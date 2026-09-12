@@ -39,6 +39,7 @@ class Element {
     this.open = false;
     this.listeners.get('close')?.();
   }
+  focus() {}
 }
 
 async function setup(t, { saved, getReducedEffects, load = async () => {} }) {
@@ -74,7 +75,8 @@ async function setup(t, { saved, getReducedEffects, load = async () => {} }) {
     }
   });
   const starts = [],
-    draws = [];
+    draws = [],
+    deltas = [];
   let painter;
   t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
   t.mock.method(BoardPainter.prototype, 'setLook', async function (theme) {
@@ -92,6 +94,7 @@ async function setup(t, { saved, getReducedEffects, load = async () => {} }) {
   // this DOM/image adapter paints pixels or tests browser image decoding.
   t.mock.method(BoardPainter.prototype, 'draw', function (_context, _state, dt, options) {
     draws.push(options);
+    deltas.push(dt);
     this.celebration = advanceCelebration(this.celebration, dt, {
       reduced: options.reduced,
       paused: options.celebrationPaused,
@@ -140,22 +143,111 @@ async function setup(t, { saved, getReducedEffects, load = async () => {} }) {
   panel.populateGallery();
   node('collection-dialog').showModal();
   await node('gallery-grid').children[0].onclick();
-  let clock = performance.now();
+  let clock = 0;
   return {
     starts,
     draws,
+    deltas,
     frames,
     play: () => node('gallery-animate').onclick(),
-    advance() {
+    close: () => node('gallery-view-dialog').close(),
+    hidden: (value) => (replacements.document.hidden = value),
+    advance(now = clock + 16) {
       const [id, callback] = frames.entries().next().value || [];
       assert.equal(typeof callback, 'function', 'the actual handler scheduled a gallery frame');
       frames.delete(id);
-      callback((clock = Math.max(clock + 16, performance.now() + 16)));
+      if (Number.isFinite(now)) clock = now;
+      callback(now);
     },
+    elapsed: () => painter.celebrationStatus.elapsed,
     finished: () => painter.celebrationStatus.finished,
     unchanged: () => assert.deepEqual(library, before, 'presentation must not persist a choice'),
   };
 }
+
+test('a first frame behind the startup clock begins at zero and completes through real finale progression', async (t) => {
+  const h = await setup(t, { saved: false });
+  const beforePlay = performance.now();
+  await h.play();
+  assert.ok(beforePlay > 0, 'the supplied first frame predates the separately sampled clock');
+  assert.doesNotThrow(() => h.advance(0));
+  assert.equal(h.elapsed(), 0);
+  h.advance(16);
+  assert.equal(h.elapsed(), 0.016);
+  for (let now = 32; h.frames.size && now <= 5000; now += 16) h.advance(now);
+  assert.equal(h.finished(), true);
+  assert.equal(h.frames.size, 0, 'the completed finale stops scheduling');
+  assert.equal(h.deltas[0], 0);
+  h.unchanged();
+});
+
+test('defensive equal, backward and nonfinite timestamps cannot double-count or poison gallery time', async (t) => {
+  const h = await setup(t, { saved: false });
+  await h.play();
+  h.advance(NaN);
+  assert.equal(h.elapsed(), 0);
+  h.advance(1000);
+  assert.equal(h.elapsed(), 0, 'the first finite frame establishes the baseline');
+  h.advance(1016);
+  assert.equal(h.elapsed(), 0.016);
+  // These ordering/nonfinite values are deliberate host-boundary injections,
+  // not evidence that a browser supplied them in the frozen failure.
+  for (const now of [1016, 1000, NaN, Infinity, -Infinity, 1016]) {
+    h.advance(now);
+    assert.equal(h.elapsed(), 0.016);
+  }
+  h.advance(1032);
+  assert.equal(h.elapsed(), 0.032, 'catching up did not replay a previously counted interval');
+  h.advance(100000);
+  assert.ok(Math.abs(h.elapsed() - 0.132) < 1e-12, 'a long delivered gap advances at most 0.1s');
+  assert.ok(h.deltas.every((dt) => Number.isFinite(dt) && dt >= 0 && dt <= 0.1));
+  assert.equal(h.frames.size, 1, 'valid progression still has one live callback');
+  h.unchanged();
+});
+
+test('restart establishes a fresh clock and retained restart or close callbacks stay inert', async (t) => {
+  const h = await setup(t, { saved: false });
+  await h.play();
+  h.advance(1000);
+  h.advance(1016);
+  assert.equal(h.elapsed(), 0.016);
+  const stale = h.frames.values().next().value,
+    beforeRestart = h.draws.length;
+  await h.play();
+  assert.equal(h.starts.length, 2);
+  assert.equal(h.elapsed(), 0);
+  assert.equal(h.frames.size, 1);
+  stale(1032);
+  assert.equal(h.draws.length, beforeRestart, 'a cancelled old invocation does not paint');
+  assert.equal(h.frames.size, 1, 'a cancelled old invocation does not reschedule');
+  h.advance(0);
+  assert.equal(h.elapsed(), 0, 'restart does not inherit the previous invocation clock');
+  h.advance(16);
+  assert.equal(h.elapsed(), 0.016);
+  const closed = h.frames.values().next().value,
+    beforeClose = h.draws.length;
+  h.close();
+  assert.equal(h.frames.size, 0);
+  closed(32);
+  assert.equal(h.draws.length, beforeClose);
+  assert.equal(h.frames.size, 0);
+  h.unchanged();
+});
+
+test('delivered hidden frames pause the finale while keeping the visible return interval current', async (t) => {
+  const h = await setup(t, { saved: false });
+  await h.play();
+  h.advance(1000);
+  h.hidden(true);
+  h.advance(2000);
+  assert.equal(h.elapsed(), 0);
+  assert.equal(h.draws.at(-1).celebrationPaused, true);
+  h.hidden(false);
+  h.advance(2016);
+  assert.equal(h.elapsed(), 0.016, 'the delivered hidden interval was not added on return');
+  assert.equal(h.draws.at(-1).celebrationPaused, false);
+  h.unchanged();
+});
 
 test('effective reduced effects suppress gallery animation even when the saved preference is false', async (t) => {
   const h = await setup(t, { saved: false, getReducedEffects: () => true });
@@ -163,6 +255,7 @@ test('effective reduced effects suppress gallery animation even when the saved p
   assert.equal(h.starts[0].reduced, true);
   h.advance();
   assert.equal(h.draws[0].reduced, true);
+  assert.equal(h.deltas[0], 0, 'reduced mode completes even with the initial zero delta');
   assert.equal(h.finished(), true);
   assert.equal(h.frames.size, 0);
   h.unchanged();
