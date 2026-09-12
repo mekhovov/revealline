@@ -573,7 +573,11 @@
       <label class="slider-field"
         >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
       /></label>
-      <button id="music-preview" class="button secondary">Preview music ♫</button>
+      <button id="music-preview" class="button secondary">Play music ♫</button>
+      <button id="soundtrack-open" class="button secondary" disabled>
+        Music library & playlists
+      </button>
+      <p id="soundtrack-summary" class="micro-note" role="status">Loading music library…</p>
       <label class="field"
         >Terrain detail<select id="terrain-select">
           <option value="hybrid">Balanced detail</option>
@@ -591,7 +595,8 @@
         moving. Use Pause to take a break. On-screen Boost can be held or toggled independently.
       </p>
       <p class="micro-note">
-        Original synthesized music. No streaming, samples, or copyrighted songs.
+        Built-in original synth playlists and your local MP3 library. The music studio manages
+        custom tracks, playlists and complete audio backups.
       </p>
       <details id="keyboard-settings">
         <summary>Keyboard controls</summary>
