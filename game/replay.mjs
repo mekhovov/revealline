@@ -9,6 +9,7 @@ import {
 } from './core/index.mjs';
 import { boundedJSON, stableId } from './data-json.mjs';
 import {
+  MASTERY_DEFINITION_VERSION,
   resolveMasteryDefinition,
   captureMasterySetup,
   captureMasteryFacts,
@@ -492,7 +493,10 @@ function* replaySteps({ data, state, mastery }) {
       if (state.status === 'won' || state.status === 'lost')
         reject('Replay contains tick commands after the run ended.', 'commands-after-terminal');
       stepRun(state, segment.input, FIXED_DT);
-      if (mastery) mastery.observer.observe(captureMasteryFacts(state, { runId: mastery.runId }));
+      if (mastery)
+        mastery.observer.observe(
+          captureMasteryFacts(state, { runId: mastery.runId, definition: mastery.definition }),
+        );
       processed++;
       yield processed;
     }
@@ -550,8 +554,8 @@ function masteryRequest(source) {
   const value = boundedJSON(source, {
     maxBytes: 16384,
     maxNodes: 320,
-    maxDepth: 5,
-    maxArray: 2,
+    maxDepth: 6,
+    maxArray: 4,
     maxString: 512,
   });
   if (
@@ -566,6 +570,17 @@ function masteryRequest(source) {
   )
     reject('Invalid optional mastery observation request.');
   value.definition = resolveMasteryDefinition(value.definition);
+  // The envelope needs one extra nesting level for v2 region references.
+  // Resolve the owned definition before dispatch; never read caller getters.
+  // Preserve the original request budget for the archived Steady contract.
+  if (value.definition.version === MASTERY_DEFINITION_VERSION)
+    boundedJSON(value, {
+      maxBytes: 16384,
+      maxNodes: 320,
+      maxDepth: 5,
+      maxArray: 2,
+      maxString: 512,
+    });
   return value;
 }
 
@@ -607,10 +622,11 @@ export async function verifyReplayAsync(
     const { definition, ...identity } = requestedMastery;
     prepared.mastery = {
       runId: identity.runId,
+      definition,
       observer: createMasteryObserver({
         definition,
-        setup: captureMasterySetup(prepared.state, identity),
-        initial: captureMasteryFacts(prepared.state, identity),
+        setup: captureMasterySetup(prepared.state, { ...identity, definition }),
+        initial: captureMasteryFacts(prepared.state, { ...identity, definition }),
       }),
     };
   }
