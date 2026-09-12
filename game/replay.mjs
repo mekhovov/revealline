@@ -3,10 +3,12 @@ import {
   LEGACY_VERSIONS,
   ENCOUNTER_VERSIONS,
   WIDE_VERSIONS,
+  CLASSIC_VERSIONS,
   resolveVersions,
   versionsForLevel,
 } from './core/versions.mjs';
 import { boundedJSON, stableId } from './data-json.mjs';
+import { projectClassicState } from './core/classic-state.mjs';
 import {
   MASTERY_DEFINITION_VERSION,
   resolveMasteryDefinition,
@@ -18,6 +20,7 @@ import {
 export const REPLAY_VERSION = 'xonix-replay.v3';
 export const ENCOUNTER_REPLAY_VERSION = ENCOUNTER_VERSIONS.replayVersion;
 export const WIDE_REPLAY_VERSION = WIDE_VERSIONS.replayVersion;
+export const CLASSIC_REPLAY_VERSION = CLASSIC_VERSIONS.replayVersion;
 export const MAX_REPLAY_TICKS = 30 * 60 * 120;
 export const MAX_REPLAY_BYTES = 32 * 1024 * 1024;
 export const CHECKPOINT_ALGORITHM = 'fnv1a64-state-v2';
@@ -42,7 +45,11 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset !== LEGACY_VERSIONS.ruleset ? [...SECTIONS, 'encounter'] : SECTIONS;
+  versions.ruleset === CLASSIC_VERSIONS.ruleset
+    ? [...SECTIONS, 'encounter', 'classic']
+    : versions.ruleset !== LEGACY_VERSIONS.ruleset
+      ? [...SECTIONS, 'encounter']
+      : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -328,6 +335,9 @@ function authoritativeSections(state, versions) {
     continuation: pick(state, ['_accumulator', '_input', '_abilitySerial', '_terminalEmitted']),
     result: state.result,
     ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
+    ...(versions.ruleset === CLASSIC_VERSIONS.ruleset
+      ? { classic: projectClassicState(state) }
+      : {}),
   };
 }
 

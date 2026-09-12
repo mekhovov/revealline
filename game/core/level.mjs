@@ -1,6 +1,7 @@
 import { DEFAULT_RULES } from './registry.mjs';
 import { boundedJSON, exactKeys } from '../data-json.mjs';
 import { resolveEncounterDescriptor } from './encounter.mjs';
+import { resolveClassicDefinition } from './classic-definition.mjs';
 
 const number = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const integer = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
@@ -257,7 +258,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    const wide = version?.value === 'xonix-level.v3';
+    const classic = version?.value === 'xonix-level.v4';
+    const wide = version?.value === 'xonix-level.v3' || classic;
     if (version?.value !== 'xonix-level.v2' && !wide) {
       if (level && Object.hasOwn(level, 'encounter'))
         return { valid: false, errors: ['encounter requires xonix-level.v2'] };
@@ -291,14 +293,49 @@ export function validateLevel(level) {
         'themeId',
         'musicId',
         'encounter',
+        ...(classic ? ['classic'] : []),
       ],
       'level',
     );
     if (wide && !Object.hasOwn(owned, 'encounter'))
       return { valid: false, errors: ['wide levels require an explicit nullable encounter'] };
-    const result = validateShape(owned, !wide || owned.encounter !== null, wide);
+    const shape = classic
+      ? {
+          ...owned,
+          version: 'xonix-level.v3',
+          enemies: (owned.enemies ?? [])
+            .filter(
+              (enemy) =>
+                enemy.type !== 'contour-patrol' &&
+                !(owned.encounter !== null && enemy.type === 'claimed-rover'),
+            )
+            .map((enemy) =>
+              ['claimed-rover', 'eroder'].includes(enemy.type)
+                ? { ...enemy, type: 'bouncer' }
+                : enemy,
+            ),
+        }
+      : owned;
+    const result = validateShape(shape, !wide || owned.encounter !== null, wide);
     if (!result.valid) return result;
-    if (!wide || owned.encounter !== null) resolveEncounterDescriptor(owned.encounter, owned);
+    if (classic) {
+      if ((owned.enemies ?? []).length > 24) throw new TypeError('at most 24 enemies');
+      // Claimed actors in encounter maps still need ordinary radius/wall checks.
+      const actors = validateShape(
+        {
+          ...shape,
+          encounter: null,
+          enemies: (owned.enemies ?? [])
+            .filter((enemy) => ['claimed-rover', 'eroder'].includes(enemy.type))
+            .map((enemy) => ({ ...enemy, type: 'bouncer' })),
+        },
+        false,
+        true,
+      );
+      if (!actors.valid) return actors;
+      resolveClassicDefinition(owned);
+    }
+    if (!wide || owned.encounter !== null) resolveEncounterDescriptor(owned.encounter, shape);
     return result;
   } catch (error) {
     return { valid: false, errors: [error.message] };
@@ -306,6 +343,13 @@ export function validateLevel(level) {
 }
 
 export function normalizedLevel(level) {
+  if (Object.getOwnPropertyDescriptor(level ?? {}, 'version')?.value === 'xonix-level.v4')
+    level = boundedJSON(level, {
+      maxBytes: 128 * 1024,
+      maxNodes: 10000,
+      maxDepth: 12,
+      maxArray: 100,
+    });
   const result = validateLevel(level);
   if (!result.valid) throw new TypeError(`Invalid level: ${result.errors.join('; ')}`);
   const ids = new Set(
@@ -313,6 +357,8 @@ export function normalizedLevel(level) {
       (level[key] ?? []).map((p) => p.id),
     ),
   );
+  if (level.version === 'xonix-level.v4')
+    for (const item of [...level.classic.terrain, ...level.classic.powerups]) ids.add(item.id);
   let homeId = 'home-hangar';
   for (let n = 1; ids.has(homeId); n++) homeId = `home-hangar-${n}`;
   return {
