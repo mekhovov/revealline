@@ -864,6 +864,65 @@ a.text-link:hover span,
   font-size: 12px;
 }
 
+.pack-launcher {
+  margin-bottom: 15px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1.15fr) minmax(170px, 0.8fr) minmax(180px, 0.9fr) auto;
+  align-items: end;
+  gap: 12px;
+  border: 1px solid rgba(112, 219, 198, 0.38);
+  border-left: 4px solid var(--aqua);
+  background: linear-gradient(100deg, rgba(112, 219, 198, 0.08), transparent 48%), var(--panel);
+  box-shadow: 7px 7px 0 rgba(112, 219, 198, 0.045);
+}
+
+.launcher-copy span,
+.pack-launcher label {
+  display: block;
+  color: var(--aqua);
+  font: 800 8px/1 var(--pixel);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.launcher-copy strong {
+  display: block;
+  margin: 7px 0 3px;
+  font-size: 16px;
+}
+
+.launcher-copy p,
+.launcher-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.pack-launcher select {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 7px;
+  padding: 0 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+  background: var(--night-deep);
+  color: var(--paper);
+  font: 700 10px/1 var(--pixel);
+}
+
+.pack-launcher .button {
+  min-width: 158px;
+  min-height: 48px;
+}
+
+.launcher-status {
+  min-height: 1.4em;
+  grid-column: 2 / -1;
+  font-family: var(--pixel);
+  font-size: 9px;
+}
+
 .pack-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1583,6 +1642,18 @@ a.text-link:hover span,
     grid-template-columns: 0.45fr 0.9fr 1.25fr;
   }
 
+  .pack-launcher {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .launcher-copy {
+    grid-column: 1 / -1;
+  }
+
+  .launcher-status {
+    grid-column: 1 / -1;
+  }
+
   .mode-copy {
     padding: 38px 32px;
   }
@@ -1693,6 +1764,20 @@ a.text-link:hover span,
 
   .pack-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pack-launcher {
+    grid-template-columns: 1fr;
+    padding: 17px;
+  }
+
+  .launcher-copy,
+  .launcher-status {
+    grid-column: auto;
+  }
+
+  .pack-launcher .button {
+    width: 100%;
   }
 
   .pack-art {
