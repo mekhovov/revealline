@@ -64,7 +64,7 @@ try {
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   const sound = new Soundscape();
-  const freeBodies = unlockedBodies(emptyProgress(campaign));
+  const freeBodies = unlockedBodies(emptyProgress(campaign), campaign);
   function bodyFor(theme, classId) {
     const candidate = recommendedBody(theme, classId);
     return Object.hasOwn(presets.characters, candidate) && freeBodies.has(candidate)

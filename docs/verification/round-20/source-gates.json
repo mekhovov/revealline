@@ -1,0 +1,184 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.10.0",
+  "recordedAt": "2026-09-12T11:25:59.597Z",
+  "startedAt": "2026-09-12T11:25:40.729Z",
+  "baselineRevision": "8be20d48bf1336dc8575495889c9bb2bf34f1937",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Round 20 source checks, attempt 2 after the reward-notice placement correction. The first passing attempt and its historical reports are preserved independently, together with all Round 19 evidence and thirteen frozen releases. Root npm test includes all discovered motion/controller/practice suites; its total is the unique test count and no focused suites are repeated. This does not certify frozen artifacts, browser interaction, physical devices, native execution, distribution or player enjoyment.",
+  "runner": {
+    "path": ".cache/round-20/source-gates-attempt-2/run-gates.mjs",
+    "bytes": 11285,
+    "sha256": "3c830a151a1961fc6c635500d37c7db5b954a346125f15fbbcce33696a6ce2c0"
+  },
+  "sourceSnapshot": {
+    "before": "a96de4954e0308dc867458c48c5b4ddaab202a6892b856f4c4191e3e1d3d5217",
+    "after": "a96de4954e0308dc867458c48c5b4ddaab202a6892b856f4c4191e3e1d3d5217",
+    "files": 266,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-20/source-gates-attempt-2/source-inputs-before.json",
+      "bytes": 44967,
+      "sha256": "a38fcd4ce199a1efd5b3708b36876c1967636ad864b72334d41f2061a73eca37"
+    },
+    "afterIndex": {
+      "path": ".cache/round-20/source-gates-attempt-2/source-inputs.json",
+      "bytes": 44967,
+      "sha256": "a38fcd4ce199a1efd5b3708b36876c1967636ad864b72334d41f2061a73eca37"
+    }
+  },
+  "expectedMinimumTests": {
+    "test": 1128
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "durationMs": 13999,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/test.log",
+        "bytes": 271818,
+        "sha256": "a3d82c7b5e6f1c1ea19cb2b137160838ccbb25c88f8ef66b52fa596f773751bb"
+      },
+      "tests": {
+        "tests": 1128,
+        "pass": 1128,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 4180,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/lint.log",
+        "bytes": 132,
+        "sha256": "c6abb5dc19b6f6ca8238a2db334dfc7bc7bf67b7103df15ced87170bb9fd68f5"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 6734,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/format.log",
+        "bytes": 168,
+        "sha256": "6dd71cfb4d29060b62b22bc95917cec40186dd4f517bb85965a8cc87e6e92873"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "durationMs": 1045,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/native-format.log",
+        "bytes": 254,
+        "sha256": "19716f333c27e82a81167834762d6bc81e9785e1b1be53ee7c36758f3a6e1616"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 3738,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/validate.log",
+        "bytes": 512,
+        "sha256": "0a1b3c37aa0a6627fe6f36f9430b495225dd6e1206d14a8c2ab2cac06bd69c1e"
+      },
+      "validation": {
+        "version": "0.10.0",
+        "files": 106,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 5,
+        "packLevels": 16,
+        "packGoals": 6
+      }
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "mise exec node@22.22.2 -- node --check authoring/motion-lab/app.js",
+      "durationMs": 33,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-20/source-gates-attempt-2/motion-lab-syntax.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "preservedFrozenBaseline": {
+    "inventory": {
+      "path": ".cache/round-20/integrity/frozen-releases-before-v0100.json",
+      "bytes": 296319,
+      "sha256": "892fcff7bcd69a6851a8bb607c839a4a3cc403d82d08b43c4369833da154ce3f"
+    },
+    "releaseCount": 13,
+    "fileCount": 1260,
+    "bytes": 1644628794,
+    "preparedComparisonUnchanged": true,
+    "exactTagsUnchanged": true,
+    "tagCount": 14,
+    "beforeTags": {
+      "path": ".cache/round-20/source-gates-attempt-2/tags-before.json",
+      "bytes": 3793,
+      "sha256": "4c95253e5786f29974404390ef68884ec4af91ed977ff7d0f4b28b524595d2d0"
+    },
+    "afterTags": {
+      "path": ".cache/round-20/source-gates-attempt-2/tags-after.json",
+      "bytes": 3793,
+      "sha256": "4c95253e5786f29974404390ef68884ec4af91ed977ff7d0f4b28b524595d2d0"
+    }
+  },
+  "preservedPreviousEvidence": {
+    "roots": [
+      "docs/verification/round-19",
+      ".cache/round-19",
+      "releases",
+      ".cache/round-20/source-gates",
+      "docs/verification/round-20/source-gates-initial.json",
+      "docs/verification/round-20/source-inputs-initial.json",
+      "docs/verification/round-20/source-gates-initial.md"
+    ],
+    "files": 2312,
+    "before": "acc221f8f7cc6708658db7a6e275c27714eec43207b3c4efdebbdd0065b7ee0a",
+    "after": "acc221f8f7cc6708658db7a6e275c27714eec43207b3c4efdebbdd0065b7ee0a",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-20/source-gates-attempt-2/prior-evidence-before.json",
+      "bytes": 472853,
+      "sha256": "447ecf1772eca84bb04ec930671430f1b55c6efe2e6bb17e66058f4151ce2a03"
+    },
+    "afterIndex": {
+      "path": ".cache/round-20/source-gates-attempt-2/prior-evidence-after.json",
+      "bytes": 472853,
+      "sha256": "447ecf1772eca84bb04ec930671430f1b55c6efe2e6bb17e66058f4151ce2a03"
+    }
+  },
+  "passed": true
+}

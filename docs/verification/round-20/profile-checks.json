@@ -1,0 +1,32 @@
+{
+  "three-clears": {
+    "path": ".cache/round-20/three-clears.library.json",
+    "bytes": 5840,
+    "sha256": "0a3ebc3dc4948b9a208b2460fac9659798d89cdc7f42089128dd404825f3f10b",
+    "pictures": 3,
+    "scores": 3,
+    "masteries": 3,
+    "campaignClears": {
+      "equipment-workshop/1/3fc2cf073da368b4": 3
+    }
+  },
+  "repeat-clear": {
+    "path": ".cache/round-20/repeat-clear.library.json",
+    "bytes": 7065,
+    "sha256": "e7c5b758cb66604ccc468dfb59171c25b00cde4ff1a703bdd8d614e225b66416",
+    "pictures": 3,
+    "scores": 4,
+    "masteries": 4,
+    "campaignClears": {
+      "equipment-workshop/1/3fc2cf073da368b4": 3
+    }
+  },
+  "candidate": {
+    "path": ".cache/round-20/candidate-earned.library.json",
+    "bytes": 4418,
+    "sha256": "08ef9be1628e133b576747f968e53fec92657389b052712ff1a50783535fcde5",
+    "pictures": 3,
+    "scores": 3,
+    "masteries": 1
+  }
+}

@@ -48,6 +48,8 @@ import {
   saveProgress,
   awardCompletion,
   achievements,
+  appearanceMilestones,
+  newAppearanceBodies,
   unlockedBodies,
   canPlay,
 } from './progress.mjs';
@@ -123,7 +125,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.9.0',
+  let buildVersion = '0.10.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -273,6 +275,7 @@ try {
     bodyWarning = '',
     lastReplay = null,
     completionWarning = '',
+    appearanceRewardIds = [],
     celebrationActive = false,
     sessionBusy = false,
     restoreController = null,
@@ -1107,7 +1110,7 @@ try {
       const candidate = recommendedBody(theme, run?.activeClassId || classId, theme.player);
       bodyId =
         Object.hasOwn(presets.characters, candidate) &&
-        (practice || unlockedBodies(progress).has(candidate))
+        (practice || unlockedBodies(progress, campaign).has(candidate))
           ? candidate
           : 'neutral-marker';
     }
@@ -1140,7 +1143,7 @@ try {
     painter.setLook(theme, bodyId, visuals());
   }
   function updateBodies() {
-    const allowed = unlockedBodies(progress);
+    const allowed = unlockedBodies(progress, campaign);
     $('body-select').replaceChildren();
     for (const [id, body] of Object.entries(presets.characters)) {
       const option = new Option(
@@ -1156,6 +1159,53 @@ try {
           ? theme.player
           : 'neutral-marker';
     $('body-select').value = bodyId;
+    const next = appearanceMilestones(progress, campaign).find((tier) => !tier.earned);
+    $('appearance-hint').textContent = practice
+      ? 'Preview access: all appearances are available. Practice grants no campaign rewards.'
+      : next
+        ? `${next.name}: ${next.count} / ${next.target} different missions in this campaign. See Collection for the appearances.`
+        : 'All chapter appearances are available in this campaign. Cosmetics do not change abilities.';
+  }
+  const bodyLabels = (ids) => ids.map((id) => presets.characters[id]?.label || id);
+  function paintAppearanceRewards() {
+    const name = campaign.title || campaign.name || campaign.id;
+    $('appearance-campaign').textContent = `Campaign appearances · ${name}`;
+    $('appearance-rewards').replaceChildren();
+    for (const tier of appearanceMilestones(progress, campaign)) {
+      const row = document.createElement('article');
+      row.className = `appearance-reward${tier.earned ? ' earned' : ''}`;
+      const thumbnail = document.createElement('img');
+      thumbnail.alt = '';
+      thumbnail.width = thumbnail.height = 64;
+      const body = presets.characters[tier.bodyIds[0]];
+      if (body?.src)
+        thumbnail.src = new URL(`../authoring/motion-lab/${body.src}`, import.meta.url).href;
+      const copy = document.createElement('div');
+      const title = document.createElement('h4');
+      title.textContent = tier.name;
+      const state = document.createElement('p');
+      state.className = 'reward-progress';
+      state.textContent = `${tier.earned ? 'Available' : 'Locked'} · ${Math.min(tier.count, tier.target)} / ${tier.target} different ${tier.target === 1 ? 'mission' : 'missions'}`;
+      const names = document.createElement('p');
+      names.textContent = bodyLabels(tier.bodyIds).join(' · ');
+      const detail = document.createElement('p');
+      detail.className = 'reward-detail';
+      const remaining = tier.target - tier.count;
+      detail.textContent = tier.earned
+        ? 'Available in this campaign.'
+        : `Finish ${remaining} more ${remaining === 1 ? 'mission' : 'missions'} in this campaign.`;
+      copy.append(title, state, names, detail);
+      row.append(thumbnail, copy);
+      $('appearance-rewards').append(row);
+    }
+    $('collection-note').textContent = practice
+      ? 'Practice previews every appearance without earning rewards. These rows show existing campaign progress. Cosmetics do not change abilities.'
+      : 'Appearances belong to this campaign. A different campaign has its own progress. Cosmetics do not change abilities.';
+  }
+  function focusAppearance() {
+    if ($('collection-dialog').open) $('collection-dialog').close();
+    $('body-select').focus({ preventScroll: true });
+    $('body-select').scrollIntoView({ block: 'center', behavior: 'auto' });
   }
   function leavePractice() {
     scenario = null;
@@ -1164,7 +1214,7 @@ try {
     campaignOverview = false;
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
-    bodyId = unlockedBodies(progress).has(bodyId) ? bodyId : theme.player;
+    bodyId = unlockedBodies(progress, campaign).has(bodyId) ? bodyId : theme.player;
     $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
     $('theme-select').replaceChildren(...themesFile.themes.map((t) => new Option(t.name, t.id)));
     $('theme-select').value = theme.id;
@@ -1272,6 +1322,12 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('result-medals', kind === 'won');
+    const newAppearance = kind === 'won' && !practice && appearanceRewardIds.length > 0;
+    show('appearance-unlock', newAppearance);
+    show('choose-appearance', newAppearance);
+    $('appearance-unlock').textContent = newAppearance
+      ? `New appearances for ${campaign.title || campaign.name || campaign.id}: ${bodyLabels(appearanceRewardIds).join(' · ')}.`
+      : '';
     $('overlay-eyebrow').textContent = practice
       ? 'PRACTICE / NO CAMPAIGN REWARDS'
       : `MISSION ${String(levelIndex + 1).padStart(2, '0')} / ${run.level.name.toUpperCase()}`;
@@ -1340,6 +1396,7 @@ try {
   function prepare({ restoreAdoption = false } = {}) {
     if (!restoreAdoption) cancelRestore();
     completionWarning = '';
+    appearanceRewardIds = [];
     celebrationActive = false;
     sound.reset?.();
     painter.skipCelebration?.();
@@ -1701,6 +1758,7 @@ try {
         paused = true;
         clearInput();
         if (run.status === 'won' && !practice) {
+          const previousProgress = progress;
           try {
             library = recordLibraryCompletion(library, {
               campaign,
@@ -1717,6 +1775,7 @@ try {
             show('save-warning', true);
           }
           progress = progressFor(library, campaign);
+          appearanceRewardIds = newAppearanceBodies(previousProgress, progress, campaign);
           persistProfile();
           updateBodies();
           paintMissions();
@@ -1923,11 +1982,12 @@ try {
       row.append(title, copy);
       $('achievements').append(row);
     }
-    $('collection-note').textContent =
-      'In this campaign, the first clear unlocks Skyline FPV, Fixed-wing, Falcon, Vector and Auditor appearances. Four clears unlock Night signal FPV and Delta interceptor. Cosmetics do not change abilities.';
+    paintAppearanceRewards();
     libraryPanel.populateGallery();
     $('collection-dialog').showModal();
   };
+  $('choose-appearance').onclick = focusAppearance;
+  $('collection-choose-appearance').onclick = focusAppearance;
   document
     .querySelectorAll('[data-close]')
     .forEach((b) => (b.onclick = () => $(b.dataset.close).close()));

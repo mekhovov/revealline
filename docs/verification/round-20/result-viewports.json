@@ -1,0 +1,74 @@
+[
+  {
+    "buttons": [
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "next-button"
+      },
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "view-picture"
+      },
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "choose-appearance"
+      }
+    ],
+    "documentWidth": 320,
+    "focus": "retry-button",
+    "height": 640,
+    "readout": "New appearances for Equipment Workshop: Night signal FPV · Delta interceptor.",
+    "width": 320
+  },
+  {
+    "buttons": [
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "next-button"
+      },
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "view-picture"
+      },
+      {
+        "height": 44,
+        "hidden": false,
+        "id": "choose-appearance"
+      }
+    ],
+    "documentWidth": 844,
+    "focus": "retry-button",
+    "height": 390,
+    "readout": "New appearances for Equipment Workshop: Night signal FPV · Delta interceptor.",
+    "width": 844
+  },
+  {
+    "buttons": [
+      {
+        "height": 45,
+        "hidden": false,
+        "id": "next-button"
+      },
+      {
+        "height": 45,
+        "hidden": false,
+        "id": "view-picture"
+      },
+      {
+        "height": 45,
+        "hidden": false,
+        "id": "choose-appearance"
+      }
+    ],
+    "documentWidth": 1280,
+    "focus": "retry-button",
+    "height": 720,
+    "readout": "New appearances for Equipment Workshop: Night signal FPV · Delta interceptor.",
+    "width": 1280
+  }
+]

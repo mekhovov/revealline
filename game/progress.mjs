@@ -8,7 +8,7 @@ import {
   rosterHash,
 } from './core/registry.mjs';
 import { EPS } from './core/geometry.mjs';
-import { dataIdentity } from './data-json.mjs';
+import { dataIdentity, stableId } from './data-json.mjs';
 
 export const PROGRESS_VERSION = 'revealline-progress.v1';
 const record = (value) =>
@@ -203,9 +203,103 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   next.seen = [...next.seen, runId].slice(-256);
   return next;
 }
+const STARTER_BODIES = Object.freeze([
+  'fpv-body',
+  'scout-quad',
+  'heavy-lift',
+  'ukrainian-bird',
+  'retro-craft',
+  'navi-avatar',
+  'neutral-marker',
+]);
+const APPEARANCE_TIERS = Object.freeze([
+  Object.freeze({
+    id: 'first-clear',
+    name: 'First clear',
+    bodyIds: Object.freeze([
+      'fpv-racer',
+      'fixedwing-body',
+      'ukrainian-falcon',
+      'retro-vector',
+      'navi-auditor',
+    ]),
+  }),
+  Object.freeze({
+    id: 'chapter-explorer',
+    name: 'Chapter explorer',
+    bodyIds: Object.freeze(['fpv-night', 'delta-interceptor']),
+  }),
+]);
+const projectionData = (value, key) => {
+  const descriptor = Object.getOwnPropertyDescriptor(value, key);
+  if (!descriptor || !Object.hasOwn(descriptor, 'value'))
+    throw new TypeError(`Reward projection requires an own data field: ${key}.`);
+  return descriptor.value;
+};
+
+/** Read only the identity/map projection. Simulation validation remains in the core. */
+function chapterRewards(progress, campaign) {
+  if (!record(campaign))
+    throw new TypeError('Reward campaign must be a nonempty valid projection.');
+  const id = projectionData(campaign, 'id'),
+    revision = projectionData(campaign, 'revision'),
+    levels = projectionData(campaign, 'levels');
+  if (
+    projectionData(campaign, 'version') !== 'xonix-campaign.v1' ||
+    !stableId(id) ||
+    typeof revision !== 'string' ||
+    !revision.trim() ||
+    revision.length > 60 ||
+    !Array.isArray(levels) ||
+    levels.length < 1 ||
+    levels.length > 128
+  )
+    throw new TypeError('Reward campaign must be a nonempty valid projection.');
+  const ids = new Set();
+  for (let index = 0; index < levels.length; index++) {
+    const level = projectionData(levels, String(index));
+    if (!record(level)) throw new TypeError('Reward map IDs must be valid.');
+    const levelId = projectionData(level, 'id');
+    if (!stableId(levelId)) throw new TypeError('Reward map IDs must be valid.');
+    ids.add(levelId);
+  }
+  if (
+    !record(progress) ||
+    projectionData(progress, 'version') !== PROGRESS_VERSION ||
+    projectionData(progress, 'campaignId') !== id ||
+    projectionData(progress, 'revision') !== revision
+  )
+    throw new TypeError('Reward progress must match the campaign identity.');
+  const clears = projectionData(progress, 'clears');
+  if (!record(clears)) throw new TypeError('Reward clears must be an object.');
+  const entries = [];
+  for (const levelId of ids) {
+    if (!Object.hasOwn(clears, levelId)) continue;
+    const entry = projectionData(clears, levelId);
+    if (!record(entry)) throw new TypeError('Reward clear must contain valid statistics.');
+    const stats = Object.fromEntries(
+      ['score', 'time', 'medals', 'clean'].map((key) => [key, projectionData(entry, key)]),
+    );
+    if (!statsValid(stats)) throw new TypeError('Reward clear must contain valid statistics.');
+    entries.push(stats);
+  }
+  return { entries, count: entries.length, total: ids.size, finalTarget: Math.min(4, ids.size) };
+}
+function milestonesFor(count, finalTarget) {
+  return APPEARANCE_TIERS.map((tier, index) => {
+    const target = index === 0 ? 1 : finalTarget;
+    return { ...tier, bodyIds: [...tier.bodyIds], count, target, earned: count >= target };
+  });
+}
+
+/** Campaign-local derived rewards, not an award service. Count is distinct clears, not capped. */
+export function appearanceMilestones(progress, campaign) {
+  const { count, finalTarget } = chapterRewards(progress, campaign);
+  return milestonesFor(count, finalTarget);
+}
+
 export function achievements(progress, campaign) {
-  const entries = Object.values(progress.clears),
-    count = entries.length;
+  const { entries, count, total, finalTarget } = chapterRewards(progress, campaign);
   return [
     {
       id: 'first-light',
@@ -222,8 +316,8 @@ export function achievements(progress, campaign) {
     {
       id: 'pathfinder',
       name: 'Pathfinder',
-      description: 'Complete four different missions.',
-      earned: count >= 4,
+      description: `Complete ${finalTarget} different ${finalTarget === 1 ? 'mission' : 'missions'} in this campaign.`,
+      earned: count >= finalTarget,
     },
     {
       id: 'golden-line',
@@ -235,32 +329,42 @@ export function achievements(progress, campaign) {
       id: 'last-light',
       name: 'Last light',
       description: 'Complete the full campaign.',
-      earned: count === campaign.levels.length,
+      earned: count === total,
     },
   ];
 }
-export function unlockedBodies(progress) {
-  const count = Object.keys(progress.clears).length;
+/** Omitted campaign retains the legacy one/four-clear policy for existing callers. */
+export function unlockedBodies(progress, campaign) {
+  const milestones =
+    campaign === undefined
+      ? milestonesFor(Object.keys(progress.clears).length, 4)
+      : appearanceMilestones(progress, campaign);
   return new Set([
-    'fpv-body',
-    'scout-quad',
-    'heavy-lift',
-    'ukrainian-bird',
-    'retro-craft',
-    'navi-avatar',
-    'neutral-marker',
-    ...(count >= 1
-      ? ['fpv-racer', 'fixedwing-body', 'ukrainian-falcon', 'retro-vector', 'navi-auditor']
-      : []),
-    ...(count >= 4 ? ['fpv-night', 'delta-interceptor'] : []),
+    ...STARTER_BODIES,
+    ...milestones.filter((tier) => tier.earned).flatMap((tier) => tier.bodyIds),
   ]);
+}
+/** Caller supplies a real live award transition; adoption/imports never emit events here. */
+export function newAppearanceBodies(before, after, campaign) {
+  // Require chapter context even though unlockedBodies also supports a legacy API.
+  const previous = new Set(
+    appearanceMilestones(before, campaign)
+      .filter((tier) => tier.earned)
+      .flatMap((tier) => tier.bodyIds),
+  );
+  return appearanceMilestones(after, campaign)
+    .filter((tier) => tier.earned)
+    .flatMap((tier) => tier.bodyIds)
+    .filter((id) => !previous.has(id));
 }
 export function canPlay(progress, campaign, index) {
   return (
     Number.isInteger(index) &&
     index >= 0 &&
     index < campaign.levels.length &&
-    (index === 0 || Object.hasOwn(progress.clears, campaign.levels[index - 1].id))
+    (index === 0 ||
+      Object.hasOwn(progress.clears, campaign.levels[index].id) ||
+      Object.hasOwn(progress.clears, campaign.levels[index - 1].id))
   );
 }
 

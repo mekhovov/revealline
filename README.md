@@ -1,10 +1,12 @@
 # RevealLine
 
-A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.9.0 source includes 12 campaign maps, sixteen more maps in five installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
+A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.10.0 source includes 12 campaign maps, sixteen more maps in five installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.
 
 ## Run locally
+
+v0.10.0 makes [chapter appearance rewards](docs/chapter-rewards.md) attainable in short campaigns, shows exact unlock progress, and adds a brief reward message beside the completed picture. Completed missions remain replayable after an out-of-order restore. This working iteration keeps simulation, saves and equipment seals compatible with v0.9.0; its browser and release checks are in progress.
 
 v0.9.0 adds [pack-authored equipment goals](docs/pack-mastery-contract.md), editable practice definitions and the three-map [Equipment Workshop](docs/equipment-workshop.md) across Ukrainian heritage, 1990s arcade and spend-management themes. Copy, edit, disable and export goals without changing simulation code. Existing records remain archived when definitions change; practice stays non-awarding after mission selection. `inspect-goals` reports content and reference checks separately from gameplay proof.
 
