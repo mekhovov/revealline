@@ -1,0 +1,36 @@
+{
+  "format": "revealline-practice-profile-comparison.v1",
+  "version": "v0.5.0",
+  "url": "http://127.0.0.1:8801/game/",
+  "allEqual": true,
+  "beforeBackupSha256": "e4dc9786a842930975d48060dad8550d6a4c0090d8a98114e85b80e253b5da57",
+  "afterExportSha256": "8147317a841d2edeb5cc35cac0ef32101d9e3d0a13add74f2c78cf64f725bfd2",
+  "fields": {
+    "format": {
+      "equal": true,
+      "beforeSha256": "3019e451dd9d7c4261b18cf949637ea9bdfa69b377b4d1f4f5ef6e243457d97e",
+      "afterSha256": "3019e451dd9d7c4261b18cf949637ea9bdfa69b377b4d1f4f5ef6e243457d97e"
+    },
+    "preferences": {
+      "equal": true,
+      "beforeSha256": "9c7de51fbd475fb609434d9f0d6f1f502eabf4bb065fd0357c219c6f6753c307",
+      "afterSha256": "9c7de51fbd475fb609434d9f0d6f1f502eabf4bb065fd0357c219c6f6753c307"
+    },
+    "campaigns": {
+      "equal": true,
+      "beforeSha256": "d06bda69a96236856afce82968756325a1d911347375bb6291ac705404e9262b",
+      "afterSha256": "d06bda69a96236856afce82968756325a1d911347375bb6291ac705404e9262b"
+    },
+    "gallery": {
+      "equal": true,
+      "beforeSha256": "99c38b7acb2d963eed8b9ca320de0760221dfdac7013a0d78bd5fb93fd53dbff",
+      "afterSha256": "99c38b7acb2d963eed8b9ca320de0760221dfdac7013a0d78bd5fb93fd53dbff"
+    },
+    "scores": {
+      "equal": true,
+      "beforeSha256": "cc9cc50a498fe12885f29710a4b2da83337358d85f1b644a95ff3cd46577c2b9",
+      "afterSha256": "cc9cc50a498fe12885f29710a4b2da83337358d85f1b644a95ff3cd46577c2b9"
+    }
+  },
+  "method": "Actual UI backup import; offline practice full win and gallery access; standalone page reloaded offline; actual Export player library UI then visible Save JSON copied for canonical structural comparison. No browser storage mutation."
+}
