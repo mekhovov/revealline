@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { attachInput, gamepadCommand } from '../ui/input.mjs';
 import { createRun, stepRun } from '../core/index.mjs';
 import { resolveKeyBindings } from '../key-bindings.mjs';
+import { createControllerRouter, neutralControllerFlight } from '../ui/controller-router.mjs';
 
 const neutral = { direction: null, boost: false, action: false, pickup: false };
 class Target {
@@ -76,6 +78,8 @@ function fixture(
     onActivity = () => {},
     onPause = () => {},
     getBindings = () => null,
+    readControllerCommand = null,
+    onGamepad = () => {},
   } = {},
 ) {
   const originals = new Map(
@@ -104,6 +108,7 @@ function fixture(
       buttons: Array.from({ length: 16 }, () => ({ pressed: false })),
     };
   let pads = [],
+    padReads = 0,
     isActive = true,
     input;
   Object.defineProperty(globalThis, 'window', { configurable: true, value: win });
@@ -122,7 +127,12 @@ function fixture(
   });
   Object.defineProperty(globalThis, 'navigator', {
     configurable: true,
-    value: { getGamepads: () => pads },
+    value: {
+      getGamepads: () => {
+        padReads++;
+        return pads;
+      },
+    },
   });
   input = attachInput({
     arena,
@@ -131,6 +141,8 @@ function fixture(
     onActivity: () => onActivity(input),
     onPause: (force) => onPause(input, force),
     getBindings,
+    readControllerCommand,
+    onGamepad,
   });
   t.after(() => {
     input.destroy();
@@ -148,6 +160,9 @@ function fixture(
     stop,
     boost,
     pad,
+    get padReads() {
+      return padReads;
+    },
     setPads: (value) => (pads = value),
     setActive: (value) => (isActive = value),
     setTap: (value) => (tap = value),
@@ -575,3 +590,178 @@ test('changing mappings with clear prevents a held old key surviving the change'
   f.key('l', 'KeyL');
   assert.equal(f.input.poll().direction, 'right');
 });
+
+test('external sampled commands bypass all hardware polling and status while keyboard/touch still arbitrate', (t) => {
+  let command = { ...neutralControllerFlight(), direction: 'left', boost: true, action: true },
+    reads = 0;
+  const messages = [];
+  const f = fixture(t, {
+    readControllerCommand: () => {
+      reads++;
+      return command;
+    },
+    onGamepad: (message) => messages.push(message),
+  });
+  f.setPads([f.pad]);
+  f.pad.axes[0] = 1;
+  assert.deepEqual(f.input.poll(), { ...neutral, direction: 'left', boost: true, action: true });
+  assert.equal(f.boost.getAttribute('aria-pressed'), 'true');
+  f.key('w', 'KeyW');
+  assert.equal(f.input.poll().direction, 'up');
+  f.moves.down.emit('pointerdown', { pointerId: 10, button: 0 });
+  assert.equal(f.input.poll().direction, 'down');
+  f.moves.down.emit('pointerup', { pointerId: 10 });
+  f.up('w', 'KeyW');
+  command = neutralControllerFlight();
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(reads, 4);
+  assert.equal(f.padReads, 0);
+  assert.deepEqual(messages, []);
+});
+
+test('external clear and inactive phases need one neutral sample, never an internal controller read', (t) => {
+  let command = { ...neutralControllerFlight(), direction: 'right', action: true };
+  const f = fixture(t, { readControllerCommand: () => command });
+  assert.equal(f.input.poll().action, true);
+  f.input.clear();
+  assert.deepEqual(f.input.poll(), neutral);
+  f.setActive(false);
+  command = neutralControllerFlight();
+  assert.deepEqual(f.input.poll(), neutral);
+  f.setActive(true);
+  assert.deepEqual(f.input.poll(), neutral);
+  command = { ...neutralControllerFlight(), direction: 'down' };
+  assert.equal(f.input.poll().direction, 'down');
+  assert.equal(f.padReads, 0);
+});
+
+test('external pause and stop clear every held source without duplicating pause or equipment actions', (t) => {
+  let command = neutralControllerFlight(),
+    pauses = 0;
+  const f = fixture(t, { readControllerCommand: () => command, onPause: () => pauses++ });
+  f.key('w', 'KeyW');
+  f.moves.right.emit('pointerdown', { pointerId: 12, button: 0 });
+  command = { ...neutralControllerFlight(), pause: true, action: true, boost: true };
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(pauses, 1);
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(pauses, 1);
+  command = neutralControllerFlight();
+  f.input.poll();
+  f.key('d', 'KeyD');
+  command = { ...neutralControllerFlight(), stop: true };
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(pauses, 1);
+  command = neutralControllerFlight();
+  assert.deepEqual(f.input.poll(), neutral);
+  f.up('d', 'KeyD');
+  f.key('a', 'KeyA');
+  assert.equal(f.input.poll().direction, 'left');
+});
+
+test('invalid external fields cannot manufacture movement/ability and destroyed input stops reading it', (t) => {
+  let reads = 0;
+  const f = fixture(t, {
+    readControllerCommand: () => {
+      reads++;
+      return { direction: 'diagonal', boost: 'true', action: 1, pickup: [], pause: 1 };
+    },
+  });
+  assert.deepEqual(f.input.poll(), neutral);
+  f.input.destroy();
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(reads, 1);
+  assert.equal(f.padReads, 0);
+});
+
+test('default sampler preserves an assigned pad when another arrives, and pauses if that owner disappears', (t) => {
+  const pauses = [],
+    messages = [];
+  const f = fixture(t, {
+    onPause: (_input, force) => pauses.push(force),
+    onGamepad: (message) => messages.push(message),
+  });
+  f.pad.index = 4;
+  f.pad.id = 'primary';
+  f.pad.axes[0] = -1;
+  f.setPads([null, null, null, null, f.pad]);
+  assert.equal(f.input.poll().direction, 'left');
+  const other = { ...f.pad, index: 0, id: 'other', axes: [1, 0] };
+  f.setPads([other, null, null, null, f.pad]);
+  assert.equal(f.input.poll().direction, 'left');
+  assert.equal(pauses.length, 0);
+  f.setPads([other]);
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.deepEqual(pauses, [true]);
+  assert.deepEqual(f.input.poll(), neutral, 'replacement held axis stays blocked');
+  other.axes[0] = 0;
+  f.input.poll();
+  other.axes[0] = 1;
+  assert.equal(f.input.poll().direction, 'right');
+  assert.match(messages[1], /disconnected/);
+});
+
+test('default sampler detects same-index descriptor changes and explicit same-device disconnect events', (t) => {
+  let pauses = 0;
+  const f = fixture(t, { onPause: () => pauses++ });
+  f.pad.index = 0;
+  f.pad.id = 'first';
+  f.setPads([f.pad]);
+  f.input.poll();
+  f.pad.id = 'replacement';
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(pauses, 1);
+  f.input.poll();
+  f.win.emit('gamepaddisconnected', { gamepad: { index: 0 } });
+  assert.deepEqual(f.input.poll(), neutral);
+  assert.equal(pauses, 2);
+});
+
+for (const turnPolicy of ['immediate', 'grid-center']) {
+  test(`router → injected input completes the real first mission identically to canonical input (${turnPolicy})`, (t) => {
+    const level = JSON.parse(fs.readFileSync(new URL('../content/campaign.json', import.meta.url)))
+      .levels[0];
+    let frame = { flight: neutralControllerFlight() },
+      hardwareReads = 0;
+    const f = fixture(t, { readControllerCommand: () => frame.flight });
+    f.pad.index = 0;
+    f.pad.id = 'integration';
+    const router = createControllerRouter({
+      eventTarget: null,
+      readPads: () => {
+        hardwareReads++;
+        return [f.pad];
+      },
+    });
+    t.after(() => router.destroy());
+    router.sample({ scope: 'ready', timeMs: 0 });
+    f.pad.buttons[0].pressed = true;
+    frame = router.sample({ scope: 'ready', timeMs: 1 });
+    assert.deepEqual(f.input.poll(), neutral);
+    f.pad.buttons[0].pressed = false;
+    frame = router.sample({ scope: 'flight', timeMs: 2 });
+    f.input.poll();
+    const actual = createRun(level, { seed: 123, turnPolicy }),
+      expected = createRun(level, { seed: 123, turnPolicy });
+    let ticks = 0;
+    while (actual.status === 'running' && ticks < 1000) {
+      const input = {
+        direction: 'down',
+        boost: ticks >= 80 && ticks < 100,
+        action: ticks >= 40 && ticks < 45,
+        pickup: false,
+      };
+      f.pad.axes[1] = 1;
+      f.pad.buttons[0].pressed = input.action;
+      f.pad.buttons[5].pressed = input.boost;
+      frame = router.sample({ scope: 'flight', timeMs: 3 + (ticks * 1000) / 120 });
+      stepRun(actual, f.input.poll());
+      stepRun(expected, input);
+      ticks++;
+    }
+    assert.equal(actual.status, 'won');
+    assert.deepEqual(actual, expected);
+    assert.equal(hardwareReads, ticks + 3);
+    assert.equal(f.padReads, 0);
+  });
+}
