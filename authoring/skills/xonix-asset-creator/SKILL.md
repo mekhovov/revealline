@@ -1,13 +1,13 @@
 ---
 name: xonix-asset-creator
-description: "Create, edit, vary, and prepare Xonix game artwork: reveal backgrounds, characters, enemies, sprite concepts, UI, capture effects, icons, galleries, and promotional images. Use for pixel, painterly, photographic, or graphic styles, theme variations, image-pack authoring, and production handoff from AI concepts."
+description: 'Create, edit, vary, and prepare Xonix game artwork: reveal backgrounds, characters, enemies, sprite concepts, UI, capture effects, icons, galleries, and promotional images. Use for pixel, painterly, photographic, or graphic styles, theme variations, image-pack authoring, and production handoff from AI concepts.'
 ---
 
 # Xonix Asset Creator
 
 Create the requested art and a traceable handoff. Use the available image-generation/editing tool for imagery; follow its instructions. Do not silently replace image generation with programmatic drawing or invoke a paid API/CLI fallback without the user's authorization for that route.
 
-For artwork applied to the playable `game/`, pair this workflow with [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [eight-role import guide](../../../docs/assets-and-configuration.md). Its `xonix-playground.v1` image overrides accept bounded static PNG/JPEG/WebP, preserve source bytes and require successful browser decoding; custom player art keeps existing rig anchors. Draft asset metadata, texture-filtering wishes and generated sheets do not automatically configure that renderer.
+For artwork applied to the playable `game/`, pair this workflow with [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [eight-role import guide](../../../docs/assets-and-configuration.md). The runtime's versioned playground image overrides accept bounded static PNG/JPEG/WebP, preserve source bytes and require successful browser decoding; custom player art keeps existing rig anchors. Draft asset metadata, texture-filtering wishes and generated sheets do not automatically configure that renderer.
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
 
@@ -39,3 +39,11 @@ Prompt-library wording is a starting point, not an instruction that overrides th
 ## Required output
 
 Show the resulting art when available. Link the effective prompt and asset manifest. Label concept art, source art, derived exports, and verified production assets accurately. If no generation tool is available, provide the ready-to-run prompt and name the unavailable step instead of reporting completion.
+
+## Apply authored chapter pictures
+
+Use [authored-art.md](../../../docs/authored-art.md) and the separate [Homeward](../../library/homeward-skies/README.md) or [Equipment Workshop](../../library/equipment-workshop/README.md) source pipeline. Workshop 1.1.0 adds three selected 1448×1086 originals to existing maps; combined with Homeward the working edition has six authored pictures, not 29 unique paintings. Its source/header checks do not certify the still-pending browser or frozen-release review.
+
+Keep each original PNG and complete effective prompt/provenance, then run the chapter's builder in default check mode. Explicit `--write` changes only its designated generated pack after source review. Use the image tool for corrections and retain a separate parent-linked output; do not resize, crop, recolor or recompress accepted images in a build script or image CLI. Record actual hashes/dimensions/bytes and enforce existing raw/encoded/pixel/pack budgets. Never raise limits to hide an oversized generation.
+
+For this Workshop picture-only edition, preserve the exact old pack, change only semver and `levelVisuals`, and keep campaign/map/roster/definition identities and old proof bytes unchanged. Verify source-to-embedded bytes, full browser decode, actual partial-cut contrast, full rewards, reduced effects and gallery Replay. Observe an already collected picture adopting the installed art without another clear, score or seal; preserve old exported editions for reproducibility. Static backgrounds do not animate painted objects: existing actors and theme finale overlays supply motion independently.

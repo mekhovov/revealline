@@ -4,6 +4,8 @@ A reveal picture can be a full illustration while the playable board, drone, haz
 
 The current [Homeward Skies chapter](homeward-skies.md) demonstrates three original Ukrainian-inspired illustrations with preserved PNG sources and complete prompts. Its maps reuse the first three Fieldcraft geometry lessons under new chapter identities and artwork. This is an illustrated content chapter, not three new engine mechanics. Inspect the [source recipe](../authoring/library/homeward-skies/pack-source.json), [effective prompts and provenance](../authoring/library/homeward-skies/prompts.json), and generated runtime pack at `game/content/packs/homeward-skies.json`.
 
+Working v0.17.0 adds a second concrete source pipeline: [Equipment Workshop 1.1.0](../authoring/library/equipment-workshop/README.md) embeds three original pictures for its existing heritage, 1990s and fictional spend-themed maps. Each selected PNG is 1448×1086; their combined originals total 8,330,027 bytes. The generated pack is 11,127,186 bytes. Together with Homeward, this edition contains **six authored reward pictures across the unchanged 29 campaign maps**; the remaining 23 use procedural scenes. Source inspection and byte/header checks are complete, while actual Workshop masked play, returning-gallery review and frozen v0.17.0 verification remain pending. Static illustrations and animated gameplay/finale overlays remain separate.
+
 ## Import a supplied picture
 
 1. Open the [Playground](../game/playground/index.html) and load the intended scenario or expansion. Keep a copy of the original file and record its source/rights status.
@@ -46,6 +48,25 @@ node scripts/verify-homeward.mjs
 
 The builder targets Homeward's existing files. To author another chapter, create a separate source directory and pack identity, then adapt the recipe/build step deliberately; do not overwrite Homeward to make an unrelated theme. Numerical rule or map changes require appropriate revision/identity changes and completion proofs. A visual source change also needs a pack-version decision and an in-game inspection; do not assume old collectible art updates are invisible to players.
 
+For the existing Workshop's illustrated edition, use its separate [source recipe](../authoring/library/equipment-workshop/pack-source.json), [full prompts/provenance](../authoring/library/equipment-workshop/prompts.json), [preserved procedural v1.0.0 pack](../authoring/library/equipment-workshop/previous/equipment-workshop-1.0.0.json) and [Workshop builder](../scripts/build-workshop-pack.mjs):
+
+```sh
+# Default check is read-only; missing or stale output fails with guidance.
+node scripts/build-workshop-pack.mjs
+
+# Only after reviewing an intentional source/art change:
+node scripts/build-workshop-pack.mjs --write
+node scripts/build-workshop-pack.mjs
+```
+
+This builder allows only pack version `1.1.0` and the three generated `levelVisuals` additions over the preserved baseline. It embeds exact selected PNG bytes, checks distinct hashes and actual 4:3 dimensions, and rejects redirected files, unintended rule changes and budgets before replacing its designated output. It does not edit originals. Artwork creation or corrections use the image-generation/editing tool with retained parent sources; do not crop, quantize, resize or recompress accepted images through build scripts or image CLIs. Distinct hashes establish different bytes, not different or attractive compositions.
+
+Workshop retains `xonix-pack.v2`, campaign/map IDs, normalized rules, roster, music and definitions; its campaign key remains `equipment-workshop/1/3fc2cf073da368b4`. Keep old proof bytes unchanged and verify the existing legal routes in both steering modes. No profile, replay, session, mastery or pack-schema migration is needed. The source recipe contains empty generated `levelVisuals`; the runtime output uses `[{levelId, visualOverrides: {background: {dataUrl, name, fit: 'contain', metadata}}}]`, with no `roles` wrapper.
+
+Budgets remain 4 MiB raw and 6 MiB encoded characters per image, 20 MiB combined encoded artwork, 32 million combined pixels, 24 MiB per pack and 48 MiB installed library. Existing per-image dimension limits still apply. Report actual generated/installed/offline totals rather than silently raising limits; the static build's separate offline limit is 64 MiB and 2,000 files. Authoring originals are preserved outside the runtime distribution, whose pack carries the portable embeddings.
+
 Build validation checks data and image headers. Installation separately performs sequential full image decoding. The chapter's route proofs cover registered gameplay behaviors, not human appeal or art quality. Inspect real first cuts, failures, ability effects, completion, gallery replay and mobile layouts. Keep those findings distinct from physical-device/controller tests.
 
 Installed packs export their embedded originals. Complete backups and [earlier-release copying](continuity-transfer.md) preserve the installed pack together with progress, picture metadata and a saved flight. Removing a pack keeps earned records but can make its images unavailable until reinstallation. A same-ID replacement can deliberately change future rendering, so retain the prior source files and exported pack if the old edition must remain reproducible. See [library and expansion contracts](library-and-packs.md), [full backups](full-backup.md) and [versioning](versioning.md).
+
+For a picture-only replacement, observe a previously earned procedural Workshop picture before and after installing 1.1.0. Existing collection records resolve the currently installed image; the update must not award another clear, duplicate a score, change a seal or require replaying the map. Reopen the collection, then check removal/reinstallation and complete-backup import/Undo through public controls. Finish each new picture using the existing legal scenario/session fixtures and inspect the real theme ending, Skip, reduced effects and gallery Replay. Check the unchanged Homeward FPV ending too: this validates four existing overlay families, not animation inside the paintings. Record browser decode, visual inspection and identity/byte checks as distinct evidence.

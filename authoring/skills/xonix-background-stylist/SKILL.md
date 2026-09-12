@@ -1,15 +1,19 @@
 ---
 name: xonix-background-stylist
-description: "Inspect supplied images for a Xonix game, preserve source artwork, and create optional derived style or object-skin variants. Use when adapting photographs, paintings, pixel scenes, avatars, or terrain art to the game without changing geometry or behavior."
+description: 'Inspect supplied images for a Xonix game, preserve source artwork, and create optional derived style or object-skin variants. Use when adapting photographs, paintings, pixel scenes, avatars, or terrain art to the game without changing geometry or behavior.'
 ---
 
 # Xonix Background Stylist
 
 Make an existing image usable in the requested game context while preserving the user's source and chosen medium. **Default to keep-source with a separate gameplay overlay.** A photograph need not become pixel art. Style conversion is an optional derived copy when requested, not an automatic import step.
 
-For a source applied to the playable game, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [actual eight-role format and limits](../../../docs/assets-and-configuration.md). An exported `xonix-playground.v1` scenario preserves embedded original bytes; await `prepareScenario` before adopting it, compare background contain/cover, and inspect inherited player rig anchors. The media-library and draft-pack records below remain separate provenance/design formats, not automatic runtime imports.
+For a source applied to the playable game, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [actual eight-role format and limits](../../../docs/assets-and-configuration.md). An exported versioned playground scenario preserves embedded original bytes; await `prepareScenario` before adopting it, compare background contain/cover, and inspect inherited player rig anchors. The media-library and draft-pack records below remain separate provenance/design formats, not automatic runtime imports.
 
 For a playable illustrated chapter or collectible gallery picture, read [authored-art.md](../../../docs/authored-art.md). Homeward Skies is a concrete source-PNG → map-specific embedded image workflow, with original files and full effective prompts in `authoring/library/homeward-skies/`. Its builder is chapter-specific; create another source directory/identity for an unrelated pack. The read-only builder check verifies reproducible bytes and metadata; `--write` rebuilds its designated generated pack after an intentional reviewed change. Neither step proves browser decoding, composition quality or enjoyment.
+
+[Equipment Workshop 1.1.0](../../library/equipment-workshop/README.md) is the second concrete pipeline: three original heritage/retro/fictional-spend pictures replace procedural backgrounds on existing maps. Its three 1448×1086 source PNGs total 8,330,027 bytes; Workshop plus Homeward gives the working edition six authored pictures. Source inspection and byte/header checks are complete, with Workshop's browser/frozen-release review still pending. Preserve its old v1.0.0 pack, `pack-source.json`, selected PNGs and full `prompts.json`; do not overwrite Homeward or treat this image addition as new gameplay.
+
+Run `node scripts/build-workshop-pack.mjs` for a read-only consistency check and use its explicit `--write` only after reviewing an intentional source/art change. The fixed three background sidecars embed exact original bytes and `contain` framing. Check distinct hashes, actual 4:3 dimensions and existing image/pack limits; source editing or budget correction requires a separately recorded image-tool output, never programmatic pixel modification. Keep Workshop's campaign/map/recipe/definition identities unchanged and preserve old proof files. In the actual Library, observe old collected pictures before/after replacement without granting new rewards, then inspect normal/reduced finales and gallery Replay. These animate independent overlays, not objects inside the static illustration.
 
 ## Establish the reference and mode
 

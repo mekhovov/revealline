@@ -148,7 +148,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.16.0',
+  let buildVersion = '0.17.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -1214,6 +1214,7 @@ try {
   }
   const libraryPanel = attachLibraryPanel({
     focusMission,
+    getReducedEffects: () => $('reduced-effects').checked,
     profileTransfer: isRelease
       ? {
           storage: localStorage,

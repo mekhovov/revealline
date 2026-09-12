@@ -16,6 +16,7 @@ import {
 import { PACK_LIMITS, preparePack, resolvePackCampaign } from '../game/packs.mjs';
 import { createMasteryCatalog } from '../game/mastery-catalog.mjs';
 import { campaignKey } from '../game/library.mjs';
+import { loadWorkshopArtInputs } from './create-workshop-art-fixtures.mjs';
 
 const packPath = path.join(PROJECT_ROOT, 'game/content/packs/equipment-workshop.json');
 const originalBytes = await fs.readFile(packPath);
@@ -85,8 +86,9 @@ test('inspect-goals accepts only explicit bounded command options', async () => 
 
 test('inspection matches prepared filtered campaign and authored catalog identities without images or awards', async () => {
   const report = await inspectGoals({ packPath });
-  const pack = (await preparePack(candidate, { decodeImage: async () => assert.fail('No images') }))
-    .pack;
+  // Known-source/header adapter only; inspect-goals itself performs no image decode.
+  const { decodeImage } = await loadWorkshopArtInputs(PROJECT_ROOT);
+  const pack = (await preparePack(candidate, { decodeImage })).pack;
   const resolved = resolvePackCampaign(pack, 'equipment-workshop');
   const catalog = createMasteryCatalog([
     {

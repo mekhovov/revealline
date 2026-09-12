@@ -11,23 +11,18 @@ import {
   exportReplay,
   verifyReplayAsync,
 } from '../replay.mjs';
-import { preparePack, resolvePackCampaign, scenarioFromPack } from '../packs.mjs';
+import { resolvePackCampaign, scenarioFromPack } from '../packs.mjs';
+import { loadWorkshopArtInputs } from '../../scripts/create-workshop-art-fixtures.mjs';
 import { campaignKey } from '../library.mjs';
 import { masteryDefinitionIdentity } from '../mastery.mjs';
 import { verifyMasteryRun, verifiedMasteryRecord } from '../mastery-verification.mjs';
 
 const read = (name) => readFileSync(new URL(name, import.meta.url));
-const candidate = JSON.parse(read('../content/packs/equipment-workshop.json'));
 const homeward = JSON.parse(read('../content/packs/homeward-skies.json'));
 const proofBytes = read('../replays/homeward-routes.json');
 const proof = JSON.parse(proofBytes);
-const pack = (
-  await preparePack(candidate, {
-    decodeImage: async () => {
-      throw new Error('Procedural workshop must not decode embedded images');
-    },
-  })
-).pack;
+// Known-source/header adapter only; browser tests establish actual image decoding.
+const { current: pack } = await loadWorkshopArtInputs();
 const { campaign } = resolvePackCampaign(pack, 'equipment-workshop');
 const key = campaignKey(campaign);
 const levelFor = (oldId) => campaign.levels[Number(oldId.slice(-2)) - 1];
@@ -54,16 +49,19 @@ function recording(level, options, segments) {
   return exportReplay(recorder, run);
 }
 
-test('workshop retains proven geometry and equipment with three independent procedural themes', () => {
+test('workshop retains proven geometry and equipment with three independent themes and original illustrated rewards', () => {
   assert.equal(
     createHash('sha256').update(proofBytes).digest('hex'),
     '63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a',
   );
   assert.equal(pack.format, 'xonix-pack.v2');
-  assert.ok(read('../content/packs/equipment-workshop.json').length < 24 * 1024);
-  assert.equal(JSON.stringify(pack).includes('data:image'), false);
+  assert.ok(read('../content/packs/equipment-workshop.json').length < 24 * 1024 * 1024);
+  assert.equal(JSON.stringify(pack).includes('data:image/png'), true);
   assert.deepEqual(pack.visualOverrides, {});
-  assert.deepEqual(pack.levelVisuals, []);
+  assert.deepEqual(
+    pack.levelVisuals.map((entry) => entry.levelId),
+    ['workshop-01', 'workshop-02', 'workshop-03'],
+  );
   assert.deepEqual(pack.classRecipes, homeward.classRecipes);
   assert.deepEqual(
     campaign.levels.map((level) => level.themeId),
