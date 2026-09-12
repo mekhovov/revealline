@@ -389,18 +389,27 @@ h1 {
   background: #6e9691;
 }
 .play-controls {
+  --flight-target-size: 44px;
+  --flight-target-gap: 4px;
   display: flex;
-  align-items: center;
-  gap: 15px;
+  align-items: start;
+  gap: 8px;
   justify-content: space-between;
   border-top: 1px solid var(--line);
   padding-top: 12px;
 }
-.direction-controls {
+.play-controls .direction-controls {
   display: grid;
-  grid-template-columns: repeat(3, 34px);
-  grid-template-rows: repeat(3, 28px);
-  gap: 3px;
+  flex: none;
+  grid-template-columns: repeat(3, var(--flight-target-size));
+  grid-template-rows: repeat(3, var(--flight-target-size));
+  gap: var(--flight-target-gap);
+}
+.play-controls .direction-controls button {
+  width: var(--flight-target-size);
+  height: var(--flight-target-size);
+  min-width: var(--flight-target-size);
+  min-height: var(--flight-target-size);
 }
 .direction-controls button {
   border: 1px solid #bbc8be;
@@ -432,6 +441,22 @@ h1 {
   background: var(--ink);
   color: var(--paper);
 }
+.play-controls .ability-buttons {
+  flex: 1;
+  min-width: 0;
+}
+.play-controls .ability-buttons .button {
+  min-width: var(--flight-target-size);
+  min-height: var(--flight-target-size);
+  max-width: 100%;
+  gap: 8px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.play-controls .ability-buttons kbd {
+  flex: none;
+  max-width: 100%;
+}
 .ability-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -456,6 +481,18 @@ kbd {
 .utility-buttons {
   display: flex;
   gap: 5px;
+}
+.play-controls .utility-buttons {
+  flex: none;
+  flex-direction: column;
+  gap: var(--flight-target-gap);
+}
+.play-controls .icon-button {
+  flex: none;
+  width: var(--flight-target-size);
+  height: var(--flight-target-size);
+  min-width: var(--flight-target-size);
+  min-height: var(--flight-target-size);
 }
 .icon-button {
   width: 34px;
@@ -641,6 +678,9 @@ kbd {
   margin: 0 0 15px;
   min-height: 36px;
   color: #587579;
+}
+#hangar-state {
+  overflow-wrap: anywhere;
 }
 .micro-note {
   font-size: 9px;
@@ -919,17 +959,11 @@ dialog .eyebrow {
     text-align: right;
     max-width: 65%;
   }
-  .direction-controls {
-    grid-template-columns: repeat(3, 34px);
-    grid-template-rows: repeat(3, 30px);
-  }
   .utility-buttons {
     flex-direction: column;
     gap: 3px;
   }
   .icon-button {
-    height: 29px;
-    width: 30px;
     font-size: 15px;
   }
   .ability-buttons {
@@ -1044,10 +1078,6 @@ dialog .eyebrow {
   .telemetry strong {
     font-size: 16px;
   }
-  .direction-controls {
-    grid-template-columns: repeat(3, 29px);
-    grid-template-rows: repeat(3, 29px);
-  }
   .ability-buttons .button {
     min-width: 89px;
     padding: 7px 9px;
@@ -1150,21 +1180,6 @@ dialog .eyebrow {
     padding: 8px 13px;
     font-size: 11px;
   }
-  .play-controls {
-    position: fixed;
-    left: 8px;
-    bottom: 9px;
-    flex-direction: column;
-    border: 0;
-    width: 93px;
-    gap: 5px;
-    padding: 0;
-  }
-  .direction-controls {
-    grid-template-columns: repeat(3, 26px);
-    grid-template-rows: repeat(3, 24px);
-    gap: 2px;
-  }
   .ability-buttons {
     gap: 3px;
     justify-content: center;
@@ -1181,10 +1196,6 @@ dialog .eyebrow {
   }
   .utility-buttons {
     flex-direction: row;
-  }
-  .icon-button {
-    width: 27px;
-    height: 26px;
   }
   .arena-panel {
     margin-right: 0;
@@ -1230,30 +1241,27 @@ dialog .eyebrow {
 
 /* Compact layouts keep gameplay actions at usable touch sizes. */
 @media (max-width: 680px) {
+  .arena-panel {
+    max-width: min(
+      100%,
+      max(280px, calc((100svh - var(--safe-top) - var(--safe-bottom) - 430px) * 1.333333))
+    );
+  }
   .play-controls {
     display: grid;
     grid-template-columns: 144px minmax(0, 1fr);
     align-items: start;
     gap: 8px;
   }
-  .direction-controls {
-    grid-template-columns: repeat(3, 44px);
-    grid-template-rows: repeat(3, 44px);
-    gap: 3px;
-  }
   .ability-buttons .button {
     min-width: 0;
     min-height: 44px;
     padding: 8px 5px;
   }
-  .utility-buttons {
+  .play-controls .utility-buttons {
     grid-column: 1 / -1;
     flex-direction: row;
     justify-content: flex-end;
-  }
-  .icon-button {
-    width: 44px;
-    height: 44px;
   }
   .game-overlay {
     overflow: auto;
@@ -1261,26 +1269,8 @@ dialog .eyebrow {
   }
 }
 @media (max-height: 500px) and (min-width: 681px) {
-  .play-controls {
-    width: 144px;
-    gap: 4px;
-    bottom: 8px;
-  }
-  .direction-controls {
-    grid-template-columns: repeat(3, 44px);
-    grid-template-rows: repeat(3, 44px);
-    gap: 2px;
-  }
-  .ability-buttons .button {
-    min-width: 138px;
-    min-height: 44px;
-  }
   .ability-buttons > span {
     line-height: 8px;
-  }
-  .icon-button {
-    width: 44px;
-    height: 44px;
   }
   .game-overlay {
     overflow: auto;
@@ -1313,30 +1303,26 @@ dialog .eyebrow {
     height: 55px;
   }
   .arena-panel {
-    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 330px) * 1.333333));
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 360px) * 1.333333));
   }
 }
 @media (min-width: 681px) and (max-width: 1100px) and (min-height: 501px) {
   .arena-panel {
     max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 380px) * 1.333333));
   }
-  .direction-controls {
-    grid-template-columns: repeat(3, 44px);
-    grid-template-rows: repeat(3, 44px);
-  }
   .ability-buttons .button {
     min-height: 44px;
   }
-  .icon-button {
-    width: 44px;
-    height: 44px;
-  }
 }
 
-/* Reserve a little more control space in tall tablet-sized desktop windows. */
-@media (min-width: 681px) and (max-width: 1100px) and (min-height: 901px) {
+/* Tall windows still reserve space for the full direction and utility columns. */
+@media (min-width: 681px) and (min-height: 901px) {
   .arena-panel {
-    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 400px) * 1.333333));
+    max-width: min(
+      100%,
+      850px,
+      calc((100svh - var(--safe-top) - var(--safe-bottom) - 420px) * 1.333333)
+    );
   }
 }
 
@@ -1733,7 +1719,7 @@ dialog input[type='search'] {
 }
 @media (min-width: 681px) and (min-height: 501px) and (max-height: 900px) {
   .arena-panel:has(> .encounter-status:not([hidden])) {
-    --encounter-reserve: 330px;
+    --encounter-reserve: 360px;
   }
 }
 @media (min-width: 681px) and (max-width: 1100px) and (min-height: 501px) {
@@ -1741,9 +1727,9 @@ dialog input[type='search'] {
     --encounter-reserve: 380px;
   }
 }
-@media (min-width: 681px) and (max-width: 1100px) and (min-height: 901px) {
+@media (min-width: 681px) and (min-height: 901px) {
   .arena-panel:has(> .encounter-status:not([hidden])) {
-    --encounter-reserve: 400px;
+    --encounter-reserve: 420px;
   }
 }
 @media (min-width: 681px) and (max-height: 500px) {
@@ -1753,5 +1739,106 @@ dialog input[type='search'] {
   }
   .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
     margin-right: 0;
+  }
+}
+
+/* A short landscape rail shares document flow with the board. Longer labels can
+   grow the page without pushing fixed controls above the viewport or over play. */
+@media (min-width: 681px) and (max-height: 500px) {
+  .arena-panel,
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    display: grid;
+    grid-template-columns: 144px minmax(0, 1fr);
+    grid-template-areas:
+      'controls telemetry'
+      'controls arena'
+      'controls status'
+      'controls boost'
+      'controls encounter'
+      'controls reward'
+      'controls message'
+      'controls minor'
+      'controls warning'
+      'controls mastery'
+      'controls announcement'
+      'controls help'
+      'controls asset';
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: start;
+    width: 100%;
+    max-width: 100%;
+  }
+  .arena-panel > .telemetry {
+    grid-area: telemetry;
+  }
+  .arena-panel > .arena-shell,
+  .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
+    grid-area: arena;
+    width: 100%;
+    min-width: min(100%, 200px);
+    max-width: min(
+      100%,
+      max(200px, calc((100svh - var(--safe-top) - var(--safe-bottom) - 125px) * 1.333333))
+    );
+    margin-inline: auto 0;
+  }
+  .arena-panel > .flight-status {
+    grid-area: status;
+  }
+  #controller-boost-cue {
+    grid-area: boost;
+  }
+  #encounter-status {
+    grid-area: encounter;
+  }
+  #appearance-unlock {
+    grid-area: reward;
+  }
+  .play-controls {
+    grid-area: controls;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--flight-target-size);
+    grid-template-areas: 'directions directions' 'actions utilities';
+    align-items: stretch;
+    border: 0;
+    padding: 0;
+    gap: 4px;
+  }
+  .play-controls .direction-controls {
+    grid-area: directions;
+    justify-self: center;
+  }
+  .play-controls .ability-buttons {
+    grid-area: actions;
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .play-controls .utility-buttons {
+    grid-area: utilities;
+    flex-direction: column;
+    justify-content: start;
+  }
+  #run-message {
+    grid-area: message;
+  }
+  .arena-panel > .minor-controls {
+    grid-area: minor;
+  }
+  #save-warning {
+    grid-area: warning;
+  }
+  #mastery-status {
+    grid-area: mastery;
+  }
+  #mastery-announcement {
+    grid-area: announcement;
+  }
+  #controller-ui-hint {
+    grid-area: help;
+  }
+  #asset-warning {
+    grid-area: asset;
   }
 }

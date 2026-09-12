@@ -4,6 +4,8 @@ Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1
 
 The **v0.14.0 frozen release** adds a lasting loss explanation and one retry tip, with a readable reset note in **Read details**. Reading or leaving that region keeps the attempt ended until a separate **Try again ↻**. See [Retry feedback](../docs/retry-feedback.md).
 
+The **v0.15.0 working source** gives solo flight buttons a consistent 44px minimum, keeps short-landscape controls beside the board in normal page flow, and wraps long authored labels. Playground's manual **Control geometry** capture helps authors compare target rectangles, spacing and actual viewport conditions. See [Flight controls](../docs/flight-controls.md). The preserved v0.14 evidence below describes that earlier frozen release.
+
 ## The loop
 
 Leave claimed ground to start a vulnerable cut; return to claimed ground to close it. The cut and connected regions without a field enemy become revealed. Enemies on both sides can leave a trail-only capture. Permanent walls block movement and are excluded from the coverage denominator. A bright centerline and tile overlay identify the vulnerable cut.

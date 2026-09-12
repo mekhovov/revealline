@@ -17,6 +17,7 @@ import {
 } from './model.mjs';
 import { generateLevel } from '../generator.mjs';
 import { resolvePreviewSize } from './viewport.mjs';
+import { captureControlGeometry } from './control-geometry.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
@@ -318,6 +319,7 @@ function preview() {
   }
 }
 function fit() {
+  geometryStale('Preview size or display scale changed. Capture again for current rectangles.');
   const available = $('preview-stage').parentElement.clientWidth,
     scale = Math.min(1, available / width),
     frame = $('preview-frame');
@@ -383,6 +385,55 @@ function measure() {
       ? `Launch actions: ${launch.map(({ label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${b.left >= r.left && b.top >= r.top && b.right <= r.right + 1 && b.bottom <= r.bottom + 1 && b.left >= 0 && b.top >= 0 && b.right <= view.innerWidth + 1 && b.bottom <= view.innerHeight + 1 ? 'visible inside arena' : 'scroll needed'}`).join('; ')}`
       : 'No launch overlay is active.';
   } catch {}
+}
+let geometryCaptured = false;
+let geometryDocument = null;
+let geometryView = null;
+function geometryStale(
+  message = 'Preview activity may have changed this snapshot. Capture again.',
+) {
+  if (geometryCaptured) $('geometry-status').textContent = `Previous capture retained. ${message}`;
+}
+function geometryActivity() {
+  geometryStale();
+}
+function observeGeometryPreview() {
+  geometryDocument?.removeEventListener('click', geometryActivity);
+  geometryDocument?.removeEventListener('keydown', geometryActivity);
+  geometryView?.removeEventListener('scroll', geometryActivity);
+  geometryView?.removeEventListener('resize', geometryActivity);
+  geometryDocument = null;
+  geometryView = null;
+  geometryStale('Preview document reloaded. Capture again.');
+  try {
+    geometryDocument = $('preview-frame').contentDocument;
+    geometryView = $('preview-frame').contentWindow;
+    geometryDocument?.addEventListener('click', geometryActivity);
+    geometryDocument?.addEventListener('keydown', geometryActivity);
+    geometryView?.addEventListener('scroll', geometryActivity, { passive: true });
+    geometryView?.addEventListener('resize', geometryActivity);
+  } catch {
+    geometryStale('This preview cannot be measured from the Playground.');
+  }
+}
+function captureGeometry() {
+  try {
+    const frame = $('preview-frame');
+    const report = captureControlGeometry({
+      document: frame.contentDocument,
+      view: frame.contentWindow,
+      requested: { width, height },
+      displayScale: Math.min(1, $('preview-stage').parentElement.clientWidth / width),
+    });
+    $('geometry-readout').textContent = JSON.stringify(report, null, 2);
+    geometryCaptured = true;
+    $('geometry-status').textContent =
+      `Captured ${report.capturedAt}. Snapshot only; configuration and run are not edited.`;
+  } catch (error) {
+    geometryCaptured = false;
+    $('geometry-readout').textContent = '';
+    $('geometry-status').textContent = `Capture unavailable: ${error.message}`;
+  }
 }
 try {
   [campaign, themes] = await Promise.all([
@@ -915,8 +966,10 @@ try {
     }
   };
   window.addEventListener('resize', fit);
+  $('capture-geometry').addEventListener('click', () => requestAnimationFrame(captureGeometry));
   $('preview-mode').onchange = preview;
   $('preview-frame').addEventListener('load', () => {
+    observeGeometryPreview();
     measure();
     $('preview-frame').contentDocument?.addEventListener('click', () =>
       requestAnimationFrame(measure),

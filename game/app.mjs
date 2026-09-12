@@ -137,7 +137,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.14.0',
+  let buildVersion = '0.15.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
