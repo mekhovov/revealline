@@ -10,3 +10,4 @@ releases/
 .cache/
 coverage/
 *.log
+generated/

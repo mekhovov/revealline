@@ -1,16 +1,17 @@
 {
   "name": "revealline",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Configurable territory-capture game and authoring playground",
   "engines": {
-    "node": ">=20.19"
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "scripts": {
     "dev": "node scripts/game-cli.mjs serve --port 8768",
     "test": "node scripts/game-cli.mjs test",
     "validate": "node scripts/game-cli.mjs validate",
+    "lint": "eslint \"game/**/*.mjs\" \"scripts/**/*.mjs\" eslint.config.mjs --max-warnings 0",
     "build": "node scripts/game-cli.mjs build",
     "release": "node scripts/game-cli.mjs release-snapshot",
     "format": "prettier --write \"game/**/*.{mjs,css,html,json}\" \"scripts/*.mjs\"",
@@ -20,6 +21,8 @@
     "phaser": "4.2.1"
   },
   "devDependencies": {
+    "eslint": "10.10.0",
+    "globals": "17.12.0",
     "prettier": "3.6.2"
   }
 }
