@@ -71,6 +71,7 @@
                     an enemy.
                   </p>
                   <p id="retry-consequence" hidden></p>
+                  <p id="overlay-difficulty" class="micro-note" hidden></p>
                   <div id="result-medals" class="result-medals" hidden></div>
                   <p id="mastery-overlay" class="mastery-note" hidden></p>
                 </div>
@@ -332,6 +333,18 @@
           <label class="field" data-course-hide
             >Campaign<select id="campaign-select"></select
           ></label>
+          <label id="difficulty-field" class="field" data-course-hide>
+            Campaign difficulty
+            <select id="difficulty-select" aria-describedby="difficulty-note">
+              <option value="standard">Standard</option>
+              <option value="gentle">Gentle</option>
+            </select>
+          </label>
+          <p id="difficulty-note" class="micro-note" role="status" data-course-hide></p>
+          <details id="difficulty-details" class="difficulty-details" data-course-hide hidden>
+            <summary>Compare this mission’s rules</summary>
+            <ul id="difficulty-rule-details"></ul>
+          </details>
           <div class="loadout-grid">
             <label class="field" data-course-hide
               >Starting class<select id="class-select"></select></label
@@ -432,6 +445,17 @@
         hints and hidden objectives; supplies refill charge-based classes. A shield absorbs one
         contact by safely cancelling the line.
       </p>
+      <p>
+        <strong>Campaign difficulty:</strong> Standard and Gentle reveal the same pictures and share
+        mission and appearance unlocks. Scores and medals stay separate; equipment seals require
+        Standard. A change during a flight applies to the next fresh attempt. Resume and Load
+        preserve the current flight; Retry starts the selected difficulty from the beginning.
+      </p>
+      <p>
+        <strong>Long flights:</strong> Replay recording and recoverable saves stop after 30 minutes
+        of play. A flight can continue, but a completion after two hours cannot be kept in the
+        collection. Pause when taking a break, and export your library to keep a backup.
+      </p>
       <button class="button primary" data-close="help-dialog">Ready to fly →</button>
       <button id="first-flight-help-enter" class="button secondary" type="button" hidden>
         Learn by playing
@@ -483,6 +507,10 @@
         hidden
       ></ul>
       <h2 id="gallery-view-title">Your picture</h2>
+      <label id="gallery-difficulty-field" class="field" hidden>
+        Saved difficulty
+        <select id="gallery-difficulty" aria-label="Saved difficulty" disabled></select>
+      </label>
       <canvas
         id="gallery-canvas"
         width="768"
@@ -544,9 +572,16 @@
         </select></label
       >
       <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
+      <div class="settings-assists">
+        <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
+        <label><input id="settings-tap-steering" type="checkbox" /> Tap steering</label>
+      </div>
       <p class="micro-note">
-        Original synthesized music. No streaming, samples, or copyrighted songs. Reduced effects and
-        Tap steering are beside the arena.
+        Reduced effects softens movement and celebration effects. Tap steering keeps moving after a
+        direction tap; use Stop to halt. These settings also update the controls beside the arena.
+      </p>
+      <p class="micro-note">
+        Original synthesized music. No streaming, samples, or copyrighted songs.
       </p>
       <details id="keyboard-settings">
         <summary>Keyboard controls</summary>
