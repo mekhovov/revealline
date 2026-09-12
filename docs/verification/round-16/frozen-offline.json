@@ -1,0 +1,11 @@
+{
+  "status": "ready",
+  "version": "v0.6.0",
+  "buildId": "d83c1461133c5980cfa0ce4b9863edb8252a0f80c67c0acd0954976fc9e6ccd9",
+  "count": 107,
+  "verified": 107,
+  "bytes": 19999500,
+  "missing": [],
+  "corrupt": [],
+  "message": "Offline files verified. This version can open without a connection while the browser retains its storage."
+}
