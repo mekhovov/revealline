@@ -2,6 +2,16 @@
 (() => {
   'use strict';
   const CONFIG = __XONIX_OFFLINE_CONFIG__;
+  const MAX_BYTES = 64 * 1024 * 1024;
+  if (!Array.isArray(CONFIG.files) || CONFIG.files.length > 2000)
+    throw new Error('Offline inventory exceeds its file budget');
+  let inventoryBytes = 0;
+  for (const file of CONFIG.files) {
+    if (!Number.isSafeInteger(file.bytes) || file.bytes < 0 || file.bytes > MAX_BYTES)
+      throw new Error('Offline inventory has an invalid byte budget');
+    inventoryBytes += file.bytes;
+    if (inventoryBytes > MAX_BYTES) throw new Error('Offline inventory exceeds its byte budget');
+  }
   const scope = new URL(self.registration.scope);
   const prefix = `revealline-offline:${encodeURIComponent(scope.href)}:`;
   const cacheName = `${prefix}${CONFIG.buildId}`;
@@ -15,6 +25,59 @@
   const sameScope = (url) => url.origin === scope.origin && url.pathname.startsWith(scope.pathname);
   const hex = (bytes) =>
     Array.from(new Uint8Array(bytes), (n) => n.toString(16).padStart(2, '0')).join('');
+  async function downloadVerified(url, file) {
+    if (!sameScope(new URL(url))) throw new Error('Precache escaped its distribution scope');
+    const response = await fetch(new Request(url, { cache: 'reload', credentials: 'same-origin' }));
+    let reader;
+    try {
+      if (
+        response.redirected ||
+        !response.ok ||
+        response.type === 'opaque' ||
+        response.status === 206 ||
+        response.headers
+          .get('Vary')
+          ?.split(',')
+          .some((value) => value.trim() === '*')
+      )
+        throw new Error(`Offline download failed integrity: ${file.path}`);
+      const bytes = new Uint8Array(file.bytes);
+      let length = 0;
+      if (response.body) {
+        reader = response.body.getReader();
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (!(value instanceof Uint8Array) || value.byteLength > bytes.byteLength - length)
+            throw new Error(`Offline download exceeds its byte budget: ${file.path}`);
+          bytes.set(value, length);
+          length += value.byteLength;
+        }
+      }
+      if (
+        length !== file.bytes ||
+        hex(await crypto.subtle.digest('SHA-256', bytes)) !== file.sha256
+      )
+        throw new Error(`Offline download failed integrity: ${file.path}`);
+      const headers = new Headers(response.headers);
+      // Fetch delivers decoded bytes; network encoding/length may describe the wire body.
+      headers.delete('Content-Encoding');
+      headers.set('Content-Length', String(bytes.byteLength));
+      return { bytes, headers, status: response.status, statusText: response.statusText };
+    } catch (error) {
+      try {
+        if (reader) await reader.cancel();
+        else await response.body?.cancel();
+      } catch {}
+      throw error;
+    } finally {
+      reader?.releaseLock();
+    }
+  }
+  function ownedResponse({ bytes, headers, status, statusText }) {
+    const body = bytes.byteLength === 0 && [204, 205].includes(status) ? null : bytes;
+    return new Response(body, { headers, status, statusText });
+  }
   async function verified(response, file) {
     if (!response || !response.ok || response.type === 'opaque') return false;
     const bytes = await response.clone().arrayBuffer();
@@ -64,21 +127,17 @@
   }
   async function install() {
     if ((await inspect()).status === 'ready') return;
-    // Verify all downloaded bytes before creating a new version's cache. The
-    // installed worker continues using its own content-addressed cache meanwhile.
+    // Own and verify every body before creating a new version's cache. Avoid
+    // retaining unread network branches while another clone is consumed.
     const downloaded = [];
-    for (const [url, file] of files) {
-      if (!sameScope(new URL(url))) throw new Error('Precache escaped its distribution scope');
-      const response = await fetch(
-        new Request(url, { cache: 'reload', credentials: 'same-origin' }),
-      );
-      if (response.redirected || !(await verified(response, file)))
-        throw new Error(`Offline download failed integrity: ${file.path}`);
-      downloaded.push([url, response]);
-    }
+    for (const [url, file] of files)
+      downloaded.push({ url, ...(await downloadVerified(url, file)) });
     const cache = await caches.open(cacheName);
     try {
-      for (const [url, response] of downloaded) await cache.put(url, response);
+      for (const item of downloaded) {
+        await cache.put(item.url, ownedResponse(item));
+        item.bytes = null;
+      }
       await cache.put(
         readyURL,
         new Response(CONFIG.buildId, { headers: { 'Content-Type': 'text/plain' } }),
@@ -86,6 +145,8 @@
     } catch (error) {
       await caches.delete(cacheName);
       throw error;
+    } finally {
+      downloaded.length = 0;
     }
   }
   self.addEventListener('install', (event) => event.waitUntil(install()));
@@ -116,13 +177,9 @@
           hit = await cache.match(url.href);
         if (hit) return hit;
         try {
-          const response = await fetch(
-            new Request(url.href, { cache: 'reload', credentials: 'same-origin' }),
-          );
-          if (response.redirected || !(await verified(response, file)))
-            throw new Error('File changed');
-          await cache.put(url.href, response.clone());
-          return response;
+          const owned = await downloadVerified(url.href, file);
+          await cache.put(url.href, ownedResponse(owned));
+          return ownedResponse(owned);
         } catch {
           return new Response(
             'This offline file is unavailable. Reconnect and prepare this game version again.',
