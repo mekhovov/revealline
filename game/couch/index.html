@@ -12,7 +12,10 @@
     <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
     <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="../">◩ REVEAL / LINE</a>
-      <nav><a href="../">Solo campaign ↗</a><span class="version">COUCH / TWO PLAYERS</span></nav>
+      <nav>
+        <a id="race-solo-return" href="../">Solo campaign ↗</a>
+        <span class="version">COUCH / TWO PLAYERS</span>
+      </nav>
     </header>
     <main data-boot-inert inert aria-busy="true" class="couch-page">
       <div class="edition">
@@ -39,13 +42,25 @@
       <div class="race-actions">
         <button id="race-start" class="button primary">Start round ↗</button
         ><button id="race-focus" class="button secondary">Focus boards</button
-        ><button id="race-pause" class="button secondary">Pause</button
+        ><button id="race-pause" class="button secondary" disabled>Pause</button
         ><button id="race-reset" class="button secondary">New match</button
         ><button id="race-audio" class="button secondary">Enable music ♫</button
+        ><button id="race-menu-release" class="button secondary" type="button" hidden disabled>
+          Release menu controller</button
         ><label><input id="race-tap" type="checkbox" /> Tap controls</label
         ><label><input id="race-reduced" type="checkbox" /> Reduced effects</label
         ><strong id="race-clock">1:30</strong>
       </div>
+      <p
+        id="race-menu-status"
+        class="race-menu-status"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        Fixed couch menu: South selects; East cancels. Release controls, then press a face button or
+        Menu to join. Keyboard and touch also work.
+      </p>
       <p id="race-message" class="race-message" role="status">
         Choose your side. First clear wins. Equal finishes draw. No campaign rewards are changed.
       </p>
