@@ -1,6 +1,6 @@
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
-const currentLabel = `v${currentVersion}`;
+const currentLabel = currentVersion.startsWith('v') ? currentVersion : `v${currentVersion}`;
 const picker = document.querySelector('#version-picker');
 const versionPlay = document.querySelector('#version-play');
 const versionGrid = document.querySelector('#version-grid');
