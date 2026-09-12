@@ -115,6 +115,33 @@ const setup = async (options = {}) => {
   return { context, sound };
 };
 
+test('classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music', async () => {
+  const { context, sound } = await setup({ persistentMusic: true });
+  sound.update(true, { id: 'fpv' }, { status: 'running' });
+  const cues = [];
+  for (const event of [
+    { type: 'powerup.collected', kind: 'extra-life' },
+    { type: 'powerup.collected', kind: 'enemy-freeze' },
+    { type: 'erosion.warning' },
+    { type: 'cells.eroded' },
+  ]) {
+    context.advance(1);
+    const before = context.sources.length;
+    sound.event(event);
+    const notes = context.sources.slice(before).map((source) => source.frequency.value);
+    assert.ok(notes.length > 0);
+    cues.push(notes);
+  }
+  assert.notDeepEqual(cues[0], cues[1]);
+  assert.notDeepEqual(cues[2], cues[3]);
+  sound.pause();
+  const before = context.sources.length;
+  sound.event({ type: 'powerup.collected', kind: 'player-speed' });
+  sound.event({ type: 'rover.warning' });
+  assert.equal(context.sources.length, before);
+  sound.dispose();
+});
+
 test('no context or sound is created before an explicit user audio action', async () => {
   let calls = 0;
   const sound = new Soundscape({

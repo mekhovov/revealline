@@ -1100,6 +1100,7 @@ function packCatalogEntries(pack, tooling) {
       tooling.MASTERY_PACK_VERSION,
       tooling.ENCOUNTER_PACK_VERSION,
       tooling.WIDE_PACK_VERSION,
+      tooling.CLASSIC_PACK_VERSION,
     ].includes(pack.format)
       ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
       : {}),

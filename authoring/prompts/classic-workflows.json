@@ -1,0 +1,103 @@
+{
+  "version": "1.0.0",
+  "scope": "Implemented classic runtime authoring and verification; templates are not executed assets or playtests",
+  "prompts": [
+    {
+      "id": "classic-01-role-demonstration",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "Teach one registered classic enemy role through a playable map",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "authoring/skills/xonix-level-designer/references/classic-runtime.md",
+        "game/core/classic-definition.mjs",
+        "scripts/build-classic-lab.mjs"
+      ],
+      "variables": ["ROLE"],
+      "prompt": "Create an original 72x36 practice demonstration of {{ROLE}}, choosing one registered bouncer, border-patrol, contour-patrol, claimed-rover or eroder behavior. Use level.v4/core.v5 and the exact bounded descriptor; explain its FIELD/SAFE contact domain and whether it seeds capture. Keep the other pressure simple. Give the player a visible warning/counter where the current role supports one. Deliver valid pack.v5 with masteries:[] and scenario.v5 with masteryDefinition:null, then prove a legal Scout route in Immediate and Grid + buffer. Inspect actual role events as well as a final win; a route that avoids the role proves only solvability. Preserve old maps/replays and do not patch run state or add invented behavior fields. Check the current implementation of the approved return-to-secured-ground stop and fresh-direction gesture before claiming that movement contract is verified.",
+      "example_request": "Apply classic-01-role-demonstration with ROLE=claimed-rover; demonstrate its full wake-up warning before a SAFE-ground encounter."
+    },
+    {
+      "id": "classic-02-terrain-pickups",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "Compose material and contact pickups with a clear learning beat",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "authoring/skills/xonix-level-designer/references/classic-runtime.md",
+        "game/core/classic-state.mjs",
+        "game/test/classic-core.test.mjs"
+      ],
+      "variables": ["LEARNING_BEAT"],
+      "prompt": "Build {{LEARNING_BEAT}} with disjoint interior slow/lethal rectangles, permanent walls and visible contact-only pickups in the implemented classic schema. Use fixed current effects: life +1 up to9; player speed x1.25 for600 ticks; enemy slow x0.5 for720; enemy freeze for360. Timed effects start next tick, refresh rather than stack, and use world expiry while freeze holds actor clocks. Keep required objectives and pickups off lethal material. Show that enclosing a pickup does not collect it and claiming material makes it inactive. Prove both turn modes and the actual contact/expiry events without editing simulation state; retain limits and original replay files. Check the current implementation of the approved return-to-secured-ground stop and fresh-direction gesture before claiming that movement contract is verified.",
+      "example_request": "Apply classic-02-terrain-pickups with LEARNING_BEAT=capture a lethal strip from outside, then collect a speed pickup on the newly safe route."
+    },
+    {
+      "id": "classic-03-theme-variation",
+      "family": "cross-family",
+      "asset_type": "background",
+      "mode": "text_generate",
+      "intent": "Reskin classic cues while preserving simulation identity",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "authoring/skills/xonix-level-designer/references/classic-runtime.md",
+        "game/content.mjs",
+        "game/ui/classic-view.mjs"
+      ],
+      "variables": ["THEME_BRIEF"],
+      "prompt": "Create {{THEME_BRIEF}} for an existing classic map using original artwork and only current registered visual override roles. Read the active schema: classic-only keys are contour, rover, eroder, slowTerrain, lethalTerrain, lifePickup, speedPickup, slowPickup and freezePickup; earlier formats reject them. Preserve complete level/class-recipe bytes, black hidden-art masking, contact radii, warning timings and capture identity. Keep contour/rover/eroder silhouettes and slow/lethal patterns distinguishable in normal and reduced-effects views. Retain originals and source declarations; inspect real decoded pixels in a 2:1 arena. Re-run the same input proof and compare checkpoints. Do not treat a cosmetic variation, screenshot or generated prompt as new gameplay, completed media or a hardware playtest.",
+      "example_request": "Apply classic-03-theme-variation with THEME_BRIEF=a botanical atlas treatment with readable original insect-like role art and unchanged collision rules."
+    },
+    {
+      "id": "classic-04-reference-study",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "Turn inspected reference motifs into an explicitly original routing study",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/classic-mechanics-design.md",
+        "authoring/reference-studies/",
+        "scripts/build-classic-lab.mjs"
+      ],
+      "variables": ["REFERENCE_STUDY"],
+      "prompt": "Inspect {{REFERENCE_STUDY}} and the exact saved source frames it cites. Separate observed wall/material motifs from unknown grid, velocities, fill policy and timings. Produce a new classic 72x36 comparison variant with explicit original coordinates and stationary controls where useful; retain the original study JSON, its unknowns and playthroughVerified:false. Do not copy source art, music or claim an exact reconstruction. Validate the generated recipe and prove ordinary legal routes in both policies, storing that evidence separately as our variant's solvability. Compare fresh trail versus unseeded captured region and use first-claim scoring when studying erosion/reclaim.",
+      "example_request": "Apply classic-04-reference-study with REFERENCE_STUDY=authoring/reference-studies/bars-hollow-chambers.json; isolate one wall/capture decision before mixing enemy roles."
+    },
+    {
+      "id": "classic-05-replay-demo-verification",
+      "family": "cross-family",
+      "asset_type": "verification",
+      "mode": "text_generate",
+      "intent": "Verify exact classic input authority and separately inspect the demonstrated mechanic",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "scripts/verify-classic-lab.mjs",
+        "game/replays/classic-lab-routes.json",
+        "game/core/versions.mjs",
+        "game/sessions.mjs"
+      ],
+      "variables": ["TARGET_PACK"],
+      "prompt": "Verify {{TARGET_PACK}} from its actual current bytes. The existing Classic Lab proof covers pre-return-stop movement and remains immutable. Use its dedicated verifier only for that baseline; for revised stopping/gesture behavior or another pack, create a separate bounded proof bound to full pack/campaign/map/roster identity. Record legal inputs, both turn policies, replay.v6 summary/checkpoint, terminal status and livesLost; hearts must not conceal failures. Reject missing/duplicate routes, identity edits, forged summaries and unsupported commands. Verify saved prefixes around a pickup or role transition through public session APIs, and inspect actual mechanic events and rendered cues separately from route completion. Never fabricate wins, rewrite historical goldens, or claim browser/device/human evidence from a headless replay.",
+      "example_request": "Apply classic-05-replay-demo-verification with TARGET_PACK=game/content/packs/classic-lab.json; report solvability and whether each route actually exercises its named lesson."
+    },
+    {
+      "id": "classic-06-bounded-tuning",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "Tune supported classic parameters without silently redefining a primitive",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "authoring/skills/xonix-level-designer/references/classic-runtime.md",
+        "game/core/classic-definition.mjs",
+        "game/core/classic-topology.mjs"
+      ],
+      "variables": ["TUNING_GOAL"],
+      "prompt": "Address {{TUNING_GOAL}} through supported geometry, actor placement/velocity, pickup placement and ordinary rule bounds. Preserve the fixed pickup strengths, rover/erosion timings, protected support routes, fixed coverage denominator and first-claim scoring. Create a distinct reviewed content edition when simulation data changes; retain every old save/replay context. Compare matched legal routes in both turn modes, meaningful failure/retry cases and the same visual cues. If the requested change requires a new actor algorithm, stack behavior or effect duration, stop that dependent implementation at a precise engine/version proposal rather than inserting unsupported JSON. Do not broaden this tuning pass into new Tactical primitives or a wholesale engine rewrite. Check the current implementation of the approved return-to-secured-ground stop and fresh-direction gesture before claiming that movement contract is verified.",
+      "example_request": "Apply classic-06-bounded-tuning with TUNING_GOAL=make an eroder's first approach easier to read by changing spawn distance while retaining its fixed warning and cooldown."
+    }
+  ]
+}
