@@ -3,21 +3,7 @@ const currentVersion = root.dataset.currentVersion;
 const currentLabel = currentVersion.startsWith('v') ? currentVersion : `v${currentVersion}`;
 const picker = document.querySelector('#version-picker');
 const versionPlay = document.querySelector('#version-play');
-const versionGrid = document.querySelector('#version-grid');
 const status = document.querySelector('#version-status');
-
-const escapeHTML = (value) =>
-  String(value).replace(
-    /[&<>"']/g,
-    (character) =>
-      ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-      })[character],
-  );
 
 const historicalPlayPath = (record) => `./releases/${record.play}`;
 
@@ -26,14 +12,6 @@ function addOption(label, href) {
   option.value = href;
   option.textContent = label;
   picker.append(option);
-}
-
-function versionCard(record) {
-  const card = document.createElement('article');
-  card.className = 'version-card';
-  const shortRevision = record.sourceRevision ? record.sourceRevision.slice(0, 7) : 'archived';
-  card.innerHTML = `<div class="card-topline"><span>ARCHIVED FLIGHT</span><span>${escapeHTML(record.version)}</span></div><h3>${escapeHTML(record.version)} release</h3><p>Play the preserved build from its own version channel. Progress stays separate from newer flights.</p><a href="${escapeHTML(historicalPlayPath(record))}">Launch ${escapeHTML(record.version)} <span aria-hidden="true">↗</span></a><small class="card-revision">${escapeHTML(shortRevision)}</small>`;
-  return card;
 }
 
 picker.addEventListener('change', () => {
@@ -50,17 +28,13 @@ try {
   );
   for (const record of releases) {
     if (!record || typeof record.version !== 'string' || typeof record.play !== 'string') continue;
-    addOption(`${record.version} · archived`, historicalPlayPath(record));
+    addOption(`${record.version} · preserved`, historicalPlayPath(record));
   }
-  versionGrid.querySelector('.version-card-loading')?.remove();
-  for (const record of releases) {
-    if (record && typeof record.version === 'string' && typeof record.play === 'string')
-      versionGrid.append(versionCard(record));
-  }
-  status.textContent = `${releases.length} archived flight${releases.length === 1 ? '' : 's'} available · ${currentLabel} is the live default.`;
+  status.textContent = `${releases.length} preserved build${releases.length === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
 } catch {
-  versionGrid.querySelector('.version-card-loading')?.remove();
-  status.textContent = `The live flight is ready. The archive will appear when its index is available.`;
+  status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
 }
 
-document.querySelector('#latest-label').textContent = currentLabel;
+for (const label of document.querySelectorAll('[data-current-label]')) {
+  label.textContent = currentLabel;
+}
