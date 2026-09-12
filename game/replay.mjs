@@ -7,6 +7,13 @@ import {
   RULESET,
   CLASSES,
 } from './core/index.mjs';
+import { boundedJSON, stableId } from './data-json.mjs';
+import {
+  resolveMasteryDefinition,
+  captureMasterySetup,
+  captureMasteryFacts,
+  createMasteryObserver,
+} from './mastery.mjs';
 
 export const REPLAY_VERSION = 'xonix-replay.v3';
 export const MAX_REPLAY_TICKS = 30 * 60 * 120;
@@ -472,7 +479,12 @@ function prepareReplay(source) {
   return { data, state };
 }
 
-function* replaySteps({ data, state }) {
+/** Owned, structurally validated document. This does not verify its outcome. */
+export function snapshotReplay(source) {
+  return prepareReplay(source).data;
+}
+
+function* replaySteps({ data, state, mastery }) {
   let processed = 0;
   for (const segment of data.segments) {
     if (segment.releaseBefore) releaseInputs(state);
@@ -480,6 +492,7 @@ function* replaySteps({ data, state }) {
       if (state.status === 'won' || state.status === 'lost')
         reject('Replay contains tick commands after the run ended.', 'commands-after-terminal');
       stepRun(state, segment.input, FIXED_DT);
+      if (mastery) mastery.observer.observe(captureMasteryFacts(state, { runId: mastery.runId }));
       processed++;
       yield processed;
     }
@@ -487,7 +500,16 @@ function* replaySteps({ data, state }) {
   if (data.releaseAfter) releaseInputs(state);
 }
 
-function finishVerification({ data, state }) {
+const verifiedMasteryObservers = new WeakMap();
+
+/** In-memory continuation only. A preview observer never authorizes an award. */
+export function takeReplayMasteryObserver(verification) {
+  const observer = verifiedMasteryObservers.get(verification) ?? null;
+  verifiedMasteryObservers.delete(verification);
+  return observer;
+}
+
+function finishVerification({ data, state, mastery }) {
   const checkpoint = authoritativeCheckpoint(state),
     summary = getSummary(state),
     diagnostics = [];
@@ -510,14 +532,41 @@ function finishVerification({ data, state }) {
       code: 'tick-mismatch',
       message: 'Simulation tick count differs from the recording.',
     });
-  return {
+  const result = {
     state,
     match: diagnostics.length === 0,
     diagnostics,
     actual: { summary, checkpoint },
     recordedBuild: data.build,
     ticks: data.ticks,
+    ...(mastery ? { masteryPreview: mastery.observer.snapshot() } : {}),
   };
+  if (mastery && result.match) verifiedMasteryObservers.set(result, mastery.observer);
+  return result;
+}
+
+function masteryRequest(source) {
+  if (source === undefined) return null;
+  const value = boundedJSON(source, {
+    maxBytes: 16384,
+    maxNodes: 320,
+    maxDepth: 5,
+    maxArray: 2,
+    maxString: 512,
+  });
+  if (
+    !keysExactly(value, ['definition', 'campaignId', 'campaignKey', 'runId']) ||
+    !stableId(value.campaignId) ||
+    typeof value.campaignKey !== 'string' ||
+    value.campaignKey.length < 1 ||
+    value.campaignKey.length > 300 ||
+    typeof value.runId !== 'string' ||
+    !value.runId.trim() ||
+    value.runId.length > 159
+  )
+    reject('Invalid optional mastery observation request.');
+  value.definition = resolveMasteryDefinition(value.definition);
+  return value;
 }
 
 /** Synchronous verification for Node tooling and short trusted-size test fixtures. */
@@ -539,16 +588,33 @@ function checkAbort(signal) {
 }
 
 /** Browser verification yields before work and every bounded simulation chunk. */
-export async function verifyReplayAsync(data, { chunkTicks = 600, onProgress, signal } = {}) {
+export async function verifyReplayAsync(
+  data,
+  { chunkTicks = 600, onProgress, signal, mastery } = {},
+) {
   if (!Number.isInteger(chunkTicks) || chunkTicks < 1 || chunkTicks > 1200)
     reject('chunkTicks must be an integer in 1..1200.');
   if (onProgress !== undefined && typeof onProgress !== 'function')
     reject('onProgress must be a function.');
+  // Snapshot optional data before yielding. No caller callback receives core
+  // state, and the ordinary verifier path retains its exact result contract.
+  const requestedMastery = masteryRequest(mastery);
   checkAbort(signal);
   await yieldToHost();
   checkAbort(signal);
-  const prepared = prepareReplay(data),
-    iterator = replaySteps(prepared),
+  const prepared = prepareReplay(data);
+  if (requestedMastery) {
+    const { definition, ...identity } = requestedMastery;
+    prepared.mastery = {
+      runId: identity.runId,
+      observer: createMasteryObserver({
+        definition,
+        setup: captureMasterySetup(prepared.state, identity),
+        initial: captureMasteryFacts(prepared.state, identity),
+      }),
+    };
+  }
+  const iterator = replaySteps(prepared),
     total = prepared.data.ticks;
   const now = () => globalThis.performance?.now?.() ?? Date.now();
   let processed = 0,
@@ -572,5 +638,6 @@ export async function verifyReplayAsync(data, { chunkTicks = 600, onProgress, si
       checkAbort(signal);
     }
   }
+  checkAbort(signal);
   return finishVerification(prepared);
 }

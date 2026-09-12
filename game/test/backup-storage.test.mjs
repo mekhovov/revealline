@@ -122,7 +122,7 @@ test('coordinated import journals original bytes before writes and commits profi
   assert.deepEqual(writes[0][2].previous, prior);
   assert.equal(h.assets.get('journal'), null);
   assert.equal(h.local.get(keys.lockKey), undefined);
-  assert.equal(JSON.parse(h.values().profile).format, 'xonix-library.v1');
+  assert.equal(JSON.parse(h.values().profile).format, 'xonix-library.v2');
   assert.equal(JSON.parse(h.values().packs).format, 'xonix-pack-library.v1');
   assert.equal(h.values().session, null);
 });
