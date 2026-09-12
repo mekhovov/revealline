@@ -1,0 +1,26 @@
+{
+  "source": "../fpv-arcade/art-provenance.json",
+  "reusedOriginalRewards": [
+    {
+      "path": "backgrounds/night-signal.png",
+      "original": "../fpv-arcade/backgrounds/night-signal.png",
+      "bytes": 2785110,
+      "sha256": "668f0668befdf07e0cd07abae9329ea56e95cf1c44333833aff021d542b38506",
+      "uniqueImageAdded": false
+    },
+    {
+      "path": "backgrounds/orchard-window.png",
+      "original": "../fpv-arcade/backgrounds/orchard-window.png",
+      "bytes": 3172117,
+      "sha256": "e748ccee83cdb51fb9d385c626d6824d37eeef254f1684e27e54b12e42b35823",
+      "uniqueImageAdded": false
+    },
+    {
+      "path": "backgrounds/split-courtyard.png",
+      "original": "../fpv-arcade/backgrounds/split-courtyard.png",
+      "bytes": 2809420,
+      "sha256": "b5f74dd3ec1f97320646c64c6906121d215609401a6f24682e10fce80c5fba01",
+      "uniqueImageAdded": false
+    }
+  ]
+}

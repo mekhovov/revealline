@@ -4,12 +4,14 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { findRoute, replayProof, digest } from './verify-campaign.mjs';
+import { verifyFpvR2Proof } from './verify-fpv-r2.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
 import {
   validatePack,
   PACK_LIMITS,
   ENCOUNTER_PACK_VERSION,
   WIDE_PACK_VERSION,
+  CLASSIC_PACK_VERSION,
 } from '../game/packs.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { snapshotReplay, verifyReplay, recordInput } from '../game/replay.mjs';
@@ -23,6 +25,7 @@ const root = new URL('../', import.meta.url);
 const proofFile = new URL('game/replays/expansion-routes.json', root);
 const encounterProofFile = new URL('game/replays/sentinel-routes.json', root);
 const wideProofFile = new URL('game/replays/first-light-routes.json', root);
+const r2ProofFile = new URL('game/replays/fpv-arcade-r2-routes.json', root);
 const policies = ['immediate', 'grid-center'];
 const routeKey = (pack, campaign, level, policy) =>
   `${pack.id}/${campaign.id}/${level.id}/${policy}`;
@@ -50,8 +53,11 @@ export async function verifyExpansionRoutes() {
       : null,
     wideProof = packs.some((pack) => pack.format === WIDE_PACK_VERSION)
       ? JSON.parse(await readFile(wideProofFile, 'utf8'))
+      : null,
+    r2Proof = packs.some((pack) => pack.format === CLASSIC_PACK_VERSION)
+      ? JSON.parse(await readFile(r2ProofFile, 'utf8'))
       : null;
-  return verifyExpansionProofs({ packs, proof, encounterProof, wideProof });
+  return verifyExpansionProofs({ packs, proof, encounterProof, wideProof, r2Proof });
 }
 
 /** Owned proof data; verify one outcome per exact indexed pack/campaign/map/policy.
@@ -65,7 +71,7 @@ export function verifyExpansionProofs(source) {
     maxArray: 20000,
     maxString: PACK_LIMITS.maxBytes,
   });
-  exactKeys(request, ['packs', 'proof', 'encounterProof', 'wideProof'], 'proof request');
+  exactKeys(request, ['packs', 'proof', 'encounterProof', 'wideProof', 'r2Proof'], 'proof request');
   const packs = boundedJSON(request.packs, {
     maxBytes: PACK_LIMITS.libraryBytes,
     maxNodes: 160000,
@@ -75,7 +81,8 @@ export function verifyExpansionProofs(source) {
   });
   const proof = proofCopy(request.proof),
     encounter = request.encounterProof === null ? null : proofCopy(request.encounterProof),
-    wide = request.wideProof == null ? null : proofCopy(request.wideProof);
+    wide = request.wideProof == null ? null : proofCopy(request.wideProof),
+    r2 = request.r2Proof == null ? null : proofCopy(request.r2Proof);
   required(Array.isArray(packs) && packs.length <= PACK_LIMITS.installed, 'Invalid indexed packs.');
   const expected = new Map(),
     packIds = new Set();
@@ -382,11 +389,44 @@ export function verifyExpansionProofs(source) {
       results.push(verified.actual.summary);
     }
   }
+  let supplementalGentleResults = null;
+  if (r2 !== null) {
+    const pack = packs.find((item) => item.id === r2.packId),
+      prior = packs.find((item) => item.id === 'fpv-arcade');
+    required(
+      pack?.format === CLASSIC_PACK_VERSION && prior && wide,
+      'Invalid or unknown R2 proof context.',
+    );
+    // This is the same strict public-input verifier as the dedicated twelve-route
+    // gate, including the Gentle derivation, fresh-gesture barrier and old controls.
+    const checked = verifyFpvR2Proof({ pack, prior, originalProof: wide, proof: r2 });
+    required(checked.routes.length === 12, 'Incomplete R2 route set.');
+    supplementalGentleResults = [];
+    for (const route of r2.routes) {
+      if (route.difficulty === 'gentle') {
+        supplementalGentleResults.push(route.expected);
+        continue;
+      }
+      const { key } = identify(pack.id, route.levelId, route.turnPolicy);
+      seen.add(key);
+      results.push(route.expected);
+    }
+    required(supplementalGentleResults.length === 6, 'Incomplete R2 Gentle route set.');
+  }
   required(
     seen.size === expected.size && [...expected.keys()].every((key) => seen.has(key)),
     'Incomplete expansion proof.',
   );
-  return { verified: results.length, results };
+  return {
+    verified: results.length,
+    results,
+    ...(supplementalGentleResults === null
+      ? {}
+      : {
+          supplementalGentleVerified: supplementalGentleResults.length,
+          supplementalGentleResults,
+        }),
+  };
 }
 /** Discovery owns only ordinary maps; never replace historical proofs with an unhandled encounter search. */
 export function assertDiscoverySupported(packs) {
