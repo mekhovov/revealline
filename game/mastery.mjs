@@ -1,6 +1,18 @@
 import { boundedJSON, canonicalJSON, dataIdentity, plainObject, stableId } from './data-json.mjs';
 import { FIXED_DT, MAX_CLASS_HISTORY } from './core/registry.mjs';
 import { normalizedLevel } from './core/level.mjs';
+import {
+  isEquipmentDefinition,
+  resolveEquipmentDefinition,
+  captureEquipmentSetup,
+  captureEquipmentFacts,
+  createEquipmentObserver,
+} from './mastery-equipment.mjs';
+export {
+  EQUIPMENT_MASTERY_DEFINITION_VERSION,
+  SUPPLY_LINE,
+  SAFE_RETURN,
+} from './mastery-equipment.mjs';
 
 export const MASTERY_DEFINITION_VERSION = 'xonix-mastery-definition.v1';
 export const MAX_MASTERY_TICKS = 30 * 60 * 120;
@@ -48,6 +60,7 @@ const copy = (value, maxArray = 16) => {
 
 /** This first schema intentionally supports exactly the two Steady Signal predicates. */
 export function resolveMasteryDefinition(source) {
+  if (isEquipmentDefinition(source)) return resolveEquipmentDefinition(source);
   const value = copy(source, 2);
   keys(
     value,
@@ -153,7 +166,10 @@ function ownSetup(source) {
 }
 
 /** Call once on a new, validated core run; campaignKey remains host supplied. */
-export function captureMasterySetup(state, { campaignId, campaignKey, runId }) {
+export function captureMasterySetup(state, { campaignId, campaignKey, runId, definition }) {
+  if (isEquipmentDefinition(definition))
+    return captureEquipmentSetup(state, { campaignId, campaignKey, runId, definition });
+  if (definition !== undefined) resolveMasteryDefinition(definition);
   ensure(
     state.tick === 0 &&
       state.status === 'running' &&
@@ -192,7 +208,9 @@ const entryOf = (facts) => ({
 });
 
 /** Owned projection from trusted core state, never a raw replay/award parser. */
-export function captureMasteryFacts(state, { runId }) {
+export function captureMasteryFacts(state, { runId, definition }) {
+  if (isEquipmentDefinition(definition)) return captureEquipmentFacts(state, { runId, definition });
+  if (definition !== undefined) resolveMasteryDefinition(definition);
   const active = state.classHistory.at(-1);
   return {
     runId,
@@ -303,8 +321,10 @@ function ownFacts(source) {
 
 /** Preview only. A future trusted verifier must replay the entire run before any award. */
 export function createMasteryObserver({ definition, setup: sourceSetup, initial }) {
-  const rule = resolveMasteryDefinition(definition),
-    setup = ownSetup(sourceSetup);
+  const rule = resolveMasteryDefinition(definition);
+  if (isEquipmentDefinition(rule))
+    return createEquipmentObserver({ definition: rule, setup: sourceSetup, initial });
+  const setup = ownSetup(sourceSetup);
   const definitionIdentity = masteryDefinitionIdentity(rule),
     identity = identityOf(setup);
   const requirement = rule.all[1];
