@@ -627,22 +627,22 @@ export function attachLibraryPanel(api) {
       classId: picture.entry.classRecipes[0].id,
     });
     state.status = 'won';
-    let last = performance.now();
+    let last = null;
     const frame = (now) => {
       if (!$('gallery-view-dialog').open || generation !== viewGeneration || view !== picture)
         return;
-      galleryPainter.draw(
-        $('gallery-canvas').getContext('2d'),
-        state,
-        Math.min((now - last) / 1000, 0.1),
-        {
-          paused: true,
-          fullReveal: true,
-          reduced: reducedEffects(),
-          celebrationPaused: document.hidden,
-        },
-      );
-      last = now;
+      // Use one clock: the first finite frame establishes its own baseline.
+      let dt = 0;
+      if (Number.isFinite(now)) {
+        if (last !== null) dt = Math.min(0.1, Math.max(0, (now - last) / 1000));
+        last = last === null ? now : Math.max(last, now);
+      }
+      galleryPainter.draw($('gallery-canvas').getContext('2d'), state, dt, {
+        paused: true,
+        fullReveal: true,
+        reduced: reducedEffects(),
+        celebrationPaused: document.hidden,
+      });
       if (galleryPainter.celebrationStatus?.active) galleryFrame = requestAnimationFrame(frame);
     };
     galleryFrame = requestAnimationFrame(frame);
