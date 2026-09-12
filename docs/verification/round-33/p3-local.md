@@ -17,3 +17,8 @@ Source browser evidence on the isolated test origin127.0.0.1:8874:
 - Complete backup preparation succeeded, but the supported download event timed out and no resulting soundtrack file was observed in Downloads. Browser download delivery/restore remains unverified.
 
 Source and finite adapter checks do not prove frozen offline playback, mobile/controller hardware or music quality. Server-stopped MP3 playback, browser complete-backup round trip, physical input devices and the planned24 finished recordings remain separate gates. This is a playable development milestone, not completed public/native-store qualification.
+
+
+### Follow-up: frozen offline MP3 playback passed
+
+With v0.24 served on isolated port 8875, the real browser verified 158 cached files, imported an owned 26-second MPEG transport fixture and saved a custom playlist. The test server was then stopped (TCP connection refused). Reloading the same URL restored the cached game; the saved playlist was selected and its actual MP3 progressed to 0:17 (seek position 17.8 seconds) of 0:26. [Recorded observations](offline-mp3-browser.json). The silent fixture verifies preserved bytes, decoder and transport, not musical quality. Actual browser download/reimport remains unobserved; this does not establish physical-device support.
