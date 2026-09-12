@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.4.1 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.5.0 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
 
 ## The loop
 
@@ -20,10 +20,10 @@ The campaign introduces bouncers, border patrols, supplies, objectives, obstacle
 | R | Collect supplies when nearby and applicable |
 | Escape / P | Pause or resume |
 | Touch direction buttons | Hold to move; optional Tap steering latches direction, tap again or press Stop to clear |
-| Standard gamepad | D-pad / left stick, button 0 action, button 2 supply, right shoulder boost, Start pause |
+| Standard gamepad | Release then press a face button to join. D-pad / left stick moves; South ability, West supply, North hangar, East Stop, right shoulder boost, Menu pause |
 | G / Change craft control | Choose another available class while safely docked |
 
-Gamepad labels commonly correspond to A/X/RB; mappings vary. Pause and focus loss clear held input. Touch Boost follows hold or tap steering, and Stop clears it. Controller adapters and viewport fixtures do not certify particular hardware.
+In menus, D-pad moves focus, South confirms and East goes back. Selects and sliders preview a value before applying it; East cancels the edit. See [controller navigation](../docs/controller-navigation.md) and try the actual menus in [Controller practice](controller-lab/). Gamepad labels commonly correspond to A/B/X/Y/RB; mappings vary. Pause and focus loss clear held input. Touch Boost follows hold or tap steering, and Stop clears it. Controller adapters and viewport fixtures do not certify particular hardware.
 
 **Immediate** turns at the current position. **Grid + buffer** turns at cell centers and buffers the latest held direction. Releasing clears that buffer. The board remains 48 × 36 cells at every viewport size. Starting-class or steering changes in the flight deck start a fresh attempt; the in-flight hangar changes class within the existing attempt.
 

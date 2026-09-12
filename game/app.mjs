@@ -2,6 +2,10 @@ import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
 import { attachInput } from './ui/input.mjs';
+import { createControllerRouter } from './ui/controller-router.mjs';
+import { attachControllerNavigation } from './ui/controller-navigation.mjs';
+import { attachControllerPreview } from './ui/controller-preview.mjs';
+import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
@@ -80,7 +84,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.4.1',
+  let buildVersion = '0.5.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -100,6 +104,18 @@ try {
     const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
+  const controllerPreviewRequested = !!scenario && params.get('controller-preview') === '1';
+  if (
+    window.parent !== window &&
+    window.name === 'revealline-controller-practice' &&
+    !controllerPreviewRequested
+  )
+    throw new Error('Return to Controller practice and choose Load practice to continue.');
+  const controllerPreview = attachControllerPreview({ enabled: controllerPreviewRequested });
+  const practiceNavigation = attachPracticeNavigation({
+    enabled: controllerPreviewRequested,
+    onBlocked: () => warning('Use the Controller practice page’s header links to leave practice.'),
+  });
   // Each archived release keeps its own profile schema, packs and save slot.
   // A portable complete backup transfers progress without changing older versions.
   const channel = isRelease ? `release-${buildVersion}` : 'dev';
@@ -115,7 +131,8 @@ try {
       }
     : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
   let persistenceReady = writer.writable;
-  window.addEventListener('pagehide', () => writer.release(), { once: true });
+  let handlePageHide = () => writer.release();
+  window.addEventListener('pagehide', (event) => handlePageHide(event));
   const journalKey = `${libraryKey}.backup-journal`;
   const backupAdapters = () => ({
     storage: localStorage,
@@ -263,6 +280,71 @@ try {
   function dialogOpen() {
     return !!document.querySelector('dialog[open]');
   }
+  const controller = createControllerRouter(
+    controllerPreview ? { readPads: controllerPreview.readPads } : {},
+  );
+  let controllerFrame = null,
+    controllerNavigation = null,
+    controllerStatus = '',
+    controllerPreviousScope = '',
+    controllerInactive = false;
+  const controllerDialog = () => [...document.querySelectorAll('dialog[open]')].at(-1);
+  function controllerScope() {
+    const dialog = controllerDialog();
+    if (dialog) return `modal:${dialog.id}`;
+    if (celebrationActive) return 'celebration';
+    if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
+    if (run?.status === 'lost') return 'lost';
+    if (campaignOverview) return `overview:${campaign.id}`;
+    if (!started) return `ready:${campaign.id}:${run?.levelId}`;
+    return paused ? 'paused' : 'flight';
+  }
+  function controllerFocus() {
+    const dialog = controllerDialog();
+    if (dialog) {
+      if (dialog.id === 'hangar-dialog') return $('switch-class-select');
+      if (dialog.id === 'collection-dialog')
+        return $('gallery-grid').querySelector('button') || $('gallery-search');
+      return dialog.querySelector('button:not(:disabled),select:not(:disabled),summary');
+    }
+    const scope = controllerScope();
+    if (scope === 'celebration') return $('skip-celebration');
+    if (scope === 'picture') return $('show-result');
+    if (scope === 'won' || scope.startsWith('overview:')) return $('next-button');
+    if (scope === 'lost') return $('retry-button');
+    return $('start-button');
+  }
+  function controllerBack() {
+    const dialog = controllerDialog();
+    if (dialog) {
+      const transferCancel = $('transfer-cancel');
+      if (
+        dialog.id === 'library-dialog' &&
+        transferCancel &&
+        !transferCancel.hidden &&
+        !transferCancel.disabled
+      ) {
+        transferCancel.click();
+        return;
+      }
+      if (dialog.id === 'settings-dialog' && !$('cancel-key-capture').hidden) {
+        $('cancel-key-capture').click();
+        return;
+      }
+      // Follow the same cancellable lifecycle as Escape. Library transactions
+      // may prevent cancellation; picture close restores its collection focus.
+      if (dialog.dispatchEvent(new Event('cancel', { cancelable: true }))) dialog.close();
+      else
+        $('controller-ui-hint').textContent =
+          'This operation is still in progress. Use its Cancel action when available.';
+      return;
+    }
+    const scope = controllerScope();
+    if (scope === 'paused') resume();
+    else if (scope === 'celebration') $('skip-celebration').click();
+    else if (scope === 'picture') $('show-result').click();
+    else controllerFocus()?.focus();
+  }
   const input = attachInput({
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
@@ -273,6 +355,49 @@ try {
     active: () => started && !dialogOpen() && !['won', 'lost'].includes(run?.status),
     onGamepad: (message) => ($('input-status').textContent = message),
     getBindings: () => library.preferences.keyboardBindings,
+    readControllerCommand: () => controllerFrame?.flight,
+  });
+  controllerNavigation = attachControllerNavigation({
+    getScope: controllerScope,
+    getRoot: () => controllerDialog() || document,
+    getDefaultFocus: controllerFocus,
+    accept: (element) =>
+      !element.matches(
+        '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
+      ),
+    onBack: controllerBack,
+    onMenu: () => {
+      if (!dialogOpen() && started && paused && !['won', 'lost'].includes(run?.status)) resume();
+    },
+    onHint: (message) => {
+      $('controller-ui-hint').textContent = message;
+    },
+  });
+  handlePageHide = (event) => {
+    // Suspend while this tab still owns the writer. A history-cache return
+    // keeps its memory available for export without reclaiming stale storage.
+    pause(true);
+    clearInput();
+    sound.pause();
+    writer.release();
+    persistenceReady = false;
+    controllerPreview?.clear();
+    if (!event.persisted) {
+      controllerNavigation.destroy();
+      input.destroy();
+      controller.destroy();
+      controllerPreview?.destroy();
+      practiceNavigation.destroy();
+    }
+  };
+  window.addEventListener('pageshow', (event) => {
+    if (!event.persisted) return;
+    controller.invalidate();
+    clearInput();
+    pause(true);
+    $('save-warning').textContent =
+      'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
+    show('save-warning', true);
   });
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
@@ -315,11 +440,16 @@ try {
       refreshKeyPrompts();
     },
   });
-  window.addEventListener('pagehide', () => keySettings.destroy(), { once: true });
+  window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) keySettings.destroy();
+  });
   function clearInput() {
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
+    controller.clear();
+    controllerFrame = null;
+    controllerNavigation?.clear();
     input.clear();
     if (run) {
       releaseInputs(run);
@@ -411,7 +541,7 @@ try {
     themeOverride = !!themeId;
     musicOverride = false;
     scenario = null;
-    practice = false;
+    practice = controllerPreviewRequested;
     demo = false;
     activeEntry = entry;
     campaign = entry.campaign;
@@ -421,7 +551,7 @@ try {
     progress = progressFor(library, campaign);
     const selection = campaignSelection(progress, campaign, { levelId });
     levelIndex = selection.levelIndex;
-    campaignOverview = selection.overview;
+    campaignOverview = !practice && selection.overview;
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     theme = entry.themes.find((t) => t.id === (themeId || campaign.themeId)) || entry.themes[0];
     bodyId = theme.player;
@@ -893,7 +1023,7 @@ try {
   }
   function leavePractice() {
     scenario = null;
-    practice = false;
+    practice = controllerPreviewRequested;
     demo = false;
     campaignOverview = false;
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
@@ -1246,9 +1376,68 @@ try {
     painter.effectsFor(events);
   }
   function update(elapsed) {
+    if (document.hidden || !document.hasFocus()) {
+      if (!controllerInactive) {
+        controllerInactive = true;
+        clearInput();
+        pause(true);
+      }
+      return;
+    }
+    controllerInactive = false;
+    const scope = controllerScope();
+    controllerFrame = controller.sample({ scope, timeMs: performance.now() });
+    const { status, assigned, disconnected } = controllerFrame;
+    if (status.message !== controllerStatus) {
+      controllerStatus = status.message;
+      $('input-status').textContent =
+        status.code === 'disconnected' || assigned
+          ? status.message
+          : `Keyboard / touch · ${status.message}`;
+    }
+    show('controller-ui-hint', !!assigned && scope !== 'flight');
+    if (scope !== controllerPreviousScope) {
+      controllerPreviousScope = scope;
+      $('controller-ui-hint').textContent =
+        'Controller: D-pad moves focus · South confirms · East goes back · Menu resumes a paused flight.';
+      if (assigned && scope !== 'flight') controllerNavigation.engage();
+    }
+    if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
+    if (disconnected) {
+      clearInput();
+      pause(true);
+      warning(
+        'Controller disconnected. Your flight is paused. Release controls and press a face button to join again.',
+      );
+    } else {
+      controllerNavigation.handle(controllerFrame.ui);
+      if (controllerFrame?.flight.stop) {
+        pendingAction = false;
+        pendingPickup = false;
+        pendingSwitch = null;
+      }
+      if (controllerFrame?.flight.hangar && !$('hangar-button').disabled) {
+        $('hangar-button').click();
+        clearInput();
+      }
+    }
     const controls = input.poll();
     pendingAction = pendingAction || controls.action;
     pendingPickup = pendingPickup || controls.pickup;
+    const focus = document.activeElement;
+    controllerPreview?.report({
+      scope: controllerScope().slice(0, 160),
+      focusedId: (focus?.id || '').slice(0, 160),
+      focusedLabel: (
+        focus?.getAttribute('aria-label') ||
+        (focus?.matches('button,a,summary') ? focus.textContent : focus?.id) ||
+        ''
+      )
+        .trim()
+        .slice(0, 160),
+      assigned: !!assigned,
+      message: status.message.slice(0, 240),
+    });
     if (!paused && started && !dialogOpen() && !['won', 'lost'].includes(run.status)) {
       if (elapsed > 0.25) {
         pause(true);
@@ -1531,19 +1720,21 @@ try {
       warning(`Replay download: ${error.message}`);
     }
   };
-  onNativeInactive(() => {
+  function suspendInteraction() {
+    // Menu and result screens also need a neutral gate. Their pause() path
+    // deliberately returns early, and a hidden renderer may not tick at all.
+    controllerInactive = true;
+    clearInput();
+    controllerPreview?.clear();
     sound.pause();
     pause(true);
-  }).catch((error) => warning(`App lifecycle adapter unavailable: ${error.message}`));
-  window.addEventListener('blur', () => {
-    sound.pause();
-    pause(true);
-  });
+  }
+  onNativeInactive(suspendInteraction).catch((error) =>
+    warning(`App lifecycle adapter unavailable: ${error.message}`),
+  );
+  window.addEventListener('blur', suspendInteraction);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      sound.pause();
-      pause(true);
-    }
+    if (document.hidden) suspendInteraction();
   });
   setTheme();
   refreshCampaigns();
