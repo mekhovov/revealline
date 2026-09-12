@@ -1,6 +1,6 @@
 # Publish the browser game
 
-The public artifact is a self-contained static website and downloadable ZIP. It needs no application server, paid graphics service, account system or runtime CDN. Publish the **whole distribution**, including the sibling animation assets and the original Phaser license. Native iPhone/desktop store packages and network multiplayer are separate products; this release does not contain their platform projects, credentials or backend.
+The public artifact is a self-contained static website and downloadable ZIP. It needs no application server, paid graphics service, account system or runtime CDN. Publish the **whole distribution**, including the sibling animation assets and the original Phaser license. Native iPhone/desktop wrappers live in separate source workspaces; store distribution and network multiplayer require their own verification and services. The static website does not contain native binaries or a multiplayer backend.
 
 ## Produce and identify the artifact
 
@@ -91,7 +91,7 @@ Record failures as release blockers for the affected target rather than silently
 
 ## Scope of readiness
 
-The v0.2.0 source supplies 22 maps, seven gameplay roles, four presentation themes and three installable expansions. The recorded Replay Theater integration checkpoint passed 448 JavaScript tests. Those results establish that checkpoint's automated behavior; they do not certify every target below.
+The v0.4.0 source supplies 25 maps, seven gameplay roles, four presentation themes and four installable expansions. Homeward Skies adds three original illustrated picture rewards; continuation and reviewed earlier-release copying extend the player library. Refer to the exact saved build’s verification report for test totals and artifact hashes. Automated results do not certify every target below.
 
 | Target                        | Implemented or checked here                                                                       | Evidence still required before claiming that target                                                                  |
 | ----------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |

@@ -1,0 +1,2107 @@
+{
+  "format": "revealline-modified-doc-links.v1",
+  "recordedAt": "2026-09-12T07:50:42.821Z",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "d9dff590a11ff1d4d4458a5099725ea61caaf4365fe5ff0767a39928d6aeaa27"
+    },
+    {
+      "path": "authoring/README.md",
+      "sha256": "cf4342eea159cdcd845b61f54e228c0db26306e9c8e44c999f438140b035a6bf"
+    },
+    {
+      "path": "authoring/library/homeward-skies/README.md",
+      "sha256": "b3b61ae07fe9d06ae71b0a9a73ee92f315e1d6f5ae466f02be28ebe6e9958a14"
+    },
+    {
+      "path": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "sha256": "7d51af15886f99c069a36b7cb11af207e4f82d04d7ef9f9091ff126d8b7a3994"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "sha256": "fc4e0b29ce2caf679828fd8c8902a7f97391d5adaac70d48b79876c8d4c06b8d"
+    },
+    {
+      "path": "docs/assets-and-configuration.md",
+      "sha256": "53e795bc6915bf0e975a2d085362188565062c4fe718cc84e65a01d6bef3c2ea"
+    },
+    {
+      "path": "docs/authored-art.md",
+      "sha256": "cc39ca2b6666568001ed155f48ec9eddb93cb04b0dc1b5bf5a78387077f6fcc1"
+    },
+    {
+      "path": "docs/continuity-transfer.md",
+      "sha256": "4d14af08ee0a2b1b3d5c83e3339fb772c208560cc14ced0ed941d60c13599477"
+    },
+    {
+      "path": "docs/development.md",
+      "sha256": "aea0fdb5cdac3981c5900c6893921d383ccc7723863e31322051e49dd65a79b0"
+    },
+    {
+      "path": "docs/homeward-skies.md",
+      "sha256": "2c540b7e566bf5ea749398e7126d2f621337f8bdf0dac386e2f4c893f3cda383"
+    },
+    {
+      "path": "docs/public-release.md",
+      "sha256": "8ffe8168fea7d1e5a94282992e8c9ab52fef64adf69dc81e0f8d642ed9ccffc5"
+    },
+    {
+      "path": "docs/research/round-14-player-continuity.md",
+      "sha256": "e2b62162928e641e3f58e0fe967737f86382e685f693e2266ec21a29173421f6"
+    },
+    {
+      "path": "docs/round-14-fulfillment-audit.md",
+      "sha256": "c8ad724c5476c88ee7eb423087a33399ad61fd25caa5cec8ea5c35952ba5dd70"
+    },
+    {
+      "path": "docs/verification/round-14.md",
+      "sha256": "3ab093ae5002b8ab772541d592b7816add578442aed5275732c0511c63d08287"
+    },
+    {
+      "path": "docs/verification/round-14/homeward-fixtures.md",
+      "sha256": "c7a6409bf68e0944d0d7c8362ebe2cd542d8c8f92f8574a6fe454dd6264b6346"
+    },
+    {
+      "path": "docs/verification/round-14/source-gates.md",
+      "sha256": "a67078daa534e083c622c30c139a0c13925f1ae304befa6f98fa7ede7c066fe4"
+    },
+    {
+      "path": "docs/versioning.md",
+      "sha256": "e8004d8d297cb5ea015d8431208d862721c885af7607519687d4dca49a3a12db"
+    },
+    {
+      "path": "game/README.md",
+      "sha256": "87b1056fc3758599701786702310d9621d8580ac91542e028785de28ce3359ff"
+    }
+  ],
+  "checked": 289,
+  "scope": "Inline Markdown links and reference definitions: local file/directory existence",
+  "fragmentTargets": 0,
+  "failures": [],
+  "links": [
+    {
+      "file": "README.md",
+      "line": 9,
+      "target": "docs/homeward-skies.md",
+      "resolved": "docs/homeward-skies.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 9,
+      "target": "docs/continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 9,
+      "target": "docs/native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 25,
+      "target": "game/README.md",
+      "resolved": "game/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 26,
+      "target": "docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 26,
+      "target": "docs/full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 27,
+      "target": "docs/fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 27,
+      "target": "docs/replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 28,
+      "target": "docs/homeward-skies.md",
+      "resolved": "docs/homeward-skies.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 28,
+      "target": "docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 29,
+      "target": "docs/playground-runtime.md",
+      "resolved": "docs/playground-runtime.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 29,
+      "target": "docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 30,
+      "target": "docs/audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 31,
+      "target": "docs/development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 31,
+      "target": "game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 31,
+      "target": "docs/replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 32,
+      "target": "docs/public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 32,
+      "target": "docs/deployment.md",
+      "resolved": "docs/deployment.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 32,
+      "target": "docs/offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 32,
+      "target": "docs/versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 33,
+      "target": "docs/native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 33,
+      "target": "docs/native-compatibility.md",
+      "resolved": "docs/native-compatibility.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 34,
+      "target": "authoring/README.md",
+      "resolved": "authoring/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 35,
+      "target": "docs/research/xonix-and-xposed.md",
+      "resolved": "docs/research/xonix-and-xposed.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 35,
+      "target": "docs/research/round-10-reference-and-import.md",
+      "resolved": "docs/research/round-10-reference-and-import.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 35,
+      "target": "docs/verification/round-10.md",
+      "resolved": "docs/verification/round-10.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 36,
+      "target": "authoring/motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "README.md",
+      "line": 36,
+      "target": "docs/concepts/round-09-reference-atlas.html",
+      "resolved": "docs/concepts/round-09-reference-atlas.html",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 5,
+      "target": "skills/xonix-reference-importer/references/import-and-style.md",
+      "resolved": "authoring/skills/xonix-reference-importer/references/import-and-style.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 5,
+      "target": "../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 5,
+      "target": "../docs/audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "../game/README.md",
+      "resolved": "game/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "library/homeward-skies/prompts.json",
+      "resolved": "authoring/library/homeward-skies/prompts.json",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "../docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "../docs/continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "../docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "media/README.md",
+      "resolved": "authoring/media/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "library/round-06-fpv/README.md",
+      "resolved": "authoring/library/round-06-fpv/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 7,
+      "target": "../docs/native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 13,
+      "target": "../game/README.md",
+      "resolved": "game/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 13,
+      "target": "skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 13,
+      "target": "../docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 14,
+      "target": "../docs/replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 14,
+      "target": "../docs/fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 15,
+      "target": "../docs/continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 15,
+      "target": "skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 16,
+      "target": "../docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 16,
+      "target": "skills/xonix-background-stylist/SKILL.md",
+      "resolved": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 17,
+      "target": "skills/xonix-native-packager/SKILL.md",
+      "resolved": "authoring/skills/xonix-native-packager/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 17,
+      "target": "../docs/native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 18,
+      "target": "skills/xonix-expansion-author/SKILL.md",
+      "resolved": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 18,
+      "target": "../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 18,
+      "target": "../docs/full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 18,
+      "target": "../docs/playground-runtime.md",
+      "resolved": "docs/playground-runtime.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 19,
+      "target": "../docs/public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 19,
+      "target": "../docs/round-10-implementation-plan.md",
+      "resolved": "docs/round-10-implementation-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 19,
+      "target": "../docs/round-09-classes-and-world.md",
+      "resolved": "docs/round-09-classes-and-world.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 20,
+      "target": "skills/xonix-reference-importer/SKILL.md",
+      "resolved": "authoring/skills/xonix-reference-importer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 20,
+      "target": "skills/xonix-reference-importer/references/import-and-style.md",
+      "resolved": "authoring/skills/xonix-reference-importer/references/import-and-style.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 21,
+      "target": "skills/xonix-theme-designer/SKILL.md",
+      "resolved": "authoring/skills/xonix-theme-designer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 22,
+      "target": "skills/xonix-asset-creator/SKILL.md",
+      "resolved": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 23,
+      "target": "skills/xonix-background-stylist/SKILL.md",
+      "resolved": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 23,
+      "target": "media/README.md",
+      "resolved": "authoring/media/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 24,
+      "target": "skills/xonix-level-designer/SKILL.md",
+      "resolved": "authoring/skills/xonix-level-designer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 25,
+      "target": "skills/xonix-audio-director/SKILL.md",
+      "resolved": "authoring/skills/xonix-audio-director/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 25,
+      "target": "../docs/audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 26,
+      "target": "skills/xonix-animation-director/SKILL.md",
+      "resolved": "authoring/skills/xonix-animation-director/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 26,
+      "target": "motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 27,
+      "target": "skills/xonix-character-collection/SKILL.md",
+      "resolved": "authoring/skills/xonix-character-collection/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 27,
+      "target": "prompts/round-08-character-collections.md",
+      "resolved": "authoring/prompts/round-08-character-collections.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 28,
+      "target": "skills/xonix-ability-designer/SKILL.md",
+      "resolved": "authoring/skills/xonix-ability-designer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 28,
+      "target": "prompts/round-09-abilities-and-world.md",
+      "resolved": "authoring/prompts/round-09-abilities-and-world.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 29,
+      "target": "skills/xonix-pack-reviewer/SKILL.md",
+      "resolved": "authoring/skills/xonix-pack-reviewer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 30,
+      "target": "prompts/README.md",
+      "resolved": "authoring/prompts/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 30,
+      "target": "prompts/catalog.json",
+      "resolved": "authoring/prompts/catalog.json",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 31,
+      "target": "../game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 31,
+      "target": "../docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 31,
+      "target": "../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 31,
+      "target": "CONTRACT.md",
+      "resolved": "authoring/CONTRACT.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 32,
+      "target": "evaluations/round-09-authoring-checks.md",
+      "resolved": "authoring/evaluations/round-09-authoring-checks.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 32,
+      "target": "evaluations/round-08-authoring-checks.md",
+      "resolved": "authoring/evaluations/round-08-authoring-checks.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 32,
+      "target": "evaluations/round-04-forward-test.md",
+      "resolved": "authoring/evaluations/round-04-forward-test.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 91,
+      "target": "prompts/run-record.template.json",
+      "resolved": "authoring/prompts/run-record.template.json",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 95,
+      "target": "../docs/development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 95,
+      "target": "../game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 95,
+      "target": "../docs/replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 97,
+      "target": "../docs/replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 132,
+      "target": "skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 132,
+      "target": "../docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 134,
+      "target": "motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 136,
+      "target": "motion-lab/collection-presets.json",
+      "resolved": "authoring/motion-lab/collection-presets.json",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 136,
+      "target": "motion-lab/collection.mjs",
+      "resolved": "authoring/motion-lab/collection.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 138,
+      "target": "motion-lab/ability-presets.json",
+      "resolved": "authoring/motion-lab/ability-presets.json",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 138,
+      "target": "motion-lab/ability.mjs",
+      "resolved": "authoring/motion-lab/ability.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/playground-runtime.md",
+      "resolved": "docs/playground-runtime.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 142,
+      "target": "../docs/replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 143,
+      "target": "../docs/round-10-implementation-plan.md",
+      "resolved": "docs/round-10-implementation-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 143,
+      "target": "../docs/research/round-10-reference-and-import.md",
+      "resolved": "docs/research/round-10-reference-and-import.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 143,
+      "target": "../docs/verification/round-10.md",
+      "resolved": "docs/verification/round-10.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "../docs/round-09-classes-and-world.md",
+      "resolved": "docs/round-09-classes-and-world.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "../docs/concepts/round-09-reference-atlas.html",
+      "resolved": "docs/concepts/round-09-reference-atlas.html",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "../docs/research/round-09-drone-reference.md",
+      "resolved": "docs/research/round-09-drone-reference.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "../docs/research/round-09-ground-and-support-reference.md",
+      "resolved": "docs/research/round-09-ground-and-support-reference.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "prompts/round-09-abilities-and-world.md",
+      "resolved": "authoring/prompts/round-09-abilities-and-world.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 144,
+      "target": "evaluations/round-09-authoring-checks.md",
+      "resolved": "authoring/evaluations/round-09-authoring-checks.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 145,
+      "target": "../docs/round-08-character-collection.md",
+      "resolved": "docs/round-08-character-collection.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 145,
+      "target": "../docs/round-08-gameplay-plan.md",
+      "resolved": "docs/round-08-gameplay-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 145,
+      "target": "prompts/round-08-character-collections.md",
+      "resolved": "authoring/prompts/round-08-character-collections.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 145,
+      "target": "evaluations/round-08-authoring-checks.md",
+      "resolved": "authoring/evaluations/round-08-authoring-checks.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 146,
+      "target": "../docs/research/round-07-reloaded-ui-motion.md",
+      "resolved": "docs/research/round-07-reloaded-ui-motion.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 147,
+      "target": "../docs/round-07-motion-and-balance.md",
+      "resolved": "docs/round-07-motion-and-balance.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 147,
+      "target": "prompts/round-07-animation-variants.md",
+      "resolved": "authoring/prompts/round-07-animation-variants.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 147,
+      "target": "motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 147,
+      "target": "evaluations/round-07-authoring-checks.md",
+      "resolved": "authoring/evaluations/round-07-authoring-checks.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 148,
+      "target": "../docs/research/round-06-reloaded-observations.md",
+      "resolved": "docs/research/round-06-reloaded-observations.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 149,
+      "target": "../docs/concepts/round-06-fpv-object-skins.png",
+      "resolved": "docs/concepts/round-06-fpv-object-skins.png",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 149,
+      "target": "../docs/concepts/round-06-fpv-asset-variants.png",
+      "resolved": "docs/concepts/round-06-fpv-asset-variants.png",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 149,
+      "target": "../docs/concepts/round-06-review.md",
+      "resolved": "docs/concepts/round-06-review.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 150,
+      "target": "prompts/round-06-asset-variations.md",
+      "resolved": "authoring/prompts/round-06-asset-variations.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 150,
+      "target": "media/VERIFICATION.md",
+      "resolved": "authoring/media/VERIFICATION.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 150,
+      "target": "evaluations/round-06-verification.md",
+      "resolved": "authoring/evaluations/round-06-verification.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 152,
+      "target": "../docs/round-05-gameplay-direction.md",
+      "resolved": "docs/round-05-gameplay-direction.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 153,
+      "target": "challenges/round-05-reference-adjustments.md",
+      "resolved": "authoring/challenges/round-05-reference-adjustments.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 153,
+      "target": "REFERENCE-LESSONS.md",
+      "resolved": "authoring/REFERENCE-LESSONS.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 153,
+      "target": "prompts/round-05-adjustments.md",
+      "resolved": "authoring/prompts/round-05-adjustments.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 154,
+      "target": "../docs/concepts/round-05-gameplay-study.png",
+      "resolved": "docs/concepts/round-05-gameplay-study.png",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 154,
+      "target": "../docs/concepts/round-05-gameplay-prompt.md",
+      "resolved": "docs/concepts/round-05-gameplay-prompt.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 154,
+      "target": "evaluations/round-05-verification.md",
+      "resolved": "authoring/evaluations/round-05-verification.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 156,
+      "target": "../docs/research/round-04-framework-recommendations.md",
+      "resolved": "docs/research/round-04-framework-recommendations.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 157,
+      "target": "../docs/research/round-04-asset-workflow.md",
+      "resolved": "docs/research/round-04-asset-workflow.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 158,
+      "target": "../docs/research/round-04-contracts-sources.md",
+      "resolved": "docs/research/round-04-contracts-sources.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 159,
+      "target": "../docs/concepts/round-04-theme-system.png",
+      "resolved": "docs/concepts/round-04-theme-system.png",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 159,
+      "target": "../docs/concepts/round-04-theme-system-prompt.md",
+      "resolved": "docs/concepts/round-04-theme-system-prompt.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 160,
+      "target": "../docs/research/xonix-and-xposed.md",
+      "resolved": "docs/research/xonix-and-xposed.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 160,
+      "target": "../docs/research/engine-and-framework.md",
+      "resolved": "docs/research/engine-and-framework.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/README.md",
+      "line": 160,
+      "target": "../docs/round-03-focused-direction.md",
+      "resolved": "docs/round-03-focused-direction.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/library/homeward-skies/README.md",
+      "line": 19,
+      "target": "../../../docs/homeward-skies.md",
+      "resolved": "docs/homeward-skies.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 10,
+      "target": "../xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 10,
+      "target": "../../../docs/assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 12,
+      "target": "../../../docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 17,
+      "target": "references/variant-record.md",
+      "resolved": "authoring/skills/xonix-background-stylist/references/variant-record.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 28,
+      "target": "../xonix-animation-director/SKILL.md",
+      "resolved": "authoring/skills/xonix-animation-director/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 30,
+      "target": "../xonix-character-collection/SKILL.md",
+      "resolved": "authoring/skills/xonix-character-collection/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 36,
+      "target": "references/variant-record.md",
+      "resolved": "authoring/skills/xonix-background-stylist/references/variant-record.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "line": 44,
+      "target": "../../media/README.md",
+      "resolved": "authoring/media/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 8,
+      "target": "../../../docs/development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 22,
+      "target": "../../../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 24,
+      "target": "../../../docs/continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 26,
+      "target": "../../../docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 38,
+      "target": "../../../docs/versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 42,
+      "target": "../../../docs/deployment.md",
+      "resolved": "docs/deployment.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 44,
+      "target": "../xonix-native-packager/SKILL.md",
+      "resolved": "authoring/skills/xonix-native-packager/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "line": 44,
+      "target": "../../../docs/native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 3,
+      "target": "../authoring/CONTRACT.md",
+      "resolved": "authoring/CONTRACT.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 3,
+      "target": "../authoring/media/README.md",
+      "resolved": "authoring/media/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 3,
+      "target": "../authoring/motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 9,
+      "target": "../game/content/campaign.json",
+      "resolved": "game/content/campaign.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 10,
+      "target": "../game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 11,
+      "target": "../game/content/themes.json",
+      "resolved": "game/content/themes.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 12,
+      "target": "../game/content/classes.json",
+      "resolved": "game/content/classes.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 13,
+      "target": "../game/content.mjs",
+      "resolved": "game/content.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 14,
+      "target": "../authoring/motion-lab/presets.json",
+      "resolved": "authoring/motion-lab/presets.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 43,
+      "target": "../authoring/skills/xonix-background-stylist/SKILL.md",
+      "resolved": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 43,
+      "target": "../authoring/media/README.md",
+      "resolved": "authoring/media/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 45,
+      "target": "../game/content.mjs",
+      "resolved": "game/content.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 45,
+      "target": "../game/imports.mjs",
+      "resolved": "game/imports.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 67,
+      "target": "../authoring/skills/xonix-animation-director/SKILL.md",
+      "resolved": "authoring/skills/xonix-animation-director/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 67,
+      "target": "../authoring/motion-lab/README.md",
+      "resolved": "authoring/motion-lab/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "../game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "deployment.md",
+      "resolved": "docs/deployment.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "round-10-implementation-plan.md",
+      "resolved": "docs/round-10-implementation-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "research/round-10-reference-and-import.md",
+      "resolved": "docs/research/round-10-reference-and-import.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "../authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/assets-and-configuration.md",
+      "line": 81,
+      "target": "../authoring/prompts/README.md",
+      "resolved": "authoring/prompts/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 5,
+      "target": "homeward-skies.md",
+      "resolved": "docs/homeward-skies.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 5,
+      "target": "../authoring/library/homeward-skies/pack-source.json",
+      "resolved": "authoring/library/homeward-skies/pack-source.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 5,
+      "target": "../authoring/library/homeward-skies/prompts.json",
+      "resolved": "authoring/library/homeward-skies/prompts.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 9,
+      "target": "../game/playground/index.html",
+      "resolved": "game/playground/index.html",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 14,
+      "target": "assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 20,
+      "target": "../authoring/skills/xonix-background-stylist/SKILL.md",
+      "resolved": "authoring/skills/xonix-background-stylist/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 20,
+      "target": "../authoring/skills/xonix-asset-creator/SKILL.md",
+      "resolved": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 51,
+      "target": "continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 51,
+      "target": "library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 51,
+      "target": "full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/authored-art.md",
+      "line": 51,
+      "target": "versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/continuity-transfer.md",
+      "line": 16,
+      "target": "full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/continuity-transfer.md",
+      "line": 57,
+      "target": "../authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/continuity-transfer.md",
+      "line": 57,
+      "target": "research/round-14-player-continuity.md",
+      "resolved": "docs/research/round-14-player-continuity.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 13,
+      "target": "linting.md",
+      "resolved": "docs/linting.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 33,
+      "target": "../game/core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 34,
+      "target": "assets-and-configuration.md",
+      "resolved": "docs/assets-and-configuration.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 35,
+      "target": "playground-runtime.md",
+      "resolved": "docs/playground-runtime.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 36,
+      "target": "library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 39,
+      "target": "full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 40,
+      "target": "replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 41,
+      "target": "replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 43,
+      "target": "audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 44,
+      "target": "public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 44,
+      "target": "offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 50,
+      "target": "library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 56,
+      "target": "full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 58,
+      "target": "replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 60,
+      "target": "../authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 60,
+      "target": "../authoring/skills/xonix-expansion-author/SKILL.md",
+      "resolved": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 70,
+      "target": "public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 76,
+      "target": "../game/replays/campaign-routes.json",
+      "resolved": "game/replays/campaign-routes.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 76,
+      "target": "../game/replays/expansion-routes.json",
+      "resolved": "game/replays/expansion-routes.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 78,
+      "target": "fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 80,
+      "target": "../game/generator.mjs",
+      "resolved": "game/generator.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 80,
+      "target": "versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/development.md",
+      "line": 80,
+      "target": "native-distribution.md",
+      "resolved": "docs/native-distribution.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 13,
+      "target": "fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 17,
+      "target": "../game/content/packs/homeward-skies.json",
+      "resolved": "game/content/packs/homeward-skies.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 23,
+      "target": "../authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "resolved": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 24,
+      "target": "../authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "resolved": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 25,
+      "target": "../authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "resolved": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 27,
+      "target": "../authoring/library/homeward-skies/prompts.json",
+      "resolved": "authoring/library/homeward-skies/prompts.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 48,
+      "target": "../game/replays/homeward-routes.json",
+      "resolved": "game/replays/homeward-routes.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 54,
+      "target": "../authoring/library/homeward-skies/pack-source.json",
+      "resolved": "authoring/library/homeward-skies/pack-source.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 74,
+      "target": "../game/replay-theater/",
+      "resolved": "game/replay-theater",
+      "kind": "directory"
+    },
+    {
+      "file": "docs/homeward-skies.md",
+      "line": 76,
+      "target": "../authoring/skills/xonix-expansion-author/SKILL.md",
+      "resolved": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/public-release.md",
+      "line": 19,
+      "target": "replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/public-release.md",
+      "line": 21,
+      "target": "versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/public-release.md",
+      "line": 69,
+      "target": "offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/research/round-14-player-continuity.md",
+      "line": 9,
+      "target": "round-06-reloaded-observations.md",
+      "resolved": "docs/research/round-06-reloaded-observations.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/research/round-14-player-continuity.md",
+      "line": 9,
+      "target": "round-07-reloaded-ui-motion.md",
+      "resolved": "docs/research/round-07-reloaded-ui-motion.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/research/round-14-player-continuity.md",
+      "line": 30,
+      "target": "../../releases/v0.3.0/site/game/app.mjs",
+      "resolved": "releases/v0.3.0/site/game/app.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/research/round-14-player-continuity.md",
+      "line": 30,
+      "target": "../../releases/v0.3.0/site/game/progress.mjs",
+      "resolved": "releases/v0.3.0/site/game/progress.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/research/round-14-player-continuity.md",
+      "line": 30,
+      "target": "../../releases/v0.3.0/site/game/challenges.mjs",
+      "resolved": "releases/v0.3.0/site/game/challenges.mjs",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 3,
+      "target": "verification/round-13/release-v0.3.0.md",
+      "resolved": "docs/verification/round-13/release-v0.3.0.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 7,
+      "target": "round-08-gameplay-plan.md",
+      "resolved": "docs/round-08-gameplay-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 7,
+      "target": "round-10-implementation-plan.md",
+      "resolved": "docs/round-10-implementation-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 42,
+      "target": "verification/round-13/screenshots/frozen-offline-picture.png",
+      "resolved": "docs/verification/round-13/screenshots/frozen-offline-picture.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 42,
+      "target": "concepts/round-06-fpv-object-skins.png",
+      "resolved": "docs/concepts/round-06-fpv-object-skins.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 46,
+      "target": "round-11-balance.md",
+      "resolved": "docs/round-11-balance.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 48,
+      "target": "fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/round-14-fulfillment-audit.md",
+      "line": 86,
+      "target": "round-08-gameplay-plan.md",
+      "resolved": "docs/round-08-gameplay-plan.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 14,
+      "target": "../homeward-skies.md",
+      "resolved": "docs/homeward-skies.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 14,
+      "target": "../continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 14,
+      "target": "../authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 14,
+      "target": "../research/round-14-player-continuity.md",
+      "resolved": "docs/research/round-14-player-continuity.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 14,
+      "target": "../round-14-fulfillment-audit.md",
+      "resolved": "docs/round-14-fulfillment-audit.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 18,
+      "target": "round-14/source-gates.md",
+      "resolved": "docs/verification/round-14/source-gates.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 22,
+      "target": "round-14/art-identity.json",
+      "resolved": "docs/verification/round-14/art-identity.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 40,
+      "target": "round-14/screenshots/copper-orchard-earned.png",
+      "resolved": "docs/verification/round-14/screenshots/copper-orchard-earned.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 40,
+      "target": "round-14/screenshots/river-switchyard-earned.png",
+      "resolved": "docs/verification/round-14/screenshots/river-switchyard-earned.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 40,
+      "target": "round-14/screenshots/home-beacon-earned.png",
+      "resolved": "docs/verification/round-14/screenshots/home-beacon-earned.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 40,
+      "target": "round-14/screenshots/beacon-celebration.png",
+      "resolved": "docs/verification/round-14/screenshots/beacon-celebration.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 40,
+      "target": "round-14/screenshots/copper-orchard-ready.png",
+      "resolved": "docs/verification/round-14/screenshots/copper-orchard-ready.png",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14.md",
+      "line": 44,
+      "target": "round-14/layout-fixtures.json",
+      "resolved": "docs/verification/round-14/layout-fixtures.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14/source-gates.md",
+      "line": 13,
+      "target": "source-gates.json",
+      "resolved": "docs/verification/round-14/source-gates.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14/source-gates.md",
+      "line": 15,
+      "target": "source-inputs.json",
+      "resolved": "docs/verification/round-14/source-inputs.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14/source-gates.md",
+      "line": 19,
+      "target": "art-identity.json",
+      "resolved": "docs/verification/round-14/art-identity.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/verification/round-14/source-gates.md",
+      "line": 21,
+      "target": "document-links.json",
+      "resolved": "docs/verification/round-14/document-links.json",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 22,
+      "target": "continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 44,
+      "target": "full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 44,
+      "target": "library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 44,
+      "target": "replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 46,
+      "target": "offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 50,
+      "target": "development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 50,
+      "target": "deployment.md",
+      "resolved": "docs/deployment.md",
+      "kind": "file"
+    },
+    {
+      "file": "docs/versioning.md",
+      "line": 50,
+      "target": "public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 3,
+      "target": "core/README.md",
+      "resolved": "game/core/README.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 52,
+      "target": "../docs/full-backup.md",
+      "resolved": "docs/full-backup.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 58,
+      "target": "../docs/library-and-packs.md",
+      "resolved": "docs/library-and-packs.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 58,
+      "target": "../docs/replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 60,
+      "target": "../docs/continuity-transfer.md",
+      "resolved": "docs/continuity-transfer.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 66,
+      "target": "../docs/fieldcraft-challenges.md",
+      "resolved": "docs/fieldcraft-challenges.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 70,
+      "target": "../docs/audio-and-rewards.md",
+      "resolved": "docs/audio-and-rewards.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 76,
+      "target": "../docs/replay-theater.md",
+      "resolved": "docs/replay-theater.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 76,
+      "target": "../docs/replays.md",
+      "resolved": "docs/replays.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 89,
+      "target": "../docs/public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 93,
+      "target": "../docs/playground-runtime.md",
+      "resolved": "docs/playground-runtime.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 95,
+      "target": "../authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "resolved": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 95,
+      "target": "../authoring/skills/xonix-expansion-author/SKILL.md",
+      "resolved": "authoring/skills/xonix-expansion-author/SKILL.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 97,
+      "target": "../docs/authored-art.md",
+      "resolved": "docs/authored-art.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 99,
+      "target": "../docs/offline-release.md",
+      "resolved": "docs/offline-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 99,
+      "target": "../docs/development.md",
+      "resolved": "docs/development.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 99,
+      "target": "../docs/public-release.md",
+      "resolved": "docs/public-release.md",
+      "kind": "file"
+    },
+    {
+      "file": "game/README.md",
+      "line": 99,
+      "target": "../docs/versioning.md",
+      "resolved": "docs/versioning.md",
+      "kind": "file"
+    }
+  ]
+}

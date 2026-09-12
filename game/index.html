@@ -19,7 +19,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.3.0</span>
+        ><span id="version" class="version">v0.4.0</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -48,14 +48,25 @@
             ></div>
             <div id="game-overlay" class="game-overlay">
               <div class="overlay-card">
-                <p id="overlay-eyebrow" class="eyebrow">MISSION 01 / FIRST SIGNAL</p>
-                <h1 id="overlay-title">Clear a path.<br />Reveal a world.</h1>
-                <p id="overlay-copy">
-                  Leave the blue border, draw a line and return to safety. Reveal the side without
-                  an enemy.
-                </p>
-                <div id="result-medals" class="result-medals" hidden></div>
+                <div class="overlay-message">
+                  <p id="overlay-eyebrow" class="eyebrow">MISSION 01 / FIRST SIGNAL</p>
+                  <h1 id="overlay-title">Clear a path.<br />Reveal a world.</h1>
+                  <p id="overlay-copy">
+                    Leave the blue border, draw a line and return to safety. Reveal the side without
+                    an enemy.
+                  </p>
+                  <div id="result-medals" class="result-medals" hidden></div>
+                </div>
                 <div class="overlay-actions">
+                  <button
+                    id="continue-saved"
+                    class="button secondary"
+                    type="button"
+                    aria-describedby="continue-saved-note"
+                    hidden
+                  >
+                    Load saved flight →
+                  </button>
                   <button id="start-button" class="button primary" type="button">
                     Start mission <span>↗</span></button
                   ><button id="next-button" class="button primary" type="button" hidden>
@@ -65,6 +76,9 @@
                   </button>
                   <button id="retry-button" class="button secondary" type="button" hidden>
                     Try again
+                  </button>
+                  <button id="choose-mission" class="button secondary" type="button" hidden>
+                    Choose replay mission
                   </button>
                 </div>
                 <p id="overlay-footnote" class="overlay-footnote">
@@ -147,10 +161,17 @@
           <div class="deck-heading">
             <span>FLIGHT DECK</span><span id="campaign-progress">00 / 12</span>
           </div>
+          <p id="continue-saved-note" class="micro-note" role="status" hidden></p>
+          <details id="mission-brief" class="mission-brief">
+            <summary>Mission brief</summary>
+            <p id="mission-brief-title" class="mission-brief-title"></p>
+            <p id="mission-brief-copy"></p>
+            <p id="mission-brief-facts"></p>
+          </details>
           <label class="field">World<select id="theme-select"></select></label>
           <label class="field">Campaign<select id="campaign-select"></select></label>
           <div class="loadout-grid">
-            <label class="field">Class<select id="class-select"></select></label
+            <label class="field">Starting class<select id="class-select"></select></label
             ><label class="field"
               >Steering<select id="turn-select">
                 <option value="immediate">Immediate</option>

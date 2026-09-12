@@ -11,6 +11,7 @@ import { downloadJSON } from '../content.mjs';
 import { BoardPainter } from './render.mjs';
 import { createRun } from '../core/index.mjs';
 import { challengeCampaign } from '../challenges.mjs';
+import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
 const $ = (id) => document.getElementById(id);
 const button = (label, fn) => {
   const b = document.createElement('button');
@@ -29,6 +30,7 @@ const fileText = async (file, max = 32 * 1024 * 1024) => {
 };
 
 export function attachLibraryPanel(api) {
+  let transferPanel = null;
   let previousLibrary = null,
     previousBackup = null,
     busy = false,
@@ -107,6 +109,7 @@ export function attachLibraryPanel(api) {
     populateGallery();
   };
   function refresh() {
+    transferPanel?.refresh();
     renderScores();
     $('undo-library').disabled = !previousLibrary;
     $('undo-backup').disabled = !previousBackup;
@@ -133,6 +136,7 @@ export function attachLibraryPanel(api) {
               api.catalog().find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
             );
             $('library-dialog').close();
+            api.focusMission?.();
           }),
         );
       row.append(
@@ -213,23 +217,10 @@ export function attachLibraryPanel(api) {
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
       if (parsed.format === 'xonix-backup.v1') {
         const prepared = await prepareBackup(parsed, backupOptions());
-        let old = null;
-        try {
-          if (api.canSnapshotBackup())
-            old = await prepareBackup(
-              { format: 'xonix-backup.v1', ...backupContents() },
-              backupOptions(),
-            );
-        } catch {}
-        const applied = await api.applyBackup(prepared);
-        previousBackup = old;
-        previousLibrary = null;
-        $('undo-library').disabled = true;
-        $('undo-backup').disabled = false;
-        refresh();
+        const applied = await applyPrepared(prepared);
         status(
           'save-status',
-          `Complete backup restored. Your saved flight is ready to load. ${old ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
+          `Complete backup restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
         );
         return;
       }
@@ -251,6 +242,28 @@ export function attachLibraryPanel(api) {
       );
     });
   }
+  async function applyPrepared(prepared) {
+    let old = null;
+    try {
+      if (api.canSnapshotBackup())
+        old = await prepareBackup(
+          { format: 'xonix-backup.v1', ...backupContents() },
+          backupOptions(),
+        );
+    } catch {}
+    const applied = await api.applyBackup(prepared);
+    previousBackup = old;
+    previousLibrary = null;
+    refresh();
+    return { ...applied, undo: old !== null };
+  }
+  transferPanel = attachProfileTransferPanel({
+    api,
+    container: $('library-saves'),
+    backupOptions,
+    task,
+    applyPrepared,
+  });
   $('library-button').onclick = () => open();
   for (const b of document.querySelectorAll('[data-library-panel]'))
     b.onclick = () => open(b.dataset.libraryPanel);
@@ -348,6 +361,7 @@ export function attachLibraryPanel(api) {
       );
       api.select({ ...api.base(), campaign: c });
       $('library-dialog').close();
+      api.focusMission?.();
     } catch (e) {
       status('challenge-status', e);
     }
@@ -480,6 +494,7 @@ export function attachLibraryPanel(api) {
         seed: view.item.seed ?? 1,
       });
       $('gallery-view-dialog').close();
+      api.focusMission?.();
     }
   };
   $('gallery-animate').onclick = async () => {

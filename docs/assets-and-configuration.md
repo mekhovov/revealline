@@ -68,7 +68,7 @@ Inspect the body at normal game size, turning, boosting, paused and with reduced
 
 ## Rules and themes stay separate
 
-The playable class registry has five recipes using `scan`, `stun-field`, `shield` and `slow-field`. Bomber and Carrier share a primitive with different capacity. The historical ability lab's ten classes, five primitives, radio/fiber experiments and collection fixtures have a separate contract. Do not copy unsupported lab fields into the playable registry or call a decorative weapon, antenna or spool a working ability.
+The playable class registry has seven recipes using five primitives: `scan`, `stun-field`, `shield`, `slow-field` and `impact-pulse`. Bomber and Carrier share the stun primitive with different capacity; Fiber relay uses scan with signal resistance, while Impact craft recalls an unfinished cut without awarding territory. The historical ability lab's ten classes, five primitives, radio/fiber experiments and collection fixtures have a separate contract. Do not copy unsupported lab fields into the playable registry or call a decorative weapon, antenna or spool a working ability.
 
 Class values are fictional cells/seconds for an arcade challenge, not real equipment performance. A new primitive, enemy algorithm, capture rule or loadout capability needs code, validation, contact-order decisions and meaningful tests. Supported numerical changes stay data. Class revision and the core's `loadoutHash` distinguish gameplay setups; changing the displayed body must not modify them. Preserve the authored steering policy when comparing cosmetics and test both policies when changing movement logic.
 
