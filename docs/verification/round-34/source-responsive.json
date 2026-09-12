@@ -1,0 +1,144 @@
+{
+  "sourceCommit": "6d4e5dcc97ca49bf0d2c86c15dfb3a68f08ce58d",
+  "additionalSourceChange": "width/height based compact flight controls in game/ui/pixel-theme.css",
+  "surface": "isolated source browser on 8876",
+  "input": "real UI Restart, tap Left, tap Down, pause; no application-state injection",
+  "physicalDevices": false,
+  "measurements": [
+    {
+      "canvas": {
+        "height": 152.3372344970703,
+        "width": 306.34112548828125,
+        "x": 6.8294267654418945,
+        "y": 132.83203125
+      },
+      "document": [
+        320,
+        568
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 124.08203125,
+        "display": "block"
+      },
+      "viewport": [
+        320,
+        568
+      ]
+    },
+    {
+      "canvas": {
+        "height": 179.8372344970703,
+        "width": 361.3411254882813,
+        "x": 6.8294267654418945,
+        "y": 132.83203125
+      },
+      "document": [
+        375,
+        666
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 124.08203125,
+        "display": "block"
+      },
+      "viewport": [
+        375,
+        666
+      ]
+    },
+    {
+      "canvas": {
+        "height": 187.3372344970703,
+        "width": 376.3411254882813,
+        "x": 6.8294267654418945,
+        "y": 132.83203125
+      },
+      "document": [
+        390,
+        640
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 124.08203125,
+        "display": "block"
+      },
+      "viewport": [
+        390,
+        640
+      ]
+    },
+    {
+      "canvas": {
+        "height": 187.3372344970703,
+        "width": 376.3411254882813,
+        "x": 6.8294267654418945,
+        "y": 132.83203125
+      },
+      "document": [
+        390,
+        844
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 124.08203125,
+        "display": "block"
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "canvas": {
+        "height": 208.32681274414065,
+        "width": 418.3268127441406,
+        "x": 407.01171875,
+        "y": 118.828125
+      },
+      "document": [
+        844,
+        390
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 112.38932037353516,
+        "display": "block"
+      },
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "canvas": {
+        "height": 378.3333129882813,
+        "width": 758.3333129882812,
+        "x": 260.83331298828125,
+        "y": 134.83071899414062
+      },
+      "document": [
+        1280,
+        720
+      ],
+      "fits": true,
+      "flight": "LIVE LINE / EXPOSED",
+      "target": {
+        "bottom": 128.3919219970703,
+        "display": "block"
+      },
+      "viewport": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "presentationCommit": "da557b2d5926017943ade53bf365d8f1f247160b",
+  "pixelThemeSha256": "603eac012f23c76558b60e6804f7226ef4e4082d8a9ebb499abb446c91943874",
+  "scopeNote": "Measured before committing the final compact CSS; presentation files match this commit. Unrelated prepared P5 storage was present on this source origin and is excluded from the frozen release."
+}
