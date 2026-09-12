@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import {
   PACK_CATALOG_VERSION,
   canAutoStartPackLaunch,
+  createPackCommitCoordinator,
   createPackLaunchGuard,
   preparePackCatalog,
   resolvePackLaunch,
@@ -164,6 +165,66 @@ test('pack launch work rejects a library replacement before adopting its result'
   finish();
   await assert.rejects(pending, /newer action/);
   assert.equal(adopted, false);
+});
+
+test('a stale durable pack commit reconciles catalog bytes without changing the newer run', async () => {
+  let durable = null;
+  let releaseWrite;
+  let activeRun = { id: 'base-run' };
+  let adoptedCatalog = null;
+  let resumeCalls = 0;
+  const coordinator = createPackCommitCoordinator({
+    write: (value) =>
+      new Promise((resolve) => {
+        releaseWrite = () => {
+          durable = value;
+          resolve();
+        };
+      }),
+    read: () => durable,
+    prepare: (value) => ({ packs: value }),
+    adopt: (value) => (adoptedCatalog = value),
+  });
+  const guard = createPackLaunchGuard();
+  const packs = {};
+  const ticket = guard.begin(packs);
+  const committing = coordinator.commit('pack-a', {
+    beforeWrite: () => guard.assert(ticket, packs),
+  });
+  await Promise.resolve();
+  guard.invalidate();
+  activeRun = { id: 'newer-run' };
+  releaseWrite();
+  await committing;
+  assert.equal(guard.current(ticket, packs), false);
+  assert.equal(await coordinator.noteStaleCommit(), true);
+  assert.deepEqual(adoptedCatalog, { packs: 'pack-a' });
+  assert.equal(activeRun.id, 'newer-run');
+  assert.equal(resumeCalls, 0);
+});
+
+test('pack reconciliation waits for restore and reads the latest queued commit', async () => {
+  let blocked = true;
+  let durable = null;
+  let activeRun = { id: 'restore-pending' };
+  let adoptedCatalog = null;
+  const coordinator = createPackCommitCoordinator({
+    write: async (value) => (durable = value),
+    read: () => durable,
+    prepare: (value) => ({ packs: value }),
+    adopt: (value) => (adoptedCatalog = value),
+    canAdopt: () => !blocked,
+  });
+  await coordinator.commit('pack-a');
+  assert.equal(await coordinator.noteStaleCommit(), false);
+  assert.equal(coordinator.needsReconciliation(), true);
+  coordinator.markIntent();
+  await coordinator.commit('pack-b');
+  activeRun = { id: 'restored-run' };
+  blocked = false;
+  assert.equal(await coordinator.reconcile(), true);
+  assert.deepEqual(adoptedCatalog, { packs: 'pack-b' });
+  assert.equal(activeRun.id, 'restored-run');
 });
 
 test('pack launch guard rejects changed libraries and advances only its current operation', () => {
