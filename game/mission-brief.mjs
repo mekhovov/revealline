@@ -67,6 +67,10 @@ export function missionBriefing(
           .slice(0, 2)
           .join('\n')
       : '';
+  const captureHint =
+    rules.stopOnCapture === true
+      ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
+      : '';
   const facts = [goal, encounterGoal, limits, recommendation].filter(Boolean).join('\n');
   return Object.freeze({
     title,
@@ -75,7 +79,7 @@ export function missionBriefing(
     facts,
     copy: intro
       ? `Leave safe ground, draw a line and return.\nReveal ${coverage}% by enclosing regions without a field enemy.`
-      : [facts, classicHint].filter(Boolean).join('\n'),
+      : [facts, captureHint, classicHint].filter(Boolean).join('\n'),
     fullBrief:
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',

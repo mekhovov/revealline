@@ -579,3 +579,45 @@ test('New playlist uses the visibly selected library track rather than the separ
     [initial.track.id],
   );
 });
+
+test('ordinary audition transport controls pause/resume, seek and change only audition volume without rewriting music intent', async (t) => {
+  const initial = await fixture(),
+    app = await setup(t, { initial });
+  app.choose('tracks', initial.track.id);
+  const media = app.node('audition');
+  media.duration = 45;
+  media.currentTime = 0;
+  media.volume = 1;
+  await app.click('audition-track');
+  assert.equal(app.state.desired, false);
+  assert.equal(app.node('toggle-audition').disabled, false);
+  await app.click('toggle-audition');
+  assert.equal(media.paused, true);
+  assert.equal(app.node('toggle-audition').textContent, 'Resume audition');
+  await app.click('toggle-audition');
+  assert.equal(media.paused, false);
+  app.node('audition-seek').value = '12.5';
+  await app.node('audition-seek').onchange();
+  assert.equal(media.currentTime, 12.5);
+  app.node('audition-volume').value = '0.35';
+  app.node('audition-volume').oninput();
+  assert.equal(media.volume, 0.35);
+  assert.equal(app.state.volume, 0.6);
+  assert.equal(
+    app.calls.some(([kind]) => kind === 'seek' || kind === 'volume'),
+    false,
+  );
+  app.node('audition-seek').focus();
+  app.node('audition-seek').value = '20';
+  media.currentTime = 13;
+  media.emit('timeupdate');
+  assert.equal(
+    app.node('audition-seek').value,
+    '20',
+    'Current playback cannot overwrite a focused range draft',
+  );
+  await app.click('stop-audition');
+  assert.equal(app.node('toggle-audition').disabled, true);
+  assert.equal(app.node('audition-seek').disabled, true);
+  assert.equal(app.state.desired, true);
+});

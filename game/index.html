@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="ui/controller-settings.css" />
     <link rel="stylesheet" href="ui/game-shell.css" />
+    <link rel="stylesheet" href="ui/pixel-theme.css" />
   </head>
   <body>
     <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
@@ -416,57 +417,95 @@
       <button class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button>
       <p class="eyebrow">THE SHORT VERSION</p>
       <h2>Make the next cut count.</h2>
-      <ol>
-        <li>Blue ground is safe from field enemies. Leaving it begins a vulnerable gold line.</li>
-        <li>Return to blue ground to close the cut. Regions without a field enemy are revealed.</li>
-        <li>
-          Enemies on both sides can leave only your line captured. Use that line to begin another
-          cut.
-        </li>
-        <li>
-          A field enemy touching your line, or crossing your own line, costs a life. Border patrols
-          can also hit you on the outer edge.
-        </li>
-        <li>
-          Reach the coverage target and capture required objectives. Special challenge maps can
-          limit the clock or live-line length; their briefing and HUD explain those limits.
-        </li>
-      </ol>
-      <p>
-        <strong>Keyboard:</strong>
-        <span id="keyboard-help"
-          >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
+      <div id="help-reading-unit">
+        <div class="reading-toolbar">
+          <div class="reading-actions">
+            <button id="help-read" type="button" aria-controls="help-reading" aria-pressed="false">
+              Read instructions
+            </button>
+            <button id="help-reading-done" type="button" aria-controls="help-reading" disabled>
+              Done reading
+            </button>
+          </div>
+          <p
+            id="help-reading-hint"
+            class="reading-hint"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            Read without starting or resuming.
+          </p>
+        </div>
+        <div
+          id="help-reading"
+          role="region"
+          aria-label="How to play"
+          tabindex="0"
+          data-game-reading
+          data-menu-reading
         >
-        Touch: tap a direction to fly. Tap another to turn. Releasing keeps you moving. Pause to
-        take a break. Boost can use Hold or Toggle independently.
-      </p>
-      <p>
-        <strong>Controller:</strong>
-        <span id="controller-help"
-          >Release controls and press a face button to join. Configure the layout in Settings.</span
-        >
-      </p>
-      <p>
-        Text entry and file pickers still use keyboard or touch. Some browsers also need a keyboard
-        or touch action before sound can start. Menu navigation and silent gameplay remain
-        available.
-      </p>
-      <p>
-        Each class explains its actual effect in the flight deck. Scout shows current direction
-        hints and hidden objectives; supplies refill charge-based classes. A shield absorbs one
-        contact by safely cancelling the line.
-      </p>
-      <p>
-        <strong>Campaign difficulty:</strong> Standard and Gentle reveal the same pictures and share
-        mission and appearance unlocks. Scores and medals stay separate; equipment seals require
-        Standard. A change during a flight applies to the next fresh attempt. Resume and Load
-        preserve the current flight; Retry starts the selected difficulty from the beginning.
-      </p>
-      <p>
-        <strong>Long flights:</strong> Replay recording and recoverable saves stop after 30 minutes
-        of play. A flight can continue, but a completion after two hours cannot be kept in the
-        collection. Pause when taking a break, and export your library to keep a backup.
-      </p>
+          <ol>
+            <li>
+              Blue ground is safe from field enemies. Leaving it begins a vulnerable gold line.
+            </li>
+            <li>
+              Return to blue ground to close the cut. Regions without a field enemy are revealed. In
+              the revised First Light chapter, closing a cut stops your craft: tap a fresh direction
+              to fly again.
+            </li>
+            <li>
+              Enemies on both sides can leave only your line captured. Use that line to begin
+              another cut.
+            </li>
+            <li>
+              A field enemy touching your line, or crossing your own line, costs a life. Border
+              patrols can also hit you on the outer edge.
+            </li>
+            <li>
+              Reach the coverage target and capture required objectives. Special challenge maps can
+              limit the clock or live-line length; their briefing and HUD explain those limits.
+            </li>
+          </ol>
+          <p>
+            <strong>Keyboard:</strong>
+            <span id="keyboard-help"
+              >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
+            >
+            Touch: tap a direction to fly. Tap another to turn. Releasing keeps you moving. Pause to
+            take a break. Boost can use Hold or Toggle independently.
+          </p>
+          <p>
+            <strong>Controller:</strong>
+            <span id="controller-help"
+              >Release controls and press a face button to join. Configure the layout in
+              Settings.</span
+            >
+          </p>
+          <p>
+            Text entry and file pickers still use keyboard or touch. Some browsers also need a
+            keyboard or touch action before sound can start. Menu navigation and silent gameplay
+            remain available.
+          </p>
+          <p>
+            Each class explains its actual effect in the flight deck. Scout shows current direction
+            hints and hidden objectives; supplies refill charge-based classes. A shield absorbs one
+            contact by safely cancelling the line.
+          </p>
+          <p>
+            <strong>Campaign difficulty:</strong> Standard and Gentle reveal the same pictures and
+            share mission and appearance unlocks. Scores and medals stay separate; equipment seals
+            require Standard. A change during a flight applies to the next fresh attempt. Resume and
+            Load preserve the current flight; Retry starts the selected difficulty from the
+            beginning.
+          </p>
+          <p>
+            <strong>Long flights:</strong> Replay recording and recoverable saves stop after 30
+            minutes of play. A flight can continue, but a completion after two hours cannot be kept
+            in the collection. Pause when taking a break, and export your library to keep a backup.
+          </p>
+        </div>
+      </div>
       <button class="button primary" data-close="help-dialog">Ready to fly →</button>
       <button id="first-flight-help-enter" class="button secondary" type="button" hidden>
         Learn by playing
@@ -495,11 +534,51 @@
       /></label>
       <div id="gallery-grid" class="gallery-grid"></div>
       <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
-      <h3 id="achievement-campaign">Campaign achievements</h3>
-      <div id="achievements"></div>
-      <h3 id="appearance-campaign">Campaign appearances</h3>
-      <div id="appearance-rewards" class="appearance-rewards"></div>
-      <p id="collection-note"></p>
+      <div id="collection-reading-unit">
+        <div class="reading-toolbar">
+          <div class="reading-actions">
+            <button
+              id="collection-read"
+              type="button"
+              aria-controls="collection-reading"
+              aria-pressed="false"
+            >
+              Read achievements
+            </button>
+            <button
+              id="collection-reading-done"
+              type="button"
+              aria-controls="collection-reading"
+              disabled
+            >
+              Done reading
+            </button>
+          </div>
+          <p
+            id="collection-reading-hint"
+            class="reading-hint"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            Read without starting or resuming.
+          </p>
+        </div>
+        <div
+          id="collection-reading"
+          role="region"
+          aria-label="Achievements and appearances"
+          tabindex="0"
+          data-game-reading
+          data-menu-reading
+        >
+          <h3 id="achievement-campaign">Campaign achievements</h3>
+          <div id="achievements"></div>
+          <h3 id="appearance-campaign">Campaign appearances</h3>
+          <div id="appearance-rewards" class="appearance-rewards"></div>
+          <p id="collection-note"></p>
+        </div>
+      </div>
       <button id="collection-choose-appearance" class="button secondary" type="button">
         Choose appearance
       </button>
@@ -786,7 +865,7 @@
         <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-featured" type="button" class="button primary">
-            First Light · New FPV chapter <span>→</span>
+            First Light · Revised challenge <span>→</span>
           </button>
           <button id="shell-play" type="button" class="button secondary">
             All missions <span>→</span>

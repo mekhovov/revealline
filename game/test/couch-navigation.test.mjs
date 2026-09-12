@@ -687,3 +687,118 @@ test('timeout draw keeps series at zero and needs a fresh explicit Next gesture'
   f.frames(30);
   assert.equal(f.tick(), 30);
 });
+
+for (const turnPolicy of ['immediate', 'grid-center']) {
+  for (const adapter of ['keyboard', 'controller']) {
+    test(`${turnPolicy}, ${adapter}: real cut closure stops only its player across substeps and held input`, async (t) => {
+      const level = {
+        version: 'xonix-level.v4',
+        id: 'couch-capture-stop',
+        revision: '1',
+        name: 'Independent capture stop',
+        width: 72,
+        height: 36,
+        encounter: null,
+        classic: { version: 'classic.v1', terrain: [], powerups: [] },
+        spawn: { x: 36.5, y: 0.5 },
+        goal: { coverage: 0.99 },
+        enemies: [{ id: 'seed', type: 'bouncer', x: 60.5, y: 18.5, vx: 1, vy: 0 }],
+        rules: {
+          moveSpeed: 13,
+          lives: 3,
+          graceSeconds: 0,
+          respawnSeconds: 0.1,
+          stopOnCapture: true,
+        },
+      };
+      const f = await page(t, {
+        campaign: { ...base, levels: [level] },
+        turnPolicy,
+        pads: adapter === 'controller' ? [pad(0)] : [],
+      });
+      f.$('race-start').click();
+      f.frames(2);
+      if (adapter === 'controller') f.pads()[0].axes[1] = 1;
+      else f.key('KeyS');
+      f.frames(100);
+      f.key('ArrowDown');
+      f.key('ArrowDown', false);
+      // The second player is still mid-cut when the first reaches safe ground.
+      // Observe actual host motion instead of assuming when the menu hands off.
+      for (let i = 0; i < 500 && f.renders[0].player.y < 34.9; i++) f.frame();
+      assert.equal(f.state(), 'running');
+      assert.ok(f.renders[0].player.y >= 34.9 && f.renders[0].player.y < 35);
+      if (turnPolicy === 'grid-center') {
+        // This off-center request cannot turn before the swept closure. It must
+        // be discarded there, even though the physical input remains held.
+        if (adapter === 'controller') f.pads()[0].axes = [1, 0, 0, 0];
+        else f.key('KeyD');
+      }
+      const beforeTicks = f.renders.map((run) => run.tick);
+      const otherY = f.renders[1].player.y;
+      const reads = f.readCount();
+      f.frame(200);
+      assert.deepEqual(
+        f.renders.map((run, i) => run.tick - beforeTicks[i]),
+        [24, 24],
+      );
+      assert.equal(f.readCount(), reads + 1, 'one physical sample for all 24 simulation substeps');
+      const first = f.renders[0];
+      assert.equal(f.state(), 'running');
+      assert.equal(first.player.x, level.spawn.x);
+      assert.equal(first.player.y, 35);
+      assert.equal(first.player.speed, 0);
+      assert.equal(first.player.queuedDirection, null);
+      assert.equal(first.player.cutting, false);
+      assert.ok(first.claimedCount > 0);
+      assert.equal(f.renders[1].claimedCount, 0);
+      assert.ok(Math.abs(f.renders[1].player.y - otherY - 24 * 13 * FIXED_DT) < 1e-8);
+      const stops = f.observedEvents.filter((event) => event.type === 'capture.stopped');
+      assert.equal(stops.length, 1);
+      assert.equal(
+        stops[0].time,
+        f.observedEvents.find((event) => event.type === 'cut.closed').time,
+      );
+      assert.ok(first.time - stops[0].time > 20 * FIXED_DT, 'closure happened early in the frame');
+      const stoppedAt = { x: first.player.x, y: first.player.y };
+      const otherAfterCut = f.renders[1].player.y;
+      f.frames(6);
+      if (adapter === 'controller') {
+        // Changing a non-neutral held stick cannot bypass the post-cut gate.
+        f.pads()[0].axes = [-1, 0, 0, 0];
+      } else {
+        // Even a repeat:false duplicate keydown is an old physical hold.
+        f.key(turnPolicy === 'grid-center' ? 'KeyD' : 'KeyS');
+      }
+      f.frames(3);
+      assert.deepEqual({ x: first.player.x, y: first.player.y }, stoppedAt);
+      assert.equal(first.player.speed, 0);
+      assert.ok(f.renders[1].player.y > otherAfterCut, 'the other selected direction stays active');
+      if (adapter === 'controller') {
+        f.pads()[0].axes = [0, 0, 0, 0];
+        f.frame();
+        assert.deepEqual({ x: first.player.x, y: first.player.y }, stoppedAt);
+        f.pads()[0].axes[0] = 1;
+        f.frame();
+        f.pads()[0].axes[0] = 0;
+      } else {
+        f.key('KeyS', false);
+        if (turnPolicy === 'grid-center') f.key('KeyD', false);
+        f.key('KeyD');
+        f.key('KeyD', false);
+      }
+      f.frames(12);
+      assert.ok(
+        first.player.x > stoppedAt.x,
+        'a fresh direction resumes and persists after release',
+      );
+      assert.equal(first.status, 'running');
+      assert.equal(f.renders[1].status, 'running');
+      assert.equal(f.observedEvents.filter((event) => event.type === 'capture.stopped').length, 1);
+      assert.equal(
+        f.observedEvents.some((event) => event.type === 'player.failed'),
+        false,
+      );
+    });
+  }
+}

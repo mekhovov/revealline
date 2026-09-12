@@ -450,9 +450,9 @@ test('public fixture generator emits six proven sessions/scenarios and a legally
   assert.equal(await readFile(path.join(out, manifest.files[0].name), 'utf8'), 'edited');
 });
 
-test('all seven actual indexed packs fit the unchanged installed-library budget with exact Homeward, Workshop and First Light image bytes', async () => {
+test('all eight actual indexed packs fit the unchanged installed-library budget with exact Homeward, Workshop and First Light image bytes', async () => {
   const index = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs/index.json')));
-  assert.equal(index.packs.length, 7);
+  assert.equal(index.packs.length, 8);
   const known = new Map(
     current.levelVisuals.map((entry) => {
       const dataUrl = entry.visualOverrides.background.dataUrl;
@@ -518,7 +518,7 @@ test('all seven actual indexed packs fit the unchanged installed-library budget 
       return { naturalWidth: info.width, naturalHeight: info.height };
     },
   });
-  assert.equal(decoded, 9);
-  assert.equal(installed.packs.length, 7);
+  assert.equal(decoded, 12); // R2 reuses three originals; each pack validates its own records.
+  assert.equal(installed.packs.length, 8);
   assert.equal(exportPackLibrary(installed), text);
 });

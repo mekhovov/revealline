@@ -482,7 +482,11 @@ try {
           stepDuel(match, commands);
           neutralResumeTick = false;
           for (let i = 0; i < 2; i++)
-            if (beforeStatus[i] === 'respawning' || match.runs[i].status === 'respawning')
+            if (
+              beforeStatus[i] === 'respawning' ||
+              match.runs[i].status === 'respawning' ||
+              match.runs[i].events.some((event) => event.type === 'capture.stopped')
+            )
               input.clearPlayer(i);
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)

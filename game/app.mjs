@@ -17,6 +17,7 @@ import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
 import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -627,7 +628,8 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
-  const controllerDialog = () => [...document.querySelectorAll('dialog[open]')].at(-1);
+  const modalNavigation = attachModalNavigation();
+  const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
     return `Controller: direction controls move focus · ${b.confirm} confirms · ${b.back} goes back · ${b.menu} resumes a paused flight.`;
@@ -758,6 +760,9 @@ try {
       !element.matches(
         '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
       ),
+    onNativeInput: () => {
+      if (controllerScope() !== 'flight') controller.clear();
+    },
     onBack: controllerBack,
     onMenu: () => {
       if (
@@ -776,6 +781,15 @@ try {
     onReadingChange: (state) => controllerReading?.changed(state),
   });
   controllerReading = attachControllerReading({
+    additionalSurfaces: [
+      ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
+      [
+        'collection-reading',
+        'collection-read',
+        'Achievements and appearances',
+        'collection-reading-unit',
+      ],
+    ],
     getNavigation: () => controllerNavigation,
     getControlLabels: () => controllerLabels.menu,
     getScope: controllerScope,
@@ -803,6 +817,7 @@ try {
       soundtrackStore?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
+      modalNavigation.destroy();
       input.destroy();
       controller.destroy();
       controllerPreview?.destroy();
@@ -824,7 +839,7 @@ try {
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; pause ${labels.pause}. Releasing a direction keeps you moving.`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -2819,6 +2834,10 @@ try {
         );
       if (event.type === 'pickup.collected')
         warning('Supplies ready. Choose your next opportunity.');
+      if (event.type === 'capture.stopped')
+        warning(
+          `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+        );
       if (event.type === 'powerup.collected')
         warning(
           {
@@ -2982,6 +3001,14 @@ try {
           input.clear();
           controller.clear();
           controls = { direction: null, boost: false, action: false, pickup: false };
+        }
+        if (run.events.some((event) => event.type === 'capture.stopped')) {
+          // Record the closure tick unchanged; later substeps wait for a fresh gesture.
+          input.clear();
+          controller.clear();
+          controllerFrame = null;
+          controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingSwitch = null;
         }
         refreshControllerBoostCue();
         if (masteryObserver)
@@ -3422,10 +3449,11 @@ try {
   });
   gameShell = attachGameShell({
     pause,
+    getTopDialog: controllerDialog,
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
-    onFeatured: () => activatePack('fpv-arcade', { campaignId: 'fpv-first-light' }),
+    onFeatured: () => activatePack('fpv-arcade-r2', { campaignId: 'fpv-first-light-r2' }),
   });
   void initializeSoundtrack();
   if (autoplayPackLaunch)
