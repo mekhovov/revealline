@@ -1,12 +1,12 @@
 import {
   CLASSES,
   DEFAULT_RULES,
-  RULESET,
   TURN_POLICIES,
   validateClassRecipes,
   loadoutHash,
   rosterHash,
 } from './core/registry.mjs';
+import { versionsForCampaign } from './core/versions.mjs';
 import { EPS } from './core/geometry.mjs';
 import { dataIdentity, stableId } from './data-json.mjs';
 
@@ -67,6 +67,11 @@ export function emptyProgress(campaign) {
   };
 }
 export function validateProgress(value, campaign) {
+  try {
+    versionsForCampaign(campaign);
+  } catch {
+    return false;
+  }
   if (
     !record(value) ||
     value.version !== PROGRESS_VERSION ||
@@ -156,7 +161,7 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   if (
     !level ||
     !recipe ||
-    result.ruleset !== RULESET ||
+    result.ruleset !== versionsForCampaign(campaign).ruleset ||
     !historyValid(result, campaign.classRecipes ?? CLASSES) ||
     result.revision !== level.revision ||
     result.classRevision !== recipe.revision ||

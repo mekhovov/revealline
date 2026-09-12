@@ -1,12 +1,10 @@
+import { createRun, stepRun, releaseInputs, getSummary, FIXED_DT, CLASSES } from './core/index.mjs';
 import {
-  createRun,
-  stepRun,
-  releaseInputs,
-  getSummary,
-  FIXED_DT,
-  RULESET,
-  CLASSES,
-} from './core/index.mjs';
+  LEGACY_VERSIONS,
+  ENCOUNTER_VERSIONS,
+  resolveVersions,
+  versionsForLevel,
+} from './core/versions.mjs';
 import { boundedJSON, stableId } from './data-json.mjs';
 import {
   MASTERY_DEFINITION_VERSION,
@@ -17,6 +15,7 @@ import {
 } from './mastery.mjs';
 
 export const REPLAY_VERSION = 'xonix-replay.v3';
+export const ENCOUNTER_REPLAY_VERSION = ENCOUNTER_VERSIONS.replayVersion;
 export const MAX_REPLAY_TICKS = 30 * 60 * 120;
 export const MAX_REPLAY_BYTES = 32 * 1024 * 1024;
 export const CHECKPOINT_ALGORITHM = 'fnv1a64-state-v2';
@@ -40,6 +39,20 @@ const SECTIONS = [
   'result',
 ];
 const encoder = new TextEncoder();
+const sectionNames = (versions) =>
+  versions.ruleset === ENCOUNTER_VERSIONS.ruleset ? [...SECTIONS, 'encounter'] : SECTIONS;
+function replayVersions(value) {
+  try {
+    return resolveVersions({
+      levelVersion: value.level?.version,
+      ruleset: value.ruleset,
+      replayVersion: value.version,
+      checkpointAlgorithm: value.checkpoint?.algorithm,
+    });
+  } catch {
+    reject('Unsupported or mismatched replay version, level, ruleset or checkpoint algorithm.');
+  }
+}
 
 export class ReplayValidationError extends TypeError {
   constructor(message, code = 'invalid-replay') {
@@ -194,7 +207,7 @@ const physicsRecipe = (recipe) =>
     'signalResistance',
     'moveSpeedMultiplier',
   ]);
-function authoritativeSections(state) {
+function authoritativeSections(state, versions) {
   return {
     identity: pick(state, [
       'ruleset',
@@ -217,6 +230,9 @@ function authoritativeSections(state) {
       classRecipe: physicsRecipe(state.classRecipe),
       classRecipes: state.classRecipes.map(physicsRecipe),
       hangars: state.hangars,
+      ...(versions.ruleset === ENCOUNTER_VERSIONS.ruleset
+        ? { encounter: state.level.encounter }
+        : {}),
     },
     board: {
       cells: Array.from(state.cells),
@@ -311,15 +327,17 @@ function authoritativeSections(state) {
     ]),
     continuation: pick(state, ['_accumulator', '_input', '_abilitySerial', '_terminalEmitted']),
     result: state.result,
+    ...(versions.ruleset === ENCOUNTER_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
   };
 }
 
 /** Covers future-affecting simulation state, including action latches. */
 export function authoritativeCheckpoint(state) {
-  const projected = authoritativeSections(state),
+  const versions = resolveVersions({ levelVersion: state.level.version, ruleset: state.ruleset });
+  const projected = authoritativeSections(state, versions),
     sections = {};
-  for (const name of SECTIONS) sections[name] = checksum(projected[name]);
-  return { algorithm: CHECKPOINT_ALGORITHM, hash: checksum(sections), sections };
+  for (const name of sectionNames(versions)) sections[name] = checksum(projected[name]);
+  return { algorithm: versions.checkpointAlgorithm, hash: checksum(sections), sections };
 }
 
 /** Recorder owns copies; recordInput never steps the simulation itself. */
@@ -330,10 +348,11 @@ export function createRecorder(level, options = {}, build = 'unknown') {
   if (!keysExactly(copied.options, [], ['seed', 'turnPolicy', 'classId', 'classRecipes']))
     reject('Unsupported replay run option.');
   const state = createRun(copied.level, copied.options);
+  const versions = versionsForLevel(state.level);
   return {
-    version: REPLAY_VERSION,
+    version: versions.replayVersion,
     build: copied.build,
-    ruleset: RULESET,
+    ruleset: versions.ruleset,
     level: state.level,
     options: {
       seed: state.seed,
@@ -375,6 +394,13 @@ export function recordRelease(recorder) {
 }
 
 export function exportReplay(recorder, state) {
+  const versions = resolveVersions({
+    levelVersion: recorder.level.version,
+    replayVersion: recorder.version,
+    ruleset: recorder.ruleset,
+  });
+  if (state.ruleset !== versions.ruleset || state.level.version !== versions.levelVersion)
+    reject('Recorder and run simulation versions differ.', 'recording-mismatch');
   if (state.tick !== recorder.ticks)
     reject(
       'Recorder tick count differs from the run. Record once per actual fixed tick.',
@@ -388,9 +414,9 @@ export function exportReplay(recorder, state) {
   if (canonical(pick(state, Object.keys(recorder._identity))) !== canonical(recorder._identity))
     reject('Recorder and run identities differ.', 'recording-mismatch');
   return boundedCopy({
-    version: REPLAY_VERSION,
+    version: versions.replayVersion,
     build: recorder.build,
-    ruleset: RULESET,
+    ruleset: versions.ruleset,
     level: recorder.level,
     options: recorder.options,
     segments: recorder.segments,
@@ -429,11 +455,10 @@ function prepareReplay(source) {
       'ticks',
       'summary',
       'checkpoint',
-    ]) ||
-    data.version !== REPLAY_VERSION ||
-    data.ruleset !== RULESET
+    ])
   )
     reject('Unsupported replay version, ruleset or document fields.');
+  const versions = replayVersions(data);
   if (typeof data.build !== 'string' || !data.build.length || data.build.length > 160)
     reject('Invalid recorded build.');
   if (!keysExactly(data.options, ['seed', 'turnPolicy', 'classId', 'classRecipes']))
@@ -467,9 +492,9 @@ function prepareReplay(source) {
     hex = (value) => typeof value === 'string' && /^[0-9a-f]{16}$/.test(value);
   if (
     !keysExactly(c, ['algorithm', 'hash', 'sections']) ||
-    c.algorithm !== CHECKPOINT_ALGORITHM ||
+    c.algorithm !== versions.checkpointAlgorithm ||
     !hex(c.hash) ||
-    !keysExactly(c.sections, SECTIONS) ||
+    !keysExactly(c.sections, sectionNames(versions)) ||
     Object.values(c.sections).some((value) => !hex(value))
   )
     reject('Invalid authoritative checkpoint.');
@@ -477,7 +502,7 @@ function prepareReplay(source) {
     reject('Checkpoint root does not match its section checksums.');
   if (!record(data.summary)) reject('Expected summary must be an object.');
   const state = createRun(data.level, data.options);
-  return { data, state };
+  return { data, state, versions };
 }
 
 /** Owned, structurally validated document. This does not verify its outcome. */
@@ -513,11 +538,11 @@ export function takeReplayMasteryObserver(verification) {
   return observer;
 }
 
-function finishVerification({ data, state, mastery }) {
+function finishVerification({ data, state, mastery, versions }) {
   const checkpoint = authoritativeCheckpoint(state),
     summary = getSummary(state),
     diagnostics = [];
-  for (const name of SECTIONS)
+  for (const name of sectionNames(versions))
     if (checkpoint.sections[name] !== data.checkpoint.sections[name])
       diagnostics.push({
         code: 'state-mismatch',
@@ -615,10 +640,12 @@ export async function verifyReplayAsync(
   // state, and the ordinary verifier path retains its exact result contract.
   const requestedMastery = masteryRequest(mastery);
   checkAbort(signal);
+  const prepared = prepareReplay(data);
   await yieldToHost();
   checkAbort(signal);
-  const prepared = prepareReplay(data);
   if (requestedMastery) {
+    if (prepared.versions.ruleset !== LEGACY_VERSIONS.ruleset)
+      reject('Optional mastery observation is supported only for legacy core v2 maps.');
     const { definition, ...identity } = requestedMastery;
     prepared.mastery = {
       runId: identity.runId,

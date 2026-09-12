@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, dataIdentity, plainObject, stableId } from './data-json.mjs';
-import { CLASSES, RULESET, rosterHash, validateClassRecipes } from './core/registry.mjs';
+import { CLASSES, rosterHash, validateClassRecipes } from './core/registry.mjs';
+import { LEGACY_VERSIONS, ENCOUNTER_VERSIONS, versionsForCampaign } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { createRun } from './core/index.mjs';
 import {
@@ -142,16 +143,24 @@ function campaignContext(source) {
   );
   // Keep the existing library.campaignKey projection byte-compatible. Importing
   // the library here would tie pack validation back to persistence; tests pin both.
-  const campaignKey = `${source.id}/${encodeURIComponent(source.revision)}/${dataIdentity({ ruleset: RULESET, levels, classRecipes })}`;
-  return { id: source.id, levels, classRecipes, campaignKey, rosterHash: rosterHash(classRecipes) };
+  const versions = versionsForCampaign(source);
+  const campaignKey = `${source.id}/${encodeURIComponent(source.revision)}/${dataIdentity({ ruleset: versions.ruleset, levels, classRecipes })}`;
+  return {
+    id: source.id,
+    levels,
+    classRecipes,
+    campaignKey,
+    versions,
+    rosterHash: rosterHash(classRecipes),
+  };
 }
 const boardMetadata = (context, level) => ({
   campaignKey: context.campaignKey,
   levelId: level.id,
-  levelIdentity: `level-v1-${dataIdentity(level)}`,
+  levelIdentity: `${context.versions.ruleset === LEGACY_VERSIONS.ruleset ? 'level-v1' : 'level-v2'}-${dataIdentity(level)}`,
   levelRevision: level.revision,
   rosterHash: context.rosterHash,
-  ruleset: RULESET,
+  ruleset: context.versions.ruleset,
 });
 const registrationIdentity = (value) =>
   canonicalJSON({
@@ -160,6 +169,10 @@ const registrationIdentity = (value) =>
   });
 
 function registration(context, source) {
+  requireValue(
+    context.versions.ruleset === LEGACY_VERSIONS.ruleset,
+    'Optional mastery definitions are supported only for legacy core v2 maps.',
+  );
   const definition = resolveMasteryDefinition(source);
   const level = context.levels.find((item) => item.id === definition.levelId);
   requireValue(
@@ -252,23 +265,33 @@ export function createMasteryCatalog(source) {
     );
     const format = entry.sourcePackFormat ?? 'xonix-pack.v1';
     requireValue(
-      format === 'xonix-pack.v1' || format === 'xonix-pack.v2',
+      ['xonix-pack.v1', 'xonix-pack.v2', 'xonix-pack.v3'].includes(format),
       'Unsupported mastery source pack format.',
     );
     requireValue(
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
-    const authored = format === 'xonix-pack.v2';
+    const encounter = format === 'xonix-pack.v3';
+    const authored = format === 'xonix-pack.v2' || encounter;
     requireValue(
       authored ? Array.isArray(entry.masteries) : !Object.hasOwn(entry, 'masteries'),
       authored
-        ? 'A v2 mastery catalog entry requires its explicit masteries array.'
+        ? 'A v2/v3 mastery catalog entry requires its explicit masteries array.'
         : 'A v1 entry cannot declare masteries.',
     );
     const context = campaignContext(entry.campaign),
       byLevel = new Map(),
       definitionIds = new Set();
+    requireValue(
+      context.versions.ruleset ===
+        (encounter ? ENCOUNTER_VERSIONS.ruleset : LEGACY_VERSIONS.ruleset),
+      'Pack format and campaign simulation versions differ.',
+    );
+    requireValue(
+      !encounter || entry.masteries.length === 0,
+      'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+    );
     totalLevels += context.levels.length;
     requireValue(
       totalLevels <= MASTERY_CATALOG_LIMITS.levels,

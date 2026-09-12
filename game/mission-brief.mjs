@@ -40,7 +40,11 @@ export function missionBriefing(
   const recommendation = recommendations.length
     ? `Recommended: ${compact(recommendations.join(' / '), 68)}.`
     : '';
-  const facts = [goal, limits, recommendation].filter(Boolean).join('\n');
+  const encounter = level.encounter;
+  const encounterGoal = encounter
+    ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
+    : '';
+  const facts = [goal, encounterGoal, limits, recommendation].filter(Boolean).join('\n');
   return Object.freeze({
     title,
     fullTitle,
@@ -52,8 +56,10 @@ export function missionBriefing(
     fullBrief:
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
-    status: intro
-      ? 'Your first route: fly down from the marked start to the opposite border.'
-      : 'Choose your route. Open Mission brief in the flight deck for guidance.',
+    status: encounter
+      ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
+      : intro
+        ? 'Your first route: fly down from the marked start to the opposite border.'
+        : 'Choose your route. Open Mission brief in the flight deck for guidance.',
   });
 }

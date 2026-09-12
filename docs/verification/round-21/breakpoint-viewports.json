@@ -1,0 +1,79 @@
+{
+  "observations": [
+    {
+      "label": "844x500",
+      "launch": "Launch actions: Start mission ↗ 334 × 44 · visible inside arena",
+      "layout": "Arena 380.0 × 285.0 · top 109, bottom 394 · whole arena visible · no horizontal overflow",
+      "size": "844 × 500 CSS pixels requested · frame reports 844 × 500 · shown at 84%",
+      "status": "Preview set to 844 × 500 CSS pixels."
+    },
+    {
+      "label": "844x501",
+      "launch": "Launch actions: Start mission ↗ 254 × 45 · visible inside arena",
+      "layout": "Arena 320.0 × 240.0 · top 161, bottom 401 · whole arena visible · no horizontal overflow",
+      "size": "844 × 501 CSS pixels requested · frame reports 844 × 501 · shown at 84%",
+      "status": "Preview set to 844 × 501 CSS pixels."
+    },
+    {
+      "label": "844x520",
+      "controls": "Controls: minimum 44 × 44 · scroll to reach some actions",
+      "launch": "Launch actions: Start mission ↗ 254 × 45 · visible inside arena",
+      "layout": "Arena 320.0 × 240.0 · top 161, bottom 401 · whole arena visible · no horizontal overflow",
+      "size": "844 × 520 CSS pixels requested · frame reports 844 × 520 · shown at 84%",
+      "status": "Preview set to 844 × 520 CSS pixels."
+    },
+    {
+      "label": "1101x501",
+      "controls": "Controls: minimum 34 × 28 · scroll to reach some actions",
+      "launch": "Launch actions: Start mission ↗ 254 × 45 · visible inside arena",
+      "layout": "Arena 320.0 × 240.0 · top 161, bottom 401 · whole arena visible · no horizontal overflow",
+      "size": "1101 × 501 CSS pixels requested · frame reports 1101 × 501 · shown at 64%",
+      "status": "Preview set to 1101 × 501 CSS pixels."
+    },
+    {
+      "label": "681x501",
+      "controls": "Controls: minimum 44 × 44 · scroll to reach some actions",
+      "launch": "Launch actions: Start mission ↗ 254 × 45 · visible inside arena",
+      "layout": "Arena 320.0 × 240.0 · top 161, bottom 401 · whole arena visible · no horizontal overflow",
+      "size": "681 × 501 CSS pixels requested · frame reports 681 × 501 · shown at 100%",
+      "status": "Preview set to 681 × 501 CSS pixels."
+    },
+    {
+      "label": "invalid239-retains681x501",
+      "controls": "Controls: minimum 44 × 44 · scroll to reach some actions",
+      "launch": "Launch actions: Start mission ↗ 254 × 45 · visible inside arena",
+      "layout": "Arena 320.0 × 240.0 · top 161, bottom 401 · whole arena visible · no horizontal overflow",
+      "size": "681 × 501 CSS pixels requested · frame reports 681 × 501 · shown at 100%",
+      "status": "Width must be a whole number from 240 to 2560 CSS pixels. The previous preview size is kept."
+    },
+    {
+      "label": "844x501-paused",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "launch": "Launch actions: Resume → 105 × 45 · scroll needed",
+      "layout": "Arena 320.0 × 240.0 · top -118, bottom 122 · scroll needed for whole arena · no horizontal overflow",
+      "size": "844 × 501 CSS pixels requested · frame reports 844 × 501 · shown at 84%",
+      "status": "Preview set to 844 × 501 CSS pixels."
+    },
+    {
+      "label": "couch-sentinel320x640",
+      "controls": "Controls: minimum 45 × 44 · scroll to reach some actions",
+      "launch": "No launch overlay is active.",
+      "layout": "Arena 304.0 × 612.8 · top 98, bottom 711 · scroll needed for whole arena · no horizontal overflow",
+      "size": "320 × 640 CSS pixels requested · frame reports 320 × 640 · shown at 100%",
+      "status": "Preview set to 320 × 640 CSS pixels."
+    },
+    {
+      "label": "couch-sentinel844x390",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "launch": "No launch overlay is active.",
+      "layout": "Arena 828.0 × 237.6 · top 80, bottom 318 · whole arena visible · no horizontal overflow",
+      "size": "844 × 390 CSS pixels requested · frame reports 844 × 390 · shown at 84%",
+      "status": "Preview set to 844 × 390 CSS pixels."
+    }
+  ],
+  "pausedResize": {
+    "before": "1 / 2 · SHIELD RELAY · 1.7s\nCapture the shield relay. Return every line to safe ground.",
+    "after": "1 / 2 · SHIELD RELAY · 1.7s\nCapture the shield relay. Return every line to safe ground.",
+    "matched": true
+  }
+}

@@ -2,6 +2,7 @@ import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { encounterView } from '../ui/encounter-view.mjs';
 
 const $ = (id) => document.getElementById(id);
 const examples = {
@@ -69,6 +70,12 @@ try {
   function readouts() {
     if (!player) return;
     const { state, info } = player;
+    const encounter = encounterView(state);
+    $('encounter-cue').hidden = !encounter;
+    $('encounter-title').textContent = encounter?.title ?? '';
+    $('encounter-instruction').textContent = encounter
+      ? `Recorded route: ${encounter.instruction}`
+      : '';
     $('timeline').max = Math.max(1, info.totalTicks);
     $('timeline').value = state.tick;
     $('tick-readout').textContent = `Tick ${state.tick} / ${info.totalTicks}`;

@@ -417,7 +417,15 @@ export class Soundscape {
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
     else if (event.type === 'cells.claimed') cue([0, 4, 7], 'bell', 0.04, 0.2);
     else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
-    else if (event.type === 'boss.warning' || event.type === 'signal.warning')
+    else if (event.type === 'encounter.phaseChanged' && event.phase === 'open')
+      cue([0, 7, 12], 'bell', 0.08, 0.16);
+    else if (event.type === 'encounter.stageChanged' && event.stage === 'transition')
+      cue([0, 4, 9], 'pad', 0.1, 0.16);
+    else if (
+      event.type === 'boss.warning' ||
+      event.type === 'signal.warning' ||
+      (event.type === 'encounter.phaseChanged' && event.phase === 'warning')
+    )
       cue([1, 1], 'chip', 0.16, 0.1);
     else if (event.type === 'shield.absorbed') cue([7, 0, 12], 'bell', 0.045, 0.18);
     else if (

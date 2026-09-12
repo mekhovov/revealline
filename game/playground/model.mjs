@@ -1,8 +1,13 @@
-import { CLASSES, RULESET, validateLevel } from '../core/index.mjs';
+import { CLASSES, validateLevel } from '../core/index.mjs';
+import { versionsForLevel } from '../core/versions.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { prepareScenario } from '../imports.mjs';
-import { validateScenario, MASTERY_SCENARIO_VERSION } from '../content.mjs';
+import {
+  validateScenario,
+  MASTERY_SCENARIO_VERSION,
+  ENCOUNTER_SCENARIO_VERSION,
+} from '../content.mjs';
 import { createMasteryCatalog } from '../mastery-catalog.mjs';
 import {
   preparePack,
@@ -12,6 +17,7 @@ import {
   PACK_LIMITS,
   validatePack,
   MASTERY_PACK_VERSION,
+  ENCOUNTER_PACK_VERSION,
 } from '../packs.mjs';
 
 export function expansionEntries(library) {
@@ -35,12 +41,40 @@ export function editorScenario(scenario) {
 export function withScenarioMastery(current, definition) {
   const candidate = {
     ...current,
-    format: MASTERY_SCENARIO_VERSION,
+    format:
+      current.format === ENCOUNTER_SCENARIO_VERSION
+        ? ENCOUNTER_SCENARIO_VERSION
+        : MASTERY_SCENARIO_VERSION,
     masteryDefinition: structuredClone(definition),
   };
   const checked = validateScenario(candidate);
   required(checked.valid, checked.errors.join('; '));
   return editorScenario(candidate);
+}
+/** Encounter edits replace one bounded recipe; references are validated together. */
+export function withScenarioEncounter(current, descriptor) {
+  const candidate = {
+    ...current,
+    format: ENCOUNTER_SCENARIO_VERSION,
+    masteryDefinition: null,
+    level: { ...current.level, version: 'xonix-level.v2', encounter: structuredClone(descriptor) },
+  };
+  const checked = validateScenario(candidate);
+  required(checked.valid, checked.errors.join('; '));
+  return editorScenario(candidate);
+}
+/** Explicit conversion keeps the picture/objectives but removes the staged enemy. */
+export function withoutScenarioEncounter(current) {
+  required(current.level.encounter, 'This map has no staged encounter.');
+  const level = structuredClone(current.level);
+  level.enemies = level.enemies.filter((enemy) => enemy.id !== level.encounter.enemyId);
+  delete level.encounter;
+  level.version = 'xonix-level.v1';
+  return editScenario(current, {
+    format: MASTERY_SCENARIO_VERSION,
+    masteryDefinition: null,
+    level,
+  });
 }
 /** Validate the complete candidate before the editor records Undo or adopts a map edit. */
 export function editScenario(current, changes) {
@@ -78,10 +112,12 @@ export function entryScenario(
     entry.themes[0];
   const current = {
     format:
-      entry.sourcePackFormat === MASTERY_PACK_VERSION
-        ? MASTERY_SCENARIO_VERSION
-        : 'xonix-playground.v1',
-    ...(entry.sourcePackFormat === MASTERY_PACK_VERSION
+      entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
+        ? ENCOUNTER_SCENARIO_VERSION
+        : entry.sourcePackFormat === MASTERY_PACK_VERSION
+          ? MASTERY_SCENARIO_VERSION
+          : 'xonix-playground.v1',
+    ...([MASTERY_PACK_VERSION, ENCOUNTER_PACK_VERSION].includes(entry.sourcePackFormat)
       ? {
           masteryDefinition:
             entry.masteries.find((definition) => definition.levelId === levelId) ?? null,
@@ -124,7 +160,14 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     value && typeof value === 'object' && !Array.isArray(value),
     'Choose a scenario, map, expansion or library JSON object.',
   );
-  if (['xonix-pack.v1', MASTERY_PACK_VERSION, 'xonix-pack-library.v1'].includes(value.format)) {
+  if (
+    [
+      'xonix-pack.v1',
+      MASTERY_PACK_VERSION,
+      ENCOUNTER_PACK_VERSION,
+      'xonix-pack-library.v1',
+    ].includes(value.format)
+  ) {
     let nextLibrary,
       selectedId,
       warnings = [];
@@ -153,7 +196,17 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     };
   }
   const candidateScenario =
-    value.version === 'xonix-level.v1' ? { ...current, level: value } : value;
+    value.version === 'xonix-level.v2'
+      ? { ...current, format: ENCOUNTER_SCENARIO_VERSION, masteryDefinition: null, level: value }
+      : value.version === 'xonix-level.v1'
+        ? {
+            ...current,
+            ...(current?.format === ENCOUNTER_SCENARIO_VERSION
+              ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
+              : {}),
+            level: value,
+          }
+        : value;
   const prepared = await prepareScenario(candidateScenario, {
     ...(decodeImage ? { decodeImage } : {}),
   });
@@ -264,7 +317,10 @@ export function interactionPreset(kind, current, classRecipes = CLASSES) {
   );
   const scenario = structuredClone(current),
     close = kind !== 'fiber';
-  if (scenario.format === MASTERY_SCENARIO_VERSION) scenario.masteryDefinition = null;
+  if ([MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(scenario.format)) {
+    scenario.format = MASTERY_SCENARIO_VERSION;
+    scenario.masteryDefinition = null;
+  }
   scenario.level = {
     version: 'xonix-level.v1',
     id: `workshop-${kind}`,
@@ -329,8 +385,13 @@ export function expansionFromScenario(
   delete level.themeId;
   delete level.musicId;
   const pack = {
-    format: current.format === MASTERY_SCENARIO_VERSION ? MASTERY_PACK_VERSION : 'xonix-pack.v1',
-    ...(current.format === MASTERY_SCENARIO_VERSION
+    format:
+      current.format === ENCOUNTER_SCENARIO_VERSION
+        ? ENCOUNTER_PACK_VERSION
+        : current.format === MASTERY_SCENARIO_VERSION
+          ? MASTERY_PACK_VERSION
+          : 'xonix-pack.v1',
+    ...([MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(current.format)
       ? {
           masteries: current.masteryDefinition
             ? [
@@ -346,7 +407,7 @@ export function expansionFromScenario(
     version: '1.0.0',
     name,
     description: 'A playable expansion authored in the Reveal Line playground.',
-    engine: RULESET,
+    engine: versionsForLevel(level).ruleset,
     dependencies: [],
     metadata: {
       author: 'Local creator',

@@ -23,6 +23,7 @@ export const VISUAL_ROLES = Object.freeze([
 ]);
 export const SCENARIO_VERSION = 'xonix-playground.v1';
 export const MASTERY_SCENARIO_VERSION = 'xonix-playground.v2';
+export const ENCOUNTER_SCENARIO_VERSION = 'xonix-playground.v3';
 
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
@@ -434,9 +435,15 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   const errors = checkJSON(value),
     warnings = [];
   if (errors.length) return result(errors, { warnings });
-  if (!plain(value) || ![SCENARIO_VERSION, MASTERY_SCENARIO_VERSION].includes(value.format))
-    return result(['Expected xonix-playground.v1 or xonix-playground.v2'], { warnings });
-  const hasMastery = value.format === MASTERY_SCENARIO_VERSION;
+  if (
+    !plain(value) ||
+    ![SCENARIO_VERSION, MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(value.format)
+  )
+    return result(['Expected xonix-playground.v1, xonix-playground.v2 or xonix-playground.v3'], {
+      warnings,
+    });
+  const hasEncounter = value.format === ENCOUNTER_SCENARIO_VERSION;
+  const hasMastery = value.format === MASTERY_SCENARIO_VERSION || hasEncounter;
   keys(
     value,
     [
@@ -455,6 +462,11 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
     errors,
   );
   errors.push(...validateLevel(value.level).errors);
+  if (
+    plain(value.level) &&
+    value.level.version !== (hasEncounter ? 'xonix-level.v2' : 'xonix-level.v1')
+  )
+    errors.push('Scenario and level simulation versions must match');
   themeChecks(value.theme, errors);
   if (plain(value.level)) {
     if (!text(value.level.name, 280))
@@ -512,6 +524,10 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (hasMastery) {
     if (!own(value, 'masteryDefinition'))
       errors.push('scenario.masteryDefinition is required; use null for no optional goal');
+    else if (hasEncounter && value.masteryDefinition !== null)
+      errors.push(
+        'Encounter scenarios require masteryDefinition:null; optional goals are not supported by this ruleset',
+      );
     else if (value.masteryDefinition !== null && !errors.length) {
       try {
         resolveMasteryContext({

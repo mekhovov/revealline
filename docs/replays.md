@@ -1,19 +1,23 @@
 # Deterministic replays
 
-The [replay module](../game/replay.mjs) records the real Xonix kernel's fixed-tick commands and explicit input releases. The current format is `xonix-replay.v3`, paired with `xonix-core.v2`. It records class-switch commands and checkpoints the complete class roster, active craft and retained equipment state. Replay verification runs a separate simulation and grants no campaign rewards. [Replay Theater](replay-theater.md) now provides visual playback of verified recordings, with the same reward boundary.
+The [replay module](../game/replay.mjs) records the real Xonix kernel's fixed-tick commands and explicit input releases. Current source accepts two exact simulation contracts. Existing `xonix-level.v1` maps retain `xonix-core.v2`, `xonix-replay.v3` and `fnv1a64-state-v2`. Staged `xonix-level.v2` encounters use `xonix-core.v3`, `xonix-replay.v4` and `fnv1a64-state-v3`. These fields cannot be mixed. Both record class-switch commands, the complete roster, active craft and retained equipment state. Replay verification reconstructs a separate simulation and grants no campaign rewards. [Replay Theater](replay-theater.md) provides visual playback with the same reward boundary.
 
 A release is part of gameplay history: the official `releaseInputs` hook clears buffered steering, speed and action latches. For example, holding Scout's action beyond its cooldown, pausing, then pressing it again produces a new scan. Omitting that pause release reproduces the same score/time summary but different ability timers. Explicit releases, introduced in v2 and retained in v3, record this distinction; verification compares the full authoritative state.
 
 ## Shell integration
 
 ```js
-import {createRun, stepRun, releaseInputs, FIXED_DT} from './core/index.mjs';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from './core/index.mjs';
 import {
-  createRecorder, recordInput, recordRelease, exportReplay,
-  verifyReplayAsync, MAX_REPLAY_BYTES
+  createRecorder,
+  recordInput,
+  recordRelease,
+  exportReplay,
+  verifyReplayAsync,
+  MAX_REPLAY_BYTES,
 } from './replay.mjs';
 
-const options = {seed, turnPolicy, classId, classRecipes};
+const options = { seed, turnPolicy, classId, classRecipes };
 const run = createRun(level, options);
 let recorder = createRecorder(level, options, buildVersion);
 
@@ -33,7 +37,7 @@ downloadJSON(document, 'run-replay.json');
 if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds 32 MiB.');
 const result = await verifyReplayAsync(await file.text(), {
   signal: abortController.signal,
-  onProgress: ({ticks, total}) => showProgress(ticks, total)
+  onProgress: ({ ticks, total }) => showProgress(ticks, total),
 });
 showVerification(result.match, result.diagnostics, result.actual);
 ```
@@ -53,19 +57,39 @@ Recording must begin with a new run. If a step did not happen, do not call `reco
   "version": "xonix-replay.v3",
   "build": "0.2.0",
   "ruleset": "xonix-core.v2",
-  "level": {"...": "complete validated level"},
-  "options": {"seed": 17, "turnPolicy": "immediate", "classId": "scout", "classRecipes": []},
+  "level": { "...": "complete validated level" },
+  "options": { "seed": 17, "turnPolicy": "immediate", "classId": "scout", "classRecipes": [] },
   "segments": [
-    {"ticks": 721, "input": {"direction": null, "boost": false, "action": true, "pickup": false, "switchClass": null}, "releaseBefore": false},
-    {"ticks": 1, "input": {"direction": null, "boost": false, "action": true, "pickup": false, "switchClass": null}, "releaseBefore": true}
+    {
+      "ticks": 721,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": true
+    }
   ],
   "releaseAfter": true,
   "ticks": 722,
-  "summary": {"...": "getSummary snapshot"},
+  "summary": { "...": "getSummary snapshot" },
   "checkpoint": {
     "algorithm": "fnv1a64-state-v1",
     "hash": "16 hexadecimal characters",
-    "sections": {"...": "named section checksums"}
+    "sections": { "...": "named section checksums" }
   }
 }
 ```
@@ -78,19 +102,21 @@ Adjacent equal commands use run-length encoding. `releaseBefore` applies the off
 
 Exports from [game/replay.mjs](../game/replay.mjs):
 
-| API | Behavior |
-|---|---|
-| `createRecorder(level, options={}, build='unknown')` | Validate and copy a new run's inputs/configuration. |
-| `recordInput(recorder, input)` | Record exactly one fixed-tick command; normalize missing booleans to false and direction/class switch to null. |
-| `recordRelease(recorder)` | Record the mirrored official release hook without adding time. |
-| `exportReplay(recorder, state)` | Return an independent complete JSON document with summary and checkpoint. |
-| `authoritativeCheckpoint(state)` | Return the versioned full-state checksum and section hashes. |
-| `verifyReplay(data)` | Synchronous Node/tool verification. Accept a parsed object or JSON string. |
-| `verifyReplayAsync(data, {chunkTicks=600, onProgress, signal})` | Browser verification that yields before work and between chunks, with cancellation. |
+| API                                                             | Behavior                                                                                                       |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `createRecorder(level, options={}, build='unknown')`            | Validate and copy a new run's inputs/configuration.                                                            |
+| `recordInput(recorder, input)`                                  | Record exactly one fixed-tick command; normalize missing booleans to false and direction/class switch to null. |
+| `recordRelease(recorder)`                                       | Record the mirrored official release hook without adding time.                                                 |
+| `exportReplay(recorder, state)`                                 | Return an independent complete JSON document with summary and checkpoint.                                      |
+| `authoritativeCheckpoint(state)`                                | Return the versioned full-state checksum and section hashes.                                                   |
+| `verifyReplay(data)`                                            | Synchronous Node/tool verification. Accept a parsed object or JSON string.                                     |
+| `verifyReplayAsync(data, {chunkTicks=600, onProgress, signal})` | Own and validate the input before the first yield, then reconstruct in cancellable chunks.                     |
 
 Both verification functions return `{state, match, diagnostics, actual:{summary,checkpoint}, recordedBuild, ticks}`. State mismatches identify sections through diagnostics such as `{code:'state-mismatch',section:'ability',message,...}`. A summary mismatch is reported separately. Malformed, unsupported or oversized documents throw `ReplayValidationError`; cancellation throws an error named `AbortError`. A valid but divergent replay returns `match:false`.
 
 The checkpoint covers identity and configuration; every cell/count/coverage; player position, cardinal direction, queue and grace; live tiles and path segments; enemies and their status/boss timing; objectives and supplies; ability resources, timers and fields; the complete retained per-class loadout bank, class history and switch cooldown; signal rectangles/effects and configured challenge budgets; status/time/tick/lives/score/recovery; input latches, serial counters and terminal continuation state; and the completed result. Decorative heading, body/palette data, class display wording and ephemeral last-step events are excluded. The whole checksum is computed from named section checksums, and those sections are compared independently.
+
+Encounter checkpoints additionally hash the entire normalized `level.encounter` descriptor under `configuration` and the entire authoritative `run.encounter` object in a separate `encounter` section. Stage, phase, lane, timing, transition and defeat facts are reconstructed from inputs, never assigned from imported data. Old maps receive neither an empty encounter field nor an extra checksum section; the v0.10 compatibility fixture pins their existing replay and profile outputs. `REPLAY_VERSION` and `CHECKPOINT_ALGORITHM` remain legacy defaults; `createRecorder` and verification dispatch from the validated map/version pair. Encounter maps currently support ordinary completion rewards only, with no optional mastery definition.
 
 Checksums use stable canonical JSON and FNV-1a64. They detect accidental divergence; they are **not signatures, authentication or an anti-cheat proof**. Someone able to edit a replay can also edit its expected hashes. A match states that the currently loaded kernel reconstructed its recorded expected state. The recorded build string is reported as provenance; it does not load old executable code. Changes to simulation semantics require versioned rules and appropriate replay compatibility decisions.
 
@@ -118,15 +144,18 @@ The game offers **Save & pause**, then **Library & saves → Saves & loads → L
 
 [sessions.mjs](../game/sessions.mjs) exposes these boundaries:
 
-| API | Behavior |
-|---|---|
-| `suspendSession({run, recorder, campaignKey, themeId, bodyId, runId, savedAt})` | Require an unfinished run, mirror an official input release, then export its complete recording |
-| `restoreSession(candidate, {campaign, campaignKey, signal, onProgress})` | Snapshot and validate the whole envelope, asynchronously verify the recording, match installed map/roster data and return a reconstructed run and continuing recorder |
-| `saveSession(storage, key, session)` | Validate and persist a bounded slot; report failure while preserving the previous slot |
+| API                                                                             | Behavior                                                                                                                                                              |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `suspendSession({run, recorder, campaignKey, themeId, bodyId, runId, savedAt})` | Require an unfinished run, mirror an official input release, then export its complete recording                                                                       |
+| `restoreSession(candidate, {campaign, campaignKey, signal, onProgress})`        | Snapshot and validate the whole envelope, asynchronously verify the recording, match installed map/roster data and return a reconstructed run and continuing recorder |
+| `snapshotSession(candidate)`                                                    | Return an owned envelope after metadata and nested simulation-pair checks; this does not verify its outcome                                                           |
+| `saveSession(storage, key, session)`                                            | Validate and persist a bounded slot; report failure while preserving the previous slot                                                                                |
 
 The portable envelope allows the replay's 32 MiB plus 16 KiB of metadata. The automatic local slot has a stricter 2 MiB budget; a larger valid attempt needs its exported file. Metadata, date syntax, object shape, keys, depth and byte limits are checked before adopting any state. The entire document and installed campaign are copied before asynchronous verification, so later caller mutation cannot alter what is accepted. Missing, terminal, mismatched or corrupt attempts leave the current game unchanged.
 
 Install the matching expansion before loading its attempt. A successful standalone replay match does not authorize replacing installed campaign rules or granting a reward. Only a subsequently completed normal campaign run can enter progression. A resumed run rebuilds its recorder from the original segments and releases, then records future fixed ticks normally; a cut can remain live across suspension without assigning private simulation state.
+
+The session, library, pack-library and complete-backup envelope versions remain unchanged. A complete backup may include v1/v2 expansion packs and v3 encounter packs together, plus either supported replay version in its suspended slot. Each campaign contains one simulation version; mixed old/new maps require separate campaigns. Encounter packs require `engine: 'xonix-core.v3'` and explicit `masteries: []`; their practice scenarios use `xonix-playground.v3` and `masteryDefinition: null`. Invalid pairings fail before image decoding or adoption. Older frozen readers do not acquire new encounter support: use complete-backup transfer into a compatible newer build, retaining the older release and backup when needed.
 
 Player-library exports contain progress, preferences, local scores and picture metadata; pack-library exports contain actual imported media and campaigns. Those formats can also be combined in a validated `xonix-backup.v1` archive with [coordinated import recovery](full-backup.md). See [library and packs](library-and-packs.md) for selective exports. These are editable local files, with no cloud recovery or authenticated achievement service.
 

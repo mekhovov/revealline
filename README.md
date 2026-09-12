@@ -1,10 +1,12 @@
 # RevealLine
 
-A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.10.0 source includes 12 campaign maps, sixteen more maps in five installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
+A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.11.0 working source includes 12 campaign maps, seventeen more maps in six installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.
 
 ## Run locally
+
+v0.11.0 adds [Sentinel Relay](docs/sentinel-relay.md), a two-stage encounter with a shield relay, timed release cuts, an isolation finish, editable timings and phase cues. New packs and replay-backed saves use explicit simulation versions; old campaigns retain their exact behavior. All 1,276 [source tests](docs/verification/round-21/source-gates.md) pass, and the [packaged browser check](docs/verification/round-21/candidate-browser.md) covers completion, retained rewards, couch cues and replay playback. The Playground also accepts exact preview dimensions and keeps short encounter windows readable. Frozen archive and offline checks follow separately.
 
 v0.10.0 makes [chapter appearance rewards](docs/chapter-rewards.md) attainable in short campaigns, shows exact unlock progress, and adds a brief reward message beside the completed picture. Completed missions remain replayable after an out-of-order restore. Its frozen source passed 1,128 tests and the release was rebuilt byte for byte. Simulation, saves and equipment seals remain compatible with v0.9.0.
 

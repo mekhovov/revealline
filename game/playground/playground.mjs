@@ -10,10 +10,13 @@ import {
   paintLevel,
   expansionFromScenario,
   withScenarioMastery,
+  withScenarioEncounter,
+  withoutScenarioEncounter,
   editScenario,
   entryMastery,
 } from './model.mjs';
 import { generateLevel } from '../generator.mjs';
+import { resolvePreviewSize } from './viewport.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
@@ -104,12 +107,39 @@ function sync() {
   const definition = current.masteryDefinition;
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   $('mastery-readout').textContent =
-    current.format === 'xonix-playground.v2'
-      ? definition
-        ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
-        : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
-      : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
-  $('use-campaign-goal').disabled = !entryMastery(selectedEntry(), current.level.id);
+    current.format === 'xonix-playground.v3'
+      ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
+      : current.format === 'xonix-playground.v2'
+        ? definition
+          ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
+          : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
+        : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
+  $('use-campaign-goal').disabled =
+    current.format === 'xonix-playground.v3' || !entryMastery(selectedEntry(), current.level.id);
+  $('apply-mastery').disabled = current.format === 'xonix-playground.v3';
+  $('clear-goal').disabled = current.format === 'xonix-playground.v3';
+  const encounter = current.level.encounter;
+  $('encounter-fields').disabled = !encounter;
+  $('encounter-readout').textContent = encounter
+    ? `Two-stage relay. Close ${encounter.minReleaseCutCells} new trail cells during an opening, or isolate the core to at most ${encounter.minReleaseCutCells} field cells. The sentinel must remain the only field seed. Test every class and steering mode after changing this recipe.`
+    : 'Load Sentinel Relay from the expansion examples to edit its two stages. Ordinary maps keep their existing rules.';
+  if (encounter)
+    for (const [id, value] of [
+      ['enemy', encounter.enemyId],
+      ['shield', encounter.shieldObjectiveId],
+      ['core', encounter.coreObjectiveId],
+      ['cut', encounter.minReleaseCutCells],
+      ['width', encounter.laneWidth],
+      ['delay', encounter.initialDelayTicks],
+      ['transition', encounter.transitionTicks],
+      ['shield-warning', encounter.shielded.warningTicks],
+      ['shield-active', encounter.shielded.activeTicks],
+      ['shield-rest', encounter.shielded.restTicks],
+      ['core-warning', encounter.exposed.warningTicks],
+      ['core-active', encounter.exposed.activeTicks],
+      ['core-open', encounter.exposed.openTicks],
+    ])
+      $(`encounter-${id}`).value = value;
   const track = currentTrack();
   $('music-readout').textContent = track
     ? `Pack music: ${track.name} · ${track.genre} · ${track.tempo} BPM. This exact descriptor is used in practice and retained in the expansion export. Enable sound in the preview to listen.`
@@ -300,12 +330,29 @@ function fit() {
     `${width} × ${height} CSS pixels · shown at ${Math.round(scale * 100)}%`;
   measure();
 }
+function resizePreview(nextWidth, nextHeight) {
+  // Validate both before adopting either dimension. The iframe URL and run stay intact.
+  const next = resolvePreviewSize(nextWidth, nextHeight);
+  width = next.width;
+  height = next.height;
+  $('preview-width').value = String(width);
+  $('preview-height').value = String(height);
+  document.querySelectorAll('[data-size]').forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.size === `${width},${height}`));
+  });
+  $('preview-size-status').classList.remove('error');
+  $('preview-size-status').textContent = `Preview set to ${width} × ${height} CSS pixels.`;
+  fit();
+}
 function measure() {
   try {
     const frame = $('preview-frame'),
       doc = frame.contentDocument,
       view = frame.contentWindow,
       arena = doc?.querySelector('#arena-shell,#race-boards');
+    if (view)
+      $('viewport-readout').textContent =
+        `${width} × ${height} CSS pixels requested · frame reports ${view.innerWidth} × ${view.innerHeight} · shown at ${Math.round(Math.min(1, $('preview-stage').parentElement.clientWidth / width) * 100)}%`;
     if (!arena) return;
     const r = arena.getBoundingClientRect(),
       visible =
@@ -488,6 +535,53 @@ try {
       status(`Goal rejected: ${error.message}`, true);
     }
   };
+  $('apply-encounter').onclick = () => {
+    try {
+      if (!current.level.encounter) throw new Error('Load a staged encounter first.');
+      const number = (id) => Number($(`encounter-${id}`).value);
+      const next = withScenarioEncounter(current, {
+        ...current.level.encounter,
+        enemyId: $('encounter-enemy').value,
+        shieldObjectiveId: $('encounter-shield').value,
+        coreObjectiveId: $('encounter-core').value,
+        minReleaseCutCells: number('cut'),
+        laneWidth: number('width'),
+        initialDelayTicks: number('delay'),
+        transitionTicks: number('transition'),
+        shielded: {
+          warningTicks: number('shield-warning'),
+          activeTicks: number('shield-active'),
+          restTicks: number('shield-rest'),
+        },
+        exposed: {
+          warningTicks: number('core-warning'),
+          activeTicks: number('core-active'),
+          openTicks: number('core-open'),
+        },
+      });
+      remember();
+      current = next;
+      sync();
+      status(
+        'Encounter validated and applied. Play configuration to test the timing and routes. Undo restores the prior recipe.',
+      );
+    } catch (error) {
+      status(`Encounter rejected: ${error.message}`, true);
+    }
+  };
+  $('remove-encounter').onclick = () => {
+    try {
+      const next = withoutScenarioEncounter(current);
+      remember();
+      current = next;
+      sync();
+      status(
+        'Converted to an ordinary map. The sentinel was removed; both objectives and artwork remain. Undo restores the encounter.',
+      );
+    } catch (error) {
+      status(`Conversion rejected: ${error.message}`, true);
+    }
+  };
   $('turn-select').onchange = () => {
     remember();
     current.settings.turnPolicy = $('turn-select').value;
@@ -538,6 +632,9 @@ try {
       const level = await generateLevel($('seed-input').value);
       assertImportCurrent(ticket);
       const next = editScenario(current, {
+        ...(current.format === 'xonix-playground.v3'
+          ? { format: 'xonix-playground.v2', masteryDefinition: null }
+          : {}),
         level,
         settings: { ...current.settings, seed: parseInt(level.id.slice(10, 18), 16) >>> 0 },
       });
@@ -615,8 +712,11 @@ try {
   };
   $('export-button').onclick = async () => {
     try {
-      if (checked())
+      if (checked()) {
+        $('pack-json').value = JSON.stringify(current, null, 2);
+        $('pack-json').closest('details').open = true;
         status((await downloadJSON(current, `${current.level.id}.xonix.json`)).message);
+      }
     } catch (error) {
       status(error.message, true);
     }
@@ -730,6 +830,8 @@ try {
       if (!checked()) return;
       const track = currentTrack();
       const pack = expansionFromScenario(current, { music: track ? [track] : [] });
+      $('pack-json').value = JSON.stringify(pack, null, 2);
+      $('pack-json').closest('details').open = true;
       const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
       status(
         `Edited map prepared as a complete playable expansion.${current.masteryDefinition ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.` : ''} ${exported.message} Import it into the main game to keep campaign progress.`,
@@ -740,8 +842,10 @@ try {
   };
   $('export-catalog').onclick = async () => {
     try {
+      $('pack-json').value = exportPackLibrary(packLibrary);
+      $('pack-json').closest('details').open = true;
       const exported = await downloadJSON(
-        JSON.parse(exportPackLibrary(packLibrary)),
+        JSON.parse($('pack-json').value),
         'workshop-expansions.json',
       );
       status(
@@ -798,13 +902,18 @@ try {
   document.querySelectorAll('[data-size]').forEach(
     (b) =>
       (b.onclick = () => {
-        [width, height] = b.dataset.size.split(',').map(Number);
-        document
-          .querySelectorAll('[data-size]')
-          .forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-        fit();
+        resizePreview(...b.dataset.size.split(','));
       }),
   );
+  $('preview-size-form').onsubmit = (event) => {
+    event.preventDefault();
+    try {
+      resizePreview($('preview-width').value, $('preview-height').value);
+    } catch (error) {
+      $('preview-size-status').classList.add('error');
+      $('preview-size-status').textContent = `${error.message} The previous preview size is kept.`;
+    }
+  };
   window.addEventListener('resize', fit);
   $('preview-mode').onchange = preview;
   $('preview-frame').addEventListener('load', () => {

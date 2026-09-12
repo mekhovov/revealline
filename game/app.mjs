@@ -1,6 +1,7 @@
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
+import { encounterView } from './ui/encounter-view.mjs';
 import { attachInput } from './ui/input.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
@@ -57,6 +58,7 @@ import {
   downloadJSON,
   recommendedBody,
   MASTERY_SCENARIO_VERSION,
+  ENCOUNTER_SCENARIO_VERSION,
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
@@ -125,7 +127,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.10.0',
+  let buildVersion = '0.11.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -1409,7 +1411,9 @@ try {
       classRecipes: scenario?.classRecipes || classRegistry,
     });
     runId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
-    const explicitPractice = scenario?.format === MASTERY_SCENARIO_VERSION;
+    const explicitPractice = [MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(
+      scenario?.format,
+    );
     const observedCampaign = explicitPractice
       ? scenario.masteryDefinition
         ? scenarioMasteryCampaign(scenario, run.classRecipes)
@@ -1583,6 +1587,13 @@ try {
       : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
+    const encounter = encounterView(run);
+    show('encounter-status', !!encounter && !campaignOverview);
+    if (encounter) {
+      $('encounter-title').textContent = encounter.title;
+      $('encounter-instruction').textContent = encounter.instruction;
+      $('encounter-status').dataset.phase = encounter.phase;
+    }
     refreshMastery();
   }
   function eventFeedback(events) {
@@ -1630,6 +1641,14 @@ try {
         );
       if (event.type === 'pickup.collected')
         warning('Supplies ready. Choose your next opportunity.');
+      if (
+        event.type === 'encounter.stageChanged' ||
+        event.type === 'encounter.phaseChanged' ||
+        event.type === 'encounter.defeated'
+      ) {
+        const cue = encounterView(run);
+        if (cue) warning(`${cue.title}. ${cue.instruction}`);
+      }
       if (event.type === 'boss.warning')
         warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
     }

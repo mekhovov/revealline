@@ -1,0 +1,2083 @@
+{
+  "format": "revealline-compatibility.v0100.v1",
+  "source": {
+    "tag": "v0.10.0",
+    "revision": "40ae9d23ad8737c4f77f9cc07923948133b7c09d",
+    "archiveSha256": "cfc48dd29d71eefaef128a839a38f2f1302ec5f63a3994742adb0cf84242eeab"
+  },
+  "campaign": {
+    "version": "xonix-campaign.v1",
+    "id": "first-signal",
+    "revision": "2",
+    "title": "First Signal",
+    "levels": [
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-01",
+        "revision": "1",
+        "name": "First Signal",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "roamer",
+            "type": "bouncer",
+            "x": 37.5,
+            "y": 24.5,
+            "vx": 2.2,
+            "vy": 1.6,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.45
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [40, 73]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-02",
+        "revision": "1",
+        "name": "Relay Orchard",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "roamer",
+            "type": "bouncer",
+            "x": 36.5,
+            "y": 27.5,
+            "vx": -1.6,
+            "vy": 2.4,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 8.5,
+            "y": 14.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.58
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [45, 81]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-03",
+        "revision": "1",
+        "name": "Crosswind",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "x": 11.5,
+            "y": 24.5,
+            "vx": 2.5,
+            "vy": -2.1,
+            "radius": 0.3
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 38.5,
+            "y": 12.5,
+            "vx": -2.2,
+            "vy": 2.5,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.62
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [50, 89]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-04",
+        "revision": "1",
+        "name": "Stone Lanes",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [
+          {
+            "x": 10,
+            "y": 10,
+            "w": 8,
+            "h": 2
+          },
+          {
+            "x": 29,
+            "y": 21,
+            "w": 8,
+            "h": 2
+          }
+        ],
+        "enemies": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "x": 10.5,
+            "y": 22.5,
+            "vx": 2.6,
+            "vy": 2,
+            "radius": 0.3
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 37.5,
+            "y": 25.5,
+            "vx": -2.8,
+            "vy": -1.8,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 11.5,
+            "y": 29.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.65
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [55, 97]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-05",
+        "revision": "1",
+        "name": "Night Patrol",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "field",
+            "type": "bouncer",
+            "x": 36.5,
+            "y": 22.5,
+            "vx": -2.6,
+            "vy": 2.1,
+            "radius": 0.3
+          },
+          {
+            "id": "patrol",
+            "type": "border-patrol",
+            "x": 0.5,
+            "y": 35.5,
+            "speed": 2.5,
+            "clockwise": true
+          }
+        ],
+        "objectives": [],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.65
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [60, 105]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-06",
+        "revision": "1",
+        "name": "Hidden Frequency",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "x": 10.5,
+            "y": 20.5,
+            "vx": 2.8,
+            "vy": 2.3,
+            "radius": 0.3
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 38.5,
+            "y": 25.5,
+            "vx": -3.2,
+            "vy": -2.6,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [
+          {
+            "id": "hidden-relay",
+            "x": 8.5,
+            "y": 10.5,
+            "required": true,
+            "hidden": true
+          },
+          {
+            "id": "bonus",
+            "x": 37.5,
+            "y": 30.5,
+            "required": false,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.68
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [65, 113]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-07",
+        "revision": "1",
+        "name": "The Crossing",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "field",
+            "type": "bouncer",
+            "x": 38.5,
+            "y": 25.5,
+            "vx": -3.2,
+            "vy": 2.1,
+            "radius": 0.3
+          },
+          {
+            "id": "sentinel",
+            "type": "lane-boss",
+            "x": 35.5,
+            "y": 17.5,
+            "axis": "horizontal",
+            "period": 8,
+            "warningSeconds": 2,
+            "activeSeconds": 1.2,
+            "laneWidth": 1.2
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 8.5,
+            "y": 27.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.7
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [70, 121]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-08",
+        "revision": "1",
+        "name": "Last Light",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [
+          {
+            "x": 9,
+            "y": 11,
+            "w": 7,
+            "h": 2
+          }
+        ],
+        "enemies": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "x": 11.5,
+            "y": 24.5,
+            "vx": 2.8,
+            "vy": -2.4,
+            "radius": 0.3
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 39.5,
+            "y": 29.5,
+            "vx": -3.1,
+            "vy": 2.6,
+            "radius": 0.3
+          },
+          {
+            "id": "sentinel",
+            "type": "lane-boss",
+            "x": 34.5,
+            "y": 15.5,
+            "axis": "vertical",
+            "period": 8.5,
+            "warningSeconds": 2,
+            "activeSeconds": 1.2,
+            "laneWidth": 1.2
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 8.5,
+            "y": 29.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.72
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [75, 129]
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-09",
+        "revision": "1",
+        "name": "Signal Garden",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "west",
+            "type": "bouncer",
+            "x": 11.5,
+            "y": 24.5,
+            "vx": 2.1,
+            "vy": -1.5,
+            "radius": 0.3
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 38.5,
+            "y": 12.5,
+            "vx": -2.3,
+            "vy": 1.8,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [
+          {
+            "id": "archive",
+            "x": 8.5,
+            "y": 28.5,
+            "required": true,
+            "hidden": true
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.63
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [50, 89]
+        },
+        "signalZones": [
+          {
+            "id": "garden-emitter",
+            "x": 19,
+            "y": 6,
+            "w": 11,
+            "h": 12,
+            "speedFactor": 0.5,
+            "disableBoost": false,
+            "lockAbility": false
+          }
+        ]
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-10",
+        "revision": "1",
+        "name": "Supply Circuit",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "roamer",
+            "type": "bouncer",
+            "x": 36.5,
+            "y": 27.5,
+            "vx": -2.8,
+            "vy": 2.1,
+            "radius": 0.3
+          },
+          {
+            "id": "patrol",
+            "type": "border-patrol",
+            "x": 0.5,
+            "y": 35.5,
+            "speed": 2.5,
+            "clockwise": false
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 8.5,
+            "y": 14.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          },
+          {
+            "id": "west-pad",
+            "x": 0.5,
+            "y": 18.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.67
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [45, 81]
+        },
+        "signalZones": [
+          {
+            "id": "west-emitter",
+            "x": 8,
+            "y": 12,
+            "w": 5,
+            "h": 5,
+            "speedFactor": 0.5,
+            "disableBoost": true,
+            "lockAbility": false
+          }
+        ],
+        "hangars": [
+          {
+            "id": "home-hangar",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          },
+          {
+            "id": "west-hangar",
+            "x": 0.5,
+            "y": 18.5,
+            "radius": 2
+          }
+        ]
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-11",
+        "revision": "1",
+        "name": "Short Fuse",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "field",
+            "type": "bouncer",
+            "x": 36.5,
+            "y": 22.5,
+            "vx": -3.2,
+            "vy": 2.6,
+            "radius": 0.3
+          },
+          {
+            "id": "patrol",
+            "type": "border-patrol",
+            "x": 0.5,
+            "y": 35.5,
+            "speed": 2.5,
+            "clockwise": true
+          }
+        ],
+        "objectives": [],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.7
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [60, 105],
+          "cutTimeLimitSeconds": 6,
+          "timeLimitSeconds": 70,
+          "maxTrailCells": 50
+        }
+      },
+      {
+        "version": "xonix-level.v1",
+        "id": "signal-12",
+        "revision": "1",
+        "name": "Relay Storm",
+        "width": 48,
+        "height": 36,
+        "spawn": {
+          "x": 24.5,
+          "y": 0.5
+        },
+        "walls": [],
+        "enemies": [
+          {
+            "id": "field",
+            "type": "bouncer",
+            "x": 38.5,
+            "y": 25.5,
+            "vx": -3.2,
+            "vy": 2.1,
+            "radius": 0.3
+          },
+          {
+            "id": "sentinel",
+            "type": "lane-boss",
+            "x": 35.5,
+            "y": 17.5,
+            "axis": "horizontal",
+            "period": 7,
+            "warningSeconds": 1.8,
+            "activeSeconds": 1.2,
+            "laneWidth": 1.2
+          },
+          {
+            "id": "east",
+            "type": "bouncer",
+            "x": 37.5,
+            "y": 29.5,
+            "vx": -2.1,
+            "vy": -1.9,
+            "radius": 0.3
+          }
+        ],
+        "objectives": [
+          {
+            "id": "relay",
+            "x": 8.5,
+            "y": 27.5,
+            "required": true,
+            "hidden": false
+          }
+        ],
+        "supplies": [
+          {
+            "id": "home",
+            "x": 24.5,
+            "y": 0.5,
+            "radius": 2
+          }
+        ],
+        "goal": {
+          "coverage": 0.74
+        },
+        "rules": {
+          "lives": 3,
+          "moveSpeed": 10,
+          "boostMultiplier": 1.5,
+          "respawnSeconds": 0.7,
+          "graceSeconds": 0.7,
+          "playerRadius": 0.18,
+          "pointsPerCell": 10,
+          "timeMedals": [70, 121],
+          "timeLimitSeconds": 95,
+          "cutTimeLimitSeconds": 8,
+          "maxTrailCells": 60
+        },
+        "signalZones": [
+          {
+            "id": "north-emitter",
+            "x": 5,
+            "y": 7,
+            "w": 8,
+            "h": 8,
+            "speedFactor": 0.5,
+            "disableBoost": true,
+            "lockAbility": true
+          },
+          {
+            "id": "east-emitter",
+            "x": 31,
+            "y": 20,
+            "w": 8,
+            "h": 8,
+            "speedFactor": 0.5,
+            "disableBoost": false,
+            "lockAbility": false
+          }
+        ]
+      }
+    ],
+    "briefs": [
+      "Fly down from the marked start to the opposite border. Close your line to reveal the side without a field enemy.",
+      "Enclose the gold relay as well as reaching the coverage target. Scan shows hidden information; a captured relay stays restored.",
+      "Two enemies can preserve both sides of a cut. A secured line still gives you a new starting point.",
+      "Walls block movement. Bend your route around them, then reconnect to blue safe ground.",
+      "A border patrol makes the outer rail dangerous. Watch its direction before waiting on the edge.",
+      "A required relay is hidden. Scout can reveal it; its location can also be captured through an ordinary cut.",
+      "The sentinel warns before activating a lane. Wait for the recovery window or protect your line with a shield.",
+      "Combine coverage, a relay and the sentinel warning. Choose your next cut, then commit.",
+      "The amber zone slows ordinary craft. Fiber ignores interference, but its cable is still the vulnerable live trail. Switch at the home hangar before choosing your cut.",
+      "Return to either hangar to change craft without restarting. Carriers collect charges at pads; stun fields covering an emitter suppress its signal zone while the field lasts. A field never captures territory by itself.",
+      "Each cut has a six-second deadline and a fifty-cell cable budget. The whole attempt lasts seventy seconds. Close shorter cuts to build new launch points; neither a shield nor fiber bypasses these limits.",
+      "The final storm combines two signal zones, a moving field pair, a lane warning and a mission clock. Scan, shield, supply fields, fiber and impact are alternate tools; safe-hangar switching never refills ammunition or resets cooldowns."
+    ],
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "fiber",
+        "label": "Fiber relay",
+        "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 7,
+        "duration": 3,
+        "radius": 30,
+        "signalResistance": true,
+        "moveSpeedMultiplier": 1,
+        "revision": "1"
+      },
+      {
+        "id": "impact",
+        "label": "Impact craft",
+        "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+        "primitive": "impact-pulse",
+        "capacity": 0,
+        "cooldown": 10,
+        "duration": 3,
+        "radius": 5,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+  "cases": [
+    {
+      "recording": {
+        "version": "xonix-replay.v3",
+        "build": "v0.10.0-compatibility",
+        "ruleset": "xonix-core.v2",
+        "level": {
+          "version": "xonix-level.v1",
+          "id": "signal-01",
+          "revision": "1",
+          "name": "First Signal",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "roamer",
+              "type": "bouncer",
+              "x": 37.5,
+              "y": 24.5,
+              "vx": 2.2,
+              "vy": 1.6,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.45
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [40, 73],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0
+          },
+          "signalZones": [],
+          "hangars": [
+            {
+              "id": "home-hangar",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ]
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "interceptor",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 192,
+            "input": {
+              "direction": "left",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 256,
+            "input": {
+              "direction": "down",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": "right",
+              "boost": true,
+              "action": true,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 371,
+            "input": {
+              "direction": "right",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 820,
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-01",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "interceptor",
+          "activeClassId": "interceptor",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "interceptor",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-1443c455",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-1443c455",
+          "status": "won",
+          "won": true,
+          "tick": 820,
+          "time": 6.833333333333463,
+          "lives": 3,
+          "score": 14720,
+          "coverage": 0.9411764705882353,
+          "claimedCount": 1472,
+          "totalClaimable": 1564,
+          "medal": "gold",
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "952a6d30e19f2a66",
+          "sections": {
+            "identity": "b2e78a6001917b68",
+            "configuration": "b539b55a56b01abe",
+            "board": "5d5d79b75155aa89",
+            "player": "8b723d4e5e07ba7b",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "1ce5d06310ef7188",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "177638b6a66e71d1",
+            "clock": "2b708a35cacc0598",
+            "continuation": "a9d828ced6380d30",
+            "result": "cb0f04d7bfd34180"
+          }
+        }
+      },
+      "suspended": {
+        "format": "xonix-session.v1",
+        "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+        "themeId": "fpv",
+        "bodyId": "fpv-body",
+        "runId": "old-live-immediate",
+        "savedAt": "2026-09-12T12:00:00.000Z",
+        "replay": {
+          "version": "xonix-replay.v3",
+          "build": "v0.10.0-compatibility",
+          "ruleset": "xonix-core.v2",
+          "level": {
+            "version": "xonix-level.v1",
+            "id": "signal-01",
+            "revision": "1",
+            "name": "First Signal",
+            "width": 48,
+            "height": 36,
+            "spawn": {
+              "x": 24.5,
+              "y": 0.5
+            },
+            "walls": [],
+            "enemies": [
+              {
+                "id": "roamer",
+                "type": "bouncer",
+                "x": 37.5,
+                "y": 24.5,
+                "vx": 2.2,
+                "vy": 1.6,
+                "radius": 0.3
+              }
+            ],
+            "objectives": [],
+            "supplies": [
+              {
+                "id": "home",
+                "x": 24.5,
+                "y": 0.5,
+                "radius": 2
+              }
+            ],
+            "goal": {
+              "coverage": 0.45
+            },
+            "rules": {
+              "lives": 3,
+              "moveSpeed": 10,
+              "boostMultiplier": 1.5,
+              "respawnSeconds": 0.7,
+              "graceSeconds": 0.7,
+              "playerRadius": 0.18,
+              "pointsPerCell": 10,
+              "objectivePoints": 500,
+              "timeMedals": [40, 73],
+              "switchCooldownSeconds": 2,
+              "timeLimitSeconds": 0,
+              "cutTimeLimitSeconds": 0,
+              "maxTrailCells": 0
+            },
+            "signalZones": [],
+            "hangars": [
+              {
+                "id": "home-hangar",
+                "x": 24.5,
+                "y": 0.5,
+                "radius": 2
+              }
+            ]
+          },
+          "options": {
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "interceptor",
+            "classRecipes": [
+              {
+                "id": "scout",
+                "label": "Scout",
+                "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+                "primitive": "scan",
+                "capacity": 0,
+                "cooldown": 6,
+                "duration": 4,
+                "radius": 48,
+                "revision": "1"
+              },
+              {
+                "id": "bomber",
+                "label": "Light carrier",
+                "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+                "primitive": "stun-field",
+                "capacity": 1,
+                "cooldown": 2,
+                "duration": 2.5,
+                "radius": 3,
+                "revision": "1"
+              },
+              {
+                "id": "carrier",
+                "label": "Heavy carrier",
+                "description": "Carry two charges; each creates the same temporary stun field.",
+                "primitive": "stun-field",
+                "capacity": 2,
+                "cooldown": 2,
+                "duration": 2.5,
+                "radius": 3,
+                "revision": "1"
+              },
+              {
+                "id": "interceptor",
+                "label": "Interceptor",
+                "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+                "primitive": "shield",
+                "capacity": 0,
+                "cooldown": 9,
+                "duration": 1.5,
+                "radius": 0,
+                "revision": "1"
+              },
+              {
+                "id": "fiber",
+                "label": "Fiber relay",
+                "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+                "primitive": "scan",
+                "capacity": 0,
+                "cooldown": 7,
+                "duration": 3,
+                "radius": 30,
+                "signalResistance": true,
+                "moveSpeedMultiplier": 1,
+                "revision": "1"
+              },
+              {
+                "id": "impact",
+                "label": "Impact craft",
+                "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+                "primitive": "impact-pulse",
+                "capacity": 0,
+                "cooldown": 10,
+                "duration": 3,
+                "radius": 5,
+                "revision": "1"
+              },
+              {
+                "id": "trapper",
+                "label": "Trapper",
+                "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+                "primitive": "slow-field",
+                "capacity": 1,
+                "cooldown": 2,
+                "duration": 4,
+                "radius": 4,
+                "slowFactor": 0.25,
+                "revision": "1"
+              }
+            ]
+          },
+          "segments": [
+            {
+              "ticks": 192,
+              "input": {
+                "direction": "left",
+                "boost": true,
+                "action": false,
+                "pickup": false,
+                "switchClass": null
+              },
+              "releaseBefore": false
+            },
+            {
+              "ticks": 108,
+              "input": {
+                "direction": "down",
+                "boost": true,
+                "action": false,
+                "pickup": false,
+                "switchClass": null
+              },
+              "releaseBefore": false
+            }
+          ],
+          "releaseAfter": true,
+          "ticks": 300,
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-01",
+            "revision": "1",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "interceptor",
+            "activeClassId": "interceptor",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "interceptor",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-1443c455",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "status": "running",
+            "won": false,
+            "tick": 300,
+            "time": 2.499999999999994,
+            "lives": 3,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 1564,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "403fc141d94b719b",
+            "sections": {
+              "identity": "b2e78a6001917b68",
+              "configuration": "b539b55a56b01abe",
+              "board": "fdfff9d1d17aa722",
+              "player": "cef96057163a09a6",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "23085e30481e5c7b",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "3b14ed94fb37a5b5",
+              "clock": "0c4d61b38f590bf6",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4"
+            }
+          }
+        }
+      },
+      "variant": "immediate/interceptor/1/loadout-v1-1443c455/1/roster-v1-e159e435/route-v1-957a079b2aad7869"
+    },
+    {
+      "recording": {
+        "version": "xonix-replay.v3",
+        "build": "v0.10.0-compatibility",
+        "ruleset": "xonix-core.v2",
+        "level": {
+          "version": "xonix-level.v1",
+          "id": "signal-01",
+          "revision": "1",
+          "name": "First Signal",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "roamer",
+              "type": "bouncer",
+              "x": 37.5,
+              "y": 24.5,
+              "vx": 2.2,
+              "vy": 1.6,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.45
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [40, 73],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0
+          },
+          "signalZones": [],
+          "hangars": [
+            {
+              "id": "home-hangar",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ]
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "grid-center",
+          "classId": "interceptor",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 192,
+            "input": {
+              "direction": "left",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 256,
+            "input": {
+              "direction": "down",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": "right",
+              "boost": true,
+              "action": true,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 371,
+            "input": {
+              "direction": "right",
+              "boost": true,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 820,
+        "summary": {
+          "ruleset": "xonix-core.v2",
+          "levelId": "signal-01",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "grid-center",
+          "classId": "interceptor",
+          "activeClassId": "interceptor",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "interceptor",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-1443c455",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-1443c455",
+          "status": "won",
+          "won": true,
+          "tick": 820,
+          "time": 6.833333333333463,
+          "lives": 3,
+          "score": 14720,
+          "coverage": 0.9411764705882353,
+          "claimedCount": 1472,
+          "totalClaimable": 1564,
+          "medal": "gold",
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "f9829f980c3035a2",
+          "sections": {
+            "identity": "3ea4dc053083ca65",
+            "configuration": "b539b55a56b01abe",
+            "board": "5d5d79b75155aa89",
+            "player": "8b723d4e5e07ba7b",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "1ce5d06310ef7188",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "177638b6a66e71d1",
+            "clock": "2b708a35cacc0598",
+            "continuation": "a9d828ced6380d30",
+            "result": "f0b2286422948145"
+          }
+        }
+      },
+      "suspended": {
+        "format": "xonix-session.v1",
+        "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+        "themeId": "fpv",
+        "bodyId": "fpv-body",
+        "runId": "old-live-grid-center",
+        "savedAt": "2026-09-12T12:00:00.000Z",
+        "replay": {
+          "version": "xonix-replay.v3",
+          "build": "v0.10.0-compatibility",
+          "ruleset": "xonix-core.v2",
+          "level": {
+            "version": "xonix-level.v1",
+            "id": "signal-01",
+            "revision": "1",
+            "name": "First Signal",
+            "width": 48,
+            "height": 36,
+            "spawn": {
+              "x": 24.5,
+              "y": 0.5
+            },
+            "walls": [],
+            "enemies": [
+              {
+                "id": "roamer",
+                "type": "bouncer",
+                "x": 37.5,
+                "y": 24.5,
+                "vx": 2.2,
+                "vy": 1.6,
+                "radius": 0.3
+              }
+            ],
+            "objectives": [],
+            "supplies": [
+              {
+                "id": "home",
+                "x": 24.5,
+                "y": 0.5,
+                "radius": 2
+              }
+            ],
+            "goal": {
+              "coverage": 0.45
+            },
+            "rules": {
+              "lives": 3,
+              "moveSpeed": 10,
+              "boostMultiplier": 1.5,
+              "respawnSeconds": 0.7,
+              "graceSeconds": 0.7,
+              "playerRadius": 0.18,
+              "pointsPerCell": 10,
+              "objectivePoints": 500,
+              "timeMedals": [40, 73],
+              "switchCooldownSeconds": 2,
+              "timeLimitSeconds": 0,
+              "cutTimeLimitSeconds": 0,
+              "maxTrailCells": 0
+            },
+            "signalZones": [],
+            "hangars": [
+              {
+                "id": "home-hangar",
+                "x": 24.5,
+                "y": 0.5,
+                "radius": 2
+              }
+            ]
+          },
+          "options": {
+            "seed": 1,
+            "turnPolicy": "grid-center",
+            "classId": "interceptor",
+            "classRecipes": [
+              {
+                "id": "scout",
+                "label": "Scout",
+                "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+                "primitive": "scan",
+                "capacity": 0,
+                "cooldown": 6,
+                "duration": 4,
+                "radius": 48,
+                "revision": "1"
+              },
+              {
+                "id": "bomber",
+                "label": "Light carrier",
+                "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+                "primitive": "stun-field",
+                "capacity": 1,
+                "cooldown": 2,
+                "duration": 2.5,
+                "radius": 3,
+                "revision": "1"
+              },
+              {
+                "id": "carrier",
+                "label": "Heavy carrier",
+                "description": "Carry two charges; each creates the same temporary stun field.",
+                "primitive": "stun-field",
+                "capacity": 2,
+                "cooldown": 2,
+                "duration": 2.5,
+                "radius": 3,
+                "revision": "1"
+              },
+              {
+                "id": "interceptor",
+                "label": "Interceptor",
+                "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+                "primitive": "shield",
+                "capacity": 0,
+                "cooldown": 9,
+                "duration": 1.5,
+                "radius": 0,
+                "revision": "1"
+              },
+              {
+                "id": "fiber",
+                "label": "Fiber relay",
+                "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+                "primitive": "scan",
+                "capacity": 0,
+                "cooldown": 7,
+                "duration": 3,
+                "radius": 30,
+                "signalResistance": true,
+                "moveSpeedMultiplier": 1,
+                "revision": "1"
+              },
+              {
+                "id": "impact",
+                "label": "Impact craft",
+                "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+                "primitive": "impact-pulse",
+                "capacity": 0,
+                "cooldown": 10,
+                "duration": 3,
+                "radius": 5,
+                "revision": "1"
+              },
+              {
+                "id": "trapper",
+                "label": "Trapper",
+                "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+                "primitive": "slow-field",
+                "capacity": 1,
+                "cooldown": 2,
+                "duration": 4,
+                "radius": 4,
+                "slowFactor": 0.25,
+                "revision": "1"
+              }
+            ]
+          },
+          "segments": [
+            {
+              "ticks": 192,
+              "input": {
+                "direction": "left",
+                "boost": true,
+                "action": false,
+                "pickup": false,
+                "switchClass": null
+              },
+              "releaseBefore": false
+            },
+            {
+              "ticks": 108,
+              "input": {
+                "direction": "down",
+                "boost": true,
+                "action": false,
+                "pickup": false,
+                "switchClass": null
+              },
+              "releaseBefore": false
+            }
+          ],
+          "releaseAfter": true,
+          "ticks": 300,
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-01",
+            "revision": "1",
+            "seed": 1,
+            "turnPolicy": "grid-center",
+            "classId": "interceptor",
+            "activeClassId": "interceptor",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "interceptor",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-1443c455",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "status": "running",
+            "won": false,
+            "tick": 300,
+            "time": 2.499999999999994,
+            "lives": 3,
+            "score": 0,
+            "coverage": 0,
+            "claimedCount": 0,
+            "totalClaimable": 1564,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "b06739826dbb05f6",
+            "sections": {
+              "identity": "3ea4dc053083ca65",
+              "configuration": "b539b55a56b01abe",
+              "board": "fdfff9d1d17aa722",
+              "player": "cef96057163a09a6",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "23085e30481e5c7b",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "3b14ed94fb37a5b5",
+              "clock": "0c4d61b38f590bf6",
+              "continuation": "a1e7286b42b404e7",
+              "result": "5b9bc4ba528108e4"
+            }
+          }
+        }
+      },
+      "variant": "grid-center/interceptor/1/loadout-v1-1443c455/1/roster-v1-e159e435/route-v1-957a079b2aad7869"
+    }
+  ],
+  "library": {
+    "format": "xonix-library.v2",
+    "preferences": {
+      "themeId": "fpv",
+      "bodyId": "fpv-body",
+      "classId": "scout",
+      "turnPolicy": "immediate",
+      "tapSteering": null,
+      "keyboardBindings": null,
+      "controllerBindings": null,
+      "style": "hybrid",
+      "showGrid": false,
+      "matchClassAppearance": true,
+      "reducedEffects": false,
+      "musicEnabled": false,
+      "musicGenre": "synthwave",
+      "masterVolume": 0.8,
+      "musicVolume": 0.45,
+      "sfxVolume": 0.6
+    },
+    "campaigns": {
+      "first-signal/2/88639f3aab7b6cc1": {
+        "version": "revealline-progress.v1",
+        "campaignId": "first-signal",
+        "revision": "2",
+        "clears": {
+          "signal-01": {
+            "score": 14720,
+            "time": 6.833333333333463,
+            "medals": 3,
+            "clean": true,
+            "variants": {
+              "immediate/interceptor/1/loadout-v1-1443c455/1/roster-v1-e159e435/route-v1-957a079b2aad7869": {
+                "score": 14720,
+                "time": 6.833333333333463,
+                "medals": 3,
+                "clean": true
+              },
+              "grid-center/interceptor/1/loadout-v1-1443c455/1/roster-v1-e159e435/route-v1-957a079b2aad7869": {
+                "score": 14720,
+                "time": 6.833333333333463,
+                "medals": 3,
+                "clean": true
+              }
+            }
+          }
+        },
+        "seen": ["old-win-immediate", "old-win-grid-center"]
+      }
+    },
+    "gallery": [
+      {
+        "key": "gallery-v1-925909f44aa7e26d",
+        "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+        "levelId": "signal-01",
+        "levelRevision": "1",
+        "levelName": "First Signal",
+        "themeId": "fpv",
+        "bodyId": "fpv-body",
+        "sourcePackId": null,
+        "seed": 1,
+        "score": 14720,
+        "time": 6.833333333333463,
+        "medal": "gold",
+        "completedAt": "2026-09-12T12:00:00.000Z",
+        "runId": "old-win-immediate"
+      }
+    ],
+    "scores": [
+      {
+        "boardId": "board-v1-4fb1e4b972367a0d",
+        "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+        "levelId": "signal-01",
+        "levelName": "First Signal",
+        "classId": "interceptor",
+        "classRevision": "1",
+        "turnPolicy": "grid-center",
+        "seed": 1,
+        "score": 14720,
+        "time": 6.833333333333463,
+        "medal": "gold",
+        "completedAt": "2026-09-12T12:00:00.000Z",
+        "runId": "old-win-grid-center",
+        "switches": 0,
+        "classRoute": ["interceptor"]
+      },
+      {
+        "boardId": "board-v1-f906e5a31749b7da",
+        "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+        "levelId": "signal-01",
+        "levelName": "First Signal",
+        "classId": "interceptor",
+        "classRevision": "1",
+        "turnPolicy": "immediate",
+        "seed": 1,
+        "score": 14720,
+        "time": 6.833333333333463,
+        "medal": "gold",
+        "completedAt": "2026-09-12T12:00:00.000Z",
+        "runId": "old-win-immediate",
+        "switches": 0,
+        "classRoute": ["interceptor"]
+      }
+    ],
+    "masteries": []
+  },
+  "continuation": {
+    "complete": false,
+    "completed": 1,
+    "total": 12,
+    "levelIndex": 1
+  },
+  "selection": {
+    "complete": false,
+    "completed": 1,
+    "total": 12,
+    "levelIndex": 1,
+    "overview": false,
+    "explicit": false
+  },
+  "appearanceMilestones": [
+    {
+      "id": "first-clear",
+      "name": "First clear",
+      "bodyIds": [
+        "fpv-racer",
+        "fixedwing-body",
+        "ukrainian-falcon",
+        "retro-vector",
+        "navi-auditor"
+      ],
+      "count": 1,
+      "target": 1,
+      "earned": true
+    },
+    {
+      "id": "chapter-explorer",
+      "name": "Chapter explorer",
+      "bodyIds": ["fpv-night", "delta-interceptor"],
+      "count": 1,
+      "target": 4,
+      "earned": false
+    }
+  ]
+}

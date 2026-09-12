@@ -178,9 +178,11 @@ export function scheduleWindow(cursor, now, tempo, { ahead = 0.12, maxSteps = 4 
 export function deriveTension(state = {}) {
   const cutting = state.player?.cutting ? 0.55 : 0,
     lowLife = state.lives === 1 ? 0.22 : 0;
-  const danger = state.enemies?.some((e) => e.bossPhase === 'warning' || e.bossPhase === 'active')
-    ? 0.25
-    : 0;
+  const danger =
+    ['warning', 'active'].includes(state.encounter?.phase) ||
+    state.enemies?.some((e) => e.bossPhase === 'warning' || e.bossPhase === 'active')
+      ? 0.25
+      : 0;
   const line = Math.min(0.2, (state.trail?.length || 0) / 120);
   return clamp(cutting + lowLife + danger + line, 0, 1);
 }

@@ -1,0 +1,74 @@
+{
+  "format": "revealline-authoring-prompts.v1",
+  "createdAt": "2026-09-12",
+  "status": "Authored prompt examples; no new artwork generated or inspected.",
+  "source": "Original Reveal Line encounter authoring",
+  "scope": "Finite existing class roles and proposed core-v3 Sentinel recipe; not runtime commands.",
+  "prompts": [
+    {
+      "id": "sentinel-fpv-cues",
+      "kind": "presentation",
+      "themeId": "fpv",
+      "title": "Fictional FPV signal sentinel",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Use the existing radar silhouette and Ukrainian blue/gold dawn palette. Show a closed segmented shield in stage 1, separated core segments in the opening, a horizontal hatched warning before the stage-1 stripe and a vertical warning in stage 2. Keep the bright player center, live raster trail and lane edges above the prop. Equipment powers down with restrained sparks and smoke; no harm to people. Provide a data-binding table and muted/reduced-effects review cases; this is not a request to generate new artwork."
+    },
+    {
+      "id": "sentinel-heritage-cues",
+      "kind": "presentation",
+      "themeId": "ukraine",
+      "title": "Rosette opening",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Reskin the same encounter as a geometric Ukrainian rosette: closed knot segments become open petals, the relay is a memory marker and completion uses the existing stitch-bloom finale. Use original ornament rather than copying a named artwork. Preserve non-color warning patterns and the same hitbox. List the existing theme fields to edit and unsupported requested visuals as future work, without creating a new map ID."
+    },
+    {
+      "id": "sentinel-retro-cues",
+      "kind": "presentation",
+      "themeId": "retro",
+      "title": "Arcade core",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Bind the current arcade palette and pixel craft to a neon sentinel, closed brackets versus open diamond, and the existing neon finale. Favor crisp pixel clusters and stable contrast over scanline noise. Use the original chiptune descriptor sentinel-arcade, without copying melodies. Show concise phase labels and explain that a completed picture is a reward, not an automatic next-level launch."
+    },
+    {
+      "id": "sentinel-business-cues",
+      "kind": "presentation",
+      "themeId": "coupa",
+      "title": "Connections restored",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Use the original Spend Sprite and business network scene. The shield relay becomes a connection checkpoint; the core is a blocked hub that opens to the existing savings-node finale. Keep the actual timed-cut/isolation rules explicit. Do not depict real financial transactions, claim quantified savings, use an official Navi identity, or infer new equipment effects from this skin."
+    },
+    {
+      "id": "sentinel-background-proposal",
+      "kind": "future-art-prompt",
+      "themeId": "fpv",
+      "title": "Optional reward image, not yet generated",
+      "prompt": "Propose an original 4:3 modern pixel-art Ukrainian landscape at dawn for a complete-picture reward. Clear large pixel clusters, restrained dithering, warm village lights and a distant hilltop beacon; a calm image with a readable focal point at small size. No HUD, text, branded marks, active actors, live cuts or objectives baked into the art. Return the prompt and intended bindings only. Any later generation must retain original bytes/provenance, undergo visual inspection and pass browser image decoding before pack adoption. It must not modify the encounter geometry."
+    },
+    {
+      "id": "sentinel-ordinary-proof",
+      "kind": "playthrough",
+      "title": "Every class, both steering policies",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. From the unmodified runtime pack createRun, apply only ordinary direction commands with boost/action/pickup false and no class switch. Record legal wins for each of scout, bomber, carrier, interceptor, fiber, impact and trapper in immediate and grid-center modes. Prove relay capture precedes transition, the first full warning/active sequence precedes opening, and one timed-cut defeat precedes one terminal result. Preserve exact summaries/checkpoints and do not assign state.status or cells directly."
+    },
+    {
+      "id": "sentinel-missed-and-short",
+      "kind": "playthrough",
+      "title": "Missed windows remain recoverable",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Record a legal route that misses two stage-2 openings and then wins in a later one. Separately make a too-short ordinary closure while more than eight FIELD cells remain: it keeps its claimed cells, resets the cut counter and cannot defeat by either path. Do not sum short cuts toward the eight-cell release threshold. Report precise event ticks, inputs and remaining field count; do not force phases or overwrite the clock."
+    },
+    {
+      "id": "sentinel-isolation-proof",
+      "kind": "playthrough",
+      "title": "Recover from a shrunken field",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Use ordinary valid cuts to reduce the sole seeded region to eight or fewer field cells without a qualifying timed release. Wait safely for an opening and prove the isolated defeat cause, required core capture and absence of a fabricated cut.closed event. Include a missed opening and a saved-flight reconstruction if the portable verifier is ready. Check that a failure/redeployment tick and active recovery cannot trigger automatic release. No direct cell editing in the playable proof."
+    },
+    {
+      "id": "sentinel-save-and-reskin",
+      "kind": "verification",
+      "title": "Appearance and pause do not alter the encounter",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Replay the same fixed input stream under all four presentation themes and reduced effects. The authoritative summary/checkpoint must stay identical within each steering policy. Suspend before and during warning, active and open phases, restore through the public session API and compare continuation. A paused or disconnected controller consumes no phase ticks. Keep virtual-controller evidence separate from physical-device claims."
+    },
+    {
+      "id": "sentinel-tuning-review",
+      "kind": "authoring",
+      "title": "Bounded pacing revision",
+      "prompt": "Use the existing sentinel-relay-01 level and its registered two-stage descriptor. Keep 48x36 geometry, cardinal input, seven class recipes, eight distinct live FIELD cells for the timed release, and safe isolation fallback. Do not change rules through art, emit awards from the renderer, add code to JSON, invent a health bar, or claim physical hardware testing. Supply proposed changes separately from observed validation. Review the legal route timings before proposing a pacing change. Keep exactly two stages and derive each period from warning/active/rest-or-open ticks. Explain the player-visible effect, exact candidate descriptor changes, content identity/revision consequences and proof routes to rerun. Do not modify previous release packs, proof expectations or controller movement speed to disguise a harder schedule. Offer a gentler warning/open timing recipe as proposed content, not an already supported rewarded difficulty switch."
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# Xonix core v2
+# Xonix core v2 and explicit staged encounters
 
 This directory implements actual territory gameplay in plain browser/Node ESM. It has no rendering, DOM, asset, storage, audio, network or wall-clock dependency. It does not import the earlier motion lab. The shell owns input devices, display, pause, menus and persistence; the kernel owns all gameplay state.
 
@@ -151,3 +151,81 @@ Run `node --test game/test/core-*.test.mjs` from the repository root. The suite 
 Corev2 records `xonix-replay.v3`, including explicit `switchClass` input and a full loadout-bank/signal/history checkpoint. Current verification rejects older replay contracts with a message directing the player to the corresponding archived game build. The v0.1.x frozen releases retain corev1/replayv2. New class recipes and mechanics cannot be replayed by silently applying old rules.
 
 The twelve-map campaign has twenty-four input-only completion proofs, one per map and turning policy. Run `node scripts/verify-campaign.mjs`; the search uses the interceptor recipe and is evidence of at least one legal route, not a claim that every class/difficulty is equally easy or that the game is fun on every device.
+
+
+## Explicit staged encounter branch
+
+Ordinary `xonix-level.v1` still selects `xonix-core.v2`; `RULESET` remains that legacy
+constant. New `xonix-level.v2` selects `xonix-core.v3`, `xonix-replay.v4` and
+`fnv1a64-state-v3`. `versions.mjs` exports `LEGACY_VERSIONS`, `ENCOUNTER_VERSIONS`,
+`resolveVersions({levelVersion?, ruleset?, replayVersion?, checkpointAlgorithm?})`,
+`versionsForLevel(level)` and `versionsForCampaign(campaign)`. The omitted request
+selects legacy, explicit mismatches reject, and a campaign must contain one uniform
+version across 1–128 maps. Pair lookup does not replace full content validation.
+
+The initial v2 recipe requires one `encounter` object (`xonix-encounter.v1`, kind
+`relay-sentinel`) and exactly one field seed: a stationary enemy `{id, type, x, y,
+radius?}` at an exact interior cell center. There is no automatic snapping; this
+keeps its radius-bounded contact footprint inside one field cell even when the
+minimum release cut is one. Additional border patrols remain nonseed hazards. Free movement and old
+lane-boss timing keys are invalid on the sentinel. The descriptor references its
+`enemyId`, distinct visible required `shieldObjectiveId`/`coreObjectiveId`, and the
+core must occupy the sentinel's cell. The shield relay must occupy another cell.
+Timings are integers 1–7,200; `minReleaseCutCells` is 1–128 and no greater than the
+claimable field; `laneWidth` is 0.25–5. The descriptor is own plain data, exact-keyed
+and bounded to 4 KiB. The whole new level has a 128 KiB/10,000-node boundary.
+
+The descriptor owns `initialDelayTicks`, `transitionTicks`,
+`shielded:{warningTicks,activeTicks,restTicks}`, and
+`exposed:{warningTicks,activeTicks,openTicks}`. No independent period or arbitrary
+behavior code is supported. New levels reject unknown top-level fields. Ordinary
+v1 presentation metadata retains its previous treatment, except that an attempted
+`encounter` opt-in requires v2.
+
+Only the new run has `run.encounter`. Its **14 authoritative fields** are `version`,
+`kind`, `stage`, `phase`, `phaseStartTick`, `phaseEndTick`, `axis`, `lane`, `cycle`,
+`defeated`, `transitionTick`, `defeatTick`, `defeatCause`, `qualifyingCutCells`.
+Stages are `shielded`, `transition`, `exposed`, `defeated`; phases are `delay`,
+`warning`, `active`, `rest`, `transition`, `open`, `defeated`. The phase end is
+exclusive; it becomes null after defeat. Lane is null before a warning or during
+transition. Cycle resets to zero on transition and increments at each warning.
+No new summary fields or hidden enemy clocks are added.
+
+Phase selection occurs once at fixed-tick start. Initial delay of 240 means ticks
+1–240, first warning at 241. A relay closure at tick N immediately cancels its old
+stripe, then spends 180 full transition ticks N+1…N+180; the first exposed warning
+starts N+181. Each warning samples and locks the player's row (shielded) or column
+(exposed). Stun suppresses stripe contact only; the phase clock and the sentinel's
+body/trail contacts remain. Slow, scan, shield, impact and fiber keep their existing
+class behavior. Recovery preserves the stage and its clock; pause advances neither.
+
+A closing cut freezes its eligible count before changing cells: distinct live
+trail indices that are still FIELD. It can release the seed only during exposed
+`open` and only at the configured minimum. Area fill, previously safe cells, prior
+cuts and failed/redeployed cuts never count. The relay's activating closure cannot
+also release the core. Successful capture/cell/objective events precede stage or
+defeat events; contact and failure take precedence over a tied closing transaction.
+
+For geometry exhaustion, after a normal running world tick with a safe player,
+no live cut and at most the configured minimum FIELD cells remaining, an open core
+releases automatically. It runs after contact/timeout handling, never on recovery,
+respawn or impact-redeploy ticks. It performs a separate cell/objective transaction,
+emits `encounter.defeated` with `cause:'isolated'`, and never fabricates `cut.closed`.
+A regular release emits `cause:'cut-release'` and records the qualifying cut count.
+Only actual core capture can mark defeat; then the sentinel no longer retains a
+region or makes contact. Ordinary coverage/objective victory still runs once.
+
+`encounter.phaseChanged` and `encounter.stageChanged` include `tick,time,id,stage,
+phase,phaseStartTick,phaseEndTick,axis,lane,cycle`. `encounter.defeated` includes those
+fields plus `cause,qualifyingCutCells`. Renderers may read these facts and use
+`encounterCutCells(run)` for derived current-cut progress; that projection grants
+no reward and changes no authority. Replay v4 must checkpoint both the normalized
+descriptor and the entire authority object, including null fields. The old branch
+has neither an empty object nor an extra checkpoint section.
+
+Focused verification is in `../test/encounter-core.test.mjs` and
+`../test/encounter-compatibility.test.mjs`. Public-input routes establish ordinary
+and isolation wins, repeated openings and timing behavior in both turning modes;
+controlled precondition fixtures separately exercise contact/transaction edges.
+Existing frozen proof entries are not regenerated. These core checks do not stand
+in for integrated save/restore, editor, browser presentation or hardware testing.

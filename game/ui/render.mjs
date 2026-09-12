@@ -1,3 +1,4 @@
+import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { createSceneArt } from './scene-art.mjs';
@@ -423,6 +424,7 @@ export class BoardPainter {
           ctx.restore();
         }
       }
+      drawEncounterLane(ctx, state, p);
       for (const pad of state.supplies) {
         if (this.images.supply)
           ctx.drawImage(this.images.supply, pad.x * CELL - 8, pad.y * CELL - 8, 16, 16);
@@ -480,6 +482,26 @@ export class BoardPainter {
         }
         ctx.globalAlpha = 1;
       }
+      // Staged-core artwork and brackets sit behind the live cut. Its occupied cell
+      // gets a compact marker in the ordinary actor pass afterward.
+      for (const e of state.enemies) {
+        if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
+        const stunned = (e.stunnedUntil || 0) > t;
+        ctx.globalAlpha = stunned ? 0.4 : 1;
+        this.drawActor(
+          ctx,
+          this.theme.bossShape || 'core',
+          e.x * CELL,
+          e.y * CELL,
+          32,
+          stunned ? p.muted : p.danger,
+          this.images.boss,
+          t,
+          reduced,
+        );
+        ctx.globalAlpha = 1;
+        drawEncounterCore(ctx, state, e, p, reduced);
+      }
       ctx.strokeStyle = p.accent;
       ctx.lineWidth = 3;
       ctx.lineCap = 'square';
@@ -505,6 +527,21 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
       }
       for (const e of state.enemies) {
+        if (e.type === 'relay-sentinel') {
+          if (!state.encounter?.defeated) {
+            ctx.strokeStyle = p.danger;
+            ctx.lineWidth = 2;
+            ctx.strokeRect(
+              Math.floor(e.x) * CELL + 1,
+              Math.floor(e.y) * CELL + 1,
+              CELL - 2,
+              CELL - 2,
+            );
+            ctx.fillStyle = p.danger;
+            ctx.fillRect(e.x * CELL - 2, e.y * CELL - 2, 4, 4);
+          }
+          continue;
+        }
         const role =
           e.type === 'lane-boss' ? 'boss' : e.type === 'border-patrol' ? 'patrol' : 'enemy';
         const stunned = (e.stunnedUntil || 0) > t,

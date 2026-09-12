@@ -59,6 +59,32 @@
   font-size: 12px;
   line-height: 1.5;
 }
+.racer-encounter {
+  display: grid;
+  gap: 3px;
+  margin: 0 0 8px;
+  padding: 6px 8px;
+  border-left: 3px solid var(--accent);
+  background: #e7ece1;
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.racer-encounter strong {
+  font-variant-numeric: tabular-nums;
+}
+.racer-encounter[data-phase='warning'] {
+  border-left-style: dashed;
+}
+.racer-encounter[data-phase='active'] {
+  border-left-color: var(--danger);
+}
+.racer-encounter[data-phase='open'] {
+  border-left-color: var(--safe);
+}
+.racer:has(> .racer-encounter:not([hidden])) {
+  --race-encounter-height: 96px;
+}
 .race-pad {
   display: flex;
   gap: 4px;
@@ -173,10 +199,15 @@
   letter-spacing: 0;
 }
 .race-focus .racer canvas {
-  height: calc(100svh - var(--safe-top) - var(--safe-bottom) - 228px);
+  height: calc(
+    100svh - var(--safe-top) - var(--safe-bottom) - 228px - var(--race-encounter-height, 0px)
+  );
   max-height: none;
   width: 100%;
   object-fit: contain;
+}
+.race-focus .racer:has(> .racer-encounter:not([hidden])) canvas {
+  min-height: 90px;
 }
 .race-focus .race-pad {
   gap: 4px;
@@ -190,7 +221,10 @@
     gap: 8px;
   }
   .race-focus .racer canvas {
-    height: calc((100svh - var(--safe-top) - var(--safe-bottom) - 408px) / 2);
+    height: calc(
+      (100svh - var(--safe-top) - var(--safe-bottom) - 408px) / 2 -
+        var(--race-encounter-height, 0px)
+    );
     min-height: 90px;
   }
   .race-focus .race-actions button {
@@ -215,6 +249,9 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
   .race-focus .racer canvas {
-    height: calc((100svh - var(--safe-top) - var(--safe-bottom) - 408px) / 2);
+    height: calc(
+      (100svh - var(--safe-top) - var(--safe-bottom) - 408px) / 2 -
+        var(--race-encounter-height, 0px)
+    );
   }
 }

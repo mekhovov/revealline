@@ -1,6 +1,7 @@
 import { CELL } from './registry.mjs';
 import { EPS, capsuleTime, pointAt } from './geometry.mjs';
 import { ownershipSpans, cellIndex } from './movement.mjs';
+import { releaseCutCells, finishEncounterCapture, defeatEncounter } from './encounter.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -121,9 +122,9 @@ export function appendTrail(state, trace, time) {
 }
 
 /** Four-neighbor enemy-seeded fill. Each field enemy center retains its region. */
-export function commitCapture(state) {
+function captureCells(state, releaseSeed, closeCut) {
   const secured = [];
-  for (const c of state.trail)
+  for (const c of closeCut ? state.trail : [])
     if (state.cells[c.index] === CELL.FIELD) {
       state.cells[c.index] = CELL.SAFE;
       secured.push(c.index);
@@ -133,7 +134,10 @@ export function commitCapture(state) {
   let head = 0,
     tail = 0;
   for (const e of state.enemies)
-    if (e.type !== 'border-patrol') {
+    if (
+      e.type !== 'border-patrol' &&
+      !(e.type === 'relay-sentinel' && (releaseSeed || state.encounter?.defeated))
+    ) {
       const index = cellIndex(e.x, e.y);
       if (state.cells[index] === CELL.FIELD && !retained[index]) {
         retained[index] = 1;
@@ -166,16 +170,18 @@ export function commitCapture(state) {
   state.claimedCount += secured.length;
   state.coverage = state.claimedCount / state.totalClaimable;
   state.score += secured.length * state.rules.pointsPerCell;
-  state.player.cutting = false;
-  state.cutStartedAt = null;
-  state.trail = [];
-  state.trailSegments = [];
-  state.events.push({
-    type: 'cut.closed',
-    tick: state.tick,
-    time: state.time,
-    cells: secured.length,
-  });
+  if (closeCut) {
+    state.player.cutting = false;
+    state.cutStartedAt = null;
+    state.trail = [];
+    state.trailSegments = [];
+    state.events.push({
+      type: 'cut.closed',
+      tick: state.tick,
+      time: state.time,
+      cells: secured.length,
+    });
+  }
   state.events.push({
     type: 'cells.claimed',
     tick: state.tick,
@@ -195,4 +201,17 @@ export function commitCapture(state) {
         id: objective.id,
       });
     }
+}
+
+/** Capture eligibility is frozen before any trail or objective mutation. */
+export function commitCapture(state) {
+  const releaseCells = releaseCutCells(state);
+  captureCells(state, releaseCells > 0, true);
+  finishEncounterCapture(state, releaseCells);
+}
+
+/** End-tick isolated release owns a fill transaction, never a fabricated cut. */
+export function releaseIsolatedCapture(state) {
+  captureCells(state, true, false);
+  defeatEncounter(state, 'isolated');
 }

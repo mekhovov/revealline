@@ -40,6 +40,16 @@
             aria-label="Recorded territory-capture game. Space plays or pauses; right arrow steps one tick."
           ></canvas>
         </div>
+        <div
+          id="encounter-cue"
+          class="encounter-cue"
+          role="group"
+          aria-label="Recorded encounter"
+          hidden
+        >
+          <strong id="encounter-title"></strong>
+          <p id="encounter-instruction"></p>
+        </div>
         <div class="transport" aria-label="Playback controls">
           <button id="play-pause" type="button" disabled>Play</button>
           <button id="restart" type="button" disabled>Restart</button>
@@ -91,8 +101,9 @@
           <details class="import-panel">
             <summary>Import your own replay</summary>
             <p>
-              Choose a normal <code>xonix-replay.v3</code> JSON file, or paste one below. Maximum 32
-              MiB / 30 recorded minutes.
+              Choose a normal <code>xonix-replay.v3</code> or <code>xonix-replay.v4</code> JSON
+              file, or paste one below. Version 4 supports staged encounters. Maximum 32 MiB / 30
+              recorded minutes.
             </p>
             <label for="replay-file">Replay file</label>
             <input id="replay-file" type="file" accept=".json,application/json" />

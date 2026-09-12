@@ -3,7 +3,7 @@ import { CONTENT_LIMITS } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { importLibrary, campaignKey, LIBRARY_LIMITS } from './library.mjs';
 import { importPackLibrary, resolvePackCampaign, PACK_LIMITS } from './packs.mjs';
-import { restoreSession, SESSION_IMPORT_BYTES } from './sessions.mjs';
+import { restoreSession, snapshotSession, SESSION_IMPORT_BYTES } from './sessions.mjs';
 import { MAX_REPLAY_TICKS } from './replay.mjs';
 
 export const BACKUP_FORMAT = 'xonix-backup.v1';
@@ -73,6 +73,7 @@ export async function prepareBackup(
   // Fail malformed profile data before any image allocation. Repeat known-
   // campaign validation after the backup's expansions become available.
   importLibrary(value.library, { campaigns: registered });
+  if (value.session !== null) value.session = snapshotSession(value.session);
   const packs = await importPackLibrary(value.packs, {
     decodeImage: async (...args) => {
       checkAbort(signal);

@@ -19,7 +19,15 @@ import {
   applyPlannedEnemy,
   patrolDistance,
 } from './movement.mjs';
-import { tracePlan, selfContact, appendTrail, commitCapture } from './capture.mjs';
+import {
+  tracePlan,
+  selfContact,
+  appendTrail,
+  commitCapture,
+  releaseIsolatedCapture,
+} from './capture.mjs';
+import { versionsForLevel } from './versions.mjs';
+import { createEncounter, updateEncounter, canReleaseIsolated } from './encounter.mjs';
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
@@ -40,7 +48,7 @@ export {
 /**
  * Owns one mutable deterministic run. Rendering may READ public fields; mutation
  * outside this module invalidates replay guarantees. No DOM, art or clock reads.
- * @param {object} source validated xonix-level.v1
+ * @param {object} source validated xonix-level.v1 or xonix-level.v2
  * @param {{seed?:number,turnPolicy?:'immediate'|'grid-center',classId?:string,classRecipes?:object[]}} options
  */
 export function createRun(
@@ -65,7 +73,7 @@ export function createRun(
       for (let x = w.x; x < w.x + w.w; x++) cells[y * 48 + x] = CELL.WALL;
   const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
   const state = {
-    ruleset: RULESET,
+    ruleset: versionsForLevel(level).ruleset,
     levelId: level.id,
     revision: level.revision,
     seed,
@@ -144,6 +152,7 @@ export function createRun(
     _abilitySerial: 0,
     _terminalEmitted: false,
   };
+  if (level.version === 'xonix-level.v2') state.encounter = createEncounter(level.encounter);
   state._loadouts[classId] = state.ability;
   updateSignal(state);
   return state;
@@ -282,7 +291,8 @@ function worldStep(state, input, duration) {
       commitCapture(state);
       if (
         state.coverage + EPS >= state.level.goal.coverage &&
-        state.objectives.every((o) => !o.required || o.captured)
+        state.objectives.every((o) => !o.required || o.captured) &&
+        (!state.encounter || state.encounter.defeated)
       ) {
         complete(state, true);
         break;
@@ -323,6 +333,7 @@ function fixedStep(state, input) {
   state.tick++;
   const endTime = state.time + FIXED_DT;
   updateBosses(state);
+  updateEncounter(state);
   updateAbilities(state);
   if (input.switchClass && input.switchClass !== state._input.switchClass)
     switchClass(state, input.switchClass);
@@ -355,6 +366,15 @@ function fixedStep(state, input) {
   worldStep(state, input, FIXED_DT);
   updateSignal(state);
   if (state.status !== 'won' && state.status !== 'lost') state.time = endTime;
+  // Only a normal running world tick may isolate; recovery/respawn returned above.
+  if (canReleaseIsolated(state)) {
+    releaseIsolatedCapture(state);
+    if (
+      state.coverage + EPS >= state.level.goal.coverage &&
+      state.objectives.every((o) => !o.required || o.captured)
+    )
+      complete(state, true);
+  }
 }
 
 function normalizedInput(input) {
