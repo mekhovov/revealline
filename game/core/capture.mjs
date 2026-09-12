@@ -2,6 +2,7 @@ import { CELL } from './registry.mjs';
 import { EPS, capsuleTime, pointAt } from './geometry.mjs';
 import { ownershipSpans, cellIndex } from './movement.mjs';
 import { releaseCutCells, finishEncounterCapture, defeatEncounter } from './encounter.mjs';
+import { classicSeedsField, classicClaim, updateClassicAnchors } from './classic-topology.mjs';
 
 export function tracePlan(state, paths, duration) {
   const additions = [],
@@ -88,6 +89,12 @@ export function selfContact(state, trace, horizon) {
 export function appendTrail(state, trace, time) {
   if (trace.started !== null && trace.started <= time + EPS && !state.player.cutting) {
     state.player.cutting = true;
+    if (state.classic) {
+      const first = trace.additions[0];
+      const dx = Math.sign(first.x2 - first.x1),
+        dy = Math.sign(first.y2 - first.y1);
+      state.classic.departure = cellIndex(first.x1 - dx * EPS * 4, first.y1 - dy * EPS * 4, state);
+    }
     state.cutStartedAt = state.time + trace.started;
     state.events.push({ type: 'cut.started', tick: state.tick, time: state.time + trace.started });
   }
@@ -139,7 +146,7 @@ function captureCells(state, releaseSeed, closeCut) {
     tail = 0;
   for (const e of state.enemies)
     if (
-      e.type !== 'border-patrol' &&
+      (state.classic ? classicSeedsField(e) : e.type !== 'border-patrol') &&
       !(e.type === 'relay-sentinel' && (releaseSeed || state.encounter?.defeated))
     ) {
       const index = cellIndex(e.x, e.y, state);
@@ -173,7 +180,8 @@ function captureCells(state, releaseSeed, closeCut) {
     }
   state.claimedCount += secured.length;
   state.coverage = state.claimedCount / state.totalClaimable;
-  state.score += secured.length * state.rules.pointsPerCell;
+  state.score +=
+    (state.classic ? classicClaim(state, secured) : secured.length) * state.rules.pointsPerCell;
   if (closeCut) {
     state.player.cutting = false;
     state.cutStartedAt = null;
@@ -208,6 +216,7 @@ function captureCells(state, releaseSeed, closeCut) {
         id: objective.id,
       });
     }
+  if (state.classic) updateClassicAnchors(state);
 }
 
 /** Capture eligibility is frozen before any trail or objective mutation. */

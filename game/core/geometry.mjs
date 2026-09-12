@@ -1,4 +1,4 @@
-import { versionsForLevel, resolveVersions, WIDE_VERSIONS } from './versions.mjs';
+import { versionsForLevel, resolveVersions, WIDE_VERSIONS, CLASSIC_VERSIONS } from './versions.mjs';
 
 /** Deterministic continuous geometry. Times returned here are fractions in [0, 1]. */
 export const EPS = 1e-9;
@@ -85,7 +85,9 @@ export const LEGACY_GEOMETRY = board(48, 36);
 export const WIDE_GEOMETRY = board(72, 36);
 export function geometryForLevel(level) {
   const pair = versionsForLevel(level);
-  const geometry = pair.ruleset === WIDE_VERSIONS.ruleset ? WIDE_GEOMETRY : LEGACY_GEOMETRY;
+  const geometry = [WIDE_VERSIONS.ruleset, CLASSIC_VERSIONS.ruleset].includes(pair.ruleset)
+    ? WIDE_GEOMETRY
+    : LEGACY_GEOMETRY;
   for (const field of ['width', 'height']) {
     const property = Object.getOwnPropertyDescriptor(level, field);
     if (!property || !Object.hasOwn(property, 'value') || property.value !== geometry[field])
@@ -96,7 +98,9 @@ export function geometryForLevel(level) {
 /** Runs are core-owned; this lookup never changes another run's geometry. */
 export function geometryForRun(run) {
   const pair = resolveVersions({ ruleset: run.ruleset });
-  const geometry = pair.ruleset === WIDE_VERSIONS.ruleset ? WIDE_GEOMETRY : LEGACY_GEOMETRY;
+  const geometry = [WIDE_VERSIONS.ruleset, CLASSIC_VERSIONS.ruleset].includes(pair.ruleset)
+    ? WIDE_GEOMETRY
+    : LEGACY_GEOMETRY;
   if (run.width !== geometry.width || run.height !== geometry.height)
     throw new TypeError('run dimensions do not match its simulation version');
   return geometry;

@@ -21,10 +21,23 @@ export const VISUAL_ROLES = Object.freeze([
   'supply',
   'wall',
 ]);
+// These roles belong only to the Classic transport; legacy role acceptance stays fixed.
+export const CLASSIC_VISUAL_ROLES = Object.freeze([
+  'contour',
+  'rover',
+  'eroder',
+  'slowTerrain',
+  'lethalTerrain',
+  'lifePickup',
+  'speedPickup',
+  'slowPickup',
+  'freezePickup',
+]);
 export const SCENARIO_VERSION = 'xonix-playground.v1';
 export const MASTERY_SCENARIO_VERSION = 'xonix-playground.v2';
 export const ENCOUNTER_SCENARIO_VERSION = 'xonix-playground.v3';
 export const WIDE_SCENARIO_VERSION = 'xonix-playground.v4';
+export const CLASSIC_SCENARIO_VERSION = 'xonix-playground.v5';
 
 /** A preview uses the authored definition's campaign ID and this single map.
  * It is deliberately separate from any installed campaign or award authority.
@@ -443,14 +456,16 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       MASTERY_SCENARIO_VERSION,
       ENCOUNTER_SCENARIO_VERSION,
       WIDE_SCENARIO_VERSION,
+      CLASSIC_SCENARIO_VERSION,
     ].includes(value.format)
   )
-    return result(['Expected a supported xonix-playground.v1..v4 format'], {
+    return result(['Expected a supported xonix-playground.v1..v5 format'], {
       warnings,
     });
+  const classic = value.format === CLASSIC_SCENARIO_VERSION;
   const wide = value.format === WIDE_SCENARIO_VERSION;
   const hasEncounter = value.format === ENCOUNTER_SCENARIO_VERSION;
-  const hasMastery = value.format === MASTERY_SCENARIO_VERSION || hasEncounter || wide;
+  const hasMastery = value.format === MASTERY_SCENARIO_VERSION || hasEncounter || wide || classic;
   keys(
     value,
     [
@@ -472,7 +487,13 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (
     plain(value.level) &&
     value.level.version !==
-      (wide ? 'xonix-level.v3' : hasEncounter ? 'xonix-level.v2' : 'xonix-level.v1')
+      (classic
+        ? 'xonix-level.v4'
+        : wide
+          ? 'xonix-level.v3'
+          : hasEncounter
+            ? 'xonix-level.v2'
+            : 'xonix-level.v1')
   )
     errors.push('Scenario and level simulation versions must match');
   themeChecks(value.theme, errors);
@@ -532,11 +553,13 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (hasMastery) {
     if (!own(value, 'masteryDefinition'))
       errors.push('scenario.masteryDefinition is required; use null for no optional goal');
-    else if ((hasEncounter || wide) && value.masteryDefinition !== null)
+    else if ((hasEncounter || wide || classic) && value.masteryDefinition !== null)
       errors.push(
-        wide
-          ? 'Wide scenarios require masteryDefinition:null; optional goals are not supported by this ruleset'
-          : 'Encounter scenarios require masteryDefinition:null; optional goals are not supported by this ruleset',
+        classic
+          ? 'Classic scenarios require masteryDefinition:null; optional goals are not supported by this ruleset'
+          : wide
+            ? 'Wide scenarios require masteryDefinition:null; optional goals are not supported by this ruleset'
+            : 'Encounter scenarios require masteryDefinition:null; optional goals are not supported by this ruleset',
       );
     else if (value.masteryDefinition !== null && !errors.length) {
       try {
@@ -553,7 +576,10 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   else {
     let totalPixels = 0;
     for (const [role, item] of Object.entries(value.visualOverrides)) {
-      if (!VISUAL_ROLES.includes(role)) {
+      if (
+        !VISUAL_ROLES.includes(role) &&
+        !(value.format === CLASSIC_SCENARIO_VERSION && CLASSIC_VISUAL_ROLES.includes(role))
+      ) {
         errors.push(`Unknown visual role ${role}`);
         continue;
       }

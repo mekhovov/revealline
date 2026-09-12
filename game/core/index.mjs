@@ -31,6 +31,8 @@ import { createEncounter, updateEncounter, canReleaseIsolated } from './encounte
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
+import { createClassicState } from './classic-state.mjs';
+import { initializeClassicActors, stepClassic } from './classic-step.mjs';
 export {
   validateLevel,
   validateClassRecipes,
@@ -50,7 +52,7 @@ export {
 /**
  * Owns one mutable deterministic run. Rendering may READ public fields; mutation
  * outside this module invalidates replay guarantees. No DOM, art or clock reads.
- * @param {object} source validated xonix-level.v1, v2 or v3
+ * @param {object} source validated xonix-level.v1, v2, v3 or v4
  * @param {{seed?:number,turnPolicy?:'immediate'|'grid-center',classId?:string,classRecipes?:object[]}} options
  */
 export function createRun(
@@ -157,8 +159,12 @@ export function createRun(
     _abilitySerial: 0,
     _terminalEmitted: false,
   };
-  if (level.version === 'xonix-level.v2' || level.version === 'xonix-level.v3')
+  if (['xonix-level.v2', 'xonix-level.v3', 'xonix-level.v4'].includes(level.version))
     state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
+  if (level.version === 'xonix-level.v4') {
+    state.classic = createClassicState(level, cells);
+    initializeClassicActors(state);
+  }
   state._loadouts[classId] = state.ability;
   updateSignal(state);
   return state;
@@ -177,7 +183,8 @@ function complete(state, won) {
   state._terminalEmitted = true;
   releaseInputs(state);
   state.medal = won
-    ? state.time <= state.rules.timeMedals[0] + EPS && state.lives === state.rules.lives
+    ? state.time <= state.rules.timeMedals[0] + EPS &&
+      (state.classic ? state.classic.livesLost === 0 : state.lives === state.rules.lives)
       ? 'gold'
       : state.time <= state.rules.timeMedals[1] + EPS
         ? 'silver'
@@ -190,8 +197,12 @@ function complete(state, won) {
 function recover(state, contact) {
   state.failureCause = contact.kind;
   const absorbed =
-    !['self-contact', 'cut-timeout', 'cable-limit'].includes(contact.kind) &&
-    state.ability.shieldUntil > state.time + EPS;
+    ![
+      'self-contact',
+      'cut-timeout',
+      'cable-limit',
+      ...(state.classic ? ['lethal-terrain'] : []),
+    ].includes(contact.kind) && state.ability.shieldUntil > state.time + EPS;
   state.trail = [];
   state.trailSegments = [];
   state.player.cutting = false;
@@ -201,6 +212,11 @@ function recover(state, contact) {
   state.ability.fields = [];
   state.ability.shieldUntil = 0;
   if (!absorbed) state.lives--;
+  if (state.classic) {
+    if (!absorbed) state.classic.livesLost++;
+    state.classic.effects['player-speed'] = { from: 0, until: 0 };
+    state.classic.departure = null;
+  }
   state.events.push({
     type: absorbed ? 'shield.absorbed' : 'player.failed',
     tick: state.tick,
@@ -209,7 +225,7 @@ function recover(state, contact) {
     actorId: contact.id,
     lives: state.lives,
   });
-  if (state.lives <= 0) {
+  if (state.lives <= 0 && !state.classic) {
     complete(state, false);
     return;
   }
@@ -218,17 +234,18 @@ function recover(state, contact) {
 }
 
 function updateBosses(state) {
+  const clock = state.classic ? state.classic.actorTime : state.time;
   for (const e of state.enemies)
     if (e.type === 'lane-boss') {
-      if (state.time + EPS >= e.nextWarningAt) {
+      if (clock + EPS >= e.nextWarningAt) {
         e.lane = clamp(
           Math.floor(e.axis === 'horizontal' ? state.player.y : state.player.x) + 0.5,
           1.5,
           e.axis === 'horizontal' ? state.height - 1.5 : state.width - 1.5,
         );
-        e.warningUntil = state.time + (e.warningSeconds ?? 1.5);
+        e.warningUntil = clock + (e.warningSeconds ?? 1.5);
         e.activeUntil = e.warningUntil + (e.activeSeconds ?? 0.7);
-        e.nextWarningAt = state.time + (e.period ?? 6);
+        e.nextWarningAt = clock + (e.period ?? 6);
         state.events.push({
           type: 'boss.warning',
           tick: state.tick,
@@ -240,11 +257,7 @@ function updateBosses(state) {
         });
       }
       e.bossPhase =
-        state.time < e.warningUntil - EPS
-          ? 'warning'
-          : state.time < e.activeUntil - EPS
-            ? 'active'
-            : 'idle';
+        clock < e.warningUntil - EPS ? 'warning' : clock < e.activeUntil - EPS ? 'active' : 'idle';
     }
 }
 
@@ -336,6 +349,7 @@ function worldStep(state, input, duration) {
 }
 
 function fixedStep(state, input) {
+  if (state.classic) return stepClassic(state, input, { complete, recover, updateBosses });
   state.tick++;
   const endTime = state.time + FIXED_DT;
   updateBosses(state);
@@ -450,6 +464,7 @@ export function getSummary(state) {
     tick: state.tick,
     time: state.time,
     lives: state.lives,
+    ...(state.classic ? { livesLost: state.classic.livesLost } : {}),
     score: state.score,
     coverage: state.coverage,
     claimedCount: state.claimedCount,

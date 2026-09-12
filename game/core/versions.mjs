@@ -19,6 +19,13 @@ export const WIDE_VERSIONS = Object.freeze({
   checkpointAlgorithm: 'fnv1a64-state-v4',
 });
 
+export const CLASSIC_VERSIONS = Object.freeze({
+  levelVersion: 'xonix-level.v4',
+  ruleset: 'xonix-core.v5',
+  replayVersion: 'xonix-replay.v6',
+  checkpointAlgorithm: 'fnv1a64-state-v5',
+});
+
 /** An omitted pair remains legacy. Explicit fields must select exactly one supported pair. */
 export function resolveVersions(value = {}) {
   if (!plainObject(value)) throw new TypeError('version request must be an object');
@@ -27,8 +34,8 @@ export function resolveVersions(value = {}) {
   exactKeys(request, Object.keys(LEGACY_VERSIONS), 'version request');
   const keys = Object.keys(request);
   if (!keys.length) return { ...LEGACY_VERSIONS };
-  const match = [LEGACY_VERSIONS, ENCOUNTER_VERSIONS, WIDE_VERSIONS].find((pair) =>
-    keys.every((key) => request[key] === pair[key]),
+  const match = [LEGACY_VERSIONS, ENCOUNTER_VERSIONS, WIDE_VERSIONS, CLASSIC_VERSIONS].find(
+    (pair) => keys.every((key) => request[key] === pair[key]),
   );
   if (!match) throw new TypeError('unsupported or mismatched simulation versions');
   return { ...match };
