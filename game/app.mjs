@@ -60,6 +60,7 @@ import {
 } from './packs.mjs';
 import {
   canAutoStartPackLaunch,
+  canReconcilePackCommit,
   createPackCommitCoordinator,
   createPackLaunchGuard,
   preparePackCatalog,
@@ -230,7 +231,15 @@ try {
     prepare: async (value) =>
       prepareContentCatalog(value ? await importPackLibrary(value) : emptyPackLibrary()),
     adopt: adoptContentCatalog,
-    canAdopt: () => !contentSwitchBusy && !sessionBusy && !document.hidden,
+    canAdopt: () =>
+      canReconcilePackCommit({
+        contentSwitchBusy,
+        sessionBusy,
+        backupBusy,
+        persistenceReady,
+        backupLocked: localStorage.getItem(`${libraryKey}.backup-lock`) !== null,
+        hidden: document.hidden,
+      }),
     onReconciled: () => {
       refreshCampaigns();
       libraryPanel.refresh();
@@ -363,7 +372,8 @@ try {
     courseEntry = null,
     courseEntryMessage = '',
     courseEntryHold = false,
-    contentSwitchBusy = false;
+    contentSwitchBusy = false,
+    backupBusy = false;
   const packLaunchGuard = createPackLaunchGuard();
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
@@ -1556,11 +1566,12 @@ try {
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
+      backupBusy = true;
       invalidateContentSwitch();
       packCommits.markIntent();
       contentSwitchBusy = true;
-      refreshContentSelectors();
       try {
+        refreshContentSelectors();
         const content = prepareContentCatalog(prepared.packs);
         if (!writer.writable) throw new Error(writer.reason);
         if (!persistenceReady) {
@@ -1593,6 +1604,7 @@ try {
         refreshCampaigns();
         return result;
       } finally {
+        backupBusy = false;
         contentSwitchBusy = false;
         refreshContentSelectors();
         await packCommits.reconcile();

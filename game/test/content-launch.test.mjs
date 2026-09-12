@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import {
   PACK_CATALOG_VERSION,
   canAutoStartPackLaunch,
+  canReconcilePackCommit,
   createPackCommitCoordinator,
   createPackLaunchGuard,
   preparePackCatalog,
@@ -203,8 +204,15 @@ test('a stale durable pack commit reconciles catalog bytes without changing the 
   assert.equal(resumeCalls, 0);
 });
 
-test('pack reconciliation waits for restore and reads the latest queued commit', async () => {
-  let blocked = true;
+test('pack reconciliation keeps the backup gate after a content-switch reset', async () => {
+  const host = {
+    contentSwitchBusy: true,
+    sessionBusy: false,
+    backupBusy: true,
+    persistenceReady: true,
+    backupLocked: true,
+    hidden: false,
+  };
   let durable = null;
   let activeRun = { id: 'restore-pending' };
   let adoptedCatalog = null;
@@ -213,15 +221,18 @@ test('pack reconciliation waits for restore and reads the latest queued commit',
     read: () => durable,
     prepare: (value) => ({ packs: value }),
     adopt: (value) => (adoptedCatalog = value),
-    canAdopt: () => !blocked,
+    canAdopt: () => canReconcilePackCommit(host),
   });
   await coordinator.commit('pack-a');
+  host.contentSwitchBusy = false;
   assert.equal(await coordinator.noteStaleCommit(), false);
+  assert.equal(adoptedCatalog, null);
   assert.equal(coordinator.needsReconciliation(), true);
   coordinator.markIntent();
   await coordinator.commit('pack-b');
   activeRun = { id: 'restored-run' };
-  blocked = false;
+  host.backupBusy = false;
+  host.backupLocked = false;
   assert.equal(await coordinator.reconcile(), true);
   assert.deepEqual(adoptedCatalog, { packs: 'pack-b' });
   assert.equal(activeRun.id, 'restored-run');

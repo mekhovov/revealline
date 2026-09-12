@@ -131,6 +131,24 @@ export function createPackCommitCoordinator({
   });
 }
 
+export function canReconcilePackCommit({
+  contentSwitchBusy,
+  sessionBusy,
+  backupBusy,
+  persistenceReady,
+  backupLocked,
+  hidden,
+}) {
+  return (
+    contentSwitchBusy === false &&
+    sessionBusy === false &&
+    backupBusy === false &&
+    persistenceReady === true &&
+    backupLocked === false &&
+    hidden === false
+  );
+}
+
 export function canAutoStartPackLaunch({
   current,
   blocked,
