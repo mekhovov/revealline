@@ -1,6 +1,8 @@
 # Round 11 roster viability and balance evidence
 
-All **252 supplied combinations** have a verified legal clear: twelve campaign maps plus six expansion maps, seven classes, both turning policies, seed 1. Every action-free clear retains all three lives and earns the current gold medal. No combination remains unresolved within this survey's budget. This establishes a usable fallback for every stock loadout; it does not establish human difficulty, long-term enjoyment, or device performance.
+The initial **252 combinations** have a verified legal clear: twelve campaign maps plus the six original expansion maps, seven classes, both turning policies, seed 1. Every action-free clear retains all three lives and earns its current gold medal. No combination remains unresolved within this survey's budget. This establishes a usable fallback for every stock loadout in that baseline; it does not establish human difficulty, long-term enjoyment, or device performance.
+
+The findings below led to the separately implemented [Fieldcraft expansion](fieldcraft-challenges.md): four additional maps, 56 more ordinary all-class clears, eight measured role clears and six action-omission comparisons. The original matrix remains scoped to the first eighteen maps so the before/after evidence stays clear. There are now twenty-two supplied maps.
 
 The complete result is [balance-matrix.json](verification/round-11/balance-matrix.json). It contains content and source SHA-256 hashes, exact input sequences, summaries, event counts, challenge margins, and portable replay checkpoints for every attempted run. The [survey script](verification/round-11/run-balance-survey.mjs) is the reproducible command source.
 
@@ -97,7 +99,7 @@ The six expansion maps reuse the corresponding baseline movement routes; Relay S
 
 Every optimized fallback earns gold, and several later maps finish faster than earlier ones. The generous base campaign is accessible, while its current time medals and hazards do not establish a sustained difficulty curve for a practiced player. Automatic route search has full board knowledge, so these numbers must not be treated as beginner clear times. Conversely, calling the campaign challenging or highly replayable solely because the solver clears it would be unsupported.
 
-The next bounded content review should preserve these accessible clears and establish three additional measurable encounters in separate, revisioned challenge data:
+The resulting bounded content pass preserved these accessible clears and implemented the following measurable encounters in separate, revisioned Fieldcraft data:
 
 | Encounter | Required evidence before calling the role useful |
 |---|---|
@@ -105,4 +107,4 @@ The next bounded content review should preserve these accessible clears and esta
 | Supply / emitter challenge | A carrier pickup and field visibly suppress an emitter; compare a legal supply-assisted clear with the ordinary fallback. Avoid mandatory ammunition without an accessible refill. |
 | Recovery / pressure challenge | A pulse or shield demonstrably rescues a threatened cut, while a skilled no-ability route still clears; verify the later recut, remaining mission time and preserved cooldowns. |
 
-Each such encounter should have a reviewed replay in both turning modes, a demonstrated failure-and-recovery path, and a short hands-on keyboard/touch/controller playtest. Calibrate medal times from those human runs and retain clear warning windows. This is an acceptance checklist for a finite balance pass, not a claim that new encounter content has already been authored or that automated verification can certify enjoyment.
+Fieldcraft now has reviewed replays in both turning modes and explicit action-omission comparisons, including a demonstrated pulse recovery path. Its [verification guide](fieldcraft-challenges.md) records those results. Hands-on keyboard/touch/controller playtests and human medal calibration remain separate evidence; automated verification cannot certify enjoyment.

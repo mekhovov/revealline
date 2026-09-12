@@ -1,0 +1,349 @@
+{
+  "format": "xonix-pack.v1",
+  "id": "night-shift",
+  "version": "1.0.0",
+  "name": "Night Shift",
+  "description": "Three neon arcade maps with an original procedural metal score and growing cut challenges.",
+  "engine": "xonix-core.v2",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line",
+    "license": "Original project content",
+    "rightsStatus": "Original procedural design"
+  },
+  "themes": [
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#f5bf77",
+        "safe": "#7edacb",
+        "danger": "#f57d9b",
+        "field": "#171d35",
+        "grid": "#293050",
+        "sky": "#e49c95",
+        "land": "#565270"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "night-shift",
+      "revision": "1",
+      "title": "Night Shift",
+      "themeId": "retro",
+      "musicId": "night-shift-theme",
+      "levels": [
+        {
+          "version": "xonix-level.v1",
+          "id": "night-shift-01",
+          "revision": "1",
+          "name": "Midnight Channel",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "roamer",
+              "type": "bouncer",
+              "x": 36.5,
+              "y": 27.5,
+              "vx": -1.6,
+              "vy": 2.4,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 14.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.58
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [45, 81],
+            "timeLimitSeconds": 150
+          },
+          "themeId": "retro",
+          "musicId": "night-shift-theme"
+        },
+        {
+          "version": "xonix-level.v1",
+          "id": "night-shift-02",
+          "revision": "1",
+          "name": "Voltage Garden",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "x": 11.5,
+              "y": 24.5,
+              "vx": 2.5,
+              "vy": -2.1,
+              "radius": 0.3
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "x": 38.5,
+              "y": 12.5,
+              "vx": -2.2,
+              "vy": 2.5,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.62
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [50, 89],
+            "timeLimitSeconds": 135,
+            "maxTrailCells": 65
+          },
+          "themeId": "retro",
+          "musicId": "night-shift-theme"
+        },
+        {
+          "version": "xonix-level.v1",
+          "id": "night-shift-03",
+          "revision": "1",
+          "name": "Afterglow Sentinel",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [
+            {
+              "x": 10,
+              "y": 10,
+              "w": 8,
+              "h": 2
+            },
+            {
+              "x": 29,
+              "y": 21,
+              "w": 8,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "x": 10.5,
+              "y": 22.5,
+              "vx": 2.6,
+              "vy": 2,
+              "radius": 0.3
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "x": 37.5,
+              "y": 25.5,
+              "vx": -2.8,
+              "vy": -1.8,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 11.5,
+              "y": 29.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.65
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [55, 97],
+            "timeLimitSeconds": 120,
+            "cutTimeLimitSeconds": 10
+          },
+          "themeId": "retro",
+          "musicId": "night-shift-theme"
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": [
+    {
+      "id": "night-shift-theme",
+      "name": "Voltage and Velvet",
+      "genre": "metal",
+      "tempo": 144,
+      "root": 40,
+      "scale": "minor"
+    }
+  ]
+}

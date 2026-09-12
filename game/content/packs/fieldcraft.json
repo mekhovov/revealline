@@ -1,0 +1,545 @@
+{
+  "format": "xonix-pack.v1",
+  "id": "fieldcraft",
+  "version": "1.0.0",
+  "name": "Fieldcraft",
+  "description": "Four distinct fictional equipment challenges: interference crossing, two-dock emitter suppression, pulse recovery and net-assisted capture. Every class stays selectable; briefs recommend tools without inventing ability gates.",
+  "engine": "xonix-core.v2",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line",
+    "license": "Original project content",
+    "rightsStatus": "Original fictional arcade design"
+  },
+  "themes": [
+    {
+      "id": "fpv",
+      "name": "FPV Front",
+      "subtitle": "Dawn over home",
+      "family": "fpv",
+      "player": "fpv-body",
+      "enemyShape": "tank",
+      "patrolShape": "drone",
+      "bossShape": "radar",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply pad",
+        "enemy": "Invader patrol",
+        "boss": "Signal sentinel",
+        "currency": "Score",
+        "ability": "Equipment"
+      },
+      "palette": {
+        "ink": "#112d35",
+        "paper": "#f5f1e6",
+        "muted": "#8baaa5",
+        "accent": "#e9c46a",
+        "safe": "#81b5bf",
+        "danger": "#f08168",
+        "field": "#102831",
+        "grid": "#193941",
+        "sky": "#dfb781",
+        "land": "#687c55"
+      },
+      "classBodies": {
+        "scout": "scout-quad",
+        "bomber": "fpv-body",
+        "carrier": "heavy-lift",
+        "interceptor": "scout-quad",
+        "fiber": "fpv-body",
+        "impact": "fpv-body",
+        "trapper": "fpv-body"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "fieldcraft",
+      "revision": "1",
+      "title": "Fieldcraft",
+      "themeId": "fpv",
+      "musicId": "fieldcraft-theme",
+      "levels": [
+        {
+          "version": "xonix-level.v1",
+          "revision": "1",
+          "width": 48,
+          "height": 36,
+          "themeId": "fpv",
+          "musicId": "fieldcraft-theme",
+          "id": "fieldcraft-01",
+          "name": "Copper Crossing",
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "south-anchor",
+              "type": "bouncer",
+              "x": 8.5,
+              "y": 30.5,
+              "vx": 0.2,
+              "vy": 0,
+              "radius": 0.3
+            },
+            {
+              "id": "north-anchor",
+              "type": "bouncer",
+              "x": 38.5,
+              "y": 5.5,
+              "vx": -0.2,
+              "vy": 0,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "west-relay",
+              "x": 9.5,
+              "y": 10.5,
+              "required": true,
+              "hidden": false
+            },
+            {
+              "id": "east-relay",
+              "x": 38.5,
+              "y": 28.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [],
+          "signalZones": [
+            {
+              "id": "broad-band",
+              "x": 1,
+              "y": 9,
+              "w": 46,
+              "h": 14,
+              "speedFactor": 0.25,
+              "disableBoost": true,
+              "lockAbility": true
+            }
+          ],
+          "goal": {
+            "coverage": 0.72
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 8,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 1,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [20, 50],
+            "cutTimeLimitSeconds": 12,
+            "maxTrailCells": 36,
+            "timeLimitSeconds": 90
+          },
+          "metadata": {
+            "description": "Recommended: Fiber relay. The amber band spans the entire field: fiber crosses at full speed, while other craft can take slower cuts or build safe launch lines. First split the field vertically; the two relays then favor cuts at different heights. Fiber still has a vulnerable live cable and a 36-cell limit."
+          }
+        },
+        {
+          "version": "xonix-level.v1",
+          "revision": "1",
+          "width": 48,
+          "height": 36,
+          "themeId": "fpv",
+          "musicId": "fieldcraft-theme",
+          "id": "fieldcraft-02",
+          "name": "Switchyard Circuit",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "walls": [
+            {
+              "x": 15,
+              "y": 7,
+              "w": 7,
+              "h": 2
+            },
+            {
+              "x": 14,
+              "y": 27,
+              "w": 8,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "north-anchor",
+              "type": "bouncer",
+              "x": 42.5,
+              "y": 9.5,
+              "vx": 0,
+              "vy": 0.3,
+              "radius": 0.3
+            },
+            {
+              "id": "south-anchor",
+              "type": "bouncer",
+              "x": 42.5,
+              "y": 28.5,
+              "vx": 0,
+              "vy": -0.25,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "north-relay",
+              "x": 12.5,
+              "y": 5.5,
+              "required": true,
+              "hidden": false
+            },
+            {
+              "id": "south-relay",
+              "x": 12.5,
+              "y": 29.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "west-supply",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            },
+            {
+              "id": "south-supply",
+              "x": 30.5,
+              "y": 35.5,
+              "radius": 2
+            }
+          ],
+          "hangars": [
+            {
+              "id": "west-hangar",
+              "x": 0.5,
+              "y": 18.5,
+              "radius": 2
+            },
+            {
+              "id": "south-hangar",
+              "x": 30.5,
+              "y": 35.5,
+              "radius": 2
+            }
+          ],
+          "signalZones": [
+            {
+              "id": "west-emitter",
+              "x": 2,
+              "y": 16,
+              "w": 4,
+              "h": 5,
+              "speedFactor": 0.25,
+              "disableBoost": true,
+              "lockAbility": false
+            },
+            {
+              "id": "south-emitter",
+              "x": 28,
+              "y": 31,
+              "w": 5,
+              "h": 3,
+              "speedFactor": 0.25,
+              "disableBoost": true,
+              "lockAbility": false
+            }
+          ],
+          "goal": {
+            "coverage": 0.68
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 8,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 1,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [12, 25],
+            "cutTimeLimitSeconds": 6.5,
+            "maxTrailCells": 50,
+            "timeLimitSeconds": 65
+          },
+          "metadata": {
+            "description": "Recommended: Light carrier. Collect at the west supply, enter one cell and drop a field beside the emitter before crossing. At the south hangar, try Heavy carrier and collect again: changing craft preserves ammunition and cooldowns. Fields suppress an emitter only while their radius covers its center. Restore both relays with separate cuts."
+          }
+        },
+        {
+          "version": "xonix-level.v1",
+          "revision": "1",
+          "width": 48,
+          "height": 36,
+          "themeId": "fpv",
+          "musicId": "fieldcraft-theme",
+          "id": "fieldcraft-03",
+          "name": "Pulse Recall",
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [
+            {
+              "x": 10,
+              "y": 22,
+              "w": 7,
+              "h": 2
+            },
+            {
+              "x": 32,
+              "y": 24,
+              "w": 6,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "cable-cutter",
+              "type": "bouncer",
+              "x": 29.5,
+              "y": 3.5,
+              "vx": -4,
+              "vy": 0,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "recovery-relay",
+              "x": 38.5,
+              "y": 28.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [],
+          "signalZones": [
+            {
+              "id": "recall-emitter",
+              "x": 22,
+              "y": 2,
+              "w": 5,
+              "h": 5,
+              "speedFactor": 0.5,
+              "disableBoost": false,
+              "lockAbility": false
+            }
+          ],
+          "goal": {
+            "coverage": 0.7
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 8,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 1,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [16, 25],
+            "cutTimeLimitSeconds": 6,
+            "maxTrailCells": 48,
+            "timeLimitSeconds": 35
+          },
+          "metadata": {
+            "description": "Recommended: Impact craft. The nearby roamer threatens a cut from the top. Pulse before it touches your cable: the cut is abandoned and the craft redeploys without losing a life. The pulse also holds nearby enemies and suppresses the emitter briefly. Recover at home, then choose a safer cross-field cut from the left rail. This is an escape tool; the pulse never claims territory."
+          }
+        },
+        {
+          "version": "xonix-level.v1",
+          "revision": "1",
+          "width": 48,
+          "height": 36,
+          "themeId": "fpv",
+          "musicId": "fieldcraft-theme",
+          "id": "fieldcraft-04",
+          "name": "Net Loom",
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [
+            {
+              "x": 7,
+              "y": 14,
+              "w": 7,
+              "h": 2
+            },
+            {
+              "x": 33,
+              "y": 15,
+              "w": 5,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "thread-cutter",
+              "type": "bouncer",
+              "x": 29.5,
+              "y": 3.5,
+              "vx": -4,
+              "vy": 0,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "upper-thread",
+              "x": 8.5,
+              "y": 8.5,
+              "required": true,
+              "hidden": false
+            },
+            {
+              "id": "lower-thread",
+              "x": 38.5,
+              "y": 30.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "net-supply",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "signalZones": [],
+          "goal": {
+            "coverage": 0.68
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 8,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 1,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [8, 20],
+            "cutTimeLimitSeconds": 4,
+            "maxTrailCells": 36,
+            "timeLimitSeconds": 35
+          },
+          "metadata": {
+            "description": "Recommended: Trapper. Pick up a charge before leaving home. Place a net near the fast roamer as you begin the vertical cut; slowing it buys time to close your line. The roamer is still dangerous inside a net. Use the new center rail for a shorter second cut toward the lower relay. Keep every cable within 36 cells and four seconds."
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": [
+    {
+      "id": "fieldcraft-theme",
+      "name": "Copper Skies",
+      "genre": "rock",
+      "tempo": 116,
+      "root": 45,
+      "scale": "dorian"
+    }
+  ]
+}

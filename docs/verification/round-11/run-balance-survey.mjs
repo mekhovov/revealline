@@ -6,12 +6,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { createRun, stepRun, FIXED_DT, RULESET } from '../../../game/core/index.mjs';
-import {
-  createRecorder,
-  recordInput,
-  exportReplay,
-  verifyReplay,
-} from '../../../game/replay.mjs';
+import { createRecorder, recordInput, exportReplay, verifyReplay } from '../../../game/replay.mjs';
 import { loadInputs, digest } from '../../../scripts/verify-campaign.mjs';
 import { expansionSources } from '../../../scripts/verify-packs.mjs';
 
@@ -141,7 +136,11 @@ export async function survey() {
   const { campaign, classes } = await loadInputs();
   const baseProof = await readJSON('game/replays/campaign-routes.json');
   const expansionProof = await readJSON('game/replays/expansion-routes.json');
-  const packs = await expansionSources();
+  // This is the initial 18-map accessibility baseline. Fieldcraft has its own
+  // complete roster and role-interaction proof in scripts/verify-specialty.mjs.
+  const packs = (await expansionSources()).filter((pack) =>
+    ['night-shift', 'living-threads'].includes(pack.id),
+  );
   const sources = [
     ...campaign.levels.map((level) => ({
       packId: null,

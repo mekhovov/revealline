@@ -1,0 +1,353 @@
+{
+  "format": "xonix-pack.v1",
+  "id": "living-threads",
+  "version": "1.0.0",
+  "name": "Living Threads",
+  "description": "Three Ukrainian-inspired garden maps with an original ambient score and timed weaving challenges.",
+  "engine": "xonix-core.v2",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line",
+    "license": "Original project content",
+    "rightsStatus": "Original procedural design"
+  },
+  "themes": [
+    {
+      "id": "ukraine",
+      "name": "Ukraine Atlas",
+      "subtitle": "Threads of belonging",
+      "family": "atlas",
+      "player": "ukrainian-bird",
+      "enemyShape": "moth",
+      "patrolShape": "spark",
+      "bossShape": "flower",
+      "scene": "heritage",
+      "labels": {
+        "objective": "Memory",
+        "supply": "Garden gate",
+        "enemy": "Thorn spirit",
+        "boss": "Winter bloom",
+        "currency": "Score",
+        "ability": "Gift"
+      },
+      "palette": {
+        "ink": "#29343c",
+        "paper": "#f3ecdf",
+        "muted": "#aaa18e",
+        "accent": "#e5ba6c",
+        "safe": "#90b7bf",
+        "danger": "#d98277",
+        "field": "#252d3e",
+        "grid": "#344154",
+        "sky": "#dcb894",
+        "land": "#697d73"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "living-threads",
+      "revision": "1",
+      "title": "Living Threads",
+      "themeId": "ukraine",
+      "musicId": "living-threads-theme",
+      "levels": [
+        {
+          "version": "xonix-level.v1",
+          "id": "living-threads-01",
+          "revision": "1",
+          "name": "Petals at Dawn",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "field",
+              "type": "bouncer",
+              "x": 36.5,
+              "y": 22.5,
+              "vx": -2.6,
+              "vy": 2.1,
+              "radius": 0.3
+            },
+            {
+              "id": "patrol",
+              "type": "border-patrol",
+              "x": 0.5,
+              "y": 35.5,
+              "speed": 2.5,
+              "clockwise": true
+            }
+          ],
+          "objectives": [],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.65
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [60, 105],
+            "timeLimitSeconds": 150
+          },
+          "themeId": "ukraine",
+          "musicId": "living-threads-theme"
+        },
+        {
+          "version": "xonix-level.v1",
+          "id": "living-threads-02",
+          "revision": "1",
+          "name": "The Woven Path",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "west",
+              "type": "bouncer",
+              "x": 10.5,
+              "y": 20.5,
+              "vx": 2.8,
+              "vy": 2.3,
+              "radius": 0.3
+            },
+            {
+              "id": "east",
+              "type": "bouncer",
+              "x": 38.5,
+              "y": 25.5,
+              "vx": -3.2,
+              "vy": -2.6,
+              "radius": 0.3
+            }
+          ],
+          "objectives": [
+            {
+              "id": "hidden-relay",
+              "x": 8.5,
+              "y": 10.5,
+              "required": true,
+              "hidden": true
+            },
+            {
+              "id": "bonus",
+              "x": 37.5,
+              "y": 30.5,
+              "required": false,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.68
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [65, 113],
+            "timeLimitSeconds": 135,
+            "maxTrailCells": 65
+          },
+          "themeId": "ukraine",
+          "musicId": "living-threads-theme"
+        },
+        {
+          "version": "xonix-level.v1",
+          "id": "living-threads-03",
+          "revision": "1",
+          "name": "Garden of Memory",
+          "width": 48,
+          "height": 36,
+          "spawn": {
+            "x": 24.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "field",
+              "type": "bouncer",
+              "x": 38.5,
+              "y": 25.5,
+              "vx": -3.2,
+              "vy": 2.1,
+              "radius": 0.3
+            },
+            {
+              "id": "sentinel",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 17.5,
+              "axis": "horizontal",
+              "period": 8,
+              "warningSeconds": 2,
+              "activeSeconds": 1.2,
+              "laneWidth": 1.2
+            }
+          ],
+          "objectives": [
+            {
+              "id": "relay",
+              "x": 8.5,
+              "y": 27.5,
+              "required": true,
+              "hidden": false
+            }
+          ],
+          "supplies": [
+            {
+              "id": "home",
+              "x": 24.5,
+              "y": 0.5,
+              "radius": 2
+            }
+          ],
+          "goal": {
+            "coverage": 0.7
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 10,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.7,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "timeMedals": [70, 121],
+            "timeLimitSeconds": 120,
+            "cutTimeLimitSeconds": 10
+          },
+          "themeId": "ukraine",
+          "musicId": "living-threads-theme"
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": [
+    {
+      "id": "living-threads-theme",
+      "name": "Threads in the Rain",
+      "genre": "ambient",
+      "tempo": 76,
+      "root": 57,
+      "scale": "dorian"
+    }
+  ]
+}
