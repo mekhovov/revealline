@@ -68,6 +68,7 @@ import {
 } from './content-launch.mjs';
 import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
+import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { campaignContinuation, campaignSelection, savedFlightPreview } from './continuation.mjs';
 import { missionBriefing } from './mission-brief.mjs';
@@ -113,6 +114,7 @@ const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 
 try {
+  let attemptFiles = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource] = await Promise.all([
     getJSON('content/campaign.json'),
     getJSON('content/themes.json'),
@@ -156,6 +158,7 @@ try {
     return { packs: nextPacks, entries, registrations };
   }
   function adoptContentCatalog(content) {
+    attemptFiles?.invalidate();
     packs = content.packs;
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
@@ -526,6 +529,7 @@ try {
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'library-dialog' && libraryPanel.cancelAttemptExport()) return;
       const transferCancel = $('transfer-cancel');
       if (
         dialog.id === 'library-dialog' &&
@@ -824,6 +828,7 @@ try {
   }
   async function enterFirstFlight() {
     if (practice || courseSession || courseEntry) return;
+    attemptFiles?.invalidate();
     const ticket = {
       controller: new AbortController(),
       run,
@@ -1011,6 +1016,7 @@ try {
     else delete $('content-select-status').dataset.kind;
   }
   function invalidateContentSwitch({ announce = false } = {}) {
+    attemptFiles?.invalidate();
     const interrupted = contentSwitchBusy;
     packLaunchGuard.invalidate();
     contentSwitchBusy = false;
@@ -1173,6 +1179,7 @@ try {
   }
   async function replacePackLibrary(next, { contentSwitchTicket = null } = {}) {
     if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
+    attemptFiles?.invalidate();
     const ownsOperation = !contentSwitchTicket;
     const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
     if (ownsOperation) {
@@ -1256,6 +1263,7 @@ try {
     return { pack: prepared.pack, installed: true };
   }
   async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
+    attemptFiles?.invalidate();
     cancelRestore();
     const operation = packLaunchGuard.begin(packs);
     packCommits.markIntent();
@@ -1391,21 +1399,23 @@ try {
       );
     return session;
   }
+  function findCampaignEntry(key) {
+    let entry = catalog().find((e) => campaignKey(e.campaign) === key);
+    if (!entry) {
+      const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(key || '');
+      if (match) {
+        const c = challengeCampaign(match[1], match[2], baseClasses);
+        const e = { ...baseEntry, campaign: c };
+        if (campaignKey(c) === key) entry = e;
+      }
+    }
+    return entry;
+  }
   async function restoreAttempt(candidate) {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before loading a campaign flight.');
     if (sessionBusy) throw new Error('A flight is already being verified.');
-    let entry = catalog().find((e) => campaignKey(e.campaign) === candidate?.campaignKey);
-    if (!entry) {
-      const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(
-        candidate?.campaignKey || '',
-      );
-      if (match) {
-        const c = challengeCampaign(match[1], match[2], baseClasses);
-        const e = { ...baseEntry, campaign: c };
-        if (campaignKey(c) === candidate.campaignKey) entry = e;
-      }
-    }
+    const entry = findCampaignEntry(candidate?.campaignKey);
     if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
     invalidateContentSwitch();
     sessionBusy = true;
@@ -1492,6 +1502,39 @@ try {
     musicOverride = true;
     prepare();
   }
+  attemptFiles = createAttemptFilePreparer({
+    getState: () => ({
+      run,
+      recorder,
+      runId,
+      library,
+      packs,
+      started,
+      paused,
+      practice,
+      courseActive: courseSession,
+      courseEntry: !!courseEntry,
+      recordingStopped,
+      contentBusy: contentSwitchBusy,
+      sessionBusy,
+      backupBusy,
+      hidden: document.hidden,
+      themeId: theme.id,
+      bodyId,
+    }),
+    snapshotCurrent: () => {
+      pause(true);
+      return snapshotAttempt();
+    },
+    resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
+    readStored: () => localStorage.getItem(sessionKey),
+    readBackupMarker: () => localStorage.getItem(`${libraryKey}.backup-lock`),
+    readJournal: () => readAssetStore(journalKey),
+    withStorageLock: (work, signal) =>
+      navigator.locks?.request
+        ? navigator.locks.request(`${libraryKey}.backup-lock`, { signal }, work)
+        : work(),
+  });
   const libraryPanel = attachLibraryPanel({
     focusMission,
     getReducedEffects: () => $('reduced-effects').checked,
@@ -1521,9 +1564,14 @@ try {
     select: selectEntry,
     pause: () => pause(true),
     saved: savedAttempt,
-    suspend: () => {
-      pause(true);
-      return snapshotAttempt();
+    attemptExportSource: () => attemptFiles.source(),
+    prepareAttemptFile: (options) => {
+      // Do not clear an actual pending pack/restore/backup operation to make an
+      // export eligible. An otherwise idle queued autoplay loses its ticket.
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        throw new Error('Finish the pending content or save operation before exporting.');
+      invalidateContentSwitch();
+      return attemptFiles.prepare(options);
     },
     currentSession: () =>
       started && recorder && !practice && !['won', 'lost'].includes(run.status)
@@ -1653,7 +1701,10 @@ try {
       $(id).hidden = true;
     }
   }
-  $('library-dialog').addEventListener('close', cancelRestore);
+  $('library-dialog').addEventListener('close', () => {
+    cancelRestore();
+    attemptFiles.invalidate();
+  });
   $('pack-select').onchange = async () => {
     const packId = $('pack-select').value;
     if (packId.startsWith('campaign:')) return;
@@ -2159,6 +2210,7 @@ try {
   }
   function prepare({ restoreAdoption = false, contentSwitchTicket = null } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
     courseEntryHold = false;
@@ -2297,6 +2349,7 @@ try {
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
     cancelRestore();

@@ -184,6 +184,11 @@ async function setup(t, count = 30, hostOverrides = {}) {
       base: () => entry,
       pause() {},
       saved: () => null,
+      attemptExportSource: () => ({
+        source: null,
+        label: 'Export saved attempt',
+        reason: 'No saved attempt.',
+      }),
       select: (...args) => selections.push(args),
       focusMission: () => node('mission-start').focus(),
       ...hostOverrides,
