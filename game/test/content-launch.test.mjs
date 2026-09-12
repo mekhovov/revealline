@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
   PACK_CATALOG_VERSION,
+  canAutoStartPackLaunch,
+  createPackLaunchGuard,
   preparePackCatalog,
   resolvePackLaunch,
   packLaunchHref,
@@ -116,4 +118,97 @@ test('landing and game expose wired pack and level selectors with exact first-mi
     const encoded = `pack=${pack.id}&amp;campaign=${campaign.id}&amp;level=${level.id}&amp;play=1`;
     assert.ok(landing.includes(encoded), `${pack.name} card must launch its first mission`);
   }
+});
+
+test('newer restore, profile and pack choices block an in-flight pack adoption', async () => {
+  for (const newerAction of ['saved-flight restore', 'profile replacement', 'pack selection']) {
+    const guard = createPackLaunchGuard();
+    const packs = {};
+    const ticket = guard.begin(packs);
+    let finish;
+    let adopted = false;
+    const pending = guard
+      .run(
+        ticket,
+        packs,
+        () => packs,
+        () => new Promise((resolve) => (finish = resolve)),
+      )
+      .then(() => (adopted = true));
+    guard.invalidate();
+    finish(newerAction);
+    await assert.rejects(pending, /newer action/);
+    assert.equal(adopted, false, `${newerAction} must win over the older pack launch`);
+    assert.equal(guard.current(ticket, packs), false);
+    assert.throws(() => guard.assert(ticket, packs), /newer action/);
+  }
+});
+
+test('pack launch work rejects a library replacement before adopting its result', async () => {
+  const guard = createPackLaunchGuard();
+  const before = {};
+  const after = {};
+  let packs = before;
+  let finish;
+  let adopted = false;
+  const ticket = guard.begin(before);
+  const pending = guard
+    .run(
+      ticket,
+      before,
+      () => packs,
+      () => new Promise((resolve) => (finish = resolve)),
+    )
+    .then(() => (adopted = true));
+  packs = after;
+  finish();
+  await assert.rejects(pending, /newer action/);
+  assert.equal(adopted, false);
+});
+
+test('pack launch guard rejects changed libraries and advances only its current operation', () => {
+  const guard = createPackLaunchGuard();
+  const before = {};
+  const after = {};
+  const first = guard.begin(before);
+  assert.throws(() => guard.assert(first, after), /newer action/);
+  guard.advance(first, before, after);
+  assert.equal(guard.current(first, before), false);
+  assert.equal(guard.current(first, after), true);
+  const newer = guard.begin(after);
+  assert.throws(() => guard.advance(first, after, {}), /newer action/);
+  assert.equal(guard.current(newer, after), true);
+});
+
+test('autoplay rechecks dialog, busy and lifecycle state before resuming', () => {
+  const run = {};
+  const entry = {};
+  const ready = {
+    current: true,
+    blocked: false,
+    started: false,
+    paused: true,
+    overlayKind: 'ready',
+    run,
+    expectedRun: run,
+    entry,
+    expectedEntry: entry,
+    campaignKey: 'campaign-key',
+    expectedCampaignKey: 'campaign-key',
+    levelId: 'level-01',
+    expectedLevelId: 'level-01',
+  };
+  assert.equal(canAutoStartPackLaunch(ready), true);
+  for (const stale of [
+    { current: false },
+    { blocked: true },
+    { started: true },
+    { paused: false },
+    { overlayKind: 'pause' },
+    { run: {} },
+    { entry: {} },
+    { campaignKey: 'new-campaign' },
+    { levelId: 'level-02' },
+  ])
+    assert.equal(canAutoStartPackLaunch({ ...ready, ...stale }), false);
 });
