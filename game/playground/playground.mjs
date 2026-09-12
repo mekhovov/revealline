@@ -539,6 +539,7 @@ try {
   };
   $('import-file').onchange = async () => {
     const file = $('import-file').files[0];
+    $('import-file').value = '';
     if (!file) return;
     const ticket = beginImport();
     try {
@@ -551,8 +552,6 @@ try {
       );
     } catch (error) {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
-    } finally {
-      if (importCurrent(ticket)) $('import-file').value = '';
     }
   };
   $('apply-json').onclick = async () => {
@@ -582,6 +581,7 @@ try {
     const file = $('asset-file').files[0],
       role = $('asset-role').value,
       fit = $('asset-fit').value;
+    $('asset-file').value = '';
     if (!file) return;
     const ticket = beginImport();
     try {
@@ -611,8 +611,6 @@ try {
         `${file.name}: ${inspected.width} × ${inspected.height}. Bound to ${role}; original bytes unchanged.`;
     } catch (error) {
       if (importCurrent(ticket)) status(error.message, true);
-    } finally {
-      if (importCurrent(ticket)) $('asset-file').value = '';
     }
   };
   $('clear-asset').onclick = () => {
@@ -701,12 +699,11 @@ try {
       );
     } catch (error) {
       if (epoch === replayEpoch) status(`Replay rejected: ${error.message}`, true);
-    } finally {
-      if (epoch === replayEpoch) $('replay-file').value = '';
     }
   }
   $('replay-file').onchange = () => {
     const file = $('replay-file').files[0];
+    $('replay-file').value = '';
     if (file)
       verifyText(() => {
         if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');

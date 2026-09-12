@@ -1,12 +1,12 @@
 # RevealLine
 
-A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.4.0 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
+A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.4.1 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.
 
 ## Run locally
 
-v0.4.0 adds [Homeward Skies](docs/homeward-skies.md), a three-picture illustrated Ukrainian chapter, clear campaign continuation and [reviewed earlier-release copying](docs/continuity-transfer.md). [Native app wrappers](docs/native-distribution.md), asynchronous file sharing, custom keyboard controls and persistent Tap steering remain available. Packaged versions keep separate collections; copying or complete backups transfer progress forward while older versions remain unchanged.
+v0.4.0 adds [Homeward Skies](docs/homeward-skies.md), a three-picture illustrated Ukrainian chapter, clear campaign continuation and [reviewed earlier-release copying](docs/continuity-transfer.md). v0.4.1 fixes selecting the same backup, pack or authoring asset again after a previous import. [Native app wrappers](docs/native-distribution.md), asynchronous file sharing, custom keyboard controls and persistent Tap steering remain available. Packaged versions keep separate collections; copying or complete backups transfer progress forward while older versions remain unchanged.
 
 Use a supported Node version: 20.19+ within 20.x, 22.13+ within 22.x, or 24+. Then run from this directory:
 
