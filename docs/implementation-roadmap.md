@@ -81,3 +81,7 @@ Update this register and the applicable verification report at each logical mile
 ## Latest milestone — v0.23.0
 
 First Light is frozen from `2455efd` with 1,926 passing tests and an independently reproduced artifact. [P2 local evidence](verification/round-32/p2-local.md) records exact checks and limits. Human chapter feedback is requested; P2 enjoyment and device qualification are not claimed complete. P3 preserved MP3 model/storage/transport landed in `f201d22`; its game studio integration is in progress. P4 classic engine work proceeds on a separate version branch, without migrating old campaigns.
+
+## Soundtrack Studio integration
+
+P3 now includes preserved MP3 records/storage, six built-in playlists, a session transport, Settings → Music library & playlists and seven real-host regression scenarios with finite media boundaries. Real source-browser file selection, decoder probing, MP3 playback progress and saved playlist restoration have passed. Binary export preparation succeeded in the in-app browser, but its download event timed out and no output file was observed; exact browser download/restore and frozen offline playback remain open gates. The 24 finished recordings are still P6, separate from current recipes and silent transport fixtures.

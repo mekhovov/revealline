@@ -34,6 +34,9 @@ import { controllerBindingLabels, controllerStickLabel } from './controller-bind
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
+import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
+import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
@@ -428,6 +431,152 @@ try {
   const sound = new Soundscape({ persistentMusic: true });
   let neutralResumeTick = false;
   let gameShell = null;
+  let soundtrackPlayer = null,
+    soundtrackPanel = null,
+    soundtrackStore = null;
+  let soundtrackAssets = new Map(),
+    soundtrackSuspended = false;
+  let authoredMusic = null,
+    soundtrackGeneration = -1,
+    soundtrackDisposed = false;
+  const soundtrackLoad = new AbortController();
+  function soundtrackContext() {
+    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
+    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
+    return {
+      themeId: theme.id,
+      campaignKey: edition,
+      mapKey: JSON.stringify([edition, level.id, level.revision, theme.id]),
+    };
+  }
+  function assignMusic(track, { atBoundary = true } = {}) {
+    authoredMusic = track || null;
+    if (soundtrackPlayer) soundtrackPlayer.setAuthoredTrack(authoredMusic);
+    else if (track) sound.setTrack(track, { atBoundary });
+  }
+  function configureAudio(settings) {
+    if (!soundtrackPlayer) return sound.configure(settings);
+    const { style: _style, music, ...mix } = settings;
+    sound.configure(mix);
+    if (music !== undefined) soundtrackPlayer.setVolume(music);
+  }
+  async function activateAudio({ explicit = false } = {}) {
+    if (!soundtrackPlayer) return sound.enable();
+    if (soundtrackSuspended) {
+      soundtrackSuspended = false;
+      await soundtrackPlayer.resume();
+    }
+    if (explicit || !soundtrackPlayer.snapshot().track) return soundtrackPlayer.play();
+    // Ordinary Resume enables effects but keeps an intentional music-only Pause.
+    return sound.enable();
+  }
+  function muteAudio() {
+    soundtrackPlayer?.pause();
+    sound.disable();
+  }
+  function suspendAudio() {
+    soundtrackSuspended = true;
+    if (soundtrackPlayer) soundtrackPlayer.suspend();
+    else sound.suspend();
+  }
+  function soundtrackStatus(message) {
+    $('soundtrack-summary').textContent = message;
+  }
+  async function initializeSoundtrack() {
+    try {
+      const audioElement = document.createElement('audio');
+      if (typeof audioElement.play !== 'function')
+        throw new Error(
+          'This browser does not provide file-audio playback. Built-in sound remains available.',
+        );
+      soundtrackStore = createSoundtrackStore();
+      soundtrackPlayer = createSoundtrackPlayer({
+        soundscape: sound,
+        audioElement,
+        readAsset: async (hash) => {
+          const blob = soundtrackAssets.get(hash);
+          if (!blob)
+            throw new Error('This song is missing locally. Restore its soundtrack backup.');
+          return blob;
+        },
+        onChange: (state) => {
+          soundtrackPanel?.update(state);
+          soundtrackStatus(
+            state.error ||
+              state.notice ||
+              (state.track
+                ? `${state.track.title} · ${state.status}`
+                : 'Choose a playlist or import MP3 songs.'),
+          );
+        },
+      });
+      soundtrackPlayer.setAuthoredTrack(authoredMusic);
+      soundtrackPlayer.setContext(soundtrackContext());
+      if (soundtrackSuspended) soundtrackPlayer.suspend();
+      soundtrackPanel = attachSoundtrackPanel({
+        document,
+        store: soundtrackStore,
+        player: soundtrackPlayer,
+        getContext: soundtrackContext,
+        onLibrary: (_library, snapshot) => {
+          if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
+          soundtrackGeneration = snapshot.generation;
+          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+        },
+        onError: (error) => soundtrackStatus(error.message || String(error)),
+        onOpen: () => {
+          pause(true);
+          clearInput();
+          $('settings-dialog').close();
+        },
+        onClose: () => {
+          clearInput();
+          $('settings-dialog').showModal();
+          $('soundtrack-open').focus();
+        },
+        onVolume: (value) => {
+          $('music-volume').value = value;
+          preferences({ musicVolume: value });
+        },
+        onAudioEnabled: () => preferences({ musicEnabled: true }),
+        beforeAudio: async () => {
+          if (soundtrackSuspended) {
+            soundtrackSuspended = false;
+            await soundtrackPlayer.resume();
+          }
+        },
+      });
+      // The studio owns persisted playlist selection. Keep the legacy genre selector
+      // only for browsers that cannot attach the file-audio transport.
+      $('music-select').closest('label').hidden = true;
+      $('music-preview').textContent = 'Play selected playlist ♫';
+      $('soundtrack-open').disabled = false;
+      $('soundtrack-open').onclick = () => soundtrackPanel.open();
+      try {
+        const snapshot = await soundtrackStore.read({ signal: soundtrackLoad.signal });
+        if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
+          soundtrackGeneration = snapshot.generation;
+          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+          soundtrackPlayer.setLibrary(snapshot.library);
+        }
+      } catch (error) {
+        if (!soundtrackDisposed)
+          soundtrackStatus(
+            `Custom music storage: ${error.message}. Built-in playback is available; the studio can retry.`,
+          );
+      }
+    } catch (error) {
+      soundtrackPanel?.dispose();
+      soundtrackPlayer?.dispose();
+      soundtrackStore?.close();
+      soundtrackPlayer = null;
+      soundtrackPanel = null;
+      sound.resumeMusic();
+      $('soundtrack-open').disabled = true;
+      $('music-select').closest('label').hidden = false;
+      if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
+    }
+  }
   const painter = new BoardPainter(presets, {
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -450,13 +599,13 @@ try {
   $('terrain-select').value = library.preferences.style;
   $('settings-grid').checked = library.preferences.showGrid;
   $('match-class-appearance').checked = library.preferences.matchClassAppearance;
-  sound.configure?.({
+  configureAudio({
     style: library.preferences.musicGenre,
     master: library.preferences.masterVolume,
     music: library.preferences.musicVolume,
     sfx: library.preferences.sfxVolume,
   });
-  if (scenario?.music) sound.setTrack(scenario.music);
+  if (scenario?.music) assignMusic(scenario.music);
   function warning(message) {
     $('run-message').textContent = message;
     captionUntil = (run?.time || 0) + 5;
@@ -641,11 +790,16 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     clearInput();
-    sound.suspend();
+    suspendAudio();
     writer.release();
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      soundtrackDisposed = true;
+      soundtrackLoad.abort();
+      soundtrackPlayer?.dispose();
+      soundtrackPanel?.dispose();
+      soundtrackStore?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
       input.destroy();
@@ -657,6 +811,7 @@ try {
   };
   window.addEventListener('pageshow', (event) => {
     if (!event.persisted) return;
+    restoreListening();
     controller.invalidate();
     clearInput();
     pause(true);
@@ -1284,9 +1439,9 @@ try {
     $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
     const track = entry.music?.find((m) => m.id === campaign.musicId) || entry.music?.[0];
     if (track) {
-      sound.setTrack?.(track, { atBoundary: true });
+      assignMusic(track);
       $('music-select').value = track.genre;
-    } else sound.configure?.({ style: library.preferences.musicGenre });
+    } else assignMusic(DEFAULT_TRACKS.find((t) => t.genre === library.preferences.musicGenre));
     refreshCampaigns();
     prepare({ restoreAdoption, contentSwitchTicket, difficulty });
   }
@@ -1615,13 +1770,13 @@ try {
     clearInput();
     refreshKeyPrompts();
     refreshControllerPrompts();
-    sound.configure?.({
+    configureAudio({
       style: p.musicGenre,
       master: p.masterVolume,
       music: p.musicVolume,
       sfx: p.sfxVolume,
     });
-    if (!p.musicEnabled) sound.disable();
+    if (!p.musicEnabled) muteAudio();
     themeOverride = true;
     musicOverride = true;
     prepare();
@@ -1941,11 +2096,14 @@ try {
     }
   };
   function tuneMusic(event) {
-    if (event?.target.id === 'music-select') {
+    if (event?.target.id === 'music-select' && !soundtrackPlayer) {
       musicOverride = true;
-      sound.setTrack(DEFAULT_TRACKS.find((t) => t.genre === $('music-select').value));
+      assignMusic(
+        DEFAULT_TRACKS.find((t) => t.genre === $('music-select').value),
+        { atBoundary: false },
+      );
     }
-    sound.configure?.({
+    configureAudio({
       style: $('music-select').value,
       master: Number($('master-volume').value),
       music: Number($('music-volume').value),
@@ -1962,7 +2120,9 @@ try {
     $(id).onchange = tuneMusic;
   $('music-preview').onclick = async () => {
     try {
-      const ok = await sound.preview({ seconds: 4 });
+      const ok = soundtrackPlayer
+        ? await activateAudio({ explicit: true })
+        : await sound.preview({ seconds: 4 });
       $('music-preview').textContent = ok ? 'Soundtrack playing ♫' : 'Audio is unavailable';
       if (ok) {
         preferences({ musicEnabled: true });
@@ -2043,6 +2203,7 @@ try {
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, visuals());
+    soundtrackPlayer?.setContext(soundtrackContext());
   }
   function updateBodies() {
     const allowed = availableBodies();
@@ -2456,11 +2617,11 @@ try {
         (m) => m.id === (authoredLevel.musicId || campaign.musicId),
       );
       if (track) {
-        sound.setTrack(track, { atBoundary: true });
+        assignMusic(track);
         $('music-select').value = track.genre;
       }
     }
-    if (scenario?.music) sound.setTrack(scenario.music, { atBoundary: true });
+    if (scenario?.music) assignMusic(scenario.music);
     painter.setLevel?.(run.level, { seed });
     setTheme();
     started = false;
@@ -2510,7 +2671,7 @@ try {
     courseEntryMessage = '';
     started = true;
     paused = false;
-    (library.preferences.musicEnabled ? sound.enable?.() : sound.disable())?.catch?.(() => {});
+    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
@@ -2909,7 +3070,8 @@ try {
       show('skip-celebration', false);
       overlay('won');
     }
-    sound.update(!paused && started, theme, run);
+    if (soundtrackPlayer) soundtrackPlayer.update(!paused && started, theme, run);
+    else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       $('music-preview').textContent = 'Preview music ♫';
     $('sound-button').setAttribute('aria-pressed', String(sound.enabled));
@@ -2941,6 +3103,7 @@ try {
     bodyWarning = '';
     bodyId = $('body-select').value;
     painter.setLook(theme, bodyId, visuals());
+    soundtrackPlayer?.setContext(soundtrackContext());
     preferences({ bodyId, matchClassAppearance: false });
     $('match-class-appearance').checked = false;
   };
@@ -3048,7 +3211,11 @@ try {
   };
   $('sound-button').onclick = async () => {
     try {
-      const on = await sound.toggle();
+      let on;
+      if (sound.enabled) {
+        muteAudio();
+        on = false;
+      } else on = await activateAudio({ explicit: true });
       $('sound-button').setAttribute('aria-pressed', String(on));
       $('sound-button').setAttribute('aria-label', on ? 'Mute sound' : 'Enable sound');
       preferences({ musicEnabled: on });
@@ -3131,16 +3298,25 @@ try {
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
     controllerPreview?.clear();
-    sound.suspend();
+    suspendAudio();
     pause(true);
   }
   onNativeInactive(suspendInteraction).catch((error) =>
     warning(`App lifecycle adapter unavailable: ${error.message}`),
   );
   window.addEventListener('blur', suspendInteraction);
+  function restoreListening() {
+    if (document.hidden || soundtrackDisposed || !soundtrackPlayer || !soundtrackSuspended) return;
+    soundtrackSuspended = false;
+    void soundtrackPlayer.resume();
+  }
+  window.addEventListener('focus', restoreListening);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) suspendInteraction();
-    else void packCommits.reconcile();
+    else {
+      void packCommits.reconcile();
+      restoreListening();
+    }
   });
   setTheme();
   refreshCampaigns();
@@ -3225,6 +3401,7 @@ try {
     initial: !practice && !courseSession && !packLaunchRequest,
     onFeatured: () => activatePack('fpv-arcade', { campaignId: 'fpv-first-light' }),
   });
+  void initializeSoundtrack();
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {
       const currentLevelId = campaign.levels[levelIndex]?.id;
