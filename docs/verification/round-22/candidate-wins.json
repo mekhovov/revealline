@@ -1,0 +1,10 @@
+[
+  {
+    "policy": "Immediate",
+    "hud": "- generic: REVEALED\n    - strong: 52.2%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:03\n    - generic: SCORE\n    - strong: \"08160\"\n    - application \"Territory capture game. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; supply R; boost Left Shift / Right Shift; change craft G; stop X; pause Esc / P.\" [active]\n    - button \"Keep picture →\"\n    - strong: Mission complete\n    - generic: Close a line to reveal the picture\n    - generic \"Direction controls\""
+  },
+  {
+    "policy": "Grid + buffer",
+    "hud": "- generic: REVEALED\n    - strong: 52.2%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:03\n    - generic: SCORE\n    - strong: \"08160\"\n    - application \"Territory capture game. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; supply R; boost Left Shift / Right Shift; change craft G; stop X; pause Esc / P.\" [active]\n    - button \"Keep picture →\"\n    - strong: Mission complete\n    - generic: Close a line to reveal the picture\n    - generic \"Direction controls\""
+  }
+]

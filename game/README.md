@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.11.0 working source includes 29 maps: 12 base campaign maps and 17 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter, Equipment Workshop and Sentinel Relay.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.12.0 working source includes 29 maps: 12 base campaign maps and 17 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter, Equipment Workshop and Sentinel Relay. The latest frozen release remains v0.11.0; its saved UI does not include the new controller readers described below.
 
 ## The loop
 
@@ -28,6 +28,10 @@ The campaign introduces bouncers, border patrols, supplies, objectives, obstacle
 | G / Change craft control | Choose another available class while safely docked                                                                                                        |
 
 With the default map, D-pad moves menu focus, South confirms and East goes back. Selects and sliders preview a value before applying it; East cancels the edit. See [controller navigation](../docs/controller-navigation.md) and try the actual menus in [Controller practice](controller-lab/). **Settings → Controller controls** lets you change the complete flight/menu maps, choose position/Xbox/PlayStation labels, select or invert sticks and tune press/release thresholds. Apply adopts the whole draft; Cancel and closing Settings preserve the current layout. Help and edit previews use your selected labels. These solo preferences are not yet shared with couch play or Replay Theater. See [controller settings](../docs/controller-settings.md) and [forward-compatible profile transfer](../docs/controller-preference-migration.md). Pause and focus loss clear held input. Touch Boost follows hold or tap steering, and Stop clears it. Controller adapters and viewport fixtures do not certify particular hardware.
+
+**Read details** enters the mission/result overlay's text region. **Mission brief → Read mission brief** enters the full authored briefing, pausing an active flight first. Your configured menu Up/Down scroll only that region. Confirm, Back, Menu or **Done reading** exits without also starting, retrying or resuming; release before the next action. Keyboard and touch retain native scrolling and relinquish controller reading when used. These two readers do not extend to every Help, Library, couch or theater text area.
+
+The [Controller practice guide](../docs/controller-practice.md) covers 18 choices: 12 base maps, four Fieldcraft maps, Sentinel Relay and the local long-text **Reading practice / The patient route**. The last choice adds no campaign reward or installable expansion. The lab includes 320 × 640 and 844 × 501 viewports and shows requested versus actual size. Practice remains non-awarding. Browser simulation does not reproduce a phone's safe areas, physical controller mapping or trusted activation for audio, fullscreen and file pickers.
 
 **Immediate** turns at the current position. **Grid + buffer** turns at cell centers and buffers the latest held direction. Releasing clears that buffer. The board remains 48 × 36 cells at every viewport size. Starting-class or steering changes in the flight deck start a fresh attempt; the in-flight hangar changes class within the existing attempt.
 
@@ -67,7 +71,7 @@ Development and each archived release keep separate profiles. **Bring progress f
 
 ## Add variety
 
-In **Library & saves → Expansion packs**, install a bundled example, import a `xonix-pack.v1` file or import an exported pack library. Select its campaign to play its maps and earn its own progress. Invalid imports preserve the previous installed content; removing a pack retains player records so reinstalling can restore its pictures. Packs select supported rules and media; they cannot execute scripts, introduce an unregistered algorithm or fetch remote media.
+In **Library & saves → Expansion packs**, install a bundled example, import a supported pack file or import an exported pack library. Pack v1 supplies ordinary content; explicit v2 adds finite optional goals; v3 supplies versioned encounter maps with an empty mastery list. Select its campaign to play its maps and earn its own progress. Invalid imports preserve the previous installed content; removing a pack retains player records so reinstalling can restore its pictures. Packs select supported rules and media; they cannot execute scripts, introduce an unregistered algorithm or fetch remote media.
 
 [Fieldcraft](../docs/fieldcraft-challenges.md) explores resistant signal crossing, bomber supply and emitter suppression with a hangar switch, an Impact recall and slowing nets. Its maps also retain ordinary completion routes for every built-in class. These are alternate approaches to playtest, not promises that one class is mandatory.
 
@@ -79,7 +83,7 @@ Settings offer synthwave, chiptune, rock, metal and ambient music, independent m
 
 Open [Replay Theater](http://127.0.0.1:8768/game/replay-theater/) to watch four recorded Fieldcraft examples: signal-resistant flight, supplies with a hangar switch, Impact recovery and a slowing net. It starts paused and stays silent. Choose **Play**, **Pause**, **Restart**, **Step 1 tick**, or **0.5× / 1× / 2×** speed. With the canvas focused, Space toggles playback and Right Arrow steps one tick. Four theme choices change only the presentation.
 
-Import your own `xonix-replay.v3` file, or paste JSON under **Import your own replay → Verify and load JSON**. Verification must finish before the new recording replaces the previous one; **Cancel load** cancels adoption. The theater reads no player library and awards no scores, pictures or progress. Its progress bar is a readout, with no arbitrary seeking or control over the recorded craft. To continue an unfinished flight yourself, use a saved attempt in the main game. See [Replay Theater](../docs/replay-theater.md) and [recording/export](../docs/replays.md).
+Import your own `xonix-replay.v3` ordinary recording or `xonix-replay.v4` encounter recording, or paste JSON under **Import your own replay → Verify and load JSON**. Verification must finish before the new recording replaces the previous one; **Cancel load** cancels adoption. The theater reads no player library and awards no scores, pictures or progress. Its progress bar is a readout, with no arbitrary seeking or control over the recorded craft. To continue an unfinished flight yourself, use a saved attempt in the main game. See [Replay Theater](../docs/replay-theater.md) and [recording/export](../docs/replays.md).
 
 ## Couch race
 

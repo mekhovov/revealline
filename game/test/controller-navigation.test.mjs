@@ -1,6 +1,27 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
+import { createControllerRouter, neutralControllerFlight } from '../ui/controller-router.mjs';
+import { resolveControllerBindings } from '../controller-bindings.mjs';
+import { attachControllerReading } from '../ui/controller-reading.mjs';
+
+function readingSurface(h, options = {}) {
+  const origin = h.control('button', { id: 'read-details', textContent: 'Read details' });
+  const region = h.control('div', {
+    id: 'reading-region',
+    textContent: 'The full authored details. Last line.',
+    tabIndex: 0,
+    clientHeight: 100,
+    scrollHeight: 400,
+    ...options,
+  });
+  region.setAttribute('data-game-reading', '');
+  region.setAttribute('aria-label', 'Mission details');
+  region.setAttribute('role', 'region');
+  const request = { region, origin, label: 'Mission details' };
+  origin.addEventListener('click', () => h.api.beginReading(request));
+  return { ...request, begin: () => h.api.beginReading(request) };
+}
 
 class Events {
   listeners = new Map();
@@ -78,6 +99,10 @@ class Element extends Events {
     this.value = '';
     this.textContent = '';
     this.options = [];
+    this.clientHeight = 44;
+    this.scrollHeight = 44;
+    this.scrollTop = 0;
+    this.scrollLeft = 0;
     this.id = '';
     this._rect = { x: 0, y: 0, width: 100, height: 44 };
     Object.assign(this, options);
@@ -847,3 +872,525 @@ for (const type of ['select', 'range'])
     assert.equal(control.value, originalValue);
     assert.equal(changes, 0);
   });
+
+test('reading entry focuses a named region before notification and returns owned metadata', (t) => {
+  const changes = [];
+  const h = setup(t, {
+    onReadingChange(state) {
+      changes.push(state);
+      if (state) {
+        assert.equal(h.document.activeElement.id, 'reading-region');
+        assert.deepEqual(h.api.readingState(), state);
+        state.label = 'Consumer changed its copy';
+      }
+    },
+  });
+  const surface = readingSurface(h);
+  surface.origin.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(h.document.activeElement, surface.region);
+  assert.ok(surface.region.classList.contains('controller-focus'));
+  assert.equal(surface.region.getAttribute('data-controller-reading'), 'true');
+  assert.deepEqual(h.api.readingState(), { regionId: 'reading-region', label: 'Mission details' });
+  const snapshot = h.api.readingState();
+  snapshot.regionId = 'wrong';
+  assert.equal(h.api.readingState().regionId, 'reading-region');
+  assert.equal(surface.begin(), true);
+  assert.equal(changes.length, 1, 'A repeated request for this reader is idempotent.');
+  h.api.engage();
+  h.api.handle({});
+  assert.equal(h.document.activeElement, surface.region);
+  assert.equal(changes.length, 1);
+});
+
+test('reader scrolls vertically to both endpoints without moving focus, wrapping or repeating edge announcements', (t) => {
+  const h = setup(t);
+  const surface = readingSurface(h, { scrollTop: 50, scrollLeft: 7 });
+  surface.begin();
+  const scrolls = surface.region.scrolled;
+  for (let i = 0; i < 10; i++) h.api.handle({ direction: 'down' });
+  assert.equal(surface.region.scrollTop, 300);
+  assert.equal(surface.region.scrollLeft, 0);
+  assert.equal(h.document.activeElement, surface.region);
+  assert.equal(
+    surface.region.scrolled,
+    scrolls,
+    'Repeated scrolls do not scroll ancestors into view.',
+  );
+  assert.equal(h.calls.hints.filter((text) => text.startsWith('End of details.')).length, 1);
+  h.api.handle({ direction: 'right' });
+  h.api.handle({ direction: 'left' });
+  assert.equal(surface.region.scrollTop, 300);
+  assert.equal(h.document.activeElement, surface.region);
+  for (let i = 0; i < 10; i++) h.api.handle({ direction: 'up' });
+  assert.equal(surface.region.scrollTop, 0);
+  assert.equal(h.calls.hints.filter((text) => text.startsWith('Start of details.')).length, 1);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
+
+test('small and nonoverflowing readers have bounded steps and always permit immediate exit', (t) => {
+  const h = setup(t);
+  const surface = readingSurface(h, { clientHeight: 31, scrollHeight: 100 });
+  surface.begin();
+  h.api.handle({ direction: 'down' });
+  assert.equal(surface.region.scrollTop, 15);
+  surface.region.clientHeight = 150;
+  h.api.sync();
+  assert.equal(
+    surface.region.scrollTop,
+    0,
+    'Resize clamps position without cancelling the reader.',
+  );
+  assert.ok(h.api.readingState());
+  h.api.handle({ direction: 'down' });
+  assert.equal(surface.region.scrollTop, 0);
+  assert.match(h.calls.hints.at(-1), /All text is visible/);
+  h.api.handle({ back: true });
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.document.activeElement, surface.origin);
+});
+
+for (const action of ['back', 'confirm', 'menu'])
+  test(`reading ${action} ends once and consumes the complete gesture before host actions`, (t) => {
+    const order = [];
+    const h = setup(t, {
+      getControlLabels: () => ({ directions: 'Directions', confirm: 'R1', back: 'Square' }),
+      onReadingChange: (value) => order.push(value ? 'entered' : 'ended'),
+      onHint: (text) => order.push(text),
+    });
+    const surface = readingSurface(h);
+    let activations = 0;
+    surface.origin.addEventListener('click', () => activations++);
+    surface.begin();
+    assert.match(order.at(-1), /R1 or Square returns/);
+    h.api.handle({ [action]: true, direction: 'down' });
+    assert.equal(h.api.readingState(), null);
+    assert.equal(surface.region.scrollTop, 0);
+    assert.equal(surface.region.hasAttribute('data-controller-reading'), false);
+    assert.equal(h.document.activeElement, surface.origin);
+    assert.equal(activations, 0);
+    assert.equal(h.calls.back + h.calls.menu, 0);
+    assert.equal(order.at(-2), 'ended');
+    assert.match(order.at(-1), /Reading ended/);
+    assert.equal(h.api.endReading(), false);
+    assert.equal(order.filter((value) => value === 'ended').length, 1);
+  });
+
+test('entry validates the entire surface before replacing a reader or cancelling an editor', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h),
+    select = h.select();
+  select.focus();
+  h.api.handle({ confirm: true });
+  h.api.handle({ direction: 'down' });
+  assert.equal(h.api.beginReading({ ...surface, label: '' }), false);
+  assert.equal(h.editors().length, 1);
+  assert.equal(surface.begin(), true);
+  assert.equal(h.editors().length, 0);
+  assert.equal(select.value, 'first');
+  const initial = h.api.readingState();
+  for (const request of [
+    {},
+    { ...surface, label: 'x'.repeat(161) },
+    { ...surface, origin: surface.region },
+    { ...surface, region: h.control('div', { id: 'unmarked', tabIndex: 0 }) },
+    { ...surface, origin: h.control('button', { hidden: true }) },
+  ]) {
+    assert.equal(h.api.beginReading(request), false);
+    assert.deepEqual(h.api.readingState(), initial);
+  }
+  h.api.endReading({ restoreFocus: false });
+  assert.equal(h.document.activeElement, surface.region);
+  h.setScope('flight');
+  assert.equal(surface.begin(), false);
+  h.setScope('ready:again');
+  h.api.destroy();
+  assert.equal(surface.begin(), false);
+});
+
+for (const [name, change] of [
+  ['removed region', ({ region }) => region.remove()],
+  [
+    'changed region identity',
+    ({ region }) => {
+      region.id = 'another-region';
+    },
+  ],
+  [
+    'hidden region',
+    ({ region }) => {
+      region.hidden = true;
+    },
+  ],
+  [
+    'inert region',
+    ({ region }) => {
+      region.inert = true;
+    },
+  ],
+  ['removed origin', ({ origin }) => origin.remove()],
+  [
+    'disabled origin',
+    ({ origin }) => {
+      origin.disabled = true;
+    },
+  ],
+  [
+    'replaced content',
+    ({ region }) => {
+      region.textContent = 'A new mission.';
+    },
+  ],
+  ['removed marker', ({ region }) => region.removeAttribute('data-game-reading')],
+  [
+    'collapsed viewport',
+    ({ region }) => {
+      region.clientHeight = 0;
+    },
+  ],
+])
+  test(`${name} cancels reading and cannot redirect the invalidating Confirm to another action`, (t) => {
+    const changes = [];
+    const h = setup(t, { onReadingChange: (value) => changes.push(value) });
+    const surface = readingSurface(h),
+      start = h.control('button', { id: 'start' });
+    let clicks = 0;
+    start.addEventListener('click', () => clicks++);
+    h.setDefault(start);
+    surface.begin();
+    change(surface);
+    h.api.handle({ confirm: true });
+    assert.equal(h.api.readingState(), null);
+    assert.equal(h.document.activeElement, start);
+    assert.equal(clicks, 0);
+    assert.equal(changes.length, 2);
+    assert.equal(changes[1], null);
+    h.api.handle({ confirm: true });
+    assert.equal(clicks, 1);
+  });
+
+test('scope and root changes cancel reading without restoring stale focus or activating the next dialog', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h),
+    dialog = h.control('dialog', { open: true }),
+    close = h.control('button', {}, dialog);
+  let clicks = 0;
+  close.addEventListener('click', () => clicks++);
+  surface.begin();
+  close.focus();
+  h.setScope('modal:help', dialog);
+  h.setDefault(close);
+  h.api.handle({ confirm: true });
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.document.activeElement, close);
+  assert.equal(clicks, 0);
+  assert.equal(h.api.beginReading(surface), false, 'The modal cannot read outside its root.');
+});
+
+test('native focus, pointer and keyboard relinquish reading without stealing focus or swallowing native keys', (t) => {
+  for (const type of ['focusin', 'pointerdown', 'keydown']) {
+    const h = setup(t),
+      surface = readingSurface(h),
+      other = h.control('button');
+    let clicks = 0;
+    other.addEventListener('click', () => clicks++);
+    surface.begin();
+    if (type === 'focusin') other.focus();
+    else {
+      const event = surface.region.emit(type, { key: 'ArrowDown' });
+      assert.equal(event.defaultPrevented, false);
+      assert.equal(h.document.activeElement, surface.region);
+      other.focus();
+    }
+    assert.equal(h.api.readingState(), null);
+    assert.equal(h.document.activeElement, other);
+    h.api.handle({ confirm: true });
+    assert.equal(clicks, 0);
+    h.api.handle({ confirm: true });
+    assert.equal(clicks, 1);
+  }
+});
+
+test('an end-only Done button stays harmless after pointerdown already cancelled reading', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h),
+    done = h.control('button', { textContent: 'Done reading' });
+  let changes = 0;
+  done.addEventListener('click', () => {
+    if (h.api.endReading()) changes++;
+  });
+  surface.begin();
+  done.emit('pointerdown');
+  done.focus();
+  done.click();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.document.activeElement, done);
+  assert.equal(changes, 0);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+});
+
+test('lifecycle clear cancels reading once, preserves scroll position and consumes stale input', (t) => {
+  const changes = [];
+  const h = setup(t, { onReadingChange: (value) => changes.push(value) });
+  const surface = readingSurface(h),
+    start = h.control('button');
+  let clicks = 0;
+  start.addEventListener('click', () => clicks++);
+  surface.begin();
+  h.api.handle({ direction: 'down' });
+  h.api.clear();
+  h.api.clear();
+  assert.equal(changes.length, 2);
+  assert.equal(surface.region.scrollTop, 48);
+  assert.equal(surface.region.classList.contains('controller-focus'), false);
+  start.focus();
+  h.api.handle({ confirm: true });
+  assert.equal(clicks, 0);
+  surface.begin();
+  assert.equal(surface.region.scrollTop, 48);
+  h.api.destroy();
+  h.api.handle({ confirm: true, menu: true, direction: 'down' });
+  assert.equal(h.api.readingState(), null);
+  assert.equal(surface.region.scrollTop, 48);
+  assert.equal(clicks, 0);
+});
+
+test('real remapped router drives reading repeats and gates held buttons/sticks across entry and exit', (t) => {
+  const config = resolveControllerBindings();
+  Object.assign(config.menu.buttons, { confirm: 5, back: 2, menu: 9 });
+  Object.assign(config.menu.stick, { xAxis: 2, yAxis: 3, invertY: true });
+  const pad = {
+    index: 0,
+    id: 'Test standard pad',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false })),
+  };
+  let reads = 0,
+    samples = 0,
+    time = 0;
+  const router = createControllerRouter({
+    bindings: config,
+    eventTarget: null,
+    readPads: () => {
+      reads++;
+      return [pad];
+    },
+  });
+  t.after(() => router.destroy());
+  const h = setup(t, {
+    onReadingChange: () => router.clear(),
+    getControlLabels: () => ({ confirm: 'Right shoulder', back: 'West' }),
+  });
+  const surface = readingSurface(h);
+  h.setDefault(surface.origin);
+  const sample = (scope = 'ready:first', advance = 16) => {
+    samples++;
+    const frame = router.sample({ scope, timeMs: (time += advance) });
+    h.api.handle(frame.ui);
+    assert.deepEqual(frame.flight, neutralControllerFlight());
+    assert.equal(reads, samples, 'Only the existing router reads hardware.');
+    return frame;
+  };
+  const neutral = () => {
+    pad.buttons.forEach((button) => {
+      button.pressed = false;
+    });
+    pad.axes.fill(0);
+    return sample();
+  };
+  sample();
+  pad.buttons[0].pressed = true;
+  assert.equal(sample().status.code, 'joined');
+  neutral();
+  pad.buttons[5].pressed = true;
+  sample();
+  assert.ok(h.api.readingState());
+  assert.equal(sample().status.code, 'waiting-neutral');
+  assert.ok(h.api.readingState(), 'The held entry Confirm cannot also exit.');
+  pad.buttons[5].pressed = false;
+  pad.axes[0] = 0.5;
+  assert.equal(sample().status.code, 'waiting-neutral', 'Flight stick must also be released.');
+  neutral();
+  pad.axes[3] = -0.8;
+  sample();
+  assert.equal(surface.region.scrollTop, 48, 'Inverted right stick means logical Down.');
+  sample('ready:first', 100);
+  assert.equal(surface.region.scrollTop, 48);
+  sample('ready:first', 250);
+  assert.equal(surface.region.scrollTop, 96);
+  sample('ready:first', 120);
+  assert.equal(surface.region.scrollTop, 144);
+  pad.buttons[2].pressed = true;
+  sample();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.document.activeElement, surface.origin);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+  assert.equal(sample().status.code, 'waiting-neutral');
+  assert.equal(h.document.activeElement, surface.origin);
+  neutral();
+  pad.buttons[5].pressed = true;
+  sample();
+  assert.ok(h.api.readingState());
+  neutral();
+  pad.buttons[9].pressed = true;
+  sample();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(h.calls.menu, 0, 'Menu exits the reader instead of resuming.');
+});
+
+test('reopening changed content starts at the top while unchanged content keeps its reading position', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h);
+  surface.begin();
+  h.api.handle({ direction: 'down' });
+  h.api.endReading();
+  surface.begin();
+  assert.equal(surface.region.scrollTop, 48);
+  surface.region.textContent = 'A different full mission brief.';
+  h.api.sync();
+  assert.equal(h.api.readingState(), null);
+  surface.begin();
+  assert.equal(surface.region.scrollTop, 0);
+});
+
+test('registered Done preserves the reader until native click and restores the origin after host disables Done', (t) => {
+  let done;
+  const changes = [];
+  const h = setup(t, {
+    onReadingChange(state) {
+      changes.push(state);
+      done.disabled = !state;
+    },
+  });
+  const surface = readingSurface(h);
+  done = h.control('button', { disabled: true, textContent: 'Done reading' });
+  done.addEventListener('click', () => h.api.endReading({ restoreFocus: true }));
+  assert.equal(h.api.beginReading({ ...surface, exit: done }), true);
+  assert.equal(done.disabled, false);
+  const down = done.emit('pointerdown', { button: 0, isPrimary: true });
+  // A real browser ordinarily focuses the down target unless this default was prevented.
+  if (!down.defaultPrevented) done.focus();
+  assert.equal(down.defaultPrevented, true);
+  assert.ok(h.api.readingState());
+  assert.equal(h.document.activeElement, surface.region);
+  assert.equal(changes.length, 1, 'Pointerdown does not itself activate Done.');
+  h.api.handle({});
+  done.emit('pointerup');
+  done.click();
+  assert.equal(h.api.readingState(), null);
+  assert.equal(done.disabled, true);
+  assert.equal(h.document.activeElement, surface.origin);
+  assert.equal(changes.length, 2);
+  assert.equal(h.calls.back + h.calls.menu, 0);
+  done.emit('click');
+  assert.equal(changes.length, 2, 'A queued duplicate click stays end-only.');
+});
+
+test('Done descendant taps keep click semantics; pointercancel and other pointer gestures still relinquish', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h),
+    done = h.control('button'),
+    label = h.control('span', { textContent: 'Done reading' }, done),
+    other = h.control('button');
+  const request = { ...surface, exit: done };
+  h.api.beginReading(request);
+  assert.equal(label.emit('pointerdown', { button: 0 }).defaultPrevented, true);
+  label.emit('pointercancel');
+  assert.equal(h.api.readingState(), null);
+  assert.equal(
+    h.document.activeElement,
+    surface.region,
+    'Cancellation does not move native focus.',
+  );
+  for (const [target, event] of [
+    [other, { button: 0 }],
+    [done, { button: 2 }],
+    [done, { button: 0, isPrimary: false }],
+  ]) {
+    h.api.beginReading(request);
+    const down = target.emit('pointerdown', event);
+    assert.equal(down.defaultPrevented, false);
+    assert.equal(h.api.readingState(), null);
+  }
+});
+
+test('exit registration rejects unrelated or hidden controls without replacing a current reader', (t) => {
+  const h = setup(t),
+    surface = readingSurface(h),
+    outside = new Element(h.document, 'button');
+  surface.begin();
+  for (const exit of [
+    surface.origin,
+    surface.region,
+    outside,
+    h.control('button', { hidden: true }),
+    h.control('a'),
+    h.control('button', {}, surface.region),
+  ]) {
+    assert.equal(h.api.beginReading({ ...surface, exit }), false);
+    assert.equal(h.api.readingState().regionId, surface.region.id);
+  }
+});
+
+test('actual two-surface host preserves a native Done click through document capture and returns focus', (t) => {
+  let host;
+  let transitions = 0;
+  const h = setup(t, {
+    onReadingChange: (state) => host.changed(state),
+    onHint: (message) => host.hint(message),
+  });
+  const surfaces = ['overlay', 'mission-brief'].map((prefix) => {
+    const unit = h.control('div', {
+      id: `${prefix === 'overlay' ? 'overlay-reading' : prefix}-unit`,
+    });
+    const entry = h.control('button', { id: `${prefix}-read`, textContent: 'Read details' }, unit);
+    const done = h.control(
+      'button',
+      { id: `${prefix}-reading-done`, textContent: 'Done reading' },
+      unit,
+    );
+    h.control('p', { id: `${prefix}-reading-hint` }, unit);
+    const region = h.control(
+      'div',
+      {
+        id: `${prefix}-reading`,
+        tabIndex: 0,
+        textContent: 'Full details through the last line.',
+        clientHeight: 100,
+        scrollHeight: 400,
+      },
+      unit,
+    );
+    region.setAttribute('data-game-reading', '');
+    region.setAttribute('aria-label', 'Mission details');
+    return { entry, done, region };
+  });
+  host = attachControllerReading({
+    document: h.document,
+    getNavigation: () => h.api,
+    getControlLabels: () => ({ confirm: 'R1', back: 'Square' }),
+    getScope: () => 'paused',
+    onTransition: () => {
+      transitions++;
+    },
+  });
+  t.after(() => host.destroy());
+  for (const { entry, done, region } of surfaces) {
+    entry.focus();
+    h.api.handle({ confirm: true });
+    assert.equal(h.document.activeElement, region);
+    assert.equal(done.disabled, false);
+    const down = done.emit('pointerdown', { button: 0 });
+    if (!down.defaultPrevented) done.focus();
+    assert.ok(h.api.readingState(), 'Document capture must not disable the active Done target.');
+    done.emit('pointerup');
+    done.click();
+    assert.equal(h.api.readingState(), null);
+    assert.equal(h.document.activeElement, entry);
+    assert.equal(done.disabled, true);
+    assert.equal(h.calls.back + h.calls.menu, 0);
+  }
+  assert.equal(transitions, 4);
+});

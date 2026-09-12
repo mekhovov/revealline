@@ -16,7 +16,7 @@ npm run build
 node scripts/game-cli.mjs serve --root dist --port 8769
 ```
 
-The root page links to solo play, the included couch race, Replay Theater and playground, privacy/storage information and credits. It uses local relative links and does not redirect the player to another origin. Open `/game/` to go straight to the game. The distribution also includes [Replay Theater](replay-theater.md) at `/game/replay-theater/`, with four verified Fieldcraft examples and local replay-file import. Keep that directory and its recordings with the rest of the version.
+The root page links to solo play, the included couch race, Replay Theater and playground, privacy/storage information and credits. It uses local relative links and does not redirect the player to another origin. Open `/game/` to go straight to the game. The distribution also includes [Replay Theater](replay-theater.md) at `/game/replay-theater/`, with four verified Fieldcraft examples and local replay-file import, and [Controller practice](controller-practice.md) at `/game/controller-lab/`. Keep these directories and their local content with the rest of the version.
 
 A working-tree build records `sourceRevision:null`; use it for review, not as evidence of a frozen release. After the intended source has been committed and tagged, snapshot that real tag using `node scripts/game-cli.mjs release-snapshot --ref YOUR_SAVED_TAG --version YOUR_RELEASE_LABEL`. Replace those placeholders with the actual saved revision and new immutable label. [Versioning instructions](versioning.md) describe the files and collision protections.
 
@@ -42,7 +42,7 @@ Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
 Cache-Control: no-cache
 ```
 
-Inline **styles** remain allowed because the renderer and responsive controls update presentation properties; executable inline scripts and `unsafe-eval` are not allowed. Data/blob image sources support validated local artwork and local exports. Only same-origin connections and scripts are allowed. Same-origin frames support the playground. This is a policy for the current static application; adding a remote service requires a deliberate design and policy change. [MDN CSP documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy) explains the directive behavior.
+Inline **styles** remain allowed because the renderer and responsive controls update presentation properties; executable inline scripts and `unsafe-eval` are not allowed. Data/blob image sources support validated local artwork and local exports. Only same-origin connections and scripts are allowed. Same-origin frames support the playground and Controller practice. This is a policy for the current static application; adding a remote service requires a deliberate design and policy change. [MDN CSP documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy) explains the directive behavior.
 
 `no-cache` permits a browser to retain bytes but requires validation for ordinary network delivery. The explicit offline worker uses its own verified cache. The local CLI applies the same headers when serving a CLI-owned build root, so release browser testing can exercise the actual policy. It intentionally leaves the source server unchanged. The generator does not set an arbitrary `Service-Worker-Allowed` header: the worker already lives at the directory it owns.
 
@@ -57,7 +57,7 @@ The generated `privacy.html` describes what the current implementation does:
 | Preferences, achievements, local scores and gallery records            | Browser local storage, separated by channel/content identity           |
 | Suspended attempt                                                      | Local save slot or an explicitly exported replay-backed file           |
 | Imported image packs                                                   | Browser IndexedDB                                                      |
-| Playground-to-preview configuration                                    | Browser session storage                                                |
+| Playground/Controller practice preview configuration                   | Browser session storage                                                |
 | Prepared offline game files                                            | Scope/version-specific browser cache                                   |
 | Complete backups and separate library, pack, attempt or replay exports | Files explicitly downloaded by the player                              |
 | Replay Theater playback                                                | Temporary in-memory state; no player-library access or progress awards |
@@ -76,7 +76,7 @@ A release can be marked ready for its **tested browser targets** once these conc
 
 1. Content validation, formatting and behavior tests pass; campaign and bundled pack proofs match current content.
 2. The static ZIP and file manifest verify, and a second build from the same source/version produces the same bytes.
-3. Under the production CSP, main game, playground, couch page and Replay Theater load without missing assets or script-policy errors.
+3. Under the production CSP, main game, playground, Controller practice, couch page and Replay Theater load without missing assets or script-policy errors.
 4. Both steering modes complete a real level; live trails, failure, pause, focus-loss release and restart behave as described.
 5. Class switch, carrier supply, signal/fiber behavior and challenge timers can be exercised through visible controls.
 6. A completed picture animates, remains viewable and enters the gallery; scores and achievements survive a page reload.
@@ -86,12 +86,15 @@ A release can be marked ready for its **tested browser targets** once these conc
 10. Offline preparation reports a complete inventory, an offline reopen succeeds, and a second version remains separate.
 11. Couch players can start, pause, finish and rematch using the documented controls and Focus boards layout. Simultaneous finishes and identical-input draws remain fair. Replay Theater verifies before playback, preserves a previous recording on failed/cancelled import, and reaches the expected final checkpoint.
 12. Public entry, privacy notice, credits, license files, version links and rollback artifacts are present. The publish destination applies the required MIME types/headers and returns 404 for missing assets.
+13. For builds with controller readers, reach the last line of both mission/result details and the full authored brief at the recorded compact viewport sizes. Check remapped navigation/exit, native keyboard/touch handoff, focus loss and a separate action before resuming. Record requested and actual dimensions; a virtual pad exercises software behavior, not physical hardware or native-OS activation.
 
 Record failures as release blockers for the affected target rather than silently broadening claims. Do not hold a tested browser release hostage to unimplemented native stores or networking; advertise its actual mode and platform boundaries.
 
 ## Scope of readiness
 
 The preserved v0.11.0 source supplies 29 maps, seven gameplay roles, four presentation themes, six installable expansions and six effective optional equipment goals. Sentinel Relay adds a configurable two-stage boss with independently versioned rules, saves and replays; previous campaigns retain their behavior. Short chapters retain attainable appearance rewards, and completed maps remain replayable after out-of-order restores. Equipment Workshop includes three examples of [pack-authored goals](pack-mastery-contract.md); Homeward Skies retains its three original illustrated picture rewards. Its [browser/offline report](verification/round-21/frozen-browser.md), [1,276-test source gates](verification/round-21/source-gates.md) and [integrity record](verification/round-21/integrity-notes.md) identify the frozen artifact. The archived source rebuilds all 128 output files byte for byte; 121 offline files were verified and an offline boss completion retained its picture and score. Ongoing source changes are not themselves release evidence. Automated results do not certify every target below.
+
+The v0.12.0 working source adds two [controller reading regions](controller-navigation.md): mission/result details and the complete authored brief. Configured menu directions scroll within the selected region; Confirm, Back, Menu or Done leaves it without resuming flight. Keyboard and touch retain native scrolling. [Controller practice](controller-practice.md) has 18 choices, including a local long-text exercise, compact 320 × 640 and 844 × 501 options, and requested/actual size reporting. This does not add a campaign map or expansion: the canonical totals remain 29 maps and six expansions. v0.12.0 is not yet a frozen release in this record. Its exact build/browser evidence must be recorded separately; the v0.11.0 links and counts above remain the latest preserved release evidence. These readers cover two solo surfaces, not every long text area or native system dialog.
 
 | Target                        | Implemented or checked here                                                                       | Evidence still required before claiming that target                                                                  |
 | ----------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
