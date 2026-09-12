@@ -1,6 +1,6 @@
 ---
 name: xonix-runtime-maintainer
-description: Maintain, test, build and archive this project's playable Xonix browser runtime using its actual core, content and CLI contracts. Use for game logic, browser integration or playable release work; concept-only art and the separate motion lab have their own workflows.
+description: Maintain, test, build and archive this project's playable Xonix runtime, including saved-game continuity and release transfers, using its actual core, content and CLI contracts. Use for game logic, browser integration or playable releases; concept art and the separate motion lab have their own workflows.
 ---
 
 # Xonix Runtime Maintainer
@@ -20,6 +20,10 @@ Read the exported functions and current data before selecting names or fields. N
 For controls, read `docs/controls.md` and `game/key-bindings.mjs`. Keep mappings separate from simulation rules. Preserve Escape pause, browser/editing shortcuts, unconditional key release, cancellation without partial adoption and visible hints. New preferences require bounded validation, additive migration and portable-backup tests. Archived release profile channels must remain isolated from incompatible new schemas.
 
 For portable saves, local leaderboards and installed campaigns, read [library-and-packs.md](../../../docs/library-and-packs.md). New core results include roster and class-route identities; retain both through rewards and replays. Expansion packs use the runtime `xonix-pack.v1` contract and complete image decoding before atomic installation.
+
+For returning-player navigation or earlier-release copying, read [continuity-transfer.md](../../../docs/continuity-transfer.md). Preserve an explicit replay/restoration target and keep a restored flight paused. Discovery is unverified; prepare source data under its actual writer and backup locks, without recovering or writing the source. At Copy, reprepare and compare exact source ID plus canonical SHA-256 fingerprint with the reviewed snapshot. Changed content gets a fresh review; matching prepared content goes through the destination's existing journal/Undo path. Missing or corrupt source data must not become an empty successful replacement. Test conflicts, cancellation, source-byte preservation and changed-source reviews using injectable stores, rather than editing a real player's storage.
+
+For illustrated chapters, read [authored-art.md](../../../docs/authored-art.md). Keep source PNGs/prompts distinct from generated embedded pack JSON, preserve original bytes and verify browser decoding plus actual reveal/gallery rendering. An art-only change does not authorize new gameplay behavior or silently mutate an archived release.
 
 ## Make the requested change reviewable
 

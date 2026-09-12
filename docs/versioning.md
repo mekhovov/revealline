@@ -19,16 +19,16 @@ For a separate browser origin and isolated origin-scoped saves, serve one versio
 node scripts/game-cli.mjs serve --root releases/v0.1.0/site --port 8771
 ```
 
-This example uses an already saved v0.1.0 folder; substitute the version being compared. Open [that version](http://127.0.0.1:8771/game/). Two paths on the same host and port still share an origin. In v0.2.0, player libraries, installed packs and suspended-attempt slots separate development and release channels, while a release channel keeps its player profile across build versions. Campaign content identity partitions progress, gallery and score records within that profile; installed-pack data uses a separate store. Earlier v0.1.x keys remain version-specific and require an explicit compatible migration. Separate ports isolate all browser storage, including practice transfers and offline caches. A different path or service-worker scope alone does not isolate local storage. Do not treat study fixtures as earned progress.
+This example uses an already saved v0.1.0 folder; substitute the version being compared. Open [that version](http://127.0.0.1:8771/game/). Two paths on the same host and port still share an origin. The historical v0.2.0 build used a shared `release` channel. From v0.2.1 onward, each stable release has a separate versioned player profile, pack store and saved-flight slot. v0.4.0 offers explicit [reviewed earlier-release copying](continuity-transfer.md) for compatible cooperating releases on the same origin. It never merges or automatically rewrites an older collection. Other origins and older formats use compatible portable backups. Campaign content identity partitions progress, gallery and score records within each profile. Separate ports isolate all browser storage, including practice transfers and offline caches. A different path or service-worker scope alone does not isolate local storage. Do not treat study fixtures as earned progress.
 
 ## What is frozen
 
 `releases/<version>/` contains:
 
-| File/directory | Meaning |
-|---|---|
-| `source.tar` | `git archive` of the resolved commit; uncommitted and ignored working files are absent |
-| `site/` | Static distribution built by the CLI contained in that archived revision |
+| File/directory | Meaning                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------- |
+| `source.tar`   | `git archive` of the resolved commit; uncommitted and ignored working files are absent      |
+| `site/`        | Static distribution built by the CLI contained in that archived revision                    |
 | `release.json` | Version, exact commit and SHA-256 of the source archive, site manifest and distribution ZIP |
 
 The shared `releases/index.json` and `index.html` list the saved labels. Version labels accept letters, digits, dots, underscores and hyphens, start with a letter/digit, and cannot contain `..`. Labels matching the two index filenames are reserved. Existing labels are never overwritten. `releases/` is generated local output, not automatically a remote backup. Copy or publish the reviewed artifacts separately if durable external storage is required.

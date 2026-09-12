@@ -1,0 +1,306 @@
+import { BACKUP_FORMAT, isPreparedBackup, prepareBackup } from './backup.mjs';
+import { importLibrary } from './library.mjs';
+import { emptyPackLibrary, PACK_LIMITS } from './packs.mjs';
+import { SESSION_STORAGE_BYTES } from './sessions.mjs';
+import { browserDecodeImage } from './imports.mjs';
+import { canonicalJSON, plainObject, required } from './data-json.mjs';
+
+export const TRANSFER_LIMITS = Object.freeze({
+  storageKeys: 4096,
+  candidates: 32,
+  timeoutMs: 120000,
+  maxTimeoutMs: 300000,
+});
+const versionPattern = /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
+const prefix = 'revealline.library.';
+const suffix = '.v1';
+async function sha256(bytes) {
+  required(
+    globalThis.crypto?.subtle,
+    'A secure SHA-256 implementation is required to review collection changes.',
+  );
+  return globalThis.crypto.subtle.digest('SHA-256', bytes);
+}
+
+/** Fingerprint normalized, validated content only: no origin, timestamp, raw
+ * storage generation or property insertion order. This detects changed review
+ * snapshots; it is not a signature or proof of ownership. A trusted injected
+ * digest accepts Uint8Array bytes and returns exactly 32 SHA-256 bytes.
+ */
+export async function transferFingerprint(prepared, { digest = sha256 } = {}) {
+  required(isPreparedBackup(prepared), 'Fingerprint only a prepared complete backup.');
+  required(typeof digest === 'function', 'A SHA-256 digest function is required.');
+  const result = await digest(new TextEncoder().encode(canonicalJSON(prepared)));
+  const bytes =
+    result instanceof ArrayBuffer
+      ? new Uint8Array(result)
+      : ArrayBuffer.isView(result)
+        ? new Uint8Array(result.buffer, result.byteOffset, result.byteLength)
+        : null;
+  required(bytes?.byteLength === 32, 'The SHA-256 digest must contain exactly 32 bytes.');
+  return `sha256-${Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')}`;
+}
+function versionParts(version) {
+  if (typeof version !== 'string') return null;
+  const match = versionPattern.exec(version.replace(/^v/, ''));
+  return match ? match.slice(1).map(Number) : null;
+}
+function compare(a, b) {
+  for (let i = 0; i < 3; i++) if (a[i] !== b[i]) return a[i] - b[i];
+  return 0;
+}
+function targetVersion(version) {
+  const parsed = versionParts(version);
+  required(parsed, 'A stable current release version is required for collection transfer.');
+  return parsed;
+}
+function sourceFor(channel, current) {
+  if (typeof channel !== 'string') return null;
+  const legacy = channel === 'release';
+  const buildLabel = legacy ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(channel)?.[1];
+  const parsed = versionParts(buildLabel);
+  if (!parsed || (!legacy && compare(parsed, [0, 2, 1]) < 0) || compare(parsed, current) >= 0)
+    return null;
+  const profileKey = `${prefix}${channel}${suffix}`;
+  return Object.freeze({
+    id: channel,
+    channel,
+    version: `v${parsed.join('.')}`,
+    buildLabel,
+    legacy,
+    profileKey,
+    packsKey: `revealline.packs.${channel}.v1`,
+    sessionKey: `revealline.suspended.${channel}.v1`,
+    journalKey: `${profileKey}.backup-journal`,
+    writerKey: `${profileKey}.writer`,
+    lockKey: `${profileKey}.backup-lock`,
+  });
+}
+
+/** Bounded key discovery only: candidates are not verified until prepared.
+ * Frozen v0.2.0 used exactly `release`; v0.2.1 onward uses the build label in
+ * `release-vN.N.N` (or `release-N.N.N`). These sources share the writer/journal
+ * protocol. Dev, motion-lab, old per-campaign progress and future channels are
+ * deliberately excluded. No release URLs, network requests or value writes.
+ */
+export function discoverProfileTransfers({ storage, currentVersion } = {}) {
+  const current = targetVersion(currentVersion);
+  required(storage && typeof storage.key === 'function', 'Storage key discovery is unavailable.');
+  const length = storage.length;
+  required(
+    Number.isInteger(length) && length >= 0 && length <= TRANSFER_LIMITS.storageKeys,
+    'Storage has too many keys to inspect safely; use a complete backup file instead.',
+  );
+  const sources = new Map();
+  for (let index = 0; index < length; index++) {
+    const key = storage.key(index);
+    required(key === null || typeof key === 'string', 'Storage key discovery failed.');
+    if (!key?.startsWith(prefix) || !key.endsWith(suffix)) continue;
+    const source = sourceFor(key.slice(prefix.length, -suffix.length), current);
+    if (!source) continue;
+    sources.set(source.id, source);
+    required(
+      sources.size <= TRANSFER_LIMITS.candidates,
+      'Too many earlier collections were found; use a complete backup file instead.',
+    );
+  }
+  return Object.freeze(
+    [...sources.values()].sort(
+      (a, b) =>
+        compare(versionParts(b.version), versionParts(a.version)) || a.id.localeCompare(b.id),
+    ),
+  );
+}
+
+function operation(signal, timeoutMs) {
+  required(
+    Number.isInteger(timeoutMs) && timeoutMs > 0 && timeoutMs <= TRANSFER_LIMITS.maxTimeoutMs,
+    'Collection transfer timeout is invalid.',
+  );
+  const controller = new AbortController();
+  const cancel = () => {
+    const error = new Error('Collection transfer was cancelled; the earlier release is unchanged.');
+    error.name = 'AbortError';
+    controller.abort(error);
+  };
+  if (signal?.aborted) cancel();
+  else signal?.addEventListener('abort', cancel, { once: true });
+  const timer = setTimeout(() => {
+    const error = new Error('Collection transfer timed out; the earlier release is unchanged.');
+    error.name = 'TimeoutError';
+    controller.abort(error);
+  }, timeoutMs);
+  const check = () => {
+    if (controller.signal.aborted) throw controller.signal.reason;
+  };
+  return {
+    signal: controller.signal,
+    check,
+    wait(task) {
+      check();
+      return new Promise((resolve, reject) => {
+        const stop = () => reject(controller.signal.reason);
+        controller.signal.addEventListener('abort', stop, { once: true });
+        Promise.resolve()
+          .then(() => {
+            check();
+            return task();
+          })
+          .then(resolve, reject)
+          .finally(() => controller.signal.removeEventListener('abort', stop));
+      });
+    },
+    dispose() {
+      clearTimeout(timer);
+      signal?.removeEventListener('abort', cancel);
+    },
+  };
+}
+function rawJSON(candidate, maxBytes, label) {
+  required(candidate !== undefined, `${label} could not be read.`);
+  if (typeof candidate !== 'string') return candidate;
+  required(
+    candidate.length <= maxBytes && new TextEncoder().encode(candidate).byteLength <= maxBytes,
+    `${label} exceeds its stored byte budget; use its portable file instead.`,
+  );
+  try {
+    return JSON.parse(candidate);
+  } catch {
+    throw new TypeError(
+      `${label} contains invalid JSON; repair or export it from the earlier release.`,
+    );
+  }
+}
+
+/** Take a read-only, source-locked snapshot and validate it using the existing
+ * complete-backup pipeline. The caller explicitly applies `prepared` through
+ * its target commitBackup/Undo path after success. This never applies a backup.
+ * Only successful null reads mean absent optional packs/slot; a missing profile,
+ * undefined result, corrupt document or pending recovery is always an error.
+ */
+export async function prepareProfileTransfer(
+  sourceId,
+  {
+    storage,
+    readAsset,
+    lockManager,
+    currentVersion,
+    campaigns = [],
+    resolveCampaign,
+    decodeImage = browserDecodeImage,
+    digest = sha256,
+    signal,
+    onProgress,
+    timeoutMs = TRANSFER_LIMITS.timeoutMs,
+  } = {},
+) {
+  const source = sourceFor(sourceId, targetVersion(currentVersion));
+  required(source, 'Choose a recognized earlier release collection.');
+  required(
+    storage && typeof storage.getItem === 'function' && typeof readAsset === 'function',
+    'Collection storage readers are unavailable.',
+  );
+  required(
+    lockManager && typeof lockManager.request === 'function',
+    'Safe collection transfer requires Web Locks; export a complete backup in the earlier release instead.',
+  );
+  const op = operation(signal, timeoutMs);
+  // The Web Locks API forbids combining signal with ifAvailable. Cancellation
+  // instead stops our callback's reads/validation and lets its promise release
+  // the held locks. No steal or queued lock request is used.
+  const locked = (key, task) =>
+    op.wait(() =>
+      lockManager.request(key, { mode: 'exclusive', ifAvailable: true }, async (lock) => {
+        op.check();
+        required(
+          lock,
+          `The ${source.version} collection is busy. Close its other game tabs before copying progress.`,
+        );
+        return task();
+      }),
+    );
+  try {
+    return await locked(source.writerKey, () =>
+      locked(source.lockKey, async () => {
+        required(
+          storage.getItem(source.lockKey) === null,
+          'The earlier release has an unfinished backup lock. Open it to recover before copying progress.',
+        );
+        required(
+          (await op.wait(() => readAsset(source.journalKey))) === null,
+          'The earlier release has a pending or unreadable recovery journal. Recover it before copying progress.',
+        );
+        op.check();
+        const rawProfile = storage.getItem(source.profileKey);
+        required(
+          typeof rawProfile === 'string',
+          'The earlier player library is missing or unreadable; no empty replacement was created.',
+        );
+        // Unlike loadLibrary, importLibrary never falls back to an empty profile.
+        const library = importLibrary(rawProfile, { campaigns });
+        const rawPacks = await op.wait(() => readAsset(source.packsKey));
+        const rawSession = storage.getItem(source.sessionKey);
+        required(
+          rawSession === null || typeof rawSession === 'string',
+          'The earlier saved-flight slot could not be read.',
+        );
+        const packs =
+          rawPacks === null
+            ? emptyPackLibrary()
+            : rawJSON(rawPacks, PACK_LIMITS.libraryBytes, 'Earlier expansion library');
+        const session =
+          rawSession === null
+            ? null
+            : rawJSON(rawSession, SESSION_STORAGE_BYTES, 'Earlier saved flight');
+        required(
+          rawSession === null || plainObject(session),
+          'The earlier saved flight is corrupt; an empty replacement was not created.',
+        );
+        const prepared = await op.wait(() =>
+          prepareBackup(
+            { format: BACKUP_FORMAT, library, packs, session },
+            {
+              campaigns,
+              resolveCampaign,
+              decodeImage: (...args) => op.wait(() => decodeImage(...args)),
+              signal: op.signal,
+              onProgress,
+            },
+          ),
+        );
+        op.check();
+        const fingerprint = await op.wait(() => transferFingerprint(prepared, { digest }));
+        op.check();
+        const packIds = new Set(prepared.packs.packs.map((pack) => pack.id));
+        const missingPackIds = Object.freeze(
+          [...new Set(prepared.library.gallery.map((item) => item.sourcePackId))]
+            .filter((id) => id !== null && !packIds.has(id))
+            .sort(),
+        );
+        const preview = Object.freeze({
+          version: source.version,
+          campaigns: Object.keys(prepared.library.campaigns).length,
+          completedLevels: Object.values(prepared.library.campaigns).reduce(
+            (sum, progress) => sum + Object.keys(progress.clears).length,
+            0,
+          ),
+          pictures: prepared.library.gallery.length,
+          scores: prepared.library.scores.length,
+          packs: prepared.packs.packs.length,
+          hasSession: prepared.session !== null,
+          missingOptional: Object.freeze({
+            packs: rawPacks === null,
+            session: rawSession === null,
+          }),
+          missingPackIds,
+        });
+        return Object.freeze({ source, preview, prepared, fingerprint });
+      }),
+    );
+  } catch (error) {
+    if (['AbortError', 'TimeoutError'].includes(error?.name)) throw error;
+    throw new Error(`Could not copy ${source.version}: ${error.message}`);
+  } finally {
+    op.dispose();
+  }
+}

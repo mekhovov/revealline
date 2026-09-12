@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.2.0 source includes 12 campaign maps and ten optional expansion maps: three each in Night Shift and Living Threads, plus four specialty challenges in Fieldcraft.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.4.0 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
 
 ## The loop
 
@@ -57,7 +57,7 @@ The capacity display in **Saves & loads** shows usage against 512 campaigns, 4,0
 
 Attempt loading reconstructs and verifies recorded gameplay before adopting the run. A replay export by itself is a verification document; use an attempt export to resume. Storage errors are reported, and incompatible/corrupt data is preserved for recovery. Browser storage can be cleared or evicted, so downloaded backups matter. See [library/pack contracts](../docs/library-and-packs.md) and [replays and sessions](../docs/replays.md).
 
-Development and release channels keep separate profiles. Current release builds share a channel profile across versions, with campaign records partitioned by content identity. Earlier v0.1.x saves have separate keys and require an explicit compatible migration. Different ports isolate all origin-scoped browser data.
+Development and each archived release keep separate profiles. **Bring progress from an earlier release** reviews and explicitly copies a compatible collection on the same browser origin, preserving the earlier release. Copy checks the source again and requires a new review if it changed. Use a complete backup file for another browser, address, port, device or native origin. Earlier v0.1.x saves require an explicitly compatible migration. See [continuation and release copying](../docs/continuity-transfer.md).
 
 ## Add variety
 
@@ -93,5 +93,7 @@ Escape pauses both boards. **Focus boards** hides setup and secondary controls t
 The [playground](http://127.0.0.1:8768/game/playground/) edits map/theme/class/rule JSON, paints signals and hangars, imports expansions, replaces eight image roles and exports playable scenarios or a new one-map expansion. Fiber, Bomber and Impact presets exercise their actual interactions. **Play configuration** uses the same engine in practice mode, which grants no campaign rewards. Its six embedded screen-size fixtures are layout tests, not device emulators. See [the playground workflow](../docs/playground-runtime.md).
 
 The separate motion lab, legacy draft packs and media library retain their own formats; they require an explicit adapter where their data differs. AI-assisted game changes should use [Runtime Maintainer](../authoring/skills/xonix-runtime-maintainer/SKILL.md) and [Expansion Author](../authoring/skills/xonix-expansion-author/SKILL.md) with the relevant art/design skill.
+
+The [authored-art workflow](../docs/authored-art.md) covers source preservation, optional AI styling, map-specific embedded pictures, pack rebuilds and actual reveal/gallery checks. Homeward Skies supplies three original illustrated examples with separate source files and effective prompts.
 
 The static distribution includes **Prepare offline play** in Settings. Preparation must finish online before an offline reopen; source previews do not register a worker. See [offline instructions](../docs/offline-release.md), [development](../docs/development.md), [public release](../docs/public-release.md) and [saved versions](../docs/versioning.md). Native store packages and physical phone/controller/audio/performance checks remain separate from browser layout and automated simulation evidence.

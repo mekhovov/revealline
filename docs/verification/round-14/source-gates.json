@@ -1,0 +1,107 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.4.0",
+  "recordedAt": "2026-09-12T07:49:10.763Z",
+  "startedAt": "2026-09-12T07:49:01.930Z",
+  "baselineRevision": "b7c093de982d9f14cb847ff705b6bde0c4a2ba01",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "sourceSnapshot": {
+    "before": "d3d8a81376105c841f53ea47d6846ffd88702a0df5756c6249b182f05ce1fc7e",
+    "after": "d3d8a81376105c841f53ea47d6846ffd88702a0df5756c6249b182f05ce1fc7e",
+    "files": 214,
+    "changedDuringChecks": [],
+    "inventoryFile": {
+      "path": "docs/verification/round-14/source-inputs.json",
+      "bytes": 36181,
+      "sha256": "0eade7ee9d5c03df451dcb6b203f5317548a341137f671e08acb4d0ba3037ce1"
+    },
+    "hashDefinition": "SHA256 of compact JSON of sorted {path,bytes,sha256} entries; tracked and nonignored new runtime, tooling, native-project and relevant authored-source inputs. Documentation/evidence excluded."
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "durationMs": 8756,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-14/test.log",
+        "bytes": 142958,
+        "sha256": "00e00e4196bae557f3b079152bdced93dc8c86565321e307f2fe4c4a2b9e9c32"
+      },
+      "tests": {
+        "tests": 605,
+        "pass": 605,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 2308,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-14/lint.log",
+        "bytes": 131,
+        "sha256": "ba6664023081e39625a43c1985d8f2651cdcad40ce02f4f1216167673bc264e3"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 3027,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-14/format.log",
+        "bytes": 167,
+        "sha256": "d9d811f86391237ec3742c280e341b3961e2925614a05a49cb09d0fe0101c7cb"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "durationMs": 1124,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-14/native-format.log",
+        "bytes": 253,
+        "sha256": "e9f742723f57a4a41437311ba7b3eb15e5c814cd1f70373e8406674c5c625841"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 278,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-14/validate.log",
+        "bytes": 457,
+        "sha256": "9887d834871b7f15faac39f013a8a0a4ee1f8577608cb3195c612e6f8e6b5141"
+      },
+      "validation": {
+        "version": "0.4.0",
+        "files": 88,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7
+      }
+    }
+  ],
+  "passed": true
+}

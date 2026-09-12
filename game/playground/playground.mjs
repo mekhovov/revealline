@@ -317,6 +317,12 @@ function measure() {
     );
     $('control-readout').textContent =
       `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
+    const launch = [...doc.querySelectorAll('#game-overlay button:not([hidden])')]
+      .map((button) => ({ label: button.textContent.trim(), rect: button.getBoundingClientRect() }))
+      .filter(({ rect }) => rect.width > 0 && rect.height > 0);
+    $('launch-readout').textContent = launch.length
+      ? `Launch actions: ${launch.map(({ label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${b.left >= r.left && b.top >= r.top && b.right <= r.right + 1 && b.bottom <= r.bottom + 1 && b.left >= 0 && b.top >= 0 && b.right <= view.innerWidth + 1 && b.bottom <= view.innerHeight + 1 ? 'visible inside arena' : 'scroll needed'}`).join('; ')}`
+      : 'No launch overlay is active.';
   } catch {}
 }
 try {

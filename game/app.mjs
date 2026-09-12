@@ -24,6 +24,8 @@ import {
 import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { challengeCampaign } from './challenges.mjs';
+import { campaignContinuation, campaignSelection, savedFlightPreview } from './continuation.mjs';
+import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
@@ -78,7 +80,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.3.0',
+  let buildVersion = '0.4.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -181,7 +183,9 @@ try {
     $('save-warning').textContent = [loaded.warning, packWarning].filter(Boolean).join(' ');
     show('save-warning', true);
   }
-  let levelIndex = 0,
+  const initialSelection = campaignSelection(progress, campaign);
+  let levelIndex = initialSelection.levelIndex,
+    campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
     classId = 'scout',
     turnPolicy = 'immediate',
@@ -290,7 +294,7 @@ try {
     $('stop-button').title = `Stop moving · ${labels.stop}`;
     for (const button of document.querySelectorAll('[data-move]'))
       button.title = `Move ${button.dataset.move} · ${labels[button.dataset.move]}`;
-    if (!started)
+    if (!started && !campaignOverview)
       $('overlay-footnote').textContent =
         `Move with your configured keys · ${labels.ability} ability · ${labels.pickup} supply · touch controls below`;
   }
@@ -414,11 +418,10 @@ try {
     classRegistry = entry.classRecipes;
     campaign.classRecipes = classRegistry;
     themesFile.themes = entry.themes;
-    levelIndex = Math.max(
-      0,
-      campaign.levels.findIndex((l) => l.id === levelId),
-    );
     progress = progressFor(library, campaign);
+    const selection = campaignSelection(progress, campaign, { levelId });
+    levelIndex = selection.levelIndex;
+    campaignOverview = selection.overview;
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     theme = entry.themes.find((t) => t.id === (themeId || campaign.themeId)) || entry.themes[0];
     bodyId = theme.player;
@@ -440,6 +443,26 @@ try {
     } catch {
       return null;
     }
+  }
+  function refreshSavedFlight() {
+    const preview = practice
+      ? null
+      : savedFlightPreview(
+          savedAttempt(),
+          catalog().map((entry) => ({
+            key: campaignKey(entry.campaign),
+            campaign: entry.campaign,
+          })),
+        );
+    const atReady = !started && !practice;
+    show('continue-saved', atReady && !!preview);
+    show('continue-saved-note', atReady && !!preview);
+    $('continue-saved').disabled = sessionBusy;
+    $('continue-saved').textContent = sessionBusy
+      ? 'Verifying saved flight…'
+      : 'Load saved flight →';
+    $('continue-saved-note').textContent = preview ? `${preview.title}. ${preview.note}` : '';
+    $('continue-saved').title = preview?.title || 'Load saved flight';
   }
   function assertWriter() {
     if (!persistenceReady || !writer.writable)
@@ -491,6 +514,7 @@ try {
     }
     if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
     sessionBusy = true;
+    refreshSavedFlight();
     pause(true);
     const controller = new AbortController();
     restoreController = controller;
@@ -528,6 +552,7 @@ try {
     } finally {
       sessionBusy = false;
       if (restoreController === controller) restoreController = null;
+      refreshSavedFlight();
     }
   }
   function adoptPreferences() {
@@ -561,6 +586,15 @@ try {
     prepare();
   }
   const libraryPanel = attachLibraryPanel({
+    focusMission,
+    profileTransfer: isRelease
+      ? {
+          storage: localStorage,
+          readAsset: readAssetStore,
+          lockManager: navigator.locks,
+          currentVersion: buildVersion,
+        }
+      : null,
     get: () => ({
       library,
       packs,
@@ -603,6 +637,9 @@ try {
       library = next;
       progress = progressFor(library, campaign);
       const saved = persistProfile({ mode: 'replace' });
+      const selection = campaignSelection(progress, campaign);
+      levelIndex = selection.levelIndex;
+      campaignOverview = !practice && selection.overview;
       adoptPreferences();
       return saved;
     },
@@ -858,6 +895,7 @@ try {
     scenario = null;
     practice = false;
     demo = false;
+    campaignOverview = false;
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
     bodyId = unlockedBodies(progress).has(bodyId) ? bodyId : theme.player;
@@ -871,7 +909,7 @@ try {
     campaign.levels.forEach((level, index) => {
       const b = document.createElement('button');
       b.type = 'button';
-      b.className = `mission${index === levelIndex && !practice ? ' selected' : ''}`;
+      b.className = `mission${index === levelIndex && !practice && !campaignOverview ? ' selected' : ''}`;
       b.disabled = !canPlay(progress, campaign, index);
       b.dataset.level = String(index);
       b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
@@ -893,6 +931,7 @@ try {
         leavePractice();
         levelIndex = index;
         prepare();
+        focusMission();
       };
       $('missions').append(b);
     });
@@ -907,29 +946,43 @@ try {
     $('class-select').value = classId;
     $('turn-select').value = turnPolicy;
   }
-  function missionBrief() {
-    const level = scenario?.level || campaign.levels[levelIndex],
-      rules = level.rules || {};
-    const notes = [
-      campaign.briefs?.[levelIndex] ||
-        level.metadata?.description ||
-        `Reveal ${Math.round(level.goal.coverage * 100)}% and capture every marked ${theme.labels.objective.toLowerCase()}. Return to safe ground to secure each line.`,
-    ];
-    if (rules.timeLimitSeconds) notes.push(`Mission deadline: ${rules.timeLimitSeconds}s.`);
-    if (rules.cutTimeLimitSeconds)
-      notes.push(`Close each live line within ${rules.cutTimeLimitSeconds}s.`);
-    if (rules.maxTrailCells) notes.push(`Cable budget: ${rules.maxTrailCells} cells per cut.`);
-    if (level.signalZones?.length)
-      notes.push(
-        'Signal zones affect ordinary craft. Fiber bypasses interference; carrier fields can suppress emitters.',
-      );
-    return notes.join(' ');
+  function focusMission() {
+    $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+    (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
+  }
+  function currentBriefing() {
+    return missionBriefing(scenario?.level || campaign.levels[levelIndex], {
+      brief: scenario ? undefined : campaign.briefs?.[levelIndex],
+      objectiveLabel: theme.labels.objective,
+      classes: scenario?.classRecipes || classRegistry,
+      intro:
+        !practice &&
+        !activeEntry.sourcePackId &&
+        campaign.id === baseCampaign.id &&
+        levelIndex === 0,
+    });
+  }
+  function refreshMissionBrief() {
+    const brief = currentBriefing();
+    $('mission-brief-title').textContent = brief.fullTitle;
+    $('mission-brief-copy').textContent = brief.fullBrief;
+    $('mission-brief-facts').textContent = brief.facts;
+    return brief;
   }
   function overlay(kind) {
+    $('game-overlay').dataset.kind = kind;
+    $('game-overlay').dataset.intro = String(
+      kind === 'ready' &&
+        !practice &&
+        !activeEntry.sourcePackId &&
+        campaign.id === baseCampaign.id &&
+        levelIndex === 0,
+    );
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
-    show('next-button', kind === 'won');
+    show('next-button', kind === 'won' || kind === 'campaign-complete');
+    show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('result-medals', kind === 'won');
@@ -937,15 +990,30 @@ try {
       ? 'PRACTICE / NO CAMPAIGN REWARDS'
       : `MISSION ${String(levelIndex + 1).padStart(2, '0')} / ${run.level.name.toUpperCase()}`;
     if (kind === 'ready') {
-      $('overlay-title').innerHTML =
-        levelIndex === 0 && !practice
-          ? 'Clear a path.<br>Reveal a world.'
-          : escapeHTML(run.level.name);
-      $('overlay-copy').textContent = practice
-        ? 'Test this authored configuration in the real game engine. Practice does not change your campaign collection.'
-        : missionBrief();
+      const brief = refreshMissionBrief();
+      $('overlay-eyebrow').textContent = practice
+        ? 'PRACTICE / NO CAMPAIGN REWARDS'
+        : `MISSION ${String(levelIndex + 1).padStart(2, '0')}`;
+      $('overlay-title').textContent =
+        $('game-overlay').dataset.intro === 'true' ? 'Clear a path.\nReveal a world.' : brief.title;
+      $('overlay-copy').textContent = brief.copy;
       $('start-button').textContent = 'Start mission ↗';
+      if (
+        !practice &&
+        !Object.hasOwn(progress.clears, run.levelId) &&
+        Object.keys(progress.clears).length
+      )
+        $('start-button').textContent = 'Continue campaign →';
       refreshKeyPrompts();
+    }
+    if (kind === 'campaign-complete') {
+      const completion = campaignContinuation(progress, campaign);
+      $('overlay-eyebrow').textContent = 'CAMPAIGN COMPLETE';
+      $('overlay-title').textContent = 'Every mission revealed.';
+      $('overlay-copy').textContent =
+        `${campaign.title || campaign.name || campaign.id}: ${completion.completed} / ${completion.total} missions complete. Enjoy your collection, choose a mission to replay, or select another campaign in the flight deck.`;
+      $('next-button').textContent = 'View collection →';
+      $('overlay-footnote').textContent = 'Your earned pictures and best results are kept.';
     }
     if (kind === 'pause') {
       $('overlay-title').textContent = 'Take a breath.';
@@ -963,9 +1031,9 @@ try {
       );
       $('next-button').textContent = practice
         ? 'Try it yourself →'
-        : levelIndex === campaign.levels.length - 1
-          ? 'Back to first signal →'
-          : 'Next mission →';
+        : campaignContinuation(progress, campaign).complete
+          ? 'Campaign complete →'
+          : 'Next uncleared mission →';
       $('overlay-footnote').textContent = practice
         ? 'Demonstrations and imported maps do not grant unlocks.'
         : run.medal === 'gold'
@@ -980,12 +1048,7 @@ try {
       $('overlay-footnote').textContent =
         'Retries start immediately. Previous campaign progress is kept.';
     }
-  }
-  function escapeHTML(s) {
-    return String(s).replace(
-      /[&<>"']/g,
-      (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
-    );
+    refreshSavedFlight();
   }
   function prepare({ restoreAdoption = false } = {}) {
     if (!restoreAdoption) cancelRestore();
@@ -1038,23 +1101,27 @@ try {
       : `${campaign.title || campaign.name || campaign.id} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
     $('campaign-name').textContent = `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`;
     updateLoadout();
+    refreshMissionBrief();
     paintMissions();
-    overlay('ready');
+    overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready');
     warning(
       practice
         ? 'Practice uses the same simulation; campaign awards are disabled.'
-        : missionBrief(),
+        : campaignOverview
+          ? 'Campaign complete. View your collection or choose a mission to replay.'
+          : currentBriefing().status,
     );
     refreshHUD();
   }
   function resume() {
     cancelRestore();
-    if (!run || ['won', 'lost'].includes(run.status)) return;
+    if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
     clearInput();
     started = true;
     paused = false;
     (library.preferences.musicEnabled ? sound.enable?.() : sound.disable())?.catch?.(() => {});
     show('game-overlay', false);
+    show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
     $('pause-button').textContent = 'Ⅱ';
   }
@@ -1093,8 +1160,9 @@ try {
     $('objective-state').textContent = required.length
       ? `${theme.labels.objective}: ${done.length} / ${required.length}`
       : 'Close a line to reveal the picture';
-    $('flight-state').textContent =
-      run.status === 'won'
+    $('flight-state').textContent = campaignOverview
+      ? 'Campaign complete'
+      : run.status === 'won'
         ? 'Mission complete'
         : run.status === 'lost'
           ? 'Flight ended'
@@ -1111,7 +1179,9 @@ try {
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
       `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
-    $('hangar-button').disabled = ['won', 'lost'].includes(run.status);
+    $('hangar-button').disabled = campaignOverview || ['won', 'lost'].includes(run.status);
+    $('restart-button').disabled = campaignOverview;
+    $('pause-button').disabled = campaignOverview;
     $('save-attempt-button').disabled =
       !started || practice || ['won', 'lost'].includes(run.status);
     const near = run.hangars?.some(
@@ -1297,6 +1367,8 @@ try {
       (scenario?.theme?.id === $('theme-select').value ? scenario.theme : themesFile.themes[0]);
     bodyId = theme.player;
     setTheme();
+    refreshMissionBrief();
+    if (!started && !campaignOverview) overlay('ready');
     preferences({ themeId: theme.id, bodyId });
   };
   $('body-select').onchange = () => {
@@ -1320,8 +1392,26 @@ try {
     prepare();
   };
   $('start-button').onclick = () => resume();
+  $('continue-saved').onclick = async () => {
+    try {
+      await restoreAttempt(savedAttempt());
+      $('start-button').focus({ preventScroll: true });
+    } catch (error) {
+      warning(`Saved flight was not loaded: ${error.message}`);
+      // A new selection may have cancelled verification. Preserve its focus;
+      // only recover focus lost when the loading button was disabled.
+      if (!$('continue-saved').hidden && document.activeElement === document.body)
+        $('continue-saved').focus({ preventScroll: true });
+    }
+  };
+  $('choose-mission').onclick = () => {
+    const mission = $('missions').querySelector('button:not(:disabled)');
+    mission?.focus();
+    mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+  };
   $('pause-button').onclick = () => pause();
   $('restart-button').onclick = () => {
+    if (campaignOverview) return;
     demo = false;
     prepare();
     resume();
@@ -1344,12 +1434,29 @@ try {
     }
   };
   $('next-button').onclick = () => {
+    if (campaignOverview && !practice) {
+      $('collection-button').click();
+      return;
+    }
     if (practice) {
       if (demo) {
         leavePractice();
         levelIndex = 0;
       }
-    } else levelIndex = (levelIndex + 1) % campaign.levels.length;
+    } else {
+      const selection = campaignSelection(progress, campaign);
+      campaignOverview = selection.overview;
+      if (campaignOverview) {
+        clearInput();
+        sound.pause();
+        paintMissions();
+        overlay('campaign-complete');
+        refreshHUD();
+        $('next-button').focus({ preventScroll: true });
+        return;
+      }
+      levelIndex = selection.levelIndex;
+    }
     prepare();
   };
   $('demo-button').onclick = () => {

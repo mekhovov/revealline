@@ -1,0 +1,104 @@
+{
+  "format": "revealline-round14-art-identity.v1",
+  "recordedAt": "2026-09-12T07:37:51.504Z",
+  "pack": {
+    "path": "game/content/packs/homeward-skies.json",
+    "id": "homeward-skies",
+    "version": "1.0.0",
+    "bytes": 11371849,
+    "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b",
+    "matchesSourceRecipeAndOriginals": true
+  },
+  "recipe": {
+    "path": "authoring/library/homeward-skies/pack-source.json",
+    "sha256": "5ecb8b51b9bd5239dfa9a4108d7f9ab841235deb2a3442e4e40cc539a3a3e103"
+  },
+  "provenance": {
+    "path": "authoring/library/homeward-skies/prompts.json",
+    "sha256": "ab567f9d9cfdf4d0c465739d65c1d246ece5617c2689fd37850b2ae44647c7df"
+  },
+  "pictures": [
+    {
+      "levelId": "homeward-01",
+      "file": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "bytes": 2949901,
+      "sha256": "27ac3051d7f9d99c83d26fac70baa3ee309409e296635ef48b7c4417f93d4004",
+      "width": 1448,
+      "height": 1086,
+      "embeddedBytesMatch": true,
+      "originalFileDimensionsMatch": true,
+      "effectivePromptRecorded": true,
+      "provenanceReviewPresent": true,
+      "fit": "contain"
+    },
+    {
+      "levelId": "homeward-02",
+      "file": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "bytes": 2825406,
+      "sha256": "11a5066a45cfff861a90405764b276ab801a993848379d1c08c4233ee34aa24a",
+      "width": 1448,
+      "height": 1086,
+      "embeddedBytesMatch": true,
+      "originalFileDimensionsMatch": true,
+      "effectivePromptRecorded": true,
+      "provenanceReviewPresent": true,
+      "fit": "contain"
+    },
+    {
+      "levelId": "homeward-03",
+      "file": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "bytes": 2741772,
+      "sha256": "4b5da54f1d1023d24a40db5aab7ffe7d4bb1c531a4ed659663e6fad683921363",
+      "width": 1448,
+      "height": 1086,
+      "embeddedBytesMatch": true,
+      "originalFileDimensionsMatch": true,
+      "effectivePromptRecorded": true,
+      "provenanceReviewPresent": true,
+      "fit": "contain"
+    }
+  ],
+  "indexedPacks": [
+    {
+      "id": "night-shift",
+      "version": "1.0.0",
+      "bytes": 8848,
+      "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4",
+      "maps": 3,
+      "structuralValidation": true
+    },
+    {
+      "id": "living-threads",
+      "version": "1.0.0",
+      "bytes": 9156,
+      "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52",
+      "maps": 3,
+      "structuralValidation": true
+    },
+    {
+      "id": "fieldcraft",
+      "version": "1.0.0",
+      "bytes": 15204,
+      "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb",
+      "maps": 4,
+      "structuralValidation": true
+    },
+    {
+      "id": "homeward-skies",
+      "version": "1.0.0",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b",
+      "maps": 3,
+      "structuralValidation": true
+    }
+  ],
+  "contentCounts": {
+    "baseMaps": 12,
+    "expansionMaps": 13,
+    "totalMaps": 25,
+    "packs": 4,
+    "classes": 7,
+    "primitives": 5
+  },
+  "scope": "Read-only source/build byte equality, provenance presence, PNG dimensions and actual pack structural validation. No new image generation, visual review, full browser decoding, native execution or hardware performance claim."
+}
