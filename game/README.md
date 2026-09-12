@@ -110,7 +110,11 @@ Open [Couch race](http://127.0.0.1:8768/game/couch/) for two independent boards 
 | Supply  | E          | /           |
 | Boost   | Left Shift | Right Shift |
 
-Escape pauses both boards. **Focus boards** hides setup and secondary controls to keep both arenas and control sets in the shared viewport; **Show setup** returns to configuration. Starting a round enables focus automatically. Each side has touch controls, and two standard controllers can drive separate players. Couch results are separate from campaign rewards. This is a local race, with no shared-arena co-op or network connection. The focused couch layout was checked in the same browser at six CSS viewport sizes, including 320 × 640, with 44 CSS-pixel control targets. This is layout evidence, not physical-device or controller certification. The [public-release guide](../docs/public-release.md) describes the future network boundary.
+Escape pauses both boards. **Focus boards** hides setup and secondary controls to prioritize the two arenas and their controls; compact windows or long hints can require normal vertical scrolling. **Show setup** reveals configuration and the Solo link, pausing a running round first. Starting a round enables focus automatically. Each side retains touch controls, and two standard controllers can drive separate players.
+
+The **Round29 working increment** adds one deliberate shared menu owner while preserving those two flight assignments. Release controls, press a face button or Menu to join, then release again before using South to choose an action. East/Menu cancels a select preview or focuses the primary action; it never starts, resumes or advances a round by itself. **Release menu controller** allows either assigned player to join afresh. Fixed couch controls use position labels and held Boost, independently of solo remaps and Boost Toggle. The menu hint stays visible in Focus boards mode. See [Couch controller menus](../docs/couch-controller-navigation.md) for native handoff, disconnect behavior and current verification limits; the [public-release guide](../docs/public-release.md) identifies published versions.
+
+Couch results are separate from campaign rewards. This is a local race, with no shared-arena co-op or network connection. The [public-release guide](../docs/public-release.md) describes the future network boundary. Source checks, browser layout observations and physical-controller evidence remain distinct.
 
 ## Create and share
 
