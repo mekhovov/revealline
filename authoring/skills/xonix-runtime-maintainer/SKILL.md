@@ -7,6 +7,14 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 Locate the project from the current workspace or this source skill's project path. Read [development.md](../../../docs/development.md) and the relevant code before editing. The playable application is `game/`; the historical `authoring/motion-lab/` is a separate study. A preview class or catalog reference is not automatically implemented in the game.
 
+## Current native edition
+
+The approved execution register is [implementation-roadmap.md](../../../docs/implementation-roadmap.md). Read [continuous steering](../../../docs/continuous-steering.md) for remembered input and explicit Resume. Release and centered sticks do not stop flight; keep physical input gates separate from saved direction and queued turns. Never reinterpret historical `direction:null` recordings.
+
+First Light uses the isolated 72×36 `level.v3/core.v4/replay.v5` branch documented in [wide-engine.md](../../../docs/wide-engine.md). Obtain geometry from the run/level and update every consumer: capture, collision, renderer, editor, theater, gallery and couch. Preserve old 48×36 fixtures. Standard and Gentle route proofs are independent; do not regenerate old oracles to conceal a regression. [First Light](../../../docs/first-light.md) links its actual source, pictures and checks. Later classic versions are deliverable only when their own tests and registered behaviors exist.
+
+For uploaded music use [Audio Director](../xonix-audio-director/SKILL.md). Library/playlist/media identity stays separate from score authority. One session player owns music; packs can supply an authored recipe fallback. Never reset songs on Retry or ordinary Pause. Archive a candidate from its exact committed source before release checks so parallel unfinished work cannot enter a validated version.
+
 ## Choose the real contract
 
 - `game/core/index.mjs` exports the simulation API and `validateLevel`. Keep DOM, Phaser rendering and authoring-file concerns outside that core.

@@ -10,7 +10,8 @@ CATALOG = Path(__file__).resolve().parent / "prompts/catalog.json"
 SUPPLEMENTS = (CATALOG.parent / "round-06-asset-variations.json",
                CATALOG.parent / "round-07-animation-variants.json",
                CATALOG.parent / "round-08-character-collections.json",
-               CATALOG.parent / "round-09-abilities-and-world.json")
+               CATALOG.parent / "round-09-abilities-and-world.json",
+               CATALOG.parent / "native-edition-workflows.json")
 TOKEN = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 
 
