@@ -85,7 +85,7 @@ export function createPackCommitCoordinator({
   };
 
   const reconcile = () => {
-    if (!pending || !canAdopt()) return Promise.resolve(false);
+    if (!pending) return Promise.resolve(false);
     if (reconciliation) return reconciliation;
     reconciliation = (async () => {
       while (pending) {

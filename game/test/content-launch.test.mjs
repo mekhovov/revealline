@@ -238,6 +238,32 @@ test('pack reconciliation keeps the backup gate after a content-switch reset', a
   assert.equal(activeRun.id, 'restored-run');
 });
 
+test('a denied reconciliation gate fails closed through the error callback and can retry', async () => {
+  let denied = true;
+  let durable = null;
+  let adopted = null;
+  let reported = null;
+  const coordinator = createPackCommitCoordinator({
+    write: async (value) => (durable = value),
+    read: () => durable,
+    prepare: (value) => value,
+    adopt: (value) => (adopted = value),
+    canAdopt: () => {
+      if (denied) throw new Error('Storage access denied.');
+      return true;
+    },
+    onError: (error) => (reported = error.message),
+  });
+  await coordinator.commit('pack-a');
+  assert.equal(await coordinator.noteStaleCommit(), false);
+  assert.equal(adopted, null);
+  assert.equal(reported, 'Storage access denied.');
+  assert.equal(coordinator.needsReconciliation(), true);
+  denied = false;
+  assert.equal(await coordinator.reconcile(), true);
+  assert.equal(adopted, 'pack-a');
+});
+
 test('pack launch guard rejects changed libraries and advances only its current operation', () => {
   const guard = createPackLaunchGuard();
   const before = {};
