@@ -1,6 +1,6 @@
 # Solo controller Boost
 
-Implemented in the **v0.13.0 working source**. The latest frozen release remains v0.12.0, whose controller Boost still uses Hold. This guide describes source behavior and software checks; browser, physical-controller and native-device verification are separate evidence.
+Available in the frozen **[v0.13.0 release](http://127.0.0.1:8767/releases/v0.13.0/site/game/)**, with Hold as the default and Toggle optional. Its [1,406-test source gates](verification/round-23/source-gates.md), [browser checks](verification/round-23/frozen-browser.md) and [identical archived-source rebuild](verification/round-23/integrity-notes.md) are recorded. Frozen v0.12.0 retains Hold-only controller Boost. Physical controllers, phones and native execution still require separate verification.
 
 Open **Settings → Solo controller Boost** and choose **Hold** or **Toggle**. This select is separate from **Edit controller settings** and its button-map draft. A native selection applies immediately; controller navigation previews until Confirm, while Back cancels. Choosing Hold resets this option. Restoring the binding draft's defaults changes its mappings, not this separate setting. Editing pauses an active flight, and resuming remains a separate action.
 
@@ -38,6 +38,8 @@ Run the relevant suites:
 node --test game/test/controller-boost*.test.mjs game/test/controller-router*.test.mjs game/test/ui-input.test.mjs
 ```
 
-The 27 focused recovery cases exercise real router→input→core behavior: both steering policies, three recovery causes, a legal 0.1-second recovery ending inside a 0.25-second frame, mixed local sources, exact command recording and unchanged Hold checkpoints. Other suites cover settings callbacks, strict migration, source preservation, merges, full backups and Undo. These are subsets of the eventual source gates, not extra totals or physical-device evidence.
+The 27 focused recovery cases exercise real router→input→core behavior: both steering policies, three recovery causes, a legal 0.1-second recovery ending inside a 0.25-second frame, mixed local sources, exact command recording and unchanged Hold checkpoints. Other suites cover settings callbacks, strict migration, source preservation, merges, full backups and Undo. These are included in the 1,406-test source total; they are not additional tests or physical-device evidence.
+
+The frozen distribution rebuilds all **133 output files** identically and retains all sixteen earlier releases. Its [offline check](verification/round-23/frozen-browser.md) verifies **126 files / 20,515,050 bytes**. After the server stopped, the game retained the selected Toggle mode, saved and restored an unfinished cut paused with Boost off, then completed it after an explicit Resume. A further offline reload retained the picture and one 8,160-point score at **4.03 seconds**. The offline Lab verified a held Boost press toggled only once, release kept it on, and Stop or actual self-contact recovery cleared it. This checks one browser's behavior while its storage is retained.
 
 Use [Controller practice](controller-practice.md) for the visible Settings/join/Boost/Stop/recovery/reader journey. Its **Release all · buttons + sticks** releases physical inputs; ordinary release alone leaves a live Toggle on. A parent control may separately blur and pause the game, which clears the toggle. Record that focus change rather than attributing it to release semantics.
