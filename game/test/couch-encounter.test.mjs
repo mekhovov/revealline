@@ -65,6 +65,7 @@ async function page(t, { campaign = pack.campaigns[0], turnPolicy = 'immediate' 
   doc.querySelectorAll = () => [];
   doc.body = new Element();
   doc.hidden = false;
+  doc.hasFocus = () => true;
   const win = new Element();
   const renders = [];
   const originals = new Map();

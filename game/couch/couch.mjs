@@ -2,6 +2,8 @@ import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
+import { createControllerRouter } from '../ui/controller-router.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { readAssetStore } from '../storage.mjs';
@@ -81,12 +83,34 @@ try {
     accumulator = 0,
     last = 0,
     won = [0, 0],
-    finished = false;
+    finished = false,
+    generation = 0,
+    framePads = [],
+    frameReadError = null,
+    padDescriptors = new Map(),
+    slots = [null, null],
+    assignmentsChanged = false,
+    pendingPadLoss = false,
+    menuOwner = null,
+    menuHint = '',
+    menuGate = '',
+    menuStatus =
+      'Release controls, then press a face button or Menu to choose the menu controller.',
+    menuScope = null,
+    inactive = false,
+    disposed = false,
+    frameId = null,
+    stopNative = () => {};
+  let menuRouter, navigation;
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
   $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function clear() {
     input.clear();
     accumulator = 0;
+    menuRouter?.clear();
+    navigation?.clear();
+    if (match?.status === 'running') menuScope = 'flight';
+    menuHint = '';
   }
   function prepare() {
     clear();
@@ -110,6 +134,7 @@ try {
       { seed: 2026, turnPolicy: $('race-turn').value, classId, classRecipes: entry.classes },
       { seconds: Number($('race-time').value) },
     );
+    generation++;
     sound.reset();
     sound.setTrack(entry.track || DEFAULT_TRACKS[0]);
     painters.forEach((p) => {
@@ -121,14 +146,18 @@ try {
     $('race-start').textContent = 'Start round ↗';
     $('race-message').textContent =
       'Both boards use the same map, class and seed. Ready when you are.';
+    updateMenu();
   }
   function pause() {
     sound.pause();
     if (!match || match.status === 'finished') return;
     pauseDuel(match);
     clear();
-    $('race-start').textContent = 'Resume round →';
-    $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
+    if (match.status === 'paused') {
+      $('race-start').textContent = 'Resume round →';
+      $('race-message').textContent = 'Both players are paused. Resume when everyone is ready.';
+    }
+    updateMenu();
   }
   $('race-start').onclick = () => {
     if (match.status === 'finished') {
@@ -140,15 +169,24 @@ try {
     focusBoards(true);
     sound.resume().catch(() => {});
     $('race-message').textContent = 'Make your line count. First clear wins.';
+    updateMenu();
     input.focus();
   };
   $('race-pause').onclick = pause;
-  onNativeInactive(pause).catch((error) => {
-    $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
-  });
+  onNativeInactive(suspend)
+    .then((stop) => {
+      if (disposed) stop();
+      else stopNative = stop;
+    })
+    .catch((error) => {
+      if (!disposed)
+        $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+    });
   function focusBoards(on) {
     document.body.classList.toggle('race-focus', on);
     $('race-focus').textContent = on ? 'Show setup' : 'Focus boards';
+    clear();
+    updateMenu();
   }
   $('race-focus').onclick = () => {
     const on = !document.body.classList.contains('race-focus');
@@ -182,22 +220,238 @@ try {
   };
   $('race-tap').onchange = clear;
   const input = attachCouchInput({
+    getGamepads: readCachedPads,
     active: () => match?.status === 'running',
     tapMode: () => $('race-tap').checked,
     onPause: pause,
     onStop: (player) => {
       if (match) releaseInputs(match.runs[player]);
     },
-    onPads: (count) => {
-      $('race-pad-status').textContent =
-        `${count} standard controller${count === 1 ? '' : 's'} connected · keyboard and touch remain available. Escape pauses both boards.`;
+    onPads: (count, nextSlots) => {
+      assignmentsChanged = nextSlots.some((slot, i) => slot !== slots[i]);
+      slots = [...nextSlots];
+      const message = `${count} standard controller${count === 1 ? '' : 's'} assigned · ${slots.map((slot, i) => `Player ${i + 1}: ${slot === null ? 'keyboard/touch' : `pad slot ${slot}`}`).join(' · ')}. Keyboard and touch remain available. Escape pauses both boards.`;
+      if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
     },
   });
+  function couchScope() {
+    return match?.status === 'running'
+      ? 'flight'
+      : `couch:${match?.status || 'loading'}:${generation}:${document.body.classList.contains('race-focus') ? 'focus' : 'setup'}`;
+  }
+  function readCachedPads() {
+    if (frameReadError) throw frameReadError;
+    return framePads;
+  }
+  function readAssignedMenuPads() {
+    // Keep sparse browser positions. The router also receives the physical index.
+    return readCachedPads().map((pad) => (slots.includes(pad?.index) ? pad : null));
+  }
+  function capturePads() {
+    framePads = [];
+    frameReadError = null;
+    try {
+      if (typeof navigator.getGamepads !== 'function') throw new Error('Gamepad API unavailable');
+      const pads = navigator.getGamepads();
+      const count = Number.isInteger(pads?.length) ? Math.max(0, Math.min(32, pads.length)) : 0;
+      framePads = Array.from({ length: count }, (_, i) => pads[i] || null);
+    } catch (error) {
+      frameReadError = error || new Error('Controller read failed');
+    }
+    const next = new Map();
+    for (const pad of framePads) {
+      if (!pad?.connected || pad.mapping !== 'standard') continue;
+      next.set(
+        pad.index,
+        JSON.stringify([
+          typeof pad.id === 'string' ? pad.id.slice(0, 512) : '',
+          pad.mapping,
+          pad.buttons?.length ?? 0,
+          pad.axes?.length ?? 0,
+        ]),
+      );
+    }
+    for (const index of slots) {
+      if (
+        index === null ||
+        !padDescriptors.has(index) ||
+        next.get(index) === padDescriptors.get(index)
+      )
+        continue;
+      // Couch flight allocation is index-based. A changed descriptor is a new
+      // device even if a disconnect event was missed between animation frames.
+      menuRouter.disconnect(index);
+      pendingPadLoss = true;
+      pause();
+      clear();
+    }
+    padDescriptors = next;
+  }
+  function focusPrimaryAction() {
+    if (!match || match.status === 'running' || disposed) return;
+    $('race-start').focus({ preventScroll: true });
+    navigation.engage();
+    menuHint = 'Choose the primary action with South when everyone is ready.';
+    updateMenu();
+  }
+  function updateMenu() {
+    if (!match || disposed) return;
+    const running = match.status === 'running';
+    $('race-start').disabled = running;
+    $('race-pause').disabled = !running;
+    $('race-menu-release').hidden = running || !menuOwner;
+    $('race-menu-release').disabled = running || !menuOwner;
+    const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
+    const text = running
+      ? 'Fixed couch controls: D-pad/left stick move; South ability; West supply; right shoulder holds Boost; Menu pauses both boards.'
+      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu focuses ${$('race-start').textContent.replace(/[↗→]/g, '').trim()}.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
+    if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
+  }
+  menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
+  const menuIds = new Set([
+    'race-level',
+    'race-theme',
+    'race-class',
+    'race-turn',
+    'race-time',
+    'race-start',
+    'race-focus',
+    'race-pause',
+    'race-reset',
+    'race-audio',
+    'race-tap',
+    'race-reduced',
+    'race-menu-release',
+    'race-solo-return',
+  ]);
+  navigation = attachControllerNavigation({
+    getScope: couchScope,
+    getRoot: () => document,
+    getDefaultFocus: () => $('race-start'),
+    accept: (element) => menuIds.has(element.id),
+    getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
+    onBack: focusPrimaryAction,
+    onMenu: focusPrimaryAction,
+    onHint: (message) => {
+      menuHint = message;
+      updateMenu();
+    },
+  });
+  $('race-menu-release').onclick = () => {
+    if (match.status === 'running' || !menuOwner) return;
+    menuRouter.invalidate();
+    menuOwner = null;
+    clear();
+    menuStatus =
+      'Menu controller released. Release controls, then press a face button or Menu to join.';
+    updateMenu();
+    $('race-start').focus({ preventScroll: true });
+  };
+  function sampleMenu(now) {
+    const scope = couchScope();
+    // Even Ready can lose or reassign a pad without changing the duel status.
+    // Clear before sampling so that this frame cannot claim a new menu owner.
+    if (assignmentsChanged || pendingPadLoss) menuRouter.clear();
+    const result = menuRouter.sample({ scope, timeMs: now });
+    const released = !menuOwner && result.disconnected;
+    menuOwner = result.assigned;
+    menuGate =
+      menuOwner && ['joined', 'waiting-neutral'].includes(result.status.code)
+        ? 'Release controller buttons and the movement stick to continue.'
+        : '';
+    if (result.disconnected) {
+      clear();
+      if (!released) menuStatus = result.status.message;
+      updateMenu();
+      return;
+    }
+    menuStatus = frameReadError
+      ? 'Controller access is unavailable.'
+      : !framePads.some((pad) => pad?.connected && pad.mapping === 'standard') &&
+          framePads.some((pad) => pad?.connected)
+        ? 'This controller has no standard mapping.'
+        : result.status.message;
+    if (assignmentsChanged || pendingPadLoss) {
+      clear();
+      updateMenu();
+      return;
+    }
+    if (menuOwner && (scope !== menuScope || result.status.code === 'joined')) {
+      menuScope = scope;
+      focusPrimaryAction();
+    } else {
+      navigation.handle(result.ui);
+    }
+    updateMenu();
+  }
+  function suspend() {
+    if (disposed) return;
+    pause();
+    clear();
+    framePads = [];
+    frameReadError = null;
+    last = 0;
+    inactive = true;
+  }
+  const hidden = () => {
+    if (document.hidden) suspend();
+  };
+  const nativeMenuInput = () => {
+    if (!disposed && match?.status !== 'running') {
+      // Relinquishing DOM focus alone does not stop the router's held repeats.
+      // Preserve native focus until a fresh neutral-and-press controller gesture.
+      menuRouter.clear();
+      menuHint = '';
+    }
+  };
+  const disconnected = (event) => {
+    if (slots.includes(event.gamepad?.index)) {
+      menuRouter.disconnect(event.gamepad.index);
+      pendingPadLoss = true;
+      suspend();
+    }
+  };
+  const pagehide = (event) => {
+    suspend();
+    if (event.persisted) return;
+    disposed = true;
+    input.destroy();
+    menuRouter.destroy();
+    navigation.destroy();
+    stopNative();
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('blur', suspend);
+    window.removeEventListener('gamepaddisconnected', disconnected);
+    window.removeEventListener('pagehide', pagehide);
+    document.removeEventListener('visibilitychange', hidden);
+    document.removeEventListener('pointerdown', nativeMenuInput, true);
+    document.removeEventListener('keydown', nativeMenuInput, true);
+  };
+  window.addEventListener('blur', suspend);
+  window.addEventListener('gamepaddisconnected', disconnected);
+  window.addEventListener('pagehide', pagehide);
+  document.addEventListener('visibilitychange', hidden);
+  document.addEventListener('pointerdown', nativeMenuInput, true);
+  document.addEventListener('keydown', nativeMenuInput, true);
   function frame(now) {
+    if (disposed) return;
+    const available = !document.hidden && document.hasFocus();
+    if (!available && !inactive) suspend();
+    if (available && inactive) {
+      inactive = false;
+      last = 0;
+    }
     const dt = last ? Math.max(0, (now - last) / 1000) : 0;
     last = now;
-    input.poll();
-    if (match.status === 'running') {
+    const wasRunning = match.status === 'running';
+    if (available) {
+      assignmentsChanged = false;
+      capturePads();
+      input.poll();
+      if (!wasRunning) sampleMenu(now);
+      pendingPadLoss = false;
+    }
+    if (available && wasRunning && match.status === 'running') {
       if (dt > 0.25) pause();
       else {
         accumulator += dt;
@@ -281,11 +535,12 @@ try {
       theme,
       match.runs.find((r) => !['won', 'lost'].includes(r.status)) || match.runs[0],
     );
-    requestAnimationFrame(frame);
+    updateMenu();
+    frameId = requestAnimationFrame(frame);
   }
   prepare();
   if (new URLSearchParams(location.search).get('focus') === '1') focusBoards(true);
-  requestAnimationFrame(frame);
+  frameId = requestAnimationFrame(frame);
 } catch (error) {
   $('race-message').textContent = `The race could not load: ${error.message}`;
 } finally {
