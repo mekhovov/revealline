@@ -40,7 +40,7 @@ try {
     getJSON('content/classes.json'),
   ]);
   campaign.classRecipes = classRegistry;
-  let buildVersion = '0.1.1',
+  let buildVersion = '0.1.2',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;

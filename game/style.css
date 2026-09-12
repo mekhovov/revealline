@@ -1173,3 +1173,10 @@ dialog .eyebrow {
     height: 44px;
   }
 }
+
+/* Reserve a little more control space in tall tablet-sized desktop windows. */
+@media (min-width: 681px) and (max-width: 1100px) and (min-height: 901px) {
+  .arena-panel {
+    max-width: min(100%, calc((100svh - 400px) * 1.333333));
+  }
+}
