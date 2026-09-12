@@ -9,7 +9,7 @@ const id = (v) => typeof v === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.t
 const object = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Validate data without mutating it. Unknown presentation metadata is ignored. */
-function validateShape(level, encounterBranch = false, wideBranch = false) {
+function validateShape(level, encounterBranch = false, wideBranch = false, classicBranch = false) {
   const width = wideBranch ? 72 : 48,
     height = 36;
   const errors = [];
@@ -236,6 +236,8 @@ function validateShape(level, encounterBranch = false, wideBranch = false) {
             number(value[1], value[0], 7200),
           'rules.timeMedals must be [goldSeconds,silverSeconds]',
         );
+      else if (classicBranch && key === 'stopOnCapture')
+        check(typeof value === 'boolean', 'rules.stopOnCapture must be boolean');
       else
         check(
           Object.hasOwn(ranges, key) &&
@@ -316,7 +318,7 @@ export function validateLevel(level) {
             ),
         }
       : owned;
-    const result = validateShape(shape, !wide || owned.encounter !== null, wide);
+    const result = validateShape(shape, !wide || owned.encounter !== null, wide, classic);
     if (!result.valid) return result;
     if (classic) {
       if ((owned.enemies ?? []).length > 24) throw new TypeError('at most 24 enemies');
@@ -330,6 +332,7 @@ export function validateLevel(level) {
             .map((enemy) => ({ ...enemy, type: 'bouncer' })),
         },
         false,
+        true,
         true,
       );
       if (!actors.valid) return actors;

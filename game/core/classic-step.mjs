@@ -288,7 +288,15 @@ function world(state, input, hooks) {
       if (failure.kind !== 'mission-timeout') hooks.recover(state, failure);
       interrupted = true;
     } else if (!recovering) {
-      if (trace.closure !== null && trace.closure <= elapsed + EPS) commitCapture(state);
+      if (trace.closure !== null && trace.closure <= elapsed + EPS) {
+        commitCapture(state);
+        if (state.rules.stopOnCapture === true) {
+          blocked = true;
+          state.player.speed = 0;
+          state.player.queuedDirection = null;
+          state.events.push({ type: 'capture.stopped', tick: state.tick, time: state.time });
+        }
+      }
       collect(state, hits, elapsed);
       if (trace.stop !== null && trace.stop <= elapsed + EPS) {
         blocked = true;
