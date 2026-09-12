@@ -1,3 +1,5 @@
+import { attachModalNavigation } from './modal-navigation.mjs';
+
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
   document: doc = globalThis.document,
@@ -5,11 +7,14 @@ export function attachGameShell({
   canContinue,
   initial = true,
   onFeatured,
+  getTopDialog,
 } = {}) {
   const $ = (id) => doc.getElementById(id);
   const home = $('shell-home'),
     missions = $('shell-missions');
   if (!home || !missions) return null;
+  const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
+  const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const deck = doc.querySelector('.flight-deck');
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
@@ -76,7 +81,7 @@ export function attachGameShell({
   const keydown = (event) => {
     if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey) return;
     if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-    const dialog = [...doc.querySelectorAll('dialog[open]')].at(-1);
+    const dialog = topDialog();
     if (!dialog || !event.target?.closest?.('button,a')) return;
     const controls = [...dialog.querySelectorAll('button,a,select,input,summary')].filter(
       (element) =>
@@ -93,5 +98,12 @@ export function attachGameShell({
   };
   doc.addEventListener('keydown', keydown);
   if (initial) openHome();
-  return { openHome, openMissions, destroy: () => doc.removeEventListener('keydown', keydown) };
+  return {
+    openHome,
+    openMissions,
+    destroy() {
+      doc.removeEventListener('keydown', keydown);
+      modalNavigation?.destroy();
+    },
+  };
 }

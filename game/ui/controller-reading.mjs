@@ -1,4 +1,4 @@
-/** Bind the two first-party reading surfaces. The navigation adapter owns
+/** Bind the finite first-party reading surfaces. The navigation adapter owns
  * scrolling/focus; this host layer owns visible controls and the pause boundary. */
 export function attachControllerReading({
   document: doc = globalThis.document,
@@ -7,10 +7,12 @@ export function attachControllerReading({
   getScope,
   pause = () => {},
   onTransition = () => {},
+  additionalSurfaces = [],
 } = {}) {
   const definitions = [
     ['overlay-reading', 'overlay-read', 'Mission details', 'overlay-reading-unit'],
     ['mission-brief-reading', 'mission-brief-read', 'Mission brief', 'mission-brief-unit'],
+    ...additionalSurfaces,
   ];
   const surfaces = definitions.map(([id, entryId, label, unitId]) => {
     const surface = {

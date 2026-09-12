@@ -14,6 +14,7 @@ export function attachControllerNavigation({
   onMenu = () => {},
   onHint = () => {},
   onReadingChange = () => {},
+  onNativeInput = () => {},
 } = {}) {
   let scope = null,
     root = null,
@@ -201,11 +202,19 @@ export function attachControllerNavigation({
       return;
     }
     relinquish();
+    onNativeInput(event);
   });
   listen('pointercancel', () => {
     if (reading) relinquish();
   });
-  listen('keydown', relinquish);
+  listen('keydown', (event) => {
+    if ((reading || editing) && event.key === 'Escape' && !event.defaultPrevented) {
+      event.preventDefault();
+      if (reading) endReading();
+      else cancelEdit('Choice cancelled.');
+    } else relinquish();
+    onNativeInput(event);
+  });
   listen('focusin', (event) => {
     if (focusing) return;
     if (reading && event.target !== reading.region)

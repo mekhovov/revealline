@@ -10,10 +10,12 @@ const pack = JSON.parse(
 const frames = (page, count) => {
   for (let i = 0; i < count; i++) page.frame();
 };
-async function setup(t, index) {
+async function setup(t, index, { stopOnCapture } = {}) {
   const page = await soloPage(t),
     candidate = structuredClone(pack);
   candidate.campaigns[0].levels = [candidate.campaigns[0].levels[index]];
+  if (stopOnCapture !== undefined)
+    candidate.campaigns[0].levels[0].rules.stopOnCapture = stopOnCapture;
   page.$('library-button').click();
   page.$('pack-json').value = JSON.stringify(candidate);
   page.$('install-pack').click();
@@ -29,6 +31,40 @@ async function setup(t, index) {
   assert.equal(page.rendered.run.ruleset, 'xonix-core.v5');
   return page;
 }
+
+for (const turnPolicy of ['immediate', 'grid-center'])
+  test(`${turnPolicy}: capture stops the actual host before another substep and saved Resume stays stopped`, async (t) => {
+    const page = await setup(t, 0, { stopOnCapture: true });
+    page.change('turn-select', turnPolicy);
+    page.$('start-button').click();
+    page.key('ArrowDown');
+    for (let n = 0; n < 700 && page.rendered.run.claimedCount === 0; n++) frames(page, 1);
+    const run = page.rendered.run;
+    assert.ok(run.claimedCount > 0);
+    assert.equal(run.status, 'running');
+    const position = [run.player.x, run.player.y];
+    page.frame(200);
+    assert.deepEqual([run.player.x, run.player.y], position);
+    assert.equal(run.player.speed, 0);
+    assert.equal(run.player.queuedDirection, null);
+    assert.match(page.$('run-message').textContent, /Tap a direction to fly again/);
+    page.$('pause-button').click();
+    const saved = JSON.parse(page.storage.getItem('revealline.suspended.dev.v1'));
+    assert.equal(saved.continuation.direction, null);
+    assert.equal(verifyReplay(saved.replay).match, true);
+    page.$('continue-saved').click();
+    await settle(() => !page.$('continue-saved').disabled, 'stopped session restored');
+    page.frame(0);
+    page.$('start-button').click();
+    frames(page, 8);
+    assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], position);
+    page.key('ArrowDown', false);
+    page.key('ArrowLeft');
+    page.key('ArrowLeft', false);
+    frames(page, 12);
+    assert.ok(page.rendered.run.player.x < position[0]);
+    assert.deepEqual(page.errors, []);
+  });
 
 test('actual classic host explains a life pickup, retains timed effects through pause/load, and explicitly resumes saved movement', async (t) => {
   const page = await setup(t, 0);

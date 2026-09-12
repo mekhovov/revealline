@@ -242,6 +242,41 @@ export function attachSoundtrackPanel({
   const stopAuditionButton = button('stop-audition', 'Finish audition', () =>
     playback(() => stopAudition(true)),
   );
+  const auditionSeek = input('audition-seek', 'Audition position', {
+    type: 'range',
+    min: '0',
+    max: '0',
+    step: '0.5',
+  });
+  const auditionVolume = input('audition-volume', 'Audition volume', {
+    type: 'range',
+    min: '0',
+    max: '1',
+    step: '0.05',
+  });
+  const toggleAudition = button('toggle-audition', 'Pause audition', () =>
+    playback(async () => {
+      if (!auditionURL || disposed || busy) return;
+      const token = auditionToken;
+      if (!audition.paused) audition.pause();
+      else {
+        await beforeAudio();
+        if (disposed || token !== auditionToken || !auditionURL) return;
+        try {
+          await audition.play();
+        } catch (error) {
+          if (token === auditionToken) throw error;
+        }
+      }
+    }),
+  );
+  const auditionControls = section(
+    'Audition controls',
+    row(toggleAudition),
+    auditionSeek.field,
+    auditionVolume.field,
+  );
+  auditionControls.hidden = true;
   const tracksSection = section(
     'Music library',
     node(
@@ -263,6 +298,7 @@ export function attachSoundtrackPanel({
     row(applyTrack, deleteTrack),
     row(auditionButton, stopAuditionButton),
     audition,
+    auditionControls,
   );
   const playlistsSelect = input('playlists', 'Playlists', { tag: 'select', size: '5' });
   const playlistTitle = input('playlist-title', 'Playlist title', { maxlength: '120' });
@@ -885,6 +921,23 @@ export function attachSoundtrackPanel({
     await onPlayback({ playing: state.playing, desired: state.desired ?? state.playing });
     if (state.playing) await onAudioEnabled();
   }
+  function updateAudition() {
+    const available = auditionURL !== null && !disposed;
+    auditionControls.hidden = !available;
+    toggleAudition.disabled = !available || busy;
+    toggleAudition.textContent = audition.paused ? 'Resume audition' : 'Pause audition';
+    const duration =
+      Number.isFinite(audition.duration) && audition.duration > 0 ? audition.duration : 0;
+    auditionSeek.element.max = String(duration);
+    auditionSeek.element.disabled = !available || busy || !duration;
+    auditionVolume.element.disabled = !available || busy;
+    if (doc.activeElement !== auditionSeek.element)
+      auditionSeek.element.value = String(
+        Number.isFinite(audition.currentTime) ? audition.currentTime : 0,
+      );
+    if (doc.activeElement !== auditionVolume.element)
+      auditionVolume.element.value = String(Number.isFinite(audition.volume) ? audition.volume : 1);
+  }
   function update(snapshot = player.snapshot()) {
     if (disposed) return;
     now.textContent = `${snapshot.track?.title ?? 'No track selected'}${snapshot.track?.artist ? ` · ${snapshot.track.artist}` : ''} · ${snapshot.status} · ${seconds(snapshot.positionSeconds)} / ${seconds(snapshot.durationSeconds)}${snapshot.pendingPlaylistId ? ' · playlist update queued' : ''}${snapshot.notice ? ` · ${snapshot.notice}` : ''}${snapshot.error ? ` · ${snapshot.error}` : ''}`;
@@ -894,6 +947,7 @@ export function attachSoundtrackPanel({
     seek.element.disabled = !snapshot.track || !(snapshot.durationSeconds > 0);
     if (doc.activeElement !== volume.element) volume.element.value = String(snapshot.volume ?? 0.5);
     stopAuditionButton.disabled = auditionURL === null;
+    updateAudition();
   }
   async function open() {
     if (disposed) return;
@@ -934,7 +988,11 @@ export function attachSoundtrackPanel({
     )
       return;
     const controls = [...dialog.querySelectorAll('button,input,select,audio')].filter(
-      (element) => !element.disabled && !element.hidden,
+      (element) =>
+        !element.disabled &&
+        !element.hidden &&
+        !element.closest?.('[hidden],[inert]') &&
+        (typeof element.getClientRects !== 'function' || element.getClientRects().length > 0),
     );
     const at = controls.indexOf(doc.activeElement);
     const delta = ['ArrowLeft', 'ArrowUp'].includes(event.key) ? -1 : 1;
@@ -951,6 +1009,34 @@ export function attachSoundtrackPanel({
       player.setVolume(value);
       await onVolume(value);
     });
+  auditionSeek.element.onchange = () =>
+    playback(() => {
+      const value = Number(auditionSeek.element.value),
+        duration = audition.duration;
+      if (
+        !auditionURL ||
+        busy ||
+        !Number.isFinite(duration) ||
+        duration <= 0 ||
+        !Number.isFinite(value)
+      )
+        return;
+      audition.currentTime = Math.max(0, Math.min(duration, value));
+    });
+  auditionVolume.element.oninput = () => {
+    const value = Number(auditionVolume.element.value);
+    if (auditionURL && !busy && Number.isFinite(value))
+      audition.volume = Math.max(0, Math.min(1, value));
+  };
+  for (const type of [
+    'loadedmetadata',
+    'durationchange',
+    'timeupdate',
+    'play',
+    'pause',
+    'volumechange',
+  ])
+    listen(audition, type, updateAudition);
   listen(audition, 'ended', () => {
     void playback(() => stopAudition(true));
   });
