@@ -332,9 +332,10 @@ function addPublicEntries(entries, info) {
   ];
   const landing = entries.find((e) => e.name === 'site/index.html');
   if (landing) {
+    const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
     const rendered = landing.bytes
       .toString()
-      .replaceAll('__REVEALLINE_VERSION__', html(info.version))
+      .replaceAll('__REVEALLINE_VERSION__', html(displayVersion))
       .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
       .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"');
     entries.splice(entries.indexOf(landing), 1);
