@@ -641,9 +641,17 @@
         <p id="suspended-status">No suspended attempt.</p>
         <div class="overlay-actions">
           <button id="resume-save" class="button primary">Load suspended attempt</button
-          ><button id="export-session" class="button secondary">Export attempt</button
+          ><button
+            id="export-session"
+            class="button secondary"
+            aria-describedby="attempt-export-source"
+          >
+            Export saved attempt</button
+          ><button id="cancel-attempt-export" class="button secondary" hidden disabled>
+            Cancel export</button
           ><button id="export-library" class="button secondary">Export player library</button>
         </div>
+        <p id="attempt-export-source" class="micro-note"></p>
         <p>
           Player library files contain campaign progress, picture records, local scores and
           preferences. Attempt files contain a verified unfinished flight. Install matching

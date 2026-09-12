@@ -32,6 +32,7 @@ const fileText = async (file, max = 32 * 1024 * 1024) => {
 
 export function attachLibraryPanel(api) {
   let transferPanel = null;
+  let attemptExport = null;
   let previousLibrary = null,
     previousBackup = null,
     busy = false,
@@ -131,6 +132,10 @@ export function attachLibraryPanel(api) {
       ? `Saved flight: ${saved.replay?.level?.name || 'Unknown'} · ${typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'Date unavailable'}`
       : 'No suspended attempt. Use Save & pause during a flight.';
     $('resume-save').disabled = !saved;
+    const exportSource = api.attemptExportSource();
+    $('export-session').textContent = exportSource.label;
+    $('export-session').disabled = busy || exportSource.source === null;
+    $('attempt-export-source').textContent = exportSource.reason;
     $('installed-packs').replaceChildren();
     for (const pack of api.get().packs.packs) {
       const row = document.createElement('article');
@@ -163,10 +168,104 @@ export function attachLibraryPanel(api) {
       );
       $('installed-packs').append(row);
     }
+    if (attemptExport) {
+      for (const control of $('library-dialog').querySelectorAll('button,input,select,textarea'))
+        control.disabled =
+          control !== $('cancel-attempt-export') || attemptExport.phase !== 'verifying';
+    }
   }
   $('library-dialog').addEventListener('cancel', (e) => {
-    if (busy) e.preventDefault();
+    if (cancelAttemptExport() || busy) e.preventDefault();
   });
+  $('library-dialog').addEventListener('close', () => {
+    if (!$('library-dialog').open) endAttemptExport(false);
+  });
+  globalThis.addEventListener?.('pagehide', () => endAttemptExport(false));
+
+  function currentAttemptExport(operation) {
+    return (
+      attemptExport === operation &&
+      !operation.controller.signal.aborted &&
+      $('library-dialog').open
+    );
+  }
+  function endAttemptExport(restoreFocus) {
+    const operation = attemptExport;
+    if (!operation) return;
+    attemptExport = null;
+    operation.controller.abort();
+    busy = false;
+    for (const { element, disabled } of operation.controls)
+      if (element.isConnected) element.disabled = disabled;
+    $('cancel-attempt-export').hidden = true;
+    $('cancel-attempt-export').disabled = true;
+    refresh();
+    if (restoreFocus && $('library-dialog').open && !document.hidden) {
+      const target = $('export-session').disabled ? $('export-library') : $('export-session');
+      target.focus({ preventScroll: true });
+    }
+  }
+  function cancelAttemptExport() {
+    if (!attemptExport || attemptExport.phase !== 'verifying') return false;
+    endAttemptExport(true);
+    status('save-status', 'Export cancelled. The previous copy is unchanged.');
+    return true;
+  }
+  $('cancel-attempt-export').onclick = cancelAttemptExport;
+
+  async function exportAttempt() {
+    if (busy || !$('library-dialog').open) return;
+    const source = api.attemptExportSource();
+    if (source.source === null) {
+      status('save-status', source.reason);
+      return;
+    }
+    const operation = {
+      controller: new AbortController(),
+      phase: 'verifying',
+      controls: [...$('library-dialog').querySelectorAll('button,input,select,textarea')].map(
+        (element) => ({ element, disabled: element.disabled }),
+      ),
+    };
+    attemptExport = operation;
+    busy = true;
+    for (const { element } of operation.controls) element.disabled = true;
+    $('cancel-attempt-export').hidden = false;
+    $('cancel-attempt-export').disabled = false;
+    $('cancel-attempt-export').focus({ preventScroll: true });
+    status(
+      'save-status',
+      `Checking the ${source.source === 'stored' ? 'saved' : 'current'} attempt…`,
+    );
+    try {
+      const prepared = await api.prepareAttemptFile({
+        signal: operation.controller.signal,
+        onProgress: ({ ticks, total }) => {
+          if (currentAttemptExport(operation))
+            status('save-status', `Checking flight inputs: ${ticks} / ${total} ticks…`);
+        },
+      });
+      if (!currentAttemptExport(operation)) return;
+      const text = JSON.stringify(prepared.session, null, 2);
+      prepared.assertCurrent();
+      if (!currentAttemptExport(operation)) return;
+      operation.phase = 'download';
+      $('cancel-attempt-export').hidden = true;
+      $('cancel-attempt-export').disabled = true;
+      $('save-json').value = text;
+      const exported = await downloadJSON(prepared.session, 'revealline-suspended-flight.json');
+      if (!currentAttemptExport(operation)) return;
+      const session = prepared.session;
+      status(
+        'save-status',
+        `${prepared.source === 'stored' ? 'Saved' : 'Current'} attempt prepared: ${session.replay.level.name} · ${session.savedAt.replace('T', ' ').slice(0, 19)}. ${prepared.context === 'replay-only' ? 'Replay verified; the exact matching campaign is still required to resume. ' : ''}${exported.message}`,
+      );
+    } catch (error) {
+      if (currentAttemptExport(operation)) status('save-status', error);
+    } finally {
+      if (attemptExport === operation) endAttemptExport(true);
+    }
+  }
   function backupOptions() {
     return {
       campaigns: [api.base().campaign],
@@ -343,16 +442,7 @@ export function attachLibraryPanel(api) {
       await api.restore(api.saved());
       $('library-dialog').close();
     });
-  $('export-session').onclick = () =>
-    task('save-status', async () => {
-      const s = api.suspend();
-      $('save-json').value = JSON.stringify(s, null, 2);
-      const exported = await downloadJSON(s, 'revealline-suspended-flight.json');
-      status(
-        'save-status',
-        `Unfinished flight prepared with verified-input recovery data. ${exported.message}`,
-      );
-    });
+  $('export-session').onclick = exportAttempt;
   $('install-pack').onclick = () => install($('pack-json').value);
   $('pack-file').onchange = () => {
     const file = $('pack-file').files[0];
@@ -674,5 +764,5 @@ export function attachLibraryPanel(api) {
       target?.focus();
     }
   });
-  return { open, refresh, populateGallery, refreshMasteries };
+  return { open, refresh, populateGallery, refreshMasteries, cancelAttemptExport };
 }
