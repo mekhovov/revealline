@@ -534,6 +534,27 @@
           <p id="layout-readout" class="micro-note">
             Use Play configuration to load the current data.
           </p>
+          <details class="control-geometry">
+            <summary>Control geometry</summary>
+            <p class="micro-note" id="geometry-help">
+              Capture the real solo preview's button boxes and pointer media in CSS pixels. This is
+              a local snapshot, with approximate content-overflow indicators; it is not a hardware
+              or accessibility certification. Using parent controls may pause the game through its
+              existing focus handling.
+            </p>
+            <button
+              id="capture-geometry"
+              class="button"
+              type="button"
+              aria-describedby="geometry-help"
+            >
+              Capture geometry
+            </button>
+            <p id="geometry-status" class="micro-note" role="status">
+              No geometry snapshot captured.
+            </p>
+            <pre id="geometry-readout" tabindex="0" aria-label="Control geometry snapshot"></pre>
+          </details>
           <p class="micro-note">
             Sized frames check layout. They do not emulate iPhone hardware, native touch, Safari or
             controller performance. Open Couch race above for the separate local two-player mode.

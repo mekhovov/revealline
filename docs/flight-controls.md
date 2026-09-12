@@ -1,0 +1,28 @@
+# Flight controls and layout checks
+
+Implemented in the **v0.15.0 working source**; the latest frozen release is **v0.14.0**. The [source browser checks](verification/round-25/source-browser.md) and [packaged-candidate checks](verification/round-25/candidate-browser.md) record the completed bounded layout and interaction passes. This guide describes the current layout and authoring tools, not a published v0.15 release or completed hardware verification. Genuine coarse input, browser text zoom and coordinate-level edge hits were not established; the observed interactions used standard pointer clicks and simulated controller gestures.
+
+Solo play keeps the same buttons, bindings and input behavior. Directions and Stop now share 44px tracks and targets with 4px gaps, forming a 140px cross. Ability, Supply, Boost and the utility buttons also use a 44px minimum. Long labels may wrap and grow a button; they should not force its neighbor out of reach. Hold/Tap steering, keyboard input, controller remapping and [Solo controller Boost](controller-boost.md) work through the same handlers.
+
+On narrow screens, directions and actions use two columns, with utilities below. Short landscape puts a control rail on the left and the board/status on the right. Within that rail, utilities sit beside the ability rows. Both sides share normal document flow, so a long label can increase page height without pushing a fixed strip above the screen or over the board. Scrolling may be needed; the layout does not promise that every status, explanation and control fits above the fold. [Read details](controller-navigation.md) still scrolls its own text and exits without starting or resuming play.
+
+## Capture the real preview geometry
+
+1. Open [Playground](../game/playground/index.html), select a **Solo** preview and choose **Play configuration**. Select a size preset or enter custom dimensions and choose **Apply size**.
+2. Wait for the preview to settle. Compare the requested dimensions with the actual iframe size. Open **Control geometry → Capture geometry**.
+3. Read or copy the visible JSON snapshot. It covers exactly eleven flight buttons, four control groups and the arena. It records child-viewport CSS rectangles, enabled/visible flags, pointer/hover media, scroll position, layout properties, target/arena intersections and approximate content overflow.
+4. Capture again after a size, scroll, label or game-state change. A previous capture is a dated snapshot, not live telemetry. Keep the original capture when comparing a change.
+
+Resizing does not emulate a phone, physical touch, Safari, safe areas or controller hardware. Use the captured media values to describe the browser actually tested. Outer preview scaling and screenshot pixels are separate from child CSS pixels. Using a parent control, including Capture, can blur and pause the game through its existing lifecycle; Resume remains explicit. The diagnostic itself sends no game-state, input or storage commands.
+
+The report is deliberately limited. Positive-area border-box intersections include offscreen targets; touching edges do not count. Visibility does not prove absence of an overlay, ancestor clipping or pointer occlusion. Scroll/client sizes are approximate content-overflow indicators, not glyph-level readability tests. Inspect the picture and perform real pointer hits before claiming a layout is usable. Couch's separate preview is not a solo geometry capture.
+
+## Maintain the shared sizing
+
+[`game/style.css`](../game/style.css) scopes the target and gap variables to `.play-controls`. Keep direction grid tracks and button boxes consistent, the cross and utilities nonshrinking, and the action group flexible with `min-width:0`. Preserve stable DOM nodes, focus order, labels, pointer capture/cancellation and canonical commands. Do not use invisible enlarged hit areas, overlapping targets or another late minimum-size override inside smaller tracks.
+
+Ordinary board caps reserve 360px around desktop play, 380px in the intermediate-width branch, 420px in tall windows and 430px on mobile. The mobile cap uses a 280px floor bounded by the actual available width; desktop retains its applicable 320px minimum. Short landscape uses the left rail/right board grid with a 200px board floor also capped by available width. Sentinel has its existing separate status-aware sizing. Treat these as CSS space allocations, not target dimensions or guarantees that no scrolling occurs; remeasure when nearby content changes.
+
+Prefer measurements and interactions over tests that simply match CSS strings. Check compact portrait, short landscape, desktop and both sides of the width/height breakpoints. Include an 80-character unbroken valid class label, actual long key hints, a stage warning, Toggle cue, loss consequence and successful picture. The scenario importer rejects an 81-character class label. Keyboard hints are finite code labels; change them through visible Settings, not by adding unsupported preferences to a scenario.
+
+Use normal controls to verify direction/Stop hit boundaries, release/cancel behavior, Tap steering, pause/read/Done, Retry and a legal completion in both steering modes. Keep existing replay expectations and progress unchanged. Shared base CSS is also loaded by Couch and the Playground outer page, so keep solo changes scoped; Replay Theater has its own stylesheet. See the [implementation plan](round-25-controls-plan.md) for the matrix and [primary research](round-25-candidate-backlog.md) for the distinction between the WCAG 24px AA minimum, 44px AAA criterion and physical mobile guidance. The 44px choice here is a product baseline, not a claim of universal accessibility conformance or measured comfort.

@@ -1,5 +1,7 @@
 # Round 25 — consistent solo control targets
 
+**Implementation status:** the bounded layout and visible geometry diagnostic are now implemented in the v0.15.0 working source. The sections below retain the accepted pre-edit baseline, risks and requested matrix; their old fixed-strip, board-reserve and aggregate-diagnostic descriptions are historical, not the final CSS. See [Flight controls](flight-controls.md) for current behavior and the [source](verification/round-25/source-browser.md) and [candidate](verification/round-25/candidate-browser.md) reports for completed observations. Genuine coarse input, browser text zoom and coordinate-level edge hits remain unestablished. v0.14.0 remains the latest frozen release at this review.
+
 Implementation plan for the [accepted candidate](round-25-candidate-backlog.md), prepared on 12 September 2026 while v0.14 frozen verification finishes. This document implements nothing and changes no historical evidence. The bounded goal is a consistent, non-overlapping **44×44 CSS-pixel minimum for the existing solo flight buttons**, with usable group reflow. There is no new setting, mirrored layout, input mode, schema or simulation behavior.
 
 ## Baseline before any CSS edit
@@ -70,6 +72,8 @@ Avoid new tests that merely grep CSS or duplicate token values. Read-only geomet
 
 ## Delivery scope
 
-Expected implementation ownership is `game/style.css`, with a minimal `game/index.html` edit only if observed layout requires one. Add a short player/maintainer note and exact browser evidence after behavior exists. No change to core, bindings, preferences, library, session/replay/pack versions, maps, music, assets, couch/Theater logic or frozen releases is needed. Keep CSS selectors narrow because other pages share some class names.
+Expected implementation ownership is `game/style.css`, with a minimal `game/index.html` edit only if observed layout requires one. Independent review also accepted a visible, bounded **Control geometry → Capture geometry** diagnostic in Playground. It measures existing child-page DOM through the Playground's own same-origin preview code and presents text/JSON to the author; it does not modify game state or simulate pointer capabilities. Per-target rectangles, enabled/visible flags, viewport/media results, overlaps and conservative overflow indicators supplement the existing rounded readouts. The capture identifies its time and viewport so an earlier sample cannot be mistaken for a live measurement. This is reusable authoring functionality, not private browser inspection or a test-only state hook.
+
+Add a short player/maintainer note and exact browser evidence after behavior exists. No change to core, bindings, preferences, library, session/replay/pack versions, maps, music, assets, couch/Theater logic or frozen releases is needed. Keep CSS selectors narrow because Couch and the Playground outer page also import the solo stylesheet.
 
 The [candidate research](round-25-candidate-backlog.md) distinguishes WCAG 2.5.8 AA's 24px minimum from WCAG 2.5.5 AAA's 44px criterion and XAG 107's physical mobile guidance. This plan chooses 44px as a product target, not a universal legal or accessibility-conformance claim. Physical reach, comfort, assistive-device behavior and enjoyment remain unmeasured unless actual corresponding evidence is recorded. The user's standing instruction is autonomous iteration; this layout work does not add a human approval or playtest gate.
