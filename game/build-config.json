@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "entry": "game/index.html",
+  "include": [
+    "game",
+    "authoring/motion-lab/animation.mjs",
+    "authoring/motion-lab/render-character.mjs",
+    "authoring/motion-lab/presets.json",
+    "authoring/motion-lab/assets"
+  ]
+}

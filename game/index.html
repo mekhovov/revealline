@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#112d35" />
+    <title>Reveal / Line — First Signal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="./"
+        ><span class="brand-mark" aria-hidden="true">◩</span> REVEAL
+        <span class="slash">/</span> LINE</a
+      >
+      <nav>
+        <a href="playground/">Playground ↗</a
+        ><button id="help-button" class="text-button" type="button">How to play</button
+        ><span id="version" class="version">v0.1.0</span>
+      </nav>
+    </header>
+    <main>
+      <div class="edition">
+        <span id="theme-caption">FPV FRONT / DAWN OVER HOME</span
+        ><span id="mode-caption">FIRST SIGNAL · 01 / 08</span>
+      </div>
+      <div class="game-layout">
+        <section class="arena-panel" aria-label="Game">
+          <div class="telemetry">
+            <div class="coverage">
+              <span>REVEALED</span><strong id="coverage">0.0<small>%</small></strong>
+              <div class="meter"><i id="coverage-bar"></i><b id="goal-marker"></b></div>
+              <em id="target">TARGET 45%</em>
+            </div>
+            <div><span>LIVES</span><strong id="lives" aria-label="3 lives">◆ ◆ ◆</strong></div>
+            <div><span>TIME</span><strong id="time">0:00</strong></div>
+            <div><span id="score-label">SCORE</span><strong id="score">00000</strong></div>
+          </div>
+          <div id="arena-shell" class="arena-shell">
+            <div
+              id="game-canvas"
+              tabindex="0"
+              role="application"
+              aria-label="Territory capture game. Arrow keys or WASD move. E uses an ability, R picks up supplies. Escape pauses."
+            ></div>
+            <div id="game-overlay" class="game-overlay">
+              <div class="overlay-card">
+                <p id="overlay-eyebrow" class="eyebrow">MISSION 01 / FIRST SIGNAL</p>
+                <h1 id="overlay-title">Clear a path.<br />Reveal a world.</h1>
+                <p id="overlay-copy">
+                  Leave the blue border, draw a line and return to safety. Reveal the side without
+                  an enemy.
+                </p>
+                <div id="result-medals" class="result-medals" hidden></div>
+                <div class="overlay-actions">
+                  <button id="start-button" class="button primary" type="button">
+                    Start mission <span>↗</span></button
+                  ><button id="next-button" class="button primary" type="button" hidden>
+                    Next mission →</button
+                  ><button id="retry-button" class="button secondary" type="button" hidden>
+                    Try again
+                  </button>
+                </div>
+                <p id="overlay-footnote" class="overlay-footnote">
+                  A short first flight · arrows / WASD · touch controls below
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flight-status">
+            <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
+            ><span id="objective-state">Close a line to reveal the picture</span>
+          </div>
+          <div class="play-controls">
+            <div class="direction-controls" aria-label="Direction controls">
+              <button type="button" data-move="up" aria-label="Move up">↑</button
+              ><button type="button" data-move="left" aria-label="Move left">←</button
+              ><button type="button" id="stop-button" aria-label="Stop moving">■</button
+              ><button type="button" data-move="right" aria-label="Move right">→</button
+              ><button type="button" data-move="down" aria-label="Move down">↓</button>
+            </div>
+            <div class="ability-buttons">
+              <button id="action-button" class="button ability" type="button">
+                Scan <kbd>E</kbd></button
+              ><button id="pickup-button" class="button secondary" type="button">
+                Supply <kbd>R</kbd></button
+              ><button
+                id="boost-button"
+                class="button secondary"
+                type="button"
+                aria-pressed="false"
+                title="Hold to boost. With Tap steering enabled, tap to toggle."
+              >
+                Boost <kbd>Shift</kbd>
+              </button>
+              <span id="ability-state">Ready</span>
+            </div>
+            <div class="utility-buttons">
+              <button
+                id="pause-button"
+                class="icon-button"
+                type="button"
+                aria-label="Pause or resume"
+              >
+                Ⅱ</button
+              ><button
+                id="restart-button"
+                class="icon-button"
+                type="button"
+                aria-label="Restart mission"
+              >
+                ↻</button
+              ><button
+                id="sound-button"
+                class="icon-button"
+                type="button"
+                aria-label="Enable sound"
+                aria-pressed="false"
+              >
+                ♫
+              </button>
+            </div>
+          </div>
+          <p id="run-message" class="run-message" role="status">
+            Your first route: fly down from the marked start to the opposite border.
+          </p>
+          <div class="minor-controls">
+            <label><input id="tap-steering" type="checkbox" /> Tap steering</label
+            ><label><input id="reduced-effects" type="checkbox" /> Reduced effects</label
+            ><button id="demo-button" class="text-button" type="button">Watch first cut</button
+            ><span id="input-status">Keyboard / touch</span>
+          </div>
+          <p id="save-warning" class="warning" role="status" hidden></p>
+          <p id="asset-warning" class="warning" role="status" hidden></p>
+        </section>
+        <aside class="flight-deck" aria-label="Mission and loadout">
+          <div class="deck-heading">
+            <span>FLIGHT DECK</span><span id="campaign-progress">00 / 08</span>
+          </div>
+          <label class="field">World<select id="theme-select"></select></label>
+          <div class="loadout-grid">
+            <label class="field">Class<select id="class-select"></select></label
+            ><label class="field"
+              >Steering<select id="turn-select">
+                <option value="immediate">Immediate</option>
+                <option value="grid-center">Grid + buffer</option>
+              </select></label
+            >
+          </div>
+          <p id="class-description" class="class-description"></p>
+          <p id="world-legend" class="micro-note"></p>
+          <label class="field">Character appearance<select id="body-select"></select></label>
+          <p id="loadout-note" class="micro-note">
+            Loadout changes start a fresh attempt. Appearance changes stay cosmetic.
+          </p>
+          <div class="section-line">
+            <span>CAMPAIGN / FIRST SIGNAL</span
+            ><button id="collection-button" class="text-button" type="button">Collection</button>
+          </div>
+          <div id="missions" class="missions"></div>
+          <div class="deck-footer">
+            <p>Find your line.</p>
+            <span>Small moves. Bigger possibilities.</span>
+          </div>
+        </aside>
+      </div>
+      <footer class="page-footer">
+        <span id="footer-note">Original game study · configurable worlds</span>
+        <nav>
+          <a data-source-only href="../authoring/motion-lab/">Motion lab</a
+          ><a data-source-only href="../docs/concepts/round-09-reference-atlas.html"
+            >Reference atlas</a
+          ><a data-source-only href="../releases/">Versions</a
+          ><button id="export-replay" class="text-button" type="button">Export replay</button>
+        </nav>
+      </footer>
+    </main>
+    <dialog id="help-dialog">
+      <button class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button>
+      <p class="eyebrow">THE SHORT VERSION</p>
+      <h2>Make the next cut count.</h2>
+      <ol>
+        <li>Blue ground is safe from field enemies. Leaving it begins a vulnerable gold line.</li>
+        <li>Return to blue ground to close the cut. Regions without a field enemy are revealed.</li>
+        <li>
+          Enemies on both sides can leave only your line captured. Use that line to begin another
+          cut.
+        </li>
+        <li>
+          A field enemy touching your line, or crossing your own line, costs a life. Border patrols
+          can also hit you on the outer edge.
+        </li>
+        <li>
+          Reach the coverage target and capture any required gold objectives. The clock is for
+          optional medals; it never ends your run.
+        </li>
+      </ol>
+      <p>
+        <strong>Controls:</strong> arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.
+        Touch: hold a direction, or enable Tap steering and tap again/■ to stop. Boost uses the same
+        hold/toggle choice. Standard controllers: D-pad/stick, A action, X supply, shoulder boost,
+        Start pause.
+      </p>
+      <p>
+        Each class explains its actual effect in the flight deck. Scout shows current direction
+        hints and hidden objectives; supplies refill charge-based classes. A shield absorbs one
+        contact by safely cancelling the line.
+      </p>
+      <button class="button primary" data-close="help-dialog">Ready to fly →</button>
+    </dialog>
+    <dialog id="collection-dialog">
+      <button class="dialog-close" data-close="collection-dialog" aria-label="Close collection">
+        ×
+      </button>
+      <p class="eyebrow">YOUR FLIGHT LOG</p>
+      <h2>Every line leaves a mark.</h2>
+      <div id="achievements"></div>
+      <p id="collection-note"></p>
+      <button class="button primary" data-close="collection-dialog">Back to the field →</button>
+    </dialog>
+    <script src="vendor/phaser-4.2.1.min.js"></script>
+    <script type="module" src="app.mjs"></script>
+  </body>
+</html>

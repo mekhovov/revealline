@@ -1,0 +1,216 @@
+.workshop {
+  max-width: 1460px;
+  padding-bottom: 40px;
+}
+.workshop-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  margin: 13px 0 20px;
+}
+.workshop-title .eyebrow {
+  color: #6c827a;
+}
+.workshop-title h1 {
+  font-size: 37px;
+  margin-bottom: 12px;
+}
+.workshop-title p {
+  color: var(--muted);
+  font-size: 12px;
+}
+.workshop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.editor-status {
+  padding: 10px 14px;
+  background: #e2e9dc;
+  border-left: 3px solid #6c928c;
+  font: 11px monospace;
+  white-space: pre-wrap;
+}
+.editor-status.error {
+  background: #f1ded1;
+  border-color: #ce876e;
+}
+.editor-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 490px) minmax(0, 1fr);
+  gap: 35px;
+  margin-top: 24px;
+}
+.editor-panel {
+  min-width: 0;
+}
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.settings-row.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.settings-row.seed-row {
+  align-items: center;
+}
+.seed-row .button {
+  margin-top: 3px;
+}
+.brushes {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.brushes button,
+.viewport-buttons button {
+  border: 1px solid #b3c3b8;
+  padding: 8px 11px;
+  background: #f9f8f1;
+  color: var(--ink);
+  border-radius: 2px;
+  font-size: 11px;
+}
+.brushes button[aria-pressed='true'],
+.viewport-buttons button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+#map-editor {
+  width: 100%;
+  aspect-ratio: 4/3;
+  display: block;
+  background: var(--ink);
+  cursor: crosshair;
+  image-rendering: pixelated;
+  touch-action: none;
+  border: 1px solid var(--line);
+}
+.file-button {
+  position: relative;
+  overflow: hidden;
+  font-size: 11px;
+  cursor: pointer;
+}
+.file-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+.file-button:focus-within {
+  outline: 3px solid #b98c3a;
+}
+.asset-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.asset-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.asset-card {
+  width: 86px;
+  min-width: 0;
+  font: 9px monospace;
+  overflow-wrap: anywhere;
+}
+.asset-card img {
+  display: block;
+  width: 86px;
+  height: 65px;
+  object-fit: contain;
+  background: #18313b;
+  margin-bottom: 5px;
+}
+.preview-panel {
+  min-width: 0;
+}
+.preview-panel > .section-line {
+  margin-top: 0;
+  padding-top: 0;
+  border: 0;
+}
+.viewport-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+#preview-stage {
+  margin: auto;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 10px 40px #13313a20;
+  max-width: 100%;
+}
+#preview-frame {
+  border: 0;
+  display: block;
+  transform-origin: top left;
+  background: var(--paper);
+}
+details {
+  border-top: 1px solid var(--line);
+  padding: 15px 0;
+  font-size: 12px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+details p {
+  font-size: 11px;
+  color: var(--muted);
+}
+textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  padding: 10px;
+  font: 10px/1.5 monospace;
+  background: #fcfaf4;
+  color: var(--ink);
+}
+pre {
+  white-space: pre-wrap;
+  font-size: 11px;
+  max-height: 260px;
+  overflow: auto;
+}
+@media (max-width: 850px) {
+  .workshop-title {
+    display: block;
+  }
+  .workshop-actions {
+    margin-top: 20px;
+  }
+  .editor-grid {
+    grid-template-columns: 1fr;
+  }
+  .editor-panel {
+    max-width: 580px;
+    width: 100%;
+    margin: auto;
+  }
+  .preview-panel {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .workshop-title h1 {
+    font-size: 30px;
+  }
+  .workshop-actions .button {
+    font-size: 10px;
+  }
+  .settings-row.three {
+    gap: 7px;
+  }
+}

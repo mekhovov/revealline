@@ -1,0 +1,1057 @@
+:root {
+  --paper: #f5f1e6;
+  --ink: #112d35;
+  --muted: #647b7c;
+  --line: #cad0c6;
+  --accent: #e9c46a;
+  --safe: #81b5bf;
+  --danger: #f08168;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font:
+    14px/1.5 'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button,
+a,
+input,
+select {
+  touch-action: manipulation;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #ba832d;
+  outline-offset: 3px;
+}
+[hidden] {
+  display: none !important;
+}
+.masthead {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1392px;
+  margin: auto;
+  padding: 0 36px;
+  border-bottom: 1px solid var(--line);
+}
+.wordmark {
+  font-weight: 800;
+  font-size: 21px;
+  letter-spacing: -0.8px;
+  text-decoration: none;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.brand-mark {
+  font-size: 29px;
+  color: #5f8587;
+}
+.slash {
+  font-weight: 400;
+  color: #8ca49c;
+}
+.masthead nav,
+.page-footer nav {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  font-size: 12px;
+}
+.version {
+  font:
+    10px 'SFMono-Regular',
+    Consolas,
+    monospace;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 4px 7px;
+}
+main {
+  max-width: 1336px;
+  margin: auto;
+  padding: 24px 24px 0;
+}
+.edition,
+.deck-heading,
+.section-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font:
+    10px/1.4 'SFMono-Regular',
+    Consolas,
+    monospace;
+  letter-spacing: 1.4px;
+}
+.edition {
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 286px;
+  gap: 32px;
+  align-items: start;
+}
+.arena-panel {
+  width: 100%;
+  max-width: min(100%, calc((100svh - 273px) * 1.333333));
+  margin: 0 auto;
+}
+.telemetry {
+  height: 68px;
+  display: grid;
+  grid-template-columns: 1.65fr 1fr 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.telemetry > div {
+  border-left: 1px solid var(--line);
+  padding-left: 14px;
+}
+.telemetry > div:first-child {
+  border: 0;
+  padding-left: 0;
+  position: relative;
+}
+.telemetry span {
+  display: block;
+  font: 9px monospace;
+  letter-spacing: 1.3px;
+  color: var(--muted);
+}
+.telemetry strong {
+  display: block;
+  font:
+    22px/1.25 'SFMono-Regular',
+    Consolas,
+    monospace;
+  margin-top: 5px;
+  letter-spacing: -1px;
+}
+.telemetry small {
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.telemetry #lives {
+  font-size: 15px;
+  letter-spacing: 2px;
+  padding-top: 4px;
+  color: #627f7f;
+}
+.coverage strong {
+  display: inline-block;
+}
+.meter {
+  position: absolute;
+  left: 68px;
+  top: 27px;
+  right: 0;
+  height: 3px;
+  background: #d5dacd;
+}
+.meter i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #507d83;
+  transition: width 0.25s;
+}
+.meter b {
+  position: absolute;
+  top: -3px;
+  width: 1px;
+  height: 9px;
+  background: var(--ink);
+}
+.coverage em {
+  display: block;
+  font: 8px monospace;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.arena-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #102831;
+  box-shadow: 0 18px 35px #16353e1c;
+  border: 1px solid #344e50;
+  isolation: isolate;
+}
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  outline-offset: 4px;
+}
+#game-canvas canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  image-rendering: pixelated;
+}
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0b2328e8, #0d2936bb);
+  color: #f3eddb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 2;
+}
+.overlay-card {
+  max-width: 450px;
+  width: 100%;
+}
+.eyebrow {
+  font: 9px/1.6 monospace;
+  letter-spacing: 1.8px;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+h1 {
+  font-size: clamp(25px, 3.5vw, 48px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -1.8px;
+  margin: 0 0 20px;
+}
+#overlay-copy {
+  max-width: 370px;
+  color: #bacbcc;
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0 0 23px;
+}
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.button {
+  border: 1px solid #a1b4ad;
+  background: transparent;
+  color: var(--ink);
+  border-radius: 2px;
+  padding: 11px 17px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 43px;
+}
+.primary {
+  background: var(--accent);
+  color: #233234;
+  border-color: var(--accent);
+}
+.secondary {
+  background: #ffffff35;
+}
+.overlay-actions .secondary {
+  color: #eff2e8;
+  border-color: #617e7f;
+  background: #173a4359;
+}
+.overlay-footnote {
+  font: 9px/1.6 monospace;
+  color: #9cb3b3;
+  margin: 20px 0 0;
+}
+.result-medals {
+  font-size: 26px;
+  letter-spacing: 5px;
+  color: var(--accent);
+  margin-bottom: 17px;
+}
+.flight-status {
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+  font: 9px monospace;
+  color: var(--muted);
+}
+.flight-status > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.flight-status strong {
+  font-weight: 400;
+}
+.flight-status i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #6e9691;
+}
+.play-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.direction-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+  grid-template-rows: repeat(3, 28px);
+  gap: 3px;
+}
+.direction-controls button {
+  border: 1px solid #bbc8be;
+  background: #e7ece1;
+  color: var(--ink);
+  border-radius: 3px;
+  font: 19px monospace;
+  padding: 0;
+}
+.direction-controls [data-move='up'] {
+  grid-column: 2;
+}
+.direction-controls [data-move='left'] {
+  grid-row: 2;
+}
+.direction-controls #stop-button {
+  grid-row: 2;
+  font-size: 9px;
+}
+.direction-controls [data-move='right'] {
+  grid-row: 2;
+}
+.direction-controls [data-move='down'] {
+  grid-column: 2;
+  grid-row: 3;
+}
+.direction-controls button.pressed,
+#boost-button.pressed {
+  background: var(--ink);
+  color: var(--paper);
+}
+.ability-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.ability {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  min-width: 110px;
+}
+kbd {
+  font: 9px monospace;
+  opacity: 0.65;
+}
+.ability-buttons > span {
+  width: 100%;
+  font: 9px monospace;
+  color: var(--muted);
+}
+.utility-buttons {
+  display: flex;
+  gap: 5px;
+}
+.icon-button {
+  width: 34px;
+  height: 35px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: transparent;
+  font-size: 18px;
+}
+.icon-button[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.run-message {
+  font-size: 11px;
+  min-height: 17px;
+  margin: 11px 0 8px;
+  color: #4e6d70;
+}
+.minor-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  font: 9px/1.5 monospace;
+  color: var(--muted);
+  align-items: center;
+}
+.minor-controls label {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.minor-controls input {
+  accent-color: var(--ink);
+}
+.minor-controls > span {
+  margin-left: auto;
+}
+.text-button {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.flight-deck {
+  border-left: 1px solid var(--line);
+  padding-left: 27px;
+}
+.deck-heading {
+  margin-bottom: 22px;
+}
+.deck-heading span:last-child {
+  color: var(--muted);
+}
+.field {
+  display: grid;
+  gap: 5px;
+  font: 10px monospace;
+  color: var(--muted);
+  margin-bottom: 13px;
+}
+.field select,
+.field input {
+  font:
+    12px 'Avenir Next',
+    'Segoe UI',
+    sans-serif;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #b6c4bc;
+  border-radius: 2px;
+  background: #ffffff50;
+  padding: 10px;
+  color: var(--ink);
+  min-height: 39px;
+}
+.loadout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.class-description {
+  font-size: 11px;
+  line-height: 1.6;
+  margin: 0 0 15px;
+  min-height: 36px;
+  color: #587579;
+}
+.micro-note {
+  font-size: 9px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: -3px 0 21px;
+}
+.section-line {
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  margin-bottom: 12px;
+}
+.missions {
+  display: grid;
+  gap: 5px;
+}
+.mission {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  gap: 10px;
+  padding: 9px 10px;
+  background: none;
+  border: 1px solid transparent;
+  color: var(--ink);
+  border-radius: 2px;
+}
+.mission .number {
+  font: 10px monospace;
+  color: var(--muted);
+}
+.mission .name {
+  font-size: 12px;
+  flex: 1;
+}
+.mission .medal {
+  font: 9px monospace;
+  color: #97712c;
+  letter-spacing: 2px;
+}
+.mission.selected {
+  background: #e3e9dc;
+  border-color: #b8c6b7;
+}
+.mission:not(:disabled):hover {
+  background: #e8ebdf;
+}
+.deck-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 22px;
+  padding-top: 18px;
+}
+.deck-footer p {
+  font-size: 21px;
+  letter-spacing: -0.7px;
+  margin: 0;
+}
+.deck-footer span {
+  font-size: 10px;
+  color: var(--muted);
+}
+.page-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 23px 0 19px;
+  margin-top: 20px;
+  border-top: 1px solid var(--line);
+  font: 9px monospace;
+  color: var(--muted);
+}
+.page-footer nav {
+  font: 9px monospace;
+  gap: 15px;
+}
+.warning {
+  font-size: 11px;
+  border-left: 3px solid var(--danger);
+  padding: 8px;
+  background: #edcfb630;
+}
+dialog {
+  border: 1px solid #aebfb2;
+  max-width: min(560px, calc(100vw - 30px));
+  max-height: 85svh;
+  padding: 35px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 30px 100px #0006;
+}
+dialog::backdrop {
+  background: #09202899;
+}
+dialog h2 {
+  font-size: 29px;
+  line-height: 1.15;
+  letter-spacing: -1px;
+  margin-top: 0;
+}
+dialog p,
+dialog li {
+  font-size: 12px;
+  line-height: 1.8;
+}
+dialog li {
+  margin-bottom: 8px;
+}
+dialog .eyebrow {
+  color: #728b80;
+}
+.dialog-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 26px;
+}
+.achievement {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+.achievement strong {
+  font-size: 13px;
+  display: block;
+}
+.achievement span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.achievement:not(.earned) {
+  opacity: 0.5;
+}
+@media (min-width: 1100px) and (min-height: 900px) {
+  .arena-panel {
+    max-width: 850px;
+  }
+  .telemetry {
+    height: 73px;
+  }
+  .masthead {
+    height: 86px;
+  }
+}
+@media (max-width: 1000px) {
+  .game-layout {
+    gap: 22px;
+    grid-template-columns: minmax(0, 1fr) 245px;
+  }
+  .flight-deck {
+    padding-left: 20px;
+  }
+  .arena-panel {
+    max-width: 100%;
+  }
+  .masthead {
+    padding: 0 24px;
+  }
+  .telemetry {
+    gap: 7px;
+  }
+  .telemetry > div {
+    padding-left: 9px;
+  }
+  .telemetry strong {
+    font-size: 19px;
+  }
+  .meter {
+    left: 58px;
+  }
+  .utility-buttons {
+    flex-direction: column;
+  }
+  .play-controls {
+    gap: 8px;
+  }
+  .ability-buttons .button {
+    padding: 9px 12px;
+    min-width: 88px;
+  }
+}
+@media (max-width: 680px) {
+  .masthead {
+    height: 58px;
+    padding: 0 16px;
+  }
+  .wordmark {
+    font-size: 17px;
+    gap: 7px;
+  }
+  .brand-mark {
+    font-size: 24px;
+  }
+  .masthead nav {
+    gap: 12px;
+    font-size: 10px;
+  }
+  .masthead .version {
+    display: none;
+  }
+  main {
+    padding: 17px 16px 0;
+  }
+  .edition {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+  }
+  .game-layout {
+    display: block;
+  }
+  .arena-panel {
+    max-width: 100%;
+  }
+  .telemetry {
+    height: 56px;
+    grid-template-columns: 1.5fr 0.85fr 0.8fr 1fr;
+    gap: 7px;
+  }
+  .telemetry span {
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+  .telemetry strong {
+    font-size: 18px;
+  }
+  .telemetry #lives {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .meter {
+    left: 56px;
+    top: 25px;
+  }
+  .coverage em {
+    font-size: 7px;
+  }
+  .game-overlay {
+    padding: 22px;
+  }
+  h1 {
+    font-size: 30px;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+  }
+  #overlay-copy {
+    font-size: 11px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .eyebrow {
+    font-size: 8px;
+    margin-bottom: 9px;
+  }
+  .overlay-footnote {
+    font-size: 8px;
+    margin-top: 13px;
+  }
+  .button {
+    min-height: 42px;
+    font-size: 12px;
+    padding: 10px 13px;
+  }
+  .overlay-actions {
+    gap: 6px;
+  }
+  .flight-status {
+    font-size: 8px;
+    height: 31px;
+  }
+  .flight-status > span:last-child {
+    text-align: right;
+    max-width: 65%;
+  }
+  .direction-controls {
+    grid-template-columns: repeat(3, 34px);
+    grid-template-rows: repeat(3, 30px);
+  }
+  .utility-buttons {
+    flex-direction: column;
+    gap: 3px;
+  }
+  .icon-button {
+    height: 29px;
+    width: 30px;
+    font-size: 15px;
+  }
+  .ability-buttons {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .ability-buttons .button {
+    min-height: 37px;
+    font-size: 11px;
+  }
+  .ability-buttons > span {
+    font-size: 8px;
+  }
+  .run-message {
+    font-size: 10px;
+    min-height: 30px;
+  }
+  .minor-controls {
+    gap: 10px;
+    font-size: 8px;
+  }
+  .minor-controls > span {
+    display: none;
+  }
+  .flight-deck {
+    margin-top: 28px;
+    padding: 23px 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 15px;
+  }
+  .deck-heading,
+  .class-description,
+  .micro-note,
+  .section-line,
+  .missions,
+  .deck-footer {
+    grid-column: 1/-1;
+  }
+  .deck-heading {
+    margin-bottom: 17px;
+  }
+  .loadout-grid {
+    gap: 7px;
+  }
+  .class-description {
+    min-height: 0;
+  }
+  .missions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .mission {
+    padding: 10px 7px;
+    gap: 6px;
+  }
+  .mission .name {
+    font-size: 11px;
+  }
+  .deck-footer {
+    display: none;
+  }
+  .page-footer {
+    display: block;
+    line-height: 1.8;
+  }
+  .page-footer nav {
+    margin-top: 8px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .result-medals {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 350px) {
+  main {
+    padding: 13px 10px 0;
+  }
+  .masthead {
+    padding: 0 10px;
+  }
+  .masthead nav {
+    gap: 8px;
+    font-size: 9px;
+  }
+  .wordmark {
+    font-size: 15px;
+  }
+  .brand-mark {
+    display: none;
+  }
+  .edition {
+    font-size: 7px;
+  }
+  .game-overlay {
+    padding: 16px;
+  }
+  h1 {
+    font-size: 25px;
+  }
+  .overlay-footnote {
+    display: none;
+  }
+  .overlay-actions .button {
+    font-size: 11px;
+  }
+  .telemetry strong {
+    font-size: 16px;
+  }
+  .direction-controls {
+    grid-template-columns: repeat(3, 29px);
+    grid-template-rows: repeat(3, 29px);
+  }
+  .ability-buttons .button {
+    min-width: 89px;
+    padding: 7px 9px;
+  }
+  .flight-deck {
+    column-gap: 9px;
+  }
+  .loadout-grid {
+    grid-template-columns: 1fr;
+  }
+  .missions {
+    gap: 1px;
+  }
+  .mission .medal {
+    letter-spacing: 0;
+  }
+}
+@media (max-height: 500px) and (min-width: 681px) {
+  .masthead {
+    height: 40px;
+  }
+  .masthead .wordmark {
+    font-size: 16px;
+  }
+  .masthead .brand-mark {
+    font-size: 21px;
+  }
+  main {
+    padding: 10px 18px 0;
+  }
+  .edition {
+    margin-bottom: 8px;
+    font-size: 8px;
+  }
+  .game-layout {
+    grid-template-columns: minmax(0, 1fr) 228px;
+    gap: 20px;
+  }
+  .arena-panel {
+    max-width: calc((100svh - 125px) * 1.333333);
+  }
+  .telemetry {
+    height: 40px;
+  }
+  .telemetry span {
+    font-size: 7px;
+  }
+  .telemetry strong {
+    font-size: 16px;
+    margin-top: 2px;
+  }
+  .telemetry #lives {
+    font-size: 11px;
+  }
+  .coverage em {
+    display: none;
+  }
+  .meter {
+    top: 20px;
+  }
+  .flight-status {
+    height: 24px;
+    font-size: 8px;
+  }
+  .flight-deck {
+    max-height: calc(100svh - 83px);
+    overflow: auto;
+    padding-right: 5px;
+  }
+  .deck-heading {
+    margin-bottom: 12px;
+  }
+  .field {
+    margin-bottom: 9px;
+  }
+  .class-description {
+    min-height: 0;
+  }
+  .game-overlay {
+    padding: 22px;
+  }
+  h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  #overlay-copy {
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .overlay-footnote {
+    display: none;
+  }
+  .eyebrow {
+    font-size: 7px;
+    margin-bottom: 8px;
+  }
+  .overlay-actions .button {
+    min-height: 36px;
+    padding: 8px 13px;
+    font-size: 11px;
+  }
+  .play-controls {
+    position: fixed;
+    left: 8px;
+    bottom: 9px;
+    flex-direction: column;
+    border: 0;
+    width: 93px;
+    gap: 5px;
+    padding: 0;
+  }
+  .direction-controls {
+    grid-template-columns: repeat(3, 26px);
+    grid-template-rows: repeat(3, 24px);
+    gap: 2px;
+  }
+  .ability-buttons {
+    gap: 3px;
+    justify-content: center;
+  }
+  .ability-buttons .button {
+    min-height: 28px;
+    min-width: 84px;
+    padding: 4px;
+    font-size: 10px;
+  }
+  .ability-buttons > span {
+    font-size: 7px;
+    text-align: center;
+  }
+  .utility-buttons {
+    flex-direction: row;
+  }
+  .icon-button {
+    width: 27px;
+    height: 26px;
+  }
+  .arena-panel {
+    margin-right: 0;
+  }
+  .minor-controls,
+  .run-message,
+  .page-footer {
+    display: none;
+  }
+  .result-medals {
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Keep held touch controls independent from page scrolling. */
+.direction-controls button,
+#boost-button {
+  touch-action: none;
+}

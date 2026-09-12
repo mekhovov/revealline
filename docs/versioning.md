@@ -19,7 +19,7 @@ For a separate browser origin and isolated origin-scoped saves, serve one versio
 node scripts/game-cli.mjs serve --root releases/v0.1.0/site --port 8771
 ```
 
-Open [that version](http://127.0.0.1:8771/game/). Two paths on the same host and port still share an origin; merely nesting versions under different paths does not guarantee storage isolation. Do not import study fixtures or old saves into production progress without an explicit compatible migration.
+Open [that version](http://127.0.0.1:8771/game/). Two paths on the same host and port still share an origin. This game separates campaign save keys by development/release channel, build version, campaign ID and campaign revision. Use distinct labels for frozen versions. Separate ports add origin isolation for all browser storage, including the practice pack transfer. Do not import study fixtures or old saves into production progress without an explicit compatible migration.
 
 ## What is frozen
 
