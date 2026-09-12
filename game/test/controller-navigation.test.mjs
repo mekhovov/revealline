@@ -1283,6 +1283,109 @@ test('real remapped router drives reading repeats and gates held buttons/sticks 
   assert.equal(h.calls.menu, 0, 'Menu exits the reader instead of resuming.');
 });
 
+test('held Retry Confirm cannot leave the loss reader or leak ability and Toggle Boost into flight', (t) => {
+  for (const confirmButton of [0, 5]) {
+    const config = resolveControllerBindings();
+    config.menu.buttons.confirm = confirmButton;
+    const pad = {
+      index: 0,
+      id: 'Retry boundary standard pad',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false })),
+    };
+    let reads = 0,
+      samples = 0,
+      scope = 'lost:retry',
+      retryClicks = 0;
+    const router = createControllerRouter({
+      bindings: config,
+      boostMode: 'toggle',
+      eventTarget: null,
+      readPads: () => {
+        reads++;
+        return [pad];
+      },
+    });
+    t.after(() => router.destroy());
+    const h = setup(t, { onReadingChange: () => router.clear() });
+    h.setScope(scope);
+    const surface = readingSurface(h);
+    const retry = h.control('button', { textContent: 'Retry' });
+    h.setDefault(retry);
+    retry.addEventListener('click', () => {
+      retryClicks++;
+      // Exercise the host's existing input-clear/scope contract, not a game run.
+      router.clear();
+      h.api.clear();
+      scope = 'flight';
+      h.setScope(scope);
+    });
+    const sample = () => {
+      const frame = router.sample({ scope, timeMs: ++samples * 16 });
+      if (frame.status.code === 'joined') h.api.engage();
+      h.api.handle(frame.ui);
+      assert.equal(reads, samples, 'Navigation must not perform a second hardware read.');
+      return frame;
+    };
+    const neutral = () => {
+      pad.buttons.forEach((button) => {
+        button.pressed = false;
+      });
+      return sample();
+    };
+    sample();
+    pad.buttons[0].pressed = true;
+    assert.equal(sample().status.code, 'joined');
+    assert.equal(h.document.activeElement, retry);
+    assert.equal(retryClicks, 0, 'Joining must not activate the default Retry action.');
+    neutral();
+    pad.buttons[12].pressed = true;
+    sample();
+    assert.equal(h.document.activeElement, surface.origin);
+    neutral();
+    pad.buttons[confirmButton].pressed = true;
+    sample();
+    assert.ok(h.api.readingState());
+    assert.equal(sample().status.code, 'waiting-neutral');
+    assert.ok(h.api.readingState(), 'Held entry Confirm must not also end reading.');
+    neutral();
+    pad.buttons[confirmButton].pressed = true;
+    sample();
+    assert.equal(h.api.readingState(), null);
+    assert.equal(h.document.activeElement, surface.origin);
+    assert.equal(sample().status.code, 'waiting-neutral');
+    assert.equal(retryClicks, 0, 'The reader exit and its held continuation cannot retry.');
+    assert.equal(h.calls.back + h.calls.menu, 0);
+    neutral();
+    pad.buttons[13].pressed = true;
+    sample();
+    assert.equal(h.document.activeElement, retry);
+    neutral();
+    pad.buttons[confirmButton].pressed = true;
+    assert.deepEqual(sample().flight, neutralControllerFlight());
+    assert.equal(retryClicks, 1);
+    assert.equal(scope, 'flight');
+    for (let held = 0; held < 4; held++) {
+      const frame = sample();
+      assert.equal(frame.status.code, 'waiting-neutral');
+      assert.deepEqual(frame.flight, neutralControllerFlight());
+      assert.equal(retryClicks, 1, 'The held Retry gesture activates its DOM handler once.');
+      assert.deepEqual(router.boostState(), { mode: 'toggle', latched: false });
+    }
+    assert.deepEqual(neutral().flight, neutralControllerFlight());
+    pad.buttons[confirmButton].pressed = true;
+    const fresh = sample();
+    assert.deepEqual(fresh.flight, {
+      ...neutralControllerFlight(),
+      [confirmButton === 0 ? 'action' : 'boost']: true,
+    });
+    assert.deepEqual(router.boostState(), { mode: 'toggle', latched: confirmButton === 5 });
+    assert.equal(retryClicks, 1, 'A fresh flight gesture does not activate the old Retry button.');
+  }
+});
+
 test('reopening changed content starts at the top while unchanged content keeps its reading position', (t) => {
   const h = setup(t),
     surface = readingSurface(h);

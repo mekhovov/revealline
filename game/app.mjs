@@ -2,6 +2,7 @@ import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
+import { retryExplanation } from './ui/retry-view.mjs';
 import { attachInput } from './ui/input.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
@@ -136,7 +137,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.13.0',
+  let buildVersion = '0.14.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -1390,6 +1391,8 @@ try {
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
     show('result-medals', kind === 'won');
+    show('retry-consequence', false);
+    $('retry-consequence').textContent = '';
     const newAppearance = kind === 'won' && !practice && appearanceRewardIds.length > 0;
     show('appearance-unlock', newAppearance);
     show('choose-appearance', newAppearance);
@@ -1451,12 +1454,19 @@ try {
           : 'Try another class, or return for a clean, faster route.';
     }
     if (kind === 'lost') {
+      const explanation = retryExplanation(run, { practice });
       $('overlay-title').textContent = 'A new line awaits.';
-      $('overlay-copy').textContent =
-        `${run.failureCause === 'mission-timeout' ? 'The mission clock ran out. ' : run.failureCause === 'cut-timeout' ? 'Your live line stayed open too long. ' : run.failureCause === 'cable-limit' ? 'Your cable budget ran out. ' : ''}You revealed ${(run.coverage * 100).toFixed(1)}%. Watch the danger, choose your cut and try again.`;
+      $('overlay-copy').textContent = [
+        explanation?.reason,
+        `You revealed ${(run.coverage * 100).toFixed(1)}%.`,
+        explanation?.tip,
+      ]
+        .filter(Boolean)
+        .join(' ');
       $('retry-button').textContent = 'Try again ↻';
-      $('overlay-footnote').textContent =
-        'Retries start immediately. Previous campaign progress is kept.';
+      $('retry-consequence').textContent = explanation?.footnote || '';
+      show('retry-consequence', !!explanation);
+      $('overlay-footnote').textContent = '';
     }
     refreshSavedFlight();
     refreshMastery();
@@ -1916,7 +1926,10 @@ try {
           show('skip-celebration', true);
           show('show-result', false);
           warning('Picture unlocked. A whole world, from one brave line.');
-        } else overlay('lost');
+        } else {
+          overlay('lost');
+          warning('Flight ended. Read the details or try again.');
+        }
       }
     } else {
       pendingAction = false;
