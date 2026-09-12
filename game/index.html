@@ -19,7 +19,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.2.0</span>
+        ><span id="version" class="version">v0.2.1</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -219,7 +219,10 @@
         </li>
       </ol>
       <p>
-        <strong>Controls:</strong> arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.
+        <strong>Keyboard:</strong>
+        <span id="keyboard-help"
+          >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
+        >
         Touch: hold a direction, or enable Tap steering and tap again/■ to stop. Boost uses the same
         hold/toggle choice. Standard controllers: D-pad/stick, A action, X supply, shoulder boost,
         Start pause.
@@ -325,6 +328,33 @@
         Original synthesized music. No streaming, samples, or copyrighted songs. Reduced effects and
         Tap steering are beside the arena.
       </p>
+      <details id="keyboard-settings">
+        <summary>Keyboard controls</summary>
+        <p class="micro-note">
+          Choose a preset or change any action. Keys use physical positions, so W means the W
+          position on a US keyboard. Escape always pauses; Escape or Tab cancels key capture.
+          Keyboard changes affect solo play and its practice preview. Couch players keep their
+          separate controls.
+        </p>
+        <label class="field"
+          >Keyboard preset<select id="key-preset">
+            <option value="default">Arrows + WASD</option>
+            <option value="left-hand">Left hand</option>
+            <option value="right-hand">Right hand</option>
+            <option value="custom" disabled>Custom</option>
+          </select></label
+        >
+        <div id="key-binding-list" class="key-binding-list"></div>
+        <button id="cancel-key-capture" class="button secondary" type="button" hidden>
+          Cancel key capture
+        </button>
+        <button id="reset-key-bindings" class="button secondary" type="button">
+          Restore default keys
+        </button>
+        <p id="key-capture-status" class="micro-note" role="status" aria-live="polite">
+          Select an action to change its key.
+        </p>
+      </details>
       <p id="offline-status" class="micro-note">
         Offline installation is available in packaged releases.
       </p>

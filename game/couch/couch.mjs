@@ -30,9 +30,10 @@ try {
     track: null,
   }));
   try {
-    const saved = await readAssetStore(
-      `revealline.packs.${document.querySelector('meta[name="revealline-offline"]') ? 'release' : 'dev'}.v1`,
-    );
+    const channel = document.querySelector('meta[name="revealline-offline"]')
+      ? `release-${(await json('../build-info.json')).version}`
+      : 'dev';
+    const saved = await readAssetStore(`revealline.packs.${channel}.v1`);
     if (saved) {
       const installed = await importPackLibrary(saved);
       for (const pack of installed.packs)

@@ -6,6 +6,8 @@ Picture celebrations and a persistent gallery reward completed missions. Searcha
 
 ## Run locally
 
+v0.2.1 adds [custom keyboard controls](docs/controls.md), left/right-hand presets and persistent Tap steering. Packaged versions keep separate collections; complete backups transfer progress forward while older versions remain unchanged.
+
 Use a supported Node version: 20.19+ within 20.x, 22.13+ within 22.x, or 24+. Then run from this directory:
 
 ```sh

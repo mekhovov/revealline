@@ -17,6 +17,8 @@ Locate the project from the current workspace or this source skill's project pat
 
 Read the exported functions and current data before selecting names or fields. New primitives, enemy types, save migrations or targeting domains require implemented behavior and tests; arbitrary JSON strings cannot create them. Preserve authored `immediate` and `grid-center` turning, and test both for changes affecting movement, input buffering, dashes or contact order. Cosmetic replacement must leave those mechanics unchanged.
 
+For controls, read `docs/controls.md` and `game/key-bindings.mjs`. Keep mappings separate from simulation rules. Preserve Escape pause, browser/editing shortcuts, unconditional key release, cancellation without partial adoption and visible hints. New preferences require bounded validation, additive migration and portable-backup tests. Archived release profile channels must remain isolated from incompatible new schemas.
+
 For portable saves, local leaderboards and installed campaigns, read [library-and-packs.md](../../../docs/library-and-packs.md). New core results include roster and class-route identities; retain both through rewards and replays. Expansion packs use the runtime `xonix-pack.v1` contract and complete image decoding before atomic installation.
 
 ## Make the requested change reviewable

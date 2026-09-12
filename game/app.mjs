@@ -1,6 +1,8 @@
 import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
 import { attachInput } from './ui/input.mjs';
+import { attachKeySettings } from './ui/key-settings.mjs';
+import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
 import {
@@ -75,7 +77,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.2.0',
+  let buildVersion = '0.2.1',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -95,7 +97,9 @@ try {
     const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
-  const channel = isRelease ? 'release' : 'dev';
+  // Each archived release keeps its own profile schema, packs and save slot.
+  // A portable complete backup transfers progress without changing older versions.
+  const channel = isRelease ? `release-${buildVersion}` : 'dev';
   const libraryKey = `revealline.library.${channel}.v1`;
   const packsKey = `revealline.packs.${channel}.v1`;
   const sessionKey = `revealline.suspended.${channel}.v1`;
@@ -231,7 +235,8 @@ try {
   });
   const mediaReduce = matchMedia('(prefers-reduced-motion: reduce)');
   $('reduced-effects').checked = mediaReduce.matches || library.preferences.reducedEffects;
-  $('tap-steering').checked = matchMedia('(pointer: coarse)').matches;
+  $('tap-steering').checked =
+    library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
   $('music-select').value = library.preferences.musicGenre;
   $('master-volume').value = library.preferences.masterVolume;
   $('music-volume').value = library.preferences.musicVolume;
@@ -262,7 +267,50 @@ try {
     tapMode: () => $('tap-steering').checked,
     active: () => started && !dialogOpen() && !['won', 'lost'].includes(run?.status),
     onGamepad: (message) => ($('input-status').textContent = message),
+    getBindings: () => library.preferences.keyboardBindings,
   });
+  function refreshKeyPrompts() {
+    const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
+    const labels = bindingLabels(bindings);
+    const description = `Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; stop ${labels.stop}; pause ${labels.pause}.`;
+    $('keyboard-help').textContent = description;
+    $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
+    for (const [id, action] of [
+      ['action-button', 'ability'],
+      ['pickup-button', 'pickup'],
+      ['boost-button', 'boost'],
+    ]) {
+      $(id).querySelector('kbd').textContent = keyLabel(bindings.bindings[action][0])
+        .replace('Left ', 'L ')
+        .replace('Right ', 'R ');
+      $(id).querySelector('kbd').title = labels[action];
+    }
+    $('hangar-button').textContent = `Change craft · ${labels.hangar}`;
+    $('stop-button').title = `Stop moving · ${labels.stop}`;
+    for (const button of document.querySelectorAll('[data-move]'))
+      button.title = `Move ${button.dataset.move} · ${labels[button.dataset.move]}`;
+    if (!started)
+      $('overlay-footnote').textContent =
+        `Move with your configured keys · ${labels.ability} ability · ${labels.pickup} supply · touch controls below`;
+  }
+  const keySettings = attachKeySettings({
+    getBindings: () => library.preferences.keyboardBindings,
+    setBindings: (value) => {
+      preferences({ keyboardBindings: value });
+      return saveSucceeded && !practice
+        ? { ok: true }
+        : {
+            ok: false,
+            warning:
+              'Keys changed for this session. Export your library to retain session-only preferences.',
+          };
+    },
+    onChanged: () => {
+      clearInput();
+      refreshKeyPrompts();
+    },
+  });
+  window.addEventListener('pagehide', () => keySettings.destroy(), { once: true });
   function clearInput() {
     pendingAction = false;
     pendingPickup = false;
@@ -496,6 +544,10 @@ try {
     $('settings-grid').checked = p.showGrid;
     $('match-class-appearance').checked = p.matchClassAppearance;
     $('reduced-effects').checked = p.reducedEffects;
+    $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+    keySettings.refresh();
+    clearInput();
+    refreshKeyPrompts();
     sound.configure?.({
       style: p.musicGenre,
       master: p.masterVolume,
@@ -639,7 +691,7 @@ try {
   };
   document.addEventListener('keydown', (e) => {
     if (
-      e.key.toLowerCase() === 'g' &&
+      actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), e) === 'hangar' &&
       !e.repeat &&
       !e.ctrlKey &&
       !e.metaKey &&
@@ -891,8 +943,7 @@ try {
         ? 'Test this authored configuration in the real game engine. Practice does not change your campaign collection.'
         : missionBrief();
       $('start-button').textContent = 'Start mission ↗';
-      $('overlay-footnote').textContent =
-        'Arrows / WASD · E ability · R supply · touch controls below';
+      refreshKeyPrompts();
     }
     if (kind === 'pause') {
       $('overlay-title').textContent = 'Take a breath.';
@@ -1318,7 +1369,10 @@ try {
       warning('Audio could not start in this browser.');
     }
   };
-  $('tap-steering').onchange = () => clearInput();
+  $('tap-steering').onchange = () => {
+    clearInput();
+    preferences({ tapSteering: $('tap-steering').checked });
+  };
   $('help-button').onclick = () => {
     pause(true);
     $('help-dialog').showModal();
@@ -1374,6 +1428,7 @@ try {
   setTheme();
   refreshCampaigns();
   prepare();
+  refreshKeyPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
       this.boardTexture = this.textures.createCanvas('field', 768, 576);
