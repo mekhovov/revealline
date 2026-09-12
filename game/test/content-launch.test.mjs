@@ -114,11 +114,22 @@ test('landing and game expose wired pack and level selectors with exact first-mi
   assert.match(landing, /id="landing-level-select"/);
   assert.match(game, /id="pack-select"/);
   assert.match(game, /id="level-select"/);
+  const cards = [
+    ...landing.matchAll(/<article\b[^>]*class="[^"]*\bpack-card\b[^"]*"[^>]*>[\s\S]*?<\/article>/g),
+  ].map(([markup]) => markup);
+  assert.equal(cards.length, catalog.packs.length);
   for (const pack of catalog.packs) {
     const campaign = pack.campaigns[0];
     const level = campaign.levels[0];
     const encoded = `pack=${pack.id}&amp;campaign=${campaign.id}&amp;level=${level.id}&amp;play=1`;
-    assert.ok(landing.includes(encoded), `${pack.name} card must launch its first mission`);
+    const matching = cards.filter((card) => card.includes(`href="./game/?${encoded}"`));
+    assert.equal(matching.length, 1, `${pack.name} must have one real first-mission launch card`);
+    assert.ok(matching[0].includes(`<h3>${pack.name}</h3>`));
+    const route = resolvePackLaunch(new URLSearchParams(encoded.replaceAll('&amp;', '&')), catalog);
+    assert.equal(route.packId, pack.id);
+    assert.equal(route.campaignId, campaign.id);
+    assert.equal(route.levelId, level.id);
+    assert.equal(route.play, true);
   }
 });
 
