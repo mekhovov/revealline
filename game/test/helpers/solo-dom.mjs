@@ -169,6 +169,7 @@ export async function soloPage(
     fetchJSON,
     audio,
     soundtrackIndexedDB,
+    rendering,
   } = {},
 ) {
   const doc = new SoloDocument(),
@@ -206,6 +207,18 @@ export async function soloPage(
         if (name === 'src') element.src = '';
       };
       audioElements.push(element);
+      return element;
+    };
+  }
+  if (rendering) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => {
+      const element = createElement(tag);
+      if (tag.toLowerCase() === 'canvas') {
+        // Real Phaser textures are detached canvases: their CSS width is zero.
+        element.clientWidth = 0;
+        element.getContext = () => rendering.contextFor(element);
+      }
       return element;
     };
   }
@@ -280,15 +293,20 @@ export async function soloPage(
         constructor(config) {
           scene = new config.scene();
           scene.textures = {
-            createCanvas: (id, width, height) => ({
-              context: {},
-              width,
-              height,
-              setSize(w, h) {
-                this.width = w;
-                this.height = h;
-              },
-            }),
+            createCanvas: (id, width, height) => {
+              const canvas = doc.createElement('canvas');
+              canvas.width = width;
+              canvas.height = height;
+              return {
+                context: rendering ? canvas.getContext('2d') : {},
+                width,
+                height,
+                setSize(w, h) {
+                  this.width = canvas.width = w;
+                  this.height = canvas.height = h;
+                },
+              };
+            },
           };
           scene.add = {
             image: () => ({
@@ -301,6 +319,7 @@ export async function soloPage(
           scene.game = { canvas: doc.createElement('canvas') };
           scene.game.canvas.width = config.width;
           scene.game.canvas.height = config.height;
+          if (rendering) scene.game.canvas.clientWidth = rendering.displayCSSWidth ?? config.width;
           scene.scale = {
             resize(width, height) {
               scene.game.canvas.width = width;
@@ -314,6 +333,7 @@ export async function soloPage(
       },
     },
   };
+  if (rendering?.Image) globals.Image = rendering.Image;
   if (audio) {
     globals.AudioContext = function () {
       return audio.context;
@@ -345,12 +365,15 @@ export async function soloPage(
     'draw',
   ]) {
     methods.set(key, BoardPainter.prototype[key]);
-    BoardPainter.prototype[key] =
-      key === 'draw'
-        ? (_context, run, _dt, options) => {
-            rendered = { run, ...options };
-          }
-        : () => {};
+    if (key === 'draw') {
+      BoardPainter.prototype[key] = function (context, run, dt, options) {
+        rendered = { run, ...options };
+        if (rendering) {
+          methods.get('draw').call(this, context, run, dt, options);
+          rendering.onDraw?.({ painter: this, context, run, dt, options });
+        }
+      };
+    } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(async () => {
     win.emit('pagehide', { persisted: false });

@@ -383,3 +383,23 @@ test('the larger player keeps direction response and animated rotors while pause
   assert.equal(p.bank, 0);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
 });
+
+test('explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks', () => {
+  const { p, s, run } = playerFixture({ css: 600 });
+  const span = (displayCSSWidth) => {
+    s.calls.length = 0;
+    p.draw(s.ctx, run, 0, { paused: true, displayCSSWidth });
+    const call = s.calls.find((c) => c.op === 'drawImage' && c.args[0] === p.image);
+    return Math.max(call.args[3], call.args[4]) * 16;
+  };
+  const direct = span(undefined),
+    checkpoint = authoritativeCheckpoint(run);
+  for (const invalid of [null, 0, -1, NaN, Infinity, '306']) assert.equal(span(invalid), direct);
+  const override = span(306);
+  assert.ok(override > direct);
+  s.ctx.canvas.clientWidth = 0;
+  assert.equal(span(306), override, 'detached texture uses the host-provided display width');
+  for (const invalid of [undefined, null, 0, -1, NaN, Infinity, '306'])
+    assert.equal(span(invalid), 32, 'unmeasured render targets retain the logical-width fallback');
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+});
