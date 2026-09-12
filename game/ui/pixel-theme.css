@@ -642,10 +642,21 @@ dialog::backdrop {
   }
 }
 
-@media (max-width: 360px) and (max-height: 700px) {
+@media (max-width: 680px) and (max-height: 740px) {
   .game-shell .flight-status {
     display: none;
   }
+}
+@media (max-width: 680px) and (max-height: 620px) {
+  .game-shell .play-controls {
+    gap: 4px;
+    padding-top: 6px;
+  }
+  .game-shell .encounter-status {
+    margin-block: 4px;
+  }
+}
+@media (max-width: 360px), (max-width: 680px) and (max-height: 740px) {
   .game-shell .encounter-status {
     font-size: 15px;
     line-height: 1.2;
