@@ -316,6 +316,12 @@ h1 {
   line-height: 1.65;
   margin: 0 0 23px;
 }
+#retry-consequence {
+  color: #bacbcc;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
 .overlay-actions {
   display: flex;
   flex-wrap: wrap;
