@@ -39,7 +39,9 @@ export function attachLibraryPanel(api) {
     viewGeneration = 0,
     returnToCollection = true;
   let galleryPage = 0,
-    scorePage = 0;
+    scorePage = 0,
+    galleryReturn = null;
+  const galleryCards = new Map();
   const galleryPainter = new BoardPainter(api.get().presets);
   function open(panel = 'scores') {
     api.pause();
@@ -426,6 +428,7 @@ export function attachLibraryPanel(api) {
     if (accept() && canvas.isConnected) galleryPainter.drawGallery(canvas.getContext('2d'), args);
   }
   function populateGallery() {
+    galleryCards.clear();
     $('gallery-grid').replaceChildren();
     const worlds = new Map(
       api.catalog().map((entry) => [campaignKey(entry.campaign), entry.themes]),
@@ -458,6 +461,7 @@ export function attachLibraryPanel(api) {
       card.disabled = !picture;
       card.onclick = () => openPicture(picture);
       $('gallery-grid').append(card);
+      galleryCards.set(item.key, card);
       if (picture)
         drawPicture(canvas, picture).catch(() => {
           copy.textContent = 'Picture could not decode. Reinstall its pack.';
@@ -473,6 +477,12 @@ export function attachLibraryPanel(api) {
     });
   }
   async function openPicture(picture) {
+    if (!picture || !$('collection-dialog').open) return;
+    galleryReturn = {
+      key: picture.item.key,
+      page: galleryPage,
+      query: $('gallery-search').value,
+    };
     const generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
     returnToCollection = true;
@@ -546,12 +556,29 @@ export function attachLibraryPanel(api) {
     galleryFrame = requestAnimationFrame(frame);
   };
   $('gallery-view-dialog').addEventListener('close', () => {
+    // A queued close from an earlier view must not disturb a newly opened picture.
+    if ($('gallery-view-dialog').open) return;
     cancelAnimationFrame(galleryFrame);
     viewGeneration++;
     view = null;
+    const origin = galleryReturn;
+    galleryReturn = null;
     if (returnToCollection) {
+      if (origin) {
+        galleryPage = origin.page;
+        $('gallery-search').value = origin.query;
+      }
       populateGallery();
-      $('collection-dialog').showModal();
+      if (!$('collection-dialog').open) $('collection-dialog').showModal();
+      // populateGallery replaces every card. Resolve the current node by the
+      // stable picture key instead of keeping a detached originating button.
+      const target = [
+        galleryCards.get(origin?.key),
+        ...galleryCards.values(),
+        $('gallery-search'),
+        ...$('collection-dialog').querySelectorAll('button'),
+      ].find((element) => element?.isConnected && !element.disabled && !element.hidden);
+      target?.focus();
     }
   });
   return { open, refresh, populateGallery };

@@ -18,7 +18,10 @@ export function attachInput({
   active = () => true,
   onGamepad = () => {},
   getBindings = () => null,
+  readControllerCommand = null,
 }) {
+  if (readControllerCommand !== null && typeof readControllerCommand !== 'function')
+    throw new TypeError('readControllerCommand must be a function.');
   const held = new Map(),
     buttons = new Map(),
     captures = new Map(),
@@ -33,7 +36,8 @@ export function attachInput({
     padBoost = false,
     action = false,
     pickup = false,
-    padWas = false,
+    selectedPad = null,
+    padDisconnected = false,
     lastPause = false,
     blockedPad = false,
     destroyed = false;
@@ -153,6 +157,10 @@ export function attachInput({
   listen(window, 'keydown', down);
   listen(window, 'keyup', up);
   listen(window, 'blur', clear);
+  if (!readControllerCommand)
+    listen(window, 'gamepaddisconnected', (event) => {
+      if (selectedPad && selectedPad.index === event.gamepad?.index) padDisconnected = true;
+    });
   for (const b of padButtons) {
     listen(b, 'pointerdown', (e) => {
       if (!active() || (e.button !== undefined && e.button !== 0)) return;
@@ -273,28 +281,75 @@ export function attachInput({
   }
   const poll = () => {
     if (destroyed) return neutral();
-    let pad;
-    try {
-      pad = [...(navigator.getGamepads?.() || [])].find(
-        (p) => p?.connected && p.mapping === 'standard',
-      );
-    } catch {}
-    if (!!pad !== padWas) {
-      if (padWas) {
+    let cmd;
+    if (readControllerCommand) {
+      let supplied;
+      try {
+        supplied = readControllerCommand();
+      } catch {}
+      cmd = {
+        direction: ['up', 'right', 'down', 'left'].includes(supplied?.direction)
+          ? supplied.direction
+          : null,
+        boost: supplied?.boost === true,
+        action: supplied?.action === true,
+        pickup: supplied?.pickup === true,
+        pause: supplied?.pause === true,
+        stop: supplied?.stop === true,
+        hangar: supplied?.hangar === true,
+      };
+    } else {
+      let pads = [];
+      try {
+        pads = [...(navigator.getGamepads?.() || [])]
+          .map((pad, index) => ({
+            pad,
+            index: pad?.index ?? index,
+            signature: JSON.stringify([
+              pad?.id ?? '',
+              pad?.mapping,
+              pad?.buttons?.length,
+              pad?.axes?.length,
+            ]),
+          }))
+          .filter(({ pad }) => pad?.connected && pad.mapping === 'standard');
+      } catch {}
+      const found = selectedPad
+        ? pads.find(
+            (candidate) =>
+              candidate.index === selectedPad.index &&
+              candidate.signature === selectedPad.signature,
+          )
+        : pads[0];
+      if (selectedPad && (!found || padDisconnected)) {
+        selectedPad = null;
+        padDisconnected = false;
         clear();
         onPause(true);
+        onGamepad('Controller disconnected. Release controls before continuing.');
+        return neutral();
       }
-      padWas = !!pad;
-      onGamepad(pad ? 'Standard controller connected' : 'Keyboard / touch');
+      if (found && !selectedPad) {
+        selectedPad = { index: found.index, signature: found.signature };
+        onGamepad('Standard controller connected');
+      }
+      cmd = gamepadCommand(found?.pad);
     }
     if (!active()) {
       clear();
       lastPause = false;
       return neutral();
     }
-    let cmd = gamepadCommand(pad);
     if (blockedPad) {
-      if (!cmd.direction && !cmd.boost && !cmd.action && !cmd.pickup && !cmd.pause)
+      if (
+        !cmd.direction &&
+        !cmd.boost &&
+        !cmd.action &&
+        !cmd.pickup &&
+        !cmd.pause &&
+        !cmd.stop &&
+        !cmd.hangar
+      )
         blockedPad = false;
       cmd = gamepadCommand(null);
     }
@@ -302,6 +357,10 @@ export function attachInput({
       lastPause = true;
       clear();
       onPause();
+      return neutral();
+    }
+    if (cmd.stop) {
+      clear();
       return neutral();
     }
     lastPause = cmd.pause;
