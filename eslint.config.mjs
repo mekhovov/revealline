@@ -15,7 +15,13 @@ export default [
     ],
   },
   {
-    files: ['game/**/*.mjs', 'scripts/**/*.mjs', 'platforms/**/*.{mjs,js}', 'eslint.config.mjs'],
+    files: [
+      'game/**/*.mjs',
+      'scripts/**/*.mjs',
+      'site/**/*.mjs',
+      'platforms/**/*.{mjs,js}',
+      'eslint.config.mjs',
+    ],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
     rules: {
       'no-undef': ['error', { typeof: true }],
@@ -23,7 +29,7 @@ export default [
     },
   },
   {
-    files: ['game/**/*.mjs'],
+    files: ['game/**/*.mjs', 'site/**/*.mjs'],
     ignores: ['game/core/**', 'game/test/**'],
     languageOptions: { globals: globals.browser },
   },
