@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
 import { BoardPainter } from '../ui/render.mjs';
-import { campaignKey, emptyLibrary } from '../library.mjs';
-import { createRun, CLASSES } from '../core/index.mjs';
+import { campaignKey, emptyLibrary, recordLibraryCompletion } from '../library.mjs';
+import { createRun, CLASSES, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
@@ -161,7 +162,7 @@ async function setup(t, count = 30, hostOverrides = {}) {
     goal: { coverage: 0.5 },
   }));
   const entry = {
-    campaign: { id: 'gallery-test', revision: '1', levels },
+    campaign: { version: 'xonix-campaign.v1', id: 'gallery-test', revision: '1', levels },
     themes: [{ id: 'fpv', name: 'FPV Front' }],
     visualOverrides: {},
   };
@@ -313,7 +314,10 @@ test('Replay leaves the collection closed and preserves the host mission focus',
   assert.equal(h.node('gallery-view-dialog').open, false);
   assert.equal(h.node('collection-dialog').open, false);
   assert.equal(h.document.activeElement, h.node('mission-start'));
-  assert.deepEqual(h.selections[0], [h.entry, { levelId: 'picture-3', themeId: 'fpv', seed: 17 }]);
+  assert.deepEqual(h.selections[0], [
+    h.entry,
+    { levelId: 'picture-3', themeId: 'fpv', seed: 17, difficulty: 'standard' },
+  ]);
 });
 
 test('late decoding and a queued old close cannot steal focus from a new picture', async (t) => {
@@ -366,7 +370,7 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.equal(canvas.style.visibility, '');
   assert.equal(canvas.attributes.get('aria-hidden'), 'false');
   assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
   assert.equal(h.node('gallery-replay').disabled, false);
   assert.equal(h.node('gallery-animate').disabled, false);
   assert.deepEqual(h.library, previous);
@@ -412,7 +416,7 @@ test('an older rejected decode cannot replace the selected ready picture with an
   failFirst(new Error('Stale first decode failed'));
   await first;
   assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
   assert.equal(h.node('gallery-canvas').style.visibility, '');
   assert.equal(h.node('gallery-animate').disabled, false);
   assert.equal(h.node('gallery-replay').disabled, false);
@@ -437,7 +441,7 @@ test('a failed selected decode keeps stale pixels hidden and can be closed and r
   const retry = h.cards()[1].onclick();
   h.decodeJobs.at(-1)();
   await retry;
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
   assert.equal(h.node('gallery-canvas').style.visibility, '');
   assert.equal(h.node('gallery-replay').disabled, false);
 });
@@ -464,7 +468,7 @@ test('a rejected celebration preparation preserves the ready picture and reports
   await h.node('gallery-animate').onclick();
   assert.equal(attempts, 2);
   assert.equal(h.frames.length, 1, 'A successful retry can start the celebration.');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
   h.node('gallery-replay').onclick();
   assert.equal(h.selections[0][1].levelId, 'picture-0');
 });
@@ -644,7 +648,7 @@ async function homewardCollection(t) {
     runId: 'gallery-local-metadata',
     earnedAt: '2026-09-12T12:00:00.000Z',
   };
-  return { ...h, seal };
+  return { ...h, seal, homewardEntry: entry };
 }
 
 test('a late seal updates an existing focused collection card without repaint or replacement', async (t) => {
@@ -725,4 +729,191 @@ test('late detail refresh keeps foreign records out, labels changed definitions 
   assert.equal(h.node('gallery-view-masteries').hidden, true);
   assert.equal(h.node('gallery-view-masteries').children.length, 0);
   assert.equal(h.document.activeElement, h.node('gallery-replay'));
+});
+
+async function difficultyCollection(t, { count = 1, illustrated = false, saved = null } = {}) {
+  let executions = [];
+  const h = await setup(t, count, { executionCatalog: () => executions, saved: () => saved });
+  h.entry.classRecipes = CLASSES;
+  if (illustrated) h.entry.visualOverrides = { background: { dataUrl: 'fixture-image' } };
+  executions = createExecutionCatalog([h.entry]).entries;
+  h.library.gallery = h.library.gallery.flatMap((row) => [
+    {
+      ...row,
+      key: `${row.key}-gentle`,
+      campaignKey: executions[1].executionKey,
+      score: 200,
+      time: 5,
+    },
+    { ...row, time: 3 },
+  ]);
+  return { ...h, executions };
+}
+
+test('both difficulty records share a card while mode changes preserve focus and Back returns to that card', async (t) => {
+  const h = await difficultyCollection(t, { count: 18 });
+  const before = JSON.stringify(h.library);
+  h.collection();
+  h.search('gentle');
+  h.next();
+  const card = h.cards()[2];
+  await card.onclick();
+  const selector = h.node('gallery-difficulty'),
+    option = selector.children[0];
+  assert.equal(selector.value, 'standard');
+  assert.equal(h.node('gallery-difficulty-field').hidden, false);
+  assert.match(h.node('gallery-view-meta').textContent, /Standard · 100 points · 3.00s/);
+  assert.match(card.children[2].textContent, /Standard: GOLD · 100 points/);
+  selector.focus();
+  selector.value = 'gentle';
+  await selector.onchange();
+  assert.equal(selector.children[0], option);
+  assert.equal(h.document.activeElement, selector);
+  assert.match(h.node('gallery-view-meta').textContent, /Gentle · 200 points · 5.00s/);
+  assert.equal(h.node('gallery-view-dialog').open, true);
+  h.node('gallery-view-dialog').close();
+  assert.equal(h.cards().length, 6);
+  assert.equal(h.document.activeElement, h.cards()[2]);
+  assert.match(h.node('gallery-pages').children[1].textContent, /18 entries · page 2 of 2/);
+  assert.equal(h.node('gallery-search').value, 'gentle');
+  assert.equal(JSON.stringify(h.library), before);
+});
+
+for (const difficulty of ['standard', 'gentle'])
+  test(`picture Replay explicitly selects stored ${difficulty} despite the opposite next-attempt preference`, async (t) => {
+    const h = await difficultyCollection(t);
+    h.library.preferences.campaignDifficulty = difficulty === 'gentle' ? 'standard' : 'gentle';
+    const before = JSON.stringify(h.library);
+    h.collection();
+    await h.cards()[0].onclick();
+    if (difficulty === 'gentle') {
+      h.node('gallery-difficulty').value = 'gentle';
+      await h.node('gallery-difficulty').onchange();
+    }
+    h.node('gallery-replay').onclick();
+    const [entry, options] = h.selections[0];
+    assert.equal(entry.difficulty, difficulty);
+    assert.equal(options.difficulty, difficulty);
+    assert.equal(options.seed, 17);
+    assert.equal(options.levelId, 'picture-0');
+    assert.equal(h.node('collection-dialog').open, false);
+    assert.equal(h.document.activeElement, h.node('mission-start'));
+    assert.equal(JSON.stringify(h.library), before);
+  });
+
+test('rapid difficulty switches retain the latest image generation and keep stale actions blocked', async (t) => {
+  const h = await difficultyCollection(t, { illustrated: true });
+  h.collection();
+  h.decodeJobs[0]();
+  await Promise.resolve();
+  const standard = h.cards()[0].onclick();
+  const selector = h.node('gallery-difficulty');
+  selector.focus();
+  selector.value = 'gentle';
+  const gentle = selector.onchange();
+  selector.value = 'standard';
+  const latest = selector.onchange();
+  const paints = h.paints.length;
+  h.decodeJobs[2]();
+  await gentle;
+  assert.equal(h.paints.length, paints);
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
+  h.decodeJobs[3]();
+  await latest;
+  assert.equal(h.node('gallery-replay').disabled, false);
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  h.decodeJobs[1].reject(new Error('old Standard decode'));
+  await standard;
+  assert.match(h.node('gallery-view-meta').textContent, /Standard · 100 points · 3.00s$/);
+  assert.doesNotMatch(h.node('gallery-view-meta').textContent, /old Standard/);
+  assert.equal(h.document.activeElement, selector);
+});
+
+test('score and saved-attempt mode labels use exact execution keys and searchable separate boards', async (t) => {
+  const saved = { replay: { level: { name: 'Picture 00' } }, savedAt: '2026-09-12T12:00:00.000Z' };
+  const h = await difficultyCollection(t, { saved });
+  saved.campaignKey = h.executions[1].executionKey;
+  let library = emptyLibrary();
+  for (const entry of h.executions) {
+    const run = createRun(entry.campaign.levels[0], {
+      classId: 'scout',
+      classRecipes: entry.classRecipes,
+    });
+    for (let tick = 0; run.status === 'running' && tick < 1000; tick++)
+      stepRun(run, { direction: 'down' }, FIXED_DT);
+    assert.equal(run.status, 'won');
+    library = recordLibraryCompletion(library, {
+      campaign: entry.campaign,
+      result: getSummary(run),
+      runId: `view-${entry.difficulty}`,
+      themeId: 'fpv',
+      bodyId: 'fpv-body',
+      completedAt: saved.savedAt,
+    });
+  }
+  h.setLibrary(library);
+  h.api.open('scores');
+  assert.equal(h.node('scoreboard').children.length, 2);
+  assert.match(h.node('suspended-status').textContent, /Gentle/);
+  h.node('score-search').value = 'gentle';
+  h.node('score-search').oninput();
+  assert.equal(h.node('scoreboard').children.length, 1);
+  assert.match(h.node('scoreboard').children[0].children[1].textContent, /Gentle/);
+  saved.campaignKey = `${saved.campaignKey}0`;
+  h.api.refresh();
+  assert.match(h.node('suspended-status').textContent, /Archived.*unavailable/);
+});
+
+test('a late Standard seal decorates the shared card without appearing on its selected Gentle variant', async (t) => {
+  const h = await homewardCollection(t),
+    entries = createExecutionCatalog([h.homewardEntry]).entries;
+  h.setCatalog(entries);
+  h.library.gallery.push({
+    ...h.library.gallery[0],
+    key: 'gentle-homeward-picture',
+    campaignKey: entries[1].executionKey,
+  });
+  h.api.populateGallery();
+  const card = h.cards()[0];
+  await card.onclick();
+  const selector = h.node('gallery-difficulty');
+  selector.focus();
+  selector.value = 'gentle';
+  await selector.onchange();
+  h.library.masteries.push(h.seal);
+  h.api.refreshMasteries();
+  assert.equal(h.cards().length, 1);
+  assert.equal(card.children[3].textContent, '◇ Steady Signal');
+  assert.equal(h.node('gallery-view-masteries').hidden, true);
+  assert.equal(h.document.activeElement, selector);
+  selector.value = 'standard';
+  await selector.onchange();
+  assert.equal(h.node('gallery-view-masteries').hidden, false);
+  assert.match(h.node('gallery-view-masteries').children[0].textContent, /Steady Signal/);
+});
+
+test('an open picture cannot replay a pack removed after the picture was resolved', async (t) => {
+  const h = await setup(t, 1);
+  h.collection();
+  await h.cards()[0].onclick();
+  h.setCatalog([]);
+  h.node('gallery-replay').onclick();
+  assert.equal(h.selections.length, 0);
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.match(h.node('gallery-view-meta').textContent, /Archived.*exact pack/);
+});
+
+test('a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override', async (t) => {
+  const h = await setup(t, 1),
+    challenge = { ...h.entry, activity: 'challenge' };
+  h.setCatalog([challenge]);
+  h.library.preferences.campaignDifficulty = 'gentle';
+  h.collection();
+  await h.cards()[0].onclick();
+  assert.match(h.node('gallery-view-meta').textContent, /Challenge · 100 points$/);
+  assert.equal(h.node('gallery-difficulty-field').hidden, true);
+  h.node('gallery-replay').onclick();
+  assert.equal(h.selections[0][0], challenge);
+  assert.equal(Object.hasOwn(h.selections[0][1], 'difficulty'), false);
 });
