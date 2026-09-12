@@ -60,6 +60,7 @@ import {
 } from './packs.mjs';
 import {
   canAutoStartPackLaunch,
+  createPackCommitCoordinator,
   createPackLaunchGuard,
   preparePackCatalog,
   resolvePackLaunch,
@@ -223,6 +224,24 @@ try {
   const libraryKey = `revealline.library.${channel}.v1`;
   const packsKey = `revealline.packs.${channel}.v1`;
   const sessionKey = `revealline.suspended.${channel}.v1`;
+  const packCommits = createPackCommitCoordinator({
+    read: () => readAssetStore(packsKey),
+    write: (value) => writeAssetStore(packsKey, value),
+    prepare: async (value) =>
+      prepareContentCatalog(value ? await importPackLibrary(value) : emptyPackLibrary()),
+    adopt: adoptContentCatalog,
+    canAdopt: () => !contentSwitchBusy && !sessionBusy && !document.hidden,
+    onReconciled: () => {
+      refreshCampaigns();
+      libraryPanel.refresh();
+      contentStatus('Pack storage updated; your newer play selection was kept.');
+    },
+    onError: (error) => {
+      const message = `A committed pack change needs a reload before it can appear: ${error.message}`;
+      contentStatus(message, true);
+      warning(message);
+    },
+  });
   const writer = scenario
     ? {
         writable: false,
@@ -238,7 +257,8 @@ try {
   const backupAdapters = () => ({
     storage: localStorage,
     readAsset: readAssetStore,
-    writeAsset: writeAssetStore,
+    writeAsset: (key, value) =>
+      key === packsKey ? packCommits.commit(value) : writeAssetStore(key, value),
     profileKey: libraryKey,
     packsKey,
     sessionKey,
@@ -615,6 +635,7 @@ try {
     $('save-warning').textContent =
       'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
     show('save-warning', true);
+    void packCommits.reconcile();
   });
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
@@ -979,11 +1000,15 @@ try {
     if (error) $('content-select-status').dataset.kind = 'error';
     else delete $('content-select-status').dataset.kind;
   }
-  function invalidateContentSwitch() {
+  function invalidateContentSwitch({ announce = false } = {}) {
+    const interrupted = contentSwitchBusy;
     packLaunchGuard.invalidate();
     contentSwitchBusy = false;
     $('pack-select').disabled = courseSession;
     $('level-select').disabled = courseSession;
+    if (announce && interrupted)
+      contentStatus('Pending pack launch cancelled; your newer play choice is kept.');
+    return interrupted;
   }
   function refreshContentSelectors() {
     const installedIds = new Set(packs.packs.map((pack) => pack.id));
@@ -1106,7 +1131,7 @@ try {
       seed = selectedSeed;
     }
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
-    else invalidateContentSwitch();
+    else invalidateContentSwitch({ announce: true });
     if (!restoreAdoption) cancelRestore();
     themeOverride = !!themeId;
     musicOverride = false;
@@ -1134,54 +1159,65 @@ try {
       $('music-select').value = track.genre;
     } else sound.configure?.({ style: library.preferences.musicGenre });
     refreshCampaigns();
-    prepare({ restoreAdoption });
+    prepare({ restoreAdoption, contentSwitchTicket });
   }
   async function replacePackLibrary(next, { contentSwitchTicket = null } = {}) {
     if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
+    const ownsOperation = !contentSwitchTicket;
     const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
-    const before = packs;
-    packLaunchGuard.assert(operation, before);
-    if (!contentSwitchTicket) {
-      contentSwitchBusy = false;
-      $('pack-select').disabled = courseSession;
-      $('level-select').disabled = courseSession;
+    if (ownsOperation) {
+      packCommits.markIntent();
+      contentSwitchBusy = true;
+      refreshContentSelectors();
     }
-    assertWriter();
-    const content = prepareContentCatalog(next);
-    pause(true);
-    cancelRestore();
-    masteryAwards.cancelAll();
     try {
-      await packLaunchGuard.run(
-        operation,
-        before,
-        () => packs,
-        () => writeAssetStore(packsKey, exportPackLibrary(next)),
-      );
-    } catch (error) {
-      if (!packLaunchGuard.current(operation, packs)) throw error;
-      throw new Error(`Pack storage failed; previous installed packs are kept. ${error.message}`);
+      const before = packs;
+      packLaunchGuard.assert(operation, before);
+      assertWriter();
+      const content = prepareContentCatalog(next);
+      pause(true);
+      cancelRestore();
+      masteryAwards.cancelAll();
+      try {
+        await packCommits.commit(exportPackLibrary(next), {
+          beforeWrite: () => packLaunchGuard.assert(operation, packs),
+        });
+      } catch (error) {
+        if (!packLaunchGuard.current(operation, packs)) throw error;
+        throw new Error(`Pack storage failed; previous installed packs are kept. ${error.message}`);
+      }
+      if (!packLaunchGuard.current(operation, before)) {
+        await packCommits.noteStaleCommit();
+        packLaunchGuard.assert(operation, packs);
+      }
+      adoptContentCatalog(content);
+      packLaunchGuard.advance(operation, before, packs);
+      packCommits.acceptCurrent();
+      if (
+        activeEntry.sourcePackId &&
+        !packs.packs.some((pack) => pack.id === activeEntry.sourcePackId)
+      )
+        selectEntry(baseEntry, { contentSwitchTicket: operation });
+      else if (activeEntry.sourcePackId) {
+        const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
+        selectEntry(
+          resolvePackCampaign(
+            pack,
+            pack.campaigns.some((source) => source.id === campaign.id)
+              ? campaign.id
+              : pack.campaigns[0].id,
+          ),
+          { contentSwitchTicket: operation },
+        );
+      }
+      refreshCampaigns();
+    } finally {
+      if (ownsOperation && packLaunchGuard.current(operation, packs)) {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+        await packCommits.reconcile();
+      }
     }
-    adoptContentCatalog(content);
-    packLaunchGuard.advance(operation, before, packs);
-    if (
-      activeEntry.sourcePackId &&
-      !packs.packs.some((pack) => pack.id === activeEntry.sourcePackId)
-    )
-      selectEntry(baseEntry, { contentSwitchTicket: operation });
-    else if (activeEntry.sourcePackId) {
-      const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
-      selectEntry(
-        resolvePackCampaign(
-          pack,
-          pack.campaigns.some((source) => source.id === campaign.id)
-            ? campaign.id
-            : pack.campaigns[0].id,
-        ),
-        { contentSwitchTicket: operation },
-      );
-    }
-    refreshCampaigns();
   }
   async function ensureBundledPack(packId, operation) {
     const before = packs;
@@ -1212,6 +1248,7 @@ try {
   async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
     cancelRestore();
     const operation = packLaunchGuard.begin(packs);
+    packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
     try {
@@ -1257,6 +1294,7 @@ try {
       if (packLaunchGuard.current(operation, packs)) {
         contentSwitchBusy = false;
         refreshContentSelectors();
+        await packCommits.reconcile();
       }
     }
   }
@@ -1406,6 +1444,7 @@ try {
       sessionBusy = false;
       if (restoreController === controller) restoreController = null;
       refreshSavedFlight();
+      await packCommits.reconcile();
     }
   }
   function adoptPreferences() {
@@ -1518,36 +1557,46 @@ try {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
       invalidateContentSwitch();
-      const content = prepareContentCatalog(prepared.packs);
-      if (!writer.writable) throw new Error(writer.reason);
-      if (!persistenceReady) {
-        const recovered = await recoverBackupImport(backupAdapters());
-        if (!recovered.ok) throw new Error(recovered.warning);
-      } else assertWriter();
-      pause(true);
-      cancelRestore();
-      masteryAwards.cancelAll();
-      const result = await commitBackup(prepared, backupAdapters());
-      if (!result.ok) {
-        if (result.recoveryRequired) persistenceReady = false;
-        throw new Error(result.warning);
+      packCommits.markIntent();
+      contentSwitchBusy = true;
+      refreshContentSelectors();
+      try {
+        const content = prepareContentCatalog(prepared.packs);
+        if (!writer.writable) throw new Error(writer.reason);
+        if (!persistenceReady) {
+          const recovered = await recoverBackupImport(backupAdapters());
+          if (!recovered.ok) throw new Error(recovered.warning);
+        } else assertWriter();
+        pause(true);
+        cancelRestore();
+        masteryAwards.cancelAll();
+        const result = await commitBackup(prepared, backupAdapters());
+        if (!result.ok) {
+          if (result.recoveryRequired) persistenceReady = false;
+          throw new Error(result.warning);
+        }
+        persistenceReady = true;
+        storedStateAdopted = true;
+        saveSucceeded = true;
+        if (result.warning) {
+          $('save-warning').textContent = result.warning;
+          show('save-warning', true);
+        } else show('save-warning', false);
+        library = result.profile.library;
+        libraryBaseline = library;
+        libraryGeneration = result.profile.generation;
+        recovery = null;
+        adoptContentCatalog(content);
+        packCommits.acceptCurrent();
+        selectEntry(baseEntry);
+        adoptPreferences();
+        refreshCampaigns();
+        return result;
+      } finally {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+        await packCommits.reconcile();
       }
-      persistenceReady = true;
-      storedStateAdopted = true;
-      saveSucceeded = true;
-      if (result.warning) {
-        $('save-warning').textContent = result.warning;
-        show('save-warning', true);
-      } else show('save-warning', false);
-      library = result.profile.library;
-      libraryBaseline = library;
-      libraryGeneration = result.profile.generation;
-      recovery = null;
-      adoptContentCatalog(content);
-      selectEntry(baseEntry);
-      adoptPreferences();
-      refreshCampaigns();
-      return result;
     },
     setPacks: replacePackLibrary,
   });
@@ -2096,8 +2145,10 @@ try {
     refreshMastery();
     refreshCourse();
   }
-  function prepare({ restoreAdoption = false } = {}) {
+  function prepare({ restoreAdoption = false, contentSwitchTicket = null } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
+    else invalidateContentSwitch({ announce: true });
     courseEntryHold = false;
     courseEntryMessage = '';
     if (courseSession) coursePhase = 'ready';
@@ -2231,10 +2282,12 @@ try {
     );
     refreshHUD();
   }
-  function resume({ alignCourseBoard = true } = {}) {
+  function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
     if (courseBlocked()) return;
-    cancelRestore();
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
+    else invalidateContentSwitch({ announce: true });
+    cancelRestore();
     clearInput();
     courseEntryHold = false;
     courseEntryMessage = '';
@@ -2850,6 +2903,7 @@ try {
   window.addEventListener('blur', suspendInteraction);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) suspendInteraction();
+    else void packCommits.reconcile();
   });
   setTheme();
   refreshCampaigns();
@@ -2933,7 +2987,7 @@ try {
           expectedLevelId: autoplayPackLaunch.levelId,
         })
       )
-        resume();
+        resume({ contentSwitchTicket: autoplayPackLaunch.ticket });
     });
 } catch (error) {
   $('overlay-title').textContent = 'The game could not load.';
