@@ -19,6 +19,7 @@ class Element {
     this.dataset = {};
     this.children = [];
     this.listeners = new Map();
+    this.captureListeners = new Map();
     this.classes = new Set();
     this.classList = {
       contains: (name) => this.classes.has(name),
@@ -33,16 +34,19 @@ class Element {
     this.children = children;
     this.value = children[0]?.value ?? '';
   }
-  addEventListener(type, callback) {
-    this.listeners.set(type, [...(this.listeners.get(type) ?? []), callback]);
+  addEventListener(type, callback, options) {
+    const listeners = options === true || options?.capture ? this.captureListeners : this.listeners;
+    listeners.set(type, [...(listeners.get(type) ?? []), callback]);
   }
-  removeEventListener(type, callback) {
-    this.listeners.set(
+  removeEventListener(type, callback, options) {
+    const listeners = options === true || options?.capture ? this.captureListeners : this.listeners;
+    listeners.set(
       type,
-      (this.listeners.get(type) ?? []).filter((fn) => fn !== callback),
+      (listeners.get(type) ?? []).filter((fn) => fn !== callback),
     );
   }
   emit(type, event = {}) {
+    for (const callback of this.captureListeners.get(type) ?? []) callback(event);
     for (const callback of this.listeners.get(type) ?? []) callback(event);
   }
   removeAttribute() {}
@@ -166,9 +170,12 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     let direction = null;
     let paused = false;
     let divergent = false;
-    for (const segment of route.segments) {
+    for (const [index, segment] of route.segments.entries()) {
       app.key('keyup', direction);
-      direction = segment.input.direction;
+      // The archived route waited against the top/bottom border with null input.
+      // Continuous flight uses deliberate outward headings at those same borders,
+      // preserving elapsed attack cycles and every original cue/win assertion.
+      direction = segment.input.direction ?? (index === 2 ? 'up' : 'down');
       app.key('keydown', direction);
       for (let n = 0; n < segment.ticks; n++) {
         app.frame();

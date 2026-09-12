@@ -1,5 +1,7 @@
 # RevealLine
 
+**Development:** the approved [phased roadmap](docs/implementation-roadmap.md) is being implemented on `feature/native-game-edition`. The new [continuous steering and game shell](docs/continuous-steering.md) are the first milestone; the published v0.21 described below stays unchanged. Use the roadmap for current progress and pending gates.
+
 A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The public v0.21.0 release includes 29 maps across the base campaign and six installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Homeward Skies and Equipment Workshop provide six original illustrated rewards; the other 23 maps use procedural scenes. Ukrainian FPV Front is the main direction, with Ukrainian heritage, 1990s arcade and fictional spend-management themes using the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.

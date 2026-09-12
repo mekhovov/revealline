@@ -66,7 +66,8 @@ try {
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
-  const sound = new Soundscape();
+  const sound = new Soundscape({ persistentMusic: true });
+  let neutralResumeTick = false;
   const freeBodies = unlockedBodies(emptyProgress(campaign), campaign);
   function bodyFor(theme, classId) {
     const candidate = recommendedBody(theme, classId);
@@ -104,8 +105,9 @@ try {
   let menuRouter, navigation;
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
   $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function clear() {
-    input.clear();
+  function clear({ resetDirection = false } = {}) {
+    if (resetDirection) input.clear();
+    else input.clearPhysical();
     accumulator = 0;
     menuRouter?.clear();
     navigation?.clear();
@@ -113,7 +115,7 @@ try {
     menuHint = '';
   }
   function prepare() {
-    clear();
+    clear({ resetDirection: true });
     const entry = maps.find((m) => m.key === $('race-level').value),
       level = entry.level;
     const classId = entry.classes.some((c) => c.id === $('race-class').value)
@@ -136,7 +138,7 @@ try {
     );
     generation++;
     sound.reset();
-    sound.setTrack(entry.track || DEFAULT_TRACKS[0]);
+    sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, $('race-class').value), entry.visualOverrides);
       p.setLevel?.(level, { seed: 2026 });
@@ -151,7 +153,7 @@ try {
   function pause() {
     sound.pause();
     if (!match || match.status === 'finished') return;
-    pauseDuel(match);
+    pauseDuel(match, { preserveContinuation: true });
     clear();
     if (match.status === 'paused') {
       $('race-start').textContent = 'Resume round →';
@@ -165,7 +167,8 @@ try {
       prepare();
     }
     clear();
-    resumeDuel(match);
+    resumeDuel(match, { preserveContinuation: true });
+    neutralResumeTick = true;
     focusBoards(true);
     sound.resume().catch(() => {});
     $('race-message').textContent = 'Make your line count. First clear wins.';
@@ -220,6 +223,7 @@ try {
   };
   $('race-tap').onchange = clear;
   const input = attachCouchInput({
+    continuousSteering: () => true,
     getGamepads: readCachedPads,
     active: () => match?.status === 'running',
     tapMode: () => $('race-tap').checked,
@@ -387,6 +391,7 @@ try {
   function suspend() {
     if (disposed) return;
     pause();
+    sound.suspend();
     clear();
     framePads = [];
     frameReadError = null;
@@ -457,7 +462,21 @@ try {
         accumulator += dt;
         while (accumulator + 1e-9 >= FIXED_DT && match.status === 'running') {
           const before = match.runs.map((r) => r.tick);
-          stepDuel(match, input.consume());
+          const beforeStatus = match.runs.map((r) => r.status);
+          const commands = input
+            .consume()
+            .map((command, i) =>
+              beforeStatus[i] === 'respawning'
+                ? { direction: null, boost: false, action: false, pickup: false }
+                : neutralResumeTick
+                  ? { ...command, boost: false, action: false, pickup: false }
+                  : command,
+            );
+          stepDuel(match, commands);
+          neutralResumeTick = false;
+          for (let i = 0; i < 2; i++)
+            if (beforeStatus[i] === 'respawning' || match.runs[i].status === 'respawning')
+              input.clearPlayer(i);
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {

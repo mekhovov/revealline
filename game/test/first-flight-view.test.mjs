@@ -143,7 +143,8 @@ test('repeated live updates preserve native selection drafts, focus and host tas
   assert.deepEqual($('step-list').children, stepNodes);
   assert.deepEqual($('select').children, options);
   assert.equal($('task').textContent, 'Host-owned current instruction');
-  assert.match($('controls').textContent, /Stop: <X>/);
+  assert.doesNotMatch($('controls').textContent, /Stop:/);
+  assert.match($('controls').textContent, /Pause: Escape/);
   $('select').emit('change');
   assert.deepEqual(calls, [['select', 'picture-home']]);
   assert.equal(JSON.stringify(model), original);

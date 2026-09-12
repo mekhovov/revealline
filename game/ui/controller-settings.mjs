@@ -25,6 +25,7 @@ export function attachControllerSettings({
   getBindings,
   onApply,
   onBeforeEdit = () => {},
+  continuousSteering = false,
 } = {}) {
   if (
     !container ||
@@ -228,6 +229,8 @@ export function attachControllerSettings({
         },
       );
       buttonSelects.push(select);
+      if (continuousSteering && context === 'flight' && action === 'stop')
+        select.parentElement.hidden = true;
     }
   }
   const sticks = section(

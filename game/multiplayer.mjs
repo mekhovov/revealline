@@ -29,13 +29,13 @@ export function createDuel(level, options = {}, { seconds = 90 } = {}) {
 export function releaseDuel(match) {
   match.runs.forEach(releaseInputs);
 }
-export function pauseDuel(match) {
+export function pauseDuel(match, { preserveContinuation = false } = {}) {
   if (match.status === 'running') match.status = 'paused';
-  releaseDuel(match);
+  if (!preserveContinuation) releaseDuel(match);
 }
-export function resumeDuel(match) {
+export function resumeDuel(match, { preserveContinuation = false } = {}) {
   if (['ready', 'paused'].includes(match.status)) match.status = 'running';
-  releaseDuel(match);
+  if (!preserveContinuation) releaseDuel(match);
 }
 function rankedWinner(runs) {
   const a = runs[0],

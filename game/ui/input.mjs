@@ -16,6 +16,7 @@ export function attachInput({
   onActivity = () => {},
   onClear = () => {},
   tapMode = () => false,
+  continuousSteering = () => false,
   active = () => true,
   onGamepad = () => {},
   getBindings = () => null,
@@ -24,9 +25,14 @@ export function attachInput({
   if (readControllerCommand !== null && typeof readControllerCommand !== 'function')
     throw new TypeError('readControllerCommand must be a function.');
   if (typeof onClear !== 'function') throw new TypeError('onClear must be a function.');
+  if (typeof continuousSteering !== 'function')
+    throw new TypeError('continuousSteering must be a function.');
   const held = new Map(),
     buttons = new Map(),
     captures = new Map(),
+    keysDown = new Set(),
+    pointersDown = new Set(),
+    freshGestures = new WeakSet(),
     listeners = [];
   const padButtons = [...document.querySelectorAll('[data-move]')],
     boostButton = document.querySelector('#boost-button');
@@ -42,11 +48,15 @@ export function attachInput({
     padDisconnected = false,
     lastPause = false,
     blockedPad = false,
+    intentDirection = null,
+    localDirectionPending = false,
+    lastPadDirection = null,
     destroyed = false;
-  const listen = (target, type, fn) => {
+  const continuous = () => continuousSteering() === true;
+  const listen = (target, type, fn, options) => {
     if (target) {
-      target.addEventListener(type, fn);
-      listeners.push(() => target.removeEventListener(type, fn));
+      target.addEventListener(type, fn, options);
+      listeners.push(() => target.removeEventListener(type, fn, options));
     }
   };
   const editing = (el) =>
@@ -55,6 +65,35 @@ export function attachInput({
     );
   const shortcut = (e) => e.ctrlKey || e.metaKey || e.altKey;
   const activation = (e) => e.key === ' ' || e.key === 'Enter';
+  const freshKey = (e) => (continuous() ? freshGestures.has(e) : !e.repeat);
+  // Observe physical edges even while menus/readers own the event. A held key
+  // cannot become a new flight command after a pause, reset or focus transfer.
+  listen(
+    window,
+    'keydown',
+    (e) => {
+      if (!continuous()) return;
+      const code = keyCodeForEvent(e);
+      if (!code) return;
+      if (!e.repeat && !keysDown.has(code)) freshGestures.add(e);
+      keysDown.add(code);
+    },
+    true,
+  );
+  listen(window, 'keyup', (e) => keysDown.delete(keyCodeForEvent(e)), true);
+  listen(
+    window,
+    'pointerdown',
+    (e) => {
+      if (!continuous()) return;
+      if (!pointersDown.has(e.pointerId)) freshGestures.add(e);
+      pointersDown.add(e.pointerId);
+    },
+    true,
+  );
+  const releasePointer = (e) => pointersDown.delete(e.pointerId);
+  listen(window, 'pointerup', releasePointer, true);
+  listen(window, 'pointercancel', releasePointer, true);
   const localBoost = () =>
     boostLatched || [...held.values(), ...buttons.values()].some((value) => value.boost);
   // Native keyboard clicks run in the activation event's task. Release the
@@ -71,8 +110,10 @@ export function attachInput({
     padButtons.forEach((b) =>
       b.classList.toggle(
         'pressed',
-        latched === b.dataset.move ||
-          [...held.values(), ...buttons.values()].some((v) => v.element === b),
+        continuous()
+          ? intentDirection === b.dataset.move
+          : latched === b.dataset.move ||
+              [...held.values(), ...buttons.values()].some((v) => v.element === b),
       ),
     );
     if (boostButton) {
@@ -81,7 +122,9 @@ export function attachInput({
       boostButton.setAttribute('aria-pressed', String(pressed));
     }
   };
-  const clear = () => {
+  // Neither reset touches simulation state. Hosts retain intent for UI/lifecycle
+  // transitions, and use clear() for a new attempt or recovery instead.
+  const clearPhysical = () => {
     const captured = [...captures];
     held.clear();
     buttons.clear();
@@ -92,6 +135,8 @@ export function attachInput({
     action = false;
     pickup = false;
     blockedPad = true;
+    lastPadDirection = null;
+    localDirectionPending = false;
     finishBoostKeyGesture();
     syncPressed();
     for (const [id, element] of captured)
@@ -103,11 +148,29 @@ export function attachInput({
     // ownership rather than invoking the router's full clear/neutral gate.
     onClear();
   };
+  const clear = () => {
+    intentDirection = null;
+    clearPhysical();
+  };
+  const lifecycleClear = () => (continuous() ? clearPhysical() : clear());
+  const restoreDirection = (direction) => {
+    if (direction !== null && !['up', 'right', 'down', 'left'].includes(direction))
+      throw new TypeError('Saved direction must be a cardinal direction or null.');
+    if (destroyed || !continuous())
+      throw new Error('Restoring direction requires active continuous steering.');
+    clearPhysical();
+    intentDirection = direction;
+    syncPressed();
+  };
   // Resuming may synchronously clear input. Record the fresh command only afterward.
   const startDirection = (direction, key, element = null, pointer = false) => {
     onActivity();
     if (!active()) return;
-    if (element && tapMode()) latched = latched === direction ? null : direction;
+    if (continuous()) {
+      intentDirection = direction;
+      localDirectionPending = true;
+      (pointer ? buttons : held).set(key, { direction, order: ++order, element });
+    } else if (element && tapMode()) latched = latched === direction ? null : direction;
     else {
       latched = null;
       (pointer ? buttons : held).set(key, { direction, order: ++order, element });
@@ -127,31 +190,32 @@ export function attachInput({
       code = keyCodeForEvent(e);
     if (command === 'pause') {
       e.preventDefault();
-      if (!e.repeat) {
-        clear();
+      if (freshKey(e)) {
+        lifecycleClear();
         onPause();
       }
       return;
     }
     if (['up', 'right', 'down', 'left'].includes(command)) {
       e.preventDefault();
-      if (!e.repeat) startDirection(command, code);
+      if (freshKey(e)) startDirection(command, code);
       return;
     }
     if (command === 'boost') {
       e.preventDefault();
-      if (!e.repeat) startBoost(code, false, false);
+      if (freshKey(e)) startBoost(code, false, false);
       syncPressed();
       return;
     }
     if (command === 'stop') {
+      if (continuous()) return;
       e.preventDefault();
       if (!e.repeat) clear();
       return;
     }
     if (command === 'ability' || command === 'pickup') {
       e.preventDefault();
-      if (!e.repeat) {
+      if (freshKey(e)) {
         if (command === 'ability') action = true;
         else pickup = true;
       }
@@ -159,12 +223,20 @@ export function attachInput({
   };
   const up = (e) => {
     if (activation(e)) finishBoostKeyGesture();
-    held.delete(keyCodeForEvent(e));
+    const code = keyCodeForEvent(e);
+    keysDown.delete(code);
+    held.delete(code);
     syncPressed();
   };
   listen(window, 'keydown', down);
   listen(window, 'keyup', up);
-  listen(window, 'blur', clear);
+  listen(window, 'blur', () => {
+    // Releases outside the document may be unobservable. A returning held key
+    // still produces repeat events, which never count as a fresh command.
+    keysDown.clear();
+    pointersDown.clear();
+    lifecycleClear();
+  });
   if (!readControllerCommand)
     listen(window, 'gamepaddisconnected', (event) => {
       if (selectedPad && selectedPad.index === event.gamepad?.index) padDisconnected = true;
@@ -172,6 +244,7 @@ export function attachInput({
   for (const b of padButtons) {
     listen(b, 'pointerdown', (e) => {
       if (!active() || (e.button !== undefined && e.button !== 0)) return;
+      if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
       startDirection(b.dataset.move, e.pointerId, b, true);
       // Tap steering persists without a held pointer; capture still provides cancellation.
@@ -189,12 +262,12 @@ export function attachInput({
       } catch {}
     };
     listen(b, 'pointerup', release);
-    listen(b, 'pointercancel', clear);
+    listen(b, 'pointercancel', lifecycleClear);
     listen(b, 'lostpointercapture', release);
     listen(b, 'keydown', (e) => {
       if (!activation(e) || shortcut(e) || !active()) return;
       e.preventDefault();
-      if (!e.repeat) startDirection(b.dataset.move, e.code, b);
+      if (freshKey(e)) startDirection(b.dataset.move, keyCodeForEvent(e), b);
     });
     listen(b, 'keyup', (e) => {
       if (activation(e)) {
@@ -210,6 +283,7 @@ export function attachInput({
   if (boostButton) {
     listen(boostButton, 'pointerdown', (e) => {
       if (!active() || (e.button !== undefined && e.button !== 0)) return;
+      if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
       startBoost(e.pointerId, true);
       try {
@@ -227,17 +301,17 @@ export function attachInput({
       } catch {}
     };
     listen(boostButton, 'pointerup', releaseBoost);
-    listen(boostButton, 'pointercancel', clear);
+    listen(boostButton, 'pointercancel', lifecycleClear);
     listen(boostButton, 'lostpointercapture', (e) => {
       // Explicit pointerup removes the capture first and preserves a tap latch.
       // Unexpected capture loss cancels it, so a cancelled gesture cannot stick.
-      if (captures.get(e.pointerId) === boostButton) clear();
+      if (captures.get(e.pointerId) === boostButton) lifecycleClear();
       else releaseBoost(e);
     });
     listen(boostButton, 'keydown', (e) => {
       if (!activation(e) || shortcut(e) || !active()) return;
       e.preventDefault();
-      if (!e.repeat) startBoost(e.code);
+      if (freshKey(e)) startBoost(keyCodeForEvent(e));
       clearTimeout(boostClickTimer);
       boostClickTimer = null;
       boostClickGuard = true;
@@ -269,6 +343,7 @@ export function attachInput({
   ]) {
     const b = document.querySelector(`#${id}`);
     const activate = () => {
+      if (kind === 'stop' && continuous()) return;
       if (kind === 'stop') clear();
       else if (active()) {
         if (kind === 'action') action = true;
@@ -281,7 +356,7 @@ export function attachInput({
     listen(b, 'keydown', (e) => {
       if (!activation(e) || shortcut(e)) return;
       e.preventDefault();
-      if (!e.repeat) activate();
+      if (freshKey(e)) activate();
     });
     listen(b, 'keyup', (e) => {
       if (activation(e)) e.preventDefault();
@@ -332,7 +407,7 @@ export function attachInput({
       if (selectedPad && (!found || padDisconnected)) {
         selectedPad = null;
         padDisconnected = false;
-        clear();
+        lifecycleClear();
         onPause(true);
         onGamepad('Controller disconnected. Release controls before continuing.');
         return neutral();
@@ -344,7 +419,7 @@ export function attachInput({
       cmd = gamepadCommand(found?.pad);
     }
     if (!active()) {
-      clear();
+      lifecycleClear();
       lastPause = false;
       return neutral();
     }
@@ -363,22 +438,33 @@ export function attachInput({
     }
     if (cmd.pause && !lastPause) {
       lastPause = true;
-      clear();
+      lifecycleClear();
       onPause();
       return neutral();
     }
-    if (cmd.stop) {
+    if (cmd.stop && !continuous()) {
       clear();
       return neutral();
     }
     lastPause = cmd.pause;
     padBoost = cmd.boost;
+    if (continuous()) {
+      // Local events since the previous sample win an unobservable same-sample
+      // tie. Consume the pad transition either way: an old hold never reclaims
+      // the heading on a later poll. Physical release only rearms that source.
+      if (cmd.direction && cmd.direction !== lastPadDirection && !localDirectionPending)
+        intentDirection = cmd.direction;
+      lastPadDirection = cmd.direction;
+      localDirectionPending = false;
+    }
     syncPressed();
     const newest = [...held.values(), ...buttons.values()]
       .filter((x) => x.direction)
       .sort((a, b) => b.order - a.order)[0];
     const result = {
-      direction: newest?.direction || latched || cmd.direction || null,
+      direction: continuous()
+        ? intentDirection
+        : newest?.direction || latched || cmd.direction || null,
       boost: localBoost() || cmd.boost,
       action: action || cmd.action,
       pickup: pickup || cmd.pickup,
@@ -391,6 +477,9 @@ export function attachInput({
   return {
     poll,
     clear,
+    clearPhysical,
+    snapshotDirection: () => (continuous() && !destroyed ? intentDirection : null),
+    restoreDirection,
     localBoostActive: localBoost,
     destroy() {
       clear();
