@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachInput, gamepadCommand } from '../ui/input.mjs';
 import { createRun, stepRun } from '../core/index.mjs';
+import { resolveKeyBindings } from '../key-bindings.mjs';
 
 const neutral = { direction: null, boost: false, action: false, pickup: false };
 class Target {
@@ -69,7 +70,13 @@ class Target {
 }
 function fixture(
   t,
-  { tap = false, withBoost = true, onActivity = () => {}, onPause = () => {} } = {},
+  {
+    tap = false,
+    withBoost = true,
+    onActivity = () => {},
+    onPause = () => {},
+    getBindings = () => null,
+  } = {},
 ) {
   const originals = new Map(
     ['window', 'document', 'navigator'].map((k) => [
@@ -123,6 +130,7 @@ function fixture(
     active: () => isActive,
     onActivity: () => onActivity(input),
     onPause: (force) => onPause(input, force),
+    getBindings,
   });
   t.after(() => {
     input.destroy();
@@ -505,4 +513,65 @@ test('standard controller mapping has dead zone, D-pad priority and independent 
   assert.equal(gamepadCommand(pad).direction, 'right');
   assert.equal(gamepadCommand(pad).boost, true);
   assert.equal(gamepadCommand(pad).pickup, true);
+});
+
+test('custom physical keys move and release even when the release targets an editor', (t) => {
+  const map = resolveKeyBindings();
+  map.bindings.right = ['KeyJ'];
+  const f = fixture(t, { getBindings: () => map });
+  f.key('ArrowRight', 'ArrowRight');
+  assert.equal(f.input.poll().direction, null);
+  f.key('ø', 'KeyJ');
+  assert.equal(f.input.poll().direction, 'right');
+  f.arena.isEditing = true;
+  f.win.emit('keyup', { target: f.arena, code: 'KeyJ', key: 'ø', ctrlKey: true });
+  assert.equal(f.input.poll().direction, null);
+});
+
+test('remapped equipment fires once and modifier or IME input remains native', (t) => {
+  const map = resolveKeyBindings();
+  map.bindings.ability = ['KeyK'];
+  const f = fixture(t, { getBindings: () => map });
+  f.key('e', 'KeyE');
+  assert.equal(f.input.poll().action, false);
+  f.key('k', 'KeyK', { ctrlKey: true });
+  f.key('k', 'KeyK', { isComposing: true });
+  assert.equal(f.input.poll().action, false);
+  f.key('k', 'KeyK');
+  assert.equal(f.input.poll().action, true);
+  f.key('k', 'KeyK', { repeat: true });
+  assert.equal(f.input.poll().action, false);
+});
+
+test('custom stop clears held movement and boost; Escape remains a pause route', (t) => {
+  const map = resolveKeyBindings();
+  map.bindings.stop = ['KeyV'];
+  map.bindings.pause = ['Escape', 'KeyB'];
+  let pauses = 0;
+  const f = fixture(t, { getBindings: () => map, onPause: () => pauses++ });
+  f.key('ArrowRight', 'ArrowRight');
+  f.key('Shift', 'ShiftRight');
+  assert.equal(f.input.poll().boost, true);
+  f.key('v', 'KeyV');
+  assert.deepEqual(f.input.poll(), neutral);
+  f.key('ArrowDown', 'ArrowDown');
+  f.key('Escape', 'Escape');
+  assert.equal(pauses, 1);
+  assert.deepEqual(f.input.poll(), neutral);
+  f.key('b', 'KeyB');
+  assert.equal(pauses, 2);
+});
+
+test('changing mappings with clear prevents a held old key surviving the change', (t) => {
+  let map = resolveKeyBindings();
+  const f = fixture(t, { getBindings: () => map });
+  f.key('d', 'KeyD');
+  assert.equal(f.input.poll().direction, 'right');
+  map = resolveKeyBindings();
+  map.bindings.right = ['KeyL'];
+  f.input.clear();
+  f.up('d', 'KeyD');
+  assert.deepEqual(f.input.poll(), neutral);
+  f.key('l', 'KeyL');
+  assert.equal(f.input.poll().direction, 'right');
 });

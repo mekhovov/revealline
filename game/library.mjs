@@ -1,6 +1,7 @@
 import { emptyProgress, validateProgress, awardCompletion, PROGRESS_VERSION } from './progress.mjs';
 import { CLASSES, RULESET, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
 import { normalizedLevel } from './core/level.mjs';
+import { resolveKeyBindings } from './key-bindings.mjs';
 import {
   boundedJSON,
   plainObject,
@@ -8,6 +9,7 @@ import {
   exactKeys,
   required,
   dataIdentity,
+  canonicalJSON,
 } from './data-json.mjs';
 
 export const LIBRARY_VERSION = 'xonix-library.v1';
@@ -39,6 +41,8 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   bodyId: 'fpv-body',
   classId: 'scout',
   turnPolicy: 'immediate',
+  tapSteering: null,
+  keyboardBindings: null,
   style: 'hybrid',
   showGrid: false,
   matchClassAppearance: true,
@@ -90,6 +94,12 @@ function preferencesValid(preferences) {
   for (const key of ['themeId', 'bodyId', 'classId'])
     required(stableId(preferences[key]), `preferences.${key} is invalid.`);
   required(TURN_POLICIES.includes(preferences.turnPolicy), 'preferences.turnPolicy is invalid.');
+  required(
+    preferences.tapSteering === null || typeof preferences.tapSteering === 'boolean',
+    'preferences.tapSteering must be null (device default), true or false.',
+  );
+  if (preferences.keyboardBindings !== null)
+    preferences.keyboardBindings = resolveKeyBindings(preferences.keyboardBindings);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -195,6 +205,10 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.matchClassAppearance = false;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'masterVolume'))
     value.preferences.masterVolume = DEFAULT_PREFERENCES.masterVolume;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'tapSteering'))
+    value.preferences.tapSteering = DEFAULT_PREFERENCES.tapSteering;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'keyboardBindings'))
+    value.preferences.keyboardBindings = DEFAULT_PREFERENCES.keyboardBindings;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);
@@ -526,7 +540,7 @@ export function mergeLibraries(local, remote, { baseline = null } = {}) {
     base = baseline === null ? null : checkLibrary(baseline);
   const next = structuredClone(right);
   for (const key of Object.keys(DEFAULT_PREFERENCES))
-    if (!base || left.preferences[key] !== base.preferences[key])
+    if (!base || canonicalJSON(left.preferences[key]) !== canonicalJSON(base.preferences[key]))
       next.preferences[key] = left.preferences[key];
   for (const [key, localProgress] of Object.entries(left.campaigns)) {
     const remoteProgress = next.campaigns[key];

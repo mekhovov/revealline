@@ -24,6 +24,7 @@ import {
   libraryCapacity,
 } from '../library.mjs';
 import { dataIdentity } from '../data-json.mjs';
+import { resolveKeyBindings } from '../key-bindings.mjs';
 const level = {
   version: 'xonix-level.v1',
   id: 'first',
@@ -501,6 +502,136 @@ test('old profiles preserve manual appearance choice while new profiles default 
   assert.equal(imported.preferences.matchClassAppearance, false);
   assert.equal(imported.preferences.bodyId, 'fpv-racer');
   assert.equal(emptyLibrary().preferences.matchClassAppearance, true);
+});
+test('tap steering keeps device defaults for legacy profiles and preserves explicit choices through storage and exports', () => {
+  const old = recordLibraryCompletion(emptyLibrary(), options('before-tap-preference'));
+  delete old.preferences.tapSteering;
+  const original = JSON.stringify(old);
+  const migrated = importLibrary(original, { campaigns: [campaign] });
+  assert.equal(migrated.preferences.tapSteering, null);
+  assert.deepEqual(migrated.campaigns, old.campaigns);
+  assert.deepEqual(migrated.gallery, old.gallery);
+  assert.deepEqual(migrated.scores, old.scores);
+  assert.equal(JSON.stringify(old), original);
+  assert.equal(emptyLibrary().preferences.tapSteering, null);
+
+  const local = storage();
+  local.map.set('p', original);
+  assert.equal(loadLibrary(local, 'p').library.preferences.tapSteering, null);
+  for (const mode of [true, false, null]) {
+    const selected = updatePreferences(migrated, { tapSteering: mode });
+    const saved = saveLibrary(local, 'p', selected, null, { mode: 'replace' });
+    assert.equal(saved.ok, true);
+    assert.equal(loadLibrary(local, 'p').library.preferences.tapSteering, mode);
+    assert.equal(importLibrary(exportLibrary(selected)).preferences.tapSteering, mode);
+  }
+  assert.equal(migrated.preferences.tapSteering, null);
+});
+test('tap steering rejects coercible values and unrelated stale edits cannot undo an explicit choice', () => {
+  const baseline = emptyLibrary();
+  for (const invalid of ['auto', 'true', 'false', 0, 1, {}, [], undefined]) {
+    assert.throws(() => updatePreferences(baseline, { tapSteering: invalid }));
+    assert.equal(baseline.preferences.tapSteering, null);
+  }
+  const remote = updatePreferences(baseline, { tapSteering: false });
+  const local = updatePreferences(baseline, { musicGenre: 'rock' });
+  const merged = mergeLibraries(local, remote, { baseline });
+  assert.equal(merged.preferences.tapSteering, false);
+  assert.equal(merged.preferences.musicGenre, 'rock');
+  const automatic = updatePreferences(remote, { tapSteering: null });
+  assert.equal(
+    mergeLibraries(automatic, remote, { baseline: remote }).preferences.tapSteering,
+    null,
+  );
+});
+test('keyboard preferences migrate old profiles to defaults and preserve owned remaps through portable and local saves', () => {
+  const old = recordLibraryCompletion(emptyLibrary(), options('before-key-preference'));
+  delete old.preferences.keyboardBindings;
+  const bytes = JSON.stringify(old);
+  const migrated = importLibrary(bytes, { campaigns: [campaign] });
+  assert.equal(migrated.preferences.keyboardBindings, null);
+  assert.equal(emptyLibrary().preferences.keyboardBindings, null);
+  assert.deepEqual(migrated.campaigns, old.campaigns);
+  assert.deepEqual(migrated.gallery, old.gallery);
+  assert.deepEqual(migrated.scores, old.scores);
+  assert.equal(JSON.stringify(old), bytes);
+
+  const bindings = resolveKeyBindings(null);
+  bindings.bindings.ability = ['KeyQ'];
+  const expected = structuredClone(bindings);
+  const selected = updatePreferences(migrated, { keyboardBindings: bindings });
+  bindings.bindings.ability.push('KeyF');
+  assert.deepEqual(selected.preferences.keyboardBindings, expected);
+  const imported = importLibrary(exportLibrary(selected));
+  assert.deepEqual(imported.preferences.keyboardBindings, expected);
+  imported.preferences.keyboardBindings.bindings.ability.push('KeyF');
+  assert.deepEqual(selected.preferences.keyboardBindings, expected);
+
+  const local = storage();
+  local.map.set('p', bytes);
+  assert.equal(loadLibrary(local, 'p').library.preferences.keyboardBindings, null);
+  assert.equal(saveLibrary(local, 'p', selected, null, { mode: 'replace' }).ok, true);
+  assert.deepEqual(loadLibrary(local, 'p').library.preferences.keyboardBindings, expected);
+  const automatic = updatePreferences(selected, { keyboardBindings: null });
+  assert.equal(saveLibrary(local, 'p', automatic, null, { mode: 'replace' }).ok, true);
+  assert.equal(loadLibrary(local, 'p').library.preferences.keyboardBindings, null);
+});
+test('invalid keyboard remaps reject before preference adoption or replacement storage writes', () => {
+  const baseline = emptyLibrary();
+  const bytes = exportLibrary(baseline);
+  const local = storage();
+  local.map.set('p', bytes);
+  const malformed = [false, 'default', [], {}, undefined];
+  for (const mutate of [
+    (value) => (value.version = 'future'),
+    (value) => delete value.bindings.up,
+    (value) => (value.bindings.ability = ['KeyW']),
+    (value) => (value.bindings.ability = ['KeyQ', 'KeyQ']),
+    (value) => (value.bindings.pause = ['KeyP']),
+    (value) => (value.bindings.ability = ['javascript:run']),
+    (value) => (value.bindings.ability = ['KeyQ', 'KeyF', 'KeyT', 'KeyY', 'KeyU']),
+    (value) => (value.executable = 'run()'),
+  ]) {
+    const candidate = resolveKeyBindings(null);
+    mutate(candidate);
+    malformed.push(candidate);
+  }
+  for (const keyboardBindings of malformed) {
+    assert.throws(() => updatePreferences(baseline, { keyboardBindings }));
+    const invalid = structuredClone(baseline);
+    invalid.preferences.keyboardBindings = keyboardBindings;
+    assert.equal(validateLibrary(invalid).valid, false);
+    assert.throws(() => importLibrary(invalid));
+    assert.equal(saveLibrary(local, 'p', invalid, null, { mode: 'replace' }).ok, false);
+    assert.equal(local.map.get('p'), bytes);
+    assert.equal(exportLibrary(baseline), bytes);
+  }
+});
+test('unchanged cloned keyboard settings preserve remote remaps while deliberate changes and default resets apply', () => {
+  const originalBindings = resolveKeyBindings(null);
+  const baseline = updatePreferences(emptyLibrary(), { keyboardBindings: originalBindings });
+  const remoteBindings = resolveKeyBindings(null);
+  remoteBindings.bindings.ability = ['KeyQ'];
+  const remote = updatePreferences(baseline, { keyboardBindings: remoteBindings });
+  const local = updatePreferences(baseline, { musicGenre: 'rock' });
+  assert.notEqual(local.preferences.keyboardBindings, baseline.preferences.keyboardBindings);
+  assert.deepEqual(local.preferences.keyboardBindings, baseline.preferences.keyboardBindings);
+  const merged = mergeLibraries(local, remote, { baseline });
+  assert.deepEqual(merged.preferences.keyboardBindings, remoteBindings);
+  assert.equal(merged.preferences.musicGenre, 'rock');
+
+  const deliberateBindings = resolveKeyBindings(null);
+  deliberateBindings.bindings.ability = ['KeyF'];
+  const deliberate = updatePreferences(local, { keyboardBindings: deliberateBindings });
+  assert.deepEqual(
+    mergeLibraries(deliberate, remote, { baseline }).preferences.keyboardBindings,
+    deliberateBindings,
+  );
+  const automatic = updatePreferences(remote, { keyboardBindings: null });
+  assert.equal(
+    mergeLibraries(automatic, remote, { baseline: remote }).preferences.keyboardBindings,
+    null,
+  );
 });
 test('campaign capacity overflow is typed and preserves existing completed records', () => {
   const lib = emptyLibrary();
