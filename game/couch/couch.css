@@ -1,0 +1,219 @@
+.couch-page {
+  max-width: 1400px;
+  margin: auto;
+}
+.race-setup {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+.race-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.race-actions label {
+  font-size: 12px;
+}
+.race-actions strong {
+  margin-left: auto;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+}
+.race-message {
+  min-height: 42px;
+  padding: 14px 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.race-boards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.racer {
+  min-width: 0;
+  border-top: 3px solid var(--accent);
+}
+.racer:nth-child(2) {
+  border-color: var(--safe);
+}
+.racer-heading,
+.racer-stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+.racer canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #112d35;
+  image-rendering: pixelated;
+}
+.racer > p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+.race-pad {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.race-pad button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  touch-action: none;
+}
+.race-pad button.pressed {
+  background: var(--ink);
+  color: var(--paper);
+}
+.race-setup select {
+  min-height: 44px;
+}
+.race-actions button {
+  min-height: 44px;
+}
+@media (max-width: 700px) {
+  .race-boards {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .race-setup {
+    grid-template-columns: 1fr 1fr;
+  }
+  .race-message {
+    font-size: 13px;
+  }
+  .masthead nav .version {
+    display: none;
+  }
+}
+@media (max-height: 500px) and (min-width: 701px) {
+  .race-setup {
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .race-boards {
+    gap: 14px;
+  }
+  .racer canvas {
+    max-height: 250px;
+    object-fit: contain;
+  }
+  .racer > p {
+    margin: 6px 0;
+  }
+  .race-message {
+    padding: 6px 0;
+    margin: 0;
+  }
+  .race-pad button {
+    font-size: 11px;
+    min-height: 44px;
+    padding: 4px;
+  }
+  .edition {
+    padding: 8px 0;
+  }
+}
+
+/* Focus mode keeps both sets of controls in the same shared viewport. */
+.race-focus {
+  padding: 8px;
+}
+.race-focus .masthead,
+.race-focus .edition,
+.race-focus .race-setup,
+.race-focus #race-reset,
+.race-focus #race-audio,
+.race-focus .race-actions label,
+.race-focus .racer > p,
+.race-focus .couch-page > .micro-note {
+  display: none;
+}
+.race-focus .couch-page {
+  max-width: 1400px;
+  padding: 0;
+}
+.race-focus .race-actions {
+  gap: 8px;
+  margin: 0;
+}
+.race-focus .race-actions button {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.race-focus .race-message {
+  min-height: 0;
+  padding: 5px 0;
+  margin: 0;
+  line-height: 18px;
+  font-size: 12px;
+}
+.race-focus .race-boards {
+  gap: 12px;
+}
+.race-focus .racer-heading,
+.race-focus .racer-stats {
+  padding: 4px 0;
+  font-size: 10px;
+  line-height: 14px;
+  letter-spacing: 0;
+}
+.race-focus .racer canvas {
+  height: calc(100svh - 228px);
+  max-height: none;
+  width: 100%;
+  object-fit: contain;
+}
+.race-focus .race-pad {
+  gap: 4px;
+}
+.race-focus .race-pad button {
+  padding: 4px;
+  font-size: 11px;
+}
+@media (max-width: 700px) {
+  .race-focus .race-boards {
+    gap: 8px;
+  }
+  .race-focus .racer canvas {
+    height: calc((100svh - 408px) / 2);
+    min-height: 90px;
+  }
+  .race-focus .race-actions button {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+  .race-focus .race-actions strong {
+    font-size: 20px;
+  }
+  .race-focus .race-pad {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .race-focus .race-pad button {
+    min-width: 0;
+    min-height: 44px;
+    padding: 2px;
+  }
+}
+@media (max-width: 380px) {
+  .race-focus .race-pad {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .race-focus .racer canvas {
+    height: calc((100svh - 408px) / 2);
+  }
+}

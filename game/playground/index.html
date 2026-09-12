@@ -7,12 +7,16 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="playground.css" />
   </head>
-  <body>
-    <header class="masthead">
+  <body class="playground-page">
+    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
+    <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="../">◩ REVEAL / LINE</a>
-      <nav><span>PLAYGROUND</span><a href="../">Back to campaign ↗</a></nav>
+      <nav>
+        <span>PLAYGROUND</span><a href="../couch/">Couch race ↗</a
+        ><a href="../">Back to campaign ↗</a>
+      </nav>
     </header>
-    <main class="workshop">
+    <main data-boot-inert inert aria-busy="true" class="workshop">
       <div class="workshop-title">
         <div>
           <p class="eyebrow">AUTHOR / PREVIEW / REPEAT</p>
@@ -21,15 +25,24 @@
         </div>
         <div class="workshop-actions">
           <button id="preview-button" class="button primary">Play configuration ↗</button
-          ><button id="export-button" class="button">Export pack</button
+          ><button id="export-button" class="button">Export scenario</button
           ><label class="file-button button"
-            >Import pack<input id="import-file" type="file" accept="application/json,.json"
+            >Import content<input id="import-file" type="file" accept="application/json,.json"
           /></label>
         </div>
       </div>
       <p id="editor-status" class="editor-status" role="status">Loading the authoring contract…</p>
       <div class="editor-grid">
         <section class="editor-panel" aria-label="Configuration">
+          <label class="field">Campaign source<select id="campaign-select"></select></label>
+          <p id="source-readout" class="micro-note">
+            Import a scenario, map, expansion or expansion library.
+          </p>
+          <div
+            id="example-packs"
+            class="workshop-actions"
+            aria-label="Example expansion packs"
+          ></div>
           <div class="settings-row">
             <label class="field">Start from<select id="level-select"></select></label
             ><label class="field">World<select id="theme-select"></select></label>
@@ -43,6 +56,18 @@
               </select></label
             >
           </div>
+          <div class="section-line">
+            <span>TRY AN INTERACTION</span><span>SAFE PRACTICE RECIPES</span>
+          </div>
+          <div class="preset-buttons" role="group" aria-label="Interaction preset">
+            <button class="button" data-preset="fiber">Fiber relay</button>
+            <button class="button" data-preset="bomber">Bomber supply</button>
+            <button class="button" data-preset="impact">Impact pulse</button>
+          </div>
+          <p id="preset-readout" class="micro-note">
+            Each preset keeps your current theme and artwork. Undo returns to the previous map and
+            loadout.
+          </p>
           <div class="settings-row three">
             <label class="field"
               >Coverage target %<input
@@ -64,6 +89,48 @@
               >Lives<input id="lives-input" type="number" min="1" max="9" value="3"
             /></label>
           </div>
+          <details>
+            <summary>Challenge budgets</summary>
+            <p>Zero disables a limit. Time and cable limits are part of the actual game rules.</p>
+            <div class="settings-row three">
+              <label class="field"
+                >Mission seconds<input
+                  id="mission-limit"
+                  type="number"
+                  min="0"
+                  max="1800"
+                  step="1"
+                  value="0"
+              /></label>
+              <label class="field"
+                >Cut seconds<input
+                  id="cut-limit"
+                  type="number"
+                  min="0"
+                  max="120"
+                  step="0.5"
+                  value="0"
+              /></label>
+              <label class="field"
+                >Trail cells<input
+                  id="trail-limit"
+                  type="number"
+                  min="0"
+                  max="1564"
+                  step="1"
+                  value="0"
+              /></label>
+            </div>
+            <label class="field"
+              >Equipment switch cooldown / seconds<input
+                id="switch-limit"
+                type="number"
+                min="0.1"
+                max="30"
+                step="0.1"
+                value="2"
+            /></label>
+          </details>
           <div class="settings-row seed-row">
             <label class="field"
               >Generator seed<input id="seed-input" type="text" value="first-light" /></label
@@ -87,9 +154,57 @@
             ><button data-brush="enemy" aria-pressed="false">Enemy</button
             ><button data-brush="objective" aria-pressed="false">Objective</button
             ><button data-brush="supply" aria-pressed="false">Supply</button
+            ><button data-brush="signal" aria-pressed="false">Signal zone</button
+            ><button data-brush="hangar" aria-pressed="false">Hangar</button
             ><button data-brush="spawn" aria-pressed="false">Start</button
             ><button data-brush="erase" aria-pressed="false">Erase</button>
           </div>
+          <details>
+            <summary>Paint by coordinates and tune signal brush</summary>
+            <div class="settings-row three">
+              <label class="field"
+                >Column<input id="paint-x" type="number" min="0" max="47" step="1" value="20"
+              /></label>
+              <label class="field"
+                >Row<input id="paint-y" type="number" min="0" max="35" step="1" value="6"
+              /></label>
+              <button id="paint-cell" class="button">Apply tool</button>
+            </div>
+            <div class="settings-row three">
+              <label class="field"
+                >Signal width<input
+                  id="signal-width"
+                  type="number"
+                  min="1"
+                  max="46"
+                  step="1"
+                  value="8"
+              /></label>
+              <label class="field"
+                >Signal height<input
+                  id="signal-height"
+                  type="number"
+                  min="1"
+                  max="34"
+                  step="1"
+                  value="6"
+              /></label>
+              <label class="field"
+                >Signal speed %<input
+                  id="signal-speed"
+                  type="number"
+                  min="25"
+                  max="100"
+                  step="5"
+                  value="50"
+              /></label>
+            </div>
+            <p>
+              Signal zones block boost and abilities for vulnerable classes. Edit flags in Level
+              JSON. Hangars become usable after their ground is safe. Erase removes a whole zone or
+              object.
+            </p>
+          </details>
           <canvas
             id="map-editor"
             width="768"
@@ -149,30 +264,53 @@
                 spellcheck="false"
                 rows="8"
               ></textarea></label
+            ><label class="field"
+              >Procedural music JSON (optional)<textarea
+                id="music-json"
+                spellcheck="false"
+                rows="7"
+                placeholder="Leave empty to use game audio defaults"
+              ></textarea></label
             ><button id="apply-json" class="button">Validate and apply JSON</button>
           </details>
           <details>
             <summary>Complete pack JSON</summary>
             <p>
               Paste a generated pack including artwork bindings, or inspect the current
-              configuration.
+              configuration. Accepted: xonix-playground.v1, xonix-level.v1, xonix-pack.v1 and
+              xonix-pack-library.v1.
             </p>
             <textarea
               id="pack-json"
               aria-label="Complete pack JSON"
               spellcheck="false"
-              placeholder="Paste xonix-playground.v1 JSON here"
+              placeholder="Paste a scenario, map, runtime expansion or expansion library"
             ></textarea>
             <div class="settings-row">
               <button id="show-pack" class="button">Show current pack</button
-              ><button id="apply-pack" class="button">Apply pack JSON</button>
+              ><button id="apply-pack" class="button">Apply content JSON</button>
             </div>
+            <div class="settings-row">
+              <button id="export-expansion" class="button">Export map as expansion</button>
+              <button id="export-catalog" class="button" disabled>Export loaded library</button>
+            </div>
+            <p>
+              The map expansion includes this edited map, current class recipes, theme and images.
+              The loaded library export preserves its original campaigns. These practice previews do
+              not install content in the main game's library.
+            </p>
+            <p id="music-readout" class="micro-note"></p>
           </details>
           <details>
             <summary>Replay a recorded run</summary>
             <p>
               Import an exported replay to check its final simulation summary. Playback is a
               verification run and grants no campaign rewards.
+            </p>
+            <p>
+              <a href="../replay-theater/"
+                >Open Replay Theater to watch, pause and step through a recording ↗</a
+              >
             </p>
 
             <label class="file-button button"
@@ -195,6 +333,12 @@
               >Open full preview ↗</a
             >
           </div>
+          <label class="field"
+            >Preview mode<select id="preview-mode">
+              <option value="solo">Solo configuration</option>
+              <option value="couch">Couch race</option>
+            </select></label
+          >
           <nav class="viewport-buttons" aria-label="Preview size">
             <button data-size="390,844" aria-pressed="true">Phone</button
             ><button data-size="844,390" aria-pressed="false">Landscape</button
@@ -220,7 +364,7 @@
           </p>
           <p class="micro-note">
             Sized frames check layout. They do not emulate iPhone hardware, native touch, Safari or
-            controller performance.
+            controller performance. Open Couch race above for the separate local two-player mode.
           </p>
         </section>
       </div>

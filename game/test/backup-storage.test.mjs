@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { prepareBackup, BACKUP_FORMAT } from '../backup.mjs';
-import { emptyLibrary } from '../library.mjs';
+import { emptyLibrary, loadLibrary, saveLibrary, updatePreferences } from '../library.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { createRun, stepRun, FIXED_DT, CLASSES } from '../core/index.mjs';
 import { createRecorder, recordInput } from '../replay.mjs';
@@ -125,6 +125,72 @@ test('coordinated import journals original bytes before writes and commits profi
   assert.equal(JSON.parse(h.values().profile).format, 'xonix-library.v1');
   assert.equal(JSON.parse(h.values().packs).format, 'xonix-pack-library.v1');
   assert.equal(h.values().session, null);
+});
+test('explicit guarded replacement repairs corrupt prior packs and profile while preserving original recovery bytes', async () => {
+  const h = harness();
+  const incoming = await prepareBackup({
+    format: BACKUP_FORMAT,
+    library: updatePreferences(emptyLibrary(), { musicGenre: 'chiptune', musicEnabled: false }),
+    packs: emptyPackLibrary(),
+    session: null,
+  });
+  // Failed pack adoption can leave the host without recognized profile recovery
+  // bytes. Neither an ordinary write nor an unrecognized replacement may erase it.
+  for (const mode of ['merge', 'replace']) {
+    const blocked = saveLibrary(h.api.storage, keys.profileKey, incoming.library, null, { mode });
+    assert.equal(blocked.ok, false);
+    assert.deepEqual(h.values(), prior);
+  }
+  assert.equal((await recoverBackupImport(h.api)).ok, true);
+  h.api.commitProfile = (library, options) => {
+    assert.equal(options.mode, 'replace');
+    assert.ok(options.writeLock.token);
+    assert.equal(h.api.storage.getItem(keys.lockKey), options.writeLock.token);
+    const current = loadLibrary(h.api.storage, keys.profileKey);
+    assert.equal(current.recovery, prior.profile);
+    return saveLibrary(h.api.storage, keys.profileKey, library, current.recovery, {
+      ...options,
+      baseline: emptyLibrary(),
+      generation: 'legacy',
+    });
+  };
+  const result = await commitBackup(incoming, h.api);
+  assert.equal(result.ok, true, result.warning);
+  const stored = loadLibrary(h.api.storage, keys.profileKey);
+  assert.equal(stored.recovery, null);
+  assert.deepEqual(stored.library, incoming.library);
+  assert.equal(stored.generation, result.profile.generation);
+  assert.notEqual(stored.generation, 'legacy');
+  assert.equal(JSON.parse(h.values().packs).format, 'xonix-pack-library.v1');
+  assert.equal(h.values().session, null);
+  assert.deepEqual(h.events.find((e) => e[0] === 'asset' && e[1] === 'journal')[2].previous, prior);
+  const recoveryCopies = [...h.local].filter(([key]) => key.startsWith('profile.recovery.'));
+  assert.equal(recoveryCopies.length, 1);
+  assert.equal(recoveryCopies[0][1], prior.profile);
+  assert.equal(h.assets.get('journal'), null);
+  assert.equal(h.local.has(keys.lockKey), false);
+});
+test('failed finalization after guarded corrupt-profile replacement restores exact prior profile and pack bytes', async () => {
+  const h = harness();
+  h.api.commitProfile = (library, options) => {
+    const current = loadLibrary(h.api.storage, keys.profileKey);
+    return saveLibrary(h.api.storage, keys.profileKey, library, current.recovery, options);
+  };
+  let failed = false;
+  h.fault((kind, key, value) => {
+    if (!failed && kind === 'asset' && key === 'journal' && value === null) {
+      failed = true;
+      throw new Error('journal finalization failed');
+    }
+  });
+  const result = await commitBackup(await prepared(), h.api);
+  assert.equal(result.ok, false);
+  assert.equal(result.rolledBack, true, result.warning);
+  assert.equal(result.recoveryRequired, false);
+  assert.ok(h.events.some((e) => e[0] === 'local' && e[1] === 'profile'));
+  assert.deepEqual(h.values(), prior);
+  assert.equal(h.assets.get('journal'), null);
+  assert.equal(h.local.has(keys.lockKey), false);
 });
 test('a journal write failure performs no player-data writes', async () => {
   const h = harness();
