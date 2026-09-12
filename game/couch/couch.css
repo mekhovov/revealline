@@ -4,9 +4,12 @@
 }
 .race-setup {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr;
+  grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1.5fr)) repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin: 16px 0;
+}
+.race-setup .field {
+  min-width: 0;
 }
 .race-actions {
   display: flex;
@@ -15,12 +18,34 @@
   flex-wrap: wrap;
 }
 .race-actions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 .race-actions strong {
   margin-left: auto;
   font-size: 28px;
   font-variant-numeric: tabular-nums;
+}
+.race-menu-status {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-left: 3px solid var(--accent);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+#race-solo-return {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 .race-message {
   min-height: 42px;
@@ -106,9 +131,14 @@
 }
 .race-setup select {
   min-height: 44px;
+  max-width: 100%;
 }
 .race-actions button {
+  min-width: 44px;
   min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 @media (max-width: 700px) {
   .race-boards {
@@ -116,7 +146,7 @@
     gap: 26px;
   }
   .race-setup {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .race-message {
     font-size: 13px;
@@ -154,7 +184,7 @@
   }
 }
 
-/* Focus mode keeps both sets of controls in the same shared viewport. */
+/* Focus mode prioritizes the boards and shared actions; narrow pages may scroll. */
 .race-focus {
   padding: max(8px, var(--safe-top)) max(8px, var(--safe-right)) max(8px, var(--safe-bottom))
     max(8px, var(--safe-left));
@@ -180,6 +210,10 @@
 .race-focus .race-actions button {
   padding: 8px 12px;
   font-size: 12px;
+}
+.race-focus .race-menu-status {
+  margin: 4px 0;
+  padding: 6px 8px;
 }
 .race-focus .race-message {
   min-height: 0;
