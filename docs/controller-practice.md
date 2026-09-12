@@ -12,6 +12,14 @@ Choose a mission, starting class, steering policy and viewport, then **Load prac
 
 The iframe has the selected **logical viewport dimensions**, scaled visually to fit the available space. This is useful for inspecting responsive layout; it does not reproduce a phone's browser chrome, virtual keyboard, performance or hardware. Use the real device for those checks. Virtual controls focus the iframe before posting input. Clicking other parent controls may pause the game through its ordinary focus-loss handling.
 
+## Practice Hold and Toggle Boost
+
+The v0.13.0 working source offers **Settings → Solo controller Boost → Hold / Toggle** inside the game. The frozen v0.12 Lab retains Hold-only controller Boost. The new option is independent of the binding editor and the Lab's own **Pulse / Hold** gesture selector; that selector controls the virtual physical button, not the game's saved preference.
+
+Select Toggle through the game's Settings, close Settings and resume explicitly. Use the configured Boost button once, release it and inspect **Controller Boost on**. A second fresh press switches it off. The default physical index is 5; a remapped game action may use another index. Check that holding one virtual press does not repeatedly toggle, that Stop clears it, and that pause, reading, hangar entry, recovery and disconnect require a later neutral/new-press sequence. Keyboard-held and touch-latched Boost can remain active when the controller contribution turns off.
+
+**Release all · buttons + sticks** neutralizes physical values. Normal release does not turn an active game Toggle off; use configured Boost again or Stop. Clicking a parent control may also cause focus loss and pause, which separately clears the toggle. Observe the scope/focus readout so these causes are not confused. Practice saves the valid mode only in the current session; library/full-backup exports can retain it, while a flight export contains no controller preferences. See [the Boost guide](controller-boost.md). These are steps to verify through visible UI, not a claim that physical hardware or this new browser journey has been tested.
+
 ## Practice reading a full briefing
 
 Choose **Reading practice / The patient route** and load it. Its original 2,839-character briefing is a local test example built on familiar ordinary capture rules, not a new campaign reward or an imported player pack. Choose **Sentinel Relay** to check the encounter's actual brief and phase instructions instead.

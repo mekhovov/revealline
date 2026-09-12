@@ -4,6 +4,7 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { createControllerRouter, neutralControllerFlight } from '../ui/controller-router.mjs';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { attachControllerReading } from '../ui/controller-reading.mjs';
+import { attachControllerBoostSettings } from '../ui/controller-boost-settings.mjs';
 
 function readingSurface(h, options = {}) {
   const origin = h.control('button', { id: 'read-details', textContent: 'Read details' });
@@ -342,6 +343,48 @@ function setup(t, overrides = {}) {
     editors: () => document.querySelectorAll('.controller-editor'),
   };
 }
+
+test('Boost preference previews cancel without writes and commit once through the native setting', (t) => {
+  const h = setup(t),
+    select = h.select(['Hold', 'Toggle']),
+    status = h.control('p');
+  const router = createControllerRouter({ readPads: () => [], eventTarget: null });
+  let mode = 'hold',
+    writes = 0;
+  const settings = attachControllerBoostSettings({
+    select,
+    status,
+    getMode: () => mode,
+    applyMode(value) {
+      writes++;
+      mode = value;
+      router.setBoostMode(value);
+      return { ok: true };
+    },
+  });
+  t.after(() => {
+    settings.destroy();
+    router.destroy();
+  });
+  h.setScope('modal:settings');
+  select.focus();
+  h.api.handle({ confirm: true });
+  h.api.handle({ direction: 'down' });
+  assert.equal(mode, 'hold');
+  h.api.handle({ back: true });
+  assert.equal(writes, 0);
+  assert.equal(select.value, 'hold');
+  h.api.handle({ confirm: true });
+  h.api.handle({ direction: 'down' });
+  h.api.handle({ confirm: true });
+  assert.equal(writes, 1);
+  assert.equal(mode, 'toggle');
+  assert.deepEqual(router.boostState(), { mode: 'toggle', latched: false });
+  assert.match(status.textContent, /Toggle\. Saved/);
+  assert.equal(h.calls.menu, 0);
+  assert.equal(h.calls.back, 0);
+  assert.equal(h.document.activeElement, select);
+});
 
 test('select browsing uses a separate preview, and Back cancels without changing or firing native handlers', (t) => {
   const h = setup(t),

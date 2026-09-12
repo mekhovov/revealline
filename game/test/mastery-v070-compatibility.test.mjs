@@ -145,7 +145,12 @@ test('v0.7 opaque future-hash metadata remains portable and archived without bec
   assert.deepEqual(old.library.masteries, [old.record]);
   assert.equal(old.labels[0].name, 'Archived seal: supply-line');
   const current = importLibrary(exportLibrary(copy(old.library)));
-  assert.deepEqual(current, old.library);
+  assert.equal(Object.hasOwn(current.preferences, 'controllerBoostMode'), true);
+  assert.equal(current.preferences.controllerBoostMode, 'hold');
+  const owned = copy(current);
+  // Preference migration cannot change any older metadata or its archive label.
+  delete owned.preferences.controllerBoostMode;
+  assert.deepEqual(owned, old.library);
   assert.deepEqual(pictureMasteries(current.masteries, old.picture, null), old.labels);
   assert.throws(() => verifiedMasteryRecord(current.masteries[0]), /verification is required/);
 });

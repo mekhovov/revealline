@@ -79,6 +79,7 @@ function fixture(
     withBoost = true,
     onActivity = () => {},
     onPause = () => {},
+    onClear = () => {},
     getBindings = () => null,
     readControllerCommand = null,
     onGamepad = () => {},
@@ -142,6 +143,7 @@ function fixture(
     active: () => isActive,
     onActivity: () => onActivity(input),
     onPause: (force) => onPause(input, force),
+    onClear: () => onClear(input),
     getBindings,
     readControllerCommand,
     onGamepad,
@@ -797,3 +799,225 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(f.padReads, 0);
   });
 }
+
+function boostFixture(t, { mode = 'toggle', tap = false } = {}) {
+  let frame = null,
+    router = null,
+    clearCount = 0,
+    hardwareReads = 0;
+  const f = fixture(t, {
+    tap,
+    readControllerCommand: () => frame?.flight,
+    onClear: (input) => {
+      clearCount++;
+      assert.equal(input.localBoostActive(), false, 'The notification follows the local reset.');
+      if (router?.boostState().mode === 'toggle') {
+        router.cancelToggleBoost();
+        if (frame) frame = { ...frame, flight: { ...frame.flight, boost: false } };
+      }
+    },
+  });
+  f.pad.index = 0;
+  f.pad.id = 'Mixed-source Boost';
+  f.pad.axes = [0, 0, 0, 0];
+  router = createControllerRouter({
+    eventTarget: null,
+    boostMode: mode,
+    readPads: () => {
+      hardwareReads++;
+      return [f.pad];
+    },
+  });
+  t.after(() => router.destroy());
+  const sample = (scope = 'flight', extra = {}) => {
+    frame = router.sample({ scope, timeMs: 0, ...extra });
+    return { frame, controls: f.input.poll() };
+  };
+  const release = () => {
+    f.pad.axes.fill(0);
+    f.pad.buttons.forEach((button) => {
+      button.pressed = false;
+    });
+  };
+  const join = (scope = 'flight') => {
+    release();
+    sample(scope);
+    f.pad.buttons[0].pressed = true;
+    assert.equal(sample(scope).frame.status.code, 'joined');
+    release();
+    assert.deepEqual(sample(scope).controls, neutral);
+  };
+  return {
+    ...f,
+    router,
+    sample,
+    release,
+    join,
+    get clearCount() {
+      return clearCount;
+    },
+    get hardwareReads() {
+      return hardwareReads;
+    },
+  };
+}
+
+test('onClear must be a function before any listeners are installed', () => {
+  for (const value of [null, false, 'clear', {}])
+    assert.throws(() => attachInput({ onClear: value }), /onClear must be a function/);
+});
+
+test('local Boost observation does not include the controller or poll/drain queued input', (t) => {
+  const f = boostFixture(t);
+  f.join();
+  f.pad.buttons[5].pressed = true;
+  assert.equal(f.sample().controls.boost, true);
+  assert.equal(f.input.localBoostActive(), false);
+  f.key('Shift', 'ShiftLeft');
+  f.action.emit('click');
+  const reads = f.hardwareReads;
+  for (let i = 0; i < 20; i++) assert.equal(f.input.localBoostActive(), true);
+  assert.equal(f.hardwareReads, reads);
+  const controls = f.sample().controls;
+  assert.equal(controls.boost, true);
+  assert.equal(controls.action, true);
+  assert.equal(f.sample().controls.action, false);
+  f.up('Shift', 'ShiftLeft');
+  assert.equal(f.input.localBoostActive(), false);
+});
+
+test('switching controller Toggle off preserves a keyboard Boost hold and aggregate pressed state', (t) => {
+  const f = boostFixture(t);
+  f.join();
+  f.pad.buttons[5].pressed = true;
+  f.sample();
+  f.release();
+  f.sample();
+  f.key('Shift', 'ShiftLeft');
+  f.pad.buttons[5].pressed = true;
+  assert.equal(f.sample().controls.boost, true);
+  assert.equal(f.router.boostState().latched, false);
+  assert.equal(f.input.localBoostActive(), true);
+  assert.equal(f.boost.getAttribute('aria-pressed'), 'true');
+  f.release();
+  f.up('Shift', 'ShiftLeft');
+  assert.equal(f.sample().controls.boost, false);
+  assert.equal(f.boost.getAttribute('aria-pressed'), 'false');
+});
+
+test('switching controller Toggle off preserves the independent touch Boost latch', (t) => {
+  const f = boostFixture(t, { tap: true });
+  f.join();
+  f.pad.buttons[5].pressed = true;
+  f.sample();
+  f.release();
+  f.sample();
+  f.boost.emit('pointerdown', { pointerId: 5, button: 0 });
+  f.boost.emit('pointerup', { pointerId: 5 });
+  f.pad.buttons[5].pressed = true;
+  assert.equal(f.sample().controls.boost, true);
+  assert.equal(f.router.boostState().latched, false);
+  assert.equal(f.input.localBoostActive(), true);
+  f.boost.emit('pointerdown', { pointerId: 6, button: 0 });
+  f.boost.emit('pointerup', { pointerId: 6 });
+  assert.equal(f.sample().controls.boost, false);
+});
+
+for (const reason of [
+  'keyboard-stop',
+  'visible-stop',
+  'pointer-cancel',
+  'capture-loss',
+  'blur',
+  'inactive',
+  'clear',
+])
+  test(`${reason} cancels both local and controller Toggle without stranding the adapter neutral gate`, (t) => {
+    const f = boostFixture(t, { tap: true });
+    f.join();
+    f.pad.buttons[5].pressed = true;
+    f.sample();
+    f.release();
+    assert.equal(f.sample().controls.boost, true);
+    f.boost.emit('pointerdown', { pointerId: 7, button: 0 });
+    assert.equal(f.input.localBoostActive(), true);
+    const before = f.clearCount;
+    if (reason === 'keyboard-stop') f.key('x', 'KeyX');
+    else if (reason === 'visible-stop') f.stop.emit('click');
+    else if (reason === 'pointer-cancel') f.boost.emit('pointercancel', { pointerId: 7 });
+    else if (reason === 'capture-loss') f.boost.releasePointerCapture(7);
+    else if (reason === 'blur') f.win.emit('blur');
+    else if (reason === 'inactive') {
+      f.setActive(false);
+      f.sample();
+    } else f.input.clear();
+    assert.equal(f.clearCount, before + 1, 'Local reset notifies once, without recursion.');
+    assert.equal(f.input.localBoostActive(), false);
+    assert.equal(f.router.boostState().latched, false);
+    assert.equal(f.boost.getAttribute('aria-pressed'), 'false');
+    f.setActive(true);
+    assert.deepEqual(
+      f.sample().controls,
+      neutral,
+      'The physical release is now observed as neutral.',
+    );
+    f.pad.buttons[5].pressed = true;
+    assert.equal(
+      f.sample().controls.boost,
+      true,
+      'A fresh press is usable after the neutral gate.',
+    );
+  });
+
+test('repeated inactive input clears preserve real router join, menu Confirm and later fresh flight Toggle', (t) => {
+  const f = boostFixture(t);
+  f.setActive(false);
+  for (let i = 0; i < 8; i++) assert.deepEqual(f.sample('ready').controls, neutral);
+  f.pad.buttons[0].pressed = true;
+  assert.equal(f.sample('ready').frame.status.code, 'joined');
+  f.release();
+  f.sample('ready');
+  f.pad.buttons[0].pressed = true;
+  assert.equal(f.sample('ready').frame.ui.confirm, true);
+  assert.equal(f.sample('ready').frame.ui.confirm, false);
+  f.setActive(true);
+  assert.deepEqual(
+    f.sample('flight').controls,
+    neutral,
+    'Start cannot leak the held Confirm action.',
+  );
+  f.release();
+  assert.deepEqual(f.sample('flight').controls, neutral);
+  f.pad.buttons[5].pressed = true;
+  assert.equal(f.sample().controls.boost, true);
+});
+
+test('input-local cancellation leaves Hold router output unchanged while its existing gate waits for release', (t) => {
+  const f = boostFixture(t, { mode: 'hold' });
+  f.join();
+  f.pad.buttons[5].pressed = true;
+  f.sample();
+  f.input.clear();
+  const held = f.sample();
+  assert.equal(held.frame.flight.boost, true);
+  assert.deepEqual(held.controls, neutral);
+  assert.deepEqual(f.router.boostState(), { mode: 'hold', latched: false });
+  f.release();
+  f.sample();
+  f.pad.buttons[5].pressed = true;
+  assert.equal(f.sample().controls.boost, true);
+});
+
+test('destroy cancels a router toggle and exposes no local Boost or new input', (t) => {
+  const f = boostFixture(t);
+  f.join();
+  f.pad.buttons[5].pressed = true;
+  f.sample();
+  f.key('Shift', 'ShiftLeft');
+  f.input.destroy();
+  assert.equal(f.router.boostState().latched, false);
+  assert.equal(f.input.localBoostActive(), false);
+  assert.deepEqual(f.input.poll(), neutral);
+  f.key('Shift', 'ShiftLeft');
+  assert.equal(f.input.localBoostActive(), false);
+});

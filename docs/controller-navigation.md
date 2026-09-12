@@ -9,7 +9,7 @@ Release its controls, then press a physical face button or Menu to join. Release
 | Flight        | D-pad / left stick | Move in a cardinal direction       |
 | Flight        | South / A          | Equipped ability                   |
 | Flight        | West / X           | Collect supplies                   |
-| Flight        | Right shoulder     | Boost while held                   |
+| Flight        | Right shoulder     | Boost while held; optional Toggle  |
 | Flight        | North / Y          | Open the hangar                    |
 | Flight        | East / B           | Stop                               |
 | Flight        | Menu               | Pause                              |
@@ -60,4 +60,4 @@ Browser history can retain a page in memory. This app suspends a flight before r
 
 Text entry, date entry and native file pickers still use keyboard or touch. Some browsers require a trusted keyboard or pointer action before audio, sharing or other protected APIs are available. Polling a controller does not create that activation; menu navigation and silent play remain usable. See the primary API/accessibility sources in the [controller plan](round-15-controller-plan.md).
 
-This increment covers the solo interface and its practice preview. Couch players retain their existing separate controls; complete couch menu ownership and Replay Theater menu navigation are future work. Controller toggle steering/Boost, physical-button capture, haptics and arbitrary nonstandard mappings are not provided. Touch tap steering/Boost remains a separate existing option. Physical controller/browser/native-device sessions must be reported separately from simulated input and DOM tests. No hardware certification or universal controller-only OS interaction is implied.
+This increment covers the solo interface and its practice preview. The v0.13 working source adds [optional solo Boost Toggle](controller-boost.md), defaulting to Hold; it is separate from binding drafts and resets on pause, Stop and recovery. Couch players retain their existing separate Hold controls; complete couch menu ownership and Replay Theater menu navigation are future work. Controller toggle steering, physical-button capture, haptics and arbitrary nonstandard mappings are not provided. Touch tap steering/Boost remains a separate existing option. Physical controller/browser/native-device sessions must be reported separately from simulated input and DOM tests. No hardware certification or universal controller-only OS interaction is implied.
