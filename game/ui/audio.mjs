@@ -47,6 +47,9 @@ export class Soundscape {
     this.pendingTrack = null;
     this.gameplayPaused = false;
     this.musicSuspendedAt = null;
+    this.musicTransportPaused = false;
+    this.songEndHandler = null;
+    this.songEnded = null;
   }
   getSettings() {
     return { ...this.settings, trackId: this.track.id };
@@ -62,6 +65,55 @@ export class Soundscape {
       step: this.cursor?.index ?? 0,
       songSteps: SYNTH_SONG_STEPS,
     };
+  }
+  /** Optional external playlist owner. Null preserves the original looping scheduler. */
+  setSongEndHandler(handler) {
+    if (handler !== null && typeof handler !== 'function')
+      throw new TypeError('Song end handler must be a function or null');
+    if (handler !== null && !this.persistentMusic)
+      throw new TypeError('A playlist requires persistent music');
+    this.songEndHandler = handler;
+  }
+  pauseMusic() {
+    this.musicTransportPaused = true;
+    this.holdMusicClock();
+    this.stopVoices('music');
+    this.musicActive = false;
+  }
+  resumeMusic() {
+    this.musicTransportPaused = false;
+    if (this.persistentMusic && this.cursor && this.musicSuspendedAt !== null) {
+      // Transport seeks may sit within a sixteenth. Keep their signed remainder;
+      // the legacy lifecycle restore still uses its original backlog clamp.
+      this.cursor = {
+        index: this.cursor.index,
+        time: this.context.currentTime + this.cursor.time - this.musicSuspendedAt,
+      };
+      this.musicSuspendedAt = null;
+    } else this.restoreMusicClock();
+  }
+  musicPosition() {
+    const step = 60 / this.track.tempo / 4,
+      durationSeconds = SYNTH_SONG_STEPS * step;
+    const now = this.musicSuspendedAt ?? this.context?.currentTime ?? 0;
+    const positionSeconds = this.cursor
+      ? clamp(this.cursor.index * step - (this.cursor.time - now), 0, durationSeconds)
+      : 0;
+    return { positionSeconds, durationSeconds };
+  }
+  seekMusic(seconds) {
+    const step = 60 / this.track.tempo / 4,
+      duration = SYNTH_SONG_STEPS * step;
+    if (!Number.isFinite(seconds) || seconds < 0 || seconds > duration)
+      throw new TypeError('Invalid synth seek position');
+    if (!this.context) return false;
+    this.stopVoices('music');
+    const now = this.context.currentTime,
+      index = Math.floor(seconds / step);
+    this.cursor = { index, time: now + index * step - seconds };
+    this.musicSuspendedAt = this.musicTransportPaused || this.paused ? now : null;
+    this.songEnded = null;
+    return true;
   }
   get previewActive() {
     return !!(
@@ -153,12 +205,14 @@ export class Soundscape {
     this.pendingTrack = null;
     this.musicSuspendedAt = null;
     this.musicActive = false;
+    this.songEnded = null;
   }
   holdMusicClock() {
     if (this.persistentMusic && this.cursor && this.musicSuspendedAt === null)
       this.musicSuspendedAt = this.context.currentTime;
   }
   restoreMusicClock() {
+    if (this.musicTransportPaused) return;
     if (this.persistentMusic && this.cursor && this.musicSuspendedAt !== null)
       this.cursor = {
         index: this.cursor.index,
@@ -544,6 +598,7 @@ export class Soundscape {
       return;
     const terminal = state.status === 'won' || state.status === 'lost';
     if (this.persistentMusic) this.gameplayPaused = !active || terminal;
+    if (this.musicTransportPaused) return;
     const preview = this.previewActive;
     if (!preview) this.previewUntil = null;
     if ((!active || terminal) && !preview && !this.persistentMusic) {
@@ -570,6 +625,9 @@ export class Soundscape {
       for (const note of composeStep(step.track ?? this.track, step.index, this.tension))
         this.play({ ...note, duration: Math.min(note.duration, remaining) }, step.time, 'music');
     }
+    const ended = this.songEnded;
+    this.songEnded = null;
+    if (ended) this.songEndHandler?.(ended);
   }
   persistentWindow(now) {
     let cursor = this.cursor;
@@ -577,6 +635,16 @@ export class Soundscape {
     // One step at a time permits a tempo change exactly at the authored boundary,
     // while retaining the shared scheduler's four-step look-ahead/backlog bounds.
     for (let n = 0; n < 4; n++) {
+      if (cursor?.index === SYNTH_SONG_STEPS && this.songEndHandler) {
+        // External queues wait for the audible boundary, not the look-ahead window.
+        if (cursor.time <= now) {
+          this.musicTransportPaused = true;
+          this.musicSuspendedAt = cursor.time;
+          this.musicActive = false;
+          this.songEnded = Object.freeze({ trackId: this.track.id });
+        }
+        break;
+      }
       if (cursor?.index === SYNTH_SONG_STEPS && cursor.time < now + 0.12) {
         if (this.pendingTrack) {
           this.track = this.pendingTrack;
