@@ -1,6 +1,6 @@
 # Couch controller menus
 
-This guide describes the **Round29 source increment after v0.19**. Source checks, browser observations, release verification and physical-device evidence have separate scopes. The [implementation plan](round-29-couch-navigation-plan.md) records the accepted scope.
+This guide describes **v0.20's shared couch menu**. The [source checks](verification/round-29/couch-source.md), [packaged browser observations](verification/round-29/v020-browser.md), [archive verification](verification/round-29/v020-integrity.md) and [public deployment](verification/round-29/v020-public.md) have separate scopes; none certifies physical controllers. The [implementation plan](round-29-couch-navigation-plan.md) records the accepted scope.
 
 Couch race has two independent boards using the same map, class, seed and steering. A shared menu chooses the setup and controls the round. It remains a local race: no network connection, shared-arena co-op or campaign rewards are added.
 
