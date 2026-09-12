@@ -552,7 +552,10 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
       fail('Another snapshot owns releases/.snapshot-lock; inspect it before retrying');
     throw e;
   }
-  const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-'));
+  // Node resolves an entry module's URL through directory symlinks. Older frozen
+  // CLIs compare that URL with argv[1], so pass the canonical path even when the
+  // temporary root is an alias such as macOS /var -> /private/var.
+  const temporary = await fs.realpath(await fs.mkdtemp(path.join(os.tmpdir(), 'xonix-snapshot-')));
   const staging = await fs.mkdtemp(path.join(releases, '.snapshot-'));
   try {
     const archivePath = path.join(temporary, 'source.tar');
@@ -798,7 +801,20 @@ export async function generateLevel(seed, { root = PROJECT_ROOT } = {}) {
   return generator.generateLevel(seed);
 }
 
-if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url)
+async function isDirectEntry() {
+  if (!process.argv[1]) return false;
+  try {
+    const [entry, module] = await Promise.all([
+      fs.realpath(path.resolve(process.argv[1])),
+      fs.realpath(fileURLToPath(import.meta.url)),
+    ]);
+    return entry === module;
+  } catch {
+    return false;
+  }
+}
+
+if (await isDirectEntry())
   main().catch((error) => {
     process.stderr.write(`Game CLI error: ${error.message}\n`);
     process.exitCode = 1;

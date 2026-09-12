@@ -5,6 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { request } from 'node:http';
 import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
   buildProject,
@@ -90,6 +91,175 @@ test('snapshot rejects unsafe refs and index-conflicting labels before any Git c
   await assert.rejects(releaseSnapshot({ ref: '--help', version: '1.0' }), /trusted local/);
   await assert.rejects(releaseSnapshot({ ref: 'HEAD', version: 'INDEX.HTML' }), /version index/);
   await assert.rejects(releaseSnapshot({ ref: 'HEAD', version: 'index.json' }), /version index/);
+});
+
+test('direct CLI invocation works through an aliased directory and reports command failures', async (t) => {
+  const { directory } = await fixture(t);
+  const scripts = path.dirname(fileURLToPath(import.meta.url));
+  const alias = path.join(directory, 'scripts-alias');
+  await fs.symlink(scripts, alias, 'dir');
+  const entry = path.join(alias, 'game-cli.mjs');
+  const help = spawnSync(process.execPath, [entry, 'help'], { encoding: 'utf8' });
+  assert.equal(help.status, 0, help.stderr);
+  assert.match(help.stdout, /Xonix game CLI/);
+  const bad = spawnSync(process.execPath, [entry, 'not-a-command'], { encoding: 'utf8' });
+  assert.equal(bad.status, 1);
+  assert.match(bad.stderr, /Unknown command/);
+});
+
+test('real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source', async (t) => {
+  const { root, directory } = await fixture(t);
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(([key]) => !key.startsWith('GIT_')),
+  );
+  Object.assign(environment, {
+    GIT_CONFIG_GLOBAL: os.devNull,
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_AUTHOR_NAME: 'Snapshot fixture',
+    GIT_AUTHOR_EMAIL: 'fixture@example.invalid',
+    GIT_COMMITTER_NAME: 'Snapshot fixture',
+    GIT_COMMITTER_EMAIL: 'fixture@example.invalid',
+    GIT_AUTHOR_DATE: '2026-09-12T12:00:00Z',
+    GIT_COMMITTER_DATE: '2026-09-12T12:00:00Z',
+  });
+  const run = (binary, args, env = environment) => {
+    const result = spawnSync(binary, args, { cwd: root, env, encoding: 'utf8' });
+    assert.equal(result.status, 0, result.error?.message || result.stderr);
+    return result.stdout;
+  };
+  const git = (...args) => run('git', args);
+  const scripts = path.join(root, 'scripts');
+  await fs.mkdir(scripts);
+  await fs.copyFile(
+    new URL('./game-cli.mjs', import.meta.url),
+    path.join(scripts, 'build-implementation.mjs'),
+  );
+  // Retain the historical argv/URL guard in the archived entry. The real build
+  // implementation runs behind it, so fixing only the current entry guard would
+  // still fail this old-revision snapshot when TMPDIR contains a symlink.
+  const historicalEntry = [
+    "import path from 'node:path';",
+    "import { pathToFileURL } from 'node:url';",
+    "import { main } from './build-implementation.mjs';",
+    'if (pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) await main();',
+    '',
+  ].join('\n');
+  await fs.writeFile(path.join(scripts, 'game-cli.mjs'), historicalEntry);
+  await fs.writeFile(path.join(root, '.gitignore'), 'releases/\n');
+  git('init', '--quiet');
+  git('add', 'game', 'scripts', '.gitignore');
+  git(
+    '-c',
+    'commit.gpgsign=false',
+    '-c',
+    `core.hooksPath=${os.devNull}`,
+    'commit',
+    '--quiet',
+    '-m',
+    'Frozen fixture',
+  );
+  git('tag', 'fixture-v1');
+  const commit = git('rev-parse', 'fixture-v1^{commit}').trim();
+  const oldCore = await fs.readFile(path.join(root, 'game/core.mjs'));
+  await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value = 999;\n');
+  await fs.writeFile(
+    path.join(scripts, 'game-cli.mjs'),
+    'throw new Error("Uncommitted CLI must not run");\n',
+  );
+  const statusBefore = git('status', '--porcelain');
+  const tempRoot = path.join(directory, 'temporary-real');
+  const tempAlias = path.join(directory, 'temporary-alias');
+  await fs.mkdir(tempRoot);
+  await fs.symlink(tempRoot, tempAlias, 'dir');
+  const childEnvironment = { ...environment, TMPDIR: tempAlias, TEMP: tempAlias, TMP: tempAlias };
+  const cliUrl = new URL('./game-cli.mjs', import.meta.url).href;
+  const options = { root, ref: 'fixture-v1', version: 'fixture-v1' };
+  const code = `import { releaseSnapshot } from ${JSON.stringify(cliUrl)}; console.log(JSON.stringify(await releaseSnapshot(${JSON.stringify(options)})));`;
+  const release = JSON.parse(
+    run(process.execPath, ['--input-type=module', '--eval', code], childEnvironment),
+  );
+  const destination = path.join(root, 'releases/fixture-v1');
+  const site = path.join(destination, 'site');
+  const archive = await fs.readFile(path.join(destination, 'source.tar'));
+  const manifestBytes = await fs.readFile(path.join(site, 'manifest.json'));
+  const manifest = JSON.parse(manifestBytes);
+  const zip = await fs.readFile(path.join(site, 'distribution.zip'));
+  const releaseBytes = await fs.readFile(path.join(destination, 'release.json'));
+  assert.equal(release.sourceRevision, commit);
+  assert.equal(release.directory, destination);
+  assert.equal(release.sourceArchiveSha256, hash(archive));
+  assert.equal(release.manifestSha256, hash(manifestBytes));
+  assert.equal(release.distributionSha256, hash(zip));
+  assert.deepEqual(
+    JSON.parse(releaseBytes),
+    Object.fromEntries(Object.entries(release).filter(([key]) => key !== 'directory')),
+  );
+  assert.equal(manifest.sourceRevision, commit);
+  assert.equal(manifest.version, 'fixture-v1');
+  const info = JSON.parse(await fs.readFile(path.join(site, 'game/build-info.json')));
+  assert.equal(info.sourceRevision, commit);
+  assert.equal(info.version, 'fixture-v1');
+  assert.deepEqual(await fs.readFile(path.join(site, 'game/core.mjs')), oldCore);
+  const sourceEntries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
+  assert.deepEqual(sourceEntries.get('game/core.mjs'), oldCore);
+  assert.equal(sourceEntries.get('scripts/game-cli.mjs').toString(), historicalEntry);
+  assert.ok(
+    ![...sourceEntries.keys()].some(
+      (name) => name.startsWith('releases/') || name.startsWith('.git/'),
+    ),
+  );
+  // Read the ZIP's actual stored entries independently of createZip's writer.
+  const zipped = new Map();
+  let offset = 0;
+  while (zip.readUInt32LE(offset) === 0x04034b50) {
+    assert.equal(zip.readUInt16LE(offset + 8), 0);
+    const size = zip.readUInt32LE(offset + 18);
+    const nameLength = zip.readUInt16LE(offset + 26);
+    const extraLength = zip.readUInt16LE(offset + 28);
+    const name = zip.subarray(offset + 30, offset + 30 + nameLength).toString();
+    const start = offset + 30 + nameLength + extraLength;
+    const bytes = zip.subarray(start, start + size);
+    assert.equal(crc32(bytes), zip.readUInt32LE(offset + 14));
+    assert.ok(!zipped.has(name));
+    zipped.set(name, bytes);
+    offset = start + size;
+  }
+  assert.equal(zip.readUInt32LE(offset), 0x02014b50);
+  assert.equal(zip.readUInt32LE(zip.length - 22), 0x06054b50);
+  assert.equal(zip.readUInt16LE(zip.length - 12), zipped.size);
+  assert.deepEqual(zipped.get('manifest.json'), manifestBytes);
+  assert.equal(zipped.size, manifest.files.length + 1);
+  for (const entry of manifest.files) {
+    const bytes = await fs.readFile(path.join(site, entry.path));
+    assert.deepEqual(zipped.get(entry.path), bytes);
+    assert.equal(hash(bytes), entry.sha256);
+    assert.equal(bytes.length, entry.bytes);
+  }
+  assert.equal(
+    await fs.readFile(path.join(site, 'distribution.zip.sha256'), 'utf8'),
+    `${hash(zip)}  distribution.zip\n`,
+  );
+  const index = JSON.parse(await fs.readFile(path.join(root, 'releases/index.json')));
+  assert.deepEqual(index.releases, [JSON.parse(releaseBytes)]);
+  const { server, url } = await startServer({ root: path.join(root, 'releases'), port: 0 });
+  try {
+    assert.equal((await getRaw(url, '/fixture-v1/site/game/')).status, 200);
+    assert.equal((await getRaw(url, '/fixture-v1/site/game/core.mjs')).body, oldCore.toString());
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+  }
+  await assert.rejects(releaseSnapshot(options), /already exists/);
+  assert.deepEqual(await fs.readFile(path.join(site, 'distribution.zip')), zip);
+  assert.deepEqual(await fs.readFile(path.join(destination, 'release.json')), releaseBytes);
+  assert.equal(git('rev-parse', 'HEAD').trim(), commit);
+  assert.equal(git('rev-parse', 'fixture-v1').trim(), commit);
+  assert.equal(git('status', '--porcelain'), statusBefore);
+  assert.deepEqual(await fs.readdir(tempRoot), []);
+  assert.deepEqual((await fs.readdir(path.join(root, 'releases'))).sort(), [
+    'fixture-v1',
+    'index.html',
+    'index.json',
+  ]);
 });
 
 test('build is byte-reproducible and each manifest checksum covers exact output bytes', async (t) => {
