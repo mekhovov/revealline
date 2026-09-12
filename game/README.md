@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.13.0 working source includes 29 maps: 12 base campaign maps and 17 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter, Equipment Workshop and Sentinel Relay. The latest frozen release remains v0.12.0; it includes controller reading but retains Hold-only controller Boost.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The latest frozen release is [v0.13.0](http://127.0.0.1:8767/releases/v0.13.0/site/game/), with 29 maps: 12 base campaign maps and 17 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter, Equipment Workshop and Sentinel Relay. It adds optional Toggle controller Boost while keeping Hold as the default. All sixteen earlier releases remain independently preserved.
 
 ## The loop
 
@@ -109,6 +109,8 @@ The separate motion lab, legacy draft packs and media library retain their own f
 The [authored-art workflow](../docs/authored-art.md) covers source preservation, optional AI styling, map-specific embedded pictures, pack rebuilds and actual reveal/gallery checks. Homeward Skies supplies three original illustrated examples with separate source files and effective prompts.
 
 The static distribution includes **Prepare offline play** in Settings. Preparation must finish online before an offline reopen; source previews do not register a worker. See [offline instructions](../docs/offline-release.md), [development](../docs/development.md), [public release](../docs/public-release.md) and [saved versions](../docs/versioning.md). Native store packages and physical phone/controller/audio/performance checks remain separate from browser layout and automated simulation evidence.
+
+The frozen v0.13.0 source passes [1,406 tests](../docs/verification/round-23/source-gates.md), and its archived source [rebuilds all 133 outputs identically](../docs/verification/round-23/integrity-notes.md). The [offline check](../docs/verification/round-23/frozen-browser.md) verifies **126 files / 20,515,050 bytes**. With its server stopped, a live cut was saved, reloaded, restored paused and completed; another offline reload retained the picture and one 8,160-point score at **4.03 seconds**. The same offline origin loaded Controller practice and exercised Toggle, Stop and recovery. These are recorded browser results, not physical-device or native-build certification.
 
 ## Author optional goals
 
