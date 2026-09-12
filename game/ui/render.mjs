@@ -1,5 +1,12 @@
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
+import {
+  classicView,
+  drawClassicTerrain,
+  drawClassicPickups,
+  drawClassicEnemy,
+  drawClassicStatus,
+} from './classic-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { createSceneArt } from './scene-art.mjs';
@@ -235,6 +242,7 @@ export class BoardPainter {
     const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
     const p = this.theme.palette,
       t = state.time;
+    const classic = fullReveal ? null : classicView(state);
     this.time += paused ? 0 : dt;
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
@@ -278,6 +286,7 @@ export class BoardPainter {
       }
       ctx.globalAlpha = 1;
     }
+    drawClassicTerrain(ctx, classic, p, this.images);
     for (let y = 0; y < rows; y++)
       for (let x = 0; x < columns; x++) {
         const v = state.cells[y * columns + x],
@@ -412,10 +421,14 @@ export class BoardPainter {
           e.bossPhase !== 'idle' &&
           e.bossPhase !== 'recovery'
         ) {
+          const frozen = classic?.enemies.some((enemy) => enemy.id === e.id && enemy.frozen);
           ctx.save();
-          ctx.fillStyle = p.danger;
-          ctx.globalAlpha =
-            e.bossPhase === 'active' ? 0.35 : 0.1 + (reduced ? 0 : Math.sin(t * 8) * 0.03);
+          ctx.fillStyle = frozen ? p.muted : p.danger;
+          ctx.globalAlpha = frozen
+            ? 0.12
+            : e.bossPhase === 'active'
+              ? 0.35
+              : 0.1 + (reduced ? 0 : Math.sin(t * 8) * 0.03);
           if (e.axis === 'horizontal')
             ctx.fillRect(
               16,
@@ -434,6 +447,7 @@ export class BoardPainter {
         }
       }
       drawEncounterLane(ctx, state, p);
+      drawClassicPickups(ctx, classic, p, this.images);
       for (const pad of state.supplies) {
         if (this.images.supply)
           ctx.drawImage(this.images.supply, pad.x * CELL - 8, pad.y * CELL - 8, 16, 16);
@@ -505,7 +519,7 @@ export class BoardPainter {
           32,
           stunned ? p.muted : p.danger,
           this.images.boss,
-          t,
+          classic?.actorTime ?? t,
           reduced,
         );
         ctx.globalAlpha = 1;
@@ -536,6 +550,15 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
       }
       for (const e of state.enemies) {
+        if (
+          drawClassicEnemy(
+            ctx,
+            classic?.enemies.find((enemy) => enemy.id === e.id),
+            p,
+            this.images,
+          )
+        )
+          continue;
         if (e.type === 'relay-sentinel') {
           if (!state.encounter?.defeated) {
             ctx.strokeStyle = p.danger;
@@ -565,7 +588,7 @@ export class BoardPainter {
           size,
           stunned ? p.muted : p.danger,
           this.images[role],
-          t,
+          classic?.actorTime ?? t,
           reduced,
         );
         ctx.globalAlpha = 1;
@@ -587,6 +610,7 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
+      drawClassicStatus(ctx, classic, p);
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
         this.heading;

@@ -178,10 +178,28 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   )
     return progress;
   const rules = { ...DEFAULT_RULES, ...level.rules };
-  if (!Number.isInteger(result.lives) || result.lives < 1 || result.lives > rules.lives)
+  const classic = result.ruleset === 'xonix-core.v5';
+  if (
+    !Number.isInteger(result.lives) ||
+    result.lives < 1 ||
+    result.lives > (classic ? 9 : rules.lives)
+  )
     return progress;
+  if (classic) {
+    const possibleGains = level.classic.powerups.filter(
+      (item) => item.kind === 'extra-life',
+    ).length;
+    if (
+      !Number.isInteger(result.livesLost) ||
+      result.livesLost < 0 ||
+      result.lives + result.livesLost < rules.lives ||
+      result.lives + result.livesLost > rules.lives + possibleGains
+    )
+      return progress;
+  }
+  const clean = classic ? result.livesLost === 0 : result.lives === rules.lives;
   const medal =
-    result.time <= rules.timeMedals[0] + EPS && result.lives === rules.lives
+    result.time <= rules.timeMedals[0] + EPS && clean
       ? 'gold'
       : result.time <= rules.timeMedals[1] + EPS
         ? 'silver'
@@ -195,7 +213,7 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
     score: result.score,
     time: result.time,
     medals,
-    clean: result.lives === rules.lives,
+    clean,
   };
   const variants = { ...old?.variants };
   // Keep the 256 most recently used setup records while retaining aggregate bests.

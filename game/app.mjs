@@ -2,6 +2,7 @@ import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
+import { classicView } from './ui/classic-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
@@ -2758,13 +2759,17 @@ try {
         : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
-    const encounter = encounterView(run);
-    show('encounter-status', !!encounter && !campaignOverview);
-    if (encounter) {
-      $('encounter-title').textContent = encounter.title;
-      $('encounter-instruction').textContent = encounter.instruction;
-      $('encounter-status').dataset.phase = encounter.phase;
-    }
+    const encounter = encounterView(run),
+      classic = classicView(run);
+    show('encounter-status', !!(encounter || classic) && !campaignOverview);
+    $('encounter-title').textContent = encounter?.title || 'Classic field';
+    $('encounter-instruction').textContent = encounter?.instruction || '';
+    show('encounter-instruction', !!encounter);
+    $('classic-summary').textContent = classic?.summary || '';
+    show('classic-summary', !!classic);
+    $('encounter-status').dataset.phase =
+      encounter?.phase ||
+      (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
     refreshMastery();
     refreshCourse();
   }
@@ -2789,6 +2794,7 @@ try {
             'mission-timeout': 'The mission clock ran out. Try a faster route.',
             'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
             'cable-limit': 'Your cable budget ran out. Close a shorter line.',
+            'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
         );
       if (event.type === 'shield.absorbed')
@@ -2813,6 +2819,26 @@ try {
         );
       if (event.type === 'pickup.collected')
         warning('Supplies ready. Choose your next opportunity.');
+      if (event.type === 'powerup.collected')
+        warning(
+          {
+            'extra-life': event.gain
+              ? 'Extra life collected.'
+              : 'Life pickup collected. Already at the nine-life limit.',
+            'player-speed': 'Speed pickup: faster flight for five seconds.',
+            'enemy-slow': 'Slow pickup: enemies move at half speed for six seconds.',
+            'enemy-freeze':
+              'Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.',
+          }[event.kind] || 'Powerup collected.',
+        );
+      if (event.type === 'rover.warning')
+        warning('Claimed-ground rover waking in one second. Watch the marked actor.');
+      if (event.type === 'rover.activated')
+        warning('Claimed-ground rover active. Your secured ground still has a moving threat.');
+      if (event.type === 'erosion.warning')
+        warning('The marked captured cell is about to reopen. Watch the edge timer.');
+      if (event.type === 'cells.eroded')
+        warning('Ground reopened. Reclaiming it restores coverage, without repeat capture points.');
       if (
         event.type === 'encounter.stageChanged' ||
         event.type === 'encounter.phaseChanged' ||

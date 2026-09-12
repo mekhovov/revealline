@@ -23,6 +23,10 @@ const explanations = Object.freeze({
     'Your open line exceeded its length limit.',
     'Plan a shorter line back to safe ground.',
   ],
+  'lethal-terrain': [
+    'Your character touched a lethal field.',
+    'Route around its warning pattern or enclose it from safe ground before crossing.',
+  ],
   'mission-timeout': [
     'The mission clock ran out.',
     'Plan a shorter route to the required reveal area and objectives.',

@@ -1,5 +1,12 @@
 import { geometryForLevel } from '../core/geometry.mjs';
 import { boardPaintSizeForLevel } from '../ui/render.mjs';
+import { createRun } from '../core/index.mjs';
+import {
+  classicView,
+  drawClassicTerrain,
+  drawClassicPickups,
+  drawClassicEnemy,
+} from '../ui/classic-view.mjs';
 
 export function paintEditorMap(canvas, current) {
   const { width, height } = boardPaintSizeForLevel(current.level);
@@ -7,6 +14,12 @@ export function paintEditorMap(canvas, current) {
   if (canvas.height !== height) canvas.height = height;
   const c = canvas.getContext('2d'),
     s = 16;
+  const classic =
+    current.level.version === 'xonix-level.v4'
+      ? classicView(
+          createRun(current.level, { ...current.settings, classRecipes: current.classRecipes }),
+        )
+      : null;
   c.fillStyle = current.theme.palette.field;
   c.fillRect(0, 0, width, height);
   c.fillStyle = current.theme.palette.safe;
@@ -51,7 +64,17 @@ export function paintEditorMap(canvas, current) {
   }
   c.fillStyle = '#849496';
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
+  drawClassicTerrain(c, classic, current.theme.palette);
+  drawClassicPickups(c, classic, current.theme.palette);
   for (const e of current.level.enemies) {
+    if (
+      drawClassicEnemy(
+        c,
+        classic?.enemies.find((enemy) => enemy.id === e.id),
+        current.theme.palette,
+      )
+    )
+      continue;
     c.fillStyle = current.theme.palette.danger;
     c.beginPath();
     c.arc(e.x * s, e.y * s, e.type === 'lane-boss' ? 12 : 6, 0, Math.PI * 2);

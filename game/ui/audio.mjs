@@ -566,7 +566,16 @@ export class Soundscape {
       }
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
     else if (event.type === 'cells.claimed') cue([0, 4, 7], 'bell', 0.04, 0.2);
-    else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
+    else if (event.type === 'cells.eroded') cue([7, 3, 0], 'chip', 0.07, 0.12);
+    else if (event.type === 'powerup.collected') {
+      const notes = {
+        'extra-life': [0, 4, 7, 12],
+        'player-speed': [0, 7, 14],
+        'enemy-slow': [12, 7, 4],
+        'enemy-freeze': [12, 0, 12],
+      }[event.kind];
+      if (notes) cue(notes, 'bell', 0.055, 0.18);
+    } else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
     else if (event.type === 'encounter.phaseChanged' && event.phase === 'open')
       cue([0, 7, 12], 'bell', 0.08, 0.16);
     else if (event.type === 'encounter.stageChanged' && event.stage === 'transition')
@@ -574,6 +583,8 @@ export class Soundscape {
     else if (
       event.type === 'boss.warning' ||
       event.type === 'signal.warning' ||
+      event.type === 'rover.warning' ||
+      event.type === 'erosion.warning' ||
       (event.type === 'encounter.phaseChanged' && event.phase === 'warning')
     )
       cue([1, 1], 'chip', 0.16, 0.1);
