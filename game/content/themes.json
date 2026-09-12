@@ -1,0 +1,129 @@
+{
+  "version": "xonix-themes.v1",
+  "themes": [
+    {
+      "id": "fpv",
+      "name": "FPV Front",
+      "subtitle": "Dawn over home",
+      "family": "fpv",
+      "player": "fpv-body",
+      "enemyShape": "tank",
+      "patrolShape": "drone",
+      "bossShape": "radar",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply pad",
+        "enemy": "Invader patrol",
+        "boss": "Signal sentinel",
+        "currency": "Score",
+        "ability": "Equipment"
+      },
+      "palette": {
+        "ink": "#112d35",
+        "paper": "#f5f1e6",
+        "muted": "#8baaa5",
+        "accent": "#e9c46a",
+        "safe": "#81b5bf",
+        "danger": "#f08168",
+        "field": "#102831",
+        "grid": "#193941",
+        "sky": "#dfb781",
+        "land": "#687c55"
+      }
+    },
+    {
+      "id": "ukraine",
+      "name": "Ukraine Atlas",
+      "subtitle": "Threads of belonging",
+      "family": "atlas",
+      "player": "ukrainian-bird",
+      "enemyShape": "moth",
+      "patrolShape": "spark",
+      "bossShape": "flower",
+      "scene": "heritage",
+      "labels": {
+        "objective": "Memory",
+        "supply": "Garden gate",
+        "enemy": "Thorn spirit",
+        "boss": "Winter bloom",
+        "currency": "Score",
+        "ability": "Gift"
+      },
+      "palette": {
+        "ink": "#29343c",
+        "paper": "#f3ecdf",
+        "muted": "#aaa18e",
+        "accent": "#e5ba6c",
+        "safe": "#90b7bf",
+        "danger": "#d98277",
+        "field": "#252d3e",
+        "grid": "#344154",
+        "sky": "#dcb894",
+        "land": "#697d73"
+      }
+    },
+    {
+      "id": "retro",
+      "name": "1994 Forever",
+      "subtitle": "One more credit",
+      "family": "retro",
+      "player": "retro-craft",
+      "enemyShape": "orb",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "arcade",
+      "labels": {
+        "objective": "Cartridge",
+        "supply": "Dock",
+        "enemy": "Glitch",
+        "boss": "Mainframe",
+        "currency": "Score",
+        "ability": "Power-up"
+      },
+      "palette": {
+        "ink": "#242a41",
+        "paper": "#eee8df",
+        "muted": "#aaa1b1",
+        "accent": "#f5bf77",
+        "safe": "#7edacb",
+        "danger": "#f57d9b",
+        "field": "#171d35",
+        "grid": "#293050",
+        "sky": "#e49c95",
+        "land": "#565270"
+      }
+    },
+    {
+      "id": "coupa",
+      "name": "Spend Network",
+      "subtitle": "A clearer picture of spend",
+      "family": "navi",
+      "player": "navi-avatar",
+      "enemyShape": "cube",
+      "patrolShape": "spark",
+      "bossShape": "core",
+      "scene": "network",
+      "labels": {
+        "objective": "Opportunity",
+        "supply": "Sync point",
+        "enemy": "Exception",
+        "boss": "Complexity hub",
+        "currency": "Insight",
+        "ability": "AI assist"
+      },
+      "palette": {
+        "ink": "#173747",
+        "paper": "#edf2ed",
+        "muted": "#85a8b6",
+        "accent": "#e2c775",
+        "safe": "#87cbe0",
+        "danger": "#e69477",
+        "field": "#112b3e",
+        "grid": "#1e3d51",
+        "sky": "#bbdadd",
+        "land": "#689bb1"
+      }
+    }
+  ]
+}

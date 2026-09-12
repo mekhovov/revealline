@@ -1,0 +1,519 @@
+{
+  "version": "xonix-campaign.v1",
+  "id": "first-signal",
+  "revision": "1",
+  "title": "First Signal",
+  "levels": [
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-01",
+      "revision": "1",
+      "name": "First Signal",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "roamer",
+          "type": "bouncer",
+          "x": 37.5,
+          "y": 24.5,
+          "vx": 2.2,
+          "vy": 1.6,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.45
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [40, 73]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-02",
+      "revision": "1",
+      "name": "Relay Orchard",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "roamer",
+          "type": "bouncer",
+          "x": 36.5,
+          "y": 27.5,
+          "vx": -1.6,
+          "vy": 2.4,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 14.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.58
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [45, 81]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-03",
+      "revision": "1",
+      "name": "Crosswind",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 11.5,
+          "y": 24.5,
+          "vx": 2.5,
+          "vy": -2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 12.5,
+          "vx": -2.2,
+          "vy": 2.5,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.62
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [50, 89]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-04",
+      "revision": "1",
+      "name": "Stone Lanes",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [
+        {
+          "x": 10,
+          "y": 10,
+          "w": 8,
+          "h": 2
+        },
+        {
+          "x": 29,
+          "y": 21,
+          "w": 8,
+          "h": 2
+        }
+      ],
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 10.5,
+          "y": 22.5,
+          "vx": 2.6,
+          "vy": 2,
+          "radius": 0.3
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 37.5,
+          "y": 25.5,
+          "vx": -2.8,
+          "vy": -1.8,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 11.5,
+          "y": 29.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.65
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [55, 97]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-05",
+      "revision": "1",
+      "name": "Night Patrol",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "field",
+          "type": "bouncer",
+          "x": 36.5,
+          "y": 22.5,
+          "vx": -2.6,
+          "vy": 2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "patrol",
+          "type": "border-patrol",
+          "x": 0.5,
+          "y": 35.5,
+          "speed": 2.5,
+          "clockwise": true
+        }
+      ],
+      "objectives": [],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.65
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [60, 105]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-06",
+      "revision": "1",
+      "name": "Hidden Frequency",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 10.5,
+          "y": 20.5,
+          "vx": 2.8,
+          "vy": 2.3,
+          "radius": 0.3
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 25.5,
+          "vx": -3.2,
+          "vy": -2.6,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [
+        {
+          "id": "hidden-relay",
+          "x": 8.5,
+          "y": 10.5,
+          "required": true,
+          "hidden": true
+        },
+        {
+          "id": "bonus",
+          "x": 37.5,
+          "y": 30.5,
+          "required": false,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.68
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [65, 113]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-07",
+      "revision": "1",
+      "name": "The Crossing",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "field",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 25.5,
+          "vx": -3.2,
+          "vy": 2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 35.5,
+          "y": 17.5,
+          "axis": "horizontal",
+          "period": 8,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 27.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.7
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [70, 121]
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-08",
+      "revision": "1",
+      "name": "Last Light",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [
+        {
+          "x": 9,
+          "y": 11,
+          "w": 7,
+          "h": 2
+        }
+      ],
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 11.5,
+          "y": 24.5,
+          "vx": 2.8,
+          "vy": -2.4,
+          "radius": 0.3
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 39.5,
+          "y": 29.5,
+          "vx": -3.1,
+          "vy": 2.6,
+          "radius": 0.3
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 34.5,
+          "y": 15.5,
+          "axis": "vertical",
+          "period": 8.5,
+          "warningSeconds": 2,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 29.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.72
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [75, 129]
+      }
+    }
+  ],
+  "briefs": [
+    "Fly down from the marked start to the opposite border. Close your line to reveal the side without a field enemy.",
+    "Enclose the gold relay as well as reaching the coverage target. Scan shows hidden information; a captured relay stays restored.",
+    "Two enemies can preserve both sides of a cut. A secured line still gives you a new starting point.",
+    "Walls block movement. Bend your route around them, then reconnect to blue safe ground.",
+    "A border patrol makes the outer rail dangerous. Watch its direction before waiting on the edge.",
+    "A required relay is hidden. Scout can reveal it; its location can also be captured through an ordinary cut.",
+    "The sentinel warns before activating a lane. Wait for the recovery window or protect your line with a shield.",
+    "Combine coverage, a relay and the sentinel warning. Choose your next cut, then commit."
+  ]
+}
