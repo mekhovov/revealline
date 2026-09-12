@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#112d35" />
+    <meta
+      name="description"
+      content="Watch verified Reveal Line recordings without changing your progress."
+    />
+    <title>Replay Theater · Reveal Line</title>
+    <link rel="stylesheet" href="./theater.css" />
+    <script type="module" src="./app.mjs"></script>
+  </head>
+  <body>
+    <header class="page-head">
+      <a href="../">← Back to the game</a>
+      <span class="eyebrow">Reveal Line / Replay Theater</span>
+      <h1>Watch the route unfold.</h1>
+      <p>Pause at a turning point. Follow the cable. See what each craft changes.</p>
+      <p class="notice">Read-only playback · No rewards, scores or player progress are saved.</p>
+      <a href="#playback">Jump to playback ↓</a>
+    </header>
+    <p id="boot-status" role="status">Preparing the theater…</p>
+    <main inert aria-busy="true" data-boot-inert>
+      <section id="playback" class="watch" aria-labelledby="recording-name">
+        <div class="recording-head">
+          <div>
+            <span class="eyebrow">Verified recording</span>
+            <h2 id="recording-name">Choose a recording</h2>
+          </div>
+          <span id="playback-phase" class="badge">Empty</span>
+        </div>
+        <div class="stage">
+          <canvas
+            id="board"
+            width="768"
+            height="576"
+            tabindex="0"
+            aria-label="Recorded territory-capture game. Space plays or pauses; right arrow steps one tick."
+          ></canvas>
+        </div>
+        <div class="transport" aria-label="Playback controls">
+          <button id="play-pause" type="button" disabled>Play</button>
+          <button id="restart" type="button" disabled>Restart</button>
+          <button id="step" type="button" disabled>Step 1 tick</button>
+          <label
+            >Speed
+            <select id="speed" disabled>
+              <option value="0.5">0.5×</option>
+              <option value="1" selected>1×</option>
+              <option value="2">2×</option>
+            </select></label
+          >
+        </div>
+        <progress
+          id="timeline"
+          value="0"
+          max="1"
+          aria-label="Recording playback progress"
+        ></progress>
+        <div class="readouts">
+          <span id="tick-readout">Tick 0 / 0</span><span id="time-readout">0.00 / 0.00 s</span>
+        </div>
+        <p id="run-readout">The original rules and controller inputs determine every tick.</p>
+        <p id="checkpoint" class="checkpoint">A recording is verified before it appears here.</p>
+        <p id="transport-status" role="status" aria-live="polite">
+          Playback starts only when you choose Play.
+        </p>
+        <p id="asset-status" class="quiet"></p>
+        <details>
+          <summary>Recorded events</summary>
+          <ol id="events" class="event-list">
+            <li>No events yet.</li>
+          </ol>
+        </details>
+      </section>
+      <aside>
+        <section class="panel" aria-labelledby="load-heading">
+          <span class="eyebrow">Fieldcraft collection</span>
+          <h2 id="load-heading">Four ways through.</h2>
+          <label for="example">Watch an equipment example</label>
+          <select id="example">
+            <option value="fieldcraft-01">Copper Crossing · Fiber</option>
+            <option value="fieldcraft-02">Switchyard Circuit · Carrier</option>
+            <option value="fieldcraft-03">Pulse Recall · Impact</option>
+            <option value="fieldcraft-04">Net Loom · Trapper</option>
+          </select>
+          <p id="example-brief" class="quiet"></p>
+          <button id="load-example" type="button">Load example</button>
+          <details class="import-panel">
+            <summary>Import your own replay</summary>
+            <p>
+              Choose a normal <code>xonix-replay.v3</code> JSON file, or paste one below. Maximum 32
+              MiB / 30 recorded minutes.
+            </p>
+            <label for="replay-file">Replay file</label>
+            <input id="replay-file" type="file" accept=".json,application/json" />
+            <label for="replay-text">Or paste replay JSON</label>
+            <textarea
+              id="replay-text"
+              rows="6"
+              maxlength="33554432"
+              spellcheck="false"
+              placeholder='{"version":"xonix-replay.v3", …}'
+            ></textarea>
+            <button id="load-text" type="button">Verify and load JSON</button>
+          </details>
+          <div class="load-status">
+            <p id="import-status" role="status" aria-live="polite">Loading the first example…</p>
+            <button id="cancel-load" type="button" hidden>Cancel load</button>
+          </div>
+        </section>
+        <section class="panel" aria-labelledby="look-heading">
+          <h2 id="look-heading">A different atmosphere.</h2>
+          <label for="theme">Presentation theme</label>
+          <select id="theme"></select>
+          <label class="check"><input id="reduced" type="checkbox" /> Reduce effects</label>
+          <label class="check"><input id="grid" type="checkbox" /> Show grid</label>
+          <p class="quiet">
+            Themes change the art. The imported route, class abilities and result stay exactly as
+            recorded. This theater is silent.
+          </p>
+        </section>
+        <p class="smallprint">
+          The examples use normal movement, equipment and class-change inputs. They are
+          demonstrations, not player completions. To try them yourself, install Fieldcraft in the
+          game’s Library.
+        </p>
+      </aside>
+    </main>
+    <noscript><p>This theater needs JavaScript to verify and play recordings.</p></noscript>
+  </body>
+</html>

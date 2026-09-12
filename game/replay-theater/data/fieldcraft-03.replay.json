@@ -1,0 +1,307 @@
+{
+  "version": "xonix-replay.v3",
+  "build": "fieldcraft-role-proof",
+  "ruleset": "xonix-core.v2",
+  "level": {
+    "version": "xonix-level.v1",
+    "revision": "1",
+    "width": 48,
+    "height": 36,
+    "themeId": "fpv",
+    "musicId": "fieldcraft-theme",
+    "id": "fieldcraft-03",
+    "name": "Pulse Recall",
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [
+      {
+        "x": 10,
+        "y": 22,
+        "w": 7,
+        "h": 2
+      },
+      {
+        "x": 32,
+        "y": 24,
+        "w": 6,
+        "h": 2
+      }
+    ],
+    "enemies": [
+      {
+        "id": "cable-cutter",
+        "type": "bouncer",
+        "x": 29.5,
+        "y": 3.5,
+        "vx": -4,
+        "vy": 0,
+        "radius": 0.3
+      }
+    ],
+    "objectives": [
+      {
+        "id": "recovery-relay",
+        "x": 38.5,
+        "y": 28.5,
+        "required": true,
+        "hidden": false
+      }
+    ],
+    "supplies": [],
+    "signalZones": [
+      {
+        "id": "recall-emitter",
+        "x": 22,
+        "y": 2,
+        "w": 5,
+        "h": 5,
+        "speedFactor": 0.5,
+        "disableBoost": false,
+        "lockAbility": false
+      }
+    ],
+    "goal": {
+      "coverage": 0.7
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [16, 25],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 35,
+      "cutTimeLimitSeconds": 6,
+      "maxTrailCells": 48
+    },
+    "metadata": {
+      "description": "Recommended: Impact craft. The nearby roamer threatens a cut from the top. Pulse before it touches your cable: the cut is abandoned and the craft redeploys without losing a life. The pulse also holds nearby enemies and suppresses the emitter briefly. Recover at home, then choose a safer cross-field cut from the left rail. This is an escape tool; the pulse never claims territory."
+    },
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "options": {
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "impact",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "fiber",
+        "label": "Fiber relay",
+        "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 7,
+        "duration": 3,
+        "radius": 30,
+        "signalResistance": true,
+        "moveSpeedMultiplier": 1,
+        "revision": "1"
+      },
+      {
+        "id": "impact",
+        "label": "Impact craft",
+        "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+        "primitive": "impact-pulse",
+        "capacity": 0,
+        "cooldown": 10,
+        "duration": 3,
+        "radius": 5,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 104,
+      "input": {
+        "direction": "down",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 210,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 240,
+      "input": {
+        "direction": "left",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 100,
+      "input": {
+        "direction": "down",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 465,
+      "input": {
+        "direction": "right",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": false,
+  "ticks": 1120,
+  "summary": {
+    "ruleset": "xonix-core.v2",
+    "levelId": "fieldcraft-03",
+    "revision": "1",
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "impact",
+    "activeClassId": "impact",
+    "rosterHash": "roster-v1-e159e435",
+    "classHistory": [
+      {
+        "classId": "impact",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-ac8eb5df",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": null,
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-ac8eb5df",
+    "status": "won",
+    "won": true,
+    "tick": 1120,
+    "time": 9.333333333333444,
+    "lives": 3,
+    "score": 11740,
+    "coverage": 0.7308192457737321,
+    "claimedCount": 1124,
+    "totalClaimable": 1538,
+    "medal": "gold",
+    "objectives": {
+      "captured": 1,
+      "total": 1,
+      "required": 1
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v2",
+    "hash": "52bc468e9bf76168",
+    "sections": {
+      "identity": "9338422fce5501f3",
+      "configuration": "536809a4b2a9a5a1",
+      "board": "7ef69f7a8ecc7d82",
+      "player": "e92ae86d4f922bb2",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "04486b5cc89eaecd",
+      "objectives": "94ffdca0362e0f09",
+      "supplies": "09612b07b5ecb5a5",
+      "ability": "5de8d8bad6e16220",
+      "clock": "3b1f523286f57b5b",
+      "continuation": "b90ee8c788f6c77f",
+      "result": "5d0b189961c0995d"
+    }
+  }
+}
