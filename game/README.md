@@ -30,6 +30,8 @@ The campaign introduces bouncers, border patrols, supplies, objectives, obstacle
 
 ## Solo controls and classes
 
+The working [Campaign difficulty](../docs/campaign-difficulty.md) increment is under verification: **Standard** keeps authored rules and optional equipment seals; **Gentle** offers the same pictures with more lives, slower moving hazards and fewer limits. Both modes contribute to mission/appearance access while retaining separate scores and medals. A choice during an unfinished flight applies to the next fresh attempt; Resume and Load preserve the current mode, while Retry starts over in the selected mode. The guide explains exact context matching, grouped gallery results, the shared 1,000-score history and distinct 30-minute recorder / 7,200-second collection bounds. This source description is not release or browser acceptance; Couch, Challenges, First Flight and Practice retain their own rules.
+
 | Input                    | Action                                                                                                                                                    |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Arrows / WASD            | Move in four directions; release to stop                                                                                                                  |
