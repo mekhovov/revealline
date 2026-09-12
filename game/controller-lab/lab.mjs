@@ -215,7 +215,7 @@ function resize() {
   frame.style.transform = `scale(${scale})`;
   $('frame-space').style.height = `${Math.ceil(height * scale)}px`;
   $('viewport-readout').textContent =
-    `${width} × ${height} · ${Math.round(scale * 100)}% display scale`;
+    `${width} × ${height} requested · frame reports ${frame.contentWindow?.innerWidth ?? '—'} × ${frame.contentWindow?.innerHeight ?? '—'} · ${Math.round(scale * 100)}% display scale`;
 }
 async function loadPractice() {
   const choice = selectedMission();
@@ -333,16 +333,22 @@ try {
   const entry = { campaign, themes: themes.themes, classRecipes };
   for (const level of campaign.levels)
     missions.push({ entry, levelId: level.id, label: `${campaign.title} / ${level.name}` });
-  let packNote = '';
-  try {
-    const { pack } = await preparePack(await json('../content/packs/fieldcraft.json'));
-    for (const campaign of pack.campaigns) {
-      const entry = resolvePackCampaign(pack, campaign.id);
-      for (const level of entry.campaign.levels)
-        missions.push({ entry, levelId: level.id, label: `${pack.name} / ${level.name}` });
+  const packNotes = [];
+  for (const [name, path] of [
+    ['Fieldcraft', '../content/packs/fieldcraft.json'],
+    ['Sentinel Relay', '../content/packs/sentinel-relay.json'],
+    ['Reading practice', './reading-practice.json'],
+  ]) {
+    try {
+      const { pack } = await preparePack(await json(path));
+      for (const campaign of pack.campaigns) {
+        const entry = resolvePackCampaign(pack, campaign.id);
+        for (const level of entry.campaign.levels)
+          missions.push({ entry, levelId: level.id, label: `${pack.name} / ${level.name}` });
+      }
+    } catch (error) {
+      packNotes.push(`${name} unavailable: ${error.message}`);
     }
-  } catch (error) {
-    packNote = ` Fieldcraft unavailable: ${error.message}`;
   }
   if (!disposed) {
     missions.forEach((mission, index) => option($('mission'), String(index), mission.label));
@@ -351,7 +357,7 @@ try {
     refreshClasses();
     $('load').disabled = false;
     await loadPractice();
-    if (packNote) status(`${$('load-status').textContent}${packNote}`);
+    if (packNotes.length) status(`${$('load-status').textContent} ${packNotes.join(' ')}`);
   }
 } catch (error) {
   status(error.message, true);

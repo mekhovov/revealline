@@ -48,8 +48,9 @@
               aria-label="Territory capture game. Arrow keys or WASD move. E uses an ability, R picks up supplies. Escape pauses."
             ></div>
             <div id="game-overlay" class="game-overlay">
-              <div class="overlay-card">
+              <div id="overlay-reading-unit" class="overlay-card">
                 <div
+                  id="overlay-reading"
                   class="overlay-message"
                   role="region"
                   aria-label="Mission details"
@@ -64,6 +65,35 @@
                   </p>
                   <div id="result-medals" class="result-medals" hidden></div>
                   <p id="mastery-overlay" class="mastery-note" hidden></p>
+                </div>
+                <div class="reading-toolbar">
+                  <div class="reading-actions">
+                    <button
+                      id="overlay-read"
+                      type="button"
+                      aria-controls="overlay-reading"
+                      aria-pressed="false"
+                    >
+                      Read details
+                    </button>
+                    <button
+                      id="overlay-reading-done"
+                      type="button"
+                      aria-controls="overlay-reading"
+                      disabled
+                    >
+                      Done reading
+                    </button>
+                  </div>
+                  <p
+                    id="overlay-reading-hint"
+                    class="reading-hint"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                  >
+                    Read without starting or resuming.
+                  </p>
                 </div>
                 <div class="overlay-actions">
                   <button
@@ -195,10 +225,49 @@
           <p id="continue-saved-note" class="micro-note" role="status" hidden></p>
           <details id="mission-brief" class="mission-brief">
             <summary>Mission brief</summary>
-            <p id="mission-brief-title" class="mission-brief-title"></p>
-            <p id="mission-brief-copy"></p>
-            <p id="mission-brief-facts"></p>
-            <p id="mastery-brief" class="mastery-note" hidden></p>
+            <div id="mission-brief-unit">
+              <div class="reading-toolbar">
+                <div class="reading-actions">
+                  <button
+                    id="mission-brief-read"
+                    type="button"
+                    aria-controls="mission-brief-reading"
+                    aria-pressed="false"
+                  >
+                    Read mission brief
+                  </button>
+                  <button
+                    id="mission-brief-reading-done"
+                    type="button"
+                    aria-controls="mission-brief-reading"
+                    disabled
+                  >
+                    Done reading
+                  </button>
+                </div>
+                <p
+                  id="mission-brief-reading-hint"
+                  class="reading-hint"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  Read without starting or resuming.
+                </p>
+              </div>
+              <div
+                id="mission-brief-reading"
+                role="region"
+                aria-label="Full mission brief"
+                tabindex="0"
+                data-game-reading
+              >
+                <p id="mission-brief-title" class="mission-brief-title"></p>
+                <p id="mission-brief-copy"></p>
+                <p id="mission-brief-facts"></p>
+                <p id="mastery-brief" class="mastery-note" hidden></p>
+              </div>
+            </div>
           </details>
           <label class="field">World<select id="theme-select"></select></label>
           <label class="field">Campaign<select id="campaign-select"></select></label>

@@ -5,6 +5,7 @@ import { encounterView } from './ui/encounter-view.mjs';
 import { attachInput } from './ui/input.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
+import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
@@ -127,7 +128,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.11.0',
+  let buildVersion = '0.12.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -357,6 +358,7 @@ try {
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
   let controllerFrame = null,
     controllerNavigation = null,
+    controllerReading = null,
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
@@ -377,6 +379,7 @@ try {
       `Release all controls, then press a physical face button or Menu to join. Joining never starts a mission. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls.`;
     $('controller-ui-hint').textContent =
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
+    controllerReading?.refresh();
   }
   function controllerScope() {
     const dialog = controllerDialog();
@@ -465,7 +468,16 @@ try {
     },
     onHint: (message) => {
       $('controller-ui-hint').textContent = message;
+      controllerReading?.hint(message);
     },
+    onReadingChange: (state) => controllerReading?.changed(state),
+  });
+  controllerReading = attachControllerReading({
+    getNavigation: () => controllerNavigation,
+    getControlLabels: () => controllerLabels.menu,
+    getScope: controllerScope,
+    pause,
+    onTransition: () => clearInput({ preserveNavigation: true }),
   });
   handlePageHide = (event) => {
     // Suspend while this tab still owns the writer. A history-cache return
@@ -479,6 +491,7 @@ try {
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      controllerReading.destroy();
       controllerNavigation.destroy();
       input.destroy();
       controller.destroy();
@@ -560,13 +573,13 @@ try {
       controllerSettings.destroy();
     }
   });
-  function clearInput() {
+  function clearInput({ preserveNavigation = false } = {}) {
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
     controller.clear();
     controllerFrame = null;
-    controllerNavigation?.clear();
+    if (!preserveNavigation) controllerNavigation?.clear();
     input.clear();
     if (run) {
       releaseInputs(run);

@@ -521,18 +521,20 @@ test('heartbeat loss reaches the real router as device loss requiring deliberate
   router.destroy();
 });
 
-test('all offered base and Fieldcraft missions prepare through the real practice pipeline in both policies', async () => {
+test('all offered base, Fieldcraft, Sentinel and reading missions prepare through the real practice pipeline in both policies', async () => {
   const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
-  const [campaign, themes, classRecipes, fieldcraft] = await Promise.all([
+  const [campaign, themes, classRecipes, ...sources] = await Promise.all([
     json('../content/campaign.json'),
     json('../content/themes.json'),
     json('../content/classes.json'),
     json('../content/packs/fieldcraft.json'),
+    json('../content/packs/sentinel-relay.json'),
+    json('../controller-lab/reading-practice.json'),
   ]);
-  const { pack } = await preparePack(fieldcraft);
+  const packs = await Promise.all(sources.map((source) => preparePack(source)));
   const entries = [
     { campaign, themes: themes.themes, classRecipes },
-    ...pack.campaigns.map((c) => resolvePackCampaign(pack, c.id)),
+    ...packs.flatMap(({ pack }) => pack.campaigns.map((c) => resolvePackCampaign(pack, c.id))),
   ];
   let count = 0;
   for (const entry of entries)
@@ -547,5 +549,5 @@ test('all offered base and Fieldcraft missions prepare through the real practice
         assert.equal(JSON.stringify(entry), original);
         count++;
       }
-  assert.equal(count, 32);
+  assert.equal(count, 36);
 });

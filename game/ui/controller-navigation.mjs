@@ -13,22 +13,34 @@ export function attachControllerNavigation({
   onBack = () => {},
   onMenu = () => {},
   onHint = () => {},
+  onReadingChange = () => {},
 } = {}) {
   let scope = null,
     root = null,
     engaged = false,
     focused = null,
     editing = null,
+    reading = null,
+    readingInvalidated = false,
     destroyed = false,
     focusing = false;
   const listeners = [];
+  const readingContent = new WeakMap();
   const listen = (type, fn) => {
     doc.addEventListener(type, fn, true);
     listeners.push(() => doc.removeEventListener(type, fn, true));
   };
   const hint = (message) => onHint(message);
   function visible(element) {
-    if (!element || !element.isConnected || element.disabled || !root?.contains(element))
+    return visibleInScope(element, false);
+  }
+  function visibleInScope(element, allowDisabled) {
+    if (
+      !element ||
+      !element.isConnected ||
+      (!allowDisabled && element.disabled) ||
+      !root?.contains(element)
+    )
       return false;
     if (element.closest('[hidden],[inert],[aria-hidden="true"]')) return false;
     for (let parent = element; parent && parent !== doc; parent = parent.parentElement) {
@@ -66,15 +78,138 @@ export function attachControllerNavigation({
     editing = null;
     if (message) hint(message);
   }
+  const readingState = () =>
+    reading ? { regionId: reading.regionId, label: reading.label } : null;
+  function readingMetrics(region) {
+    const { clientHeight, scrollHeight, scrollTop } = region;
+    if (
+      ![clientHeight, scrollHeight, scrollTop].every(Number.isFinite) ||
+      clientHeight <= 0 ||
+      scrollHeight < 0
+    )
+      return null;
+    return {
+      max: Math.max(0, scrollHeight - clientHeight),
+      step: Math.min(48, Math.max(1, Math.floor(clientHeight / 2))),
+    };
+  }
+  function cancelReading({ restoreFocus = false, message = '', invalidated = false } = {}) {
+    if (!reading) return false;
+    const previous = reading;
+    reading = null;
+    previous.region.removeAttribute('data-controller-reading');
+    if (focused === previous.region) mark(null);
+    readingInvalidated ||= invalidated;
+    onReadingChange(null);
+    if (message) hint(message);
+    if (
+      restoreFocus &&
+      !destroyed &&
+      getScope() === previous.scope &&
+      getRoot() === previous.root
+    ) {
+      if (!focus(previous.origin)) ensureFocus();
+    }
+    return true;
+  }
+  function endReading({ restoreFocus = true } = {}) {
+    return cancelReading({ restoreFocus, message: 'Reading ended. Choose an action when ready.' });
+  }
+  function readingHint() {
+    const labels = getControlLabels();
+    return `${reading.label}: ${readingMetrics(reading.region)?.max ? 'Up/Down scroll' : 'All text is visible'} · ${labels.confirm} or ${labels.back} returns`;
+  }
+  function beginReading({ region, origin, label: name, exit = null } = {}) {
+    if (destroyed) return false;
+    sync();
+    if (
+      scope === 'flight' ||
+      !visible(region) ||
+      !region.id ||
+      !region.hasAttribute('data-game-reading') ||
+      !(region.getAttribute('aria-label') || region.getAttribute('aria-labelledby')) ||
+      region.tabIndex < 0 ||
+      !readingMetrics(region) ||
+      !controls().includes(origin) ||
+      origin === region ||
+      (exit !== null &&
+        (exit.tagName !== 'BUTTON' ||
+          !visibleInScope(exit, true) ||
+          exit === origin ||
+          region.contains(exit))) ||
+      typeof name !== 'string' ||
+      !name.trim() ||
+      name.length > 160
+    )
+      return false;
+    if (
+      reading?.region === region &&
+      reading.origin === origin &&
+      reading.label === name.trim() &&
+      reading.exit === exit
+    )
+      return true;
+    cancelEdit();
+    if (reading) {
+      reading.region.removeAttribute('data-controller-reading');
+      mark(null);
+    }
+    if (readingContent.has(region) && readingContent.get(region) !== region.textContent)
+      region.scrollTop = 0;
+    readingContent.set(region, region.textContent);
+    reading = {
+      region,
+      regionId: region.id,
+      origin,
+      exit,
+      label: name.trim(),
+      text: region.textContent,
+      scope,
+      root,
+      boundary: null,
+    };
+    readingInvalidated = false;
+    engaged = true;
+    region.setAttribute('data-controller-reading', 'true');
+    focus(region);
+    onReadingChange(readingState());
+    // A host may deliberately clear navigation during the callback.
+    if (reading) hint(readingHint());
+    return !!reading;
+  }
   function relinquish() {
     cancelEdit('Controller edit cancelled.');
+    cancelReading({ invalidated: true });
     engaged = false;
     mark(null);
   }
-  listen('pointerdown', relinquish);
+  listen('pointerdown', (event) => {
+    const exit = reading?.exit;
+    if (
+      exit &&
+      visible(exit) &&
+      (event.target === exit || exit.contains(event.target)) &&
+      (event.button === undefined || event.button === 0) &&
+      event.isPrimary !== false &&
+      event.cancelable !== false &&
+      !event.defaultPrevented
+    ) {
+      // Keep focus/reader alive for this button's ordinary click. Cancelling it
+      // now would disable Done before its click can restore the reading origin.
+      // No action runs on pointerdown, so dragging away may still cancel a click.
+      event.preventDefault();
+      return;
+    }
+    relinquish();
+  });
+  listen('pointercancel', () => {
+    if (reading) relinquish();
+  });
   listen('keydown', relinquish);
   listen('focusin', (event) => {
     if (focusing) return;
+    if (reading && event.target !== reading.region)
+      cancelReading({ invalidated: true, message: 'Reading ended.' });
     if (editing && event.target !== editing.element) cancelEdit('Controller edit cancelled.');
     if (engaged) mark(visible(event.target) ? event.target : null);
   });
@@ -94,16 +229,41 @@ export function attachControllerNavigation({
   }
   function sync() {
     if (destroyed) return;
-    let invalidated = false;
+    let invalidated = readingInvalidated;
+    readingInvalidated = false;
     const nextScope = getScope(),
       nextRoot = getRoot();
     if (scope !== nextScope || root !== nextRoot) {
       invalidated = scope !== null;
       cancelEdit();
+      cancelReading();
       scope = nextScope;
       root = nextRoot;
       mark(null);
       if (engaged && scope !== 'flight') ensureFocus();
+    }
+    if (
+      reading &&
+      (!visible(reading.region) ||
+        reading.region.id !== reading.regionId ||
+        !visible(reading.origin) ||
+        doc.activeElement !== reading.region ||
+        reading.region.textContent !== reading.text ||
+        !reading.region.hasAttribute('data-game-reading') ||
+        !(
+          reading.region.getAttribute('aria-label') ||
+          reading.region.getAttribute('aria-labelledby')
+        ) ||
+        reading.region.tabIndex < 0 ||
+        !readingMetrics(reading.region))
+    ) {
+      invalidated = true;
+      cancelReading({ message: 'The reading region changed. Choose it again to read.' });
+    }
+    if (reading) {
+      const max = readingMetrics(reading.region).max;
+      if (reading.region.scrollTop < 0 || reading.region.scrollTop > max)
+        reading.region.scrollTop = Math.max(0, Math.min(max, reading.region.scrollTop));
     }
     if (
       editing &&
@@ -117,9 +277,11 @@ export function attachControllerNavigation({
     }
     if (scope === 'flight') {
       cancelEdit();
+      cancelReading();
       mark(null);
     } else if (
       engaged &&
+      !reading &&
       (!visible(doc.activeElement) || !controls().includes(doc.activeElement))
     ) {
       invalidated = true;
@@ -248,6 +410,30 @@ export function attachControllerNavigation({
       );
     element.click();
   }
+  function readDirection(direction) {
+    if (direction !== 'up' && direction !== 'down') {
+      hint(readingHint());
+      return;
+    }
+    const { region } = reading;
+    const { max, step } = readingMetrics(region);
+    const top = Math.max(
+      0,
+      Math.min(max, region.scrollTop + (direction === 'down' ? step : -step)),
+    );
+    if (typeof region.scrollTo === 'function')
+      region.scrollTo({ top, left: 0, behavior: 'instant' });
+    else {
+      region.scrollTop = top;
+      region.scrollLeft = 0;
+    }
+    const boundary = max === 0 ? 'all' : top === 0 ? 'start' : top === max ? 'end' : null;
+    if (boundary && reading.boundary !== boundary)
+      hint(
+        `${boundary === 'all' ? 'All text is visible.' : boundary === 'start' ? 'Start of details.' : 'End of details.'} ${readingHint()}`,
+      );
+    reading.boundary = boundary;
+  }
   function handle(command = {}) {
     if (destroyed) return;
     if (sync()) return;
@@ -255,6 +441,11 @@ export function attachControllerNavigation({
     if (!command.confirm && !command.back && !command.menu && !DIRECTIONS.has(command.direction))
       return;
     engaged = true;
+    if (reading) {
+      if (command.back || command.menu || command.confirm) endReading();
+      else readDirection(command.direction);
+      return;
+    }
     const element = ensureFocus();
     if (command.back) {
       if (editing) cancelEdit('Choice cancelled.');
@@ -271,12 +462,16 @@ export function attachControllerNavigation({
   return {
     handle,
     sync,
+    beginReading,
+    endReading,
+    readingState,
     engage() {
       if (destroyed) return;
       sync();
       if (scope === 'flight') return;
       engaged = true;
-      ensureFocus();
+      if (reading) focus(reading.region);
+      else ensureFocus();
     },
     clear: relinquish,
     destroy() {

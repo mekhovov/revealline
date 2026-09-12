@@ -269,7 +269,7 @@ main {
   flex-direction: column;
 }
 .overlay-message {
-  min-height: 0;
+  min-height: 90px;
   overflow-y: auto;
 }
 #overlay-title {
@@ -529,6 +529,62 @@ kbd {
 #mission-brief-facts {
   white-space: pre-line;
   color: var(--muted);
+}
+.reading-toolbar {
+  flex-shrink: 0;
+  margin: 8px 0;
+}
+.reading-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+.reading-actions button {
+  min-height: 44px;
+  min-width: 0;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 7px;
+  background: transparent;
+  color: inherit;
+  font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.reading-actions button:disabled {
+  opacity: 0.45;
+}
+.reading-hint,
+.mission-brief .reading-hint {
+  margin: 4px 0 0;
+  min-height: 2.8em;
+  font-size: 10px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.game-overlay {
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-items: safe center;
+}
+[data-game-reading] {
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  overscroll-behavior: contain;
+}
+[data-game-reading]:focus-visible,
+[data-game-reading].controller-focus {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+#mission-brief-reading {
+  max-height: min(40vh, 320px);
+  overflow-y: auto;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+#mission-brief-copy {
+  white-space: pre-wrap;
 }
 .field {
   display: grid;
@@ -887,6 +943,7 @@ dialog .eyebrow {
     gap: 0 15px;
   }
   .deck-heading,
+  .mission-brief,
   .class-description,
   .micro-note,
   .section-line,
@@ -1613,6 +1670,14 @@ dialog input[type='search'] {
 }
 .encounter-status[data-phase='open'] {
   border-left-color: var(--safe);
+}
+
+/* Reading controls need a usable board on ordinary missions too. Keep the
+   available-column cap; shorter landscape and mobile layouts retain their sizes. */
+@media (min-width: 681px) and (min-height: 501px) {
+  .arena-panel {
+    min-width: min(100%, 320px);
+  }
 }
 
 /* Preserve a readable board when phase text needs more than the viewport can fit.

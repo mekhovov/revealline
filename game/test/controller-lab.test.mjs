@@ -156,13 +156,71 @@ test('practice page keeps virtual holds, releases and import failures isolated f
     await t.test(
       'boot prepares actual practice and exposes every authored map without profile writes',
       () => {
-        assert.equal(elements.mission.children.length, 16);
+        assert.equal(elements.mission.children.length, 18);
         assert.equal(elements.craft.children.length, 7);
         assert.match(elements['game-frame'].src, /practice=1&controller-preview=1/);
         assert.deepEqual(writes, ['revealline.playground.current']);
         const scenario = JSON.parse(storage.get(writes[0]));
         assert.equal(scenario.level.id, 'signal-01');
         assert.equal(scenario.settings.turnPolicy, 'immediate');
+      },
+    );
+    await t.test(
+      'canonical staged practice retains its descriptor, selected class and steering without installation',
+      async () => {
+        const sentinel = elements.mission.children.find(
+          (item) => item.textContent === 'Sentinel Relay / Sentinel Relay',
+        );
+        assert.ok(sentinel);
+        elements.mission.value = sentinel.value;
+        await elements.mission.emit('change');
+        elements.craft.value = 'fiber';
+        elements.steering.value = 'grid-center';
+        const oldFrame = elements['game-frame'].src;
+        await click('load');
+        const scenario = JSON.parse(storage.get('revealline.playground.current'));
+        const source = JSON.parse(
+          await readFile(new URL('../content/packs/sentinel-relay.json', import.meta.url)),
+        );
+        assert.equal(scenario.format, 'xonix-playground.v3');
+        assert.equal(scenario.masteryDefinition, null);
+        assert.deepEqual(scenario.level, source.campaigns[0].levels[0]);
+        assert.deepEqual(scenario.settings, {
+          classId: 'fiber',
+          turnPolicy: 'grid-center',
+          seed: 1,
+        });
+        assert.notEqual(elements['game-frame'].src, oldFrame);
+        assert.deepEqual(new Set(writes), new Set(['revealline.playground.current']));
+      },
+    );
+    await t.test(
+      'long original reading fixture uses the normal validated practice handoff and preserves its final paragraph',
+      async () => {
+        const reading = elements.mission.children.find(
+          (item) => item.textContent === 'Reading practice / The patient route',
+        );
+        assert.ok(reading);
+        elements.mission.value = reading.value;
+        await elements.mission.emit('change');
+        await click('load');
+        const scenario = JSON.parse(storage.get('revealline.playground.current'));
+        assert.equal(scenario.format, 'xonix-playground.v1');
+        assert.equal(scenario.theme.id, 'ukraine');
+        assert.equal(scenario.level.id, 'reading-practice-01');
+        assert.ok(scenario.level.metadata.description.length > 2500);
+        assert.match(
+          scenario.level.metadata.description,
+          /End of briefing\n\nYou have reached the last paragraph/,
+        );
+        assert.equal(scenario.level.goal.coverage, 0.45);
+        assert.equal(scenario.classRecipes.length, 7);
+        assert.deepEqual(new Set(writes), new Set(['revealline.playground.current']));
+        elements.mission.value = '0';
+        await elements.mission.emit('change');
+        elements.craft.value = 'scout';
+        elements.steering.value = 'immediate';
+        await click('load');
       },
     );
     await elements['game-frame'].emit('load');

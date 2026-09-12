@@ -2,7 +2,7 @@
 
 Open [Controller practice](../game/controller-lab/index.html) from the served game. The page drives the **actual game UI** through a clearly labeled virtual controller. It is an input simulation: it does not demonstrate physical controller compatibility, Bluetooth behavior, native hardware mapping or trusted browser activation.
 
-Choose a mission, starting class, steering policy and viewport, then **Load practice**. The base campaign and Fieldcraft maps use the same validated scenario handoff as Playground. The loaded practice does not award campaign progress, score-table entries or cosmetic unlocks. The handoff replaces the current Playground practice scenario in this tab's session storage; it never imports a pack or rewrites the player's library.
+Choose a mission, starting class, steering policy and viewport, then **Load practice**. The current menu offers 18 choices: 12 base maps, four Fieldcraft maps, canonical Sentinel Relay and the local Reading practice map, **The patient route**. All seven existing classes are available. Each choice uses the same validated scenario handoff as Playground. The loaded practice does not award campaign progress, score-table entries or cosmetic unlocks. The handoff replaces the current Playground practice scenario in this tab's session storage; it never imports a pack or rewrites the player's library.
 
 1. **Connect virtual pad** sends neutral input. Press a physical face button **0–3** or **Menu / 9** to join, then release. Use the game's **configured menu Confirm** afterward; joining consumes the first press. The fixed joining controls remain available after remapping.
 2. All sixteen buttons are labeled by physical position and index. These labels stay the same when the game remaps actions. **Default layout only:** 0 confirms / uses Ability; 1 goes Back / stops; 2 picks up; 3 opens Hangar; 5 boosts; 9 pauses; D-pad indices 12–15 navigate or steer. Inspect the game's controller settings for a custom layout.
@@ -11,6 +11,18 @@ Choose a mission, starting class, steering policy and viewport, then **Load prac
 5. Disconnect during movement to test the actual router's lost-device behavior. Connect again, release, and deliberately join. Hiding the page disconnects the virtual pad. A missing heartbeat expires after 1200 ms; the parent normally sends one every 150 ms.
 
 The iframe has the selected **logical viewport dimensions**, scaled visually to fit the available space. This is useful for inspecting responsive layout; it does not reproduce a phone's browser chrome, virtual keyboard, performance or hardware. Use the real device for those checks. Virtual controls focus the iframe before posting input. Clicking other parent controls may pause the game through its ordinary focus-loss handling.
+
+## Practice reading a full briefing
+
+Choose **Reading practice / The patient route** and load it. Its original 2,839-character briefing is a local test example built on familiar ordinary capture rules, not a new campaign reward or an imported player pack. Choose **Sentinel Relay** to check the encounter's actual brief and phase instructions instead.
+
+Join, open **Mission brief** in the game's flight deck, then activate **Read mission brief**. Use the game's configured menu directions to reach the final “End of briefing” paragraph. Confirm, Back, Menu or **Done reading** returns; a separate released-and-pressed action is required to Start or Resume. The overlay's **Read details** uses the same reader for compact requirements and actual results. Reading before launch must leave the mission unstarted; reading from a paused live cut must not advance the run.
+
+The lab includes **320 × 640** and **844 × 501** choices alongside its existing phone, landscape and desktop viewports. Record both the requested and actual dimensions shown by the lab. Check that the last line and the Done control are reachable and that text does not need horizontal scrolling. The viewport is a browser layout exercise, not a real phone measurement. Test a remapped Back/Confirm and right-stick menu layout as well as defaults.
+
+Use only the virtual physical buttons, sticks and normal game UI. The lab does not gain a scroll command or permission to inject text into the iframe. Its local reading pack is prepared as an explicit practice choice; it is not installed in the player's pack library or added to the ordinary pack index. Loading any choice replaces only the current tab's Playground practice handoff. The iframe continues to reject player-store writes, even after selecting another map or finishing a flight.
+
+For a finished picture/result check, complete a legal route; reading never fabricates a win. Preserve the existing clean-picture view and reward isolation. Record actual browser focus/scroll results separately from the module tests, and do not infer physical hardware or native-OS behavior from them.
 
 ## Both sticks and focus handoff
 
@@ -84,9 +96,9 @@ The status envelope has exactly `format`, `session`, `sequence`, `readSequence`,
 Run:
 
 ```sh
-node --test game/test/controller-preview.test.mjs game/test/controller-lab.test.mjs game/test/practice-navigation.test.mjs
+node --test game/test/controller-*.test.mjs game/test/practice-navigation.test.mjs game/test/ui-input.test.mjs
 ```
 
-The current focused run passes **48 tests**: 19 bridge/preview tests, 21 parent lab tests (including its nested scenarios), and eight practice-navigation tests. Automated coverage includes strict transport validation, source/origin rejection, per-load token rotation and queued old-document rejection, stale packet handling, heartbeat loss, all-four-axis clear/release semantics, sampled acknowledgement versus receipt, remapped equipment/right-stick input through the real router, bounded feedback, an actual join→menu→flight→pause→disconnect roundtrip, both steering policies through all offered scenario preparations, and parent-page DOM simulations for all sixteen buttons, draft sliders, pulses, holds, acknowledgement timeout/cancellation, import failure and disposal. A static markup check verifies the actual button-index and slider-label inventory.
+Automated coverage includes strict transport validation, source/origin rejection, per-load token rotation and queued old-document rejection, stale packet handling, heartbeat loss, all-four-axis clear/release semantics, sampled acknowledgement versus receipt, remapped equipment/right-stick input through the real router, bounded feedback, an actual join→menu→flight→pause→disconnect roundtrip, both steering policies through all offered scenario preparations, and parent-page DOM simulations for all sixteen buttons, draft sliders, pulses, holds, acknowledgement timeout/cancellation, import failure and disposal. A static markup check verifies the actual button-index and slider-label inventory. Reader checks additionally cover the two real surfaces, complete long-text handoff, current class/policy preparations, bounded navigation and pause/exit behavior; current counts and browser evidence belong to the associated verification record.
 
 Navigation tests exercise nested and synthetic clicks, auxiliary activation, every actual solo-page navigation destination, fragment/download exceptions and teardown. The app's boot guard and query-stripped reload require separate app integration checks. DOM simulations do not establish browser focus timing or physical-device behavior. Complete the actual browser journey and physical controller checks described in [the controller plan](round-15-controller-plan.md) separately.
