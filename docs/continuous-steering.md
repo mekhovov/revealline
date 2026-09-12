@@ -6,6 +6,12 @@ Immediate turns change direction at the current position. Grid + buffer retains 
 
 The game opens into a dark title menu. **Play → Missions → Return to briefing → Start** selects an attempt. The top game menu, Collection and Settings remain inside the browser page. Authoring, diagnostics and Replay Theater live under Studio & extras. Browser fullscreen permission is not needed. The P1 shell retains the existing mission selectors inside its menu; later phases replace these with richer pack/map cards.
 
+## Cut completion: revised playtest contract
+
+User feedback on 2026-09-13 replaces continuation after a cut: a new level.v4 recipe with `rules.stopOnCapture:true` stops the craft when its active cut reaches secured ground. The capture still resolves normally and enemies keep moving. Another **fresh** direction starts the next move. Merely holding the previous key/stick cannot restart. Movement along already secured ground does not trigger this stop.
+
+The core emits `capture.stopped`, clears the buffered turn and forbids additional player movement in the closure tick. Hosts clear remembered and physical direction before another fixed substep, preserving the original recorded closure command. Saved continuation after closure is neutral; explicit Resume stays stopped. Couch clears only the player who closed the cut. Unspecified/false recipes and all frozen editions preserve their earlier semantics.
+
 ## Pause, save and recovery
 
 Pause and saved-session v2 preserve the exact verified simulation, including an off-center queued turn, and separately store `continuation.direction`. Explicit Resume supplies that direction on the next actual simulation tick. The first resumed tick has neutral Boost, ability, pickup and class-switch commands. Physical controls must be released and freshly pressed before they can act again. Opening a dialog, returning focus or pressing a movement key while paused cannot resume.
