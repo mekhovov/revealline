@@ -1,0 +1,127 @@
+/* Scoped game menu layout. Existing controls and pixel-theme tokens stay native. */
+.game-shell #shell-mission-content .flight-deck.mission-picker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+.mission-picker-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+.mission-picker-stage > section,
+.mission-picker-setup,
+.mission-picker-setup-fields > * {
+  min-width: 0;
+}
+.mission-picker-chapter-section h3 {
+  margin: 0 0 10px;
+}
+.mission-picker-cards {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(180px, 76%);
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 4px 12px;
+  scroll-padding: 4px;
+  scroll-snap-type: x proximity;
+}
+.mission-picker-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  min-height: 76px;
+  padding: 12px;
+  text-align: left;
+  font: inherit;
+  line-height: 1.15;
+  color: var(--ink, #edf2ff);
+  background: #111d35;
+  border: 2px solid #30486f;
+  border-radius: 0;
+  scroll-snap-align: start;
+  overflow-wrap: anywhere;
+}
+.mission-picker-card[aria-pressed='true'] {
+  border-color: var(--accent, #65e6da);
+  box-shadow: inset 4px 0 var(--accent, #65e6da);
+}
+.mission-picker-card:not(:disabled):hover {
+  background: #1b2c4a;
+}
+.mission-picker-card:disabled {
+  opacity: 0.65;
+}
+.mission-picker-card-state {
+  color: var(--muted, #a8bdd9);
+  font-size: 0.8em;
+}
+.mission-picker-missions .content-select-status {
+  margin: 0 0 12px;
+}
+.mission-picker-stage[data-status='error'] .content-select-status {
+  color: var(--danger, #ff90b8);
+}
+.mission-picker-missions .section-line {
+  margin-top: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.mission-picker-missions .missions {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: 8px;
+}
+.mission-picker-missions .mission {
+  min-height: 64px;
+  min-width: 0;
+  padding: 12px;
+}
+.mission-picker-missions .mission .name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  line-height: 1.15;
+}
+.mission-picker-setup {
+  border-top: 2px solid #30486f;
+  padding-top: 8px;
+}
+.mission-picker-setup > summary {
+  min-height: 44px;
+  padding: 10px 4px;
+  cursor: pointer;
+  color: var(--accent, #65e6da);
+}
+.mission-picker-setup-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px 20px;
+  padding-top: 12px;
+}
+@media (min-width: 800px) {
+  .mission-picker-stage {
+    grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.5fr);
+    align-items: start;
+  }
+  .mission-picker-cards {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: minmax(0, 1fr);
+    max-height: min(54dvh, 480px);
+    overflow-y: auto;
+    scroll-snap-type: y proximity;
+  }
+  .mission-picker-setup-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mission-picker-setup-fields > .content-switcher,
+  .mission-picker-setup-fields > .micro-note,
+  .mission-picker-setup-fields > .class-description,
+  .mission-picker-setup-fields > details,
+  .mission-picker-setup-fields > .loadout-grid {
+    grid-column: 1 / -1;
+  }
+}

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="ui/controller-settings.css" />
     <link rel="stylesheet" href="ui/game-shell.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
+    <link rel="stylesheet" href="ui/mission-picker.css" />
   </head>
   <body>
     <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
@@ -515,12 +516,12 @@
         Cancel course entry
       </button>
     </dialog>
-    <dialog id="collection-dialog">
+    <dialog id="collection-dialog" aria-labelledby="collection-title">
       <button class="dialog-close" data-close="collection-dialog" aria-label="Close collection">
         ×
       </button>
       <p class="eyebrow">YOUR FLIGHT LOG</p>
-      <h2>Every line leaves a mark.</h2>
+      <h2 id="collection-title">Every line leaves a mark.</h2>
       <p>
         Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new
         best.
@@ -629,12 +630,12 @@
       <button id="switch-class-button" class="button primary">Switch & continue →</button>
       <p id="switch-status" role="status"></p>
     </dialog>
-    <dialog id="settings-dialog">
+    <dialog id="settings-dialog" aria-labelledby="settings-title">
       <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings">
         ×
       </button>
       <p class="eyebrow">TUNE YOUR ARCADE</p>
-      <h2>Your pace. Your soundtrack.</h2>
+      <h2 id="settings-title">Your pace. Your soundtrack.</h2>
       <label class="field"
         >Music<select id="music-select">
           <option value="synthwave">Sunset synth</option>
