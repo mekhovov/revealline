@@ -153,7 +153,10 @@ export async function settle(predicate, message = 'Asynchronous host action did 
   assert.ok(predicate(), message);
 }
 let sequence = 0;
-export async function soloPage(t, { campaign, storage = memoryStorage() } = {}) {
+export async function soloPage(
+  t,
+  { campaign, storage = memoryStorage(), search = '', previewStorage = memoryStorage() } = {},
+) {
   const doc = new SoloDocument(),
     win = new Events(),
     db = assetDatabase();
@@ -174,9 +177,9 @@ export async function soloPage(t, { campaign, storage = memoryStorage() } = {}) 
   const globals = {
     document: doc,
     window: win,
-    location: { href: 'http://localhost/game/', search: '', origin: 'http://localhost' },
+    location: { href: `http://localhost/game/${search}`, search, origin: 'http://localhost' },
     localStorage: storage,
-    sessionStorage: memoryStorage(),
+    sessionStorage: previewStorage,
     indexedDB: db,
     navigator: {
       getGamepads() {
