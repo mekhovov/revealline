@@ -44,6 +44,30 @@
     "revision": "1"
   },
   {
+    "id": "fiber",
+    "label": "Fiber relay",
+    "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+    "primitive": "scan",
+    "capacity": 0,
+    "cooldown": 7,
+    "duration": 3,
+    "radius": 30,
+    "signalResistance": true,
+    "moveSpeedMultiplier": 1,
+    "revision": "1"
+  },
+  {
+    "id": "impact",
+    "label": "Impact craft",
+    "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+    "primitive": "impact-pulse",
+    "capacity": 0,
+    "cooldown": 10,
+    "duration": 3,
+    "radius": 5,
+    "revision": "1"
+  },
+  {
     "id": "trapper",
     "label": "Trapper",
     "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",

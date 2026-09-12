@@ -8,15 +8,15 @@ import {
   CLASSES,
 } from './core/index.mjs';
 
-export const REPLAY_VERSION = 'xonix-replay.v2';
+export const REPLAY_VERSION = 'xonix-replay.v3';
 export const MAX_REPLAY_TICKS = 30 * 60 * 120;
 export const MAX_REPLAY_BYTES = 32 * 1024 * 1024;
-export const CHECKPOINT_ALGORITHM = 'fnv1a64-state-v1';
+export const CHECKPOINT_ALGORITHM = 'fnv1a64-state-v2';
 const MAX_NODES = 3_000_000,
   MAX_DEPTH = 24,
   MAX_STRING = 262_144;
 const FORBIDDEN = new Set(['__proto__', 'prototype', 'constructor']);
-const INPUT_KEYS = ['direction', 'boost', 'action', 'pickup'];
+const INPUT_KEYS = ['direction', 'boost', 'action', 'pickup', 'switchClass'];
 const SECTIONS = [
   'identity',
   'configuration',
@@ -115,14 +115,29 @@ function keysExactly(value, required, optional = []) {
 
 function inputCopy(input = {}) {
   if (!record(input) || Object.keys(input).some((key) => !INPUT_KEYS.includes(key)))
-    reject('Input must contain only direction, boost, action and pickup.', 'invalid-input');
+    reject(
+      'Input must contain only direction, boost, action, pickup and switchClass.',
+      'invalid-input',
+    );
   const direction = input.direction ?? null;
   if (![null, 'up', 'right', 'down', 'left'].includes(direction))
     reject('Replay input needs a cardinal direction or null.', 'invalid-input');
-  for (const key of INPUT_KEYS.slice(1))
+  for (const key of ['boost', 'action', 'pickup'])
     if (input[key] !== undefined && typeof input[key] !== 'boolean')
       reject(`Replay input ${key} must be boolean.`, 'invalid-input');
-  return { direction, boost: !!input.boost, action: !!input.action, pickup: !!input.pickup };
+  const switchClass = input.switchClass ?? null;
+  if (
+    switchClass !== null &&
+    (typeof switchClass !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(switchClass))
+  )
+    reject('Replay switchClass must be a stable ID or null.', 'invalid-input');
+  return {
+    direction,
+    boost: !!input.boost,
+    action: !!input.action,
+    pickup: !!input.pickup,
+    switchClass,
+  };
 }
 const sameInput = (a, b) => INPUT_KEYS.every((key) => a[key] === b[key]);
 
@@ -168,6 +183,8 @@ const physicsRecipe = (recipe) =>
     'duration',
     'radius',
     'slowFactor',
+    'signalResistance',
+    'moveSpeedMultiplier',
   ]);
 function authoritativeSections(state) {
   return {
@@ -180,6 +197,8 @@ function authoritativeSections(state) {
       'classId',
       'classRevision',
       'loadoutHash',
+      'activeClassId',
+      'rosterHash',
       'width',
       'height',
     ]),
@@ -188,6 +207,8 @@ function authoritativeSections(state) {
       spawn: state.level.spawn,
       goal: state.level.goal,
       classRecipe: physicsRecipe(state.classRecipe),
+      classRecipes: state.classRecipes.map(physicsRecipe),
+      hangars: state.hangars,
     },
     board: {
       cells: Array.from(state.cells),
@@ -248,11 +269,38 @@ function authoritativeSections(state) {
         'scanUntil',
         'shieldUntil',
       ]),
+      classHistory: state.classHistory,
+      switchCooldownUntil: state.switchCooldownUntil,
+      loadouts: Object.fromEntries(
+        Object.entries(state._loadouts).map(([id, ability]) => [
+          id,
+          pick(ability, [
+            'primitive',
+            'ammo',
+            'capacity',
+            'cooldownUntil',
+            'scanUntil',
+            'shieldUntil',
+          ]),
+        ]),
+      ),
+      signal: state.signal,
+      signalZones: state.signalZones,
       fields: state.ability.fields.map((field) =>
         pick(field, ['id', 'kind', 'x', 'y', 'radius', 'until', 'slowFactor']),
       ),
     },
-    clock: pick(state, ['status', 'tick', 'time', 'lives', 'score', 'respawnAt', 'medal']),
+    clock: pick(state, [
+      'status',
+      'tick',
+      'time',
+      'lives',
+      'score',
+      'respawnAt',
+      'medal',
+      'cutStartedAt',
+      'failureCause',
+    ]),
     continuation: pick(state, ['_accumulator', '_input', '_abilitySerial', '_terminalEmitted']),
     result: state.result,
   };
@@ -356,9 +404,9 @@ function prepareReplay(source) {
     }
   }
   const data = boundedCopy(source);
-  if (data?.version === 'xonix-replay.v1')
+  if (['xonix-replay.v1', 'xonix-replay.v2'].includes(data?.version))
     reject(
-      'Legacy replay v1 omitted releases and full state; re-record this run with replay v2.',
+      'Legacy replay version: use its archived game build. Current runs use replay v3 with class switches and signal challenges.',
       'legacy-replay',
     );
   if (

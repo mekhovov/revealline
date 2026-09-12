@@ -1,7 +1,7 @@
 {
   "version": "xonix-campaign.v1",
   "id": "first-signal",
-  "revision": "1",
+  "revision": "2",
   "title": "First Signal",
   "levels": [
     {
@@ -504,6 +504,331 @@
         "pointsPerCell": 10,
         "timeMedals": [75, 129]
       }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-09",
+      "revision": "1",
+      "name": "Signal Garden",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 11.5,
+          "y": 24.5,
+          "vx": 2.1,
+          "vy": -1.5,
+          "radius": 0.3
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 12.5,
+          "vx": -2.3,
+          "vy": 1.8,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [
+        {
+          "id": "archive",
+          "x": 8.5,
+          "y": 28.5,
+          "required": true,
+          "hidden": true
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.63
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [50, 89]
+      },
+      "signalZones": [
+        {
+          "id": "garden-emitter",
+          "x": 19,
+          "y": 6,
+          "w": 11,
+          "h": 12,
+          "speedFactor": 0.5,
+          "disableBoost": false,
+          "lockAbility": false
+        }
+      ]
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-10",
+      "revision": "1",
+      "name": "Supply Circuit",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "roamer",
+          "type": "bouncer",
+          "x": 36.5,
+          "y": 27.5,
+          "vx": -2.8,
+          "vy": 2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "patrol",
+          "type": "border-patrol",
+          "x": 0.5,
+          "y": 35.5,
+          "speed": 2.5,
+          "clockwise": false
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 14.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        },
+        {
+          "id": "west-pad",
+          "x": 0.5,
+          "y": 18.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.67
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [45, 81]
+      },
+      "signalZones": [
+        {
+          "id": "west-emitter",
+          "x": 8,
+          "y": 12,
+          "w": 5,
+          "h": 5,
+          "speedFactor": 0.5,
+          "disableBoost": true,
+          "lockAbility": false
+        }
+      ],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        },
+        {
+          "id": "west-hangar",
+          "x": 0.5,
+          "y": 18.5,
+          "radius": 2
+        }
+      ]
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-11",
+      "revision": "1",
+      "name": "Short Fuse",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "field",
+          "type": "bouncer",
+          "x": 36.5,
+          "y": 22.5,
+          "vx": -3.2,
+          "vy": 2.6,
+          "radius": 0.3
+        },
+        {
+          "id": "patrol",
+          "type": "border-patrol",
+          "x": 0.5,
+          "y": 35.5,
+          "speed": 2.5,
+          "clockwise": true
+        }
+      ],
+      "objectives": [],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.7
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [60, 105],
+        "cutTimeLimitSeconds": 6,
+        "timeLimitSeconds": 70,
+        "maxTrailCells": 50
+      }
+    },
+    {
+      "version": "xonix-level.v1",
+      "id": "signal-12",
+      "revision": "1",
+      "name": "Relay Storm",
+      "width": 48,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "enemies": [
+        {
+          "id": "field",
+          "type": "bouncer",
+          "x": 38.5,
+          "y": 25.5,
+          "vx": -3.2,
+          "vy": 2.1,
+          "radius": 0.3
+        },
+        {
+          "id": "sentinel",
+          "type": "lane-boss",
+          "x": 35.5,
+          "y": 17.5,
+          "axis": "horizontal",
+          "period": 7,
+          "warningSeconds": 1.8,
+          "activeSeconds": 1.2,
+          "laneWidth": 1.2
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 37.5,
+          "y": 29.5,
+          "vx": -2.1,
+          "vy": -1.9,
+          "radius": 0.3
+        }
+      ],
+      "objectives": [
+        {
+          "id": "relay",
+          "x": 8.5,
+          "y": 27.5,
+          "required": true,
+          "hidden": false
+        }
+      ],
+      "supplies": [
+        {
+          "id": "home",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ],
+      "goal": {
+        "coverage": 0.74
+      },
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.7,
+        "graceSeconds": 0.7,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "timeMedals": [70, 121],
+        "timeLimitSeconds": 95,
+        "cutTimeLimitSeconds": 8,
+        "maxTrailCells": 60
+      },
+      "signalZones": [
+        {
+          "id": "north-emitter",
+          "x": 5,
+          "y": 7,
+          "w": 8,
+          "h": 8,
+          "speedFactor": 0.5,
+          "disableBoost": true,
+          "lockAbility": true
+        },
+        {
+          "id": "east-emitter",
+          "x": 31,
+          "y": 20,
+          "w": 8,
+          "h": 8,
+          "speedFactor": 0.5,
+          "disableBoost": false,
+          "lockAbility": false
+        }
+      ]
     }
   ],
   "briefs": [
@@ -514,6 +839,10 @@
     "A border patrol makes the outer rail dangerous. Watch its direction before waiting on the edge.",
     "A required relay is hidden. Scout can reveal it; its location can also be captured through an ordinary cut.",
     "The sentinel warns before activating a lane. Wait for the recovery window or protect your line with a shield.",
-    "Combine coverage, a relay and the sentinel warning. Choose your next cut, then commit."
+    "Combine coverage, a relay and the sentinel warning. Choose your next cut, then commit.",
+    "The amber zone slows ordinary craft. Fiber ignores interference, but its cable is still the vulnerable live trail. Switch at the home hangar before choosing your cut.",
+    "Return to either hangar to change craft without restarting. Carriers collect charges at pads; stun fields covering an emitter suppress its signal zone while the field lasts. A field never captures territory by itself.",
+    "Each cut has a six-second deadline and a fifty-cell cable budget. The whole attempt lasts seventy seconds. Close shorter cuts to build new launch points; neither a shield nor fiber bypasses these limits.",
+    "The final storm combines two signal zones, a moving field pair, a lane warning and a mission clock. Scan, shield, supply fields, fiber and impact are alternate tools; safe-hangar switching never refills ammunition or resets cooldowns."
   ]
 }

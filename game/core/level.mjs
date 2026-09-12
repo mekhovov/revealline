@@ -33,7 +33,7 @@ export function validateLevel(level) {
     object(level.goal) && number(level.goal.coverage, 0.01, 1),
     'goal.coverage must be between 0.01 and 1',
   );
-  for (const key of ['walls', 'enemies', 'objectives', 'supplies'])
+  for (const key of ['walls', 'enemies', 'objectives', 'supplies', 'signalZones', 'hangars'])
     check(level[key] === undefined || Array.isArray(level[key]), `${key} must be an array`);
   if (errors.some((e) => e.endsWith('must be an array'))) return { valid: false, errors };
   const walls = level.walls ?? [],
@@ -151,6 +151,43 @@ export function validateLevel(level) {
           `supplies[${i}].radius must be 0.25..4`,
         );
     }
+  const zones = level.signalZones ?? [];
+  check(zones.length <= 16, 'at most 16 signal zones');
+  for (const [i, z] of zones.entries()) {
+    check(object(z) && id(z.id) && !seen.has(z.id), `signalZones[${i}] needs a unique id`);
+    if (!object(z)) continue;
+    seen.add(z.id);
+    check(
+      number(z.x, 1, 46) &&
+        number(z.y, 1, 34) &&
+        number(z.w, 0.5, 46) &&
+        number(z.h, 0.5, 34) &&
+        z.x + z.w <= 47 &&
+        z.y + z.h <= 35,
+      `signalZones[${i}] must be an interior rectangle`,
+    );
+    check(number(z.speedFactor, 0.25, 1), `signalZones[${i}].speedFactor must be 0.25..1`);
+    for (const key of ['disableBoost', 'lockAbility'])
+      check(
+        z[key] === undefined || typeof z[key] === 'boolean',
+        `signalZones[${i}].${key} must be boolean`,
+      );
+  }
+  const hangars = level.hangars ?? [];
+  check(hangars.length <= 12, 'at most 12 hangars');
+  for (const [i, h] of hangars.entries()) {
+    check(object(h) && id(h.id) && !seen.has(h.id), `hangars[${i}] needs a unique id`);
+    if (!object(h)) continue;
+    seen.add(h.id);
+    check(
+      x(h.x) && y(h.y) && cells[Math.floor(h.y) * 48 + Math.floor(h.x)] !== 2,
+      `hangars[${i}] invalid position`,
+    );
+    check(
+      h.radius === undefined || number(h.radius, 0.25, 4),
+      `hangars[${i}].radius must be 0.25..4`,
+    );
+  }
   if (level.rules !== undefined && !object(level.rules)) errors.push('rules must be an object');
   if (object(level.rules)) {
     const ranges = {
@@ -162,6 +199,10 @@ export function validateLevel(level) {
       playerRadius: [0.05, 0.3],
       pointsPerCell: [0, 1000],
       objectivePoints: [0, 10000],
+      switchCooldownSeconds: [0.1, 30],
+      timeLimitSeconds: [0, 1800],
+      cutTimeLimitSeconds: [0, 120],
+      maxTrailCells: [0, 1564],
     };
     for (const [key, value] of Object.entries(level.rules)) {
       if (key === 'timeMedals')
@@ -179,6 +220,8 @@ export function validateLevel(level) {
           `unsupported or invalid rule ${key}`,
         );
     }
+    if (level.rules.maxTrailCells !== undefined)
+      check(Number.isInteger(level.rules.maxTrailCells), 'rules.maxTrailCells must be integer');
     if (level.rules.lives !== undefined)
       check(Number.isInteger(level.rules.lives), 'rules.lives must be integer');
   }
@@ -188,6 +231,13 @@ export function validateLevel(level) {
 export function normalizedLevel(level) {
   const result = validateLevel(level);
   if (!result.valid) throw new TypeError(`Invalid level: ${result.errors.join('; ')}`);
+  const ids = new Set(
+    ['enemies', 'objectives', 'supplies', 'signalZones'].flatMap((key) =>
+      (level[key] ?? []).map((p) => p.id),
+    ),
+  );
+  let homeId = 'home-hangar';
+  for (let n = 1; ids.has(homeId); n++) homeId = `home-hangar-${n}`;
   return {
     ...structuredClone(level),
     rules: structuredClone({ ...DEFAULT_RULES, ...level.rules }),
@@ -195,5 +245,7 @@ export function normalizedLevel(level) {
     enemies: structuredClone(level.enemies ?? []),
     objectives: structuredClone(level.objectives ?? []),
     supplies: structuredClone(level.supplies ?? []),
+    signalZones: structuredClone(level.signalZones ?? []),
+    hangars: structuredClone(level.hangars ?? [{ id: homeId, ...level.spawn, radius: 2 }]),
   };
 }

@@ -74,7 +74,11 @@ test('out-of-range pickup cannot refill and ability state is independent of supp
   assert.equal(s.ability.ammo, 0);
   assert.equal(s.events[0].reason, 'out-of-range');
   for (const c of CLASSES) assert.ok(!('sprite' in c));
-  assert.equal(CLASSES.length, 5);
+  assert.ok(
+    ['scout', 'bomber', 'carrier', 'interceptor', 'trapper', 'fiber', 'impact'].every((id) =>
+      CLASSES.some((c) => c.id === id),
+    ),
+  );
 });
 
 test('shield absorbs one enemy hit, cancels trail, preserves lives and recovers with grace', () => {

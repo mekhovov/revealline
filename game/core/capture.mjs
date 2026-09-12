@@ -87,6 +87,7 @@ export function selfContact(state, trace, horizon) {
 export function appendTrail(state, trace, time) {
   if (trace.started !== null && trace.started <= time + EPS && !state.player.cutting) {
     state.player.cutting = true;
+    state.cutStartedAt = state.time + trace.started;
     state.events.push({ type: 'cut.started', tick: state.tick, time: state.time + trace.started });
   }
   const have = new Set(state.trail.map((c) => c.index));
@@ -166,6 +167,7 @@ export function commitCapture(state) {
   state.coverage = state.claimedCount / state.totalClaimable;
   state.score += secured.length * state.rules.pointsPerCell;
   state.player.cutting = false;
+  state.cutStartedAt = null;
   state.trail = [];
   state.trailSegments = [];
   state.events.push({

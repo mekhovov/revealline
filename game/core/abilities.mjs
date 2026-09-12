@@ -1,3 +1,4 @@
+import { updateSignal } from './systems.mjs';
 import { EPS } from './geometry.mjs';
 
 export function updateAbilities(state) {
@@ -9,7 +10,8 @@ export function updateAbilities(state) {
     if (e.type === 'border-patrol') continue;
     for (const f of state.ability.fields)
       if (Math.hypot(e.x - f.x, e.y - f.y) <= f.radius + e.radius) {
-        if (f.kind === 'stun-field') e.stunnedUntil = Math.max(e.stunnedUntil, f.until);
+        if (f.kind === 'stun-field' || f.kind === 'impact-pulse')
+          e.stunnedUntil = Math.max(e.stunnedUntil, f.until);
         else {
           e.slowUntil = Math.max(e.slowUntil, f.until);
           e.slowFactor = Math.min(e.slowFactor, f.slowFactor);
@@ -21,7 +23,11 @@ export function updateAbilities(state) {
 export function useAbilities(state, input) {
   const action = input.action && !state._input.action,
     pickup = input.pickup && !state._input.pickup;
-  state._input = { action: !!input.action, pickup: !!input.pickup };
+  state._input = {
+    action: !!input.action,
+    pickup: !!input.pickup,
+    switchClass: input.switchClass ?? null,
+  };
   if (state.status !== 'running') return;
   const ability = state.ability,
     recipe = state.classRecipe;
@@ -47,6 +53,15 @@ export function useAbilities(state, input) {
       });
   }
   if (!action) return;
+  if (state.signal.abilityBlocked) {
+    state.events.push({
+      type: 'ability.rejected',
+      tick: state.tick,
+      time: state.time,
+      reason: 'signal-interference',
+    });
+    return;
+  }
   if (ability.cooldownUntil > state.time + EPS) {
     state.events.push({
       type: 'ability.rejected',
@@ -83,6 +98,24 @@ export function useAbilities(state, input) {
       until: state.time + recipe.duration,
       slowFactor: recipe.slowFactor ?? 1,
     });
+  if (recipe.primitive === 'impact-pulse') {
+    state.trail = [];
+    state.trailSegments = [];
+    state.cutStartedAt = null;
+    state.player.cutting = false;
+    state.player.speed = 0;
+    state.player.queuedDirection = null;
+    state.status = 'respawning';
+    state.respawnAt = state.time + state.rules.respawnSeconds;
+    state.events.push({
+      type: 'craft.redeployed',
+      tick: state.tick,
+      time: state.time,
+      x: state.player.x,
+      y: state.player.y,
+      radius: recipe.radius,
+    });
+  }
   state.events.push({
     type: 'ability.used',
     tick: state.tick,
@@ -91,4 +124,5 @@ export function useAbilities(state, input) {
     ammo: ability.ammo,
   });
   updateAbilities(state);
+  updateSignal(state);
 }
