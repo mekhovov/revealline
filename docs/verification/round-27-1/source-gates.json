@@ -1,0 +1,331 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.17.1",
+  "releaseVersionConsistency": {
+    "values": {
+      "package.json": "0.17.1",
+      "package-lock.json": "0.17.1",
+      "package-lock.json#packages[empty].version": "0.17.1",
+      "platforms/desktop/package.json": "0.17.1",
+      "platforms/desktop/package-lock.json": "0.17.1",
+      "platforms/desktop/package-lock.json#packages[empty].version": "0.17.1",
+      "platforms/ios/package.json": "0.17.1",
+      "platforms/ios/package-lock.json": "0.17.1",
+      "platforms/ios/package-lock.json#packages[empty].version": "0.17.1",
+      "game/build-config.json": "0.17.1",
+      "game/app.mjs#buildVersion": "0.17.1",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[0]": "0.17.1",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[1]": "0.17.1"
+    },
+    "validationVersion": "0.17.1",
+    "allMatch": true
+  },
+  "protectedOriginals": {
+    "files": 19,
+    "sha256": "546c0344c69da83460ce9b76f2647c04cba574b79adec3c296f97ee986309534",
+    "changedPaths": [],
+    "unchanged": true
+  },
+  "reviewedRepairDelta": {
+    "sourceInventory": {
+      "path": "docs/verification/round-27/source-inputs-gallery-final.json",
+      "bytes": 58536,
+      "sha256": "ba21f4f9ec26566922b5e78e30b7ef3efa459ccb8e7a09df014840de0ea3620f"
+    },
+    "changedPaths": [
+      "game/app.mjs",
+      "game/build-config.json",
+      "game/offline/service-worker.template.js",
+      "game/test/offline.test.mjs",
+      "package-lock.json",
+      "package.json",
+      "platforms/desktop/package-lock.json",
+      "platforms/desktop/package.json",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj",
+      "platforms/ios/package-lock.json",
+      "platforms/ios/package.json"
+    ],
+    "metadataPaths": [
+      "package.json",
+      "package-lock.json",
+      "platforms/desktop/package.json",
+      "platforms/desktop/package-lock.json",
+      "platforms/ios/package.json",
+      "platforms/ios/package-lock.json",
+      "game/build-config.json",
+      "game/app.mjs",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj"
+    ],
+    "metadataOnlyVersionReplacement": true,
+    "workerInputs": [
+      {
+        "path": "game/offline/service-worker.template.js",
+        "sha256": "9da62506e2b91905594e72195ee3028b514ce3f34ec1b7d56ab8d860ef54d3e3"
+      },
+      {
+        "path": "game/test/offline.test.mjs",
+        "sha256": "cfed723dd92248ce0edf2d7c6109ca52cdb7193778658abd226baf39492a1589"
+      }
+    ]
+  },
+  "reviewedWorkshopDelta": {
+    "oldEdition": {
+      "path": "authoring/library/equipment-workshop/previous/equipment-workshop-1.0.0.json",
+      "bytes": 18389,
+      "sha256": "91876d315417252a65a36b1a46f3f3e03737ec26ccc08224f52e9c376f76ea1a"
+    },
+    "currentEdition": {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024,
+      "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+    },
+    "nonvisualContentUnchanged": true,
+    "allowedFields": [
+      "version",
+      "levelVisuals"
+    ],
+    "version": "1.1.0",
+    "images": 3
+  },
+  "protectedLegacyInputs": {
+    "sourceInventory": {
+      "path": "docs/verification/round-27/source-inputs-gallery-final.json",
+      "bytes": 58536,
+      "sha256": "ba21f4f9ec26566922b5e78e30b7ef3efa459ccb8e7a09df014840de0ea3620f"
+    },
+    "files": 33,
+    "sha256": "efb47348a5f438a1047ada626ce0486e0a74e5c89d9b13cbbd700bac50e8d54f",
+    "changedPaths": [],
+    "unchanged": true
+  },
+  "recordedAt": "2026-09-12T17:04:27.208Z",
+  "startedAt": "2026-09-12T17:03:43.041Z",
+  "baselineRevision": "5d6d8852c55d95c39e36412da646fa0e23238a23",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Round27.1 parent-authorized source validation of the owned-byte offline worker repair. Exactly the worker, its tests and nine version-only metadata files differ from the frozen v0.17.0 source inventory. All 343 source inputs are hashed before/after. Twenty-one frozen release trees and twenty-two tags, earlier Round26/Round27 evidence, all three diagnostic copies and the existing candidate are preserved. The sole intentional prior-evidence delta is the explicitly authorized investigation chronology correction, pinned separately; the original baseline JSON is unchanged. Existing core/content/proofs/fixtures and all artwork stay exact. The six gates run once each, without build:pages, deployment, candidate rebuild or duplicate focused suite counting. This is working-source evidence, not frozen repair, browser, hardware, native or enjoyment certification.",
+  "runner": {
+    "path": ".cache/round-27-1/source-gates/run-gates.mjs",
+    "bytes": 22034,
+    "sha256": "614ab25051137ace7183d407170aba4a0f7cc44f19497cd3a70bde8c5e2a738b"
+  },
+  "sourceSnapshot": {
+    "before": "285d6bdf4c0ab39969fe5bef47249e9a2eff75a8a238a87e03ce8e7e0c349fb8",
+    "after": "285d6bdf4c0ab39969fe5bef47249e9a2eff75a8a238a87e03ce8e7e0c349fb8",
+    "files": 343,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-27-1/source-gates/source-inputs-before.json",
+      "bytes": 58536,
+      "sha256": "1f5d9806a6fc5c9b9d6ad53feab5c0b631176813dc68dff60ecae9c358c0000c"
+    },
+    "afterIndex": {
+      "path": ".cache/round-27-1/source-gates/source-inputs.json",
+      "bytes": 58536,
+      "sha256": "1f5d9806a6fc5c9b9d6ad53feab5c0b631176813dc68dff60ecae9c358c0000c"
+    }
+  },
+  "expectedMinimumTests": {
+    "test": 1566
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "durationMs": 29954,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/test.log",
+        "bytes": 381250,
+        "sha256": "c72d2dc2b0966255112de063d207642c239408b467e782aaf8170b09ed22ce3d"
+      },
+      "tests": {
+        "tests": 1566,
+        "pass": 1566,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 5697,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/lint.log",
+        "bytes": 148,
+        "sha256": "091c736558d4027c61953d19ebc86b4f1ca18e812d89c2c000d5039b85c2717c"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 8819,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/format.log",
+        "bytes": 195,
+        "sha256": "6d7c61aa2284cb4cdc662ca3fe77acfb2b91b870aace3871e5e87d97869c14f5"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "durationMs": 1047,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/native-format.log",
+        "bytes": 254,
+        "sha256": "9cfc366e45fc00ba879b063cd763dab9a72887936713f943b5c1e51a33541763"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 6509,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/validate.log",
+        "bytes": 1263,
+        "sha256": "0372730fadd6d15ef7ef620dc90c96ed7bddf98e18a39360c0eb33ebc2afcb61"
+      },
+      "validation": {
+        "version": "0.17.1",
+        "files": 127,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/?course=first-flight&amp;lesson=close-line&amp;turn-policy=immediate",
+          "site/index.html → ./game/?course=first-flight&amp;lesson=close-line&amp;turn-policy=immediate",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/couch/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./privacy.html",
+          "site/index.html → ./credits.html"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 6,
+        "packLevels": 17,
+        "packGoals": 6
+      }
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "mise exec node@22.22.2 -- node --check authoring/motion-lab/app.js",
+      "durationMs": 29,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-27-1/source-gates/motion-lab-syntax.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "preservedFrozenBaseline": {
+    "inventory": {
+      "path": ".cache/round-27-1/integrity/frozen-releases-before-v0171.json",
+      "bytes": 1240922,
+      "sha256": "3b704d3a8e148b1b366c4ea06ac41eef8db392e6a233c2d848499068f664e86a"
+    },
+    "releaseCount": 21,
+    "fileCount": 2342,
+    "bytes": 2966393002,
+    "preparedComparisonUnchanged": true,
+    "previousEvidenceMatchesPreparation": false,
+    "approvedEvidenceCorrection": {
+      "record": {
+        "path": ".cache/round-27-1/integrity/investigation-chronology-correction.json",
+        "bytes": 1247,
+        "sha256": "344441bd9cf7190bd22cb0e6e8ce2f1664783de51dc9219f5146fe734c8cb74f"
+      },
+      "format": "revealline-evidence-correction.v1",
+      "recordedAt": "2026-09-12T16:57:03.206779+00:00",
+      "path": "docs/verification/round-27/frozen-offline-investigation.md",
+      "before": {
+        "path": "docs/verification/round-27/frozen-offline-investigation.md",
+        "bytes": 7322,
+        "sha256": "fb90b65585b2f90acd9ce9cdea6dbf3427cc0a240a00c4b501529e792959867f"
+      },
+      "after": {
+        "path": "docs/verification/round-27/frozen-offline-investigation.md",
+        "bytes": 7444,
+        "sha256": "24cf25d88b3174d0d479cdad6565177ae165c319b4d1f8f0d684c8f4fe299402"
+      },
+      "reason": "Parent corrected browser chronology: five QA tabs were closed after the lifecycle probe and before the write-stage diagnostic, not before the second original frozen-install attempt. The three original attempts preceded all three diagnostic probes.",
+      "authorization": "Parent explicitly requested this factual correction to the new uncommitted note and separate recording without rewriting the immutable baseline.",
+      "baseline": {
+        "path": ".cache/round-27-1/integrity/frozen-releases-before-v0171.json",
+        "sha256": "3b704d3a8e148b1b366c4ea06ac41eef8db392e6a233c2d848499068f664e86a",
+        "unchanged": true
+      },
+      "localLinksChecked": 15,
+      "runtimeChanged": false
+    },
+    "allOtherPreparedEvidenceUnchanged": true,
+    "exactTagsUnchanged": true,
+    "tagCount": 22,
+    "beforeTags": {
+      "path": ".cache/round-27-1/source-gates/tags-before.json",
+      "bytes": 5945,
+      "sha256": "b1354e559afb83b1444455b6cfe7b94ede4ed71909f8ed453f0642224b869944"
+    },
+    "afterTags": {
+      "path": ".cache/round-27-1/source-gates/tags-after.json",
+      "bytes": 5945,
+      "sha256": "b1354e559afb83b1444455b6cfe7b94ede4ed71909f8ed453f0642224b869944"
+    }
+  },
+  "preservedPreviousEvidence": {
+    "roots": [
+      "docs/verification/round-26",
+      ".cache/round-26",
+      "releases",
+      ".cache/round-27-1/integrity/frozen-releases-before-v0171.json",
+      ".cache/round-27-1/integrity/frozen-releases-before-v0171.json.sha256",
+      "docs/verification/round-27",
+      ".cache/round-27",
+      ".cache/round-27-1/candidate",
+      ".cache/round-27-1/integrity/investigation-chronology-correction.json"
+    ],
+    "files": 6233,
+    "before": "88111da31a8b043c1de6600588b04733a8b47dce083cfcbf276bf20805879b02",
+    "after": "88111da31a8b043c1de6600588b04733a8b47dce083cfcbf276bf20805879b02",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-27-1/source-gates/prior-evidence-before.json",
+      "bytes": 1311335,
+      "sha256": "5724b1bfbced6635039548587c0b42959b48bfed33006a8ee6ef7bd835a96961"
+    },
+    "afterIndex": {
+      "path": ".cache/round-27-1/source-gates/prior-evidence-after.json",
+      "bytes": 1311335,
+      "sha256": "5724b1bfbced6635039548587c0b42959b48bfed33006a8ee6ef7bd835a96961"
+    }
+  },
+  "passed": true
+}
