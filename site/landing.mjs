@@ -13,7 +13,7 @@ const packStatus = document.querySelector('#landing-pack-status');
 
 const historicalPlayPath = (record) => `./releases/${record.play}`;
 
-const savedClears = (campaignId) => {
+const savedClears = (campaign) => {
   try {
     const version = currentVersion.replace(/^v/, '');
     const raw = localStorage.getItem(`revealline.library.release-${version}.v1`);
@@ -23,7 +23,7 @@ const savedClears = (campaignId) => {
     if (!library || !['xonix-library.v1', 'xonix-library.v2'].includes(library.format))
       return new Set();
     const progress = Object.values(library.campaigns || {}).find(
-      (entry) => entry?.campaignId === campaignId,
+      (entry) => entry?.campaignId === campaign.id && entry?.revision === campaign.revision,
     );
     return new Set(
       progress?.clears && typeof progress.clears === 'object' ? Object.keys(progress.clears) : [],
@@ -70,7 +70,7 @@ try {
     const pack = catalog.packs.find((item) => item.id === packSelect.value);
     levelSelect.replaceChildren(
       ...pack.campaigns.flatMap((campaign) => {
-        const clears = savedClears(campaign.id);
+        const clears = savedClears(campaign);
         return campaign.levels.map((level, index) => {
           const available =
             index === 0 || clears.has(level.id) || clears.has(campaign.levels[index - 1].id);

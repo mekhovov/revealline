@@ -26,6 +26,7 @@ test('shipped pack catalog is a lightweight exact projection of every bundled pa
       summary.campaigns,
       pack.campaigns.map((campaign) => ({
         id: campaign.id,
+        revision: campaign.revision,
         title: campaign.title,
         levels: campaign.levels.map((level) => ({ id: level.id, name: level.name })),
       })),
@@ -93,6 +94,9 @@ test('catalog validation rejects drift, duplicate identities and unsupported fie
   );
   assert.throws(() =>
     preparePackCatalog(mutate((value) => (value.packs[0].path = '../night-shift.json'))),
+  );
+  assert.throws(() =>
+    preparePackCatalog(mutate((value) => (value.packs[0].campaigns[0].revision = ''))),
   );
   assert.throws(() =>
     preparePackCatalog(mutate((value) => (value.packs[0].campaigns[0].levels[0].extra = true))),
