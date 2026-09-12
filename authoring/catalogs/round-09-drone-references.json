@@ -1,0 +1,1540 @@
+{
+  "version": "research-catalog.v1",
+  "accessedAt": "2026-09-12",
+  "scopeNote": "Curated public reference inventory, not exhaustive: 32 named platform/model records and one linked modification. High-level identity, shape, role and evidence only. All gameRole values are fictional proposals, not implemented runtime classes or real-world tactics.",
+  "interpretation": {
+    "family": "Broad domain for the atlas; all entries here are aircraft.",
+    "status": "Evidence/document category, not an automatic declaration of fielding. Read fieldUseEvidence and caveats.",
+    "silhouette": "Family-level art cues, not measured engineering drawings; no frame-by-frame motion audit performed.",
+    "communicationOptions": "Communication is independent of airframe and role; not a performance or engineering specification.",
+    "operators": "Representative, qualified context; never an exhaustive operator list or manufacturer endorsement.",
+    "confidence": "Confidence concerns only the narrow attributed claim, not manufacturer effectiveness claims."
+  },
+  "excluded": [
+    "payload quantities",
+    "ranges",
+    "endurance",
+    "operational frequencies",
+    "explosive construction",
+    "real targeting tactics",
+    "deployment instructions",
+    "countermeasure evasion",
+    "procurement links or contact data"
+  ],
+  "entries": [
+    {
+      "id": "wild-hornet-strike",
+      "name": "Wild Hornet Strike",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Wild Hornets",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "compact FPV multirotor",
+      "roles": [
+        "one-way strike"
+      ],
+      "silhouette": "Compact open-frame quad family; exposed arms, front camera and small central body.",
+      "status": "documented-product",
+      "gameRole": "Charge dash: spend one arcade charge to clear a marked gate; keep the normal player collision footprint.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://wildhornets.com/en/fpv-drone-with-10-inch-propellers-analog",
+          "title": "Wild Hornets Strike product",
+          "claim": "Named FPV strike product and open frame.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://wildhornets.com/en/frequently-asked-questions",
+          "title": "Wild Hornets: manufacturer FAQ",
+          "claim": "Manufacturer lists its strike FPV family as field-used.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Named product page mixes analog/digital wording; no communications specifications or success claims are imported.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer reports front-line use of its FPV strike family.",
+      "communicationOptions": [
+        "radio video/control; exact variant omitted"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "queen-hornet",
+      "name": "Queen Hornet",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Wild Hornets",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy FPV multirotor",
+      "roles": [
+        "reusable drop",
+        "cargo transport",
+        "small-drone carrier",
+        "relay"
+      ],
+      "silhouette": "Broad quad frame with conspicuous space beneath the body for interchangeable cargo.",
+      "status": "documented-product",
+      "gameRole": "Courier: collect a glowing capsule, carry it above the cut line, and drop on a marked tile; a relay badge may be a separate module.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://wildhornets.com/en/queen-hornet-17-inch-fpv-drone",
+          "title": "Queen Hornet product",
+          "claim": "Named bomber/cargo product with release system.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://wildhornets.com/en/frequently-asked-questions",
+          "title": "Wild Hornets: manufacturer FAQ",
+          "claim": "Lists supply, smaller-drone carrier and relay roles.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "One airframe supports several roles; do not make bomber, carrier and relay separate mandatory body classes.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer describes field-used multirole platform.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "sting",
+      "name": "STING",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Wild Hornets",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "FPV interceptor multirotor",
+      "roles": [
+        "interceptor"
+      ],
+      "silhouette": "Compact interceptor body; emphasize a rounded central shell and four separated rotor points in original art.",
+      "status": "documented-product",
+      "gameRole": "Interceptor pulse: tag one roaming arcade hazard and show a brief ring; control speed stays chosen by the ruleset.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://wildhornets.com/en/sting-interceptor",
+          "title": "STING interceptor product",
+          "claim": "Named Ukrainian FPV interceptor product; manufacturer reports use.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Rounded-shell treatment is art direction, not a measured profile. Published effectiveness rankings are excluded.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer reports operational use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "vampire",
+      "name": "Vampire",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "SkyFall",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy multirotor",
+      "roles": [
+        "reusable drop",
+        "cargo transport"
+      ],
+      "silhouette": "Wide heavy-multirotor stance, separated rotor discs, landing supports and clear underslung cargo space.",
+      "status": "documented-product",
+      "gameRole": "Night courier: retrieve and deliver bright aid parcels; one readable cargo silhouette remains visible over backgrounds.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/the-vampire-a-drone-that-terrifies-enemies-and-assists-ukrainians",
+          "title": "Ukraine MoD: Vampire",
+          "claim": "Ukrainian platform; reusable cargo/drop roles and aid delivery.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://www.pravda.com.ua/eng/articles/2026/02/10/8020316/",
+          "title": "Ukrainska Pravda: interview with SkyFall, 10 February 2026",
+          "claim": "Manufacturer interview identifies SkyFall as Vampire maker.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer-interview",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "A named SkyFall platform; do not equate every large drone or the nickname Baba Yaga with Vampire.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Ukraine MoD documents military use and humanitarian supply delivery.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "r18",
+      "name": "R18",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Aerorozvidka origin; UFORCE current product listing",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy octocopter",
+      "roles": [
+        "reusable drop",
+        "surveillance",
+        "cargo transport"
+      ],
+      "silhouette": "Eight-rotor layout; open center and underslung camera/cargo zone.",
+      "status": "documented-product",
+      "gameRole": "Eight-petal carrier: a distinctive rotor rhythm with the same logical player footprint; deliver one collectible.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://aerorozvidka.ngo/",
+          "title": "Aerorozvidka official organization site",
+          "claim": "Developer organization identifies R18 among its work.",
+          "accessedAt": "2026-09-12",
+          "kind": "developer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://www.uforce.com/air-platforms",
+          "title": "UFORCE air platforms: Nemesis and R18",
+          "claim": "Explicitly describes R18 as octocopter with surveillance, cargo and strike uses.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Current UFORCE branding does not erase Aerorozvidka origin. Do not infer variant compatibility.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Developer association and current maker listing documented; field prevalence not independently counted.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "kazhan-620",
+      "name": "Kazhan 620 / E620",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Reactive Drone",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy quadcopter",
+      "roles": [
+        "reusable drop",
+        "cargo transport"
+      ],
+      "silhouette": "Four motors in the current maker comparison; heavy body and cargo clearance.",
+      "status": "documented-product",
+      "gameRole": "Compact lifter: a four-rotor cargo variant, with crane-like attachment animation on pickup/drop.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://kazhan.ua/uk/",
+          "title": "Reactive Drone: Kazhan 620 and 630",
+          "claim": "Current 620 listing explicitly says four-motor construction; cargo/drop role.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://mod.gov.ua/news/operatori-vazhkih-bomberiv-nichni-mislivczi-za-vorozhoyu-broneyu-ta-logistikoyu",
+          "title": "Ukraine MoD: heavy bomber operators, 21 March 2026",
+          "claim": "Kazhan family listed among systems used by Ukrainian forces.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Current maker names 620/E620 differently across listings. Four motors is specific to the current 620 listing, not every historical Kazhan.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "MoD identifies Kazhan among active heavy systems; exact 620 variant use is not separately established here.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "kazhan-630",
+      "name": "Kazhan 630 / E630",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Reactive Drone",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy hexacopter",
+      "roles": [
+        "reusable drop",
+        "cargo transport"
+      ],
+      "silhouette": "Six motors in the maker comparison; wider ring of rotors around a central body.",
+      "status": "documented-product",
+      "gameRole": "Six-petal lifter: alternate attachment spacing and idle rhythm; no hidden cargo or speed advantage from the skin.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://kazhan.ua/uk/",
+          "title": "Reactive Drone: Kazhan 620 and 630",
+          "claim": "Current 630 listing explicitly says six-motor construction; cargo/drop role.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Separate named model reference; not evidence that all heavy bombers are hexacopters.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker product documented; MoD confirms Kazhan family, not this exact variant independently.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "nemesis",
+      "name": "Nemesis Heavy Bomber Mark 3.5",
+      "family": "aircraft",
+      "origin": "Ukraine-origin platform; current UFORCE group",
+      "manufacturer": "UFORCE",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "heavy multirotor",
+      "roles": [
+        "reusable drop",
+        "surveillance",
+        "relay"
+      ],
+      "silhouette": "Large multi-arm body and configurable cargo/sensor region; exact rotor layout kept asset-specific.",
+      "status": "documented-product",
+      "gameRole": "Support carrier: pick one mission module before a level, then show its status using a single large badge.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.uforce.com/air-platforms",
+          "title": "UFORCE air platforms: Nemesis and R18",
+          "claim": "Heavy Bomber Mark 3.5 and reusable multi-role Nemesis listed.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://mod.gov.ua/news/operatori-vazhkih-bomberiv-nichni-mislivczi-za-vorozhoyu-broneyu-ta-logistikoyu",
+          "title": "Ukraine MoD: heavy bomber operators, 21 March 2026",
+          "claim": "Nemesis listed among heavy systems in Ukrainian service.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Nemesis also names a military unit and a wider maker product family. This row is the heavy bomber, not every Nemesis-labelled aircraft.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker reports Ukrainian service; MoD independently names Nemesis among active heavy platforms.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "khizhak-reboff",
+      "name": "Khizhak REBOFF / Хижак REBOFF",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "3DTech",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "FPV multirotor",
+      "roles": [
+        "strike"
+      ],
+      "silhouette": "FPV frame plus visible spool-shaped attachment; use a thin luminous trailing line in the fictional treatment.",
+      "status": "official-report",
+      "gameRole": "Filament cutter: optional glowing trail styling; a tether challenge is a separate explicit arcade rule.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/news/stijki-do-vorozhogo-reb-ukrayinski-droni-na-optovolokni-hizhak-reboff",
+          "title": "Ukraine MoD: Khizhak REBOFF, 20 May 2025",
+          "claim": "3DTech maker, fiber-linked FPV family, codification and brigade supply.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Fiber is a communication option, not an aerodynamic class. No real link resilience or spool performance is simulated.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "MoD states codified models were supplied to combat brigades.",
+      "communicationOptions": [
+        "fiber-optic control/video link"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "baton-optik",
+      "name": "Baton Optik / Батон Оптик",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Not identified in the cited MoD announcement",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "FPV multirotor",
+      "roles": [
+        "strike"
+      ],
+      "silhouette": "Quad-family body with spool module; color and fixture shape should distinguish it without enlarging the hitbox.",
+      "status": "official-report",
+      "gameRole": "Ribbon courier: a second filament visual recipe; optional route puzzle only when the ruleset explicitly enables it.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/news/znishhuye-tehniku-navit-za-30-kilometriv-novi-droni-baton-optik-popovnili-arsenal-sil-oboroni",
+          "title": "Ukraine MoD: updated Baton Optik authorized, 5 February 2026",
+          "claim": "Updated Ukrainian fiber-linked strike UAS authorized in February 2026.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Exact maker and historical variant equivalence unresolved; do not borrow performance from other fiber FPVs.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "MoD authorized an updated version for service; this does not establish deployment volume.",
+      "communicationOptions": [
+        "fiber-optic control/video link"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "linza",
+      "name": "Linza",
+      "family": "aircraft",
+      "origin": "Ukraine; Ukrainian–German co-production announced",
+      "manufacturer": "Frontline Robotics; Quantum Systems partnership",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "camera multirotor",
+      "roles": [
+        "reusable drop",
+        "surveillance"
+      ],
+      "silhouette": "Camera-led multirotor: make the gimbal, body shell and cargo attachment visually separate.",
+      "status": "official-report",
+      "gameRole": "Survey courier: one scanner ring can reveal objective hints; a separate capsule slot supports delivery challenges.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/tactical-reconnaissance-and-strike-missions-key-facts-about-the-ukrainian-linza-uav-to-be-co-produced-with-germany",
+          "title": "Ukraine MoD: Linza co-production, 25 December 2025",
+          "claim": "Identifies maker partnership, stabilized camera, bomber and reconnaissance purposes.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Reconnaissance and bomber purposes coexist; production partnership is not a separate nationality or role.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "MoD describes current platform and production expansion; specific fielded variant counts not audited.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "pd2",
+      "name": "PD-2",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Ukrspecsystems",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "fixed-wing with optional VTOL configuration",
+      "roles": [
+        "surveillance",
+        "cargo transport"
+      ],
+      "silhouette": "Long fixed wing and fuselage; optional lift-rotor attachments are separate from the forward-flight body.",
+      "status": "documented-product",
+      "gameRole": "Survey glider: scan through an authored lane; a VTOL visual recipe changes hover animation only unless rules differ explicitly.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://ukrspecsystems.com/drones/pd-2-uas",
+          "title": "Ukrspecsystems: PD-2",
+          "claim": "Same aircraft offered in fixed-wing and VTOL configurations; surveillance/cargo purposes and Ukrainian service.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "A fixed-wing/VTOL configuration change is not a theme change. No flight-envelope physics are implied by the arcade body.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker states Ukrainian Armed Forces active service.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "shark-d",
+      "name": "SHARK-D",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Ukrspecsystems",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance",
+        "relay"
+      ],
+      "silhouette": "Slender fixed-wing body with distinct sensor zone; use a long-wing silhouette without modeling real dimensions.",
+      "status": "documented-product",
+      "gameRole": "Survey ribbon: deliberate sweep animation highlights a hidden collectible for a short fictional window.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://ukrspecsystems.com/drones/shark-uas",
+          "title": "Ukrspecsystems: SHARK-D",
+          "claim": "SHARK-D identity, reconnaissance/surveillance, relay option and active service.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Current URL says shark-uas but page heading is SHARK-D; do not merge with SHARK-M or Mini SHARK.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker explicitly states SHARK-D active service in Ukrainian Armed Forces.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "leleka-100",
+      "name": "Leleka-100",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "DeViRo",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance"
+      ],
+      "silhouette": "Birdlike long-wing survey family; retain a recognizable narrow fuselage and camera accent.",
+      "status": "documented-product",
+      "gameRole": "Map reader: reveal a small preview window of the background without claiming territory.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://deviro.ua/",
+          "title": "DeViRo official product and company site",
+          "claim": "Maker identifies Leleka-100 military use and reconnaissance product family.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Current flagship Leleka variants differ; this historical model name must not inherit their specifications.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker documents Ukrainian military customer relationship and Leleka-100 use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "raybird",
+      "name": "Raybird / ACS-3 family",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Skyeton",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance"
+      ],
+      "silhouette": "Long-wing survey aircraft with compact fuselage; motion cue is a smooth authored sweep rather than quad-style bobbing.",
+      "status": "documented-product",
+      "gameRole": "Panorama scout: reveal the next art fragment while traversing a route; animation does not steer the player.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://skyeton.com/",
+          "title": "Skyeton: Raybird",
+          "claim": "Skyeton identifies Ukrainian origin, Raybird platform and combat use.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Raybird is a developing family. No endurance, speed, altitude or mission-success claims are used.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker reports Ukrainian military use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "shvidun",
+      "name": "Shvidun / Швидун",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Not identified in the cited MoD announcement",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "fixed-wing interceptor",
+      "roles": [
+        "interceptor"
+      ],
+      "silhouette": "Winged interceptor silhouette; use a compact nose and clear span distinct from a rotor drone.",
+      "status": "official-report",
+      "gameRole": "Sky guardian: clear one marked airborne hazard, with an optional return-to-hub animation.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/one-of-the-most-effective-interceptors-against-shahed-drones-what-is-known-about-the-ukrainian-made-shvidun-drone",
+          "title": "Ukraine MoD: Shvidun, 31 March 2026",
+          "claim": "Ukrainian interceptor with winged airframe, authorized and already operational.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Maker identity unresolved. Return/reuse is publicly described but exact conditions are outside this catalog.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "MoD reports codification, authorization and first systems already operating.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "shrike",
+      "name": "SHRIKE",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "SkyFall",
+      "operators": [
+        "Ukraine"
+      ],
+      "airframeFamily": "FPV multirotor",
+      "roles": [
+        "one-way strike"
+      ],
+      "silhouette": "Compact racing-like quad family; original colored canopy and front-camera eye can distinguish it from the heavy carrier.",
+      "status": "documented-product",
+      "gameRole": "Sprint charm: alternate compact body for the same charge-dash recipe.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.pravda.com.ua/eng/articles/2026/02/10/8020316/",
+          "title": "Ukrainska Pravda: interview with SkyFall, 10 February 2026",
+          "claim": "SkyFall interview identifies SHRIKE as its FPV product used by Ukrainian operators.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer-interview",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Product-family reference; no claimed autonomous targeting capability or real performance is transposed into game behavior.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer interview describes current Ukrainian FPV product and military use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "orlan-10",
+      "name": "Orlan-10",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Special Technology Center / STC",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance",
+        "relay"
+      ],
+      "silhouette": "Conventional airplane outline with long straight wings, narrow fuselage and tail.",
+      "status": "official-report",
+      "gameRole": "Observer hazard: patrol an authored loop and briefly outline a danger zone before it activates.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://odin.t2com.army.mil/WEG/Asset/Orlan-10_Russian",
+          "title": "US Army ODIN: Orlan-10",
+          "claim": "Russian maker, service, reconnaissance and relay-related uses.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://war-sanctions.gur.gov.ua/en/components/companies?kc=&page=18&per-page=12",
+          "title": "Ukraine DIU: Special Technological Centre supplier listing",
+          "claim": "STC supplier listing identifies Orlan-10 supply to Russian MoD for the war.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Inventory proliferation or captured examples do not make this a uniquely operated platform. This row is Orlan-10, not export 10E.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "US Army inventory identifies Russian military service; DIU supplier listing corroborates war supply.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "orlan-30",
+      "name": "Orlan-30",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Special Technology Center / STC",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance"
+      ],
+      "silhouette": "Long-wing conventional survey silhouette; use a different tail accent rather than invented maneuvering strengths.",
+      "status": "official-report",
+      "gameRole": "Patient observer: a second patrol rhythm and a visible scanner sweep; difficulty is authored independently.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://war-sanctions.gur.gov.ua/en/components/companies?kc=&page=18&per-page=12",
+          "title": "Ukraine DIU: Special Technological Centre supplier listing",
+          "claim": "STC identified as supplier of Orlan-30 to Russian MoD for war use.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://roe.ru/upload/pdf/1336_post.pdf",
+          "title": "Rosoboronexport: Orlan-10E and Orlan-30 exhibition release",
+          "claim": "Exporter names Orlan-30 as reconnaissance UAV and reports combat use.",
+          "accessedAt": "2026-09-12",
+          "kind": "state-exporter",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Orlan-10 and Orlan-30 remain distinct named references. Field configuration details are not inferred from export brochures.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU identifies STC supply of Orlan-30 to Russia; state exporter reports combat reconnaissance use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "zala-z16",
+      "name": "ZALA Z-16",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "ZALA",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance"
+      ],
+      "silhouette": "Compact wing-dominant survey silhouette; choose a broad swept-wing art treatment as a family cue.",
+      "status": "documented-product",
+      "gameRole": "Contour observer: follows a distinct curved patrol lane and broadcasts an easily seen warning arc.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://zala-aero.com/",
+          "title": "ZALA official product and news site",
+          "claim": "Maker names Z-16 and publishes reconnaissance-use reports.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://zala-aero.com/news/zala-na-dsa-2026-eksportnaya-versiya-ruk-lanczet-e-v-polnoj-boevoj-komplektaczii/",
+          "title": "ZALA: Lancet-E exhibition configuration, 13 April 2026",
+          "claim": "Exporter version Z-16E explicitly described as aircraft-type reconnaissance; used only as family context.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Z-16, Z-16E and older ZALA 421 designations are not automatically interchangeable. Field claims are attributed to the maker.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer publishes Russian military-use reports.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "supercam-s350",
+      "name": "Supercam S350",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Unmanned Systems group / Supercam",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing survey aircraft",
+      "roles": [
+        "surveillance",
+        "civilian monitoring"
+      ],
+      "silhouette": "Wing-dominant survey body with sensor region; broad stable sweep is a fictional animation choice.",
+      "status": "documented-product",
+      "gameRole": "Wide observer: a broad scan warning sweeps over unrevealed cells without changing collision geometry.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://supercam.aero/catalog/supercam-s350",
+          "title": "Unmanned Systems: Supercam S350 / S350F",
+          "claim": "Maker identifies survey/monitoring product and modular sensors.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://war-sanctions.gur.gov.ua/ru/uav/217",
+          "title": "Ukraine DIU: Supercam S350 inventory",
+          "claim": "DIU identifies S350 reconnaissance model.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "S350/S350F and VTOL SX350 are not one configuration. Commercial origin does not determine faction.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU records the model and recovered components; maker also markets civilian monitoring.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "skat-350m",
+      "name": "Skat 350 M",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Izhevsk Aviation Plant / Kalashnikov",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "flying-wing survey aircraft",
+      "roles": [
+        "surveillance",
+        "civilian monitoring"
+      ],
+      "silhouette": "Flying-wing silhouette rather than a quad; emphasize span and a small central camera highlight.",
+      "status": "documented-product",
+      "gameRole": "Wing watcher: wide predictable crossings create route-planning pressure between safe stops.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/media/news/bespilotniki-kalashnikova-zainteresovali-strany-blizhnego-vostoka/",
+          "title": "Rostec: Kalashnikov aircraft exhibition",
+          "claim": "State industry identifies Skat 350 M as flying-wing aircraft.",
+          "accessedAt": "2026-09-12",
+          "kind": "state-industry",
+          "confidence": "high"
+        },
+        {
+          "url": "https://t.me/s/kalashnikovnews/5140",
+          "title": "Kalashnikov official channel: Skat 350 M reporting",
+          "claim": "Official maker channel names production and Russian reconnaissance use.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Do not equate this with Supercam S350 just because numbers and general outline resemble each other.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Manufacturer reports Russian field use; state industry identifies the flying-wing layout.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "lancet",
+      "name": "Lancet family",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "ZALA",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "winged one-way aircraft",
+      "roles": [
+        "loitering strike"
+      ],
+      "silhouette": "Slender winged body; a cross-like fin motif is an original identifying accent, not a measured variant drawing.",
+      "status": "documented-product",
+      "gameRole": "Telegraphed dart: stop, flash direction, then move along a committed arcade line; no homing or real tactics implied.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://zala-aero.com/news/zala-na-dsa-2026-eksportnaya-versiya-ruk-lanczet-e-v-polnoj-boevoj-komplektaczii/",
+          "title": "ZALA: Lancet-E exhibition configuration, 13 April 2026",
+          "claim": "Maker identifies Lancet family with separate Item 51E and 52E aircraft.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://sanctions.kse.ua/wp-content/uploads/2023/09/sanctions_workingbgroup_drones_final4.pdf",
+          "title": "Yermak–McFaul/KSE: Russian drone supply-chain report, 2023",
+          "claim": "Research report documents Russian Lancet use against Ukraine.",
+          "accessedAt": "2026-09-12",
+          "kind": "research-report",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Lancet is a system/family name; Item 51, Item 52 and export E versions differ. No variant performance is merged.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Russian use is documented by research report and maker publications.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "geran2-shahed136",
+      "name": "Geran-2 / Shahed-136 lineage",
+      "family": "aircraft",
+      "origin": "Iranian design lineage; Russian production and modifications",
+      "manufacturer": "Iranian Shahed design lineage; Russian production organizations vary",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "delta-wing one-way aircraft",
+      "roles": [
+        "one-way strike"
+      ],
+      "silhouette": "Strong triangular delta outline, central body and rear propulsion cue; game artwork remains original.",
+      "status": "official-report",
+      "gameRole": "Delta wave: a slow readable lane-crossing hazard with a large warning silhouette and no real target association.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.govinfo.gov/content/pkg/GOVPUB-D5_200-PURL-gpo212630/pdf/GOVPUB-D5_200-PURL-gpo212630.pdf",
+          "title": "US Defense Intelligence Agency: Iranian UAV evidence",
+          "claim": "DIA visual evidence relates Shahed-136 and Russian Geran-2 markings.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://gur.gov.ua/en/content/my-shukaiemo-de-same-rosiia-vyhotovliaie-shakhedy-vadym-skibitskyi",
+          "title": "Ukraine DIU: Russian production of Geran-2 / Shahed",
+          "claim": "DIU reports Russian Geran-2 production.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Historical Geran-2 markings do not prove every later variant is identical to an Iranian Shahed-136. Geran-3/4/5 are outside this row.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "US DIA documents Iranian-origin aircraft in Russian use; Ukrainian DIU reports Russian production.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "gerbera",
+      "name": "Gerbera",
+      "family": "aircraft",
+      "origin": "Russian assembly; Chinese prototype lineage according to Ukrainian DIU",
+      "manufacturer": "Russian Yelabuga production; supplier lineage reported by DIU",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing multi-role aircraft",
+      "roles": [
+        "decoy",
+        "surveillance",
+        "one-way strike"
+      ],
+      "silhouette": "Simple wing-dominant body; use a hollow diamond emblem to make a fictional decoy readable.",
+      "status": "official-report",
+      "gameRole": "Echo hazard: looks distinct from real threats through pattern as well as color; a reveal action identifies it.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://gur.gov.ua/en/content/herbery-z-fanery-ta-inozemnoi-elektroniky-detali-budovy-cherhovoho-rosiiskoho-drona",
+          "title": "Ukraine DIU: Gerbera, 18 November 2024",
+          "claim": "DIU reports Russian assembly, Chinese prototype lineage and multiple roles.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Not merely a harmless decoy and not a synonym for Shahed. Purpose varies by fitted configuration; origin assessment is attributed.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU reports examined downed samples and Russian use.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "molniya",
+      "name": "Molniya",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Not established in the cited DIU release",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "fixed-wing FPV aircraft",
+      "roles": [
+        "strike",
+        "decoy configuration"
+      ],
+      "silhouette": "Simple airplane-type frame with straight wings; use a spare angular body in the pixel treatment.",
+      "status": "official-report",
+      "gameRole": "Straight runner: a visibly committed crossing line with a long warning, balanced in game units.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://gur.gov.ua/en/content/war-sanctions-zavdiaky-chomu-litaiut-rosiiski-fpv-kryla-molnyia-ta-analoh-orlanu-fenyks.html",
+          "title": "Ukraine DIU: Molniya and Phoenix, 10 December 2024",
+          "claim": "DIU identifies airplane-type FPV strike UAV and mentions a non-strike configuration.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Molniya has variants; this row does not inherit Molniya-2R or later carrier/autonomy claims. FPV is not synonymous with quadcopter.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU describes Russian use and examined components.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "kvn",
+      "name": "Knyaz Vandal Novgorodsky / KVN",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Ushkuynik",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "FPV multirotor",
+      "roles": [
+        "strike"
+      ],
+      "silhouette": "Compact FPV family plus conspicuous spool attachment; preserve the same central collision marker.",
+      "status": "official-report",
+      "gameRole": "Filament rival: draws an original luminous warning thread; any tether penalty is an optional arcade rule.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://gur.gov.ua/en/content/warsanctions-hur-opryliudniuie-nachynku-rosiiskoho-bpla-kniaz-vieshchii-olieh.html",
+          "title": "Ukraine DIU: Ushkuynik products, 13 April 2026",
+          "claim": "DIU identifies Ushkuynik as developer of Knyaz Vandal Novgorodsky fiber-optic FPVs.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Public maker identity/type is stronger than deployment evidence in this audit. Do not infer fiber properties or build details.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU identifies the maker and fiber-linked FPV product; this specific source does not establish unit-scale deployment.",
+      "communicationOptions": [
+        "fiber-optic control/video link"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "piranha10",
+      "name": "Piranha-10",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "SKB Piranha",
+      "operators": [
+        "Russia"
+      ],
+      "airframeFamily": "FPV multirotor",
+      "roles": [
+        "one-way strike"
+      ],
+      "silhouette": "Compact open-frame FPV family; original tooth-shaped canopy trim can signal the rival role.",
+      "status": "official-report",
+      "gameRole": "Small dart rival: one of several art variations sharing the same readable attack cue.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://war-sanctions.gur.gov.ua/ru/uav/446",
+          "title": "Ukraine DIU: Piranha-10 inventory",
+          "claim": "DIU lists Piranha-10 as FPV strike UAV linked to SKB Piranha.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Use the named -10 model; do not import -13 or unnamed Piranha specifications. Exact configuration remains unverified.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "DIU catalog identifies model, strike role and maker; broad deployment is not established by the entry alone.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "dji-mavic3",
+      "name": "DJI Mavic 3",
+      "family": "aircraft",
+      "origin": "China; civilian commercial origin",
+      "manufacturer": "DJI",
+      "operators": [
+        "Civilian operators",
+        "Ukraine (model and family documented)",
+        "Russia (DJI family documented; exact model not established here)"
+      ],
+      "airframeFamily": "folding camera quadcopter",
+      "roles": [
+        "photography",
+        "surveillance"
+      ],
+      "silhouette": "Compact folded-body shape, four arms and prominent front camera; distinct from exposed-frame FPV.",
+      "status": "documented-product",
+      "gameRole": "Camera scout: preview a patch of art or mark a collectible without capturing it.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.dji.com/lt/newsroom/news/dji-mavic-3-release",
+          "title": "DJI: Mavic 3 release, 5 November 2021",
+          "claim": "Civilian folding camera-drone identity.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://mod.gov.ua/news/ministerstvo-oboroni-sprostilo-pravila-vikoristannya-bp-la",
+          "title": "Ukraine MoD: Mavic 3 and Matrice 300 examples",
+          "claim": "MoD explicitly names Mavic 3 as an example.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://s3.us-east-1.amazonaws.com/files.cnas.org/documents/CNAS-Report-Defense-Ukraine-Drones-Final.pdf",
+          "title": "CNAS: Evolution Not Revolution, February 2024",
+          "claim": "Research documents DJI-family use by Ukrainian and Russian forces.",
+          "accessedAt": "2026-09-12",
+          "kind": "research-report",
+          "confidence": "high"
+        },
+        {
+          "url": "https://www.dji.com/media-center/announcements/dji-statement-on-the-us-department-of-defense-chinese-military-companies-list",
+          "title": "DJI statement on civilian purpose, 8 October 2022",
+          "claim": "DJI states civilian purpose and opposition to military use.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Mavic 3, Classic, Pro, 3E and 3T differ. Shared manufacturer does not imply endorsement or equal configuration on both sides.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Ukraine MoD cites Mavic 3; CNAS documents DJI-family use by both forces.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "dji-matrice300",
+      "name": "DJI Matrice 300 RTK",
+      "family": "aircraft",
+      "origin": "China; civilian commercial origin",
+      "manufacturer": "DJI",
+      "operators": [
+        "Civilian operators",
+        "Ukraine (model and family documented)"
+      ],
+      "airframeFamily": "industrial camera quadcopter",
+      "roles": [
+        "inspection",
+        "surveillance"
+      ],
+      "silhouette": "Industrial quad with wider arms, tall landing supports and a modular camera zone.",
+      "status": "documented-product",
+      "gameRole": "Survey lifter: a large camera-shell skin and optional scanner badge; never infer a larger hitbox from its supports.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.dji.com/support/product/matrice-300",
+          "title": "DJI: Matrice 300 RTK product support",
+          "claim": "DJI product support identifies industrial camera platform and modular gimbal options.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://mod.gov.ua/news/ministerstvo-oboroni-sprostilo-pravila-vikoristannya-bp-la",
+          "title": "Ukraine MoD: Mavic 3 and Matrice 300 examples",
+          "claim": "MoD names DJI Matrice 300 as a class example.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        },
+        {
+          "url": "https://mod.gov.ua/en/news/the-ministry-of-defence-contracted-a-record-number-of-multirotor-drones-for-the-front",
+          "title": "Ukraine MoD: multirotor procurement, 11 March 2026",
+          "claim": "MoD reports Matrice-family frontline procurement.",
+          "accessedAt": "2026-09-12",
+          "kind": "defence-agency",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Russian DJI-family use does not prove Russian use of this precise model in the audited sources. M300 and M350 are separate products.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Ukraine MoD names Matrice 300; later procurement release names the broader Matrice family.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "dronehunter-f700",
+      "name": "DroneHunter F700 / deployed DroneHunter family",
+      "family": "aircraft",
+      "origin": "United States",
+      "manufacturer": "Fortem Technologies",
+      "operators": [
+        "International civilian/security users",
+        "Ukraine (DroneHunter family supplied)"
+      ],
+      "airframeFamily": "net-capture multirotor",
+      "roles": [
+        "net interception"
+      ],
+      "silhouette": "Large rotorcraft with clearly separate front capture-module shapes; a spreading lattice is the fictional action cue.",
+      "status": "documented-product",
+      "gameRole": "Net guardian: a short-lived lattice pauses one roaming arcade hazard; the net icon visibly counts down.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://fortemtech.com/products/dronehunter-f700/",
+          "title": "Fortem: DroneHunter F700",
+          "claim": "Current F700 is a net-capture counter-drone product.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://fortemtech.com/press-releases/2022-05-16-fortem-deploys-man-portable-counter-uas-solution-in-ukraine/",
+          "title": "Fortem: DroneHunter deployment to Ukraine, May 2022",
+          "claim": "Maker confirms DroneHunter-family provision to Ukraine in 2022.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        }
+      ],
+      "caveats": "Current F700 product capabilities are not proof every Ukrainian-delivered unit matches the current version. Field success rates not imported.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Maker states DroneHunter supplied to Ukraine with support in 2022.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "high",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "volk18",
+      "name": "Volk-18",
+      "family": "aircraft",
+      "origin": "Russia",
+      "manufacturer": "Almaz-Antey development group",
+      "operators": [
+        "Developer/test operators; wartime operator not verified"
+      ],
+      "airframeFamily": "net-capture quadcopter",
+      "roles": [
+        "net interception demonstrator"
+      ],
+      "silhouette": "Compact quad with a nose/capture-module compartment; original cube-and-lattice treatment suits a readable game antagonist.",
+      "status": "prototype-or-demonstration",
+      "gameRole": "Net rival: telegraph a square lattice on one lane, then briefly close that lane using explicit game timing.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://vpk.name/news/524669_zamglavy_koncerna_almaz-antei_nashi_novye_razrabotki_otvety_na_ugrozy_aviabezopasnosti.html",
+          "title": "TASS interview with Almaz-Antey deputy, preserved by VPK.name, 19 July 2021",
+          "claim": "Manufacturer deputy describes net interceptor and ongoing tests in 2021.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer-interview-republication",
+          "confidence": "medium"
+        },
+        {
+          "url": "https://defence-ua.com/news/zbivali_z_drobovika_lovili_sitkoju_teper_budut_taraniti_v_rf_stvorili_chergovij_bpla_vinischuvach_droniv_foto-2844.html",
+          "title": "Defense Express: Volk-18 demonstrator at NAIS 2021",
+          "claim": "Specialist report identifies quadcopter demonstrator exhibited at NAIS 2021.",
+          "accessedAt": "2026-09-12",
+          "kind": "specialist-report",
+          "confidence": "medium"
+        }
+      ],
+      "caveats": "Manufacturer interview is preserved by a third-party republication; it is not independent proof of effectiveness or later service.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Demonstration and test status documented; no verified Ukraine-war deployment in this audit.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "platform-or-model",
+      "confidence": {
+        "identityAndRole": "medium",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      }
+    },
+    {
+      "id": "queen-hornet-rifle-demo",
+      "name": "Queen Hornet rifle modification",
+      "family": "aircraft",
+      "origin": "Ukraine",
+      "manufacturer": "Unit modification of Wild Hornets platform",
+      "operators": [
+        "Ukraine (modification reported)"
+      ],
+      "airframeFamily": "heavy FPV multirotor",
+      "roles": [
+        "gun-carrying modification"
+      ],
+      "silhouette": "Queen Hornet body with a separate elongated underslung attachment; fictional version uses a toy-like pulse emitter.",
+      "status": "prototype-or-demonstration",
+      "gameRole": "Pulse carrier: animated emitter pops a harmless geometric obstacle; no real firearm shape, recoil or aiming model is required.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://t.me/s/wild_hornets?after=1722",
+          "title": "Wild Hornets official channel: Queen Hornet rifle modification, post 1726",
+          "claim": "Official post 1726 describes a mounted-rifle modification being prepared/tested.",
+          "accessedAt": "2026-09-12",
+          "kind": "manufacturer",
+          "confidence": "high"
+        },
+        {
+          "url": "https://euromaidanpress.com/2024/11/24/ukraines-largest-fpv-drone-makes-history-with-first-ever-assault-rifle-combat-use/",
+          "title": "Euromaidan Press: attributed Queen Hornet modification report, 24 November 2024",
+          "claim": "Later attributed report relays maker field-use claim; not independently established here.",
+          "accessedAt": "2026-09-12",
+          "kind": "attributed-report",
+          "confidence": "medium"
+        }
+      ],
+      "caveats": "This is a configuration of queen-hornet, not a new aircraft model. Evidence supports a modification, not standard loadout or universal availability.",
+      "accessedAt": "2026-09-12",
+      "fieldUseEvidence": "Official maker post documents preparation/testing; later media attributes a field-use claim to the maker. No independent broad-deployment proof.",
+      "communicationOptions": [
+        "not cataloged"
+      ],
+      "recordKind": "configuration",
+      "confidence": {
+        "identityAndRole": "medium",
+        "fieldUse": "see fieldUseEvidence",
+        "visual": "family-level cues; no dimensions or measured motion"
+      },
+      "parentReferenceId": "queen-hornet"
+    }
+  ]
+}

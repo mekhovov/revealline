@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xonix Pack Reviewer"
+  short_description: "Validate content packs and inspect visual readiness"
+  default_prompt: "Use $xonix-pack-reviewer to review all four draft content packs."

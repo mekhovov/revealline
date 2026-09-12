@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion lab · viewport comparison</title>
+  <style>
+    *{box-sizing:border-box}body{margin:0;background:#e9e6de;color:#17292c;font:15px/1.5 system-ui,sans-serif}main{max-width:1450px;margin:auto;padding:24px}h1{font-size:26px;margin:0 0 6px;letter-spacing:-.7px}p{margin:0 0 16px;color:#4c6264}nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}button,a{font:inherit}button{padding:9px 14px;background:#f9f8f3;border:1px solid #aeb9b6;color:inherit;border-radius:4px;cursor:pointer}button[aria-pressed="true"]{background:#213b3e;color:#fff}button:focus-visible,a:focus-visible{outline:3px solid #c58a2d;outline-offset:3px}a{color:#285f66}#stage{overflow:hidden;margin:0 auto;background:#f5f2e9;box-shadow:0 8px 36px #203b3e24}iframe{border:0;display:block;transform-origin:top left;background:#f5f2e9}#dimensions{font-variant-numeric:tabular-nums;font-size:13px;margin-top:14px}header{display:flex;justify-content:space-between;gap:16px;align-items:start}small{display:block;max-width:70ch;margin-top:8px;color:#586d6c}
+  </style>
+</head>
+<body>
+<main>
+  <header><div><h1>Same arena. Different viewport.</h1><p>Compare the live study at phone, tablet and desktop sizes.</p></div><a href="../../authoring/motion-lab/">Open full motion lab ↗</a></header>
+  <nav aria-label="Preview viewport">
+    <button type="button" data-size="390,844" aria-pressed="true">Phone portrait · 390 × 844</button>
+    <button type="button" data-size="844,390" aria-pressed="false">Phone landscape · 844 × 390</button>
+    <button type="button" data-size="1024,768" aria-pressed="false">Tablet · 1024 × 768</button>
+    <button type="button" data-size="1280,720" aria-pressed="false">Desktop · 1280 × 720</button>
+    <button type="button" data-size="320,640" aria-pressed="false">Compact · 320 × 640</button>
+  </nav>
+  <div id="stage"><iframe id="preview" title="Live motion lab viewport" src="../../authoring/motion-lab/" width="390" height="844"></iframe></div>
+  <p id="dimensions" role="status"></p>
+  <p id="layout-readout" aria-live="polite">Measuring the embedded layout…</p>
+  <small>This embeds the actual lab in a sized browser frame. It checks CSS layout, not iPhone emulation, native touch, gamepad support or hardware performance. The frame may be scaled down to fit this page; scroll inside it to reach its controls.</small>
+</main>
+<script>
+  const frame=document.querySelector('#preview'),stage=document.querySelector('#stage'),dimensions=document.querySelector('#dimensions');
+  let width=390,height=844;
+  function fit(){const available=Math.max(200,document.querySelector('main').clientWidth-48);const scale=Math.min(1,available/width);frame.width=width;frame.height=height;frame.style.transform=`scale(${scale})`;stage.style.width=`${width*scale}px`;stage.style.height=`${height*scale}px`;dimensions.textContent=`Viewport ${width} × ${height} CSS pixels · displayed at ${Math.round(scale*100)}% · fixed 48 × 36 arena`;}
+  document.querySelectorAll('[data-size]').forEach(button=>button.addEventListener('click',()=>{[width,height]=button.dataset.size.split(',').map(Number);document.querySelectorAll('[data-size]').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));fit();}));
+  window.addEventListener('resize',fit);fit();
+  function measure(){
+    const doc=frame.contentDocument,view=frame.contentWindow,canvas=doc?.querySelector('#arena');
+    if(!canvas)return;
+    const rect=canvas.getBoundingClientRect(),visible=rect.left>=0&&rect.top>=0&&rect.right<=view.innerWidth+1&&rect.bottom<=view.innerHeight+1;
+    const overflow=doc.documentElement.scrollWidth>view.innerWidth;
+    document.querySelector('#layout-readout').textContent=`Actual frame ${view.innerWidth} × ${view.innerHeight} · arena ${rect.width.toFixed(1)} × ${rect.height.toFixed(1)} · ${visible?'whole arena visible':'scroll needed to see whole arena'} · ${overflow?'horizontal overflow':'no horizontal overflow'} · body ${doc.querySelector('#body-size')?.textContent||'loading'}`;
+  }
+  frame.addEventListener('load',measure);setInterval(measure,500);
+</script>
+</body>
+</html>

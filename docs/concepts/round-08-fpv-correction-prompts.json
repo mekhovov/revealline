@@ -1,0 +1,33 @@
+{
+  "tool": "built-in image_gen",
+  "alphaEditAttempts": [
+    {
+      "id": "fpv-racer",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-c9794b6b-46e1-443a-b846-e378faddde72.png",
+      "prompt": "Use case: background-extraction. Edit this exact supplied pixel-art drone body. The checkerboard in the input is mistakenly painted RGB pixels, not transparency. Remove the entire gray-and-white checkerboard, including all holes inside the frame and protective rings, and output a PNG with a REAL RGBA alpha channel, alpha zero outside the drone. The background must genuinely be transparent; do not paint a different checkerboard, solid black, white, gray or any backdrop. Preserve the drone's existing body silhouette, proportions, camera, battery, four motor hubs, thin frame, Ukrainian blue/yellow patch, color details and pixel-art style. Keep nose pointing up. Do not add propeller blades, because the application animates them separately. No shadows, text, letters or additional objects. One isolated sprite, fully transparent negative space.",
+      "parent": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-348b1ad2-dfb8-4aa2-a386-da989779f206.png",
+      "status": "rejected RGB output: transparency absent"
+    },
+    {
+      "id": "fpv-night",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-04a49f01-f7f1-4902-9066-57d10e057d43.png",
+      "prompt": "Use case: background-extraction. Edit this exact supplied pixel-art drone body. The checkerboard in the input is mistakenly painted RGB pixels, not transparency. Remove the entire gray-and-white checkerboard, including all holes inside the frame and protective rings, and output a PNG with a REAL RGBA alpha channel, alpha zero outside the drone. The background must genuinely be transparent; do not paint a different checkerboard, solid black, white, gray or any backdrop. Preserve the drone's existing body silhouette, proportions, camera, battery, four motor hubs, thin frame, Ukrainian blue/yellow patch, color details and pixel-art style. Keep nose pointing up. Do not add propeller blades, because the application animates them separately. No shadows, text, letters or additional objects. One isolated sprite, fully transparent negative space.",
+      "parent": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-1602ffad-3979-436e-80f7-7f658a15a901.png",
+      "status": "rejected RGB output: transparency absent"
+    }
+  ],
+  "acceptedFreshGenerations": [
+    {
+      "id": "fpv-racer",
+      "prompt": "Create ONE original isolated pixel-art game sprite with a genuinely TRANSPARENT alpha background. Output a transparent PNG cutout, all empty space alpha zero. No checkerboard pattern, no paper, no solid backdrop, no floor or shadow. Strict straight-down top view, nose points UP. Polished hard-edged 16-bit pixel art, large deliberate pixel clusters, about48logicalpixels enlarged, limitedpalette, no photo-texture. One centered complete Ukrainian FPV drone BODY, four motor hubs, a small camera at the top, compact battery, a small blue-over-yellow flag patch, thin carbonframe, short rearantenna. No propeller blades at all; those are animated separately in the application. No weapons, no text, no Z or other military insignia, no glow. Empty negative spaces INSIDE the frame must also be truly transparent. Keep a useful transparent margin around the entire form. The variant is a compact protected FPV with four slender dark charcoal circular propeller guards, one around each motor at the four corners. Rings are thin and separated; the space between each hub and ring remains empty/transparent except for a single thin support. Four motor centers form a square. The central body is small and narrow, slate-blue upper strapping with olive battery and warm-gray edge pixels. The overall design reads as a light real FPV frame, not a bulky rounded toy. Use simple readable shapes and a few warm ivory highlight pixels. The guards distinguish this cosmetic variant from an open X-frame.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-9a1f150d-d7a3-4f2d-859e-fa23c4c283b2.png",
+      "status": "RGBA inspected; copied into motion lab"
+    },
+    {
+      "id": "fpv-night",
+      "prompt": "Create ONE original isolated pixel-art game sprite with a genuinely TRANSPARENT alpha background. Output a transparent PNG cutout, all empty space alpha zero. No checkerboard pattern, no paper, no solid backdrop, no floor or shadow. Strict straight-down top view, nose points UP. Polished hard-edged 16-bit pixel art, large deliberate pixel clusters, about48logicalpixels enlarged, limitedpalette, no photo-texture. One centered complete Ukrainian FPV drone BODY, four motor hubs, a small camera at the top, compact battery, a small blue-over-yellow flag patch, thin carbonframe, short rearantenna. No propeller blades at all; those are animated separately in the application. No weapons, no text, no Z or other military insignia, no glow. Empty negative spaces INSIDE the frame must also be truly transparent. Keep a useful transparent margin around the entire form. The variant is an OPEN X-frame with long thin graphite arms and a narrow rectangular midnight-blue battery pack strapped onto an olive center, subtle deep plum edge trim, tiny gold connector. No propeller guards or circles around the motor hubs. Four small hubs at the four corners. Very slim carbon silhouette with clear gaps and selected warm ivory rim pixels. Front arms are slightly wider than rear arms but retain symmetry left/right. This is an original night-palette cosmetic body, with no performance implications. Do not add wings, lights or extra objects.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-d597b643-e60f-43f9-9352-570a4bb84cf9.png",
+      "status": "RGBA inspected; copied into motion lab"
+    }
+  ]
+}

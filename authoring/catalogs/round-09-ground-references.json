@@ -1,0 +1,994 @@
+{
+  "version": "1.0.0",
+  "accessedAt": "2026-09-12",
+  "scopeNote": "Curated, extensible high-level research inventory: 34 products and role categories, not an exhaustive list, current order of battle, recognition guide, combat simulator or validated runtime pack. Public purpose is source-backed where indicated; silhouette and all gameRole mappings are original design proposals.",
+  "referenceOnly": true,
+  "artPolicy": {
+    "noZMarkings": true,
+    "originIsNotAllegiance": true,
+    "medicalAndCivilianTargets": false,
+    "photographsReused": false,
+    "sourcePreservation": "Reference links do not grant permission to copy photos, manufacturer logos or protected emblems.",
+    "variants": "Microtile, detailed and hybrid artwork can share identical geometry, rules and authored turn mode.",
+    "enemyIdentity": "Hostile actors must be explicitly authored as invading military operators or fictional military machines. Nationality, language, civilian occupation or clothing alone never sets hostility."
+  },
+  "evidencePolicy": "Sources are primary manufacturer, state exporter or government pages. Official-search-extract means the web tool supplied indexed text; it is not a complete page, video or photo inspection. Government and manufacturer reports are attributed reports, not independent performance verification. Undated pages are not dated from search crawl timestamps. Unknown operator lists are empty.",
+  "entries": [
+    {
+      "id": "ground-oplot",
+      "name": "Oplot",
+      "family": "armour",
+      "origin": "Ukraine; listed by Progress, a state exporter rather than the manufacturer.",
+      "operators": [],
+      "roles": [
+        "main battle tank"
+      ],
+      "silhouette": "Broad tracked rectangle, centered faceted turret and short graphic barrel cue; keep the detailed shape outside the collider.",
+      "status": "documented-product",
+      "gameRole": "Objective marker: a friendly restoration exhibit revealed by a completed region; an optional heavy-roamer skin only in an explicitly assigned fictional mission.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://progress.gov.ua/en/technika/osnovnyj-bojovyj-tank-oplot-4/",
+          "title": "Progress — Main Battle Tank OPLOT",
+          "claim": "Ukrainian Oplot main battle tank is listed by the state export company; no operator inventory is established.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "Product listing does not establish present operators, deployments or relative strength. Do not turn a Ukrainian-origin reference into an automatically hostile unit.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-btr4",
+      "name": "BTR-4 Bucephalus",
+      "family": "armour",
+      "origin": "Ukraine; Ukrainian design identified by the Ministry of Defence.",
+      "operators": [
+        "Ukraine — service described in the MoD's April 2026 overview"
+      ],
+      "roles": [
+        "armored personnel carrier"
+      ],
+      "silhouette": "Long wheeled hull, small turret mass and a clear rear-body block; simplify wheel marks at microtile size.",
+      "status": "official-report",
+      "gameRole": "Objective marker: capture around an allied personnel transport to complete a supply-area objective.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/a-bold-assault-warhorse-that-can-swim-btr-4-bucephalus-overview",
+          "title": "Ukraine MoD — BTR-4 Bucephalus overview",
+          "claim": "The April 2026 overview identifies BTR-4 as a Ukrainian armored personnel carrier in Ukrainian service.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "This is the named BTR-4 reference, not every BTR-series vehicle. No current unit, quantity or location is asserted.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-kozak2m1",
+      "name": "KOZAK-2M1",
+      "family": "armour",
+      "origin": "Ukraine; PRACTIKA product.",
+      "operators": [],
+      "roles": [
+        "tactical armored vehicle"
+      ],
+      "silhouette": "Compact hooded cab, angular passenger box and four dark wheel hints; readable as a light armored truck.",
+      "status": "documented-product",
+      "gameRole": "Patrol skin: an authored contour patrol with a square route badge; allegiance and contact rules are separate mission data.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://practika.ua/produktsiya/",
+          "title": "PRACTIKA — Products",
+          "claim": "PRACTIKA lists KOZAK-2M1 as a tactical armored vehicle.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract; direct fetch returned 503"
+        }
+      ],
+      "caveats": "Manufacturer listing supports identity and class; exact operator and deployment are not established. Direct page fetch failed, so the catalog uses its indexed official extract.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-novator",
+      "name": "Novator",
+      "family": "armour",
+      "origin": "Ukraine; Ukrainian Armor design, with an imported chassis identified on the product page.",
+      "operators": [
+        "Ukraine — manufacturer-reported defense deliveries in December 2024"
+      ],
+      "roles": [
+        "light armored vehicle",
+        "personnel transport"
+      ],
+      "silhouette": "Short nose, angular cabin and separated rear platform; a rounded support badge can distinguish the friendly variant.",
+      "status": "documented-product",
+      "gameRole": "Objective marker: an allied mobile resupply icon stops at authored reclaimed-ground stations.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://ukrarmor.com/products/novator/",
+          "title": "Ukrainian Armor — Novator product page",
+          "claim": "Novator is a light armored vehicle; the page includes personnel transport and non-military applications.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        },
+        {
+          "url": "https://ukrarmor.com/news-en/ukrainian-armor-has-completed-ahead-of-schedule-the-fulfillment-of-contracts-for-the-production-and-supply-of-novator-armored-vehicles/",
+          "title": "Ukrainian Armor — Novator production and supply announcement, 12 December 2024",
+          "claim": "The manufacturer reports Novator deliveries for Ukrainian defense needs and distinguishes medical and command variants.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The manufacturer's generic product text also covers public-order applications; a civilian or police vehicle is not an enemy by default. Novator and Novator-2 details must not be merged.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-medical-varta",
+      "name": "Medical VARTA",
+      "family": "medical-support",
+      "origin": "Ukraine; Ukrainian Armor vehicle-family reference.",
+      "operators": [],
+      "roles": [
+        "medical transport",
+        "evacuation support"
+      ],
+      "silhouette": "Tall enclosed rear body, small front cabin and a large original heart/medical-kit game icon; omit weapon details.",
+      "status": "documented-product",
+      "gameRole": "Objective marker: reveal a medical staging area and connect it to a reclaimed region for an evacuation reward.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://ukrarmor.com/products/varta-is-an-aromoured-multi-purpose-vehucle-ampv-5/",
+          "title": "Ukrainian Armor — Medical VARTA product page",
+          "claim": "The manufacturer lists Medical VARTA; the body text discusses the broader VARTA vehicle family.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "The page heading is Medical VARTA but its text reuses broader VARTA details. Treat the proposed medical sprite as an original support design, not a verified exact fit-out. Never use it as a hostile target.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-kraz6322",
+      "name": "KrAZ-6322 Soldier",
+      "family": "logistics-vehicles",
+      "origin": "Ukraine; AutoKrAZ.",
+      "operators": [],
+      "roles": [
+        "personnel transport",
+        "cargo transport"
+      ],
+      "silhouette": "Distinct long bonnet, separate cab, three axle hints and a simple cargo-bed block.",
+      "status": "documented-product",
+      "gameRole": "Patrol/objective: a friendly cargo token travels only along an authored reclaimed-ground route after its delivery markers are captured.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.autokraz.com.ua/downloads/KrAZ_military_vehicles_eng_cum.pdf",
+          "title": "AutoKrAZ — Military vehicles catalog",
+          "claim": "The catalog identifies KrAZ-6322 Soldier for personnel and cargo transport.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-PDF text, printed pages 4–5; image capture unavailable"
+        }
+      ],
+      "caveats": "The catalog is a product reference, not a current fleet list. The same truck silhouette needs explicit operator metadata; delivery behavior is fictional.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-bohdana",
+      "name": "2S22 Bohdana",
+      "family": "artillery-and-rockets",
+      "origin": "Ukraine-designed artillery system; chassis origins vary by version, including foreign suppliers.",
+      "operators": [
+        "Ukraine — MoD discusses procurement and deliveries"
+      ],
+      "roles": [
+        "self-propelled artillery"
+      ],
+      "silhouette": "Long truck body with a single elongated barrel cue; the cab and artillery module remain separate visual layers.",
+      "status": "official-report",
+      "gameRole": "Objective node: reveal a friendly artillery museum/card marker for a collection reward; a generic opposing artillery skin may instead use a clearly telegraphed region-hazard rule.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/german-quality-to-strengthen-the-bohdana-key-facts-about-the-zetros-chassis-for-200-units-of-bohdana-self-propelled-artillery-systems-to-be-delivered-to-ukraine-by-germany",
+          "title": "Ukraine MoD — Bohdana and Zetros chassis, 18 December 2025",
+          "claim": "Bohdana is Ukrainian self-propelled artillery; the article discusses multiple chassis origins.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The cited article discusses German Zetros chassis and other versions. Do not treat one chassis appearance as universal or convert announced future deliveries into confirmed deployment. No ballistic behavior is modeled.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-vilkha",
+      "name": "VILKHA",
+      "family": "artillery-and-rockets",
+      "origin": "Ukraine; State Kyiv Design Bureau LUCH catalog.",
+      "operators": [],
+      "roles": [
+        "multiple-launch rocket system"
+      ],
+      "silhouette": "Heavy truck and grouped tubular rack rendered as a few repeated rectangles; no technical tube layout is required.",
+      "status": "documented-product",
+      "gameRole": "Objective node: complete an authored enclosure around a friendly launcher marker to earn a themed gallery card.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.luch.kiev.ua/en/catalogue-of-product",
+          "title": "State Kyiv Design Bureau LUCH — Presentations",
+          "claim": "The official catalog lists VILKHA multiple-launch rocket system and NEPTUNE rocket system.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "Catalog identity is confirmed; operator, deployment and model-subvariant inventory are not established here. The enclosure reward is invented.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-neptune",
+      "name": "NEPTUNE",
+      "family": "artillery-and-rockets",
+      "origin": "Ukraine; State Kyiv Design Bureau LUCH catalog.",
+      "operators": [],
+      "roles": [
+        "rocket system"
+      ],
+      "silhouette": "Truck with long rectangular canister blocks, distinct from VILKHA's repeated short-tube motif.",
+      "status": "documented-product",
+      "gameRole": "Objective node: a coastal chapter's collection landmark; reclaim adjacent abstract sea tiles to reveal its artwork.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://www.luch.kiev.ua/en/catalogue-of-product",
+          "title": "State Kyiv Design Bureau LUCH — Presentations",
+          "claim": "The official catalog lists VILKHA multiple-launch rocket system and NEPTUNE rocket system.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "The source confirms the named system. The game's coast setting and token behavior are art direction; no real launch, guidance, range or target-selection model is supplied.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-kvertus-ew",
+      "name": "Kvertus EW family",
+      "family": "electronic-and-sensor-support",
+      "origin": "Ukraine; Kvertus.",
+      "operators": [
+        "Ukraine — manufacturer says its systems serve the Ministry of Defence"
+      ],
+      "roles": [
+        "electronic warfare",
+        "signals-intelligence equipment"
+      ],
+      "silhouette": "Portable case or vehicle-mounted antenna cluster, separated by a waveform badge from radar's dish badge.",
+      "status": "documented-product",
+      "gameRole": "Support node: capturing an allied relay marker pauses one fictional hazard's visual pulse; a distinct explicitly hostile generic EW skin can represent a player-only slow region.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://kvertus.ua/en/",
+          "title": "Kvertus — Official manufacturer site",
+          "claim": "Kvertus identifies itself as a Ukrainian EW and signals-intelligence manufacturer; Ukrainian MoD use is a manufacturer claim.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "A family reference, not one supposedly universal model. Manufacturer claims are not an independent deployment audit. The fictional pause/slow effect is not a description of EW behavior.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-horungy",
+      "name": "HORUNGY",
+      "family": "armour",
+      "origin": "Ukrainian modernization by PRACTIKA of the Soviet-origin BTR-60.",
+      "operators": [],
+      "roles": [
+        "armored fighting vehicle",
+        "modernized personnel carrier"
+      ],
+      "silhouette": "Elongated wheeled lower body with a tall clean cabin block and a small roof module.",
+      "status": "documented-product",
+      "gameRole": "Patrol skin: reuse the same geometric contour-patrol rule as another APC while changing body art and mission identity.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://practika.ua/horungy/",
+          "title": "PRACTIKA — HORUNGY AFV",
+          "claim": "HORUNGY is a Ukrainian modernization of the Soviet BTR-60.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "This illustrates why design ancestry, modernizer, operator and allegiance require separate fields. It does not establish a current operator roster, nor imply every Soviet-derived vehicle belongs to Russia.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-80k6m",
+      "name": "80K6M radar",
+      "family": "electronic-and-sensor-support",
+      "origin": "Ukraine offering in the Progress state export catalog; original manufacturer not independently verified in the cited page.",
+      "operators": [],
+      "roles": [
+        "mobile radar"
+      ],
+      "silhouette": "Large flat rectangular antenna panel above a small base truck; a scanner badge remains legible when the panel collapses to a few pixels.",
+      "status": "documented-product",
+      "gameRole": "Node: a friendly information marker reveals an optional image fragment or displays a fictional hazard's next board pulse.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://progress.gov.ua/en/technika/mobile-three-dimensional-radar-station-80k6m/",
+          "title": "Progress — Mobile three-dimensional radar station 80K6M",
+          "claim": "The Ukrainian state export catalog lists 80K6M as a mobile radar station.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "Progress is an exporter, not automatically the manufacturer. The game's preview function is invented and supplies no real detection geometry.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-comms-node",
+      "name": "Military communications node",
+      "family": "electronic-and-sensor-support",
+      "origin": "Role category; no single country, manufacturer or hardware model.",
+      "operators": [
+        "Ukraine — communications component identified in MoD organization overview"
+      ],
+      "roles": [
+        "communications support"
+      ],
+      "silhouette": "Small shelter, compact mast and original linked-dot badge; also usable as a portable pack silhouette.",
+      "status": "category",
+      "gameRole": "Node: complete a short loop around the relay token to activate a labeled connection objective; no control inversion or hidden input lag.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/land-forces",
+          "title": "Ukraine MoD — Land Forces",
+          "claim": "The official organization overview includes command, reconnaissance, communications, engineer and EW components.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The hardware form and puzzle are fictional. No real frequencies, equipment configuration or communications procedures are included.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-lynx",
+      "name": "Lynx UGV",
+      "family": "ground-robots",
+      "origin": "Ukraine; Roboneers.",
+      "operators": [
+        "Ukraine — manufacturer-presented military testimonials"
+      ],
+      "roles": [
+        "cargo transport",
+        "evacuation support"
+      ],
+      "silhouette": "Low wheeled platform with an open center deck and an optional cargo box; no face or humanoid head is needed.",
+      "status": "documented-product",
+      "gameRole": "Objective/patrol: a friendly courier follows authored reclaimed-ground waypoints and waits at an unrevealed delivery marker.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://roboneers.net/product/lynx",
+          "title": "Roboneers — Lynx UGV",
+          "claim": "The manufacturer describes Lynx as a ground platform for cargo delivery and evacuation.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        },
+        {
+          "url": "https://roboneers.net/",
+          "title": "Roboneers — Official product and company site",
+          "claim": "The company's Ukrainian context and Lynx product are identified; linked testimonials describe Ukrainian military users.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-page-text"
+        }
+      ],
+      "caveats": "Use the cargo/evacuation reference, without importing other payloads or operational claims. Do not confuse Roboneers Lynx with unrelated equipment sharing the name.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-themis",
+      "name": "THeMIS cargo/evacuation variant",
+      "family": "ground-robots",
+      "origin": "Estonian-developed Milrem Robotics platform; origin is distinct from recipient country.",
+      "operators": [
+        "Ukraine — manufacturer reports a September 2022 delivery to a charitable organization"
+      ],
+      "roles": [
+        "cargo transport",
+        "evacuation support"
+      ],
+      "silhouette": "Two chunky track pods around a low open center deck; a cargo or stretcher game icon is a replaceable module.",
+      "status": "official-report",
+      "gameRole": "Objective marker: capture two delivery cells to release a friendly helper token along a preauthored route.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://milremrobotics.com/milrem-robotics-delivers-the-themis-ugv-to-ukraine/",
+          "title": "Milrem — THeMIS delivered to Ukraine, 6 September 2022",
+          "claim": "Milrem reports delivery to a Ukrainian charitable organization for supply transport and casualty evacuation.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        },
+        {
+          "url": "https://milremrobotics.com/about-us/",
+          "title": "Milrem Robotics — About us",
+          "claim": "The manufacturer identifies its Tallinn, Estonia base.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The cited recipient is a Ukrainian charitable organization, not proof of a particular military unit. Do not conflate this cargo configuration with every THeMIS payload or assume current deployment.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "sea-magura-v5",
+      "name": "Magura V5",
+      "family": "sea-robots",
+      "origin": "Ukraine; Ukrainian production stated by Defence Intelligence of Ukraine, manufacturer not resolved here.",
+      "operators": [
+        "Ukraine — Defence Intelligence / GUR reference"
+      ],
+      "roles": [
+        "unmanned surface platform"
+      ],
+      "silhouette": "Slim pointed boat body with a small dark deck block; wake is a cosmetic layer separate from the trail collider.",
+      "status": "official-report",
+      "gameRole": "Player skin/objective marker: a sea chapter swaps the drone body for a boat while retaining authored grid movement, live-cut geometry and selected turn mode.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://gur.gov.ua/en/content/ukraintsi-zibraly-shche-10-milioniv-na-udarni-magury-dlia-hur-mo",
+          "title": "Defence Intelligence of Ukraine — Magura fundraising update, 10 August 2024",
+          "claim": "GUR identifies Ukrainian-made Magura V5 as an unmanned surface platform.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The 2024 official report identifies V5; it does not make V5, V6 and V7 interchangeable. Game traversal and capture are fictional, not naval operations.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "sea-seababy",
+      "name": "Sea Baby",
+      "family": "sea-robots",
+      "origin": "Ukraine; designed and produced in Ukraine according to UNITED24's SBU project report.",
+      "operators": [
+        "Ukraine — Security Service / SBU project"
+      ],
+      "roles": [
+        "unmanned surface vehicle"
+      ],
+      "silhouette": "Low boat with a broad angular deck, a pointed front and a short foam wake; distinguish it graphically from the slim Magura-inspired skin.",
+      "status": "official-report",
+      "gameRole": "Player skin/objective marker: an alternate cosmetic for a fictional coastal image-reveal map; identical movement rules unless a separate ruleset is deliberately authored.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://u24.gov.ua/news/avdiivka_navaldrone",
+          "title": "UNITED24 — First Avdiivka naval drone, 6 March 2024",
+          "claim": "The Ukrainian official fundraising platform identifies Sea Baby as a Ukrainian-produced SBU naval drone.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Historical project report, not a current model inventory. Avoid importing named missions, real targets or platform performance. The civilian-sounding name is a product name, not a civilian character.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-t90ms",
+      "name": "T-90MS",
+      "family": "armour",
+      "origin": "Russia; Rosoboronexport export-product reference.",
+      "operators": [],
+      "roles": [
+        "main battle tank"
+      ],
+      "silhouette": "Broad tracked silhouette, faceted turret and one clear forward barrel line; reserve the bright player head color for the player.",
+      "status": "documented-product",
+      "gameRole": "Open-field patrol: an explicitly hostile fictional tank skin for a slow, clearly bounded roaming hazard; optional boss-scale artwork must not enlarge its collider silently.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/pressrelease/4518075/",
+          "title": "Rosoboronexport / Rostec — SOFEX 2016",
+          "claim": "The public product list includes T-90MS, BTR-82A, BMP-3 and Uran-6.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "T-90MS is an export model reference. It is not interchangeable with T-90M, and this source does not establish Russian use of T-90MS in the war. Customers and captured ownership require separate evidence.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-bmp3",
+      "name": "BMP-3",
+      "family": "armour",
+      "origin": "Russian export-product reference; the cited sheet does not establish a particular operator.",
+      "operators": [],
+      "roles": [
+        "infantry fighting vehicle"
+      ],
+      "silhouette": "Low tracked wedge with a small centered turret; thinner body mass than the heavy-tank skin.",
+      "status": "documented-product",
+      "gameRole": "Open-field patrol: a compact roamer variant with a distinct route pattern configured independently of sprite detail.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://roe.ru/pdfs/pdf_4442.pdf",
+          "title": "Rosoboronexport — BMP-3 product sheet",
+          "claim": "The export product sheet classifies BMP-3 as a tracked infantry fighting vehicle.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        },
+        {
+          "url": "https://rostec.ru/en/media/pressrelease/4518075/",
+          "title": "Rosoboronexport / Rostec — SOFEX 2016",
+          "claim": "The public product list includes T-90MS, BTR-82A, BMP-3 and Uran-6.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The product sheet establishes vehicle class, not a current deployment or complete design history. The proposed roaming rule does not copy real capabilities.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-btr82a",
+      "name": "BTR-82A",
+      "family": "armour",
+      "origin": "Russia; modernized BTR-80A-derived APC described by the exporter.",
+      "operators": [],
+      "roles": [
+        "armored personnel carrier"
+      ],
+      "silhouette": "Long boat-like wheeled hull, four wheel hints on each side and a small roof turret; simplify consistently for microtiles.",
+      "status": "documented-product",
+      "gameRole": "Contour patrol: an explicitly hostile fictional sprite follows interior capture boundaries and uses a square route badge distinct from open-field roamers.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://roe.ru/pdfs/pdf_1886.pdf",
+          "title": "Rosoboronexport — BTR-82A product sheet",
+          "claim": "The export product sheet describes BTR-82A as an armored personnel carrier derived from BTR-80A.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        },
+        {
+          "url": "https://rostec.ru/en/media/pressrelease/4518075/",
+          "title": "Rosoboronexport / Rostec — SOFEX 2016",
+          "claim": "The public product list includes T-90MS, BTR-82A, BMP-3 and Uran-6.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The export sheet supports the BTR-80A derivation, not an operator list. APC appearance never makes civilians or an unidentified vehicle a hostile target.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-ural4320",
+      "name": "Ural-4320 family",
+      "family": "logistics-vehicles",
+      "origin": "Soviet-origin truck family; modern Russian Ural Automobile Plant offerings include later variants.",
+      "operators": [],
+      "roles": [
+        "cargo transport",
+        "utility truck platform"
+      ],
+      "silhouette": "Prominent bonnet, high cab and separate canvas/cargo rectangle with three axle hints.",
+      "status": "documented-product",
+      "gameRole": "Objective/patrol: a mission-tagged military logistics token moves on reclaimed-ground routes; civilian truck skins remain neutral background or objectives.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://uralaz.ru/models/ural-4320/",
+          "title": "Ural Automobile Plant — URAL 4320 family",
+          "claim": "The Russian manufacturer lists cargo trucks in the 4320 family; the current page includes NEXT versions.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        },
+        {
+          "url": "https://uralaz.ru/company/history/",
+          "title": "Ural Automobile Plant — History",
+          "claim": "The manufacturer's history places the original Ural-4320 in Soviet-era production.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The current manufacturer page includes NEXT versions; do not label all pictures as the original 1977 form. Civilian and military applications exist, so the truck is not automatically an enemy.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-krasukha",
+      "name": "Krasukha EW family",
+      "family": "electronic-and-sensor-support",
+      "origin": "Russia; KRET within Rostec's public product descriptions.",
+      "operators": [],
+      "roles": [
+        "electronic warfare"
+      ],
+      "silhouette": "Truck-sized base and oversized dish/antenna assembly with an original broken-wave hazard badge.",
+      "status": "documented-product",
+      "gameRole": "Region hazard: an explicitly hostile fictional node telegraphs a bounded player-only slow field with a countdown outline; enemies remain unaffected only when that rule is authored.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/news/ew-in-the-sky-and-on-the-ground/",
+          "title": "Rostec — EW in the sky and on the ground, 26 March 2024",
+          "claim": "Rostec identifies KRET's ground-based Krasukha electronic-warfare system.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract; direct fetch returned 502"
+        }
+      ],
+      "caveats": "Family-level reference; suffix, model, operator and exact equipment layout are not established here. Slow fields are a Xonix rule proposal, not a real EW effect or countermeasure method.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-pantsir-s1",
+      "name": "Pantsir-S1",
+      "family": "air-defence",
+      "origin": "Russia; Rostec / High Precision Systems public product context.",
+      "operators": [
+        "Foreign customers — the source mentions exports without establishing this catalog's operator roster"
+      ],
+      "roles": [
+        "air-defense gun/missile system"
+      ],
+      "silhouette": "Tall truck chassis, stacked side modules and a central sensor shape; use a large warning-ring badge at small sizes.",
+      "status": "documented-product",
+      "gameRole": "Region hazard: an authored zone pulses between clear warning and active state; a safe route is a game geometry rule and never a real-world vulnerability map.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/news/rostec-shall-create-overseas-service-centers-for-pantsirs/",
+          "title": "Rostec — Overseas service centers for Pantsir, 25 November 2019",
+          "claim": "The manufacturer group describes Pantsir-S1 as an air-defense gun/missile system and mentions foreign customers.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The source explicitly discusses foreign customers. Origin is not allegiance, and S1/S1M/arctic variants should not be silently merged. No real engagement or countermeasure details.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-tor-m2e",
+      "name": "Tor-M2E",
+      "family": "air-defence",
+      "origin": "Russia; export air-defense system listed by Rosoboronexport/Rostec.",
+      "operators": [],
+      "roles": [
+        "surface-to-air missile system"
+      ],
+      "silhouette": "Compact boxy tracked base, central raised module and rectangular sensor cue; silhouette direction requires a later variant-specific visual pass.",
+      "status": "documented-product",
+      "gameRole": "Region-hazard node: a fictional checkerboard warning pattern alternates on the board; use a different badge from the circular Pantsir-inspired pattern.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/news/rosoboronexport-to-demonstrate-modern-army-and-navy-equipment-at-defexpo-india-2018/",
+          "title": "Rostec — Defexpo India 2018 products",
+          "claim": "The Russian exporter identifies Tor-M2E as a surface-to-air missile system promoted to foreign customers.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Export model, not a deployment claim. Tor-M2E, Tor-M2K and Tor-M2KM are not one interchangeable visual. The arcade pattern is unrelated to real engagement geometry.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-msta-s",
+      "name": "Msta-S",
+      "family": "artillery-and-rockets",
+      "origin": "Russia; Rostec public manufacturer-group report on the Msta-S family.",
+      "operators": [
+        "Russia — Armed Forces delivery reported by Rostec in April 2024"
+      ],
+      "roles": [
+        "self-propelled artillery"
+      ],
+      "silhouette": "Tracked base under a tall turret box and one long barrel cue; keep muzzle flash optional and abstract.",
+      "status": "official-report",
+      "gameRole": "Region-hazard node: a slowly announced square pulse changes one game tile region after a visible countdown; no aiming at moving real-world targets.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/news/rostec-has-fielded-a-new-batch-of-the-msta-s-and-akatsia-self-propelled-guns/",
+          "title": "Rostec — Msta-S and Akatsia delivery, 5 April 2024",
+          "claim": "Rostec reports delivery of Msta-S self-propelled artillery to Russia's Armed Forces.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Historical manufacturer-reported delivery, not a present location or independently audited inventory. Arcade cadence, reach and effect are invented.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-tornado-g",
+      "name": "Tornado-G",
+      "family": "artillery-and-rockets",
+      "origin": "Russia; Rostec describes it as a Grad-derived multiple-launch rocket system.",
+      "operators": [
+        "Russia — 2022 parade context reported by Rostec"
+      ],
+      "roles": [
+        "multiple-launch rocket system"
+      ],
+      "silhouette": "Long truck and repeating rack blocks; use stacked square warning icons to distinguish it from single-barrel artillery.",
+      "status": "official-report",
+      "gameRole": "Region-hazard node: announce a small sequence of abstract board pulses using icons and count-down beats; provide a reduced-motion version.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/news/rostec-military-equipment-takes-part-in-wwii-victory-parade-/",
+          "title": "Rostec — Parade equipment, 8 May 2022",
+          "claim": "The manufacturer group identifies Tornado-G as a multiple-launch rocket system in a Russian parade announcement.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "A parade/product report is not evidence of a specific wartime deployment. Tornado-G is not Tornado-S or Smerch; no real firing pattern is modeled.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "ground-uran6",
+      "name": "Uran-6",
+      "family": "ground-robots",
+      "origin": "Russia; publicly presented by Rosoboronexport/Rostec.",
+      "operators": [],
+      "roles": [
+        "robotic mine clearing"
+      ],
+      "silhouette": "Small tracked bulldozer-like body with a broad front attachment; render it as a compact machine rather than a humanoid soldier.",
+      "status": "documented-product",
+      "gameRole": "Territory eroder: an explicitly fictional hazard replaces a few reclaimed cells only after a warning marker; the art borrows the machinery shape, not its real purpose.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://rostec.ru/en/media/pressrelease/4518075/",
+          "title": "Rosoboronexport / Rostec — SOFEX 2016",
+          "claim": "The public product list includes T-90MS, BTR-82A, BMP-3 and Uran-6.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The 2016 source identifies a mine-clearing robot. Territory erosion is a deliberately fictional rule and is not a statement that the real platform attacks reclaimed land. A neutral recovery version can instead be a support objective.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "role-engineer",
+      "name": "Military engineer / sapper",
+      "family": "military-personnel",
+      "origin": "Role category, not an ethnicity or equipment manufacturer.",
+      "operators": [
+        "Ukraine — Support Forces organization used as the public reference"
+      ],
+      "roles": [
+        "military engineering",
+        "infrastructure support"
+      ],
+      "silhouette": "Helmet, compact tool bag and broad spade/wrench game badge; gender and skin tone vary independently of allegiance.",
+      "status": "category",
+      "gameRole": "Objective node: reveal a repair station; its completion restores one authored bridge or removes a labeled game obstacle.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/support-forces-of-the-armed-forces-of-ukraine",
+          "title": "Ukraine MoD — Support Forces",
+          "claim": "The official overview includes military engineering and geospatial support.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Use fictional service members, not identifiable real personnel. No mine-handling, explosive construction, breaching or countermeasure procedure is represented.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "role-medic",
+      "name": "Military medic / evacuation crew",
+      "family": "military-personnel",
+      "origin": "Role category, not an ethnicity or equipment manufacturer.",
+      "operators": [
+        "Ukraine — Medical Forces organization used as the public reference"
+      ],
+      "roles": [
+        "medical support",
+        "evacuation assistance"
+      ],
+      "silhouette": "Compact pack and original heart-in-bag badge with a clear friendly outline; no weapon silhouette.",
+      "status": "category",
+      "gameRole": "Objective marker: a friendly service token grants a bounded recovery reward when its evacuation area is revealed.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/medical-forces",
+          "title": "Ukraine MoD — Medical Forces",
+          "claim": "Medical Forces provide medical support for military personnel.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Always a support/rescue role in this catalog, including a neutral-humanitarian variant. No hostile-target assignment, graphic injuries or real medical procedure.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "role-logistics",
+      "name": "Military logistics driver / mechanic",
+      "family": "military-personnel",
+      "origin": "Role category, not an ethnicity or equipment manufacturer.",
+      "operators": [
+        "Ukraine — Logistics Forces organization used as the public reference"
+      ],
+      "roles": [
+        "supply",
+        "transport",
+        "repair"
+      ],
+      "silhouette": "Work jacket, box or wheel silhouette and a large wrench badge; identity comes from explicit mission metadata.",
+      "status": "category",
+      "gameRole": "Objective node: connect two supply markers on reclaimed ground to complete a delivery objective and award a cosmetic token.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/logistics-forces-of-the-armed-forces-of-ukraine",
+          "title": "Ukraine MoD — Logistics Forces",
+          "claim": "The official overview identifies supply, transport, repair and maintenance functions.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "Do not infer military status from work clothing, a truck or nationality. This role is a friendly/neutral support objective by default.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "role-command-comms",
+      "name": "Military command / communications staff",
+      "family": "military-personnel",
+      "origin": "Role category, not an ethnicity or equipment manufacturer.",
+      "operators": [
+        "Ukraine — command and communications components in MoD Land Forces overview"
+      ],
+      "roles": [
+        "command support",
+        "communications coordination"
+      ],
+      "silhouette": "Headset and tablet silhouette with a linked-dot badge; no real uniform rank or named command portrait is necessary.",
+      "status": "category",
+      "gameRole": "Node: a friendly briefing token reveals the next optional objective; a separately authored hostile military command token may gate an abstract challenge phase.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/land-forces",
+          "title": "Ukraine MoD — Land Forces",
+          "claim": "The official organization overview includes command, reconnaissance, communications, engineer and EW components.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The combined character is an original game archetype, not a precise organizational position. No command procedures, communications settings or real chain of command is reproduced.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "id": "role-observer",
+      "name": "Military observer / spotter",
+      "family": "military-personnel",
+      "origin": "Role category, not an ethnicity or equipment manufacturer.",
+      "operators": [
+        "Ukraine — reconnaissance component in MoD Land Forces overview"
+      ],
+      "roles": [
+        "observation",
+        "reconnaissance support"
+      ],
+      "silhouette": "Small binocular-shaped badge over a compact helmeted figure; an observation icon must remain different from a targeting reticle.",
+      "status": "category",
+      "gameRole": "Objective marker/patrol: a friendly observation token reveals a collectible image clue; a fictional opposing scout can animate a visible board-warning cue.",
+      "implementation": "reference-only",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/about-us/land-forces",
+          "title": "Ukraine MoD — Land Forces",
+          "claim": "The official organization overview includes command, reconnaissance, communications, engineer and EW components.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "An original abstraction of military observation. No real targeting workflow, concealed-position advice, sensor settings or nationality-based civilian enemy.",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the reference's operator list."
+    },
+    {
+      "family": "military-personnel",
+      "origin": "Role category, not a country of manufacture, ethnicity or equipment model.",
+      "operators": [],
+      "status": "category",
+      "implementation": "reference-only",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the source country.",
+      "id": "role-infantry-patrol",
+      "name": "Military infantry / patrol team",
+      "roles": [
+        "infantry personnel",
+        "fictional foot-patrol archetype"
+      ],
+      "silhouette": "Compact helmeted figure, small pack and a restrained carried-equipment cue; a two-person icon can represent a team without enlarging its gameplay collider.",
+      "gameRole": "Patrol: an explicitly hostile invading military team can follow a visible authored contour route or reclaimed-ground route. An allied variant is an escort objective. Domain, allegiance, timing and contact consequences are mission data, not uniform colors.",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/the-list-of-combat-roles-and-military-specialties-available-to-volunteers-under-the-contract-18-24-program-has-been-expanded",
+          "title": "Ukraine MoD — Military roles list, 15 April 2025",
+          "claim": "The official personnel notice lists rifleman and scout roles; it does not prescribe the proposed arcade patrol.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "A broad fictional game archetype supported by public military-role names, not a portrayal of a named unit or a claim about present deployment. No formations, patrol tactics, weapon use or civilian-nationality enemy rules are supplied."
+    },
+    {
+      "family": "military-personnel",
+      "origin": "Role category, not a country of manufacture, ethnicity or equipment model.",
+      "operators": [],
+      "status": "category",
+      "implementation": "reference-only",
+      "visualEvidence": "Proposed pixel-art silhouette direction; no photograph or footage inspection is claimed in this catalog.",
+      "allegiance": "Explicit mission metadata required; never inferred from origin, language, silhouette or the source country.",
+      "id": "role-drone-operator",
+      "name": "Military drone operator",
+      "roles": [
+        "unmanned-systems operation",
+        "operator role category"
+      ],
+      "silhouette": "Small figure with a controller/tablet and optional goggles; pair with an original rotor-shaped role badge rather than real unit insignia.",
+      "gameRole": "Node/objective marker: an allied operator token grants a fictional scan objective; an explicitly hostile military operator token can gate a visibly announced arcade hazard phase until its region is enclosed. The associated drone body and behavior remain separately authored.",
+      "sources": [
+        {
+          "url": "https://mod.gov.ua/en/news/contract-18-24-list-of-afu-units-and-established-posts-for-unmanned-systems-operators-approved",
+          "title": "Ukraine MoD — Unmanned-systems operator posts, 11 August 2025",
+          "claim": "The official personnel notice identifies FPV, multirotor, fixed-wing and ground-system operator specialties.",
+          "accessedAt": "2026-09-12",
+          "evidenceMode": "official-search-extract"
+        }
+      ],
+      "caveats": "The Ukrainian public source establishes role categories, not the allegiance of every person holding a controller. A hostile game version is explicitly fictional military mission data. No piloting, targeting, communications settings, tactics or operator-location guidance is provided."
+    }
+  ]
+}

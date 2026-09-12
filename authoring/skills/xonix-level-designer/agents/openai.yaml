@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xonix Level Designer"
+  short_description: "Compose levels, objectives, and challenge variants"
+  default_prompt: "Use $xonix-level-designer to draft a five-level Navi Network campaign."

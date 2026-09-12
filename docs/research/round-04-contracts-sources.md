@@ -1,0 +1,21 @@
+# Round 04 — content contract research
+
+Research date: 12 September 2026. Primary sources below support the technical choices; the repository contract is our recommendation, not a claim that these sources prescribe this game design.
+
+| Primary source | Verified fact | Design consequence |
+|---|---|---|
+| [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12) | The specification supplies a schema dialect, validation vocabularies, local definitions/references and explicit metadata. Format annotation and assertion are separate vocabularies. | Use a declared dialect and fixed schema version; use explicit type/range/enum rules. Do not assume a URI string or a schema validates application semantics. |
+| [Phaser Loader concepts](https://docs.phaser.io/phaser/concepts/loader) | The loader queues images, sprite sheets, atlases, audio, JSON and other types. Assets have string keys. | Keep media identifiers separate from board rules. Load validated packs through a narrow adapter and namespace keys by pack/content version. The game pack contract should not be an unrestricted Phaser loader manifest. |
+| [Phaser 3.90 LoaderPlugin, versioned documentation](https://docs.phaser.io/api-documentation/3.90.0/class/loader-loaderplugin) | Texture and other loaded caches are global across scenes; base paths can be configured. Its API includes script/plugin file types. | New themes can share scene-independent assets, but imports must be limited to allowed media/data types. A downloaded pack must not gain arbitrary execution by forwarding its fields to the loader. |
+| [Current Phaser LoaderPlugin](https://docs.phaser.io/api-documentation/class/loader-loaderplugin) | At research time the unversioned official API page labels itself Phaser v4.1.0, while the versioned page is v3.90.0. The current page documents newer texture pack handling. | Pin the engine version before implementation and use its matching docs. Keep this contract independent of a specific atlas runtime format. A package/editor may later compile sprite sheets into the chosen engine's atlas format. |
+| [Phaser Masks](https://docs.phaser.io/phaser/concepts/display/masks) | Geometry masks can hide/show rendered regions; bitmap masks support alpha detail and are documented as WebGL-only. Masks are positioned in world space and have constraints. | Recommend a grid-derived binary reveal mask while preserving original artwork. Fancy reveal softness should be optional. Verify actual renderer behavior in the pinned Phaser release rather than assuming every effect works on every renderer/device. |
+
+The sources support a separation between assets and rendering. They do not establish that a generated sprite sheet is usable, that a level is solvable, or that the proposed device performance target is met. Those are explicit later verification steps.
+
+## Authoring recommendations adopted
+
+Use a combined local pack for now, with separate sections for theme, assets, reveal art, rulesets, levels and campaigns. This is easier to review than a generic plugin DSL. Background styles stay independent of sprites and simulation, and protected crop metadata preserves source material. Rules refer only to versioned, checked-in primitives with bounded parameter shapes. Capture effects are separate from fill policy to prevent themed objectives from accidentally changing territory semantics.
+
+The v0.1 authoring examples use the same 4:3 arena geometry across theme families, with adaptive surrounding UI planned for differing screen shapes. That is a design recommendation, not a requirement of Phaser. It needs playtesting and device validation before being treated as final.
+
+The system and bundled Python were checked and did not contain `jsonschema`. The current checker therefore uses a deliberately limited interpreter for the exact checked-in schema keywords plus application semantic checks. It must not be advertised as full JSON Schema Draft 2020-12 compliance. Separately, python-jsonschema in an isolated temporary environment validated the schema, all 14 primitive parameter schemas, four example packs and 32 parameter invocations with `Draft202012Validator`; all passed. No project dependency was added. A maintained standard validator is the recommended production build dependency.

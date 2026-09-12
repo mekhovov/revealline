@@ -1,0 +1,412 @@
+{
+  "schemaVersion": "0.1.0",
+  "contentVersion": "0.1.0",
+  "id": "fpv-front",
+  "status": "draft",
+  "title": "FPV Front: Daybreak",
+  "summary": "Ukrainian FPV drone military arcade. Original fictionalized scenes show invading Russian military machinery without portrait likenesses or documentary claims.",
+  "requiresCapabilities": [
+    "content.raster-reveal.v1",
+    "content.sprite-animation.v1",
+    "effect.clear-modifier.v1",
+    "effect.grant-score.v1",
+    "enemy.bounce-field.v1",
+    "enemy.patrol-boundary.v1",
+    "fill.enemy-seeded.v1",
+    "goal.capture-markers.v1",
+    "goal.coverage.v1",
+    "layout.fixed-arena.v1",
+    "modifier.cut-timeout.v1"
+  ],
+  "theme": {
+    "id": "fpv-front",
+    "family": "fpv-front",
+    "title": "FPV Front: Daybreak",
+    "artDirection": "Crisp 16-bit graphite machinery, golden fields, blue accents. Pixel silhouettes carry threats; illustration contains static scenery, never collision truth. Player art uses a practical FPV carbon frame, separate propeller blades, compact battery and front camera, with restrained Ukrainian blue/yellow accents. Current artwork uses no Z markings anywhere. Ukrainian, hostile military and neutral subjects stay explicitly distinct.",
+    "cultureNotes": "Contemporary Ukrainian identity; ornament reserved for safe borders. Geographic layouts and tactical systems are fictional arcade abstractions.",
+    "referenceUrls": [
+      "https://www.nintendo.com/us/store/products/arcade-archives-volfied-switch/",
+      "https://wildhornets.com/en/fpv-drone-with-10-inch-propellers-analog"
+    ],
+    "palette": {
+      "field": "#122733",
+      "safe": "#36A7DC",
+      "trail": "#FFDA58",
+      "player": "#FFF18B",
+      "enemy": "#F86B62",
+      "objective": "#B8F5B5",
+      "text": "#F4E7CC",
+      "panel": "#192E3C"
+    },
+    "vocabulary": {
+      "player": "FPV drone",
+      "enemy": "Invading military patrol",
+      "capture": "Secure area",
+      "score": "Mission score",
+      "objective": "Signal relay"
+    },
+    "visualRoles": {
+      "player": "player-sprite",
+      "fieldEnemy": "field-enemy",
+      "boundaryEnemy": "boundary-enemy",
+      "objective": "objective-sprite",
+      "menuBackdrop": "menu-art"
+    },
+    "animations": [
+      {
+        "id": "player-idle",
+        "assetId": "player-sprite",
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fps": 8,
+        "loop": true
+      }
+    ],
+    "audio": {
+      "musicAssetId": "music",
+      "cutAssetId": "sfx-cut",
+      "captureAssetId": "sfx-capture",
+      "failureAssetId": "sfx-failure"
+    },
+    "presentation": {
+      "coverStyle": "dither",
+      "spriteSampling": "nearest",
+      "motionIntensity": 0.25,
+      "crtStrength": 0,
+      "arenaAspect": "4:3",
+      "layoutPolicy": "fixed-arena-adaptive-chrome"
+    },
+    "imagePolicy": {
+      "allowedStyles": [
+        "pixel-art",
+        "illustration",
+        "photograph",
+        "scanned-art"
+      ],
+      "preserveOriginal": true,
+      "cropApprovalRequired": true
+    }
+  },
+  "assets": [
+    {
+      "id": "player-sprite",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original Ukrainian FPV quadcopter: thin carbon X-frame, four separate motors/propeller blades, strapped battery, small front camera and short antenna. Restrained blue/yellow accent and thin ivory outline. Proposed 32 px frame; inspect actual-size readability before export. No Z markings or hostile insignia. Four planned consistent frames, not delivered assets.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "field-enemy",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Fictional hostile military scout drone, infantry or vehicle appearance selected as a replaceable skin. Distinct red threat cue, no Z or Ukrainian markings. Keep existing field-bouncer domain and collider unchanged; 32 px planned frames.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "boundary-enemy",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Fictional hostile military route-patrol vehicle skin with an amber boundary-role cue, no Z or Ukrainian markings. Current behavior remains outer-border-only patrol; internal-frontier behavior requires its own extension. 32 px planned frames.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "objective-sprite",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original fpv-front objective; clear 32 px silhouette, all frames consistent. Current FPV concepts use no Z markings; distinguish Ukrainian player identity from hostile military subjects.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "menu-art",
+      "kind": "image",
+      "status": "planned",
+      "brief": "Original fpv-front menuBackdrop; clear 32 px silhouette, all frames consistent. Current FPV concepts use no Z markings; distinguish Ukrainian player identity from hostile military subjects.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "reveal-main",
+      "kind": "image",
+      "status": "planned",
+      "brief": "Original pixel panorama of fields and a fictional invading military convoy; no interface or text. Current FPV concepts use no Z markings; distinguish Ukrainian player identity from hostile military subjects.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original fpv-front audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-cut",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original fpv-front audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-capture",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original fpv-front audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-failure",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original fpv-front audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    }
+  ],
+  "revealArt": [
+    {
+      "id": "main",
+      "sourceAssetId": "reveal-main",
+      "style": "pixel-art",
+      "title": "Signal Field",
+      "caption": "Original pixel panorama of fields and a fictional invading military convoy; no interface or text.",
+      "altText": "Original pixel panorama of fields and a fictional invading military convoy; no interface or text.",
+      "fit": "contain",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "sampling": "nearest",
+      "preserveSource": true,
+      "cropApproved": false,
+      "protectedRegions": [],
+      "luminanceTreatment": "dim-until-complete"
+    }
+  ],
+  "rulesets": [
+    {
+      "id": "standard",
+      "title": "First board",
+      "fillPolicy": {
+        "primitiveId": "fill.enemy-seeded.v1",
+        "params": {}
+      },
+      "lives": 3,
+      "timeLimitSeconds": 120,
+      "playerCellsPerSecond": 10,
+      "scorePerCapturedCell": 1,
+      "cutCommit": "hold",
+      "trailContact": "lose-life",
+      "goals": [
+        {
+          "id": "coverage",
+          "test": {
+            "primitiveId": "goal.coverage.v1",
+            "params": {
+              "targetFraction": 0.7
+            }
+          }
+        },
+        {
+          "id": "objective",
+          "test": {
+            "primitiveId": "goal.capture-markers.v1",
+            "params": {
+              "markerTag": "relay",
+              "targetCount": 2
+            }
+          }
+        }
+      ],
+      "completion": {
+        "mode": "all",
+        "goalIds": [
+          "coverage",
+          "objective"
+        ]
+      },
+      "failure": {
+        "zeroLives": true,
+        "timerExpiry": "fail"
+      }
+    }
+  ],
+  "levels": [
+    {
+      "id": "first-light",
+      "title": "Signal Field",
+      "rulesetId": "standard",
+      "revealArtId": "main",
+      "grid": {
+        "width": 48,
+        "height": 36,
+        "safeBorder": 1,
+        "blockedRects": [
+          {
+            "x": 20,
+            "y": 14,
+            "width": 4,
+            "height": 4
+          }
+        ]
+      },
+      "playerStart": {
+        "x": 24,
+        "y": 0
+      },
+      "enemies": [
+        {
+          "id": "roamer",
+          "visualRole": "fieldEnemy",
+          "behavior": {
+            "primitiveId": "enemy.bounce-field.v1",
+            "params": {
+              "cellsPerSecond": 3
+            }
+          },
+          "start": {
+            "x": 12,
+            "y": 10
+          },
+          "tags": [
+            "patrol"
+          ]
+        },
+        {
+          "id": "edge",
+          "visualRole": "boundaryEnemy",
+          "behavior": {
+            "primitiveId": "enemy.patrol-boundary.v1",
+            "params": {
+              "cellsPerSecond": 2,
+              "clockwise": true
+            }
+          },
+          "start": {
+            "x": 0,
+            "y": 24
+          },
+          "tags": [
+            "boundary"
+          ]
+        }
+      ],
+      "markers": [
+        {
+          "id": "marker-a",
+          "at": {
+            "x": 8,
+            "y": 8
+          },
+          "tag": "relay",
+          "visualRole": "objective",
+          "onCapture": [
+            {
+              "primitiveId": "effect.grant-score.v1",
+              "params": {
+                "points": 150
+              }
+            },
+            {
+              "primitiveId": "effect.clear-modifier.v1",
+              "params": {
+                "modifierId": "interference"
+              }
+            }
+          ]
+        },
+        {
+          "id": "marker-b",
+          "at": {
+            "x": 36,
+            "y": 26
+          },
+          "tag": "relay",
+          "visualRole": "objective",
+          "onCapture": [
+            {
+              "primitiveId": "effect.grant-score.v1",
+              "params": {
+                "points": 150
+              }
+            }
+          ]
+        }
+      ],
+      "modifiers": [
+        {
+          "id": "interference",
+          "rule": {
+            "primitiveId": "modifier.cut-timeout.v1",
+            "params": {
+              "seconds": 8
+            }
+          }
+        }
+      ],
+      "difficulty": "intro"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "chapter-one",
+      "title": "FPV Front: Daybreak",
+      "levelIds": [
+        "first-light"
+      ],
+      "progression": "linear",
+      "rewardMode": "gallery",
+      "fictionalEconomy": false
+    }
+  ]
+}
