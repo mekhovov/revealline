@@ -2,6 +2,8 @@
 
 The current task authorizes building the real game, retaining design studies, creating a local Git history, and testing independently playable releases. The implementation target is a complete, reviewable first campaign and a reusable authoring/runtime foundation. Enjoyment, commercial retention, physical-device performance and “perfect” presentation need human evidence; passing unit tests cannot establish them.
 
+**Delivery status:** the browser foundation is implemented through `v0.1.2`, with three independently playable releases. The [verification report](verification/round-10.md) records tests, browser observations, source revisions and remaining gates. Human playtesting and physical-device delivery are the next stages.
+
 ## The experience
 
 **Leave safety, draw a vulnerable line, return to safety, reveal a picture, choose the next risk.** The main game remains territory capture. Abilities create opportunities around that decision. New models, uniforms, backgrounds or cultural/business themes cannot quietly change the rules.
@@ -63,7 +65,7 @@ Future extensions: collectible image packs, class mastery routes, authored boss 
 | Core milestone | Pure kernel and first complete cut → fill → win/loss loop | Known fill sets, self/trail contact, tie ordering, deterministic replay and terminal idempotence |
 | Playable `v0.1.0` | Campaign, four themes, animated craft, classes, support markers, boss, real progress and sound | Manual browser clear/failure/retry, keyboard and visible controls, theme invariance, all content validates |
 | Playground iteration | Editing, image/pack import/export, seeded practice and replay tools | Round-trip and invalid-input checks; generated level runs through the same kernel |
-| Release refinement | Responsive layouts, failure fixes, docs/skills, static ZIP and archived versions | Five viewport checks, complete test suite, archive runs independently, source hashes and clean logical commits |
+| Release refinement | Responsive layouts, failure fixes, docs/skills, static ZIP and archived versions | Six viewport checks, complete test suite, archive runs independently, source hashes and clean logical commits |
 | Human/device review | Testers try the campaign on actual target devices | Observe readability, input/focus/audio, sustained frame pacing, frustration and voluntary replay |
 
 Major logical changes receive commits; stable playable states receive tags and non-overwriting snapshot builds. Snapshots use different version/save identities and carry source revision information. The release index must identify playable studies versus actual game releases. No remote Git repository, public upload or storefront submission is implied by local history.
@@ -78,7 +80,7 @@ Playtest checklist: can a newcomer explain safe ground and danger after one atte
 
 Browser static hosting is the first concrete distribution. iPhone browser and home-screen launch need Safari checks; native iOS uses a separately tested Capacitor/Xcode project if selected. Steam/macOS/Windows/Linux need an explicitly chosen desktop wrapper, signing/store work and physical controller tests. A generated ZIP is not an App Store or Steam build. Official API support does not prove a particular controller works; poll standard gamepads and handle disconnect/focus state explicitly. [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API).
 
-Detailed implementation results, commands and remaining issues will be recorded in the development, deployment, versioning and verification guides as the build lands. Latest news or research updates require a separate requested monitoring schedule; this task performs current research without silently creating recurring automation.
+Detailed implementation results, commands and remaining issues are recorded in the development, deployment, versioning and verification guides. Current research is saved with its sources; no recurring monitoring has been configured.
 
 ## Accessibility refinement from current guidance
 

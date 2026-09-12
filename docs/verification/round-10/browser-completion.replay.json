@@ -1,0 +1,185 @@
+{
+  "version": "xonix-replay.v2",
+  "build": "0.1.1",
+  "ruleset": "xonix-core.v1",
+  "level": {
+    "version": "xonix-level.v1",
+    "id": "signal-01",
+    "revision": "1",
+    "name": "First Signal",
+    "width": 48,
+    "height": 36,
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "enemies": [
+      {
+        "id": "roamer",
+        "type": "bouncer",
+        "x": 37.5,
+        "y": 24.5,
+        "vx": 2.2,
+        "vy": 1.6,
+        "radius": 0.3
+      }
+    ],
+    "objectives": [],
+    "supplies": [
+      {
+        "id": "home",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ],
+    "goal": {
+      "coverage": 0.45
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.7,
+      "graceSeconds": 0.7,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        40,
+        73
+      ]
+    }
+  },
+  "options": {
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 31,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": false
+      },
+      "releaseBefore": true
+    },
+    {
+      "ticks": 414,
+      "input": {
+        "direction": "down",
+        "boost": false,
+        "action": false,
+        "pickup": false
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": true,
+  "ticks": 445,
+  "summary": {
+    "ruleset": "xonix-core.v1",
+    "levelId": "signal-01",
+    "revision": "1",
+    "seed": 1,
+    "turnPolicy": "immediate",
+    "classId": "scout",
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-aaa4aadd",
+    "status": "won",
+    "won": true,
+    "tick": 445,
+    "time": 3.708333333333323,
+    "lives": 3,
+    "score": 8160,
+    "coverage": 0.5217391304347826,
+    "claimedCount": 816,
+    "totalClaimable": 1564,
+    "medal": "gold",
+    "objectives": {
+      "captured": 0,
+      "total": 0,
+      "required": 0
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v1",
+    "hash": "04e184819eba9aef",
+    "sections": {
+      "identity": "e640c00b3c48d350",
+      "configuration": "8db32b528cc3dfe2",
+      "board": "183d1d3d9b51e016",
+      "player": "f2f25a4f15539119",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "7e872bf096c9ef82",
+      "objectives": "09612b07b5ecb5a5",
+      "supplies": "e1b45854413ff5f8",
+      "ability": "92e0a0ced603e64b",
+      "clock": "2c35e52f6bde45a4",
+      "continuation": "708bf870927e4723",
+      "result": "047c07a806319f07"
+    }
+  }
+}

@@ -25,6 +25,7 @@ Arrows/WASD move, Shift boosts, E uses the class ability, R collects nearby supp
 | Export and verify a run | [Replays](docs/replays.md) · [Campaign completion fixtures](game/replays/campaign-routes.json) |
 | Work with AI skills and prompts | [Authoring kit](authoring/README.md): 11 skills, 124 shared prompt templates |
 | Review the plan and source evidence | [Implementation plan](docs/round-10-implementation-plan.md) · [Latest reference/import research](docs/research/round-10-reference-and-import.md) · [Xonix/XPOSED research](docs/research/xonix-and-xposed.md) |
+| Verify this delivery | [Verification report](docs/verification/round-10.md) · [Local playable versions](http://127.0.0.1:8767/releases/) |
 | Compare earlier visual experiments | [Motion lab guide](authoring/motion-lab/README.md) · [Reference atlas](docs/concepts/round-09-reference-atlas.html) |
 
 ```sh
@@ -35,3 +36,5 @@ node scripts/game-cli.mjs serve --root dist --port 8769
 ```
 
 The build is a static website. Native iPhone, Steam and desktop wrappers, offline caching, physical-device performance and human playtesting remain separate delivery checks. Earlier authoring packs and lab formats are preserved design tools; they are not automatically importable into the playable game.
+
+The active development server in this session uses port **8767**: [play](http://127.0.0.1:8767/game/), [edit and test](http://127.0.0.1:8767/game/playground/), [compare frozen versions](http://127.0.0.1:8767/releases/). The standard launch command remains on 8768 so it does not replace an existing server.

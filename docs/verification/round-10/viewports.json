@@ -1,0 +1,32 @@
+[
+  {
+    "arena": "Arena 358.0 × 268.5 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 44 × 44 · all actions visible",
+    "size": "390 × 844 CSS pixels · shown at 100%"
+  },
+  {
+    "arena": "Arena 353.3 × 265.0 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 44 × 44 · all actions visible",
+    "size": "844 × 390 CSS pixels · shown at 58%"
+  },
+  {
+    "arena": "Arena 517.3 × 388.0 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 44 × 44 · all actions visible",
+    "size": "1024 × 768 CSS pixels · shown at 48%"
+  },
+  {
+    "arena": "Arena 520.0 × 390.0 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 34 × 28 · all actions visible",
+    "size": "1280 × 720 CSS pixels · shown at 38%"
+  },
+  {
+    "arena": "Arena 300.0 × 225.0 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 44 × 44 · all actions visible",
+    "size": "320 × 640 CSS pixels · shown at 100%"
+  },
+  {
+    "arena": "Arena 682.7 × 512.0 · whole arena visible · no horizontal overflow",
+    "controls": "Controls: minimum 44 × 44 · all actions visible",
+    "size": "1065 × 912 CSS pixels · shown at 46%"
+  }
+]
