@@ -1,0 +1,35 @@
+{
+  "before-practice": {
+    "path": ".cache/round-19/before-practice.library.json",
+    "bytes": 433,
+    "sha256": "f9ffa8ab7671f2efbacbc0eb5e07ad93f74a7af9021dbfd7f28da115ae809e43",
+    "pictures": 0,
+    "scores": 0,
+    "masteries": 0
+  },
+  "after-practice": {
+    "path": ".cache/round-19/after-practice.library.json",
+    "bytes": 433,
+    "sha256": "f9ffa8ab7671f2efbacbc0eb5e07ad93f74a7af9021dbfd7f28da115ae809e43",
+    "pictures": 0,
+    "scores": 0,
+    "masteries": 0
+  },
+  "reinstalled": {
+    "path": ".cache/round-19/reinstalled.library.json",
+    "bytes": 3123,
+    "sha256": "00851bf096e9ffe2f898b04d87b81cd1ff42e848e1fc6fd492ebde4358061778",
+    "pictures": 1,
+    "scores": 1,
+    "masteries": 2
+  },
+  "practiceProfileByteIdentical": true,
+  "candidate": {
+    "path": ".cache/round-19/candidate-earned.library.json",
+    "bytes": 5817,
+    "sha256": "b211d62d881dd01be33451a506cf2aa159672b81e4e630438751232195e4a1c6",
+    "pictures": 3,
+    "scores": 3,
+    "masteries": 3
+  }
+}

@@ -249,6 +249,29 @@
           </p>
           <div id="asset-list" class="asset-list"></div>
           <details>
+            <summary>Optional equipment goal</summary>
+            <p id="mastery-readout" class="micro-note"></p>
+            <div class="settings-row">
+              <button id="use-campaign-goal" class="button">Copy campaign goal</button>
+              <button id="clear-goal" class="button">No optional goal</button>
+            </div>
+            <label class="field"
+              >Goal definition JSON
+              <textarea
+                id="mastery-json"
+                spellcheck="false"
+                rows="12"
+                placeholder="Paste a Steady Signal, Supply Line or Safe Return definition"
+              ></textarea>
+            </label>
+            <button id="apply-mastery" class="button">Validate and apply goal</button>
+            <p class="micro-note">
+              Goals never gate the picture or next mission. Practice checks the live checklist
+              without awarding progress. Exporting a new one-map expansion retargets the goal to
+              that new campaign; original installed packs stay available.
+            </p>
+          </details>
+          <details>
             <summary>Advanced: level, theme and ability JSON</summary>
             <p>
               Unknown mechanics are rejected. Valid recipes can tune the registered effects without
@@ -277,8 +300,8 @@
             <summary>Complete pack JSON</summary>
             <p>
               Paste a generated pack including artwork bindings, or inspect the current
-              configuration. Accepted: xonix-playground.v1, xonix-level.v1, xonix-pack.v1 and
-              xonix-pack-library.v1.
+              configuration. Scenario and expansion versions 1 and 2 are accepted, along with
+              xonix-level.v1 and xonix-pack-library.v1. Version 2 carries explicit optional goals.
             </p>
             <textarea
               id="pack-json"

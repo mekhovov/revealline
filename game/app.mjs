@@ -15,6 +15,7 @@ import { attachLibraryPanel } from './ui/library-panel.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
 import { createMasteryAwards } from './mastery-awards.mjs';
+import { createMasteryCatalog } from './mastery-catalog.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { canonicalJSON } from './data-json.mjs';
 import {
@@ -50,7 +51,12 @@ import {
   unlockedBodies,
   canPlay,
 } from './progress.mjs';
-import { downloadJSON, recommendedBody } from './content.mjs';
+import {
+  downloadJSON,
+  recommendedBody,
+  MASTERY_SCENARIO_VERSION,
+  scenarioMasteryCampaign,
+} from './content.mjs';
 import { prepareScenario } from './imports.mjs';
 import {
   createRecorder,
@@ -92,7 +98,32 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.8.0',
+  let installedEntries = [baseEntry],
+    masteryCatalog = createMasteryCatalog([{ campaign: baseEntry.campaign, sourcePackId: null }]);
+  function prepareContentCatalog(nextPacks) {
+    const entries = [
+      baseEntry,
+      ...nextPacks.packs.flatMap((pack) =>
+        pack.campaigns.map((source) => resolvePackCampaign(pack, source.id)),
+      ),
+    ];
+    const registrations = createMasteryCatalog(
+      entries.map((entry) => ({
+        campaign: entry.campaign,
+        sourcePackId: entry.sourcePackId,
+        ...(entry.sourcePackFormat
+          ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
+          : {}),
+      })),
+    );
+    return { packs: nextPacks, entries, registrations };
+  }
+  function adoptContentCatalog(content) {
+    packs = content.packs;
+    installedEntries = content.entries;
+    masteryCatalog = content.registrations;
+  }
+  let buildVersion = '0.9.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -112,7 +143,10 @@ try {
     const prepared = await prepareScenario(JSON.parse(raw), { classRecipes: classRegistry });
     scenario = prepared.scenario;
   }
-  const controllerPreviewRequested = !!scenario && params.get('controller-preview') === '1';
+  // Switching source maps inside an authored preview must not turn the same
+  // session into an awarding game, even when the configured scenario is cleared.
+  const practiceSession = !!scenario;
+  const controllerPreviewRequested = practiceSession && params.get('controller-preview') === '1';
   if (
     window.parent !== window &&
     window.name === 'revealline-controller-practice' &&
@@ -121,8 +155,13 @@ try {
     throw new Error('Return to Controller practice and choose Load practice to continue.');
   const controllerPreview = attachControllerPreview({ enabled: controllerPreviewRequested });
   const practiceNavigation = attachPracticeNavigation({
-    enabled: controllerPreviewRequested,
-    onBlocked: () => warning('Use the Controller practice page’s header links to leave practice.'),
+    enabled: practiceSession,
+    onBlocked: () =>
+      warning(
+        controllerPreviewRequested
+          ? 'Use the Controller practice page’s header links to leave practice.'
+          : 'Use the Playground page’s header links to open the solo game. This preview stays in practice.',
+      ),
   });
   // Each archived release keeps its own profile schema, packs and save slot.
   // A portable complete backup transfers progress without changing older versions.
@@ -186,13 +225,13 @@ try {
     const rawPacks = await readAssetStore(packsKey);
     const prepared = rawPacks ? await importPackLibrary(rawPacks) : emptyPackLibrary();
     const profile = loadLibrary(localStorage, libraryKey, { campaigns: [campaign] });
-    return { packs: prepared, profile };
+    return { content: prepareContentCatalog(prepared), profile };
   }
   try {
     const snapshot = navigator.locks?.request
       ? await navigator.locks.request(`${libraryKey}.backup-lock`, readSavedState)
       : await readSavedState();
-    packs = snapshot.packs;
+    adoptContentCatalog(snapshot.content);
     loaded = snapshot.profile;
     storedStateAdopted = loaded.recovery === null;
   } catch (error) {
@@ -221,7 +260,7 @@ try {
     started = false,
     paused = true,
     demo = false,
-    practice = !!scenario,
+    practice = practiceSession,
     accumulator = 0,
     handled = false,
     pendingAction = false,
@@ -531,10 +570,7 @@ try {
     accumulator = 0;
   }
   function catalog() {
-    const entries = [
-      baseEntry,
-      ...packs.packs.flatMap((p) => p.campaigns.map((c) => resolvePackCampaign(p, c.id))),
-    ];
+    const entries = [...installedEntries];
     for (const key of Object.keys(library.campaigns)) {
       const id = key.split('/')[0],
         match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)$/.exec(id);
@@ -614,7 +650,7 @@ try {
     themeOverride = !!themeId;
     musicOverride = false;
     scenario = null;
-    practice = controllerPreviewRequested;
+    practice = practiceSession;
     demo = false;
     activeEntry = entry;
     campaign = entry.campaign;
@@ -727,7 +763,8 @@ try {
         campaignKey: campaignKey(entry.campaign),
         signal: controller.signal,
         masteryDefinition:
-          masteryFor(campaignKey(entry.campaign), candidate?.replay?.level?.id) ?? undefined,
+          masteryFor(campaignKey(entry.campaign), candidate?.replay?.level?.id, masteryCatalog) ??
+          undefined,
       });
       if (controller.signal.aborted)
         throw new Error('Loading was cancelled; your newer selection is kept.');
@@ -739,7 +776,7 @@ try {
       run = restored.run;
       recorder = restored.recorder;
       runId = restored.session.runId;
-      masteryDefinition = masteryFor(campaignKey(campaign), run.levelId);
+      masteryDefinition = masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
       masteryObserver = restored.masteryObserver ?? null;
       masteryAward = null;
       classId = run.classId;
@@ -820,6 +857,7 @@ try {
     }),
     base: () => baseEntry,
     catalog,
+    getMasteryCatalog: () => masteryCatalog,
     select: selectEntry,
     pause: () => pause(true),
     saved: savedAttempt,
@@ -844,7 +882,10 @@ try {
         .filter(Boolean)
         .join(' '),
     restore: restoreAttempt,
-    beforeProfileReplacement: () => masteryAwards.cancelAll(),
+    beforeProfileReplacement: () => {
+      cancelRestore();
+      masteryAwards.cancelAll();
+    },
     setLibrary: (next) => {
       masteryAwards.cancelAll();
       library = next;
@@ -857,6 +898,7 @@ try {
       return saved;
     },
     applyBackup: async (prepared) => {
+      const content = prepareContentCatalog(prepared.packs);
       if (!writer.writable) throw new Error(writer.reason);
       if (!persistenceReady) {
         const recovered = await recoverBackupImport(backupAdapters());
@@ -881,7 +923,7 @@ try {
       libraryBaseline = library;
       libraryGeneration = result.profile.generation;
       recovery = null;
-      packs = prepared.packs;
+      adoptContentCatalog(content);
       selectEntry(baseEntry);
       adoptPreferences();
       refreshCampaigns();
@@ -889,13 +931,16 @@ try {
     },
     setPacks: async (next) => {
       assertWriter();
+      const content = prepareContentCatalog(next);
+      pause(true);
+      cancelRestore();
       masteryAwards.cancelAll();
       try {
         await writeAssetStore(packsKey, exportPackLibrary(next));
       } catch (e) {
         throw new Error(`Pack storage failed; previous installed packs are kept. ${e.message}`);
       }
-      packs = next;
+      adoptContentCatalog(content);
       if (activeEntry.sourcePackId && !packs.packs.some((p) => p.id === activeEntry.sourcePackId))
         selectEntry(baseEntry);
       else if (activeEntry.sourcePackId) {
@@ -1114,7 +1159,7 @@ try {
   }
   function leavePractice() {
     scenario = null;
-    practice = controllerPreviewRequested;
+    practice = practiceSession;
     demo = false;
     campaignOverview = false;
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
@@ -1307,22 +1352,29 @@ try {
       classRecipes: scenario?.classRecipes || classRegistry,
     });
     runId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
-    const observedCampaign = scenario
-      ? catalog()
-          .map((entry) => entry.campaign)
-          .find((entry) => {
-            if (!masteryFor(campaignKey(entry), run.levelId)) return false;
-            const map = entry.levels.find((level) => level.id === run.levelId);
-            return (
-              map &&
-              canonicalJSON(normalizedLevel(map)) === canonicalJSON(run.level) &&
-              canonicalJSON(entry.classRecipes) === canonicalJSON(run.classRecipes)
-            );
-          })
-      : campaign;
-    masteryDefinition = observedCampaign
-      ? masteryFor(campaignKey(observedCampaign), run.levelId)
-      : null;
+    const explicitPractice = scenario?.format === MASTERY_SCENARIO_VERSION;
+    const observedCampaign = explicitPractice
+      ? scenario.masteryDefinition
+        ? scenarioMasteryCampaign(scenario, run.classRecipes)
+        : null
+      : scenario
+        ? catalog()
+            .map((entry) => entry.campaign)
+            .find((entry) => {
+              if (!masteryFor(campaignKey(entry), run.levelId, masteryCatalog)) return false;
+              const map = entry.levels.find((level) => level.id === run.levelId);
+              return (
+                map &&
+                canonicalJSON(normalizedLevel(map)) === canonicalJSON(run.level) &&
+                canonicalJSON(entry.classRecipes) === canonicalJSON(run.classRecipes)
+              );
+            })
+        : campaign;
+    masteryDefinition = explicitPractice
+      ? scenario.masteryDefinition
+      : observedCampaign
+        ? masteryFor(campaignKey(observedCampaign), run.levelId, masteryCatalog)
+        : null;
     masteryObserver = null;
     masteryAward = null;
     $('mastery-announcement').textContent = '';

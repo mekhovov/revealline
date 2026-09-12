@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.8.0 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.9.0 working source includes 28 maps: 12 base campaign maps and 16 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter and Equipment Workshop.
 
 ## The loop
 
@@ -16,30 +16,30 @@ The campaign introduces bouncers, border patrols, supplies, objectives, obstacle
 
 ## Solo controls and classes
 
-| Input | Action |
-|---|---|
-| Arrows / WASD | Move in four directions; release to stop |
-| Shift | Boost while held |
-| E | Use the active class ability |
-| R | Collect supplies when nearby and applicable |
-| Escape / P | Pause or resume |
-| Touch direction buttons | Hold to move; optional Tap steering latches direction, tap again or press Stop to clear |
-| Standard gamepad | Release then press a face button to join. D-pad / left stick moves; South ability, West supply, North hangar, East Stop, right shoulder boost, Menu pause |
-| G / Change craft control | Choose another available class while safely docked |
+| Input                    | Action                                                                                                                                                    |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrows / WASD            | Move in four directions; release to stop                                                                                                                  |
+| Shift                    | Boost while held                                                                                                                                          |
+| E                        | Use the active class ability                                                                                                                              |
+| R                        | Collect supplies when nearby and applicable                                                                                                               |
+| Escape / P               | Pause or resume                                                                                                                                           |
+| Touch direction buttons  | Hold to move; optional Tap steering latches direction, tap again or press Stop to clear                                                                   |
+| Standard gamepad         | Release then press a face button to join. D-pad / left stick moves; South ability, West supply, North hangar, East Stop, right shoulder boost, Menu pause |
+| G / Change craft control | Choose another available class while safely docked                                                                                                        |
 
 With the default map, D-pad moves menu focus, South confirms and East goes back. Selects and sliders preview a value before applying it; East cancels the edit. See [controller navigation](../docs/controller-navigation.md) and try the actual menus in [Controller practice](controller-lab/). **Settings → Controller controls** lets you change the complete flight/menu maps, choose position/Xbox/PlayStation labels, select or invert sticks and tune press/release thresholds. Apply adopts the whole draft; Cancel and closing Settings preserve the current layout. Help and edit previews use your selected labels. These solo preferences are not yet shared with couch play or Replay Theater. See [controller settings](../docs/controller-settings.md) and [forward-compatible profile transfer](../docs/controller-preference-migration.md). Pause and focus loss clear held input. Touch Boost follows hold or tap steering, and Stop clears it. Controller adapters and viewport fixtures do not certify particular hardware.
 
 **Immediate** turns at the current position. **Grid + buffer** turns at cell centers and buffers the latest held direction. Releasing clears that buffer. The board remains 48 × 36 cells at every viewport size. Starting-class or steering changes in the flight deck start a fresh attempt; the in-flight hangar changes class within the existing attempt.
 
-| Class | Ability and tradeoff |
-|---|---|
-| Scout | Scan marks objectives and briefly shows enemy direction hints |
-| Light carrier (`bomber`) | Collect one charge, then place a temporary enemy-stunning field |
-| Heavy carrier (`carrier`) | Carry two charges of the same stun-field ability |
-| Interceptor | A temporary shield can absorb one enemy/lane contact; it cancels the cut and recovers at home |
-| Fiber relay | Scan and ignore signal interference; the live cable/trail remains vulnerable |
-| Impact craft | Stun nearby enemies, abandon the unfinished cut and redeploy without losing a life; no territory is granted |
-| Trapper | Collect a charge to place a slowing field |
+| Class                     | Ability and tradeoff                                                                                        |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Scout                     | Scan marks objectives and briefly shows enemy direction hints                                               |
+| Light carrier (`bomber`)  | Collect one charge, then place a temporary enemy-stunning field                                             |
+| Heavy carrier (`carrier`) | Carry two charges of the same stun-field ability                                                            |
+| Interceptor               | A temporary shield can absorb one enemy/lane contact; it cancels the cut and recovers at home               |
+| Fiber relay               | Scan and ignore signal interference; the live cable/trail remains vulnerable                                |
+| Impact craft              | Stun nearby enemies, abandon the unfinished cut and redeploy without losing a life; no territory is granted |
+| Trapper                   | Collect a charge to place a slowing field                                                                   |
 
 A hangar switch requires safe ground, no live cut and the configured cooldown. Each class retains its ammunition and cooldown; switching does not refill it. Maps can disable switching by declaring no hangars. Body, palette, rotor animation and theme are separate from these gameplay recipes.
 
@@ -83,12 +83,12 @@ Import your own `xonix-replay.v3` file, or paste JSON under **Import your own re
 
 Open [Couch race](http://127.0.0.1:8768/game/couch/) for two independent boards with the same map, class, seed and steering. Choose a 30-, 90- or 180-second round. First clear wins; simultaneous clears can draw. At timeout, coverage, lives and then score decide. A series is first to two points.
 
-| Action | Player 1 | Player 2 |
-|---|---|---|
-| Move | WASD | Arrows |
-| Ability | Q | Enter |
-| Supply | E | / |
-| Boost | Left Shift | Right Shift |
+| Action  | Player 1   | Player 2    |
+| ------- | ---------- | ----------- |
+| Move    | WASD       | Arrows      |
+| Ability | Q          | Enter       |
+| Supply  | E          | /           |
+| Boost   | Left Shift | Right Shift |
 
 Escape pauses both boards. **Focus boards** hides setup and secondary controls to keep both arenas and control sets in the shared viewport; **Show setup** returns to configuration. Starting a round enables focus automatically. Each side has touch controls, and two standard controllers can drive separate players. Couch results are separate from campaign rewards. This is a local race, with no shared-arena co-op or network connection. The focused couch layout was checked in the same browser at six CSS viewport sizes, including 320 × 640, with 44 CSS-pixel control targets. This is layout evidence, not physical-device or controller certification. The [public-release guide](../docs/public-release.md) describes the future network boundary.
 
@@ -101,3 +101,7 @@ The separate motion lab, legacy draft packs and media library retain their own f
 The [authored-art workflow](../docs/authored-art.md) covers source preservation, optional AI styling, map-specific embedded pictures, pack rebuilds and actual reveal/gallery checks. Homeward Skies supplies three original illustrated examples with separate source files and effective prompts.
 
 The static distribution includes **Prepare offline play** in Settings. Preparation must finish online before an offline reopen; source previews do not register a worker. See [offline instructions](../docs/offline-release.md), [development](../docs/development.md), [public release](../docs/public-release.md) and [saved versions](../docs/versioning.md). Native store packages and physical phone/controller/audio/performance checks remain separate from browser layout and automated simulation evidence.
+
+## Author optional goals
+
+Use explicit pack v2 with supported finite `masteries`, or copy a campaign goal in the playground. Scenario v2 retains a full `masteryDefinition` or explicit null. The [pack contract](../docs/pack-mastery-contract.md) and [Equipment Workshop](../docs/equipment-workshop.md) describe the three themed examples, local-reference validation, practice, export and CLI inspection. Ordinary pictures and scores remain independent of seals. Revised or removed declarations preserve historical records; reinstalling the exact declaration restores its current label. The older v1 pack/scenario formats remain unchanged.

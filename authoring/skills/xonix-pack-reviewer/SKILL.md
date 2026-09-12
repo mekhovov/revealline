@@ -1,13 +1,13 @@
 ---
 name: xonix-pack-reviewer
-description: "Review Xonix theme and content packs for schema validity, asset readiness, reference integrity, supported mechanics, art consistency, device readability, and production handoff. Use before sharing, importing, or promoting a draft pack, and when checking AI-created themes, sprites, backgrounds, audio, or levels."
+description: 'Review Xonix theme and content packs for schema validity, asset readiness, reference integrity, supported mechanics, art consistency, device readability, and production handoff. Use before sharing, importing, or promoting a draft pack, and when checking AI-created themes, sprites, backgrounds, audio, or levels.'
 ---
 
 # Xonix Pack Reviewer
 
 Review against the actual contract and available evidence. Clearly separate a valid authoring document from a working, enjoyable game.
 
-First identify the target format. Review playable `xonix-level.v1`, `xonix-playground.v1` and class/theme data using [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core contract](../../../game/core/README.md) and [runtime import guide](../../../docs/assets-and-configuration.md); await validated image decoding before adoption. The Python draft-pack checks below remain valid for legacy packs, but cannot certify a playable scenario, campaign reward or working imported asset.
+First identify the target format. Review playable `xonix-level.v1`, supported scenario v1/v2 and class/theme data using [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core contract](../../../game/core/README.md) and [runtime import guide](../../../docs/assets-and-configuration.md); await validated image decoding before adoption. The Python draft-pack checks below remain valid for legacy packs, but cannot certify a playable scenario, campaign reward or working imported asset.
 
 For gameplay classes and equipment, use [Ability Designer](../xonix-ability-designer/SKILL.md). Check the actual ability registry and its separate format. Explicit class abilities can change declared state; cosmetic swaps cannot. Distinguish sourced reference entries, planned actor roles, working lab targets and integrated territory mechanics. Compare cosmetics within the same class/equipment/turn-policy baseline, and require result identity to retain gameplay-affecting choices.
 
@@ -44,3 +44,9 @@ Find the target project's `authoring/CONTRACT.md`, `schema/content-pack.schema.j
 - **Design hypotheses:** which playtest questions remain.
 
 A clean data check never warrants saying the game or asset pack is production ready by itself.
+
+## Review optional goal containers
+
+Use [the pack contract](../../../docs/pack-mastery-contract.md) and [context resolver](../../../docs/mastery-catalog-contract.md) for explicit pack v2 and scenario v2. Check local references and actual filtered capabilities, one supported finite goal per map, required explicit none, bounded nested data and all prospective conflicts before adoption. Preserve v1 fields/output and frozen definition identities. Artwork decoding must follow structural/reference checks; an installed or decoded pack is not a solved challenge.
+
+Review the actual playground copy/edit/clear/Undo and one-map retargeted export. Test positive, ordinary and omitted-action traces in both policies, current versus archived gallery labels, save-prefix reconstruction after goal replacement, and no reward writes from practice. Confirm base-campaign conflicts reject before storage changes, and old-format clients reject unsupported packs honestly. Use [Round 19 prompts](../../prompts/round-19-pack-goals.md) for examples; their schema-valid variants still require playtesting.
