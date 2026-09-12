@@ -36,6 +36,7 @@ export function attachLibraryPanel(api) {
     previousBackup = null,
     busy = false,
     view = null,
+    viewReady = false,
     galleryFrame = 0,
     viewGeneration = 0,
     returnToCollection = true;
@@ -437,7 +438,9 @@ export function attachLibraryPanel(api) {
       args.image = image;
       args.fit = picture.visualOverrides.background.fit;
     }
-    if (accept() && canvas.isConnected) galleryPainter.drawGallery(canvas.getContext('2d'), args);
+    if (!accept() || !canvas.isConnected) return false;
+    galleryPainter.drawGallery(canvas.getContext('2d'), args);
+    return true;
   }
   function sealsFor(item, picture, records) {
     const catalog = api.getMasteryCatalog?.();
@@ -538,6 +541,14 @@ export function attachLibraryPanel(api) {
     });
     refreshMasteries();
   }
+  function pictureReady(ready, loading = false) {
+    viewReady = ready;
+    $('gallery-canvas').style.visibility = ready ? '' : 'hidden';
+    $('gallery-canvas').setAttribute('aria-hidden', String(!ready));
+    $('gallery-animate').disabled = !ready;
+    $('gallery-replay').disabled = !ready;
+    $('gallery-view-dialog').setAttribute('aria-busy', String(loading));
+  }
   async function openPicture(picture) {
     if (!picture || !$('collection-dialog').open) return;
     galleryReturn = {
@@ -549,25 +560,32 @@ export function attachLibraryPanel(api) {
     cancelAnimationFrame(galleryFrame);
     returnToCollection = true;
     view = picture;
+    pictureReady(false, true);
+    const meta = `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
+    const current = () =>
+      generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
     $('gallery-view-title').textContent = picture.level.name;
-    $('gallery-view-meta').textContent =
-      `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
+    $('gallery-view-meta').setAttribute('role', 'status');
+    $('gallery-view-meta').textContent = `${meta} · Loading picture…`;
     refreshPictureMasteries(picture, api.get().library.masteries);
     $('collection-dialog').close();
     $('gallery-view-dialog').showModal();
     try {
-      await drawPicture(
-        $('gallery-canvas'),
-        picture,
-        () => generation === viewGeneration && view === picture,
-      );
+      const drawn = await drawPicture($('gallery-canvas'), picture, current);
+      if (drawn && current()) {
+        pictureReady(true);
+        $('gallery-view-meta').textContent = meta;
+      }
     } catch (e) {
-      if (generation === viewGeneration && view === picture)
-        $('gallery-view-meta').textContent = e.message;
+      if (current()) {
+        pictureReady(false);
+        $('gallery-view-meta').textContent =
+          `${meta} · Picture could not load. Close this view and try again, or reinstall its pack. ${e instanceof Error ? e.message : ''}`;
+      }
     }
   }
   $('gallery-replay').onclick = () => {
-    if (view) {
+    if (view && viewReady && $('gallery-view-dialog').open) {
       returnToCollection = false;
       api.select(view.entry, {
         levelId: view.level.id,
@@ -579,12 +597,23 @@ export function attachLibraryPanel(api) {
     }
   };
   $('gallery-animate').onclick = async () => {
-    if (!view) return;
+    if (!view || !viewReady || !$('gallery-view-dialog').open) return;
     const picture = view,
       generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
-    await galleryPainter.setLook(picture.theme, picture.theme.player, picture.visualOverrides);
+    try {
+      await galleryPainter.setLook(picture.theme, picture.theme.player, picture.visualOverrides);
+      if (picture.visualOverrides.background && !galleryPainter.images.background)
+        throw new Error('The picture artwork is unavailable for celebration.');
+    } catch (e) {
+      if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
+        $('gallery-view-meta').textContent =
+          `${picture.theme.name} / ${picture.item.medal.toUpperCase()} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`;
+      return;
+    }
     if (generation !== viewGeneration || view !== picture || !$('gallery-view-dialog').open) return;
+    $('gallery-view-meta').textContent =
+      `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
     galleryPainter.setLevel?.(picture.level, { seed: picture.item.seed ?? 1 });
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,
@@ -624,6 +653,7 @@ export function attachLibraryPanel(api) {
     cancelAnimationFrame(galleryFrame);
     viewGeneration++;
     view = null;
+    pictureReady(false);
     const origin = galleryReturn;
     galleryReturn = null;
     if (returnToCollection) {

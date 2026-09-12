@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { campaignKey, emptyLibrary } from '../library.mjs';
-import { createRun } from '../core/index.mjs';
+import { createRun, CLASSES } from '../core/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
@@ -19,6 +19,8 @@ class Element {
     this.children = [];
     this.listeners = new Map();
     this.dataset = {};
+    this.style = {};
+    this.attributes = new Map();
     this.value = '';
     this.textContent = '';
     this.disabled = false;
@@ -39,7 +41,9 @@ class Element {
     this.children = [];
     this.append(...children);
   }
-  setAttribute() {}
+  setAttribute(name, value) {
+    this.attributes.set(name, value);
+  }
   getContext() {
     return {};
   }
@@ -90,7 +94,7 @@ class Element {
 
 async function setup(t, count = 30, hostOverrides = {}) {
   const prior = new Map(
-    ['document', 'fetch', 'Image', 'cancelAnimationFrame'].map((key) => [
+    ['document', 'fetch', 'Image', 'cancelAnimationFrame', 'requestAnimationFrame'].map((key) => [
       key,
       Object.getOwnPropertyDescriptor(globalThis, key),
     ]),
@@ -113,7 +117,11 @@ async function setup(t, count = 30, hostOverrides = {}) {
     node('gallery-grid'),
     node('gallery-pages'),
   );
-  node('gallery-view-dialog').append(node('gallery-view-masteries'));
+  const closeButton = new Element(document, 'button');
+  closeButton.setAttribute('aria-label', 'Close picture');
+  node('gallery-view-dialog').append(closeButton, node('gallery-view-masteries'));
+  node('gallery-canvas').width = 768;
+  node('gallery-canvas').height = 576;
   const decodeJobs = [];
   Object.defineProperty(globalThis, 'document', { configurable: true, value: document });
   Object.defineProperty(globalThis, 'fetch', {
@@ -124,11 +132,18 @@ async function setup(t, count = 30, hostOverrides = {}) {
     configurable: true,
     value: class {
       decode() {
-        return new Promise((resolve) => decodeJobs.push(resolve));
+        return new Promise((resolve, reject) =>
+          decodeJobs.push(Object.assign(resolve, { reject, src: this.src })),
+        );
       }
     },
   });
   Object.defineProperty(globalThis, 'cancelAnimationFrame', { configurable: true, value() {} });
+  const frames = [];
+  Object.defineProperty(globalThis, 'requestAnimationFrame', {
+    configurable: true,
+    value: (callback) => frames.push(callback),
+  });
   const paints = [];
   t.mock.method(BoardPainter.prototype, 'drawGallery', (_context, args) => paints.push(args));
   const levels = Array.from({ length: count }, (_, index) => ({
@@ -188,7 +203,9 @@ async function setup(t, count = 30, hostOverrides = {}) {
     entry,
     selections,
     paints,
+    frames,
     decodeJobs,
+    closeButton,
     get library() {
       return library;
     },
@@ -301,14 +318,169 @@ test('late decoding and a queued old close cannot steal focus from a new picture
   const first = h.cards()[0].onclick();
   h.node('gallery-view-dialog').close();
   const second = h.cards()[1].onclick();
-  h.node('gallery-replay').focus();
+  h.closeButton.focus();
   h.node('gallery-view-dialog').emit('close');
   assert.equal(h.node('collection-dialog').open, false);
   for (const resolve of h.decodeJobs) resolve();
   await Promise.all([first, second]);
-  assert.equal(h.document.activeElement, h.node('gallery-replay'));
+  assert.equal(h.document.activeElement, h.closeButton);
   h.node('gallery-view-dialog').close();
   assert.equal(h.document.activeElement.children[1].textContent, 'Picture 01');
+});
+
+test('a new picture hides the previous artwork and blocks actions until its own decode completes', async (t) => {
+  const h = await setup(t, 2);
+  h.collection();
+  await h.cards()[0].onclick();
+  const canvas = h.node('gallery-canvas'),
+    previous = structuredClone(h.library),
+    fullPaints = () => h.paints.filter((paint) => paint.width === 768);
+  assert.equal(fullPaints().at(-1).level.id, 'picture-0');
+  h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
+  h.node('gallery-view-dialog').close();
+  const loading = h.cards()[1].onclick();
+  assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
+  assert.equal(canvas.style.visibility, 'hidden');
+  assert.equal(canvas.hidden, false, 'Keep the canvas layout box while its pixels are hidden.');
+  assert.equal(canvas.width, 768);
+  assert.equal(canvas.height, 576);
+  assert.equal(canvas.attributes.get('aria-hidden'), 'true');
+  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'true');
+  assert.equal(h.node('gallery-view-meta').attributes.get('role'), 'status');
+  assert.match(h.node('gallery-view-meta').textContent, /FPV Front \/ GOLD.*Loading/);
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-animate').disabled, true);
+  h.node('gallery-replay').onclick();
+  await h.node('gallery-animate').onclick();
+  assert.equal(h.selections.length, 0, 'Synthetic activation cannot bypass the loading gate.');
+  assert.equal(h.node('gallery-view-dialog').open, true);
+  assert.equal(fullPaints().length, 1, 'The previous drawing must not be advertised as ready.');
+  h.decodeJobs.at(-1)();
+  await loading;
+  assert.equal(fullPaints().at(-1).level.id, 'picture-1');
+  assert.equal(canvas.style.visibility, '');
+  assert.equal(canvas.attributes.get('aria-hidden'), 'false');
+  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-replay').disabled, false);
+  assert.equal(h.node('gallery-animate').disabled, false);
+  assert.deepEqual(h.library, previous);
+});
+
+test('an older decode completing during rapid navigation cannot reveal or enable the newer pending picture', async (t) => {
+  const h = await setup(t, 2);
+  h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
+  h.collection();
+  const first = h.cards()[0].onclick(),
+    finishFirst = h.decodeJobs.at(-1);
+  h.node('gallery-view-dialog').requestClose();
+  assert.equal(h.node('collection-dialog').open, true, 'Close remains available while loading.');
+  const second = h.cards()[1].onclick(),
+    finishSecond = h.decodeJobs.at(-1);
+  finishFirst();
+  await first;
+  assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
+  assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'true');
+  assert.equal(h.paints.filter((paint) => paint.width === 768).length, 0);
+  finishSecond();
+  await second;
+  assert.deepEqual(
+    h.paints.filter((paint) => paint.width === 768).map((paint) => paint.level.id),
+    ['picture-1'],
+  );
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-replay').disabled, false);
+});
+
+test('an older rejected decode cannot replace the selected ready picture with an error', async (t) => {
+  const h = await setup(t, 2);
+  h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
+  h.collection();
+  const first = h.cards()[0].onclick(),
+    failFirst = h.decodeJobs.at(-1).reject;
+  h.node('gallery-view-dialog').close();
+  const second = h.cards()[1].onclick();
+  h.decodeJobs.at(-1)();
+  await second;
+  failFirst(new Error('Stale first decode failed'));
+  await first;
+  assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-animate').disabled, false);
+  assert.equal(h.node('gallery-replay').disabled, false);
+});
+
+test('a failed selected decode keeps stale pixels hidden and can be closed and retried', async (t) => {
+  const h = await setup(t, 2);
+  h.collection();
+  await h.cards()[0].onclick();
+  h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
+  h.node('gallery-view-dialog').close();
+  const loading = h.cards()[1].onclick();
+  h.decodeJobs.at(-1).reject(new Error('Selected image decode failed'));
+  await loading;
+  assert.equal(h.node('gallery-canvas').style.visibility, 'hidden');
+  assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
+  assert.match(h.node('gallery-view-meta').textContent, /Picture could not load.*Selected image/);
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-animate').disabled, true);
+  h.node('gallery-view-dialog').requestClose();
+  assert.equal(h.document.activeElement, h.cards()[1]);
+  const retry = h.cards()[1].onclick();
+  h.decodeJobs.at(-1)();
+  await retry;
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-replay').disabled, false);
+});
+
+test('a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise', async (t) => {
+  const h = await setup(t, 1);
+  h.entry.classRecipes = CLASSES;
+  h.collection();
+  await h.cards()[0].onclick();
+  let attempts = 0;
+  t.mock.method(BoardPainter.prototype, 'setLook', async () => {
+    if (++attempts === 1) throw new Error('Celebration asset load failed');
+  });
+  t.mock.method(BoardPainter.prototype, 'setLevel', () => {});
+  t.mock.method(BoardPainter.prototype, 'startCelebration', () => {});
+  const paints = h.paints.length;
+  await h.node('gallery-animate').onclick();
+  assert.equal(h.paints.length, paints);
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-replay').disabled, false);
+  assert.equal(h.node('gallery-animate').disabled, false);
+  assert.match(h.node('gallery-view-meta').textContent, /Celebration could not start/);
+  assert.equal(h.frames.length, 0);
+  await h.node('gallery-animate').onclick();
+  assert.equal(attempts, 2);
+  assert.equal(h.frames.length, 1, 'A successful retry can start the celebration.');
+  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD');
+  h.node('gallery-replay').onclick();
+  assert.equal(h.selections[0][1].levelId, 'picture-0');
+});
+
+test('a failed illustration reload cannot start a procedural celebration over the ready authored picture', async (t) => {
+  const h = await setup(t, 1);
+  h.entry.visualOverrides.background = { dataUrl: 'data:image/png;base64,AA==', fit: 'contain' };
+  h.collection();
+  const loading = h.cards()[0].onclick();
+  h.decodeJobs.at(-1)();
+  await loading;
+  t.mock.method(BoardPainter.prototype, 'setLook', async function () {
+    // The renderer settles individual asset failures and leaves no background image.
+    this.images = {};
+  });
+  const paints = h.paints.length;
+  await h.node('gallery-animate').onclick();
+  assert.equal(h.paints.length, paints);
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-replay').disabled, false);
+  assert.match(h.node('gallery-view-meta').textContent, /Celebration could not start/);
 });
 
 test('busy library import still prevents cancel until its guarded task finishes', async (t) => {

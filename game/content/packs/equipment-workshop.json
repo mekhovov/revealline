@@ -299,10 +299,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              20,
-              50
-            ],
+            "timeMedals": [20, 50],
             "cutTimeLimitSeconds": 12,
             "maxTrailCells": 36,
             "timeLimitSeconds": 90
@@ -440,10 +437,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              12,
-              25
-            ],
+            "timeMedals": [12, 25],
             "cutTimeLimitSeconds": 6.5,
             "maxTrailCells": 50,
             "timeLimitSeconds": 65
@@ -528,10 +522,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              16,
-              25
-            ],
+            "timeMedals": [16, 25],
             "cutTimeLimitSeconds": 6,
             "maxTrailCells": 48,
             "timeLimitSeconds": 35
@@ -578,10 +569,7 @@
       "all": [
         {
           "type": "supply-pickups",
-          "padIds": [
-            "south-supply",
-            "west-supply"
-          ]
+          "padIds": ["south-supply", "west-supply"]
         },
         {
           "type": "suppressed-region-crossings",

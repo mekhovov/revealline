@@ -1,0 +1,1721 @@
+{
+  "sha256": "c32eabbe10be44c6f7c3897ddb3904d8468d0085dc681d956a1a45ce0de831f6",
+  "files": 343,
+  "entries": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 1204,
+      "sha256": "49987f39607ae0b3e09a75945a72b5e3ba8ce2dbf19110ba9e0f4a5cf0b079a2"
+    },
+    {
+      "path": ".prettierignore",
+      "bytes": 13,
+      "sha256": "b9103394dd2014e4b41474c435a325fa1d61d451cdb4be0a7933dbbaa8637736"
+    },
+    {
+      "path": ".prettierrc.json",
+      "bytes": 73,
+      "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/README.md",
+      "bytes": 6991,
+      "sha256": "3f9ed673b0d06db3a4a3c4daa0011a2ba1d4e266272e1254b8d275129ee40f0f"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-01.png",
+      "bytes": 3053722,
+      "sha256": "293631a199c14f13c3a175871b9f65adfcac51073053f0a73cb25294fbee4843"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-02.png",
+      "bytes": 2326976,
+      "sha256": "92f1849825f01af5809805a3bf75f80ba4105f53f53d483c1cf42ccf22e5c9f9"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/backgrounds/workshop-03.png",
+      "bytes": 2949329,
+      "sha256": "324157d049b2a122cd352fbc8fceac8c807bf44095c77c4870c640a2971f634d"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/pack-source.json",
+      "bytes": 18389,
+      "sha256": "932b0a68d74deda146939a4ce4c04550a0bfd3dcca6973676b67944ecbc7533a"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/previous/equipment-workshop-1.0.0.json",
+      "bytes": 18389,
+      "sha256": "91876d315417252a65a36b1a46f3f3e03737ec26ccc08224f52e9c376f76ea1a"
+    },
+    {
+      "path": "authoring/library/equipment-workshop/prompts.json",
+      "bytes": 8466,
+      "sha256": "357ee97869ac8219b95eaedca4f428566f448a2c099dcf512fa1feb86adc01f5"
+    },
+    {
+      "path": "authoring/library/homeward-skies/README.md",
+      "bytes": 1920,
+      "sha256": "b3b61ae07fe9d06ae71b0a9a73ee92f315e1d6f5ae466f02be28ebe6e9958a14"
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+      "bytes": 2949901,
+      "sha256": "27ac3051d7f9d99c83d26fac70baa3ee309409e296635ef48b7c4417f93d4004"
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+      "bytes": 2825406,
+      "sha256": "11a5066a45cfff861a90405764b276ab801a993848379d1c08c4233ee34aa24a"
+    },
+    {
+      "path": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+      "bytes": 2741772,
+      "sha256": "4b5da54f1d1023d24a40db5aab7ffe7d4bb1c531a4ed659663e6fad683921363"
+    },
+    {
+      "path": "authoring/library/homeward-skies/pack-source.json",
+      "bytes": 13846,
+      "sha256": "5ecb8b51b9bd5239dfa9a4108d7f9ab841235deb2a3442e4e40cc539a3a3e103"
+    },
+    {
+      "path": "authoring/library/homeward-skies/prompts.json",
+      "bytes": 5565,
+      "sha256": "ab567f9d9cfdf4d0c465739d65c1d246ece5617c2689fd37850b2ae44647c7df"
+    },
+    {
+      "path": "authoring/library/round-06-fpv/README.md",
+      "bytes": 1250,
+      "sha256": "2a136e0ed380b129b4a21223820590bcc1317620c1a9268bd5d0434cc10283e6"
+    },
+    {
+      "path": "authoring/library/round-06-fpv/files/derivatives/1ac512f99c16d314045aa2878fb0b2a72dee1c2e18ef1bab2c1f4e253c13f4e8.png",
+      "bytes": 1874341,
+      "sha256": "1ac512f99c16d314045aa2878fb0b2a72dee1c2e18ef1bab2c1f4e253c13f4e8"
+    },
+    {
+      "path": "authoring/library/round-06-fpv/files/originals/90229dd48897009e68be20c63588b4a175dd41da567d574a470ef9a13e283815.png",
+      "bytes": 2225451,
+      "sha256": "90229dd48897009e68be20c63588b4a175dd41da567d574a470ef9a13e283815"
+    },
+    {
+      "path": "authoring/library/round-06-fpv/files/originals/a6c6ba02c95aaf86d7536e00c7a6bae30fce65bac4e764653134da9d010b5a4b.png",
+      "bytes": 1769976,
+      "sha256": "a6c6ba02c95aaf86d7536e00c7a6bae30fce65bac4e764653134da9d010b5a4b"
+    },
+    {
+      "path": "authoring/library/round-06-fpv/media.json",
+      "bytes": 8119,
+      "sha256": "569a0b6d23773c04639d91f063b75ee985683a43515ebfe6deb1a561e3d67be7"
+    },
+    {
+      "path": "authoring/library/sentinel-relay/README.md",
+      "bytes": 4394,
+      "sha256": "0bf03aadecd645ab975561c97eac7fe2beb4ebe4a2c00cec6f2307e45f567669"
+    },
+    {
+      "path": "authoring/library/sentinel-relay/prompts.json",
+      "bytes": 10405,
+      "sha256": "f7ce393adef5b7ecbaff1ffd3b16e1d6fa5c796deaadcbebd3f72bd4766ec0b9"
+    },
+    {
+      "path": "authoring/library/sentinel-relay/proposedpack-source.json",
+      "bytes": 11416,
+      "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+    },
+    {
+      "path": "authoring/library/sentinel-relay/record-proofs.mjs",
+      "bytes": 8080,
+      "sha256": "3640f06b87340825f2c989ba53d8cde42bf6a0ca7ee4fe25c140177bdb3bf9cd"
+    },
+    {
+      "path": "authoring/motion-lab/README.md",
+      "bytes": 27312,
+      "sha256": "957ffe597811051fa9ee9aecf012ffadf035e3364efdbaad0ebf25694ccc3431"
+    },
+    {
+      "path": "authoring/motion-lab/ability-presets.json",
+      "bytes": 12087,
+      "sha256": "05e956de444eb4ff0ff9867f8438b5dcf18702868d42bf781a98ff7e92d7858a"
+    },
+    {
+      "path": "authoring/motion-lab/ability.mjs",
+      "bytes": 16262,
+      "sha256": "287f08add0aacfaf7f5ecb7bf686179f25716c489dbfaa3dc1a54e339af6daf5"
+    },
+    {
+      "path": "authoring/motion-lab/animation.mjs",
+      "bytes": 8068,
+      "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+    },
+    {
+      "path": "authoring/motion-lab/app.js",
+      "bytes": 49415,
+      "sha256": "d55038fb78493ee7ad41055efac73135c46fb7c43e2502617ea93cdc5a3edc88"
+    },
+    {
+      "path": "authoring/motion-lab/assets/delta-interceptor.png",
+      "bytes": 468947,
+      "sha256": "00357545f135aa3bc2ed98fa32baf46b3b0a3cd3c596054571746bae153eef9e"
+    },
+    {
+      "path": "authoring/motion-lab/assets/fixedwing-body.png",
+      "bytes": 373537,
+      "sha256": "bec5073f36946b3060aa42835ed8486e36c1c155e8b57c5c3058fa4630bf1663"
+    },
+    {
+      "path": "authoring/motion-lab/assets/fpv-body.png",
+      "bytes": 644588,
+      "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4"
+    },
+    {
+      "path": "authoring/motion-lab/assets/fpv-night.png",
+      "bytes": 581776,
+      "sha256": "e7df9c8f1ffb7a5ceb883e2130f0f245d208d24aae5d3527f39227ea4c589847"
+    },
+    {
+      "path": "authoring/motion-lab/assets/fpv-racer.png",
+      "bytes": 879038,
+      "sha256": "bc77fb42b3fd233a3d4391bc23e093d6d93d202d0482934f79091a310f8c01e6"
+    },
+    {
+      "path": "authoring/motion-lab/assets/heavy-lift.png",
+      "bytes": 795459,
+      "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec"
+    },
+    {
+      "path": "authoring/motion-lab/assets/navi-avatar.png",
+      "bytes": 384917,
+      "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69"
+    },
+    {
+      "path": "authoring/motion-lab/assets/retro-craft.png",
+      "bytes": 477364,
+      "sha256": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b"
+    },
+    {
+      "path": "authoring/motion-lab/assets/scout-quad.png",
+      "bytes": 641545,
+      "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99"
+    },
+    {
+      "path": "authoring/motion-lab/assets/ukrainian-bird.png",
+      "bytes": 290701,
+      "sha256": "fb43fb88833c5a161937097ac74e5588868c82f3b8c896c28139a77c9dffafad"
+    },
+    {
+      "path": "authoring/motion-lab/collection-presets.json",
+      "bytes": 16627,
+      "sha256": "c553f4a554a5931a155bb231a477dffa49dd3d501db1cfe17e143d767ab654e8"
+    },
+    {
+      "path": "authoring/motion-lab/collection.mjs",
+      "bytes": 16779,
+      "sha256": "90df2634277af9d728087c6b624a6b463d797a8ce5d2df681b60131430b524a4"
+    },
+    {
+      "path": "authoring/motion-lab/grid-motion.mjs",
+      "bytes": 2234,
+      "sha256": "939ae0f5126612cf94c39fee0d08f6403d2c97057d8438675991af41aac5baed"
+    },
+    {
+      "path": "authoring/motion-lab/index.html",
+      "bytes": 12386,
+      "sha256": "b73bbb9fb88d74b2846c6524c5e0f6d9ba708f3eec083bc6f835a8c121f15c17"
+    },
+    {
+      "path": "authoring/motion-lab/motion.mjs",
+      "bytes": 9933,
+      "sha256": "64eeff049089fbafe8064605ca0063b66f6bf903dec045674b79c559a7533390"
+    },
+    {
+      "path": "authoring/motion-lab/presets.json",
+      "bytes": 23077,
+      "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+    },
+    {
+      "path": "authoring/motion-lab/render-ability.mjs",
+      "bytes": 4494,
+      "sha256": "bbaf39d14701b3ac6534223c097fb9a3a0087860abbb024474635086fbd317ab"
+    },
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "bytes": 6489,
+      "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+    },
+    {
+      "path": "authoring/motion-lab/styles.css",
+      "bytes": 17303,
+      "sha256": "ed3259a976c7bf0b3049fac2fe1a23975c1bd0a2a717faf0b088426265390548"
+    },
+    {
+      "path": "authoring/motion-lab/test-ability.mjs",
+      "bytes": 13260,
+      "sha256": "8d4cb0a495296a6a1f984a0268c51f67838550e8a6b2f0db61fd78c323107efe"
+    },
+    {
+      "path": "authoring/motion-lab/test-animation.mjs",
+      "bytes": 6606,
+      "sha256": "645c635f33714d3894524a057e873b475310f54e46decf6d52fa25c97ba13227"
+    },
+    {
+      "path": "authoring/motion-lab/test-collection.mjs",
+      "bytes": 14124,
+      "sha256": "c0dabc20bcc99e546299acdac5275eba48e1cdc7475c653ae1d04888ae14f625"
+    },
+    {
+      "path": "authoring/motion-lab/test-grid-motion.mjs",
+      "bytes": 7908,
+      "sha256": "789be101fd605cd0bc7bce94aae82288c8853def33ce5c02ac265800726e3ca3"
+    },
+    {
+      "path": "authoring/motion-lab/test-motion.mjs",
+      "bytes": 6625,
+      "sha256": "9a5725c2a4abe811b346c37a97af7384a15c60b2243f6374a158a0532bc20c25"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "bytes": 1610,
+      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+    },
+    {
+      "path": "game/README.md",
+      "bytes": 25382,
+      "sha256": "b922fe544241a9bfeedc23c6fa57d6af485dc3d4c49c17da963831cc9ef64590"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 104942,
+      "sha256": "05e38a63ddfac16bbac8c8850d0a2bb4cd1ece8a5829ff9392dc18b4235b825c"
+    },
+    {
+      "path": "game/backup-storage.mjs",
+      "bytes": 11253,
+      "sha256": "f6ca4e617e6bcadb04b3cdbd4a25d34600f4e761dd852d40b2f328077aab5201"
+    },
+    {
+      "path": "game/backup.mjs",
+      "bytes": 5618,
+      "sha256": "47e43bf59ec137614fecf0c9a95f618c1e4e5ff78c6ad61e4e028c63521590dd"
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 266,
+      "sha256": "1b5de874a22717d620bd955f5af93f0f6c8781d7207eca6309e7eec0dec2bbe3"
+    },
+    {
+      "path": "game/challenges.mjs",
+      "bytes": 1508,
+      "sha256": "2731d620bcb4e6c5e6b65d9e09465e84c507e270d83f02f9b4af218932a98c27"
+    },
+    {
+      "path": "game/content.mjs",
+      "bytes": 22090,
+      "sha256": "e2a7950cad829491131794f8e3e5362d4e6b2cfe2fe2f9168fafaa0dd8affdec"
+    },
+    {
+      "path": "game/content/campaign.json",
+      "bytes": 18487,
+      "sha256": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718"
+    },
+    {
+      "path": "game/content/classes.json",
+      "bytes": 2227,
+      "sha256": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84"
+    },
+    {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024,
+      "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+    },
+    {
+      "path": "game/content/packs/fieldcraft.json",
+      "bytes": 15204,
+      "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+    },
+    {
+      "path": "game/content/packs/index.json",
+      "bytes": 523,
+      "sha256": "4970d0c8b1ad92b78794f51864f9ad843e2f033d53889cda1f9e786151013a6b"
+    },
+    {
+      "path": "game/content/packs/living-threads.json",
+      "bytes": 9156,
+      "sha256": "c3fe1e692afcd2dfda0cc3c042f0969d1c2e655d663cf0b7034291c29d16ac52"
+    },
+    {
+      "path": "game/content/packs/night-shift.json",
+      "bytes": 8848,
+      "sha256": "b82d453a9c7a3feab9b88d960b3bf5cbeca8d5254dec3f259490c54b272acef4"
+    },
+    {
+      "path": "game/content/packs/sentinel-relay.json",
+      "bytes": 11416,
+      "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1"
+    },
+    {
+      "path": "game/content/themes.json",
+      "bytes": 4266,
+      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+    },
+    {
+      "path": "game/continuation.mjs",
+      "bytes": 2831,
+      "sha256": "41f2e36132f69ce1b91bd3a7ee1536e4b2db5e5c957fd5d4309463a48b651b32"
+    },
+    {
+      "path": "game/controller-bindings.mjs",
+      "bytes": 11608,
+      "sha256": "a2d9f30cd614a7ff5a8a4f62a81d850b11920b525e98d286e77631427924a3a2"
+    },
+    {
+      "path": "game/controller-boost.mjs",
+      "bytes": 398,
+      "sha256": "c71973fcdf65d6809cea584054f01f445ce0fa1523c32a79986fec7f00c8d012"
+    },
+    {
+      "path": "game/controller-lab/index.html",
+      "bytes": 10545,
+      "sha256": "b17cb638dcf6812fd57f7afad56ee0d51321ea4a1272acb07fb9f9ae1eacc361"
+    },
+    {
+      "path": "game/controller-lab/lab.mjs",
+      "bytes": 13519,
+      "sha256": "0be211d34699142f8117efb0159b642760a8b597fc3d85e2baf2b443e9f8fb2a"
+    },
+    {
+      "path": "game/controller-lab/reading-practice.json",
+      "bytes": 8518,
+      "sha256": "f2b350c1eb556d6a0ba71e042180a2929ca35e83c40b8106cc3d147af79c98b1"
+    },
+    {
+      "path": "game/controller-lab/style.css",
+      "bytes": 4767,
+      "sha256": "e3e1bd36aedd7c126f2db67bf08eb7c991eef24942d355bb5bf712bcf7ef99c6"
+    },
+    {
+      "path": "game/core/README.md",
+      "bytes": 27018,
+      "sha256": "7a3da15802c16785d0b44424e40dd01e498bf1574a815d8d13b943acd9a9ef19"
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "bytes": 7301,
+      "sha256": "8b220e9645c1d6fd330450ee50398b99ce93334cbef56e0dbdef63cdcd957215"
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "bytes": 4104,
+      "sha256": "feb703f7bc54cdb7011b2ee6f62c67e490f689bacbef111b1a8e8de37258dcf4"
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "bytes": 8439,
+      "sha256": "b1189681308844c0847e44b222edf76285784e0fcf8a320634df6158245fb6f1"
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 2520,
+      "sha256": "ee2fd81b895b3481a1d8f3374cc1845ecf0245beb7524a5742d76080886c26d5"
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 16069,
+      "sha256": "e486116605ccccd1d4b14476ee02c9463e09f4e005d6da4b426bc8db4101aeb6"
+    },
+    {
+      "path": "game/core/level.mjs",
+      "bytes": 11603,
+      "sha256": "8965f3e57c90f0a243b80b82d3a9b602268b1a4f1b97c80542292326bd5917a5"
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "bytes": 9914,
+      "sha256": "2776a164ecd54a5c92dc3aec43a7f7333fe664c1b0a14966708af74c0a7b34f4"
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "bytes": 4614,
+      "sha256": "a18d6382cd93665cca9189fbebe71c0eee2aa89a835733af1c02b54de2a58816"
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 2656,
+      "sha256": "24c925dbedd62b33a18c64861022879a20e280a1f917cf668d3681a24410a7c7"
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "bytes": 11295,
+      "sha256": "050db9edd11a6b4e461055e43b697427ec419487f471180fb5ac0c3cf6cf5e6e"
+    },
+    {
+      "path": "game/couch/couch.css",
+      "bytes": 4950,
+      "sha256": "d22df259bdeab6ab9b0a839d69ca728354c9c6dfb419ae2c24d35f95d4d284cf"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 11572,
+      "sha256": "57bf1599fea0c2df74db8a0fa76d56bdfb24412e0df7970a390fd010f7d8e0bb"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 6237,
+      "sha256": "5ea2331bd135d7c3e456044ee3ea5edfa0150b57efa5540a1a6ced60447f7b4e"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4640,
+      "sha256": "e765ace4b34cc64d8948b73d896e5f8d4666ba5984385f6b2de81c1babefba0c"
+    },
+    {
+      "path": "game/first-flight.mjs",
+      "bytes": 24629,
+      "sha256": "2586278d20e5b4e37cbebf09082277ed79888e174a6d72eba8045c64788ed800"
+    },
+    {
+      "path": "game/generator.mjs",
+      "bytes": 2245,
+      "sha256": "1b6fbf899208d0c4ee21c66fad0a68447f00e8eda4d865e90bc53d6737ae97f2"
+    },
+    {
+      "path": "game/imports.mjs",
+      "bytes": 4923,
+      "sha256": "439c5495d62b22dd3df3e1b0abb946c18301000018afc8d84a5a8b8ca7c3f51f"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 31833,
+      "sha256": "d80353b3636d9479518e7adbaa7895f1c221770725493077abee0aa6ed21772b"
+    },
+    {
+      "path": "game/key-bindings.mjs",
+      "bytes": 12560,
+      "sha256": "bbd86d04ea7e45d9e140f1712e1e940956375b988841978537cd7a978da0ebe0"
+    },
+    {
+      "path": "game/library.mjs",
+      "bytes": 29772,
+      "sha256": "582f6f23ab33afb9bb801c12894ec75031379208a593d5f1983e2bbe7762ca43"
+    },
+    {
+      "path": "game/mastery-awards.mjs",
+      "bytes": 2816,
+      "sha256": "811ad0eea30187532b1d0114a6350e338dccd10ee0d56b3477b86ca1c617fc03"
+    },
+    {
+      "path": "game/mastery-catalog.mjs",
+      "bytes": 13020,
+      "sha256": "c432fc11ada220fc792b9917e2404c656940959cd94e690f69d1bcdf1685f70f"
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    {
+      "path": "game/mastery-records.mjs",
+      "bytes": 10009,
+      "sha256": "71edb762a8097fec95428444bbcb269ecfb7a02abc7ea5af7b537639cf3b330f"
+    },
+    {
+      "path": "game/mastery-verification.mjs",
+      "bytes": 4572,
+      "sha256": "a1d03f1e877762f631e7f387ecfe328704cce60e31b554e70b45b3fb0ee65f89"
+    },
+    {
+      "path": "game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "path": "game/mission-brief.mjs",
+      "bytes": 2963,
+      "sha256": "0f07b1dfdad1ea1446842f9719775cebbd9eb24d9e1400e36be784ab02a486f0"
+    },
+    {
+      "path": "game/multiplayer.mjs",
+      "bytes": 4183,
+      "sha256": "1fd6a308969df4825743c83e06551ab4b5feadaf4384a3d8d1127f21b4faaf39"
+    },
+    {
+      "path": "game/offline.mjs",
+      "bytes": 6894,
+      "sha256": "68c32db2e5fbb1f99007b79a4cdbb2b4d01bce4348b581b4e397e4fec02181ff"
+    },
+    {
+      "path": "game/offline/service-worker.template.js",
+      "bytes": 5579,
+      "sha256": "48e0123a1f1686d1762a717e5ffcd67967d78a5341ba1330c47707b82dfa4af7"
+    },
+    {
+      "path": "game/packs.mjs",
+      "bytes": 20018,
+      "sha256": "083626931fc98fec76de88a737740e5d325d281881aca69657db64a53e152661"
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "path": "game/playground/control-geometry.mjs",
+      "bytes": 8171,
+      "sha256": "c2f116cb8e3725896ab70cfaad56415c573e888f2530bbbb00d3d3a8a355d1bb"
+    },
+    {
+      "path": "game/playground/index.html",
+      "bytes": 24345,
+      "sha256": "d71338896742b9513de293b7913ae3e2c07199195aa28275a4553697cde31005"
+    },
+    {
+      "path": "game/playground/model.mjs",
+      "bytes": 15261,
+      "sha256": "2210440deb0f0c9747a36393cd82dd07e269b1568fe14958c8d516fc7bb5b3ae"
+    },
+    {
+      "path": "game/playground/playground.css",
+      "bytes": 4933,
+      "sha256": "b964082e9c7be250f48a5a6f6335faf506531920b73eb397999e80848ee7c945"
+    },
+    {
+      "path": "game/playground/playground.mjs",
+      "bytes": 38738,
+      "sha256": "5f8da922d343d4a65e6d29ff370b3b9ec6181918ed2a8dc1658c6c9787d95b82"
+    },
+    {
+      "path": "game/playground/viewport.mjs",
+      "bytes": 709,
+      "sha256": "1f924db83e9de28cd7a8ebc7aa3f2e1c57fcf3e0755dedf31c18b8ca2dfa3986"
+    },
+    {
+      "path": "game/profile-transfer.mjs",
+      "bytes": 12130,
+      "sha256": "6e79c4fb5afbb219277043b01f3d0593d764b80e5cddbaef42e5f55828076f81"
+    },
+    {
+      "path": "game/profile-writer.mjs",
+      "bytes": 2372,
+      "sha256": "54c871a6bb7bcb6acc15c9d120f66693cf69cfe9363ff82ebbee85aa7fcb78d0"
+    },
+    {
+      "path": "game/progress.mjs",
+      "bytes": 14126,
+      "sha256": "f107a7dd219c2a06ee3af6807fe86cfce46a68798669dd1dc175ab6bd25e502a"
+    },
+    {
+      "path": "game/replay-player.mjs",
+      "bytes": 6210,
+      "sha256": "8c2e1e5636ae0fb091c5d02cddc36212ae73899bc4391444ab21e69e7c4fd757"
+    },
+    {
+      "path": "game/replay-theater/app.mjs",
+      "bytes": 12934,
+      "sha256": "7b110708c2c1fda1c4a0f69079cd6e7190cc1f863092c7cdd940e79d08ff3edf"
+    },
+    {
+      "path": "game/replay-theater/data/fieldcraft-01.replay.json",
+      "bytes": 7644,
+      "sha256": "61330819bae8b378851efd23a239f6685952d76af54fa6172e55d741702db853"
+    },
+    {
+      "path": "game/replay-theater/data/fieldcraft-02.replay.json",
+      "bytes": 9818,
+      "sha256": "093a520328f5cab12f792b888b0316333db04aad9cf868291a5be130d706f8ee"
+    },
+    {
+      "path": "game/replay-theater/data/fieldcraft-03.replay.json",
+      "bytes": 7586,
+      "sha256": "1ca12465d5235c6c42312852f45c68bb16d6daa8ab7d06af9fe4216db06e45e8"
+    },
+    {
+      "path": "game/replay-theater/data/fieldcraft-04.replay.json",
+      "bytes": 7564,
+      "sha256": "6f61b3229c6d1716d8b27fce35bfe649ea27bc85a9ded1b4b77d5c051aa0efa8"
+    },
+    {
+      "path": "game/replay-theater/index.html",
+      "bytes": 6271,
+      "sha256": "5febaa9ce428bf216f4dd1fa9fdbe1481371aebf8d2f714b0a56270eaf876f5a"
+    },
+    {
+      "path": "game/replay-theater/theater.css",
+      "bytes": 6851,
+      "sha256": "04b21a0199ea4a16ca09db6fc639fb6146ffcbef13cea2dc34c37db3a02cff75"
+    },
+    {
+      "path": "game/replay.mjs",
+      "bytes": 23200,
+      "sha256": "077f11af0020008b24e1f26d34973dc19aa966efe24c85abd2aa1bdc95bb22ac"
+    },
+    {
+      "path": "game/replays/campaign-routes.json",
+      "bytes": 59180,
+      "sha256": "335fcd9379f6202e71a36284ac10c14f07edeb375ccf96e310d8546776bb1d73"
+    },
+    {
+      "path": "game/replays/expansion-routes.json",
+      "bytes": 81574,
+      "sha256": "22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8"
+    },
+    {
+      "path": "game/replays/fieldcraft-routes.json",
+      "bytes": 388881,
+      "sha256": "53255e41c150b293a67a9771628f81f8b9dd6f42e23be201f3959ebbaa01c43e"
+    },
+    {
+      "path": "game/replays/homeward-routes.json",
+      "bytes": 318515,
+      "sha256": "63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a"
+    },
+    {
+      "path": "game/replays/sentinel-routes.json",
+      "bytes": 256854,
+      "sha256": "b704c71879c29810f42dca6e94857c6728d2439c08d1807edc008114bdb85a70"
+    },
+    {
+      "path": "game/sessions.mjs",
+      "bytes": 6952,
+      "sha256": "64720b5d46c3fc825be3e1cec4f4ae65bf0a6244e99795765da5fbecfb38f93e"
+    },
+    {
+      "path": "game/storage.mjs",
+      "bytes": 1653,
+      "sha256": "c24d54887f80e41820efd471e50130a4c507fe071a16321e81f019135bef2fb7"
+    },
+    {
+      "path": "game/style.css",
+      "bytes": 42715,
+      "sha256": "ff76434cf62769246d1808b0b77645f54d5a67de6b12e3a9b9c7fefcb438cfb5"
+    },
+    {
+      "path": "game/test/appearance-milestones.test.mjs",
+      "bytes": 13356,
+      "sha256": "21e67746ea56d979176fcf5b12c6132f958ee29c5eba459b79fdaec681045da1"
+    },
+    {
+      "path": "game/test/audio.test.mjs",
+      "bytes": 12848,
+      "sha256": "a3301432f1fe0b193026ad5b3132e6e8b8c59d66269f576a0f42650b8332aeee"
+    },
+    {
+      "path": "game/test/backup-storage.test.mjs",
+      "bytes": 17038,
+      "sha256": "9262b05ebab4d8d9e19d4a9f2d406bb367f3018a457862deda59924363d2e54e"
+    },
+    {
+      "path": "game/test/backup.test.mjs",
+      "bytes": 11732,
+      "sha256": "bacd388a95a29b3f20cc03d0c0432970f9a0163f349782a96e8bbfcdf224e099"
+    },
+    {
+      "path": "game/test/campaign-playthrough.test.mjs",
+      "bytes": 1697,
+      "sha256": "8927ea781b5c47dfd95573f58dbf8e72111c4f18a51f564ae2282371c02c88fc"
+    },
+    {
+      "path": "game/test/challenges.test.mjs",
+      "bytes": 1165,
+      "sha256": "4bf4a6f6f7f0e70ec1cb533f9bfaf832d04530a26fea7491ebf8cc1fed896b72"
+    },
+    {
+      "path": "game/test/chapter-reward-integration.test.mjs",
+      "bytes": 17113,
+      "sha256": "6206a7af16e36eb01889f7aa5b23902e9eba6fb602f5c93744c5e9b56d26a53c"
+    },
+    {
+      "path": "game/test/compatibility-v0100.test.mjs",
+      "bytes": 4140,
+      "sha256": "9ec2638110ef850f4dd52f82f23b75138eacaec918ee5be8e14ab2f60d9bf4df"
+    },
+    {
+      "path": "game/test/compatibility-v060.test.mjs",
+      "bytes": 8745,
+      "sha256": "cec22f55271294c5fac5447e055a5c6e02ed8fb55395955b0401140ca6603b39"
+    },
+    {
+      "path": "game/test/content.test.mjs",
+      "bytes": 15721,
+      "sha256": "4a3373493c07bbb6634efb6611f9c36cd09ecc173386db10a1aff34c6a4ae018"
+    },
+    {
+      "path": "game/test/continuation.test.mjs",
+      "bytes": 6954,
+      "sha256": "b46f612ffee34a1b5af245025d5dc38643dd213847cf574d96e25d0f5b39bc79"
+    },
+    {
+      "path": "game/test/control-geometry.test.mjs",
+      "bytes": 8510,
+      "sha256": "d0a96c5f9c626228eec98d84ca568e4c03bd6c374eed19e9f0519730f7287c04"
+    },
+    {
+      "path": "game/test/controller-bindings.test.mjs",
+      "bytes": 19470,
+      "sha256": "1520158d76fcd31d680a7c7c87571e90d62c79fcfda21488118094f11e91d61b"
+    },
+    {
+      "path": "game/test/controller-boost-library.test.mjs",
+      "bytes": 20533,
+      "sha256": "ee3fffe6df11d377a78416049b11228d35ad1084b3a0ee71cfb3d06815130851"
+    },
+    {
+      "path": "game/test/controller-boost-recovery.test.mjs",
+      "bytes": 14610,
+      "sha256": "c7c3fe10e205df0d33aa909bf2309089e329436115443cc9054699259bb3f3b4"
+    },
+    {
+      "path": "game/test/controller-boost-settings.test.mjs",
+      "bytes": 4621,
+      "sha256": "4826397672ee45350423c96d4541692fe00578c0b48ea73bfaeec3fa10688513"
+    },
+    {
+      "path": "game/test/controller-boost.test.mjs",
+      "bytes": 13319,
+      "sha256": "f42202ade52680cab67fd719252f28a4007a04ae0da00633225f81a5d1e3e795"
+    },
+    {
+      "path": "game/test/controller-lab.test.mjs",
+      "bytes": 24571,
+      "sha256": "4292c4912134551e6b4bfd3b615051d677ad4aeee1a484032c71724978ea1fa6"
+    },
+    {
+      "path": "game/test/controller-navigation.test.mjs",
+      "bytes": 54544,
+      "sha256": "cf104327dc9ef8d14df1936004d1716be22d1caab90e5ef13efe2ebc8792f8a2"
+    },
+    {
+      "path": "game/test/controller-preference-library.test.mjs",
+      "bytes": 16950,
+      "sha256": "0982e3a97d56dc8f434d3c5c14925740c7700203abc35daf8702dd8fbec20f18"
+    },
+    {
+      "path": "game/test/controller-preview.test.mjs",
+      "bytes": 18212,
+      "sha256": "da9bd04b1797fe6481ebe5e79a247c064d36ef4bb15f4b83e1e034f860254f88"
+    },
+    {
+      "path": "game/test/controller-reading.test.mjs",
+      "bytes": 10396,
+      "sha256": "7881ac0035b8eb309b793e15419c17139203aecf66555d3a394d9199944c1299"
+    },
+    {
+      "path": "game/test/controller-router-bindings.test.mjs",
+      "bytes": 16106,
+      "sha256": "3c27da51837dba585757f89aa7d0750e8e5d305f9df2e97f0530c53d0c6b3c2d"
+    },
+    {
+      "path": "game/test/controller-router.test.mjs",
+      "bytes": 12277,
+      "sha256": "a43c3364d1232daf9999d631c511b87c147c7cb33938c3938afa3230bef51b6c"
+    },
+    {
+      "path": "game/test/controller-settings.test.mjs",
+      "bytes": 14847,
+      "sha256": "73e9a1cb2f4a2f9106beacec2bcbad30998b5da65b4500bf1c44eac09ee4696c"
+    },
+    {
+      "path": "game/test/core-abilities.test.mjs",
+      "bytes": 6789,
+      "sha256": "dd53944807d462fd83b51a0906f0c6af27cc8e2964a920102e0943ebea8db8b6"
+    },
+    {
+      "path": "game/test/core-capture.test.mjs",
+      "bytes": 10599,
+      "sha256": "74c97abf558f7f43e4f9088283d2b323274b9f5d02b3970533d2f1131a3f4e7a"
+    },
+    {
+      "path": "game/test/core-movement.test.mjs",
+      "bytes": 7165,
+      "sha256": "bc49300042f76d5a1bf8d87b821fcf69e3b2fa222ef2bd97cff62550722f0ebd"
+    },
+    {
+      "path": "game/test/core-roster-viability.test.mjs",
+      "bytes": 6255,
+      "sha256": "998cada0fd5c82c8c8610f8943aef8b1078acde608c6433d4aab7b238aa0471a"
+    },
+    {
+      "path": "game/test/core-systems.test.mjs",
+      "bytes": 11692,
+      "sha256": "4517be9f933c4416db3502722f3d0557752ea82e0d69592020868d97f601983c"
+    },
+    {
+      "path": "game/test/couch-encounter.test.mjs",
+      "bytes": 8139,
+      "sha256": "c28f75a5393f99cdf167f8b3d1af287e17c6b732995b1a52289a7bb377d1b64f"
+    },
+    {
+      "path": "game/test/couch-input.test.mjs",
+      "bytes": 17306,
+      "sha256": "a5daf52e5648a770bfb03807e9356df521fdfeea43957788c4c2313cea798bc9"
+    },
+    {
+      "path": "game/test/encounter-authoring.test.mjs",
+      "bytes": 7074,
+      "sha256": "859379d08920d116a97815dfa02af89ec5ffe352fce661d41d4fea3f442c5c03"
+    },
+    {
+      "path": "game/test/encounter-compatibility.test.mjs",
+      "bytes": 5110,
+      "sha256": "319ecde5fb9e3efeb3f87c802aa3613732c588bb2d3f6cd969a4130c7701e262"
+    },
+    {
+      "path": "game/test/encounter-consumers.test.mjs",
+      "bytes": 13058,
+      "sha256": "9828ca98e1c88c123a3f6d8fc4f6bcd02377852c60f96d52940c6ef860134d82"
+    },
+    {
+      "path": "game/test/encounter-core.test.mjs",
+      "bytes": 28874,
+      "sha256": "f90e36a2b2110487d69caa046d20de4ac37bbdaf2ba56bcf3c65704bb6208233"
+    },
+    {
+      "path": "game/test/encounter-packs-backup.test.mjs",
+      "bytes": 11759,
+      "sha256": "1b99430c7efb0561df453c675db54befed639a875dfb502dcc9978d007ce5ba2"
+    },
+    {
+      "path": "game/test/encounter-view.test.mjs",
+      "bytes": 3805,
+      "sha256": "5a04093fe8f46009e297ab525beb67b3b95aae476e2327054bbf790bad7da882"
+    },
+    {
+      "path": "game/test/equipment-workshop.test.mjs",
+      "bytes": 7044,
+      "sha256": "b7e87bbb2fcbbd5aab5705ca44771dec15b2a0cacd57ffc64573787f92346584"
+    },
+    {
+      "path": "game/test/expansion-playthrough.test.mjs",
+      "bytes": 2140,
+      "sha256": "cf445e1b48708da94d837c26f67ad2f810405783a535275e409878c541a82bcc"
+    },
+    {
+      "path": "game/test/first-flight-entry.test.mjs",
+      "bytes": 9194,
+      "sha256": "796eeab6416b279cb6d4862682d636e03400bbf462abe59e2a3bd9aabfbb4aad"
+    },
+    {
+      "path": "game/test/first-flight-helpers.mjs",
+      "bytes": 4338,
+      "sha256": "1d4692acb55afb2c9cb902fa6c16f3a317cf4578a24a620a95c7d43fadd9d0c7"
+    },
+    {
+      "path": "game/test/first-flight-launch.test.mjs",
+      "bytes": 1994,
+      "sha256": "6e231bd086cc8987007f56e28c216babf39fcc3e0e46b730da54f7530231562f"
+    },
+    {
+      "path": "game/test/first-flight-preview.test.mjs",
+      "bytes": 2204,
+      "sha256": "dd65f82a5dba201ddef1dee48f82d3b2d655b442f3ef0e70d40a732deedc01ca"
+    },
+    {
+      "path": "game/test/first-flight-routes.test.mjs",
+      "bytes": 7176,
+      "sha256": "6a59977a2bb22d21f50969895c2174a547013b1089dde21a41ba5f3ba19d26f5"
+    },
+    {
+      "path": "game/test/first-flight-view.test.mjs",
+      "bytes": 7853,
+      "sha256": "1efe494fca25c3ba4bcdbe09e3ab9453fd09e1e061d9cde496b04852a5d8ff5d"
+    },
+    {
+      "path": "game/test/first-flight.test.mjs",
+      "bytes": 11296,
+      "sha256": "57d61c8168e738746df7060d97edd4138aa1f6643904b66b85a772d08a5316c3"
+    },
+    {
+      "path": "game/test/fixtures/compatibility-v0100.json",
+      "bytes": 58779,
+      "sha256": "b7b2d916ca95ae47e2df274502d5379cf9d532e648d8f095a2a535b9097ac94f"
+    },
+    {
+      "path": "game/test/fixtures/compatibility-v060.json",
+      "bytes": 121441,
+      "sha256": "46dd19ae2a1946cec105fd5273cc69baa4e0adcca693e503b2b7eb62490272c3"
+    },
+    {
+      "path": "game/test/fixtures/controller-boost-profiles.json",
+      "bytes": 96013,
+      "sha256": "c9595075a37f3bbcdb9c9a92aa35599ec8fb19c4d093228b69b1e2aa44f6e81e"
+    },
+    {
+      "path": "game/test/fixtures/first-flight-routes.json",
+      "bytes": 135035,
+      "sha256": "65d9c11194f62f9c78be0d2a7fdfadbefb5b0643a275f345a0e2618c3e8053e2"
+    },
+    {
+      "path": "game/test/fixtures/mastery-v070.json",
+      "bytes": 144263,
+      "sha256": "6a27a598867e00e86b06b11a3b69ba99b7b4c942330a7fed6fb897e0621a62ba"
+    },
+    {
+      "path": "game/test/fixtures/retry-scenarios.mjs",
+      "bytes": 2869,
+      "sha256": "1622cc5d08a060c206ca4397d8f35605ddfcbff844ddeaea33ed823f568dcae9"
+    },
+    {
+      "path": "game/test/gallery-focus.test.mjs",
+      "bytes": 19173,
+      "sha256": "08525d1a1e17b3588b0c0ce26cc9c4f5f2c34eccb66ace26bb362ebee372c6eb"
+    },
+    {
+      "path": "game/test/gallery-reduced-effects.test.mjs",
+      "bytes": 6852,
+      "sha256": "9189031f63f9681560e952a86ea9f687349f9335b75123a731b6810c35518cad"
+    },
+    {
+      "path": "game/test/homeward-playthrough.test.mjs",
+      "bytes": 4254,
+      "sha256": "499f4f6c369c3c93923e64a5b1c175a5fef2cfa84805b10f3b61f1a88c15b54e"
+    },
+    {
+      "path": "game/test/imports.test.mjs",
+      "bytes": 11662,
+      "sha256": "30e620046a3cb9f44b1e5a9980edf60b3428a771334eb09a0390807e4f003f08"
+    },
+    {
+      "path": "game/test/key-bindings.test.mjs",
+      "bytes": 14636,
+      "sha256": "dd7f407c148eaa361350c0dd1a700bfa125d65cd8b0f94942a1c354663bf2f09"
+    },
+    {
+      "path": "game/test/key-settings.test.mjs",
+      "bytes": 11518,
+      "sha256": "8a1af9b16934d6c202e070301de8b30d3b31ad89a178b65d7cfdc40a513af5cd"
+    },
+    {
+      "path": "game/test/library.test.mjs",
+      "bytes": 27720,
+      "sha256": "ca762e8fa68fcdd727e2a6f0bf9a378b1d02aaa786e76c665c18015c2613f4bd"
+    },
+    {
+      "path": "game/test/mastery-catalog.test.mjs",
+      "bytes": 16636,
+      "sha256": "ece2e487344a137c5ca822a4128176599939f3e4a16d593a66efc38a87f6d416"
+    },
+    {
+      "path": "game/test/mastery-equipment-replay.test.mjs",
+      "bytes": 13205,
+      "sha256": "76a3329d3b74320a774aa6679201c86fbe2100641e4dbc9d7728c71f6a3ac121"
+    },
+    {
+      "path": "game/test/mastery-equipment.test.mjs",
+      "bytes": 29637,
+      "sha256": "10e759718dbe0622126b2776771230aefaf6dcdfae3119fde363571c7ae1aa48"
+    },
+    {
+      "path": "game/test/mastery-library.test.mjs",
+      "bytes": 18157,
+      "sha256": "9c92461eb958dd77c62aea5159140b8654cd70b7f5d683d1348c6343decba1da"
+    },
+    {
+      "path": "game/test/mastery-pack-view.test.mjs",
+      "bytes": 4092,
+      "sha256": "17d69d5355b915055dd67af5d165d13660041b8cf01a6c36d236330dd9138e6f"
+    },
+    {
+      "path": "game/test/mastery-records.test.mjs",
+      "bytes": 15276,
+      "sha256": "4d4ba75a9f60f0a72ed327a8a4b9759c72decc7962742ec1b06b40c7bc8a9106"
+    },
+    {
+      "path": "game/test/mastery-replay.test.mjs",
+      "bytes": 14713,
+      "sha256": "f3786c2b6b2a111253d9891ac9543d638df5dbbe773728ed83d1a6e31bacc795"
+    },
+    {
+      "path": "game/test/mastery-v070-compatibility.test.mjs",
+      "bytes": 7400,
+      "sha256": "044c01c891ffe846ee70e894343c14b23f96899a5a68403f4d98b0ef7fc7e2b7"
+    },
+    {
+      "path": "game/test/mastery-view.test.mjs",
+      "bytes": 12600,
+      "sha256": "08c3de7df3837dc250b99e46988c904a7e3169b84e7adc9fde2cafe4dac72626"
+    },
+    {
+      "path": "game/test/mastery.test.mjs",
+      "bytes": 21052,
+      "sha256": "c9d245a7200e309fee4cc407d114d6d1fff022dbb7b026a12b217ad14953cf93"
+    },
+    {
+      "path": "game/test/mission-brief.test.mjs",
+      "bytes": 5158,
+      "sha256": "3ec059cc5a49280f24a323cad0994c2fbf3d4916ce9207dbca6867fdf221a6e0"
+    },
+    {
+      "path": "game/test/multiplayer-encounter.test.mjs",
+      "bytes": 7837,
+      "sha256": "414120bb4bf22446872a6735f3105c80f0cde98f115d3f3397d4d59ad0112608"
+    },
+    {
+      "path": "game/test/multiplayer.test.mjs",
+      "bytes": 3413,
+      "sha256": "7c1fce5ca52302cbc7b78fecacaaf0f47342c2499f4573bf2a58cf4256707d21"
+    },
+    {
+      "path": "game/test/offline.test.mjs",
+      "bytes": 11041,
+      "sha256": "709df2a2d053b367b476dba97fa780222884dbf0388002fd1a69711c2fa6ff8b"
+    },
+    {
+      "path": "game/test/pack-mastery-integration.test.mjs",
+      "bytes": 22266,
+      "sha256": "20231c964ab8acbb1cbfc4d987eb4fe89c563cc11df19ebb9d632e7e86cc3846"
+    },
+    {
+      "path": "game/test/pack-mastery.test.mjs",
+      "bytes": 21331,
+      "sha256": "d40be0da622d3782db281d5ccd7b6892035578c646daf4ab7109391d0c70cc4c"
+    },
+    {
+      "path": "game/test/packs.test.mjs",
+      "bytes": 9168,
+      "sha256": "67d50e73839995232f1cd657fab5596294ab78b4c451ccc31453f732219d3e85"
+    },
+    {
+      "path": "game/test/platform.test.mjs",
+      "bytes": 4917,
+      "sha256": "7ee9ea8f97294938363d5403f2e99a3a0c42a5d2b3af8240f9a991ebd9eae7d4"
+    },
+    {
+      "path": "game/test/playground-model.test.mjs",
+      "bytes": 9537,
+      "sha256": "8ece207445ac99b8527a28e864ad42c18520cc6431c39c8231bc267adda6451d"
+    },
+    {
+      "path": "game/test/playground-viewport.test.mjs",
+      "bytes": 1770,
+      "sha256": "32301dc61791189b13df4957c5e8548eab141ac63e96786a379cb7795c13722a"
+    },
+    {
+      "path": "game/test/practice-navigation.test.mjs",
+      "bytes": 6681,
+      "sha256": "e020dd85d2fdaa6b5788e4614e1873e7066b1374db4c4e57fea1d6295aeda034"
+    },
+    {
+      "path": "game/test/profile-transfer.test.mjs",
+      "bytes": 24452,
+      "sha256": "7cac64c3a3a35dbe085441a2dcdbc1ce205a7d69ecae44632101614cf8ab046e"
+    },
+    {
+      "path": "game/test/profile-writer.test.mjs",
+      "bytes": 3415,
+      "sha256": "b939a6e79d1f89381f27ca08468b3c5609348a1938ebc7f2ca96aa108d76af64"
+    },
+    {
+      "path": "game/test/progress.test.mjs",
+      "bytes": 15126,
+      "sha256": "63ecff625e28c1cbdf6b3ebfd7f49e0bedf3aa9137f061bb3c2a27d0bef24f40"
+    },
+    {
+      "path": "game/test/replay-player.test.mjs",
+      "bytes": 8924,
+      "sha256": "94e382ea9ff22ba2f3afd1bfbb196a7b85a2f3475321b249c6b3482fcd5eba69"
+    },
+    {
+      "path": "game/test/replay.test.mjs",
+      "bytes": 12174,
+      "sha256": "c681b72a398b12fe1c59b3e072770940ed2da6680c42a3139adc004ad9aaa662"
+    },
+    {
+      "path": "game/test/retry-integration.test.mjs",
+      "bytes": 13004,
+      "sha256": "7155d94b7477e0f191eabd149e8cd32e2bcc08f3a1bc205d082d537f5fb99bfe"
+    },
+    {
+      "path": "game/test/retry-view.test.mjs",
+      "bytes": 4922,
+      "sha256": "334ce4b3d1a0e55e3d82bf0e54e5b8a90b683908abf63012a33c38e30ab8f3b5"
+    },
+    {
+      "path": "game/test/rewards.test.mjs",
+      "bytes": 8437,
+      "sha256": "a96318d206e2c03d3dfb5381ecc0f62c63412ce2bcc3be57f893c9860bbe5fe4"
+    },
+    {
+      "path": "game/test/scenario-mastery.test.mjs",
+      "bytes": 8831,
+      "sha256": "3672bb70234fee1cf1fe950457fa3a2b45961bb793a3cbfba2229458cad3b397"
+    },
+    {
+      "path": "game/test/sentinel-playthrough.test.mjs",
+      "bytes": 12264,
+      "sha256": "27a1ab5a5c3c9f4a624a6d2c80b5d98017ca8dc843f2be73bc2b92111ede71b1"
+    },
+    {
+      "path": "game/test/sessions-equipment-mastery.test.mjs",
+      "bytes": 9225,
+      "sha256": "02807ba4a204864df441a42df1915528923f16c30770025a5c28d10bc7535f2c"
+    },
+    {
+      "path": "game/test/sessions-mastery.test.mjs",
+      "bytes": 10260,
+      "sha256": "2d8d1665eac262dad984e35fb5a06881761d809e8912bf4989ac36c8dcf7540c"
+    },
+    {
+      "path": "game/test/sessions.test.mjs",
+      "bytes": 7469,
+      "sha256": "c7dd76c3c8d1b8b0d39d8f4cba807b801e097830b4ee8420cdaaf45120ed7e49"
+    },
+    {
+      "path": "game/test/specialty-playthrough.test.mjs",
+      "bytes": 4060,
+      "sha256": "4393a8b4f734300ea5e302396b8efa91f14857c675b15638328d3ea7b12d2e47"
+    },
+    {
+      "path": "game/test/ui-input.test.mjs",
+      "bytes": 36475,
+      "sha256": "9016f00f613491d1bdfe68696b4d9d7bb9c25d1fa9e55ab3086b1641dfa50a43"
+    },
+    {
+      "path": "game/test/workshop-art-integration.test.mjs",
+      "bytes": 19484,
+      "sha256": "e81b8ae1f0b40de5e0b14045504d44627b48d71b28458b2f2bd2634e65ab75b8"
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 16048,
+      "sha256": "1518cb72317e6ef985968c4777439a5467584be86444c797d092cc6dfc780c32"
+    },
+    {
+      "path": "game/ui/celebration.mjs",
+      "bytes": 7855,
+      "sha256": "d242a42e9aa595adc00a6b85b4f2e3ead6f3a5a94e8ddc230b131b1c97827232"
+    },
+    {
+      "path": "game/ui/controller-boost-host.mjs",
+      "bytes": 888,
+      "sha256": "cc41000cce1abaf68ca19fcaf053f3803765da43094a866bcde7b2f2c2a9cddf"
+    },
+    {
+      "path": "game/ui/controller-boost-settings.mjs",
+      "bytes": 1722,
+      "sha256": "2f1b3fc0f900a275d2949b25a11b9396ca39a9586d56c59913b0713dedd51c66"
+    },
+    {
+      "path": "game/ui/controller-navigation.mjs",
+      "bytes": 16870,
+      "sha256": "6aa2b0b93eb73d803ba2b2e57b8c4277df44e35b9a1ac27ba908dc56ec741305"
+    },
+    {
+      "path": "game/ui/controller-preview.mjs",
+      "bytes": 7643,
+      "sha256": "276fd2d8bd6b7bb910afde37c282e8405efd0e80d411a96afdc54a6e1b571263"
+    },
+    {
+      "path": "game/ui/controller-reading.mjs",
+      "bytes": 3791,
+      "sha256": "84680d4e16c4086d39d413e26be9718c91155055c7f1cb6f6b8bcf86543b7ec6"
+    },
+    {
+      "path": "game/ui/controller-router.mjs",
+      "bytes": 14109,
+      "sha256": "43f4ddd13a240605f5a230fe1916b81b58531e140bc1723e4832a6ff58c9060a"
+    },
+    {
+      "path": "game/ui/controller-settings.css",
+      "bytes": 2398,
+      "sha256": "cfdc4360b453dee456605e25cb42d2b570961d31b867f34600d7c6eba427c4cf"
+    },
+    {
+      "path": "game/ui/controller-settings.mjs",
+      "bytes": 14687,
+      "sha256": "d75da103ed80323539ce7d5ad5f882520d2fe37bce82089d5d731c98babdffda"
+    },
+    {
+      "path": "game/ui/encounter-view.mjs",
+      "bytes": 5410,
+      "sha256": "1b0951214d4a30dd3332e4ebe2b0b05c78c945419107cc5f8a47bb8dc52f876d"
+    },
+    {
+      "path": "game/ui/first-flight-entry.mjs",
+      "bytes": 3674,
+      "sha256": "f4e98a0697da7aa8dd2b1df0ce87b836235563aa7488aa6231ef3fced94911b1"
+    },
+    {
+      "path": "game/ui/first-flight-launch.mjs",
+      "bytes": 957,
+      "sha256": "d91abcd941fb9ecf25fd91083ab24f6c08bf5d8371b55f16b1ba39a016f8e95b"
+    },
+    {
+      "path": "game/ui/first-flight-preview.mjs",
+      "bytes": 924,
+      "sha256": "88baf957233a35c91aafdad9d1df70cc381b6f48aafc36b289f79c7d669a93ff"
+    },
+    {
+      "path": "game/ui/first-flight-view.mjs",
+      "bytes": 7579,
+      "sha256": "daffa97ad420a2b3474e9c07307945652a877821a54d6a299e78edad2c879ef2"
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "bytes": 13120,
+      "sha256": "ad25ed1f33eedae9d3175d700e1d1b5b87115f473757e0dd2071ed8c9925f271"
+    },
+    {
+      "path": "game/ui/key-settings.mjs",
+      "bytes": 8066,
+      "sha256": "dbe7be1bef6ce35d318e6f3e6aad935081059b75aa621fd412ae6558cef4dc62"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 24702,
+      "sha256": "9b5c628dce38dae134d603f1bc12b2d532e1db66085bc5a1b1e137b2574765c4"
+    },
+    {
+      "path": "game/ui/mastery-view.mjs",
+      "bytes": 7740,
+      "sha256": "5232533a6fec3c543ac2c633ef0742be8a6e0580e21541d202c4efff76c5a43b"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    },
+    {
+      "path": "game/ui/practice-navigation.mjs",
+      "bytes": 1761,
+      "sha256": "81ac683067848898a0978514bc73dd059884a5d5d6710979fca700c7e57bea6b"
+    },
+    {
+      "path": "game/ui/profile-transfer-panel.mjs",
+      "bytes": 6121,
+      "sha256": "5fcf62d14b9a5256391c1c69d69ea80ed65b0b3a81c8cf2279fea9eafe9af579"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "bytes": 24172,
+      "sha256": "c42b9361025787d0e470381519af062faeef405b6d248521a112f5d4b8a8a6c3"
+    },
+    {
+      "path": "game/ui/retry-view.mjs",
+      "bytes": 2692,
+      "sha256": "116360c6df5373e94f65ae758c14438481f4f23419f70f2f45c028773057279a"
+    },
+    {
+      "path": "game/ui/scene-art.mjs",
+      "bytes": 9119,
+      "sha256": "f6b763dd22a55fa3c729d87862174942b1572b55c4a2e7b0072a88258de9807f"
+    },
+    {
+      "path": "game/vendor/PHASER-LICENSE.md",
+      "bytes": 1120,
+      "sha256": "d59c20a9deb5dc240614b428dce5246ae561d15efeeebea0e069d73f0a78fbff"
+    },
+    {
+      "path": "game/vendor/phaser-4.2.1.min.js",
+      "bytes": 1375976,
+      "sha256": "66348b1b5141e49b7d5ebbe688cddcb502eab1cb00f21c538686a5b2c5abe4de"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "ceacb384a6e8c645594f9a8657d43fdde3519202d7c64a327b7faed934681f03"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "1e0a6857ef93d39e3c85efcba9ba940af7a9030f8bb939b62b1c7dc4615fa145"
+    },
+    {
+      "path": "platforms/desktop/.gitignore",
+      "bytes": 25,
+      "sha256": "af7f11bef0a60b58b21faef99dacdad30c8ed997f03c76eecb2ed562e51c866b"
+    },
+    {
+      "path": "platforms/desktop/README.md",
+      "bytes": 9152,
+      "sha256": "492c7a3ee06fc20b915536fbe8158c665554c4c180ef973fda9e2ba1dfe33dd1"
+    },
+    {
+      "path": "platforms/desktop/assets/revealline.icns",
+      "bytes": 13603,
+      "sha256": "2a1fff311a06a1f7fbc8a1d171dabe5f213fe4c32c46584c8a0fd30e22197373"
+    },
+    {
+      "path": "platforms/desktop/main.mjs",
+      "bytes": 6114,
+      "sha256": "9ac02815bd8c84dbb3009d7744b46a7d25d9015182c587b127cd2c0cd357e5ca"
+    },
+    {
+      "path": "platforms/desktop/package-lock.json",
+      "bytes": 24795,
+      "sha256": "b62eb6a3f92ca34834d773d08d3028c6128e9071f0460e6d0916355e55e790d4"
+    },
+    {
+      "path": "platforms/desktop/package-security.mjs",
+      "bytes": 4086,
+      "sha256": "d01aaa88da48d0289b67ae07cee900af26854f695a7f888b9f702a096bf8bccf"
+    },
+    {
+      "path": "platforms/desktop/package.json",
+      "bytes": 528,
+      "sha256": "f7b1fb8866411eec7d3ca9a3682246c91f6a7b629ef106ffd8619151f2b7f65b"
+    },
+    {
+      "path": "platforms/desktop/package.mjs",
+      "bytes": 6135,
+      "sha256": "a11acab8d1a8b4369f9c8d5464a0fb87d251d330dc16206dcc4a1891bebd4e4a"
+    },
+    {
+      "path": "platforms/desktop/policy.mjs",
+      "bytes": 6816,
+      "sha256": "639ec8d2681abd4c60fde7b6b3506a7b20127d47dd99f349b7cb3d3d74618e7f"
+    },
+    {
+      "path": "platforms/desktop/resources.mjs",
+      "bytes": 8595,
+      "sha256": "0f1ef9e6d8944b370480c2daa7735210d024a55bc1f666bb77c17ac98b8a1d5a"
+    },
+    {
+      "path": "platforms/desktop/test/helpers/fuse-api.mjs",
+      "bytes": 715,
+      "sha256": "f9690db253356a8bcb6757431929ace25cc1aba6df07fabe47b4fbf2599b24eb"
+    },
+    {
+      "path": "platforms/desktop/test/package-security.test.mjs",
+      "bytes": 4593,
+      "sha256": "387bc9559029e06d4c7ef797ed9ce1c9d67055389489c57cd79f1508db77ac46"
+    },
+    {
+      "path": "platforms/desktop/test/packaging.test.mjs",
+      "bytes": 7170,
+      "sha256": "68390eb206349b44c555583e06b1ae509ee9ddb2d5b19b174022ae5b362cdf9f"
+    },
+    {
+      "path": "platforms/desktop/test/policy.test.mjs",
+      "bytes": 7264,
+      "sha256": "375d18923d8a41b07324d6aa68b303aa18b8f8cb337c8f6814078eda4cb567aa"
+    },
+    {
+      "path": "platforms/desktop/test/resources.test.mjs",
+      "bytes": 8669,
+      "sha256": "bbd50976ff02c10732633102b002e07667613df5648891753a49e8ec3ebc592f"
+    },
+    {
+      "path": "platforms/desktop/verification-candidate.md",
+      "bytes": 2833,
+      "sha256": "04e6576443d14eeb79edb53b21a36431651192089be99c83a4a3845fd6ae4f10"
+    },
+    {
+      "path": "platforms/ios/.gitignore",
+      "bytes": 284,
+      "sha256": "bc66e2ed0696a198cba6eab3d72d71eeb59b0e25a2f65ac320ba2acb4b44c080"
+    },
+    {
+      "path": "platforms/ios/README.md",
+      "bytes": 15548,
+      "sha256": "601b98928973bd8d5350723d45ef7c750f2112fc2d083138952b280aa1f84f1d"
+    },
+    {
+      "path": "platforms/ios/bridge/bridge-entry.mjs",
+      "bytes": 5999,
+      "sha256": "0a0bdec0a0b3f245411dd4a689841622832ac20eb3c2ef5e669adc97a2cc23c9"
+    },
+    {
+      "path": "platforms/ios/capacitor.config.json",
+      "bytes": 367,
+      "sha256": "6d72c90434a22bab41a238688150b9ae649370d65ccb5ccef3e8e089c77b1e42"
+    },
+    {
+      "path": "platforms/ios/diagnostics/index.html",
+      "bytes": 1977,
+      "sha256": "617defcc8b76cb78feb5bd703bc7c69d1c7eeb23977f24442b2061a03722172d"
+    },
+    {
+      "path": "platforms/ios/diagnostics/page.js",
+      "bytes": 2715,
+      "sha256": "03b2b5ee904ea31d351955048b42e6ae10fde0df28ab142676c41bac00686eba"
+    },
+    {
+      "path": "platforms/ios/diagnostics/probe.mjs",
+      "bytes": 4410,
+      "sha256": "a8b916badd0aac2923af695520d740f52fa8350aa245c30699eabb2b68c0ba51"
+    },
+    {
+      "path": "platforms/ios/diagnostics/style.css",
+      "bytes": 879,
+      "sha256": "90b1117d5e370b95c91e3b2cb63ede690bbc2dfb3daac9925074275195ea9c0d"
+    },
+    {
+      "path": "platforms/ios/native/.gitignore",
+      "bytes": 206,
+      "sha256": "2b7132a9943d2622e51e656897ca5162f56b121b40b423dedce1fbc699dba88a"
+    },
+    {
+      "path": "platforms/ios/native/App/App.xcodeproj/project.pbxproj",
+      "bytes": 15411,
+      "sha256": "dd1605afe64847d309885dd8ef044b9435151a2bf4a44213d3ca3b11296f41c6"
+    },
+    {
+      "path": "platforms/ios/native/App/App.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+      "bytes": 238,
+      "sha256": "dfa0f9bb85b95ccba9c6811adadf8cb407fb5d52088e89db83ebc308ec448542"
+    },
+    {
+      "path": "platforms/ios/native/App/App/AppDelegate.swift",
+      "bytes": 2504,
+      "sha256": "481e2ad8672b14acbd3e3df65acdc6d046526ae542b7bec903cf842fc68d9e49"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png",
+      "bytes": 8769,
+      "sha256": "b5fdcb2bdfcd5f24ab3574fcaf4f7f905d8319bb9cd0f405f0a39eccc2b2ad66"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "bytes": 218,
+      "sha256": "5c09bec6eede599b14fa9e4c44b03e7febebc930615a0cd70f02981c09dfe48a"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Contents.json",
+      "bytes": 62,
+      "sha256": "972ec1fd42325872438eb085ac29e94f51c10788ec18ec5549439950866c541d"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/Contents.json",
+      "bytes": 403,
+      "sha256": "041481917eb249533ac6dd63d283bc6190b2d0642a93deda11b2ed0f6f7b605a"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-1.png",
+      "bytes": 41509,
+      "sha256": "f4fa6c70a9eddf59699eb2f56521ddbe00eacc71bba9f6c40332fd90b4548e16"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732-2.png",
+      "bytes": 41509,
+      "sha256": "f4fa6c70a9eddf59699eb2f56521ddbe00eacc71bba9f6c40332fd90b4548e16"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Assets.xcassets/Splash.imageset/splash-2732x2732.png",
+      "bytes": 41509,
+      "sha256": "f4fa6c70a9eddf59699eb2f56521ddbe00eacc71bba9f6c40332fd90b4548e16"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Base.lproj/LaunchScreen.storyboard",
+      "bytes": 1908,
+      "sha256": "b31e9cfbcd7eecf00f098e0f14e235ec345b90c5892738557cdc446dcc659509"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Base.lproj/Main.storyboard",
+      "bytes": 1019,
+      "sha256": "7b7dc7acc67134bfaa80e5ce9c9068ba53db5369b9b70248aa7439fc2b09daae"
+    },
+    {
+      "path": "platforms/ios/native/App/App/Info.plist",
+      "bytes": 2946,
+      "sha256": "6991794399acf8c3727668402c47ddb6346b3be150d051c76b56ec54fc45f2fb"
+    },
+    {
+      "path": "platforms/ios/native/App/App/PrivacyInfo.xcprivacy",
+      "bytes": 606,
+      "sha256": "c6c3948fb995a44aa6f6dd5680fb0dd7a53ea4efc8d784e2e23914d9bbad9343"
+    },
+    {
+      "path": "platforms/ios/native/App/App/SceneDelegate.swift",
+      "bytes": 899,
+      "sha256": "738b9b96bb71d34d80cd8c1183cf7f8f6f2e789c64e46fb5fe6777a35ae12dfd"
+    },
+    {
+      "path": "platforms/ios/native/App/CapApp-SPM/.gitignore",
+      "bytes": 165,
+      "sha256": "4b958e2b4dd57319aadef2551153c74b9cb5ffe9f89d6e3e491122a94913f016"
+    },
+    {
+      "path": "platforms/ios/native/App/CapApp-SPM/Package.swift",
+      "bytes": 1211,
+      "sha256": "7a7152c0a8bceda801b34a1051aaf01e0633a6bf180da44bf11cc8de1e0d0ea1"
+    },
+    {
+      "path": "platforms/ios/native/App/CapApp-SPM/README.md",
+      "bytes": 162,
+      "sha256": "42c535861f4a866e35f85764ed6af1ea046d6a409bf9852ecb00e5d292a1626e"
+    },
+    {
+      "path": "platforms/ios/native/App/CapApp-SPM/Sources/CapApp-SPM/CapApp-SPM.swift",
+      "bytes": 33,
+      "sha256": "70bf9dafddc35e3877dfb133a996f5be7ccd1e132897a98fdbf4869ff605ece9"
+    },
+    {
+      "path": "platforms/ios/native/debug.xcconfig",
+      "bytes": 23,
+      "sha256": "4838938a72b913b99cfda54a43bbe73f05893071dc6e3702b0adc44794b64272"
+    },
+    {
+      "path": "platforms/ios/package-lock.json",
+      "bytes": 58808,
+      "sha256": "646e8cd9898176272a6c4f7e7c917cc094a98dbdf83ee3a93f8e1bfb3593a33a"
+    },
+    {
+      "path": "platforms/ios/package.json",
+      "bytes": 827,
+      "sha256": "3a7d3dbcf869cc89985b21beb5372ac37ce9b22784f0afa6296c8a4d8e70684e"
+    },
+    {
+      "path": "platforms/ios/scripts/build-bridge.mjs",
+      "bytes": 1669,
+      "sha256": "1b813b616f664aee4096b61178df85205478510e0d1bbbe48d948d632693324a"
+    },
+    {
+      "path": "platforms/ios/scripts/doctor.mjs",
+      "bytes": 3935,
+      "sha256": "64982049d2449a515ec1c83807b7a550d0bd635c3e3ed0ec0f9d07a2f373cda9"
+    },
+    {
+      "path": "platforms/ios/test/bridge.test.mjs",
+      "bytes": 6675,
+      "sha256": "8f67f02fc8936a275b802d2c974e73e4fd931c523a65da66b50f828affe1da18"
+    },
+    {
+      "path": "platforms/ios/test/configuration.test.mjs",
+      "bytes": 3153,
+      "sha256": "6c48f8b3762e6d75fcd4e75e394236a42b9626fa984c1f9b809955f8f5ba3de6"
+    },
+    {
+      "path": "platforms/ios/test/diagnostics.test.mjs",
+      "bytes": 2245,
+      "sha256": "572ba9a727be5a7fc78c92b1741777b375ba48256748558f60a800c1bcbdc4b2"
+    },
+    {
+      "path": "scripts/build-homeward-pack.mjs",
+      "bytes": 4833,
+      "sha256": "30f833e9201ce141f43c9f058b126fd914d22be666ee93cc00e59059ca7b092b"
+    },
+    {
+      "path": "scripts/build-pages.mjs",
+      "bytes": 2344,
+      "sha256": "e367ad0268afa2de767d9bef9294dd3648f6d07e20e9ecb6a1f47cf8288982ca"
+    },
+    {
+      "path": "scripts/build-workshop-pack.mjs",
+      "bytes": 9412,
+      "sha256": "7596b1aa355003fad788dae9c390ac57e8f2150e4f6455f257fb422b2c520441"
+    },
+    {
+      "path": "scripts/create-first-flight-proofs.mjs",
+      "bytes": 2405,
+      "sha256": "817470329b1a7dc5d6ec994696b4aa49d000ffe090a416ec2a37c3d0558d7db7"
+    },
+    {
+      "path": "scripts/create-homeward-fixtures.mjs",
+      "bytes": 12244,
+      "sha256": "f9785992f0b1d6adea406c9eeed89e15f63d69ca532356ec996685b828f45caa"
+    },
+    {
+      "path": "scripts/create-workshop-art-fixtures.mjs",
+      "bytes": 16506,
+      "sha256": "f29d9d3f2b54cf2303a01ea16edeb04a03048151d03f758272b0c85c956e0377"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 52746,
+      "sha256": "7dd99f7663891b54cef30da75c6ed6fd48475f0cafdce200fa801db065321671"
+    },
+    {
+      "path": "scripts/native-art.mjs",
+      "bytes": 6809,
+      "sha256": "548e7dc705be4bb7182dd8aa1ef843e7e85188119259d4bb9bc653e4dd6e1da5"
+    },
+    {
+      "path": "scripts/native-art.test.mjs",
+      "bytes": 5859,
+      "sha256": "fc30ac1409de9c21e3a17d29af61b71ae46c2fa75f3c7ab06e78041a4a19b166"
+    },
+    {
+      "path": "scripts/native-cli.mjs",
+      "bytes": 15735,
+      "sha256": "99a2ca88a2ec844e9d576c59f353dbc193f32b78ccb992f4cac0412cb3a50e45"
+    },
+    {
+      "path": "scripts/native-cli.test.mjs",
+      "bytes": 21422,
+      "sha256": "15af62af829e025a07cc6d4534238c2c7e47beee676d10e89f6ea90540932fa4"
+    },
+    {
+      "path": "scripts/telegram-reference.py",
+      "bytes": 15078,
+      "sha256": "cf7c180d0de554785788d095ec42fa544fba27da013631111c146a565a5038fb"
+    },
+    {
+      "path": "scripts/test-build-workshop-pack.mjs",
+      "bytes": 10593,
+      "sha256": "27e53508adbc6429ce1a0edb58e7f37ac0990c293b05daa615318617fd03c5a4"
+    },
+    {
+      "path": "scripts/test-encounter-consumers.mjs",
+      "bytes": 4912,
+      "sha256": "b411a1f9c5eead93a93dd38bc396b83f10c81a246bc65f945cf251320e55b724"
+    },
+    {
+      "path": "scripts/test-expansion-proof-dispatch.mjs",
+      "bytes": 8399,
+      "sha256": "7c80559d56a5dd87f37c97d7f55bafce3deafa16c0bebcc57949255cf3933804"
+    },
+    {
+      "path": "scripts/test-game-cli.mjs",
+      "bytes": 30963,
+      "sha256": "7d75271688ab62790213490490497c56f09a4af505de85ce40acf6e1e94b14ab"
+    },
+    {
+      "path": "scripts/test-inspect-goals.mjs",
+      "bytes": 11323,
+      "sha256": "30b6e043e78998594149d7d8c1fc6bc705c522c65afee457e50de176fc7847cc"
+    },
+    {
+      "path": "scripts/test_telegram_reference.py",
+      "bytes": 9806,
+      "sha256": "bef8703be33afbd5f7dbd765a14ef197e790e220cc6573e141a274510c665c6f"
+    },
+    {
+      "path": "scripts/verify-campaign.mjs",
+      "bytes": 12431,
+      "sha256": "c82c265dedbdadff67ab1b58d26555f35136386fb06072a66fec7fe158f9b174"
+    },
+    {
+      "path": "scripts/verify-homeward.mjs",
+      "bytes": 9953,
+      "sha256": "c63c109e8ebeb277a0f0f2b90f91733e5011951fe86d1469f09aab85d4809765"
+    },
+    {
+      "path": "scripts/verify-packs.mjs",
+      "bytes": 12263,
+      "sha256": "866b6406ada234a004f383c65289afeb37b1a2a95ede53b8b15d513bd26e8cc7"
+    },
+    {
+      "path": "scripts/verify-specialty.mjs",
+      "bytes": 16427,
+      "sha256": "6aa614acd29491cb4c5c1b36b36949033c5b502ee1067bb8e21406a5e544e6dd"
+    },
+    {
+      "path": "site/index.html",
+      "bytes": 15954,
+      "sha256": "c038c908182301d0cd967e3e99e478cd951696f8b11bbc13ea129fe409ab91e6"
+    },
+    {
+      "path": "site/landing.css",
+      "bytes": 31531,
+      "sha256": "4966cb9a8bb411a965c699c79df43ec04856d6209fba4693c66f303f25a38cb8"
+    },
+    {
+      "path": "site/landing.mjs",
+      "bytes": 1649,
+      "sha256": "a811cad425ee2da32052e3cb33029659fc98c7c312ff90569c5ea7803400a7aa"
+    }
+  ]
+}
