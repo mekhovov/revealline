@@ -1,3 +1,4 @@
+import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
 import { attachInput } from './ui/input.mjs';
@@ -77,7 +78,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.2.1',
+  let buildVersion = '0.3.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -717,6 +718,7 @@ try {
   let offlinePrepared = false;
   const offline = offlineAvailability();
   show('offline-button', offline.available);
+  show('native-diagnostics', nativePlatform() === 'ios');
   $('offline-status').textContent = offline.available
     ? 'Download this release for offline play on this device.'
     : offline.reason;
@@ -1398,23 +1400,34 @@ try {
   document
     .querySelectorAll('[data-close]')
     .forEach((b) => (b.onclick = () => $(b.dataset.close).close()));
-  $('export-replay').onclick = () => {
+  $('export-replay').onclick = async () => {
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
       pause(true);
       lastReplay = exportReplay(recorder, run);
       $('replay-json').value = JSON.stringify(lastReplay, null, 2);
-      downloadJSON(lastReplay, `revealline-${run.levelId}-replay.json`);
       $('replay-dialog').showModal();
-      warning('Replay exported with its exact rules, inputs and final state.');
+      const exported = await downloadJSON(lastReplay, `revealline-${run.levelId}-replay.json`);
+      warning(`Replay prepared with its exact rules, inputs and final state. ${exported.message}`);
     } catch (error) {
       warning(`Replay could not export: ${error.message}`);
     }
   };
-  $('download-replay').onclick = () => {
-    if (lastReplay)
-      downloadJSON(lastReplay, `revealline-${lastReplay.summary.levelId}-replay.json`);
+  $('download-replay').onclick = async () => {
+    try {
+      if (lastReplay)
+        warning(
+          (await downloadJSON(lastReplay, `revealline-${lastReplay.summary.levelId}-replay.json`))
+            .message,
+        );
+    } catch (error) {
+      warning(`Replay download: ${error.message}`);
+    }
   };
+  onNativeInactive(() => {
+    sound.pause();
+    pause(true);
+  }).catch((error) => warning(`App lifecycle adapter unavailable: ${error.message}`));
   window.addEventListener('blur', () => {
     sound.pause();
     pause(true);

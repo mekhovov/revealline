@@ -258,10 +258,10 @@ export function attachLibraryPanel(api) {
     task('save-status', async () => {
       const text = await exportBackup(backupContents(), backupOptions());
       $('save-json').value = text;
-      downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
+      const exported = await downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
       status(
         'save-status',
-        `Complete backup exported: player library, packs and saved flight. Keep this file to move devices or restore this collection. ${api.sessionNote?.() || ''}`,
+        `Complete backup prepared: player library, packs and saved flight. ${exported.message} ${api.sessionNote?.() || ''}`,
       );
     });
   $('undo-backup').onclick = () =>
@@ -275,12 +275,16 @@ export function attachLibraryPanel(api) {
       refresh();
       status('save-status', 'Previous collection, packs and saved flight restored.');
     });
-  $('export-library').onclick = () => {
-    const text = exportLibrary(api.get().library);
-    $('save-json').value = text;
-    downloadJSON(JSON.parse(text), 'revealline-player-library.json');
-    status('save-status', 'Library exported. Keep packs and attempt files alongside it.');
-  };
+  $('export-library').onclick = () =>
+    task('save-status', async () => {
+      const text = exportLibrary(api.get().library);
+      $('save-json').value = text;
+      const exported = await downloadJSON(JSON.parse(text), 'revealline-player-library.json');
+      status(
+        'save-status',
+        `Library prepared. ${exported.message} Keep packs and attempt files alongside it.`,
+      );
+    });
   $('import-save').onclick = () => importSave($('save-json').value);
   $('save-file').onchange = () =>
     task('save-status', async () => {
@@ -311,8 +315,11 @@ export function attachLibraryPanel(api) {
     task('save-status', async () => {
       const s = api.suspend();
       $('save-json').value = JSON.stringify(s, null, 2);
-      downloadJSON(s, 'revealline-suspended-flight.json');
-      status('save-status', 'Unfinished flight exported with verified-input recovery data.');
+      const exported = await downloadJSON(s, 'revealline-suspended-flight.json');
+      status(
+        'save-status',
+        `Unfinished flight prepared with verified-input recovery data. ${exported.message}`,
+      );
     });
   $('install-pack').onclick = () => install($('pack-json').value);
   $('pack-file').onchange = () =>
@@ -321,12 +328,16 @@ export function attachLibraryPanel(api) {
       busy = false;
       await install(text);
     });
-  $('export-packs').onclick = () => {
-    const text = exportPackLibrary(api.get().packs);
-    $('pack-json').value = text;
-    downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');
-    status('pack-status', 'Installed packs exported with their original embedded images.');
-  };
+  $('export-packs').onclick = () =>
+    task('pack-status', async () => {
+      const text = exportPackLibrary(api.get().packs);
+      $('pack-json').value = text;
+      const exported = await downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');
+      status(
+        'pack-status',
+        `Installed packs prepared with their original embedded images. ${exported.message}`,
+      );
+    });
   $('challenge-date').value = new Date().toISOString().slice(0, 10);
   $('launch-challenge').onclick = () => {
     try {

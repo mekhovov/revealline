@@ -371,7 +371,13 @@ function addPublicEntries(entries, info) {
 }
 
 /** Original pixel emblem. Fixed integer geometry; no source images are modified. */
-function offlineIcons() {
+export function offlineIcons(sizes = [180, 192, 512]) {
+  if (
+    !Array.isArray(sizes) ||
+    sizes.length > 16 ||
+    sizes.some((size) => !Number.isSafeInteger(size) || size < 16 || size > 4096)
+  )
+    throw new Error('Icon sizes must be integers between 16 and 4096 pixels.');
   const palette = ['#091324', '#203852', '#53c7e8', '#f1cd6f', '#eef4df'];
   const grid = Array.from({ length: 32 }, () => Array(32).fill(0));
   const box = (x, y, w, h, c) => {
@@ -426,7 +432,7 @@ function offlineIcons() {
   };
   return [
     { name: 'icons/icon.svg', bytes: Buffer.from(svg) },
-    ...[180, 192, 512].map((size) => ({ name: `icons/icon-${size}.png`, bytes: png(size) })),
+    ...sizes.map((size) => ({ name: `icons/icon-${size}.png`, bytes: png(size) })),
   ];
 }
 
@@ -909,7 +915,13 @@ export async function main(argv = process.argv.slice(2)) {
     );
   else if (action === 'test') {
     const files = [];
-    for (const directory of ['scripts', 'game', 'authoring/motion-lab'])
+    for (const directory of [
+      'scripts',
+      'game',
+      'authoring/motion-lab',
+      'platforms/desktop/test',
+      'platforms/ios/test',
+    ])
       if (await exists(path.join(PROJECT_ROOT, directory)))
         for (const file of await regularFiles(PROJECT_ROOT, directory))
           if (/(?:^|\/)(?:test-[^/]+|[^/]+\.test)\.mjs$/.test(file)) files.push(file);

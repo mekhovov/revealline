@@ -1,4 +1,8 @@
 :root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
   --paper: #f5f1e6;
   --ink: #112d35;
   --muted: #647b7c;
@@ -13,6 +17,7 @@
 }
 body {
   margin: 0;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
   background: var(--paper);
   color: var(--ink);
   font:
@@ -129,7 +134,7 @@ main {
 }
 .arena-panel {
   width: 100%;
-  max-width: min(100%, calc((100svh - 273px) * 1.333333));
+  max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 273px) * 1.333333));
   margin: 0 auto;
 }
 .telemetry {
@@ -928,7 +933,7 @@ dialog .eyebrow {
     gap: 20px;
   }
   .arena-panel {
-    max-width: calc((100svh - 125px) * 1.333333);
+    max-width: calc((100svh - var(--safe-top) - var(--safe-bottom) - 125px) * 1.333333);
   }
   .telemetry {
     height: 40px;
@@ -954,7 +959,7 @@ dialog .eyebrow {
     font-size: 8px;
   }
   .flight-deck {
-    max-height: calc(100svh - 83px);
+    max-height: calc(100svh - var(--safe-top) - var(--safe-bottom) - 83px);
     overflow: auto;
     padding-right: 5px;
   }
@@ -1154,12 +1159,12 @@ dialog .eyebrow {
     height: 55px;
   }
   .arena-panel {
-    max-width: min(100%, calc((100svh - 330px) * 1.333333));
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 330px) * 1.333333));
   }
 }
 @media (min-width: 681px) and (max-width: 1100px) and (min-height: 501px) {
   .arena-panel {
-    max-width: min(100%, calc((100svh - 380px) * 1.333333));
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 380px) * 1.333333));
   }
   .direction-controls {
     grid-template-columns: repeat(3, 44px);
@@ -1177,7 +1182,7 @@ dialog .eyebrow {
 /* Reserve a little more control space in tall tablet-sized desktop windows. */
 @media (min-width: 681px) and (max-width: 1100px) and (min-height: 901px) {
   .arena-panel {
-    max-width: min(100%, calc((100svh - 400px) * 1.333333));
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 400px) * 1.333333));
   }
 }
 
@@ -1202,7 +1207,7 @@ dialog .eyebrow {
   max-width: 920px;
 }
 dialog {
-  max-height: calc(100svh - 32px);
+  max-height: calc(100svh - var(--safe-top) - var(--safe-bottom) - 32px);
   overflow: auto;
 }
 dialog .field {

@@ -523,8 +523,13 @@ try {
   $('open-preview').onclick = (event) => {
     if (!preview()) event.preventDefault();
   };
-  $('export-button').onclick = () => {
-    if (checked()) downloadJSON(current, `${current.level.id}.xonix.json`);
+  $('export-button').onclick = async () => {
+    try {
+      if (checked())
+        status((await downloadJSON(current, `${current.level.id}.xonix.json`)).message);
+    } catch (error) {
+      status(error.message, true);
+    }
   };
   $('import-file').onchange = async () => {
     const file = $('import-file').files[0];
@@ -632,24 +637,27 @@ try {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
     }
   };
-  $('export-expansion').onclick = () => {
+  $('export-expansion').onclick = async () => {
     try {
       if (!checked()) return;
       const track = currentTrack();
       const pack = expansionFromScenario(current, { music: track ? [track] : [] });
-      downloadJSON(pack, `${pack.id}.expansion.json`);
+      const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
       status(
-        'Edited map exported as a complete playable expansion. Import it into the main game to keep campaign progress.',
+        `Edited map prepared as a complete playable expansion. ${exported.message} Import it into the main game to keep campaign progress.`,
       );
     } catch (error) {
       status(error.message, true);
     }
   };
-  $('export-catalog').onclick = () => {
+  $('export-catalog').onclick = async () => {
     try {
-      downloadJSON(JSON.parse(exportPackLibrary(packLibrary)), 'workshop-expansions.json');
+      const exported = await downloadJSON(
+        JSON.parse(exportPackLibrary(packLibrary)),
+        'workshop-expansions.json',
+      );
       status(
-        'Original loaded expansion library exported. Current map edits are exported separately with Export map as expansion.',
+        `Original loaded expansion library prepared. ${exported.message} Current map edits are exported separately with Export map as expansion.`,
       );
     } catch (error) {
       status(error.message, true);

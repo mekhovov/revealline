@@ -52,15 +52,15 @@ For an Nginx deployment, configure the MIME mappings and corresponding `add_head
 
 The generated `privacy.html` describes what the current implementation does:
 
-| Data | Where it lives |
-|---|---|
-| Preferences, achievements, local scores and gallery records | Browser local storage, separated by channel/content identity |
-| Suspended attempt | Local save slot or an explicitly exported replay-backed file |
-| Imported image packs | Browser IndexedDB |
-| Playground-to-preview configuration | Browser session storage |
-| Prepared offline game files | Scope/version-specific browser cache |
-| Complete backups and separate library, pack, attempt or replay exports | Files explicitly downloaded by the player |
-| Replay Theater playback | Temporary in-memory state; no player-library access or progress awards |
+| Data                                                                   | Where it lives                                                         |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Preferences, achievements, local scores and gallery records            | Browser local storage, separated by channel/content identity           |
+| Suspended attempt                                                      | Local save slot or an explicitly exported replay-backed file           |
+| Imported image packs                                                   | Browser IndexedDB                                                      |
+| Playground-to-preview configuration                                    | Browser session storage                                                |
+| Prepared offline game files                                            | Scope/version-specific browser cache                                   |
+| Complete backups and separate library, pack, attempt or replay exports | Files explicitly downloaded by the player                              |
+| Replay Theater playback                                                | Temporary in-memory state; no player-library access or progress awards |
 
 The game has no analytics SDK, advertising tracker, account login, cloud save, public scoreboard, telemetry endpoint or network multiplayer server. It does not upload imported images/packs or player libraries. These are statements about the shipped game code. A public hosting provider still receives normal HTTP requests and may keep access logs; the publisher must describe any host-specific collection or extra services it adds.
 
@@ -93,16 +93,18 @@ Record failures as release blockers for the affected target rather than silently
 
 The v0.2.0 source supplies 22 maps, seven gameplay roles, four presentation themes and three installable expansions. The recorded Replay Theater integration checkpoint passed 448 JavaScript tests. Those results establish that checkpoint's automated behavior; they do not certify every target below.
 
-| Target | Implemented or checked here | Evidence still required before claiming that target |
-|---|---|---|
-| Static browser package | Main game, playground, couch mode, Replay Theater, local backups and explicit offline preparation | Exact final artifact checks, applicable browser matrix and a preserved source revision |
-| Responsive layout | Six same-browser CSS viewport fixtures, including focused couch controls at 320 × 640 | Physical screen, touch comfort, safe areas and sustained device performance |
-| iPhone / iPad browser | Responsive controls and browser APIs | Physical Safari audio activation, touch, rotation, home-screen/offline behavior and long sessions |
-| Controllers | Solo and two-player standard-gamepad adapters | The intended physical controllers, mappings, simultaneous input and disconnect/reconnect behavior |
-| Native macOS / iOS / Steam | Browser source and packaging guidance | Native projects, binaries, signing, store credentials, platform integration and store review/submission |
-| Public website | Static files, headers template, privacy/credits and hosting guidance | Actual deployment to a named HTTPS host, its MIME/CSP/cache behavior, operational privacy details and rollback check |
-| Network play / global ranking | Documented future protocol boundary | Server-authoritative transport, hosting, rooms, abuse controls and authenticated score handling |
-| Enjoyment and replay appeal | Capture/reveal loop, equipment variations, collection rewards and authored challenges | Human playtesting, accessibility feedback, balance and voluntary replay evidence |
+| Target                        | Implemented or checked here                                                                       | Evidence still required before claiming that target                                                                  |
+| ----------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Static browser package        | Main game, playground, couch mode, Replay Theater, local backups and explicit offline preparation | Exact final artifact checks, applicable browser matrix and a preserved source revision                               |
+| Responsive layout             | Six same-browser CSS viewport fixtures, including focused couch controls at 320 × 640             | Physical screen, touch comfort, safe areas and sustained device performance                                          |
+| iPhone / iPad browser         | Responsive controls and browser APIs                                                              | Physical Safari audio activation, touch, rotation, home-screen/offline behavior and long sessions                    |
+| Controllers                   | Solo and two-player standard-gamepad adapters                                                     | The intended physical controllers, mappings, simultaneous input and disconnect/reconnect behavior                    |
+| Native macOS                  | Electron shell, isolated dependencies, verified unsigned ARM64 packaging and security fuses       | Actual native UI/save/export/controller checks, publisher signing/notarization and distribution                      |
+| Native iOS                    | Capacitor SPM project, bridge, privacy/MIME declarations, diagnostics and isolated tests          | Xcode compile, device storage/share/MIME/lifecycle checks, signing and provisioning                                  |
+| Steam                         | Local desktop packaging foundation                                                                | Steam app/depot configuration, integration, private-branch testing and store submission                              |
+| Public website                | Static files, headers template, privacy/credits and hosting guidance                              | Actual deployment to a named HTTPS host, its MIME/CSP/cache behavior, operational privacy details and rollback check |
+| Network play / global ranking | Documented future protocol boundary                                                               | Server-authoritative transport, hosting, rooms, abuse controls and authenticated score handling                      |
+| Enjoyment and replay appeal   | Capture/reveal loop, equipment variations, collection rewards and authored challenges             | Human playtesting, accessibility feedback, balance and voluntary replay evidence                                     |
 
 No public-host deployment or store submission is established by generating a ZIP. Localhost CSS fixtures and automated routes do not establish physical iOS/controller results. Describe the tested browser release precisely; claims of a perfect game or certified human enjoyment would go beyond the evidence.
 

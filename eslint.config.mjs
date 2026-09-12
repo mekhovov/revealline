@@ -1,9 +1,21 @@
 import globals from 'globals';
 
 export default [
-  { ignores: ['node_modules/**', 'game/vendor/**', 'dist/**', 'releases/**'] },
   {
-    files: ['game/**/*.mjs', 'scripts/**/*.mjs', 'eslint.config.mjs'],
+    ignores: [
+      '**/node_modules/**',
+      'game/vendor/**',
+      'dist/**',
+      'releases/**',
+      'platforms/desktop/site/**',
+      'platforms/desktop/out/**',
+      'platforms/ios/www/**',
+      'platforms/ios/bridge/dist/**',
+      'platforms/ios/native/**',
+    ],
+  },
+  {
+    files: ['game/**/*.mjs', 'scripts/**/*.mjs', 'platforms/**/*.{mjs,js}', 'eslint.config.mjs'],
     languageOptions: { ecmaVersion: 'latest', sourceType: 'module' },
     rules: {
       'no-undef': ['error', { typeof: true }],
@@ -21,9 +33,14 @@ export default [
     languageOptions: { globals: { structuredClone: 'readonly' } },
   },
   {
-    files: ['scripts/**/*.mjs', 'game/test/**/*.mjs', 'eslint.config.mjs'],
+    files: ['scripts/**/*.mjs', 'game/test/**/*.mjs', 'platforms/**/*.mjs', 'eslint.config.mjs'],
+    ignores: ['platforms/ios/diagnostics/**'],
     // ESM files do not implicitly receive CommonJS require/module/__dirname.
     languageOptions: { globals: globals.nodeBuiltin },
+  },
+  {
+    files: ['platforms/ios/diagnostics/*.{mjs,js}'],
+    languageOptions: { globals: globals.browser },
   },
   {
     files: ['game/app.mjs'],

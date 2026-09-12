@@ -1,0 +1,15 @@
+node_modules/
+bridge/dist/
+www/
+.stage-*/
+native/App/App/public/
+native/App/App/capacitor.config.json
+native/App/App/config.xml
+native/App/build/
+native/App/DerivedData/
+native/App/App.xcodeproj/xcuserdata/
+native/App/App.xcworkspace/xcuserdata/
+*.ipa
+*.xcarchive
+.swiftpm/
+.DS_Store

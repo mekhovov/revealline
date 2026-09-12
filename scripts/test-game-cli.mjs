@@ -608,6 +608,10 @@ test('packaged offline builds generate scoped metadata, original icons, complete
     path.join(root, 'game/offline.mjs'),
   );
   await fs.copyFile(
+    new URL('../game/platform.mjs', import.meta.url),
+    path.join(root, 'game/platform.mjs'),
+  );
+  await fs.copyFile(
     new URL('../game/offline/service-worker.template.js', import.meta.url),
     path.join(root, 'game/offline/service-worker.template.js'),
   );
