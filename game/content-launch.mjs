@@ -46,10 +46,11 @@ export function preparePackCatalog(candidate) {
     packIds.add(pack.id);
     const campaignIds = new Set();
     for (const campaign of pack.campaigns) {
-      exactKeys(campaign, ['id', 'title', 'levels'], 'Pack catalog campaign');
+      exactKeys(campaign, ['id', 'revision', 'title', 'levels'], 'Pack catalog campaign');
       if (
         !stableId(campaign.id) ||
         campaignIds.has(campaign.id) ||
+        !shortText(campaign.revision, 60) ||
         !shortText(campaign.title) ||
         !Array.isArray(campaign.levels) ||
         campaign.levels.length < 1 ||

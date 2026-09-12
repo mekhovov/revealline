@@ -8,6 +8,7 @@
       "campaigns": [
         {
           "id": "night-shift",
+          "revision": "1",
           "title": "Night Shift",
           "levels": [
             { "id": "night-shift-01", "name": "Midnight Channel" },
@@ -24,6 +25,7 @@
       "campaigns": [
         {
           "id": "living-threads",
+          "revision": "1",
           "title": "Living Threads",
           "levels": [
             { "id": "living-threads-01", "name": "Petals at Dawn" },
@@ -40,6 +42,7 @@
       "campaigns": [
         {
           "id": "fieldcraft",
+          "revision": "1",
           "title": "Fieldcraft",
           "levels": [
             { "id": "fieldcraft-01", "name": "Copper Crossing" },
@@ -57,6 +60,7 @@
       "campaigns": [
         {
           "id": "homeward-skies",
+          "revision": "1",
           "title": "Homeward Skies",
           "levels": [
             { "id": "homeward-01", "name": "Copper Orchard" },
@@ -73,6 +77,7 @@
       "campaigns": [
         {
           "id": "equipment-workshop",
+          "revision": "1",
           "title": "Equipment Workshop",
           "levels": [
             { "id": "workshop-01", "name": "Garden of Threads" },
@@ -89,6 +94,7 @@
       "campaigns": [
         {
           "id": "sentinel-relay",
+          "revision": "1",
           "title": "Sentinel Relay",
           "levels": [{ "id": "sentinel-relay-01", "name": "Sentinel Relay" }]
         }
