@@ -2,7 +2,7 @@
 
 The application uses a browser-independent ES-module simulation with Phaser presentation and plain JavaScript tooling. The full toolchain supports **Node 20.19+ on 20.x, 22.13+ on 22.x, or 24+**, matching the pinned linter's engine requirements. `npm ci --ignore-scripts` restores the pinned dependencies, including Phaser 4.2.1, Prettier 3.6.2 and ESLint 10.10.0; it does not silently refresh the checked-in browser bundle. Source play and static builds use local files without a runtime CDN.
 
-Run `npm run dev`, then open [solo play](http://127.0.0.1:8768/game/), [couch race](http://127.0.0.1:8768/game/couch/), [Replay Theater](http://127.0.0.1:8768/game/replay-theater/) or [the playground](http://127.0.0.1:8768/game/playground/). Refresh after source edits; the server has no bundler or hot reload. It serves GET/HEAD and correct MIME types, refusing hidden files, traversal and symbolic links. It provides no upload endpoint or application backend.
+Run `npm run dev`, then open [solo play](http://127.0.0.1:8768/game/), [couch race](http://127.0.0.1:8768/game/couch/), [Replay Theater](http://127.0.0.1:8768/game/replay-theater/), [the playground](http://127.0.0.1:8768/game/playground/) or [Controller practice](http://127.0.0.1:8768/game/controller-lab/). Refresh after source edits; the server has no bundler or hot reload. It serves GET/HEAD and correct MIME types, refusing hidden files, traversal and symbolic links. It provides no upload endpoint or application backend.
 
 ## Commands
 

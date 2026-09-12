@@ -703,3 +703,125 @@ test('returning from a picture preserves the newly restored gallery origin inste
   assert.ok(restoredOrigin.classList.contains('controller-focus'));
   assert.equal(first.classList.contains('controller-focus'), false);
 });
+
+test('joining engages the default focus without activating it or leaking the join into Confirm', (t) => {
+  const h = setup(t),
+    first = h.control(),
+    start = h.control();
+  let clicks = 0;
+  start.addEventListener('click', () => clicks++);
+  h.setDefault(start);
+  h.api.engage();
+  assert.equal(h.document.activeElement, start);
+  assert.ok(start.classList.contains('controller-focus'));
+  assert.equal(first.classList.contains('controller-focus'), false);
+  assert.equal(clicks, 0);
+  h.api.engage();
+  h.api.handle({});
+  assert.equal(clicks, 0);
+  assert.equal(h.calls.back, 0);
+  assert.equal(h.calls.menu, 0);
+  h.api.handle({ confirm: true });
+  assert.equal(clicks, 1, 'Only the subsequent explicit Confirm may activate the focused control.');
+});
+
+test('engaging a new scope preserves a host-restored gallery card without opening it', (t) => {
+  const h = setup(t),
+    picture = h.control('dialog', { open: true }),
+    close = h.control('button', {}, picture),
+    collection = h.control('dialog', { open: true }),
+    first = h.control('button', {}, collection),
+    restored = h.control('button', {}, collection);
+  let clicks = 0;
+  restored.addEventListener('click', () => clicks++);
+  h.setScope('modal:picture', picture);
+  h.setDefault(close);
+  h.api.engage();
+  assert.equal(h.document.activeElement, close);
+  restored.focus();
+  h.setScope('modal:collection', collection);
+  h.setDefault(first);
+  h.api.engage();
+  assert.equal(h.document.activeElement, restored);
+  assert.ok(restored.classList.contains('controller-focus'));
+  assert.equal(first.classList.contains('controller-focus'), false);
+  assert.equal(close.classList.contains('controller-focus'), false);
+  assert.equal(clicks, 0);
+});
+
+test('engage never enters menu navigation during flight or after destruction', (t) => {
+  const h = setup(t),
+    button = h.control();
+  let clicks = 0;
+  button.addEventListener('click', () => clicks++);
+  h.setDefault(button);
+  h.setScope('flight');
+  h.api.engage();
+  assert.equal(h.document.activeElement, h.document.body);
+  assert.equal(button.classList.contains('controller-focus'), false);
+  h.setScope('paused:first');
+  h.api.engage();
+  assert.ok(button.classList.contains('controller-focus'));
+  h.setScope('flight');
+  h.api.engage();
+  assert.equal(button.classList.contains('controller-focus'), false);
+  h.api.handle({ confirm: true, menu: true, back: true });
+  assert.equal(clicks, 0);
+  assert.equal(h.calls.menu, 0);
+  assert.equal(h.calls.back, 0);
+  h.api.destroy();
+  button.blur();
+  h.setScope('paused:first');
+  h.api.engage();
+  assert.equal(h.document.activeElement, h.document.body);
+  assert.equal(button.classList.contains('controller-focus'), false);
+  assert.equal(clicks, 0);
+});
+
+for (const type of ['select', 'range'])
+  test(`${type} previews stay outside the enclosing label and preserve its name source`, (t) => {
+    const h = setup(t),
+      label = h.control('label'),
+      control =
+        type === 'select'
+          ? h.select(['Scout', 'Carrier'])
+          : h.control('input', { type: 'range', min: '0', max: '1', step: '0.1', value: '0.5' });
+    label.append(control);
+    const caption = { nodeType: 3, textContent: type === 'select' ? 'Choose craft ' : 'Volume ' };
+    // Model the label's direct text and descendant text, not a browser's full
+    // accessibility tree. An editor inserted inside this label changes both
+    // its descendant text and the DOM source used to calculate its name.
+    Object.defineProperties(label, {
+      childNodes: { get: () => [caption, ...label.children] },
+      textContent: {
+        get: () => caption.textContent + label.children.map((child) => child.textContent).join(''),
+      },
+    });
+    control.labels = [label];
+    const originalLabelText = label.textContent,
+      originalValue = control.value;
+    let changes = 0;
+    control.addEventListener('change', () => changes++);
+    control.focus();
+    h.api.handle({ confirm: true });
+    const preview = h.editors()[0];
+    assert.ok(preview);
+    assert.equal(preview.parentNode, label.parentNode);
+    assert.equal(
+      label.parentNode.children.indexOf(preview),
+      label.parentNode.children.indexOf(label) + 1,
+    );
+    assert.equal(label.contains(preview), false);
+    assert.equal(label.textContent, originalLabelText);
+    assert.ok(preview.textContent.includes(caption.textContent.trim()));
+    h.api.handle({ direction: 'right' });
+    assert.equal(label.textContent, originalLabelText);
+    assert.equal(control.value, originalValue);
+    assert.equal(changes, 0);
+    assert.equal(control.labels[0], label);
+    h.api.handle({ back: true });
+    assert.equal(h.editors().length, 0);
+    assert.equal(label.textContent, originalLabelText);
+    assert.equal(control.value, originalValue);
+    assert.equal(changes, 0);
+  });

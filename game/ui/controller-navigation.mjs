@@ -167,7 +167,7 @@ export function attachControllerNavigation({
     const preview = doc.createElement('div');
     preview.className = 'controller-editor';
     preview.setAttribute('role', 'status');
-    element.insertAdjacentElement('afterend', preview);
+    (element.closest('label') || element).insertAdjacentElement('afterend', preview);
     element.setAttribute('data-controller-editing', 'true');
     editing = {
       ...state,
@@ -269,6 +269,13 @@ export function attachControllerNavigation({
   return {
     handle,
     sync,
+    engage() {
+      if (destroyed) return;
+      sync();
+      if (scope === 'flight') return;
+      engaged = true;
+      ensureFocus();
+    },
     clear: relinquish,
     destroy() {
       if (destroyed) return;

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>Reveal / Line — Controller practice</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="../">◩ REVEAL / LINE</a>
+      <span>CONTROLLER PRACTICE</span>
+      <a href="../playground/">Open Playground ↗</a>
+    </header>
+    <main>
+      <section class="intro">
+        <p class="eyebrow">REAL GAME UI · SIMULATED CONTROLLER</p>
+        <h1>Try the whole journey.</h1>
+        <p>
+          This virtual pad controls the actual game below. Practice awards no campaign progress,
+          scores or unlocks. It does not verify physical controller support.
+        </p>
+      </section>
+      <section class="setup" aria-label="Practice setup">
+        <label>Mission<select id="mission" disabled></select></label>
+        <label>Starting class<select id="craft" disabled></select></label>
+        <label
+          >Steering<select id="steering">
+            <option value="immediate">Immediate</option>
+            <option value="grid-center">Grid + buffer</option>
+          </select></label
+        >
+        <label
+          >Game viewport<select id="viewport">
+            <option value="1280x720">Desktop · 1280 × 720</option>
+            <option value="390x844">Phone · 390 × 844</option>
+            <option value="844x390">Landscape · 844 × 390</option>
+          </select></label
+        >
+        <button id="load" disabled>Load practice</button>
+      </section>
+      <p id="load-status" class="notice" role="status">Loading validated game content…</p>
+      <div class="lab-grid">
+        <aside aria-label="Virtual controller">
+          <div class="connection">
+            <button id="connect" disabled>Connect virtual pad</button>
+            <button id="disconnect" disabled>Disconnect</button>
+          </div>
+          <p id="connection-status">Virtual pad disconnected.</p>
+          <p class="guide">
+            Connect, then press <strong>A</strong> to join. Release, then press
+            <strong>A</strong> again to activate the focused control. The first press only joins.
+          </p>
+          <label
+            >Button gesture<select id="gesture">
+              <option value="pulse">Pulse · release after 200 ms</option>
+              <option value="hold">Hold · press again to release</option>
+            </select></label
+          >
+          <div class="dpad" role="group" aria-label="Virtual directional pad">
+            <button data-pad="12" class="up" disabled aria-pressed="false" aria-label="D-pad up">
+              ↑
+            </button>
+            <button
+              data-pad="14"
+              class="left"
+              disabled
+              aria-pressed="false"
+              aria-label="D-pad left"
+            >
+              ←
+            </button>
+            <button
+              data-pad="13"
+              class="down"
+              disabled
+              aria-pressed="false"
+              aria-label="D-pad down"
+            >
+              ↓
+            </button>
+            <button
+              data-pad="15"
+              class="right"
+              disabled
+              aria-pressed="false"
+              aria-label="D-pad right"
+            >
+              →
+            </button>
+          </div>
+          <div class="face-buttons" role="group" aria-label="Virtual action buttons">
+            <button data-pad="0" disabled aria-pressed="false">
+              <b>A</b><span>Confirm / ability</span>
+            </button>
+            <button data-pad="1" disabled aria-pressed="false">
+              <b>B</b><span>Back / Stop</span>
+            </button>
+            <button data-pad="2" disabled aria-pressed="false"><b>X</b><span>Pick up</span></button>
+            <button data-pad="3" disabled aria-pressed="false"><b>Y</b><span>Hangar</span></button>
+            <button data-pad="5" disabled aria-pressed="false"><b>RB</b><span>Boost</span></button>
+            <button data-pad="9" disabled aria-pressed="false">
+              <b>Menu</b><span>Pause / menu</span>
+            </button>
+          </div>
+          <button id="release" class="wide" disabled>Release all buttons</button>
+          <button id="focus-game" class="wide" disabled>Focus game</button>
+          <dl class="feedback" aria-live="polite" aria-atomic="true">
+            <dt>Game scope</dt>
+            <dd id="scope">Waiting for practice</dd>
+            <dt>Focused control</dt>
+            <dd id="focused">—</dd>
+            <dt>Controller</dt>
+            <dd id="pad-status">Not joined</dd>
+          </dl>
+          <p class="guide">
+            Hold mode keeps a button pressed when you activate another. Release all before a new
+            menu gesture. Moving between this panel and the game may pause play; the next virtual
+            gesture focuses the game first.
+          </p>
+        </aside>
+        <section class="stage" aria-label="Actual practice game">
+          <div class="stage-heading">
+            <span id="viewport-readout">1280 × 720 · scaled to fit</span><span>LIVE PRACTICE</span>
+          </div>
+          <div id="frame-space">
+            <iframe
+              id="game-frame"
+              name="revealline-controller-practice"
+              title="Reveal Line practice game controlled by the virtual pad"
+              tabindex="0"
+              allow="gamepad; fullscreen"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </section>
+      </div>
+      <p class="footer-note">
+        Menu focus feedback contains only short labels and controller status. Audio, fullscreen and
+        file dialogs can still require a direct click or touch in the game. Keyboard and touch
+        remain available there.
+      </p>
+    </main>
+    <script type="module" src="lab.mjs"></script>
+  </body>
+</html>

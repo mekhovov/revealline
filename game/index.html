@@ -19,7 +19,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.4.1</span>
+        ><span id="version" class="version">v0.5.0</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -155,6 +155,7 @@
             ><span id="input-status">Keyboard / touch</span>
           </div>
           <p id="save-warning" class="warning" role="status" hidden></p>
+          <p id="controller-ui-hint" class="micro-note controller-hint" role="status" hidden></p>
           <p id="asset-warning" class="warning" role="status" hidden></p>
         </section>
         <aside class="flight-deck" aria-label="Mission and loadout">
@@ -215,6 +216,7 @@
             >Reference atlas</a
           ><a data-source-only href="../releases/">Versions</a
           ><a href="replay-theater/">Replay Theater</a
+          ><a href="controller-lab/">Controller practice</a
           ><button id="export-replay" class="text-button" type="button">Export replay</button>
         </nav>
       </footer>
@@ -245,8 +247,16 @@
           >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
         >
         Touch: hold a direction, or enable Tap steering and tap again/■ to stop. Boost uses the same
-        hold/toggle choice. Standard controllers: D-pad/stick, A action, X supply, shoulder boost,
-        Start pause.
+        hold/toggle choice. Standard controllers: release all controls, then press a face button to
+        join. In flight use D-pad/stick, south/A ability, west/X supply, right shoulder boost,
+        north/Y hangar, east/B stop and Menu pause. In menus, D-pad moves focus, south confirms,
+        east goes back. Confirm a select or slider to edit, then confirm again to apply or go back
+        to cancel. Controller selection does not start a mission automatically.
+      </p>
+      <p>
+        Text entry and file pickers still use keyboard or touch. Some browsers also need a keyboard
+        or touch action before sound can start. Menu navigation and silent gameplay remain
+        available.
       </p>
       <p>
         Each class explains its actual effect in the flight deck. Scout shows current direction

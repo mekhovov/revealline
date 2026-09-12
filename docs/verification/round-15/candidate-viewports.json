@@ -1,0 +1,37 @@
+{
+  "format": "revealline-browser-viewport-observations.v1",
+  "date": "2026-09-12",
+  "url": "http://127.0.0.1:8800/game/",
+  "version": "v0.5.0 candidate",
+  "method": "Read-only visible DOM geometry after browser viewport overrides; no nested iframe geometry or physical device claim.",
+  "observations": [
+    {
+      "viewport": [
+        320,
+        640
+      ],
+      "documentScrollWidth": 320,
+      "start": {
+        "x": 27,
+        "y": 328.796875,
+        "width": 266,
+        "height": 44
+      }
+    },
+    {
+      "viewport": [
+        844,
+        390
+      ],
+      "documentScrollWidth": 844,
+      "start": {
+        "x": 247.671875,
+        "y": 283.2421875,
+        "width": 307.328125,
+        "height": 44
+      }
+    }
+  ],
+  "captureLimitation": "Viewport-override screenshots were incorrectly scaled/cropped by the browser capture path and discarded. They are not visual evidence.",
+  "overrideReset": true
+}

@@ -1,0 +1,261 @@
+:root {
+  color-scheme: dark;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  color: #f3eee2;
+  background: #091824;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 4vw;
+  border-bottom: 1px solid #284553;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+a {
+  color: #a4d8d0;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+main {
+  max-width: 1780px;
+  margin: auto;
+  padding: 26px 4vw 40px;
+}
+h1 {
+  margin: 8px 0;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.12;
+}
+p {
+  line-height: 1.5;
+}
+.intro {
+  max-width: 880px;
+}
+.eyebrow,
+.stage-heading {
+  color: #91b7b4;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+.setup {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+  color: #b3ccc9;
+}
+button,
+select {
+  min-height: 44px;
+  border: 1px solid #48606a;
+  background: #18323e;
+  color: #f3eee2;
+  padding: 10px 12px;
+  font: inherit;
+  border-radius: 5px;
+}
+select {
+  max-width: 100%;
+}
+button {
+  cursor: pointer;
+  font-size: 13px;
+  touch-action: manipulation;
+}
+button:hover:not(:disabled) {
+  background: #294855;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+button[aria-pressed='true'] {
+  color: #0a2230;
+  background: #e5c976;
+  border-color: #e5c976;
+}
+:focus-visible {
+  outline: 3px solid #f1d78a;
+  outline-offset: 3px;
+}
+#load,
+#connect {
+  background: #d9c782;
+  color: #172a31;
+  border-color: #d9c782;
+}
+.notice {
+  padding: 12px;
+  border-left: 3px solid #83b4b2;
+  background: #112732;
+  min-height: 48px;
+  font-size: 13px;
+}
+.notice.error {
+  border-color: #ef937b;
+}
+.lab-grid {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  align-items: start;
+  gap: 22px;
+}
+aside {
+  padding: 16px;
+  background: #102530;
+  border: 1px solid #294954;
+  border-radius: 8px;
+}
+.connection {
+  display: grid;
+  gap: 8px;
+}
+#connection-status,
+.guide,
+.footer-note {
+  font-size: 12px;
+  color: #acc2c3;
+}
+.dpad {
+  display: grid;
+  grid-template-columns: repeat(3, 52px);
+  grid-template-rows: repeat(2, 48px);
+  gap: 5px;
+  justify-content: center;
+  margin: 18px 0;
+}
+.dpad button {
+  font-size: 23px;
+}
+.up {
+  grid-column: 2;
+}
+.left {
+  grid-column: 1;
+  grid-row: 2;
+}
+.down {
+  grid-column: 2;
+  grid-row: 2;
+}
+.right {
+  grid-column: 3;
+  grid-row: 2;
+}
+.face-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+}
+.face-buttons button {
+  display: grid;
+  gap: 5px;
+  padding-inline: 5px;
+}
+.face-buttons b {
+  font-size: 17px;
+}
+.face-buttons span {
+  font-size: 10px;
+}
+.wide {
+  width: 100%;
+  margin-top: 10px;
+}
+.feedback {
+  margin-top: 20px;
+  border-top: 1px solid #34505b;
+  padding-top: 12px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.feedback dt {
+  color: #88a9b0;
+  margin-top: 10px;
+}
+.feedback dd {
+  margin: 5px 0;
+  min-height: 16px;
+}
+.stage {
+  min-width: 0;
+  border: 1px solid #375661;
+  background: #070f17;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.stage-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px;
+}
+#frame-space {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  min-height: 120px;
+}
+iframe {
+  display: block;
+  width: 1280px;
+  height: 720px;
+  border: 0;
+  transform-origin: top left;
+  background: #091324;
+}
+.footer-note {
+  max-width: 920px;
+}
+@media (max-width: 750px) {
+  main {
+    padding-inline: 14px;
+  }
+  .lab-grid {
+    grid-template-columns: 1fr;
+  }
+  .stage {
+    grid-row: 1;
+  }
+  aside {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+  aside > .guide,
+  aside > .feedback {
+    grid-column: 1 / -1;
+  }
+  .dpad {
+    margin: 0;
+    align-self: center;
+  }
+  .connection,
+  .face-buttons {
+    align-self: start;
+  }
+  #connection-status {
+    align-self: center;
+  }
+  .wide {
+    margin: 0;
+  }
+}

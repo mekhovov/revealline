@@ -1,10 +1,12 @@
 # RevealLine
 
-A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.4.1 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
+A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.5.0 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.
 
 ## Run locally
+
+v0.5.0 adds [controller navigation](docs/controller-navigation.md) for the solo menus, hangar, results and collection, plus a [Controller practice lab](docs/controller-practice.md) that drives the actual game using a simulated pad. A deliberate join, released-input boundaries and draft selection prevent menu presses from spilling into flight. Standard mapping is supported; physical-device verification and controller remapping remain separate work.
 
 v0.4.0 adds [Homeward Skies](docs/homeward-skies.md), a three-picture illustrated Ukrainian chapter, clear campaign continuation and [reviewed earlier-release copying](docs/continuity-transfer.md). v0.4.1 fixes selecting the same backup, pack or authoring asset again after a previous import. [Native app wrappers](docs/native-distribution.md), asynchronous file sharing, custom keyboard controls and persistent Tap steering remain available. Packaged versions keep separate collections; copying or complete backups transfer progress forward while older versions remain unchanged.
 
@@ -24,7 +26,7 @@ Arrows/WASD move, Shift boosts, E uses an ability, R collects supplies, and Esca
 
 | Need                                                               | Start here                                                                                                                                                                                           |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Play, controls, gallery and couch race                             | [Game guide](game/README.md)                                                                                                                                                                         |
+| Play, controls, gallery and couch race                             | [Game guide](game/README.md) · [Controller navigation](docs/controller-navigation.md) · [Controller practice](docs/controller-practice.md)                                                               |
 | Back up progress, resume a flight or install a campaign            | [Library and expansion packs](docs/library-and-packs.md) · [Full backup](docs/full-backup.md)                                                                                                        |
 | Explore measured equipment interactions                            | [Fieldcraft challenges](docs/fieldcraft-challenges.md) · [Replay Theater guide](docs/replay-theater.md)                                                                                              |
 | Play the illustrated chapter or replace its artwork                | [Homeward Skies](docs/homeward-skies.md) · [Authored art workflow](docs/authored-art.md)                                                                                                             |
