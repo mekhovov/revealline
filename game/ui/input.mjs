@@ -1,13 +1,4 @@
-const keys = {
-  ArrowUp: 'up',
-  ArrowRight: 'right',
-  ArrowDown: 'down',
-  ArrowLeft: 'left',
-  w: 'up',
-  d: 'right',
-  s: 'down',
-  a: 'left',
-};
+import { actionForKey, keyCodeForEvent, resolveKeyBindings } from '../key-bindings.mjs';
 const neutral = () => ({ direction: null, boost: false, action: false, pickup: false });
 export function gamepadCommand(pad) {
   if (!pad?.connected) return { ...neutral(), pause: false };
@@ -26,6 +17,7 @@ export function attachInput({
   tapMode = () => false,
   active = () => true,
   onGamepad = () => {},
+  getBindings = () => null,
 }) {
   const held = new Map(),
     buttons = new Map(),
@@ -119,9 +111,9 @@ export function attachInput({
   };
   const down = (e) => {
     if (e.defaultPrevented || shortcut(e) || editing(e.target) || !active()) return;
-    const key = e.key.toLowerCase(),
-      dir = keys[e.key] || keys[key];
-    if (e.key === 'Escape' || key === 'p') {
+    const command = actionForKey(resolveKeyBindings(getBindings()), e, { allowRepeat: true }),
+      code = keyCodeForEvent(e);
+    if (command === 'pause') {
       e.preventDefault();
       if (!e.repeat) {
         clear();
@@ -129,28 +121,33 @@ export function attachInput({
       }
       return;
     }
-    if (dir) {
+    if (['up', 'right', 'down', 'left'].includes(command)) {
       e.preventDefault();
-      if (!e.repeat) startDirection(dir, e.code);
+      if (!e.repeat) startDirection(command, code);
       return;
     }
-    if (e.key === 'Shift') {
+    if (command === 'boost') {
       e.preventDefault();
-      if (!e.repeat) held.set(e.code, { boost: true, order: ++order });
+      if (!e.repeat) startBoost(code, false, false);
       syncPressed();
       return;
     }
-    if (key === 'e' || key === 'r') {
+    if (command === 'stop') {
+      e.preventDefault();
+      if (!e.repeat) clear();
+      return;
+    }
+    if (command === 'ability' || command === 'pickup') {
       e.preventDefault();
       if (!e.repeat) {
-        if (key === 'e') action = true;
+        if (command === 'ability') action = true;
         else pickup = true;
       }
     }
   };
   const up = (e) => {
     if (activation(e)) finishBoostKeyGesture();
-    held.delete(e.code);
+    held.delete(keyCodeForEvent(e));
     syncPressed();
   };
   listen(window, 'keydown', down);
