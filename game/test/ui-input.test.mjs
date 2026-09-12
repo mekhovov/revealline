@@ -47,8 +47,10 @@ class Target {
     for (const fn of this.listeners.get(e.type) || []) fn(e);
     if (!['blur', 'lostpointercapture'].includes(e.type)) this.parent?.dispatch(e);
   }
-  closest() {
-    return this.isEditing ? this : this.parent?.closest?.() || null;
+  closest(selector) {
+    return this.isEditing || (this.isReading && selector?.includes('[data-game-reading]'))
+      ? this
+      : this.parent?.closest?.(selector) || null;
   }
   focus() {
     this.focused = true;
@@ -175,6 +177,36 @@ test('fresh keyboard direction survives synchronous clear when resuming', (t) =>
   const f = fixture(t, { onActivity: (input) => input.clear() });
   f.key('ArrowRight', 'ArrowRight');
   assert.equal(f.input.poll().direction, 'right');
+});
+
+test('focused mission details keep native scrolling keys and cannot resume or queue flight actions', (t) => {
+  let activities = 0,
+    pauses = 0;
+  const f = fixture(t, { onActivity: () => activities++, onPause: () => pauses++ });
+  const details = new Target(f.win),
+    text = new Target(details);
+  details.isReading = true;
+  for (const [key, code] of [
+    ['ArrowDown', 'ArrowDown'],
+    ['ArrowRight', 'ArrowRight'],
+    ['Home', 'Home'],
+    ['End', 'End'],
+    [' ', 'Space'],
+    ['e', 'KeyE'],
+    ['r', 'KeyR'],
+    ['Shift', 'ShiftLeft'],
+    ['Escape', 'Escape'],
+  ]) {
+    const event = text.emit('keydown', { key, code });
+    assert.equal(event.defaultPrevented, false);
+    assert.deepEqual(f.input.poll(), neutral);
+    text.emit('keyup', { key, code });
+  }
+  assert.equal(activities, 0);
+  assert.equal(pauses, 0);
+  f.key('ArrowDown', 'ArrowDown');
+  assert.equal(activities, 1);
+  assert.equal(f.input.poll().direction, 'down');
 });
 test('fresh hold and tap pointer directions survive resume clear', (t) => {
   const f = fixture(t, { onActivity: (input) => input.clear() });

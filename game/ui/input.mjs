@@ -48,7 +48,9 @@ export function attachInput({
     }
   };
   const editing = (el) =>
-    !!el?.closest?.('input,select,textarea,[contenteditable]:not([contenteditable="false"])');
+    !!el?.closest?.(
+      'input,select,textarea,[contenteditable]:not([contenteditable="false"]),[data-game-reading]',
+    );
   const shortcut = (e) => e.ctrlKey || e.metaKey || e.altKey;
   const activation = (e) => e.key === ' ' || e.key === 'Enter';
   const localBoost = () =>

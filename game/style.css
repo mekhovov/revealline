@@ -1515,6 +1515,10 @@ dialog input[type='search'] {
   font-size: 0.8rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.game-overlay .overlay-actions .button {
+  min-height: 44px;
 }
 .mastery-list {
   max-height: 6rem;
