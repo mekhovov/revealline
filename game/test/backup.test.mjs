@@ -82,7 +82,7 @@ test('a full archive preserves all member formats, original image bytes and prep
   assert.ok(Object.isFrozen(ready.library.preferences));
   assert.ok(Object.isFrozen(ready.packs));
   assert.equal(JSON.parse(exportPackLibrary(ready.packs)).format, 'xonix-pack-library.v1');
-  assert.equal(JSON.parse(exportLibrary(ready.library)).format, 'xonix-library.v1');
+  assert.equal(JSON.parse(exportLibrary(ready.library)).format, 'xonix-library.v2');
   const text = await exportBackup(ready, { decodeImage });
   assert.deepEqual(await prepareBackup(text, { decodeImage }), ready);
   assert.deepEqual(candidate, before);

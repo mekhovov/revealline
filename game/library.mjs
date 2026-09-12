@@ -4,6 +4,12 @@ import { normalizedLevel } from './core/level.mjs';
 import { resolveKeyBindings } from './key-bindings.mjs';
 import { resolveControllerBindings } from './controller-bindings.mjs';
 import {
+  resolveMasteryRecords,
+  mergeMasteryRecords,
+  MASTERY_RECORD_LIMITS,
+  MasteryCapacityError,
+} from './mastery-records.mjs';
+import {
   boundedJSON,
   plainObject,
   stableId,
@@ -13,7 +19,8 @@ import {
   canonicalJSON,
 } from './data-json.mjs';
 
-export const LIBRARY_VERSION = 'xonix-library.v1';
+export const LIBRARY_VERSION = 'xonix-library.v2';
+const LEGACY_LIBRARY_VERSION = 'xonix-library.v1';
 export const LIBRARY_LIMITS = Object.freeze({
   maxBytes: 4 * 1024 * 1024,
   campaigns: 512,
@@ -89,6 +96,7 @@ export function emptyLibrary() {
     campaigns: {},
     gallery: [],
     scores: [],
+    masteries: [],
   };
 }
 function preferencesValid(preferences) {
@@ -202,9 +210,14 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
       throw new LibraryCapacityError('bytes', null, LIBRARY_LIMITS.maxBytes);
     throw error;
   }
-  exactKeys(value, ['format', 'preferences', 'campaigns', 'gallery', 'scores'], 'library');
-  required(value.format === LIBRARY_VERSION, 'Unsupported player library version.');
-  // Additive v1 preference migration preserves already-saved release-candidate profiles.
+  const legacy = value.format === LEGACY_LIBRARY_VERSION;
+  exactKeys(
+    value,
+    ['format', 'preferences', 'campaigns', 'gallery', 'scores', ...(legacy ? [] : ['masteries'])],
+    'library',
+  );
+  required(legacy || value.format === LIBRARY_VERSION, 'Unsupported player library version.');
+  // Preserve the omitted-only preference migrations of already-saved profiles.
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'matchClassAppearance'))
     value.preferences.matchClassAppearance = false;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'masterVolume'))
@@ -363,6 +376,15 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
       'Score class route is invalid.',
     );
   }
+  // Validate the complete legacy shape before adding the new metadata field.
+  // A v1 document containing `masteries` was rejected by the exact-key check.
+  value.masteries = legacy ? [] : resolveMasteryRecords(value.masteries);
+  value.format = LIBRARY_VERSION;
+  if (legacy) {
+    // The migrated document must fit the same total library budget, including
+    // newly added fields. Never silently discard old collection entries.
+    return checkLibrary(value, { campaigns });
+  }
   return value;
 }
 export function validateLibrary(value, options) {
@@ -402,6 +424,13 @@ export function updatePreferences(library, patch) {
   next.preferences = { ...next.preferences, ...safe };
   preferencesValid(next.preferences);
   return next;
+}
+/** Merge portable local metadata only. The caller must establish award authority
+ * separately; this helper neither simulates a run nor changes ordinary clears. */
+export function withMasteryRecords(library, records) {
+  const next = checkLibrary(library);
+  next.masteries = mergeMasteryRecords(next.masteries, records);
+  return checkLibrary(next);
 }
 export function recordLibraryCompletion(
   library,
@@ -531,6 +560,8 @@ export function libraryCapacity(library) {
     maxGallery: LIBRARY_LIMITS.gallery,
     scores: value.scores.length,
     maxScores: LIBRARY_LIMITS.scores,
+    masteries: value.masteries.length,
+    maxMasteries: MASTERY_RECORD_LIMITS.records,
   };
 }
 const combinedStats = (a, b) => ({
@@ -545,6 +576,7 @@ export function mergeLibraries(local, remote, { baseline = null } = {}) {
     right = checkLibrary(remote),
     base = baseline === null ? null : checkLibrary(baseline);
   const next = structuredClone(right);
+  next.masteries = mergeMasteryRecords(left.masteries, right.masteries);
   for (const key of Object.keys(DEFAULT_PREFERENCES))
     if (!base || canonicalJSON(left.preferences[key]) !== canonicalJSON(base.preferences[key]))
       next.preferences[key] = left.preferences[key];
@@ -641,7 +673,7 @@ export function loadLibrary(storage, key, options) {
 /** `baseline` is the last adopted profile, not the edited candidate. Successful
  * callers adopt both returned library and generation. A replacement (import,
  * Undo or explicit archive reset) invalidates older tabs instead of resurrecting
- * deliberately removed records. Portable exports remain raw xonix-library.v1.
+ * deliberately removed records. Portable exports use raw xonix-library.v2.
  */
 export function saveLibrary(...args) {
   return saveLibraryAttempt(...args);
@@ -768,7 +800,7 @@ function saveLibraryAttempt(
       library: candidate,
       generation,
       capacityError:
-        error instanceof LibraryCapacityError
+        error instanceof LibraryCapacityError || error instanceof MasteryCapacityError
           ? { code: error.code, resource: error.resource, used: error.used, limit: error.limit }
           : null,
       warning: `Library remains available in this session; export a backup. ${error.message.slice(0, 240)}`,

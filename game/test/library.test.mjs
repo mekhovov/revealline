@@ -343,7 +343,7 @@ test('ordinary tab writes merge remote completions and apply only locally change
   assert.equal(savedB.library.preferences.showGrid, true);
   assert.deepEqual(loadLibrary(local, 'p').library, savedB.library);
   assert.equal(JSON.parse(local.map.get('p')).format, LIBRARY_STORAGE_VERSION);
-  assert.equal(JSON.parse(exportLibrary(savedB.library)).format, 'xonix-library.v1');
+  assert.equal(JSON.parse(exportLibrary(savedB.library)).format, 'xonix-library.v2');
   assert.deepEqual(
     importLibrary(local.map.get('p')),
     savedB.library,

@@ -4,10 +4,12 @@ import {
   exportReplay,
   recordRelease,
   verifyReplayAsync,
+  takeReplayMasteryObserver,
   MAX_REPLAY_BYTES,
   MAX_REPLAY_TICKS,
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
+import { resolveMasteryDefinition } from './mastery.mjs';
 
 export const SESSION_FORMAT = 'xonix-session.v1';
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
@@ -94,7 +96,7 @@ export function suspendSession({
 
 export async function restoreSession(
   candidate,
-  { campaign, campaignKey, signal, onProgress } = {},
+  { campaign, campaignKey, signal, onProgress, masteryDefinition } = {},
 ) {
   // Snapshot the entire bounded envelope before the first await. Replay checks
   // alone cannot protect outer metadata or later reads from caller mutation.
@@ -102,7 +104,22 @@ export async function restoreSession(
   if (session.campaignKey !== campaignKey)
     throw new Error('This saved attempt belongs to a different campaign or rules revision.');
   const installed = boundedJSON(campaign);
-  const checked = await verifyReplayAsync(session.replay, { signal, onProgress });
+  const mastery =
+    masteryDefinition === undefined
+      ? undefined
+      : {
+          definition: resolveMasteryDefinition(masteryDefinition),
+          campaignId: installed.id,
+          campaignKey: session.campaignKey,
+          runId: session.runId,
+        };
+  const checked = await verifyReplayAsync(session.replay, { signal, onProgress, mastery });
+  // A final progress callback can cancel after the verifier's last yield.
+  if (signal?.aborted) {
+    const error = new Error('Saved attempt verification cancelled.');
+    error.name = 'AbortError';
+    throw error;
+  }
   if (!checked.match)
     throw new Error('Saved attempt verification failed. The current game is unchanged.');
   if (!['running', 'respawning'].includes(checked.state.status))
@@ -130,7 +147,12 @@ export async function restoreSession(
   releaseInputs(checked.state);
   recordRelease(recorder);
   const { replay: _replay, ...identity } = session;
-  return { session: identity, run: checked.state, recorder };
+  if (mastery === undefined) return { session: identity, run: checked.state, recorder };
+  // Take only after installed map/roster checks. This in-memory continuation
+  // rebuilds preview progress; it is never serialized into the saved envelope.
+  const masteryObserver = takeReplayMasteryObserver(checked);
+  required(masteryObserver, 'Saved equipment-goal observation could not be reconstructed.');
+  return { session: identity, run: checked.state, recorder, masteryObserver };
 }
 
 export function saveSession(storage, key, session) {
