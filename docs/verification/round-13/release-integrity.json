@@ -1,0 +1,282 @@
+{
+  "formatVersion": 1,
+  "checkedAt": "2026-09-12T07:09:55.212195+00:00",
+  "result": "pass",
+  "version": "v0.3.0",
+  "sourceRevision": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+  "environment": {
+    "node": "v20.19.5",
+    "python": "3.14.4",
+    "pythonZlib": "1.2.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "frozenRelease": {
+    "version": "v0.3.0",
+    "sourceRevision": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+    "sourceArchive": {
+      "bytes": 86261760,
+      "sha256": "6e45ac6777d0b504f536791f1c2c86efc710ae6886e387cb5402c9e410e76012",
+      "recordedHashMatches": true,
+      "paxRevisionMatches": true
+    },
+    "distribution": {
+      "bytes": 8216996,
+      "sha256": "a5378bc01ff54bb3a17ac4f3b5778db6d7d2d0b8d478d496e332cc56fd387207",
+      "recordedHashMatches": true,
+      "sidecarMatches": true,
+      "zipEntries": 95,
+      "compressedPayloadBytes": 8204982,
+      "uncompressedBytes": 8204982,
+      "crcPass": true,
+      "exactInventoryMatch": true,
+      "allZipBytesMatchSite": true
+    },
+    "manifest": {
+      "bytes": 15295,
+      "sha256": "30ceeac7aab37a3d91ec3b90ebc4b4acc94fa377e954df7b047ea8e05f010b1d",
+      "files": 94,
+      "totalBytes": 8189687,
+      "recordedHashMatches": true,
+      "allFileHashesMatch": true
+    }
+  },
+  "rebuild": {
+    "workspace": ".cache/round13-repro-qfdlq3z9",
+    "method": "Extract only regular files/directories from the frozen source.tar; invoke the extracted scripts/game-cli.mjs directly, with the frozen version and source revision. No working-tree game files or installed application dependencies are used.",
+    "extractedSourceFiles": 504,
+    "extractedSourceBytes": 85818075,
+    "frozenCliSha256": "b03fb675f036422aace58346d9c487dfc888f8e7e8d7ce177942b9b6b3df6179",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round13-repro-qfdlq3z9/source/scripts/game-cli.mjs",
+      "build",
+      "--out",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round13-repro-qfdlq3z9/rebuilt-site",
+      "--version",
+      "v0.3.0",
+      "--revision",
+      "7cd2046405a7d4daf6663c01c1478101bd0a632a"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round13-repro-qfdlq3z9/source",
+    "exitCode": 0,
+    "stdout": {
+      "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round13-repro-qfdlq3z9/rebuilt-site",
+      "version": "v0.3.0",
+      "files": 94,
+      "sha256": "a5378bc01ff54bb3a17ac4f3b5778db6d7d2d0b8d478d496e332cc56fd387207",
+      "sourceRevision": "7cd2046405a7d4daf6663c01c1478101bd0a632a"
+    },
+    "distributionSha256": "a5378bc01ff54bb3a17ac4f3b5778db6d7d2d0b8d478d496e332cc56fd387207",
+    "manifestSha256": "30ceeac7aab37a3d91ec3b90ebc4b4acc94fa377e954df7b047ea8e05f010b1d",
+    "zipBytes": 8216996,
+    "manifestBytes": 15295,
+    "zipByteIdentical": true,
+    "manifestByteIdentical": true,
+    "allInventoriedAssetsByteIdentical": true
+  },
+  "retainedOlderReleases": [
+    {
+      "version": "v0.1.0",
+      "sourceRevision": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+      "sourceArchive": {
+        "bytes": 81602560,
+        "sha256": "4c3e7d22145f33656c9d0868a1e27c33e6161ebaca1be275272fc1d70dc75cfb",
+        "recordedHashMatches": true,
+        "paxRevisionMatches": true
+      },
+      "distribution": {
+        "bytes": 7258748,
+        "sha256": "af3468a43496eb450a05463b9288307dced3993b60b6c0008dfb7174e4b6b955",
+        "recordedHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7252678,
+        "uncompressedBytes": 7252678,
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7652,
+        "sha256": "b0bd08588a7004faabf138d94773044cef7522254a0efe492b127dcb8596ea50",
+        "files": 46,
+        "totalBytes": 7245026,
+        "recordedHashMatches": true,
+        "allFileHashesMatch": true
+      },
+      "earlierVerification": {
+        "sha256": "af3468a43496eb450a05463b9288307dced3993b60b6c0008dfb7174e4b6b955",
+        "source": "docs/verification/round-10/distributions.json",
+        "unchanged": true
+      }
+    },
+    {
+      "version": "v0.1.1",
+      "sourceRevision": "76687c2decf409d845f698ad7fefa92167178011",
+      "sourceArchive": {
+        "bytes": 81623040,
+        "sha256": "c9a38c94bbabbba92f7c122dbb7b5b68f7655a5f8681cdd93d59244c96a5a77c",
+        "recordedHashMatches": true,
+        "paxRevisionMatches": true
+      },
+      "distribution": {
+        "bytes": 7264651,
+        "sha256": "451d938a7223bb300a4b61afca317c7fcec601e843ab216072d156847259f5ec",
+        "recordedHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7258581,
+        "uncompressedBytes": 7258581,
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7653,
+        "sha256": "d0e3a743cb855bb6bdf2c1ec74bc7b79cd55520e0c09126c433aa92c3cf6ad32",
+        "files": 46,
+        "totalBytes": 7250928,
+        "recordedHashMatches": true,
+        "allFileHashesMatch": true
+      },
+      "earlierVerification": {
+        "sha256": "451d938a7223bb300a4b61afca317c7fcec601e843ab216072d156847259f5ec",
+        "source": "docs/verification/round-10/distributions.json",
+        "unchanged": true
+      }
+    },
+    {
+      "version": "v0.1.2",
+      "sourceRevision": "5f539f6f722c49f36a31701454a683ee60122d81",
+      "sourceArchive": {
+        "bytes": 81623040,
+        "sha256": "ae59521f5ceaafcd2070d683f1a02085af95b8f6e8bb0a0dfc6547ba1f5a516f",
+        "recordedHashMatches": true,
+        "paxRevisionMatches": true
+      },
+      "distribution": {
+        "bytes": 7264949,
+        "sha256": "38745a2bb05ac56c8cbfe31d5b5046da4a7a633c940ddedcc4c2612527001356",
+        "recordedHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7258879,
+        "uncompressedBytes": 7258879,
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7653,
+        "sha256": "cdc3eaf999081e4b389a31c3bc3200dba1221287fff01d8c82499c1fbaf7f155",
+        "files": 46,
+        "totalBytes": 7251226,
+        "recordedHashMatches": true,
+        "allFileHashesMatch": true
+      },
+      "earlierVerification": {
+        "sha256": "38745a2bb05ac56c8cbfe31d5b5046da4a7a633c940ddedcc4c2612527001356",
+        "source": "docs/verification/round-10/distributions.json",
+        "unchanged": true
+      }
+    },
+    {
+      "version": "v0.2.0",
+      "sourceRevision": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+      "sourceArchive": {
+        "bytes": 85309440,
+        "sha256": "6ec3cf2fde57a4d478ab0c5e4593588baede255a6020bc80ad416acad9496de5",
+        "recordedHashMatches": true,
+        "paxRevisionMatches": true
+      },
+      "distribution": {
+        "bytes": 8184029,
+        "sha256": "0db2135c8290bcbffa342bcba4768e1ccf80391229495c923364892970f9f429",
+        "recordedHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 92,
+        "compressedPayloadBytes": 8172367,
+        "uncompressedBytes": 8172367,
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 14827,
+        "sha256": "2bc8c25e70e691b32b57efb30534bbb036733eaec5e2ea3466ec5b853fdefe18",
+        "files": 91,
+        "totalBytes": 8157540,
+        "recordedHashMatches": true,
+        "allFileHashesMatch": true
+      },
+      "earlierVerification": {
+        "sha256": "0db2135c8290bcbffa342bcba4768e1ccf80391229495c923364892970f9f429",
+        "source": "docs/verification/round-11/release-integrity.json",
+        "unchanged": true
+      }
+    },
+    {
+      "version": "v0.2.1",
+      "sourceRevision": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+      "sourceArchive": {
+        "bytes": 85514240,
+        "sha256": "97323071e6a38e8ebe61797a12e8adda25a3087253e40915589d0617a715dc57",
+        "recordedHashMatches": true,
+        "paxRevisionMatches": true
+      },
+      "distribution": {
+        "bytes": 8211017,
+        "sha256": "1a0c88d4758e65826af0c1fcebdb55181cd3f2d77ea6f7b8413a1894997daafd",
+        "recordedHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 94,
+        "compressedPayloadBytes": 8199113,
+        "uncompressedBytes": 8199113,
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 15143,
+        "sha256": "76f6d6e3a36a3d2b14411a76c8fb59560e7bbe3b19e5614722b22fd10a1f0774",
+        "files": 93,
+        "totalBytes": 8183970,
+        "recordedHashMatches": true,
+        "allFileHashesMatch": true
+      },
+      "earlierVerification": {
+        "sha256": "1a0c88d4758e65826af0c1fcebdb55181cd3f2d77ea6f7b8413a1894997daafd",
+        "source": "docs/verification/round-12/release-integrity.json",
+        "unchanged": true
+      }
+    }
+  ],
+  "originalReleaseTreesUnchanged": true,
+  "releaseTreeFingerprints": {
+    "v0.1.0": {
+      "files": 52,
+      "sha256": "254d7c34318002ccd8cbed22a18456705e8fda36ace6ab46b29eddf913d6f1e2"
+    },
+    "v0.1.1": {
+      "files": 52,
+      "sha256": "be3bc324d409b37933cae696c29053fa680b2ce215dc4a669d8fcf433db4e22d"
+    },
+    "v0.1.2": {
+      "files": 52,
+      "sha256": "6911b63d16beb18200f21d82601d227773b78f8f9cf5a46f5573ad9c28dd5f99"
+    },
+    "v0.2.0": {
+      "files": 97,
+      "sha256": "4182d40d02ab329c0c6f32d1b57d2e6b118d16aaecfab94ea99fa92c89a20638"
+    },
+    "v0.2.1": {
+      "files": 99,
+      "sha256": "1d359cb0a2ec2a8c17bf11999af592d4488d0799cc00e170f7de790345008229"
+    },
+    "v0.3.0": {
+      "files": 100,
+      "sha256": "d29343abe02dc34028a8ea8bc5a0420f36a306d7e01e39f739f0e94fb087cfc5"
+    }
+  },
+  "scope": "Archive integrity and deterministic web rebuild only. This does not establish native UI, storage, sound, controller, signing or store-distribution behavior."
+}
