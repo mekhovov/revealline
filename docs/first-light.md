@@ -25,6 +25,7 @@ node scripts/build-first-light-pack.mjs --write
 node scripts/build-first-light-pack.mjs
 node scripts/game-cli.mjs inspect-goals --pack game/content/packs/fpv-arcade.json
 node scripts/verify-first-light.mjs
+node scripts/verify-first-light.mjs --gentle
 ```
 
 `build-first-light-pack` validates file type, size, 2:1 dimensions and distinct hashes before embedding. Its default command checks source and runtime byte equivalence without changing files. Original artwork is outside the runtime build; the pack embeds only its three display images. P5 will provide broader media-library import/derivatives and optional downloads.
@@ -33,8 +34,10 @@ node scripts/verify-first-light.mjs
 
 `game/replays/first-light-routes.json` pins six legal command routes, one per map and turning policy. Each is replayed under the exact shipped level/class hashes with replay v5 and a complete checkpoint. Seed 1 routes finish with all three lives at roughly 15.4, 23.2 and 17.1 seconds; they establish solvability, not a human difficulty curve or minimum completion time. No deliberate waiting is required. Blind unchanged-direction runs fail and encounter actual damaging contacts on all three maps.
 
+`game/replays/first-light-gentle-routes.json` independently pins six Gentle routes under the derived campaign identity and Gentle policy version. They finish with five lives. The legacy 58-route Gentle oracle remains byte-for-byte unchanged; combined coverage checks require all 32 currently installed maps in both turning modes.
+
 The actual solo-host test installs a wide fixture through the normal pack handler, wins, then selects a legacy pack and verifies the native bitmap and layout ratio change. The fixture removes threats solely to isolate the host transition; shipped winning routes separately exercise the real threats. Renderer/editor/gallery/theater regressions cover rightmost columns, coordinate scaling and preserved old versions.
 
-Real browser source checks confirm actual image decoding, opaque concealment, tap/release flight, contact/recovery and explicit pause. Human assessment, additional seeds/play styles, responsive qualification and release artifact checks are tracked separately. A successful automated route does not establish that the game is fun or that hardware/controllers have been certified.
+Real browser source checks confirm actual image decoding, opaque concealment, tap/release flight, contact/recovery and explicit pause. Source viewport checks at 390 × 844, 320 × 640 and 844 × 390 preserve the whole wide arena without horizontal overflow, with visible 44 px or larger controls and reachable briefing actions. These are browser layout checks, not physical device certification. Human assessment, additional seeds/play styles and release artifact checks are tracked separately. A successful automated route does not establish that the game is fun or that hardware/controllers have been certified.
 
 The renderer uses the pinned Phaser canvas texture/scale APIs, cross-checked against installed 4.2.1 source and [Phaser's ScaleManager documentation](https://docs.phaser.io/api-documentation/class/scale-scalemanager). Session audio follows [browser `play()` permission behavior](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play); preferences cannot bypass activation requirements.

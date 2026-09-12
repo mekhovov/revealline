@@ -83,7 +83,11 @@ export class Element extends Events {
     this.attributes = new Map();
     this.classList = new Classes();
     this.dataset = {};
-    this.style = {};
+    this.style = {
+      setProperty(name, value) {
+        this[name] = String(value);
+      },
+    };
     this.hidden = false;
     this.disabled = false;
     this.inert = false;
