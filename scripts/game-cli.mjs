@@ -1096,7 +1096,11 @@ function packCatalogEntries(pack, tooling) {
     },
     sourcePackId: pack.id,
     sourcePackFormat: pack.format,
-    ...([tooling.MASTERY_PACK_VERSION, tooling.ENCOUNTER_PACK_VERSION].includes(pack.format)
+    ...([
+      tooling.MASTERY_PACK_VERSION,
+      tooling.ENCOUNTER_PACK_VERSION,
+      tooling.WIDE_PACK_VERSION,
+    ].includes(pack.format)
       ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
       : {}),
   }));

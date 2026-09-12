@@ -127,7 +127,10 @@ dialog textarea {
   display: block;
 }
 .game-shell .arena-panel {
-  max-width: min(100%, calc((100dvh - 225px - var(--safe-top) - var(--safe-bottom)) * 1.333333));
+  max-width: min(
+    100%,
+    calc((100dvh - 225px - var(--safe-top) - var(--safe-bottom)) * var(--board-aspect, 1.333333))
+  );
 }
 .game-shell .telemetry {
   height: 54px;
@@ -237,6 +240,7 @@ dialog textarea {
 }
 .game-shell .play-controls .utility-buttons {
   display: flex;
+  flex-direction: row;
   gap: 4px;
 }
 .game-shell .flight-deck {
@@ -326,7 +330,8 @@ dialog textarea {
   font-size: 12px;
   text-decoration: none;
 }
-#shell-play {
+#shell-play,
+#shell-featured {
   grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
@@ -474,7 +479,7 @@ dialog textarea {
 }
 @media (max-height: 600px) and (min-width: 681px) {
   .game-shell .arena-panel {
-    max-width: min(100%, calc((100dvh - 152px) * 1.333333));
+    max-width: min(100%, calc((100dvh - 152px) * var(--board-aspect, 1.333333)));
   }
   .game-shell .shell-bar {
     height: 44px;
@@ -514,5 +519,123 @@ dialog textarea {
   }
   .shell-home[open] {
     display: block;
+  }
+}
+
+.game-shell .play-controls .ability-buttons .button {
+  background: #152237;
+  color: #c7dce9;
+  border-color: #3e5570;
+}
+
+/* Portrait briefings are native menu overlays, independent of the shallow wide arena. */
+@media (max-width: 680px) {
+  .game-shell .game-overlay {
+    position: fixed;
+    inset: 62px 8px auto;
+    height: auto;
+    max-height: calc(100dvh - 78px);
+    z-index: 40;
+    padding: 16px;
+    background: #080f1ff5;
+    border: 1px solid #38536b;
+    align-items: flex-start;
+  }
+  .game-shell .overlay-card {
+    width: 100%;
+    max-height: calc(100dvh - 112px);
+    overflow: auto;
+    padding: 12px;
+  }
+  .game-shell .play-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .game-shell .play-controls .direction-controls,
+  .game-shell .play-controls .utility-buttons {
+    justify-content: center;
+  }
+  .game-shell .play-controls .ability-buttons {
+    min-width: 100%;
+    flex: none;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .game-shell .play-controls .ability-buttons .button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 4px;
+    overflow-wrap: normal;
+    justify-content: center;
+  }
+}
+@media (max-width: 680px) {
+  .game-shell .play-controls .ability-buttons {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+@media (min-width: 681px) and (max-height: 500px) {
+  .game-shell .arena-panel,
+  .game-shell .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: 100%;
+  }
+  .game-shell .arena-panel > .arena-shell,
+  .game-shell .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
+    max-width: min(100%, calc((100dvh - 100px) * var(--board-aspect, 1.333333)));
+  }
+  .game-shell .play-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'directions' 'actions' 'utilities';
+    align-items: start;
+    padding: 0;
+    margin: 0;
+  }
+  .game-shell .play-controls .direction-controls {
+    display: grid;
+    grid-template-columns: 44px 44px;
+    grid-template-rows: 44px 44px;
+  }
+  .game-shell .play-controls .direction-controls button {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .game-shell .play-controls .ability-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .game-shell .play-controls .utility-buttons {
+    flex-direction: row;
+  }
+  .game-shell .game-overlay {
+    position: fixed;
+    inset: 50px 8px 8px;
+    padding: 12px;
+    z-index: 40;
+    background: #080f1ff5;
+    border: 1px solid #38536b;
+  }
+  .game-shell .overlay-card {
+    width: min(760px, 100%);
+    height: 100%;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .game-shell #overlay-reading {
+    min-height: 0;
+    overflow: auto;
+  }
+  .game-shell .reading-toolbar,
+  .game-shell .overlay-actions {
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .game-shell .overlay-footnote {
+    display: none;
   }
 }

@@ -5,7 +5,14 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { performance } from 'node:perf_hooks';
-import { createRun, stepRun, getSummary, FIXED_DT, CELL } from '../game/core/index.mjs';
+import {
+  createRun,
+  stepRun,
+  getSummary,
+  FIXED_DT,
+  CELL,
+  geometryForRun,
+} from '../game/core/index.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const PROOF_FILE = path.join(ROOT, 'game/replays/campaign-routes.json');
@@ -16,8 +23,7 @@ const directions = [
   { name: 'down', dx: 0, dy: 1 },
   { name: 'left', dx: -1, dy: 0 },
 ];
-const center = (index) => ({ x: (index % 48) + 0.5, y: Math.floor(index / 48) + 0.5 });
-const idx = (x, y) => y * 48 + x;
+const center = (index, width) => ({ x: (index % width) + 0.5, y: Math.floor(index / width) + 0.5 });
 
 export async function loadInputs() {
   return {
@@ -27,18 +33,20 @@ export async function loadInputs() {
 }
 
 function safePaths(state) {
+  const { width, height } = geometryForRun(state);
+  const idx = (x, y) => y * width + x;
   const start = idx(Math.floor(state.player.x), Math.floor(state.player.y));
-  const parents = new Int32Array(48 * 36).fill(-1),
+  const parents = new Int32Array(width * height).fill(-1),
     queue = [start];
   parents[start] = start;
   for (let p = 0; p < queue.length; p++) {
     const current = queue[p],
-      x = current % 48,
-      y = Math.floor(current / 48);
+      x = current % width,
+      y = Math.floor(current / width);
     for (const d of directions) {
       const nx = x + d.dx,
         ny = y + d.dy;
-      if (nx < 0 || nx > 47 || ny < 0 || ny > 35) continue;
+      if (nx < 0 || nx >= width || ny < 0 || ny >= height) continue;
       const next = idx(nx, ny);
       if (parents[next] === -1 && state.cells[next] === CELL.SAFE) {
         parents[next] = current;
@@ -50,20 +58,30 @@ function safePaths(state) {
 }
 
 function candidates(state) {
+  const { width, height } = geometryForRun(state);
+  const idx = (x, y) => y * width + x;
   const { start, parents, reachable } = safePaths(state),
     result = [];
   for (const origin of reachable)
     for (const d of directions) {
-      let x = (origin % 48) + d.dx,
-        y = Math.floor(origin / 48) + d.dy;
-      if (x < 1 || x > 46 || y < 1 || y > 34 || state.cells[idx(x, y)] !== CELL.FIELD) continue;
+      let x = (origin % width) + d.dx,
+        y = Math.floor(origin / width) + d.dy;
+      if (
+        x < 1 ||
+        x >= width - 1 ||
+        y < 1 ||
+        y >= height - 1 ||
+        state.cells[idx(x, y)] !== CELL.FIELD
+      )
+        continue;
       let length = 0;
-      while (x >= 0 && x < 48 && y >= 0 && y < 36 && state.cells[idx(x, y)] === CELL.FIELD) {
+      while (x >= 0 && x < width && y >= 0 && y < height && state.cells[idx(x, y)] === CELL.FIELD) {
         length++;
         x += d.dx;
         y += d.dy;
       }
-      if (x < 0 || x > 47 || y < 0 || y > 35 || state.cells[idx(x, y)] !== CELL.SAFE) continue;
+      if (x < 0 || x >= width || y < 0 || y >= height || state.cells[idx(x, y)] !== CELL.SAFE)
+        continue;
       const path = [];
       for (let cursor = origin; cursor !== start; cursor = parents[cursor]) path.push(cursor);
       path.reverse();
@@ -111,8 +129,8 @@ function tryCandidate(original, candidate, counter) {
   const state = structuredClone(original),
     segments = [];
   // Collapse same-direction steps in the SAFE-only BFS route into turn waypoints.
-  const points = candidate.path.map(center);
-  let prior = center(idx(Math.floor(original.player.x), Math.floor(original.player.y))),
+  const points = candidate.path.map((index) => center(index, state.width));
+  let prior = { x: Math.floor(original.player.x) + 0.5, y: Math.floor(original.player.y) + 0.5 },
     lastDirection = null;
   const waypoints = [];
   for (let i = 0; i < points.length; i++) {
@@ -124,7 +142,8 @@ function tryCandidate(original, candidate, counter) {
   }
   if (points.length) waypoints.push(points.at(-1));
   for (const point of waypoints) if (!travel(state, point, segments, { counter })) return null;
-  if (!travel(state, center(candidate.end), segments, { action: true, counter })) return null;
+  if (!travel(state, center(candidate.end, state.width), segments, { action: true, counter }))
+    return null;
   if (
     state.status !== 'won' &&
     (state.status !== 'running' ||
@@ -139,13 +158,13 @@ export function findRoute(
   level,
   classes,
   turnPolicy,
-  { maxCuts = 14, maxMilliseconds = 45000 } = {},
+  { maxCuts = 14, maxMilliseconds = 45000, classId = 'interceptor' } = {},
 ) {
   const started = performance.now();
   let state = createRun(level, {
     seed: 1,
     turnPolicy,
-    classId: 'interceptor',
+    classId,
     classRecipes: classes,
   });
   const segments = [];

@@ -4,7 +4,7 @@ import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
-import { BoardPainter } from '../ui/render.mjs';
+import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { readAssetStore } from '../storage.mjs';
 import { importPackLibrary, resolvePackCampaign } from '../packs.mjs';
@@ -137,6 +137,13 @@ try {
       { seconds: Number($('race-time').value) },
     );
     generation++;
+    const { width, height } = boardPaintSizeForLevel(level);
+    for (const player of [0, 1]) {
+      const canvas = $(`race-canvas-${player}`);
+      canvas.width = width;
+      canvas.height = height;
+      canvas.style.setProperty('--board-ratio', `${width} / ${height}`);
+    }
     sound.reset();
     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
     painters.forEach((p) => {

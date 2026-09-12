@@ -161,6 +161,7 @@ export async function soloPage(
     search = '',
     previewStorage = memoryStorage(),
     titleScreen = false,
+    fetchJSON,
   } = {},
 ) {
   const doc = new SoloDocument(),
@@ -206,10 +207,13 @@ export async function soloPage(
     },
     fetch: async (path) => ({
       ok: path !== 'build-info.json',
-      json: async () =>
-        path === 'content/campaign.json' && campaign
+      json: async () => {
+        const replacement = fetchJSON?.(path);
+        if (replacement !== undefined) return structuredClone(replacement);
+        return path === 'content/campaign.json' && campaign
           ? structuredClone(campaign)
-          : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8')),
+          : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8'));
+      },
     }),
     requestAnimationFrame(callback) {
       const id = ++nextFrame;
@@ -225,9 +229,35 @@ export async function soloPage(
       Game: class {
         constructor(config) {
           scene = new config.scene();
-          scene.textures = { createCanvas: () => ({ context: {} }) };
-          scene.add = { image: () => ({ setOrigin() {} }) };
+          scene.textures = {
+            createCanvas: (id, width, height) => ({
+              context: {},
+              width,
+              height,
+              setSize(w, h) {
+                this.width = w;
+                this.height = h;
+              },
+            }),
+          };
+          scene.add = {
+            image: () => ({
+              setOrigin() {
+                return this;
+              },
+              setSizeToFrame() {},
+            }),
+          };
           scene.game = { canvas: doc.createElement('canvas') };
+          scene.game.canvas.width = config.width;
+          scene.game.canvas.height = config.height;
+          scene.scale = {
+            resize(width, height) {
+              scene.game.canvas.width = width;
+              scene.game.canvas.height = height;
+            },
+          };
+          scene.cameras = { main: { setSize() {} } };
           $('game-canvas').append(scene.game.canvas);
           scene.create();
         }

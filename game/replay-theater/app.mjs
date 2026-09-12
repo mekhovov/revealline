@@ -1,7 +1,7 @@
 import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
-import { BoardPainter } from '../ui/render.mjs';
+import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -82,7 +82,7 @@ try {
     $('time-readout').textContent =
       `${state.time.toFixed(2)} / ${info.durationSeconds.toFixed(2)} s`;
     $('run-readout').textContent =
-      `${info.turnPolicy} · ${clipped(state.activeClassId)} · ${(state.coverage * 100).toFixed(1)}% covered · ${state.lives} lives · ${state.score} recorded points`;
+      `${state.width} × ${state.height} cells · ${info.turnPolicy} · ${clipped(state.activeClassId)} · ${(state.coverage * 100).toFixed(1)}% covered · ${state.lives} lives · ${state.score} recorded points`;
     $('checkpoint').textContent = player.finalCheckpoint
       ? `Final checkpoint matches · ${player.finalCheckpoint.hash} · No progress awarded.`
       : player.phase === 'error'
@@ -162,6 +162,11 @@ try {
       const theme = chosenTheme();
       await nextPainter.setLook(theme, bodyFor(theme, nextPlayer.state));
       if (!current()) return;
+      const size = boardPaintSizeForRun(nextPlayer.state);
+      $('board').width = size.width;
+      $('board').height = size.height;
+      $('board').parentElement.style.setProperty('--board-ratio', String(size.width / size.height));
+      $('board').parentElement.style.setProperty('--board-width', `${size.width}px`);
       player = nextPlayer;
       painter = nextPainter;
       player.setRate(Number($('speed').value));

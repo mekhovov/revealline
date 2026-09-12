@@ -1,3 +1,4 @@
+import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
@@ -12,9 +13,14 @@ import {
 
 // Simulation uses cells. Everything below is presentation and never mutates a run.
 const CELL = 16,
-  W = 768,
-  H = 576,
   TAU = Math.PI * 2;
+const paintSize = ({ width, height }) => ({
+  width: width * CELL,
+  height: height * CELL,
+  cellSize: CELL,
+});
+export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
+export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
 const makeCanvas = (w, h) => {
   const c = document.createElement('canvas');
   c.width = w;
@@ -207,6 +213,9 @@ export class BoardPainter {
     } = {},
   ) {
     if (!this.theme || !state) return;
+    const { width: columns, height: rows } = geometryForRun(state);
+    const W = columns * CELL,
+      H = rows * CELL;
     if (fullReveal && state.status === 'won') {
       if (this._winState !== state) {
         if (!this._celebrationPrepared)
@@ -256,10 +265,10 @@ export class BoardPainter {
       ctx.fillStyle = '#000000';
       ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
-      for (let y = 0; y < 36; y++) {
+      for (let y = 0; y < rows; y++) {
         let start = -1;
-        for (let x = 0; x <= 48; x++) {
-          const covered = x < 48 && state.cells[y * 48 + x] === 0;
+        for (let x = 0; x <= columns; x++) {
+          const covered = x < columns && state.cells[y * columns + x] === 0;
           if (covered && start < 0) start = x;
           if (!covered && start >= 0) {
             ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
@@ -269,9 +278,9 @@ export class BoardPainter {
       }
       ctx.globalAlpha = 1;
     }
-    for (let y = 0; y < 36; y++)
-      for (let x = 0; x < 48; x++) {
-        const v = state.cells[y * 48 + x],
+    for (let y = 0; y < rows; y++)
+      for (let x = 0; x < columns; x++) {
+        const v = state.cells[y * columns + x],
           xx = x * CELL,
           yy = y * CELL;
         if (v === 2 && (!fullReveal || revealAlpha > 0)) {
@@ -297,19 +306,19 @@ export class BoardPainter {
           ctx.globalAlpha = 0.7;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
-          if (y > 0 && state.cells[(y - 1) * 48 + x] === 0) {
+          if (y > 0 && state.cells[(y - 1) * columns + x] === 0) {
             ctx.moveTo(xx, yy);
             ctx.lineTo(xx + CELL, yy);
           }
-          if (y < 35 && state.cells[(y + 1) * 48 + x] === 0) {
+          if (y < rows - 1 && state.cells[(y + 1) * columns + x] === 0) {
             ctx.moveTo(xx, yy + CELL);
             ctx.lineTo(xx + CELL, yy + CELL);
           }
-          if (x > 0 && state.cells[y * 48 + x - 1] === 0) {
+          if (x > 0 && state.cells[y * columns + x - 1] === 0) {
             ctx.moveTo(xx, yy);
             ctx.lineTo(xx, yy + CELL);
           }
-          if (x < 47 && state.cells[y * 48 + x + 1] === 0) {
+          if (x < columns - 1 && state.cells[y * columns + x + 1] === 0) {
             ctx.moveTo(xx + CELL, yy);
             ctx.lineTo(xx + CELL, yy + CELL);
           }

@@ -24,7 +24,7 @@ test('expansion proof covers every supplied map and rejects altered geometry', a
   );
   assert.equal((await verifyExpansionRoutes()).verified, expected);
   const route = proof.routes[0],
-    pack = packs[0],
+    pack = packs.find((item) => item.id === route.packId),
     level = structuredClone(pack.campaigns[0].levels[0]);
   level.rules.moveSpeed = 8;
   assert.throws(() => replayProof(level, pack.classRecipes, route), /content changed/);

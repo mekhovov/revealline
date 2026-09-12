@@ -17,9 +17,12 @@ const bytes = await readFile(legacyURL),
 const encounterProof = JSON.parse(
   await readFile(new URL('../game/replays/sentinel-routes.json', import.meta.url)),
 );
+const wideURL = new URL('../game/replays/first-light-routes.json', import.meta.url),
+  wideBytes = await readFile(wideURL),
+  wideProof = JSON.parse(wideBytes);
 const packs = await expansionSources(),
   sentinel = packs.find((pack) => pack.id === encounterProof.packId),
-  legacy = packs[0];
+  legacy = packs.find((pack) => pack.id === proof.routes[0].packId);
 const originalSHA = '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8';
 const sha = (value) => createHash('sha256').update(value).digest('hex');
 function fixture() {
@@ -38,23 +41,27 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('aggregate coverage is exactly 32 existing plus two Sentinel map-policy outcomes, with old bytes preserved', async () => {
+test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide map-policy outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
   assert.equal(proof.routes.length, 32);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 34);
+  assert.equal(result.verified, 40);
   assert.deepEqual(
     result.results.slice(0, 32),
     proof.routes.map((route) => route.expected),
   );
   assert.deepEqual(
     result.results
-      .slice(32)
+      .slice(32, 34)
       .map((value) => [value.levelId, value.turnPolicy, value.classId, value.ruleset]),
     [
       ['sentinel-relay-01', 'immediate', 'interceptor', 'xonix-core.v3'],
       ['sentinel-relay-01', 'grid-center', 'interceptor', 'xonix-core.v3'],
     ],
+  );
+  assert.deepEqual(
+    result.results.slice(34),
+    wideProof.routes.map((route) => route.expected),
   );
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });
@@ -246,5 +253,158 @@ test('injected proof snapshots reject executable accessors, unknown fields and m
 test('discovery guard refuses staged generation before its writer, without running --discover', async () => {
   assert.throws(() => assertDiscoverySupported(packs), /Staged encounter discovery is unsupported/);
   assert.doesNotThrow(() => assertDiscoverySupported([legacy]));
+  assert.equal(sha(await readFile(legacyURL)), originalSHA);
+});
+
+function wideFixture() {
+  return structuredClone({
+    packs: [packs.find((pack) => pack.id === 'fpv-arcade')],
+    proof: { ...proof, routes: [] },
+    encounterProof: null,
+    wideProof,
+  });
+}
+test('wide proof is optional for old contexts and required for every indexed wide outcome', () => {
+  const old = fixture();
+  assert.equal(verify(old).verified, old.proof.routes.length + 2);
+  old.wideProof = null;
+  assert.equal(verify(old).verified, old.proof.routes.length + 2);
+  for (const remove of [
+    (input) => {
+      delete input.wideProof;
+    },
+    (input) => {
+      input.wideProof = null;
+    },
+    (input) => {
+      input.wideProof.routes.pop();
+    },
+    (input) => {
+      input.wideProof.routes[1] = structuredClone(input.wideProof.routes[0]);
+    },
+  ]) {
+    const input = wideFixture();
+    remove(input);
+    assert.throws(() => verify(input), /Incomplete|wide route list|Duplicate proof/);
+  }
+});
+test('wide proof binds its exact pack, campaign, map and effective roster', () => {
+  for (const field of [
+    'format',
+    'packId',
+    'packVersion',
+    'packSha256',
+    'campaignId',
+    'campaignKey',
+  ]) {
+    const input = wideFixture();
+    input.wideProof[field] = 'wrong';
+    assert.throws(() => verify(input), /wide proof|Wide proof/);
+  }
+  for (const field of ['levelId', 'turnPolicy', 'levelSha256', 'classesSha256']) {
+    const input = wideFixture();
+    input.wideProof.routes[0][field] = 'wrong';
+    assert.throws(() => verify(input), /Unknown expansion|Wide proof/);
+  }
+  const changed = wideFixture();
+  changed.packs[0].campaigns[0].levels[0].rules.moveSpeed += 1;
+  assert.throws(() => verify(changed), /content identity changed/);
+});
+test('wide proof reconstructs commands, summary and every checkpoint rather than trusting won flags', () => {
+  for (const change of [
+    (route) => {
+      route.expected.score += 1;
+    },
+    (route) => {
+      route.expected.tick += 1;
+    },
+    (route) => {
+      route.expected.ruleset = 'xonix-core.v3';
+    },
+    (route) => {
+      route.expected.classId = 'interceptor';
+    },
+    (route) => {
+      route.expected.seed = 2;
+    },
+    (route) => {
+      route.checkpoint.algorithm = 'fnv1a64-state-v3';
+    },
+    (route) => {
+      route.checkpoint.sections.board = '0000000000000000';
+    },
+    (route) => {
+      route.checkpoint.hash = '0000000000000000';
+    },
+    (route) => {
+      route.segments[0].input.direction = 'left';
+    },
+  ]) {
+    const input = wideFixture();
+    change(input.wideProof.routes[0]);
+    assert.throws(() => verify(input));
+  }
+});
+test('wide Arcade proof cannot silently discard releases, malformed inputs or time segments', () => {
+  for (const change of [
+    (route) => {
+      route.releaseAfter = true;
+    },
+    (route) => {
+      route.segments[0].releaseBefore = true;
+    },
+    (route) => {
+      route.segments[0].input.direction = null;
+    },
+    (route) => {
+      route.segments[0].input.explode = true;
+    },
+    (route) => {
+      route.segments[0].ticks = 0;
+    },
+    (route) => {
+      route.segments[0].ticks = 0.5;
+    },
+    (route) => {
+      route.segments[0].ticks = 216001;
+    },
+  ]) {
+    const input = wideFixture();
+    change(input.wideProof.routes[0]);
+    assert.throws(() => verify(input));
+  }
+});
+test('wide proof coverage cannot hide another indexed campaign or substitute legacy proof authority', () => {
+  const extra = wideFixture(),
+    pack = structuredClone(extra.packs[0]);
+  pack.id = 'other-wide-pack';
+  pack.campaigns[0].id = 'other-wide-campaign';
+  extra.packs.push(pack);
+  assert.throws(() => verify(extra), /Incomplete/);
+  const oldAsWide = wideFixture();
+  oldAsWide.wideProof.routes[0].expected = proof.routes[0].expected;
+  assert.throws(() => verify(oldAsWide), /Wide expected identity differs/);
+  const noPack = wideFixture();
+  noPack.packs = [];
+  assert.throws(() => verify(noPack), /unknown wide proof/);
+  assert.throws(() => assertDiscoverySupported(wideFixture().packs), /discovery is unsupported/);
+});
+test('wide proof snapshots own data without invoking nested accessors or changing any proof bytes', async () => {
+  const input = wideFixture(),
+    before = structuredClone(input);
+  const result = verify(input);
+  assert.equal(result.verified, 6);
+  assert.deepEqual(input, before);
+  let reads = 0;
+  Object.defineProperty(input.wideProof.routes[0], 'segments', {
+    enumerable: true,
+    get() {
+      reads++;
+      return [];
+    },
+  });
+  assert.throws(() => verify(input), /accessors/);
+  assert.equal(reads, 0);
+  assert.deepEqual(await readFile(wideURL), wideBytes);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });

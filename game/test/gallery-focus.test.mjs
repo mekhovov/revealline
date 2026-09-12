@@ -230,6 +230,62 @@ async function setup(t, count = 30, hostOverrides = {}) {
   };
 }
 
+test('wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records', async (t) => {
+  const h = await setup(t, 1);
+  const wideLevel = {
+    ...structuredClone(h.entry.campaign.levels[0]),
+    id: 'wide-picture',
+    name: 'Wide picture',
+    version: 'xonix-level.v3',
+    width: 72,
+    encounter: null,
+  };
+  const wideEntry = {
+    ...h.entry,
+    campaign: { ...h.entry.campaign, id: 'wide-gallery', levels: [wideLevel] },
+    classRecipes: CLASSES,
+  };
+  h.setCatalog([h.entry, wideEntry]);
+  const record = {
+    ...h.library.gallery[0],
+    key: 'wide-key',
+    campaignKey: campaignKey(wideEntry.campaign),
+    levelId: wideLevel.id,
+    levelName: wideLevel.name,
+  };
+  h.setLibrary({ ...h.library, gallery: [...h.library.gallery, record] });
+  const before = structuredClone(h.library);
+  h.collection();
+  const wideCard = h.cards().find((card) => card.children[1].textContent === 'Wide picture');
+  assert.equal(wideCard.children[0].width, 320);
+  assert.equal(wideCard.children[0].height, 160);
+  await wideCard.onclick();
+  assert.equal(h.node('gallery-canvas').width, 1152);
+  assert.equal(h.node('gallery-canvas').height, 576);
+  assert.equal(h.node('gallery-canvas').style.aspectRatio, '1152 / 576');
+  assert.equal(h.paints.at(-1).width, 1152);
+  const draws = [];
+  t.mock.method(BoardPainter.prototype, 'setLook', async () => {});
+  t.mock.method(BoardPainter.prototype, 'setLevel', () => {});
+  t.mock.method(BoardPainter.prototype, 'startCelebration', () => {});
+  t.mock.method(BoardPainter.prototype, 'draw', (_ctx, run) =>
+    draws.push({ width: run.width, bitmap: h.node('gallery-canvas').width }),
+  );
+  await h.node('gallery-animate').onclick();
+  h.frames.at(-1)(100);
+  assert.deepEqual(draws, [{ width: 72, bitmap: 1152 }]);
+  h.node('gallery-view-dialog').close();
+  const oldCard = h.cards().find((card) => card.children[1].textContent === 'Picture 00');
+  assert.equal(oldCard.children[0].width, 320);
+  assert.equal(oldCard.children[0].height, 240);
+  await oldCard.onclick();
+  assert.equal(h.node('gallery-canvas').width, 768);
+  assert.equal(h.node('gallery-canvas').height, 576);
+  assert.equal(h.node('gallery-canvas').style.aspectRatio, '768 / 576');
+  assert.equal(h.paints.at(-1).width, 768);
+  assert.deepEqual(h.library, before);
+});
+
 test('Back restores the same stable picture on its page and preserves the original filter', async (t) => {
   const h = await setup(t);
   h.collection();
