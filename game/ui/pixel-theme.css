@@ -184,7 +184,8 @@ kbd {
   letter-spacing: 1px;
 }
 .game-shell .telemetry {
-  height: 70px;
+  height: auto;
+  min-height: 70px;
   gap: 10px;
   color: #7bbfe8;
 }
@@ -202,6 +203,20 @@ kbd {
 .game-shell .telemetry label,
 .game-shell .telemetry em {
   font-size: 15px;
+}
+/* Explicit rows avoid the inline value's extra line box clipping the target. */
+.game-shell .telemetry .coverage {
+  display: grid;
+  align-content: start;
+}
+.game-shell .telemetry .coverage > span,
+.game-shell .telemetry .coverage > strong,
+.game-shell .telemetry .coverage > em {
+  margin-block: 0;
+  line-height: 1.15;
+}
+.game-shell .telemetry .coverage > em {
+  display: block;
 }
 .game-shell .arena-panel {
   max-width: min(
