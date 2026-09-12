@@ -8,6 +8,7 @@
       "campaigns": [
         {
           "id": "night-shift",
+          "revision": "1",
           "title": "Night Shift",
           "levels": [
             {
@@ -33,6 +34,7 @@
       "campaigns": [
         {
           "id": "living-threads",
+          "revision": "1",
           "title": "Living Threads",
           "levels": [
             {
@@ -58,6 +60,7 @@
       "campaigns": [
         {
           "id": "fieldcraft",
+          "revision": "1",
           "title": "Fieldcraft",
           "levels": [
             {
@@ -87,6 +90,7 @@
       "campaigns": [
         {
           "id": "homeward-skies",
+          "revision": "1",
           "title": "Homeward Skies",
           "levels": [
             {
@@ -112,6 +116,7 @@
       "campaigns": [
         {
           "id": "equipment-workshop",
+          "revision": "1",
           "title": "Equipment Workshop",
           "levels": [
             {
@@ -133,6 +138,7 @@
       "campaigns": [
         {
           "id": "sentinel-relay",
+          "revision": "1",
           "title": "Sentinel Relay",
           "levels": [
             {
