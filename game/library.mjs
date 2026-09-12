@@ -2,6 +2,7 @@ import { emptyProgress, validateProgress, awardCompletion, PROGRESS_VERSION } fr
 import { CLASSES, RULESET, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { resolveKeyBindings } from './key-bindings.mjs';
+import { resolveControllerBindings } from './controller-bindings.mjs';
 import {
   boundedJSON,
   plainObject,
@@ -43,6 +44,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   turnPolicy: 'immediate',
   tapSteering: null,
   keyboardBindings: null,
+  controllerBindings: null,
   style: 'hybrid',
   showGrid: false,
   matchClassAppearance: true,
@@ -100,6 +102,8 @@ function preferencesValid(preferences) {
   );
   if (preferences.keyboardBindings !== null)
     preferences.keyboardBindings = resolveKeyBindings(preferences.keyboardBindings);
+  if (preferences.controllerBindings !== null)
+    preferences.controllerBindings = resolveControllerBindings(preferences.controllerBindings);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -209,6 +213,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.tapSteering = DEFAULT_PREFERENCES.tapSteering;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'keyboardBindings'))
     value.preferences.keyboardBindings = DEFAULT_PREFERENCES.keyboardBindings;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'controllerBindings'))
+    value.preferences.controllerBindings = DEFAULT_PREFERENCES.controllerBindings;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);

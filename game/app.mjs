@@ -6,6 +6,8 @@ import { createControllerRouter } from './ui/controller-router.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
+import { attachControllerSettings } from './ui/controller-settings.mjs';
+import { controllerBindingLabels, controllerStickLabel } from './controller-bindings.mjs';
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
@@ -84,7 +86,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.5.0',
+  let buildVersion = '0.6.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -280,15 +282,34 @@ try {
   function dialogOpen() {
     return !!document.querySelector('dialog[open]');
   }
-  const controller = createControllerRouter(
-    controllerPreview ? { readPads: controllerPreview.readPads } : {},
-  );
+  const controller = createControllerRouter({
+    bindings: library.preferences.controllerBindings,
+    ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
+  });
+  let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
   let controllerFrame = null,
     controllerNavigation = null,
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
   const controllerDialog = () => [...document.querySelectorAll('dialog[open]')].at(-1);
+  function controllerMenuHint() {
+    const b = controllerLabels.menu;
+    return `Controller: direction controls move focus · ${b.confirm} confirms · ${b.back} goes back · ${b.menu} resumes a paused flight.`;
+  }
+  function controllerFlightHint() {
+    const b = controllerLabels.flight;
+    return `Controller: ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.stop} stop · ${b.pause} pause.`;
+  }
+  function refreshControllerPrompts() {
+    controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
+    const b = controllerLabels.flight;
+    const directions = `Up ${b.up}, down ${b.down}, left ${b.left}, right ${b.right}; ${controllerStickLabel(library.preferences.controllerBindings, 'flight')}.`;
+    $('controller-help').textContent =
+      `Release all controls, then press a physical face button or Menu to join. Joining never starts a mission. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls.`;
+    $('controller-ui-hint').textContent =
+      controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
+  }
   function controllerScope() {
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
@@ -361,6 +382,11 @@ try {
     getScope: controllerScope,
     getRoot: () => controllerDialog() || document,
     getDefaultFocus: controllerFocus,
+    getControlLabels: () => ({
+      directions: 'Direction controls',
+      confirm: controllerLabels.menu.confirm,
+      back: controllerLabels.menu.back,
+    }),
     accept: (element) =>
       !element.matches(
         '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
@@ -440,8 +466,29 @@ try {
       refreshKeyPrompts();
     },
   });
+  const controllerSettings = attachControllerSettings({
+    container: $('controller-settings-root'),
+    getBindings: () => library.preferences.controllerBindings,
+    onBeforeEdit: () => keySettings.refresh(),
+    onApply: (value) => {
+      preferences({ controllerBindings: value });
+      controller.setBindings(library.preferences.controllerBindings);
+      clearInput();
+      refreshControllerPrompts();
+      return saveSucceeded && !practice
+        ? { ok: true }
+        : {
+            ok: false,
+            warning:
+              'Controller controls changed for this session. Export your library to retain session-only preferences.',
+          };
+    },
+  });
   window.addEventListener('pagehide', (event) => {
-    if (!event.persisted) keySettings.destroy();
+    if (!event.persisted) {
+      keySettings.destroy();
+      controllerSettings.destroy();
+    }
   });
   function clearInput() {
     pendingAction = false;
@@ -702,8 +749,11 @@ try {
     $('reduced-effects').checked = p.reducedEffects;
     $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
     keySettings.refresh();
+    controller.setBindings(p.controllerBindings);
+    controllerSettings.refresh();
     clearInput();
     refreshKeyPrompts();
+    refreshControllerPrompts();
     sound.configure?.({
       style: p.musicGenre,
       master: p.masterVolume,
@@ -880,6 +930,7 @@ try {
   };
   $('settings-button').onclick = () => {
     pause(true);
+    controllerSettings.refresh();
     $('settings-dialog').showModal();
   };
   let offlinePrepared = false;
@@ -945,7 +996,10 @@ try {
       warning(e.message);
     }
   };
-  $('settings-dialog').addEventListener('close', () => sound.pause());
+  $('settings-dialog').addEventListener('close', () => {
+    sound.pause();
+    controllerSettings.refresh();
+  });
   $('match-class-appearance').onchange = () => {
     preferences({ matchClassAppearance: $('match-class-appearance').checked });
     setTheme();
@@ -1395,11 +1449,11 @@ try {
           ? status.message
           : `Keyboard / touch · ${status.message}`;
     }
-    show('controller-ui-hint', !!assigned && scope !== 'flight');
+    show('controller-ui-hint', !!assigned);
     if (scope !== controllerPreviousScope) {
       controllerPreviousScope = scope;
       $('controller-ui-hint').textContent =
-        'Controller: D-pad moves focus · South confirms · East goes back · Menu resumes a paused flight.';
+        scope === 'flight' ? controllerFlightHint() : controllerMenuHint();
       if (assigned && scope !== 'flight') controllerNavigation.engage();
     }
     if (status.code === 'joined' && scope !== 'flight') controllerNavigation.engage();
@@ -1740,6 +1794,7 @@ try {
   refreshCampaigns();
   prepare();
   refreshKeyPrompts();
+  refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
       this.boardTexture = this.textures.createCanvas('field', 768, 576);

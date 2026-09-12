@@ -1,6 +1,6 @@
 # Controller preferences contract
 
-This is the isolated P1 foundation after the frozen v0.5.0 release. [The new module](../game/controller-bindings.mjs) validates controller settings, returns canonical copies, describes configured controls and defines pure stick hysteresis. The live router, settings UI and player-library schema have not adopted it in this increment. The frozen release retains its existing controls.
+The working source after frozen v0.5.0 now adopts this contract in the solo router, Settings editor and player library. The proposed next release is v0.6.0; this guide does not claim that release is frozen or its browser/device acceptance is complete. Frozen v0.5.0 retains its original controls. [The bindings module](../game/controller-bindings.mjs) validates settings, returns canonical copies, supplies configured labels and defines stick hysteresis.
 
 ## Canonical document
 
@@ -55,21 +55,21 @@ This is the isolated P1 foundation after the frozen v0.5.0 release. [The new mod
 }
 ```
 
-Every field shown is required in a supplied document. `null` and `undefined` alone mean the existing default layout; an empty or partial object is invalid. Missing fields inside a supplied document never receive defaults. JSON strings must be parsed by the importing boundary before calling this API.
+Every field shown is required in a supplied document. At the bindings API, `null` and `undefined` alone mean the existing default layout; an empty or partial object is invalid. The player library retains explicit `null` and migrates an omitted preference to null, but rejects an explicit `undefined`. Missing fields inside a supplied document never receive defaults. JSON strings must be parsed by the importing boundary before calling the bindings API.
 
 The configuration boundary accepts only plain own data, with ordinary or null prototypes. It rejects inherited custom prototypes, getters, setters, `toJSON` functions, hidden fields, symbol keys, prototype-pollution keys, cycles, nonfinite numbers and unknown properties. The bounded copy allows 8 KiB, 128 nodes, depth four, no array items and strings up to 64 characters. Resolved copies have fixed field order, ordinary object prototypes, normalized numeric zero and independently owned nested objects. The exported default and action/glyph metadata are immutable.
 
-| Field | Allowed values and meaning |
-| --- | --- |
-| `version` | Exactly `xonix-controllerbindings.v1`. Unknown versions reject the whole document. |
-| `mapping` | Exactly `standard`; no inferred device mapping. |
-| `glyphFamily` | `generic`, `xbox`, or `playstation`, chosen by the player. Changes labels only. |
-| Context `buttons` | One integer index from 0 through 15 for each named action. Complete unique maps within each context. |
-| `stick.enabled` | Boolean; false selects button-only directions in that context. |
-| `stick.xAxis`, `stick.yAxis` | Distinct integer indices 0 through 3. Left stick is 0/1, right stick 2/3; swapped/custom pairs remain explicit. |
-| `stick.invertX`, `stick.invertY` | Booleans, independent per context. |
-| `deadZone.press` | Finite magnitude from 0.10 through 0.60 inclusive. |
-| `deadZone.release` | Finite magnitude from 0.02 through `press` inclusive. |
+| Field                            | Allowed values and meaning                                                                                      |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `version`                        | Exactly `xonix-controllerbindings.v1`. Unknown versions reject the whole document.                              |
+| `mapping`                        | Exactly `standard`; no inferred device mapping.                                                                 |
+| `glyphFamily`                    | `generic`, `xbox`, or `playstation`, chosen by the player. Changes labels only.                                 |
+| Context `buttons`                | One integer index from 0 through 15 for each named action. Complete unique maps within each context.            |
+| `stick.enabled`                  | Boolean; false selects button-only directions in that context.                                                  |
+| `stick.xAxis`, `stick.yAxis`     | Distinct integer indices 0 through 3. Left stick is 0/1, right stick 2/3; swapped/custom pairs remain explicit. |
+| `stick.invertX`, `stick.invertY` | Booleans, independent per context.                                                                              |
+| `deadZone.press`                 | Finite magnitude from 0.10 through 0.60 inclusive.                                                              |
+| `deadZone.release`               | Finite magnitude from 0.02 through `press` inclusive.                                                           |
 
 The flight and menu maps can reuse the same physical button because only one context receives an input sample. Within a context, duplicate assignments reject the entire candidate, including duplicates between movement and other actions. This prevents an Ability remap from simultaneously moving the craft or altering menu Confirm. A deliberate two-button swap is submitted as one complete candidate. A single-action capture does not silently swap or unbind another action.
 
@@ -123,20 +123,24 @@ The helper reads only the configured axes, clamps finite values to −1…1 and 
 
 With press 0.35 and release 0.27, the sequence `0.34 → 0.36 → 0.30 → 0.27 → 0.30` produces `neutral → active → active → neutral → neutral`. Passing `priorActive: false` resets that history. There is no internal state or time dependency. Disabling the stick always produces `active: false` and `direction: null`; normalized x/y remain available for a future calibration preview.
 
-Once active, the stronger axis chooses the cardinal direction. Exact magnitude ties favor vertical, preserving the current router. This is magnitude hysteresis, not a sticky cardinal direction or diagonal filter. Digital directions still take precedence in the future router integration; this stick-only helper does not arbitrate buttons. It also does not read hardware, emit commands, detect edges, repeat menu actions, persist settings or alter any simulation rule.
+Once active, the stronger axis chooses the cardinal direction. Exact magnitude ties favor vertical, preserving the current router. This is magnitude hysteresis, not a sticky cardinal direction or diagonal filter. Configured digital directions take precedence in the adopted router; this stick-only helper does not arbitrate buttons. The helper does not read hardware, emit commands, detect edges, repeat menu actions, persist settings or alter any simulation rule.
 
-## Next integration boundary
+## Adopted editor, router and library
 
-1. Add `preferences.controllerBindings: null` to the next player-library preference schema and migrate only an **omitted** field to null. Validate an explicit value with `resolveControllerBindings` before persistence or adoption. Preserve semantic preference equality during concurrent library merges. Existing frozen readers reject unknown preference fields, so document transfers by source/target release instead of claiming newer profiles load into every older version.
-2. Resolve a complete draft before changing the current runtime configuration. The router should install it atomically, clear pending edges/repeat history and previous stick activity, and require a neutral sample before accepting further input. Keep this reset on remap, scope transitions, pause, Stop, disconnect, focus loss and device reassignment. A rejected candidate must leave the previous settings and current session intact.
-3. Update the router's fixed used-button/axis sampling to the selected configuration. Check neutrality against applicable mapped inputs and deliberate join controls; changing the map must not leak the capture press into an ability or Confirm. Keep the current explicit connection ownership and deliberate join behavior. Feed only one scope per sample, retain digital priority, and preserve the current pulse/held semantics in the flight adapter.
-4. Add a settings capture/edit UI with cancel, restore defaults, both context maps, stick selection and a live preview of raw neutral versus active thresholds. Commit through existing preferences handlers once, then update help/focus prompts from the new labels. Button capture and a selected glyph family do not identify or certify a device.
-5. Keep the existing normalized replay commands and rule/score identities. Remapping changes which physical input produces a command, not the command's simulation meaning. Add router, persistence and live controller-lab tests before enabling settings for players. Physical controllers and target browsers still need separate acceptance evidence.
+Open **Settings → Edit controller settings**. The complete draft includes both button maps, per-context stick enable/axis/inversion controls, glyph family and press/release thresholds. Current controls remain active while editing. Temporary duplicate assignments may exist in the draft so a two-button swap is possible; **Apply controller settings** validates the entire candidate before adoption. **Cancel draft** discards it. **Restore defaults in draft** changes only the draft until Apply. The editor uses explicit selects, checkboxes and sliders; it does not listen for a physical-button capture or automatically calibrate a device.
 
-No router, application, library, frozen release or replay schema is changed by this module. Couch ownership, Replay Theater navigation, toggle controls and host-dependent pickers/audio/export activation remain separate work from this data contract. Polling a pad and calling DOM handlers cannot create trusted user activation.
+Successful adoption updates the saved preference, compiled router mapping and visible prompts, then clears cached flight input and navigation edits. If saving is unavailable or the page is practice/session-only, the valid setting remains usable in that session and the UI identifies the persistence limitation. A fresh neutral sample is required before the new mapping can act. Invalid data leaves the previous mapping and stored collection intact. A draft whose source changes is discarded; import and Undo refresh the editor from the adopted library.
+
+The [router adoption guide](controller-router-bindings.md) specifies the exact reset and threshold behavior. Its neutral gate covers both contexts' mapped buttons and enabled sticks plus fixed physical join indices 0, 1, 2, 3 and 9. Neutral uses the release threshold, even immediately after resetting hysteresis. Joining remains independent of remapped Confirm. The router compiles settings once at adoption and reads one device snapshot per sample.
+
+The [preference migration guide](controller-preference-migration.md) covers omitted-only `preferences.controllerBindings: null`, owned validation, canonical whole-preference merging, backups and earlier-release copying. Portable libraries remain `xonix-library.v1`. New exports containing this field are not accepted by older frozen strict readers, including when the field is null; transfer forward into a compatible newer release rather than altering an old release's channel.
+
+Normalized replay commands, physics and score identities remain unchanged. The [Controller practice lab](controller-practice.md) exercises the actual solo UI through a separate bounded virtual-input bridge. Its v2 snapshot carries four finite axes and up to sixteen boolean buttons. Both snapshot and status envelopes require a per-load `session` of exactly 32 lowercase hexadecimal characters matching the iframe's `controller-session` query; an old load's session cannot advance the new load's sequence counters. That transport is distinct from the v1 settings document. It is a simulated control source, not evidence of connected hardware or native calibration.
+
+Couch ownership/menu integration, Replay Theater navigation, toggle controls, physical-button capture and host-dependent pickers/audio/export activation remain separate work. Polling a pad and calling DOM handlers cannot create trusted user activation. Physical controllers and native/browser targets require separate acceptance evidence.
 
 ## Verification and sources
 
-Run `mise exec node@22.22.2 -- node --test game/test/controller-bindings.test.mjs`. The **19 tests** cover full defaults against the actual v0.5 router, flight/menu separation, exact stick boundaries and tie precedence, remap collisions/atomic swaps, complete-schema validation, hostile accessor/plain-data cases, copy ownership, glyph invariance, hysteresis sequences, inversion, disabled analog input and malformed/missing axes. These are automated contract tests, not physical-device evidence.
+Run the relevant suites with `mise exec node@22.22.2 -- node --test game/test/controller-*.test.mjs game/test/ui-input.test.mjs`. Contract tests cover defaults, flight/menu separation, exact stick boundaries, remap collisions, complete-schema validation, accessor/plain-data rejection, owned copies, glyph invariance, inversion and disabled analog input. Router, editor and library suites additionally cover atomic adoption, neutral gates, drafts, persistence failure, complete backups and previous-release transfer. Use [the layout prompts](../authoring/prompts/round-16-controller-layouts.md) for actual UI journeys and record their outcomes separately. Test counts alone are not browser or physical-device evidence.
 
 The standard indices, normalized axes and separation of a browser mapping from a device identifier follow the [W3C Gamepad Working Draft, standard mapping](https://www.w3.org/TR/gamepad/#remapping), checked 12 September 2026. Remapping, updated input prompts, analog alternatives and hold alternatives are informed by [Xbox Accessibility Guideline 107](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107), checked the same day. The bounded ranges, system-button reservation, context separation and compatibility choices above are this project's design decisions; neither source certifies them or measures a connected device.

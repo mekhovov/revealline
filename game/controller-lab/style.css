@@ -62,7 +62,8 @@ label {
   color: #b3ccc9;
 }
 button,
-select {
+select,
+input {
   min-height: 44px;
   border: 1px solid #48606a;
   background: #18323e;
@@ -136,13 +137,23 @@ aside {
 .dpad {
   display: grid;
   grid-template-columns: repeat(3, 52px);
-  grid-template-rows: repeat(2, 48px);
+  grid-template-rows: repeat(2, 56px);
   gap: 5px;
   justify-content: center;
   margin: 18px 0;
 }
 .dpad button {
-  font-size: 23px;
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  padding: 4px;
+}
+.dpad b {
+  font-size: 22px;
+  line-height: 1;
+}
+.dpad span {
+  font-size: 10px;
 }
 .up {
   grid-column: 2;
@@ -170,7 +181,7 @@ aside {
   padding-inline: 5px;
 }
 .face-buttons b {
-  font-size: 17px;
+  font-size: 13px;
 }
 .face-buttons span {
   font-size: 10px;
@@ -178,6 +189,41 @@ aside {
 .wide {
   width: 100%;
   margin-top: 10px;
+}
+.sticks {
+  min-width: 0;
+  margin: 18px 0 0;
+  padding: 12px;
+  border: 1px solid #48606a;
+  border-radius: 5px;
+}
+.sticks legend {
+  font-size: 12px;
+  color: #b3ccc9;
+}
+.axis-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.axis-label label {
+  font-size: 11px;
+}
+.axis-label output {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.sticks input[type='range'] {
+  display: block;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 0;
+  accent-color: #e5c976;
+}
+#axis-status {
+  min-height: 54px;
+  margin-bottom: 0;
 }
 .feedback {
   margin-top: 20px;
@@ -241,7 +287,8 @@ iframe {
     gap: 12px;
   }
   aside > .guide,
-  aside > .feedback {
+  aside > .feedback,
+  aside > .sticks {
     grid-column: 1 / -1;
   }
   .dpad {

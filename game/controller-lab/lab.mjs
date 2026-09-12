@@ -10,15 +10,19 @@ const $ = (id) => document.getElementById(id),
   frame = $('game-frame'),
   origin = window.location.origin,
   buttons = [...document.querySelectorAll('[data-pad]')],
+  axisInputs = [0, 1, 2, 3].map((index) => $(`axis-${index}`)),
+  axes = [0, 0, 0, 0],
   held = new Set(),
   timers = new Map(),
   missions = [];
 let connected = false,
   loaded = false,
   sequence = 0,
+  session = null,
   statusSequence = -1,
   loadEpoch = 0,
   revision = 0,
+  pendingStick = null,
   disposed = false;
 const status = (message, error = false) => {
   $('load-status').textContent = message;
@@ -30,20 +34,30 @@ function focusGame() {
   frame.contentWindow?.focus();
 }
 function send() {
-  if (disposed || !loaded || origin === 'null') return;
+  if (disposed || !loaded || origin === 'null' || !session) return null;
+  const sent = sequence++;
   frame.contentWindow?.postMessage(
     {
       format: CONTROLLER_PREVIEW_FORMAT,
-      sequence: sequence++,
+      session,
+      sequence: sent,
       pad: {
         index: 0,
         connected,
-        axes: [0, 0],
+        axes: connected ? [...axes] : [0, 0, 0, 0],
         buttons: Array.from({ length: 16 }, (_, i) => connected && held.has(i)),
       },
     },
     origin,
   );
+  return sent;
+}
+function paintAxes() {
+  for (const [index, input] of axisInputs.entries()) {
+    input.disabled = !loaded || !connected;
+    $(`axis-${index}-value`).textContent = Number(input.value).toFixed(2);
+  }
+  $('apply-stick').disabled = !loaded || !connected;
 }
 function paintPad() {
   for (const button of buttons) {
@@ -54,16 +68,61 @@ function paintPad() {
   $('disconnect').disabled = !loaded || !connected;
   $('release').disabled = !loaded || !connected;
   $('focus-game').disabled = !loaded;
+  paintAxes();
   $('connection-status').textContent = connected
-    ? `Virtual pad connected. ${held.size ? `${held.size} button(s) held.` : 'All buttons released.'}`
+    ? `Virtual pad connected. ${held.size} button(s) held. Axes: ${axes.map((value) => value.toFixed(2)).join(', ')}.`
     : 'Virtual pad disconnected.';
 }
-function releaseAll() {
+function cancelStick(message) {
+  if (!pendingStick) return;
+  clearTimeout(pendingStick.timer);
+  pendingStick = null;
+  if (message) $('axis-status').textContent = message;
+}
+function clearPhysical(resetDraft) {
+  cancelStick();
   for (const timer of timers.values()) clearTimeout(timer);
   timers.clear();
   held.clear();
+  axes.fill(0);
+  if (resetDraft) for (const input of axisInputs) input.value = '0';
   paintPad();
   send();
+}
+function releaseAll() {
+  clearPhysical(true);
+  $('axis-status').textContent = 'Both sticks centered; all buttons released.';
+}
+for (const input of axisInputs)
+  input.addEventListener('input', () => {
+    const value = Number(input.value);
+    input.value = String(
+      Number.isFinite(value) ? Math.round(Math.max(-1, Math.min(1, value)) * 100) / 100 : 0,
+    );
+    clearPhysical(false);
+    $('axis-status').textContent =
+      'Draft only. Apply stick returns focus to the game after neutral input is sampled.';
+  });
+function applyStick() {
+  if (!loaded || !connected || disposed) return;
+  const values = axisInputs.map((input) => {
+    const value = Number(input.value);
+    return Number.isFinite(value) ? Math.max(-1, Math.min(1, value)) : 0;
+  });
+  clearPhysical(false);
+  focusGame();
+  const ticket = { values, minimumSequence: send(), timer: null };
+  pendingStick = ticket;
+  $('axis-status').textContent = 'Waiting for the game to sample neutral input…';
+  ticket.timer = setTimeout(() => {
+    if (pendingStick !== ticket) return;
+    pendingStick = null;
+    axes.fill(0);
+    paintPad();
+    send();
+    $('axis-status').textContent =
+      'Stick was not applied. Focus the game and retry Apply stick. Release all resets both stick drafts.';
+  }, 2000);
 }
 function disconnect() {
   connected = false;
@@ -71,6 +130,7 @@ function disconnect() {
 }
 function press(index) {
   if (!connected || !loaded) return;
+  cancelStick('Pending stick application cancelled by a button gesture.');
   focusGame();
   clearTimeout(timers.get(index));
   timers.delete(index);
@@ -126,6 +186,7 @@ gameAction('release', () => {
   releaseAll();
 });
 gameAction('focus-game', focusGame);
+gameAction('apply-stick', applyStick);
 $('gesture').addEventListener('change', releaseAll);
 
 function option(select, value, label) {
@@ -170,17 +231,19 @@ async function loadPractice() {
     });
     const { scenario, warnings } = await prepareScenario(candidate);
     if (ticket !== loadEpoch || disposed) return;
+    const nextSession = crypto.randomUUID().replaceAll('-', '');
     // The same explicit practice handoff used by Playground. Persist only the
     // fully validated candidate; never write to profile, packs or reward stores.
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(scenario));
     disconnect();
     loaded = false;
+    session = nextSession;
     statusSequence = -1;
     paintPad();
     $('scope').textContent = 'Loading practice';
     $('focused').textContent = '—';
     $('pad-status').textContent = 'Not joined';
-    frame.src = `../?practice=1&controller-preview=1&revision=${++revision}`;
+    frame.src = `../?practice=1&controller-preview=1&controller-session=${session}&revision=${++revision}`;
     status(
       `${choice.label} prepared. Connect the virtual pad when the game appears.${warnings.length ? ` ${warnings.join(' ')}` : ''}`,
     );
@@ -205,11 +268,24 @@ frame.addEventListener('load', () => {
 function receiveStatus(event) {
   if (disposed || event.source !== frame.contentWindow || event.origin !== origin) return;
   const value = parseControllerPreviewStatus(event.data);
-  if (!value || value.sequence <= statusSequence) return;
+  if (!value || value.session !== session || value.sequence <= statusSequence) return;
   statusSequence = value.sequence;
   $('scope').textContent = value.scope || 'No active scope';
   $('focused').textContent = value.focusedLabel || value.focusedId || 'Game canvas / document';
   $('pad-status').textContent = `${value.assigned ? 'Joined' : 'Not joined'} · ${value.message}`;
+  if (
+    pendingStick &&
+    value.readSequence >= pendingStick.minimumSequence &&
+    value.readSequence < sequence
+  ) {
+    const { values } = pendingStick;
+    cancelStick();
+    axes.splice(0, 4, ...values);
+    paintPad();
+    $('axis-status').textContent =
+      'Stick values applied. Release all centers both sticks and releases every button.';
+    send();
+  }
 }
 window.addEventListener('message', receiveStatus);
 const heartbeat = setInterval(() => {

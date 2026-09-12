@@ -1,6 +1,10 @@
-const DIRECTIONS = ['up', 'right', 'down', 'left'];
-const USED_BUTTONS = [0, 1, 2, 3, 5, 9, 12, 13, 14, 15];
+import {
+  resolveControllerBindings,
+  CONTROLLER_DIRECTION_PRIORITY,
+} from '../controller-bindings.mjs';
+
 const JOIN_BUTTONS = [0, 1, 2, 3, 9];
+const CONTEXTS = ['flight', 'menu'];
 export const neutralControllerFlight = () => ({
   direction: null,
   boost: false,
@@ -26,6 +30,34 @@ const defaultRead = () => {
   return globalThis.navigator.getGamepads();
 };
 
+// Build once at adoption. Sampling only reads these owned maps and scalars.
+function compileBindings(config) {
+  return {
+    usedButtons: [
+      ...new Set([
+        ...JOIN_BUTTONS,
+        ...Object.values(config.flight.buttons),
+        ...Object.values(config.menu.buttons),
+      ]),
+    ].sort((a, b) => a - b),
+    press: config.deadZone.press,
+    release: config.deadZone.release,
+    ...Object.fromEntries(
+      CONTEXTS.map((context) => [
+        context,
+        {
+          buttons: config[context].buttons,
+          stick: config[context].stick,
+          directions: CONTROLLER_DIRECTION_PRIORITY.map((direction) => [
+            direction,
+            config[context].buttons[direction],
+          ]),
+        },
+      ]),
+    ),
+  };
+}
+
 /** One hardware read per sample. Does not run a timer, move DOM focus, or invoke
  * game actions. The host chooses a stable UI scope; only "flight" emits flight.
  * clear() retains the pad but requires neutral. invalidate() requires rejoining.
@@ -34,6 +66,7 @@ export function createControllerRouter({
   readPads = defaultRead,
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   eventTarget = globalThis.window,
+  bindings = null,
   deadZone = 0.35,
   repeatDelayMs = 350,
   repeatIntervalMs = 120,
@@ -52,6 +85,11 @@ export function createControllerRouter({
     repeatIntervalMs > 1000
   )
     throw new RangeError('Controller thresholds or repeat timing are out of bounds.');
+  const initial = resolveControllerBindings(bindings);
+  // Constructor compatibility: an explicit document owns its thresholds.
+  // Legacy callers without one retain their equal press/release deadZone.
+  if (bindings == null) initial.deadZone = { press: deadZone, release: deadZone };
+  let compiled = compileBindings(initial);
   const seen = new Map();
   let generation = 0,
     assigned = null,
@@ -69,7 +107,18 @@ export function createControllerRouter({
     previousButtons.clear();
     repeatDirection = null;
     repeatAt = 0;
-    for (const candidate of seen.values()) candidate.armed = false;
+    for (const candidate of seen.values()) {
+      candidate.armed = false;
+      candidate.previousJoin.clear();
+      candidate.stickActive = { flight: false, menu: false };
+    }
+  }
+  function setBindings(value) {
+    if (destroyed) throw new Error('Controller input is stopped.');
+    const next = compileBindings(resolveControllerBindings(value));
+    // Validation and compilation must finish before any live state is cleared.
+    compiled = next;
+    clear();
   }
   function invalidate() {
     pendingDisconnect = pendingDisconnect || assigned !== null;
@@ -93,22 +142,7 @@ export function createControllerRouter({
     if (!pad?.connected || pad.mapping !== 'standard') return null;
     const index = pad.index ?? fallbackIndex;
     if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
-    const buttons = new Set(USED_BUTTONS.filter((i) => pressed(pad.buttons?.[i])));
-    const x = axis(pad.axes?.[0]),
-      y = axis(pad.axes?.[1]);
-    const digital = [12, 15, 13, 14].findIndex((i) => buttons.has(i));
-    const direction =
-      digital >= 0
-        ? DIRECTIONS[digital]
-        : Math.max(Math.abs(x), Math.abs(y)) > deadZone
-          ? Math.abs(x) > Math.abs(y)
-            ? x > 0
-              ? 'right'
-              : 'left'
-            : y > 0
-              ? 'down'
-              : 'up'
-          : null;
+    const buttons = new Set(compiled.usedButtons.filter((i) => pressed(pad.buttons?.[i])));
     const id = typeof pad.id === 'string' ? pad.id.slice(0, 512) : '';
     const signature = JSON.stringify([
       id,
@@ -116,6 +150,36 @@ export function createControllerRouter({
       pad.buttons?.length ?? 0,
       pad.axes?.length ?? 0,
     ]);
+    const old = seen.get(index),
+      previous = old?.signature === signature ? old.stickActive : null;
+    const axes = [0, 1, 2, 3].map((index) => axis(pad.axes?.[index]));
+    const direction = {},
+      stickActive = {};
+    let neutral = buttons.size === 0;
+    for (const context of CONTEXTS) {
+      const mapping = compiled[context],
+        { stick } = mapping;
+      const x = axes[stick.xAxis] * (stick.invertX ? -1 : 1),
+        y = axes[stick.yAxis] * (stick.invertY ? -1 : 1),
+        magnitude = Math.max(Math.abs(x), Math.abs(y));
+      const active =
+        stick.enabled && magnitude > (previous?.[context] ? compiled.release : compiled.press);
+      stickActive[context] = active;
+      // A gate requires physical release even after hysteresis state is reset;
+      // a stick between release and press must not count as a neutral sample.
+      if (stick.enabled && magnitude > compiled.release) neutral = false;
+      const analog = !active
+        ? null
+        : Math.abs(x) > Math.abs(y)
+          ? x > 0
+            ? 'right'
+            : 'left'
+          : y > 0
+            ? 'down'
+            : 'up';
+      direction[context] =
+        mapping.directions.find(([, index]) => buttons.has(index))?.[0] || analog;
+    }
     return {
       index,
       id,
@@ -123,7 +187,8 @@ export function createControllerRouter({
       signature,
       buttons,
       direction,
-      neutral: !direction && buttons.size === 0,
+      stickActive,
+      neutral,
     };
   }
   const result = (
@@ -197,6 +262,7 @@ export function createControllerRouter({
         candidate = { ...pad, generation: ++generation, armed: false, previousJoin: new Set() };
         seen.set(pad.index, candidate);
       }
+      candidate.stickActive = pad.stickActive;
       if (pad.neutral) candidate.armed = true;
     }
     if (pendingDisconnect) {
@@ -255,32 +321,35 @@ export function createControllerRouter({
     const flight = neutralControllerFlight(),
       ui = neutralControllerUI();
     if (scope === 'flight') {
-      if (edge(9)) flight.pause = true;
-      else if (edge(3)) flight.hangar = true;
-      else if (edge(1)) flight.stop = true;
+      const buttons = compiled.flight.buttons;
+      if (edge(buttons.pause)) flight.pause = true;
+      else if (edge(buttons.hangar)) flight.hangar = true;
+      else if (edge(buttons.stop)) flight.stop = true;
       else
         Object.assign(flight, {
-          direction: pad.direction,
-          boost: pad.buttons.has(5),
-          action: pad.buttons.has(0),
-          pickup: pad.buttons.has(2),
+          direction: pad.direction.flight,
+          boost: pad.buttons.has(buttons.boost),
+          action: pad.buttons.has(buttons.ability),
+          pickup: pad.buttons.has(buttons.pickup),
         });
       if (flight.pause || flight.hangar || flight.stop) clear();
     } else {
-      if (edge(9)) ui.menu = true;
-      else if (edge(1)) ui.back = true;
-      else if (edge(0)) ui.confirm = true;
-      if (!ui.menu && !ui.back && !ui.confirm && pad.direction) {
-        if (pad.direction !== repeatDirection || time >= repeatAt) {
-          ui.direction = pad.direction;
-          repeatAt = time + (pad.direction !== repeatDirection ? repeatDelayMs : repeatIntervalMs);
+      const buttons = compiled.menu.buttons,
+        direction = pad.direction.menu;
+      if (edge(buttons.menu)) ui.menu = true;
+      else if (edge(buttons.back)) ui.back = true;
+      else if (edge(buttons.confirm)) ui.confirm = true;
+      if (!ui.menu && !ui.back && !ui.confirm && direction) {
+        if (direction !== repeatDirection || time >= repeatAt) {
+          ui.direction = direction;
+          repeatAt = time + (direction !== repeatDirection ? repeatDelayMs : repeatIntervalMs);
         }
       }
-      if (!pad.direction || pad.direction !== repeatDirection || ui.menu || ui.back || ui.confirm) {
+      if (!direction || direction !== repeatDirection || ui.menu || ui.back || ui.confirm) {
         if (ui.menu || ui.back || ui.confirm) repeatAt = time + repeatDelayMs;
-        else if (!pad.direction) repeatAt = 0;
+        else if (!direction) repeatAt = 0;
       }
-      repeatDirection = pad.direction;
+      repeatDirection = direction;
     }
     previousButtons = new Set(pad.buttons);
     return result('connected', 'Controller ready.', flight, ui);
@@ -297,6 +366,7 @@ export function createControllerRouter({
   }
   return {
     sample,
+    setBindings,
     clear,
     invalidate,
     disconnect,

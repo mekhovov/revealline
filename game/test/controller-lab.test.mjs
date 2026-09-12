@@ -72,9 +72,12 @@ test('practice page keeps virtual holds, releases and import failures isolated f
       'scope',
       'focused',
       'pad-status',
+      'apply-stick',
+      'axis-status',
+      ...[0, 1, 2, 3].flatMap((index) => [`axis-${index}`, `axis-${index}-value`]),
     ],
     elements = Object.fromEntries(ids.map((id) => [id, new Element(id)])),
-    pads = [12, 14, 13, 15, 0, 1, 2, 3, 5, 9].map((index) => {
+    pads = Array.from({ length: 16 }, (_, index) => {
       const button = new Element();
       button.dataset.pad = String(index);
       return button;
@@ -97,6 +100,7 @@ test('practice page keeps virtual holds, releases and import failures isolated f
   };
   elements['game-frame'].contentWindow = child;
   elements.gesture.value = 'pulse';
+  for (const index of [0, 1, 2, 3]) elements[`axis-${index}`].value = '0';
   elements.steering.value = 'immediate';
   elements.viewport.value = '1280x720';
   doc.getElementById = (id) => elements[id];
@@ -209,7 +213,9 @@ test('practice page keeps virtual holds, releases and import failures isolated f
       async () => {
         const data = {
           format: CONTROLLER_PREVIEW_STATUS_FORMAT,
+          session: latest().session,
           sequence: 1,
+          readSequence: -1,
           scope: 'settings',
           focusedId: 'theme',
           focusedLabel: '<img onerror=bad>',
@@ -249,6 +255,182 @@ test('practice page keeps virtual holds, releases and import failures isolated f
       assert.equal(elements.load.disabled, false);
       storageFailure = false;
     });
+    let feedbackSequence = 10;
+    const acknowledge = (readSequence, overrides = {}) =>
+      host.emit('message', {
+        source: child,
+        origin: host.location.origin,
+        data: {
+          format: CONTROLLER_PREVIEW_STATUS_FORMAT,
+          session: latest().session,
+          sequence: feedbackSequence++,
+          readSequence,
+          scope: 'paused',
+          focusedId: 'resume',
+          focusedLabel: 'Resume',
+          assigned: true,
+          message: 'Controller ready.',
+          ...overrides,
+        },
+      });
+    const setAxis = async (index, value) => {
+      elements[`axis-${index}`].value = String(value);
+      await elements[`axis-${index}`].emit('input');
+    };
+    await t.test(
+      'four draft sliders only send neutral until Apply receives a fresh sampled-neutral acknowledgement',
+      async () => {
+        for (const [index, value] of [0.2, -0.4, 0.6, -0.8].entries()) await setAxis(index, value);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        assert.equal(elements['axis-2-value'].textContent, '0.60');
+        assert.equal(elements['axis-3-value'].textContent, '-0.80');
+        elements['game-frame'].focused = false;
+        await click('apply-stick');
+        const neutralSequence = latest().sequence;
+        assert.equal(elements['game-frame'].focused, true);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        await acknowledge(neutralSequence - 1);
+        await acknowledge(-1);
+        await acknowledge(neutralSequence + 100);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        await acknowledge(neutralSequence);
+        assert.deepEqual(latest().pad.axes, [0.2, -0.4, 0.6, -0.8]);
+        assert.ok(latest().pad.buttons.every((value) => !value));
+        assert.match(elements['axis-status'].textContent, /values applied/);
+        const count = posts.length;
+        await acknowledge(neutralSequence);
+        assert.equal(
+          posts.length,
+          count,
+          'A repeated acknowledgement never reapplies an old draft.',
+        );
+      },
+    );
+    await t.test(
+      'Release all centers live and draft axes and cancels pending application',
+      async () => {
+        await setAxis(2, 0.8);
+        await click('apply-stick');
+        const pendingSequence = latest().sequence;
+        await click('release');
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        for (const index of [0, 1, 2, 3]) {
+          assert.equal(elements[`axis-${index}`].value, '0');
+          assert.equal(elements[`axis-${index}-value`].textContent, '0.00');
+        }
+        await acknowledge(pendingSequence);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        assert.equal(timeouts.size, 0);
+      },
+    );
+    await t.test(
+      'a pending stick application times out safely and ignores late acknowledgement',
+      async () => {
+        await setAxis(3, -0.75);
+        await click('apply-stick');
+        const pendingSequence = latest().sequence,
+          timeout = [...timeouts].find(([, item]) => item.ms === 2000);
+        assert.ok(timeout);
+        timeouts.delete(timeout[0]);
+        timeout[1].fn();
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        assert.equal(elements['axis-3'].value, '-0.75');
+        assert.match(elements['axis-status'].textContent, /not applied.*retry Apply stick/);
+        await acknowledge(pendingSequence);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+      },
+    );
+    await t.test(
+      'editing again or pressing a physical button cancels a pending stick handoff',
+      async () => {
+        await click('apply-stick');
+        const first = latest().sequence;
+        await setAxis(3, -0.5);
+        await acknowledge(first);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        await click('apply-stick');
+        const second = latest().sequence;
+        await press(11);
+        await acknowledge(second);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        assert.equal(latest().pad.buttons[11], true);
+        await click('release');
+      },
+    );
+    for (const transition of ['disconnect', 'reload', 'hidden', 'history-cache'])
+      await t.test(
+        `${transition} cancels pending stick application and stale feedback cannot restart it`,
+        async () => {
+          await click('connect');
+          await setAxis(2, 0.9);
+          await click('apply-stick');
+          const pendingSequence = latest().sequence;
+          if (transition === 'disconnect') await click('disconnect');
+          if (transition === 'reload') {
+            await click('load');
+            await elements['game-frame'].emit('load');
+          }
+          if (transition === 'hidden') {
+            doc.hidden = true;
+            await doc.emit('visibilitychange');
+            doc.hidden = false;
+          }
+          if (transition === 'history-cache') {
+            await host.emit('pagehide', { persisted: true });
+            await host.emit('pageshow', { persisted: true });
+          }
+          await acknowledge(pendingSequence);
+          assert.equal(latest().pad.connected, false);
+          assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+          assert.equal(timeouts.size, 0);
+        },
+      );
+    await t.test(
+      'reload rotates the document session so queued high-sequence status cannot starve new feedback',
+      async () => {
+        const oldSession = latest().session;
+        await click('load');
+        await elements['game-frame'].emit('load');
+        const currentSession = latest().session;
+        assert.match(currentSession, /^[a-f0-9]{32}$/);
+        assert.notEqual(currentSession, oldSession);
+        assert.ok(elements['game-frame'].src.includes(`controller-session=${currentSession}`));
+        await acknowledge(-1, {
+          session: oldSession,
+          sequence: 999999,
+          focusedLabel: 'Old document',
+        });
+        assert.equal(elements.focused.textContent, '—');
+        await acknowledge(-1, {
+          session: currentSession,
+          sequence: 0,
+          focusedLabel: 'New document',
+        });
+        assert.equal(elements.focused.textContent, 'New document');
+        await click('connect');
+        await setAxis(2, 0.5);
+        await click('apply-stick');
+        const neutralSequence = latest().sequence;
+        await acknowledge(neutralSequence, { session: oldSession, sequence: 1000000 });
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+        await acknowledge(neutralSequence);
+        assert.deepEqual(latest().pad.axes, [0, 0, 0.5, 0]);
+        await click('release');
+      },
+    );
+    await t.test(
+      'every physical button 0 through 15 is operable without fixed-action assumptions',
+      async () => {
+        await click('connect');
+        for (let index = 0; index < 16; index++) {
+          await press(index);
+          assert.equal(latest().pad.buttons[index], true);
+          await press(index);
+          assert.ok(latest().pad.buttons.every((value) => !value));
+        }
+        assert.deepEqual(latest().pad.axes, [0, 0, 0, 0]);
+      },
+    );
     await t.test(
       'visibility loss disconnects while iframe-focus parent blur does not',
       async () => {
@@ -289,6 +471,9 @@ test('practice page keeps virtual holds, releases and import failures isolated f
           ({ data }, index) => index === 0 || data.sequence > posts[index - 1].data.sequence,
         ),
       );
+      await setAxis(0, 0.5);
+      await click('apply-stick');
+      assert.ok([...timeouts.values()].some((item) => item.ms === 2000));
       await host.emit('pagehide');
       assert.equal(intervals.size, 0);
       assert.equal(timeouts.size, 0);
@@ -300,4 +485,29 @@ test('practice page keeps virtual holds, releases and import failures isolated f
       else delete globalThis[key];
     }
   }
+});
+
+test('actual lab markup exposes all physical indices and four accessible numeric axis controls', async () => {
+  const html = await readFile(new URL('../controller-lab/index.html', import.meta.url), 'utf8');
+  const controls = [
+    ...html.matchAll(/<button\b([^>]*data-pad="(\d+)"[^>]*)>([\s\S]*?)<\/button>/g),
+  ];
+  assert.deepEqual(
+    controls.map((match) => Number(match[2])).sort((a, b) => a - b),
+    Array.from({ length: 16 }, (_, i) => i),
+  );
+  for (const [, attributes, index, contents] of controls) {
+    assert.match(attributes, new RegExp(`aria-label="Button ${index}: [^"]+"`));
+    assert.doesNotMatch(contents, /Confirm|ability|Pick up|Boost|Hangar/);
+  }
+  for (let axis = 0; axis < 4; axis++) {
+    assert.match(html, new RegExp(`<label for="axis-${axis}">[^<]+</label\\s*>`));
+    assert.match(html, new RegExp(`<output[^>]*id="axis-${axis}-value"[^>]*>0\\.00</output>`));
+    assert.match(
+      html,
+      new RegExp(`<input[^>]*id="axis-${axis}"[^>]*type="range"[^>]*min="-1"[^>]*max="1"`),
+    );
+  }
+  assert.match(html, /Default layout only:/);
+  assert.match(html, /configured menu Confirm/);
 });

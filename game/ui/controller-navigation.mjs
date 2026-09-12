@@ -8,6 +8,7 @@ export function attachControllerNavigation({
   getScope = () => 'ui',
   getRoot = () => doc,
   getDefaultFocus = () => null,
+  getControlLabels = () => ({ directions: 'D-pad', confirm: 'South', back: 'East' }),
   accept = () => true,
   onBack = () => {},
   onMenu = () => {},
@@ -139,7 +140,8 @@ export function attachControllerNavigation({
     if (!editing) return;
     const value =
       editing.kind === 'select' ? editing.options[editing.index].label : String(editing.draft);
-    editing.preview.textContent = `${editing.label}: ${value} · D-pad changes · South confirms · East cancels`;
+    const controls = getControlLabels();
+    editing.preview.textContent = `${editing.label}: ${value} · ${controls.directions} changes · ${controls.confirm} confirms · ${controls.back} cancels`;
     hint(editing.preview.textContent);
   }
   function beginEdit(element) {

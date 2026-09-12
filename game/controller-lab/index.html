@@ -48,8 +48,9 @@
           </div>
           <p id="connection-status">Virtual pad disconnected.</p>
           <p class="guide">
-            Connect, then press <strong>A</strong> to join. Release, then press
-            <strong>A</strong> again to activate the focused control. The first press only joins.
+            Connect, then press any face button <strong>0–3</strong> or physical
+            <strong>Menu / 9</strong> to join. Release, then use your configured menu Confirm
+            button. The first press only joins; default Confirm is South / 0.
           </p>
           <label
             >Button gesture<select id="gesture">
@@ -58,52 +59,139 @@
             </select></label
           >
           <div class="dpad" role="group" aria-label="Virtual directional pad">
-            <button data-pad="12" class="up" disabled aria-pressed="false" aria-label="D-pad up">
-              ↑
+            <button
+              data-pad="12"
+              class="up"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 12: D-pad up"
+            >
+              <b>↑</b><span>12</span>
             </button>
             <button
               data-pad="14"
               class="left"
               disabled
               aria-pressed="false"
-              aria-label="D-pad left"
+              aria-label="Button 14: D-pad left"
             >
-              ←
+              <b>←</b><span>14</span>
             </button>
             <button
               data-pad="13"
               class="down"
               disabled
               aria-pressed="false"
-              aria-label="D-pad down"
+              aria-label="Button 13: D-pad down"
             >
-              ↓
+              <b>↓</b><span>13</span>
             </button>
             <button
               data-pad="15"
               class="right"
               disabled
               aria-pressed="false"
-              aria-label="D-pad right"
+              aria-label="Button 15: D-pad right"
             >
-              →
+              <b>→</b><span>15</span>
             </button>
           </div>
-          <div class="face-buttons" role="group" aria-label="Virtual action buttons">
-            <button data-pad="0" disabled aria-pressed="false">
-              <b>A</b><span>Confirm / ability</span>
+          <div
+            class="face-buttons"
+            role="group"
+            aria-label="Physical virtual-pad buttons 0 through 11"
+          >
+            <button data-pad="0" disabled aria-pressed="false" aria-label="Button 0: south face">
+              <b>South</b><span>Button 0</span>
             </button>
-            <button data-pad="1" disabled aria-pressed="false">
-              <b>B</b><span>Back / Stop</span>
+            <button data-pad="1" disabled aria-pressed="false" aria-label="Button 1: east face">
+              <b>East</b><span>Button 1</span>
             </button>
-            <button data-pad="2" disabled aria-pressed="false"><b>X</b><span>Pick up</span></button>
-            <button data-pad="3" disabled aria-pressed="false"><b>Y</b><span>Hangar</span></button>
-            <button data-pad="5" disabled aria-pressed="false"><b>RB</b><span>Boost</span></button>
-            <button data-pad="9" disabled aria-pressed="false">
-              <b>Menu</b><span>Pause / menu</span>
+            <button data-pad="2" disabled aria-pressed="false" aria-label="Button 2: west face">
+              <b>West</b><span>Button 2</span>
+            </button>
+            <button data-pad="3" disabled aria-pressed="false" aria-label="Button 3: north face">
+              <b>North</b><span>Button 3</span>
+            </button>
+            <button data-pad="4" disabled aria-pressed="false" aria-label="Button 4: left shoulder">
+              <b>L shoulder</b><span>Button 4</span>
+            </button>
+            <button
+              data-pad="5"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 5: right shoulder"
+            >
+              <b>R shoulder</b><span>Button 5</span>
+            </button>
+            <button data-pad="6" disabled aria-pressed="false" aria-label="Button 6: left trigger">
+              <b>L trigger</b><span>Button 6</span>
+            </button>
+            <button data-pad="7" disabled aria-pressed="false" aria-label="Button 7: right trigger">
+              <b>R trigger</b><span>Button 7</span>
+            </button>
+            <button
+              data-pad="8"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 8: view or select"
+            >
+              <b>View / select</b><span>Button 8</span>
+            </button>
+            <button data-pad="9" disabled aria-pressed="false" aria-label="Button 9: menu or start">
+              <b>Menu / start</b><span>Button 9</span>
+            </button>
+            <button
+              data-pad="10"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 10: left stick press"
+            >
+              <b>L stick press</b><span>Button 10</span>
+            </button>
+            <button
+              data-pad="11"
+              disabled
+              aria-pressed="false"
+              aria-label="Button 11: right stick press"
+            >
+              <b>R stick press</b><span>Button 11</span>
             </button>
           </div>
-          <button id="release" class="wide" disabled>Release all buttons</button>
+          <fieldset class="sticks">
+            <legend>Both sticks · draft values</legend>
+            <div class="axis-label">
+              <label for="axis-0">Left horizontal · axis 0</label
+              ><output id="axis-0-value" for="axis-0" aria-hidden="true">0.00</output>
+            </div>
+            <input id="axis-0" type="range" min="-1" max="1" step="0.05" value="0" disabled />
+            <div class="axis-label">
+              <label for="axis-1">Left vertical · axis 1</label
+              ><output id="axis-1-value" for="axis-1" aria-hidden="true">0.00</output>
+            </div>
+            <input id="axis-1" type="range" min="-1" max="1" step="0.05" value="0" disabled />
+            <div class="axis-label">
+              <label for="axis-2">Right horizontal · axis 2</label
+              ><output id="axis-2-value" for="axis-2" aria-hidden="true">0.00</output>
+            </div>
+            <input id="axis-2" type="range" min="-1" max="1" step="0.05" value="0" disabled />
+            <div class="axis-label">
+              <label for="axis-3">Right vertical · axis 3</label
+              ><output id="axis-3-value" for="axis-3" aria-hidden="true">0.00</output>
+            </div>
+            <input id="axis-3" type="range" min="-1" max="1" step="0.05" value="0" disabled />
+            <p class="guide">
+              Negative = left/up. Positive = right/down. Editing releases the virtual pad; values
+              stay draft until applied.
+            </p>
+            <p class="guide">
+              Editing may pause a flight. Resume explicitly in the game using your configured
+              controls, then Apply again to test flight movement. Apply never resumes for you.
+            </p>
+            <button id="apply-stick" class="wide" disabled>Apply stick values</button>
+            <p id="axis-status" class="guide" role="status">Both sticks centered.</p>
+          </fieldset>
+          <button id="release" class="wide" disabled>Release all · buttons + sticks</button>
           <button id="focus-game" class="wide" disabled>Focus game</button>
           <dl class="feedback" aria-live="polite" aria-atomic="true">
             <dt>Game scope</dt>
@@ -117,6 +205,11 @@
             Hold mode keeps a button pressed when you activate another. Release all before a new
             menu gesture. Moving between this panel and the game may pause play; the next virtual
             gesture focuses the game first.
+          </p>
+          <p class="guide default-hints">
+            <strong>Default layout only:</strong> 0 confirms / uses ability; 1 goes back / stops; 2
+            picks up; 3 opens Hangar; 5 boosts; 9 pauses. Remap controls in the game's Settings;
+            this panel always sends the physical positions and indices shown.
           </p>
         </aside>
         <section class="stage" aria-label="Actual practice game">
