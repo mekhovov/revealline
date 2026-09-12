@@ -528,6 +528,18 @@ dialog::backdrop {
   body {
     font-size: 18px;
   }
+  .game-shell .flight-status {
+    height: auto;
+    min-height: 31px;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    padding-block: 5px;
+    line-height: 1.2;
+  }
+  .game-shell .flight-status > #objective-state {
+    max-width: 100%;
+    text-align: left;
+  }
   .shell-home[open] {
     grid-template-columns: 1fr;
   }
