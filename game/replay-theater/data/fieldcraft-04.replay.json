@@ -1,0 +1,310 @@
+{
+  "version": "xonix-replay.v3",
+  "build": "fieldcraft-role-proof",
+  "ruleset": "xonix-core.v2",
+  "level": {
+    "version": "xonix-level.v1",
+    "revision": "1",
+    "width": 48,
+    "height": 36,
+    "themeId": "fpv",
+    "musicId": "fieldcraft-theme",
+    "id": "fieldcraft-04",
+    "name": "Net Loom",
+    "spawn": {
+      "x": 24.5,
+      "y": 0.5
+    },
+    "walls": [
+      {
+        "x": 7,
+        "y": 14,
+        "w": 7,
+        "h": 2
+      },
+      {
+        "x": 33,
+        "y": 15,
+        "w": 5,
+        "h": 2
+      }
+    ],
+    "enemies": [
+      {
+        "id": "thread-cutter",
+        "type": "bouncer",
+        "x": 29.5,
+        "y": 3.5,
+        "vx": -4,
+        "vy": 0,
+        "radius": 0.3
+      }
+    ],
+    "objectives": [
+      {
+        "id": "upper-thread",
+        "x": 8.5,
+        "y": 8.5,
+        "required": true,
+        "hidden": false
+      },
+      {
+        "id": "lower-thread",
+        "x": 38.5,
+        "y": 30.5,
+        "required": true,
+        "hidden": false
+      }
+    ],
+    "supplies": [
+      {
+        "id": "net-supply",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ],
+    "signalZones": [],
+    "goal": {
+      "coverage": 0.68
+    },
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 8,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [8, 20],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 35,
+      "cutTimeLimitSeconds": 4,
+      "maxTrailCells": 36
+    },
+    "metadata": {
+      "description": "Recommended: Trapper. Pick up a charge before leaving home. Place a net near the fast roamer as you begin the vertical cut; slowing it buys time to close your line. The roamer is still dangerous inside a net. Use the new center rail for a shorter second cut toward the lower relay. Keep every cable within 36 cells and four seconds."
+    },
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 24.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "options": {
+    "seed": 1,
+    "turnPolicy": "grid-center",
+    "classId": "trapper",
+    "classRecipes": [
+      {
+        "id": "scout",
+        "label": "Scout",
+        "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 6,
+        "duration": 4,
+        "radius": 48,
+        "revision": "1"
+      },
+      {
+        "id": "bomber",
+        "label": "Light carrier",
+        "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+        "primitive": "stun-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "carrier",
+        "label": "Heavy carrier",
+        "description": "Carry two charges; each creates the same temporary stun field.",
+        "primitive": "stun-field",
+        "capacity": 2,
+        "cooldown": 2,
+        "duration": 2.5,
+        "radius": 3,
+        "revision": "1"
+      },
+      {
+        "id": "interceptor",
+        "label": "Interceptor",
+        "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+        "primitive": "shield",
+        "capacity": 0,
+        "cooldown": 9,
+        "duration": 1.5,
+        "radius": 0,
+        "revision": "1"
+      },
+      {
+        "id": "fiber",
+        "label": "Fiber relay",
+        "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+        "primitive": "scan",
+        "capacity": 0,
+        "cooldown": 7,
+        "duration": 3,
+        "radius": 30,
+        "signalResistance": true,
+        "moveSpeedMultiplier": 1,
+        "revision": "1"
+      },
+      {
+        "id": "impact",
+        "label": "Impact craft",
+        "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+        "primitive": "impact-pulse",
+        "capacity": 0,
+        "cooldown": 10,
+        "duration": 3,
+        "radius": 5,
+        "revision": "1"
+      },
+      {
+        "id": "trapper",
+        "label": "Trapper",
+        "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+        "primitive": "slow-field",
+        "capacity": 1,
+        "cooldown": 2,
+        "duration": 4,
+        "radius": 4,
+        "slowFactor": 0.25,
+        "revision": "1"
+      }
+    ]
+  },
+  "segments": [
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": false,
+        "pickup": true,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 30,
+      "input": {
+        "direction": "down",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 1,
+      "input": {
+        "direction": null,
+        "boost": false,
+        "action": true,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 320,
+      "input": {
+        "direction": "down",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 130,
+      "input": {
+        "direction": "up",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    },
+    {
+      "ticks": 225,
+      "input": {
+        "direction": "right",
+        "boost": true,
+        "action": false,
+        "pickup": false,
+        "switchClass": null
+      },
+      "releaseBefore": false
+    }
+  ],
+  "releaseAfter": false,
+  "ticks": 707,
+  "summary": {
+    "ruleset": "xonix-core.v2",
+    "levelId": "fieldcraft-04",
+    "revision": "1",
+    "seed": 1,
+    "turnPolicy": "grid-center",
+    "classId": "trapper",
+    "activeClassId": "trapper",
+    "rosterHash": "roster-v1-e159e435",
+    "classHistory": [
+      {
+        "classId": "trapper",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-eff6ab56",
+        "tick": 0
+      }
+    ],
+    "switches": 0,
+    "failureCause": null,
+    "classRevision": "1",
+    "loadoutHash": "loadout-v1-eff6ab56",
+    "status": "won",
+    "won": true,
+    "tick": 707,
+    "time": 5.891666666666749,
+    "lives": 3,
+    "score": 11880,
+    "coverage": 0.7064935064935065,
+    "claimedCount": 1088,
+    "totalClaimable": 1540,
+    "medal": "gold",
+    "objectives": {
+      "captured": 2,
+      "total": 2,
+      "required": 2
+    }
+  },
+  "checkpoint": {
+    "algorithm": "fnv1a64-state-v2",
+    "hash": "cf8171a4e8ed2176",
+    "sections": {
+      "identity": "6312fb7d8e790a3a",
+      "configuration": "43f04149bd798e6a",
+      "board": "1c230d8eeb6032bb",
+      "player": "0b34f2c3e54bcbef",
+      "trail": "f0ca473df9efdcc8",
+      "enemies": "7a8410dcf3582d6a",
+      "objectives": "e2320cad0e4285d4",
+      "supplies": "ae3212627b2fc1a6",
+      "ability": "ccfd6382885d49d9",
+      "clock": "e8049c7bbc41a4d3",
+      "continuation": "b90ee8c788f6c77f",
+      "result": "5cc4302393e783fc"
+    }
+  }
+}
