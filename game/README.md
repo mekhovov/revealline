@@ -1,12 +1,14 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.6.0 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.7.0 working source includes 25 maps: 12 base campaign maps and 13 optional expansion maps across Night Shift, Living Threads, Fieldcraft and the illustrated Homeward Skies chapter.
 
 ## The loop
 
 Leave claimed ground to start a vulnerable cut; return to claimed ground to close it. The cut and connected regions without a field enemy become revealed. Enemies on both sides can leave a trail-only capture. Permanent walls block movement and are excluded from the coverage denominator. A bright centerline and tile overlay identify the vulnerable cut.
 
 Reach the coverage target and capture required objectives. A failed cut costs a life and clears that cut while retaining earlier territory. Some maps add a mission deadline, a cut deadline or a maximum trail length; zero disables each limit. Other clocks only affect medals. Victory reveals the whole picture, plays a skippable celebration and retains the actual captured percentage in the result.
+
+Copper Orchard also offers the optional **Steady Signal** seal: close one cut through eight distinct active interference cells with signal-resistant equipment, then finish without losing a life. The goal tracks open-line and closed-cut progress separately, survives verified saved-flight restoration, and is replay-checked before being added to your collection. Each retained setup lists its class route, steering mode and seed. Ordinary wins still unlock the picture and next mission. See the [mastery guide](../docs/round-17-mastery-increment.md) for exact rules, local record limits and authoring boundaries.
 
 The campaign introduces bouncers, border patrols, supplies, objectives, obstacles, a telegraphed lane boss, signal interference and hangars. FPV Front, Ukraine Atlas, 1994 Forever and Spend Network change presentation. The business world is an original Coupa-inspired metaphor, not official product behavior or real customer savings. Military classes use fictional arcade abilities rather than real operational specifications.
 

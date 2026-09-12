@@ -12,6 +12,11 @@ import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
+import { masteryFor, masteryText } from './ui/mastery-view.mjs';
+import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
+import { createMasteryAwards } from './mastery-awards.mjs';
+import { normalizedLevel } from './core/level.mjs';
+import { canonicalJSON } from './data-json.mjs';
 import {
   emptyLibrary,
   loadLibrary,
@@ -20,6 +25,7 @@ import {
   recordLibraryCompletion,
   campaignKey,
   updatePreferences,
+  withMasteryRecords,
 } from './library.mjs';
 import {
   emptyPackLibrary,
@@ -86,7 +92,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.6.0',
+  let buildVersion = '0.7.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -232,7 +238,25 @@ try {
     sessionBusy = false,
     restoreController = null,
     themeOverride = false,
-    musicOverride = false;
+    musicOverride = false,
+    masteryDefinition = null,
+    masteryObserver = null,
+    masteryAward = null;
+  const masteryAwards = createMasteryAwards({
+    getGeneration: () => libraryGeneration,
+    commit: (record) => {
+      library = withMasteryRecords(library, [record]);
+      return persistProfile().ok;
+    },
+    onStatus: (status) => {
+      if (['earned', 'session'].includes(status.status)) libraryPanel.refreshMasteries();
+      if (status.runId !== runId) return;
+      masteryAward = status;
+      refreshMastery();
+      if (['earned', 'session', 'unavailable'].includes(status.status))
+        $('mastery-announcement').textContent = status.message;
+    },
+  });
   theme = themesFile.themes.find((t) => t.id === library.preferences.themeId) || theme;
   classId = classRegistry.some((c) => c.id === library.preferences.classId)
     ? library.preferences.classId
@@ -403,6 +427,8 @@ try {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
     pause(true);
+    masteryAwards.cancelAll();
+    cancelRestore();
     clearInput();
     sound.pause();
     writer.release();
@@ -700,6 +726,8 @@ try {
         campaign: entry.campaign,
         campaignKey: campaignKey(entry.campaign),
         signal: controller.signal,
+        masteryDefinition:
+          masteryFor(campaignKey(entry.campaign), candidate?.replay?.level?.id) ?? undefined,
       });
       if (controller.signal.aborted)
         throw new Error('Loading was cancelled; your newer selection is kept.');
@@ -711,6 +739,9 @@ try {
       run = restored.run;
       recorder = restored.recorder;
       runId = restored.session.runId;
+      masteryDefinition = masteryFor(campaignKey(campaign), run.levelId);
+      masteryObserver = restored.masteryObserver ?? null;
+      masteryAward = null;
       classId = run.classId;
       turnPolicy = run.turnPolicy;
       seed = run.seed;
@@ -813,7 +844,9 @@ try {
         .filter(Boolean)
         .join(' '),
     restore: restoreAttempt,
+    beforeProfileReplacement: () => masteryAwards.cancelAll(),
     setLibrary: (next) => {
+      masteryAwards.cancelAll();
       library = next;
       progress = progressFor(library, campaign);
       const saved = persistProfile({ mode: 'replace' });
@@ -831,6 +864,7 @@ try {
       } else assertWriter();
       pause(true);
       cancelRestore();
+      masteryAwards.cancelAll();
       const result = await commitBackup(prepared, backupAdapters());
       if (!result.ok) {
         if (result.recoveryRequired) persistenceReady = false;
@@ -855,6 +889,7 @@ try {
     },
     setPacks: async (next) => {
       assertWriter();
+      masteryAwards.cancelAll();
       try {
         await writeAssetStore(packsKey, exportPackLibrary(next));
       } catch (e) {
@@ -1151,7 +1186,22 @@ try {
     $('mission-brief-title').textContent = brief.fullTitle;
     $('mission-brief-copy').textContent = brief.fullBrief;
     $('mission-brief-facts').textContent = brief.facts;
+    refreshMastery();
     return brief;
+  }
+  function refreshMastery() {
+    const visible = !!masteryDefinition && !campaignOverview;
+    show('mastery-brief', visible);
+    show('mastery-status', visible && $('game-overlay').hidden);
+    const kind = $('game-overlay').dataset.kind;
+    show('mastery-overlay', visible && ['ready', 'pause', 'won', 'lost'].includes(kind));
+    if (!visible) return;
+    const preview = masteryObserver?.snapshot();
+    const text = masteryText(masteryDefinition, preview, { practice, award: masteryAward });
+    for (const id of ['mastery-status', 'mastery-overlay'])
+      if ($(id).textContent !== text) $(id).textContent = text;
+    $('mastery-brief').textContent =
+      `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
   }
   function overlay(kind) {
     $('game-overlay').dataset.kind = kind;
@@ -1233,6 +1283,7 @@ try {
         'Retries start immediately. Previous campaign progress is kept.';
     }
     refreshSavedFlight();
+    refreshMastery();
   }
   function prepare({ restoreAdoption = false } = {}) {
     if (!restoreAdoption) cancelRestore();
@@ -1249,6 +1300,43 @@ try {
       classRecipes: scenario?.classRecipes || classRegistry,
     });
     runId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    const observedCampaign = scenario
+      ? catalog()
+          .map((entry) => entry.campaign)
+          .find((entry) => {
+            if (!masteryFor(campaignKey(entry), run.levelId)) return false;
+            const map = entry.levels.find((level) => level.id === run.levelId);
+            return (
+              map &&
+              canonicalJSON(normalizedLevel(map)) === canonicalJSON(run.level) &&
+              canonicalJSON(entry.classRecipes) === canonicalJSON(run.classRecipes)
+            );
+          })
+      : campaign;
+    masteryDefinition = observedCampaign
+      ? masteryFor(campaignKey(observedCampaign), run.levelId)
+      : null;
+    masteryObserver = null;
+    masteryAward = null;
+    $('mastery-announcement').textContent = '';
+    if (masteryDefinition)
+      try {
+        masteryObserver = createMasteryObserver({
+          definition: masteryDefinition,
+          setup: captureMasterySetup(run, {
+            campaignId: observedCampaign.id,
+            campaignKey: campaignKey(observedCampaign),
+            runId,
+          }),
+          initial: captureMasteryFacts(run, { runId }),
+        });
+      } catch {
+        masteryAward = {
+          status: 'unavailable',
+          message:
+            'The optional goal is unavailable for this configuration. You can still reveal the picture.',
+        };
+      }
     const authoredLevel = scenario?.level || campaign.levels[levelIndex];
     if (!scenario && !themeOverride) {
       theme =
@@ -1378,6 +1466,7 @@ try {
       : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
+    refreshMastery();
   }
   function eventFeedback(events) {
     for (const event of events) {
@@ -1518,6 +1607,16 @@ try {
           );
         }
         stepRun(run, command, FIXED_DT);
+        if (masteryObserver)
+          try {
+            masteryObserver.observe(captureMasteryFacts(run, { runId }));
+          } catch {
+            masteryObserver = null;
+            masteryAward = {
+              status: 'unavailable',
+              message: 'Live goal tracking is unavailable. Your picture progress is kept.',
+            };
+          }
         pendingAction = false;
         pendingPickup = false;
         pendingSwitch = null;
@@ -1559,6 +1658,24 @@ try {
           persistProfile();
           updateBodies();
           paintMissions();
+          if (masteryDefinition && recorder && !completionWarning)
+            try {
+              void masteryAwards.submit(
+                {
+                  replay: exportReplay(recorder, run),
+                  campaign,
+                  definition: masteryDefinition,
+                  runId,
+                  earnedAt: new Date().toISOString(),
+                },
+                { eligible: !practice },
+              );
+            } catch (error) {
+              masteryAward = {
+                status: 'unavailable',
+                message: `Your picture is collected; the seal could not be checked. ${error.message}`,
+              };
+            }
           try {
             const old = JSON.parse(localStorage.getItem(sessionKey));
             if (!completionWarning && saveSucceeded && old?.runId === runId) {

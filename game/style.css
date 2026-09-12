@@ -1499,3 +1499,33 @@ dialog input[type='search'] {
   white-space: normal;
   overflow-wrap: anywhere;
 }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.mastery-note {
+  color: #665019;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.mastery-list {
+  max-height: 6rem;
+  overflow-y: auto;
+  margin: 0.5rem 0 1rem;
+  padding-left: 1.2rem;
+  color: #665019;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.game-overlay .mastery-note {
+  color: #f2d889;
+}
