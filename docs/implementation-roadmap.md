@@ -85,3 +85,7 @@ First Light is frozen from `2455efd` with 1,926 passing tests and an independent
 ## Soundtrack Studio integration
 
 P3 now includes preserved MP3 records/storage, six built-in playlists, a session transport, Settings → Music library & playlists and seven real-host regression scenarios with finite media boundaries. Real source-browser file selection, decoder probing, MP3 playback progress and saved playlist restoration have passed. Binary export preparation succeeded in the in-app browser, but its download event timed out and no output file was observed; exact browser download/restore and frozen offline playback remain open gates. The 24 finished recordings are still P6, separate from current recipes and silent transport fixtures.
+
+## Latest playable audio milestone — v0.24.0
+
+Soundtrack Studio is frozen from `45a0241` with2,012 passing tests and independently reproduced artifacts. [P3 local evidence](verification/round-33/p3-local.md) separates actual source-browser MP3 playback from pending binary-download and offline-browser checks. P4 classic source is being implemented separately; no new classic campaign is advertised in v0.24. P5 media-library design proceeds independently.
