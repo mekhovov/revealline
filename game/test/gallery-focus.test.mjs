@@ -1,8 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { campaignKey, emptyLibrary } from '../library.mjs';
+import { createRun } from '../core/index.mjs';
+import { dataIdentity } from '../data-json.mjs';
+import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
 // stale or disabled node fails. Painting and browser image decoding are separate.
@@ -84,7 +88,7 @@ class Element {
   }
 }
 
-async function setup(t, count = 30) {
+async function setup(t, count = 30, hostOverrides = {}) {
   const prior = new Map(
     ['document', 'fetch', 'Image', 'cancelAnimationFrame'].map((key) => [
       key,
@@ -109,6 +113,7 @@ async function setup(t, count = 30) {
     node('gallery-grid'),
     node('gallery-pages'),
   );
+  node('gallery-view-dialog').append(node('gallery-view-masteries'));
   const decodeJobs = [];
   Object.defineProperty(globalThis, 'document', { configurable: true, value: document });
   Object.defineProperty(globalThis, 'fetch', {
@@ -159,13 +164,14 @@ async function setup(t, count = 30) {
   }));
   const selections = [],
     api = attachLibraryPanel({
-      get: () => ({ library, packs: { packs: [] }, presets: {} }),
+      get: () => ({ library, packs: { format: 'xonix-pack-library.v1', packs: [] }, presets: {} }),
       catalog: () => catalog,
       base: () => entry,
       pause() {},
       saved: () => null,
       select: (...args) => selections.push(args),
       focusMission: () => node('mission-start').focus(),
+      ...hostOverrides,
     });
   await Promise.resolve();
   await Promise.resolve();
@@ -320,4 +326,226 @@ test('busy library import still prevents cancel until its guarded task finishes'
   await job;
   assert.equal(h.node('library-dialog').requestClose().defaultPrevented, false);
   assert.equal(h.node('library-dialog').open, false);
+});
+
+test('profile replacement cancels pending writes before its Undo snapshot and restores the prior profile', async (t) => {
+  const order = [];
+  let pendingWrite = true,
+    h;
+  h = await setup(t, 1, {
+    beforeProfileReplacement() {
+      order.push('boundary');
+      pendingWrite = false;
+    },
+    canSnapshotBackup: () => true,
+    currentSession() {
+      // backupContents is the point where the previous profile is captured.
+      // A later cancellation could omit a just-earned seal from Undo.
+      assert.equal(pendingWrite, false, 'cancel pending profile writes before taking the snapshot');
+      order.push('snapshot');
+      return null;
+    },
+    async applyBackup(prepared) {
+      order.push('apply');
+      h.setLibrary(prepared.library);
+      return { ok: true };
+    },
+  });
+  const previous = emptyLibrary();
+  previous.preferences.musicEnabled = false;
+  h.setLibrary(previous);
+  h.api.open('saves');
+  const incoming = {
+    format: 'xonix-backup.v1',
+    library: emptyLibrary(),
+    packs: { format: 'xonix-pack-library.v1', packs: [] },
+    session: null,
+  };
+  incoming.library.preferences.musicEnabled = true;
+  h.node('save-json').value = JSON.stringify(incoming);
+  await h.node('import-save').onclick();
+  assert.deepEqual(order, ['boundary', 'snapshot', 'apply']);
+  assert.equal(h.library.preferences.musicEnabled, true);
+  assert.match(h.node('save-status').textContent, /Complete backup restored/);
+  assert.equal(h.node('undo-backup').disabled, false);
+  await h.node('undo-backup').onclick();
+  assert.deepEqual(order, ['boundary', 'snapshot', 'apply', 'apply']);
+  assert.deepEqual(
+    h.library,
+    previous,
+    'Undo returns the full profile captured after cancellation',
+  );
+  assert.equal(h.node('undo-backup').disabled, true);
+});
+
+test('a rejected replacement boundary preserves the active profile without taking an Undo snapshot', async (t) => {
+  let snapshots = 0,
+    applications = 0;
+  const h = await setup(t, 1, {
+    beforeProfileReplacement() {
+      throw new Error('Profile replacement is temporarily unavailable.');
+    },
+    canSnapshotBackup: () => true,
+    currentSession() {
+      snapshots++;
+      return null;
+    },
+    async applyBackup() {
+      applications++;
+      return { ok: true };
+    },
+  });
+  const previous = emptyLibrary();
+  previous.preferences.musicEnabled = false;
+  h.setLibrary(previous);
+  h.api.open('saves');
+  h.node('save-json').value = JSON.stringify({
+    format: 'xonix-backup.v1',
+    library: emptyLibrary(),
+    packs: { format: 'xonix-pack-library.v1', packs: [] },
+    session: null,
+  });
+  await h.node('import-save').onclick();
+  assert.equal(snapshots, 0);
+  assert.equal(applications, 0);
+  assert.deepEqual(h.library, previous);
+  assert.equal(h.node('undo-backup').disabled, true);
+  assert.match(h.node('save-status').textContent, /temporarily unavailable/);
+});
+
+let homewardPack;
+async function homewardCollection(t) {
+  homewardPack ??= JSON.parse(
+    await readFile(new URL('../content/packs/homeward-skies.json', import.meta.url), 'utf8'),
+  );
+  const h = await setup(t, 1);
+  const entry = {
+    campaign: { ...homewardPack.campaigns[0], classRecipes: homewardPack.classRecipes },
+    classRecipes: homewardPack.classRecipes,
+    themes: [{ id: 'fpv', name: 'FPV Front' }],
+    visualOverrides: {},
+  };
+  const level = entry.campaign.levels[0],
+    key = campaignKey(entry.campaign);
+  const library = emptyLibrary();
+  library.gallery = [
+    {
+      key: 'homeward-picture',
+      campaignKey: key,
+      levelId: level.id,
+      levelName: level.name,
+      themeId: 'fpv',
+      medal: 'gold',
+      score: 100,
+      seed: 1,
+    },
+  ];
+  h.setLibrary(library);
+  h.setCatalog([entry]);
+  h.collection();
+  const state = createRun(level, { seed: 1, classId: 'fiber', classRecipes: entry.classRecipes });
+  // Local imported-record presentation fixture, not a newly awarded result.
+  const seal = {
+    format: 'xonix-mastery-record.v1',
+    campaignKey: key,
+    levelId: level.id,
+    levelRevision: level.revision,
+    levelIdentity: `level-v1-${dataIdentity(state.level)}`,
+    definitionId: STEADY_SIGNAL.id,
+    definitionRevision: STEADY_SIGNAL.revision,
+    definitionHash: masteryDefinitionIdentity(STEADY_SIGNAL),
+    setup: {
+      ruleset: state.ruleset,
+      seed: state.seed,
+      turnPolicy: state.turnPolicy,
+      classId: state.classId,
+      classRevision: state.classRevision,
+      loadoutHash: state.loadoutHash,
+      rosterHash: state.rosterHash,
+      classHistory: state.classHistory,
+    },
+    runId: 'gallery-local-metadata',
+    earnedAt: '2026-09-12T12:00:00.000Z',
+  };
+  return { ...h, seal };
+}
+
+test('a late seal updates an existing focused collection card without repaint or replacement', async (t) => {
+  const h = await homewardCollection(t);
+  const card = h.cards()[0],
+    slot = card.children[3],
+    canvas = card.children[0];
+  card.focus();
+  const paints = h.paints.length;
+  assert.equal(slot.hidden, true);
+  h.library.masteries.push(h.seal);
+  h.api.refreshMasteries();
+  assert.equal(h.cards()[0], card);
+  assert.equal(card.children[0], canvas);
+  assert.equal(card.children[3], slot);
+  assert.equal(slot.hidden, false);
+  assert.equal(slot.textContent, '◇ Steady Signal');
+  assert.equal(h.document.activeElement, card);
+  assert.equal(h.node('collection-dialog').open, true);
+  assert.equal(h.node('gallery-view-dialog').open, false);
+  assert.equal(h.paints.length, paints);
+});
+
+test('an already open picture receives friendly seal details without disturbing its focus or artwork', async (t) => {
+  const h = await homewardCollection(t),
+    card = h.cards()[0];
+  await card.onclick();
+  const list = h.node('gallery-view-masteries'),
+    canvas = h.node('gallery-canvas');
+  h.node('gallery-replay').focus();
+  const paints = h.paints.length;
+  assert.equal(list.hidden, true);
+  h.library.masteries.push(h.seal, {
+    ...structuredClone(h.seal),
+    setup: { ...structuredClone(h.seal.setup), seed: 2 },
+    runId: 'gallery-other-seed',
+  });
+  h.api.refreshMasteries();
+  assert.equal(h.node('gallery-view-masteries'), list);
+  assert.equal(list.hidden, false);
+  assert.equal(list.children.length, 2);
+  assert.match(list.children[0].textContent, /Steady Signal · Fiber relay · Immediate · seed 1/);
+  assert.match(list.children[1].textContent, /seed 2/);
+  const row = list.children[0];
+  h.api.refreshMasteries();
+  assert.equal(list.children[0], row, 'An unchanged detail list is not replaced.');
+  assert.equal(h.document.activeElement, h.node('gallery-replay'));
+  assert.equal(h.node('gallery-canvas'), canvas);
+  assert.equal(h.cards()[0], card);
+  assert.equal(h.node('gallery-view-dialog').open, true);
+  assert.equal(h.node('collection-dialog').open, false);
+  assert.equal(h.paints.length, paints);
+});
+
+test('late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals', async (t) => {
+  const h = await homewardCollection(t),
+    card = h.cards()[0];
+  await card.onclick();
+  h.node('gallery-replay').focus();
+  h.library.masteries.push({ ...structuredClone(h.seal), levelId: 'homeward-02' });
+  h.api.refreshMasteries();
+  assert.equal(card.children[3].hidden, true);
+  assert.equal(h.node('gallery-view-masteries').hidden, true);
+  h.library.masteries.push({
+    ...structuredClone(h.seal),
+    definitionHash: 'mastery-v1-0000000000000000',
+  });
+  h.api.refreshMasteries();
+  assert.equal(card.children[3].textContent, '◇ Archived seal: steady-signal');
+  assert.match(
+    h.node('gallery-view-masteries').children[0].textContent,
+    /Archived seal: steady-signal/,
+  );
+  h.library.masteries.length = 0;
+  h.api.refreshMasteries();
+  assert.equal(card.children[3].hidden, true);
+  assert.equal(card.children[3].textContent, '');
+  assert.equal(h.node('gallery-view-masteries').hidden, true);
+  assert.equal(h.node('gallery-view-masteries').children.length, 0);
+  assert.equal(h.document.activeElement, h.node('gallery-replay'));
 });

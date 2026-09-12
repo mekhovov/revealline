@@ -20,7 +20,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.6.0</span>
+        ><span id="version" class="version">v0.7.0</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -57,6 +57,7 @@
                     an enemy.
                   </p>
                   <div id="result-medals" class="result-medals" hidden></div>
+                  <p id="mastery-overlay" class="mastery-note" hidden></p>
                 </div>
                 <div class="overlay-actions">
                   <button
@@ -156,6 +157,14 @@
             ><span id="input-status">Keyboard / touch</span>
           </div>
           <p id="save-warning" class="warning" role="status" hidden></p>
+          <p id="mastery-status" class="micro-note mastery-note" hidden></p>
+          <p
+            id="mastery-announcement"
+            class="sr-only"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
           <p id="controller-ui-hint" class="micro-note controller-hint" role="status" hidden></p>
           <p id="asset-warning" class="warning" role="status" hidden></p>
         </section>
@@ -169,6 +178,7 @@
             <p id="mission-brief-title" class="mission-brief-title"></p>
             <p id="mission-brief-copy"></p>
             <p id="mission-brief-facts"></p>
+            <p id="mastery-brief" class="mastery-note" hidden></p>
           </details>
           <label class="field">World<select id="theme-select"></select></label>
           <label class="field">Campaign<select id="campaign-select"></select></label>
@@ -296,6 +306,13 @@
         ×
       </button>
       <p class="eyebrow" id="gallery-view-meta"></p>
+      <ul
+        id="gallery-view-masteries"
+        class="mastery-list"
+        aria-label="Equipment seals"
+        tabindex="0"
+        hidden
+      ></ul>
       <h2 id="gallery-view-title">Your picture</h2>
       <canvas
         id="gallery-canvas"

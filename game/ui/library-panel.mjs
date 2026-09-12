@@ -12,6 +12,7 @@ import { BoardPainter } from './render.mjs';
 import { createRun } from '../core/index.mjs';
 import { challengeCampaign } from '../challenges.mjs';
 import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
+import { masteryFor, pictureMasteries } from './mastery-view.mjs';
 const $ = (id) => document.getElementById(id);
 const button = (label, fn) => {
   const b = document.createElement('button');
@@ -42,6 +43,8 @@ export function attachLibraryPanel(api) {
     scorePage = 0,
     galleryReturn = null;
   const galleryCards = new Map();
+  const gallerySealSlots = new Map();
+  let pictureSealsSignature = null;
   const galleryPainter = new BoardPainter(api.get().presets);
   function open(panel = 'scores') {
     api.pause();
@@ -117,7 +120,7 @@ export function attachLibraryPanel(api) {
     $('undo-backup').disabled = !previousBackup;
     const usage = libraryCapacity(api.get().library);
     $('library-capacity').textContent =
-      `${usage.gallery} / ${usage.maxGallery} pictures · ${usage.campaigns} / ${usage.maxCampaigns} campaigns · ${usage.percent.toFixed(1)}% of profile budget. Old pictures are preserved; export archives before reaching capacity.`;
+      `${usage.gallery} / ${usage.maxGallery} pictures · ${usage.masteries} / ${usage.maxMasteries} equipment seals · ${usage.campaigns} / ${usage.maxCampaigns} campaigns · ${usage.percent.toFixed(1)}% of profile budget. Old pictures are preserved; export archives before reaching capacity.`;
     const saved = api.saved();
     $('suspended-status').textContent = saved
       ? `Saved flight: ${saved.replay?.level?.name || 'Unknown'} · ${typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'Date unavailable'}`
@@ -245,6 +248,7 @@ export function attachLibraryPanel(api) {
     });
   }
   async function applyPrepared(prepared) {
+    api.beforeProfileReplacement?.();
     let old = null;
     try {
       if (api.canSnapshotBackup())
@@ -427,8 +431,51 @@ export function attachLibraryPanel(api) {
     }
     if (accept() && canvas.isConnected) galleryPainter.drawGallery(canvas.getContext('2d'), args);
   }
+  function sealsFor(item, picture, records) {
+    return pictureMasteries(
+      records,
+      item,
+      picture ? masteryFor(item.campaignKey, item.levelId) : null,
+      picture?.entry.classRecipes ?? picture?.entry.campaign.classRecipes,
+    );
+  }
+  function refreshPictureMasteries(picture, records) {
+    const seals = sealsFor(picture.item, picture, records);
+    const rows = seals.map(
+      (seal) =>
+        `◇ ${seal.name} · ${seal.route} · ${seal.steering} · seed ${seal.seed} · ${seal.earnedAt.slice(0, 10)}`,
+    );
+    const signature = JSON.stringify([picture.item.key, rows]);
+    const list = $('gallery-view-masteries');
+    if (signature !== pictureSealsSignature) {
+      list.replaceChildren(
+        ...rows.map((text) => {
+          const row = document.createElement('li');
+          row.textContent = text;
+          return row;
+        }),
+      );
+      pictureSealsSignature = signature;
+    }
+    list.hidden = seals.length === 0;
+  }
+  /** A late verified seal must not replace a focused card or reopen its picture. */
+  function refreshMasteries() {
+    const records = api.get().library.masteries;
+    for (const { item, picture, slot } of gallerySealSlots.values()) {
+      if (!slot.isConnected) continue;
+      const seals = records?.length ? sealsFor(item, picture, records) : [];
+      const text = seals.length
+        ? `◇ ${[...new Set(seals.map((seal) => seal.name))].join(' · ')}`
+        : '';
+      if (slot.textContent !== text) slot.textContent = text;
+      slot.hidden = seals.length === 0;
+    }
+    if (view && $('gallery-view-dialog').open) refreshPictureMasteries(view, records);
+  }
   function populateGallery() {
     galleryCards.clear();
+    gallerySealSlots.clear();
     $('gallery-grid').replaceChildren();
     const worlds = new Map(
       api.catalog().map((entry) => [campaignKey(entry.campaign), entry.themes]),
@@ -457,7 +504,11 @@ export function attachLibraryPanel(api) {
       copy.textContent = picture
         ? `${picture.theme.name} · ${item.medal.toUpperCase()} · ${item.score.toLocaleString()}`
         : 'Reinstall this picture’s pack to view';
-      card.append(canvas, title, copy);
+      const seal = document.createElement('span');
+      seal.className = 'mastery-note';
+      seal.hidden = true;
+      card.append(canvas, title, copy, seal);
+      gallerySealSlots.set(item.key, { item, picture, slot: seal });
       card.disabled = !picture;
       card.onclick = () => openPicture(picture);
       $('gallery-grid').append(card);
@@ -475,6 +526,7 @@ export function attachLibraryPanel(api) {
       galleryPage = p;
       populateGallery();
     });
+    refreshMasteries();
   }
   async function openPicture(picture) {
     if (!picture || !$('collection-dialog').open) return;
@@ -490,6 +542,7 @@ export function attachLibraryPanel(api) {
     $('gallery-view-title').textContent = picture.level.name;
     $('gallery-view-meta').textContent =
       `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
+    refreshPictureMasteries(picture, api.get().library.masteries);
     $('collection-dialog').close();
     $('gallery-view-dialog').showModal();
     try {
@@ -581,5 +634,5 @@ export function attachLibraryPanel(api) {
       target?.focus();
     }
   });
-  return { open, refresh, populateGallery };
+  return { open, refresh, populateGallery, refreshMasteries };
 }
