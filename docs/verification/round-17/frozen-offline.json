@@ -1,0 +1,50 @@
+{
+  "format": "revealline-frozen-offline-check.v1",
+  "version": "0.7.0",
+  "sourceRevision": "1d4a8d9636428122cca857533dff68c7ee65ac88",
+  "origin": "http://127.0.0.1:8807",
+  "serverStopped": true,
+  "curlExitCode": 7,
+  "offline": {
+    "files": 112,
+    "bytes": 20049333,
+    "buildId": "d5e742c87b937a2ce1afc235e63c105306898d5c74680001094f6cb5674a484b"
+  },
+  "export": {
+    "path": ".cache/round-17/frozen-earned.library.json",
+    "bytes": 2266,
+    "sha256": "9ad4fda797cab31d8b186ee013c909bd9e30e1cc7b59471c99772962e6b91d66",
+    "format": "xonix-library.v2",
+    "pictures": 1,
+    "scores": 1,
+    "masteries": 1,
+    "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+    "definitionHash": "mastery-v1-2e6aae3f42f3d3c2",
+    "levelIdentity": "level-v1-5983ec4eaf745012",
+    "setup": {
+      "ruleset": "xonix-core.v2",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "classId": "fiber",
+      "classRevision": "1",
+      "loadoutHash": "loadout-v1-85870cc1",
+      "rosterHash": "roster-v1-e159e435",
+      "classHistory": [
+        {
+          "classId": "fiber",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-85870cc1",
+          "tick": 0
+        }
+      ]
+    }
+  },
+  "playback": {
+    "firstVisitOffline": true,
+    "example": "Copper Crossing",
+    "verified": true,
+    "steppedTick": 1,
+    "totalTicks": 1305
+  },
+  "sampledGameAndTheaterWarningErrorLogs": []
+}
