@@ -46,6 +46,10 @@ export function attachLibraryPanel(api) {
   const gallerySealSlots = new Map();
   let pictureSealsSignature = null;
   const galleryPainter = new BoardPainter(api.get().presets);
+  const reducedEffects = () =>
+    (typeof api.getReducedEffects === 'function'
+      ? api.getReducedEffects()
+      : api.get().library.preferences.reducedEffects) === true;
   function open(panel = 'scores') {
     api.pause();
     for (const id of ['scores', 'saves', 'packs', 'challenges'])
@@ -585,7 +589,7 @@ export function attachLibraryPanel(api) {
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,
       seed: picture.item.seed ?? 1,
-      reduced: api.get().library.preferences.reducedEffects,
+      reduced: reducedEffects(),
     });
     // The gallery owns a presentation-only completed view; it never enters progression.
     const state = createRun(picture.level, {
@@ -605,7 +609,7 @@ export function attachLibraryPanel(api) {
         {
           paused: true,
           fullReveal: true,
-          reduced: api.get().library.preferences.reducedEffects,
+          reduced: reducedEffects(),
           celebrationPaused: document.hidden,
         },
       );

@@ -25,6 +25,8 @@ const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.
 const source = await readJSON('../../authoring/library/sentinel-relay/proposedpack-source.json');
 const oldSource = await readJSON('../content/packs/night-shift.json');
 const goalsSource = await readJSON('../content/packs/equipment-workshop.json');
+// Preserve these format/encounter fixtures' identity-only scope; real Workshop image transport is tested separately.
+goalsSource.levelVisuals = [];
 const oracle = await readJSON('./fixtures/compatibility-v0100.json');
 const noImage = async () => {
   throw new Error('These fixtures have no image decoder work.');

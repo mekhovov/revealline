@@ -55,11 +55,10 @@ const homeSource = await json('../content/packs/homeward-skies.json');
 homeSource.visualOverrides = {};
 homeSource.levelVisuals = [];
 const home = (await preparePack(homeSource, { decodeImage: noImage })).pack;
-const workshop = (
-  await preparePack(await json('../content/packs/equipment-workshop.json'), {
-    decodeImage: noImage,
-  })
-).pack;
+const workshopSource = await json('../content/packs/equipment-workshop.json');
+// This suite tests identity/rewards; actual illustrated transport has its own integration cases.
+workshopSource.levelVisuals = [];
+const workshop = (await preparePack(workshopSource, { decodeImage: noImage })).pack;
 const packs = [home, workshop];
 const campaigns = new Map(
   packs.map((pack) => [pack.id, resolvePackCampaign(pack, pack.campaigns[0].id).campaign]),
