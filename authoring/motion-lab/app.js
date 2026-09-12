@@ -291,7 +291,7 @@ function setupBackground() {
   };
   $("clear-background").addEventListener("click", clear);
   $("background-file").addEventListener("change", async event => {
-    const file = event.target.files[0]; if (!file) return;
+    const file = event.target.files[0]; event.target.value = ""; if (!file) return;
     if (!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type) || file.size > 25*1024*1024) {$("background-status").textContent = "Choose a PNG, JPEG, WebP or GIF up to 25 MiB. The current preview is retained."; return;}
     const token = ++backgroundToken, url = URL.createObjectURL(file), image = new Image();
     $("background-status").textContent = "Decoding local image…";

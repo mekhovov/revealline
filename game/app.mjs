@@ -80,7 +80,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.4.0',
+  let buildVersion = '0.4.1',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;

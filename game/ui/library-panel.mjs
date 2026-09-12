@@ -299,12 +299,16 @@ export function attachLibraryPanel(api) {
       );
     });
   $('import-save').onclick = () => importSave($('save-json').value);
-  $('save-file').onchange = () =>
-    task('save-status', async () => {
-      const text = await fileText($('save-file').files[0], MAX_BACKUP_BYTES);
+  $('save-file').onchange = () => {
+    const file = $('save-file').files[0];
+    $('save-file').value = '';
+    if (!file) return;
+    return task('save-status', async () => {
+      const text = await fileText(file, MAX_BACKUP_BYTES);
       busy = false;
       await importSave(text);
     });
+  };
   $('undo-library').onclick = () => {
     if (previousLibrary) {
       const result = api.setLibrary(previousLibrary);
@@ -335,12 +339,16 @@ export function attachLibraryPanel(api) {
       );
     });
   $('install-pack').onclick = () => install($('pack-json').value);
-  $('pack-file').onchange = () =>
-    task('pack-status', async () => {
-      const text = await fileText($('pack-file').files[0], 64 * 1024 * 1024);
+  $('pack-file').onchange = () => {
+    const file = $('pack-file').files[0];
+    $('pack-file').value = '';
+    if (!file) return;
+    return task('pack-status', async () => {
+      const text = await fileText(file, 64 * 1024 * 1024);
       busy = false;
       await install(text);
     });
+  };
   $('export-packs').onclick = () =>
     task('pack-status', async () => {
       const text = exportPackLibrary(api.get().packs);
