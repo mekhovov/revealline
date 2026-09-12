@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /** Local browser-game tooling. Node built-ins only; no package install needed. */
 import { createHash } from 'node:crypto';
+import { deflateSync } from 'node:zlib';
 import { createServer } from 'node:http';
 import { createReadStream } from 'node:fs';
 import * as fs from 'node:fs/promises';
@@ -12,6 +13,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
 const FORMAT_VERSION = 1;
+export const PUBLIC_SECURITY_HEADERS = Object.freeze({
+  'Content-Security-Policy':
+    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'no-referrer',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+  'Cache-Control': 'no-cache',
+});
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -129,14 +138,28 @@ export async function collectBuildFiles(root = PROJECT_ROOT, config) {
   const files = new Set();
   for (const included of config.include) {
     for (const file of await regularFiles(root, included)) {
-      if (file.startsWith('game/test/')) continue;
+      if (file.startsWith('game/test/') || file === 'game/offline/service-worker.template.js')
+        continue;
       if (file.split('/').some((p) => p.startsWith('.') || p === 'node_modules'))
         fail(`Private path in build: ${file}`);
       files.add(file);
     }
   }
   if (!files.has(config.entry)) fail(`Build include does not contain entry ${config.entry}`);
-  if (files.has('manifest.json') || files.has('distribution.zip') || files.has(MARKER))
+  if (
+    [
+      'manifest.json',
+      'distribution.zip',
+      MARKER,
+      'service-worker.js',
+      'offline-cache.json',
+      'manifest.webmanifest',
+      '_headers',
+      'privacy.html',
+      'credits.html',
+    ].some((name) => files.has(name)) ||
+    [...files].some((name) => name.startsWith('icons/'))
+  )
     fail('Build inputs overlap generated files');
   return [...files].sort();
 }
@@ -294,6 +317,197 @@ async function assertOutput(root, out, inputs) {
   }
 }
 
+function publicPage(title, body) {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style></head><body><main>${body}</main></body></html>\n`;
+}
+function addPublicEntries(entries, info) {
+  const has = (name) => entries.some((e) => e.name === name);
+  const links = [
+    `<a href="./${html(info.entry)}">Play solo</a>`,
+    ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
+    ...(has('game/replay-theater/index.html')
+      ? ['<a href="./game/replay-theater/">Replay Theater</a>']
+      : []),
+    ...(has('game/playground/index.html') ? ['<a href="./game/playground/">Playground</a>'] : []),
+  ];
+  if (!has('index.html'))
+    entries.push({
+      name: 'index.html',
+      bytes: Buffer.from(
+        publicPage(
+          'Play',
+          `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
+        ),
+      ),
+    });
+  entries.push({
+    name: 'privacy.html',
+    bytes: Buffer.from(
+      publicPage(
+        'Privacy and local storage',
+        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs use IndexedDB. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
+      ),
+    ),
+  });
+  entries.push({
+    name: 'credits.html',
+    bytes: Buffer.from(
+      publicPage(
+        'Credits and notices',
+        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Browser music is produced by the original procedural score recipes shipped with this build.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>',
+      ),
+    ),
+  });
+  entries.push({
+    name: '_headers',
+    bytes: Buffer.from(
+      '/*\n' +
+        Object.entries(PUBLIC_SECURITY_HEADERS)
+          .map(([name, value]) => `  ${name}: ${value}`)
+          .join('\n') +
+        '\n',
+    ),
+  });
+}
+
+/** Original pixel emblem. Fixed integer geometry; no source images are modified. */
+function offlineIcons() {
+  const palette = ['#091324', '#203852', '#53c7e8', '#f1cd6f', '#eef4df'];
+  const grid = Array.from({ length: 32 }, () => Array(32).fill(0));
+  const box = (x, y, w, h, c) => {
+    for (let j = y; j < y + h; j++) for (let i = x; i < x + w; i++) grid[j][i] = c;
+  };
+  box(6, 6, 20, 20, 1);
+  box(8, 8, 16, 16, 0);
+  box(8, 8, 8, 16, 2);
+  box(16, 8, 8, 7, 1);
+  box(16, 8, 2, 16, 4);
+  box(16, 22, 8, 2, 4);
+  box(22, 15, 2, 9, 4);
+  box(21, 12, 4, 4, 3);
+  box(22, 11, 2, 6, 3);
+  box(20, 13, 6, 2, 3);
+  const rectangles = [];
+  for (let y = 0; y < 32; y++)
+    for (let x = 0; x < 32; x++)
+      if (grid[y][x])
+        rectangles.push(
+          `<rect x="${x}" y="${y}" width="1" height="1" fill="${palette[grid[y][x]]}"/>`,
+        );
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges"><rect width="32" height="32" fill="${palette[0]}"/>${rectangles.join('')}</svg>\n`;
+  const chunk = (kind, data) => {
+    const type = Buffer.from(kind),
+      header = Buffer.alloc(4),
+      sum = Buffer.alloc(4);
+    header.writeUInt32BE(data.length);
+    sum.writeUInt32BE(crc32(Buffer.concat([type, data])));
+    return Buffer.concat([header, type, data, sum]);
+  };
+  const png = (size) => {
+    const header = Buffer.alloc(13);
+    header.writeUInt32BE(size, 0);
+    header.writeUInt32BE(size, 4);
+    header[8] = 8;
+    header[9] = 2;
+    const rows = Buffer.alloc((size * 3 + 1) * size);
+    for (let y = 0; y < size; y++)
+      for (let x = 0; x < size; x++) {
+        const color = palette[grid[Math.floor((y * 32) / size)][Math.floor((x * 32) / size)]];
+        const offset = y * (size * 3 + 1) + 1 + x * 3;
+        for (let c = 0; c < 3; c++)
+          rows[offset + c] = parseInt(color.slice(1 + c * 2, 3 + c * 2), 16);
+      }
+    return Buffer.concat([
+      Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+      chunk('IHDR', header),
+      chunk('IDAT', deflateSync(rows, { level: 9 })),
+      chunk('IEND', Buffer.alloc(0)),
+    ]);
+  };
+  return [
+    { name: 'icons/icon.svg', bytes: Buffer.from(svg) },
+    ...[180, 192, 512].map((size) => ({ name: `icons/icon-${size}.png`, bytes: png(size) })),
+  ];
+}
+
+/** Adds a content-addressed offline app only when this source has its explicit UI helper. */
+async function addOfflineEntries(root, entries, info) {
+  if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
+  const template = await fs.readFile(
+    path.join(root, 'game/offline/service-worker.template.js'),
+    'utf8',
+  );
+  if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
+    fail('Offline worker template has no configuration marker');
+  entries.push(...offlineIcons());
+  const manifest = {
+    id: './',
+    name: 'Reveal Line',
+    short_name: 'Reveal Line',
+    description: 'A territory-capture arcade game with interchangeable worlds and characters.',
+    start_url: './game/',
+    scope: './',
+    display: 'standalone',
+    orientation: 'any',
+    background_color: '#091324',
+    theme_color: '#091324',
+    lang: 'en',
+    icons: [
+      { src: './icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
+      { src: './icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+      { src: './icons/icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
+    ],
+  };
+  entries.push({ name: 'manifest.webmanifest', bytes: Buffer.from(json(manifest)) });
+  const placeholder = '0'.repeat(64),
+    injected = [];
+  for (const entry of entries.filter(
+    (e) => e.name.endsWith('.html') && e.name.startsWith('game/'),
+  )) {
+    const relativeRoot = path.posix.relative(path.posix.dirname(entry.name), '.') || '.';
+    const marker = {
+      format: 'revealline-offline.v1',
+      version: info.version,
+      buildId: placeholder,
+      scope: `${relativeRoot}/`,
+      worker: `${relativeRoot}/service-worker.js`,
+    };
+    const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324"><meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
+    const source = entry.bytes.toString();
+    entry.bytes = Buffer.from(
+      source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
+    );
+    injected.push(entry);
+  }
+  // Placeholder metadata prevents a circular hash; all other shipped bytes,
+  // generated icon/manifest bytes and the worker logic participate in identity.
+  const buildId = sha256(
+    Buffer.from(
+      json({
+        info,
+        template,
+        files: [...entries]
+          .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+          .map((e) => [e.name, sha256(e.bytes)]),
+      }),
+    ),
+  );
+  for (const entry of injected)
+    entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
+  const files = [...entries]
+    .filter((entry) => entry.name !== '_headers')
+    .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
+    .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
+  if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
+    fail('Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs');
+  const config = { format: 'revealline-offline.v1', version: info.version, buildId, files };
+  entries.push({ name: 'offline-cache.json', bytes: Buffer.from(json(config)) });
+  entries.push({
+    name: 'service-worker.js',
+    bytes: Buffer.from(template.replace('__XONIX_OFFLINE_CONFIG__', JSON.stringify(config))),
+  });
+}
+
 export async function buildProject({
   root = PROJECT_ROOT,
   out = path.join(root, 'dist'),
@@ -326,11 +540,8 @@ export async function buildProject({
       else entries.push({ name, bytes: Buffer.from(bytes) });
     };
     replace('game/build-info.json', json(info));
-    if (!entries.some((e) => e.name === 'index.html'))
-      replace(
-        'index.html',
-        `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Xonix ${html(version)}</title><meta http-equiv="refresh" content="0;url=./${html(config.entry)}"><a href="./${html(config.entry)}">Play ${html(version)}</a></html>\n`,
-      );
+    addPublicEntries(entries, info);
+    await addOfflineEntries(root, entries, info);
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
     const manifest = {
       ...info,
@@ -374,11 +585,18 @@ export async function startServer({ root = PROJECT_ROOT, port = 8768, host = '12
   root = await fs.realpath(root);
   if (!Number.isInteger(port) || port < 0 || port > 65535)
     fail('Port must be an integer from 0 to 65535');
+  let publicHeaders = {};
+  try {
+    const ownership = JSON.parse(await fs.readFile(path.join(root, MARKER), 'utf8'));
+    if (ownership.tool === 'xonix-game-cli' && ownership.formatVersion === FORMAT_VERSION)
+      publicHeaders = PUBLIC_SECURITY_HEADERS;
+  } catch {}
   const server = createServer(async (req, res) => {
     const respond = (status, body) => {
       res.writeHead(status, {
         'Content-Type': 'text/plain; charset=utf-8',
         'Cache-Control': 'no-store',
+        ...publicHeaders,
       });
       res.end(req.method === 'HEAD' ? undefined : body);
     };
@@ -431,6 +649,7 @@ export async function startServer({ root = PROJECT_ROOT, port = 8768, host = '12
         'Content-Length': stat.size,
         'Cache-Control': 'no-store',
         'X-Content-Type-Options': 'nosniff',
+        ...publicHeaders,
       });
       if (req.method === 'HEAD') res.end();
       else {

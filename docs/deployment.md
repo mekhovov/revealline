@@ -6,14 +6,17 @@ The implemented distribution is a **static browser application**. The CLI produc
 
 ```sh
 npm run validate
+npm run lint
 npm test
 npm run build
 node scripts/game-cli.mjs serve --root dist --port 8769
 ```
 
-Open [the built game](http://127.0.0.1:8769/game/). The root page redirects relatively to the game. Preserve the entire output hierarchy when copying to a static host: `game/` and the selected `authoring/motion-lab/` presentation dependencies must remain alongside each other. Publishing only `game/` breaks those relative imports and image paths.
+Open [the built game](http://127.0.0.1:8769/game/). The generated root page links to the game, the included couch race, Replay Theater and playground, privacy information and credits. [Replay Theater](replay-theater.md) is also included at `/game/replay-theater/`, with its verified example recordings. Preserve the entire output hierarchy when copying to a static host: `game/` and the selected `authoring/motion-lab/` presentation dependencies must remain alongside each other. Publishing only `game/` breaks those relative imports and image paths.
 
 The exact allowlist is [build-config.json](../game/build-config.json). It copies the game, the required animation/character modules, presentation presets and local body assets; source-only `game/test/` files are omitted. Tests and their CLI helpers remain in the source archive. Research documents, third-party reference pictures, local profiles and the full historical lab are not part of that allowlist. The vendored Phaser runtime and its license stay with the game.
+
+Build output also includes generated offline/PWA files and public entry/privacy/credits pages. The generated `_headers` is a static-host policy template; a CLI-owned build preview enforces that policy. See [public release instructions](public-release.md) and [offline release instructions](offline-release.md).
 
 Build output contains:
 

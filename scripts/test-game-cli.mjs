@@ -599,3 +599,105 @@ test('class validation accepts current data and rejects unsupported mechanics th
   await write();
   await assert.rejects(validateClasses(root), /Invalid class recipes/);
 });
+
+test('packaged offline builds generate scoped metadata, original icons, complete integrity inventory and reproducible bytes', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  await fs.mkdir(path.join(root, 'game/offline'));
+  await fs.copyFile(
+    new URL('../game/offline.mjs', import.meta.url),
+    path.join(root, 'game/offline.mjs'),
+  );
+  await fs.copyFile(
+    new URL('../game/offline/service-worker.template.js', import.meta.url),
+    path.join(root, 'game/offline/service-worker.template.js'),
+  );
+  await fs.mkdir(path.join(root, 'game/playground'));
+  await fs.writeFile(
+    path.join(root, 'game/playground/index.html'),
+    '<html><head><title>Nested</title></head><body>Preview</body></html>',
+  );
+  const source = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
+  const first = await buildProject({ root, out });
+  const second = await buildProject({ root, out: path.join(directory, 'second') });
+  assert.equal(first.sha256, second.sha256);
+  const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
+  const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
+  assert.equal(manifest.start_url, './game/');
+  assert.equal(manifest.scope, './');
+  assert.ok(manifest.icons.some((i) => i.sizes === '192x192'));
+  assert.ok(manifest.icons.some((i) => i.sizes === '512x512'));
+  for (const file of cache.files) {
+    const bytes = await fs.readFile(path.join(out, file.path));
+    assert.equal(hash(bytes), file.sha256);
+    assert.equal(bytes.length, file.bytes);
+  }
+  assert.ok(cache.files.some((f) => f.path === 'game/playground/index.html'));
+  assert.ok(
+    !cache.files.some(
+      (f) =>
+        f.path.includes('template') ||
+        f.path === 'service-worker.js' ||
+        f.path === 'offline-cache.json' ||
+        f.path === '_headers',
+    ),
+  );
+  const entry = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
+  assert.match(entry, /revealline-offline/);
+  assert.match(entry, /\.\.\/service-worker.js/);
+  assert.match(entry, new RegExp(cache.buildId));
+  const nested = await fs.readFile(path.join(out, 'game/playground/index.html'), 'utf8');
+  assert.match(nested, /\.\.\/\.\.\/manifest.webmanifest/);
+  const worker = await fs.readFile(path.join(out, 'service-worker.js'), 'utf8');
+  assert.ok(worker.includes(cache.buildId));
+  assert.ok(!worker.includes('__XONIX_OFFLINE_CONFIG__'));
+  for (const size of [180, 192, 512]) {
+    const icon = await fs.readFile(path.join(out, `icons/icon-${size}.png`));
+    assert.equal(icon.readUInt32BE(16), size);
+    assert.equal(icon.readUInt32BE(20), size);
+  }
+  assert.equal(await fs.readFile(path.join(root, 'game/index.html'), 'utf8'), source);
+  await assert.rejects(fs.access(path.join(out, 'game/offline/service-worker.template.js')));
+  await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value=42;');
+  await buildProject({ root, out });
+  assert.notEqual(
+    JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8')).buildId,
+    cache.buildId,
+  );
+});
+
+test('offline source sentinel requires its template and does not silently emit an incomplete installer', async (t) => {
+  const { root, out } = await fixture(t);
+  await fs.writeFile(path.join(root, 'game/offline.mjs'), 'export {};');
+  await assert.rejects(buildProject({ root, out }), /ENOENT/);
+});
+
+test('public package has local entry, accurate storage notices and enforced preview headers without changing source serving', async (t) => {
+  const { root, out } = await fixture(t);
+  await buildProject({ root, out });
+  const sourceServer = await startServer({ root, port: 0 }),
+    releaseServer = await startServer({ root: out, port: 0 });
+  t.after(() =>
+    Promise.all(
+      [sourceServer.server, releaseServer.server].map(
+        (server) => new Promise((resolve) => server.close(resolve)),
+      ),
+    ),
+  );
+  const source = await getRaw(sourceServer.url, '/game/'),
+    release = await getRaw(releaseServer.url, '/game/');
+  assert.equal(source.headers['content-security-policy'], undefined);
+  assert.match(release.headers['content-security-policy'], /script-src 'self'/);
+  assert.doesNotMatch(release.headers['content-security-policy'], /unsafe-eval/);
+  assert.equal(release.headers['referrer-policy'], 'no-referrer');
+  assert.equal(release.headers['cache-control'], 'no-cache');
+  const entry = await getRaw(releaseServer.url, '/');
+  assert.match(entry.body, /Clear a path/);
+  assert.doesNotMatch(entry.body, /http-equiv="refresh"/);
+  assert.match(entry.body, /\.\/game\/index.html/);
+  assert.match((await getRaw(releaseServer.url, '/privacy.html')).body, /does not upload/);
+  assert.match((await getRaw(releaseServer.url, '/credits.html')).body, /PHASER-LICENSE/);
+  assert.match(await fs.readFile(path.join(out, '_headers'), 'utf8'), /Content-Security-Policy/);
+  const missing = await getRaw(releaseServer.url, '/missing.mjs');
+  assert.equal(missing.status, 404);
+  assert.match(missing.headers['content-type'], /text\/plain/);
+});
