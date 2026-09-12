@@ -1,0 +1,17 @@
+{
+  "format": "xonix-pack-index.v1",
+  "packs": [
+    {
+      "id": "night-shift",
+      "path": "night-shift.json"
+    },
+    {
+      "id": "living-threads",
+      "path": "living-threads.json"
+    },
+    {
+      "id": "fieldcraft",
+      "path": "fieldcraft.json"
+    }
+  ]
+}

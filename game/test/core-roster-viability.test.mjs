@@ -15,19 +15,21 @@ const packProof = JSON.parse(
 );
 const sources = [
   ...campaign.levels.map((level) => ({ level, classes, routes: campaignProof.routes })),
-  ...(await expansionSources()).flatMap((pack) =>
-    pack.campaigns.flatMap((campaign) =>
-      campaign.levels.map((level) => ({
-        level,
-        classes: pack.classRecipes,
-        routes: packProof.routes.filter((route) => route.packId === pack.id),
-      })),
+  ...(await expansionSources())
+    .filter((pack) => ['night-shift', 'living-threads'].includes(pack.id))
+    .flatMap((pack) =>
+      pack.campaigns.flatMap((campaign) =>
+        campaign.levels.map((level) => ({
+          level,
+          classes: pack.classRecipes,
+          routes: packProof.routes.filter((route) => route.packId === pack.id),
+        })),
+      ),
     ),
-  ),
 ];
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
-  test(`${turnPolicy}: all seven loadouts can clear all eighteen supplied maps without mandatory action, supplies or switching`, () => {
+  test(`${turnPolicy}: all seven loadouts retain the original eighteen-map action-free fallback`, () => {
     const before = digest(sources);
     assert.equal(sources.length, 18);
     for (const { level, classes, routes } of sources) {

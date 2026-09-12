@@ -35,7 +35,7 @@
   "sources": [
     {
       "path": "docs/verification/round-11/run-balance-survey.mjs",
-      "sha256": "6fb09b8c2a89c7843a0c246188e702e668ba7618236871fa55bb0a7661f18e7d"
+      "sha256": "94d1e5251e61c043ab430173d5aae894864f0b1590bc175494f2120799f218da"
     },
     {
       "path": "game/content/campaign.json",
@@ -46,8 +46,12 @@
       "sha256": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84"
     },
     {
+      "path": "game/content/packs/fieldcraft.json",
+      "sha256": "81d01d2a51cd5d1a0f23175d8b13c5bffb73a5eaf53a8f7ddcab9ea53e3ee5fb"
+    },
+    {
       "path": "game/content/packs/index.json",
-      "sha256": "53359dc8ae4cf9e92951adc949f33d0e88f724aa877877fc87f22a928afe63de"
+      "sha256": "147fc81b51f52675f4df191db0e9de75898f5bdd2304f55b4062da8b8e4d3648"
     },
     {
       "path": "game/content/packs/living-threads.json",
@@ -103,7 +107,7 @@
     },
     {
       "path": "game/replays/expansion-routes.json",
-      "sha256": "a8906271aa4b6804ab615d6de5b0a31df9f41fba032a06617f5e602d3a04373a"
+      "sha256": "0e509ef315eb19d7c91a707630c1ecd16f273fcaf3a16c7579476f263aff9b0e"
     },
     {
       "path": "scripts/verify-campaign.mjs",
@@ -111,7 +115,7 @@
     },
     {
       "path": "scripts/verify-packs.mjs",
-      "sha256": "70e33bb2cf5260ea0870220f60c05484ac84baeff24d4f0a88a4616d13e106fd"
+      "sha256": "0a91137292cc38f476e915c61a292164bf846cf508973a9a8da63ab0a6f8e754"
     }
   ],
   "inputSequences": {
