@@ -8,6 +8,7 @@ export function attachGameShell({
   initial = true,
   onFeatured,
   getTopDialog,
+  focusMissions,
 } = {}) {
   const $ = (id) => doc.getElementById(id);
   const home = $('shell-home'),
@@ -25,7 +26,7 @@ export function attachGameShell({
     pause(true);
     closeHome();
     if (!missions.open) missions.showModal();
-    $('pack-select').focus();
+    if (!focusMissions?.()) $('pack-select').focus();
   };
   const openHome = () => {
     pause(true);

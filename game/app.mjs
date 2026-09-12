@@ -17,6 +17,7 @@ import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
 import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
@@ -168,7 +169,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.23.0',
+  let buildVersion = '0.25.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -432,7 +433,8 @@ try {
   }
   const sound = new Soundscape({ persistentMusic: true });
   let neutralResumeTick = false;
-  let gameShell = null;
+  let gameShell = null,
+    missionPicker = null;
   let soundtrackPlayer = null,
     soundtrackPanel = null,
     soundtrackStore = null;
@@ -817,6 +819,8 @@ try {
       soundtrackStore?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
+      gameShell?.destroy();
+      missionPicker?.destroy();
       modalNavigation.destroy();
       input.destroy();
       controller.destroy();
@@ -2284,6 +2288,7 @@ try {
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
     gameShell?.openMissions();
+    missionPicker?.revealSetup();
     $('body-select').focus({ preventScroll: true });
     $('body-select').scrollIntoView({ block: 'center', behavior: 'auto' });
   }
@@ -3447,7 +3452,9 @@ try {
     scene: FieldScene,
     banner: false,
   });
+  missionPicker = attachMissionPicker();
   gameShell = attachGameShell({
+    focusMissions: () => missionPicker?.focusSelectedChapter(),
     pause,
     getTopDialog: controllerDialog,
     canContinue: () =>
