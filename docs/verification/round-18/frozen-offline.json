@@ -1,0 +1,55 @@
+{
+  "format": "revealline-frozen-offline-check.v1",
+  "version": "0.8.0",
+  "sourceRevision": "8410d814dbcc7b3aef53e11c6f94d384d01cce05",
+  "origin": "http://127.0.0.1:8810",
+  "serverStopped": true,
+  "curlExitCode": 7,
+  "offline": {
+    "files": 113,
+    "bytes": 20086392,
+    "buildId": "176cbe39c36029e758c2016ade1e8eed770fccc62266a8282f4d09688abefe92"
+  },
+  "export": {
+    "path": ".cache/round-18/frozen-earned.library.json",
+    "bytes": 2388,
+    "sha256": "f18eb3468c6c4e56f4a49b729c5b3f91b925cc105db7706a4a6b806d332c6e3b",
+    "format": "xonix-library.v2",
+    "pictures": 1,
+    "scores": 1,
+    "masteries": 1,
+    "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+    "definitionHash": "mastery-v1-a3ffbfe068645ff0",
+    "levelIdentity": "level-v1-f1c1d86b070b5419",
+    "setup": {
+      "ruleset": "xonix-core.v2",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "classId": "bomber",
+      "classRevision": "1",
+      "loadoutHash": "loadout-v1-341623c5",
+      "rosterHash": "roster-v1-e159e435",
+      "classHistory": [
+        {
+          "classId": "bomber",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-341623c5",
+          "tick": 0
+        },
+        {
+          "classId": "carrier",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-fec92391",
+          "tick": 813
+        }
+      ]
+    }
+  },
+  "result": {
+    "coveragePercent": 71.1,
+    "lives": 3,
+    "score": 11910,
+    "medal": "gold"
+  },
+  "sampledGameWarningErrorLogs": []
+}
