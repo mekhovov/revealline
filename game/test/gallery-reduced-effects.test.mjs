@@ -10,6 +10,7 @@ class Element {
   constructor() {
     this.children = [];
     this.listeners = new Map();
+    this.style = {};
     this.value = '';
     this.textContent = '';
     this.open = false;
