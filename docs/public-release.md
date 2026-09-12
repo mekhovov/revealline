@@ -91,7 +91,7 @@ Record failures as release blockers for the affected target rather than silently
 
 ## Scope of readiness
 
-The v0.4.0 source supplies 25 maps, seven gameplay roles, four presentation themes and four installable expansions. Homeward Skies adds three original illustrated picture rewards; continuation and reviewed earlier-release copying extend the player library. Refer to the exact saved build’s verification report for test totals and artifact hashes. Automated results do not certify every target below.
+The v0.4.1 source supplies 25 maps, seven gameplay roles, four presentation themes and four installable expansions. Homeward Skies adds three original illustrated picture rewards; continuation and reviewed earlier-release copying extend the player library. v0.4.1 fixes repeated file selection. The frozen [browser/offline report](verification/round-14/release-v0.4.1-browser.md), [source gates](verification/round-14/patch-v0.4.1-source-gates.md) and [integrity record](verification/round-14/integrity-v0.4.1-notes.md) identify the tested artifact and evidence. Automated results do not certify every target below.
 
 | Target                        | Implemented or checked here                                                                       | Evidence still required before claiming that target                                                                  |
 | ----------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
