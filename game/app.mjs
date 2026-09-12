@@ -3427,6 +3427,8 @@ try {
         document.documentElement.style.setProperty('--board-aspect', String(width / height));
       }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+        // The texture is detached; only the displayed Phaser canvas has a CSS size.
+        displayCSSWidth: this.game.canvas.clientWidth,
         paused,
         reduced: $('reduced-effects').checked,
         fullReveal: run.status === 'won',

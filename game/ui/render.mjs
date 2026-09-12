@@ -250,6 +250,7 @@ export class BoardPainter {
       celebrationPaused = false,
       actorScale = 1,
       playerScale = 1,
+      displayCSSWidth = null,
     } = {},
   ) {
     if (!this.theme || !state) return;
@@ -277,9 +278,11 @@ export class BoardPainter {
       t = state.time;
     const classic = fullReveal ? null : classicView(state);
     const canvasCSSWidth =
-      Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
-        ? ctx.canvas.clientWidth
-        : W;
+      Number.isFinite(displayCSSWidth) && displayCSSWidth > 0
+        ? displayCSSWidth
+        : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
+          ? ctx.canvas.clientWidth
+          : W;
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
       tick: state.tick,
       time: state.time,

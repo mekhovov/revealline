@@ -21,6 +21,8 @@ The desired normal body footprint is 18–28 CSS pixels on canvases at least 480
 
 The player uses its existing animated rig with a separately bounded `playerScale`. Its contained image box targets 24–32 CSS pixels on desktop and at least 16 on ordinary phones, capped at 64 logical pixels. The current drone's transparent source margins make the visible body roughly 18/12 pixels at these minima; arbitrary replacement images can have different margins. Source rectangles are not cropped, so rotor anchors and non-square image proportions stay intact. The neutral fallback uses its visible triangle extent. Shield and queued-turn cues move outside the enlarged body, while the player contact ring stays at the authored `rules.playerRadius`.
 
+The solo Phaser host passes `displayCSSWidth` from its visible game canvas into `BoardPainter.draw`. Its detached texture canvas has no displayed width and cannot supply this measurement. Direct-canvas hosts such as couch and replay theater retain the context canvas's `clientWidth` fallback; an unavailable or invalid measurement falls back to the logical board width. Resizing changes presentation size without changing simulation geometry.
+
 A small center marker and radius outline remain at the simulation contact footprint independently of the larger body. Warning/rejoining brackets, dormant-rover cues, freeze/slow icons and all terrain/pickup roles remain visible. Custom artwork does not remove these functional cues.
 
 ## Live cut and capture
@@ -34,7 +36,9 @@ The active cut has a dark contrast outline, bright colored body and a narrow lig
 Run the focused checks:
 
 ```sh
-node --test game/test/actor-presentation.test.mjs game/test/classic-presentation.test.mjs game/test/wide-presentation.test.mjs game/test/rewards.test.mjs game/test/gallery-reduced-effects.test.mjs
+node --test game/test/actor-presentation.test.mjs game/test/host-presentation-size.test.mjs game/test/classic-presentation.test.mjs game/test/wide-presentation.test.mjs game/test/rewards.test.mjs game/test/gallery-reduced-effects.test.mjs
 ```
 
 They check motion/pose clocks, separate contact scale, theme geometry, replaceable role dispatch, bounded history, captured-cell effects and unchanged authoritative checkpoints. Player checks cover four rigs on legacy and wide boards, phone/desktop canvas sizes, independent actor/player scaling, non-square replacement images and intact rotor anchors. Canvas command recording establishes rendering behavior, not visual quality, browser frame rate or physical-device certification. Actual browser play and screenshots remain the visual review gate.
+
+The actual-host sizing test selects the R2 featured chapter through the app, confirms its Daybreak FPV binding, and passes 306/600 CSS-pixel visible widths to a detached texture with `clientWidth=0`. It exercises resizing and demonstrates the old missing-handoff undersizing on that same texture. App, renderer and simulation run normally; Phaser, Canvas2D and image decoding are modeled boundaries, so these measurements establish image-box sizing rather than occupied raster silhouettes.
