@@ -2,6 +2,8 @@
 
 The playable runtime separates a portable player library from an installed expansion library. Both are versioned, local data. Importing a file does not fetch remote media, execute scripts, grant authenticated online scores, or alter archived game releases.
 
+The [public game](https://mekhovov.github.io/revealline/) currently serves v0.18.0. The source-aware attempt export described below is implemented in working source at `122e76343756974b74694df15fb7404aaf101377` for the next v0.19 release; it is not yet frozen or published there.
+
 ## Player library
 
 `game/library.mjs` exports the pure-data API. The shell supplies storage and owns file pickers, dialogs and recovery messaging. No browser storage is read by this module until the caller explicitly invokes `loadLibrary`.
@@ -64,6 +66,30 @@ The profile budget is 4 MiB, 512 campaign identities, 4,096 gallery entries and 
 
 In-progress sessions belong to the replay/session workflow. Do not serialize mutable kernel objects into this profile or interpret an imported completion record as permission to resume a run. Recovery must reconstruct a run from validated inputs and compare its checkpoint before adopting state.
 
+## Export an unfinished flight — working source for v0.19
+
+Open **Library & saves → Saves & loads**. The export button names the source it will check:
+
+| Game state                                                                | Export source                                                                                                                                                  |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ready, before starting the selected mission                               | **Export saved attempt** checks the stored checkpoint, even when another pack or level is selected.                                                            |
+| Started, unfinished normal flight, including a live cut or recovery       | **Export current attempt** takes precedence over any older stored checkpoint and leaves the flight paused.                                                     |
+| Current flight whose complete input recording is unavailable              | Export is unavailable; it does not silently substitute an older save. A complete backup may still contain that earlier checkpoint.                             |
+| Win or loss results                                                       | **Export saved attempt** checks an earlier unfinished checkpoint if one remains, possibly from another run. It never exports the terminal result as resumable. |
+| Practice, Controller Lab practice, First Flight or pending training entry | Attempt export is unavailable.                                                                                                                                 |
+
+The selected checkpoint is replayed and verified before publication. **Cancel export**, Escape or the configured controller Back cancels pending verification, keeps Library open and does not resume the flight. A closed page/dialog or changed source prevents a late result from replacing the copy area or requesting a download. A missing, unreadable or invalid stored slot reports an error; failed verification preserves the previous copy text and the stored bytes.
+
+On success, the status identifies the current/saved source, map and checkpoint date. Verified JSON appears under **Copy or paste save JSON** before the download adapter runs. **Download requested** means to check the browser downloads or Save dialog; it does not confirm that a file reached disk. An adapter error or native cancellation leaves the verified JSON available to copy. Cancel export is offered during verification, before the adapter request; it cannot revoke a download already requested.
+
+If the exact expansion is missing, export can rescue a **replay-only** verified file. The status explicitly says that the matching campaign is still required to resume. Install that exact content before loading the file; export neither installs a pack nor switches the selected mission. An available campaign whose rules or roster fail verification is rejected rather than treated as missing.
+
+The stored-source branch only reads: it does not overwrite the suspended slot, write a player profile, change packs, apply a backup or adopt a run. The current-source branch retains ordinary input release and pause/autosave behavior. Opening Library from a live flight already pauses and may autosave before export is chosen; the read-only stored branch does not imply that this earlier action made no write.
+
+The existing local suspended-slot limit is **2 MiB**. Portable session files can be larger, subject to the **32 MiB + 16 KiB** session import budget and the embedded replay's **32 MiB** budget. A larger portable file is not a promise that it will fit the local slot. Player libraries and complete backups remain separate formats with their own budgets.
+
+For maintainers, [attempt-export.mjs](../game/attempt-export.mjs) owns and verifies the portable envelope; [attempt-file.mjs](../game/attempt-file.mjs) selects the source, checks transaction markers/journals and detects stale state. The panel calls the returned synchronous `assertCurrent()` immediately before copying and downloading. Stored reads use short backup-operation locks where available, with verification outside the lock; the fallback does not claim an atomic snapshot across storage backends. Preserve these boundaries when changing navigation, restore, profile replacement or lifecycle handlers. See the [accepted plan](round-28-save-export-plan.md), [120-case scoped source verification](verification/round-28/attempt-export.md) and the [browser acceptance report](verification/round-28/attempt-export-browser.md), whose scope is separate from release gates.
+
 ## Expansion contract
 
 `game/packs.mjs` accepts unchanged `xonix-pack.v1` and opt-in `xonix-pack.v2`. V2 adds required top-level `masteries` using the finite optional-goal [contract](pack-mastery-contract.md); empty means none. Maps, campaign identities and old v1 files remain unchanged. A complete v1 pack contains:
@@ -111,6 +137,8 @@ The music descriptor accepts `synthwave`, `chiptune`, `rock`, `metal` or `ambien
 Use **Library & saves → Saves & loads → Export complete backup** for one portable file containing the player library, installed packs and the current unfinished campaign flight or saved fallback. Load a file/pasted JSON and use **Undo complete backup import** to restore the previous collection in this page. See [full backup and recovery](full-backup.md) for the single-writer policy and exact protocol. It reuses these validators and performs coordinated storage writes only after complete preparation. The separate exports below remain supported.
 
 ## Prepare, install and switch content
+
+In v0.18, the game's **Pack** and **Level** selectors provide ordinary navigation; choosing a bundled pack can install it before presenting its levels. The public landing page also offers pack launch links. These choices have their own installation and launch behavior. In the new working-source export flow, a pending content operation blocks export, and changing content invalidates verification. Selecting a different mission never changes which stored checkpoint is exported.
 
 ```js
 import {
