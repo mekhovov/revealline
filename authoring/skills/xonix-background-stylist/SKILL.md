@@ -7,6 +7,8 @@ description: "Inspect supplied images for a Xonix game, preserve source artwork,
 
 Make an existing image usable in the requested game context while preserving the user's source and chosen medium. **Default to keep-source with a separate gameplay overlay.** A photograph need not become pixel art. Style conversion is an optional derived copy when requested, not an automatic import step.
 
+For a source applied to the playable game, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [actual eight-role format and limits](../../../docs/assets-and-configuration.md). An exported `xonix-playground.v1` scenario preserves embedded original bytes; await `prepareScenario` before adopting it, compare background contain/cover, and inspect inherited player rig anchors. The media-library and draft-pack records below remain separate provenance/design formats, not automatic runtime imports.
+
 ## Establish the reference and mode
 
 - Inspect the supplied image before describing or editing it. Read its actual dimensions and identify focal subjects, markings, existing style, crop sensitivity and its intended role. If a required reference cannot be accessed, name that missing input; never substitute a remembered or invented image.

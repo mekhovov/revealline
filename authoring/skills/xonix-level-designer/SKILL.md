@@ -7,6 +7,8 @@ description: "Design, revise, or generate Xonix levels, challenge packs, objecti
 
 Create levels as data against a declared primitive catalog. Keep challenge identity independent of art and device layout.
 
+For actual playable levels, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core contract](../../../game/core/README.md) and the [configuration guide](../../../docs/assets-and-configuration.md). Author `xonix-level.v1` data or a `xonix-playground.v1` scenario; `game/generator.mjs` already generates explicit candidates and `scripts/verify-campaign.mjs` replays reviewed campaign completions. Keep both steering modes and actual class recipes explicit; the legacy draft-pack steps below remain a separate design route and are not a game importer.
+
 For player classes, equipment, supply/drop, scan, dash or net abilities, use [Ability Designer](../xonix-ability-designer/SKILL.md). Bind actual supported primitives and target domains; a military reference catalog or lab toy is not a production actor. Record class/equipment/turn policy with comparisons and define action ordering relative to cut failure and fill before adding a real level rule.
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
@@ -34,7 +36,7 @@ Locate the target project's `authoring/CONTRACT.md`, resolving this installed sk
 
 ## Adapt templates to the request
 
-Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Keep unimplemented medals, generators, and behaviors as proposals instead of inventing accepted fields.
+Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.
 
 ## Deliver
 

@@ -7,6 +7,8 @@ description: "Design, configure and review Xonix player classes, equipment, acti
 
 Turn a requested play style into a small, explicit set of registered mechanics. Airframe, class, equipment, appearance, allegiance and mission role are separate dimensions. A body replacement does not grant an ability. An explicitly selected class or equipment item may change declared gameplay state; document that change and test it.
 
+For a class applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core registry contract](../../../game/core/README.md) and [runtime configuration guide](../../../docs/assets-and-configuration.md). `game/content/classes.json` currently has five recipes using four primitives; exported `xonix-playground.v1` scenarios can carry a validated `classRecipes` array, with class revision and loadout hash preserved. The ten-class/five-primitive ability lab below has a separate format; its dash, net, radio/fiber options do not automatically work in territory gameplay.
+
 ## Inspect the actual capabilities
 
 Locate `authoring/CONTRACT.md`, the current game plan, and the target runtime or preview README. If present, read `authoring/motion-lab/ability-presets.json` and its pure evaluator before emitting configuration. The lab has an independent format, fictional cell/time tuning and abstract targets. Do not insert its IDs into the existing content-pack contract or call it a territory game. Read the accepted registry and validator; unknown effects need a versioned implementation and meaningful tests.
