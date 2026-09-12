@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-current-version="__REVEALLINE_VERSION__">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1218" />
+    <meta
+      name="description"
+      content="Reveal Line is a territory-capture arcade game about drawing a line, finding a route home and revealing a world."
+    />
+    <title>Reveal Line · Draw the line</title>
+    <link rel="stylesheet" href="./landing.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Reveal Line home">
+        <span class="brand-mark" aria-hidden="true">◩</span>
+        <span>REVEAL <i>/</i> LINE</span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#versions">Versions</a>
+        <a href="./game/">Play now <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal-dot"></span> FIELD STATION / ONLINE</p>
+          <h1 id="hero-title">Draw the line.<br /><em>Reveal the world.</em></h1>
+          <p class="hero-deck">
+            Leave the safe edge, cut a path through the unknown and make it home before the hunters
+            find you. Every clean close uncovers another picture.
+          </p>
+          <div class="hero-actions">
+            <a id="latest-play" class="button button-primary" href="./game/">
+              Start playing <strong id="latest-label">v__REVEALLINE_VERSION__</strong>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a class="button button-quiet" href="#versions"
+              >Choose a version <span aria-hidden="true">↓</span></a
+            >
+          </div>
+          <p class="input-note">Keyboard · touch · compatible controller</p>
+        </div>
+
+        <div
+          class="hero-art"
+          aria-label="A stylized map showing a safe border and a route revealing a bright field"
+          role="img"
+        >
+          <div class="art-stamp">RL / 016</div>
+          <div class="art-grid"></div>
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <div class="art-route route-one"></div>
+          <div class="art-route route-two"></div>
+          <span class="art-node node-start"></span>
+          <span class="art-node node-end"></span>
+          <span class="art-threat threat-one">×</span>
+          <span class="art-threat threat-two">×</span>
+          <div class="art-readout">
+            <span>REVEALED</span><strong>45.0%</strong><i><b></b></i>
+          </div>
+          <p class="art-caption">FIRST SIGNAL<br /><span>DAWN OVER HOME</span></p>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="Game highlights">
+        <div>
+          <span class="strip-number">01</span><strong>Draw a path</strong>
+          <p>Risk the open field and return to safety.</p>
+        </div>
+        <div>
+          <span class="strip-number">02</span><strong>Read the threat</strong>
+          <p>Find the clean side before the line is cut.</p>
+        </div>
+        <div>
+          <span class="strip-number">03</span><strong>Reveal a picture</strong>
+          <p>Collect a world, then fly it again.</p>
+        </div>
+      </section>
+
+      <section id="versions" class="versions-section" aria-labelledby="versions-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ARCHIVE / PLAYABLE BUILDS</p>
+            <h2 id="versions-title">Choose your flight.</h2>
+          </div>
+          <p class="section-note">
+            Every release keeps its own saves and rules.<br />Try the newest signal first.
+          </p>
+        </div>
+        <div class="version-control">
+          <label for="version-picker">Jump to a version</label>
+          <div class="picker-row">
+            <select id="version-picker" aria-describedby="version-status">
+              <option value="./game/">v__REVEALLINE_VERSION__ · latest</option>
+            </select>
+            <a id="version-play" class="button button-secondary" href="./game/"
+              >Open version <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <p id="version-status" class="version-status" role="status">Loading archived flights…</p>
+        </div>
+        <div id="version-grid" class="version-grid" aria-live="polite">
+          <article class="version-card version-card-current">
+            <div class="card-topline">
+              <span class="card-live"><i></i> LIVE DEFAULT</span
+              ><span>v__REVEALLINE_VERSION__</span>
+            </div>
+            <h3>First Signal</h3>
+            <p>
+              The current flight deck, including the guided First Flight course and the latest
+              campaign.
+            </p>
+            <a href="./game/">Launch latest <span aria-hidden="true">↗</span></a>
+          </article>
+          <div class="version-card version-card-loading" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="./"
+        ><span class="brand-mark" aria-hidden="true">◩</span><span>REVEAL <i>/</i> LINE</span></a
+      >
+      <p>Original territory-capture arcade · local saves · no account required</p>
+      <nav aria-label="Footer navigation">
+        <a href="./privacy.html">Privacy</a><a href="./credits.html">Credits</a
+        ><a href="https://github.com/mekhovov/revealline"
+          >Source <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+    </footer>
+    <script type="module" src="./landing.mjs"></script>
+  </body>
+</html>

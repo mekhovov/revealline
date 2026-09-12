@@ -330,7 +330,16 @@ function addPublicEntries(entries, info) {
       : []),
     ...(has('game/playground/index.html') ? ['<a href="./game/playground/">Playground</a>'] : []),
   ];
-  if (!has('index.html'))
+  const landing = entries.find((e) => e.name === 'site/index.html');
+  if (landing) {
+    const rendered = landing.bytes
+      .toString()
+      .replaceAll('__REVEALLINE_VERSION__', html(info.version))
+      .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
+      .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"');
+    entries.splice(entries.indexOf(landing), 1);
+    entries.push({ name: 'index.html', bytes: Buffer.from(rendered) });
+  } else if (!has('index.html'))
     entries.push({
       name: 'index.html',
       bytes: Buffer.from(

@@ -29,6 +29,20 @@ The ZIP has fixed timestamps, stable lexical file ordering and no current-clock 
 
 Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScript, `.json` as JSON and any `.webmanifest` as a web app manifest; do not rewrite missing assets to an HTML application page. Retain relative paths when hosting under a prefix such as `/versions/v0.1.0/`. No SPA fallback is needed for the current file-based entry. Uploading or changing a live site is a separate external action; finish the local build and review it before that action when approval is still needed.
 
+## GitHub Pages
+
+This repository includes `.github/workflows/deploy-pages.yml`. Every push to `main` runs the
+source gates, builds the current package as the default `/game/` target, snapshots every stable
+`vMAJOR.MINOR.PATCH` Git tag into `/releases/<version>/site/game/`, and deploys the complete
+static artifact with the GitHub Pages deployment actions. The root landing page reads the generated
+release index so players can launch the newest build immediately or switch to an older playable
+version. The workflow checks out full history because immutable version paths are built from tags;
+it intentionally omits the local `source.tar` archives from the public Pages artifact.
+
+Set the repository Pages source to **GitHub Actions** once, then pushes to `main` are the update
+mechanism. The workflow uses only the repository’s `GITHUB_TOKEN`; no game runtime service or
+secret is required.
+
 ## Browser installation and offline use
 
 Serving a static game does not by itself verify offline behavior or installation. Browser installation criteria vary; manifest metadata and HTTPS or loopback are relevant, while a service worker provides separately testable caching behavior. Browser and platform installation flows also differ. [MDN installability guidance](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable)
