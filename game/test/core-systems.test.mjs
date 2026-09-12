@@ -267,3 +267,26 @@ test('mission timeout also expires during redeployment and pause alone advances 
   assert.equal(state.time, 0.25);
   assert.equal(state.failureCause, 'mission-timeout');
 });
+
+test('a long legal switching session stops adding history before the persistence limit and can still finish', async () => {
+  const { MAX_CLASS_HISTORY } = await import('../core/index.mjs');
+  const { emptyProgress, awardCompletion } = await import('../progress.mjs');
+  const level = { ...base, enemies: [], rules: { switchCooldownSeconds: 0.1 } };
+  const state = createRun(level);
+  for (let i = 0; i < MAX_CLASS_HISTORY - 1; i++) {
+    stepRun(state, { switchClass: i % 2 === 0 ? 'fiber' : 'scout' });
+    stepRun(state, {}, 0.1);
+  }
+  assert.equal(state.classHistory.length, MAX_CLASS_HISTORY);
+  const active = state.activeClassId;
+  stepRun(state, { switchClass: active === 'scout' ? 'fiber' : 'scout' });
+  assert.equal(state.activeClassId, active);
+  assert.ok(state.events.some((e) => e.type === 'class.rejected' && e.reason === 'history-limit'));
+  stepRun(state, { direction: 'down' }, 5);
+  assert.equal(state.status, 'won');
+  const campaign = { id: 'long-history', revision: '1', levels: [level] };
+  const progress = awardCompletion(emptyProgress(campaign), campaign, state.result, {
+    runId: 'long-legal-run',
+  });
+  assert.ok(progress.clears[level.id]);
+});

@@ -1,5 +1,6 @@
 export const RULESET = 'xonix-core.v2';
 export const FIXED_DT = 1 / 120;
+export const MAX_CLASS_HISTORY = 4096;
 export const TURN_POLICIES = Object.freeze(['immediate', 'grid-center']);
 export const CELL = Object.freeze({ FIELD: 0, SAFE: 1, WALL: 2 });
 export const DIRECTIONS = Object.freeze({
