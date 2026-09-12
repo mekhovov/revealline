@@ -192,6 +192,7 @@ function fit() {
   $('preview-stage').style.height = `${height * scale}px`;
   $('viewport-readout').textContent =
     `${width} × ${height} CSS pixels · shown at ${Math.round(scale * 100)}%`;
+  measure();
 }
 function measure() {
   try {
@@ -208,6 +209,20 @@ function measure() {
         r.bottom <= view.innerHeight + 1;
     $('layout-readout').textContent =
       `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
+    const controls = [
+      ...doc.querySelectorAll(
+        '[data-move],#stop-button,#action-button,#pickup-button,#boost-button,#pause-button,#restart-button,#sound-button',
+      ),
+    ].map((button) => button.getBoundingClientRect());
+    const reachable = controls.every(
+      (r) =>
+        r.left >= 0 &&
+        r.top >= 0 &&
+        r.right <= view.innerWidth + 1 &&
+        r.bottom <= view.innerHeight + 1,
+    );
+    $('control-readout').textContent =
+      `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
   } catch {}
 }
 try {
@@ -450,17 +465,15 @@ try {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
     }
   };
-  $('replay-file').onchange = async () => {
-    const file = $('replay-file').files[0];
-    if (!file) return;
+  async function verifyText(readText) {
     const epoch = ++replayEpoch;
     replayController?.abort();
     replayController = new AbortController();
     const signal = replayController.signal;
     $('replay-result').textContent = '';
     try {
-      if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
-      const text = await file.text();
+      const text = await readText();
+      if (text.length > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
       if (epoch !== replayEpoch) return;
       status('Verifying recorded simulation…');
       const result = await verifyReplayAsync(text, {
@@ -487,7 +500,16 @@ try {
     } finally {
       if (epoch === replayEpoch) $('replay-file').value = '';
     }
+  }
+  $('replay-file').onchange = () => {
+    const file = $('replay-file').files[0];
+    if (file)
+      verifyText(() => {
+        if (file.size > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
+        return file.text();
+      });
   };
+  $('verify-replay-json').onclick = () => verifyText(() => $('replay-paste').value);
   document.querySelectorAll('[data-size]').forEach(
     (b) =>
       (b.onclick = () => {

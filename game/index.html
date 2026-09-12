@@ -16,7 +16,7 @@
       <nav>
         <a href="playground/">Playground ↗</a
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.1.0</span>
+        ><span id="version" class="version">v0.1.1</span>
       </nav>
     </header>
     <main>
@@ -57,7 +57,10 @@
                     Start mission <span>↗</span></button
                   ><button id="next-button" class="button primary" type="button" hidden>
                     Next mission →</button
-                  ><button id="retry-button" class="button secondary" type="button" hidden>
+                  ><button id="view-picture" class="button secondary" type="button" hidden>
+                    View picture ⤢
+                  </button>
+                  <button id="retry-button" class="button secondary" type="button" hidden>
                     Try again
                   </button>
                 </div>
@@ -66,6 +69,7 @@
                 </p>
               </div>
             </div>
+            <button id="show-result" class="picture-return" type="button" hidden>Results ↗</button>
           </div>
           <div class="flight-status">
             <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
@@ -217,6 +221,25 @@
       <div id="achievements"></div>
       <p id="collection-note"></p>
       <button class="button primary" data-close="collection-dialog">Back to the field →</button>
+    </dialog>
+    <dialog id="replay-dialog">
+      <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay">×</button>
+      <p class="eyebrow">REPRODUCE THIS ATTEMPT</p>
+      <h2>Your recorded route.</h2>
+      <p>
+        The file contains the exact level, class recipe, inputs and final state. Paste its JSON into
+        the Playground to verify it.
+      </p>
+      <textarea
+        id="replay-json"
+        aria-label="Exported replay JSON"
+        readonly
+        spellcheck="false"
+      ></textarea>
+      <div class="overlay-actions">
+        <button id="download-replay" class="button primary">Download JSON</button
+        ><button class="button" data-close="replay-dialog">Close</button>
+      </div>
     </dialog>
     <script src="vendor/phaser-4.2.1.min.js"></script>
     <script type="module" src="app.mjs"></script>

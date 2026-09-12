@@ -178,6 +178,13 @@
             <label class="file-button button"
               >Verify replay<input id="replay-file" type="file" accept="application/json,.json"
             /></label>
+            <label class="field"
+              >Replay JSON<textarea
+                id="replay-paste"
+                spellcheck="false"
+                placeholder="Or paste exported replay JSON here"
+              ></textarea></label
+            ><button id="verify-replay-json" class="button">Verify pasted replay</button>
             <pre id="replay-result"></pre>
           </details>
         </section>
@@ -204,6 +211,9 @@
             ></iframe>
           </div>
           <p id="viewport-readout" class="micro-note"></p>
+          <p id="control-readout" class="micro-note">
+            Controls are measured after the preview loads.
+          </p>
           <p id="layout-readout" class="micro-note">
             Use Play configuration to load the current data.
           </p>

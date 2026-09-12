@@ -101,3 +101,9 @@ Summary-only `xonix-replay.v1` files are explicitly rejected with a re-record me
 ## Tests
 
 Run `node --test game/test/replay.test.mjs`. The suite covers RLE/copy isolation; the held-Scout pause regression; trailing and repeated releases; every authoritative checksum section; cosmetic exclusion; completed runs; tampered commands/summaries; identity/tick/partial-time errors; malformed/prototype JSON; recording limits; asynchronous yielding/cancellation; custom recipes; and a full 216,000 tick recording. Browser UI wiring and campaign reward boundaries are tested separately by their owners.
+
+## Browser round trip
+
+Choose **Export replay** in the game. This pauses an active attempt, downloads JSON and opens the same JSON in a read-only dialog for copying. In Playground, expand **Replay a recorded run**, select the file or paste it, and choose **Verify pasted replay**. A new verification cancels the previous one; only the latest result updates the UI. This verifies the simulation and does not grant rewards or display an animated replay.
+
+The shell records up to 30 minutes. At that bound it explicitly discards the recorder and disables export while allowing play to continue. Start a fresh attempt to record again; the limit never produces a misleading partial export.
