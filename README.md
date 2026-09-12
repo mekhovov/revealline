@@ -6,7 +6,7 @@ Picture celebrations and a persistent gallery reward completed missions. Searcha
 
 ## Run locally
 
-v0.10.0 makes [chapter appearance rewards](docs/chapter-rewards.md) attainable in short campaigns, shows exact unlock progress, and adds a brief reward message beside the completed picture. Completed missions remain replayable after an out-of-order restore. This working iteration keeps simulation, saves and equipment seals compatible with v0.9.0; its browser and release checks are in progress.
+v0.10.0 makes [chapter appearance rewards](docs/chapter-rewards.md) attainable in short campaigns, shows exact unlock progress, and adds a brief reward message beside the completed picture. Completed missions remain replayable after an out-of-order restore. Its frozen source passed 1,128 tests and the release was rebuilt byte for byte. Simulation, saves and equipment seals remain compatible with v0.9.0.
 
 v0.9.0 adds [pack-authored equipment goals](docs/pack-mastery-contract.md), editable practice definitions and the three-map [Equipment Workshop](docs/equipment-workshop.md) across Ukrainian heritage, 1990s arcade and spend-management themes. Copy, edit, disable and export goals without changing simulation code. Existing records remain archived when definitions change; practice stays non-awarding after mission selection. `inspect-goals` reports content and reference checks separately from gameplay proof.
 
@@ -18,7 +18,7 @@ v0.5.0 adds [controller navigation](docs/controller-navigation.md) for the solo 
 
 v0.4.0 adds [Homeward Skies](docs/homeward-skies.md), a three-picture illustrated Ukrainian chapter, clear campaign continuation and [reviewed earlier-release copying](docs/continuity-transfer.md). v0.4.1 fixes selecting the same backup, pack or authoring asset again after a previous import. [Native app wrappers](docs/native-distribution.md), asynchronous file sharing, custom keyboard controls and persistent Tap steering remain available. Packaged versions keep separate collections; copying or complete backups transfer progress forward while older versions remain unchanged.
 
-The saved [v0.9.0 game](http://127.0.0.1:8767/releases/v0.9.0/site/game/) and [Controller practice](http://127.0.0.1:8767/releases/v0.9.0/site/game/controller-lab/) are available while the workspace server runs. Install Homeward Skies or Equipment Workshop from **Library & saves → Expansion packs**, then choose its Play button. The [frozen browser and offline checks](docs/verification/round-19/frozen-browser.md) and [reproducible archive evidence](docs/verification/round-19/integrity-notes.md) identify this saved build. All twelve earlier versions, including [v0.8.0](http://127.0.0.1:8767/releases/v0.8.0/site/game/), remain independently playable.
+The saved [v0.10.0 game](http://127.0.0.1:8767/releases/v0.10.0/site/game/) and [Controller practice](http://127.0.0.1:8767/releases/v0.10.0/site/game/controller-lab/) are available while the workspace server runs. Install Homeward Skies or Equipment Workshop from **Library & saves → Expansion packs**, then choose its Play button. The [frozen browser and offline checks](docs/verification/round-20/frozen-browser.md) and [reproducible archive evidence](docs/verification/round-20/integrity-notes.md) identify this saved build. All thirteen earlier versions, including [v0.9.0](http://127.0.0.1:8767/releases/v0.9.0/site/game/), remain independently playable.
 
 Use a supported Node version: 20.19+ within 20.x, 22.13+ within 22.x, or 24+. Then run from this directory:
 
