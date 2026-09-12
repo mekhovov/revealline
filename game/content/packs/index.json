@@ -12,6 +12,10 @@
     {
       "id": "fieldcraft",
       "path": "fieldcraft.json"
+    },
+    {
+      "id": "homeward-skies",
+      "path": "homeward-skies.json"
     }
   ]
 }
