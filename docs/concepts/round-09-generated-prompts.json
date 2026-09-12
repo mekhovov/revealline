@@ -1,0 +1,69 @@
+{
+  "round": 9,
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "scout-quad",
+      "prompt": "Use case: stylized-concept. Asset type: one original top-down pixel-art game character body, intended as a replaceable body under independently animated propellers or effects. Single centered craft, nose exactly north/up, orthographic overhead camera, symmetric readable silhouette, no perspective. Beautiful modern 16-bit pixel-art: deliberate squared color clusters, crisp stepped edges, restrained navy, olive, ivory and blue/yellow accent palette; charming practical hardware, readable at tiny game scale. Actual transparent alpha background: transparent empty pixels, absolutely no checkerboard painting, no floor, no shadow outside body, no scenery, no text or logo, no border. Entire body visible with generous transparent padding. No fire, smoke, projectiles, exploded views, wiring diagrams, technical annotations or weapon instructions. No baked propeller blades or rotor blur: show only empty small motor hubs where specified; animation is supplied in code. Subject: compact camera-surveillance quadcopter, an original design inspired by the general folding-arm camera-drone category, not a branded replica. Light warm-gray shell, dark-blue seams, four short unfolded diagonal arms and exactly four circular bare motor hubs at roughly (22%,24%),(78%,24%),(22%,76%),(78%,76%) of square composition. Small dark camera module at north tip, single blue-and-yellow identification accent, compact battery shape. No cargo or armament. Central shell about half total craft width. Quiet charming high-quality Ukrainian reconnaissance game character.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-91d19cbc-6e72-444d-a0fd-076b45a524aa.png",
+      "boundPath": "authoring/motion-lab/assets/scout-quad.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "transparentPixels": 1117548,
+      "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99",
+      "status": "accepted-generated-concept"
+    },
+    {
+      "id": "heavy-lift",
+      "prompt": "Use case: stylized-concept. Asset type: one original top-down pixel-art game character body, intended as a replaceable body under independently animated propellers or effects. Single centered craft, nose exactly north/up, orthographic overhead camera, symmetric readable silhouette, no perspective. Beautiful modern 16-bit pixel-art: deliberate squared color clusters, crisp stepped edges, restrained navy, olive, ivory and blue/yellow accent palette; charming practical hardware, readable at tiny game scale. Actual transparent alpha background: transparent empty pixels, absolutely no checkerboard painting, no floor, no shadow outside body, no scenery, no text or logo, no border. Entire body visible with generous transparent padding. No fire, smoke, projectiles, exploded views, wiring diagrams, technical annotations or weapon instructions. No baked propeller blades or rotor blur: show only empty small motor hubs where specified; animation is supplied in code. Subject: original heavy transport/bomber-class Ukrainian hexacopter body, not an exact real weapon replica. Exactly six arms and six bare motor hubs positioned symmetrically at approximately (27%,20%),(73%,20%),(14%,50%),(86%,50%),(27%,80%),(73%,80%). Sturdy broad graphite-and-olive central fuselage, two small unlabelled empty cargo cradle shapes tucked under central body, ivory landing rails visible from overhead, blue/yellow tiny stripe. Camera at north. Absolutely no bombs, no cartridges, no explosives and no propeller blades. Six-motor silhouette must be unmistakable and beautifully readable. Wider and heavier silhouette than small FPV, still one compact sprite.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-1c1f985d-0c15-42cf-a022-5a82d5632906.png",
+      "boundPath": "authoring/motion-lab/assets/heavy-lift.png",
+      "dimensions": [
+        1312,
+        1199
+      ],
+      "mode": "RGBA",
+      "transparentPixels": 1027404,
+      "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec",
+      "status": "accepted-generated-concept"
+    },
+    {
+      "id": "fixedwing-body",
+      "prompt": "Use case: stylized-concept. Asset type: one original top-down pixel-art game character body, intended as a replaceable body under independently animated propellers or effects. Single centered craft, nose exactly north/up, orthographic overhead camera, symmetric readable silhouette, no perspective. Beautiful modern 16-bit pixel-art: deliberate squared color clusters, crisp stepped edges, restrained navy, olive, ivory and blue/yellow accent palette; charming practical hardware, readable at tiny game scale. Actual transparent alpha background: transparent empty pixels, absolutely no checkerboard painting, no floor, no shadow outside body, no scenery, no text or logo, no border. Entire body visible with generous transparent padding. No fire, smoke, projectiles, exploded views, wiring diagrams, technical annotations or weapon instructions. No baked propeller blades or rotor blur: show only empty small motor hubs where specified; animation is supplied in code. Subject: original Ukrainian fixed-wing reconnaissance/courier drone, long narrow ivory fuselage, broad straight olive wings with rounded pixel-stepped tips, compact V-tail at south, tiny blue/yellow panel on left wing, dark camera nose at north. One small bare pusher motor hub centered near rear fuselage, no propeller blade. Entire plane contained in square transparent image. Clean plan view with horizontal main wings and north-pointing slender nose. Original arcade aircraft with calm documentary hardware character, no visible weapons.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-b1b9ef55-d5e9-4af9-81c4-01d8558ea24e.png",
+      "boundPath": "authoring/motion-lab/assets/fixedwing-body.png",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "transparentPixels": 1292448,
+      "sha256": "bec5073f36946b3060aa42835ed8486e36c1c155e8b57c5c3058fa4630bf1663",
+      "status": "accepted-generated-concept"
+    },
+    {
+      "id": "delta-interceptor",
+      "prompt": "Use case: stylized-concept. Asset type: one original top-down pixel-art game character body, intended as a replaceable body under independently animated propellers or effects. Single centered craft, nose exactly north/up, orthographic overhead camera, symmetric readable silhouette, no perspective. Beautiful modern 16-bit pixel-art: deliberate squared color clusters, crisp stepped edges, restrained navy, olive, ivory and blue/yellow accent palette; charming practical hardware, readable at tiny game scale. Actual transparent alpha background: transparent empty pixels, absolutely no checkerboard painting, no floor, no shadow outside body, no scenery, no text or logo, no border. Entire body visible with generous transparent padding. No fire, smoke, projectiles, exploded views, wiring diagrams, technical annotations or weapon instructions. No baked propeller blades or rotor blur: show only empty small motor hubs where specified; animation is supplied in code. Subject: original compact interceptor drone body with distinctive slender dart/delta silhouette, north-pointing long slate-blue nose, short triangular ivory-and-olive wings, two tiny rear stabilizers, dark rear motor opening, small blue/yellow identification accent. Non-branded fictional arcade airframe inspired by aerodynamic drone silhouettes; no weapons, no propellers or flame. Strong north-forward direction and pale readable wing shape, high quality crisp clustered pixel-art.",
+      "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-7f495c69-e12d-4fe1-a1e5-6c1b70dda22f.png",
+      "boundPath": "authoring/motion-lab/assets/delta-interceptor.png",
+      "dimensions": [
+        1218,
+        1292
+      ],
+      "mode": "RGBA",
+      "transparentPixels": 1230601,
+      "sha256": "00357545f135aa3bc2ed98fa32baf46b3b0a3cd3c596054571746bae153eef9e",
+      "status": "accepted-generated-concept"
+    }
+  ],
+  "worldConcept": {
+    "path": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-5dff9759-571c-4a7a-a82f-571450343118.png",
+    "boundPath": "docs/concepts/round-09-world-concepts.png",
+    "prompt": "Use case: stylized-concept. Create an original game-art exploration contact sheet for a modern pixel-art Ukrainian defense themed Xonix arcade game. This is a visual reference sheet, not a technical diagram and not a production sprite atlas. Exactly 12 distinct charming, detailed but readable unit concepts arranged neatly as 4 columns by 3 rows, generous empty space separating each. Consistent elevated three-quarter top-down view, north/up facing vehicles, deliberate large squared 16-bit color clusters and stepped edges, beautiful restrained navy, warm ivory, olive and muted amber palette with tiny blue/yellow accents. Uniform dark navy background; no text, logos, numbers, captions or Z symbols. Row1: generic original tracked tank, wheeled armored personnel vehicle, cargo truck, medical support vehicle with a clear small medical bag symbol (not a real-world emblem). Row2: radar truck with a simple dish, communications/electronic support truck with upright mast, generic self-propelled artillery vehicle, generic box-launcher rocket-support truck with all compartments closed. Row3: helmeted engineer carrying a toolbox, helmeted medic carrying a medical bag, small tracked supply robot with cargo box, sleek uncrewed supply boat. No firing, explosions, blood, injured people, targets, action scenes, operating instructions, cutaways or weapon details. All designs are fictional original silhouettes, not exact named equipment models. Prioritize visual identity across many gameplay roles and distinct vehicle/character proportions. Crisp pixel art, no gradients, no cinematic blur, no photorealism.",
+    "status": "reviewed-reference-sheet-only",
+    "sha256": "6b08613b688738a271620927df4d50ec2be46b4a8041f91f49a9c230b2aaf1a0"
+  }
+}

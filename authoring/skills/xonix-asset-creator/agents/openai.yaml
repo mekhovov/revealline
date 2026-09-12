@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xonix Asset Creator"
+  short_description: "Generate and refine game art from reusable prompts"
+  default_prompt: "Use $xonix-asset-creator to make four background variations for FPV Front."

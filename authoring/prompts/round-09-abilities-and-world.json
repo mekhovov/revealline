@@ -1,0 +1,327 @@
+{
+  "version": "1.0.0",
+  "round": 9,
+  "scope": "Configurable ability classes, equipment and sourced world references",
+  "prompts": [
+    {
+      "id": "ability-01-reference-taxonomy",
+      "family": "cross-family",
+      "asset_type": "reference_catalog",
+      "mode": "text_generate",
+      "intent": "Build an expandable sourced reference catalog",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "REFERENCE_SCOPE"
+      ],
+      "prompt": "Collect primary public references for {{REFERENCE_SCOPE}}. Separate named models, families, nicknames and prototypes; airframe, link, payload role, maker, origin and operator are independent. Record narrow claims, URLs, access date, status and caveats. Do not claim exhaustive coverage or infer allegiance from appearance. Map each entry to a fictional Xonix role and keep its implementation status reference-only. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Build an expandable sourced reference catalog for the current Xonix design."
+    },
+    {
+      "id": "ability-02-class-components",
+      "family": "cross-family",
+      "asset_type": "player_classes",
+      "mode": "text_generate",
+      "intent": "Separate classes from bodies and equipment",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "CLASS_BRIEF"
+      ],
+      "prompt": "Design {{CLASS_BRIEF}} as independently selectable class, cosmetic body and equipment. Identify a small set of reusable registered primitives. State the meaningful player decision, primary/contextual action, resources, cooldown, targets and cancellation. Never grant a class by silently equipping an image; label an explicit class change and its reset effects. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Separate classes from bodies and equipment for the current Xonix design."
+    },
+    {
+      "id": "ability-03-bomber-pickup-drop",
+      "family": "cross-family",
+      "asset_type": "ability_rule",
+      "mode": "text_generate",
+      "intent": "Specify a fictional pickup and drop loop",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "CARRIER_BRIEF"
+      ],
+      "prompt": "Specify {{CARRIER_BRIEF}} using a visible supply pad and abstract cargo charges. Define pickup proximity, empty/full capacity, miss and hit behavior, spend order, cooldown, reset and duplicate input. Share one drop primitive between light and heavy variants where supported. Use cells and seconds as fictional game values, not real bomb or aircraft specifications. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Specify a fictional pickup and drop loop for the current Xonix design."
+    },
+    {
+      "id": "ability-04-fiber-module",
+      "family": "cross-family",
+      "asset_type": "equipment",
+      "mode": "text_generate",
+      "intent": "Make fiber a swappable equipment module",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "LINK_BRIEF"
+      ],
+      "prompt": "Design {{LINK_BRIEF}} as equipment compatible with explicitly listed classes. Keep radio-haze display and a fictional spool resource distinct from movement, trail vulnerability and other hazards. Specify refill, exhaustion, switching and tether cleanup. Show a tether that cannot be mistaken for the live capture trail. Do not imply real universal immunity or describe jamming avoidance procedures. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Make fiber a swappable equipment module for the current Xonix design."
+    },
+    {
+      "id": "ability-05-scout-reveal",
+      "family": "cross-family",
+      "asset_type": "ability_rule",
+      "mode": "text_generate",
+      "intent": "Design a scan that supports territory decisions",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "SCAN_BRIEF"
+      ],
+      "prompt": "Design {{SCAN_BRIEF}} as a limited-duration scan of eligible abstract markers. Show ready, active and expired states without changing captured coverage. Propose a future cut-planning use while labeling it unimplemented until an actual game adapter exists. Separate visual preview, marker discovery, completed objective and permanent unlock. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Design a scan that supports territory decisions for the current Xonix design."
+    },
+    {
+      "id": "ability-06-strike-intercept",
+      "family": "cross-family",
+      "asset_type": "ability_rule",
+      "mode": "text_generate",
+      "intent": "Specify bounded strike and intercept actions",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "DASH_BRIEF"
+      ],
+      "prompt": "Specify {{DASH_BRIEF}} with an explicit authoritative cardinal relocation, eligible target domains and limited charges. Distinguish one-way strike/reset from intercept/disable. Preserve immediate versus grid-center policy, clear old queued commands, enforce board bounds, and define a miss. Use abstract targets and non-graphic effects; avoid real interception tactics or performance tuning. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Specify bounded strike and intercept actions for the current Xonix design."
+    },
+    {
+      "id": "ability-07-net-emitter",
+      "family": "cross-family",
+      "asset_type": "ability_rule",
+      "mode": "text_generate",
+      "intent": "Compare a capture net and projectile emitter",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "ACTION_BRIEF"
+      ],
+      "prompt": "Compare {{ACTION_BRIEF}} as fictional reusable primitives. A net can temporarily restrain an eligible toy target; an emitter can spend a charge on a visible short-lived arcade projectile. Define target filtering, miss, expiry, duplicate-event handling and supply refill. Their visuals must communicate different outcomes without a real gun or net operating guide. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Compare a capture net and projectile emitter for the current Xonix design."
+    },
+    {
+      "id": "ability-08-fixedwing-identity",
+      "family": "cross-family",
+      "asset_type": "airframe_art",
+      "mode": "image_generate",
+      "intent": "Create an original fixed-wing body concept",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "AIRFRAME_BRIEF"
+      ],
+      "prompt": "Create {{AIRFRAME_BRIEF}} as original top-down pixel-art with a clear north-facing nose, readable wing/tail silhouette and genuine transparent alpha. Keep any motor/propeller/exhaust attachment separately bindable. Do not claim an exact named model or production sprite. Fixed-wing appearance must not silently change the configured movement policy or implement continuous-flight physics. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Create an original fixed-wing body concept for the current Xonix design."
+    },
+    {
+      "id": "ability-09-heavy-rotor-body",
+      "family": "cross-family",
+      "asset_type": "airframe_art",
+      "mode": "image_generate",
+      "intent": "Create a carrier body with a specified motor layout",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "ROTOR_BRIEF"
+      ],
+      "prompt": "Create {{ROTOR_BRIEF}} as an original heavy multirotor game-body concept. Distinguish the requested motor count from blades per motor. Show only bare hubs when animation will supply blades; keep cargo cradles, landing rails and body separable where possible. Use real transparent pixels, preserve the complete silhouette and record source-normalized anchors after inspecting the output. Heavy class does not automatically mean six rotors. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Create a carrier body with a specified motor layout for the current Xonix design."
+    },
+    {
+      "id": "ability-10-equipment-attachments",
+      "family": "cross-family",
+      "asset_type": "attachment_art",
+      "mode": "image_generate",
+      "intent": "Create interchangeable readable equipment concepts",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "ATTACHMENT_BRIEF"
+      ],
+      "prompt": "Create {{ATTACHMENT_BRIEF}} as a small pixel-art equipment concept with a clear pivot, north-up view, transparent alpha and consistent scale. Examples are a stylized spool, camera gimbal, empty cargo cradle, relay light or folded net module. Keep weapons abstract and non-operational. Bind only after inspecting actual alpha/size and checking overlap at tiny play scale. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Create interchangeable readable equipment concepts for the current Xonix design."
+    },
+    {
+      "id": "ability-11-ground-role-mapping",
+      "family": "cross-family",
+      "asset_type": "actor_catalog",
+      "mode": "text_generate",
+      "intent": "Translate equipment references into game roles",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "ACTOR_BRIEF"
+      ],
+      "prompt": "Map {{ACTOR_BRIEF}} into proposed Xonix actor roles such as patrol, contour visitor, slow region, signal node or enclosure objective. Keep body model, allegiance, team, collision domain and AI behavior independent. A tank image is not a tank simulation. Use clear telegraphs and no real vulnerability or targeting advice. Mark every unsupported actor as a planned extension. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Translate equipment references into game roles for the current Xonix design."
+    },
+    {
+      "id": "ability-12-personnel-objectives",
+      "family": "cross-family",
+      "asset_type": "actor_catalog",
+      "mode": "text_generate",
+      "intent": "Design distinct military and support role markers",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "PERSONNEL_BRIEF"
+      ],
+      "prompt": "Design {{PERSONNEL_BRIEF}} as respectful, readable pixel-art role concepts and a fictional mission brief. Distinguish operators, engineers, medics, logistics, observers and military adversaries by equipment and role cues rather than nationality or civilian appearance. Friendly support can be a supply or rescue objective. Use non-graphic feedback and explicit allegiance metadata; keep actual human imagery separate from live actor logic. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Design distinct military and support role markers for the current Xonix design."
+    },
+    {
+      "id": "ability-13-ew-and-radar",
+      "family": "cross-family",
+      "asset_type": "challenge_design",
+      "mode": "text_generate",
+      "intent": "Design readable signal and detection challenges",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "SIGNAL_BRIEF"
+      ],
+      "prompt": "Translate {{SIGNAL_BRIEF}} into fictional telegraphed regions or objectives. Clearly distinguish a sensor marker from interference and air defense. Avoid hidden control reversal or unannounced input loss. A radio-haze display can reduce an optional scan cue while fiber only bypasses that named synthetic effect. Keep real frequencies, operational ranges and countermeasure methods out of the rules. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Design readable signal and detection challenges for the current Xonix design."
+    },
+    {
+      "id": "ability-14-world-silhouettes",
+      "family": "cross-family",
+      "asset_type": "actor_art",
+      "mode": "image_generate",
+      "intent": "Create a family of original world-role silhouettes",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "WORLD_BRIEF"
+      ],
+      "prompt": "Create {{WORLD_BRIEF}} as original modern pixel-art reference silhouettes for the Ukrainian main theme. Keep a compact and a detailed treatment, readable north/up direction, consistent light and palettes, separate units and support markers, and no Z markings anywhere in this current concept set; allegiance stays explicit in separate metadata. This is a concept sheet until individual exports, alpha, pivots and applied sprites are verified. Do not bake targeting instructions or gameplay statistics into images. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Create a family of original world-role silhouettes for the current Xonix design."
+    },
+    {
+      "id": "ability-15-four-theme-remap",
+      "family": "cross-family",
+      "asset_type": "theme_mapping",
+      "mode": "text_generate",
+      "intent": "Carry one ability across all four themes",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "PRIMITIVE_BRIEF"
+      ],
+      "prompt": "Translate {{PRIMITIVE_BRIEF}} across FPV FRONT, UKRAINE ATLAS, 1994 FOREVER and the fictional business family. Preserve the selected class/equipment and exact primitive outcomes while replacing names, bodies, attachments, effects, sounds and goal text. Military drop/scan/net can become heritage delivery/discovery, retro capsules/data, or fictional parcels/audit/filter. Introduce no military or nationality-coded enemies into the business theme. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Carry one ability across all four themes for the current Xonix design."
+    },
+    {
+      "id": "ability-16-teaching-challenges",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "Plan a readable ability-learning sequence",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "CURRICULUM_BRIEF"
+      ],
+      "prompt": "Design {{CURRICULUM_BRIEF}} with one new decision per level, generous space and a visible resource source. Keep territory capture the central loop; abilities create route choices rather than bypassing the whole board. Author a scan stage, delivery detour, paired objective, moving air-marker intercept, signal-link comparison and a combined mastery stage. Declare dependencies and tests before calling any stage playable. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Plan a readable ability-learning sequence for the current Xonix design."
+    },
+    {
+      "id": "ability-17-class-progression",
+      "family": "cross-family",
+      "asset_type": "progression",
+      "mode": "text_generate",
+      "intent": "Reward play styles without conflating skins and power",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "PROGRESSION_BRIEF"
+      ],
+      "prompt": "Specify {{PROGRESSION_BRIEF}} with stable class and cosmetic identities. Distinguish a newly available play style from an earned visual trim. Offer a free baseline route, explicit alternative clear/mastery conditions and separate fair challenge comparisons for class/equipment/turn mode. Simulated lab results cannot unlock production rewards. Use real terminal events from a future trusted results adapter. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Reward play styles without conflating skins and power for the current Xonix design."
+    },
+    {
+      "id": "ability-18-ability-integration",
+      "family": "cross-family",
+      "asset_type": "runtime_review",
+      "mode": "review",
+      "intent": "Review event order and ownership of ability effects",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "RUNTIME_PATH"
+      ],
+      "prompt": "Inspect {{RUNTIME_PATH}} and the current contract before changing it. Trace action eligibility, resource spend, effect creation, movement relocation, target changes, pause and cancellation. For future territory integration specify ordering relative to dangerous contact, cut closure, fill, objective capture and terminal results. Renderer callbacks must not manufacture damage, coverage or progression. Reject unknown registered primitives and invalid parameters. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Review event order and ownership of ability effects for the current Xonix design."
+    },
+    {
+      "id": "ability-19-ability-visual-review",
+      "family": "cross-family",
+      "asset_type": "visual_review",
+      "mode": "review",
+      "intent": "Verify actual body and ability switching",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "PREVIEW_PATH"
+      ],
+      "prompt": "Open {{PREVIEW_PATH}} and inspect actual applied class, equipment and body changes. Compare both steering policies, compact/detailed/hybrid terrain and all four theme vocabularies. Check supply pickup, action success/failure, ready/cooldown feedback, tiny silhouettes, attachment anchors, tether versus trail and pause/reduced-motion cues. Record what was actually played; a still, template or passing schema is not runtime evidence. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Verify actual body and ability switching for the current Xonix design."
+    },
+    {
+      "id": "ability-20-catalog-maintenance",
+      "family": "cross-family",
+      "asset_type": "reference_review",
+      "mode": "review",
+      "intent": "Update references without silently changing balance",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current project contract and runtime/preview capability evidence; primary public references where factual claims are requested."
+      ],
+      "variables": [
+        "CATALOG_PATH"
+      ],
+      "prompt": "Review {{CATALOG_PATH}} for stale URLs, unsupported operator claims, duplicate aliases, origin/faction confusion and prototype-versus-field-use status. Update source claims narrowly with dates. Keep factual reference changes separate from game class balance and asset identity. Report coverage gaps explicitly; do not label a curated catalog all known systems. New entries remain reference-only until a declared role, actual asset and tested runtime binding exist. Read the current project README, ability registry and schema before emitting accepted data; otherwise return a labeled proposal. Preserve source images and record effective prompts. Keep real-world references high-level and all game values fictional. ",
+      "example_request": "Update references without silently changing balance for the current Xonix design."
+    }
+  ]
+}

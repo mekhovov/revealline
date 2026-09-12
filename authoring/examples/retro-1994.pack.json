@@ -1,0 +1,399 @@
+{
+  "schemaVersion": "0.1.0",
+  "contentVersion": "0.1.0",
+  "id": "retro-1994",
+  "status": "draft",
+  "title": "1994 Forever: Amiga Summer",
+  "summary": "Collect scenes from an imagined 1980s–1990s computer-game library.",
+  "requiresCapabilities": [
+    "content.raster-reveal.v1",
+    "content.sprite-animation.v1",
+    "effect.add-time.v1",
+    "effect.grant-score.v1",
+    "enemy.bounce-field.v1",
+    "enemy.patrol-boundary.v1",
+    "fill.keep-largest.v1",
+    "goal.coverage.v1",
+    "goal.score.v1",
+    "layout.fixed-arena.v1"
+  ],
+  "theme": {
+    "id": "retro-1994",
+    "family": "retro-1994",
+    "title": "1994 Forever: Amiga Summer",
+    "artDirection": "Warm CRT glow, teal shadows, apricot sunlight, expressive chunky sprites. Optional restrained scanlines do not alter arena geometry or text.",
+    "cultureNotes": "Original imaginary hardware labels and game covers; nostalgic visual vocabulary without copying protected game characters or artwork.",
+    "referenceUrls": [
+      "https://50games.fun/"
+    ],
+    "palette": {
+      "field": "#171D39",
+      "safe": "#78D0D4",
+      "trail": "#FFD09F",
+      "player": "#FFF2B8",
+      "enemy": "#F27CC2",
+      "objective": "#AFF093",
+      "text": "#F4E5E0",
+      "panel": "#2D294E"
+    },
+    "vocabulary": {
+      "player": "Arcade cursor",
+      "enemy": "Glitch sprite",
+      "capture": "Restore pixels",
+      "score": "High score",
+      "objective": "Lost disk"
+    },
+    "visualRoles": {
+      "player": "player-sprite",
+      "fieldEnemy": "field-enemy",
+      "boundaryEnemy": "boundary-enemy",
+      "objective": "objective-sprite",
+      "menuBackdrop": "menu-art"
+    },
+    "animations": [
+      {
+        "id": "player-idle",
+        "assetId": "player-sprite",
+        "frames": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fps": 8,
+        "loop": true
+      }
+    ],
+    "audio": {
+      "musicAssetId": "music",
+      "cutAssetId": "sfx-cut",
+      "captureAssetId": "sfx-capture",
+      "failureAssetId": "sfx-failure"
+    },
+    "presentation": {
+      "coverStyle": "dither",
+      "spriteSampling": "nearest",
+      "motionIntensity": 0.25,
+      "crtStrength": 0.18,
+      "arenaAspect": "4:3",
+      "layoutPolicy": "fixed-arena-adaptive-chrome"
+    },
+    "imagePolicy": {
+      "allowedStyles": [
+        "pixel-art",
+        "illustration",
+        "photograph",
+        "scanned-art"
+      ],
+      "preserveOriginal": true,
+      "cropApprovalRequired": true
+    }
+  },
+  "assets": [
+    {
+      "id": "player-sprite",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original retro-1994 player; clear 32 px silhouette, all frames consistent.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "field-enemy",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original retro-1994 fieldEnemy; clear 32 px silhouette, all frames consistent.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "boundary-enemy",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original retro-1994 boundaryEnemy; clear 32 px silhouette, all frames consistent.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "objective-sprite",
+      "kind": "spritesheet",
+      "status": "planned",
+      "brief": "Original retro-1994 objective; clear 32 px silhouette, all frames consistent.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      },
+      "spriteLayout": {
+        "frameWidth": 32,
+        "frameHeight": 32,
+        "frameCount": 4
+      }
+    },
+    {
+      "id": "menu-art",
+      "kind": "image",
+      "status": "planned",
+      "brief": "Original retro-1994 menuBackdrop; clear 32 px silhouette, all frames consistent.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "reveal-main",
+      "kind": "image",
+      "status": "planned",
+      "brief": "Original pixel-art computer room at golden hour, imaginary disk cases and cozy summer details.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "music",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original retro-1994 audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-cut",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original retro-1994 audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-capture",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original retro-1994 audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    },
+    {
+      "id": "sfx-failure",
+      "kind": "audio",
+      "status": "planned",
+      "brief": "Original retro-1994 audio, clean loop/transient, no copied recordings.",
+      "provenance": {
+        "method": "planned",
+        "creator": "TBD; original commissioned/generated work reviewed before ready"
+      }
+    }
+  ],
+  "revealArt": [
+    {
+      "id": "main",
+      "sourceAssetId": "reveal-main",
+      "style": "pixel-art",
+      "title": "Summer Disk",
+      "caption": "Original pixel-art computer room at golden hour, imaginary disk cases and cozy summer details.",
+      "altText": "Original pixel-art computer room at golden hour, imaginary disk cases and cozy summer details.",
+      "fit": "contain",
+      "focalPoint": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "sampling": "nearest",
+      "preserveSource": true,
+      "cropApproved": false,
+      "protectedRegions": [],
+      "luminanceTreatment": "dim-until-complete"
+    }
+  ],
+  "rulesets": [
+    {
+      "id": "standard",
+      "title": "First board",
+      "fillPolicy": {
+        "primitiveId": "fill.keep-largest.v1",
+        "params": {}
+      },
+      "lives": 3,
+      "timeLimitSeconds": 120,
+      "playerCellsPerSecond": 10,
+      "scorePerCapturedCell": 1,
+      "cutCommit": "hold",
+      "trailContact": "lose-life",
+      "goals": [
+        {
+          "id": "coverage",
+          "test": {
+            "primitiveId": "goal.coverage.v1",
+            "params": {
+              "targetFraction": 0.7
+            }
+          }
+        },
+        {
+          "id": "objective",
+          "test": {
+            "primitiveId": "goal.score.v1",
+            "params": {
+              "targetScore": 800
+            }
+          }
+        }
+      ],
+      "completion": {
+        "mode": "all",
+        "goalIds": [
+          "coverage",
+          "objective"
+        ]
+      },
+      "failure": {
+        "zeroLives": true,
+        "timerExpiry": "fail"
+      }
+    }
+  ],
+  "levels": [
+    {
+      "id": "first-light",
+      "title": "Summer Disk",
+      "rulesetId": "standard",
+      "revealArtId": "main",
+      "grid": {
+        "width": 48,
+        "height": 36,
+        "safeBorder": 1,
+        "blockedRects": [
+          {
+            "x": 20,
+            "y": 14,
+            "width": 4,
+            "height": 4
+          }
+        ]
+      },
+      "playerStart": {
+        "x": 24,
+        "y": 0
+      },
+      "enemies": [
+        {
+          "id": "roamer",
+          "visualRole": "fieldEnemy",
+          "behavior": {
+            "primitiveId": "enemy.bounce-field.v1",
+            "params": {
+              "cellsPerSecond": 3
+            }
+          },
+          "start": {
+            "x": 12,
+            "y": 10
+          },
+          "tags": [
+            "patrol"
+          ]
+        },
+        {
+          "id": "edge",
+          "visualRole": "boundaryEnemy",
+          "behavior": {
+            "primitiveId": "enemy.patrol-boundary.v1",
+            "params": {
+              "cellsPerSecond": 2,
+              "clockwise": true
+            }
+          },
+          "start": {
+            "x": 0,
+            "y": 24
+          },
+          "tags": [
+            "boundary"
+          ]
+        }
+      ],
+      "markers": [
+        {
+          "id": "marker-a",
+          "at": {
+            "x": 8,
+            "y": 8
+          },
+          "tag": "disk",
+          "visualRole": "objective",
+          "onCapture": [
+            {
+              "primitiveId": "effect.grant-score.v1",
+              "params": {
+                "points": 150
+              }
+            },
+            {
+              "primitiveId": "effect.add-time.v1",
+              "params": {
+                "seconds": 10
+              }
+            }
+          ]
+        },
+        {
+          "id": "marker-b",
+          "at": {
+            "x": 36,
+            "y": 26
+          },
+          "tag": "disk",
+          "visualRole": "objective",
+          "onCapture": [
+            {
+              "primitiveId": "effect.grant-score.v1",
+              "params": {
+                "points": 150
+              }
+            }
+          ]
+        }
+      ],
+      "modifiers": [],
+      "difficulty": "intro"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "chapter-one",
+      "title": "1994 Forever: Amiga Summer",
+      "levelIds": [
+        "first-light"
+      ],
+      "progression": "linear",
+      "rewardMode": "gallery",
+      "fictionalEconomy": false
+    }
+  ]
+}

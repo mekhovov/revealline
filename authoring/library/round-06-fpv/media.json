@@ -1,0 +1,131 @@
+{
+  "mediaVersion": "1.0.0",
+  "id": "round-06-fpv-concepts",
+  "themeId": "fpv-front",
+  "roles": {
+    "player.avatar": "Player artwork; scale and silhouette do not define collision.",
+    "enemy.field": "Artwork for a field-threat visual slot; behavior belongs elsewhere.",
+    "enemy.contour": "Artwork for a contour-threat visual slot.",
+    "enemy.exposed": "Artwork for an exposed-area threat visual slot.",
+    "enemy.erosion": "Artwork for an erosion-threat visual slot.",
+    "terrain.wall": "Solid-barrier visual material, including objects instead of glyphs.",
+    "terrain.slow": "Slow-field visual material, including objects instead of glyphs.",
+    "terrain.danger": "Lethal-field visual material, including objects instead of glyphs.",
+    "reveal.original": "Preserved original chosen as reveal source.",
+    "reveal.display": "Chosen original or separately produced styled reveal artwork.",
+    "reveal.mask": "Unrevealed-area visual material.",
+    "territory.boundary": "Claimed-area contour artwork.",
+    "trail.active": "Exposed player-trail artwork.",
+    "pickup.item": "Pickup artwork; effect is defined outside this manifest.",
+    "ui.menu": "Menu background or visual skin.",
+    "ui.hud": "HUD visual skin; localized labels remain real text.",
+    "ui.icon": "Interface icon artwork.",
+    "ui.cursor": "Focus/cursor artwork.",
+    "effect.capture": "Capture effect source artwork.",
+    "marketing.key-art": "Marketing illustration, separate from runtime assets.",
+    "concept.board": "Illustrative design board only; never a playable level or reveal background.",
+    "concept.asset-study": "Contact sheet for appearance selection, not a production sprite atlas."
+  },
+  "assets": [
+    {
+      "id": "previous-concept",
+      "kind": "original",
+      "status": "imported",
+      "provenance": {
+        "method": "import",
+        "creator": "OpenAI built-in image generation for this project",
+        "rights": "Project-generated original concept; production asset review remains pending.",
+        "recordedAt": "2026-09-12T02:35:07+00:00",
+        "sourceName": "round-05-gameplay-study.png"
+      },
+      "subjectAllegiance": "mixed",
+      "file": {
+        "path": "files/originals/a6c6ba02c95aaf86d7536e00c7a6bae30fce65bac4e764653134da9d010b5a4b.png",
+        "sha256": "a6c6ba02c95aaf86d7536e00c7a6bae30fce65bac4e764653134da9d010b5a4b",
+        "bytes": 1769976,
+        "format": "png",
+        "mimeType": "image/png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "id": "corrected-concept",
+      "kind": "derivative",
+      "status": "imported",
+      "provenance": {
+        "method": "ai",
+        "creator": "OpenAI built-in image generation for this project",
+        "rights": "Project-generated original concept; production asset review remains pending.",
+        "recordedAt": "2026-09-12T02:35:07+00:00",
+        "sourceName": "round-06-fpv-object-skins.png",
+        "parentAssetId": "previous-concept",
+        "parentSha256": "a6c6ba02c95aaf86d7536e00c7a6bae30fce65bac4e764653134da9d010b5a4b",
+        "tool": "Built-in image_gen edit",
+        "model": "Exact model version not exposed by the built-in tool",
+        "effectivePrompt": "Use case: precise-object-edit. Edit the supplied FPV FRONT game concept. Preserve the attractive dawn pixel-art railway panorama, dark unrevealed board, stepped capture shape, overall HUD composition, gold live cut and three-chamber layout. This is a concept illustration, not a production screenshot. Make these specific changes:\n1. Remove every Z letter and all other vehicle insignia everywhere. Keep fictional hostile military trucks and armored vehicles olive-drab and UNMARKED, with no Ukrainian flags attached to them. Remove the real city name from the station wall, leaving a blank plaster sign. Remove the tiny footer slogan. Keep the small Ukrainian environmental flag and restrained blue/yellow player identity.\n2. Replace the toy blue/gold quadcopter at the endpoint of the gold trail with a clearly recognizable practical FPV quadcopter, viewed from almost directly above: thin dark carbon X-frame, four separated small motors, visible two- or three-bladed propellers rather than round glowing hoops, compact strapped rectangular top battery, small forward camera, one short antenna. Make the silhouette modestly larger and clearly readable with a thin warm ivory selection outline and a tiny blue/yellow strip on the body. No weapon detail, no brand logo, no consumer camera-drone body.\n3. Replace the large repeated red X glyph patches with small coherent pixel-art military hazard zones: a few dark unmarked enemy equipment cases and low barricade objects within clearly visible continuous red dotted rectangular danger boundaries. Do not put any X glyph on them. The red boundary is essential to indicate the entire dangerous cell region, independent of the decorative props.\n4. Replace blue chevron arrow patches with small military radio-interference stations: dark olive electronic boxes with short antennas, subtle blue field texture, and clear blue dotted rectangular footprint. No arrows. Keep the same terrain patch locations.\n5. Replace steel-blue wall bar art with dark concrete military barriers in the same footprint and with the same gaps.\n6. Replace the red floating scout icon with a tiny readable top-down hostile military infantry patrol sprite in an olive helmet and uniform, no face detail, no insignia, with a distinct small red threat outline. Replace the amber gear on the interior frontier with a tiny hostile wheeled patrol vehicle having an amber role marker, and the orange wheel on the revealed land with a small hostile scout unit. Leave sufficient quiet empty space and retain the bright drone and live cut as primary focus.\nThe hazards/characters are fictional arcade props, no real map or operational simulation. Keep pixel art intentional, no smooth 3D rendering. Preserve the simple dark visual hierarchy. Update the three bottom legend samples to matching concrete barrier, antenna box, danger equipment with WALL / SLOW / DANGER labels. No new captions, flags on hostile units, letter Z, gore, explosions or extra UI.\n"
+      },
+      "subjectAllegiance": "mixed",
+      "file": {
+        "path": "files/derivatives/1ac512f99c16d314045aa2878fb0b2a72dee1c2e18ef1bab2c1f4e253c13f4e8.png",
+        "sha256": "1ac512f99c16d314045aa2878fb0b2a72dee1c2e18ef1bab2c1f4e253c13f4e8",
+        "bytes": 1874341,
+        "format": "png",
+        "mimeType": "image/png",
+        "width": 1536,
+        "height": 1024
+      }
+    },
+    {
+      "id": "asset-variation-study",
+      "kind": "original",
+      "status": "imported",
+      "provenance": {
+        "method": "import",
+        "creator": "OpenAI built-in image generation for this project; prompt docs/concepts/round-06-fpv-variants-prompt.txt",
+        "rights": "Project-generated original concept; production asset review remains pending.",
+        "recordedAt": "2026-09-12T02:35:07+00:00",
+        "sourceName": "round-06-fpv-asset-variants.png"
+      },
+      "subjectAllegiance": "mixed",
+      "file": {
+        "path": "files/originals/90229dd48897009e68be20c63588b4a175dd41da567d574a470ef9a13e283815.png",
+        "sha256": "90229dd48897009e68be20c63588b4a175dd41da567d574a470ef9a13e283815",
+        "bytes": 2225451,
+        "format": "png",
+        "mimeType": "image/png",
+        "width": 1536,
+        "height": 1024
+      }
+    }
+  ],
+  "bindings": [
+    {
+      "role": "concept.board",
+      "variant": "previous",
+      "assetId": "previous-concept",
+      "presentation": {
+        "sampling": "nearest",
+        "fit": "contain"
+      }
+    },
+    {
+      "role": "concept.board",
+      "variant": "corrected",
+      "assetId": "corrected-concept",
+      "presentation": {
+        "sampling": "nearest",
+        "fit": "contain"
+      }
+    },
+    {
+      "role": "concept.asset-study",
+      "variant": "day-night-winter",
+      "assetId": "asset-variation-study",
+      "presentation": {
+        "sampling": "nearest",
+        "fit": "contain"
+      }
+    }
+  ]
+}

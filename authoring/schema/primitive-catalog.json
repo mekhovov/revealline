@@ -1,0 +1,288 @@
+{
+  "catalogVersion": "0.1.0",
+  "runtimeImplemented": false,
+  "extensionPolicy": "New primitives require reviewed application code, parameter schema, deterministic behavior and tests. Packs cannot contain executable code or load URLs as behavior.",
+  "presentationCapabilities": [
+    "content.raster-reveal.v1",
+    "layout.fixed-arena.v1",
+    "content.sprite-animation.v1"
+  ],
+  "primitives": [
+    {
+      "id": "fill.enemy-seeded.v1",
+      "category": "fill",
+      "status": "specified-not-implemented",
+      "summary": "After a closed cut, retain each unclaimed component containing a live field enemy. Claim other reachable components; border and blocked cells are excluded from coverage denominator.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "fill.keep-largest.v1",
+      "category": "fill",
+      "status": "specified-not-implemented",
+      "summary": "After a closed cut retain the largest unclaimed component. Ties retain the component with the first cell in row-major order. Claim other components; remove field enemies in claimed cells without a separate score reward.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "goal.coverage.v1",
+      "category": "goal",
+      "status": "specified-not-implemented",
+      "summary": "Succeed when captured fraction of initial claimable interior reaches targetFraction.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "targetFraction": {
+            "type": "number",
+            "minimum": 0.01,
+            "maximum": 1
+          }
+        },
+        "required": [
+          "targetFraction"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "goal.capture-markers.v1",
+      "category": "goal",
+      "status": "specified-not-implemented",
+      "summary": "Succeed after targetCount distinct markers with markerTag have been enclosed.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "markerTag": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$",
+            "maxLength": 96
+          },
+          "targetCount": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "markerTag",
+          "targetCount"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "goal.score.v1",
+      "category": "goal",
+      "status": "specified-not-implemented",
+      "summary": "Succeed when nonnegative score reaches targetScore.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "targetScore": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000000
+          }
+        },
+        "required": [
+          "targetScore"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "goal.survive.v1",
+      "category": "goal",
+      "status": "specified-not-implemented",
+      "summary": "Succeed after durationSeconds of active play with at least one life.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "durationSeconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 3600
+          }
+        },
+        "required": [
+          "durationSeconds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "enemy.bounce-field.v1",
+      "category": "enemy",
+      "status": "specified-not-implemented",
+      "summary": "Axis-aligned diagonal bouncer inside unclaimed cells; reflect at safe/blocked cells. Touching a live trail applies the ruleset trail penalty.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "cellsPerSecond": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 30
+          }
+        },
+        "required": [
+          "cellsPerSecond"
+        ],
+        "additionalProperties": false
+      },
+      "spawnDomain": "field"
+    },
+    {
+      "id": "enemy.patrol-boundary.v1",
+      "category": "enemy",
+      "status": "specified-not-implemented",
+      "summary": "Patrol the outer safe border in the chosen direction; touching player loses one life. Does not seed fill.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "cellsPerSecond": {
+            "type": "number",
+            "minimum": 0.1,
+            "maximum": 30
+          },
+          "clockwise": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "cellsPerSecond",
+          "clockwise"
+        ],
+        "additionalProperties": false
+      },
+      "spawnDomain": "boundary"
+    },
+    {
+      "id": "effect.grant-score.v1",
+      "category": "effect",
+      "status": "specified-not-implemented",
+      "summary": "Grant points once, when the marker is first captured.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "points": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100000
+          }
+        },
+        "required": [
+          "points"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "effect.disable-enemy-tag.v1",
+      "category": "effect",
+      "status": "specified-not-implemented",
+      "summary": "After filling and marker capture, disable live enemies with enemyTag. This effect does not change the fill algorithm.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "enemyTag": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$",
+            "maxLength": 96
+          }
+        },
+        "required": [
+          "enemyTag"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "effect.add-time.v1",
+      "category": "effect",
+      "status": "specified-not-implemented",
+      "summary": "Add seconds to a timed ruleset after marker capture; cannot be used on an untimed board.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "seconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          }
+        },
+        "required": [
+          "seconds"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "effect.clear-modifier.v1",
+      "category": "effect",
+      "status": "specified-not-implemented",
+      "summary": "Deactivate a level modifier by ID after marker capture.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "modifierId": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)*$",
+            "maxLength": 96
+          }
+        },
+        "required": [
+          "modifierId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "modifier.speed-scale.v1",
+      "category": "modifier",
+      "status": "specified-not-implemented",
+      "summary": "Multiply field enemy speed by factor while active; compositional ordering is by modifier ID.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "factor": {
+            "type": "number",
+            "minimum": 0.25,
+            "maximum": 3
+          }
+        },
+        "required": [
+          "factor"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "modifier.cut-timeout.v1",
+      "category": "modifier",
+      "status": "specified-not-implemented",
+      "summary": "A live cut exceeding seconds applies the trail penalty, then clears the cut.",
+      "paramsSchema": {
+        "type": "object",
+        "properties": {
+          "seconds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 120
+          }
+        },
+        "required": [
+          "seconds"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}
