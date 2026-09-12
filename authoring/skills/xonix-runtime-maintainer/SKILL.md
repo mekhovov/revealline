@@ -17,6 +17,8 @@ Locate the project from the current workspace or this source skill's project pat
 
 Read the exported functions and current data before selecting names or fields. New primitives, enemy types, save migrations or targeting domains require implemented behavior and tests; arbitrary JSON strings cannot create them. Preserve authored `immediate` and `grid-center` turning, and test both for changes affecting movement, input buffering, dashes or contact order. Cosmetic replacement must leave those mechanics unchanged.
 
+For portable saves, local leaderboards and installed campaigns, read [library-and-packs.md](../../../docs/library-and-packs.md). New core results include roster and class-route identities; retain both through rewards and replays. Expansion packs use the runtime `xonix-pack.v1` contract and complete image decoding before atomic installation.
+
 ## Make the requested change reviewable
 
 Use `node scripts/game-cli.mjs serve --port 8768` for source inspection. `npm run validate` checks campaign, theme and class data through actual validators plus copied JSON and literal browser resources. Navigation links outside the distribution appear separately as warnings. `npm test` runs the core, tooling and existing lab test files. Run the relevant checks after the edit; complete the full required checks for a release. Do not describe tests as physical-device, visual or production-save validation.

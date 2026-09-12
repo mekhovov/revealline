@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xonix Expansion Author"
+  short_description: "Create playable packs and preserve player libraries"
+  default_prompt: "Use $xonix-expansion-author to create or revise a playable expansion with validated maps, original art and procedural music, verify both steering policies, and preserve portable player saves."
