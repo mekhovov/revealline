@@ -1,0 +1,1672 @@
+{
+  "formatVersion": 1,
+  "checkedAt": "2026-09-12T17:09:35.543926+00:00",
+  "result": "pass",
+  "version": "v0.17.1",
+  "sourceRevision": "efd5fe025a9fe3f1688a11f1be9400018f8e793d",
+  "environment": {
+    "node": "v22.22.2",
+    "nodePath": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "python": "3.14.4",
+    "pythonZlib": "1.2.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "frozenRelease": {
+    "version": "v0.17.1",
+    "sourceRevision": "efd5fe025a9fe3f1688a11f1be9400018f8e793d",
+    "sourceArchive": {
+      "bytes": 149063680,
+      "sha256": "8e990bd97d9da7f267d2e2a6e17cb69a73c22f2bb01110988bd0ee5e0e198ac6",
+      "recordedHashMatches": true,
+      "knownHashMatches": true,
+      "paxRevisionMatches": true,
+      "safeRegularFileEntries": 1061,
+      "regularFileBytes": 148167480,
+      "safeExtractionInventory": true
+    },
+    "distribution": {
+      "bytes": 31852891,
+      "sha256": "94a2c573eb6bdfdd9cbbfe36d0680aa886b33b029b935870d9199ed5bfcb18d4",
+      "recordedHashMatches": true,
+      "knownHashMatches": true,
+      "sidecarMatches": true,
+      "zipEntries": 139,
+      "compressedPayloadBytes": 31835035,
+      "uncompressedBytes": 31835035,
+      "compressionMethods": [
+        0
+      ],
+      "crcPass": true,
+      "exactInventoryMatch": true,
+      "allZipBytesMatchSite": true
+    },
+    "manifest": {
+      "bytes": 22511,
+      "sha256": "8f3dc31d1e36c8e7843647a653e185cea2b9d7eb870783b91c56a2e89e23199a",
+      "files": 138,
+      "totalBytes": 31812524,
+      "recordedHashMatches": true,
+      "knownHashMatches": true,
+      "allFileHashesMatch": true,
+      "looseSiteInventoryMatches": true
+    },
+    "buildInfoMatches": true
+  },
+  "sourceProvenance": {
+    "tag": "v0.17.1",
+    "tagKind": "tag",
+    "tagObject": "299375ec717442f7967543f991c994643c6e2bd3",
+    "peeledTagRevision": "efd5fe025a9fe3f1688a11f1be9400018f8e793d",
+    "tagRevisionMatches": true,
+    "annotatedTagMetadataMatches": true,
+    "annotatedTagTextSha256": "9ceb1a97a3097ae87ac99dd3797497a746b1becb52bd126cd611f8cb2978b27f",
+    "method": "Regenerated git archive from the exact frozen commit into a fresh cache directory and compared every byte to source.tar.",
+    "command": [
+      "git",
+      "archive",
+      "--format=tar",
+      "--output=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/git-source.tar",
+      "efd5fe025a9fe3f1688a11f1be9400018f8e793d"
+    ],
+    "gitArchiveByteIdentical": true,
+    "gitArchiveSha256": "8e990bd97d9da7f267d2e2a6e17cb69a73c22f2bb01110988bd0ee5e0e198ac6"
+  },
+  "rebuild": {
+    "workspace": ".cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z",
+    "method": "Safely extract regular archived source files, then execute the archived scripts/game-cli.mjs with its own bundled assets and the exact original version/revision. No current game modules, dependency installation or network input used.",
+    "extractedSourceFiles": 1061,
+    "extractedSourceBytes": 148167480,
+    "frozenCliSha256": "7dd99f7663891b54cef30da75c6ed6fd48475f0cafdce200fa801db065321671",
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/source/scripts/game-cli.mjs",
+      "build",
+      "--out",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/rebuilt-site",
+      "--version",
+      "v0.17.1",
+      "--revision",
+      "efd5fe025a9fe3f1688a11f1be9400018f8e793d"
+    ],
+    "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/source",
+    "exitCode": 0,
+    "elapsedMilliseconds": 2169,
+    "stdout": {
+      "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/rebuilt-site",
+      "version": "v0.17.1",
+      "files": 138,
+      "sha256": "94a2c573eb6bdfdd9cbbfe36d0680aa886b33b029b935870d9199ed5bfcb18d4",
+      "sourceRevision": "efd5fe025a9fe3f1688a11f1be9400018f8e793d"
+    },
+    "stderrLog": ".cache/round-27-1/integrity/v0.17.1-run-20260912T170916037715Z/build.stderr.log",
+    "distributionSha256": "94a2c573eb6bdfdd9cbbfe36d0680aa886b33b029b935870d9199ed5bfcb18d4",
+    "manifestSha256": "8f3dc31d1e36c8e7843647a653e185cea2b9d7eb870783b91c56a2e89e23199a",
+    "zipBytes": 31852891,
+    "manifestBytes": 22511,
+    "zipByteIdentical": true,
+    "manifestByteIdentical": true,
+    "allInventoriedAssetsByteIdentical": true,
+    "internalBuildMarkerByteIdentical": true,
+    "exactLooseInventoryMatch": true,
+    "looseFilesCompared": 142
+  },
+  "offline": {
+    "format": "revealline-offline.v1",
+    "version": "v0.17.1",
+    "buildId": "49e3361dfc09d58c0aa8c8b63f06f505306d8354c2c6482ddec537406b78ba45",
+    "precacheFiles": 135,
+    "precacheBytes": 31764790,
+    "inventoryMatchesManifestExcluding": [
+      "_headers",
+      "offline-cache.json",
+      "service-worker.js"
+    ],
+    "allFileHashesMatch": true,
+    "embeddedWorkerConfigMatchesSidecar": true,
+    "workerExactlyMatchesArchivedTemplateWithConfig": true,
+    "buildIdRecomputedFromFrozenInfoTemplateAndNormalizedAssets": true,
+    "gameHtmlMarkers": [
+      {
+        "path": "game/controller-lab/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/couch/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/index.html",
+        "scope": "../",
+        "worker": "../service-worker.js"
+      },
+      {
+        "path": "game/playground/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      }
+    ],
+    "allMarkersMatchVersionBuildAndLocalRootScope": true,
+    "webManifestStartUrl": "./game/",
+    "webManifestScope": "./",
+    "webManifestIconsExist": true,
+    "serviceWorkerSha256": "6093b6fa70b5d7f02ebe84bb18d50e5241ef59acb186baa472c747934a546486",
+    "offlineCacheSha256": "49f343cd27f11c3d1c99899fcbbf4fecba2fa6b7841678d60e9cacf4c61f5d82",
+    "boundary": "Offline artifact identity only. Actual browser installation, offline navigation and storage behavior are tested separately."
+  },
+  "retainedOlderReleases": [
+    {
+      "version": "v0.1.0",
+      "sourceRevision": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+      "sourceArchive": {
+        "bytes": 81602560,
+        "sha256": "4c3e7d22145f33656c9d0868a1e27c33e6161ebaca1be275272fc1d70dc75cfb",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 336,
+        "regularFileBytes": 81307367,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 7258748,
+        "sha256": "af3468a43496eb450a05463b9288307dced3993b60b6c0008dfb7174e4b6b955",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7252678,
+        "uncompressedBytes": 7252678,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7652,
+        "sha256": "b0bd08588a7004faabf138d94773044cef7522254a0efe492b127dcb8596ea50",
+        "files": 46,
+        "totalBytes": 7245026,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.1.0",
+        "object": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+        "kind": "commit",
+        "peeledRevision": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 52,
+        "bytes": 96114584,
+        "inventorySha256": "4dd601053a68ab0fd9de219e7400eef3e5382384020076e7e8b370b3b62af81b",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.1.1",
+      "sourceRevision": "76687c2decf409d845f698ad7fefa92167178011",
+      "sourceArchive": {
+        "bytes": 81623040,
+        "sha256": "c9a38c94bbabbba92f7c122dbb7b5b68f7655a5f8681cdd93d59244c96a5a77c",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 336,
+        "regularFileBytes": 81323143,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 7264651,
+        "sha256": "451d938a7223bb300a4b61afca317c7fcec601e843ab216072d156847259f5ec",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7258581,
+        "uncompressedBytes": 7258581,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7653,
+        "sha256": "d0e3a743cb855bb6bdf2c1ec74bc7b79cd55520e0c09126c433aa92c3cf6ad32",
+        "files": 46,
+        "totalBytes": 7250928,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.1.1",
+        "object": "76687c2decf409d845f698ad7fefa92167178011",
+        "kind": "commit",
+        "peeledRevision": "76687c2decf409d845f698ad7fefa92167178011",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 52,
+        "bytes": 96146870,
+        "inventorySha256": "94d6c8f8089820410dfb91cb07863843272c6d1d52a21ac1ca5cbd91efb00eaa",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.1.2",
+      "sourceRevision": "5f539f6f722c49f36a31701454a683ee60122d81",
+      "sourceArchive": {
+        "bytes": 81623040,
+        "sha256": "ae59521f5ceaafcd2070d683f1a02085af95b8f6e8bb0a0dfc6547ba1f5a516f",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 336,
+        "regularFileBytes": 81323441,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 7264949,
+        "sha256": "38745a2bb05ac56c8cbfe31d5b5046da4a7a633c940ddedcc4c2612527001356",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 47,
+        "compressedPayloadBytes": 7258879,
+        "uncompressedBytes": 7258879,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 7653,
+        "sha256": "cdc3eaf999081e4b389a31c3bc3200dba1221287fff01d8c82499c1fbaf7f155",
+        "files": 46,
+        "totalBytes": 7251226,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.1.2",
+        "object": "5f539f6f722c49f36a31701454a683ee60122d81",
+        "kind": "commit",
+        "peeledRevision": "5f539f6f722c49f36a31701454a683ee60122d81",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 52,
+        "bytes": 96147466,
+        "inventorySha256": "e72fb5fe69a8d4b0d469ce7aa3ffddc2e78022d23f93c9aad3addcc0bc5e3198",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.2.0",
+      "sourceRevision": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+      "sourceArchive": {
+        "bytes": 85309440,
+        "sha256": "6ec3cf2fde57a4d478ab0c5e4593588baede255a6020bc80ad416acad9496de5",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 425,
+        "regularFileBytes": 84942255,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 8184029,
+        "sha256": "0db2135c8290bcbffa342bcba4768e1ccf80391229495c923364892970f9f429",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 92,
+        "compressedPayloadBytes": 8172367,
+        "uncompressedBytes": 8172367,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 14827,
+        "sha256": "2bc8c25e70e691b32b57efb30534bbb036733eaec5e2ea3466ec5b853fdefe18",
+        "files": 91,
+        "totalBytes": 8157540,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.2.0",
+        "object": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+        "kind": "commit",
+        "peeledRevision": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 97,
+        "bytes": 101666434,
+        "inventorySha256": "0deb7bf0425fd43556dcf7f4b382f9a08b1ab5d5e48d161239c1d4232f787658",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.2.1",
+      "sourceRevision": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+      "sourceArchive": {
+        "bytes": 85514240,
+        "sha256": "97323071e6a38e8ebe61797a12e8adda25a3087253e40915589d0617a715dc57",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 436,
+        "regularFileBytes": 85135529,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 8211017,
+        "sha256": "1a0c88d4758e65826af0c1fcebdb55181cd3f2d77ea6f7b8413a1894997daafd",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 94,
+        "compressedPayloadBytes": 8199113,
+        "uncompressedBytes": 8199113,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 15143,
+        "sha256": "76f6d6e3a36a3d2b14411a76c8fb59560e7bbe3b19e5614722b22fd10a1f0774",
+        "files": 93,
+        "totalBytes": 8183970,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.2.1",
+        "object": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+        "kind": "commit",
+        "peeledRevision": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 99,
+        "bytes": 101924968,
+        "inventorySha256": "7d0ec3e548dd5498149f9cfb4f80e33bc7ef1fa08580ce5c9b75cbcc74cc41b7",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.3.0",
+      "sourceRevision": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+      "sourceArchive": {
+        "bytes": 86261760,
+        "sha256": "6e45ac6777d0b504f536791f1c2c86efc710ae6886e387cb5402c9e410e76012",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 504,
+        "regularFileBytes": 85818075,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 8216996,
+        "sha256": "a5378bc01ff54bb3a17ac4f3b5778db6d7d2d0b8d478d496e332cc56fd387207",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 95,
+        "compressedPayloadBytes": 8204982,
+        "uncompressedBytes": 8204982,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 15295,
+        "sha256": "30ceeac7aab37a3d91ec3b90ebc4b4acc94fa377e954df7b047ea8e05f010b1d",
+        "files": 94,
+        "totalBytes": 8189687,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.3.0",
+        "object": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+        "kind": "commit",
+        "peeledRevision": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 100,
+        "bytes": 102684336,
+        "inventorySha256": "224e619b767e35b9355b4091744d3f4759f45d3e7dbaac5c8458abbf48f6deb7",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.4.0",
+      "sourceRevision": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+      "sourceArchive": {
+        "bytes": 107479040,
+        "sha256": "117823941f85f4cca41f2386de8b2682c9dd69e0abe3d0b607904dae61d260a7",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 548,
+        "regularFileBytes": 106995619,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 19958374,
+        "sha256": "aae68ddb2227e9e7dd6b7b90f9f1ae4c7f9591623e9bd690dacea67989d93cfb",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 101,
+        "compressedPayloadBytes": 19945558,
+        "uncompressedBytes": 19945558,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 16286,
+        "sha256": "a172e2bc322096e6699bec01abba42214cf97c200425baba53677ecb2475039d",
+        "files": 100,
+        "totalBytes": 19929272,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.4.0",
+        "object": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+        "kind": "commit",
+        "peeledRevision": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 106,
+        "bytes": 147383570,
+        "inventorySha256": "9e53916e2354991e4a26a898034ff70853c13623dc1e35fdc865d656649063c3",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.4.1",
+      "sourceRevision": "42dc21f65f666036706d57c6f1054a37967f367b",
+      "sourceArchive": {
+        "bytes": 107622400,
+        "sha256": "b70d0db44b56ae828fa349bc90bda82484978f70b06d74e0ab39a5573723c7ef",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 556,
+        "regularFileBytes": 107133352,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 19958421,
+        "sha256": "d14374c2660b858f7094a7f4d6b3e0e2327bb407a3b033db0743ee090449a77b",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 101,
+        "compressedPayloadBytes": 19945605,
+        "uncompressedBytes": 19945605,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 16286,
+        "sha256": "410926ada19bb7f6dc1795cfc54d2f97eac6a707e0df84f55852d8de13ce0cc0",
+        "files": 100,
+        "totalBytes": 19929319,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.4.1",
+        "object": "42dc21f65f666036706d57c6f1054a37967f367b",
+        "kind": "commit",
+        "peeledRevision": "42dc21f65f666036706d57c6f1054a37967f367b",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 106,
+        "bytes": 147527024,
+        "inventorySha256": "b16d67e19dd18e1283dba966b8cece22073b4e98476534411b0ad4f0b1e65e03",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.5.0",
+      "sourceRevision": "617fc224043945c0fc337c12027aa70e4da33323",
+      "sourceArchive": {
+        "bytes": 108984320,
+        "sha256": "62decf095cbf4da2bab0fcd29f27480dadd80cbc3f13c3c43b0d90eac5eeaa3b",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 589,
+        "regularFileBytes": 108467321,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20023487,
+        "sha256": "2d84e13c9a59b0905131be845a6d4464137ffacc11f9a593f8492c9b4dc5461f",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 108,
+        "compressedPayloadBytes": 20009721,
+        "uncompressedBytes": 20009721,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 17441,
+        "sha256": "04a59cc082d242d884c6bc304e54e29101ea8fcdb708a7e2016edd5def2cbfb9",
+        "files": 107,
+        "totalBytes": 19992280,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.5.0",
+        "object": "8ce113979ab250bbd4ce294786dfddbaf9efe154",
+        "kind": "tag",
+        "peeledRevision": "617fc224043945c0fc337c12027aa70e4da33323",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 113,
+        "bytes": 149018126,
+        "inventorySha256": "17f5cd29665891c01a7b2ab3255b8ffad45e12eb2c19a87169dc0882a3812212",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.6.0",
+      "sourceRevision": "e88bab7e9677c82419aca35557c858c670425f16",
+      "sourceArchive": {
+        "bytes": 109936640,
+        "sha256": "8b0ad855a170c16d9d217aa9bc25619d518b4b74d16a25889c2c46989a21388d",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 617,
+        "regularFileBytes": 109402430,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20068956,
+        "sha256": "5eb72e65a262a57cbbff7d3c485c0a99d3857c3bfe2233092e8463e50b8b042d",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 111,
+        "compressedPayloadBytes": 20054782,
+        "uncompressedBytes": 20054782,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 17941,
+        "sha256": "6803d6dc471165de4ab4a61af7c5a24ec8472e47f55b0a2d9c1a6324ddadd2c3",
+        "files": 110,
+        "totalBytes": 20036841,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.6.0",
+        "object": "eff751d470acef2ca2e56f5d346f94ced2f2af71",
+        "kind": "tag",
+        "peeledRevision": "e88bab7e9677c82419aca35557c858c670425f16",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 116,
+        "bytes": 150060976,
+        "inventorySha256": "ae334af83565f992a3aa94c30543b93f9abc1f96f2cd4c262dd9fdae34313c3f",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.7.0",
+      "sourceRevision": "1d4a8d9636428122cca857533dff68c7ee65ac88",
+      "sourceArchive": {
+        "bytes": 110827520,
+        "sha256": "d22895233c1754dd1a69dd736bf4609252211e89b92c5a86ecf60d04351b9317",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 653,
+        "regularFileBytes": 110256446,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20121610,
+        "sha256": "a6aea955ccc0a3137f1d4d26001bb9ceac9242850f50616e65900919fe177729",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 116,
+        "compressedPayloadBytes": 20106824,
+        "uncompressedBytes": 20106824,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 18734,
+        "sha256": "c2dde7df03dcd441eb9c50e213dd9fb1e84761c931730e13cee701627a786bce",
+        "files": 115,
+        "totalBytes": 20088090,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.7.0",
+        "object": "bd22efa264ee35cf1695768fff15436b8083d47b",
+        "kind": "tag",
+        "peeledRevision": "1d4a8d9636428122cca857533dff68c7ee65ac88",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 121,
+        "bytes": 151056552,
+        "inventorySha256": "4f7ed4003d24daf53539ba88876fff5ebbf7d3036d62923ffdfffd9eed8d541a",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.8.0",
+      "sourceRevision": "8410d814dbcc7b3aef53e11c6f94d384d01cce05",
+      "sourceArchive": {
+        "bytes": 111718400,
+        "sha256": "6ea37522cf6e253b2999611b2a66e0a2aa661dac61ca37d7db6771edfe86e52b",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 681,
+        "regularFileBytes": 111127221,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20159249,
+        "sha256": "eeaf8ec821909d07d5d187cf2fbf0ddb968b041d346d4c200e7d7f58ff15e412",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 117,
+        "compressedPayloadBytes": 20144335,
+        "uncompressedBytes": 20144335,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 18896,
+        "sha256": "32c76ce0742f9c7bd78e50ece49a58a43ff05cf6a6f9566159e1593c997567f0",
+        "files": 116,
+        "totalBytes": 20125439,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.8.0",
+        "object": "7aaa39e0b2ae10d6438b026cebacae5268c4b058",
+        "kind": "tag",
+        "peeledRevision": "8410d814dbcc7b3aef53e11c6f94d384d01cce05",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 122,
+        "bytes": 152022582,
+        "inventorySha256": "a98a43e40f22263abb69bee42b1fa2906c9040ad9f153bb724a1f526aec62260",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.9.0",
+      "sourceRevision": "315a4782a159f2274f7200e3470ec20c3859707b",
+      "sourceArchive": {
+        "bytes": 112445440,
+        "sha256": "3877c952754d80469ef11136381b164cde59ac3d0e8f92e30f1e286526de17dd",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 715,
+        "regularFileBytes": 111831832,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20222233,
+        "sha256": "7e88f5e7c1ee1835d85bc1df7c1b0aa1763dbd66d49097005abb5dd023a6c346",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 119,
+        "compressedPayloadBytes": 20207035,
+        "uncompressedBytes": 20207035,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 19234,
+        "sha256": "fb3b40ee4f55377b2bc747bc9b946792566f69b08a6146822d4975e880dc15ce",
+        "files": 118,
+        "totalBytes": 20187801,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.9.0",
+        "object": "8a791ab186af446ef884dc0184c6fedcc726e563",
+        "kind": "tag",
+        "peeledRevision": "315a4782a159f2274f7200e3470ec20c3859707b",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 124,
+        "bytes": 152875306,
+        "inventorySha256": "9fb915433e284bdc090105ec608e400452512fabfff23bbd7289881a012877fa",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.10.0",
+      "sourceRevision": "40ae9d23ad8737c4f77f9cc07923948133b7c09d",
+      "sourceArchive": {
+        "bytes": 112967680,
+        "sha256": "cfc48dd29d71eefaef128a839a38f2f1302ec5f63a3994742adb0cf84242eeab",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 743,
+        "regularFileBytes": 112324399,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20232240,
+        "sha256": "1bc32886efd395f00280099e3133376ffc384d7ab7d304481f3fc9eb5c536ec9",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 119,
+        "compressedPayloadBytes": 20217042,
+        "uncompressedBytes": 20217042,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 19236,
+        "sha256": "bf5f607fcea10e9db421799bb900ecc6ab8364239f22b6a2ca89bf473a72a02d",
+        "files": 118,
+        "totalBytes": 20197806,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.10.0",
+        "object": "78d91a364e83c463c65513755c9e84aaccbc56f3",
+        "kind": "tag",
+        "peeledRevision": "40ae9d23ad8737c4f77f9cc07923948133b7c09d",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 124,
+        "bytes": 153417563,
+        "inventorySha256": "5914d4be63b4b4b0c743871a6119638dd44c506b7611649b1ea97b380e3ef14e",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.11.0",
+      "sourceRevision": "7bc32d62fb7ec9c24e8b8dc5a80a016bbb76c2db",
+      "sourceArchive": {
+        "bytes": 114862080,
+        "sha256": "ac2cd79547dc3e2c481b7bbecb0d6d2225d3dbebf16452aa4274cb0ec03c7c7d",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 798,
+        "regularFileBytes": 114178803,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20558157,
+        "sha256": "8e066a13120961bbb6c139edb95ff51a2838f5a1d74a051f8776277885f62158",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 125,
+        "compressedPayloadBytes": 20542163,
+        "uncompressedBytes": 20542163,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 20219,
+        "sha256": "c6558d315f811ac35e6444b6e759e27dd4f74ca2732cfc19fcc7b46af4ae5bda",
+        "files": 124,
+        "totalBytes": 20521944,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.11.0",
+        "object": "15edf83529e289a967289820bbc43ecd344c8779",
+        "kind": "tag",
+        "peeledRevision": "7bc32d62fb7ec9c24e8b8dc5a80a016bbb76c2db",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 130,
+        "bytes": 155963001,
+        "inventorySha256": "3e53532690f95569043ea9f564ea8e71652d2baf6b7038d909feef7742943ba1",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.12.0",
+      "sourceRevision": "640f3e3570323394a22922261e8928634db7bf3b",
+      "sourceArchive": {
+        "bytes": 116367360,
+        "sha256": "0030f90969aa84e8e061382a1ba55b14ccf28810a077b7b0a919326d0b4f786d",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 831,
+        "regularFileBytes": 115657383,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20584464,
+        "sha256": "bc160dc0000557b3af5c59cebc8cd77ca553bae48244614359691073802d2d07",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 127,
+        "compressedPayloadBytes": 20568176,
+        "uncompressedBytes": 20568176,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 20560,
+        "sha256": "89abb55adc3a47792c778df7e24ef971d1d87d989946e512e3b577445d50515b",
+        "files": 126,
+        "totalBytes": 20547616,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.12.0",
+        "object": "57ef1b15ed8f887d8c905df499d85ca302df2fc6",
+        "kind": "tag",
+        "peeledRevision": "640f3e3570323394a22922261e8928634db7bf3b",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 132,
+        "bytes": 157520601,
+        "inventorySha256": "4b805786b6f4a01ac678d16f50daa15dbb5cb6480d09db6d2ef12d44d5fb4df0",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.13.0",
+      "sourceRevision": "c7b0122edffcaabbdfa6a817c06f603625f79fe0",
+      "sourceArchive": {
+        "bytes": 117432320,
+        "sha256": "9949ef4efc86288c63647bcb34778cef150d4998a727568e41e71f35e0349de7",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 865,
+        "regularFileBytes": 116697110,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20595743,
+        "sha256": "35b2470a33243fd18f19683ecec36c0b7748e38dbb93f57300bfab31eab2cac3",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 130,
+        "compressedPayloadBytes": 20579037,
+        "uncompressedBytes": 20579037,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 21058,
+        "sha256": "b63caefd0362c2e23b89b50e656851ab820d97468bc7a890332d0bf38dc698fe",
+        "files": 129,
+        "totalBytes": 20557979,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.13.0",
+        "object": "8f769643d246211d3ae3d451eb74eeb5ed448ab0",
+        "kind": "tag",
+        "peeledRevision": "c7b0122edffcaabbdfa6a817c06f603625f79fe0",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 135,
+        "bytes": 158607701,
+        "inventorySha256": "6dac653b14cfa3ec6e84ff7c1ae297bf50d9f4bdaef4e9378757cc209fc710ce",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.14.0",
+      "sourceRevision": "21dfaeed08df95e7cb1d0e20c28c39b3fd3364ee",
+      "sourceArchive": {
+        "bytes": 118405120,
+        "sha256": "c0701c46a82a857cd0a4a2e66cf72041856f519aa403cac1f5a81dd3ed812915",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 890,
+        "regularFileBytes": 117647598,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20600995,
+        "sha256": "926abf6ba536a50ab951b27644cccd15d1c503c8a4519c1b6b79c041b39556c1",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 131,
+        "compressedPayloadBytes": 20584169,
+        "uncompressedBytes": 20584169,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 21215,
+        "sha256": "77a60de67b27a3002f073a3fc4573716abcf1d352d7dfd3a24eea856692a6b4c",
+        "files": 130,
+        "totalBytes": 20562954,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.14.0",
+        "object": "b61d48560efd0423f163557c46ef81b5bafbecbd",
+        "kind": "tag",
+        "peeledRevision": "21dfaeed08df95e7cb1d0e20c28c39b3fd3364ee",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 136,
+        "bytes": 159590885,
+        "inventorySha256": "0e4e27bb00528413b4d4239810cfe0825520e957ed78ba6efa0500c6c6c0eb6b",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.15.0",
+      "sourceRevision": "8eef7e2ada51dbd6ebec0fe134aeef667d047c6c",
+      "sourceArchive": {
+        "bytes": 120207360,
+        "sha256": "6378789151d5d1d9acb80e3dff6f8b93290e6d75a7212fb514f8fb30599cb359",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 927,
+        "regularFileBytes": 119413595,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20616930,
+        "sha256": "91eca2730dd4ec55dad58bd7f466dacae6262df6df763b2072308c7e6c04932f",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 132,
+        "compressedPayloadBytes": 20599956,
+        "uncompressedBytes": 20599956,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 21386,
+        "sha256": "7febf64fb939bc186b530b2470d3f39a544b62a1e7a1b572e3bd6ceab6e923ae",
+        "files": 131,
+        "totalBytes": 20578570,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.15.0",
+        "object": "8aca496c217199fbca442bd04a8ca0a231429c7a",
+        "kind": "tag",
+        "peeledRevision": "8eef7e2ada51dbd6ebec0fe134aeef667d047c6c",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 137,
+        "bytes": 161424847,
+        "inventorySha256": "2d8dec8ca41354b32123083b1ea3c16a8d180ab0b4926cfe9209dad5a230fac9",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.16.0",
+      "sourceRevision": "8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43",
+      "sourceArchive": {
+        "bytes": 121292800,
+        "sha256": "e6013ffbe06e28eb17b142ea0c7b10eb045985fe33e4f12e66abcfaa8faa6e0e",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 970,
+        "regularFileBytes": 120464027,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 20710534,
+        "sha256": "186abf3723ddd5c3683f453a1c21ad3defe4c020856702d27680b568ee86c6df",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 139,
+        "compressedPayloadBytes": 20692678,
+        "uncompressedBytes": 20692678,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 22507,
+        "sha256": "1ebb79d210361574f9adba9a2ddb8ff05f7d0a437573ee30cc18e1d63f5b3043",
+        "files": 138,
+        "totalBytes": 20670171,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.16.0",
+        "object": "39f071ae3ad38d648f8bd2fa82a79bccce33fc84",
+        "kind": "tag",
+        "peeledRevision": "8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 144,
+        "bytes": 162696613,
+        "inventorySha256": "0fbf9e5294b08ebef8320fc054c0e46340d0a64079d61a8720ed0c5a65163f9b",
+        "allFilesMatchCapturedBaseline": true
+      }
+    },
+    {
+      "version": "v0.17.0",
+      "sourceRevision": "a38156e337bd274bb38231e9b408abd10d56404d",
+      "sourceArchive": {
+        "bytes": 148858880,
+        "sha256": "74da7cfdfc36c9c21ab5180afbb598d9deba18802b25f583c653566f1879ec5e",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "paxRevisionMatches": true,
+        "safeRegularFileEntries": 1051,
+        "regularFileBytes": 147969955,
+        "safeExtractionInventory": true
+      },
+      "distribution": {
+        "bytes": 31850686,
+        "sha256": "f6cd09198af69818b2346941181e2c22453a81c7eb85af69de577db997a4a852",
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "sidecarMatches": true,
+        "zipEntries": 139,
+        "compressedPayloadBytes": 31832830,
+        "uncompressedBytes": 31832830,
+        "compressionMethods": [
+          0
+        ],
+        "crcPass": true,
+        "exactInventoryMatch": true,
+        "allZipBytesMatchSite": true
+      },
+      "manifest": {
+        "bytes": 22511,
+        "sha256": "46e121695fc4c20d850c1ccb0ed4da26b635fcaf9b3f6c74c1476927def2a546",
+        "files": 138,
+        "totalBytes": 31810319,
+        "recordedHashMatches": true,
+        "knownHashMatches": true,
+        "allFileHashesMatch": true,
+        "looseSiteInventoryMatches": true
+      },
+      "buildInfoMatches": true,
+      "unchangedAgainstPreviouslyObservedDigests": true,
+      "tag": {
+        "name": "v0.17.0",
+        "object": "4f14195f94f17efee4915264c740f0c6e9afefd0",
+        "kind": "tag",
+        "peeledRevision": "a38156e337bd274bb38231e9b408abd10d56404d",
+        "matchesCapturedBaseline": true
+      },
+      "frozenTree": {
+        "files": 144,
+        "bytes": 212542997,
+        "inventorySha256": "8e4f4a2c236366f658e4c1015afcd11141bb38c65220f707877c5033aeda7b57",
+        "allFilesMatchCapturedBaseline": true
+      }
+    }
+  ],
+  "testedSource": {
+    "inputReport": "docs/verification/round-27-1/source-inputs.json",
+    "inputReportSha256": "1f5d9806a6fc5c9b9d6ad53feab5c0b631176813dc68dff60ecae9c358c0000c",
+    "aggregateSha256": "285d6bdf4c0ab39969fe5bef47249e9a2eff75a8a238a87e03ce8e7e0c349fb8",
+    "files": 343,
+    "allArchivedInputsMatch": true,
+    "sourceGatesReport": "docs/verification/round-27-1/source-gates.json",
+    "sourceGatesReportSha256": "0f6ffcebb05d3030157e1e4fd672dcc1a5c7fa8de3b6ed05957027f860e053a0",
+    "uniquePassingFullSuiteTests": 1566,
+    "allSixGatesPassed": true,
+    "fullSuiteExecutedOnFinalSource": true,
+    "allArchivedSourceEvidenceByteIdentical": true,
+    "normalWorkerFinalTemplateSha256": "9da62506e2b91905594e72195ee3028b514ce3f34ec1b7d56ab8d860ef54d3e3",
+    "evidencePins": {
+      "sourceGates": {
+        "path": "docs/verification/round-27-1/source-gates.json",
+        "sha256": "0f6ffcebb05d3030157e1e4fd672dcc1a5c7fa8de3b6ed05957027f860e053a0"
+      },
+      "finalInputs": {
+        "path": "docs/verification/round-27-1/source-inputs.json",
+        "sha256": "1f5d9806a6fc5c9b9d6ad53feab5c0b631176813dc68dff60ecae9c358c0000c"
+      }
+    }
+  },
+  "recordedEvidenceCorrection": {
+    "record": ".cache/round-27-1/integrity/investigation-chronology-correction.json",
+    "sha256": "344441bd9cf7190bd22cb0e6e8ce2f1664783de51dc9219f5146fe734c8cb74f",
+    "detail": {
+      "format": "revealline-evidence-correction.v1",
+      "recordedAt": "2026-09-12T16:57:03.206779+00:00",
+      "path": "docs/verification/round-27/frozen-offline-investigation.md",
+      "before": {
+        "path": "docs/verification/round-27/frozen-offline-investigation.md",
+        "bytes": 7322,
+        "sha256": "fb90b65585b2f90acd9ce9cdea6dbf3427cc0a240a00c4b501529e792959867f"
+      },
+      "after": {
+        "path": "docs/verification/round-27/frozen-offline-investigation.md",
+        "bytes": 7444,
+        "sha256": "24cf25d88b3174d0d479cdad6565177ae165c319b4d1f8f0d684c8f4fe299402"
+      },
+      "reason": "Parent corrected browser chronology: five QA tabs were closed after the lifecycle probe and before the write-stage diagnostic, not before the second original frozen-install attempt. The three original attempts preceded all three diagnostic probes.",
+      "authorization": "Parent explicitly requested this factual correction to the new uncommitted note and separate recording without rewriting the immutable baseline.",
+      "baseline": {
+        "path": ".cache/round-27-1/integrity/frozen-releases-before-v0171.json",
+        "sha256": "3b704d3a8e148b1b366c4ea06ac41eef8db392e6a233c2d848499068f664e86a",
+        "unchanged": true
+      },
+      "localLinksChecked": 15,
+      "runtimeChanged": false
+    },
+    "allOtherBaselineEvidenceExact": true,
+    "baselineEvidenceFilesChecked": 2213
+  },
+  "protectedOriginalContent": {
+    "files": 19,
+    "allArchivedBytesMatchBaseline": true,
+    "entries": [
+      {
+        "path": "authoring/library/homeward-skies/README.md",
+        "bytes": 1920,
+        "sha256": "b3b61ae07fe9d06ae71b0a9a73ee92f315e1d6f5ae466f02be28ebe6e9958a14"
+      },
+      {
+        "path": "authoring/library/homeward-skies/backgrounds/homeward-01.png",
+        "bytes": 2949901,
+        "sha256": "27ac3051d7f9d99c83d26fac70baa3ee309409e296635ef48b7c4417f93d4004"
+      },
+      {
+        "path": "authoring/library/homeward-skies/backgrounds/homeward-02.png",
+        "bytes": 2825406,
+        "sha256": "11a5066a45cfff861a90405764b276ab801a993848379d1c08c4233ee34aa24a"
+      },
+      {
+        "path": "authoring/library/homeward-skies/backgrounds/homeward-03.png",
+        "bytes": 2741772,
+        "sha256": "4b5da54f1d1023d24a40db5aab7ffe7d4bb1c531a4ed659663e6fad683921363"
+      },
+      {
+        "path": "authoring/library/homeward-skies/pack-source.json",
+        "bytes": 13846,
+        "sha256": "5ecb8b51b9bd5239dfa9a4108d7f9ab841235deb2a3442e4e40cc539a3a3e103"
+      },
+      {
+        "path": "authoring/library/homeward-skies/prompts.json",
+        "bytes": 5565,
+        "sha256": "ab567f9d9cfdf4d0c465739d65c1d246ece5617c2689fd37850b2ae44647c7df"
+      },
+      {
+        "path": "game/content/packs/homeward-skies.json",
+        "bytes": 11371849,
+        "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+      },
+      {
+        "path": "game/replays/campaign-routes.json",
+        "bytes": 59180,
+        "sha256": "335fcd9379f6202e71a36284ac10c14f07edeb375ccf96e310d8546776bb1d73"
+      },
+      {
+        "path": "game/replays/expansion-routes.json",
+        "bytes": 81574,
+        "sha256": "22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8"
+      },
+      {
+        "path": "game/replays/fieldcraft-routes.json",
+        "bytes": 388881,
+        "sha256": "53255e41c150b293a67a9771628f81f8b9dd6f42e23be201f3959ebbaa01c43e"
+      },
+      {
+        "path": "game/replays/homeward-routes.json",
+        "bytes": 318515,
+        "sha256": "63a77908b1ce98b480f9fd0431894e4f1d58ad56e4266ae0860206de564d8c1a"
+      },
+      {
+        "path": "game/replays/sentinel-routes.json",
+        "bytes": 256854,
+        "sha256": "b704c71879c29810f42dca6e94857c6728d2439c08d1807edc008114bdb85a70"
+      },
+      {
+        "path": "game/test/fixtures/compatibility-v0100.json",
+        "bytes": 58779,
+        "sha256": "b7b2d916ca95ae47e2df274502d5379cf9d532e648d8f095a2a535b9097ac94f"
+      },
+      {
+        "path": "game/test/fixtures/compatibility-v060.json",
+        "bytes": 121441,
+        "sha256": "46dd19ae2a1946cec105fd5273cc69baa4e0adcca693e503b2b7eb62490272c3"
+      },
+      {
+        "path": "game/test/fixtures/controller-boost-profiles.json",
+        "bytes": 96013,
+        "sha256": "c9595075a37f3bbcdb9c9a92aa35599ec8fb19c4d093228b69b1e2aa44f6e81e"
+      },
+      {
+        "path": "game/test/fixtures/first-flight-routes.json",
+        "bytes": 135035,
+        "sha256": "65d9c11194f62f9c78be0d2a7fdfadbefb5b0643a275f345a0e2618c3e8053e2"
+      },
+      {
+        "path": "game/test/fixtures/mastery-v070.json",
+        "bytes": 144263,
+        "sha256": "6a27a598867e00e86b06b11a3b69ba99b7b4c942330a7fed6fb897e0621a62ba"
+      },
+      {
+        "path": "game/test/fixtures/retry-scenarios.mjs",
+        "bytes": 2869,
+        "sha256": "1622cc5d08a060c206ca4397d8f35605ddfcbff844ddeaea33ed823f568dcae9"
+      },
+      {
+        "path": "authoring/library/equipment-workshop/previous/equipment-workshop-1.0.0.json",
+        "bytes": 18389,
+        "sha256": "91876d315417252a65a36b1a46f3f3e03737ec26ccc08224f52e9c376f76ea1a"
+      }
+    ]
+  },
+  "preservedEvidence": {
+    "roots": [
+      "docs/verification/round-26",
+      ".cache/round-26",
+      "docs/verification/round-27",
+      ".cache/round-27",
+      ".cache/round-27-1/source-gates",
+      ".cache/round-27-1/candidate"
+    ],
+    "files": 3912,
+    "sha256": "ba49d04ee11482920f2872787ce79911af97eaddffc653f1aacc90f5b37ceed7",
+    "allExactBeforeAndAfter": true
+  },
+  "retainedTagInventory": {
+    "count": 22,
+    "allExactObjectsKindsTargetsAndRawTextHashesMatchBeforeAndAfter": true,
+    "entries": [
+      {
+        "ref": "refs/tags/v0.0.9-motion-lab",
+        "object": "c58557c4de2bf7fc9488341d8cf04d02c196bf27",
+        "kind": "commit",
+        "revision": "c58557c4de2bf7fc9488341d8cf04d02c196bf27",
+        "objectTextSha256": "6521b72073de5f0a567de80c25eb0f995399918fd2c9d18ca8ffb3281ddb7718"
+      },
+      {
+        "ref": "refs/tags/v0.1.0",
+        "object": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+        "kind": "commit",
+        "revision": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+        "objectTextSha256": "e79ab9dce761e2ee135b313967bc650cd6e36bb2021e2213dd8fddc2314681cc"
+      },
+      {
+        "ref": "refs/tags/v0.1.1",
+        "object": "76687c2decf409d845f698ad7fefa92167178011",
+        "kind": "commit",
+        "revision": "76687c2decf409d845f698ad7fefa92167178011",
+        "objectTextSha256": "b8bbf0eca86b5334032e83c8d88be32036e76a37aa69b8978f301d291390e7ff"
+      },
+      {
+        "ref": "refs/tags/v0.1.2",
+        "object": "5f539f6f722c49f36a31701454a683ee60122d81",
+        "kind": "commit",
+        "revision": "5f539f6f722c49f36a31701454a683ee60122d81",
+        "objectTextSha256": "afa26b1a0ce662db1ddd22d9e49382d9ac0ca213de1fcf9c4e1f28c12192cf36"
+      },
+      {
+        "ref": "refs/tags/v0.10.0",
+        "object": "78d91a364e83c463c65513755c9e84aaccbc56f3",
+        "kind": "tag",
+        "revision": "40ae9d23ad8737c4f77f9cc07923948133b7c09d",
+        "objectTextSha256": "b0ad6718160a84449ea69e3525f24658f1b3996801228ab30f45fa2e32c77135"
+      },
+      {
+        "ref": "refs/tags/v0.11.0",
+        "object": "15edf83529e289a967289820bbc43ecd344c8779",
+        "kind": "tag",
+        "revision": "7bc32d62fb7ec9c24e8b8dc5a80a016bbb76c2db",
+        "objectTextSha256": "e8a6d4de06148d4a0eeae3c2ed3ea4316c5fa4e42ee9645fcc35ff24ce675a51"
+      },
+      {
+        "ref": "refs/tags/v0.12.0",
+        "object": "57ef1b15ed8f887d8c905df499d85ca302df2fc6",
+        "kind": "tag",
+        "revision": "640f3e3570323394a22922261e8928634db7bf3b",
+        "objectTextSha256": "7f1323c4d4bd556c49536d62ed38c90318170877bc9fcd5f113e0967dec278c3"
+      },
+      {
+        "ref": "refs/tags/v0.13.0",
+        "object": "8f769643d246211d3ae3d451eb74eeb5ed448ab0",
+        "kind": "tag",
+        "revision": "c7b0122edffcaabbdfa6a817c06f603625f79fe0",
+        "objectTextSha256": "bbbd93c4bd7a9f3ab236c379c598ee3264e3c9375294deb2b8332804faec613d"
+      },
+      {
+        "ref": "refs/tags/v0.14.0",
+        "object": "b61d48560efd0423f163557c46ef81b5bafbecbd",
+        "kind": "tag",
+        "revision": "21dfaeed08df95e7cb1d0e20c28c39b3fd3364ee",
+        "objectTextSha256": "fd6f710b46c36ce89a86184fe6aef8ccbbeb6d364775954490014e28f7b025cb"
+      },
+      {
+        "ref": "refs/tags/v0.15.0",
+        "object": "8aca496c217199fbca442bd04a8ca0a231429c7a",
+        "kind": "tag",
+        "revision": "8eef7e2ada51dbd6ebec0fe134aeef667d047c6c",
+        "objectTextSha256": "2f8b081a9e6a2b147ab32efbfaa070f72981f21df00e76385f0526a9403c63bd"
+      },
+      {
+        "ref": "refs/tags/v0.16.0",
+        "object": "39f071ae3ad38d648f8bd2fa82a79bccce33fc84",
+        "kind": "tag",
+        "revision": "8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43",
+        "objectTextSha256": "6c368fe4ea487e0b5f2b397cd82bded55bb1ad5425620c7e7033b50747819ac5"
+      },
+      {
+        "ref": "refs/tags/v0.17.0",
+        "object": "4f14195f94f17efee4915264c740f0c6e9afefd0",
+        "kind": "tag",
+        "revision": "a38156e337bd274bb38231e9b408abd10d56404d",
+        "objectTextSha256": "fe5d04627273da8eff91b208df08df785350575b29afbd16b1a8c9b907d588f3"
+      },
+      {
+        "ref": "refs/tags/v0.2.0",
+        "object": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+        "kind": "commit",
+        "revision": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+        "objectTextSha256": "63769c876afbc3561cca1ede94850a1d1d3c0c5a702fd9b9cb27352e6a0ecb78"
+      },
+      {
+        "ref": "refs/tags/v0.2.1",
+        "object": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+        "kind": "commit",
+        "revision": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+        "objectTextSha256": "d04e9a75d106cea3940b19f9f50bd1e2319ca9ed8e3a1410e34af756d4ba1072"
+      },
+      {
+        "ref": "refs/tags/v0.3.0",
+        "object": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+        "kind": "commit",
+        "revision": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+        "objectTextSha256": "a61978f8522c528d29f64bd235edac20ced57475e1cbe37d938e404dc611268e"
+      },
+      {
+        "ref": "refs/tags/v0.4.0",
+        "object": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+        "kind": "commit",
+        "revision": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+        "objectTextSha256": "550024a1b0ad5b5880f335d51feb9c7a40532f57e09a1db77c5b2dc085f5e927"
+      },
+      {
+        "ref": "refs/tags/v0.4.1",
+        "object": "42dc21f65f666036706d57c6f1054a37967f367b",
+        "kind": "commit",
+        "revision": "42dc21f65f666036706d57c6f1054a37967f367b",
+        "objectTextSha256": "4e9790051e7109ae67517d300b365cd97c03924de7d1d0b17767342ec83f199e"
+      },
+      {
+        "ref": "refs/tags/v0.5.0",
+        "object": "8ce113979ab250bbd4ce294786dfddbaf9efe154",
+        "kind": "tag",
+        "revision": "617fc224043945c0fc337c12027aa70e4da33323",
+        "objectTextSha256": "a2aa37f0f758b1db458624ea15f735a8453dffdb3f7d13c6920bf8d2bd98fb3a"
+      },
+      {
+        "ref": "refs/tags/v0.6.0",
+        "object": "eff751d470acef2ca2e56f5d346f94ced2f2af71",
+        "kind": "tag",
+        "revision": "e88bab7e9677c82419aca35557c858c670425f16",
+        "objectTextSha256": "9cc48d6db9d46296cb3bc47d2622e71df3f83b622fdc6842134e8cdf12a249a5"
+      },
+      {
+        "ref": "refs/tags/v0.7.0",
+        "object": "bd22efa264ee35cf1695768fff15436b8083d47b",
+        "kind": "tag",
+        "revision": "1d4a8d9636428122cca857533dff68c7ee65ac88",
+        "objectTextSha256": "00f15b12f541eed44c53cf66944073015a38fd9665ab8dfdadb5fa00ed2e3e50"
+      },
+      {
+        "ref": "refs/tags/v0.8.0",
+        "object": "7aaa39e0b2ae10d6438b026cebacae5268c4b058",
+        "kind": "tag",
+        "revision": "8410d814dbcc7b3aef53e11c6f94d384d01cce05",
+        "objectTextSha256": "80f2b7b47a1d59f8813d41e72bc904cd851dfeabe9c83b6b1299c2e506fa99d5"
+      },
+      {
+        "ref": "refs/tags/v0.9.0",
+        "object": "8a791ab186af446ef884dc0184c6fedcc726e563",
+        "kind": "tag",
+        "revision": "315a4782a159f2274f7200e3470ec20c3859707b",
+        "objectTextSha256": "41659021a03459ade9f2a1b4692c1163444f783e4aa81fe4ea6c820149cf064d"
+      }
+    ]
+  },
+  "baseline": {
+    "path": ".cache/round-27-1/integrity/frozen-releases-before-v0171.json",
+    "sha256": "3b704d3a8e148b1b366c4ea06ac41eef8db392e6a233c2d848499068f664e86a",
+    "previousReleaseCount": 21,
+    "frozenFiles": 2342,
+    "frozenBytes": 2966393002,
+    "allFileBytesAndInventoriesUnchangedBeforeAndAfter": true,
+    "scope": "Exact twenty-one-release baseline captured before v0.17.1 repair, including frozen v0.17.0 and its observed offline failure. Earlier Round26 deletion/restoration evidence remains historical and unchanged.",
+    "allTwentyOneReleaseTagObjectsAndPeeledRevisionsUnchanged": true,
+    "unchangedAfterVerification": true
+  },
+  "verificationRunner": {
+    "path": ".cache/round-27-1/integrity/verify-release.py",
+    "sha256": "46f66c623e73eee023df7f486bcc77379c1dd70be1a03d0743c188c9276e1749",
+    "reusedVerifierPath": ".cache/round-16/integrity/verify_integrity.py",
+    "reusedVerifierSha256": "9680c47e804db48a2565d9d0736e32f300cc5a465b006d7c2710b5e040812cb8",
+    "offlinePath": ".cache/round-27-1/integrity/verify-offline.mjs",
+    "offlineSha256": "a47ac7c0d2fadd114e9fce0315a28ba672a036d299e90c106b49ab773f73690a"
+  },
+  "scopeLimits": [
+    "Archive identity, CRC, deterministic packaging and offline artifact configuration on this host. Actual browser installation/offline navigation are separate root-owned checks.",
+    "No native packaging, store-signing, physical-device or player-enjoyment certification.",
+    "No frozen release files, tags or prior evidence were changed."
+  ]
+}
