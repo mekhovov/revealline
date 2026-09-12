@@ -1,0 +1,2482 @@
+[
+  {
+    "preset": "Desktop",
+    "report": {
+      "format": "revealline-control-geometry.v1",
+      "capturedAt": "2026-09-12T14:23:25.675Z",
+      "units": "Child viewport CSS pixels; outer preview display scale is reported separately.",
+      "requested": {
+        "width": 1280,
+        "height": 720
+      },
+      "displayScale": 0.55234375,
+      "viewport": {
+        "width": 1280,
+        "height": 720,
+        "devicePixelRatio": 2,
+        "scrollX": 0,
+        "scrollY": 0,
+        "documentScrollWidth": 1280,
+        "documentScrollHeight": 1501,
+        "visualViewport": {
+          "width": 1280,
+          "height": 720,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "media": {
+        "pointerFine": true,
+        "pointerCoarse": false,
+        "pointerNone": false,
+        "anyPointerFine": true,
+        "anyPointerCoarse": false,
+        "hover": true,
+        "anyHover": true
+      },
+      "arena": {
+        "left": 241,
+        "top": 161,
+        "right": 720.9921875,
+        "bottom": 520.9921875,
+        "width": 479.9921875,
+        "height": 359.9921875
+      },
+      "groups": [
+        {
+          "id": "flight",
+          "present": true,
+          "rect": {
+            "left": 241,
+            "top": 556.9921875,
+            "right": 720.9921875,
+            "bottom": 709.9921875,
+            "width": 479.9921875,
+            "height": 153
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "directions",
+          "present": true,
+          "rect": {
+            "left": 241,
+            "top": 569.9921875,
+            "right": 381,
+            "bottom": 709.9921875,
+            "width": 140,
+            "height": 140
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "44px 44px 44px",
+            "gridTemplateRows": "44px 44px 44px",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "actions",
+          "present": true,
+          "rect": {
+            "left": 389,
+            "top": 569.9921875,
+            "right": 668.9921875,
+            "bottom": 684.4921875,
+            "width": 279.9921875,
+            "height": 114.5
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "7px",
+            "rowGap": "7px",
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "utilities",
+          "present": true,
+          "rect": {
+            "left": 676.9921875,
+            "top": 569.9921875,
+            "right": 720.9921875,
+            "bottom": 709.9921875,
+            "width": 44,
+            "height": 140
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "column",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "id": "move-up",
+          "present": true,
+          "label": "Move up",
+          "rect": {
+            "left": 289,
+            "top": 569.9921875,
+            "right": 333,
+            "bottom": 613.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-left",
+          "present": true,
+          "label": "Move left",
+          "rect": {
+            "left": 241,
+            "top": 617.9921875,
+            "right": 285,
+            "bottom": 661.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "stop-button",
+          "present": true,
+          "label": "Stop moving",
+          "rect": {
+            "left": 289,
+            "top": 617.9921875,
+            "right": 333,
+            "bottom": 661.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "9px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-right",
+          "present": true,
+          "label": "Move right",
+          "rect": {
+            "left": 337,
+            "top": 617.9921875,
+            "right": 381,
+            "bottom": 661.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-down",
+          "present": true,
+          "label": "Move down",
+          "rect": {
+            "left": 289,
+            "top": 665.9921875,
+            "right": 333,
+            "bottom": 709.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "action-button",
+          "present": true,
+          "label": "Scout E",
+          "rect": {
+            "left": 389,
+            "top": 569.9921875,
+            "right": 474.7421875,
+            "bottom": 614.9921875,
+            "width": 85.7421875,
+            "height": 45
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 84,
+            "clientHeight": 43,
+            "scrollWidth": 84,
+            "scrollHeight": 43,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "14px",
+            "lineHeight": "21px"
+          }
+        },
+        {
+          "id": "pickup-button",
+          "present": true,
+          "label": "Supply pad R",
+          "rect": {
+            "left": 481.7421875,
+            "top": 569.9921875,
+            "right": 604.9453125,
+            "bottom": 614.9921875,
+            "width": 123.203125,
+            "height": 45
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 121,
+            "clientHeight": 43,
+            "scrollWidth": 121,
+            "scrollHeight": 43,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "14px",
+            "lineHeight": "21px"
+          }
+        },
+        {
+          "id": "boost-button",
+          "present": true,
+          "label": "Boost L Shift",
+          "rect": {
+            "left": 389,
+            "top": 621.9921875,
+            "right": 508.046875,
+            "bottom": 666.9921875,
+            "width": 119.046875,
+            "height": 45
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 117,
+            "clientHeight": 43,
+            "scrollWidth": 117,
+            "scrollHeight": 43,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "14px",
+            "lineHeight": "21px"
+          }
+        },
+        {
+          "id": "pause-button",
+          "present": true,
+          "label": "Pause or resume",
+          "rect": {
+            "left": 676.9921875,
+            "top": 569.9921875,
+            "right": 720.9921875,
+            "bottom": 613.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        },
+        {
+          "id": "restart-button",
+          "present": true,
+          "label": "Restart mission",
+          "rect": {
+            "left": 676.9921875,
+            "top": 617.9921875,
+            "right": 720.9921875,
+            "bottom": 661.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        },
+        {
+          "id": "sound-button",
+          "present": true,
+          "label": "Enable sound",
+          "rect": {
+            "left": 676.9921875,
+            "top": 665.9921875,
+            "right": 720.9921875,
+            "bottom": 709.9921875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        }
+      ],
+      "targetOverlaps": [],
+      "arenaOverlaps": [],
+      "summary": {
+        "expectedTargets": 11,
+        "presentTargets": 11,
+        "visibleTargets": 11,
+        "enabledVisibleTargets": 11,
+        "minimumWidth": 44,
+        "minimumHeight": 44,
+        "below44": [],
+        "horizontalPageOverflow": false
+      },
+      "limits": [
+        "Snapshot only. Capture again after resizing, scrolling or preview activity.",
+        "Visibility reflects layout and this element’s computed style; it does not prove absence of covering overlays, ancestor opacity, clipping or pointer occlusion.",
+        "Intersections compare visible border boxes, including offscreen boxes. Edge touching has zero area and is not an overlap.",
+        "Content scroll/client dimensions are approximate overflow indicators, not glyph-level clipping or readability tests.",
+        "Pointer media and viewport data describe this browser. Resizing alone does not emulate coarse input, hardware, safe areas or physical touch comfort."
+      ]
+    }
+  },
+  {
+    "preset": "Landscape",
+    "report": {
+      "format": "revealline-control-geometry.v1",
+      "capturedAt": "2026-09-12T14:23:26.271Z",
+      "units": "Child viewport CSS pixels; outer preview display scale is reported separately.",
+      "requested": {
+        "width": 844,
+        "height": 390
+      },
+      "displayScale": 0.8376777251184834,
+      "viewport": {
+        "width": 844,
+        "height": 390,
+        "devicePixelRatio": 2,
+        "scrollX": 0,
+        "scrollY": 0,
+        "documentScrollWidth": 844,
+        "documentScrollHeight": 398,
+        "visualViewport": {
+          "width": 844,
+          "height": 390,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "media": {
+        "pointerFine": true,
+        "pointerCoarse": false,
+        "pointerNone": false,
+        "anyPointerFine": true,
+        "anyPointerCoarse": false,
+        "hover": true,
+        "anyHover": true
+      },
+      "arena": {
+        "left": 224.671875,
+        "top": 109.1953125,
+        "right": 578,
+        "bottom": 374.1875,
+        "width": 353.328125,
+        "height": 264.9921875
+      },
+      "groups": [
+        {
+          "id": "flight",
+          "present": true,
+          "rect": {
+            "left": 18,
+            "top": 69.1953125,
+            "right": 162,
+            "bottom": 362.1953125,
+            "width": 144,
+            "height": 293
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "96px 44px",
+            "gridTemplateRows": "140px 149px",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "directions",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 69.1953125,
+            "right": 160,
+            "bottom": 209.1953125,
+            "width": 140,
+            "height": 140
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "44px 44px 44px",
+            "gridTemplateRows": "44px 44px 44px",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "actions",
+          "present": true,
+          "rect": {
+            "left": 18,
+            "top": 213.1953125,
+            "right": 114,
+            "bottom": 362.1953125,
+            "width": 96,
+            "height": 149
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "3px",
+            "rowGap": "3px",
+            "flexDirection": "column",
+            "flexWrap": "wrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "utilities",
+          "present": true,
+          "rect": {
+            "left": 118,
+            "top": 213.1953125,
+            "right": 162,
+            "bottom": 362.1953125,
+            "width": 44,
+            "height": 149
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "column",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "id": "move-up",
+          "present": true,
+          "label": "Move up",
+          "rect": {
+            "left": 68,
+            "top": 69.1953125,
+            "right": 112,
+            "bottom": 113.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-left",
+          "present": true,
+          "label": "Move left",
+          "rect": {
+            "left": 20,
+            "top": 117.1953125,
+            "right": 64,
+            "bottom": 161.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "stop-button",
+          "present": true,
+          "label": "Stop moving",
+          "rect": {
+            "left": 68,
+            "top": 117.1953125,
+            "right": 112,
+            "bottom": 161.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "9px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-right",
+          "present": true,
+          "label": "Move right",
+          "rect": {
+            "left": 116,
+            "top": 117.1953125,
+            "right": 160,
+            "bottom": 161.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-down",
+          "present": true,
+          "label": "Move down",
+          "rect": {
+            "left": 68,
+            "top": 165.1953125,
+            "right": 112,
+            "bottom": 209.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "action-button",
+          "present": true,
+          "label": "Scout E",
+          "rect": {
+            "left": 18,
+            "top": 213.1953125,
+            "right": 114,
+            "bottom": 257.1953125,
+            "width": 96,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 94,
+            "clientHeight": 42,
+            "scrollWidth": 94,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        },
+        {
+          "id": "pickup-button",
+          "present": true,
+          "label": "Supply pad R",
+          "rect": {
+            "left": 18,
+            "top": 260.1953125,
+            "right": 114,
+            "bottom": 304.1953125,
+            "width": 96,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 94,
+            "clientHeight": 42,
+            "scrollWidth": 94,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        },
+        {
+          "id": "boost-button",
+          "present": true,
+          "label": "Boost L Shift",
+          "rect": {
+            "left": 18,
+            "top": 307.1953125,
+            "right": 114,
+            "bottom": 351.1953125,
+            "width": 96,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 94,
+            "clientHeight": 42,
+            "scrollWidth": 94,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "10px",
+            "lineHeight": "15px"
+          }
+        },
+        {
+          "id": "pause-button",
+          "present": true,
+          "label": "Pause or resume",
+          "rect": {
+            "left": 118,
+            "top": 213.1953125,
+            "right": 162,
+            "bottom": 257.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        },
+        {
+          "id": "restart-button",
+          "present": true,
+          "label": "Restart mission",
+          "rect": {
+            "left": 118,
+            "top": 261.1953125,
+            "right": 162,
+            "bottom": 305.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        },
+        {
+          "id": "sound-button",
+          "present": true,
+          "label": "Enable sound",
+          "rect": {
+            "left": 118,
+            "top": 309.1953125,
+            "right": 162,
+            "bottom": 353.1953125,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "18px",
+            "lineHeight": "27px"
+          }
+        }
+      ],
+      "targetOverlaps": [],
+      "arenaOverlaps": [],
+      "summary": {
+        "expectedTargets": 11,
+        "presentTargets": 11,
+        "visibleTargets": 11,
+        "enabledVisibleTargets": 11,
+        "minimumWidth": 44,
+        "minimumHeight": 44,
+        "below44": [],
+        "horizontalPageOverflow": false
+      },
+      "limits": [
+        "Snapshot only. Capture again after resizing, scrolling or preview activity.",
+        "Visibility reflects layout and this element’s computed style; it does not prove absence of covering overlays, ancestor opacity, clipping or pointer occlusion.",
+        "Intersections compare visible border boxes, including offscreen boxes. Edge touching has zero area and is not an overlap.",
+        "Content scroll/client dimensions are approximate overflow indicators, not glyph-level clipping or readability tests.",
+        "Pointer media and viewport data describe this browser. Resizing alone does not emulate coarse input, hardware, safe areas or physical touch comfort."
+      ]
+    }
+  },
+  {
+    "preset": "Compact",
+    "report": {
+      "format": "revealline-control-geometry.v1",
+      "capturedAt": "2026-09-12T14:23:26.866Z",
+      "units": "Child viewport CSS pixels; outer preview display scale is reported separately.",
+      "requested": {
+        "width": 320,
+        "height": 640
+      },
+      "displayScale": 1,
+      "viewport": {
+        "width": 320,
+        "height": 640,
+        "devicePixelRatio": 2,
+        "scrollX": 0,
+        "scrollY": 0,
+        "documentScrollWidth": 320,
+        "documentScrollHeight": 1870,
+        "visualViewport": {
+          "width": 320,
+          "height": 640,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "media": {
+        "pointerFine": true,
+        "pointerCoarse": false,
+        "pointerNone": false,
+        "anyPointerFine": true,
+        "anyPointerCoarse": false,
+        "hover": true,
+        "anyHover": true
+      },
+      "arena": {
+        "left": 20,
+        "top": 164.796875,
+        "right": 300,
+        "bottom": 374.796875,
+        "width": 280,
+        "height": 210
+      },
+      "groups": [
+        {
+          "id": "flight",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 405.796875,
+            "right": 300,
+            "bottom": 624.296875,
+            "width": 280,
+            "height": 218.5
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "144px 128px",
+            "gridTemplateRows": "153.5px 44px",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "directions",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 418.796875,
+            "right": 164,
+            "bottom": 558.796875,
+            "width": 144,
+            "height": 140
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "44px 44px 44px",
+            "gridTemplateRows": "44px 44px 44px",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "actions",
+          "present": true,
+          "rect": {
+            "left": 172,
+            "top": 418.796875,
+            "right": 300,
+            "bottom": 572.296875,
+            "width": 128,
+            "height": 153.5
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "column",
+            "flexWrap": "wrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "utilities",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 580.296875,
+            "right": 300,
+            "bottom": 624.296875,
+            "width": 280,
+            "height": 44
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "id": "move-up",
+          "present": true,
+          "label": "Move up",
+          "rect": {
+            "left": 68,
+            "top": 418.796875,
+            "right": 112,
+            "bottom": 462.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-left",
+          "present": true,
+          "label": "Move left",
+          "rect": {
+            "left": 20,
+            "top": 466.796875,
+            "right": 64,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "stop-button",
+          "present": true,
+          "label": "Stop moving",
+          "rect": {
+            "left": 68,
+            "top": 466.796875,
+            "right": 112,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "9px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-right",
+          "present": true,
+          "label": "Move right",
+          "rect": {
+            "left": 116,
+            "top": 466.796875,
+            "right": 160,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-down",
+          "present": true,
+          "label": "Move down",
+          "rect": {
+            "left": 68,
+            "top": 514.796875,
+            "right": 112,
+            "bottom": 558.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "action-button",
+          "present": true,
+          "label": "Scout E",
+          "rect": {
+            "left": 172,
+            "top": 418.796875,
+            "right": 300,
+            "bottom": 462.796875,
+            "width": 128,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 42,
+            "scrollWidth": 126,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "pickup-button",
+          "present": true,
+          "label": "Supply pad R",
+          "rect": {
+            "left": 172,
+            "top": 466.796875,
+            "right": 300,
+            "bottom": 510.796875,
+            "width": 128,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 42,
+            "scrollWidth": 126,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "boost-button",
+          "present": true,
+          "label": "Boost L Shift",
+          "rect": {
+            "left": 172,
+            "top": 514.796875,
+            "right": 300,
+            "bottom": 558.796875,
+            "width": 128,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 42,
+            "scrollWidth": 126,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "pause-button",
+          "present": true,
+          "label": "Pause or resume",
+          "rect": {
+            "left": 160,
+            "top": 580.296875,
+            "right": 204,
+            "bottom": 624.296875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        },
+        {
+          "id": "restart-button",
+          "present": true,
+          "label": "Restart mission",
+          "rect": {
+            "left": 208,
+            "top": 580.296875,
+            "right": 252,
+            "bottom": 624.296875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        },
+        {
+          "id": "sound-button",
+          "present": true,
+          "label": "Enable sound",
+          "rect": {
+            "left": 256,
+            "top": 580.296875,
+            "right": 300,
+            "bottom": 624.296875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        }
+      ],
+      "targetOverlaps": [],
+      "arenaOverlaps": [],
+      "summary": {
+        "expectedTargets": 11,
+        "presentTargets": 11,
+        "visibleTargets": 11,
+        "enabledVisibleTargets": 11,
+        "minimumWidth": 44,
+        "minimumHeight": 44,
+        "below44": [],
+        "horizontalPageOverflow": false
+      },
+      "limits": [
+        "Snapshot only. Capture again after resizing, scrolling or preview activity.",
+        "Visibility reflects layout and this element’s computed style; it does not prove absence of covering overlays, ancestor opacity, clipping or pointer occlusion.",
+        "Intersections compare visible border boxes, including offscreen boxes. Edge touching has zero area and is not an overlap.",
+        "Content scroll/client dimensions are approximate overflow indicators, not glyph-level clipping or readability tests.",
+        "Pointer media and viewport data describe this browser. Resizing alone does not emulate coarse input, hardware, safe areas or physical touch comfort."
+      ]
+    }
+  },
+  {
+    "preset": "Compact · 80-character class label",
+    "report": {
+      "format": "revealline-control-geometry.v1",
+      "capturedAt": "2026-09-12T14:23:55.574Z",
+      "units": "Child viewport CSS pixels; outer preview display scale is reported separately.",
+      "requested": {
+        "width": 320,
+        "height": 640
+      },
+      "displayScale": 1,
+      "viewport": {
+        "width": 320,
+        "height": 640,
+        "devicePixelRatio": 2,
+        "scrollX": 0,
+        "scrollY": 0,
+        "documentScrollWidth": 320,
+        "documentScrollHeight": 2021,
+        "visualViewport": {
+          "width": 320,
+          "height": 640,
+          "scale": 1,
+          "offsetLeft": 0,
+          "offsetTop": 0
+        }
+      },
+      "media": {
+        "pointerFine": true,
+        "pointerCoarse": false,
+        "pointerNone": false,
+        "anyPointerFine": true,
+        "anyPointerCoarse": false,
+        "hover": true,
+        "anyHover": true
+      },
+      "arena": {
+        "left": 20,
+        "top": 164.796875,
+        "right": 300,
+        "bottom": 374.796875,
+        "width": 280,
+        "height": 210
+      },
+      "groups": [
+        {
+          "id": "flight",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 405.796875,
+            "right": 300,
+            "bottom": 746.796875,
+            "width": 280,
+            "height": 341
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "144px 128px",
+            "gridTemplateRows": "276px 44px",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "directions",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 418.796875,
+            "right": 164,
+            "bottom": 558.796875,
+            "width": 144,
+            "height": 140
+          },
+          "layout": {
+            "display": "grid",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "44px 44px 44px",
+            "gridTemplateRows": "44px 44px 44px",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "actions",
+          "present": true,
+          "rect": {
+            "left": 172,
+            "top": 418.796875,
+            "right": 300,
+            "bottom": 694.796875,
+            "width": 128,
+            "height": 276
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "column",
+            "flexWrap": "wrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        },
+        {
+          "id": "utilities",
+          "present": true,
+          "rect": {
+            "left": 20,
+            "top": 702.796875,
+            "right": 300,
+            "bottom": 746.796875,
+            "width": 280,
+            "height": 44
+          },
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "4px",
+            "rowGap": "4px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          }
+        }
+      ],
+      "controls": [
+        {
+          "id": "move-up",
+          "present": true,
+          "label": "Move up",
+          "rect": {
+            "left": 68,
+            "top": 418.796875,
+            "right": 112,
+            "bottom": 462.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-left",
+          "present": true,
+          "label": "Move left",
+          "rect": {
+            "left": 20,
+            "top": 466.796875,
+            "right": 64,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "stop-button",
+          "present": true,
+          "label": "Stop moving",
+          "rect": {
+            "left": 68,
+            "top": 466.796875,
+            "right": 112,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "9px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-right",
+          "present": true,
+          "label": "Move right",
+          "rect": {
+            "left": 116,
+            "top": 466.796875,
+            "right": 160,
+            "bottom": 510.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "move-down",
+          "present": true,
+          "label": "Move down",
+          "rect": {
+            "left": 68,
+            "top": 514.796875,
+            "right": 112,
+            "bottom": 558.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "19px",
+            "lineHeight": "normal"
+          }
+        },
+        {
+          "id": "action-button",
+          "present": true,
+          "label": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW E",
+          "rect": {
+            "left": 172,
+            "top": 418.796875,
+            "right": 300,
+            "bottom": 585.296875,
+            "width": 128,
+            "height": 166.5
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 165,
+            "scrollWidth": 126,
+            "scrollHeight": 165,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "pickup-button",
+          "present": true,
+          "label": "Supply pad R",
+          "rect": {
+            "left": 172,
+            "top": 589.296875,
+            "right": 300,
+            "bottom": 633.296875,
+            "width": 128,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": true,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 42,
+            "scrollWidth": 126,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "boost-button",
+          "present": true,
+          "label": "Boost L Shift",
+          "rect": {
+            "left": 172,
+            "top": 637.296875,
+            "right": 300,
+            "bottom": 681.296875,
+            "width": 128,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": false,
+          "layout": {
+            "display": "flex",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "8px",
+            "rowGap": "8px",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 126,
+            "clientHeight": 42,
+            "scrollWidth": 126,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "11px",
+            "lineHeight": "16.5px"
+          }
+        },
+        {
+          "id": "pause-button",
+          "present": true,
+          "label": "Pause or resume",
+          "rect": {
+            "left": 160,
+            "top": 702.796875,
+            "right": 204,
+            "bottom": 746.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": false,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        },
+        {
+          "id": "restart-button",
+          "present": true,
+          "label": "Restart mission",
+          "rect": {
+            "left": 208,
+            "top": 702.796875,
+            "right": 252,
+            "bottom": 746.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": false,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        },
+        {
+          "id": "sound-button",
+          "present": true,
+          "label": "Enable sound",
+          "rect": {
+            "left": 256,
+            "top": 702.796875,
+            "right": 300,
+            "bottom": 746.796875,
+            "width": 44,
+            "height": 44
+          },
+          "rendered": true,
+          "visible": true,
+          "enabled": true,
+          "insideViewport": false,
+          "layout": {
+            "display": "block",
+            "position": "static",
+            "boxSizing": "border-box",
+            "gridTemplateColumns": "none",
+            "gridTemplateRows": "none",
+            "columnGap": "normal",
+            "rowGap": "normal",
+            "flexDirection": "row",
+            "flexWrap": "nowrap",
+            "overflowX": "visible",
+            "overflowY": "visible"
+          },
+          "content": {
+            "clientWidth": 42,
+            "clientHeight": 42,
+            "scrollWidth": 42,
+            "scrollHeight": 42,
+            "exceedsClientWidth": false,
+            "exceedsClientHeight": false,
+            "whiteSpace": "normal",
+            "fontSize": "15px",
+            "lineHeight": "22.5px"
+          }
+        }
+      ],
+      "targetOverlaps": [],
+      "arenaOverlaps": [],
+      "summary": {
+        "expectedTargets": 11,
+        "presentTargets": 11,
+        "visibleTargets": 11,
+        "enabledVisibleTargets": 11,
+        "minimumWidth": 44,
+        "minimumHeight": 44,
+        "below44": [],
+        "horizontalPageOverflow": false
+      },
+      "limits": [
+        "Snapshot only. Capture again after resizing, scrolling or preview activity.",
+        "Visibility reflects layout and this element’s computed style; it does not prove absence of covering overlays, ancestor opacity, clipping or pointer occlusion.",
+        "Intersections compare visible border boxes, including offscreen boxes. Edge touching has zero area and is not an overlap.",
+        "Content scroll/client dimensions are approximate overflow indicators, not glyph-level clipping or readability tests.",
+        "Pointer media and viewport data describe this browser. Resizing alone does not emulate coarse input, hardware, safe areas or physical touch comfort."
+      ]
+    }
+  }
+]
