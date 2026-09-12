@@ -92,7 +92,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
-  let buildVersion = '0.7.0',
+  let buildVersion = '0.8.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -949,7 +949,9 @@ try {
       !e.ctrlKey &&
       !e.metaKey &&
       !e.altKey &&
-      !e.target.closest('input,textarea,select,button,a') &&
+      !e.target.closest(
+        'input,textarea,select,button,a,[contenteditable]:not([contenteditable="false"]),[data-game-reading]',
+      ) &&
       !dialogOpen()
     ) {
       e.preventDefault();
@@ -1197,9 +1199,14 @@ try {
     show('mastery-overlay', visible && ['ready', 'pause', 'won', 'lost'].includes(kind));
     if (!visible) return;
     const preview = masteryObserver?.snapshot();
-    const text = masteryText(masteryDefinition, preview, { practice, award: masteryAward });
-    for (const id of ['mastery-status', 'mastery-overlay'])
+    for (const id of ['mastery-status', 'mastery-overlay']) {
+      const text = masteryText(masteryDefinition, preview, {
+        practice,
+        award: masteryAward,
+        compact: id === 'mastery-status',
+      });
       if ($(id).textContent !== text) $(id).textContent = text;
+    }
     $('mastery-brief').textContent =
       `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
   }
@@ -1327,8 +1334,9 @@ try {
             campaignId: observedCampaign.id,
             campaignKey: campaignKey(observedCampaign),
             runId,
+            definition: masteryDefinition,
           }),
-          initial: captureMasteryFacts(run, { runId }),
+          initial: captureMasteryFacts(run, { runId, definition: masteryDefinition }),
         });
       } catch {
         masteryAward = {
@@ -1609,7 +1617,9 @@ try {
         stepRun(run, command, FIXED_DT);
         if (masteryObserver)
           try {
-            masteryObserver.observe(captureMasteryFacts(run, { runId }));
+            masteryObserver.observe(
+              captureMasteryFacts(run, { runId, definition: masteryDefinition }),
+            );
           } catch {
             masteryObserver = null;
             masteryAward = {
@@ -1848,6 +1858,8 @@ try {
   };
   $('collection-button').onclick = () => {
     pause(true);
+    $('achievement-campaign').textContent =
+      `Campaign achievements · ${campaign.title || campaign.name || campaign.id}`;
     $('achievements').replaceChildren();
     for (const a of achievements(progress, campaign)) {
       const row = document.createElement('div');
@@ -1860,7 +1872,7 @@ try {
       $('achievements').append(row);
     }
     $('collection-note').textContent =
-      'First clear unlocks Skyline FPV, Fixed-wing, Falcon, Vector and Auditor appearances. Four clears unlock Night signal FPV and Delta interceptor. Cosmetics do not change abilities.';
+      'In this campaign, the first clear unlocks Skyline FPV, Fixed-wing, Falcon, Vector and Auditor appearances. Four clears unlock Night signal FPV and Delta interceptor. Cosmetics do not change abilities.';
     libraryPanel.populateGallery();
     $('collection-dialog').showModal();
   };

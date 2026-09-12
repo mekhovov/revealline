@@ -49,7 +49,13 @@
             ></div>
             <div id="game-overlay" class="game-overlay">
               <div class="overlay-card">
-                <div class="overlay-message">
+                <div
+                  class="overlay-message"
+                  role="region"
+                  aria-label="Mission details"
+                  tabindex="0"
+                  data-game-reading
+                >
                   <p id="overlay-eyebrow" class="eyebrow">MISSION 01 / FIRST SIGNAL</p>
                   <h1 id="overlay-title">Clear a path.<br />Reveal a world.</h1>
                   <p id="overlay-copy">
@@ -297,6 +303,7 @@
       /></label>
       <div id="gallery-grid" class="gallery-grid"></div>
       <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
+      <h3 id="achievement-campaign">Campaign achievements</h3>
       <div id="achievements"></div>
       <p id="collection-note"></p>
       <button class="button primary" data-close="collection-dialog">Back to the field →</button>

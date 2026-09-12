@@ -1,10 +1,12 @@
 # RevealLine
 
-A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.7.0 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
+A configurable, Xonix-inspired browser game: leave safe ground, draw a vulnerable cut, close it and reveal a picture. The v0.8.0 source includes 12 campaign maps, thirteen more maps in four installable expansions, four visual worlds, seven gameplay classes and both immediate and grid-buffered steering. Ukrainian FPV Front is the main direction; Ukrainian heritage, 1990s arcade and fictional spend management use the same simulation.
 
 Picture celebrations and a persistent gallery reward completed missions. Searchable, paged local scores and pictures, complete portable backups, suspended attempts, dated challenges, five original synthesized music styles and a separate two-player couch race extend the game. Data-only expansions can supply campaigns, maps, classes built from registered abilities, themes, images and music recipes. Replay Theater plays verified recordings with pause, restart, single-tick steps and speed controls, including four Fieldcraft examples.
 
 ## Run locally
+
+v0.8.0 adds [Supply Line and Safe Return](docs/equipment-seals.md): optional goals for supply refills, suppressed crossings, a hangar switch and impact recovery. Named pause checklists distinguish accepted actions and safely banked progress; flight uses a compact summary. All three Homeward pictures can now carry a replay-verified equipment seal. Existing simulation, map, replay and save identities are preserved.
 
 v0.7.0 adds [Steady Signal](docs/round-17-mastery-increment.md), an optional equipment seal for Copper Orchard. Its live goal distinguishes an open line from a safely closed cut. Winning attempts are replay-checked before a seal is saved beside the picture; older libraries migrate with no inferred equipment awards. Saved flights reconstruct the goal, and ordinary mission progression remains available without it.
 
