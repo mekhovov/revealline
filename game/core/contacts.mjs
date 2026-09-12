@@ -37,8 +37,8 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
         const lo = Math.max(path.t0, trail.time),
           hi = endTime;
         if (lo <= hi + EPS) {
-          const x = trail.index % 48,
-            y = Math.floor(trail.index / 48);
+          const x = trail.index % state.width,
+            y = Math.floor(trail.index / state.width);
           const t = boxTime(pathPoint(path, lo), pathPoint(path, hi), {
             x: x - enemy.radius,
             y: y - enemy.radius,
@@ -74,8 +74,8 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
       const lane = staged ? staged.lane : enemy.lane;
       const box =
         axis === 'horizontal'
-          ? { x: 1, y: lane - width / 2, w: 46, h: width }
-          : { x: lane - width / 2, y: 1, w: width, h: 34 };
+          ? { x: 1, y: lane - width / 2, w: state.width - 2, h: width }
+          : { x: lane - width / 2, y: 1, w: width, h: state.height - 2 };
       const overlaps = (cell) =>
         cell.x <= box.x + box.w &&
         cell.x + 1 >= box.x &&
@@ -85,7 +85,7 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
         if (overlaps(trail)) best = remember(best, 0, 'boss-lane', enemy.id);
       for (const trail of trace.cells) {
         if (trail.time > horizon + EPS) continue;
-        if (overlaps({ x: trail.index % 48, y: Math.floor(trail.index / 48) }))
+        if (overlaps({ x: trail.index % state.width, y: Math.floor(trail.index / state.width) }))
           best = remember(best, trail.time, 'boss-lane', enemy.id);
       }
       if (state.player.cutting)

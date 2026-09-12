@@ -6,7 +6,7 @@ import { releaseCutCells, finishEncounterCapture, defeatEncounter } from './enco
 export function tracePlan(state, paths, duration) {
   const additions = [],
     cells = [],
-    spans = ownershipSpans(paths);
+    spans = ownershipSpans(paths, state);
   let cutting = state.player.cutting,
     started = null,
     closure = null,
@@ -41,7 +41,7 @@ export function tracePlan(state, paths, duration) {
     const end = spans.at(-1),
       dx = Math.sign(end.x2 - end.x1),
       dy = Math.sign(end.y2 - end.y1);
-    const index = cellIndex(end.x2 + dx * EPS * 4, end.y2 + dy * EPS * 4);
+    const index = cellIndex(end.x2 + dx * EPS * 4, end.y2 + dy * EPS * 4, state);
     if (state.cells[index] === CELL.SAFE) closure = end.t1;
   }
   return { additions, cells, started, closure, stop, duration };
@@ -95,7 +95,11 @@ export function appendTrail(state, trace, time) {
   for (const c of trace.cells)
     if (c.time < time + EPS && !have.has(c.index)) {
       have.add(c.index);
-      state.trail.push({ x: c.index % 48, y: Math.floor(c.index / 48), index: c.index });
+      state.trail.push({
+        x: c.index % state.width,
+        y: Math.floor(c.index / state.width),
+        index: c.index,
+      });
     }
   for (const s of trace.additions) {
     if (s.t0 >= time - EPS) continue;
@@ -129,8 +133,8 @@ function captureCells(state, releaseSeed, closeCut) {
       state.cells[c.index] = CELL.SAFE;
       secured.push(c.index);
     }
-  const retained = new Uint8Array(48 * 36),
-    queue = new Int32Array(48 * 36);
+  const retained = new Uint8Array(state.width * state.height),
+    queue = new Int32Array(state.width * state.height);
   let head = 0,
     tail = 0;
   for (const e of state.enemies)
@@ -138,7 +142,7 @@ function captureCells(state, releaseSeed, closeCut) {
       e.type !== 'border-patrol' &&
       !(e.type === 'relay-sentinel' && (releaseSeed || state.encounter?.defeated))
     ) {
-      const index = cellIndex(e.x, e.y);
+      const index = cellIndex(e.x, e.y, state);
       if (state.cells[index] === CELL.FIELD && !retained[index]) {
         retained[index] = 1;
         queue[tail++] = index;
@@ -146,22 +150,22 @@ function captureCells(state, releaseSeed, closeCut) {
     }
   while (head < tail) {
     const i = queue[head++],
-      x = i % 48,
-      y = Math.floor(i / 48);
+      x = i % state.width,
+      y = Math.floor(i / state.width);
     for (const n of [
       x > 0 ? i - 1 : -1,
-      x < 47 ? i + 1 : -1,
-      y > 0 ? i - 48 : -1,
-      y < 35 ? i + 48 : -1,
+      x < state.width - 1 ? i + 1 : -1,
+      y > 0 ? i - state.width : -1,
+      y < state.height - 1 ? i + state.width : -1,
     ])
       if (n >= 0 && state.cells[n] === CELL.FIELD && !retained[n]) {
         retained[n] = 1;
         queue[tail++] = n;
       }
   }
-  for (let y = 1; y < 35; y++)
-    for (let x = 1; x < 47; x++) {
-      const i = y * 48 + x;
+  for (let y = 1; y < state.height - 1; y++)
+    for (let x = 1; x < state.width - 1; x++) {
+      const i = y * state.width + x;
       if (state.cells[i] === CELL.FIELD && !retained[i]) {
         state.cells[i] = CELL.SAFE;
         secured.push(i);
@@ -190,7 +194,10 @@ function captureCells(state, releaseSeed, closeCut) {
     coverage: state.coverage,
   });
   for (const objective of state.objectives)
-    if (!objective.captured && state.cells[cellIndex(objective.x, objective.y)] === CELL.SAFE) {
+    if (
+      !objective.captured &&
+      state.cells[cellIndex(objective.x, objective.y, state)] === CELL.SAFE
+    ) {
       objective.captured = true;
       objective.revealed = true;
       state.score += state.rules.objectivePoints;
