@@ -1,0 +1,47 @@
+{
+  "prepared": {
+    "status": "ready",
+    "version": "v0.15.0",
+    "buildId": "8b0c4581556d63a66894c21eac7aa3c2b9aaa5c6270b702034a6b96f2228554e",
+    "count": 128,
+    "verified": 128,
+    "bytes": 20535053,
+    "missing": [],
+    "corrupt": [],
+    "message": "Offline files verified. This version can open without a connection while the browser retains its storage."
+  },
+  "play": {
+    "turning": "grid-center",
+    "revealed": 52.2,
+    "lives": 3,
+    "score": 8160,
+    "hudTime": "0:03",
+    "galleryAfterReload": "One First Signal gold picture; first-clear appearances available",
+    "celebrationReplayed": true,
+    "savedScoreTimeSeconds": 3.71
+  },
+  "playground": {
+    "firstLoadWithServerStopped": true,
+    "measuredPresets": ["1280x720", "844x390", "320x640"],
+    "longLabel": "80 W characters; compact page width320 and scrollWidth320",
+    "practiceLoss": {
+      "cause": "boss lane",
+      "hudTime": "0:02",
+      "lives": 0,
+      "coverage": 0,
+      "score": 0
+    },
+    "retry": {
+      "lives": 1,
+      "coverage": 0,
+      "score": 0,
+      "hudTime": "0:00",
+      "phase": "SHIELD RELAY",
+      "objectives": "0 / 2"
+    }
+  },
+  "logs": {
+    "solo": [],
+    "playground": []
+  }
+}
