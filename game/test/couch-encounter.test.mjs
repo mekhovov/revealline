@@ -17,6 +17,11 @@ class Element {
     this.hidden = false;
     this.checked = false;
     this.dataset = {};
+    this.style = {
+      setProperty(name, value) {
+        this[name] = value;
+      },
+    };
     this.children = [];
     this.listeners = new Map();
     this.captureListeners = new Map();

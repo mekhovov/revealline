@@ -60,6 +60,6 @@ export function missionBriefing(
       ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
-        : 'Choose your route. Open Mission brief in the flight deck for guidance.',
+        : 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }

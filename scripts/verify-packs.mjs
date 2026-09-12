@@ -5,17 +5,24 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { findRoute, replayProof, digest } from './verify-campaign.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
-import { validatePack, PACK_LIMITS, ENCOUNTER_PACK_VERSION } from '../game/packs.mjs';
+import {
+  validatePack,
+  PACK_LIMITS,
+  ENCOUNTER_PACK_VERSION,
+  WIDE_PACK_VERSION,
+} from '../game/packs.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { snapshotReplay, verifyReplay, recordInput } from '../game/replay.mjs';
 import {
   ENCOUNTER_VERSIONS,
   LEGACY_VERSIONS,
+  WIDE_VERSIONS,
   versionsForCampaign,
 } from '../game/core/versions.mjs';
 const root = new URL('../', import.meta.url);
 const proofFile = new URL('game/replays/expansion-routes.json', root);
 const encounterProofFile = new URL('game/replays/sentinel-routes.json', root);
+const wideProofFile = new URL('game/replays/first-light-routes.json', root);
 const policies = ['immediate', 'grid-center'];
 const routeKey = (pack, campaign, level, policy) =>
   `${pack.id}/${campaign.id}/${level.id}/${policy}`;
@@ -40,8 +47,11 @@ export async function verifyExpansionRoutes() {
     proof = JSON.parse(await readFile(proofFile, 'utf8')),
     encounterProof = packs.some((pack) => pack.format === ENCOUNTER_PACK_VERSION)
       ? JSON.parse(await readFile(encounterProofFile, 'utf8'))
+      : null,
+    wideProof = packs.some((pack) => pack.format === WIDE_PACK_VERSION)
+      ? JSON.parse(await readFile(wideProofFile, 'utf8'))
       : null;
-  return verifyExpansionProofs({ packs, proof, encounterProof });
+  return verifyExpansionProofs({ packs, proof, encounterProof, wideProof });
 }
 
 /** Owned proof data; verify one outcome per exact indexed pack/campaign/map/policy.
@@ -55,7 +65,7 @@ export function verifyExpansionProofs(source) {
     maxArray: 20000,
     maxString: PACK_LIMITS.maxBytes,
   });
-  exactKeys(request, ['packs', 'proof', 'encounterProof'], 'proof request');
+  exactKeys(request, ['packs', 'proof', 'encounterProof', 'wideProof'], 'proof request');
   const packs = boundedJSON(request.packs, {
     maxBytes: PACK_LIMITS.libraryBytes,
     maxNodes: 160000,
@@ -64,7 +74,8 @@ export function verifyExpansionProofs(source) {
     maxString: PACK_LIMITS.maxBytes,
   });
   const proof = proofCopy(request.proof),
-    encounter = request.encounterProof === null ? null : proofCopy(request.encounterProof);
+    encounter = request.encounterProof === null ? null : proofCopy(request.encounterProof),
+    wide = request.wideProof == null ? null : proofCopy(request.wideProof);
   required(Array.isArray(packs) && packs.length <= PACK_LIMITS.installed, 'Invalid indexed packs.');
   const expected = new Map(),
     packIds = new Set();
@@ -265,6 +276,107 @@ export function verifyExpansionProofs(source) {
       required(
         verified.match && verified.state.status === 'won',
         `Encounter result changed: ${key}`,
+      );
+      seen.add(key);
+      results.push(verified.actual.summary);
+    }
+  }
+  if (wide !== null) {
+    exactKeys(
+      wide,
+      ['format', 'packId', 'packVersion', 'packSha256', 'campaignId', 'campaignKey', 'routes'],
+      'wide proof',
+    );
+    const pack = packs.find((item) => item.id === wide.packId);
+    required(
+      wide.format === 'revealline-first-light-proof.v1' &&
+        wide.packId === 'fpv-arcade' &&
+        pack?.format === WIDE_PACK_VERSION &&
+        pack.campaigns.length === 1 &&
+        wide.campaignId === 'fpv-first-light' &&
+        pack.campaigns[0].id === wide.campaignId &&
+        pack.campaigns[0].levels.length === 3,
+      'Invalid or unknown wide proof campaign.',
+    );
+    const campaign = {
+      ...pack.campaigns[0],
+      classRecipes: pack.classRecipes.filter(
+        (recipe) => !pack.campaigns[0].classIds || pack.campaigns[0].classIds.includes(recipe.id),
+      ),
+    };
+    required(
+      wide.packVersion === pack.version &&
+        wide.packSha256 === digest(pack) &&
+        wide.campaignKey === campaignKey(campaign),
+      'Wide proof content identity changed.',
+    );
+    required(Array.isArray(wide.routes) && wide.routes.length === 6, 'Invalid wide route list.');
+    for (const route of wide.routes) {
+      exactKeys(
+        route,
+        [
+          'levelId',
+          'turnPolicy',
+          'levelSha256',
+          'classesSha256',
+          'segments',
+          'expected',
+          'checkpoint',
+        ],
+        'wide route',
+      );
+      const { level, key, ruleset } = identify(pack.id, route.levelId, route.turnPolicy);
+      required(
+        ruleset === WIDE_VERSIONS.ruleset &&
+          route.levelSha256 === digest(level) &&
+          route.classesSha256 === digest(campaign.classRecipes),
+        'Wide proof map or roster identity changed.',
+      );
+      required(
+        route.expected?.ruleset === ruleset &&
+          route.expected.levelId === level.id &&
+          route.expected.revision === level.revision &&
+          route.expected.turnPolicy === route.turnPolicy &&
+          route.expected.classId === 'scout' &&
+          route.expected.seed === 1,
+        'Wide expected identity differs.',
+      );
+      required(Array.isArray(route.segments), 'Invalid wide proof segments.');
+      const segments = route.segments.map((segment) => {
+        exactKeys(segment, ['ticks', 'input'], 'wide segment');
+        required(
+          ['up', 'right', 'down', 'left'].includes(segment.input?.direction),
+          'Wide Arcade proof requires deliberate cardinal directions.',
+        );
+        // The authored proof uses commands; public replay RLE requires all input
+        // defaults and an explicit release flag. Normalize through the recorder.
+        const normalized = { ticks: 0, releaseAfter: false, segments: [] };
+        recordInput(normalized, segment.input);
+        return { ticks: segment.ticks, input: normalized.segments[0].input, releaseBefore: false };
+      });
+      const recording = snapshotReplay({
+        version: WIDE_VERSIONS.replayVersion,
+        build: 'aggregate-wide-proof',
+        ruleset,
+        level,
+        options: {
+          seed: 1,
+          classId: 'scout',
+          turnPolicy: route.turnPolicy,
+          classRecipes: campaign.classRecipes,
+        },
+        segments,
+        releaseAfter: false,
+        ticks: route.expected.tick,
+        summary: route.expected,
+        checkpoint: route.checkpoint,
+      });
+      const verified = verifyReplay(recording);
+      required(
+        verified.match &&
+          verified.state.status === 'won' &&
+          verified.state.lives === verified.state.rules.lives,
+        `Wide result changed: ${key}`,
       );
       seen.add(key);
       results.push(verified.actual.summary);

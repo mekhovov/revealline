@@ -4,6 +4,7 @@ export function attachGameShell({
   pause,
   canContinue,
   initial = true,
+  onFeatured,
 } = {}) {
   const $ = (id) => doc.getElementById(id);
   const home = $('shell-home'),
@@ -37,6 +38,20 @@ export function attachGameShell({
   $('shell-menu').onclick = openHome;
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
+  const featured = $('shell-featured');
+  if (featured && onFeatured)
+    featured.onclick = async () => {
+      pause(true);
+      featured.disabled = true;
+      try {
+        if (await onFeatured()) {
+          closeHome();
+          $('start-button').focus();
+        }
+      } finally {
+        featured.disabled = false;
+      }
+    };
   $('shell-briefing').onclick = () => {
     missions.close();
     $('start-button').focus();

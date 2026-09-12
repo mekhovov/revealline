@@ -174,7 +174,7 @@
             <div class="direction-controls" aria-label="Direction controls">
               <button type="button" data-move="up" aria-label="Move up">↑</button
               ><button type="button" data-move="left" aria-label="Move left">←</button
-              ><button type="button" id="stop-button" aria-label="Stop moving">■</button
+              ><button type="button" id="stop-button" aria-label="Stop moving" hidden>■</button
               ><button type="button" data-move="right" aria-label="Move right">→</button
               ><button type="button" data-move="down" aria-label="Move down">↓</button>
             </div>
@@ -779,7 +779,12 @@
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
         <nav class="home-actions" aria-label="Main menu">
-          <button id="shell-play" type="button" class="button primary">Play <span>→</span></button>
+          <button id="shell-featured" type="button" class="button primary">
+            First Light · New FPV chapter <span>→</span>
+          </button>
+          <button id="shell-play" type="button" class="button secondary">
+            All missions <span>→</span>
+          </button>
           <button id="shell-continue" type="button" class="button secondary">
             Continue flight
           </button>

@@ -1,6 +1,6 @@
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
-import { BoardPainter } from './ui/render.mjs';
+import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
 import {
@@ -163,7 +163,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.21.0',
+  let buildVersion = '0.23.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -3173,13 +3173,27 @@ try {
   refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
-      this.boardTexture = this.textures.createCanvas('field', 768, 576);
+      this.boardSize = boardPaintSizeForRun(run);
+      const { width, height } = this.boardSize;
+      this.boardTexture = this.textures.createCanvas('field', width, height);
+      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+      document.documentElement.style.setProperty('--board-aspect', String(width / height));
       this.boardImage = this.add.image(0, 0, 'field').setOrigin(0);
       this.game.canvas.setAttribute('aria-hidden', 'true');
     }
     update(now, delta) {
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
+      const { width, height } = boardPaintSizeForRun(run);
+      if (width !== this.boardSize.width || height !== this.boardSize.height) {
+        this.boardTexture.setSize(width, height);
+        this.boardImage.setSizeToFrame();
+        this.scale.resize(width, height);
+        this.cameras.main.setSize(width, height);
+        this.boardSize = { width, height };
+        document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+        document.documentElement.style.setProperty('--board-aspect', String(width / height));
+      }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
         paused,
         reduced: $('reduced-effects').checked,
@@ -3192,8 +3206,8 @@ try {
   new Phaser.Game({
     type: Phaser.CANVAS,
     parent: 'game-canvas',
-    width: 768,
-    height: 576,
+    width: boardPaintSizeForRun(run).width,
+    height: boardPaintSizeForRun(run).height,
     backgroundColor: theme.palette.field,
     pixelArt: true,
     roundPixels: true,
@@ -3209,6 +3223,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
+    onFeatured: () => activatePack('fpv-arcade', { campaignId: 'fpv-first-light' }),
   });
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {

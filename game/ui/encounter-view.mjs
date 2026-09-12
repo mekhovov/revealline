@@ -1,3 +1,4 @@
+import { geometryForRun } from '../core/geometry.mjs';
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { encounterCutCells } from '../core/encounter.mjs';
 
@@ -69,17 +70,20 @@ export function drawEncounterLane(ctx, state, palette) {
   const e = state.encounter;
   if (!e || e.defeated || !['warning', 'active'].includes(e.phase) || !Number.isFinite(e.lane))
     return;
+  const geometry = geometryForRun(state);
+  const W = geometry.width * 16,
+    H = geometry.height * 16;
   const width = state.level.encounter.laneWidth * 16;
   const horizontal = e.axis === 'horizontal';
   const x = horizontal ? 16 : e.lane * 16 - width / 2;
   const y = horizontal ? e.lane * 16 - width / 2 : 16;
-  const w = horizontal ? 736 : width,
-    h = horizontal ? width : 544;
+  const w = horizontal ? W - 32 : width,
+    h = horizontal ? width : H - 32;
   const enemy = state.enemies.find((item) => item.id === state.level.encounter.enemyId);
   const suppressed = !!enemy && enemy.stunnedUntil > state.time + 1e-8;
   ctx.save();
   ctx.beginPath();
-  ctx.rect(16, 16, 736, 544);
+  ctx.rect(16, 16, W - 32, H - 32);
   ctx.clip();
   ctx.fillStyle = suppressed ? palette.muted : palette.danger;
   ctx.globalAlpha = e.phase === 'active' && !suppressed ? 0.48 : 0.14;
@@ -98,9 +102,9 @@ export function drawEncounterLane(ctx, state, palette) {
     ctx.strokeStyle = suppressed ? palette.muted : palette.danger;
     ctx.lineWidth = 2;
     ctx.beginPath();
-    for (let n = -576; n < 768; n += 12) {
+    for (let n = -H; n < W; n += 12) {
       ctx.moveTo(n, 0);
-      ctx.lineTo(n + 576, 576);
+      ctx.lineTo(n + H, H);
     }
     ctx.stroke();
   }
