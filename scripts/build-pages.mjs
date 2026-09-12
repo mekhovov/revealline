@@ -35,8 +35,6 @@ for (const tag of tags) {
   } catch {
     await releaseSnapshot({ root, ref: tag, version: tag });
   }
-  // Source archives are useful local evidence but needlessly inflate a Pages artifact.
-  await fs.rm(path.join(destination, 'source.tar'), { force: true });
 }
 
 const pagesReleases = path.join(root, 'dist/releases');
