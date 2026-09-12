@@ -1,0 +1,72 @@
+{
+  "solo": [
+    {
+      "label": "Phone",
+      "readout": "390 × 844 CSS pixels · shown at 100%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible"
+    },
+    {
+      "label": "Landscape",
+      "readout": "844 × 390 CSS pixels · shown at 84%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible"
+    },
+    {
+      "label": "Tablet",
+      "readout": "1024 × 768 CSS pixels · shown at 69%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible"
+    },
+    {
+      "label": "Desktop",
+      "readout": "1280 × 720 CSS pixels · shown at 55%",
+      "controls": "Controls: minimum 34 × 28 · all actions visible"
+    },
+    {
+      "label": "Window",
+      "readout": "1065 × 912 CSS pixels · shown at 66%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible"
+    },
+    {
+      "label": "Compact",
+      "readout": "320 × 640 CSS pixels · shown at 100%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible"
+    }
+  ],
+  "couch": [
+    {
+      "label": "Phone",
+      "readout": "390 × 844 CSS pixels · shown at 100%",
+      "controls": "Controls: minimum 45 × 44 · all actions visible",
+      "layout": "Arena 374.0 × 722.0 · top 98, bottom 820 · whole arena visible · no horizontal overflow"
+    },
+    {
+      "label": "Landscape",
+      "readout": "844 × 390 CSS pixels · shown at 84%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "layout": "Arena 828.0 × 253.0 · top 80, bottom 333 · whole arena visible · no horizontal overflow"
+    },
+    {
+      "label": "Tablet",
+      "readout": "1024 × 768 CSS pixels · shown at 69%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "layout": "Arena 1008.0 × 631.0 · top 80, bottom 711 · whole arena visible · no horizontal overflow"
+    },
+    {
+      "label": "Desktop",
+      "readout": "1280 × 720 CSS pixels · shown at 55%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "layout": "Arena 1264.0 × 583.0 · top 80, bottom 663 · whole arena visible · no horizontal overflow"
+    },
+    {
+      "label": "Window",
+      "readout": "1065 × 912 CSS pixels · shown at 66%",
+      "controls": "Controls: minimum 44 × 44 · all actions visible",
+      "layout": "Arena 1049.0 × 775.0 · top 80, bottom 855 · whole arena visible · no horizontal overflow"
+    },
+    {
+      "label": "Compact",
+      "readout": "320 × 640 CSS pixels · shown at 100%",
+      "controls": "Controls: minimum 45 × 44 · all actions visible",
+      "layout": "Arena 304.0 × 518.0 · top 98, bottom 616 · whole arena visible · no horizontal overflow"
+    }
+  ]
+}

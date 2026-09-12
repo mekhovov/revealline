@@ -14,7 +14,8 @@
 body {
   margin: 0 auto;
   max-width: 1420px;
-  padding: 28px;
+  padding: max(28px, env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-right, 0px))
+    max(28px, env(safe-area-inset-bottom, 0px)) max(28px, env(safe-area-inset-left, 0px));
 }
 a {
   color: var(--accent);
@@ -314,7 +315,8 @@ textarea {
 }
 @media (max-width: 620px) {
   body {
-    padding: 14px;
+    padding: max(14px, env(safe-area-inset-top, 0px)) max(14px, env(safe-area-inset-right, 0px))
+      max(14px, env(safe-area-inset-bottom, 0px)) max(14px, env(safe-area-inset-left, 0px));
   }
   .watch,
   .panel {

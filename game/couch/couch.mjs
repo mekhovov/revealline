@@ -1,3 +1,4 @@
+import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
@@ -141,6 +142,9 @@ try {
     input.focus();
   };
   $('race-pause').onclick = pause;
+  onNativeInactive(pause).catch((error) => {
+    $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+  });
   function focusBoards(on) {
     document.body.classList.toggle('race-focus', on);
     $('race-focus').textContent = on ? 'Show setup' : 'Focus boards';

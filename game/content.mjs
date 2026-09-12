@@ -1,3 +1,4 @@
+import { exportJSONFile } from './platform.mjs';
 import { validateTrack } from './ui/music.mjs';
 import { validateLevel, validateClassRecipes, CLASSES, TURN_POLICIES } from './core/index.mjs';
 
@@ -521,12 +522,5 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   return result(errors, { warnings });
 }
 export function downloadJSON(value, name) {
-  const url = URL.createObjectURL(
-    new Blob([JSON.stringify(value, null, 2) + '\n'], { type: 'application/json' }),
-  );
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = name;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return exportJSONFile(value, name);
 }

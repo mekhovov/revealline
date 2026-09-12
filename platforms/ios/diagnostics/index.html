@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Reveal Line · iOS capability check</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="./page.js"></script>
+  </head>
+  <body>
+    <main>
+      <p><a href="../game/index.html">Return to game</a></p>
+      <h1>iOS capability check</h1>
+      <p>
+        Run this inside the native app. A desktop browser result does not verify iPhone support.
+      </p>
+      <p>
+        The probe writes and deletes a tiny scratch record in its own storage namespace. It does not
+        read player saves, pictures or packs. Nothing is sent anywhere.
+      </p>
+      <button id="run" type="button">Check this runtime</button>
+      <pre id="result" aria-live="polite">Not checked.</pre>
+      <h2>File transfer check</h2>
+      <p>
+        Request this harmless JSON fixture, verify it really appears in Files, then select it below.
+        An attempted download alone is not a successful export.
+      </p>
+      <button id="download" type="button">Request fixture download</button>
+      <label for="upload">Select fixture JSON</label>
+      <input id="upload" type="file" accept=".json,application/json" />
+      <p id="file-result" aria-live="polite">Not checked.</p>
+      <p>Compare the fixture with the copyable text:</p>
+      <textarea id="fixture" readonly rows="5" aria-label="Harmless fixture JSON"></textarea>
+      <p>
+        After these probes, verify a real level, complete backup, app restart, interrupted import
+        and offline cold start. The capability report is not a durability or gameplay certificate.
+      </p>
+    </main>
+  </body>
+</html>

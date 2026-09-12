@@ -1,3 +1,4 @@
+import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -266,6 +267,12 @@ try {
       event.preventDefault();
       if (!event.repeat) safely(event.code === 'Space' ? togglePlay : step);
     }
+  });
+  onNativeInactive(() => {
+    lastFrame = 0;
+    if (player?.phase === 'playing') consume(player.pause());
+  }).catch((error) => {
+    $('transport-status').textContent = `App lifecycle adapter unavailable: ${error.message}`;
   });
   document.addEventListener('visibilitychange', () => {
     lastFrame = 0;

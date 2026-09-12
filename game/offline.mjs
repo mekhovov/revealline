@@ -1,3 +1,4 @@
+import { nativePlatform } from './platform.mjs';
 /** Explicit, opt-in preparation of a generated distribution's complete local cache. */
 const MARKER = 'meta[name="revealline-offline"]';
 function configFromPage(documentRef = globalThis.document, locationRef = globalThis.location) {
@@ -29,6 +30,14 @@ export function offlineAvailability({
   navigatorRef = globalThis.navigator,
   secure = globalThis.isSecureContext,
 } = {}) {
+  const platform = nativePlatform(locationRef);
+  if (platform)
+    return {
+      available: false,
+      bundled: true,
+      reason:
+        'This app includes its game files for offline play. No additional download is needed. Export a complete backup to protect your saved collection.',
+    };
   const config = configFromPage(documentRef, locationRef);
   if (!config)
     return {

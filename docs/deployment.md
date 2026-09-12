@@ -1,6 +1,6 @@
 # Build and distribute
 
-The implemented distribution is a **static browser application**. The CLI produces local files; it does not provision a host, publish a site, create an App Store binary or upload a Steam build. Native wrappers are separately scoped work.
+The implemented distribution is a **static browser application**. The CLI produces local files; it does not provision a host, publish a site, create an App Store binary or upload a Steam build. Native wrappers now live under `platforms/`; their commands and evidence are in [native distribution](native-distribution.md).
 
 ## Static website
 
@@ -35,18 +35,18 @@ Serving a static game does not by itself verify offline behavior or installation
 
 Only claim PWA support for the manifest, icons, registration and cache behavior actually present in `game/` and tested in the current build. Test first visit, subsequent offline start, missing media, update activation and old-version coexistence. Source and release servers should use separate ports during comparison so origin-scoped storage and any service worker cannot silently cross between versions. No native iPhone installation or offline certification is established by the Node checks.
 
-## Planned mobile packaging
+## Native mobile packaging
 
-**Recommended next path: Capacitor**, once the browser game and touch controls are stable. It keeps the HTML/JavaScript UI and connects it to native projects. The official workflow builds the web application, copies the chosen web directory through `npx cap sync`, then tests and compiles native targets. A future wrapper should point `webDir` at the complete `dist/`, retaining the relative game/dependency hierarchy. Capacitor configuration and platform folders are not implemented here. [Capacitor workflow](https://capacitorjs.com/docs/basics/workflow)
+The isolated Capacitor 8.5.2 project is implemented in `platforms/ios/`, with a bundled App/Filesystem/Share adapter, explicit runtime diagnostics and an iOS 15.4 feature floor. Stage the complete reviewed release with `scripts/native-cli.mjs`, preserving relative game/artwork paths; then run the documented `native:sync` command. The generated SPM project is checked in. [Native workflow](native-distribution.md), [Capacitor workflow](https://capacitorjs.com/docs/basics/workflow)
 
-The iOS target requires a supported Xcode toolchain, native project configuration and signing. Check the current requirements when adding it; a web-only contributor does not need Xcode for ordinary development. No IPA, App Store submission or physical-device result is produced by `npm run build`. [Capacitor iOS documentation](https://capacitorjs.com/docs/ios)
+This machine has Command Line Tools but no full Xcode or simulator. Project generation, dependency resolution, property-list parsing and adapter tests are separate from a native compilation or an iPhone installation. Device storage, module MIME, sharing, safe areas and physical controls remain explicit target checks. [Capacitor iOS documentation](https://capacitorjs.com/docs/ios)
 
-## Planned desktop and Steam packaging
+## Desktop and Steam packaging
 
-**Recommended desktop candidate: Electron with Forge.** The official Electron distribution guide recommends Forge for packaging. A wrapper can load the existing web game, but needs its own application entry, packaging configuration, platform builds and signing decisions; none is implied by a ZIP of website files. Test memory, startup, resizing and controller input on target hardware before selecting the wrapper definitively. [Electron application packaging](https://www.electronjs.org/docs/latest/tutorial/application-distribution)
+The isolated Electron 44.3.0 wrapper uses `@electron/packager` directly for a small local packaging workflow. Electron's general distribution guide recommends Forge for broader build/publish orchestration; it is not a dependency of this wrapper. A local unsigned macOS ARM64 candidate is built and retains its verified content inventory. [Native distribution](native-distribution.md), [Electron application packaging](https://www.electronjs.org/docs/latest/tutorial/application-distribution)
 
-A future Electron shell should keep the game renderer isolated from Node and expose only deliberately designed native operations. Follow the maintained Electron security recommendations when creating the shell, especially for any imported content or external navigation. [Electron security](https://www.electronjs.org/docs/latest/tutorial/security)
+The renderer is sandboxed with Node integration disabled. A secure custom scheme serves verified local files, denies external navigation and limits file exports. Packaged security fuses are read back after modification. These checks do not establish native UI, persistence or Save-dialog behavior: OS automation permissions prevented that observation here. [Electron security](https://www.electronjs.org/docs/latest/tutorial/security)
 
-Steam deployment follows a packaged desktop build: configure the application's launch options and depots, upload through the documented SteamPipe workflow, and test a private branch before a public release. This repository has no Steam app ID, depot credentials, executable or Steamworks integration. A static ZIP is useful for web hosting and archival comparison; it is not a verified Steam package. [Steamworks uploading documentation](https://partner.steamgames.com/doc/sdk/uploading)
+Steam deployment follows a packaged desktop build: configure the application's launch options and depots, upload through the documented SteamPipe workflow, and test a private branch before a public release. This repository has no Steam app ID, depot credentials or Steamworks integration. The local macOS executable has not been uploaded or tested through Steam. A static ZIP is useful for web hosting and archival comparison; it is not a verified Steam package. [Steamworks uploading documentation](https://partner.steamgames.com/doc/sdk/uploading)
 
-Official packaging pages were checked on **12 September 2026**. These are implementation recommendations, not claims that the native targets have been built or tested.
+Official packaging pages were checked on **12 September 2026**. Consult each platform report for the distinction between packaged artifacts, static checks and actual device execution.
