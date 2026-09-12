@@ -20,6 +20,9 @@ const encounterProof = JSON.parse(
 const wideURL = new URL('../game/replays/first-light-routes.json', import.meta.url),
   wideBytes = await readFile(wideURL),
   wideProof = JSON.parse(wideBytes);
+const r2URL = new URL('../game/replays/fpv-arcade-r2-routes.json', import.meta.url),
+  r2Bytes = await readFile(r2URL),
+  r2Proof = JSON.parse(r2Bytes);
 const packs = await expansionSources(),
   sentinel = packs.find((pack) => pack.id === encounterProof.packId),
   legacy = packs.find((pack) => pack.id === proof.routes[0].packId);
@@ -41,11 +44,12 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide map-policy outcomes', async () => {
+test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide plus six R2 Standard and six R2 Gentle outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
   assert.equal(proof.routes.length, 32);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 40);
+  assert.equal(result.verified, 46);
+  assert.equal(result.supplementalGentleVerified, 6);
   assert.deepEqual(
     result.results.slice(0, 32),
     proof.routes.map((route) => route.expected),
@@ -60,8 +64,18 @@ test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then v
     ],
   );
   assert.deepEqual(
-    result.results.slice(34),
+    result.results.slice(34, 40),
     wideProof.routes.map((route) => route.expected),
+  );
+  assert.deepEqual(
+    result.results.slice(40),
+    r2Proof.routes
+      .filter((route) => route.difficulty === 'standard')
+      .map((route) => route.expected),
+  );
+  assert.deepEqual(
+    result.supplementalGentleResults,
+    r2Proof.routes.filter((route) => route.difficulty === 'gentle').map((route) => route.expected),
   );
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });
@@ -405,6 +419,108 @@ test('wide proof snapshots own data without invoking nested accessors or changin
   });
   assert.throws(() => verify(input), /accessors/);
   assert.equal(reads, 0);
+  assert.deepEqual(await readFile(wideURL), wideBytes);
+  assert.equal(sha(await readFile(legacyURL)), originalSHA);
+});
+
+function r2Fixture() {
+  return structuredClone({
+    packs: packs.filter((pack) => ['fpv-arcade', 'fpv-arcade-r2'].includes(pack.id)),
+    proof: { ...proof, routes: [] },
+    encounterProof: null,
+    wideProof,
+    r2Proof,
+  });
+}
+test('R2 is optional for historical contexts but requires all twelve exact outcomes when indexed', () => {
+  const historical = wideFixture();
+  historical.r2Proof = null;
+  assert.equal(verify(historical).verified, 6);
+  for (const change of [
+    (input) => {
+      delete input.r2Proof;
+    },
+    (input) => {
+      input.r2Proof = null;
+    },
+    (input) => {
+      input.r2Proof.routes.pop();
+    },
+    (input) => {
+      input.r2Proof.routes[7] = structuredClone(input.r2Proof.routes[6]);
+    },
+    (input) => {
+      input.r2Proof.routes = input.r2Proof.routes.filter(
+        (route) => route.difficulty === 'standard',
+      );
+    },
+  ]) {
+    const input = r2Fixture();
+    change(input);
+    assert.throws(() => verify(input));
+  }
+});
+test('R2 aggregate rechecks Gentle commands, stop barriers, summaries and complete checkpoint authority', () => {
+  for (const change of [
+    (input) => {
+      input.r2Proof.packSha256 = 'foreign';
+    },
+    (input) => {
+      input.r2Proof.routes[6].campaignKey = 'foreign';
+    },
+    (input) => {
+      input.r2Proof.routes[6].expected.score++;
+    },
+    (input) => {
+      input.r2Proof.routes[6].checkpoint.hash = 'forged';
+    },
+    (input) => {
+      const segments = input.r2Proof.routes[6].segments;
+      segments.splice(
+        segments.findIndex((segment) => segment.input.direction === null),
+        1,
+      );
+    },
+    (input) => {
+      input.r2Proof.controls[0].straight.summary.won = true;
+    },
+  ]) {
+    const input = r2Fixture();
+    change(input);
+    assert.throws(() => verify(input));
+  }
+});
+test('R2 coverage cannot hide another classic campaign or fall back to a proof from an absent original edition', () => {
+  const extra = r2Fixture(),
+    pack = structuredClone(extra.packs.find((item) => item.id === 'fpv-arcade-r2'));
+  pack.id = 'another-classic';
+  pack.campaigns[0].id = 'another-classic';
+  extra.packs.push(pack);
+  assert.throws(() => verify(extra), /Incomplete/);
+  const missing = r2Fixture();
+  missing.packs = missing.packs.filter((item) => item.id !== 'fpv-arcade');
+  missing.wideProof = null;
+  assert.throws(() => verify(missing), /R2 proof context/);
+  assert.throws(() => assertDiscoverySupported(r2Fixture().packs), /discovery is unsupported/);
+});
+test('R2 aggregate owns hostile input without invoking accessors or editing historical proof bytes', async () => {
+  const input = r2Fixture(),
+    before = structuredClone(input);
+  const result = verify(input);
+  assert.equal(result.verified, 12);
+  assert.equal(result.supplementalGentleVerified, 6);
+  assert.deepEqual(input, before);
+  let reads = 0;
+  Object.defineProperty(input.r2Proof.routes[0], 'segments', {
+    enumerable: true,
+    get() {
+      reads++;
+      return [];
+    },
+  });
+  assert.throws(() => verify(input), /accessors/);
+  assert.equal(reads, 0);
+  assert.deepEqual(await readFile(r2URL), r2Bytes);
   assert.deepEqual(await readFile(wideURL), wideBytes);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });
