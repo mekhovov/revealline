@@ -58,7 +58,12 @@ import {
   installPack,
   resolvePackCampaign,
 } from './packs.mjs';
-import { preparePackCatalog, resolvePackLaunch } from './content-launch.mjs';
+import {
+  canAutoStartPackLaunch,
+  createPackLaunchGuard,
+  preparePackCatalog,
+  resolvePackLaunch,
+} from './content-launch.mjs';
 import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { challengeCampaign } from './challenges.mjs';
@@ -339,6 +344,7 @@ try {
     courseEntryMessage = '',
     courseEntryHold = false,
     contentSwitchBusy = false;
+  const packLaunchGuard = createPackLaunchGuard();
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
     getGeneration: () => libraryGeneration,
@@ -582,6 +588,7 @@ try {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
     if (courseEntry) cancelCourseEntry();
+    invalidateContentSwitch();
     pause(true);
     masteryAwards.cancelAll();
     cancelRestore();
@@ -972,6 +979,12 @@ try {
     if (error) $('content-select-status').dataset.kind = 'error';
     else delete $('content-select-status').dataset.kind;
   }
+  function invalidateContentSwitch() {
+    packLaunchGuard.invalidate();
+    contentSwitchBusy = false;
+    $('pack-select').disabled = courseSession;
+    $('level-select').disabled = courseSession;
+  }
   function refreshContentSelectors() {
     const installedIds = new Set(packs.packs.map((pack) => pack.id));
     const options = [new Option(`Base game · ${baseCampaign.levels.length} levels`, '')];
@@ -1019,8 +1032,8 @@ try {
     for (const [index, option] of [...$('level-select').options].entries())
       option.disabled = !canPlay(progress, campaign, index);
     $('level-select').value = campaign.levels[levelIndex].id;
-    $('pack-select').disabled = contentSwitchBusy;
-    $('level-select').disabled = contentSwitchBusy;
+    $('pack-select').disabled = courseSession || contentSwitchBusy;
+    $('level-select').disabled = courseSession || contentSwitchBusy;
   }
   function persistProfile({ mode = 'merge' } = {}) {
     if (courseSession || courseEntry)
@@ -1076,7 +1089,13 @@ try {
   }
   function selectEntry(
     entry,
-    { levelId, themeId, seed: selectedSeed, restoreAdoption = false } = {},
+    {
+      levelId,
+      themeId,
+      seed: selectedSeed,
+      restoreAdoption = false,
+      contentSwitchTicket = null,
+    } = {},
   ) {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before selecting a campaign.');
@@ -1086,6 +1105,8 @@ try {
         throw new Error('Picture seed is invalid.');
       seed = selectedSeed;
     }
+    if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
+    else invalidateContentSwitch();
     if (!restoreAdoption) cancelRestore();
     themeOverride = !!themeId;
     musicOverride = false;
@@ -1115,24 +1136,39 @@ try {
     refreshCampaigns();
     prepare({ restoreAdoption });
   }
-  async function replacePackLibrary(next) {
+  async function replacePackLibrary(next, { contentSwitchTicket = null } = {}) {
     if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
+    const operation = contentSwitchTicket || packLaunchGuard.begin(packs);
+    const before = packs;
+    packLaunchGuard.assert(operation, before);
+    if (!contentSwitchTicket) {
+      contentSwitchBusy = false;
+      $('pack-select').disabled = courseSession;
+      $('level-select').disabled = courseSession;
+    }
     assertWriter();
     const content = prepareContentCatalog(next);
     pause(true);
     cancelRestore();
     masteryAwards.cancelAll();
     try {
-      await writeAssetStore(packsKey, exportPackLibrary(next));
+      await packLaunchGuard.run(
+        operation,
+        before,
+        () => packs,
+        () => writeAssetStore(packsKey, exportPackLibrary(next)),
+      );
     } catch (error) {
+      if (!packLaunchGuard.current(operation, packs)) throw error;
       throw new Error(`Pack storage failed; previous installed packs are kept. ${error.message}`);
     }
     adoptContentCatalog(content);
+    packLaunchGuard.advance(operation, before, packs);
     if (
       activeEntry.sourcePackId &&
       !packs.packs.some((pack) => pack.id === activeEntry.sourcePackId)
     )
-      selectEntry(baseEntry);
+      selectEntry(baseEntry, { contentSwitchTicket: operation });
     else if (activeEntry.sourcePackId) {
       const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
       selectEntry(
@@ -1142,34 +1178,51 @@ try {
             ? campaign.id
             : pack.campaigns[0].id,
         ),
+        { contentSwitchTicket: operation },
       );
     }
     refreshCampaigns();
   }
-  async function ensureBundledPack(packId) {
+  async function ensureBundledPack(packId, operation) {
+    const before = packs;
+    packLaunchGuard.assert(operation, before);
     const installed = packs.packs.find((pack) => pack.id === packId);
     if (installed) return { pack: installed, installed: false };
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
     if (!summary) throw new Error('This pack is not bundled with the current build.');
     assertWriter();
     contentStatus(`Installing ${summary.name} on this device…`);
-    const source = await getJSON(`content/packs/${summary.path}`);
-    const prepared = await preparePack(source, { library: packs });
-    await replacePackLibrary(installPack(packs, prepared.pack));
+    const source = await packLaunchGuard.run(
+      operation,
+      before,
+      () => packs,
+      () => getJSON(`content/packs/${summary.path}`),
+    );
+    const prepared = await packLaunchGuard.run(
+      operation,
+      before,
+      () => packs,
+      () => preparePack(source, { library: before }),
+    );
+    await replacePackLibrary(installPack(before, prepared.pack), {
+      contentSwitchTicket: operation,
+    });
     return { pack: prepared.pack, installed: true };
   }
   async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
-    if (contentSwitchBusy) return false;
+    cancelRestore();
+    const operation = packLaunchGuard.begin(packs);
     contentSwitchBusy = true;
     refreshContentSelectors();
     try {
       if (!packId) {
-        selectEntry(baseEntry, { levelId });
+        selectEntry(baseEntry, { levelId, contentSwitchTicket: operation });
         if (announce)
           contentStatus(`Base game · ${campaign.levels[levelIndex].name} selected and ready.`);
-        return true;
+        return operation;
       }
-      const result = await ensureBundledPack(packId);
+      const result = await ensureBundledPack(packId, operation);
+      packLaunchGuard.assert(operation, packs);
       const source = campaignId
         ? result.pack.campaigns.find((item) => item.id === campaignId)
         : result.pack.campaigns[0];
@@ -1183,25 +1236,28 @@ try {
         if (targetIndex < 0) throw new Error('This pack level is unavailable.');
         const targetProgress = progressFor(library, entry.campaign);
         if (!canPlay(targetProgress, entry.campaign, targetIndex)) {
-          selectEntry(entry);
+          selectEntry(entry, { contentSwitchTicket: operation });
           throw new Error(
             `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
           );
         }
       }
-      selectEntry(entry, { levelId });
+      selectEntry(entry, { levelId, contentSwitchTicket: operation });
       if (announce)
         contentStatus(
           `${result.installed ? `${result.pack.name} installed · ` : ''}${campaign.levels[levelIndex].name} selected and ready.`,
         );
-      return true;
+      return operation;
     } catch (error) {
+      if (!packLaunchGuard.current(operation, packs)) return false;
       contentStatus(error.message, true);
       warning(error.message);
       return false;
     } finally {
-      contentSwitchBusy = false;
-      refreshContentSelectors();
+      if (packLaunchGuard.current(operation, packs)) {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+      }
     }
   }
   function selectLevel(levelId) {
@@ -1211,6 +1267,7 @@ try {
       contentStatus('That level is still locked. Complete the earlier missions first.', true);
       return false;
     }
+    invalidateContentSwitch();
     leavePractice();
     campaignOverview = false;
     levelIndex = index;
@@ -1302,6 +1359,7 @@ try {
       }
     }
     if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
+    invalidateContentSwitch();
     sessionBusy = true;
     refreshSavedFlight();
     pause(true);
@@ -1438,12 +1496,14 @@ try {
     beforeProfileReplacement: () => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before replacing player data.');
+      invalidateContentSwitch();
       cancelRestore();
       masteryAwards.cancelAll();
     },
     setLibrary: (next) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before replacing player data.');
+      invalidateContentSwitch();
       masteryAwards.cancelAll();
       library = next;
       progress = progressFor(library, campaign);
@@ -1457,6 +1517,7 @@ try {
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
+      invalidateContentSwitch();
       const content = prepareContentCatalog(prepared.packs);
       if (!writer.writable) throw new Error(writer.reason);
       if (!persistenceReady) {
@@ -2775,6 +2836,7 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
+    invalidateContentSwitch();
     if (courseEntry)
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
@@ -2792,7 +2854,7 @@ try {
   setTheme();
   refreshCampaigns();
   prepare();
-  let autoplayPackLaunch = false;
+  let autoplayPackLaunch = null;
   if (packLaunchError) {
     contentStatus(packLaunchError, true);
     warning(packLaunchError);
@@ -2803,7 +2865,14 @@ try {
       announce: false,
     });
     if (selected) {
-      autoplayPackLaunch = packLaunchRequest.play;
+      if (packLaunchRequest.play)
+        autoplayPackLaunch = {
+          ticket: selected,
+          run,
+          entry: activeEntry,
+          campaignKey: campaignKey(campaign),
+          levelId: campaign.levels[levelIndex].id,
+        };
       contentStatus(
         `${packLaunchRequest.packName} · ${packLaunchRequest.levelName} selected${autoplayPackLaunch ? ' · starting now…' : ' and ready.'}`,
       );
@@ -2844,7 +2913,28 @@ try {
     scene: FieldScene,
     banner: false,
   });
-  if (autoplayPackLaunch) requestAnimationFrame(() => resume());
+  if (autoplayPackLaunch)
+    requestAnimationFrame(() => {
+      const currentLevelId = campaign.levels[levelIndex]?.id;
+      if (
+        canAutoStartPackLaunch({
+          current: packLaunchGuard.current(autoplayPackLaunch.ticket, packs),
+          blocked: dialogOpen() || contentSwitchBusy || sessionBusy || document.hidden,
+          started,
+          paused,
+          overlayKind: $('game-overlay').dataset.kind,
+          run,
+          expectedRun: autoplayPackLaunch.run,
+          entry: activeEntry,
+          expectedEntry: autoplayPackLaunch.entry,
+          campaignKey: campaignKey(campaign),
+          expectedCampaignKey: autoplayPackLaunch.campaignKey,
+          levelId: currentLevelId,
+          expectedLevelId: autoplayPackLaunch.levelId,
+        })
+      )
+        resume();
+    });
 } catch (error) {
   $('overlay-title').textContent = 'The game could not load.';
   $('overlay-copy').textContent = error.message;
