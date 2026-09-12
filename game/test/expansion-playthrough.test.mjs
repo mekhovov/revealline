@@ -17,7 +17,7 @@ for (const route of proof.routes)
     assert.equal(summary.lives, 3);
   });
 test('expansion proof covers every supplied map and rejects altered geometry', async () => {
-  assert.equal((await verifyExpansionRoutes()).verified, 20);
+  assert.equal((await verifyExpansionRoutes()).verified, 26);
   const route = proof.routes[0],
     pack = packs[0],
     level = structuredClone(pack.campaigns[0].levels[0]);
