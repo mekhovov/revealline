@@ -80,11 +80,16 @@ test('v0.10 profile export, chapter continuation, rewards and campaign identity 
       bodyId: 'fpv-body',
       completedAt: '2026-09-12T12:00:00.000Z',
     });
-  assert.deepEqual(JSON.parse(exportLibrary(library)), fixture.library);
-  assert.deepEqual(
-    JSON.parse(exportLibrary(importLibrary(fixture.library, { campaigns: [campaign] }))),
-    fixture.library,
-  );
+  // The optional input preference migrates forward; every older field stays exact.
+  for (const exported of [
+    exportLibrary(library),
+    exportLibrary(importLibrary(fixture.library, { campaigns: [campaign] })),
+  ]) {
+    const owned = JSON.parse(exported);
+    assert.equal(owned.preferences.controllerBoostMode, 'hold');
+    delete owned.preferences.controllerBoostMode;
+    assert.deepEqual(owned, fixture.library);
+  }
   const progress = progressFor(library, campaign);
   assert.deepEqual(campaignContinuation(progress, campaign), fixture.continuation);
   assert.deepEqual(campaignSelection(progress, campaign), fixture.selection);

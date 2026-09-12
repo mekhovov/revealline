@@ -172,7 +172,12 @@ test('chapter reward work preserves original route and campaign identity oracles
   // Produced by frozen v0.9 site core/library modules from these same three legal
   // routes, IDs and timestamp. Source: 315a4782a159f2274f7200e3470ec20c3859707b.
   // Ordinary tests use this fixed oracle, never archived code or Git at runtime.
-  const portable = exportLibrary(states(home)[3]);
+  const owned = JSON.parse(exportLibrary(states(home)[3]));
+  assert.equal(Object.hasOwn(owned.preferences, 'controllerBoostMode'), true);
+  assert.equal(owned.preferences.controllerBoostMode, 'hold');
+  // Allow only the added input preference; retain the exact old serialized oracle.
+  delete owned.preferences.controllerBoostMode;
+  const portable = JSON.stringify(owned);
   assert.equal(Buffer.byteLength(portable), 3830);
   assert.equal(sha(portable), '046288ac3e835b01d295b65b6a6c612f9ae0b9de916c45d0cebb0a229e240658');
 });

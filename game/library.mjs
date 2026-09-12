@@ -4,6 +4,7 @@ import { versionsForCampaign } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { resolveKeyBindings } from './key-bindings.mjs';
 import { resolveControllerBindings } from './controller-bindings.mjs';
+import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from './controller-boost.mjs';
 import {
   resolveMasteryRecords,
   mergeMasteryRecords,
@@ -53,6 +54,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   tapSteering: null,
   keyboardBindings: null,
   controllerBindings: null,
+  controllerBoostMode: DEFAULT_CONTROLLER_BOOST_MODE,
   style: 'hybrid',
   showGrid: false,
   matchClassAppearance: true,
@@ -113,6 +115,7 @@ function preferencesValid(preferences) {
     preferences.keyboardBindings = resolveKeyBindings(preferences.keyboardBindings);
   if (preferences.controllerBindings !== null)
     preferences.controllerBindings = resolveControllerBindings(preferences.controllerBindings);
+  preferences.controllerBoostMode = resolveControllerBoostMode(preferences.controllerBoostMode);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -229,6 +232,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.keyboardBindings = DEFAULT_PREFERENCES.keyboardBindings;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'controllerBindings'))
     value.preferences.controllerBindings = DEFAULT_PREFERENCES.controllerBindings;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'controllerBoostMode'))
+    value.preferences.controllerBoostMode = DEFAULT_PREFERENCES.controllerBoostMode;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);

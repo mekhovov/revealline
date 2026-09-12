@@ -136,6 +136,7 @@
             <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
             ><span id="objective-state">Close a line to reveal the picture</span>
           </div>
+          <p id="controller-boost-cue" class="controller-boost-cue" role="status" hidden></p>
           <div
             id="encounter-status"
             class="encounter-status"
@@ -507,6 +508,21 @@
         </p>
       </details>
       <section id="controller-settings-root" aria-label="Controller controls"></section>
+      <section class="controller-boost-settings" aria-label="Solo controller Boost behavior">
+        <label for="controller-boost-mode">Solo controller Boost</label>
+        <select id="controller-boost-mode" aria-describedby="controller-boost-help">
+          <option value="hold">Hold</option>
+          <option value="toggle">Toggle</option>
+        </select>
+        <p id="controller-boost-help" class="micro-note">
+          Toggle: press Boost once for on/off. Stop, pause and recovery turn it off. Direction still
+          needs a hold. Couch keeps its separate Hold controls.
+        </p>
+        <p class="micro-note">
+          This setting is separate from the button-map draft. Select Hold to reset it.
+        </p>
+        <p id="controller-boost-status" class="micro-note" role="status"></p>
+      </section>
       <p id="offline-status" class="micro-note">
         Offline installation is available in packaged releases.
       </p>

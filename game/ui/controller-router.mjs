@@ -2,6 +2,7 @@ import {
   resolveControllerBindings,
   CONTROLLER_DIRECTION_PRIORITY,
 } from '../controller-bindings.mjs';
+import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from '../controller-boost.mjs';
 
 const JOIN_BUTTONS = [0, 1, 2, 3, 9];
 const CONTEXTS = ['flight', 'menu'];
@@ -67,6 +68,7 @@ export function createControllerRouter({
   now = () => globalThis.performance?.now?.() ?? Date.now(),
   eventTarget = globalThis.window,
   bindings = null,
+  boostMode = DEFAULT_CONTROLLER_BOOST_MODE,
   deadZone = 0.35,
   repeatDelayMs = 350,
   repeatIntervalMs = 120,
@@ -89,7 +91,10 @@ export function createControllerRouter({
   // Constructor compatibility: an explicit document owns its thresholds.
   // Legacy callers without one retain their equal press/release deadZone.
   if (bindings == null) initial.deadZone = { press: deadZone, release: deadZone };
-  let compiled = compileBindings(initial);
+  let compiled = compileBindings(initial),
+    mode = resolveControllerBoostMode(boostMode),
+    boostLatched = false,
+    boostArmed = false;
   const seen = new Map();
   let generation = 0,
     assigned = null,
@@ -103,6 +108,8 @@ export function createControllerRouter({
     destroyed = false;
 
   function clear() {
+    boostLatched = false;
+    boostArmed = false;
     blocked = true;
     previousButtons.clear();
     repeatDirection = null;
@@ -120,6 +127,20 @@ export function createControllerRouter({
     compiled = next;
     clear();
   }
+  function setBoostMode(value) {
+    if (destroyed) throw new Error('Controller input is stopped.');
+    const next = resolveControllerBoostMode(value);
+    mode = next;
+    clear();
+  }
+  // Input-local cancellation and recovery must not disrupt held directions,
+  // menu repeat/join history, or another input source. Only Toggle is disarmed.
+  function cancelToggleBoost() {
+    if (mode !== 'toggle') return;
+    boostLatched = false;
+    boostArmed = false;
+  }
+  const boostState = () => ({ mode, latched: boostLatched });
   function invalidate() {
     pendingDisconnect = pendingDisconnect || assigned !== null;
     assigned = null;
@@ -212,10 +233,12 @@ export function createControllerRouter({
     disconnected,
   });
 
-  function sample({ scope, timeMs } = {}) {
+  function sample({ scope, timeMs, toggleBoostEligible = true } = {}) {
     if (destroyed) return result('disposed', 'Controller input is stopped.');
     if (typeof scope !== 'string' || !scope || scope.length > 160)
       throw new TypeError('Controller scope must be a stable nonempty string.');
+    if (typeof toggleBoostEligible !== 'boolean')
+      throw new TypeError('Controller Boost eligibility must be boolean.');
     const clock = timeMs ?? now();
     const time = Number.isFinite(clock) ? Math.max(lastTime, clock) : lastTime;
     lastTime = time;
@@ -223,6 +246,7 @@ export function createControllerRouter({
       clear();
       lastScope = scope;
     }
+    if (scope !== 'flight' || !toggleBoostEligible) cancelToggleBoost();
     let raw;
     try {
       raw = readPads();
@@ -309,6 +333,10 @@ export function createControllerRouter({
       invalidate();
       return sampleLoss();
     }
+    // The same physical-neutral sample may lift both gates. A latched command
+    // is not physical input and must not prevent a later ordinary release.
+    if (mode === 'toggle' && scope === 'flight' && toggleBoostEligible && pad.neutral)
+      boostArmed = true;
     if (blocked) {
       if (pad.neutral) blocked = false;
       previousButtons = new Set(pad.buttons);
@@ -325,13 +353,15 @@ export function createControllerRouter({
       if (edge(buttons.pause)) flight.pause = true;
       else if (edge(buttons.hangar)) flight.hangar = true;
       else if (edge(buttons.stop)) flight.stop = true;
-      else
+      else {
+        if (mode === 'toggle' && boostArmed && edge(buttons.boost)) boostLatched = !boostLatched;
         Object.assign(flight, {
           direction: pad.direction.flight,
-          boost: pad.buttons.has(buttons.boost),
+          boost: mode === 'toggle' ? boostLatched : pad.buttons.has(buttons.boost),
           action: pad.buttons.has(buttons.ability),
           pickup: pad.buttons.has(buttons.pickup),
         });
+      }
       if (flight.pause || flight.hangar || flight.stop) clear();
     } else {
       const buttons = compiled.menu.buttons,
@@ -367,6 +397,9 @@ export function createControllerRouter({
   return {
     sample,
     setBindings,
+    setBoostMode,
+    cancelToggleBoost,
+    boostState,
     clear,
     invalidate,
     disconnect,

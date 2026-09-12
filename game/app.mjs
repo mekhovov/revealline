@@ -4,6 +4,14 @@ import { BoardPainter } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { attachInput } from './ui/input.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
+import {
+  cancelControllerToggleBoost,
+  controllerBoostAfterRecovery,
+} from './ui/controller-boost-host.mjs';
+import {
+  attachControllerBoostSettings,
+  renderControllerBoostCue,
+} from './ui/controller-boost-settings.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
@@ -128,7 +136,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.12.0',
+  let buildVersion = '0.13.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -353,12 +361,14 @@ try {
   }
   const controller = createControllerRouter({
     bindings: library.preferences.controllerBindings,
+    boostMode: library.preferences.controllerBoostMode,
     ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
   });
   let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
   let controllerFrame = null,
     controllerNavigation = null,
     controllerReading = null,
+    controllerBoostSettings = null,
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
@@ -380,6 +390,23 @@ try {
     $('controller-ui-hint').textContent =
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
     controllerReading?.refresh();
+    refreshControllerBoostCue();
+  }
+  function refreshControllerBoostCue() {
+    renderControllerBoostCue(
+      $('controller-boost-cue'),
+      controller.boostState(),
+      controllerLabels.flight.boost,
+      !!controllerFrame?.assigned && controllerScope() === 'flight' && run?.status === 'running',
+    );
+  }
+  function adoptControllerBoostMode({ force = false } = {}) {
+    if (force || controller.boostState().mode !== library.preferences.controllerBoostMode) {
+      controller.setBoostMode(library.preferences.controllerBoostMode);
+      clearInput();
+    }
+    controllerBoostSettings?.refresh();
+    refreshControllerBoostCue();
   }
   function controllerScope() {
     const dialog = controllerDialog();
@@ -448,6 +475,10 @@ try {
     onGamepad: (message) => ($('input-status').textContent = message),
     getBindings: () => library.preferences.keyboardBindings,
     readControllerCommand: () => controllerFrame?.flight,
+    onClear: () => {
+      cancelControllerToggleBoost(controller, controllerFrame);
+      refreshControllerBoostCue();
+    },
   });
   controllerNavigation = attachControllerNavigation({
     getScope: controllerScope,
@@ -571,7 +602,19 @@ try {
     if (!event.persisted) {
       keySettings.destroy();
       controllerSettings.destroy();
+      controllerBoostSettings.destroy();
     }
+  });
+  controllerBoostSettings = attachControllerBoostSettings({
+    select: $('controller-boost-mode'),
+    status: $('controller-boost-status'),
+    getMode: () => library.preferences.controllerBoostMode,
+    applyMode: (mode) => {
+      pause(true);
+      const saved = preferences({ controllerBoostMode: mode });
+      adoptControllerBoostMode({ force: true });
+      return saved;
+    },
   });
   function clearInput({ preserveNavigation = false } = {}) {
     pendingAction = false;
@@ -641,6 +684,7 @@ try {
       libraryBaseline = library;
       libraryGeneration = saved.generation;
       progress = progressFor(library, campaign);
+      adoptControllerBoostMode();
     } else {
       $('save-warning').textContent = saved.warning;
       show('save-warning', true);
@@ -649,7 +693,12 @@ try {
   }
   function preferences(patch) {
     library = updatePreferences(library, { ...library.preferences, ...patch });
-    if (!practice) persistProfile();
+    if (!practice) return persistProfile();
+    return {
+      ok: false,
+      warning:
+        'Practice preferences stay in this session. Export your player library to keep them.',
+    };
   }
   function cancelRestore() {
     restoreController?.abort();
@@ -836,7 +885,9 @@ try {
     $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
     keySettings.refresh();
     controller.setBindings(p.controllerBindings);
+    controller.setBoostMode(p.controllerBoostMode);
     controllerSettings.refresh();
+    controllerBoostSettings.refresh();
     clearInput();
     refreshKeyPrompts();
     refreshControllerPrompts();
@@ -1031,6 +1082,7 @@ try {
   $('settings-button').onclick = () => {
     pause(true);
     controllerSettings.refresh();
+    controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
   };
   let offlinePrepared = false;
@@ -1099,6 +1151,7 @@ try {
   $('settings-dialog').addEventListener('close', () => {
     sound.pause();
     controllerSettings.refresh();
+    controllerBoostSettings.refresh();
   });
   $('match-class-appearance').onchange = () => {
     preferences({ matchClassAppearance: $('match-class-appearance').checked });
@@ -1678,7 +1731,12 @@ try {
     }
     controllerInactive = false;
     const scope = controllerScope();
-    controllerFrame = controller.sample({ scope, timeMs: performance.now() });
+    controllerFrame = controller.sample({
+      scope,
+      timeMs: performance.now(),
+      toggleBoostEligible: run?.status === 'running',
+    });
+    refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
     if (status.message !== controllerStatus) {
       controllerStatus = status.message;
@@ -1713,7 +1771,7 @@ try {
         clearInput();
       }
     }
-    const controls = input.poll();
+    let controls = input.poll();
     pendingAction = pendingAction || controls.action;
     pendingPickup = pendingPickup || controls.pickup;
     const focus = document.activeElement;
@@ -1755,7 +1813,17 @@ try {
             'The 30-minute replay budget is full. Recording was discarded; you can keep playing.',
           );
         }
+        const beforeStatus = run.status;
         stepRun(run, command, FIXED_DT);
+        controls = controllerBoostAfterRecovery({
+          beforeStatus,
+          run,
+          controller,
+          input,
+          frame: controllerFrame,
+          controls,
+        });
+        refreshControllerBoostCue();
         if (masteryObserver)
           try {
             masteryObserver.observe(

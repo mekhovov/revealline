@@ -1,0 +1,182 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.13.0",
+  "recordedAt": "2026-09-12T13:02:35.631Z",
+  "startedAt": "2026-09-12T13:02:10.752Z",
+  "baselineRevision": "36c3b41ad4faf417f771a3039e02f8666ccf768f",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Round 23 first parent-authorized working-source validation for optional solo controller Boost Hold/Toggle. Source hashes before/after expose concurrent changes and invalidate a stable pass if any occur. All Round 22 evidence/cache, sixteen frozen releases and seventeen captured tags are preserved. Root npm test already includes all discovered motion/controller/practice suites; no focused reruns inflate the unique total. This does not certify frozen artifacts, browser interaction, physical devices, native execution, distribution or player enjoyment.",
+  "runner": {
+    "path": ".cache/round-23/source-gates/run-gates.mjs",
+    "bytes": 11383,
+    "sha256": "a063422c1d3e34845f73d052bd7ee1b4d3d6f5b339beb00ace0593aeb3321645"
+  },
+  "sourceSnapshot": {
+    "before": "c74f7e7c842b32e24417bb503efd9c4fdc5d8bf287c6d4f9a68e97aea22c02bb",
+    "after": "c74f7e7c842b32e24417bb503efd9c4fdc5d8bf287c6d4f9a68e97aea22c02bb",
+    "files": 306,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-23/source-gates/source-inputs-before.json",
+      "bytes": 52134,
+      "sha256": "e94fd9bc98007f9871902d8a04be1387e76835e4f4fcfac6daf5b4789c15572e"
+    },
+    "afterIndex": {
+      "path": ".cache/round-23/source-gates/source-inputs.json",
+      "bytes": 52134,
+      "sha256": "e94fd9bc98007f9871902d8a04be1387e76835e4f4fcfac6daf5b4789c15572e"
+    }
+  },
+  "expectedMinimumTests": {
+    "test": 1405
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "durationMs": 17265,
+      "exitCode": 1,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/test.log",
+        "bytes": 345907,
+        "sha256": "43504f1b7316e348c599247d72af5e7602556d48d263a0953dbb0fe37241de82"
+      },
+      "tests": {
+        "tests": 1405,
+        "pass": 1403,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 5157,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/lint.log",
+        "bytes": 132,
+        "sha256": "484c24c3b3de493c66b51389b2bb91880519e3fab222dde1efe306ac33a37a79"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 8939,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/format.log",
+        "bytes": 168,
+        "sha256": "23d1e8d2b9a0610e8279920febce88db3c90c96b4a1847460ed565eaa49300e3"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "durationMs": 1209,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/native-format.log",
+        "bytes": 254,
+        "sha256": "ccd5c02226997434c2cf9d166169eedc074e32238a19e2bad83e177051fa0694"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 4473,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/validate.log",
+        "bytes": 512,
+        "sha256": "56648260fb72f8bce670df668f3f10c241f33552101b04127d350892bc5d65b7"
+      },
+      "validation": {
+        "version": "0.13.0",
+        "files": 117,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 6,
+        "packLevels": 17,
+        "packGoals": 6
+      }
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "mise exec node@22.22.2 -- node --check authoring/motion-lab/app.js",
+      "durationMs": 32,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-23/source-gates/motion-lab-syntax.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "preservedFrozenBaseline": {
+    "inventory": {
+      "path": ".cache/round-23/integrity/frozen-releases-before-v0130.json",
+      "bytes": 385534,
+      "sha256": "00254c7e002cd104f83b5c77a6ab4176881691f189b3aebf979fe07055ceed89"
+    },
+    "releaseCount": 16,
+    "fileCount": 1646,
+    "bytes": 2111529959,
+    "preparedComparisonUnchanged": true,
+    "exactTagsUnchanged": true,
+    "tagCount": 17,
+    "beforeTags": {
+      "path": ".cache/round-23/source-gates/tags-before.json",
+      "bytes": 4600,
+      "sha256": "c16fc74e372a830bf6a04f87a9e99249f619693992db738074474668ba766253"
+    },
+    "afterTags": {
+      "path": ".cache/round-23/source-gates/tags-after.json",
+      "bytes": 4600,
+      "sha256": "c16fc74e372a830bf6a04f87a9e99249f619693992db738074474668ba766253"
+    }
+  },
+  "preservedPreviousEvidence": {
+    "roots": [
+      "docs/verification/round-22",
+      ".cache/round-22",
+      "releases",
+      ".cache/round-23/integrity/frozen-releases-before-v0130.json",
+      ".cache/round-23/integrity/frozen-releases-before-v0130.json.sha256"
+    ],
+    "files": 2811,
+    "before": "d549198dbec61ad400e320fca7f59e0fe0838138a4a7600a2a58daf6cf1c7b91",
+    "after": "d549198dbec61ad400e320fca7f59e0fe0838138a4a7600a2a58daf6cf1c7b91",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-23/source-gates/prior-evidence-before.json",
+      "bytes": 573734,
+      "sha256": "499a23fb28fb67fca660cfc17bde3338b0ba4639f70c2580905e117ed2c8934f"
+    },
+    "afterIndex": {
+      "path": ".cache/round-23/source-gates/prior-evidence-after.json",
+      "bytes": 573734,
+      "sha256": "499a23fb28fb67fca660cfc17bde3338b0ba4639f70c2580905e117ed2c8934f"
+    }
+  },
+  "passed": false
+}

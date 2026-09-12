@@ -14,6 +14,7 @@ export function attachInput({
   arena,
   onPause = () => {},
   onActivity = () => {},
+  onClear = () => {},
   tapMode = () => false,
   active = () => true,
   onGamepad = () => {},
@@ -22,6 +23,7 @@ export function attachInput({
 }) {
   if (readControllerCommand !== null && typeof readControllerCommand !== 'function')
     throw new TypeError('readControllerCommand must be a function.');
+  if (typeof onClear !== 'function') throw new TypeError('onClear must be a function.');
   const held = new Map(),
     buttons = new Map(),
     captures = new Map(),
@@ -96,6 +98,10 @@ export function attachInput({
       try {
         if (element.hasPointerCapture?.(id)) element.releasePointerCapture(id);
       } catch {}
+    // The host may cancel a controller-owned toggle, but must not recursively
+    // call clear(). Inactive polling also reaches this path; preserve pad/menu
+    // ownership rather than invoking the router's full clear/neutral gate.
+    onClear();
   };
   // Resuming may synchronously clear input. Record the fresh command only afterward.
   const startDirection = (direction, key, element = null, pointer = false) => {
@@ -385,6 +391,7 @@ export function attachInput({
   return {
     poll,
     clear,
+    localBoostActive: localBoost,
     destroy() {
       clear();
       destroyed = true;
