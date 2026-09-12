@@ -532,6 +532,7 @@ export async function buildProject({
   if (files.includes('game/content/campaign.json')) await validateLevels(root);
   if (files.includes('game/content/themes.json')) await validateThemes(root);
   if (files.includes('game/content/classes.json')) await validateClasses(root);
+  if (files.includes('game/content/packs/index.json')) await validatePacks(root);
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -867,6 +868,7 @@ export function parseArguments(argv) {
     validate: [],
     test: [],
     generate: ['seed', 'out'],
+    'inspect-goals': ['pack', 'out'],
     'release-snapshot': ['ref', 'version'],
   };
   if (!Object.hasOwn(allowed, action)) fail(`Unknown command: ${action}`);
@@ -886,7 +888,7 @@ export async function main(argv = process.argv.slice(2)) {
   const { action, options } = parseArguments(argv);
   if (action === 'help') {
     process.stdout.write(
-      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  release-snapshot --ref REF --version LABEL\n',
+      'Xonix game CLI (Node built-ins)\n  serve [--root DIR] [--host 127.0.0.1] [--port 8768]\n  build [--out dist] [--version LABEL]\n  validate\n  test\n  generate --seed TEXT --out FILE.json\n  inspect-goals --pack FILE.json [--out REPORT.json]\n  release-snapshot --ref REF --version LABEL\n',
     );
     return;
   }
@@ -944,8 +946,18 @@ export async function main(argv = process.argv.slice(2)) {
         ...(await validateLevels()),
         ...(await validateThemes()),
         ...(await validateClasses()),
+        ...(await validatePacks()),
       }),
     );
+  } else if (action === 'inspect-goals') {
+    if (!options.pack) fail('Inspect-goals requires --pack');
+    const report = await inspectGoals({ packPath: options.pack });
+    if (options.out) {
+      const target = path.resolve(options.out);
+      await fs.mkdir(path.dirname(target), { recursive: true });
+      await fs.writeFile(target, json(report), { flag: 'wx' });
+    }
+    process.stdout.write(json(report));
   } else if (action === 'generate') {
     if (!options.seed || !options.out) fail('Generate requires --seed and --out');
     const level = await generateLevel(options.seed);
@@ -1024,6 +1036,182 @@ export async function validateClasses(root = PROJECT_ROOT) {
   const result = validateClassRecipes(recipes);
   if (!result.valid) fail(`Invalid class recipes: ${JSON.stringify(result.errors)}`);
   return { classes: recipes.length };
+}
+
+async function boundedJSONFile(filename, maxBytes) {
+  if (!(await fs.lstat(filename)).isFile()) fail('JSON input must be a regular file, not a link');
+  const handle = await fs.open(filename, 'r');
+  try {
+    const stat = await handle.stat();
+    if (!stat.isFile() || stat.size > maxBytes) fail(`JSON input exceeds ${maxBytes} bytes`);
+    const chunks = [];
+    let size = 0;
+    for (;;) {
+      const chunk = Buffer.alloc(Math.min(65536, maxBytes + 1 - size));
+      const { bytesRead } = await handle.read(chunk, 0, chunk.length);
+      if (!bytesRead) break;
+      size += bytesRead;
+      if (size > maxBytes) fail(`JSON input exceeds ${maxBytes} bytes`);
+      chunks.push(chunk.subarray(0, bytesRead));
+    }
+    const bytes = Buffer.concat(chunks);
+    return { bytes, value: JSON.parse(bytes.toString('utf8')) };
+  } finally {
+    await handle.close();
+  }
+}
+
+// Import from the chosen source tree only when needed: old miniature/frozen builds
+// without a pack index retain their existing CLI dependency boundary.
+async function packTooling(root) {
+  const module = (name) => import(pathToFileURL(path.join(root, 'game', name)).href);
+  const [packs, catalog, library, level, registry, data] = await Promise.all([
+    module('packs.mjs'),
+    module('mastery-catalog.mjs'),
+    module('library.mjs'),
+    module('core/level.mjs'),
+    module('core/registry.mjs'),
+    module('data-json.mjs'),
+  ]);
+  return { ...packs, ...catalog, ...library, ...level, ...registry, ...data };
+}
+
+function packCatalogEntries(pack, tooling) {
+  return pack.campaigns.map((source) => ({
+    campaign: {
+      ...source,
+      classRecipes: pack.classRecipes.filter(
+        (recipe) => !source.classIds || source.classIds.includes(recipe.id),
+      ),
+    },
+    sourcePackId: pack.id,
+    sourcePackFormat: pack.format,
+    ...(pack.format === tooling.MASTERY_PACK_VERSION
+      ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
+      : {}),
+  }));
+}
+
+async function readCheckedPack(filename, tooling) {
+  const { bytes, value: pack } = await boundedJSONFile(filename, tooling.PACK_LIMITS.maxBytes);
+  const checked = tooling.validatePack(pack);
+  if (!checked.valid) fail(`Invalid pack ${path.basename(filename)}: ${checked.errors.join('; ')}`);
+  return { pack, bytes, warnings: checked.warnings };
+}
+
+/** Structural/reference inspection only; neither image decode nor simulated play occurs. */
+export async function inspectGoals({ packPath, root = PROJECT_ROOT } = {}) {
+  if (typeof packPath !== 'string' || !packPath) fail('Inspect-goals requires --pack');
+  const tooling = await packTooling(root);
+  const { pack, bytes, warnings } = await readCheckedPack(path.resolve(packPath), tooling);
+  const entries = packCatalogEntries(pack, tooling);
+  const catalog = tooling.createMasteryCatalog(entries);
+  return {
+    format: 'xonix-goal-inspection.v1',
+    pack: {
+      id: pack.id,
+      version: pack.version,
+      format: pack.format,
+      name: pack.name,
+      bytes: bytes.length,
+      sha256: sha256(bytes),
+    },
+    checks: {
+      structure: 'valid',
+      references: 'valid',
+      installedLibrary: 'not-checked',
+      imageDecoding: 'not-run',
+      solvability: 'not-tested',
+      awardAuthority: false,
+    },
+    campaigns: entries.map(({ campaign }) => {
+      const key = tooling.campaignKey(campaign);
+      return {
+        id: campaign.id,
+        title: campaign.title,
+        campaignKey: key,
+        rosterHash: tooling.rosterHash(campaign.classRecipes),
+        classIds: campaign.classRecipes.map((recipe) => recipe.id),
+        maps: campaign.levels.map((level) => {
+          const registration = catalog.get(key, level.id);
+          return {
+            id: level.id,
+            name: level.name,
+            revision: level.revision,
+            levelIdentity: `level-v1-${tooling.dataIdentity(tooling.normalizedLevel(level))}`,
+            themeId: level.themeId ?? campaign.themeId ?? pack.themes[0].id,
+            musicId: level.musicId ?? campaign.musicId ?? null,
+            goalSource: registration
+              ? pack.format === tooling.MASTERY_PACK_VERSION
+                ? 'authored'
+                : 'built-in-fallback'
+              : 'none',
+            definitionIdentity: registration?.definitionIdentity ?? null,
+            definition: registration?.definition ?? null,
+          };
+        }),
+      };
+    }),
+    warnings,
+  };
+}
+
+/** Validate every indexed expansion, including co-installation goal conflicts, before building. */
+export async function validatePacks(root = PROJECT_ROOT) {
+  const relative = 'game/content/packs/index.json';
+  if (!(await exists(path.join(root, relative)))) return {};
+  const filename = await noSymlinkPath(root, relative);
+  const { value: index } = await boundedJSONFile(filename, 65536);
+  if (
+    index?.format !== 'xonix-pack-index.v1' ||
+    Object.keys(index).some((key) => !['format', 'packs'].includes(key)) ||
+    !Array.isArray(index.packs) ||
+    index.packs.length > 104
+  )
+    fail('Pack index must have format xonix-pack-index.v1 and at most 104 entries');
+  const tooling = await packTooling(root);
+  const ids = new Set(),
+    paths = new Set(),
+    entries = [];
+  const basePath = 'game/content/campaign.json';
+  if (await exists(path.join(root, basePath))) {
+    const { value: campaign } = await boundedJSONFile(
+      await noSymlinkPath(root, basePath),
+      tooling.PACK_LIMITS.maxBytes,
+    );
+    const classesPath = 'game/content/classes.json';
+    const classRecipes = (await exists(path.join(root, classesPath)))
+      ? (
+          await boundedJSONFile(
+            await noSymlinkPath(root, classesPath),
+            tooling.PACK_LIMITS.maxBytes,
+          )
+        ).value
+      : tooling.CLASSES;
+    entries.push({ campaign: { ...campaign, classRecipes }, sourcePackId: null });
+  }
+  let levels = 0;
+  for (const entry of index.packs) {
+    if (
+      !tooling.plainObject(entry) ||
+      !tooling.stableId(entry.id) ||
+      typeof entry.path !== 'string' ||
+      Object.keys(entry).some((key) => !['id', 'path'].includes(key))
+    )
+      fail('Invalid pack index entry');
+    safeRelative(entry.path);
+    if (!entry.path.endsWith('.json') || ids.has(entry.id) || paths.has(entry.path))
+      fail('Pack index paths and IDs must be unique JSON files');
+    ids.add(entry.id);
+    paths.add(entry.path);
+    const file = await noSymlinkPath(root, `game/content/packs/${entry.path}`);
+    const { pack } = await readCheckedPack(file, tooling);
+    if (pack.id !== entry.id) fail(`Pack index ID ${entry.id} does not match ${pack.id}`);
+    entries.push(...packCatalogEntries(pack, tooling));
+    levels += pack.campaigns.reduce((count, campaign) => count + campaign.levels.length, 0);
+  }
+  const catalog = tooling.createMasteryCatalog(entries);
+  return { packs: ids.size, packLevels: levels, packGoals: catalog.registrations.length };
 }
 
 /** Delegate to the exact browser generator; this wrapper owns no second algorithm. */

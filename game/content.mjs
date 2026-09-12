@@ -1,6 +1,7 @@
 import { exportJSONFile } from './platform.mjs';
 import { validateTrack } from './ui/music.mjs';
 import { validateLevel, validateClassRecipes, CLASSES, TURN_POLICIES } from './core/index.mjs';
+import { resolveMasteryContext } from './mastery-catalog.mjs';
 
 const plain = (v) =>
   v !== null &&
@@ -20,6 +21,22 @@ export const VISUAL_ROLES = Object.freeze([
   'supply',
   'wall',
 ]);
+export const SCENARIO_VERSION = 'xonix-playground.v1';
+export const MASTERY_SCENARIO_VERSION = 'xonix-playground.v2';
+
+/** A preview uses the authored definition's campaign ID and this single map.
+ * It is deliberately separate from any installed campaign or award authority.
+ */
+export function scenarioMasteryCampaign(scenario, classRecipes = CLASSES) {
+  return {
+    version: 'xonix-campaign.v1',
+    id: scenario.masteryDefinition.campaignId,
+    revision: '1',
+    title: scenario.level.name.slice(0, 160),
+    levels: [scenario.level],
+    classRecipes: scenario.classRecipes ?? classRecipes,
+  };
+}
 export const CONTENT_LIMITS = Object.freeze({
   maxImageBytes: 4 * 1024 * 1024,
   maxEncodedImageChars: 6 * 1024 * 1024,
@@ -417,8 +434,9 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   const errors = checkJSON(value),
     warnings = [];
   if (errors.length) return result(errors, { warnings });
-  if (!plain(value) || value.format !== 'xonix-playground.v1')
-    return result(['Expected xonix-playground.v1'], { warnings });
+  if (!plain(value) || ![SCENARIO_VERSION, MASTERY_SCENARIO_VERSION].includes(value.format))
+    return result(['Expected xonix-playground.v1 or xonix-playground.v2'], { warnings });
+  const hasMastery = value.format === MASTERY_SCENARIO_VERSION;
   keys(
     value,
     [
@@ -431,6 +449,7 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       'presentation',
       'metadata',
       'music',
+      ...(hasMastery ? ['masteryDefinition'] : []),
     ],
     'scenario',
     errors,
@@ -490,6 +509,20 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
   if (own(value, 'metadata')) metadata(value.metadata, 'scenario.metadata', errors);
   if (own(value, 'music'))
     errors.push(...validateTrack(value.music).errors.map((error) => `music: ${error}`));
+  if (hasMastery) {
+    if (!own(value, 'masteryDefinition'))
+      errors.push('scenario.masteryDefinition is required; use null for no optional goal');
+    else if (value.masteryDefinition !== null && !errors.length) {
+      try {
+        resolveMasteryContext({
+          campaign: scenarioMasteryCampaign(value, recipes),
+          definition: value.masteryDefinition,
+        });
+      } catch (error) {
+        errors.push(`masteryDefinition: ${error.message}`);
+      }
+    }
+  }
   if (!plain(value.visualOverrides)) errors.push('visualOverrides must be an object');
   else {
     let totalPixels = 0;

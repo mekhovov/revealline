@@ -7,8 +7,9 @@ The existing [playground](../game/playground/index.html) now loads complete runt
 Use **Import content** or paste into **Complete pack JSON**. The supported inputs are:
 
 - `xonix-playground.v1`: one scenario, including class recipes, role images and optional procedural music.
+- `xonix-playground.v2`: the same fields plus required `masteryDefinition`, a supported optional goal or explicit null.
 - `xonix-level.v1`: replace the current map while retaining the current theme, images, classes and music.
-- `xonix-pack.v1`: validate and decode an expansion, add it to the prepared authoring catalog, and select its first campaign.
+- `xonix-pack.v1` or explicit `xonix-pack.v2`: validate and decode an expansion, add it to the prepared authoring catalog, and select its first campaign. V2 carries optional goal declarations.
 - `xonix-pack-library.v1`: validate and decode the complete catalog, including its dependency pins, before replacing the loaded authoring catalog.
 
 The **Load night shift** and **Load living threads** buttons use shipped example files through that same workflow. **Campaign source** selects a loaded campaign; **Start from** selects a map. Map selection carries its defined theme, filtered class roster, procedural track and per-map visual bindings. The edited map remains a working copy: selecting another source loads that source's saved definition. **Undo** restores the previous working copy, source selector and prepared expansion catalog together.
@@ -27,13 +28,23 @@ The hangar brush adds an equipment-change station. A placed interior hangar beco
 
 **Challenge budgets** exposes mission time, maximum cut time, maximum live trail cells and equipment-switch cooldown. Zero disables the first three restrictions. The advanced level JSON retains the full `signalZones`, `hangars`, rule objects and unrelated valid authored fields during ordinary painting. JSON names still cannot implement an unsupported core primitive.
 
+## Edit optional equipment goals
+
+Open **Optional equipment goal** to inspect the current declaration. **Copy campaign goal** copies the selected source map's registered goal into an editable v2 scenario. **Validate and apply goal** accepts a complete supported definition only when its local references and actual equipment resolve. **No optional goal** writes explicit null, so an old shipped fallback cannot unexpectedly return. Undo restores the previous definition and source together.
+
+Supported recipes are Steady Signal, Supply Line and Safe Return; their finite predicates are documented in [the pack mastery contract](pack-mastery-contract.md). The goal summary distinguishes reference validation from actual completion. Launch **Play configuration** and inspect the live/pause checklist with normal controls. The preview remains practice for its entire lifetime and awards no pictures, scores or seals.
+
+Artwork, theme and presentation edits retain the declaration. A map edit that removes its required pad, region, actor or hangar rejects before replacing the current configuration. To generate an unrelated map, explicitly clear the old goal first. The three interaction presets intentionally start without the previous map's goal; Undo restores it. JSON edits can replace the map and declaration together through Complete pack JSON.
+
+A one-map expansion export retargets the definition to its new campaign ID and reports that identity change. It does not migrate a seal from the source campaign. V2 null exports an empty declaration list; v1 files retain their original format. Export loaded library preserves the original declarations unchanged. See [the creator prompts](../authoring/prompts/round-19-pack-goals.md).
+
 ## Three direct interaction comparisons
 
-| Preset | What to try | Expected runtime behavior |
-| --- | --- | --- |
-| Fiber relay | Fly down through the signal band; compare with Scout using the same map. | Fiber keeps its speed, boost and scan capability. Scout is slowed and blocked by the field. Both retain a vulnerable live trail. |
-| Bomber supply | Pick up at home, move down about one cell, then use Ability. | One carried charge becomes a short stun field near the waiting enemy. An empty carrier has no charge to spend. |
-| Impact pulse | Move down about one cell, then use Ability. | A nearby enemy is stunned, the unfinished cut is cancelled, and the craft redeploys without losing a life. The pulse itself captures no territory. |
+| Preset        | What to try                                                              | Expected runtime behavior                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Fiber relay   | Fly down through the signal band; compare with Scout using the same map. | Fiber keeps its speed, boost and scan capability. Scout is slowed and blocked by the field. Both retain a vulnerable live trail.                   |
+| Bomber supply | Pick up at home, move down about one cell, then use Ability.             | One carried charge becomes a short stun field near the waiting enemy. An empty carrier has no charge to spend.                                     |
+| Impact pulse  | Move down about one cell, then use Ability.                              | A nearby enemy is stunned, the unfinished cut is cancelled, and the craft redeploys without losing a life. The pulse itself captures no territory. |
 
 These presets retain the current theme and original image bindings, load the registered built-in roster and start a practice preview. Every preset is structurally valid under both steering policies. Tests also exercise actual signal resistance, pickup/stun and pulse/redeployment through normal fixed-step input. They are interaction comparisons rather than real-world aircraft simulations or automatic difficulty recommendations.
 
@@ -48,9 +59,9 @@ The existing six size buttons remain 390×844, 844×390, 1024×768, 1280×720, 1
 Pure authoring logic is in `game/playground/model.mjs`; DOM, async stale-job protection, source selection and bounded undo remain in `playground.mjs`. Run:
 
 ```sh
-node --test game/test/playground-model.test.mjs game/test/content.test.mjs game/test/imports.test.mjs game/test/packs.test.mjs
+node --test game/test/playground-model.test.mjs game/test/scenario-mastery.test.mjs game/test/content.test.mjs game/test/imports.test.mjs game/test/packs.test.mjs
 ```
 
-Tests cover all four import formats, per-map asset/music/roster selection, failure atomicity, mutation during decode, signal/hangar edits, original-field preservation, both steering policies, actual class behavior and an edited scenario becoming an installable expansion. Browser interaction and viewport evidence belong to the release verification record; unit results are not a substitute for those checks.
+Tests cover supported old and new import versions, per-map asset/music/roster selection, failure atomicity, mutation during decode, signal/hangar edits, original-field preservation, both steering policies, actual class behavior and an edited scenario becoming an installable expansion. Browser interaction and viewport evidence belong to the release verification record; unit results are not a substitute for those checks.
 
 For animated inspection of recorded gameplay, open [Replay Theater](replay-theater.md). Its four Fieldcraft examples, verified file/JSON import, pause/restart, single-tick step and 0.5×/1×/2× rates are separate from the playground's verification readout. Neither route grants campaign rewards; an unfinished player save resumes through the main game.

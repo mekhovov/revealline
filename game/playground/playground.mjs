@@ -9,6 +9,9 @@ import {
   PRESET_HELP,
   paintLevel,
   expansionFromScenario,
+  withScenarioMastery,
+  editScenario,
+  entryMastery,
 } from './model.mjs';
 import { generateLevel } from '../generator.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
@@ -98,6 +101,15 @@ function sync() {
   $('source-readout').textContent =
     `${selectedEntry().label} · ${campaign.levels.length} maps. Editing a working copy; Undo returns to the previous configuration and source.`;
   $('export-catalog').disabled = !packLibrary.packs.length;
+  const definition = current.masteryDefinition;
+  $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
+  $('mastery-readout').textContent =
+    current.format === 'xonix-playground.v2'
+      ? definition
+        ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
+        : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
+      : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
+  $('use-campaign-goal').disabled = !entryMastery(selectedEntry(), current.level.id);
   const track = currentTrack();
   $('music-readout').textContent = track
     ? `Pack music: ${track.name} · ${track.genre} · ${track.tempo} BPM. This exact descriptor is used in practice and retained in the expansion export. Enable sound in the preview to listen.`
@@ -368,7 +380,11 @@ try {
         const ticket = beginImport();
         try {
           const preset = interactionPreset(button.dataset.preset, current, recipes);
-          await adopt(preset, 'Interaction preset ready. Play configuration to try it.', ticket);
+          await adopt(
+            preset,
+            'Interaction preset ready without an optional goal. Play configuration to try it; Undo restores the previous map and goal.',
+            ticket,
+          );
           $('preset-readout').textContent = PRESET_HELP[button.dataset.preset];
           preview();
         } catch (error) {
@@ -437,6 +453,41 @@ try {
     remember();
     current.settings.classId = $('class-select').value;
   };
+  $('apply-mastery').onclick = async () => {
+    const ticket = beginImport();
+    try {
+      const definition = JSON.parse($('mastery-json').value);
+      await adopt(
+        withScenarioMastery(current, definition),
+        'Optional goal validated and applied. Play configuration to test its actual conditions.',
+        ticket,
+      );
+    } catch (error) {
+      if (importCurrent(ticket)) status(`Goal rejected: ${error.message}`, true);
+    }
+  };
+  $('clear-goal').onclick = () => {
+    const next = withScenarioMastery(current, null);
+    remember();
+    current = next;
+    sync();
+    status('Optional goal disabled explicitly. Undo restores the previous definition.');
+  };
+  $('use-campaign-goal').onclick = () => {
+    try {
+      const definition = entryMastery(selectedEntry(), current.level.id);
+      if (!definition) throw new Error('This source map has no registered goal.');
+      const next = withScenarioMastery(current, definition);
+      remember();
+      current = next;
+      sync();
+      status(
+        'Campaign goal copied into this editable scenario. Changes apply to this copy; practice never awards progress.',
+      );
+    } catch (error) {
+      status(`Goal rejected: ${error.message}`, true);
+    }
+  };
   $('turn-select').onchange = () => {
     remember();
     current.settings.turnPolicy = $('turn-select').value;
@@ -450,29 +501,58 @@ try {
     ['switch-limit', 'switchCooldownSeconds'],
   ])
     $(id).onchange = () => {
-      remember();
-      current.level.rules = { ...current.level.rules, [key]: Number($(id).value) };
-      sync();
-      checked();
+      try {
+        const next = editScenario(current, {
+          level: {
+            ...current.level,
+            rules: { ...current.level.rules, [key]: Number($(id).value) },
+          },
+        });
+        remember();
+        current = next;
+        sync();
+      } catch (error) {
+        sync();
+        status(`Edit rejected: ${error.message}`, true);
+      }
     };
   $('goal-input').onchange = () => {
-    remember();
-    current.level.goal.coverage = Number($('goal-input').value) / 100;
-    sync();
-    checked();
+    try {
+      const next = editScenario(current, {
+        level: {
+          ...current.level,
+          goal: { ...current.level.goal, coverage: Number($('goal-input').value) / 100 },
+        },
+      });
+      remember();
+      current = next;
+      sync();
+    } catch (error) {
+      sync();
+      status(`Edit rejected: ${error.message}`, true);
+    }
   };
   $('generate-button').onclick = async () => {
+    const ticket = beginImport();
     try {
       const level = await generateLevel($('seed-input').value);
+      assertImportCurrent(ticket);
+      const next = editScenario(current, {
+        level,
+        settings: { ...current.settings, seed: parseInt(level.id.slice(10, 18), 16) >>> 0 },
+      });
       remember();
-      current.level = level;
-      current.settings.seed = parseInt(level.id.slice(10, 18), 16) >>> 0;
+      current = next;
       sync();
       status(
         'Deterministic map generated and validated. Dynamic difficulty still needs playtesting.',
       );
     } catch (error) {
-      status(error.message, true);
+      if (importCurrent(ticket))
+        status(
+          `${error.message} If the current goal names objects on the previous map, choose No optional goal before generating a new map.`,
+          true,
+        );
     }
   };
   document.querySelectorAll('[data-brush]').forEach(
@@ -491,8 +571,9 @@ try {
         signalHeight: Number($('signal-height').value),
         speedFactor: Number($('signal-speed').value) / 100,
       });
+      const next = editScenario(current, { level });
       remember();
-      current.level = level;
+      current = next;
       $('paint-x').value = x;
       $('paint-y').value = y;
       sync();
@@ -523,7 +604,10 @@ try {
     }
     $('undo-button').disabled = !history.length;
     sync();
-    checked();
+    if (checked())
+      status(
+        'Previous configuration and source restored. Play configuration to refresh the preview.',
+      );
   };
   $('preview-button').onclick = preview;
   $('open-preview').onclick = (event) => {
@@ -648,7 +732,7 @@ try {
       const pack = expansionFromScenario(current, { music: track ? [track] : [] });
       const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
       status(
-        `Edited map prepared as a complete playable expansion. ${exported.message} Import it into the main game to keep campaign progress.`,
+        `Edited map prepared as a complete playable expansion.${current.masteryDefinition ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.` : ''} ${exported.message} Import it into the main game to keep campaign progress.`,
       );
     } catch (error) {
       status(error.message, true);

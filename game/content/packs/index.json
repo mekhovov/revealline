@@ -16,6 +16,10 @@
     {
       "id": "homeward-skies",
       "path": "homeward-skies.json"
+    },
+    {
+      "id": "equipment-workshop",
+      "path": "equipment-workshop.json"
     }
   ]
 }

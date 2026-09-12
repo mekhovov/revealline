@@ -1,0 +1,156 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.9.0",
+  "recordedAt": "2026-09-12T10:47:30.565Z",
+  "startedAt": "2026-09-12T10:47:15.359Z",
+  "baselineRevision": "23b124446272124fd48a7b8e27d5cd6ded3e5370",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Round 19 current source checks only. Root npm test includes all discovered motion/controller/practice suites; its total is the unique test count and no focused suites are repeated. This does not certify frozen artifacts, browser interaction, physical devices, native execution, distribution or player enjoyment.",
+  "runner": {
+    "path": ".cache/round-19/source-gates/run-gates.mjs",
+    "bytes": 8397,
+    "sha256": "aab0afccdc2b26660c06a5dc9f23b921df8c0c99ff7ef7f0bbbe6d0921da75e1"
+  },
+  "sourceSnapshot": {
+    "before": "239a9ef2d68097de77fa5bfc12ada8a6dde8df980c6bb07cffa50944f884c112",
+    "after": "239a9ef2d68097de77fa5bfc12ada8a6dde8df980c6bb07cffa50944f884c112",
+    "files": 262,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-19/source-gates/source-inputs-before.json",
+      "bytes": 44312,
+      "sha256": "3ceb15a36e207d085af7729462c738187fbdaa126c62583c8cc322b818127f18"
+    },
+    "afterIndex": {
+      "path": ".cache/round-19/source-gates/source-inputs.json",
+      "bytes": 44312,
+      "sha256": "3ceb15a36e207d085af7729462c738187fbdaa126c62583c8cc322b818127f18"
+    }
+  },
+  "expectedMinimumTests": {
+    "test": 1091
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "durationMs": 14223,
+      "exitCode": 1,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/test.log",
+        "bytes": 263763,
+        "sha256": "0e560580d357181b7710a44eaf3c4269612e470e4ea6b40ce38074ef34d4e0bb"
+      },
+      "tests": {
+        "tests": 1091,
+        "pass": 1090,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 4306,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/lint.log",
+        "bytes": 131,
+        "sha256": "4dd9e1c0a2932861262f04b61a82153ddfceaf2dd64a5eda38aa6b0964ec398f"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 6608,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/format.log",
+        "bytes": 167,
+        "sha256": "3f3882cf6c3b53677ae0c6e59130359aa6a3f7b0016c664e08bc5e5c14062842"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "durationMs": 1228,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/native-format.log",
+        "bytes": 253,
+        "sha256": "6c4b0f9677b12d7d49ac38af72023a634eb54d17e0327004171f77647e50110c"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 3893,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/validate.log",
+        "bytes": 510,
+        "sha256": "b8805c11d9cd2d1954f00b957864ff8d3035382ef7c75fe4834267e68f581e51"
+      },
+      "validation": {
+        "version": "0.9.0",
+        "files": 106,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 5,
+        "packLevels": 16,
+        "packGoals": 6
+      }
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "mise exec node@22.22.2 -- node --check authoring/motion-lab/app.js",
+      "durationMs": 33,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-19/source-gates/motion-lab-syntax.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "preservedPreviousEvidence": {
+    "roots": [
+      "docs/verification/round-18",
+      ".cache/round-18"
+    ],
+    "files": 1002,
+    "before": "7d042598e703357d28bde5bf04df839825be7ba665f7d85950c9ab09b4f89970",
+    "after": "7d042598e703357d28bde5bf04df839825be7ba665f7d85950c9ab09b4f89970",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-19/source-gates/round-18-evidence-before.json",
+      "bytes": 232910,
+      "sha256": "de27d9211e2521e1a8cf6c2f0993deaf1420b05d1590c1eb354b13924e88e821"
+    },
+    "afterIndex": {
+      "path": ".cache/round-19/source-gates/round-18-evidence-after.json",
+      "bytes": 232910,
+      "sha256": "de27d9211e2521e1a8cf6c2f0993deaf1420b05d1590c1eb354b13924e88e821"
+    }
+  },
+  "passed": false
+}

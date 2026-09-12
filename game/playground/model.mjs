@@ -2,7 +2,8 @@ import { CLASSES, RULESET, validateLevel } from '../core/index.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
 import { prepareScenario } from '../imports.mjs';
-import { validateScenario } from '../content.mjs';
+import { validateScenario, MASTERY_SCENARIO_VERSION } from '../content.mjs';
+import { createMasteryCatalog } from '../mastery-catalog.mjs';
 import {
   preparePack,
   installPack,
@@ -10,6 +11,7 @@ import {
   resolvePackCampaign,
   PACK_LIMITS,
   validatePack,
+  MASTERY_PACK_VERSION,
 } from '../packs.mjs';
 
 export function expansionEntries(library) {
@@ -29,6 +31,39 @@ export function editorScenario(scenario) {
   current.presentation ??= { style: 'hybrid', showGrid: false };
   return current;
 }
+/** Choose an explicit authored preview; null deliberately disables shipped fallback. */
+export function withScenarioMastery(current, definition) {
+  const candidate = {
+    ...current,
+    format: MASTERY_SCENARIO_VERSION,
+    masteryDefinition: structuredClone(definition),
+  };
+  const checked = validateScenario(candidate);
+  required(checked.valid, checked.errors.join('; '));
+  return editorScenario(candidate);
+}
+/** Validate the complete candidate before the editor records Undo or adopts a map edit. */
+export function editScenario(current, changes) {
+  const candidate = { ...current, ...changes };
+  const checked = validateScenario(candidate);
+  required(checked.valid, checked.errors.join('; '));
+  return editorScenario(candidate);
+}
+export function entryMastery(entry, levelId) {
+  const registrations = createMasteryCatalog([
+    {
+      campaign: {
+        ...entry.campaign,
+        classRecipes: entry.classRecipes ?? entry.campaign.classRecipes ?? CLASSES,
+      },
+      sourcePackId: entry.sourcePackId ?? null,
+      ...(entry.sourcePackFormat
+        ? { sourcePackFormat: entry.sourcePackFormat, masteries: entry.masteries }
+        : {}),
+    },
+  ]).registrations;
+  return registrations.find((registration) => registration.levelId === levelId)?.definition ?? null;
+}
 export function entryScenario(
   entry,
   levelId = entry.campaign.levels[0].id,
@@ -42,7 +77,16 @@ export function entryScenario(
     entry.themes.find((item) => item.id === (level.themeId ?? entry.campaign.themeId)) ??
     entry.themes[0];
   const current = {
-    format: 'xonix-playground.v1',
+    format:
+      entry.sourcePackFormat === MASTERY_PACK_VERSION
+        ? MASTERY_SCENARIO_VERSION
+        : 'xonix-playground.v1',
+    ...(entry.sourcePackFormat === MASTERY_PACK_VERSION
+      ? {
+          masteryDefinition:
+            entry.masteries.find((definition) => definition.levelId === levelId) ?? null,
+        }
+      : {}),
     level,
     theme,
     classRecipes,
@@ -80,12 +124,15 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     value && typeof value === 'object' && !Array.isArray(value),
     'Choose a scenario, map, expansion or library JSON object.',
   );
-  if (value.format === 'xonix-pack.v1' || value.format === 'xonix-pack-library.v1') {
+  if (['xonix-pack.v1', MASTERY_PACK_VERSION, 'xonix-pack-library.v1'].includes(value.format)) {
     let nextLibrary,
       selectedId,
       warnings = [];
-    if (value.format === 'xonix-pack.v1') {
-      const prepared = await preparePack(value, { ...(decodeImage ? { decodeImage } : {}) });
+    if (value.format !== 'xonix-pack-library.v1') {
+      const prepared = await preparePack(value, {
+        library: packLibrary,
+        ...(decodeImage ? { decodeImage } : {}),
+      });
       nextLibrary = installPack(packLibrary, prepared.pack);
       selectedId = prepared.pack.id;
       warnings = prepared.warnings;
@@ -217,6 +264,7 @@ export function interactionPreset(kind, current, classRecipes = CLASSES) {
   );
   const scenario = structuredClone(current),
     close = kind !== 'fiber';
+  if (scenario.format === MASTERY_SCENARIO_VERSION) scenario.masteryDefinition = null;
   scenario.level = {
     version: 'xonix-level.v1',
     id: `workshop-${kind}`,
@@ -281,7 +329,19 @@ export function expansionFromScenario(
   delete level.themeId;
   delete level.musicId;
   const pack = {
-    format: 'xonix-pack.v1',
+    format: current.format === MASTERY_SCENARIO_VERSION ? MASTERY_PACK_VERSION : 'xonix-pack.v1',
+    ...(current.format === MASTERY_SCENARIO_VERSION
+      ? {
+          masteries: current.masteryDefinition
+            ? [
+                {
+                  ...structuredClone(current.masteryDefinition),
+                  campaignId: current.level.id,
+                },
+              ]
+            : [],
+        }
+      : {}),
     id,
     version: '1.0.0',
     name,

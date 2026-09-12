@@ -219,7 +219,7 @@ test('Supply Line names each requirement and distinguishes pending cuts from ban
   assert.doesNotMatch(detailed, /no lives|life lost|retry|Route complete/);
   const compact = masteryText(SUPPLY_LINE, preview, { compact: true, practice: true });
   assert.match(compact, /^Practice goal/);
-  assert.match(compact, /Pads 1 \/ 2 · closed signal regions 1 \/ 2 · carrier switch complete/);
+  assert.match(compact, /Pads 1 \/ 2 · closed signal regions 1 \/ 2 · equipment switch complete/);
   assert.doesNotMatch(compact, /\n|life lost/);
   assert.deepEqual(preview, before);
 });

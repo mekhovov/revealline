@@ -5,11 +5,16 @@ import {
   inspectImageDataUrl,
   VISUAL_ROLES,
   CONTENT_LIMITS,
+  SCENARIO_VERSION,
+  MASTERY_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { boundedJSON, plainObject, stableId, exactKeys, required } from './data-json.mjs';
+import { createMasteryCatalog } from './mastery-catalog.mjs';
+import { resolveMasteryDefinition } from './mastery.mjs';
 
 export const PACK_VERSION = 'xonix-pack.v1';
+export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
@@ -18,6 +23,9 @@ export const PACK_LIMITS = Object.freeze({
   levels: 128,
   themes: 16,
   campaigns: 8,
+  masteries: 128,
+  masteryBytes: 8 * 1024,
+  combinedMasteryBytes: 256 * 1024,
 });
 const semver = (v) =>
   typeof v === 'string' && /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(v);
@@ -83,6 +91,7 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
+  const authoredMasteries = pack.format === MASTERY_PACK_VERSION;
   exactKeys(
     pack,
     [
@@ -100,11 +109,14 @@ function packChecks(candidate) {
       'visualOverrides',
       'levelVisuals',
       'music',
+      ...(authoredMasteries ? ['masteries'] : []),
     ],
     'pack',
   );
   required(
-    pack.format === PACK_VERSION && stableId(pack.id) && semver(pack.version),
+    [PACK_VERSION, MASTERY_PACK_VERSION].includes(pack.format) &&
+      stableId(pack.id) &&
+      semver(pack.version),
     'Pack format/id/version is invalid.',
   );
   required(pack.engine === RULESET, `Pack requires a different engine; expected ${RULESET}.`);
@@ -255,6 +267,43 @@ function packChecks(candidate) {
     }
   }
   required(levelIds.size <= PACK_LIMITS.levels, 'Pack map budget exceeded.');
+  if (authoredMasteries) {
+    required(
+      Array.isArray(pack.masteries) && pack.masteries.length <= PACK_LIMITS.masteries,
+      'Pack v2 requires masteries with at most 128 definitions.',
+    );
+    required(
+      new TextEncoder().encode(JSON.stringify(pack.masteries)).byteLength <=
+        PACK_LIMITS.combinedMasteryBytes,
+      'Pack mastery definitions exceed their combined 256 KiB budget.',
+    );
+    const ids = new Set(),
+      maps = new Set();
+    pack.masteries = pack.masteries.map((candidate) => {
+      const definition = resolveMasteryDefinition(
+        boundedJSON(candidate, {
+          maxBytes: PACK_LIMITS.masteryBytes,
+          maxNodes: 256,
+          maxDepth: 5,
+          maxArray: 4,
+          maxString: 512,
+        }),
+      );
+      required(
+        campaignIds.has(definition.campaignId),
+        'Pack mastery refers to an unknown local campaign.',
+      );
+      const map = `${definition.campaignId}/${definition.levelId}`;
+      required(!ids.has(definition.id), 'Pack mastery definition IDs must be unique.');
+      required(!maps.has(map), 'Only one mastery definition may target each pack map.');
+      ids.add(definition.id);
+      maps.add(map);
+      return definition;
+    });
+  }
+  // Batch local context checks so a 128-map campaign is normalized only once.
+  // Definitions stay beside maps; this cannot modify their existing identity.
+  createMasteryCatalog(catalogEntries([pack]));
   required(plainObject(pack.visualOverrides), 'Pack visualOverrides must be an object.');
   required(
     Array.isArray(pack.levelVisuals) && pack.levelVisuals.length <= PACK_LIMITS.levels,
@@ -309,9 +358,29 @@ export function validatePack(value) {
     return { valid: false, errors: [error.message], warnings: [] };
   }
 }
-/** All file/structure/image-header checks finish before the first decoder call. */
-export async function preparePack(candidate, { decodeImage = browserDecodeImage } = {}) {
-  const { pack, images, warnings } = packChecks(candidate);
+function campaignData(pack, source) {
+  return {
+    ...structuredClone(source),
+    classRecipes: structuredClone(
+      pack.classRecipes.filter((recipe) => !source.classIds || source.classIds.includes(recipe.id)),
+    ),
+  };
+}
+function catalogEntries(packs) {
+  return packs.flatMap((pack) =>
+    pack.campaigns.map((source) => ({
+      campaign: campaignData(pack, source),
+      sourcePackId: pack.id,
+      sourcePackFormat: pack.format,
+      ...(pack.format === MASTERY_PACK_VERSION
+        ? {
+            masteries: pack.masteries.filter((definition) => definition.campaignId === source.id),
+          }
+        : {}),
+    })),
+  );
+}
+async function decodeCheckedPack({ pack, images, warnings }, decodeImage) {
   required(typeof decodeImage === 'function', 'A complete image decoder is required.');
   for (const image of images) {
     const decoded = await decodeImage(image.descriptor.dataUrl, {
@@ -326,6 +395,15 @@ export async function preparePack(candidate, { decodeImage = browserDecodeImage 
   freeze(pack);
   preparedPacks.add(pack);
   return { pack, warnings };
+}
+/** All file/structure/image-header checks finish before the first decoder call. */
+export async function preparePack(candidate, { decodeImage = browserDecodeImage, library } = {}) {
+  const checked = packChecks(candidate);
+  if (library !== undefined) {
+    required(preparedLibraries.has(library), 'Prepare an installation against a prepared library.');
+    libraryChecks([...library.packs.filter((pack) => pack.id !== checked.pack.id), checked.pack]);
+  }
+  return decodeCheckedPack(checked, decodeImage);
 }
 function dependenciesValid(packs) {
   const byId = new Map(packs.map((p) => [p.id, p]));
@@ -348,12 +426,17 @@ function dependenciesValid(packs) {
   }
   for (const id of byId.keys()) visit(id);
 }
-function registeredLibrary(packs) {
+function libraryChecks(packs) {
   required(packs.length <= PACK_LIMITS.installed, 'At most 12 expansion packs can be installed.');
   dependenciesValid(packs);
   const library = { format: PACK_LIBRARY_VERSION, packs };
   // Includes byte budgets across every installed asset, before adoption/storage.
   boundedPack(library, true);
+  createMasteryCatalog(catalogEntries(packs));
+  return library;
+}
+function registeredLibrary(packs) {
+  const library = libraryChecks(packs);
   freeze(library);
   preparedLibraries.add(library);
   return library;
@@ -387,29 +470,34 @@ export async function importPackLibrary(candidate, { decodeImage = browserDecode
     'Invalid expansion library.',
   );
   // Validate every pack/dependency before allocating any browser decode surface.
-  for (const pack of value.packs) packChecks(pack);
-  dependenciesValid(value.packs);
+  const checked = value.packs.map((pack) => packChecks(pack));
+  libraryChecks(checked.map((entry) => entry.pack));
   const packs = [];
-  for (const candidate of value.packs)
-    packs.push((await preparePack(candidate, { decodeImage })).pack);
+  for (const candidate of checked)
+    packs.push((await decodeCheckedPack(candidate, decodeImage)).pack);
   return registeredLibrary(packs);
 }
 export function resolvePackCampaign(pack, campaignId) {
   required(preparedPacks.has(pack), 'Resolve a prepared pack.');
   const source = pack.campaigns.find((c) => c.id === campaignId);
   required(source, 'Unknown pack campaign.');
-  const classRecipes = pack.classRecipes.filter(
-    (c) => !source.classIds || source.classIds.includes(c.id),
-  );
-  const campaign = { ...structuredClone(source), classRecipes: structuredClone(classRecipes) };
+  const campaign = campaignData(pack, source);
   return {
     campaign,
-    classRecipes: structuredClone(classRecipes),
+    classRecipes: structuredClone(campaign.classRecipes),
     themes: structuredClone(pack.themes),
     visualOverrides: structuredClone(pack.visualOverrides),
     levelVisuals: structuredClone(pack.levelVisuals),
     music: structuredClone(pack.music),
     sourcePackId: pack.id,
+    ...(pack.format === MASTERY_PACK_VERSION
+      ? {
+          sourcePackFormat: pack.format,
+          masteries: structuredClone(
+            pack.masteries.filter((definition) => definition.campaignId === source.id),
+          ),
+        }
+      : {}),
   };
 }
 export function scenarioFromPack(
@@ -429,12 +517,19 @@ export function scenarioFromPack(
     ...(resolved.levelVisuals.find((v) => v.levelId === levelId)?.visualOverrides ?? {}),
   };
   const scenario = {
-    format: 'xonix-playground.v1',
+    format: pack.format === MASTERY_PACK_VERSION ? MASTERY_SCENARIO_VERSION : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,
     settings: { classId: classId ?? resolved.classRecipes[0].id, turnPolicy, seed },
     visualOverrides,
+    ...(pack.format === MASTERY_PACK_VERSION
+      ? {
+          masteryDefinition: structuredClone(
+            resolved.masteries.find((definition) => definition.levelId === levelId) ?? null,
+          ),
+        }
+      : {}),
   };
   const music =
     resolved.music.find((track) => track.id === (level.musicId ?? resolved.campaign.musicId)) ??

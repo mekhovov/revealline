@@ -2620,6 +2620,600 @@
           "required": 1
         }
       }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-01",
+      "levelRevision": "1",
+      "levelSha256": "0b1b3a7e13483348ddc548eebffcd9ee2cd098bfe33f837e9de3278abe5b55fa",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 1046,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 100,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 772,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 1350,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-01",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 3748,
+        "time": 31.2333333333322,
+        "lives": 3,
+        "score": 12590,
+        "coverage": 0.7410485933503836,
+        "claimedCount": 1159,
+        "totalClaimable": 1564,
+        "medal": "silver",
+        "objectives": {
+          "captured": 2,
+          "total": 2,
+          "required": 2
+        }
+      }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-01",
+      "levelRevision": "1",
+      "levelSha256": "0b1b3a7e13483348ddc548eebffcd9ee2cd098bfe33f837e9de3278abe5b55fa",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 1046,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 100,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 772,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 1353,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-01",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 3751,
+        "time": 31.2583333333322,
+        "lives": 3,
+        "score": 12590,
+        "coverage": 0.7410485933503836,
+        "claimedCount": 1159,
+        "totalClaimable": 1564,
+        "medal": "silver",
+        "objectives": {
+          "captured": 2,
+          "total": 2,
+          "required": 2
+        }
+      }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-02",
+      "levelRevision": "1",
+      "levelSha256": "16feaabe12a0555c32fb394c906718a537288709a1207696647d9d8df5432c1a",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 671,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 170,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 170,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 321,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 50,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 175,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-02",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 1557,
+        "time": 12.973611111111014,
+        "lives": 3,
+        "score": 11910,
+        "coverage": 0.711212516297262,
+        "claimedCount": 1091,
+        "totalClaimable": 1534,
+        "medal": "silver",
+        "objectives": {
+          "captured": 2,
+          "total": 2,
+          "required": 2
+        }
+      }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-02",
+      "levelRevision": "1",
+      "levelSha256": "16feaabe12a0555c32fb394c906718a537288709a1207696647d9d8df5432c1a",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 671,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 170,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 170,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 321,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 60,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 175,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-02",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 1567,
+        "time": 13.056944444444337,
+        "lives": 3,
+        "score": 12080,
+        "coverage": 0.7222946544980443,
+        "claimedCount": 1108,
+        "totalClaimable": 1534,
+        "medal": "silver",
+        "objectives": {
+          "captured": 2,
+          "total": 2,
+          "required": 2
+        }
+      }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-03",
+      "levelRevision": "1",
+      "levelSha256": "9af86e8126a9b250aa530d995d6c4f9990143a411339220b5ce2128315c62be4",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 100,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 465,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-03",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 805,
+        "time": 6.7083333333334565,
+        "lives": 3,
+        "score": 11740,
+        "coverage": 0.7308192457737321,
+        "claimedCount": 1124,
+        "totalClaimable": 1538,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      }
+    },
+    {
+      "packId": "equipment-workshop",
+      "levelId": "workshop-03",
+      "levelRevision": "1",
+      "levelSha256": "9af86e8126a9b250aa530d995d6c4f9990143a411339220b5ce2128315c62be4",
+      "classesSha256": "ae853d82027f8d00c9acb1b3e75bd9d6fb5187054744fda1fc36c15fa6456b29",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "classId": "interceptor",
+      "segments": [
+        {
+          "ticks": 240,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 100,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        },
+        {
+          "ticks": 465,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "workshop-03",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "interceptor",
+        "activeClassId": "interceptor",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "interceptor",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-1443c455",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-1443c455",
+        "status": "won",
+        "won": true,
+        "tick": 805,
+        "time": 6.7083333333334565,
+        "lives": 3,
+        "score": 11740,
+        "coverage": 0.7308192457737321,
+        "claimedCount": 1124,
+        "totalClaimable": 1538,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      }
     }
   ],
   "method": "Original expansion routes use the bounded cut solver; Fieldcraft adds eight authored ordinary capture routes. Specialty interactions are verified separately in fieldcraft-routes.json."

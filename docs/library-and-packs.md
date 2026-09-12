@@ -8,9 +8,15 @@ The playable runtime separates a portable player library from an installed expan
 
 ```js
 import {
-  emptyLibrary, progressFor, recordLibraryCompletion,
-  importLibrary, exportLibrary, loadLibrary, saveLibrary,
-  updatePreferences, setCampaignProgress,
+  emptyLibrary,
+  progressFor,
+  recordLibraryCompletion,
+  importLibrary,
+  exportLibrary,
+  loadLibrary,
+  saveLibrary,
+  updatePreferences,
+  setCampaignProgress,
 } from './library.mjs';
 
 const loaded = loadLibrary(storage, 'revealline.library.v1', { campaigns: [campaign] });
@@ -19,8 +25,11 @@ const progress = progressFor(library, campaign);
 
 // A matching terminal core result, never an arbitrary visible score label.
 library = recordLibraryCompletion(library, {
-  campaign, result: coreSummary, runId,
-  themeId: theme.id, bodyId: selectedBody,
+  campaign,
+  result: coreSummary,
+  runId,
+  themeId: theme.id,
+  bodyId: selectedBody,
   sourcePackId: currentPack?.id ?? null,
 });
 const write = saveLibrary(storage, 'revealline.library.v1', library, loaded.recovery);
@@ -32,15 +41,16 @@ const imported = importLibrary(fileText, { campaigns: availableCampaigns });
 library = imported;
 ```
 
-The file has format `xonix-library.v1` and five sections. Earlier v1 files lacking the additive `masterVolume` preference migrate to 0.8 without losing progress:
+Current exports use `xonix-library.v2` with the six sections below. Supported v1 imports migrate to v2 with an empty mastery list; ordinary past clears never imply equipment seals. Earlier files lacking the additive `masterVolume` preference migrate to 0.8 without losing progress:
 
-| Field | Purpose |
-| --- | --- |
+| Field         | Purpose                                                                                                                               |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `preferences` | Theme/body/class selection, steering policy, terrain style/grid, reduced effects, music enabled/genre, master, music and SFX volumes. |
-| `campaigns` | Saved progression keyed by campaign identity and a content digest. |
-| `gallery` | One earned image entry for each campaign/map/theme combination, with its best complete attempt and original pack identity. |
-| `scores` | Actual completed attempts, preserving score/time/medal/class route together. |
-| `format` | Explicit portable-file version; unsupported versions fail closed. |
+| `campaigns`   | Saved progression keyed by campaign identity and a content digest.                                                                    |
+| `gallery`     | One earned image entry for each campaign/map/theme combination, with its best complete attempt and original pack identity.            |
+| `scores`      | Actual completed attempts, preserving score/time/medal/class route together.                                                          |
+| `masteries`   | Bounded equipment-seal records; imported metadata stays historical unless its exact current registration matches.                     |
+| `format`      | Explicit portable-file version; unsupported versions fail closed.                                                                     |
 
 `campaignKey(campaign)` includes the current ruleset, normalized level content and complete class recipe roster. Editing mechanics, levels or that roster produces a different progression partition. This conservative digest also changes for campaign level presentation metadata or recipe display text; it does not silently migrate renamed or retuned content. Registered theme art outside levels is independent. `progressFor` returns a clone, so a caller cannot accidentally mutate the stored record.
 
@@ -56,7 +66,7 @@ In-progress sessions belong to the replay/session workflow. Do not serialize mut
 
 ## Expansion contract
 
-`game/packs.mjs` accepts `xonix-pack.v1`. A complete pack contains:
+`game/packs.mjs` accepts unchanged `xonix-pack.v1` and opt-in `xonix-pack.v2`. V2 adds required top-level `masteries` using the finite optional-goal [contract](pack-mastery-contract.md); empty means none. Maps, campaign identities and old v1 files remain unchanged. A complete v1 pack contains:
 
 ```js
 {
@@ -104,13 +114,18 @@ Use **Library & saves → Saves & loads → Export complete backup** for one por
 
 ```js
 import {
-  emptyPackLibrary, preparePack, installPack, removePack,
-  exportPackLibrary, importPackLibrary, resolvePackCampaign,
+  emptyPackLibrary,
+  preparePack,
+  installPack,
+  removePack,
+  exportPackLibrary,
+  importPackLibrary,
+  resolvePackCampaign,
   scenarioFromPack,
 } from './packs.mjs';
 
 let expansions = emptyPackLibrary();
-const prepared = await preparePack(fileText); // Browser performs complete image decode.
+const prepared = await preparePack(fileText, { library: expansions }); // Preflight then full decode.
 const next = installPack(expansions, prepared.pack);
 // Store/export next successfully before replacing the persisted library.
 expansions = next;
@@ -118,7 +133,9 @@ expansions = next;
 const content = resolvePackCampaign(prepared.pack, prepared.pack.campaigns[0].id);
 // content.campaign includes the resolved classRecipes for progress/replay identity.
 const scenario = scenarioFromPack(
-  prepared.pack, content.campaign.id, content.campaign.levels[0].id,
+  prepared.pack,
+  content.campaign.id,
+  content.campaign.levels[0].id,
   { turnPolicy: 'grid-center', seed: 1 },
 );
 ```

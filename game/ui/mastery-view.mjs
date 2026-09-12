@@ -1,38 +1,20 @@
 import {
-  STEADY_SIGNAL,
-  SUPPLY_LINE,
-  SAFE_RETURN,
   MASTERY_DEFINITION_VERSION,
   EQUIPMENT_MASTERY_DEFINITION_VERSION,
   masteryDefinitionIdentity,
 } from '../mastery.mjs';
+import { builtinMasteryRegistration } from '../mastery-catalog.mjs';
 
 // Register the reviewed built-in content explicitly. Reusing campaign/map IDs
 // in an edited pack must not silently opt that different board into this goal.
-const HOMEWARD_CONTENT = Object.freeze({
-  campaignKey: 'homeward-skies/1/0d01f5687b3c38ff',
-  levelRevision: '1',
-  rosterHash: 'roster-v1-e159e435',
-  ruleset: 'xonix-core.v2',
-});
-const REGISTRATIONS = [
-  [STEADY_SIGNAL, 'level-v1-5983ec4eaf745012'],
-  [SUPPLY_LINE, 'level-v1-f1c1d86b070b5419'],
-  [SAFE_RETURN, 'level-v1-03b703a6160004fc'],
-].map(([definition, levelIdentity]) =>
-  Object.freeze({
-    ...HOMEWARD_CONTENT,
-    definition,
-    levelIdentity,
-    definitionIdentity: masteryDefinitionIdentity(definition),
-  }),
-);
-const registrationFor = (key, levelId) =>
-  REGISTRATIONS.find((entry) => entry.campaignKey === key && entry.definition.levelId === levelId);
+const registrationFor = (key, levelId, catalog) =>
+  catalog === undefined
+    ? builtinMasteryRegistration(key, levelId)
+    : (catalog?.get(key, levelId) ?? null);
 
 /** Sidecar registration keeps optional goals out of old map and score identity. */
-export function masteryFor(actualCampaignKey, levelId) {
-  return registrationFor(actualCampaignKey, levelId)?.definition ?? null;
+export function masteryFor(actualCampaignKey, levelId, catalog) {
+  return registrationFor(actualCampaignKey, levelId, catalog)?.definition ?? null;
 }
 
 const friendly = (id) =>
@@ -119,7 +101,7 @@ export function masteryText(
         ? [
             `Pads ${find('supply-pickups')?.collectedPadIds?.length ?? 0} / ${pickups.padIds.length}`,
             `closed signal regions ${find('suppressed-region-crossings')?.regions?.filter((item) => item.satisfied).length ?? 0} / ${definition.all.find((item) => item.type === 'suppressed-region-crossings').regions.length}`,
-            `carrier switch ${find('hangar-switch')?.satisfied ? 'complete' : 'pending'}`,
+            `equipment switch ${find('hangar-switch')?.satisfied ? 'complete' : 'pending'}`,
           ]
         : [
             {
@@ -148,12 +130,12 @@ export function masteryText(
   return `${practice ? 'Practice goal' : 'Optional seal'} · ${definition.name}: ${route}${pending > committed ? ` · ${pending} on your open line; return to safety to bank them` : ''} · ${clean ? 'no lives lost' : 'life lost; retry for the seal'}.`;
 }
 
-export function pictureMasteries(records, item, definition, recipes = []) {
+export function pictureMasteries(records, item, definition, recipes = [], catalog) {
   const matches = (records ?? []).filter(
     (record) => record.campaignKey === item.campaignKey && record.levelId === item.levelId,
   );
   const identity = definition ? masteryDefinitionIdentity(definition) : null;
-  const registration = registrationFor(item.campaignKey, item.levelId);
+  const registration = registrationFor(item.campaignKey, item.levelId, catalog);
   const currentDefinition = registration && identity === registration.definitionIdentity;
   return matches.map((record) => ({
     name:

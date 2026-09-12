@@ -198,12 +198,15 @@ export function attachLibraryPanel(api) {
   async function install(candidate) {
     await task('pack-status', async () => {
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
+      const before = api.get().packs;
       let next;
       if (parsed.format === 'xonix-pack-library.v1') next = await importPackLibrary(parsed);
       else {
-        const prepared = await preparePack(parsed);
-        next = installPack(api.get().packs, prepared.pack);
+        const prepared = await preparePack(parsed, { library: before });
+        next = installPack(before, prepared.pack);
       }
+      if (api.get().packs !== before)
+        throw new Error('Installed content changed; prepare this pack again.');
       await api.setPacks(next);
       refresh();
       status(
@@ -235,6 +238,7 @@ export function attachLibraryPanel(api) {
         return;
       }
       const next = importLibrary(parsed, { campaigns: api.catalog().map((c) => c.campaign) });
+      api.beforeProfileReplacement?.();
       previousLibrary = api.get().library;
       const result = api.setLibrary(next);
       $('undo-library').disabled = false;
@@ -432,11 +436,13 @@ export function attachLibraryPanel(api) {
     if (accept() && canvas.isConnected) galleryPainter.drawGallery(canvas.getContext('2d'), args);
   }
   function sealsFor(item, picture, records) {
+    const catalog = api.getMasteryCatalog?.();
     return pictureMasteries(
       records,
       item,
-      picture ? masteryFor(item.campaignKey, item.levelId) : null,
+      picture ? masteryFor(item.campaignKey, item.levelId, catalog) : null,
       picture?.entry.classRecipes ?? picture?.entry.campaign.classRecipes,
+      catalog,
     );
   }
   function refreshPictureMasteries(picture, records) {
