@@ -1,0 +1,385 @@
+import {
+  CELL,
+  CLASSES,
+  DIRECTIONS,
+  FIXED_DT,
+  RULESET,
+  TURN_POLICIES,
+  validateClassRecipes,
+  loadoutHash,
+} from './registry.mjs';
+import { normalizedLevel, validateLevel } from './level.mjs';
+import { EPS, clamp } from './geometry.mjs';
+import {
+  planPlayer,
+  planEnemy,
+  positionAt,
+  applyPlannedEnemy,
+  patrolDistance,
+} from './movement.mjs';
+import { tracePlan, selfContact, appendTrail, commitCapture } from './capture.mjs';
+import { enemyContact } from './contacts.mjs';
+import { updateAbilities, useAbilities } from './abilities.mjs';
+export {
+  validateLevel,
+  validateClassRecipes,
+  loadoutHash,
+  CELL,
+  CLASSES,
+  DIRECTIONS,
+  FIXED_DT,
+  RULESET,
+  TURN_POLICIES,
+};
+
+/**
+ * Owns one mutable deterministic run. Rendering may READ public fields; mutation
+ * outside this module invalidates replay guarantees. No DOM, art or clock reads.
+ * @param {object} source validated xonix-level.v1
+ * @param {{seed?:number,turnPolicy?:'immediate'|'grid-center',classId?:string,classRecipes?:object[]}} options
+ */
+export function createRun(
+  source,
+  { seed = 1, turnPolicy = 'immediate', classId = 'scout', classRecipes = CLASSES } = {},
+) {
+  const level = normalizedLevel(source);
+  if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)
+    throw new TypeError('seed must be a uint32');
+  if (!TURN_POLICIES.includes(turnPolicy)) throw new TypeError('unsupported turnPolicy');
+  const validation = validateClassRecipes(classRecipes);
+  if (!validation.valid)
+    throw new TypeError(`Invalid classRecipes: ${validation.errors.join('; ')}`);
+  const recipe = classRecipes.find((c) => c.id === classId);
+  if (!recipe) throw new TypeError('unsupported classId');
+  const cells = new Uint8Array(48 * 36);
+  for (let y = 0; y < 36; y++)
+    for (let x = 0; x < 48; x++)
+      if (x === 0 || x === 47 || y === 0 || y === 35) cells[y * 48 + x] = CELL.SAFE;
+  for (const w of level.walls)
+    for (let y = w.y; y < w.y + w.h; y++)
+      for (let x = w.x; x < w.x + w.w; x++) cells[y * 48 + x] = CELL.WALL;
+  const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
+  const state = {
+    ruleset: RULESET,
+    levelId: level.id,
+    revision: level.revision,
+    seed,
+    turnPolicy,
+    classId,
+    classRevision: recipe.revision,
+    loadoutHash: loadoutHash(recipe),
+    level,
+    rules: level.rules,
+    width: 48,
+    height: 36,
+    status: 'running',
+    tick: 0,
+    time: 0,
+    lives: level.rules.lives,
+    score: 0,
+    coverage: 0,
+    claimedCount: 0,
+    totalClaimable,
+    cells,
+    player: {
+      ...level.spawn,
+      direction: 'down',
+      queuedDirection: null,
+      speed: 0,
+      cutting: false,
+      graceUntil: 0,
+    },
+    trail: [],
+    trailSegments: [],
+    enemies: level.enemies.map((e) => ({
+      ...e,
+      radius: e.radius ?? 0.25,
+      stunnedUntil: 0,
+      slowUntil: 0,
+      slowFactor: 1,
+      ...(e.type === 'border-patrol' ? { perimeter: patrolDistance(e) } : {}),
+      ...(e.type === 'lane-boss'
+        ? {
+            bossPhase: 'idle',
+            lane: e.axis === 'horizontal' ? e.y : e.x,
+            nextWarningAt: 2,
+            warningUntil: 0,
+            activeUntil: 0,
+          }
+        : {}),
+    })),
+    objectives: level.objectives.map((p) => ({
+      ...p,
+      required: !!p.required,
+      captured: false,
+      revealed: !p.hidden,
+    })),
+    supplies: level.supplies.map((p) => ({ ...p, radius: p.radius ?? 1.5 })),
+    classRecipe: { ...recipe },
+    ability: {
+      primitive: recipe.primitive,
+      ammo: 0,
+      capacity: recipe.capacity,
+      cooldownUntil: 0,
+      scanUntil: 0,
+      shieldUntil: 0,
+      fields: [],
+    },
+    events: [],
+    respawnAt: 0,
+    medal: null,
+    result: null,
+    _accumulator: 0,
+    _input: { action: false, pickup: false },
+    _abilitySerial: 0,
+    _terminalEmitted: false,
+  };
+  return state;
+}
+
+/** Explicit shell pause/focus-loss hook. It neither advances time nor resets a run. */
+export function releaseInputs(state) {
+  state._input = { action: false, pickup: false };
+  state.player.queuedDirection = null;
+  state.player.speed = 0;
+}
+
+function complete(state, won) {
+  if (state._terminalEmitted) return;
+  state.status = won ? 'won' : 'lost';
+  state._terminalEmitted = true;
+  releaseInputs(state);
+  state.medal = won
+    ? state.time <= state.rules.timeMedals[0] + EPS && state.lives === state.rules.lives
+      ? 'gold'
+      : state.time <= state.rules.timeMedals[1] + EPS
+        ? 'silver'
+        : 'bronze'
+    : null;
+  state.result = getSummary(state);
+  state.events.push({ type: 'run.completed', tick: state.tick, time: state.time, ...state.result });
+}
+
+function recover(state, contact) {
+  const absorbed = contact.kind !== 'self-contact' && state.ability.shieldUntil > state.time + EPS;
+  state.trail = [];
+  state.trailSegments = [];
+  state.player.cutting = false;
+  state.player.speed = 0;
+  state.player.queuedDirection = null;
+  state.ability.fields = [];
+  state.ability.shieldUntil = 0;
+  if (!absorbed) state.lives--;
+  state.events.push({
+    type: absorbed ? 'shield.absorbed' : 'player.failed',
+    tick: state.tick,
+    time: state.time,
+    cause: contact.kind,
+    actorId: contact.id,
+    lives: state.lives,
+  });
+  if (state.lives <= 0) {
+    complete(state, false);
+    return;
+  }
+  state.status = 'respawning';
+  state.respawnAt = state.time + state.rules.respawnSeconds;
+}
+
+function updateBosses(state) {
+  for (const e of state.enemies)
+    if (e.type === 'lane-boss') {
+      if (state.time + EPS >= e.nextWarningAt) {
+        e.lane = clamp(
+          Math.floor(e.axis === 'horizontal' ? state.player.y : state.player.x) + 0.5,
+          1.5,
+          e.axis === 'horizontal' ? 34.5 : 46.5,
+        );
+        e.warningUntil = state.time + (e.warningSeconds ?? 1.5);
+        e.activeUntil = e.warningUntil + (e.activeSeconds ?? 0.7);
+        e.nextWarningAt = state.time + (e.period ?? 6);
+        state.events.push({
+          type: 'boss.warning',
+          tick: state.tick,
+          time: state.time,
+          id: e.id,
+          axis: e.axis,
+          lane: e.lane,
+          activeAt: e.warningUntil,
+        });
+      }
+      e.bossPhase =
+        state.time < e.warningUntil - EPS
+          ? 'warning'
+          : state.time < e.activeUntil - EPS
+            ? 'active'
+            : 'idle';
+    }
+}
+
+function worldStep(state, input, duration) {
+  let remaining = duration;
+  for (let guard = 0; remaining > EPS && guard < 6 && state.status === 'running'; guard++) {
+    const playerPlan = planPlayer(state, input, remaining),
+      trace = tracePlan(state, playerPlan.paths, remaining);
+    const horizon = Math.min(remaining, trace.closure ?? Infinity, trace.stop ?? Infinity);
+    const enemyPlans = state.enemies.map((e) => planEnemy(state, e, remaining));
+    const self = selfContact(state, trace, horizon),
+      contact = enemyContact(state, playerPlan.paths, enemyPlans, trace, horizon);
+    let failure = contact;
+    if (self !== null && (!failure || self <= failure.time + EPS))
+      failure = { time: self, kind: 'self-contact', id: 'player' };
+    const elapsed = failure ? Math.min(horizon, failure.time) : horizon;
+    const position = positionAt(playerPlan.paths, elapsed, state.player);
+    const activePath =
+      playerPlan.paths.find((p) => p.t1 >= elapsed - EPS) ?? playerPlan.paths.at(-1);
+    appendTrail(state, trace, elapsed);
+    if (elapsed >= remaining - EPS)
+      Object.assign(state.player, playerPlan.player, { cutting: state.player.cutting });
+    else {
+      state.player.x = position.x;
+      state.player.y = position.y;
+      state.player.direction = activePath?.direction ?? state.player.direction;
+      state.player.queuedDirection = playerPlan.player.queuedDirection;
+    }
+    state.player.x = position.x;
+    state.player.y = position.y;
+    for (let i = 0; i < state.enemies.length; i++)
+      applyPlannedEnemy(state.enemies[i], enemyPlans[i], elapsed, remaining);
+    state.time += elapsed;
+    remaining -= elapsed;
+    if (failure && failure.time <= horizon + EPS) {
+      recover(state, failure);
+      break;
+    }
+    if (trace.closure !== null && trace.closure <= horizon + EPS) {
+      commitCapture(state);
+      if (
+        state.coverage + EPS >= state.level.goal.coverage &&
+        state.objectives.every((o) => !o.required || o.captured)
+      ) {
+        complete(state, true);
+        break;
+      }
+      continue;
+    }
+    if (trace.stop !== null && trace.stop <= horizon + EPS) {
+      state.player.speed = 0;
+      // Grace blocks leaving safe territory; actors keep moving for this tick.
+      const restPlans = state.enemies.map((e) => planEnemy(state, e, remaining));
+      for (let i = 0; i < state.enemies.length; i++)
+        applyPlannedEnemy(state.enemies[i], restPlans[i], remaining, remaining);
+      state.time += remaining;
+      remaining = 0;
+      break;
+    }
+    break;
+  }
+  // A contact resolves partway through a tick. Recovery time still starts at
+  // its exact contact timestamp; the rest of this fixed interval is elapsed.
+  if (remaining > EPS && state.status === 'respawning') {
+    const plans = state.enemies.map((e) => planEnemy(state, e, remaining));
+    for (let i = 0; i < state.enemies.length; i++)
+      applyPlannedEnemy(state.enemies[i], plans[i], remaining, remaining);
+    state.time += remaining;
+  }
+}
+
+function fixedStep(state, input) {
+  state.tick++;
+  const endTime = state.time + FIXED_DT;
+  updateBosses(state);
+  updateAbilities(state);
+  useAbilities(state, input);
+  if (state.status === 'respawning') {
+    const plans = state.enemies.map((e) => planEnemy(state, e, FIXED_DT));
+    for (let i = 0; i < state.enemies.length; i++)
+      applyPlannedEnemy(state.enemies[i], plans[i], FIXED_DT, FIXED_DT);
+    state.time = endTime;
+    if (state.time + EPS >= state.respawnAt) {
+      Object.assign(state.player, state.level.spawn, {
+        direction: 'down',
+        queuedDirection: null,
+        speed: 0,
+        cutting: false,
+        graceUntil: state.time + state.rules.graceSeconds,
+      });
+      state.status = 'running';
+      state.events.push({ type: 'player.respawned', tick: state.tick, time: state.time });
+    }
+    return;
+  }
+  worldStep(state, input, FIXED_DT);
+  if (state.status !== 'won' && state.status !== 'lost') state.time = endTime;
+}
+
+function normalizedInput(input) {
+  if (input === undefined) input = {};
+  if (input === null || typeof input !== 'object') throw new TypeError('input must be an object');
+  const direction = input.direction ?? null;
+  if (direction !== null && !Object.hasOwn(DIRECTIONS, direction))
+    throw new TypeError('invalid cardinal direction');
+  for (const key of ['boost', 'action', 'pickup'])
+    if (input[key] !== undefined && typeof input[key] !== 'boolean')
+      throw new TypeError(`${key} must be boolean`);
+  return { direction, boost: !!input.boost, action: !!input.action, pickup: !!input.pickup };
+}
+
+/**
+ * Advance by elapsed seconds using exact 1/120 s steps. Input is held for this
+ * call. No elapsed time is discarded. A shell pauses by NOT calling stepRun.
+ * Record inputs per simulated tick for portable replays, not per render frame.
+ * `events` contains this call's events; terminal calls clear events but do no work.
+ */
+export function stepRun(state, input = {}, dt = FIXED_DT) {
+  const command = normalizedInput(input);
+  if (!Number.isFinite(dt) || dt < 0 || dt > 10) throw new TypeError('dt must be 0..10 seconds');
+  state.events = [];
+  if (state.status === 'won' || state.status === 'lost') return state;
+  state._accumulator += dt;
+  while (
+    state._accumulator + EPS >= FIXED_DT &&
+    state.status !== 'won' &&
+    state.status !== 'lost'
+  ) {
+    state._accumulator = Math.max(0, state._accumulator - FIXED_DT);
+    fixedStep(state, command);
+  }
+  return state;
+}
+
+export function getSummary(state) {
+  return {
+    ruleset: state.ruleset,
+    levelId: state.levelId,
+    revision: state.revision,
+    seed: state.seed,
+    turnPolicy: state.turnPolicy,
+    classId: state.classId,
+    classRevision: state.classRevision,
+    loadoutHash: state.loadoutHash,
+    status: state.status,
+    won: state.status === 'won',
+    tick: state.tick,
+    time: state.time,
+    lives: state.lives,
+    score: state.score,
+    coverage: state.coverage,
+    claimedCount: state.claimedCount,
+    totalClaimable: state.totalClaimable,
+    medal: state.medal,
+    objectives: {
+      captured: state.objectives.filter((o) => o.captured).length,
+      total: state.objectives.length,
+      required: state.objectives.filter((o) => o.required).length,
+    },
+  };
+}
+
+/** Each item is one tick's input. Returns the final mutable run for rendering. */
+export function replayRun(level, options, inputs) {
+  if (!Array.isArray(inputs)) throw new TypeError('replay inputs must be an array');
+  const state = createRun(level, options);
+  for (const input of inputs) stepRun(state, input, FIXED_DT);
+  return state;
+}
