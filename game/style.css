@@ -1407,3 +1407,15 @@ dialog input[type='search'] {
   font-size: 12px;
   box-shadow: 0 4px 18px #0002;
 }
+.key-binding-list {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+}
+.key-binding-list button {
+  min-height: 44px;
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
