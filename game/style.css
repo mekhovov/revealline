@@ -491,6 +491,40 @@ h1 {
   line-height: 1.5;
   margin: 0 0 16px;
 }
+#overlay-difficulty {
+  color: #bacbcc;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+#difficulty-note {
+  font-size: 11px;
+  line-height: 1.5;
+}
+#difficulty-select,
+#gallery-difficulty {
+  min-height: 44px;
+}
+#difficulty-field,
+#difficulty-details {
+  grid-column: 1 / -1;
+}
+.difficulty-details {
+  margin: -8px 0 16px;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.difficulty-details summary {
+  min-height: 44px;
+  align-content: center;
+  cursor: pointer;
+}
+.difficulty-details ul {
+  padding-left: 18px;
+}
+.difficulty-details li + li {
+  margin-top: 8px;
+}
 .overlay-actions {
   display: flex;
   flex-wrap: wrap;
@@ -680,6 +714,17 @@ kbd {
   min-height: 17px;
   margin: 11px 0 8px;
   color: #4e6d70;
+}
+.settings-assists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+}
+.settings-assists label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
 }
 .minor-controls {
   display: flex;
@@ -1669,10 +1714,11 @@ dialog textarea {
   #gallery-view-dialog[open] {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
     grid-template-areas:
       'picture meta'
       'picture title'
+      'picture difficulty'
       'picture seals'
       'picture actions';
     gap: 8px 20px;
@@ -1704,6 +1750,11 @@ dialog textarea {
     max-height: 100%;
     margin: 0;
     overflow-y: auto;
+  }
+  #gallery-difficulty-field {
+    grid-area: difficulty;
+    margin: 0;
+    min-width: 0;
   }
   #gallery-canvas {
     grid-area: picture;

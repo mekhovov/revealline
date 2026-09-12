@@ -70,22 +70,20 @@ import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
-import { campaignContinuation, campaignSelection, savedFlightPreview } from './continuation.mjs';
+import { savedFlightPreview } from './continuation.mjs';
+import { createExecutionCatalog } from './campaign-contexts.mjs';
+import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
+import {
+  createDifficultyNavigation,
+  difficultyCue,
+  difficultyLabel,
+  difficultyRuleComparison,
+} from './difficulty-navigation.mjs';
 import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
-import {
-  emptyProgress,
-  loadProgress,
-  saveProgress,
-  awardCompletion,
-  achievements,
-  appearanceMilestones,
-  newAppearanceBodies,
-  unlockedBodies,
-  canPlay,
-} from './progress.mjs';
+import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
   recommendedBody,
@@ -138,6 +136,7 @@ try {
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
   let installedEntries = [baseEntry],
+    executionCatalog = createExecutionCatalog(installedEntries),
     masteryCatalog = createMasteryCatalog([{ campaign: baseEntry.campaign, sourcePackId: null }]);
   function prepareContentCatalog(nextPacks) {
     const entries = [
@@ -155,12 +154,18 @@ try {
           : {}),
       })),
     );
-    return { packs: nextPacks, entries, registrations };
+    return {
+      packs: nextPacks,
+      entries,
+      executions: createExecutionCatalog(entries),
+      registrations,
+    };
   }
   function adoptContentCatalog(content) {
     attemptFiles?.invalidate();
     packs = content.packs;
     installedEntries = content.entries;
+    executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
   let buildVersion = '0.20.0',
@@ -310,8 +315,11 @@ try {
       );
     const rawPacks = await readAssetStore(packsKey);
     const prepared = rawPacks ? await importPackLibrary(rawPacks) : emptyPackLibrary();
-    const profile = loadLibrary(localStorage, libraryKey, { campaigns: [campaign] });
-    return { content: prepareContentCatalog(prepared), profile };
+    const content = prepareContentCatalog(prepared);
+    const profile = loadLibrary(localStorage, libraryKey, {
+      campaigns: content.executions.entries.map((entry) => entry.campaign),
+    });
+    return { content, profile };
   }
   try {
     const snapshot = navigator.locks?.request
@@ -329,11 +337,21 @@ try {
   let library = loaded.library,
     progress = progressFor(library, campaign),
     recovery = loaded.recovery;
+  const difficultyNavigation = createDifficultyNavigation();
+  let difficultyDetailsFor = null;
+  if (!practiceSession) {
+    activeEntry = executionCatalog.select(
+      campaignKey(baseEntry.campaign),
+      library.preferences.campaignDifficulty,
+    );
+    campaign = activeEntry.campaign;
+    progress = progressFor(library, campaign);
+  }
   if (loaded.warning || packWarning) {
     $('save-warning').textContent = [loaded.warning, packWarning].filter(Boolean).join(' ');
     show('save-warning', true);
   }
-  const initialSelection = campaignSelection(progress, campaign);
+  const initialSelection = difficultyNavigation.selection(activeEntry, library.campaigns, progress);
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -427,6 +445,7 @@ try {
   $('reduced-effects').checked = mediaReduce.matches || library.preferences.reducedEffects;
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+  syncAssistControls();
   $('music-select').value = library.preferences.musicGenre;
   $('master-volume').value = library.preferences.masterVolume;
   $('music-volume').value = library.preferences.musicVolume;
@@ -989,16 +1008,107 @@ try {
       if (match) {
         try {
           const c = challengeCampaign(match[1], match[2], baseClasses);
-          entries.push({ ...baseEntry, campaign: c });
+          entries.push({ ...baseEntry, campaign: c, activity: 'challenge' });
         } catch {}
       }
     }
-    if (!entries.some((e) => campaignKey(e.campaign) === campaignKey(activeEntry.campaign)))
-      entries.push(activeEntry);
+    const selected = {
+      ...activeEntry,
+      campaign: activeEntry.baseCampaign || activeEntry.campaign,
+    };
+    if (!entries.some((e) => campaignKey(e.campaign) === campaignKey(selected.campaign)))
+      entries.push(selected);
     return entries.filter(
       (e, i, all) =>
         all.findIndex((x) => campaignKey(x.campaign) === campaignKey(e.campaign)) === i,
     );
+  }
+  function executionEntries() {
+    // Removed packs keep archived records but cannot resolve a saved flight.
+    return [
+      ...executionCatalog.entries,
+      ...catalog().filter(
+        (entry) =>
+          !entry.sourcePackId &&
+          !executionCatalog.find(campaignKey(entry.campaign)) &&
+          /^route-\d{4}-\d\d-\d\d-(daily|calm|expert)$/.test(entry.campaign.id),
+      ),
+    ];
+  }
+  function currentSelection(options = {}) {
+    return difficultyNavigation.selection(activeEntry, library.campaigns, progress, options);
+  }
+  function missionAvailable(index, entry = activeEntry) {
+    const selected =
+      executionCatalog.select(
+        entry.baseCampaignKey || campaignKey(entry.campaign),
+        library.preferences.campaignDifficulty,
+      ) || entry;
+    const shared = difficultyNavigation.access(selected, library.campaigns);
+    if (shared) return shared.levels[index]?.playable === true;
+    return difficultyNavigation.playable(
+      selected,
+      library.campaigns,
+      progressFor(library, selected.campaign),
+      index,
+    );
+  }
+  function availableBodies() {
+    return difficultyNavigation.bodies(activeEntry, library.campaigns, progress);
+  }
+  function currentAppearanceMilestones() {
+    return difficultyNavigation.milestones(activeEntry, library.campaigns, progress);
+  }
+  function applyNextDifficulty(mode = library.preferences.campaignDifficulty) {
+    if (scenario || practice || courseSession) return;
+    const selected = executionCatalog.select(
+      activeEntry.baseCampaignKey || campaignKey(activeEntry.campaign),
+      mode,
+    );
+    if (!selected) return;
+    activeEntry = selected;
+    campaign = selected.campaign;
+    classRegistry = selected.classRecipes;
+    progress = progressFor(library, campaign);
+  }
+  function refreshDifficulty() {
+    const cue = difficultyCue({
+      entry: activeEntry,
+      nextMode: library.preferences.campaignDifficulty,
+      started,
+      recovering: sessionBusy,
+      practice,
+    });
+    $('difficulty-select').value = library.preferences.campaignDifficulty;
+    $('difficulty-select').disabled =
+      !cue.available || courseSession || !!courseEntry || contentSwitchBusy || backupBusy;
+    $('difficulty-note').textContent = cue.copy;
+    const standard = executionCatalog.select(activeEntry.baseCampaignKey, 'standard'),
+      gentle = executionCatalog.select(activeEntry.baseCampaignKey, 'gentle');
+    show('difficulty-details', cue.available && !!standard && !!gentle);
+    if (
+      cue.available &&
+      standard &&
+      gentle &&
+      (difficultyDetailsFor?.campaign !== standard.campaign ||
+        difficultyDetailsFor?.levelIndex !== levelIndex)
+    ) {
+      $('difficulty-rule-details').replaceChildren(
+        ...difficultyRuleComparison(
+          standard.campaign.levels[levelIndex],
+          gentle.campaign.levels[levelIndex],
+        ).map((copy) => {
+          const row = document.createElement('li');
+          row.textContent = copy;
+          return row;
+        }),
+      );
+      difficultyDetailsFor = { campaign: standard.campaign, levelIndex };
+    }
+    $('overlay-difficulty').textContent = cue.available
+      ? `${cue.current} difficulty. ${cue.retry}`
+      : '';
+    show('overlay-difficulty', cue.available);
   }
   function refreshCampaigns() {
     $('campaign-select').replaceChildren(
@@ -1007,7 +1117,7 @@ try {
           new Option(e.campaign.title || e.campaign.name || e.campaign.id, campaignKey(e.campaign)),
       ),
     );
-    $('campaign-select').value = campaignKey(campaign);
+    $('campaign-select').value = activeEntry.baseCampaignKey || campaignKey(campaign);
     refreshContentSelectors();
   }
   function contentStatus(message, error = false) {
@@ -1049,7 +1159,7 @@ try {
       );
     }
     const baseKey = campaignKey(baseEntry.campaign);
-    const currentKey = campaignKey(campaign);
+    const currentKey = activeEntry.baseCampaignKey || campaignKey(campaign);
     let selectedPack = activeEntry.sourcePackId || '';
     if (!activeEntry.sourcePackId && currentKey !== baseKey) {
       selectedPack = `campaign:${currentKey}`;
@@ -1061,7 +1171,7 @@ try {
     $('pack-select').value = selectedPack;
     $('level-select').replaceChildren(
       ...campaign.levels.map((level, index) => {
-        const available = canPlay(progress, campaign, index);
+        const available = missionAvailable(index);
         return new Option(
           `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
           level.id,
@@ -1071,10 +1181,11 @@ try {
       }),
     );
     for (const [index, option] of [...$('level-select').options].entries())
-      option.disabled = !canPlay(progress, campaign, index);
+      option.disabled = !missionAvailable(index);
     $('level-select').value = campaign.levels[levelIndex].id;
     $('pack-select').disabled = courseSession || contentSwitchBusy;
     $('level-select').disabled = courseSession || contentSwitchBusy;
+    refreshDifficulty();
   }
   function persistProfile({ mode = 'merge' } = {}) {
     if (courseSession || courseEntry)
@@ -1109,6 +1220,7 @@ try {
       $('save-warning').textContent = saved.warning;
       show('save-warning', true);
     }
+    refreshDifficulty();
     return saved;
   }
   function preferences(patch) {
@@ -1136,11 +1248,13 @@ try {
       seed: selectedSeed,
       restoreAdoption = false,
       contentSwitchTicket = null,
+      difficulty,
     } = {},
   ) {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before selecting a campaign.');
     if (!entry) throw new Error('This campaign is not installed.');
+    if (difficulty !== undefined) resolveCampaignDifficulty(difficulty);
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
         throw new Error('Picture seed is invalid.');
@@ -1154,13 +1268,17 @@ try {
     scenario = null;
     practice = practiceSession;
     demo = false;
+    entry =
+      executionCatalog.select(
+        entry.baseCampaignKey || campaignKey(entry.campaign),
+        difficulty ?? (practiceSession ? 'standard' : library.preferences.campaignDifficulty),
+      ) || entry;
     activeEntry = entry;
     campaign = entry.campaign;
     classRegistry = entry.classRecipes;
-    campaign.classRecipes = classRegistry;
     themesFile.themes = entry.themes;
     progress = progressFor(library, campaign);
-    const selection = campaignSelection(progress, campaign, { levelId });
+    const selection = currentSelection({ levelId });
     levelIndex = selection.levelIndex;
     campaignOverview = !practice && selection.overview;
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
@@ -1175,7 +1293,7 @@ try {
       $('music-select').value = track.genre;
     } else sound.configure?.({ style: library.preferences.musicGenre });
     refreshCampaigns();
-    prepare({ restoreAdoption, contentSwitchTicket });
+    prepare({ restoreAdoption, contentSwitchTicket, difficulty });
   }
   async function replacePackLibrary(next, { contentSwitchTicket = null } = {}) {
     if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
@@ -1217,11 +1335,12 @@ try {
         selectEntry(baseEntry, { contentSwitchTicket: operation });
       else if (activeEntry.sourcePackId) {
         const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
+        const authoredId = activeEntry.baseCampaign?.id || campaign.id;
         selectEntry(
           resolvePackCampaign(
             pack,
-            pack.campaigns.some((source) => source.id === campaign.id)
-              ? campaign.id
+            pack.campaigns.some((source) => source.id === authoredId)
+              ? authoredId
               : pack.campaigns[0].id,
           ),
           { contentSwitchTicket: operation },
@@ -1289,8 +1408,7 @@ try {
       if (levelId) {
         const targetIndex = entry.campaign.levels.findIndex((level) => level.id === levelId);
         if (targetIndex < 0) throw new Error('This pack level is unavailable.');
-        const targetProgress = progressFor(library, entry.campaign);
-        if (!canPlay(targetProgress, entry.campaign, targetIndex)) {
+        if (!missionAvailable(targetIndex, entry)) {
           selectEntry(entry, { contentSwitchTicket: operation });
           throw new Error(
             `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
@@ -1318,7 +1436,7 @@ try {
   }
   function selectLevel(levelId) {
     const index = campaign.levels.findIndex((level) => level.id === levelId);
-    if (index < 0 || !canPlay(progress, campaign, index)) {
+    if (index < 0 || !missionAvailable(index)) {
       refreshContentSelectors();
       contentStatus('That level is still locked. Complete the earlier missions first.', true);
       return false;
@@ -1340,11 +1458,15 @@ try {
     }
   }
   function refreshSavedFlight() {
+    const saved = savedAttempt();
+    const savedMode = difficultyLabel(
+      executionEntries().find((entry) => campaignKey(entry.campaign) === saved?.campaignKey),
+    );
     const preview = practice
       ? null
       : savedFlightPreview(
-          savedAttempt(),
-          catalog().map((entry) => ({
+          saved,
+          executionEntries().map((entry) => ({
             key: campaignKey(entry.campaign),
             campaign: entry.campaign,
           })),
@@ -1356,7 +1478,9 @@ try {
     $('continue-saved').textContent = sessionBusy
       ? 'Verifying saved flight…'
       : 'Load saved flight →';
-    $('continue-saved-note').textContent = preview ? `${preview.title}. ${preview.note}` : '';
+    $('continue-saved-note').textContent = preview
+      ? `${preview.title}${savedMode ? ` · ${savedMode}` : ''}. ${preview.note}`
+      : '';
     $('continue-saved').title = preview?.title || 'Load saved flight';
   }
   function assertWriter() {
@@ -1400,12 +1524,12 @@ try {
     return session;
   }
   function findCampaignEntry(key) {
-    let entry = catalog().find((e) => campaignKey(e.campaign) === key);
+    let entry = executionEntries().find((e) => campaignKey(e.campaign) === key);
     if (!entry) {
       const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(key || '');
       if (match) {
         const c = challengeCampaign(match[1], match[2], baseClasses);
-        const e = { ...baseEntry, campaign: c };
+        const e = { ...baseEntry, campaign: c, activity: 'challenge' };
         if (campaignKey(c) === key) entry = e;
       }
     }
@@ -1438,6 +1562,7 @@ try {
         levelId: restored.run.levelId,
         themeId: restored.session.themeId,
         restoreAdoption: true,
+        difficulty: entry.difficulty,
       });
       run = restored.run;
       recorder = restored.recorder;
@@ -1451,6 +1576,7 @@ try {
       bodyId = presets.characters[restored.session.bodyId] ? restored.session.bodyId : theme.player;
       started = true;
       paused = true;
+      $('pause-button').textContent = '▶';
       handled = false;
       recordingStopped = false;
       clearInput();
@@ -1483,6 +1609,7 @@ try {
     $('match-class-appearance').checked = p.matchClassAppearance;
     $('reduced-effects').checked = p.reducedEffects;
     $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+    syncAssistControls();
     keySettings.refresh();
     controller.setBindings(p.controllerBindings);
     controller.setBoostMode(p.controllerBoostMode);
@@ -1560,6 +1687,7 @@ try {
     }),
     base: () => baseEntry,
     catalog,
+    executionCatalog: executionEntries,
     getMasteryCatalog: () => masteryCatalog,
     select: selectEntry,
     pause: () => pause(true),
@@ -1605,7 +1733,7 @@ try {
       library = next;
       progress = progressFor(library, campaign);
       const saved = persistProfile({ mode: 'replace' });
-      const selection = campaignSelection(progress, campaign);
+      const selection = currentSelection();
       levelIndex = selection.levelIndex;
       campaignOverview = !practice && selection.overview;
       adoptPreferences();
@@ -1693,6 +1821,7 @@ try {
       'pack-select',
       'level-select',
       'campaign-select',
+      'difficulty-select',
       'class-select',
       'theme-select',
       'hangar-button',
@@ -1714,6 +1843,16 @@ try {
   $('campaign-select').onchange = () => {
     selectEntry(catalog().find((e) => campaignKey(e.campaign) === $('campaign-select').value));
     contentStatus(`${campaign.title || campaign.name || campaign.id} selected and ready.`);
+  };
+  $('difficulty-select').onchange = () => {
+    if ($('difficulty-select').disabled) return;
+    const mode = resolveCampaignDifficulty($('difficulty-select').value);
+    clearInput();
+    preferences({ campaignDifficulty: mode });
+    // Saving may merge a newer preference from another writer; use the actual
+    // adopted library. A setting-only change never touches the suspended slot.
+    if (!started && !sessionBusy) prepare();
+    else refreshDifficulty();
   };
   $('save-attempt-button').onclick = () => {
     pause(true);
@@ -1771,6 +1910,7 @@ try {
   };
   $('settings-button').onclick = () => {
     pause(true);
+    syncAssistControls();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
@@ -1852,8 +1992,17 @@ try {
     setTheme();
   };
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
-  $('reduced-effects').onchange = () =>
-    preferences({ reducedEffects: $('reduced-effects').checked });
+  function syncAssistControls() {
+    $('settings-reduced-effects').checked = $('reduced-effects').checked;
+    $('settings-tap-steering').checked = $('tap-steering').checked;
+  }
+  for (const id of ['reduced-effects', 'settings-reduced-effects']) {
+    $(id).onchange = () => {
+      preferences({ reducedEffects: $(id).checked });
+      $('reduced-effects').checked = library.preferences.reducedEffects;
+      syncAssistControls();
+    };
+  }
   function visuals() {
     return (
       scenario?.visualOverrides || {
@@ -1868,7 +2017,7 @@ try {
       const candidate = recommendedBody(theme, run?.activeClassId || classId, theme.player);
       bodyId =
         Object.hasOwn(presets.characters, candidate) &&
-        (practice || unlockedBodies(progress, campaign).has(candidate))
+        (practice || availableBodies().has(candidate))
           ? candidate
           : 'neutral-marker';
     }
@@ -1901,7 +2050,7 @@ try {
     painter.setLook(theme, bodyId, visuals());
   }
   function updateBodies() {
-    const allowed = unlockedBodies(progress, campaign);
+    const allowed = availableBodies();
     $('body-select').replaceChildren();
     for (const [id, body] of Object.entries(presets.characters)) {
       const option = new Option(
@@ -1917,7 +2066,7 @@ try {
           ? theme.player
           : 'neutral-marker';
     $('body-select').value = bodyId;
-    const next = appearanceMilestones(progress, campaign).find((tier) => !tier.earned);
+    const next = currentAppearanceMilestones().find((tier) => !tier.earned);
     $('appearance-hint').textContent = practice
       ? 'Preview access: all appearances are available. Practice grants no campaign rewards.'
       : next
@@ -1929,7 +2078,7 @@ try {
     const name = campaign.title || campaign.name || campaign.id;
     $('appearance-campaign').textContent = `Campaign appearances · ${name}`;
     $('appearance-rewards').replaceChildren();
-    for (const tier of appearanceMilestones(progress, campaign)) {
+    for (const tier of currentAppearanceMilestones()) {
       const row = document.createElement('article');
       row.className = `appearance-reward${tier.earned ? ' earned' : ''}`;
       const thumbnail = document.createElement('img');
@@ -1958,7 +2107,7 @@ try {
     }
     $('collection-note').textContent = practice
       ? 'Practice previews every appearance without earning rewards. These rows show existing campaign progress. Cosmetics do not change abilities.'
-      : 'Appearances belong to this campaign. A different campaign has its own progress. Cosmetics do not change abilities.';
+      : `Appearances belong to this campaign.${difficultyLabel(activeEntry) ? ' Standard and Gentle share mission and appearance unlocks.' : ''} Cosmetics do not change abilities.`;
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
@@ -1973,7 +2122,7 @@ try {
     campaignOverview = false;
     theme = themesFile.themes.find((t) => t.id === theme.id) || themesFile.themes[0];
     if (!classRegistry.some((c) => c.id === classId)) classId = classRegistry[0].id;
-    bodyId = unlockedBodies(progress, campaign).has(bodyId) ? bodyId : theme.player;
+    bodyId = availableBodies().has(bodyId) ? bodyId : theme.player;
     $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
     $('theme-select').replaceChildren(...themesFile.themes.map((t) => new Option(t.name, t.id)));
     $('theme-select').value = theme.id;
@@ -1990,7 +2139,7 @@ try {
       const b = document.createElement('button');
       b.type = 'button';
       b.className = `mission${index === levelIndex && !practice && !campaignOverview ? ' selected' : ''}`;
-      b.disabled = !canPlay(progress, campaign, index);
+      b.disabled = !missionAvailable(index);
       b.dataset.level = String(index);
       b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
       const number = document.createElement('span');
@@ -2003,9 +2152,11 @@ try {
       medal.className = 'medal';
       medal.textContent = progress.clears[level.id]
         ? '★'.repeat(progress.clears[level.id].medals)
-        : b.disabled
-          ? '—'
-          : '↗';
+        : difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed
+          ? '✓'
+          : b.disabled
+            ? '—'
+            : '↗';
       b.append(number, name, medal);
       b.onclick = () => {
         if (courseEntry) return;
@@ -2017,7 +2168,7 @@ try {
       $('missions').append(b);
     });
     $('campaign-progress').textContent =
-      `${String(Object.keys(progress.clears).length).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}`;
+      `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)} medals` : ''}`;
     refreshContentSelectors();
   }
   function updateLoadout() {
@@ -2056,7 +2207,7 @@ try {
       intro:
         !practice &&
         !activeEntry.sourcePackId &&
-        campaign.id === baseCampaign.id &&
+        (activeEntry.baseCampaign || campaign).id === baseCampaign.id &&
         levelIndex === 0,
     });
   }
@@ -2093,7 +2244,7 @@ try {
       kind === 'ready' &&
         !practice &&
         !activeEntry.sourcePackId &&
-        campaign.id === baseCampaign.id &&
+        (activeEntry.baseCampaign || campaign).id === baseCampaign.id &&
         levelIndex === 0,
     );
     show('game-overlay', true);
@@ -2133,7 +2284,7 @@ try {
       refreshKeyPrompts();
     }
     if (kind === 'campaign-complete') {
-      const completion = campaignContinuation(progress, campaign);
+      const completion = currentSelection();
       $('overlay-eyebrow').textContent = 'CAMPAIGN COMPLETE';
       $('overlay-title').textContent = 'Every mission revealed.';
       $('overlay-copy').textContent =
@@ -2157,7 +2308,7 @@ try {
       );
       $('next-button').textContent = practice
         ? 'Try it yourself →'
-        : campaignContinuation(progress, campaign).complete
+        : currentSelection().complete
           ? 'Campaign complete →'
           : 'Next uncleared mission →';
       $('overlay-footnote').textContent = practice
@@ -2207,8 +2358,9 @@ try {
     refreshSavedFlight();
     refreshMastery();
     refreshCourse();
+    refreshDifficulty();
   }
-  function prepare({ restoreAdoption = false, contentSwitchTicket = null } = {}) {
+  function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
     attemptFiles?.invalidate();
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
@@ -2216,7 +2368,10 @@ try {
     courseEntryHold = false;
     courseEntryMessage = '';
     if (courseSession) coursePhase = 'ready';
-    if (!restoreAdoption) cancelRestore();
+    if (!restoreAdoption) {
+      cancelRestore();
+      applyNextDifficulty(difficulty);
+    }
     completionWarning = '';
     appearanceRewardIds = [];
     celebrationActive = false;
@@ -2327,7 +2482,7 @@ try {
       ? 'FIRST FLIGHT / OPTIONAL TRAINING'
       : practice
         ? 'PLAYGROUND / PRACTICE'
-        : `${campaign.title || campaign.name || campaign.id} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
+        : `${campaign.title || campaign.name || campaign.id}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)}` : ''} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
     $('campaign-name').textContent = courseSession
       ? 'FIRST FLIGHT / LEARN BY PLAYING'
       : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`;
@@ -2398,7 +2553,8 @@ try {
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
     $('target').textContent = `TARGET ${Math.round(run.level.goal.coverage * 100)}%`;
-    $('lives').textContent = '◆ '.repeat(run.lives).trim() || '—';
+    $('lives').textContent =
+      run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—';
     $('lives').setAttribute('aria-label', `${run.lives} lives`);
     $('time').textContent = timeLabel(run.time);
     $('score').textContent = String(run.score).padStart(5, '0');
@@ -2670,7 +2826,7 @@ try {
         clearInput();
         refreshCourse();
         if (run.status === 'won' && !practice) {
-          const previousProgress = progress;
+          const previousBodies = availableBodies();
           try {
             library = recordLibraryCompletion(library, {
               campaign,
@@ -2681,13 +2837,12 @@ try {
               sourcePackId: activeEntry.sourcePackId,
             });
           } catch (error) {
-            completionWarning =
-              'Your picture is open, but the collection could not be updated. Export this replay and your library before continuing.';
+            completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? 'Export this replay and your library' : 'The replay recording has ended; export your library'} before continuing.`;
             $('save-warning').textContent = `${completionWarning} ${error.message}`;
             show('save-warning', true);
           }
           progress = progressFor(library, campaign);
-          appearanceRewardIds = newAppearanceBodies(previousProgress, progress, campaign);
+          appearanceRewardIds = [...availableBodies()].filter((id) => !previousBodies.has(id));
           persistProfile();
           updateBodies();
           paintMissions();
@@ -2854,7 +3009,7 @@ try {
         levelIndex = 0;
       }
     } else {
-      const selection = campaignSelection(progress, campaign);
+      const selection = currentSelection();
       campaignOverview = selection.overview;
       if (campaignOverview) {
         clearInput();
@@ -2889,10 +3044,15 @@ try {
       warning('Audio could not start in this browser.');
     }
   };
-  $('tap-steering').onchange = () => {
-    clearInput();
-    preferences({ tapSteering: $('tap-steering').checked });
-  };
+  for (const id of ['tap-steering', 'settings-tap-steering']) {
+    $(id).onchange = () => {
+      clearInput();
+      preferences({ tapSteering: $(id).checked });
+      $('tap-steering').checked =
+        library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
+      syncAssistControls();
+    };
+  }
   $('help-button').onclick = () => {
     pause(true);
     $('help-dialog').showModal();
@@ -2903,13 +3063,13 @@ try {
     $('achievement-campaign').textContent =
       `Campaign achievements · ${campaign.title || campaign.name || campaign.id}`;
     $('achievements').replaceChildren();
-    for (const a of achievements(progress, campaign)) {
+    for (const a of difficultyNavigation.achievements(activeEntry, library.campaigns, progress)) {
       const row = document.createElement('div');
       row.className = `achievement${a.earned ? ' earned' : ''}`;
       const title = document.createElement('strong');
       title.textContent = `${a.earned ? '◆' : '◇'} ${a.name}`;
       const copy = document.createElement('span');
-      copy.textContent = a.description;
+      copy.textContent = `${a.description}${a.scope === 'shared' ? ' Standard or Gentle.' : a.scope ? ` ${difficultyLabel(activeEntry)} results.` : ''}`;
       row.append(title, copy);
       $('achievements').append(row);
     }

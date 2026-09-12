@@ -86,6 +86,9 @@ test('v0.10 profile export, chapter continuation, rewards and campaign identity 
     exportLibrary(importLibrary(fixture.library, { campaigns: [campaign] })),
   ]) {
     const owned = JSON.parse(exported);
+    assert.equal(Object.hasOwn(owned.preferences, 'campaignDifficulty'), true);
+    assert.equal(owned.preferences.campaignDifficulty, 'standard');
+    delete owned.preferences.campaignDifficulty;
     assert.equal(owned.preferences.controllerBoostMode, 'hold');
     delete owned.preferences.controllerBoostMode;
     assert.deepEqual(owned, fixture.library);

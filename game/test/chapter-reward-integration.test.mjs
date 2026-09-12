@@ -172,9 +172,12 @@ test('chapter reward work preserves original route and campaign identity oracles
   // routes, IDs and timestamp. Source: 315a4782a159f2274f7200e3470ec20c3859707b.
   // Ordinary tests use this fixed oracle, never archived code or Git at runtime.
   const owned = JSON.parse(exportLibrary(states(home)[3]));
+  assert.equal(Object.hasOwn(owned.preferences, 'campaignDifficulty'), true);
+  assert.equal(owned.preferences.campaignDifficulty, 'standard');
+  delete owned.preferences.campaignDifficulty;
   assert.equal(Object.hasOwn(owned.preferences, 'controllerBoostMode'), true);
   assert.equal(owned.preferences.controllerBoostMode, 'hold');
-  // Allow only the added input preference; retain the exact old serialized oracle.
+  // Allow only these explicit preference additions; retain the exact old serialized oracle.
   delete owned.preferences.controllerBoostMode;
   const portable = JSON.stringify(owned);
   assert.equal(Buffer.byteLength(portable), 3830);

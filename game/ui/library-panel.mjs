@@ -1,5 +1,5 @@
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
-import { importLibrary, exportLibrary, campaignKey, libraryCapacity } from '../library.mjs';
+import { importLibrary, exportLibrary, libraryCapacity } from '../library.mjs';
 import {
   preparePack,
   installPack,
@@ -13,6 +13,8 @@ import { createRun } from '../core/index.mjs';
 import { challengeCampaign } from '../challenges.mjs';
 import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
 import { masteryFor, pictureMasteries } from './mastery-view.mjs';
+import { expandDifficultyCampaigns } from '../campaign-contexts.mjs';
+import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
 const $ = (id) => document.getElementById(id);
 const button = (label, fn) => {
   const b = document.createElement('button');
@@ -46,7 +48,25 @@ export function attachLibraryPanel(api) {
     galleryReturn = null;
   const galleryCards = new Map();
   const gallerySealSlots = new Map();
-  let pictureSealsSignature = null;
+  let pictureSealsSignature = null,
+    viewVariants = [],
+    catalogSource = null,
+    difficultyResolver = null;
+  const executionEntries = () => api.executionCatalog?.() ?? api.catalog?.() ?? [];
+  function difficulties() {
+    const entries = executionEntries();
+    if (
+      !catalogSource ||
+      catalogSource.length !== entries.length ||
+      entries.some((entry, index) => entry !== catalogSource[index])
+    ) {
+      catalogSource = [...entries];
+      difficultyResolver = createGalleryDifficultyResolver(entries);
+    }
+    return difficultyResolver;
+  }
+  const pictureMeta = (picture) =>
+    `${picture.theme.name} / ${picture.item.medal.toUpperCase()} · ${picture.label} · ${picture.item.score.toLocaleString()} points${Number.isFinite(picture.item.time) ? ` · ${picture.item.time.toFixed(2)}s` : ''}`;
   const galleryPainter = new BoardPainter(api.get().presets);
   const reducedEffects = () =>
     (typeof api.getReducedEffects === 'function'
@@ -73,6 +93,7 @@ export function attachLibraryPanel(api) {
   }
   function renderScores() {
     const { library } = api.get();
+    const resolver = difficulties();
     $('scoreboard').replaceChildren();
     const groups = Map.groupBy
       ? Map.groupBy(library.scores, (s) => s.boardId)
@@ -82,7 +103,9 @@ export function attachLibraryPanel(api) {
         );
     const query = $('score-search').value.toLowerCase().trim(),
       matches = [...groups.values()].filter((entries) =>
-        `${entries[0].levelName} ${entries[0].classRoute.join(' ')}`.toLowerCase().includes(query),
+        `${entries[0].levelName} ${entries[0].classRoute.join(' ')} ${resolver.label(entries[0].campaignKey)}`
+          .toLowerCase()
+          .includes(query),
       );
     scorePage = Math.min(scorePage, Math.max(0, Math.ceil(matches.length / 10) - 1));
     for (const entries of matches.slice(scorePage * 10, scorePage * 10 + 10)) {
@@ -91,7 +114,7 @@ export function attachLibraryPanel(api) {
         copy = document.createElement('p');
       title.textContent = entries[0].levelName;
       copy.className = 'micro-note';
-      copy.textContent = `${entries[0].classRoute.join(' → ')} · ${entries[0].turnPolicy} · seed ${entries[0].seed}`;
+      copy.textContent = `${resolver.label(entries[0].campaignKey)} · ${entries[0].classRoute.join(' → ')} · ${entries[0].turnPolicy} · seed ${entries[0].seed}`;
       group.append(title, copy);
       const list = document.createElement('ol');
       for (const entry of [...entries].sort((a, b) => b.score - a.score || a.time - b.time)) {
@@ -129,7 +152,7 @@ export function attachLibraryPanel(api) {
       `${usage.gallery} / ${usage.maxGallery} pictures · ${usage.masteries} / ${usage.maxMasteries} equipment seals · ${usage.campaigns} / ${usage.maxCampaigns} campaigns · ${usage.percent.toFixed(1)}% of profile budget. Old pictures are preserved; export archives before reaching capacity.`;
     const saved = api.saved();
     $('suspended-status').textContent = saved
-      ? `Saved flight: ${saved.replay?.level?.name || 'Unknown'} · ${typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'Date unavailable'}`
+      ? `Saved flight: ${saved.replay?.level?.name || 'Unknown'} · ${difficulties().label(saved.campaignKey)} · ${typeof saved.savedAt === 'string' ? saved.savedAt.replace('T', ' ').slice(0, 19) : 'Date unavailable'}`
       : 'No suspended attempt. Use Save & pause during a flight.';
     $('resume-save').disabled = !saved;
     const exportSource = api.attemptExportSource();
@@ -258,7 +281,7 @@ export function attachLibraryPanel(api) {
       const session = prepared.session;
       status(
         'save-status',
-        `${prepared.source === 'stored' ? 'Saved' : 'Current'} attempt prepared: ${session.replay.level.name} · ${session.savedAt.replace('T', ' ').slice(0, 19)}. ${prepared.context === 'replay-only' ? 'Replay verified; the exact matching campaign is still required to resume. ' : ''}${exported.message}`,
+        `${prepared.source === 'stored' ? 'Saved' : 'Current'} attempt prepared: ${session.replay.level.name} · ${difficulties().label(session.campaignKey)} · ${session.savedAt.replace('T', ' ').slice(0, 19)}. ${prepared.context === 'replay-only' ? 'Replay verified; the exact matching campaign is still required to resume. ' : ''}${exported.message}`,
       );
     } catch (error) {
       if (currentAttemptExport(operation)) status('save-status', error);
@@ -269,6 +292,7 @@ export function attachLibraryPanel(api) {
   function backupOptions() {
     return {
       campaigns: [api.base().campaign],
+      expandCampaigns: expandDifficultyCampaigns,
       resolveCampaign: (key) => {
         const match = /^route-(\d{4}-\d\d-\d\d)-(daily|calm|expert)\//.exec(key);
         if (!match) return null;
@@ -341,7 +365,7 @@ export function attachLibraryPanel(api) {
         $('library-dialog').close();
         return;
       }
-      const next = importLibrary(parsed, { campaigns: api.catalog().map((c) => c.campaign) });
+      const next = importLibrary(parsed, { campaigns: executionEntries().map((c) => c.campaign) });
       api.beforeProfileReplacement?.();
       previousLibrary = api.get().library;
       const result = api.setLibrary(next);
@@ -472,7 +496,7 @@ export function attachLibraryPanel(api) {
         $('challenge-kind').value,
         api.base().classRecipes,
       );
-      api.select({ ...api.base(), campaign: c });
+      api.select({ ...api.base(), campaign: c, activity: 'challenge' });
       $('library-dialog').close();
       api.focusMission?.();
     } catch (e) {
@@ -501,18 +525,6 @@ export function attachLibraryPanel(api) {
     })
     .catch((e) => status('pack-status', e));
 
-  function resolvePicture(item) {
-    const entry = api.catalog().find((e) => campaignKey(e.campaign) === item.campaignKey);
-    if (!entry) return null;
-    const level = entry.campaign.levels.find((l) => l.id === item.levelId);
-    const theme = entry.themes.find((t) => t.id === item.themeId);
-    if (!level || !theme) return null;
-    const visualOverrides = {
-      ...entry.visualOverrides,
-      ...entry.levelVisuals?.find((v) => v.levelId === item.levelId)?.visualOverrides,
-    };
-    return { entry, level, theme, visualOverrides, item };
-  }
   async function drawPicture(canvas, picture, accept = () => true) {
     const args = {
       theme: picture.theme,
@@ -580,20 +592,19 @@ export function attachLibraryPanel(api) {
     galleryCards.clear();
     gallerySealSlots.clear();
     $('gallery-grid').replaceChildren();
-    const worlds = new Map(
-      api.catalog().map((entry) => [campaignKey(entry.campaign), entry.themes]),
-    );
+    const resolver = difficulties();
     const query = $('gallery-search').value.toLowerCase().trim(),
-      items = api
-        .get()
-        .library.gallery.filter((item) =>
-          `${item.levelName} ${item.themeId} ${worlds.get(item.campaignKey)?.find((theme) => theme.id === item.themeId)?.name || ''}`
+      items = resolver
+        .group(api.get().library.gallery)
+        .filter((group) =>
+          `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${picture.theme.name} ${resolver.label(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : 'archived difficulty unavailable'}`
             .toLowerCase()
             .includes(query),
         );
     galleryPage = Math.min(galleryPage, Math.max(0, Math.ceil(items.length / 12) - 1));
-    for (const item of items.slice(galleryPage * 12, galleryPage * 12 + 12)) {
-      const picture = resolvePicture(item);
+    for (const group of items.slice(galleryPage * 12, galleryPage * 12 + 12)) {
+      const item = group.item,
+        picture = group.variants[0] ?? null;
       const card = document.createElement('button');
       card.className = 'gallery-card';
       card.type = 'button';
@@ -605,17 +616,18 @@ export function attachLibraryPanel(api) {
       title.textContent = item.levelName;
       const copy = document.createElement('span');
       copy.textContent = picture
-        ? `${picture.theme.name} · ${item.medal.toUpperCase()} · ${item.score.toLocaleString()}`
-        : 'Reinstall this picture’s pack to view';
+        ? `${picture.theme.name} · ${group.variants.map((variant) => resolver.label(variant.item.campaignKey)).join(' + ')} · ${picture.label}: ${item.medal.toUpperCase()} · ${item.score.toLocaleString()} points`
+        : 'Archived picture · reinstall its exact pack to view';
       const seal = document.createElement('span');
       seal.className = 'mastery-note';
       seal.hidden = true;
       card.append(canvas, title, copy, seal);
       gallerySealSlots.set(item.key, { item, picture, slot: seal });
       card.disabled = !picture;
-      card.onclick = () => openPicture(picture);
+      card.onclick = () => openPicture(picture, { variants: group.variants });
       $('gallery-grid').append(card);
       galleryCards.set(item.key, card);
+      for (const variant of group.variants) galleryCards.set(variant.item.key, card);
       if (picture)
         drawPicture(canvas, picture).catch(() => {
           copy.textContent = 'Picture could not decode. Reinstall its pack.';
@@ -639,27 +651,50 @@ export function attachLibraryPanel(api) {
     $('gallery-replay').disabled = !ready;
     $('gallery-view-dialog').setAttribute('aria-busy', String(loading));
   }
-  async function openPicture(picture) {
-    if (!picture || !$('collection-dialog').open) return;
-    galleryReturn = {
-      key: picture.item.key,
-      page: galleryPage,
-      query: $('gallery-search').value,
-    };
+  async function openPicture(picture, { variants = [picture], switching = false } = {}) {
+    if (
+      !picture ||
+      (switching
+        ? !$('gallery-view-dialog').open || !viewVariants.includes(picture)
+        : !$('collection-dialog').open)
+    )
+      return;
+    if (!switching)
+      galleryReturn = {
+        key: picture.item.key,
+        page: galleryPage,
+        query: $('gallery-search').value,
+      };
     const generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
     returnToCollection = true;
     view = picture;
+    if (!switching) {
+      viewVariants = variants;
+      $('gallery-difficulty').replaceChildren(
+        ...variants.map((variant) => {
+          const option = document.createElement('option');
+          option.value = variant.difficulty ?? '';
+          option.textContent = variant.label;
+          return option;
+        }),
+      );
+    }
+    $('gallery-difficulty-field').hidden = viewVariants.length < 2;
+    $('gallery-difficulty').disabled = viewVariants.length < 2;
+    $('gallery-difficulty').value = picture.difficulty ?? '';
     pictureReady(false, true);
-    const meta = `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
+    const meta = pictureMeta(picture);
     const current = () =>
       generation === viewGeneration && view === picture && $('gallery-view-dialog').open;
     $('gallery-view-title').textContent = picture.level.name;
     $('gallery-view-meta').setAttribute('role', 'status');
     $('gallery-view-meta').textContent = `${meta} · Loading picture…`;
     refreshPictureMasteries(picture, api.get().library.masteries);
-    $('collection-dialog').close();
-    $('gallery-view-dialog').showModal();
+    if (!switching) {
+      $('collection-dialog').close();
+      $('gallery-view-dialog').showModal();
+    }
     try {
       const drawn = await drawPicture($('gallery-canvas'), picture, current);
       if (drawn && current()) {
@@ -674,13 +709,28 @@ export function attachLibraryPanel(api) {
       }
     }
   }
+  $('gallery-difficulty').onchange = () => {
+    if (!$('gallery-view-dialog').open) return;
+    const selected = viewVariants.find(
+      (picture) => picture.difficulty === $('gallery-difficulty').value,
+    );
+    if (selected && selected !== view) return openPicture(selected, { switching: true });
+  };
   $('gallery-replay').onclick = () => {
     if (view && viewReady && $('gallery-view-dialog').open) {
+      const installed = difficulties().picture(view.item);
+      if (!installed) {
+        pictureReady(false);
+        $('gallery-view-meta').textContent =
+          'Archived picture · reinstall its exact pack before replaying.';
+        return;
+      }
       returnToCollection = false;
-      api.select(view.entry, {
+      api.select(installed.entry, {
         levelId: view.level.id,
         themeId: view.theme.id,
         seed: view.item.seed ?? 1,
+        ...(installed.difficulty ? { difficulty: installed.difficulty } : {}),
       });
       $('gallery-view-dialog').close();
       api.focusMission?.();
@@ -698,12 +748,11 @@ export function attachLibraryPanel(api) {
     } catch (e) {
       if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
         $('gallery-view-meta').textContent =
-          `${picture.theme.name} / ${picture.item.medal.toUpperCase()} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`;
+          `${pictureMeta(picture)} · Celebration could not start. The completed picture is still available. ${e instanceof Error ? e.message : ''}`;
       return;
     }
     if (generation !== viewGeneration || view !== picture || !$('gallery-view-dialog').open) return;
-    $('gallery-view-meta').textContent =
-      `${picture.theme.name} / ${picture.item.medal.toUpperCase()}`;
+    $('gallery-view-meta').textContent = pictureMeta(picture);
     galleryPainter.setLevel?.(picture.level, { seed: picture.item.seed ?? 1 });
     galleryPainter.startCelebration?.({
       levelId: picture.level.id,
@@ -743,6 +792,9 @@ export function attachLibraryPanel(api) {
     cancelAnimationFrame(galleryFrame);
     viewGeneration++;
     view = null;
+    viewVariants = [];
+    $('gallery-difficulty-field').hidden = true;
+    $('gallery-difficulty').disabled = true;
     pictureReady(false);
     const origin = galleryReturn;
     galleryReturn = null;
