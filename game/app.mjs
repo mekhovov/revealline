@@ -40,7 +40,7 @@ try {
     getJSON('content/classes.json'),
   ]);
   campaign.classRecipes = classRegistry;
-  let buildVersion = '0.1.0',
+  let buildVersion = '0.1.1',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -97,7 +97,8 @@ try {
     recorder = null,
     recordingStopped = false,
     captionUntil = 0,
-    bodyWarning = '';
+    bodyWarning = '',
+    lastReplay = null;
   if (scenario) {
     theme = scenario.theme;
     classId = scenario.settings.classId;
@@ -243,6 +244,8 @@ try {
   }
   function overlay(kind) {
     show('game-overlay', true);
+    show('show-result', false);
+    show('view-picture', kind === 'won');
     show('next-button', kind === 'won');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
@@ -543,6 +546,18 @@ try {
     prepare();
     resume();
   };
+  $('view-picture').onclick = () => {
+    if (run.status !== 'won') return;
+    show('game-overlay', false);
+    show('show-result', true);
+    $('show-result').focus({ preventScroll: true });
+  };
+  $('show-result').onclick = () => {
+    if (run.status === 'won') {
+      overlay('won');
+      $('view-picture').focus({ preventScroll: true });
+    }
+  };
   $('next-button').onclick = () => {
     if (practice) {
       if (demo) {
@@ -598,11 +613,19 @@ try {
   $('export-replay').onclick = () => {
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
-      downloadJSON(exportReplay(recorder, run), `revealline-${run.levelId}-replay.json`);
+      pause(true);
+      lastReplay = exportReplay(recorder, run);
+      $('replay-json').value = JSON.stringify(lastReplay, null, 2);
+      downloadJSON(lastReplay, `revealline-${run.levelId}-replay.json`);
+      $('replay-dialog').showModal();
       warning('Replay exported with its exact rules, inputs and final state.');
     } catch (error) {
       warning(`Replay could not export: ${error.message}`);
     }
+  };
+  $('download-replay').onclick = () => {
+    if (lastReplay)
+      downloadJSON(lastReplay, `revealline-${lastReplay.summary.levelId}-replay.json`);
   };
   window.addEventListener('blur', () => pause(true));
   document.addEventListener('visibilitychange', () => {

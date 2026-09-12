@@ -47,3 +47,5 @@ Read [development](../docs/development.md), [deployment](../docs/deployment.md),
 Static browser distribution is implemented. Native wrappers and offline caching are separate work; physical phone, controller and sustained performance checks need actual hardware. The [reference research](../docs/research/round-10-reference-and-import.md) and [earlier XPOSED inspection](../docs/research/xonix-and-xposed.md) distinguish observed references from this game's choices.
 
 Touch Boost follows the steering preference: hold it in hold mode, or tap to toggle it in Tap steering mode. Stop and pause clear it. Assistive click-only activation toggles Boost because it has no hold-release event. The action affects the same simulation multiplier as Shift or the controller shoulder.
+
+In v0.1.1, a completed mission offers **View picture**; **Results** restores the same outcome. Export replay also exposes copyable JSON, and the playground measures control visibility as well as arena fit. Mobile and tablet layout presets use 44 CSS-pixel control targets; the desktop mouse layout retains smaller buttons. These are layout measurements, not physical-device certification.
