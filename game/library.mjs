@@ -1,5 +1,6 @@
 import { emptyProgress, validateProgress, awardCompletion, PROGRESS_VERSION } from './progress.mjs';
-import { CLASSES, RULESET, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
+import { CLASSES, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
+import { versionsForCampaign } from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { resolveKeyBindings } from './key-bindings.mjs';
 import { resolveControllerBindings } from './controller-bindings.mjs';
@@ -80,7 +81,7 @@ const sortScores = (a, b) =>
   a.runId.localeCompare(b.runId);
 export function campaignKey(campaign) {
   required(stableId(campaign?.id) && text(campaign?.revision, 60), 'Campaign identity is invalid.');
-  return `${campaign.id}/${encodeURIComponent(campaign.revision)}/${dataIdentity({ ruleset: RULESET, levels: campaign.levels.map(normalizedLevel), classRecipes: campaign.classRecipes ?? CLASSES })}`;
+  return `${campaign.id}/${encodeURIComponent(campaign.revision)}/${dataIdentity({ ruleset: versionsForCampaign(campaign).ruleset, levels: campaign.levels.map(normalizedLevel), classRecipes: campaign.classRecipes ?? CLASSES })}`;
 }
 export function boardIdentity({ campaign, level, recipe, turnPolicy, seed, classRoute = [] }) {
   required(

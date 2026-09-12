@@ -1,4 +1,5 @@
 import { createRun, stepRun, releaseInputs, FIXED_DT, RULESET } from './core/index.mjs';
+import { resolveVersions } from './core/versions.mjs';
 
 export const DUEL_PROTOCOL = 'xonix-duel.v1';
 export const neutralCommand = () => ({
@@ -12,10 +13,11 @@ const terminal = (run) => ['won', 'lost'].includes(run.status);
 export function createDuel(level, options = {}, { seconds = 90 } = {}) {
   if (!Number.isInteger(seconds) || seconds < 10 || seconds > 600)
     throw new TypeError('Round duration must be 10–600 seconds.');
+  const runs = [createRun(level, options), createRun(level, options)];
   return {
     protocol: DUEL_PROTOCOL,
-    ruleset: RULESET,
-    runs: [createRun(level, options), createRun(level, options)],
+    ruleset: runs[0].ruleset,
+    runs,
     tick: 0,
     limitTicks: seconds * 120,
     status: 'ready',
@@ -82,8 +84,16 @@ export function stepDuel(match, commands) {
   return match;
 }
 
-/** Transport-independent future input envelope. It never accepts state or rewards. */
-export function validateDuelPacket(packet, { nextTick, player, matchId }) {
+/** Transport-independent future input envelope. It never accepts state or rewards.
+ * Supply the selected match.ruleset; omitted context retains the legacy core2 gate.
+ * This validator does not create a transport or authorize another match's input.
+ */
+export function validateDuelPacket(packet, { nextTick, player, matchId, ruleset = RULESET }) {
+  try {
+    resolveVersions({ ruleset });
+  } catch {
+    return false;
+  }
   if (
     !packet ||
     Object.getPrototypeOf(packet) !== Object.prototype ||
@@ -91,7 +101,7 @@ export function validateDuelPacket(packet, { nextTick, player, matchId }) {
       (k) => !['protocol', 'ruleset', 'matchId', 'tick', 'player', 'input'].includes(k),
     ) ||
     packet.protocol !== DUEL_PROTOCOL ||
-    packet.ruleset !== RULESET ||
+    packet.ruleset !== ruleset ||
     packet.matchId !== matchId ||
     packet.tick !== nextTick ||
     packet.player !== player ||

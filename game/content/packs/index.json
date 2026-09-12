@@ -20,6 +20,10 @@
     {
       "id": "equipment-workshop",
       "path": "equipment-workshop.json"
+    },
+    {
+      "id": "sentinel-relay",
+      "path": "sentinel-relay.json"
     }
   ]
 }

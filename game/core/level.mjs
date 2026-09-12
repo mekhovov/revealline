@@ -1,4 +1,6 @@
 import { DEFAULT_RULES } from './registry.mjs';
+import { boundedJSON, exactKeys } from '../data-json.mjs';
+import { resolveEncounterDescriptor } from './encounter.mjs';
 
 const number = (v, lo, hi) => Number.isFinite(v) && v >= lo && v <= hi;
 const integer = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
@@ -6,13 +8,16 @@ const id = (v) => typeof v === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.t
 const object = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Validate data without mutating it. Unknown presentation metadata is ignored. */
-export function validateLevel(level) {
+function validateShape(level, encounterBranch = false) {
   const errors = [];
   const check = (value, message) => {
     if (!value) errors.push(message);
   };
   if (!object(level)) return { valid: false, errors: ['level must be an object'] };
-  check(level.version === 'xonix-level.v1', 'version must be xonix-level.v1');
+  check(
+    level.version === (encounterBranch ? 'xonix-level.v2' : 'xonix-level.v1'),
+    encounterBranch ? 'version must be xonix-level.v2' : 'version must be xonix-level.v1',
+  );
   check(id(level.id), 'id must be a stable identifier');
   check(
     typeof level.revision === 'string' && level.revision.length > 0,
@@ -80,7 +85,10 @@ export function validateLevel(level) {
     if (!object(e)) continue;
     seen.add(e.id);
     check(
-      ['bouncer', 'border-patrol', 'lane-boss'].includes(e.type),
+      (encounterBranch
+        ? ['relay-sentinel', 'border-patrol']
+        : ['bouncer', 'border-patrol', 'lane-boss']
+      ).includes(e.type),
       `enemies[${i}] unsupported type`,
     );
     check(
@@ -226,6 +234,58 @@ export function validateLevel(level) {
       check(Number.isInteger(level.rules.lives), 'rules.lives must be integer');
   }
   return { valid: errors.length === 0, errors: [...new Set(errors)] };
+}
+
+/** Legacy metadata and normalization stay unchanged; the new recipe is strict own JSON. */
+export function validateLevel(level) {
+  try {
+    const version =
+      level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
+    if (version && !Object.hasOwn(version, 'value'))
+      return { valid: false, errors: ['level version must be own data'] };
+    if (version?.value !== 'xonix-level.v2') {
+      if (level && Object.hasOwn(level, 'encounter'))
+        return { valid: false, errors: ['encounter requires xonix-level.v2'] };
+      return validateShape(level);
+    }
+    const owned = boundedJSON(level, {
+      maxBytes: 128 * 1024,
+      maxNodes: 10000,
+      maxDepth: 12,
+      maxArray: 100,
+    });
+    exactKeys(
+      owned,
+      [
+        'version',
+        'id',
+        'revision',
+        'name',
+        'width',
+        'height',
+        'spawn',
+        'goal',
+        'walls',
+        'enemies',
+        'objectives',
+        'supplies',
+        'rules',
+        'metadata',
+        'signalZones',
+        'hangars',
+        'themeId',
+        'musicId',
+        'encounter',
+      ],
+      'level',
+    );
+    const result = validateShape(owned, true);
+    if (!result.valid) return result;
+    resolveEncounterDescriptor(owned.encounter, owned);
+    return result;
+  } catch (error) {
+    return { valid: false, errors: [error.message] };
+  }
 }
 
 export function normalizedLevel(level) {

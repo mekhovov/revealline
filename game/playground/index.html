@@ -131,6 +131,122 @@
                 value="2"
             /></label>
           </details>
+          <details id="encounter-editor">
+            <summary>Staged encounter</summary>
+            <p id="encounter-readout">
+              Load Sentinel Relay from the expansion examples to edit its two stages.
+            </p>
+            <fieldset id="encounter-fields" disabled>
+              <legend>Relay and core</legend>
+              <div class="settings-row three">
+                <label class="field"
+                  >Sentinel ID<input id="encounter-enemy" type="text" maxlength="80"
+                /></label>
+                <label class="field"
+                  >Shield objective ID<input id="encounter-shield" type="text" maxlength="80"
+                /></label>
+                <label class="field"
+                  >Core objective ID<input id="encounter-core" type="text" maxlength="80"
+                /></label>
+              </div>
+              <div class="settings-row three">
+                <label class="field"
+                  >New trail cells to release<input
+                    id="encounter-cut"
+                    type="number"
+                    min="1"
+                    max="128"
+                    step="1"
+                /></label>
+                <label class="field"
+                  >Lane width / cells<input
+                    id="encounter-width"
+                    type="number"
+                    min="0.25"
+                    max="5"
+                    step="0.05"
+                /></label>
+                <label class="field"
+                  >Initial delay / ticks<input
+                    id="encounter-delay"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+              </div>
+              <p>120 ticks = one second. Timings stay fixed across screen sizes and frame rates.</p>
+              <div class="settings-row three">
+                <label class="field"
+                  >Shield warning / ticks<input
+                    id="encounter-shield-warning"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+                <label class="field"
+                  >Shield attack / ticks<input
+                    id="encounter-shield-active"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+                <label class="field"
+                  >Shield rest / ticks<input
+                    id="encounter-shield-rest"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+              </div>
+              <label class="field"
+                >Transition / ticks<input
+                  id="encounter-transition"
+                  type="number"
+                  min="1"
+                  max="7200"
+                  step="1"
+              /></label>
+              <div class="settings-row three">
+                <label class="field"
+                  >Core warning / ticks<input
+                    id="encounter-core-warning"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+                <label class="field"
+                  >Core attack / ticks<input
+                    id="encounter-core-active"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+                <label class="field"
+                  >Core opening / ticks<input
+                    id="encounter-core-open"
+                    type="number"
+                    min="1"
+                    max="7200"
+                    step="1"
+                /></label>
+              </div>
+              <button id="apply-encounter" class="button" type="button">Apply encounter</button>
+              <button id="remove-encounter" class="button secondary" type="button">
+                Convert to ordinary map
+              </button>
+              <p>
+                Conversion removes the staged enemy and timing rules, keeps both objectives, and
+                clears optional goals. Undo restores the encounter. Geometry and reference edits
+                validate as one whole map.
+              </p>
+            </fieldset>
+          </details>
           <div class="settings-row seed-row">
             <label class="field"
               >Generator seed<input id="seed-input" type="text" value="first-light" /></label
@@ -301,7 +417,8 @@
             <p>
               Paste a generated pack including artwork bindings, or inspect the current
               configuration. Scenario and expansion versions 1 and 2 are accepted, along with
-              xonix-level.v1 and xonix-pack-library.v1. Version 2 carries explicit optional goals.
+              xonix-level.v1/v2 and xonix-pack-library.v1. Scenario and pack version 2 carry
+              explicit optional goals; version 3 carries staged encounters with no optional goals.
             </p>
             <textarea
               id="pack-json"
@@ -367,9 +484,38 @@
             ><button data-size="844,390" aria-pressed="false">Landscape</button
             ><button data-size="1024,768" aria-pressed="false">Tablet</button
             ><button data-size="1280,720" aria-pressed="false">Desktop</button
-            ><button data-size="1065,912">Window</button>
+            ><button data-size="1065,912" aria-pressed="false">Window</button>
             <button data-size="320,640" aria-pressed="false">Compact</button>
           </nav>
+          <form id="preview-size-form" class="preview-size-form" novalidate>
+            <label class="field" for="preview-width"
+              >Width · CSS px<input
+                id="preview-width"
+                type="number"
+                min="240"
+                max="2560"
+                step="1"
+                value="390"
+                required
+                aria-describedby="preview-size-help preview-size-status"
+            /></label>
+            <label class="field" for="preview-height"
+              >Height · CSS px<input
+                id="preview-height"
+                type="number"
+                min="240"
+                max="2560"
+                step="1"
+                value="844"
+                required
+                aria-describedby="preview-size-help preview-size-status"
+            /></label>
+            <button id="apply-preview-size" class="button" type="submit">Apply size</button>
+          </form>
+          <p id="preview-size-help" class="micro-note">
+            Custom size: 240–2560 CSS pixels per side. Resizing keeps the current game.
+          </p>
+          <p id="preview-size-status" class="micro-note" role="status"></p>
           <div id="preview-stage">
             <iframe
               id="preview-frame"

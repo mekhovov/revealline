@@ -1586,3 +1586,85 @@ dialog input[type='search'] {
 .game-overlay .mastery-note {
   color: #f2d889;
 }
+
+.encounter-status {
+  display: grid;
+  gap: 4px;
+  margin: 8px 12px;
+  padding: 8px 10px;
+  border: 1px solid var(--muted);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.encounter-status[hidden] {
+  display: none;
+}
+.encounter-status strong {
+  letter-spacing: 0.04em;
+}
+.encounter-status[data-phase='warning'] {
+  border-left-style: dashed;
+}
+.encounter-status[data-phase='active'] {
+  border-left-color: var(--danger);
+}
+.encounter-status[data-phase='open'] {
+  border-left-color: var(--safe);
+}
+
+/* Preserve a readable board when phase text needs more than the viewport can fit.
+   Small windows scroll vertically instead of shrinking the arena toward zero. */
+@media (min-width: 681px) {
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    --encounter-reserve: 273px;
+    --encounter-min-width: 320px;
+    max-width: min(
+      100%,
+      max(
+        var(--encounter-min-width),
+        calc((100svh - var(--safe-top) - var(--safe-bottom) - var(--encounter-reserve)) * 1.333333)
+      )
+    );
+  }
+  .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: min(
+      100%,
+      max(
+        var(--encounter-min-width),
+        calc(
+          (100svh - var(--safe-top) - var(--safe-bottom) - var(--encounter-reserve) - 90px) *
+            1.333333
+        )
+      )
+    );
+  }
+}
+@media (min-width: 681px) and (min-height: 501px) and (max-height: 900px) {
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    --encounter-reserve: 330px;
+  }
+}
+@media (min-width: 681px) and (max-width: 1100px) and (min-height: 501px) {
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    --encounter-reserve: 380px;
+  }
+}
+@media (min-width: 681px) and (max-width: 1100px) and (min-height: 901px) {
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    --encounter-reserve: 400px;
+  }
+}
+@media (min-width: 681px) and (max-height: 500px) {
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+    --encounter-reserve: 125px;
+    --encounter-min-width: 200px;
+  }
+  .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
+    margin-right: 0;
+  }
+}

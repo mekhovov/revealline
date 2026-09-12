@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.10.0 working source includes 28 maps: 12 base campaign maps and 16 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter and Equipment Workshop.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.11.0 working source includes 29 maps: 12 base campaign maps and 17 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter, Equipment Workshop and Sentinel Relay.
 
 ## The loop
 
@@ -107,3 +107,5 @@ The static distribution includes **Prepare offline play** in Settings. Preparati
 ## Author optional goals
 
 Use explicit pack v2 with supported finite `masteries`, or copy a campaign goal in the playground. Scenario v2 retains a full `masteryDefinition` or explicit null. The [pack contract](../docs/pack-mastery-contract.md) and [Equipment Workshop](../docs/equipment-workshop.md) describe the three themed examples, local-reference validation, practice, export and CLI inspection. Ordinary pictures and scores remain independent of seals. Revised or removed declarations preserve historical records; reinstalling the exact declaration restores its current label. The older v1 pack/scenario formats remain unchanged.
+
+The [Sentinel Relay guide](../docs/sentinel-relay.md) describes the new two-stage encounter, seven equipment interactions and editable versioned pack. Its warnings and openings use simulation ticks; presentation changes do not change the encounter schedule. New encounter maps use level.v2/core.v3/replay.v4; existing maps keep their original core.v2 identities.

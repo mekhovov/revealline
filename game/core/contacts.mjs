@@ -17,6 +17,7 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
   for (let n = 0; n < state.enemies.length; n++) {
     const enemy = state.enemies[n],
       plan = enemyPlans[n];
+    if (enemy.type === 'relay-sentinel' && state.encounter?.defeated) continue;
     for (const path of plan.paths) {
       if (path.t0 > horizon + EPS) continue;
       const endTime = Math.min(path.t1, horizon),
@@ -62,16 +63,19 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
         if (t != null) best = remember(best, lo + (hi - lo) * t, 'enemy-player', enemy.id);
       }
     }
+    const staged = enemy.type === 'relay-sentinel' ? state.encounter : null;
     if (
-      enemy.type === 'lane-boss' &&
-      enemy.bossPhase === 'active' &&
+      ((enemy.type === 'lane-boss' && enemy.bossPhase === 'active') ||
+        (staged && staged.phase === 'active')) &&
       enemy.stunnedUntil <= state.time + EPS
     ) {
-      const width = enemy.laneWidth ?? 1.2;
+      const width = staged ? state.level.encounter.laneWidth : (enemy.laneWidth ?? 1.2);
+      const axis = staged ? staged.axis : enemy.axis;
+      const lane = staged ? staged.lane : enemy.lane;
       const box =
-        enemy.axis === 'horizontal'
-          ? { x: 1, y: enemy.lane - width / 2, w: 46, h: width }
-          : { x: enemy.lane - width / 2, y: 1, w: width, h: 34 };
+        axis === 'horizontal'
+          ? { x: 1, y: lane - width / 2, w: 46, h: width }
+          : { x: lane - width / 2, y: 1, w: width, h: 34 };
       const overlaps = (cell) =>
         cell.x <= box.x + box.w &&
         cell.x + 1 >= box.x &&

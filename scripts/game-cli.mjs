@@ -1086,7 +1086,7 @@ function packCatalogEntries(pack, tooling) {
     },
     sourcePackId: pack.id,
     sourcePackFormat: pack.format,
-    ...(pack.format === tooling.MASTERY_PACK_VERSION
+    ...([tooling.MASTERY_PACK_VERSION, tooling.ENCOUNTER_PACK_VERSION].includes(pack.format)
       ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
       : {}),
   }));
@@ -1138,7 +1138,7 @@ export async function inspectGoals({ packPath, root = PROJECT_ROOT } = {}) {
             id: level.id,
             name: level.name,
             revision: level.revision,
-            levelIdentity: `level-v1-${tooling.dataIdentity(tooling.normalizedLevel(level))}`,
+            levelIdentity: `${level.version === 'xonix-level.v2' ? 'level-v2' : 'level-v1'}-${tooling.dataIdentity(tooling.normalizedLevel(level))}`,
             themeId: level.themeId ?? campaign.themeId ?? pack.themes[0].id,
             musicId: level.musicId ?? campaign.musicId ?? null,
             goalSource: registration

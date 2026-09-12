@@ -5,7 +5,11 @@ description: Create, revise, validate and install playable Reveal Line expansion
 
 # Xonix Expansion Author
 
-Read [library-and-packs.md](../../../docs/library-and-packs.md) for the current file shapes, limits, APIs and ten concrete prompt examples. Inspect the authored examples in `game/content/packs/` and exports in `game/packs.mjs` before choosing IDs or fields. Runtime `xonix-pack.v1` and explicit `xonix-pack.v2` are distinct from the older motion-lab collection and concept schemas.
+Read [library-and-packs.md](../../../docs/library-and-packs.md) for the current file shapes, limits, APIs and ten concrete prompt examples. Inspect the authored examples in `game/content/packs/` and exports in `game/packs.mjs` before choosing IDs or fields. Runtime packs v1/v2 and the finite encounter pack v3 are distinct from the older motion-lab collection and concept schemas.
+
+For a staged encounter pack, use [Sentinel Relay](../../../docs/sentinel-relay.md), its [editable source](../../library/sentinel-relay/proposedpack-source.json) and [ten finite prompt recipes](../../library/sentinel-relay/prompts.json). Pack-v3 requires engine core-v3, homogeneous level-v2 campaigns and empty `masteries`; it exports playground-v3 with null `masteryDefinition`. Do not reinterpret pack-v2 mastery semantics or accept unsupported boss goals. Keep all existing pack/image limits and prospective dependency/catalog validation before decoding and atomic adoption. Preserve old members in mixed backups; replacement/removal must not discard their earned pictures or archived records.
+
+Retain source/proof separation: the explicit recording helper verifies twenty legal traces before writing this current pack/proof, while ordinary tests read fixed expectations. A changed geometry requires its own inputs and identity; a four-theme reskin does not create four proven maps. Validate the complete edited encounter references, preserve it across unrelated image/style edits and Undo, and reject unsupported downgrade or broken references rather than silently removing stage behavior. Do not update old frozen packs or their expectations.
 
 Use the existing [runtime playground](../../../docs/playground-runtime.md) for interactive source selection, atomic expansion imports, signal/hangar painting and the three class comparisons. Export an edited map as a separate one-map expansion; exporting the loaded library retains its original multi-map content.
 

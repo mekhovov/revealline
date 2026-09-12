@@ -1,6 +1,6 @@
 ---
 name: xonix-runtime-maintainer
-description: Maintain, test, build and archive this project's playable Xonix runtime, including chapter appearances, optional mastery, controller layouts, navigation, isolated practice, saved-game continuity and release transfers, using its actual core, content and CLI contracts. Use for game logic, browser integration or playable releases; concept art and the separate motion lab have their own workflows.
+description: Maintain, test, build and archive this project's playable Xonix runtime, including staged encounters, chapter appearances, optional mastery, controller layouts, isolated practice and saved-game continuity, using its actual core, content and CLI contracts. Use for game logic, browser integration or playable releases; concept art and the separate motion lab have their own workflows.
 ---
 
 # Xonix Runtime Maintainer
@@ -16,6 +16,10 @@ Locate the project from the current workspace or this source skill's project pat
 - `game/build-config.json` owns the static build allowlist. Include required modules, assets and licenses when adding dependencies. Preserve relative imports so source, `dist/` and a nested saved version can all load.
 
 Read the exported functions and current data before selecting names or fields. New primitives, enemy types, save migrations or targeting domains require implemented behavior and tests; arbitrary JSON strings cannot create them. Preserve authored `immediate` and `grid-center` turning, and test both for changes affecting movement, input buffering, dashes or contact order. Cosmetic replacement must leave those mechanics unchanged.
+
+For the finite staged encounter, read [Sentinel Relay](../../../docs/sentinel-relay.md) and `game/core/versions.mjs`. Preserve the exact legacy level-v1/core-v2/replay-v3 branch; level-v2/core-v3/replay-v4 owns the new encounter state/checkpoint section. Never add empty encounter defaults or new checksum fields to old runs. Resolve the selected campaign's actual version pair rather than globally changing `RULESET`. Pack-v3 requires empty `masteries`, scenario-v3 requires null `masteryDefinition`; this is not a new optional-goal predicate.
+
+Use `game/core/encounter.mjs` for phase, fresh-trail counting and isolation authority; the renderer only reads them. Preserve contact-before-closure, repeated openings, safe/no-cut recovery exclusion for isolation, sole field seed and centered stationary actor. A short ordinary closure keeps its captured cells; automatic isolated release must not emit a fake `cut.closed`. Run `sentinel-playthrough.test.mjs`, relevant `encounter-*.test.mjs` and `compatibility-v0100.test.mjs`, preserving old proof files. The [ten finite authoring prompts](../../library/sentinel-relay/prompts.json) and source recording helper require legal input traces, not state assignments. Portable replay/session/backup and current catalog adoption must share version dispatch; theme effects and music cannot advance simulation.
 
 For controls, read `docs/controls.md` and `game/key-bindings.mjs`. Keep mappings separate from simulation rules. Preserve Escape pause, browser/editing shortcuts, unconditional key release, cancellation without partial adoption and visible hints. New preferences require bounded validation, additive migration and portable-backup tests. Archived release profile channels must remain isolated from incompatible new schemas.
 
@@ -38,7 +42,7 @@ For saved controller layouts, read [preference migration](../../../docs/controll
 
 Full couch/Replay Theater menu navigation, toggle steering/boost, physical-button capture and haptics remain future work. Do not imply solo layouts configure couch players or that simulated input proves physical or trusted browser activation. Native pickers, fullscreen, share/download and audio requirements must be tested on their actual host; keep the keyboard/touch route and truthful failure feedback.
 
-For portable saves, local leaderboards and installed campaigns, read [library-and-packs.md](../../../docs/library-and-packs.md). New core results include roster and class-route identities; retain both through rewards and replays. Expansion packs use explicit runtime `xonix-pack.v1` or `xonix-pack.v2` contracts and complete image decoding before atomic installation.
+For portable saves, local leaderboards and installed campaigns, read [library-and-packs.md](../../../docs/library-and-packs.md). New core results include roster and class-route identities; retain both through rewards and replays. Expansion packs use explicit runtime v1/v2 contracts for core-v2 or the finite `xonix-pack.v3` encounter contract for core-v3, with complete image decoding before atomic installation.
 
 For chapter appearances, use [chapter-rewards.md](../../../docs/chapter-rewards.md) and the [Round 20 prompts](../../prompts/round-20-chapter-rewards.md). Call `appearanceMilestones(progressFor(library, campaign), campaign)` and `unlockedBodies(progress, campaign)` with the actual campaign context in every campaign UI and class-appearance fallback. Count distinct declared map clears, ignore foreign IDs and preserve targets of one and `min(4, distinct map count)`. The one-argument unlock API deliberately retains the legacy four-clear final tier. Pathfinder follows the campaign target; Last light still requires all maps. These cosmetic projections must not change equipment, map/roster identities or mastery qualification.
 

@@ -1,4 +1,5 @@
 import { createRun, releaseInputs } from './core/index.mjs';
+import { resolveVersions, versionsForCampaign } from './core/versions.mjs';
 import {
   createRecorder,
   exportReplay,
@@ -62,8 +63,17 @@ function envelope(candidate) {
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
     'Saved attempt replay is missing.',
   );
+  resolveVersions({
+    levelVersion: session.replay.level?.version,
+    ruleset: session.replay.ruleset,
+    replayVersion: session.replay.version,
+    checkpointAlgorithm: session.replay.checkpoint?.algorithm,
+  });
   return session;
 }
+
+/** Owned metadata and simulation-pair preflight; does not verify a replay outcome. */
+export const snapshotSession = envelope;
 
 export function suspendSession({
   run,
@@ -104,6 +114,11 @@ export async function restoreSession(
   if (session.campaignKey !== campaignKey)
     throw new Error('This saved attempt belongs to a different campaign or rules revision.');
   const installed = boundedJSON(campaign);
+  const versions = versionsForCampaign(installed);
+  required(
+    session.replay.ruleset === versions.ruleset,
+    'Saved attempt and installed campaign simulation versions differ.',
+  );
   const mastery =
     masteryDefinition === undefined
       ? undefined

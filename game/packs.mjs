@@ -1,4 +1,4 @@
-import { RULESET } from './core/registry.mjs';
+import { LEGACY_VERSIONS, ENCOUNTER_VERSIONS, versionsForCampaign } from './core/versions.mjs';
 import {
   validateScenario,
   validateTheme,
@@ -7,6 +7,7 @@ import {
   CONTENT_LIMITS,
   SCENARIO_VERSION,
   MASTERY_SCENARIO_VERSION,
+  ENCOUNTER_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { boundedJSON, plainObject, stableId, exactKeys, required } from './data-json.mjs';
@@ -15,6 +16,7 @@ import { resolveMasteryDefinition } from './mastery.mjs';
 
 export const PACK_VERSION = 'xonix-pack.v1';
 export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
+export const ENCOUNTER_PACK_VERSION = 'xonix-pack.v3';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
@@ -91,7 +93,9 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
-  const authoredMasteries = pack.format === MASTERY_PACK_VERSION;
+  const encounter = pack.format === ENCOUNTER_PACK_VERSION;
+  const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter;
+  const versions = encounter ? ENCOUNTER_VERSIONS : LEGACY_VERSIONS;
   exactKeys(
     pack,
     [
@@ -114,12 +118,20 @@ function packChecks(candidate) {
     'pack',
   );
   required(
-    [PACK_VERSION, MASTERY_PACK_VERSION].includes(pack.format) &&
+    [PACK_VERSION, MASTERY_PACK_VERSION, ENCOUNTER_PACK_VERSION].includes(pack.format) &&
       stableId(pack.id) &&
       semver(pack.version),
     'Pack format/id/version is invalid.',
   );
-  required(pack.engine === RULESET, `Pack requires a different engine; expected ${RULESET}.`);
+  required(
+    pack.engine === versions.ruleset,
+    `Pack requires a different engine; expected ${versions.ruleset}.`,
+  );
+  if (encounter)
+    required(
+      Array.isArray(pack.masteries) && pack.masteries.length === 0,
+      'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+    );
   required(
     text(pack.name, 120) && text(pack.description, 4096),
     'Pack name/description is invalid.',
@@ -236,8 +248,12 @@ function packChecks(candidate) {
         campaign.levels.length <= PACK_LIMITS.levels,
       'Campaign must contain 1..128 maps.',
     );
+    required(
+      versionsForCampaign(campaign).ruleset === versions.ruleset,
+      'Pack format and campaign simulation versions differ.',
+    );
     for (const level of campaign.levels) {
-      exactKeys(level, levelKeys, 'level');
+      exactKeys(level, encounter ? [...levelKeys, 'encounter'] : levelKeys, 'level');
       required(stableId(level.id), 'Level identity is reserved or invalid.');
       required(!levelIds.has(level.id), 'Level IDs must be unique across a pack.');
       levelIds.add(level.id);
@@ -250,7 +266,7 @@ function packChecks(candidate) {
         'Level refers to unknown music.',
       );
       const scenario = {
-        format: 'xonix-playground.v1',
+        format: encounter ? ENCOUNTER_SCENARIO_VERSION : SCENARIO_VERSION,
         level,
         theme: themes.get(level.themeId ?? campaign.themeId) ?? pack.themes[0],
         settings: {
@@ -260,6 +276,7 @@ function packChecks(candidate) {
         },
         classRecipes: pack.classRecipes,
         visualOverrides: {},
+        ...(encounter ? { masteryDefinition: null } : {}),
       };
       const checked = validateScenario(scenario);
       required(checked.valid, checked.errors.join('; '));
@@ -372,7 +389,7 @@ function catalogEntries(packs) {
       campaign: campaignData(pack, source),
       sourcePackId: pack.id,
       sourcePackFormat: pack.format,
-      ...(pack.format === MASTERY_PACK_VERSION
+      ...(pack.format !== PACK_VERSION
         ? {
             masteries: pack.masteries.filter((definition) => definition.campaignId === source.id),
           }
@@ -490,7 +507,7 @@ export function resolvePackCampaign(pack, campaignId) {
     levelVisuals: structuredClone(pack.levelVisuals),
     music: structuredClone(pack.music),
     sourcePackId: pack.id,
-    ...(pack.format === MASTERY_PACK_VERSION
+    ...(pack.format !== PACK_VERSION
       ? {
           sourcePackFormat: pack.format,
           masteries: structuredClone(
@@ -517,13 +534,18 @@ export function scenarioFromPack(
     ...(resolved.levelVisuals.find((v) => v.levelId === levelId)?.visualOverrides ?? {}),
   };
   const scenario = {
-    format: pack.format === MASTERY_PACK_VERSION ? MASTERY_SCENARIO_VERSION : SCENARIO_VERSION,
+    format:
+      pack.format === ENCOUNTER_PACK_VERSION
+        ? ENCOUNTER_SCENARIO_VERSION
+        : pack.format === MASTERY_PACK_VERSION
+          ? MASTERY_SCENARIO_VERSION
+          : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,
     settings: { classId: classId ?? resolved.classRecipes[0].id, turnPolicy, seed },
     visualOverrides,
-    ...(pack.format === MASTERY_PACK_VERSION
+    ...(pack.format !== PACK_VERSION
       ? {
           masteryDefinition: structuredClone(
             resolved.masteries.find((definition) => definition.levelId === levelId) ?? null,

@@ -3,6 +3,7 @@ import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs'
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { encounterView } from '../ui/encounter-view.mjs';
 import { readAssetStore } from '../storage.mjs';
 import { importPackLibrary, resolvePackCampaign } from '../packs.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
@@ -240,6 +241,34 @@ try {
       $(`racer-stats-${i}`).textContent =
         `${(run.coverage * 100).toFixed(1)}% · ${run.lives} lives · ${run.score} points`;
       $(`racer-state-${i}`).textContent = match.status === 'running' ? run.status : match.status;
+      const cue = encounterView(run),
+        group = $(`racer-encounter-${i}`),
+        title = $(`racer-encounter-title-${i}`),
+        instruction = $(`racer-encounter-instruction-${i}`);
+      group.hidden = !cue;
+      if (cue) {
+        const context =
+          match.status === 'paused'
+            ? 'PAUSED · '
+            : match.status === 'ready'
+              ? 'READY · '
+              : match.status === 'finished'
+                ? 'ROUND ENDED · '
+                : '';
+        const heading = `${context}${cue.title}`;
+        const copy =
+          match.status === 'finished' && !['won', 'lost'].includes(run.status)
+            ? `Frozen at round end. Live line ${cue.cutCells} / ${cue.min} new cells.`
+            : cue.instruction;
+        // The run owns this clock. Keep paused/finished cues and avoid rewriting unchanged text.
+        if (title.textContent !== heading) title.textContent = heading;
+        if (instruction.textContent !== copy) instruction.textContent = copy;
+        group.dataset.phase = cue.phase;
+      } else {
+        title.textContent = '';
+        instruction.textContent = '';
+        delete group.dataset.phase;
+      }
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
         paused: match.status !== 'running',
         reduced: $('race-reduced').checked,
