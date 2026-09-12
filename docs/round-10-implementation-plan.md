@@ -32,7 +32,7 @@ Source files use ordinary JavaScript ES modules with explicit contracts/JSDoc an
 - Entering unclaimed ground begins a live cut. Returning to old safe ground closes it. Self-contact and enemy contact with a live trail are dangerous. Walls block and do not close a cut.
 - Contacts resolve before closure/fill and rewards. Four-neighbor components with no live field-enemy anchor are claimed; border patrols do not preserve interior regions. Enemies on both sides can leave a trail-only capture.
 - Death cancels the current trail, retains old territory, consumes one life and provides explicit recovery/grace. Completion emits once; no reward comes from an animation callback.
-- Classes initially provide scan/trajectory information, supply-dependent stun fields, a heavier two-charge carrier, a timed protective shield and a slowing trap. Existing experimental dash/projectile variants remain in the motion lab until their live-trail semantics are separately proved.
+- Classes initially provide scan/direction information, supply-dependent stun fields, a heavier two-charge carrier, a timed protective shield and a slowing trap. Existing experimental dash/projectile variants remain in the motion lab until their live-trail semantics are separately proved.
 - A boss uses a visible warning, a bounded active lane and recovery. No invisible instantaneous attack or unannounced reinterpretation of safe ground.
 
 Exact numerical defaults and supported fields belong to the actual validated level/class contracts. A reference catalog entry never registers an enemy automatically. A new primitive requires implementation, validation and tests; images and prompts cannot execute rules.
@@ -45,7 +45,7 @@ Semantic roles include player body/attachments, field enemy, boundary patrol, bo
 
 The editor materializes generated levels, validates them with the runtime validator and runs them in practice mode. It supports inspectable JSON alongside a focused paint interface. Exported content contains data and allowed image sources, never downloaded executable code. Invalid imports must show an actionable error while preserving the last valid configuration.
 
-Telegram intake preserves actual supplied/downloaded originals and records URL, hash, media kind, access evidence and rights status. The public emoji-pack URL currently needs further inventory checking; a generic Telegram logo is not a pack image. Unknown reuse permission keeps third-party art in reference intake, outside shipped assets. An AI workflow can create independently reviewed original pixel-art variants; source and derivative remain separate.
+Telegram intake preserves actual supplied/downloaded originals and records URL, hash, media kind, access evidence and rights status. The public emoji-pack URL exposes its title but no verifiable member originals; a generic Telegram logo is not a pack image. Unknown reuse permission keeps third-party art in reference intake, outside shipped assets. An AI workflow can create independently reviewed original pixel-art variants; source and derivative remain separate.
 
 ## Replay and progression
 
@@ -79,3 +79,7 @@ Playtest checklist: can a newcomer explain safe ground and danger after one atte
 Browser static hosting is the first concrete distribution. iPhone browser and home-screen launch need Safari checks; native iOS uses a separately tested Capacitor/Xcode project if selected. Steam/macOS/Windows/Linux need an explicitly chosen desktop wrapper, signing/store work and physical controller tests. A generated ZIP is not an App Store or Steam build. Official API support does not prove a particular controller works; poll standard gamepads and handle disconnect/focus state explicitly. [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API).
 
 Detailed implementation results, commands and remaining issues will be recorded in the development, deployment, versioning and verification guides as the build lands. Latest news or research updates require a separate requested monitoring schedule; this task performs current research without silently creating recurring automation.
+
+## Accessibility refinement from current guidance
+
+Microsoft’s [Xbox Accessibility Guideline 107](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107) recommends configurable input with matching labels. The first browser slice offers held or latched touch steering/Boost, keyboard and standard-controller adapters, cancellation and reduced effects. Full remapping with updated tutorial/button labels remains a separate implementation gate. These implemented controls do not imply Xbox certification or physical-device verification.

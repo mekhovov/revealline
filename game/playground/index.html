@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Reveal / Line — Playground</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="playground.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="wordmark" href="../">◩ REVEAL / LINE</a>
+      <nav><span>PLAYGROUND</span><a href="../">Back to campaign ↗</a></nav>
+    </header>
+    <main class="workshop">
+      <div class="workshop-title">
+        <div>
+          <p class="eyebrow">AUTHOR / PREVIEW / REPEAT</p>
+          <h1>Make your next world.</h1>
+          <p>Change the data. Play the result in the same game engine.</p>
+        </div>
+        <div class="workshop-actions">
+          <button id="preview-button" class="button primary">Play configuration ↗</button
+          ><button id="export-button" class="button">Export pack</button
+          ><label class="file-button button"
+            >Import pack<input id="import-file" type="file" accept="application/json,.json"
+          /></label>
+        </div>
+      </div>
+      <p id="editor-status" class="editor-status" role="status">Loading the authoring contract…</p>
+      <div class="editor-grid">
+        <section class="editor-panel" aria-label="Configuration">
+          <div class="settings-row">
+            <label class="field">Start from<select id="level-select"></select></label
+            ><label class="field">World<select id="theme-select"></select></label>
+          </div>
+          <div class="settings-row">
+            <label class="field">Class<select id="class-select"></select></label
+            ><label class="field"
+              >Steering<select id="turn-select">
+                <option value="immediate">Immediate</option>
+                <option value="grid-center">Grid + buffer</option>
+              </select></label
+            >
+          </div>
+          <div class="settings-row three">
+            <label class="field"
+              >Coverage target %<input
+                id="goal-input"
+                type="number"
+                min="5"
+                max="95"
+                step="1"
+                value="45" /></label
+            ><label class="field"
+              >Speed / cells per s<input
+                id="speed-input"
+                type="number"
+                min="2"
+                max="20"
+                step="0.5"
+                value="10" /></label
+            ><label class="field"
+              >Lives<input id="lives-input" type="number" min="1" max="9" value="3"
+            /></label>
+          </div>
+          <div class="settings-row seed-row">
+            <label class="field"
+              >Generator seed<input id="seed-input" type="text" value="first-light" /></label
+            ><button id="generate-button" class="button">Generate map</button>
+          </div>
+          <div class="settings-row">
+            <label class="field"
+              >Terrain treatment<select id="terrain-style">
+                <option value="microtile">Microtile</option>
+                <option value="props">Larger props</option>
+                <option value="hybrid" selected>Hybrid</option>
+              </select></label
+            ><label class="field">Grid overlay<input id="show-grid" type="checkbox" /></label>
+          </div>
+          <div class="section-line">
+            <span>PAINT THE 48 × 36 BOARD</span
+            ><button id="undo-button" class="text-button" disabled>Undo</button>
+          </div>
+          <div class="brushes" role="group" aria-label="Paint tool">
+            <button data-brush="wall" aria-pressed="true">Wall</button
+            ><button data-brush="enemy" aria-pressed="false">Enemy</button
+            ><button data-brush="objective" aria-pressed="false">Objective</button
+            ><button data-brush="supply" aria-pressed="false">Supply</button
+            ><button data-brush="spawn" aria-pressed="false">Start</button
+            ><button data-brush="erase" aria-pressed="false">Erase</button>
+          </div>
+          <canvas
+            id="map-editor"
+            width="768"
+            height="576"
+            aria-label="Click to paint the board. Exact coordinates can also be edited in Level JSON below."
+          ></canvas>
+          <p id="map-readout" class="micro-note">
+            Safe border · grey walls · coral enemies · gold objectives
+          </p>
+          <div class="section-line">
+            <span>REPLACE ONE VISUAL ROLE</span><span>ORIGINAL FILES PRESERVED</span>
+          </div>
+          <div class="settings-row">
+            <label class="field"
+              >Role<select id="asset-role">
+                <option value="background">Reveal background</option>
+                <option value="player">Player body</option>
+                <option value="enemy">Field enemy</option>
+                <option value="patrol">Border patrol</option>
+                <option value="boss">Boss</option>
+                <option value="objective">Objective / support</option>
+                <option value="supply">Supply pad</option>
+                <option value="wall">Wall tile</option>
+              </select></label
+            ><label class="field"
+              >Background fit<select id="asset-fit">
+                <option value="cover">Cover</option>
+                <option value="contain">Contain whole image</option>
+              </select></label
+            >
+          </div>
+          <div class="asset-actions">
+            <label class="file-button button"
+              >Choose PNG / JPEG / WebP<input
+                id="asset-file"
+                type="file"
+                accept="image/png,image/jpeg,image/webp" /></label
+            ><button id="clear-asset" class="button">Clear role</button>
+          </div>
+          <p id="asset-status" class="micro-note">
+            Images are embedded only in your exported pack. Nothing is uploaded or sent to AI.
+          </p>
+          <div id="asset-list" class="asset-list"></div>
+          <details>
+            <summary>Advanced: level, theme and ability JSON</summary>
+            <p>
+              Unknown mechanics are rejected. Valid recipes can tune the registered effects without
+              changing core code.
+            </p>
+            <label class="field"
+              >Level JSON<textarea id="level-json" spellcheck="false" rows="12"></textarea></label
+            ><label class="field"
+              >Theme JSON<textarea id="theme-json" spellcheck="false" rows="8"></textarea></label
+            ><label class="field"
+              >Class recipes JSON<textarea
+                id="classes-json"
+                spellcheck="false"
+                rows="8"
+              ></textarea></label
+            ><button id="apply-json" class="button">Validate and apply JSON</button>
+          </details>
+          <details>
+            <summary>Complete pack JSON</summary>
+            <p>
+              Paste a generated pack including artwork bindings, or inspect the current
+              configuration.
+            </p>
+            <textarea
+              id="pack-json"
+              aria-label="Complete pack JSON"
+              spellcheck="false"
+              placeholder="Paste xonix-playground.v1 JSON here"
+            ></textarea>
+            <div class="settings-row">
+              <button id="show-pack" class="button">Show current pack</button
+              ><button id="apply-pack" class="button">Apply pack JSON</button>
+            </div>
+          </details>
+          <details>
+            <summary>Replay a recorded run</summary>
+            <p>
+              Import an exported replay to check its final simulation summary. Playback is a
+              verification run and grants no campaign rewards.
+            </p>
+
+            <label class="file-button button"
+              >Verify replay<input id="replay-file" type="file" accept="application/json,.json"
+            /></label>
+            <pre id="replay-result"></pre>
+          </details>
+        </section>
+        <section class="preview-panel" aria-label="Playable preview">
+          <div class="section-line">
+            <span>LIVE ENGINE / PRACTICE</span
+            ><a id="open-preview" href="../?practice=1" target="_blank" rel="opener"
+              >Open full preview ↗</a
+            >
+          </div>
+          <nav class="viewport-buttons" aria-label="Preview size">
+            <button data-size="390,844" aria-pressed="true">Phone</button
+            ><button data-size="844,390" aria-pressed="false">Landscape</button
+            ><button data-size="1024,768" aria-pressed="false">Tablet</button
+            ><button data-size="1280,720" aria-pressed="false">Desktop</button
+            ><button data-size="320,640" aria-pressed="false">Compact</button>
+          </nav>
+          <div id="preview-stage">
+            <iframe
+              id="preview-frame"
+              title="Playable configuration preview"
+              width="390"
+              height="844"
+            ></iframe>
+          </div>
+          <p id="viewport-readout" class="micro-note"></p>
+          <p id="layout-readout" class="micro-note">
+            Use Play configuration to load the current data.
+          </p>
+          <p class="micro-note">
+            Sized frames check layout. They do not emulate iPhone hardware, native touch, Safari or
+            controller performance.
+          </p>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="playground.mjs"></script>
+  </body>
+</html>
