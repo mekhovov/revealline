@@ -5,8 +5,10 @@ import {
   TURN_POLICIES,
   validateClassRecipes,
   loadoutHash,
+  rosterHash,
 } from './core/registry.mjs';
 import { EPS } from './core/geometry.mjs';
+import { dataIdentity } from './data-json.mjs';
 
 export const PROGRESS_VERSION = 'revealline-progress.v1';
 const record = (value) =>
@@ -35,7 +37,10 @@ function variantKeyValid(key, classIds) {
     return false;
   }
   return (
-    parts.length === 5 &&
+    (parts.length === 5 ||
+      (parts.length === 7 &&
+        /^roster-v1-[0-9a-f]{8}$/.test(parts[5]) &&
+        /^route-v1-[0-9a-f]{16}$/.test(parts[6]))) &&
     TURN_POLICIES.includes(parts[0]) &&
     classIds.has(parts[1]) &&
     revision.length > 0 &&
@@ -91,6 +96,48 @@ export function validateProgress(value, campaign) {
     )
   );
 }
+/** Legacy five-part variants remain readable; new awards partition the full roster and route. */
+export function completionVariantKey(result) {
+  const route = result.classHistory.map(({ classId, classRevision, loadoutHash }) => ({
+    classId,
+    classRevision,
+    loadoutHash,
+  }));
+  return `${result.turnPolicy}/${result.classId}/${encodeURIComponent(result.classRevision)}/${result.loadoutHash}/${result.seed}/${result.rosterHash}/route-v1-${dataIdentity(route)}`;
+}
+function historyValid(result, recipes) {
+  if (
+    result.rosterHash !== rosterHash(recipes) ||
+    !Array.isArray(result.classHistory) ||
+    result.classHistory.length < 1 ||
+    result.classHistory.length > 4096 ||
+    result.switches !== result.classHistory.length - 1
+  )
+    return false;
+  let previousTick = -1,
+    previousClass = null;
+  for (const [index, entry] of result.classHistory.entries()) {
+    if (!record(entry)) return false;
+    const recipe = recipes.find((c) => c.id === entry.classId);
+    if (
+      !recipe ||
+      entry.classRevision !== recipe.revision ||
+      entry.loadoutHash !== loadoutHash(recipe) ||
+      !Number.isInteger(entry.tick) ||
+      entry.tick < 0 ||
+      entry.tick <= previousTick ||
+      entry.tick > result.tick ||
+      (index === 0 && (entry.tick !== 0 || entry.classId !== result.classId)) ||
+      entry.classId === previousClass
+    )
+      return false;
+    previousTick = entry.tick;
+    previousClass = entry.classId;
+  }
+  return (
+    Number.isInteger(result.tick) && result.tick >= 0 && result.activeClassId === previousClass
+  );
+}
 /** Accept only the shell's matching core completion. Local data is not an authenticated achievement service. */
 export function awardCompletion(progress, campaign, result, { runId, practice = false } = {}) {
   if (!validateProgress(progress, campaign)) throw new Error('Progress format is invalid.');
@@ -110,6 +157,7 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
     !level ||
     !recipe ||
     result.ruleset !== RULESET ||
+    !historyValid(result, campaign.classRecipes ?? CLASSES) ||
     result.revision !== level.revision ||
     result.classRevision !== recipe.revision ||
     result.loadoutHash !== loadoutHash(recipe) ||
@@ -137,16 +185,20 @@ export function awardCompletion(progress, campaign, result, { runId, practice = 
   const medals = medal === 'gold' ? 3 : medal === 'silver' ? 2 : 1;
   const next = structuredClone(progress),
     old = Object.hasOwn(next.clears, level.id) ? next.clears[level.id] : null;
-  const key = `${result.turnPolicy}/${result.classId}/${encodeURIComponent(result.classRevision)}/${result.loadoutHash}/${result.seed}`;
+  const key = completionVariantKey(result);
   const variant = {
     score: result.score,
     time: result.time,
     medals,
     clean: result.lives === rules.lives,
   };
+  const variants = { ...old?.variants };
+  // Keep the 256 most recently used setup records while retaining aggregate bests.
+  delete variants[key];
+  variants[key] = best(old?.variants[key], variant);
   next.clears[level.id] = {
     ...best(old, variant),
-    variants: { ...old?.variants, [key]: best(old?.variants[key], variant) },
+    variants: Object.fromEntries(Object.entries(variants).slice(-256)),
   };
   next.seen = [...next.seen, runId].slice(-256);
   return next;

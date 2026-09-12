@@ -293,3 +293,18 @@ test('a non-browser environment receives a clear decoder-unavailable error', asy
   });
   await assert.rejects(browserDecodeImage(png), (error) => error.code === 'decoder-unavailable');
 });
+
+test('prepared scenarios preserve optional original procedural music descriptors', async () => {
+  const value = candidate();
+  value.music = {
+    id: 'test-track',
+    name: 'Original pulse',
+    genre: 'rock',
+    tempo: 126,
+    root: 45,
+    scale: 'dorian',
+  };
+  const prepared = await prepareScenario(value, { decodeImage: decode });
+  assert.deepEqual(prepared.scenario.music, value.music);
+  assert.notEqual(prepared.scenario.music, value.music);
+});

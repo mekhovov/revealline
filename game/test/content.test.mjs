@@ -6,7 +6,10 @@ import {
   validateScenario,
   inspectImageDataUrl,
   CONTENT_LIMITS,
+  recommendedBody,
 } from '../content.mjs';
+import { unlockedBodies } from '../progress.mjs';
+import { preparePack, scenarioFromPack } from '../packs.mjs';
 const themes = JSON.parse(
   readFileSync(new URL('../content/themes.json', import.meta.url), 'utf8'),
 ).themes;
@@ -86,6 +89,94 @@ test('all authored campaign themes and both policies validate without mutation',
       assert.equal(validateScenario(s).valid, true, JSON.stringify(validateScenario(s)));
       assert.deepEqual(s, before);
     }
+});
+test('optional class appearance bindings use free registered rigs without changing recipes or unlocks', () => {
+  const presets = JSON.parse(
+    readFileSync(new URL('../../authoring/motion-lab/presets.json', import.meta.url), 'utf8'),
+  );
+  const progress = { clears: {} },
+    allowed = unlockedBodies(progress);
+  for (const theme of themes) {
+    const before = structuredClone(theme);
+    for (const recipe of classes) {
+      const body = recommendedBody(theme, recipe.id);
+      assert.ok(Object.hasOwn(presets.characters, body), body);
+      assert.ok(allowed.has(body), `${theme.id}/${recipe.id} must not grant an earned cosmetic`);
+    }
+    assert.deepEqual(theme, before);
+  }
+  assert.equal(recommendedBody(themes[0], 'scout'), 'scout-quad');
+  assert.equal(recommendedBody(themes[0], 'carrier'), 'heavy-lift');
+  assert.equal(recommendedBody(themes[0], 'bomber'), 'fpv-body');
+  assert.equal(recommendedBody(themes[0], 'future-class'), 'fpv-body');
+  assert.equal(recommendedBody({}, 'scout', 'neutral-marker'), 'neutral-marker');
+  assert.equal(
+    recommendedBody({ classBodies: { scout: 'fixedwing-body' } }, 'scout'),
+    'fixedwing-body',
+  );
+  assert.equal(allowed.has('fixedwing-body'), false, 'a recommendation must never grant ownership');
+  assert.deepEqual(progress, { clears: {} });
+});
+test('class appearance references accept future IDs and old themes, but reject unsafe or oversized maps', () => {
+  const old = structuredClone(themes[0]);
+  delete old.classBodies;
+  assert.equal(validateTheme(old).valid, true);
+  const future = { ...old, classBodies: { 'custom-scout': 'future-body' } };
+  assert.equal(validateTheme(future).valid, true);
+  for (const mapping of [
+    null,
+    [],
+    { scout: { body: 'fpv-body' } },
+    { 'bad class': 'fpv-body' },
+    { scout: 'https://example.test/art.png' },
+    { scout: 'constructor' },
+    Object.fromEntries(Array.from({ length: 41 }, (_, i) => [`class-${i}`, 'fpv-body'])),
+    JSON.parse('{"__proto__":"fpv-body"}'),
+  ]) {
+    const result = validateTheme({ ...old, classBodies: mapping });
+    assert.equal(result.valid, false, JSON.stringify(mapping));
+    assert.match(result.errors.join(' '), /classBodies|forbidden/);
+  }
+  const bad = { ...old, classBodies: {} };
+  let reads = 0;
+  Object.defineProperty(bad.classBodies, 'scout', {
+    enumerable: true,
+    get() {
+      reads++;
+      return 'fpv-body';
+    },
+  });
+  assert.equal(validateTheme(bad).valid, false);
+  assert.equal(reads, 0);
+  assert.equal(validateTheme({ ...old, player: 'constructor' }).valid, false);
+  assert.equal(
+    recommendedBody({ classBodies: {} }, 'constructor', 'constructor'),
+    'neutral-marker',
+  );
+});
+test('class appearance maps survive pack preparation and scenario resolution as presentation only', async () => {
+  const pack = JSON.parse(
+    readFileSync(new URL('../content/packs/night-shift.json', import.meta.url), 'utf8'),
+  );
+  const theme = pack.themes[0],
+    classId = pack.classRecipes[0].id;
+  theme.classBodies = { [classId]: 'scout-quad' };
+  const before = structuredClone(pack),
+    prepared = await preparePack(pack);
+  const scenario = scenarioFromPack(
+    prepared.pack,
+    pack.campaigns[0].id,
+    pack.campaigns[0].levels[0].id,
+  );
+  assert.deepEqual(scenario.theme.classBodies, { [classId]: 'scout-quad' });
+  assert.equal(validateScenario(scenario).valid, true);
+  assert.deepEqual(pack, before);
+  assert.deepEqual(
+    scenario.classRecipes,
+    pack.classRecipes.filter(
+      (c) => !pack.campaigns[0].classIds || pack.campaigns[0].classIds.includes(c.id),
+    ),
+  );
 });
 test('optional presentation accepts the three explicit styles and rejects partial/unknown fields', () => {
   for (const style of ['microtile', 'props', 'hybrid']) {
@@ -312,4 +403,38 @@ test('player override warns about retained rig anchors without changing physics 
   assert.equal(r.valid, true);
   assert.match(r.warnings.join(), /anchors/);
   assert.deepEqual(s, before);
+});
+
+test('optional procedural music remains data-only and exact through scenario validation', () => {
+  const s = scenario();
+  s.music = {
+    id: 'custom-track',
+    name: 'Custom Original',
+    genre: 'metal',
+    tempo: 146,
+    root: 43,
+    scale: 'minor',
+  };
+  const before = structuredClone(s);
+  assert.equal(validateScenario(s).valid, true);
+  assert.deepEqual(s, before);
+  for (const music of [
+    null,
+    { ...s.music, tempo: 999 },
+    { ...s.music, url: 'https://example.test/song.mp3' },
+    { ...s.music, genre: 'unsupported' },
+  ])
+    rejected({ ...s, music }, /music/);
+  let calls = 0;
+  const unsafe = scenario();
+  unsafe.music = { ...s.music };
+  Object.defineProperty(unsafe.music, 'name', {
+    enumerable: true,
+    get() {
+      calls++;
+      return 'unsafe';
+    },
+  });
+  rejected(unsafe, /ordinary JSON/);
+  assert.equal(calls, 0);
 });
