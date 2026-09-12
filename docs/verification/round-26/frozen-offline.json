@@ -1,0 +1,123 @@
+{
+  "format": "revealline-frozen-browser-offline.v1",
+  "checkedDate": "2026-09-12",
+  "version": "v0.16.0",
+  "sourceRevision": "8fb6b5782a6fee85211b9bbbfb3d13a1d1a60c43",
+  "method": "Operator-observed software browser interactions with the actual frozen UI and public exports; no physical hardware claim.",
+  "origin": "http://localhost:8835",
+  "offline": {
+    "status": "ready",
+    "buildId": "88feeb938b2a1742a483a7cdb650de7e94ba05da85863c9a6f8fa4cdbe55763d",
+    "files": 135,
+    "verified": 135,
+    "bytes": 20624650,
+    "missing": [],
+    "corrupt": [],
+    "evidence": ".cache/round-26/frozen-browser/offline-ready.json"
+  },
+  "serverStop": {
+    "sessionId": 26956,
+    "stoppedBeforeOfflineJourneys": true,
+    "operatorReportedCurlExitCode": 7,
+    "operatorReportedCurlResult": "Connection refused",
+    "stillStoppedAtHandoff": true
+  },
+  "onlineOrdinaryWin": {
+    "level": "First Signal",
+    "turnPolicy": "grid-center",
+    "displayCoveragePercent": 52.2,
+    "score": 8160,
+    "lives": 3,
+    "hudTime": "0:03"
+  },
+  "offlineCourse": {
+    "firstCourseUrlVisitAfterServerStop": true,
+    "entry": "How to play / Learn by playing",
+    "turnPolicy": "grid-center",
+    "closeLineWin": {
+      "displayCoveragePercent": 52.2,
+      "score": 8160,
+      "lives": 3,
+      "hudTime": "0:03"
+    },
+    "next": {
+      "initialPointerAttemptAdvanced": false,
+      "followingStartLookupSucceeded": false,
+      "keyboardEnterReachedReady": true,
+      "errorsObserved": false
+    },
+    "secondLessonRecovery": {
+      "cause": "self-contact",
+      "approximateDownMs": 800,
+      "approximateUpMs": 850,
+      "lives": 2,
+      "hudTime": "0:02",
+      "paused": true,
+      "lessonComplete": false
+    },
+    "skipReducedEffectsAndReturnExercised": true
+  },
+  "preservation": {
+    "comparisonStartsAfterCheckedEntrySave": true,
+    "exactDeepEqual": ["library", "packs", "session"],
+    "byteIdenticalBackups": true,
+    "backupBytes": 6079,
+    "backupSha256": "6104b4d2c07bc0efd1cca9c854c252f7f1799e892b896b398d3efe7ddf31d108",
+    "gallery": 1,
+    "scores": 1,
+    "runId": "57c4cedc-7dcb-4478-a230-50740c23a617",
+    "ticks": 168,
+    "checkpoint": "02b4dadbc19f4c07",
+    "turnPolicy": "grid-center",
+    "evidence": ".cache/round-26/frozen-browser/offline-preservation.json"
+  },
+  "restoredFlight": {
+    "loadedPaused": true,
+    "initialHudTime": "0:01",
+    "explicitResumeAndDown": true,
+    "displayCoveragePercent": 52.2,
+    "relay": "1/1",
+    "score": 8660,
+    "lives": 3,
+    "laterHudTime": "0:06",
+    "laterPaused": true
+  },
+  "collection": {
+    "picture": "First Signal",
+    "playCelebrationOffline": true,
+    "screenshot": "docs/verification/round-26/screenshots/frozen-offline-gallery-celebration.jpg"
+  },
+  "offlinePlayground": {
+    "firstRouteVisitAfterServerStop": true,
+    "existingPreparedCacheRequired": true,
+    "actualViewport": { "width": 320, "height": 640 },
+    "board": { "top": 214.1875, "bottom": 424.1875, "width": 280, "height": 210 },
+    "targets": 11,
+    "minimumTargetWidth": 44,
+    "minimumTargetHeight": 44,
+    "offscreenTargets": ["pause-button", "restart-button", "sound-button"],
+    "horizontalOverflow": false,
+    "targetOverlaps": 0,
+    "arenaOverlaps": 0,
+    "enterStartAndDownWin": {
+      "displayCoveragePercent": 52.2,
+      "score": 8160,
+      "lives": 3,
+      "hudTime": "0:03"
+    },
+    "geometryEvidence": ".cache/round-26/frozen-browser/offline-playground-geometry.json"
+  },
+  "console": {
+    "savedEntries": 0,
+    "evidence": ".cache/round-26/frozen-browser/console.json",
+    "operatorReportedColdPlaygroundErrors": 0
+  },
+  "handoff": { "qaTabsOpen": 2, "serverStopped": true },
+  "limits": [
+    "Prepared-cache offline operation, not a fresh empty-cache offline installation or browser restart.",
+    "HUD time labels and percentages are rounded display observations.",
+    "The first offline Next pointer attempt did not advance; keyboard Enter did. Cause remains unexplained.",
+    "Three compact utility controls require scroll in the measured Ready layout; whole-board visibility after every interaction is not established.",
+    "No physical controller, genuine coarse touch, text zoom or native-device certification."
+  ]
+}
