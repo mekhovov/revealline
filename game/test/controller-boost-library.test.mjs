@@ -142,6 +142,7 @@ for (const source of fixture.sources) {
       keyboardBindings: old.preferences.keyboardBindings ?? null,
       controllerBindings: old.preferences.controllerBindings ?? null,
       controllerBoostMode: 'hold',
+      campaignDifficulty: 'standard',
     });
     unchangedRecords(migrated, old);
     assert.equal(JSON.stringify(old), bytes);
