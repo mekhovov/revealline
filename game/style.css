@@ -239,6 +239,175 @@ main {
   border: 1px solid #344e50;
   isolation: isolate;
 }
+.first-flight-panel {
+  margin: 12px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.first-flight-session [data-course-hide] {
+  display: none;
+}
+.first-flight-session .loadout-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.first-flight-panel[hidden],
+.first-flight-markers[hidden] {
+  display: none;
+}
+.first-flight-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+.first-flight-heading h2 {
+  margin: 0;
+  font-size: 16px;
+}
+.first-flight-heading > span {
+  font-size: 11px;
+}
+.first-flight-panel p {
+  margin: 8px 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.first-flight-task {
+  display: none;
+  margin: 0 0 6px;
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.first-flight-session .first-flight-task {
+  display: block;
+}
+.first-flight-session .arena-shell {
+  scroll-margin-block: 12px;
+}
+/* Training adds a task row. Reserve its space without changing ordinary boards
+   or the compact layout where board and primary controls already fit together. */
+@media (min-width: 681px) and (min-height: 501px) and (max-height: 900px) {
+  .first-flight-session .arena-panel {
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 410px) * 1.333333));
+  }
+}
+@media (min-width: 681px) and (max-width: 1100px) and (min-height: 501px) and (max-height: 900px) {
+  .first-flight-session .arena-panel {
+    max-width: min(100%, calc((100svh - var(--safe-top) - var(--safe-bottom) - 430px) * 1.333333));
+  }
+}
+@media (min-width: 681px) and (min-height: 901px) {
+  .first-flight-session .arena-panel {
+    max-width: min(
+      100%,
+      850px,
+      calc((100svh - var(--safe-top) - var(--safe-bottom) - 470px) * 1.333333)
+    );
+  }
+}
+@media (min-width: 681px) and (max-height: 500px) {
+  .first-flight-session .arena-panel > .arena-shell {
+    max-width: min(
+      100%,
+      max(200px, calc((100svh - var(--safe-top) - var(--safe-bottom) - 175px) * 1.333333))
+    );
+  }
+}
+.first-flight-panel label {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+}
+.first-flight-panel select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  color: var(--ink);
+  background: var(--paper);
+  font: inherit;
+  padding: 8px;
+}
+.first-flight-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.first-flight-actions .button,
+#first-flight-help-enter,
+#first-flight-entry-cancel,
+.first-flight-steps summary {
+  min-height: 44px;
+  min-width: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.first-flight-actions .button {
+  flex: 1 1 130px;
+}
+.first-flight-steps summary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-size: 12px;
+}
+.first-flight-steps ol {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.first-flight-markers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.first-flight-markers * {
+  pointer-events: none;
+}
+.first-flight-marker {
+  position: absolute;
+  border: 1px dashed #fff3bf;
+  color: #fff9df;
+}
+.first-flight-marker-start,
+.first-flight-marker-objective {
+  border-style: solid;
+  border-radius: 50%;
+}
+.first-flight-marker-return {
+  border-style: double;
+  border-width: 3px;
+}
+.first-flight-marker-band {
+  background: #ffe7a00b;
+}
+.first-flight-marker > span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 150px;
+  background: #112d35e8;
+  padding: 2px 4px;
+  font: 10px/1.2 monospace;
+  white-space: nowrap;
+}
+.first-flight-marker-start > span,
+.first-flight-marker-divider > span,
+.first-flight-marker-objective > span {
+  left: 100%;
+}
+.first-flight-marker-return > span {
+  top: auto;
+  bottom: 100%;
+}
 #game-canvas {
   width: 100%;
   height: 100%;
@@ -1751,11 +1920,13 @@ dialog input[type='search'] {
     grid-template-columns: 144px minmax(0, 1fr);
     grid-template-areas:
       'controls telemetry'
+      'controls task'
       'controls arena'
       'controls status'
       'controls boost'
       'controls encounter'
       'controls reward'
+      'controls course'
       'controls message'
       'controls minor'
       'controls warning'
@@ -1785,6 +1956,12 @@ dialog input[type='search'] {
   }
   .arena-panel > .flight-status {
     grid-area: status;
+  }
+  .arena-panel > .first-flight-panel {
+    grid-area: course;
+  }
+  .arena-panel > .first-flight-task {
+    grid-area: task;
   }
   #controller-boost-cue {
     grid-area: boost;
@@ -1839,6 +2016,114 @@ dialog input[type='search'] {
     grid-area: help;
   }
   #asset-warning {
+    grid-area: asset;
+  }
+}
+
+/* A course also needs the rail in medium-height windows. Keep the ordinary
+   500px breakpoint and reserve the taller header used in this range. */
+@media (min-width: 681px) and (min-height: 501px) and (max-height: 600px) {
+  .first-flight-session .arena-panel {
+    display: grid;
+    grid-template-columns: 144px minmax(0, 1fr);
+    grid-template-areas:
+      'controls telemetry'
+      'controls task'
+      'controls arena'
+      'controls status'
+      'controls boost'
+      'controls encounter'
+      'controls reward'
+      'controls course'
+      'controls message'
+      'controls minor'
+      'controls warning'
+      'controls mastery'
+      'controls announcement'
+      'controls help'
+      'controls asset';
+    column-gap: 16px;
+    row-gap: 0;
+    align-items: start;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .first-flight-session .arena-panel > .telemetry {
+    grid-area: telemetry;
+  }
+  .first-flight-session .arena-panel > .arena-shell {
+    grid-area: arena;
+    width: 100%;
+    min-width: min(100%, 200px);
+    max-width: min(
+      100%,
+      max(200px, calc((100svh - var(--safe-top) - var(--safe-bottom) - 245px) * 1.333333))
+    );
+    margin-inline: auto 0;
+  }
+  .first-flight-session .arena-panel > .flight-status {
+    grid-area: status;
+  }
+  .first-flight-session .arena-panel > .first-flight-panel {
+    grid-area: course;
+  }
+  .first-flight-session .arena-panel > .first-flight-task {
+    grid-area: task;
+  }
+  .first-flight-session #controller-boost-cue {
+    grid-area: boost;
+  }
+  .first-flight-session #encounter-status {
+    grid-area: encounter;
+  }
+  .first-flight-session #appearance-unlock {
+    grid-area: reward;
+  }
+  .first-flight-session .play-controls {
+    grid-area: controls;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--flight-target-size);
+    grid-template-areas: 'directions directions' 'actions utilities';
+    align-items: stretch;
+    border: 0;
+    padding: 0;
+    gap: 4px;
+  }
+  .first-flight-session .play-controls .direction-controls {
+    grid-area: directions;
+    justify-self: center;
+  }
+  .first-flight-session .play-controls .ability-buttons {
+    grid-area: actions;
+    flex: none;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .first-flight-session .play-controls .utility-buttons {
+    grid-area: utilities;
+    flex-direction: column;
+    justify-content: start;
+  }
+  .first-flight-session #run-message {
+    grid-area: message;
+  }
+  .first-flight-session .arena-panel > .minor-controls {
+    grid-area: minor;
+  }
+  .first-flight-session #save-warning {
+    grid-area: warning;
+  }
+  .first-flight-session #mastery-status {
+    grid-area: mastery;
+  }
+  .first-flight-session #mastery-announcement {
+    grid-area: announcement;
+  }
+  .first-flight-session #controller-ui-hint {
+    grid-area: help;
+  }
+  .first-flight-session #asset-warning {
     grid-area: asset;
   }
 }

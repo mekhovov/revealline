@@ -1,0 +1,51 @@
+# First Flight
+
+First Flight is implemented in the **v0.16.0 working source**. The latest independently frozen game remains [v0.15.0](http://127.0.0.1:8767/releases/v0.15.0/site/game/). Source browser journeys have been exercised; final source gates, the frozen v0.16.0 artifact and its offline evidence are still pending. The [implementation plan](round-26-first-flight-plan.md) records the reviewed scope and initial feasibility probes.
+
+## Learn through actual play
+
+The optional course uses the same territory simulation, animated character and controls as solo play. It is available from the game and How to play. Start remains available without taking the course, and the existing **Watch first cut** demonstration remains a separate way to see one route.
+
+| Lesson                 | Your task                                                                                         | What to notice                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Close a line           | Fly from the marked safe edge to the opposite edge.                                               | Your live line is vulnerable until it reaches safe ground. Closing it reveals the region without a field enemy. |
+| Find the empty side    | First fly down the center. Return along that secured line, then turn left within the marked band. | Enemies on both sides can leave only your line captured. That line is now safe ground for your next cut.        |
+| Bring the picture home | Reveal the marked objective and enough territory while avoiding the moving threat.                | A mission can require both coverage and an objective. Completing both opens the full practice picture.          |
+
+Training has no mission deadline, cut deadline or cable-length cap. A life loss is never required to pass. Directions, Stop, Hold/Tap steering, both turning policies and the configured keyboard/controller bindings use their existing behavior. The course uses Scout; the other equipment classes remain in the ordinary game and equipment chapters.
+
+Instructions remain available to review. Read details and the Mission brief reader pause or preserve a stopped flight; Done ends reading without starting play. A current learning step can change while you fly, without stopping a live cut. Between lessons, choose the next lesson and then Start separately. Retry starts that lesson's fresh attempt. You can repeat, skip or leave; a skipped lesson is not recorded as completed.
+
+An explicit course Start or Resume brings an off-screen board to the nearest visible position without animated scrolling. A board already in view stays put. Movement and reading do not repeatedly reposition the page; compact layouts can still require ordinary vertical scrolling to reach lesson choices.
+
+The second lesson teaches a particular example. A different legal route can reveal its picture without demonstrating the center divider and empty side. That remains a real win, with truthful partial lesson progress and Retry/Skip available. An arbitrary small capture does not prove this example.
+
+## Your real flights and collection
+
+Course progress belongs to the current visit. Reload starts the requested lesson again. Training does not add campaign clears, pictures, scores, equipment seals or appearances to the player library. Settings changed while training remain in that practice session.
+
+Entering from an unfinished ordinary flight pauses it and checks its saved checkpoint before leaving. The entry-specific freeze does not autosave before checking the previous saved-flight envelope. If storage, ownership or verification prevents a safe handoff, the current flight stays paused with an explanation and its existing export controls. Failed or cancelled entry keeps lifecycle autosaves suppressed until an explicit resume or fresh attempt. An earlier ordinary Help autosave may already have updated its saved slot; that separate prior boundary is not undone.
+
+Return to the game opens a fresh normal game page. It does not automatically load or start the saved flight. Use the ordinary Load saved flight and Resume actions when ready. Within Playground or Controller Lab, Exit ends the course in that preview; the parent's game link opens ordinary play. A preview cannot become an awarding game merely by selecting a different lesson or leaving its initial scenario.
+
+## Preview and maintain the course
+
+Playground's finite **First Flight course** preview uses the actual game iframe and existing size controls. The editor's current configuration stays available when returning to Solo configuration. Controller Lab offers each lesson with its existing virtual pad, steering choice and viewport presets. These tools exercise software input and CSS layouts; they do not emulate physical iPhone, Safari or controller hardware.
+
+The course registry and observer live outside the simulation core. Three trusted ordinary level-v1 maps use core-v2/replay-v3. They are not installed expansion maps and do not increase the game's 29 campaign-map count. Adding another tutorial behavior requires a reviewed registry/observer change; imported packs cannot execute instructions or create new teaching predicates.
+
+The observer consumes owned public facts before and after each fixed step, bound to the exact lesson setup and host attempt ID. It reads real claims, live-line cells, enemy positions, objectives and terminal outcomes. It grants no reward and cannot modify a replay. For the second lesson, the center divider must be the exact 34-cell line; the later horizontal cut may use any of nine authored rows. Actual new ownership must match the empty northwest region. A size guess or a displayed percentage cannot establish that evidence. If guidance becomes unavailable, including after its 30-minute fact budget, play and Retry/Skip/Exit remain available; this does not introduce a mission deadline.
+
+Keep observations separate from authority: draw markers without collision, keep new learning state out of portable profiles and preserve old route/checkpoint fixtures. The [authoring prompts](../authoring/prompts/round-26-first-flight.md) cover copy, route proofs, continuity and input checks. The [development guide](development.md) describes the shared test, validation and packaging commands.
+
+## Evidence boundaries
+
+The working-source browser check completed all three lessons with **Immediate** steering: **52.2%, 27.2% and 76.1%**, each with three lives. Next opened a fresh Ready screen at zero time; Read/Done preserved the stopped state; the visit reached **3/3 completed**. Changing appearance and reduced effects during training, then returning, opened the normal game at Ready. These are observed browser journeys, not evidence that every input/device combination has passed.
+
+An ordinary Relay Orchard flight was retained before entry. A later public **Export complete backup** matched the player library, installed packs and suspended session exactly against the **post-entry baseline**; entry itself intentionally saved that checkpoint. Loading the retained flight returned it paused at tick 163, approximately 1.3583 seconds. Training's lesson wins and settings changes added no campaign progress in this comparison. The pre-existing individual **Export attempt** action requires a current unfinished flight and does not export the stored slot directly from Ready; complete backup includes that slot.
+
+Focused [entry tests](../game/test/first-flight-entry.test.mjs), [lesson tests](../game/test/first-flight.test.mjs), [legal route tests](../game/test/first-flight-routes.test.mjs) and [view tests](../game/test/first-flight-view.test.mjs) cover the corresponding boundaries. Recorded routes exercise both turning modes. Final release-wide test results are pending and must be tied to the final source identity.
+
+The primary design references are Microsoft's [XAG 109 on reviewable objectives and repeatable tutorials](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/109) and [XAG 116 on time to read and interact with UI](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/116), rechecked on 12 September 2026. The latter distinguishes UI time limits from core gameplay deadlines. The specific three-lesson design is our interpretation of that guidance and the existing game's learning gap.
+
+Legal recorded routes can establish that an example works. Browser checks can establish the observed controls, navigation and saved data. Neither establishes beginner comprehension, player comfort, enjoyment or voluntary replay. Those claims require corresponding player observations.

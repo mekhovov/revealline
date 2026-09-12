@@ -2,12 +2,14 @@
 
 # Xonix content authoring kit
 
-Guide for the v0.15.0 frozen browser release · 12 September 2026
+Guide for v0.16.0 working source · latest frozen browser release v0.15.0 · 12 September 2026
 
 
 The [playable browser game](../game/README.md) includes 29 maps: 12 campaign maps and 17 maps in six installable expansions. It offers seven classes, four worlds, five original synthesized music styles, local scores/saves/gallery, dated challenges and a separate couch race. Homeward Skies adds three authored picture rewards with preserved [sources and prompts](library/homeward-skies/prompts.json); its [art workflow](../docs/authored-art.md) is separate from [player continuation and release copying](../docs/continuity-transfer.md). Its playground, candidate generator, static packaging and explicit offline preparation use the actual [runtime formats and image limits](../docs/assets-and-configuration.md). The earlier content packs remain drafts; they do not import into that game automatically. The [media library tool](media/README.md) preserves originals, registers derivatives and binds visual variants. Four media templates contain 108 planned assets and 124 bindings, separate from the four draft packs and the 124 prompt count. An [actual concept library](library/round-06-fpv/README.md) demonstrates source/derivative registration. Complete production asset coverage and a draft-pack compiler remain unfinished. Native wrappers have a [separate packaging workflow](../docs/native-distribution.md); device and store checks are recorded independently.
 
 ## Start here
+
+For the implemented working v0.16.0 First Flight course—**Close a line**, **Find the empty side**, **Bring the picture home**—use the [course guide](../docs/first-flight.md) and [eight authoring/QA prompts](prompts/round-26-first-flight.md). These separate prose workflows do not change the 124 CLI template count or the 29 campaign-map count. Training uses the real simulation and grants no campaign progress; its three lessons and changed settings stay in the visit. Source browser checks are recorded separately from legal-route tests, final release gates and physical-device or beginner-comprehension evidence. The latest frozen artifact remains v0.15.0.
 
 | Need                                                              | Open                                                                                                                                                                                                         |
 | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

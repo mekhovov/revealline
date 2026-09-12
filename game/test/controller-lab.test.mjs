@@ -156,7 +156,7 @@ test('practice page keeps virtual holds, releases and import failures isolated f
     await t.test(
       'boot prepares actual practice and exposes every authored map without profile writes',
       () => {
-        assert.equal(elements.mission.children.length, 18);
+        assert.equal(elements.mission.children.length, 21);
         assert.equal(elements.craft.children.length, 7);
         assert.match(elements['game-frame'].src, /practice=1&controller-preview=1/);
         assert.deepEqual(writes, ['revealline.playground.current']);
@@ -221,6 +221,67 @@ test('practice page keeps virtual holds, releases and import failures isolated f
         elements.craft.value = 'scout';
         elements.steering.value = 'immediate';
         await click('load');
+      },
+    );
+    await t.test(
+      'all three course choices preserve the authored handoff and bind a fresh controller session in both policies',
+      async () => {
+        const courses = elements.mission.children.filter((item) =>
+          item.textContent.startsWith('First Flight / '),
+        );
+        assert.equal(courses.length, 3);
+        const before = storage.get('revealline.playground.current');
+        const beforeWrites = writes.length;
+        const tokens = new Set();
+        // A course must also load when session storage is unavailable: it has no
+        // authoring handoff to replace and reads its finite registry at app boot.
+        storageFailure = true;
+        for (const choice of courses)
+          for (const policy of ['immediate', 'grid-center']) {
+            elements.mission.value = choice.value;
+            await elements.mission.emit('change');
+            assert.equal(elements.craft.disabled, true);
+            assert.equal(elements.craft.children.length, 1);
+            assert.equal(elements.craft.value, 'scout');
+            elements.steering.value = policy;
+            await click('load');
+            const url = new URL(
+              elements['game-frame'].src,
+              'http://localhost:8767/game/controller-lab/',
+            );
+            assert.equal(url.searchParams.get('course'), 'first-flight');
+            assert.equal(url.searchParams.get('turn-policy'), policy);
+            assert.equal(url.searchParams.has('practice'), false);
+            assert.equal(url.searchParams.get('controller-preview'), '1');
+            const token = url.searchParams.get('controller-session');
+            assert.match(token, /^[0-9a-f]{32}$/);
+            tokens.add(token);
+            assert.equal(writes.length, beforeWrites);
+            assert.equal(storage.get('revealline.playground.current'), before);
+          }
+        assert.equal(tokens.size, 6);
+        storageFailure = false;
+      },
+    );
+    await t.test(
+      'invalid course steering retains the current child and returning to ordinary practice restores class choice',
+      async () => {
+        const before = elements['game-frame'].src;
+        const beforeWrites = writes.length;
+        elements.steering.value = 'diagonal';
+        await click('load');
+        assert.equal(elements['game-frame'].src, before);
+        assert.equal(writes.length, beforeWrites);
+        assert.match(elements['load-status'].textContent, /not replaced/);
+        elements.mission.value = '0';
+        await elements.mission.emit('change');
+        assert.equal(elements.craft.disabled, false);
+        assert.equal(elements.craft.children.length, 7);
+        elements.craft.value = 'scout';
+        elements.steering.value = 'immediate';
+        await click('load');
+        assert.match(elements['game-frame'].src, /practice=1&controller-preview=1/);
+        assert.equal(writes.length, beforeWrites + 1);
       },
     );
     await elements['game-frame'].emit('load');
