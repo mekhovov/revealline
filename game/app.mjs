@@ -54,8 +54,11 @@ import {
   emptyPackLibrary,
   importPackLibrary,
   exportPackLibrary,
+  preparePack,
+  installPack,
   resolvePackCampaign,
 } from './packs.mjs';
+import { preparePackCatalog, resolvePackLaunch } from './content-launch.mjs';
 import { readAssetStore, writeAssetStore } from './storage.mjs';
 import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { challengeCampaign } from './challenges.mjs';
@@ -103,12 +106,14 @@ const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 
 try {
-  const [baseCampaign, themesFile, presets, baseClasses] = await Promise.all([
+  const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource] = await Promise.all([
     getJSON('content/campaign.json'),
     getJSON('content/themes.json'),
     getJSON('../authoring/motion-lab/presets.json'),
     getJSON('content/classes.json'),
+    getJSON('content/packs/catalog.json'),
   ]);
+  const packCatalog = preparePackCatalog(packCatalogSource);
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
@@ -180,6 +185,14 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  let packLaunchRequest = null,
+    packLaunchError = '';
+  if (!practiceSession)
+    try {
+      packLaunchRequest = resolvePackLaunch(params, packCatalog);
+    } catch (error) {
+      packLaunchError = error.message;
+    }
   const controllerPreviewRequested = practiceSession && params.get('controller-preview') === '1';
   if (
     window.parent !== window &&
@@ -324,7 +337,8 @@ try {
     coursePhase = 'ready',
     courseEntry = null,
     courseEntryMessage = '',
-    courseEntryHold = false;
+    courseEntryHold = false,
+    contentSwitchBusy = false;
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
     getGeneration: () => libraryGeneration,
@@ -951,6 +965,62 @@ try {
       ),
     );
     $('campaign-select').value = campaignKey(campaign);
+    refreshContentSelectors();
+  }
+  function contentStatus(message, error = false) {
+    $('content-select-status').textContent = message;
+    if (error) $('content-select-status').dataset.kind = 'error';
+    else delete $('content-select-status').dataset.kind;
+  }
+  function refreshContentSelectors() {
+    const installedIds = new Set(packs.packs.map((pack) => pack.id));
+    const options = [new Option(`Base game · ${baseCampaign.levels.length} levels`, '')];
+    for (const summary of packCatalog.packs) {
+      const levels = summary.campaigns.reduce((total, item) => total + item.levels.length, 0);
+      options.push(
+        new Option(
+          `${summary.name} · ${levels} ${levels === 1 ? 'level' : 'levels'} · ${installedIds.has(summary.id) ? 'installed' : 'install on select'}`,
+          summary.id,
+        ),
+      );
+    }
+    for (const pack of packs.packs) {
+      if (packCatalog.packs.some((item) => item.id === pack.id)) continue;
+      const levels = pack.campaigns.reduce((total, item) => total + item.levels.length, 0);
+      options.push(
+        new Option(
+          `${pack.name} · ${levels} ${levels === 1 ? 'level' : 'levels'} · installed`,
+          pack.id,
+        ),
+      );
+    }
+    const baseKey = campaignKey(baseEntry.campaign);
+    const currentKey = campaignKey(campaign);
+    let selectedPack = activeEntry.sourcePackId || '';
+    if (!activeEntry.sourcePackId && currentKey !== baseKey) {
+      selectedPack = `campaign:${currentKey}`;
+      options.push(
+        new Option(campaign.title || campaign.name || campaign.id, selectedPack, true, true),
+      );
+    }
+    $('pack-select').replaceChildren(...options);
+    $('pack-select').value = selectedPack;
+    $('level-select').replaceChildren(
+      ...campaign.levels.map((level, index) => {
+        const available = canPlay(progress, campaign, index);
+        return new Option(
+          `${String(index + 1).padStart(2, '0')} · ${level.name}${available ? '' : ' · locked'}`,
+          level.id,
+          false,
+          index === levelIndex,
+        );
+      }),
+    );
+    for (const [index, option] of [...$('level-select').options].entries())
+      option.disabled = !canPlay(progress, campaign, index);
+    $('level-select').value = campaign.levels[levelIndex].id;
+    $('pack-select').disabled = contentSwitchBusy;
+    $('level-select').disabled = contentSwitchBusy;
   }
   function persistProfile({ mode = 'merge' } = {}) {
     if (courseSession || courseEntry)
@@ -1044,6 +1114,109 @@ try {
     } else sound.configure?.({ style: library.preferences.musicGenre });
     refreshCampaigns();
     prepare({ restoreAdoption });
+  }
+  async function replacePackLibrary(next) {
+    if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
+    assertWriter();
+    const content = prepareContentCatalog(next);
+    pause(true);
+    cancelRestore();
+    masteryAwards.cancelAll();
+    try {
+      await writeAssetStore(packsKey, exportPackLibrary(next));
+    } catch (error) {
+      throw new Error(`Pack storage failed; previous installed packs are kept. ${error.message}`);
+    }
+    adoptContentCatalog(content);
+    if (
+      activeEntry.sourcePackId &&
+      !packs.packs.some((pack) => pack.id === activeEntry.sourcePackId)
+    )
+      selectEntry(baseEntry);
+    else if (activeEntry.sourcePackId) {
+      const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
+      selectEntry(
+        resolvePackCampaign(
+          pack,
+          pack.campaigns.some((source) => source.id === campaign.id)
+            ? campaign.id
+            : pack.campaigns[0].id,
+        ),
+      );
+    }
+    refreshCampaigns();
+  }
+  async function ensureBundledPack(packId) {
+    const installed = packs.packs.find((pack) => pack.id === packId);
+    if (installed) return { pack: installed, installed: false };
+    const summary = packCatalog.packs.find((pack) => pack.id === packId);
+    if (!summary) throw new Error('This pack is not bundled with the current build.');
+    assertWriter();
+    contentStatus(`Installing ${summary.name} on this device…`);
+    const source = await getJSON(`content/packs/${summary.path}`);
+    const prepared = await preparePack(source, { library: packs });
+    await replacePackLibrary(installPack(packs, prepared.pack));
+    return { pack: prepared.pack, installed: true };
+  }
+  async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
+    if (contentSwitchBusy) return false;
+    contentSwitchBusy = true;
+    refreshContentSelectors();
+    try {
+      if (!packId) {
+        selectEntry(baseEntry, { levelId });
+        if (announce)
+          contentStatus(`Base game · ${campaign.levels[levelIndex].name} selected and ready.`);
+        return true;
+      }
+      const result = await ensureBundledPack(packId);
+      const source = campaignId
+        ? result.pack.campaigns.find((item) => item.id === campaignId)
+        : result.pack.campaigns[0];
+      if (!source) throw new Error('This pack campaign is unavailable.');
+      const entry = installedEntries.find(
+        (item) => item.sourcePackId === result.pack.id && item.campaign.id === source.id,
+      );
+      if (!entry) throw new Error('The installed pack campaign could not be selected.');
+      if (levelId) {
+        const targetIndex = entry.campaign.levels.findIndex((level) => level.id === levelId);
+        if (targetIndex < 0) throw new Error('This pack level is unavailable.');
+        const targetProgress = progressFor(library, entry.campaign);
+        if (!canPlay(targetProgress, entry.campaign, targetIndex)) {
+          selectEntry(entry);
+          throw new Error(
+            `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
+          );
+        }
+      }
+      selectEntry(entry, { levelId });
+      if (announce)
+        contentStatus(
+          `${result.installed ? `${result.pack.name} installed · ` : ''}${campaign.levels[levelIndex].name} selected and ready.`,
+        );
+      return true;
+    } catch (error) {
+      contentStatus(error.message, true);
+      warning(error.message);
+      return false;
+    } finally {
+      contentSwitchBusy = false;
+      refreshContentSelectors();
+    }
+  }
+  function selectLevel(levelId) {
+    const index = campaign.levels.findIndex((level) => level.id === levelId);
+    if (index < 0 || !canPlay(progress, campaign, index)) {
+      refreshContentSelectors();
+      contentStatus('That level is still locked. Complete the earlier missions first.', true);
+      return false;
+    }
+    leavePractice();
+    campaignOverview = false;
+    levelIndex = index;
+    prepare();
+    contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`);
+    return true;
   }
   function savedAttempt() {
     try {
@@ -1315,32 +1488,7 @@ try {
       refreshCampaigns();
       return result;
     },
-    setPacks: async (next) => {
-      if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
-      assertWriter();
-      const content = prepareContentCatalog(next);
-      pause(true);
-      cancelRestore();
-      masteryAwards.cancelAll();
-      try {
-        await writeAssetStore(packsKey, exportPackLibrary(next));
-      } catch (e) {
-        throw new Error(`Pack storage failed; previous installed packs are kept. ${e.message}`);
-      }
-      adoptContentCatalog(content);
-      if (activeEntry.sourcePackId && !packs.packs.some((p) => p.id === activeEntry.sourcePackId))
-        selectEntry(baseEntry);
-      else if (activeEntry.sourcePackId) {
-        const p = packs.packs.find((p) => p.id === activeEntry.sourcePackId);
-        selectEntry(
-          resolvePackCampaign(
-            p,
-            p.campaigns.some((c) => c.id === campaign.id) ? campaign.id : p.campaigns[0].id,
-          ),
-        );
-      }
-      refreshCampaigns();
-    },
+    setPacks: replacePackLibrary,
   });
   courseView = attachFirstFlightView({
     onEnter: enterFirstFlight,
@@ -1372,6 +1520,8 @@ try {
       'library-button',
       'collection-button',
       'demo-button',
+      'pack-select',
+      'level-select',
       'campaign-select',
       'class-select',
       'theme-select',
@@ -1382,8 +1532,16 @@ try {
     }
   }
   $('library-dialog').addEventListener('close', cancelRestore);
-  $('campaign-select').onchange = () =>
+  $('pack-select').onchange = async () => {
+    const packId = $('pack-select').value;
+    if (packId.startsWith('campaign:')) return;
+    await activatePack(packId);
+  };
+  $('level-select').onchange = () => selectLevel($('level-select').value);
+  $('campaign-select').onchange = () => {
     selectEntry(catalog().find((e) => campaignKey(e.campaign) === $('campaign-select').value));
+    contentStatus(`${campaign.title || campaign.name || campaign.id} selected and ready.`);
+  };
   $('save-attempt-button').onclick = () => {
     pause(true);
     try {
@@ -1687,6 +1845,7 @@ try {
     });
     $('campaign-progress').textContent =
       `${String(Object.keys(progress.clears).length).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}`;
+    refreshContentSelectors();
   }
   function updateLoadout() {
     const recipe =
@@ -2633,6 +2792,23 @@ try {
   setTheme();
   refreshCampaigns();
   prepare();
+  let autoplayPackLaunch = false;
+  if (packLaunchError) {
+    contentStatus(packLaunchError, true);
+    warning(packLaunchError);
+  } else if (packLaunchRequest) {
+    const selected = await activatePack(packLaunchRequest.packId, {
+      campaignId: packLaunchRequest.campaignId,
+      levelId: packLaunchRequest.levelId,
+      announce: false,
+    });
+    if (selected) {
+      autoplayPackLaunch = packLaunchRequest.play;
+      contentStatus(
+        `${packLaunchRequest.packName} · ${packLaunchRequest.levelName} selected${autoplayPackLaunch ? ' · starting now…' : ' and ready.'}`,
+      );
+    }
+  }
   refreshKeyPrompts();
   refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
@@ -2668,6 +2844,7 @@ try {
     scene: FieldScene,
     banner: false,
   });
+  if (autoplayPackLaunch) requestAnimationFrame(() => resume());
 } catch (error) {
   $('overlay-title').textContent = 'The game could not load.';
   $('overlay-copy').textContent = error.message;

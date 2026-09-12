@@ -836,6 +836,34 @@ kbd {
   color: var(--ink);
   min-height: 39px;
 }
+.content-switcher {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 10px;
+  margin: 0 0 13px;
+  padding: 12px;
+  border: 1px solid #b8c6b7;
+  border-left: 3px solid var(--accent);
+  background: #e9eadf;
+}
+.content-switcher .field {
+  margin: 0;
+}
+.content-switcher select:disabled {
+  opacity: 0.65;
+}
+.content-select-status {
+  min-height: 2.8em;
+  margin: -5px 0 13px;
+}
+.content-select-status[data-kind='error'] {
+  color: #9d3f33;
+}
+@media (max-width: 500px) {
+  .content-switcher {
+    grid-template-columns: 1fr;
+  }
+}
 .loadout-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

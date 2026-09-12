@@ -1,0 +1,98 @@
+{
+  "format": "xonix-pack-catalog.v1",
+  "packs": [
+    {
+      "id": "night-shift",
+      "path": "night-shift.json",
+      "name": "Night Shift",
+      "campaigns": [
+        {
+          "id": "night-shift",
+          "title": "Night Shift",
+          "levels": [
+            { "id": "night-shift-01", "name": "Midnight Channel" },
+            { "id": "night-shift-02", "name": "Voltage Garden" },
+            { "id": "night-shift-03", "name": "Afterglow Sentinel" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "living-threads",
+      "path": "living-threads.json",
+      "name": "Living Threads",
+      "campaigns": [
+        {
+          "id": "living-threads",
+          "title": "Living Threads",
+          "levels": [
+            { "id": "living-threads-01", "name": "Petals at Dawn" },
+            { "id": "living-threads-02", "name": "The Woven Path" },
+            { "id": "living-threads-03", "name": "Garden of Memory" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fieldcraft",
+      "path": "fieldcraft.json",
+      "name": "Fieldcraft",
+      "campaigns": [
+        {
+          "id": "fieldcraft",
+          "title": "Fieldcraft",
+          "levels": [
+            { "id": "fieldcraft-01", "name": "Copper Crossing" },
+            { "id": "fieldcraft-02", "name": "Switchyard Circuit" },
+            { "id": "fieldcraft-03", "name": "Pulse Recall" },
+            { "id": "fieldcraft-04", "name": "Net Loom" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "homeward-skies",
+      "path": "homeward-skies.json",
+      "name": "Homeward Skies",
+      "campaigns": [
+        {
+          "id": "homeward-skies",
+          "title": "Homeward Skies",
+          "levels": [
+            { "id": "homeward-01", "name": "Copper Orchard" },
+            { "id": "homeward-02", "name": "River Switchyard" },
+            { "id": "homeward-03", "name": "Home Beacon" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "equipment-workshop",
+      "path": "equipment-workshop.json",
+      "name": "Equipment Workshop",
+      "campaigns": [
+        {
+          "id": "equipment-workshop",
+          "title": "Equipment Workshop",
+          "levels": [
+            { "id": "workshop-01", "name": "Garden of Threads" },
+            { "id": "workshop-02", "name": "Neon Switchboard" },
+            { "id": "workshop-03", "name": "Clear Ledger" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sentinel-relay",
+      "path": "sentinel-relay.json",
+      "name": "Sentinel Relay",
+      "campaigns": [
+        {
+          "id": "sentinel-relay",
+          "title": "Sentinel Relay",
+          "levels": [{ "id": "sentinel-relay-01", "name": "Sentinel Relay" }]
+        }
+      ]
+    }
+  ]
+}
