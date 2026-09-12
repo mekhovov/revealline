@@ -1,0 +1,32 @@
+{
+  "publicCLI": true,
+  "totalPrompts": 142,
+  "uniquePrompts": 142,
+  "supplementRegistrationCount": 1,
+  "examples": [
+    {
+      "id": "presentation-01-fpv-rig",
+      "listCount": 1,
+      "showStatus": "template_not_executed",
+      "renderExitCode": 0,
+      "renderedCharacters": 1790,
+      "renderedSHA256": "92f3d22c563beb02f5f5d9535fcb87f1153ceedc2f7a07c3c3c0c2436d9ba882"
+    },
+    {
+      "id": "presentation-02-four-theme-enemies",
+      "listCount": 1,
+      "showStatus": "template_not_executed",
+      "renderExitCode": 0,
+      "renderedCharacters": 1951,
+      "renderedSHA256": "e56d39e09c7c4b85d57c8ad86351c2ce6b01793c2cd1cab5fe47edd071d19f81"
+    },
+    {
+      "id": "presentation-03-cut-reveal",
+      "listCount": 1,
+      "showStatus": "template_not_executed",
+      "renderExitCode": 0,
+      "renderedCharacters": 1904,
+      "renderedSHA256": "a2b8e1c5852508f1b4724c68ef2a26e9006d7be38d883fb7811d4983cb998561"
+    }
+  ]
+}
