@@ -42,6 +42,95 @@ export function createPackLaunchGuard() {
   });
 }
 
+export function createPackCommitCoordinator({
+  read,
+  write,
+  prepare,
+  adopt,
+  canAdopt = () => true,
+  onReconciled = () => {},
+  onError = () => {},
+}) {
+  for (const [name, callback] of Object.entries({
+    read,
+    write,
+    prepare,
+    adopt,
+    canAdopt,
+    onReconciled,
+    onError,
+  }))
+    if (typeof callback !== 'function')
+      throw new TypeError(`Pack commit coordinator needs a ${name} function.`);
+
+  let writeTail = Promise.resolve();
+  let revision = 0;
+  let pending = false;
+  let reconciliation = null;
+
+  const commit = (value, { beforeWrite } = {}) => {
+    if (beforeWrite !== undefined && typeof beforeWrite !== 'function')
+      throw new TypeError('Pack commit preflight must be a function.');
+    const commitRevision = ++revision;
+    const result = writeTail.then(async () => {
+      beforeWrite?.();
+      await write(value);
+      return commitRevision;
+    });
+    writeTail = result.then(
+      () => undefined,
+      () => undefined,
+    );
+    return result;
+  };
+
+  const reconcile = () => {
+    if (!pending || !canAdopt()) return Promise.resolve(false);
+    if (reconciliation) return reconciliation;
+    reconciliation = (async () => {
+      while (pending) {
+        if (!canAdopt()) return false;
+        const observedRevision = revision;
+        await writeTail;
+        if (!canAdopt()) return false;
+        if (observedRevision !== revision) continue;
+        const content = await prepare(await read());
+        if (!canAdopt()) return false;
+        if (observedRevision !== revision) continue;
+        adopt(content);
+        pending = false;
+        onReconciled(content);
+        return true;
+      }
+      return false;
+    })()
+      .catch((error) => {
+        onError(error);
+        return false;
+      })
+      .finally(() => {
+        reconciliation = null;
+      });
+    return reconciliation;
+  };
+
+  return Object.freeze({
+    commit,
+    markIntent() {
+      revision += 1;
+    },
+    noteStaleCommit() {
+      pending = true;
+      return reconcile();
+    },
+    acceptCurrent() {
+      pending = false;
+    },
+    reconcile,
+    needsReconciliation: () => pending,
+  });
+}
+
 export function canAutoStartPackLaunch({
   current,
   blocked,
