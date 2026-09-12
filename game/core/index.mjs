@@ -7,6 +7,7 @@ import {
   TURN_POLICIES,
   validateClassRecipes,
   loadoutHash,
+  rosterHash,
 } from './registry.mjs';
 import { normalizedLevel, validateLevel } from './level.mjs';
 import { EPS, clamp } from './geometry.mjs';
@@ -20,10 +21,12 @@ import {
 import { tracePlan, selfContact, appendTrail, commitCapture } from './capture.mjs';
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
+import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
 export {
   validateLevel,
   validateClassRecipes,
   loadoutHash,
+  rosterHash,
   CELL,
   CLASSES,
   DIRECTIONS,
@@ -66,6 +69,15 @@ export function createRun(
     seed,
     turnPolicy,
     classId,
+    activeClassId: classId,
+    rosterHash: rosterHash(classRecipes),
+    classRecipes: structuredClone(classRecipes),
+    classHistory: [
+      { classId, classRevision: recipe.revision, loadoutHash: loadoutHash(recipe), tick: 0 },
+    ],
+    switchCooldownUntil: 0,
+    cutStartedAt: null,
+    failureCause: null,
     classRevision: recipe.revision,
     loadoutHash: loadoutHash(recipe),
     level,
@@ -116,30 +128,28 @@ export function createRun(
     })),
     supplies: level.supplies.map((p) => ({ ...p, radius: p.radius ?? 1.5 })),
     classRecipe: { ...recipe },
-    ability: {
-      primitive: recipe.primitive,
-      ammo: 0,
-      capacity: recipe.capacity,
-      cooldownUntil: 0,
-      scanUntil: 0,
-      shieldUntil: 0,
-      fields: [],
-    },
+    ability: createAbility(recipe),
+    _loadouts: Object.create(null),
+    signalZones: level.signalZones.map((z) => ({ ...z, suppressedUntil: 0 })),
+    hangars: level.hangars.map((h) => ({ ...h, radius: h.radius ?? 2 })),
+    signal: null,
     events: [],
     respawnAt: 0,
     medal: null,
     result: null,
     _accumulator: 0,
-    _input: { action: false, pickup: false },
+    _input: { action: false, pickup: false, switchClass: null },
     _abilitySerial: 0,
     _terminalEmitted: false,
   };
+  state._loadouts[classId] = state.ability;
+  updateSignal(state);
   return state;
 }
 
 /** Explicit shell pause/focus-loss hook. It neither advances time nor resets a run. */
 export function releaseInputs(state) {
-  state._input = { action: false, pickup: false };
+  state._input = { action: false, pickup: false, switchClass: null };
   state.player.queuedDirection = null;
   state.player.speed = 0;
 }
@@ -161,10 +171,14 @@ function complete(state, won) {
 }
 
 function recover(state, contact) {
-  const absorbed = contact.kind !== 'self-contact' && state.ability.shieldUntil > state.time + EPS;
+  state.failureCause = contact.kind;
+  const absorbed =
+    !['self-contact', 'cut-timeout', 'cable-limit'].includes(contact.kind) &&
+    state.ability.shieldUntil > state.time + EPS;
   state.trail = [];
   state.trailSegments = [];
   state.player.cutting = false;
+  state.cutStartedAt = null;
   state.player.speed = 0;
   state.player.queuedDirection = null;
   state.ability.fields = [];
@@ -227,7 +241,14 @@ function worldStep(state, input, duration) {
     const self = selfContact(state, trace, horizon),
       contact = enemyContact(state, playerPlan.paths, enemyPlans, trace, horizon);
     let failure = contact;
-    if (self !== null && (!failure || self <= failure.time + EPS))
+    const challenge = challengeContact(state, trace, horizon);
+    if (challenge && (!failure || challenge.time <= failure.time + EPS)) failure = challenge;
+    if (
+      self !== null &&
+      (!failure ||
+        self < failure.time - EPS ||
+        (self <= failure.time + EPS && failure.kind !== 'mission-timeout'))
+    )
       failure = { time: self, kind: 'self-contact', id: 'player' };
     const elapsed = failure ? Math.min(horizon, failure.time) : horizon;
     const position = positionAt(playerPlan.paths, elapsed, state.player);
@@ -249,7 +270,10 @@ function worldStep(state, input, duration) {
     state.time += elapsed;
     remaining -= elapsed;
     if (failure && failure.time <= horizon + EPS) {
-      recover(state, failure);
+      if (failure.kind === 'mission-timeout') {
+        state.failureCause = failure.kind;
+        complete(state, false);
+      } else recover(state, failure);
       break;
     }
     if (trace.closure !== null && trace.closure <= horizon + EPS) {
@@ -265,12 +289,20 @@ function worldStep(state, input, duration) {
     }
     if (trace.stop !== null && trace.stop <= horizon + EPS) {
       state.player.speed = 0;
-      // Grace blocks leaving safe territory; actors keep moving for this tick.
-      const restPlans = state.enemies.map((e) => planEnemy(state, e, remaining));
+      // Grace blocks leaving safe territory; actors and the mission clock still advance.
+      const rest =
+        state.rules.timeLimitSeconds > 0
+          ? Math.min(remaining, Math.max(0, state.rules.timeLimitSeconds - state.time))
+          : remaining;
+      const restPlans = state.enemies.map((e) => planEnemy(state, e, rest));
       for (let i = 0; i < state.enemies.length; i++)
-        applyPlannedEnemy(state.enemies[i], restPlans[i], remaining, remaining);
-      state.time += remaining;
+        applyPlannedEnemy(state.enemies[i], restPlans[i], rest, rest);
+      state.time += rest;
       remaining = 0;
+      if (state.rules.timeLimitSeconds > 0 && state.time + EPS >= state.rules.timeLimitSeconds) {
+        state.failureCause = 'mission-timeout';
+        complete(state, false);
+      }
       break;
     }
     break;
@@ -290,8 +322,17 @@ function fixedStep(state, input) {
   const endTime = state.time + FIXED_DT;
   updateBosses(state);
   updateAbilities(state);
+  if (input.switchClass && input.switchClass !== state._input.switchClass)
+    switchClass(state, input.switchClass);
+  updateSignal(state);
   useAbilities(state, input);
   if (state.status === 'respawning') {
+    if (state.rules.timeLimitSeconds > 0 && endTime + EPS >= state.rules.timeLimitSeconds) {
+      state.time = state.rules.timeLimitSeconds;
+      state.failureCause = 'mission-timeout';
+      complete(state, false);
+      return;
+    }
     const plans = state.enemies.map((e) => planEnemy(state, e, FIXED_DT));
     for (let i = 0; i < state.enemies.length; i++)
       applyPlannedEnemy(state.enemies[i], plans[i], FIXED_DT, FIXED_DT);
@@ -310,6 +351,7 @@ function fixedStep(state, input) {
     return;
   }
   worldStep(state, input, FIXED_DT);
+  updateSignal(state);
   if (state.status !== 'won' && state.status !== 'lost') state.time = endTime;
 }
 
@@ -322,7 +364,19 @@ function normalizedInput(input) {
   for (const key of ['boost', 'action', 'pickup'])
     if (input[key] !== undefined && typeof input[key] !== 'boolean')
       throw new TypeError(`${key} must be boolean`);
-  return { direction, boost: !!input.boost, action: !!input.action, pickup: !!input.pickup };
+  const switchClass = input.switchClass ?? null;
+  if (
+    switchClass !== null &&
+    (typeof switchClass !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(switchClass))
+  )
+    throw new TypeError('switchClass must be a stable class ID or null');
+  return {
+    direction,
+    boost: !!input.boost,
+    action: !!input.action,
+    pickup: !!input.pickup,
+    switchClass,
+  };
 }
 
 /**
@@ -356,6 +410,11 @@ export function getSummary(state) {
     seed: state.seed,
     turnPolicy: state.turnPolicy,
     classId: state.classId,
+    activeClassId: state.activeClassId,
+    rosterHash: state.rosterHash,
+    classHistory: structuredClone(state.classHistory),
+    switches: state.classHistory.length - 1,
+    failureCause: state.failureCause,
     classRevision: state.classRevision,
     loadoutHash: state.loadoutHash,
     status: state.status,

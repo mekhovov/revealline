@@ -1,4 +1,4 @@
-export const RULESET = 'xonix-core.v1';
+export const RULESET = 'xonix-core.v2';
 export const FIXED_DT = 1 / 120;
 export const TURN_POLICIES = Object.freeze(['immediate', 'grid-center']);
 export const CELL = Object.freeze({ FIELD: 0, SAFE: 1, WALL: 2 });
@@ -56,6 +56,30 @@ export const CLASSES = Object.freeze(
       radius: 0,
     },
     {
+      id: 'fiber',
+      label: 'Fiber relay',
+      description:
+        'Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.',
+      primitive: 'scan',
+      capacity: 0,
+      cooldown: 7,
+      duration: 3,
+      radius: 30,
+      signalResistance: true,
+      moveSpeedMultiplier: 1,
+    },
+    {
+      id: 'impact',
+      label: 'Impact craft',
+      description:
+        'Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.',
+      primitive: 'impact-pulse',
+      capacity: 0,
+      cooldown: 10,
+      duration: 3,
+      radius: 5,
+    },
+    {
       id: 'trapper',
       label: 'Trapper',
       description:
@@ -69,7 +93,13 @@ export const CLASSES = Object.freeze(
     },
   ].map((entry) => Object.freeze({ ...entry, revision: '1' })),
 );
-export const ABILITY_PRIMITIVES = Object.freeze(['scan', 'stun-field', 'shield', 'slow-field']);
+export const ABILITY_PRIMITIVES = Object.freeze([
+  'scan',
+  'stun-field',
+  'shield',
+  'slow-field',
+  'impact-pulse',
+]);
 export const DEFAULT_RULES = Object.freeze({
   lives: 3,
   moveSpeed: 8,
@@ -80,6 +110,10 @@ export const DEFAULT_RULES = Object.freeze({
   pointsPerCell: 10,
   objectivePoints: 500,
   timeMedals: [90, 150],
+  switchCooldownSeconds: 2,
+  timeLimitSeconds: 0,
+  cutTimeLimitSeconds: 0,
+  maxTrailCells: 0,
 });
 
 /** JSON recipes configure registered effects; an unknown behavior never falls back. */
@@ -117,6 +151,10 @@ export function validateClassRecipes(recipes) {
       c.primitive === 'slow-field' ? !finite(c.slowFactor, 0.05, 0.95) : c.slowFactor !== undefined
     )
       errors.push(`${c.id}.slowFactor invalid for primitive`);
+    if (c.signalResistance !== undefined && typeof c.signalResistance !== 'boolean')
+      errors.push(`${c.id}.signalResistance must be boolean`);
+    if (c.moveSpeedMultiplier !== undefined && !finite(c.moveSpeedMultiplier, 0.5, 1.5))
+      errors.push(`${c.id}.moveSpeedMultiplier must be 0.5..1.5`);
     for (const key of Object.keys(c))
       if (
         ![
@@ -130,6 +168,8 @@ export function validateClassRecipes(recipes) {
           'duration',
           'radius',
           'slowFactor',
+          'signalResistance',
+          'moveSpeedMultiplier',
         ].includes(key)
       )
         errors.push(`${c.id} unsupported field ${key}`);
@@ -148,10 +188,20 @@ export function loadoutHash(recipe) {
     'duration',
     'radius',
     'slowFactor',
+    'signalResistance',
+    'moveSpeedMultiplier',
   ])
     if (recipe[key] !== undefined) physics[key] = recipe[key];
   let hash = 2166136261;
   for (const char of JSON.stringify(physics))
     hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
   return `loadout-v1-${hash.toString(16).padStart(8, '0')}`;
+}
+
+/** The complete available roster affects a switched run, even when the starting craft is unchanged. */
+export function rosterHash(recipes) {
+  let hash = 2166136261;
+  for (const char of recipes.map(loadoutHash).sort().join('/'))
+    hash = Math.imul(hash ^ char.charCodeAt(0), 16777619) >>> 0;
+  return `roster-v1-${hash.toString(16).padStart(8, '0')}`;
 }

@@ -172,7 +172,7 @@ test('complete win and its final shell release verify; appended terminal command
   const appended = parsed(data);
   appended.segments.push({
     ticks: 1,
-    input: { direction: null, boost: false, action: false, pickup: false },
+    input: { direction: null, boost: false, action: false, pickup: false, switchClass: null },
     releaseBefore: false,
   });
   appended.ticks++;

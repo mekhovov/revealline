@@ -67,7 +67,11 @@ export function planPlayer(state, input, duration) {
   const start = state.player,
     p = { ...start },
     paths = [];
-  const speed = state.rules.moveSpeed * (input.boost ? state.rules.boostMultiplier : 1);
+  const speed =
+    state.rules.moveSpeed *
+    (state.classRecipe.moveSpeedMultiplier ?? 1) *
+    (state.signal?.speedFactor ?? 1) *
+    (input.boost && !state.signal?.boostBlocked ? state.rules.boostMultiplier : 1);
   let left = duration,
     time = 0;
   if (!input.direction) {

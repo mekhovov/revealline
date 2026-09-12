@@ -86,14 +86,18 @@ function travel(state, target, segments, { action = false, counter } = {}) {
   const distance = Math.abs(dx) + Math.abs(dy);
   if (distance < 1e-6) return true;
   const direction = Math.abs(dx) > 1e-6 ? (dx > 0 ? 'right' : 'left') : dy > 0 ? 'down' : 'up';
-  const ticks = Math.round(
-    distance / (state.rules.moveSpeed * state.rules.boostMultiplier * FIXED_DT),
-  );
-  for (let i = 0; i < ticks && state.status !== 'won' && state.status !== 'lost'; i++) {
+  // Signal regions and declarative class speeds can change within a cut. Step
+  // legal held input until the target center rather than assuming one speed.
+  const maximumTicks = Math.ceil(distance / (state.rules.moveSpeed * 0.125 * FIXED_DT)) + 240;
+  for (let i = 0; i < maximumTicks && state.status === 'running'; i++) {
+    const remaining = Math.abs(state.player.x - target.x) + Math.abs(state.player.y - target.y);
+    if (remaining < 1e-5) break;
     const input = { direction, boost: true, action: action && i === 0 };
     stepRun(state, input, FIXED_DT);
     if (counter) counter.ticks++;
     append(segments, input, 1);
+    const after = Math.abs(state.player.x - target.x) + Math.abs(state.player.y - target.y);
+    if (after > remaining + 1e-5) break;
   }
   return (
     state.status === 'won' ||
