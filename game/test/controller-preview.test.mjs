@@ -10,17 +10,20 @@ import {
   CONTROLLER_PREVIEW_LEASE_MS,
 } from '../ui/controller-preview.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
+import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { entryScenario } from '../playground/model.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { preparePack, resolvePackCampaign } from '../packs.mjs';
 
+const SESSION = '0123456789abcdef0123456789abcdef';
 const packet = (sequence = 0, pressed = [], connected = true) => ({
   format: CONTROLLER_PREVIEW_FORMAT,
+  session: SESSION,
   sequence,
   pad: {
     index: 0,
     connected,
-    axes: [0, 0],
+    axes: [0, 0, 0, 0],
     buttons: Array.from({ length: 16 }, (_, i) => pressed.includes(i)),
   },
 });
@@ -37,12 +40,12 @@ function fixture() {
     origin = 'http://localhost:8767';
   let time = 0;
   const parent = {
-    location: { origin },
+    location: { origin, search: `?controller-session=${SESSION}` },
     postMessage: (data, target) => posts.push({ data, target }),
   };
   const host = {
     parent,
-    location: { origin },
+    location: { origin, search: `?controller-session=${SESSION}` },
     performance: { now: () => time },
     addEventListener: (name, callback) => listeners.set(name, callback),
     removeEventListener: (name, callback) => {
@@ -92,6 +95,13 @@ test('preview is inert unless enabled in a nonopaque same-origin iframe', () => 
     },
   });
   assert.equal(attachControllerPreview({ enabled: true, window: { ...f.host, parent } }), null);
+  assert.equal(
+    attachControllerPreview({
+      enabled: true,
+      window: { ...f.host, location: { origin: 'http://localhost:8767' } },
+    }),
+    null,
+  );
 });
 
 test('snapshots reject non-finite, oversized, sparse, unknown and disconnected-held data', () => {
@@ -107,6 +117,12 @@ test('snapshots reject non-finite, oversized, sparse, unknown and disconnected-h
     },
     (v) => {
       v.pad.axes.push(0);
+    },
+    (v) => {
+      v.pad.axes = [0, 0];
+    },
+    (v) => {
+      v.format = 'revealline.controller-preview.v1';
     },
     (v) => {
       delete v.pad.axes[0];
@@ -155,6 +171,12 @@ test('snapshots reject non-finite, oversized, sparse, unknown and disconnected-h
     (v) => {
       v[Symbol('hidden')] = 1;
     },
+    (v) => {
+      delete v.session;
+    },
+    (v) => {
+      v.session = 'unbounded-session';
+    },
   ]) {
     const value = packet();
     mutate(value);
@@ -162,7 +184,7 @@ test('snapshots reject non-finite, oversized, sparse, unknown and disconnected-h
   }
   const valid = packet();
   valid.pad.buttons = [];
-  valid.pad.axes = [-1, 1];
+  valid.pad.axes = [-1, 1, 0.5, -0.5];
   assert.deepEqual(parseControllerPreviewSnapshot(valid), valid);
 });
 
@@ -189,6 +211,16 @@ test('local parser callers cannot execute getters or inject custom prototypes', 
   const safe = packet();
   Object.setPrototypeOf(safe.pad, null);
   assert.ok(parseControllerPreviewSnapshot(safe));
+  for (const [target, key] of [
+    ['root', 'format'],
+    ['pad', 'axes'],
+    ['axes', '2'],
+  ]) {
+    const hidden = packet();
+    const object = target === 'root' ? hidden : target === 'pad' ? hidden.pad : hidden.pad.axes;
+    Object.defineProperty(object, key, { value: object[key], enumerable: false });
+    assert.equal(parseControllerPreviewSnapshot(hidden), null);
+  }
 });
 
 test('wrong windows, origin, duplicate sequences and older packets cannot steer', () => {
@@ -215,6 +247,7 @@ test('first input needs neutral and readPads yields independent fixed descriptor
   assert.equal(first.mapping, 'standard');
   assert.match(first.id, /simulated/);
   assert.equal(first.buttons.length, 16);
+  assert.equal(first.axes.length, 4);
   first.axes[0] = 1;
   first.buttons[0].pressed = true;
   assert.equal(f.bridge.readPads()[0].axes[0], 0);
@@ -293,12 +326,142 @@ test('bounded feedback is changed-only, throttled and sent to the exact parent o
 });
 
 test('feedback parser rejects hidden commands, oversized fields and invalid sequences', () => {
-  const valid = { format: CONTROLLER_PREVIEW_STATUS_FORMAT, sequence: 0, ...feedback() };
+  const valid = {
+    format: CONTROLLER_PREVIEW_STATUS_FORMAT,
+    session: SESSION,
+    sequence: 0,
+    readSequence: -1,
+    ...feedback(),
+  };
   assert.deepEqual(parseControllerPreviewStatus(valid), valid);
   assert.equal(parseControllerPreviewStatus({ ...valid, sequence: -1 }), null);
   assert.equal(parseControllerPreviewStatus({ ...valid, message: 'a'.repeat(241) }), null);
   assert.equal(parseControllerPreviewStatus({ ...valid, scene: 'won' }), null);
   assert.equal(parseControllerPreviewStatus({ ...valid, assigned: 1 }), null);
+  for (const readSequence of [-2, 0.5, NaN, Infinity, '0', Number.MAX_SAFE_INTEGER + 1])
+    assert.equal(parseControllerPreviewStatus({ ...valid, readSequence }), null);
+  const missing = { ...valid };
+  delete missing.readSequence;
+  assert.equal(parseControllerPreviewStatus(missing), null);
+  assert.equal(
+    parseControllerPreviewStatus({ ...valid, format: 'revealline.controller-preview-status.v1' }),
+    null,
+  );
+});
+
+test('a new document session rejects queued old input without poisoning the current sequence', () => {
+  const f = fixture();
+  f.send({ ...packet(99999), session: 'fedcba9876543210fedcba9876543210' });
+  assert.deepEqual(f.bridge.readPads(), []);
+  f.send(packet(0));
+  assert.equal(f.bridge.readPads().length, 1);
+  f.send({ ...packet(999999, [15]), session: 'fedcba9876543210fedcba9876543210' });
+  f.send(packet(1, [14]));
+  assert.equal(f.bridge.readPads()[0].buttons[14].pressed, true);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.session, SESSION);
+  assert.equal(f.posts.at(-1).data.readSequence, 1);
+});
+
+test('neutral acknowledgement proves a read, never receipt alone or pre-clear state', () => {
+  const f = fixture();
+  f.send(packet(1));
+  assert.equal(f.bridge.report(feedback()), true);
+  assert.equal(f.posts.at(-1).data.readSequence, -1);
+  f.bridge.readPads();
+  f.advance(100);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, 1);
+  f.bridge.clear();
+  f.advance(100);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, -1);
+  const held = packet(2);
+  held.pad.axes[3] = 0.8;
+  f.send(held);
+  f.bridge.readPads();
+  f.advance(100);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, -1);
+  f.send(packet(3));
+  f.advance(100);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, -1);
+  f.bridge.readPads();
+  f.advance(100);
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, 3);
+  f.advance(CONTROLLER_PREVIEW_LEASE_MS + 1);
+  f.bridge.readPads();
+  f.bridge.report(feedback());
+  assert.equal(f.posts.at(-1).data.readSequence, -1);
+});
+
+test('clear and reconnect require all four axes centered, and descriptors never change length', () => {
+  const f = fixture();
+  f.send(packet(0));
+  const right = packet(1);
+  right.pad.axes = [0, 0, 0.8, -0.4];
+  f.send(right);
+  assert.deepEqual(f.bridge.readPads()[0].axes, [0, 0, 0.8, -0.4]);
+  f.bridge.clear();
+  right.sequence = 2;
+  f.send(right);
+  assert.deepEqual(f.bridge.readPads()[0].axes, [0, 0, 0, 0]);
+  const short = packet(3);
+  short.pad.axes = [0, 0];
+  f.send(short);
+  right.sequence = 4;
+  f.send(right);
+  assert.deepEqual(f.bridge.readPads()[0].axes, [0, 0, 0, 0]);
+  f.send(packet(5));
+  right.sequence = 6;
+  f.send(right);
+  assert.deepEqual(f.bridge.readPads()[0].axes, [0, 0, 0.8, -0.4]);
+  const small = packet(7);
+  small.pad.buttons = [];
+  f.send(small);
+  const pad = f.bridge.readPads()[0];
+  assert.equal(pad.axes.length, 4);
+  assert.equal(pad.buttons.length, 16);
+  const invalid = packet(8, [], false);
+  invalid.pad.axes[3] = 0.1;
+  assert.equal(parseControllerPreviewSnapshot(invalid), null);
+});
+
+test('v2 transport can operate remapped non-face equipment and the selected right stick', () => {
+  const f = fixture(),
+    bindings = resolveControllerBindings();
+  bindings.flight.buttons.ability = 4;
+  bindings.flight.buttons.pickup = 6;
+  bindings.flight.buttons.boost = 7;
+  bindings.flight.stick.xAxis = 2;
+  bindings.flight.stick.yAxis = 3;
+  const router = createControllerRouter({
+    bindings,
+    readPads: f.bridge.readPads,
+    eventTarget: null,
+  });
+  const sample = () => router.sample({ scope: 'flight', timeMs: f.time });
+  f.send(packet(0));
+  sample();
+  f.send(packet(1, [0]));
+  assert.equal(sample().status.code, 'joined');
+  f.send(packet(2));
+  sample();
+  const flying = packet(3, [4, 6, 7]);
+  flying.pad.axes[2] = -0.8;
+  f.send(flying);
+  assert.deepEqual(sample().flight, {
+    direction: 'left',
+    boost: true,
+    action: true,
+    pickup: true,
+    pause: false,
+    hangar: false,
+    stop: false,
+  });
+  router.destroy();
 });
 
 test('destroy detaches bridge and suppresses subsequent input and feedback', () => {

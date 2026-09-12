@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#112d35" />
     <title>Reveal / Line — First Signal</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="ui/controller-settings.css" />
   </head>
   <body>
     <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
@@ -19,7 +20,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.5.0</span>
+        ><span id="version" class="version">v0.6.0</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -247,11 +248,13 @@
           >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
         >
         Touch: hold a direction, or enable Tap steering and tap again/■ to stop. Boost uses the same
-        hold/toggle choice. Standard controllers: release all controls, then press a face button to
-        join. In flight use D-pad/stick, south/A ability, west/X supply, right shoulder boost,
-        north/Y hangar, east/B stop and Menu pause. In menus, D-pad moves focus, south confirms,
-        east goes back. Confirm a select or slider to edit, then confirm again to apply or go back
-        to cancel. Controller selection does not start a mission automatically.
+        hold/toggle choice.
+      </p>
+      <p>
+        <strong>Controller:</strong>
+        <span id="controller-help"
+          >Release controls and press a face button to join. Configure the layout in Settings.</span
+        >
       </p>
       <p>
         Text entry and file pickers still use keyboard or touch. Some browsers also need a keyboard
@@ -386,6 +389,7 @@
           Select an action to change its key.
         </p>
       </details>
+      <section id="controller-settings-root" aria-label="Controller controls"></section>
       <p id="offline-status" class="micro-note">
         Offline installation is available in packaged releases.
       </p>

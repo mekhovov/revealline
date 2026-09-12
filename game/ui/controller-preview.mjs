@@ -1,5 +1,5 @@
-export const CONTROLLER_PREVIEW_FORMAT = 'revealline.controller-preview.v1';
-export const CONTROLLER_PREVIEW_STATUS_FORMAT = 'revealline.controller-preview-status.v1';
+export const CONTROLLER_PREVIEW_FORMAT = 'revealline.controller-preview.v2';
+export const CONTROLLER_PREVIEW_STATUS_FORMAT = 'revealline.controller-preview-status.v2';
 export const CONTROLLER_PREVIEW_LEASE_MS = 1200;
 
 // Inspect descriptors before reading values: exported parsers also accept local
@@ -13,7 +13,7 @@ function fields(value, keys) {
   const result = {};
   for (const key of keys) {
     const descriptor = Object.getOwnPropertyDescriptor(value, key);
-    if (!descriptor || !Object.hasOwn(descriptor, 'value')) return null;
+    if (!descriptor?.enumerable || !Object.hasOwn(descriptor, 'value')) return null;
     result[key] = descriptor.value;
   }
   return result;
@@ -26,30 +26,38 @@ function array(value, minimum, maximum, valid) {
   const result = [];
   for (let i = 0; i < length; i++) {
     const descriptor = Object.getOwnPropertyDescriptor(value, String(i));
-    if (!descriptor || !Object.hasOwn(descriptor, 'value') || !valid(descriptor.value)) return null;
+    if (!descriptor?.enumerable || !Object.hasOwn(descriptor, 'value') || !valid(descriptor.value))
+      return null;
     result.push(descriptor.value);
   }
   return result;
 }
 const sequence = (value) => Number.isSafeInteger(value) && value >= 0;
+const sessionToken = (value) => typeof value === 'string' && /^[a-f0-9]{32}$/.test(value);
 const neutral = (pad) => pad.axes.every((value) => value === 0) && pad.buttons.every((v) => !v);
 const emptyPad = (connected = false) => ({
   index: 0,
   connected,
-  axes: [0, 0],
+  axes: [0, 0, 0, 0],
   buttons: Array(16).fill(false),
 });
 
 export function parseControllerPreviewSnapshot(value) {
   try {
-    const data = fields(value, ['format', 'sequence', 'pad']);
+    const data = fields(value, ['format', 'session', 'sequence', 'pad']);
     if (!data || data.format !== CONTROLLER_PREVIEW_FORMAT || !sequence(data.sequence)) return null;
+    if (!sessionToken(data.session)) return null;
     const pad = fields(data.pad, ['index', 'connected', 'axes', 'buttons']);
     if (!pad || pad.index !== 0 || typeof pad.connected !== 'boolean') return null;
-    const axes = array(pad.axes, 2, 2, (v) => Number.isFinite(v) && v >= -1 && v <= 1);
+    const axes = array(pad.axes, 4, 4, (v) => Number.isFinite(v) && v >= -1 && v <= 1);
     const buttons = array(pad.buttons, 0, 16, (v) => typeof v === 'boolean');
     if (!axes || !buttons) return null;
-    const parsed = { format: data.format, sequence: data.sequence, pad: { ...pad, axes, buttons } };
+    const parsed = {
+      format: data.format,
+      session: data.session,
+      sequence: data.sequence,
+      pad: { ...pad, axes, buttons },
+    };
     if (!pad.connected && !neutral(parsed.pad)) return null;
     return parsed;
   } catch {
@@ -61,7 +69,9 @@ export function parseControllerPreviewStatus(value) {
   try {
     const data = fields(value, [
       'format',
+      'session',
       'sequence',
+      'readSequence',
       'scope',
       'focusedId',
       'focusedLabel',
@@ -70,6 +80,8 @@ export function parseControllerPreviewStatus(value) {
     ]);
     if (!data || data.format !== CONTROLLER_PREVIEW_STATUS_FORMAT || !sequence(data.sequence))
       return null;
+    if (!sessionToken(data.session)) return null;
+    if (data.readSequence !== -1 && !sequence(data.readSequence)) return null;
     if (typeof data.assigned !== 'boolean') return null;
     for (const [key, limit] of [
       ['scope', 160],
@@ -92,10 +104,11 @@ export function attachControllerPreview({
   window: host = globalThis.window,
 } = {}) {
   if (!enabled || !host) return null;
-  let parent, origin;
+  let parent, origin, session;
   try {
     parent = host.parent;
     origin = host.location.origin;
+    session = new URLSearchParams(host.location.search || '').get('controller-session');
     if (
       !parent ||
       parent === host ||
@@ -104,11 +117,14 @@ export function attachControllerPreview({
       parent.location.origin !== origin
     )
       return null;
+    if (!sessionToken(session)) return null;
   } catch {
     return null;
   }
   let pad = emptyPad(),
     lastSequence = -1,
+    acceptedSequence = -1,
+    readSequence = -1,
     receivedAt = -Infinity,
     awaitNeutral = true,
     disposed = false,
@@ -124,20 +140,25 @@ export function attachControllerPreview({
   function receive(event) {
     if (disposed || event.source !== parent || event.origin !== origin) return;
     const value = parseControllerPreviewSnapshot(event.data);
-    if (!value || value.sequence <= lastSequence) return;
+    if (!value || value.session !== session || value.sequence <= lastSequence) return;
     lastSequence = value.sequence;
     if (now() - receivedAt > CONTROLLER_PREVIEW_LEASE_MS) {
       pad = emptyPad();
       awaitNeutral = true;
+      acceptedSequence = -1;
+      readSequence = -1;
     }
     if (awaitNeutral && !neutral(value.pad)) return;
     awaitNeutral = !value.pad.connected;
     pad = value.pad;
+    acceptedSequence = value.sequence;
     receivedAt = now();
   }
   function clear() {
     pad = emptyPad(pad.connected);
     awaitNeutral = true;
+    acceptedSequence = -1;
+    readSequence = -1;
   }
   function readPads() {
     if (disposed) return [];
@@ -145,8 +166,14 @@ export function attachControllerPreview({
     if (time - receivedAt > CONTROLLER_PREVIEW_LEASE_MS) {
       pad = emptyPad();
       awaitNeutral = true;
+      acceptedSequence = -1;
+      readSequence = -1;
     }
-    if (!pad.connected) return [];
+    if (!pad.connected) {
+      readSequence = -1;
+      return [];
+    }
+    readSequence = acceptedSequence;
     return [
       {
         id: 'Virtual controller preview (simulated)',
@@ -170,11 +197,13 @@ export function attachControllerPreview({
     if (!input) return false;
     const data = parseControllerPreviewStatus({
       format: CONTROLLER_PREVIEW_STATUS_FORMAT,
+      session,
       sequence: reportSequence,
+      readSequence,
       ...input,
     });
     if (!data) return false;
-    const fingerprint = JSON.stringify(input),
+    const fingerprint = JSON.stringify({ ...input, readSequence }),
       time = now();
     if (fingerprint === lastReport || time - reportAt < 100) return false;
     try {

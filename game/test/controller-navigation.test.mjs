@@ -340,6 +340,28 @@ test('select browsing uses a separate preview, and Back cancels without changing
   assert.equal(h.document.activeElement, select);
 });
 
+test('selection previews describe the configured menu buttons without changing draft semantics', (t) => {
+  const h = setup(t, {
+    getControlLabels: () => ({
+      directions: 'Direction controls',
+      confirm: 'R1',
+      back: 'Square (□)',
+    }),
+  });
+  const select = h.select();
+  select.focus();
+  h.api.handle({ confirm: true });
+  h.api.handle({ direction: 'down' });
+  assert.match(
+    h.editors()[0].textContent,
+    /Second · Direction controls changes · R1 confirms · Square \(□\) cancels/,
+  );
+  assert.equal(select.value, 'first');
+  h.api.handle({ back: true });
+  assert.equal(select.value, 'first');
+  assert.equal(h.editors().length, 0);
+});
+
 test('select Confirm commits once through the existing change handler and ignores disabled choices', (t) => {
   const h = setup(t),
     select = h.select(['First', 'Disabled', 'Group', 'Last']);
