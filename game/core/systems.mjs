@@ -1,4 +1,4 @@
-import { CELL, loadoutHash } from './registry.mjs';
+import { CELL, loadoutHash, MAX_CLASS_HISTORY } from './registry.mjs';
 import { EPS } from './geometry.mjs';
 import { cellIndex } from './movement.mjs';
 
@@ -31,9 +31,11 @@ export function switchClass(state, classId) {
         ? 'unsafe'
         : !hangar
           ? 'outside-hangar'
-          : state.time + EPS < state.switchCooldownUntil
-            ? 'switch-cooldown'
-            : null;
+          : state.classHistory.length >= MAX_CLASS_HISTORY
+            ? 'history-limit'
+            : state.time + EPS < state.switchCooldownUntil
+              ? 'switch-cooldown'
+              : null;
   if (reason) {
     state.events.push({ type: 'class.rejected', tick: state.tick, time: state.time, reason });
     return false;

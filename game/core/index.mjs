@@ -3,6 +3,7 @@ import {
   CLASSES,
   DIRECTIONS,
   FIXED_DT,
+  MAX_CLASS_HISTORY,
   RULESET,
   TURN_POLICIES,
   validateClassRecipes,
@@ -31,6 +32,7 @@ export {
   CLASSES,
   DIRECTIONS,
   FIXED_DT,
+  MAX_CLASS_HISTORY,
   RULESET,
   TURN_POLICIES,
 };
