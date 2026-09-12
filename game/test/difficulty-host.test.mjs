@@ -299,3 +299,171 @@ test('a legally lost Standard attempt retries through the result button into fre
   assert.equal(retried.replay.summary.lives, 5);
   assert.deepEqual(page.errors, []);
 });
+
+test('replacing a two-chapter pack retains the active Gentle chapter and applies the next mode', async (t) => {
+  const source = read('../content/packs/night-shift.json');
+  const pack = {
+    ...source,
+    id: 'host-two-chapters',
+    name: 'Host two chapters',
+    description: 'A small public pack fixture with two distinct authored chapters.',
+    campaigns: ['first', 'second'].map((part) => ({
+      version: 'xonix-campaign.v1',
+      id: `host-chapter-${part}`,
+      revision: '1',
+      title: `Host ${part} chapter`,
+      themeId: source.themes[0].id,
+      musicId: source.music[0].id,
+      levels: [
+        {
+          ...campaign.levels[0],
+          id: `host-map-${part}`,
+          name: `Host ${part} map`,
+        },
+      ],
+    })),
+  };
+  const second = { ...pack.campaigns[1], classRecipes: pack.classRecipes };
+  const expectedStandard = createDifficultyContext(second, 'standard');
+  const expectedGentle = createDifficultyContext(second, 'gentle');
+  const page = await soloPage(t, { campaign, storage: initialStorage('immediate') });
+  async function install(candidate) {
+    page.$('library-button').click();
+    assert.equal(page.$('library-dialog').open, true);
+    page.$('pack-json').value = JSON.stringify(candidate);
+    assert.equal(page.$('install-pack').disabled, false);
+    page.$('install-pack').click();
+    await settle(() => !page.$('install-pack').disabled);
+    assert.match(page.$('pack-status').textContent, /Validated and installed/);
+    page.frame(0);
+  }
+  await install(pack);
+  const play = page
+    .$('installed-packs')
+    .querySelectorAll('button')
+    .find((button) => button.textContent === 'Play Host second chapter');
+  assert.ok(play, 'The real library exposes each authored chapter separately.');
+  play.click();
+  assert.equal(page.$('library-dialog').open, false);
+  page.change('difficulty-select', 'gentle');
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, 'host-map-second');
+  assert.equal(page.rendered.run.revision, expectedGentle.campaign.levels[0].revision);
+  assert.equal(page.rendered.run.lives, 5);
+
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  ticks(page, 12);
+  const current = page.rendered.run;
+  changeOnly(page, 'standard', false);
+  assert.equal(current.revision, expectedGentle.campaign.levels[0].revision);
+  assert.equal(preference(page), 'standard');
+  // Opening Library may legitimately pause/save; this replacement must resolve
+  // the authored second chapter from the active derived Gentle context.
+  await install({ ...pack, version: '1.0.1' });
+  assert.notStrictEqual(page.rendered.run, current);
+  assert.equal(page.rendered.run.levelId, 'host-map-second');
+  assert.equal(page.$('campaign-select').value, expectedStandard.campaignKey);
+  assert.equal(page.$('level-select').value, 'host-map-second');
+  assert.equal(page.$('difficulty-select').value, 'standard');
+  assert.equal(page.rendered.run.lives, 3);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, true);
+  assert.match(page.$('installed-packs').children[0].children[0].textContent, /1\.0\.1/);
+  const { readAssetStore } = await import('../storage.mjs');
+  const persisted = JSON.parse(await readAssetStore('revealline.packs.dev.v1'));
+  assert.equal(persisted.packs[0].version, '1.0.1');
+  assert.deepEqual(
+    persisted.packs[0].campaigns.map((entry) => entry.id),
+    ['host-chapter-first', 'host-chapter-second'],
+  );
+  page.$('library-dialog').close();
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  ticks(page, 12);
+  const next = pauseAndRead(page, expectedStandard);
+  assert.equal(next.replay.level.id, 'host-map-second');
+  assert.equal(next.replay.ticks, 12);
+  assert.deepEqual(page.errors, []);
+});
+
+test('ordinary practice selecting an authored campaign ignores saved Gentle and cannot award or save', async (t) => {
+  const { entryScenario } = await import('../playground/model.mjs');
+  const { prepareScenario } = await import('../imports.mjs');
+  const base = {
+    ...campaign,
+    id: 'practice-mode-host',
+    levels: [
+      {
+        ...campaign.levels[0],
+        id: 'practice-mode-host-01',
+        spawn: { x: 24.5, y: 0.5 },
+        goal: { coverage: 0.45 },
+      },
+    ],
+  };
+  const entry = {
+    campaign: base,
+    classRecipes: base.classRecipes,
+    themes: [read('../content/themes.json').themes.find((theme) => theme.id === 'fpv')],
+    visualOverrides: {},
+    levelVisuals: [],
+  };
+  const prepared = await prepareScenario(entryScenario(entry, base.levels[0].id));
+  const previewStorage = memoryStorage({
+    'revealline.playground.current': JSON.stringify(prepared.scenario),
+  });
+  const storage = initialStorage('immediate');
+  const prior = loadLibrary(storage, profileKey);
+  assert.equal(
+    saveLibrary(
+      storage,
+      profileKey,
+      updatePreferences(prior.library, {
+        campaignDifficulty: 'gentle',
+      }),
+      null,
+      { baseline: prior.library, generation: prior.generation },
+    ).ok,
+    true,
+  );
+  const before = [...storage.map],
+    writes = storage.writes.length;
+  const page = await soloPage(t, {
+    campaign: base,
+    storage,
+    search: '?practice=1',
+    previewStorage,
+  });
+  assert.equal(page.rendered.run.lives, 3);
+  assert.equal(page.$('difficulty-select').disabled, true);
+  // Select a real dated practice activity first, so returning to the authored
+  // campaign is an actual combobox value change, not a repeated same-option event.
+  page.$('library-button').click();
+  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  page.$('challenge-date').value = '2026-09-12';
+  page.change('challenge-kind', 'calm');
+  page.$('launch-challenge').click();
+  assert.equal(page.$('library-dialog').open, false);
+  const authored = createDifficultyContext(base, 'standard');
+  assert.notEqual(page.$('campaign-select').value, authored.campaignKey);
+  page.change('campaign-select', authored.campaignKey);
+  page.frame(0);
+  assert.equal(page.rendered.run.levelId, base.levels[0].id);
+  assert.equal(page.rendered.run.revision, base.levels[0].revision);
+  assert.equal(page.rendered.run.lives, 3);
+  assert.equal(page.$('difficulty-select').disabled, true);
+  assert.match(page.$('overlay-eyebrow').textContent, /PRACTICE/);
+  assert.equal(preference(page), 'gentle', 'Practice must not persist a different preference.');
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  for (let tick = 0; page.rendered.run.status === 'running' && tick < 600; tick++) page.frame();
+  assert.equal(page.rendered.run.status, 'won');
+  assert.equal(page.rendered.run.lives, 3);
+  assert.match(page.$('overlay-copy').textContent, /Practice complete/);
+  assert.deepEqual([...storage.map], before);
+  assert.equal(storage.writes.length, writes, 'A real practice win cannot write awards or a save.');
+  page.$('collection-button').click();
+  assert.equal(page.$('gallery-grid').children.length, 0, 'No in-memory picture award either.');
+  assert.deepEqual(page.errors, []);
+});
