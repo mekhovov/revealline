@@ -18,6 +18,16 @@ const limits = Object.freeze({
   maxArray: MAX_REPLAY_TICKS,
   maxString: CONTENT_LIMITS.maxEncodedImageChars,
 });
+// This is an in-memory context bound, not a larger portable-file budget. It
+// accommodates two execution modes for the existing 104 authored contexts,
+// including repeated filtered rosters resolved from the bounded pack library.
+const expandedCampaignLimits = Object.freeze({
+  maxBytes: 128 * 1024 * 1024,
+  maxNodes: 1000000,
+  maxDepth: 24,
+  maxArray: 4096,
+  maxString: 65536,
+});
 const preparedBackups = new WeakSet();
 export const isPreparedBackup = (value) => preparedBackups.has(value);
 const freeze = (value) => {
@@ -54,10 +64,20 @@ function envelope(candidate) {
  * `campaigns` and optional synchronous `resolveCampaign(key)` are trusted host
  * content (for example the built-in campaign and dated challenge generator).
  * Pack campaigns always come from this backup's successfully prepared packs.
+ * Optional trusted `expandCampaigns(originals)` synchronously returns the full
+ * campaign array to recognize. Its frozen input contains only those registered
+ * originals and the backup's own resolved packs, never another installed set.
  */
 export async function prepareBackup(
   candidate,
-  { campaigns = [], decodeImage = browserDecodeImage, signal, onProgress, resolveCampaign } = {},
+  {
+    campaigns = [],
+    decodeImage = browserDecodeImage,
+    signal,
+    onProgress,
+    resolveCampaign,
+    expandCampaigns,
+  } = {},
 ) {
   checkAbort(signal);
   // Snapshot every supplied data object before the first await; do not permit
@@ -69,7 +89,12 @@ export async function prepareBackup(
     resolveCampaign === undefined || typeof resolveCampaign === 'function',
     'The campaign resolver must be a trusted function, not backup data.',
   );
+  required(
+    expandCampaigns === undefined || typeof expandCampaigns === 'function',
+    'The campaign expander must be a trusted function, not backup data.',
+  );
   const known = new Map(registered.map((campaign) => [campaignKey(campaign), campaign]));
+  const originals = [...registered];
   // Fail malformed profile data before any image allocation. Repeat known-
   // campaign validation after the backup's expansions become available.
   importLibrary(value.library, { campaigns: registered });
@@ -86,8 +111,20 @@ export async function prepareBackup(
   for (const pack of packs.packs)
     for (const source of pack.campaigns) {
       const { campaign } = resolvePackCampaign(pack, source.id);
+      originals.push(campaign);
       known.set(campaignKey(campaign), campaign);
     }
+  if (expandCampaigns) {
+    const output = expandCampaigns(freeze(originals));
+    required(
+      Array.isArray(output) && output.length <= 208,
+      'Expanded backup campaigns must be a synchronous array of at most 208 campaigns.',
+    );
+    const expanded = boundedJSON(output, expandedCampaignLimits);
+    known.clear();
+    for (const campaign of expanded) known.set(campaignKey(campaign), campaign);
+    checkAbort(signal);
+  }
   if (value.session !== null) {
     const key = value.session.campaignKey;
     required(
