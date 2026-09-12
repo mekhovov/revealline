@@ -160,8 +160,37 @@
           </div>
           <div class="pack-instructions">
             <span>HOW TO INSTALL</span>
-            <p>Open the game → Library &amp; saves → Expansion packs → Install → Play</p>
+            <p>Choose a pack → Pick an unlocked mission → Install &amp; play</p>
           </div>
+        </div>
+
+        <div class="pack-launcher" aria-label="Choose a pack and level to play">
+          <div class="launcher-copy">
+            <span>QUICK LAUNCH</span>
+            <strong>Choose your next mission.</strong>
+            <p>The selected included pack installs on this device, then the level starts.</p>
+          </div>
+          <label>
+            Pack
+            <select id="landing-pack-select" aria-describedby="landing-pack-status">
+              <option value="homeward-skies">Homeward Skies</option>
+            </select>
+          </label>
+          <label>
+            Level
+            <select id="landing-level-select" aria-describedby="landing-pack-status">
+              <option value="homeward-01">01 · Copper Orchard</option>
+            </select>
+          </label>
+          <a
+            id="landing-pack-play"
+            class="button button-primary"
+            href="./game/?pack=homeward-skies&amp;campaign=homeward-skies&amp;level=homeward-01&amp;play=1"
+            >Install &amp; play <i aria-hidden="true">↗</i></a
+          >
+          <p id="landing-pack-status" class="launcher-status" role="status">
+            Homeward Skies · Copper Orchard ready to launch.
+          </p>
         </div>
 
         <div class="pack-grid">
@@ -178,8 +207,10 @@
               </p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Homeward Skies"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=homeward-skies&amp;campaign=homeward-skies&amp;level=homeward-01&amp;play=1"
+                  aria-label="Install Homeward Skies and play Copper Orchard"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
@@ -196,8 +227,10 @@
               <p>Cross interference, suppress emitters, recover a pulse, and capture with a net.</p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Fieldcraft"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=fieldcraft&amp;campaign=fieldcraft&amp;level=fieldcraft-01&amp;play=1"
+                  aria-label="Install Fieldcraft and play Copper Crossing"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
@@ -216,8 +249,10 @@
               </p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Sentinel Relay"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=sentinel-relay&amp;campaign=sentinel-relay&amp;level=sentinel-relay-01&amp;play=1"
+                  aria-label="Install and play Sentinel Relay"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
@@ -236,8 +271,10 @@
               </p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Living Threads"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=living-threads&amp;campaign=living-threads&amp;level=living-threads-01&amp;play=1"
+                  aria-label="Install Living Threads and play Petals at Dawn"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
@@ -256,8 +293,10 @@
               </p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Night Shift"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=night-shift&amp;campaign=night-shift&amp;level=night-shift-01&amp;play=1"
+                  aria-label="Install Night Shift and play Midnight Channel"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
@@ -274,8 +313,10 @@
               <p>Test proven loadouts across garden, neon circuit, and abstract network worlds.</p>
               <div class="pack-footer">
                 <span class="pack-price">INCLUDED</span>
-                <a href="./game/" aria-label="Open the game library to install Equipment Workshop"
-                  >Install in game <span aria-hidden="true">↗</span></a
+                <a
+                  href="./game/?pack=equipment-workshop&amp;campaign=equipment-workshop&amp;level=workshop-01&amp;play=1"
+                  aria-label="Install Equipment Workshop and play Garden of Threads"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
                 >
               </div>
             </div>
