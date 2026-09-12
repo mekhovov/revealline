@@ -8,7 +8,8 @@ import sys
 SOURCE = Path(__file__).resolve().parent / "skills"
 NAMES = ("xonix-theme-designer", "xonix-asset-creator", "xonix-level-designer",
          "xonix-audio-director", "xonix-pack-reviewer", "xonix-background-stylist",
-         "xonix-animation-director", "xonix-character-collection", "xonix-ability-designer")
+         "xonix-animation-director", "xonix-character-collection", "xonix-ability-designer",
+         "xonix-runtime-maintainer", "xonix-reference-importer")
 
 
 def main():

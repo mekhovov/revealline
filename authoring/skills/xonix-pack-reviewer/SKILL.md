@@ -7,6 +7,8 @@ description: "Review Xonix theme and content packs for schema validity, asset re
 
 Review against the actual contract and available evidence. Clearly separate a valid authoring document from a working, enjoyable game.
 
+First identify the target format. Review playable `xonix-level.v1`, `xonix-playground.v1` and class/theme data using [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core contract](../../../game/core/README.md) and [runtime import guide](../../../docs/assets-and-configuration.md); await validated image decoding before adoption. The Python draft-pack checks below remain valid for legacy packs, but cannot certify a playable scenario, campaign reward or working imported asset.
+
 For gameplay classes and equipment, use [Ability Designer](../xonix-ability-designer/SKILL.md). Check the actual ability registry and its separate format. Explicit class abilities can change declared state; cosmetic swaps cannot. Distinguish sourced reference entries, planned actor roles, working lab targets and integrated territory mechanics. Compare cosmetics within the same class/equipment/turn-policy baseline, and require result identity to retain gameplay-affecting choices.
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.

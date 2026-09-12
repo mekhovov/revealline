@@ -7,6 +7,8 @@ description: "Design audio direction, music prompts, adaptive stems, event sound
 
 Translate gameplay events and a theme into an original, practical audio system. Separate a composition brief from actual generated or recorded audio.
 
+For cues applied to the playable `game/`, consult [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and inspect `game/ui/audio.mjs` plus the [core events](../../../game/core/README.md). The current game synthesizes cues and a simple sequence in code; `xonix-playground.v1` has no imported soundtrack/stem fields. Preserve the draft audio workflow below, but do not claim a planned pack score is loaded or that an image override changes sound.
+
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
 
 For synchronized motion cues, consult [Animation Director](../xonix-animation-director/SKILL.md), especially `animation-14-audio-event-timing` in the shared prompt CLI. Tie one-shots to event identity and continuous sounds to explicit state; document loop, fade, overlap, pause and cancellation behavior. A rotor animation speed is presentation data, not movement speed. Timing plans still require actual audio production and listening before completion claims.
@@ -28,7 +30,7 @@ Locate the target kit and read its theme brief, `authoring/CONTRACT.md`, and rel
 
 ## Adapt templates to the request
 
-Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Keep unimplemented medals, generators, and behaviors as proposals instead of inventing accepted fields.
+Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.
 
 ## Deliver
 

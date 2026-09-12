@@ -7,6 +7,8 @@ description: "Plan, vary and inspect modular Xonix animation for avatars, enemie
 
 Direct movement and feedback as replaceable presentation. Preserve the user's source art, family identity and gameplay contract. Animation reads simulation state; it never changes colliders, movement, damage, capture rules or input. A generated contact sheet is an animation concept, not a working animation.
 
+For animation applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core state/event contract](../../../game/core/README.md) and [asset/rig guide](../../../docs/assets-and-configuration.md). The game reuses `authoring/motion-lab/animation.mjs`, `render-character.mjs` and presentation presets, while `xonix-playground.v1` only exposes static image overrides and its documented presentation fields. This reuse does not register every lab animation state or component control in the game UI; inspect actual playback without changing either steering mode or its collider.
+
 ## Inputs and scope
 
 Inspect the actual reference assets, current board fixture, intended display scale and available state/event interface. Read `authoring/CONTRACT.md` and relevant records in `authoring/prompts/round-07-animation-variants.json` when the kit is present; resolve an installed skill symlink to its physical kit if needed. The shared CLI includes this supplement: use `python3 authoring/prompt.py show animation-02-state-contract` to inspect inputs before rendering text. Consult [the motion handoff](references/motion-handoff.md) for states, timing and inspection records.

@@ -1,0 +1,25 @@
+{
+  "name": "revealline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Configurable territory-capture game and authoring playground",
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "node scripts/game-cli.mjs serve --port 8768",
+    "test": "node scripts/game-cli.mjs test",
+    "validate": "node scripts/game-cli.mjs validate",
+    "build": "node scripts/game-cli.mjs build",
+    "release": "node scripts/game-cli.mjs release-snapshot",
+    "format": "prettier --write \"game/**/*.{mjs,css,html,json}\" \"scripts/*.mjs\"",
+    "format:check": "prettier --check \"game/**/*.{mjs,css,html,json}\" \"scripts/*.mjs\""
+  },
+  "dependencies": {
+    "phaser": "4.2.1"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}

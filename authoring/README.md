@@ -2,15 +2,17 @@
 
 Version 0.1.0 · 12 September 2026
 
-A reusable foundation for **FPV FRONT**, **UKRAINE ATLAS**, **1994 FOREVER**, **NAVI NETWORK**, and future families. It contains nine AI-agent skills, 124 prompt templates (56 base, 16 asset variations, 16 animation variants, 16 character-collection templates and 20 ability/world templates), four draft content packs, a versioned schema and primitive catalog, and working local authoring checks. The base catalog also contains 28 additional variation options.
+A reusable foundation for **FPV FRONT**, **UKRAINE ATLAS**, **1994 FOREVER**, **NAVI NETWORK**, and future families. It contains **11 AI-agent skills** and **124 shared CLI prompt templates** (56 base, 16 asset variations, 16 animation variants, 16 character-collection templates and 20 ability/world templates), plus four draft content packs, a versioned schema and primitive catalog. The base catalog also contains 28 additional variation options. Reference Importer has [10 additional prose prompt examples](skills/xonix-reference-importer/references/import-and-style.md); those are separate from the shared CLI's 124 entries.
 
-The authoring tools exist and run. The [media library tool](media/README.md) imports originals, registers derivatives and binds visual variants. Four media templates contain 108 planned assets and 124 bindings, separate from the four game-content draft packs. An [actual concept library](library/round-06-fpv/README.md) demonstrates source/derivative registration. The territory simulation, level editor, procedural generator, platform builds and production asset collection are still to be implemented. Current packs describe planned assets; the concept boards are visual references, not exported game assets.
+The [playable browser game](../game/README.md), same-engine playground, deterministic candidate generator and static build tools now exist. They use their own [runtime formats and image limits](../docs/assets-and-configuration.md). The earlier content packs remain drafts; they do not import into that game automatically. The [media library tool](media/README.md) preserves originals, registers derivatives and binds visual variants. Four media templates contain 108 planned assets and 124 bindings, separate from the four draft packs and the 124 prompt count. An [actual concept library](library/round-06-fpv/README.md) demonstrates source/derivative registration. Full production asset coverage, a draft-pack compiler and native platform packaging remain unfinished.
 
 ## Start here
 
 | Need | Open |
 |---|---|
-| Understand the current direction and next proof | [Round 09 classes and world](../docs/round-09-classes-and-world.md) · [Deeper gameplay plan](../docs/round-08-gameplay-plan.md) |
+| Play or change the actual game | [Game guide](../game/README.md) · [Runtime Maintainer](skills/xonix-runtime-maintainer/SKILL.md) · [Assets/configuration](../docs/assets-and-configuration.md) |
+| Understand the current direction and next proof | [Implementation plan](../docs/round-10-implementation-plan.md) · [Round 09 classes and world](../docs/round-09-classes-and-world.md) · [Earlier gameplay plan](../docs/round-08-gameplay-plan.md) |
+| Inspect a reference pack or preserve supplied originals | [Reference Importer](skills/xonix-reference-importer/SKILL.md) · [10 import/style examples](skills/xonix-reference-importer/references/import-and-style.md) |
 | Create or revise a theme | [Theme Designer](skills/xonix-theme-designer/SKILL.md) |
 | Generate/edit backgrounds, sprites, UI, effects or marketing art | [Asset Creator](skills/xonix-asset-creator/SKILL.md) |
 | Preserve/import supplied art or create optional styled variants | [Background Stylist](skills/xonix-background-stylist/SKILL.md) · [Working media CLI](media/README.md) |
@@ -21,12 +23,12 @@ The authoring tools exist and run. The [media library tool](media/README.md) imp
 | Design classes, equipment and supported ability variations | [Ability Designer](skills/xonix-ability-designer/SKILL.md) · [Ability/world prompt guide](prompts/round-09-abilities-and-world.md) |
 | Inspect packs and distinguish readiness from proposals | [Pack Reviewer](skills/xonix-pack-reviewer/SKILL.md) |
 | Select an exact reusable prompt | [Prompt guide](prompts/README.md) · [JSON catalog](prompts/catalog.json) |
-| Understand accepted data and extension boundaries | [Contract](CONTRACT.md) · [Schema](schema/content-pack.schema.json) · [Primitives](schema/primitive-catalog.json) |
+| Understand accepted data and extension boundaries | [Playable core](../game/core/README.md) · [Runtime configuration](../docs/assets-and-configuration.md) · [Draft contract](CONTRACT.md) · [Draft schema](schema/content-pack.schema.json) |
 | Review test evidence and limitations | [Round 09 authoring checks](evaluations/round-09-authoring-checks.md) · [Round 08 authoring checks](evaluations/round-08-authoring-checks.md) · [Skill forward test](evaluations/round-04-forward-test.md) |
 
 ## Use the skills
 
-The source skills live here so they can evolve with the contract. The installer links these nine unique names into the user's Codex skill directory, without replacing any existing path. The default is `$CODEX_HOME/skills`, or `~/.codex/skills` when that variable is unset. This kit's installation was performed locally; a client may need to refresh its skill catalog before newly installed skills appear.
+The source skills live here so they can evolve with the relevant contracts. The installer links these 11 unique names into the user's Codex skill directory, without replacing any existing path. The default is `$CODEX_HOME/skills`, or `~/.codex/skills` when that variable is unset. This kit's installation was performed locally; a client may need to refresh its skill catalog before newly installed skills appear.
 
 ```sh
 python3 authoring/install-skills.py
@@ -34,6 +36,10 @@ python3 authoring/install-skills.py --install
 ```
 
 Examples to give an AI agent, with this project as the working directory:
+
+> Use $xonix-runtime-maintainer and $xonix-background-stylist to replace the playable playground's background with my supplied image. Preserve its original bytes, compare contain/cover, export and re-import a xonix-playground.v1 scenario, and check the same level in both steering modes without changing its rules.
+
+> Use $xonix-reference-importer to inspect the authorized public Telegram reference pack and preserve the PNG/TGS originals I supply. Report unknown inventory and rights honestly. Keep reference intake separate from static game-image import; prepare an original-art brief only when requested.
 
 > Use $xonix-theme-designer to make a Winter Signal chapter for FPV Front: six reveal pictures of fictional invading military vehicles in snowy Ukrainian rural and industrial scenes. Preserve the existing capture rules and drone identity.
 
@@ -71,9 +77,13 @@ python3 authoring/prompt.py show ability-15-four-theme-remap
 python3 authoring/prompt.py render fpv-02-reveal-art --set 'SCENE=fictional invading military trucks at a snowy rail siding at dawn'
 ```
 
-Adapt template defaults to the requested subject, medium, number of images and level count. A prompt cannot override the contract's accepted fields or create a working new mechanic. Record the final effective prompt and actual references with the [run-record template](prompts/run-record.template.json).
+Adapt template defaults to the requested subject, medium, number of images and level count. First name the target: playable game, motion lab, media library or legacy draft pack. They have different schemas and registries. A prompt cannot override that target's accepted fields or create a new mechanic. Record the final effective prompt and actual references with the [run-record template](prompts/run-record.template.json). The Reference Importer's 10 prose examples are read directly from its guide; they are not IDs accepted by `prompt.py`.
 
-## Validate content
+## Validate the intended format
+
+For the playable game use `npm run validate`, relevant `npm test` checks, and an actual browser preview; see [development](../docs/development.md), [core semantics](../game/core/README.md) and [replays](../docs/replays.md). The playground uses `validateScenario` plus awaited image decoding before importing a scenario. The Node build validator does not visually inspect your uploaded image. Runtime levels are `xonix-level.v1`, scenario bundles are `xonix-playground.v1`, and class recipes use the core registry. New primitives require code.
+
+The following Python commands validate the **legacy draft content packs**. They do not compile or launch the game:
 
 Run commands from the project root. Python 3.9 or newer is required. The authoring CLI needs only the standard library.
 
@@ -97,14 +107,16 @@ flowchart LR
     B[Backgrounds and crop metadata] --> P
     C[Rules and objectives] --> P
     D[Authored levels and campaigns] --> P
-    P --> E[Future content compiler]
-    E --> F[Territory simulation]
+    P --> E[Planned draft-to-runtime adapter]
+    E --> F[Existing game simulation]
     E --> G[Artwork and pixel overlay]
     F --> G
     H[Device layout and player preferences] --> G
 ```
 
 Theme changes do not redefine capture. Cropping a painting does not move an enemy. Portrait rotation does not change the arena. Input remaps stay with the player. Animation reads declared movement and events; swapping a body, rotor, trail or terrain appearance does not change a collider. Supported rule parameters are editable data; new algorithms require a bounded, versioned extension.
+
+The actual game currently loads eight static image roles, five class recipes using four primitives, and its own campaign progress. Its renderer deliberately reuses the lab's character/animation modules and preset assets; this reuse does not import the lab's complete ability, collection or terrain contracts. Follow [Runtime Maintainer](skills/xonix-runtime-maintainer/SKILL.md) for applied changes and [assets/configuration](../docs/assets-and-configuration.md) for framing, limits and inherited rig anchors.
 
 The [motion lab](motion-lab/README.md) is an authoring preview with its own documented capabilities. Consult its actual controls and limitations before using it as evidence. A preview, planned state contract or generated contact sheet does not establish game-runtime integration, complete animation assets, collision correctness or device performance.
 
@@ -114,6 +126,7 @@ The [ability definitions](motion-lab/ability-presets.json) and [ability evaluato
 
 ## Research and visuals
 
+- [Round 10 implementation plan](../docs/round-10-implementation-plan.md), [current reference/import research](../docs/research/round-10-reference-and-import.md), [development](../docs/development.md), [deployment](../docs/deployment.md), [versioning](../docs/versioning.md) and [replay verification](../docs/replays.md) describe the playable implementation and its remaining checks.
 - [Round 09 classes and world](../docs/round-09-classes-and-world.md), [browsable reference atlas](../docs/concepts/round-09-reference-atlas.html), [drone research](../docs/research/round-09-drone-reference.md), [ground/support research](../docs/research/round-09-ground-and-support-reference.md), [20 ability/world templates](prompts/round-09-abilities-and-world.md), and [executed authoring checks](evaluations/round-09-authoring-checks.md). Reference catalogs are curated, not exhaustive or implemented actor rosters.
 - [Round 08 character collection](../docs/round-08-character-collection.md), [gameplay plan before logic implementation](../docs/round-08-gameplay-plan.md), [16 collection/recipe prompts](prompts/round-08-character-collections.md), and [executed authoring checks](evaluations/round-08-authoring-checks.md).
 - [Round 07 Reloaded UI and motion inspection](../docs/research/round-07-reloaded-ui-motion.md): source-frame evidence for gallery focus, separate active cuts, progress-preserving life loss and sequential picture/results rewards.

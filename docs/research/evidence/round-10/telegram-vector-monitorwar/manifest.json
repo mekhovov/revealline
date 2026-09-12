@@ -1,0 +1,31 @@
+{
+  "version": "telegram-reference.v1",
+  "importedAt": "2026-09-12T04:05:25+00:00",
+  "pack": {
+    "name": "vector_monitorwar",
+    "sourceUrl": "https://t.me/addemoji/vector_monitorwar"
+  },
+  "access": "public-preview",
+  "rights": {
+    "status": "unknown",
+    "evidence": null
+  },
+  "usage": "reference-only",
+  "shippingEligible": false,
+  "converted": false,
+  "items": [],
+  "errors": [],
+  "title": "Add emoji set Vector @monitoringwar on Telegram",
+  "deepLinks": [
+    "tg://addemoji?set=vector_monitorwar"
+  ],
+  "pageSha256": "e31f6ef11dd84349ee76f064132d356b1a18a533cd815effbd7094046fc57049",
+  "memberCount": null,
+  "inventoryComplete": false,
+  "previewCandidates": [],
+  "socialImage": {
+    "url": "https://telegram.org/img/t_logo_2x.png",
+    "genericPlatformLogo": true
+  },
+  "observation": "Public page candidates are not a verified member inventory. No images are downloaded by preview."
+}

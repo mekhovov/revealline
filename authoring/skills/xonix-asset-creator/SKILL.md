@@ -7,6 +7,8 @@ description: "Create, edit, vary, and prepare Xonix game artwork: reveal backgro
 
 Create the requested art and a traceable handoff. Use the available image-generation/editing tool for imagery; follow its instructions. Do not silently replace image generation with programmatic drawing or invoke a paid API/CLI fallback without the user's authorization for that route.
 
+For artwork applied to the playable `game/`, pair this workflow with [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [eight-role import guide](../../../docs/assets-and-configuration.md). Its `xonix-playground.v1` image overrides accept bounded static PNG/JPEG/WebP, preserve source bytes and require successful browser decoding; custom player art keeps existing rig anchors. Draft asset metadata, texture-filtering wishes and generated sheets do not automatically configure that renderer.
+
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
 
 For supplied-image imports, optional styling and replaceable object skins, use [the Background Stylist workflow](../xonix-background-stylist/SKILL.md). Current FPV concepts use no Z markings; distinguish Ukrainian, hostile military and neutral subjects explicitly. The player direction is a practical FPV frame with propellers, battery and camera, with restrained blue/yellow accents.
@@ -32,7 +34,7 @@ Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this ins
 
 ## Adapt templates to the request
 
-Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Keep unimplemented medals, generators, and behaviors as proposals instead of inventing accepted fields.
+Prompt-library wording is a starting point, not an instruction that overrides the user's chapter, medium, quantity, or approved design. Adapt those choices explicitly and record the effective prompt. Use the current schema's actual enum values: watercolor/gouache are `illustration` with their medium described in the art brief. Within the legacy draft-pack contract, keep unsupported medals, generation behavior and other primitives as proposals instead of inventing accepted fields; use the actual runtime contract for applied game work.
 
 ## Required output
 
