@@ -1,4 +1,5 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
+import { drawPresentedActor } from './actor-presentation.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -188,7 +189,8 @@ export function classicView(run) {
       ['eroder', 'eroder'],
     ].flatMap(([type, label]) => {
       const count = enemies.filter((enemy) => enemy.type === type).length;
-      return count ? [`${count} ${label}${count === 1 ? '' : 's'}`] : [];
+      const plural = label.endsWith('enemy') ? `${label.slice(0, -5)}enemies` : `${label}s`;
+      return count ? [`${count} ${count === 1 ? label : plural}`] : [];
     });
     return freeze({
       actorTick,
@@ -400,8 +402,28 @@ export function drawClassicPickups(ctx, view, palette, images = {}) {
 }
 
 /** The new role silhouette remains stable across themes and reduced effects. */
-export function drawClassicEnemy(ctx, enemy, palette, images = {}) {
+export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation = null) {
   if (!enemy || !['contour-patrol', 'claimed-rover', 'eroder'].includes(enemy.type)) return false;
+  if (presentation) {
+    const role = { 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[
+      enemy.type
+    ];
+    drawPresentedActor(ctx, presentation, palette, images[role]);
+    ctx.save();
+    ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
+    ctx.strokeStyle = palette.paper;
+    if (enemy.mode === 'dormant') {
+      ctx.setLineDash([2, 2]);
+      ctx.strokeRect(-12, -11, 24, 22);
+    }
+    if (enemy.mode === 'warning' || enemy.mode === 'rejoining') {
+      ctx.strokeStyle = palette.accent;
+      ctx.setLineDash([3, 2]);
+      ctx.strokeRect(-13, -13, 26, 26);
+    }
+    ctx.restore();
+    return true;
+  }
   ctx.save();
   ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
   ctx.fillStyle =
