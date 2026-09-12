@@ -1,0 +1,298 @@
+{
+  "format": "revealline-source-gates.v1",
+  "version": "0.19.0",
+  "startedAt": "2026-09-12T18:15:40.494Z",
+  "recordedAt": "2026-09-12T18:16:27.568Z",
+  "baselineRevision": "9b97ea4ab0fa43c583c060d79f6806a6ec599b43",
+  "finalRevision": "9b97ea4ab0fa43c583c060d79f6806a6ec599b43",
+  "committedSource": {
+    "revision": "9b97ea4ab0fa43c583c060d79f6806a6ec599b43",
+    "inventory": {
+      "path": ".cache/round-28/v019-source-gates/committed-source-inputs.json",
+      "bytes": 60000,
+      "sha256": "c488ef7dd0738586fef48575e17a5151922d554a42f47b4ea51310b57b9c3456"
+    },
+    "matchesCheckedInputs": true,
+    "headUnchanged": true
+  },
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Six source gates run once each on the v0.19 working tree. No candidate build, build:pages, source snapshot, deployment, browser or hardware claim. Actual unique TAP totals are recorded; 84 new export cases are included in the root suite, not run or counted twice. Source inventory covers tracked and untracked inputs plus actual consumed source directories (including ignored files), excluding generated native staging and dependencies. Current game README prose may change from implementation 122e763; the only permitted runtime delta is nine exact version-only files. Before/after equality establishes the observed stable working input set, not an immutable source archive.",
+  "runner": {
+    "path": ".cache/round-28/v019-source-gates/run-gates.mjs",
+    "bytes": 20894,
+    "sha256": "a38579f352f4f08088b52cab3eb179b2ce09b3e53c966263e03be8a802fead86"
+  },
+  "runnerUnchanged": true,
+  "expectedMinimumTests": {
+    "test": 1650
+  },
+  "checks": [
+    {
+      "id": "test",
+      "command": "mise exec node@22.22.2 -- npm test",
+      "startedAt": "2026-09-12T18:15:57.228Z",
+      "durationMs": 25924,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/test.log",
+        "bytes": 404847,
+        "sha256": "99ecc5a102b5eb42a7017cb5d5a396857a00f93a79e31c8019f71ae401a7b60c"
+      },
+      "tests": {
+        "tests": 1667,
+        "pass": 1667,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "startedAt": "2026-09-12T18:15:57.229Z",
+      "durationMs": 4405,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/lint.log",
+        "bytes": 148,
+        "sha256": "85a3137f44cdfbebf3ea52ca9ba2a3a11e9a92b327198c6b816fcd87a1837a31"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "startedAt": "2026-09-12T18:15:57.230Z",
+      "durationMs": 7059,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/format.log",
+        "bytes": 195,
+        "sha256": "d667bc3284c94caecf5b18596a633daa8afdd05dc0d7ba9953a17ff9a3eb8d20"
+      }
+    },
+    {
+      "id": "native-format",
+      "command": "mise exec node@22.22.2 -- npm run format:native:check",
+      "startedAt": "2026-09-12T18:15:57.230Z",
+      "durationMs": 971,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/native-format.log",
+        "bytes": 254,
+        "sha256": "a02418f8adb95310070f79cfc36240b72369a3e7955432864bd8377542064a69"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "startedAt": "2026-09-12T18:15:57.231Z",
+      "durationMs": 5203,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/validate.log",
+        "bytes": 1876,
+        "sha256": "010316163c017e1ab33b19d9853468ab8d8a01aa685721edb12cee26c2e76e4a"
+      },
+      "validation": {
+        "version": "0.19.0",
+        "files": 131,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/?course=first-flight&amp;lesson=close-line&amp;turn-policy=immediate",
+          "site/index.html → ./game/?course=first-flight&amp;lesson=close-line&amp;turn-policy=immediate",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/couch/",
+          "site/index.html → ./game/?pack=homeward-skies&amp;campaign=homeward-skies&amp;level=homeward-01&amp;play=1",
+          "site/index.html → ./game/?pack=homeward-skies&amp;campaign=homeward-skies&amp;level=homeward-01&amp;play=1",
+          "site/index.html → ./game/?pack=fieldcraft&amp;campaign=fieldcraft&amp;level=fieldcraft-01&amp;play=1",
+          "site/index.html → ./game/?pack=sentinel-relay&amp;campaign=sentinel-relay&amp;level=sentinel-relay-01&amp;play=1",
+          "site/index.html → ./game/?pack=living-threads&amp;campaign=living-threads&amp;level=living-threads-01&amp;play=1",
+          "site/index.html → ./game/?pack=night-shift&amp;campaign=night-shift&amp;level=night-shift-01&amp;play=1",
+          "site/index.html → ./game/?pack=equipment-workshop&amp;campaign=equipment-workshop&amp;level=workshop-01&amp;play=1",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./privacy.html",
+          "site/index.html → ./credits.html"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 6,
+        "packLevels": 17,
+        "packGoals": 6
+      }
+    },
+    {
+      "id": "motion-lab-syntax",
+      "command": "mise exec node@22.22.2 -- node --check authoring/motion-lab/app.js",
+      "startedAt": "2026-09-12T18:15:57.231Z",
+      "durationMs": 25,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-28/v019-source-gates/motion-lab-syntax.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "releaseVersionConsistency": {
+    "values": {
+      "package.json": "0.19.0",
+      "package-lock.json": "0.19.0",
+      "package-lock.json#packages[empty].version": "0.19.0",
+      "platforms/desktop/package.json": "0.19.0",
+      "platforms/desktop/package-lock.json": "0.19.0",
+      "platforms/desktop/package-lock.json#packages[empty].version": "0.19.0",
+      "platforms/ios/package.json": "0.19.0",
+      "platforms/ios/package-lock.json": "0.19.0",
+      "platforms/ios/package-lock.json#packages[empty].version": "0.19.0",
+      "game/build-config.json": "0.19.0",
+      "game/app.mjs#buildVersion": "0.19.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[0]": "0.19.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[1]": "0.19.0"
+    },
+    "after": {
+      "package.json": "0.19.0",
+      "package-lock.json": "0.19.0",
+      "package-lock.json#packages[empty].version": "0.19.0",
+      "platforms/desktop/package.json": "0.19.0",
+      "platforms/desktop/package-lock.json": "0.19.0",
+      "platforms/desktop/package-lock.json#packages[empty].version": "0.19.0",
+      "platforms/ios/package.json": "0.19.0",
+      "platforms/ios/package-lock.json": "0.19.0",
+      "platforms/ios/package-lock.json#packages[empty].version": "0.19.0",
+      "game/build-config.json": "0.19.0",
+      "game/app.mjs#buildVersion": "0.19.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[0]": "0.19.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[1]": "0.19.0"
+    },
+    "validationVersion": "0.19.0",
+    "allMatch": true
+  },
+  "reviewedImplementation": {
+    "implementationRevision": "122e76343756974b74694df15fb7404aaf101377",
+    "changedPaths": [
+      "game/README.md",
+      "game/app.mjs",
+      "game/build-config.json",
+      "package-lock.json",
+      "package.json",
+      "platforms/desktop/package-lock.json",
+      "platforms/desktop/package.json",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj",
+      "platforms/ios/package-lock.json",
+      "platforms/ios/package.json"
+    ],
+    "runtimeDelta": [
+      "game/app.mjs",
+      "game/build-config.json",
+      "package-lock.json",
+      "package.json",
+      "platforms/desktop/package-lock.json",
+      "platforms/desktop/package.json",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj",
+      "platforms/ios/package-lock.json",
+      "platforms/ios/package.json"
+    ],
+    "allowedProsePaths": [
+      "game/README.md"
+    ],
+    "metadataOnlyVersionReplacement": true,
+    "inventory": {
+      "path": ".cache/round-28/v019-source-gates/reviewed-implementation-inputs.json",
+      "bytes": 60000,
+      "sha256": "7b4e773144f2010c787e9cae41004dff59045099e8e07eda52a708d872ba5ff9"
+    }
+  },
+  "sourceSnapshot": {
+    "before": "d1ab9e08857a556c312ebee76a36a45138b839e973a5d481110a71bcf22ac19d",
+    "after": "d1ab9e08857a556c312ebee76a36a45138b839e973a5d481110a71bcf22ac19d",
+    "files": 352,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-28/v019-source-gates/source-inputs-before.json",
+      "bytes": 60000,
+      "sha256": "c488ef7dd0738586fef48575e17a5151922d554a42f47b4ea51310b57b9c3456"
+    },
+    "afterIndex": {
+      "path": ".cache/round-28/v019-source-gates/source-inputs.json",
+      "bytes": 60000,
+      "sha256": "c488ef7dd0738586fef48575e17a5151922d554a42f47b4ea51310b57b9c3456"
+    }
+  },
+  "preservedFrozenBaseline": {
+    "inventory": {
+      "path": ".cache/round-28/v019-preservation/before.json",
+      "bytes": 576896,
+      "sha256": "29e254d0761bd5cf36d313b8d23f48e93df8f28bce43b74af1c4f076569f7b83"
+    },
+    "releaseCount": 23,
+    "fileCount": 2632,
+    "bytes": 3392110790,
+    "preparedComparisonUnchanged": true,
+    "tagCount": 24,
+    "exactTagsUnchanged": true,
+    "beforeTags": {
+      "path": ".cache/round-28/v019-source-gates/tags-before.json",
+      "bytes": 6483,
+      "sha256": "1ca2df9f687442a4ff5cc6a5b98de4e8cc05102e2da121c0fa4ceb67c4cfdfa7"
+    },
+    "afterTags": {
+      "path": ".cache/round-28/v019-source-gates/tags-after.json",
+      "bytes": 6483,
+      "sha256": "1ca2df9f687442a4ff5cc6a5b98de4e8cc05102e2da121c0fa4ceb67c4cfdfa7"
+    },
+    "preparedProtectedEvidenceFiles": 53,
+    "preparedProtectedEvidenceUnchanged": true
+  },
+  "preservedPreviousEvidence": {
+    "roots": [
+      "releases",
+      "docs/verification/round-26",
+      "docs/verification/round-27",
+      "docs/verification/round-27-1",
+      "docs/verification/round-28",
+      ".cache/round-27-1/source-gates",
+      ".cache/round-28/v019-preservation",
+      ".cache/round-28/ready-export/browser",
+      ".cache/round-28/ready-export/long-verification-fixture",
+      ".cache/round-28/ready-export/recovery-fixture",
+      ".cache/round-28/ready-export/browser-inventory.json",
+      ".cache/round-28/ready-export/after-ready.backup.json",
+      ".cache/round-28/ready-export/qa-servers-stopped.json"
+    ],
+    "files": 2815,
+    "before": "20da2fad84b4764fb3e90c4291f8b01992054b61fc6d95a6252c65a2ec1ebde2",
+    "after": "20da2fad84b4764fb3e90c4291f8b01992054b61fc6d95a6252c65a2ec1ebde2",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-28/v019-source-gates/prior-evidence-before.json",
+      "bytes": 515489,
+      "sha256": "773ec0fa50756860469b084176984c1fda44bc6cf99b03f2d955bd3053e36b16"
+    },
+    "afterIndex": {
+      "path": ".cache/round-28/v019-source-gates/prior-evidence-after.json",
+      "bytes": 515489,
+      "sha256": "773ec0fa50756860469b084176984c1fda44bc6cf99b03f2d955bd3053e36b16"
+    }
+  },
+  "buildCaveat": "Run a separate build only after this audit succeeds, into a new absent output path. The ordinary CLI reads the working tree rather than a Git archive. Since this audit requires the full checked input set to equal the recorded committed HEAD, that exact revision may be passed to the candidate only if a fresh source-index comparison still matches before and after the build. Otherwise omit --revision or rebuild from an owned archive of the chosen commit. Future frozen release reproducibility remains a separate archived-CLI check.",
+  "passed": true
+}
