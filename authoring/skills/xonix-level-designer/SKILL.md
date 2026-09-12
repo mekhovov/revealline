@@ -38,6 +38,10 @@ Design positive, ordinary and action-omission routes in both turning modes, plus
 
 Scan, net, route-pattern and staged-boss goals still need separately scoped finite predicates and tests. Deliver a proposal naming missing facts, ordering, positive/control traces and save boundaries before claiming support. Never insert guessed fields into a v1 map/pack or describe fictional military-themed arcade actions as real equipment operations. Theme and asset experiments can proceed independently.
 
+## Wide Arcade chapter
+
+For current wide maps start with [First Light](../../../docs/first-light.md) and its validated `authoring/library/fpv-arcade/pack-source.json`. Continuous steering, Immediate/Grid + buffer and 72×36 geometry are independent choices. Tune route options, moving threats and obstacles; artificial waiting does not establish challenge. Use original map artwork and opaque hidden regions. Re-run legal routes in both turning modes plus careless/failure paths; human comprehension and enjoyment remain separate evidence. The first three levels gate bulk content production. Reference-layout studies preserve observed geometry and label unknown behavior instead of inventing reference facts.
+
 ## Read the contract first
 
 Locate the target project's `authoring/CONTRACT.md`, resolving this installed skill's physical path to its kit if necessary. Read `schema/primitive-catalog.json`, the closest `examples/*.pack.json`, and the selected theme/ruleset. Use `prompts/catalog.json` for level and review templates. Without the contract, deliver a clearly labeled design brief rather than inventing accepted fields or capability IDs.

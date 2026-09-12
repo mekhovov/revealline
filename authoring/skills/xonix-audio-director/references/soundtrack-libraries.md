@@ -1,0 +1,13 @@
+# Session music and original MP3 libraries
+
+Read `docs/soundtrack-library.md` for the versioned model, transport, byte preservation and actual limits; `docs/soundtrack-studio.md` for UI authoring. Resolve these paths from the project root. The runtime modules, not this guide, define accepted data.
+
+- Use Settings → Music library & playlists for batch import, audition, metadata/provenance, editable playlists and Save & use. Imports stay drafts until the atomic save succeeds. Built-in genre playlists are synthesized recipes; they are not the planned 24 finished tracks.
+- An MP3 import passes frame/hash inspection and a real media probe. Test fixtures with injected decoding establish structure only. Keep the original bytes, source records and any production master; never silently transcode a rejected upload.
+- Library selection is explicit or Automatic. Automatic resolves map → campaign → theme → global, then authored track/built-in fallback. Automatic changes wait for song end; explicit selection fades now. Metadata edits do not restart the currently playing song. Use one transport owner and one Soundscape update per frame.
+- Full transfer uses `.rlsound` and includes originals. Game/profile JSON does not include uploaded audio. Check generation conflicts, rollback on quota errors, shared hashes, missing media and offline operation separately. A storage estimate is not proof of offline playback or indefinite retention.
+- Music-only Pause retains effects and does not pause flight. Gameplay Pause retains music. Blur/inactivity suspends audio, and restoring listening never resumes gameplay. MP3 and synth both honor independent master/music gains; cues keep the master/effects bus. Audition restoration must retain intended playback through interruptions without starting a hidden tab.
+
+Use the shared prompt CLI IDs `soundtrack-01-local-library`, `soundtrack-02-mixed-playlist`, `soundtrack-03-audio-production`, `soundtrack-04-continuity-check` and `soundtrack-05-backup-recovery` for applied examples. Render only the relevant template. Generated prompts do not create files, prove decoding or certify composition quality.
+
+Run applicable model/store/player/panel/host tests; retain separate evidence for real file selection, MP3 decoding and playback, exact backup restoration, server-stopped offline operation, interruption recovery and listening quality. A completed content matrix must count actual auditioned tracks rather than rendered prompt variations.
