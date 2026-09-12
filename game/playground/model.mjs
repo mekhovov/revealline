@@ -1,0 +1,316 @@
+import { CLASSES, RULESET, validateLevel } from '../core/index.mjs';
+import { normalizedLevel } from '../core/level.mjs';
+import { boundedJSON, required } from '../data-json.mjs';
+import { prepareScenario } from '../imports.mjs';
+import { validateScenario } from '../content.mjs';
+import {
+  preparePack,
+  installPack,
+  importPackLibrary,
+  resolvePackCampaign,
+  PACK_LIMITS,
+  validatePack,
+} from '../packs.mjs';
+
+export function expansionEntries(library) {
+  return library.packs.flatMap((pack) =>
+    pack.campaigns.map((source) => ({
+      ...resolvePackCampaign(pack, source.id),
+      key: `${pack.id}/${source.id}`,
+      label: `${pack.name} / ${source.title}`,
+      pack,
+    })),
+  );
+}
+export function editorScenario(scenario) {
+  const current = structuredClone(scenario);
+  for (const key of ['walls', 'enemies', 'objectives', 'supplies', 'signalZones'])
+    current.level[key] ??= [];
+  current.presentation ??= { style: 'hybrid', showGrid: false };
+  return current;
+}
+export function entryScenario(
+  entry,
+  levelId = entry.campaign.levels[0].id,
+  settings = {},
+  presentation,
+) {
+  const level = entry.campaign.levels.find((item) => item.id === levelId);
+  required(level, 'Choose a map from this campaign.');
+  const classRecipes = entry.classRecipes ?? entry.campaign.classRecipes ?? CLASSES;
+  const theme =
+    entry.themes.find((item) => item.id === (level.themeId ?? entry.campaign.themeId)) ??
+    entry.themes[0];
+  const current = {
+    format: 'xonix-playground.v1',
+    level,
+    theme,
+    classRecipes,
+    settings: {
+      classId: classRecipes.some((c) => c.id === settings.classId)
+        ? settings.classId
+        : classRecipes[0].id,
+      turnPolicy: settings.turnPolicy ?? 'immediate',
+      seed: settings.seed ?? 1,
+    },
+    visualOverrides: {
+      ...entry.visualOverrides,
+      ...(entry.levelVisuals?.find((item) => item.levelId === levelId)?.visualOverrides ?? {}),
+    },
+    ...(presentation ? { presentation } : {}),
+  };
+  const music =
+    entry.music?.find((track) => track.id === (level.musicId ?? entry.campaign.musicId)) ??
+    entry.music?.[0];
+  if (music) current.music = structuredClone(music);
+  const check = validateScenario(current);
+  required(check.valid, check.errors.join('; '));
+  return editorScenario(current);
+}
+/** Returns a complete prepared replacement; callers adopt only after stale-job checks. */
+export async function prepareDocument(candidate, { current, packLibrary, decodeImage } = {}) {
+  const value = boundedJSON(candidate, {
+    maxBytes: PACK_LIMITS.libraryBytes,
+    maxNodes: 160000,
+    maxDepth: 18,
+    maxArray: 4096,
+    maxString: 6 * 1024 * 1024,
+  });
+  required(
+    value && typeof value === 'object' && !Array.isArray(value),
+    'Choose a scenario, map, expansion or library JSON object.',
+  );
+  if (value.format === 'xonix-pack.v1' || value.format === 'xonix-pack-library.v1') {
+    let nextLibrary,
+      selectedId,
+      warnings = [];
+    if (value.format === 'xonix-pack.v1') {
+      const prepared = await preparePack(value, { ...(decodeImage ? { decodeImage } : {}) });
+      nextLibrary = installPack(packLibrary, prepared.pack);
+      selectedId = prepared.pack.id;
+      warnings = prepared.warnings;
+    } else {
+      nextLibrary = await importPackLibrary(value, { ...(decodeImage ? { decodeImage } : {}) });
+      selectedId = nextLibrary.packs[0]?.id;
+      required(selectedId, 'The expansion library has no campaigns to edit.');
+    }
+    const entries = expansionEntries(nextLibrary),
+      entry = entries.find((item) => item.sourcePackId === selectedId);
+    return {
+      kind: 'expansion',
+      packLibrary: nextLibrary,
+      entries,
+      activeKey: entry.key,
+      scenario: entryScenario(entry, undefined, current?.settings, current?.presentation),
+      warnings,
+    };
+  }
+  const candidateScenario =
+    value.version === 'xonix-level.v1' ? { ...current, level: value } : value;
+  const prepared = await prepareScenario(candidateScenario, {
+    ...(decodeImage ? { decodeImage } : {}),
+  });
+  return {
+    kind: 'scenario',
+    scenario: editorScenario(prepared.scenario),
+    warnings: prepared.warnings,
+  };
+}
+const allActors = (level) =>
+  ['enemies', 'objectives', 'supplies', 'signalZones', 'hangars'].flatMap(
+    (key) => level[key] ?? [],
+  );
+const uid = (prefix, list) => {
+  let n = 1;
+  while (list.some((x) => x.id === `${prefix}-${n}`)) n++;
+  return `${prefix}-${n}`;
+};
+export function paintLevel(
+  source,
+  brush,
+  x,
+  y,
+  { signalWidth = 8, signalHeight = 6, speedFactor = 0.5 } = {},
+) {
+  required(
+    Number.isInteger(x) && x >= 0 && x < 48 && Number.isInteger(y) && y >= 0 && y < 36,
+    'Paint coordinates must lie on the board.',
+  );
+  const level = structuredClone(source),
+    inside = x > 0 && x < 47 && y > 0 && y < 35;
+  for (const key of ['walls', 'enemies', 'objectives', 'supplies', 'signalZones'])
+    level[key] ??= [];
+  if (brush === 'wall' && inside) level.walls.push({ x, y, w: 1, h: 1 });
+  else if (brush === 'enemy' && inside)
+    level.enemies.push({
+      id: uid('enemy', allActors(level)),
+      type: 'bouncer',
+      x: x + 0.5,
+      y: y + 0.5,
+      vx: 2.5,
+      vy: 2,
+      radius: 0.25,
+    });
+  else if (brush === 'objective' && inside)
+    level.objectives.push({
+      id: uid('objective', allActors(level)),
+      x: x + 0.5,
+      y: y + 0.5,
+      required: true,
+      hidden: false,
+    });
+  else if (brush === 'supply')
+    level.supplies.push({
+      id: uid('supply', allActors(level)),
+      x: x + 0.5,
+      y: y + 0.5,
+      radius: 1.5,
+    });
+  else if (brush === 'spawn' && !inside) level.spawn = { x: x + 0.5, y: y + 0.5 };
+  else if (brush === 'signal' && inside)
+    level.signalZones.push({
+      id: uid('signal', allActors(level)),
+      x,
+      y,
+      w: Math.min(signalWidth, 47 - x),
+      h: Math.min(signalHeight, 35 - y),
+      speedFactor,
+      disableBoost: true,
+      lockAbility: true,
+    });
+  else if (brush === 'hangar') {
+    level.hangars ??= normalizedLevel(source).hangars;
+    level.hangars.push({ id: uid('hangar', allActors(level)), x: x + 0.5, y: y + 0.5, radius: 2 });
+  } else if (brush === 'erase') {
+    level.walls = level.walls.filter(
+      (w) => !(x >= w.x && x < w.x + w.w && y >= w.y && y < w.y + w.h),
+    );
+    level.signalZones = level.signalZones.filter(
+      (w) => !(x >= w.x && x < w.x + w.w && y >= w.y && y < w.y + w.h),
+    );
+    for (const key of ['enemies', 'objectives', 'supplies'])
+      level[key] = level[key].filter((o) => Math.floor(o.x) !== x || Math.floor(o.y) !== y);
+    const hangars = level.hangars ?? normalizedLevel(source).hangars;
+    if (hangars.some((o) => Math.floor(o.x) === x && Math.floor(o.y) === y))
+      level.hangars = hangars.filter((o) => Math.floor(o.x) !== x || Math.floor(o.y) !== y);
+  } else
+    throw new Error(
+      'Place this tool in its valid area: walls, signals and enemies inside; Start on the safe border.',
+    );
+  const check = validateLevel(level);
+  required(check.valid, check.errors.join('; '));
+  return level;
+}
+export const PRESET_HELP = Object.freeze({
+  fiber:
+    'Fly down through the striped signal zone. Compare Fiber relay with Scout: fiber keeps speed, boost and scanning; its live cable still risks enemy contact. The home hangar lets you change equipment.',
+  bomber:
+    'At the home pad, Pick up a charge. Fly down about one cell, then use Ability to stun the nearby enemy. Compare empty and loaded runs; return to a safe hangar to change class.',
+  impact:
+    'Fly down about one cell, then use Ability. The close pulse stuns the nearby enemy and cancels your cut before redeploying at home. Lives stay intact; territory is not awarded for the pulse.',
+});
+export function interactionPreset(kind, current, classRecipes = CLASSES) {
+  required(Object.hasOwn(PRESET_HELP, kind), 'Unknown interaction preset.');
+  required(
+    classRecipes.some((c) => c.id === kind),
+    'This registered class is unavailable.',
+  );
+  const scenario = structuredClone(current),
+    close = kind !== 'fiber';
+  scenario.level = {
+    version: 'xonix-level.v1',
+    id: `workshop-${kind}`,
+    revision: '1',
+    name: { fiber: 'Signal crossing', bomber: 'Supply and stun', impact: 'Pulse and return' }[kind],
+    width: 48,
+    height: 36,
+    spawn: { x: 24.5, y: 0.5 },
+    walls: [],
+    enemies: [
+      ...(close
+        ? [{ id: 'close-enemy', type: 'bouncer', x: 24.5, y: 4.5, vx: 0, vy: 0, radius: 0.25 }]
+        : []),
+      { id: 'roamer', type: 'bouncer', x: 40.5, y: 24.5, vx: 1, vy: 1, radius: 0.25 },
+    ],
+    objectives:
+      kind === 'fiber'
+        ? [{ id: 'hidden-relay', x: 8.5, y: 8.5, hidden: true, required: false }]
+        : [],
+    supplies: [{ id: 'home-supply', x: 24.5, y: 0.5, radius: 2 }],
+    hangars: [{ id: 'home-hangar', x: 24.5, y: 0.5, radius: 2 }],
+    signalZones:
+      kind === 'fiber'
+        ? [
+            {
+              id: 'signal-band',
+              x: 20,
+              y: 2,
+              w: 9,
+              h: 20,
+              speedFactor: 0.4,
+              disableBoost: true,
+              lockAbility: true,
+            },
+          ]
+        : [],
+    goal: { coverage: 0.45 },
+    rules: {
+      lives: 3,
+      moveSpeed: 6,
+      timeLimitSeconds: 0,
+      cutTimeLimitSeconds: 0,
+      maxTrailCells: 0,
+    },
+  };
+  scenario.classRecipes = structuredClone(classRecipes);
+  scenario.settings.classId = kind;
+  const check = validateScenario(scenario);
+  required(check.valid, check.errors.join('; '));
+  return editorScenario(scenario);
+}
+/** Export the current scenario as a new self-contained expansion with one map. */
+export function expansionFromScenario(
+  current,
+  {
+    id = `workshop-${current.level.id}`.slice(0, 80),
+    name = current.level.name.slice(0, 120),
+    music = current.music ? [current.music] : [],
+  } = {},
+) {
+  const level = structuredClone(current.level);
+  delete level.themeId;
+  delete level.musicId;
+  const pack = {
+    format: 'xonix-pack.v1',
+    id,
+    version: '1.0.0',
+    name,
+    description: 'A playable expansion authored in the Reveal Line playground.',
+    engine: RULESET,
+    dependencies: [],
+    metadata: {
+      author: 'Local creator',
+      rightsStatus: 'Review asset provenance before distribution',
+      license: 'Author supplied',
+    },
+    themes: [structuredClone(current.theme)],
+    classRecipes: structuredClone(current.classRecipes),
+    campaigns: [
+      {
+        version: 'xonix-campaign.v1',
+        id: current.level.id,
+        revision: current.level.revision,
+        title: name,
+        themeId: current.theme.id,
+        levels: [level],
+        ...(music[0] ? { musicId: music[0].id } : {}),
+      },
+    ],
+    visualOverrides: structuredClone(current.visualOverrides),
+    levelVisuals: [],
+    music: structuredClone(music),
+  };
+  const checked = validatePack(pack);
+  required(checked.valid, checked.errors.join('; '));
+  return pack;
+}

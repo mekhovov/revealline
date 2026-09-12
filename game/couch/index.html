@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#112d35" />
+    <title>Reveal / Line — Couch race</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="couch.css" />
+  </head>
+  <body>
+    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
+    <header class="masthead" data-boot-inert inert>
+      <a class="wordmark" href="../">◩ REVEAL / LINE</a>
+      <nav><a href="../">Solo campaign ↗</a><span class="version">COUCH / TWO PLAYERS</span></nav>
+    </header>
+    <main data-boot-inert inert aria-busy="true" class="couch-page">
+      <div class="edition">
+        <span>SAME MAP. TWO DIFFERENT LINES.</span><span id="series-score">0 : 0</span>
+      </div>
+      <section class="race-setup" aria-label="Race setup">
+        <label class="field">Map<select id="race-level"></select></label>
+        <label class="field">World<select id="race-theme"></select></label>
+        <label class="field">Shared class<select id="race-class"></select></label>
+        <label class="field"
+          >Steering<select id="race-turn">
+            <option value="immediate">Immediate</option>
+            <option value="grid-center">Grid + buffer</option>
+          </select></label
+        >
+        <label class="field"
+          >Round<select id="race-time">
+            <option value="90">90 seconds</option>
+            <option value="180">3 minutes</option>
+            <option value="30">30 seconds</option>
+          </select></label
+        >
+      </section>
+      <div class="race-actions">
+        <button id="race-start" class="button primary">Start round ↗</button
+        ><button id="race-focus" class="button secondary">Focus boards</button
+        ><button id="race-pause" class="button secondary">Pause</button
+        ><button id="race-reset" class="button secondary">New match</button
+        ><button id="race-audio" class="button secondary">Enable music ♫</button
+        ><label><input id="race-tap" type="checkbox" /> Tap controls</label
+        ><label><input id="race-reduced" type="checkbox" /> Reduced effects</label
+        ><strong id="race-clock">1:30</strong>
+      </div>
+      <p id="race-message" class="race-message" role="status">
+        Choose your side. First clear wins. Equal finishes draw. No campaign rewards are changed.
+      </p>
+      <div id="race-boards" class="race-boards">
+        <section class="racer" data-player="0">
+          <div class="racer-heading">
+            <strong>01 / SUNFLOWER</strong><span id="racer-state-0">Ready</span>
+          </div>
+          <canvas
+            id="race-canvas-0"
+            tabindex="-1"
+            width="768"
+            height="576"
+            role="img"
+            aria-label="Player one territory board"
+          ></canvas>
+          <div id="racer-stats-0" class="racer-stats">0% · 3 lives</div>
+          <div class="race-pad" data-player="0">
+            <button data-direction="up" aria-label="Player one up">↑</button
+            ><button data-direction="left" aria-label="Player one left">←</button
+            ><button data-direction="stop" aria-label="Player one stop">■</button
+            ><button data-direction="right" aria-label="Player one right">→</button
+            ><button data-direction="down" aria-label="Player one down">↓</button
+            ><button data-action="action">Ability</button
+            ><button data-action="pickup">Supply</button
+            ><button data-action="boost" aria-pressed="false">Boost</button>
+          </div>
+          <p>WASD · Q ability · E supply · Left Shift boost</p>
+        </section>
+        <section class="racer" data-player="1">
+          <div class="racer-heading">
+            <strong>02 / SKYLINE</strong><span id="racer-state-1">Ready</span>
+          </div>
+          <canvas
+            id="race-canvas-1"
+            width="768"
+            height="576"
+            role="img"
+            aria-label="Player two territory board"
+          ></canvas>
+          <div id="racer-stats-1" class="racer-stats">0% · 3 lives</div>
+          <div class="race-pad" data-player="1">
+            <button data-direction="up" aria-label="Player two up">↑</button
+            ><button data-direction="left" aria-label="Player two left">←</button
+            ><button data-direction="stop" aria-label="Player two stop">■</button
+            ><button data-direction="right" aria-label="Player two right">→</button
+            ><button data-direction="down" aria-label="Player two down">↓</button
+            ><button data-action="action">Ability</button
+            ><button data-action="pickup">Supply</button
+            ><button data-action="boost" aria-pressed="false">Boost</button>
+          </div>
+          <p>Arrow keys · Enter ability · / supply · Right Shift boost</p>
+        </section>
+      </div>
+      <p id="race-pad-status" class="micro-note">
+        One keyboard, two sets of touch controls, or two standard controllers. Escape pauses both
+        boards. First to two round wins takes the match; draws do not add points.
+      </p>
+      <p class="micro-note">
+        Boards are separate and use identical rules and seed. If time runs out, coverage wins; lives
+        and score break ties. Network transport is planned; this mode runs on this device.
+      </p>
+    </main>
+    <script type="module" src="couch.mjs"></script>
+  </body>
+</html>

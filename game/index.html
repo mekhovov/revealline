@@ -8,21 +8,24 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="masthead">
+    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
+    <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="./"
         ><span class="brand-mark" aria-hidden="true">◩</span> REVEAL
         <span class="slash">/</span> LINE</a
       >
       <nav>
-        <a href="playground/">Playground ↗</a
+        <a href="playground/">Playground ↗</a><a href="couch/">Couch race</a
+        ><button id="library-button" class="text-button" type="button">Library & saves</button
+        ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.1.2</span>
+        ><span id="version" class="version">v0.2.0</span>
       </nav>
     </header>
-    <main>
+    <main data-boot-inert inert aria-busy="true">
       <div class="edition">
         <span id="theme-caption">FPV FRONT / DAWN OVER HOME</span
-        ><span id="mode-caption">FIRST SIGNAL · 01 / 08</span>
+        ><span id="mode-caption">FIRST SIGNAL · 01 / 12</span>
       </div>
       <div class="game-layout">
         <section class="arena-panel" aria-label="Game">
@@ -70,6 +73,9 @@
               </div>
             </div>
             <button id="show-result" class="picture-return" type="button" hidden>Results ↗</button>
+            <button id="skip-celebration" class="picture-return" type="button" hidden>
+              Keep picture →
+            </button>
           </div>
           <div class="flight-status">
             <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
@@ -139,9 +145,10 @@
         </section>
         <aside class="flight-deck" aria-label="Mission and loadout">
           <div class="deck-heading">
-            <span>FLIGHT DECK</span><span id="campaign-progress">00 / 08</span>
+            <span>FLIGHT DECK</span><span id="campaign-progress">00 / 12</span>
           </div>
           <label class="field">World<select id="theme-select"></select></label>
+          <label class="field">Campaign<select id="campaign-select"></select></label>
           <div class="loadout-grid">
             <label class="field">Class<select id="class-select"></select></label
             ><label class="field"
@@ -153,12 +160,23 @@
           </div>
           <p id="class-description" class="class-description"></p>
           <p id="world-legend" class="micro-note"></p>
-          <label class="field">Character appearance<select id="body-select"></select></label>
+          <label class="field">Character appearance<select id="body-select"></select></label
+          ><label class="micro-note"
+            ><input id="match-class-appearance" type="checkbox" /> Match appearance to class</label
+          >
           <p id="loadout-note" class="micro-note">
-            Loadout changes start a fresh attempt. Appearance changes stay cosmetic.
+            Starting class changes begin a fresh attempt. Use a hangar to switch during flight.
           </p>
+          <div class="deck-actions">
+            <button id="hangar-button" class="button secondary" type="button">
+              Change craft · G</button
+            ><button id="save-attempt-button" class="button secondary" type="button">
+              Save & pause
+            </button>
+          </div>
+          <p id="hangar-state" class="micro-note"></p>
           <div class="section-line">
-            <span>CAMPAIGN / FIRST SIGNAL</span
+            <span id="campaign-name">CAMPAIGN / FIRST SIGNAL</span
             ><button id="collection-button" class="text-button" type="button">Collection</button>
           </div>
           <div id="missions" class="missions"></div>
@@ -175,6 +193,7 @@
           ><a data-source-only href="../docs/concepts/round-09-reference-atlas.html"
             >Reference atlas</a
           ><a data-source-only href="../releases/">Versions</a
+          ><a href="replay-theater/">Replay Theater</a
           ><button id="export-replay" class="text-button" type="button">Export replay</button>
         </nav>
       </footer>
@@ -195,8 +214,8 @@
           can also hit you on the outer edge.
         </li>
         <li>
-          Reach the coverage target and capture any required gold objectives. The clock is for
-          optional medals; it never ends your run.
+          Reach the coverage target and capture required objectives. Special challenge maps can
+          limit the clock or live-line length; their briefing and HUD explain those limits.
         </li>
       </ol>
       <p>
@@ -218,9 +237,196 @@
       </button>
       <p class="eyebrow">YOUR FLIGHT LOG</p>
       <h2>Every line leaves a mark.</h2>
+      <p>
+        Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new
+        best.
+      </p>
+      <label class="field"
+        >Find a picture<input
+          id="gallery-search"
+          type="search"
+          placeholder="Level name or world"
+          autocomplete="off"
+      /></label>
+      <div id="gallery-grid" class="gallery-grid"></div>
+      <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
       <div id="achievements"></div>
       <p id="collection-note"></p>
       <button class="button primary" data-close="collection-dialog">Back to the field →</button>
+    </dialog>
+    <dialog id="gallery-view-dialog" class="wide-dialog">
+      <button class="dialog-close" data-close="gallery-view-dialog" aria-label="Close picture">
+        ×
+      </button>
+      <p class="eyebrow" id="gallery-view-meta"></p>
+      <h2 id="gallery-view-title">Your picture</h2>
+      <canvas
+        id="gallery-canvas"
+        width="768"
+        height="576"
+        role="img"
+        aria-label="Completed level picture"
+      ></canvas>
+      <div class="overlay-actions">
+        <button id="gallery-animate" class="button primary">Play celebration ↗</button
+        ><button id="gallery-replay" class="button secondary">Replay mission</button
+        ><button class="button secondary" data-close="gallery-view-dialog">
+          Back to collection
+        </button>
+      </div>
+    </dialog>
+    <dialog id="hangar-dialog">
+      <button class="dialog-close" data-close="hangar-dialog" aria-label="Close hangar">×</button>
+      <p class="eyebrow">YOUR NEXT FLIGHT</p>
+      <h2>Different tools. New routes.</h2>
+      <p>
+        Return to a marked hangar on safe ground with no live line. Charges and cooldowns stay with
+        each craft; changing craft never refills them.
+      </p>
+      <label class="field">Next craft<select id="switch-class-select"></select></label>
+      <p id="switch-description"></p>
+      <button id="switch-class-button" class="button primary">Switch & continue →</button>
+      <p id="switch-status" role="status"></p>
+    </dialog>
+    <dialog id="settings-dialog">
+      <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings">
+        ×
+      </button>
+      <p class="eyebrow">TUNE YOUR ARCADE</p>
+      <h2>Your pace. Your soundtrack.</h2>
+      <label class="field"
+        >Music<select id="music-select">
+          <option value="synthwave">Sunset synth</option>
+          <option value="chiptune">Cartridge chiptune</option>
+          <option value="rock">Arcade rock</option>
+          <option value="metal">Pixel metal</option>
+          <option value="ambient">Quiet skies</option>
+        </select></label
+      >
+      <label class="slider-field"
+        >Master <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
+      /></label>
+      <label class="slider-field"
+        >Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
+      /></label>
+      <label class="slider-field"
+        >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
+      /></label>
+      <button id="music-preview" class="button secondary">Preview music ♫</button>
+      <label class="field"
+        >Terrain detail<select id="terrain-select">
+          <option value="hybrid">Balanced detail</option>
+          <option value="microtile">Small pixel tiles</option>
+          <option value="props">Larger landmarks</option>
+        </select></label
+      >
+      <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
+      <p class="micro-note">
+        Original synthesized music. No streaming, samples, or copyrighted songs. Reduced effects and
+        Tap steering are beside the arena.
+      </p>
+      <p id="offline-status" class="micro-note">
+        Offline installation is available in packaged releases.
+      </p>
+      <button id="offline-button" class="button secondary" hidden>Prepare offline play</button>
+      <details>
+        <summary>Offline verification details</summary>
+        <pre id="offline-details">No offline check yet.</pre>
+      </details>
+    </dialog>
+    <dialog id="library-dialog" class="wide-dialog">
+      <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
+      <p class="eyebrow">THE THINGS YOU KEEP</p>
+      <h2>Your arcade library.</h2>
+      <div class="library-tabs" role="group" aria-label="Library sections">
+        <button data-library-panel="scores" class="button secondary">Local scores</button
+        ><button data-library-panel="saves" class="button secondary">Saves & loads</button
+        ><button data-library-panel="packs" class="button secondary">Expansion packs</button
+        ><button data-library-panel="challenges" class="button secondary">Challenges</button>
+      </div>
+      <section id="library-scores">
+        <p>
+          Your best clears, grouped by map and exact setup. These scores are stored on this device;
+          there is no global ranking service.
+        </p>
+        <label class="field"
+          >Find a score<input
+            id="score-search"
+            type="search"
+            placeholder="Level or class"
+            autocomplete="off"
+        /></label>
+        <div id="scoreboard" class="scoreboard"></div>
+        <nav id="score-pages" class="overlay-actions" aria-label="Score pages"></nav>
+      </section>
+      <section id="library-saves" hidden>
+        <p id="library-capacity" class="micro-note"></p>
+        <button id="export-backup" class="button primary">Export complete backup</button>
+        <p>
+          One backup includes your player library, installed packs, and saved flight. Importing it
+          replaces those three together; export your current backup first to keep both collections.
+        </p>
+        <button id="undo-backup" class="button secondary" disabled>
+          Undo complete backup import
+        </button>
+        <p id="suspended-status">No suspended attempt.</p>
+        <div class="overlay-actions">
+          <button id="resume-save" class="button primary">Load suspended attempt</button
+          ><button id="export-session" class="button secondary">Export attempt</button
+          ><button id="export-library" class="button secondary">Export player library</button>
+        </div>
+        <p>
+          Player library files contain campaign progress, picture records, local scores and
+          preferences. Attempt files contain a verified unfinished flight. Install matching
+          expansion packs before resuming their flights.
+        </p>
+        <label class="field"
+          >Load a saved JSON file<input id="save-file" type="file" accept=".json,application/json"
+        /></label>
+        <details>
+          <summary>Copy or paste save JSON</summary>
+          <textarea id="save-json" aria-label="Save JSON" spellcheck="false"></textarea
+          ><button id="import-save" class="button primary">Load this JSON</button>
+        </details>
+        <button id="undo-library" class="button secondary" disabled>
+          Undo last library import
+        </button>
+        <p id="save-status" role="status"></p>
+      </section>
+      <section id="library-packs" hidden>
+        <p>
+          Expansion packs add campaigns, maps, registered abilities, themes, images and original
+          music recipes. Packs contain data; they cannot execute scripts.
+        </p>
+        <div id="builtin-packs" class="pack-list"></div>
+        <div id="installed-packs" class="pack-list"></div>
+        <label class="field"
+          >Install a pack file<input id="pack-file" type="file" accept=".json,application/json"
+        /></label>
+        <details>
+          <summary>Paste pack JSON</summary>
+          <textarea id="pack-json" aria-label="Expansion pack JSON" spellcheck="false"></textarea
+          ><button id="install-pack" class="button primary">Validate & install</button>
+        </details>
+        <button id="export-packs" class="button secondary">Export installed packs</button>
+        <p id="pack-status" role="status"></p>
+      </section>
+      <section id="library-challenges" hidden>
+        <p>
+          Return whenever you like. Daily boards remain playable by date; no streak expires and no
+          reward depends on logging in.
+        </p>
+        <label class="field">Board date<input id="challenge-date" type="date" /></label
+        ><label class="field"
+          >Challenge<select id="challenge-kind">
+            <option value="daily">Daily route</option>
+            <option value="calm">Open skies · slower patrols</option>
+            <option value="expert">Pressure run · faster patrols</option>
+          </select></label
+        >
+        <button id="launch-challenge" class="button primary">Play this challenge →</button>
+        <p id="challenge-status" role="status"></p>
+      </section>
     </dialog>
     <dialog id="replay-dialog">
       <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay">×</button>

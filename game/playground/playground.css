@@ -214,3 +214,36 @@ pre {
     gap: 7px;
   }
 }
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#example-packs {
+  margin-bottom: 16px;
+}
+#paint-cell {
+  align-self: center;
+}
+.workshop .field {
+  min-width: 0;
+}
+.workshop select,
+.workshop input {
+  min-width: 0;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .brushes button,
+  .preset-buttons .button,
+  .viewport-buttons button {
+    min-height: 44px;
+  }
+  .playground-page .masthead {
+    flex-wrap: wrap;
+  }
+  .playground-page .masthead nav {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+}

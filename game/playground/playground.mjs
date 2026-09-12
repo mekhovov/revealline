@@ -1,5 +1,15 @@
 import { validateScenario, downloadJSON, inspectImageDataUrl } from '../content.mjs';
 import { prepareScenario } from '../imports.mjs';
+import { emptyPackLibrary, exportPackLibrary, PACK_LIMITS } from '../packs.mjs';
+import {
+  editorScenario,
+  entryScenario,
+  prepareDocument,
+  interactionPreset,
+  PRESET_HELP,
+  paintLevel,
+  expansionFromScenario,
+} from './model.mjs';
 import { generateLevel } from '../generator.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 const $ = (id) => document.getElementById(id),
@@ -7,6 +17,11 @@ const $ = (id) => document.getElementById(id),
 let campaign,
   themes,
   current,
+  baseEntry,
+  catalog = [],
+  activeKey = 'builtin',
+  packLibrary = emptyPackLibrary(),
+  editRevision = 0,
   brush = 'wall',
   history = [],
   revision = 0,
@@ -15,10 +30,14 @@ let campaign,
   importEpoch = 0,
   replayEpoch = 0,
   replayController = null;
-const beginImport = () => ({ epoch: ++importEpoch, before: JSON.stringify(current) });
+const beginImport = () => ({ epoch: ++importEpoch, editRevision, before: JSON.stringify(current) });
 const importCurrent = (ticket) => ticket.epoch === importEpoch;
 const assertImportCurrent = (ticket) => {
-  if (!importCurrent(ticket) || JSON.stringify(current) !== ticket.before)
+  if (
+    !importCurrent(ticket) ||
+    ticket.editRevision !== editRevision ||
+    JSON.stringify(current) !== ticket.before
+  )
     throw new Error(
       'The pack changed while this import was being read. Retry with the latest settings.',
     );
@@ -28,21 +47,68 @@ const status = (message, error = false) => {
   $('editor-status').classList.toggle('error', error);
 };
 const remember = () => {
-  history.push(clone(current));
+  editRevision++;
+  history.push({ current: clone(current), catalog, activeKey, packLibrary });
   while (
     history.length > 1 &&
     (history.length > 20 ||
-      history.reduce((n, item) => n + JSON.stringify(item).length, 0) > 32 * 1024 * 1024)
+      history.reduce(
+        (n, item) =>
+          n + JSON.stringify(item.current).length + exportPackLibrary(item.packLibrary).length,
+        0,
+      ) >
+        32 * 1024 * 1024)
   )
     history.shift();
   $('undo-button').disabled = false;
 };
-const uid = (prefix, list) => {
-  let n = 1;
-  while (list.some((x) => x.id === `${prefix}-${n}`)) n++;
-  return `${prefix}-${n}`;
-};
+const selectedEntry = () => catalog.find((entry) => entry.key === activeKey) ?? baseEntry;
+const currentTrack = () => current.music;
+
+function useEntry(key, levelId) {
+  const entry = catalog.find((item) => item.key === key);
+  if (!entry) throw new Error('This campaign source is unavailable.');
+  current = entryScenario(entry, levelId, current?.settings, current?.presentation);
+  activeKey = key;
+  campaign = entry.campaign;
+  themes = { themes: entry.themes };
+}
+async function adoptDocument(candidate, message, ticket = beginImport()) {
+  assertImportCurrent(ticket);
+  const prepared = await prepareDocument(candidate, { current, packLibrary });
+  assertImportCurrent(ticket);
+  remember();
+  if (prepared.kind === 'expansion') {
+    packLibrary = prepared.packLibrary;
+    catalog = [baseEntry, ...prepared.entries];
+    activeKey = prepared.activeKey;
+    campaign = selectedEntry().campaign;
+    themes = { themes: selectedEntry().themes };
+  }
+  current = editorScenario(prepared.scenario);
+  sync();
+  status([message, ...prepared.warnings].join(' '));
+  return prepared;
+}
 function sync() {
+  $('campaign-select').replaceChildren(
+    ...catalog.map((entry) => new Option(entry.label, entry.key)),
+  );
+  $('campaign-select').value = activeKey;
+  $('source-readout').textContent =
+    `${selectedEntry().label} · ${campaign.levels.length} maps. Editing a working copy; Undo returns to the previous configuration and source.`;
+  $('export-catalog').disabled = !packLibrary.packs.length;
+  const track = currentTrack();
+  $('music-readout').textContent = track
+    ? `Pack music: ${track.name} · ${track.genre} · ${track.tempo} BPM. This exact descriptor is used in practice and retained in the expansion export. Enable sound in the preview to listen.`
+    : 'Original synthesized music is configured in the game audio controls.';
+  for (const [id, key, fallback] of [
+    ['mission-limit', 'timeLimitSeconds', 0],
+    ['cut-limit', 'cutTimeLimitSeconds', 0],
+    ['trail-limit', 'maxTrailCells', 0],
+    ['switch-limit', 'switchCooldownSeconds', 2],
+  ])
+    $(id).value = current.level.rules?.[key] ?? fallback;
   const index = campaign.levels.findIndex((level) => level.id === current.level.id);
   $('level-select').replaceChildren(
     ...campaign.levels.map(
@@ -76,6 +142,7 @@ function sync() {
   $('level-json').value = JSON.stringify(current.level, null, 2);
   $('theme-json').value = JSON.stringify(current.theme, null, 2);
   $('classes-json').value = JSON.stringify(current.classRecipes, null, 2);
+  $('music-json').value = current.music ? JSON.stringify(current.music, null, 2) : '';
   drawMap();
   drawAssets();
 }
@@ -103,6 +170,27 @@ function drawMap() {
     c.lineTo(768, y);
     c.stroke();
   }
+  for (const zone of current.level.signalZones ?? []) {
+    c.fillStyle = '#a875ce35';
+    c.fillRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
+    c.strokeStyle = '#bb86d7';
+    c.lineWidth = 2;
+    c.setLineDash([4, 4]);
+    c.strokeRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
+    c.setLineDash([]);
+    c.fillStyle = '#e4c9f4';
+    c.font = 'bold 10px monospace';
+    c.fillText(`SIGNAL ${Math.round(zone.speedFactor * 100)}%`, zone.x * s + 3, zone.y * s + 12);
+  }
+  const hangars = current.level.hangars ?? [{ ...current.level.spawn, radius: 2 }];
+  for (const h of hangars) {
+    c.strokeStyle = '#7cdfb0';
+    c.lineWidth = 2;
+    c.strokeRect(h.x * s - 7, h.y * s - 7, 14, 14);
+    c.fillStyle = '#7cdfb0';
+    c.font = 'bold 10px monospace';
+    c.fillText('H', h.x * s - 3, h.y * s + 4);
+  }
   c.fillStyle = '#849496';
   for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
   for (const e of current.level.enemies) {
@@ -126,7 +214,7 @@ function drawMap() {
   c.arc(current.level.spawn.x * s, current.level.spawn.y * s, 6, 0, Math.PI * 2);
   c.fill();
   $('map-readout').textContent =
-    `${current.level.walls.length} wall rectangles · ${current.level.enemies.length} enemies · ${current.level.objectives.length} objectives · start ${current.level.spawn.x}, ${current.level.spawn.y}`;
+    `${current.level.walls.length} wall rectangles · ${current.level.enemies.length} enemies · ${current.level.objectives.length} objectives · ${current.level.signalZones?.length ?? 0} signal zones · ${hangars.length} hangars · start ${current.level.spawn.x}, ${current.level.spawn.y}`;
 }
 function drawAssets() {
   $('asset-list').replaceChildren();
@@ -147,7 +235,7 @@ async function adopt(candidate, message, ticket = beginImport()) {
   const prepared = await prepareScenario(candidate);
   assertImportCurrent(ticket);
   remember();
-  current = prepared.scenario;
+  current = editorScenario(prepared.scenario);
   sync();
   status([message, ...prepared.warnings].join(' '));
   return prepared;
@@ -161,6 +249,12 @@ function checked() {
   return true;
 }
 function preview() {
+  if ($('preview-mode').value === 'couch') {
+    $('preview-frame').src = '../couch/?focus=1';
+    $('open-preview').href = '../couch/?focus=1';
+    status('Couch preview uses installed maps and packs. Solo configuration stays in the editor.');
+    return true;
+  }
   if (!checked()) return false;
   try {
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(current));
@@ -199,7 +293,7 @@ function measure() {
     const frame = $('preview-frame'),
       doc = frame.contentDocument,
       view = frame.contentWindow,
-      arena = doc?.querySelector('#arena-shell');
+      arena = doc?.querySelector('#arena-shell,#race-boards');
     if (!arena) return;
     const r = arena.getBoundingClientRect(),
       visible =
@@ -208,10 +302,10 @@ function measure() {
         r.right <= view.innerWidth + 1 &&
         r.bottom <= view.innerHeight + 1;
     $('layout-readout').textContent =
-      `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
+      `Arena ${r.width.toFixed(1)} × ${r.height.toFixed(1)} · top ${r.top.toFixed(0)}, bottom ${r.bottom.toFixed(0)} · ${visible ? 'whole arena visible' : 'scroll needed for whole arena'} · ${doc.documentElement.scrollWidth > view.innerWidth ? 'horizontal overflow' : 'no horizontal overflow'}`;
     const controls = [
       ...doc.querySelectorAll(
-        '[data-move],#stop-button,#action-button,#pickup-button,#boost-button,#pause-button,#restart-button,#sound-button',
+        '[data-move],#stop-button,#action-button,#pickup-button,#boost-button,#pause-button,#restart-button,#sound-button,.race-pad button,#race-start,#race-pause,#race-focus',
       ),
     ].map((button) => button.getBoundingClientRect());
     const reachable = controls.every(
@@ -240,6 +334,71 @@ try {
     presentation: { style: 'hybrid', showGrid: false },
     visualOverrides: {},
   };
+  current = editorScenario(current);
+  baseEntry = {
+    key: 'builtin',
+    label: 'Built-in campaign',
+    campaign,
+    themes: themes.themes,
+    classRecipes: recipes,
+    visualOverrides: {},
+    levelVisuals: [],
+    music: [],
+  };
+  catalog = [baseEntry];
+  $('campaign-select').onchange = () => {
+    try {
+      remember();
+      useEntry($('campaign-select').value);
+      sync();
+      status('Campaign source selected. Play configuration to test this map.');
+    } catch (error) {
+      status(error.message, true);
+    }
+  };
+  document.querySelectorAll('[data-preset]').forEach(
+    (button) =>
+      (button.onclick = async () => {
+        const ticket = beginImport();
+        try {
+          const preset = interactionPreset(button.dataset.preset, current, recipes);
+          await adopt(preset, 'Interaction preset ready. Play configuration to try it.', ticket);
+          $('preset-readout').textContent = PRESET_HELP[button.dataset.preset];
+          preview();
+        } catch (error) {
+          if (importCurrent(ticket)) status(error.message, true);
+        }
+      }),
+  );
+  fetch('../content/packs/index.json')
+    .then((r) => {
+      if (!r.ok) throw new Error('Example list unavailable.');
+      return r.json();
+    })
+    .then((index) => {
+      for (const entry of index.packs) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'button secondary';
+        button.textContent = `Load ${entry.id.replaceAll('-', ' ')}`;
+        button.onclick = async () => {
+          const ticket = beginImport();
+          try {
+            const response = await fetch(`../content/packs/${entry.path}`);
+            if (!response.ok) throw new Error('Example expansion is unavailable.');
+            await adoptDocument(
+              await response.json(),
+              'Expansion decoded. Select a campaign, map, theme and class above.',
+              ticket,
+            );
+          } catch (error) {
+            if (importCurrent(ticket)) status(error.message, true);
+          }
+        };
+        $('example-packs').append(button);
+      }
+    })
+    .catch((error) => status(error.message, true));
   campaign.levels.forEach((l, i) =>
     $('level-select').append(
       new Option(`${String(i + 1).padStart(2, '0')} / ${l.name}`, String(i)),
@@ -248,7 +407,8 @@ try {
   for (const t of themes.themes) $('theme-select').append(new Option(t.name, t.id));
   $('level-select').onchange = () => {
     remember();
-    current.level = clone(campaign.levels[Number($('level-select').value)] || current.level);
+    const level = campaign.levels[Number($('level-select').value)];
+    if (level) useEntry(activeKey, level.id);
     sync();
     status('Level selected. Play configuration to test it.');
   };
@@ -278,6 +438,10 @@ try {
   for (const [id, key] of [
     ['speed-input', 'moveSpeed'],
     ['lives-input', 'lives'],
+    ['mission-limit', 'timeLimitSeconds'],
+    ['cut-limit', 'cutTimeLimitSeconds'],
+    ['trail-limit', 'maxTrailCells'],
+    ['switch-limit', 'switchCooldownSeconds'],
   ])
     $(id).onchange = () => {
       remember();
@@ -314,47 +478,43 @@ try {
           .forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
       }),
   );
-  $('map-editor').addEventListener('pointerdown', (event) => {
-    const rect = event.currentTarget.getBoundingClientRect(),
-      x = Math.floor(((event.clientX - rect.left) / rect.width) * 48),
-      y = Math.floor(((event.clientY - rect.top) / rect.height) * 36);
-    if (x < 0 || x > 47 || y < 0 || y > 35) return;
-    remember();
-    const l = current.level,
-      inside = x > 0 && x < 47 && y > 0 && y < 35;
-    if (brush === 'wall' && inside) l.walls.push({ x, y, w: 1, h: 1 });
-    else if (brush === 'enemy' && inside)
-      l.enemies.push({
-        id: uid('enemy', l.enemies),
-        type: 'bouncer',
-        x: x + 0.5,
-        y: y + 0.5,
-        vx: 2.5,
-        vy: 2,
-        radius: 0.25,
+  function paintAt(x, y) {
+    try {
+      const level = paintLevel(current.level, brush, x, y, {
+        signalWidth: Number($('signal-width').value),
+        signalHeight: Number($('signal-height').value),
+        speedFactor: Number($('signal-speed').value) / 100,
       });
-    else if (brush === 'objective' && inside)
-      l.objectives.push({
-        id: uid('objective', l.objectives),
-        x: x + 0.5,
-        y: y + 0.5,
-        required: true,
-        hidden: false,
-      });
-    else if (brush === 'supply')
-      l.supplies.push({ id: uid('supply', l.supplies), x: x + 0.5, y: y + 0.5, radius: 1.5 });
-    else if (brush === 'spawn' && !inside) l.spawn = { x: x + 0.5, y: y + 0.5 };
-    else if (brush === 'erase') {
-      l.walls = l.walls.filter((w) => !(x >= w.x && x < w.x + w.w && y >= w.y && y < w.y + w.h));
-      for (const key of ['enemies', 'objectives', 'supplies'])
-        l[key] = l[key].filter((o) => Math.floor(o.x) !== x || Math.floor(o.y) !== y);
+      remember();
+      current.level = level;
+      $('paint-x').value = x;
+      $('paint-y').value = y;
+      sync();
+      checked();
+      status('Map edited. Play configuration to test the actual behavior.');
+    } catch (error) {
+      status(`Paint rejected: ${error.message}`, true);
     }
-    sync();
-    checked();
+  }
+  $('map-editor').addEventListener('pointerdown', (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    paintAt(
+      Math.floor(((event.clientX - rect.left) / rect.width) * 48),
+      Math.floor(((event.clientY - rect.top) / rect.height) * 36),
+    );
   });
+  $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
   $('undo-button').onclick = () => {
     const previous = history.pop();
-    if (previous) current = previous;
+    if (previous) {
+      current = previous.current;
+      catalog = previous.catalog;
+      activeKey = previous.activeKey;
+      packLibrary = previous.packLibrary;
+      campaign = selectedEntry().campaign;
+      themes = { themes: selectedEntry().themes };
+      editRevision++;
+    }
     $('undo-button').disabled = !history.length;
     sync();
     checked();
@@ -371,10 +531,10 @@ try {
     if (!file) return;
     const ticket = beginImport();
     try {
-      if (file.size > 22 * 1024 * 1024) throw new Error('Pack is larger than 22 MiB.');
+      if (file.size > PACK_LIMITS.libraryBytes) throw new Error('Content is larger than 48 MiB.');
       const candidate = JSON.parse(await file.text());
-      await adopt(
-        candidate.version === 'xonix-level.v1' ? { ...current, level: candidate } : candidate,
+      await adoptDocument(
+        candidate,
         'Imported and decoded. The previous pack remains available through Undo.',
         ticket,
       );
@@ -393,6 +553,9 @@ try {
         theme: JSON.parse($('theme-json').value),
         classRecipes: JSON.parse($('classes-json').value),
       };
+      const trackText = $('music-json').value.trim();
+      if (trackText) candidate.music = JSON.parse(trackText);
+      else delete candidate.music;
       if (!candidate.classRecipes.some((c) => c.id === candidate.settings.classId))
         candidate.settings = { ...candidate.settings, classId: candidate.classRecipes[0]?.id };
       await adopt(
@@ -459,10 +622,37 @@ try {
     const ticket = beginImport();
     try {
       const text = $('pack-json').value;
-      if (text.length > 22 * 1024 * 1024) throw new Error('Pack is larger than 22 MiB.');
-      await adopt(JSON.parse(text), 'Complete pack validated, decoded and applied.', ticket);
+      if (text.length > PACK_LIMITS.libraryBytes) throw new Error('Content is larger than 48 MiB.');
+      await adoptDocument(
+        text,
+        'Content validated, decoded and applied. Undo preserves the previous source.',
+        ticket,
+      );
     } catch (error) {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
+    }
+  };
+  $('export-expansion').onclick = () => {
+    try {
+      if (!checked()) return;
+      const track = currentTrack();
+      const pack = expansionFromScenario(current, { music: track ? [track] : [] });
+      downloadJSON(pack, `${pack.id}.expansion.json`);
+      status(
+        'Edited map exported as a complete playable expansion. Import it into the main game to keep campaign progress.',
+      );
+    } catch (error) {
+      status(error.message, true);
+    }
+  };
+  $('export-catalog').onclick = () => {
+    try {
+      downloadJSON(JSON.parse(exportPackLibrary(packLibrary)), 'workshop-expansions.json');
+      status(
+        'Original loaded expansion library exported. Current map edits are exported separately with Export map as expansion.',
+      );
+    } catch (error) {
+      status(error.message, true);
     }
   };
   async function verifyText(readText) {
@@ -521,11 +711,23 @@ try {
       }),
   );
   window.addEventListener('resize', fit);
-  $('preview-frame').addEventListener('load', measure);
+  $('preview-mode').onchange = preview;
+  $('preview-frame').addEventListener('load', () => {
+    measure();
+    $('preview-frame').contentDocument?.addEventListener('click', () =>
+      requestAnimationFrame(measure),
+    );
+  });
   setInterval(measure, 500);
   sync();
   fit();
   preview();
 } catch (error) {
   status(`Playground could not load: ${error.message}`, true);
+} finally {
+  document.querySelectorAll('[data-boot-inert]').forEach((element) => {
+    element.inert = false;
+    element.removeAttribute('aria-busy');
+  });
+  $('boot-status').hidden = true;
 }
