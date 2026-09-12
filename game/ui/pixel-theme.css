@@ -227,6 +227,8 @@ kbd {
 .game-shell .arena-shell {
   border-color: #466493;
   box-shadow: none;
+  /* The fixed pause/briefing panel must share the page's stacking context. */
+  isolation: auto;
 }
 .game-shell .game-overlay {
   position: fixed;
