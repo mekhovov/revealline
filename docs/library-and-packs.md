@@ -2,7 +2,7 @@
 
 The playable runtime separates a portable player library from an installed expansion library. Both are versioned, local data. Importing a file does not fetch remote media, execute scripts, grant authenticated online scores, or alter archived game releases.
 
-The [public game](https://mekhovov.github.io/revealline/) currently serves v0.18.0. The source-aware attempt export described below is implemented in working source at `122e76343756974b74694df15fb7404aaf101377` for the next v0.19 release; it is not yet frozen or published there.
+The [public game](https://mekhovov.github.io/revealline/) serves v0.19.0, including the current/saved attempt export described below. [Public deployment evidence](verification/round-28/v019-public-deployment.md) identifies the exact source and checked journeys; [frozen archive](verification/round-28/v019-integrity.md) and [offline browser](verification/round-28/v019-browser.md) evidence remain separate.
 
 ## Player library
 
@@ -66,7 +66,7 @@ The profile budget is 4 MiB, 512 campaign identities, 4,096 gallery entries and 
 
 In-progress sessions belong to the replay/session workflow. Do not serialize mutable kernel objects into this profile or interpret an imported completion record as permission to resume a run. Recovery must reconstruct a run from validated inputs and compare its checkpoint before adopting state.
 
-## Export an unfinished flight — working source for v0.19
+## Export an unfinished flight — v0.19
 
 Open **Library & saves → Saves & loads**. The export button names the source it will check:
 
