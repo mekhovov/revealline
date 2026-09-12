@@ -8,26 +8,39 @@ const id = (v) => typeof v === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.t
 const object = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
 /** Validate data without mutating it. Unknown presentation metadata is ignored. */
-function validateShape(level, encounterBranch = false) {
+function validateShape(level, encounterBranch = false, wideBranch = false) {
+  const width = wideBranch ? 72 : 48,
+    height = 36;
   const errors = [];
   const check = (value, message) => {
     if (!value) errors.push(message);
   };
   if (!object(level)) return { valid: false, errors: ['level must be an object'] };
   check(
-    level.version === (encounterBranch ? 'xonix-level.v2' : 'xonix-level.v1'),
-    encounterBranch ? 'version must be xonix-level.v2' : 'version must be xonix-level.v1',
+    level.version ===
+      (wideBranch ? 'xonix-level.v3' : encounterBranch ? 'xonix-level.v2' : 'xonix-level.v1'),
+    wideBranch
+      ? 'version must be xonix-level.v3'
+      : encounterBranch
+        ? 'version must be xonix-level.v2'
+        : 'version must be xonix-level.v1',
   );
   check(id(level.id), 'id must be a stable identifier');
   check(
     typeof level.revision === 'string' && level.revision.length > 0,
     'revision must be a nonempty string',
   );
-  check(level.width === 48 && level.height === 36, 'board must be exactly 48 × 36');
-  const x = (v) => number(v, 0.5, 47.5),
-    y = (v) => number(v, 0.5, 35.5);
+  check(
+    level.width === width && level.height === height,
+    `board must be exactly ${width} × ${height}`,
+  );
+  const x = (v) => number(v, 0.5, width - 0.5),
+    y = (v) => number(v, 0.5, height - 0.5);
   const onBorder = (p) =>
-    object(p) && x(p.x) && y(p.y) && (p.x === 0.5 || p.x === 47.5 || p.y === 0.5 || p.y === 35.5);
+    object(p) &&
+    x(p.x) &&
+    y(p.y) &&
+    (p.x === 0.5 || p.x === width - 0.5 || p.y === 0.5 || p.y === height - 0.5);
   check(
     onBorder(level.spawn) &&
       Number.isInteger(level.spawn.x - 0.5) &&
@@ -49,34 +62,35 @@ function validateShape(level, encounterBranch = false) {
   check(enemies.length <= 24, 'at most 24 enemies');
   check(objectives.length <= 40, 'at most 40 objectives');
   check(supplies.length <= 20, 'at most 20 supplies');
-  const cells = new Uint8Array(48 * 36);
+  const cells = new Uint8Array(width * height);
   for (let i = 0; i < walls.length; i++) {
     const w = walls[i];
     const valid =
       object(w) &&
-      integer(w.x, 1, 46) &&
-      integer(w.y, 1, 34) &&
-      integer(w.w, 1, 46) &&
-      integer(w.h, 1, 34) &&
-      w.x + w.w <= 47 &&
-      w.y + w.h <= 35;
+      integer(w.x, 1, width - 2) &&
+      integer(w.y, 1, height - 2) &&
+      integer(w.w, 1, width - 2) &&
+      integer(w.h, 1, height - 2) &&
+      w.x + w.w <= width - 1 &&
+      w.y + w.h <= height - 1;
     check(valid, `walls[${i}] must be an integer interior rectangle`);
     if (valid)
       for (let y = w.y; y < w.y + w.h; y++)
         for (let x = w.x; x < w.x + w.w; x++) {
-          check(!cells[y * 48 + x], `walls[${i}] overlaps another wall`);
-          cells[y * 48 + x] = 2;
+          check(!cells[y * width + x], `walls[${i}] overlaps another wall`);
+          cells[y * width + x] = 2;
         }
   }
   check(
-    cells.filter((v) => v === 2).length < 46 * 34,
+    cells.filter((v) => v === 2).length < (width - 2) * (height - 2),
     'at least one interior cell must be claimable',
   );
   const clear = (p, r = 0) => {
-    if (!object(p) || !number(p.x, 1 + r, 47 - r) || !number(p.y, 1 + r, 35 - r)) return false;
+    if (!object(p) || !number(p.x, 1 + r, width - 1 - r) || !number(p.y, 1 + r, height - 1 - r))
+      return false;
     for (let y = Math.floor(p.y - r); y <= Math.floor(p.y + r); y++)
       for (let x = Math.floor(p.x - r); x <= Math.floor(p.x + r); x++)
-        if (cells[y * 48 + x] === 2) return false;
+        if (cells[y * width + x] === 2) return false;
     return true;
   };
   const seen = new Set();
@@ -143,7 +157,7 @@ function validateShape(level, encounterBranch = false) {
       if (!object(p)) continue;
       seen.add(p.id);
       check(
-        x(p.x) && y(p.y) && cells[Math.floor(p.y) * 48 + Math.floor(p.x)] !== 2,
+        x(p.x) && y(p.y) && cells[Math.floor(p.y) * width + Math.floor(p.x)] !== 2,
         `${kind}[${i}] invalid position`,
       );
       if (kind === 'objectives') {
@@ -166,12 +180,12 @@ function validateShape(level, encounterBranch = false) {
     if (!object(z)) continue;
     seen.add(z.id);
     check(
-      number(z.x, 1, 46) &&
-        number(z.y, 1, 34) &&
-        number(z.w, 0.5, 46) &&
-        number(z.h, 0.5, 34) &&
-        z.x + z.w <= 47 &&
-        z.y + z.h <= 35,
+      number(z.x, 1, width - 2) &&
+        number(z.y, 1, height - 2) &&
+        number(z.w, 0.5, width - 2) &&
+        number(z.h, 0.5, height - 2) &&
+        z.x + z.w <= width - 1 &&
+        z.y + z.h <= height - 1,
       `signalZones[${i}] must be an interior rectangle`,
     );
     check(number(z.speedFactor, 0.25, 1), `signalZones[${i}].speedFactor must be 0.25..1`);
@@ -188,7 +202,7 @@ function validateShape(level, encounterBranch = false) {
     if (!object(h)) continue;
     seen.add(h.id);
     check(
-      x(h.x) && y(h.y) && cells[Math.floor(h.y) * 48 + Math.floor(h.x)] !== 2,
+      x(h.x) && y(h.y) && cells[Math.floor(h.y) * width + Math.floor(h.x)] !== 2,
       `hangars[${i}] invalid position`,
     );
     check(
@@ -210,7 +224,7 @@ function validateShape(level, encounterBranch = false) {
       switchCooldownSeconds: [0.1, 30],
       timeLimitSeconds: [0, 1800],
       cutTimeLimitSeconds: [0, 120],
-      maxTrailCells: [0, 1564],
+      maxTrailCells: [0, (width - 2) * (height - 2)],
     };
     for (const [key, value] of Object.entries(level.rules)) {
       if (key === 'timeMedals')
@@ -243,7 +257,8 @@ export function validateLevel(level) {
       level && typeof level === 'object' ? Object.getOwnPropertyDescriptor(level, 'version') : null;
     if (version && !Object.hasOwn(version, 'value'))
       return { valid: false, errors: ['level version must be own data'] };
-    if (version?.value !== 'xonix-level.v2') {
+    const wide = version?.value === 'xonix-level.v3';
+    if (version?.value !== 'xonix-level.v2' && !wide) {
       if (level && Object.hasOwn(level, 'encounter'))
         return { valid: false, errors: ['encounter requires xonix-level.v2'] };
       return validateShape(level);
@@ -279,9 +294,11 @@ export function validateLevel(level) {
       ],
       'level',
     );
-    const result = validateShape(owned, true);
+    if (wide && !Object.hasOwn(owned, 'encounter'))
+      return { valid: false, errors: ['wide levels require an explicit nullable encounter'] };
+    const result = validateShape(owned, !wide || owned.encounter !== null, wide);
     if (!result.valid) return result;
-    resolveEncounterDescriptor(owned.encounter, owned);
+    if (!wide || owned.encounter !== null) resolveEncounterDescriptor(owned.encounter, owned);
     return result;
   } catch (error) {
     return { valid: false, errors: [error.message] };

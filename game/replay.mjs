@@ -2,6 +2,7 @@ import { createRun, stepRun, releaseInputs, getSummary, FIXED_DT, CLASSES } from
 import {
   LEGACY_VERSIONS,
   ENCOUNTER_VERSIONS,
+  WIDE_VERSIONS,
   resolveVersions,
   versionsForLevel,
 } from './core/versions.mjs';
@@ -16,6 +17,7 @@ import {
 
 export const REPLAY_VERSION = 'xonix-replay.v3';
 export const ENCOUNTER_REPLAY_VERSION = ENCOUNTER_VERSIONS.replayVersion;
+export const WIDE_REPLAY_VERSION = WIDE_VERSIONS.replayVersion;
 export const MAX_REPLAY_TICKS = 30 * 60 * 120;
 export const MAX_REPLAY_BYTES = 32 * 1024 * 1024;
 export const CHECKPOINT_ALGORITHM = 'fnv1a64-state-v2';
@@ -40,7 +42,7 @@ const SECTIONS = [
 ];
 const encoder = new TextEncoder();
 const sectionNames = (versions) =>
-  versions.ruleset === ENCOUNTER_VERSIONS.ruleset ? [...SECTIONS, 'encounter'] : SECTIONS;
+  versions.ruleset !== LEGACY_VERSIONS.ruleset ? [...SECTIONS, 'encounter'] : SECTIONS;
 function replayVersions(value) {
   try {
     return resolveVersions({
@@ -230,9 +232,7 @@ function authoritativeSections(state, versions) {
       classRecipe: physicsRecipe(state.classRecipe),
       classRecipes: state.classRecipes.map(physicsRecipe),
       hangars: state.hangars,
-      ...(versions.ruleset === ENCOUNTER_VERSIONS.ruleset
-        ? { encounter: state.level.encounter }
-        : {}),
+      ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.level.encounter } : {}),
     },
     board: {
       cells: Array.from(state.cells),
@@ -327,7 +327,7 @@ function authoritativeSections(state, versions) {
     ]),
     continuation: pick(state, ['_accumulator', '_input', '_abilitySerial', '_terminalEmitted']),
     result: state.result,
-    ...(versions.ruleset === ENCOUNTER_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
+    ...(versions.ruleset !== LEGACY_VERSIONS.ruleset ? { encounter: state.encounter } : {}),
   };
 }
 

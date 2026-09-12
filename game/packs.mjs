@@ -1,4 +1,9 @@
-import { LEGACY_VERSIONS, ENCOUNTER_VERSIONS, versionsForCampaign } from './core/versions.mjs';
+import {
+  LEGACY_VERSIONS,
+  ENCOUNTER_VERSIONS,
+  WIDE_VERSIONS,
+  versionsForCampaign,
+} from './core/versions.mjs';
 import {
   validateScenario,
   validateTheme,
@@ -8,6 +13,7 @@ import {
   SCENARIO_VERSION,
   MASTERY_SCENARIO_VERSION,
   ENCOUNTER_SCENARIO_VERSION,
+  WIDE_SCENARIO_VERSION,
 } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { boundedJSON, plainObject, stableId, exactKeys, required } from './data-json.mjs';
@@ -17,6 +23,7 @@ import { resolveMasteryDefinition } from './mastery.mjs';
 export const PACK_VERSION = 'xonix-pack.v1';
 export const MASTERY_PACK_VERSION = 'xonix-pack.v2';
 export const ENCOUNTER_PACK_VERSION = 'xonix-pack.v3';
+export const WIDE_PACK_VERSION = 'xonix-pack.v4';
 export const PACK_LIBRARY_VERSION = 'xonix-pack-library.v1';
 export const PACK_LIMITS = Object.freeze({
   maxBytes: 24 * 1024 * 1024,
@@ -93,9 +100,10 @@ const levelKeys = [
 ];
 function packChecks(candidate) {
   const pack = boundedPack(candidate);
+  const wide = pack.format === WIDE_PACK_VERSION;
   const encounter = pack.format === ENCOUNTER_PACK_VERSION;
-  const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter;
-  const versions = encounter ? ENCOUNTER_VERSIONS : LEGACY_VERSIONS;
+  const authoredMasteries = pack.format === MASTERY_PACK_VERSION || encounter || wide;
+  const versions = wide ? WIDE_VERSIONS : encounter ? ENCOUNTER_VERSIONS : LEGACY_VERSIONS;
   exactKeys(
     pack,
     [
@@ -118,7 +126,9 @@ function packChecks(candidate) {
     'pack',
   );
   required(
-    [PACK_VERSION, MASTERY_PACK_VERSION, ENCOUNTER_PACK_VERSION].includes(pack.format) &&
+    [PACK_VERSION, MASTERY_PACK_VERSION, ENCOUNTER_PACK_VERSION, WIDE_PACK_VERSION].includes(
+      pack.format,
+    ) &&
       stableId(pack.id) &&
       semver(pack.version),
     'Pack format/id/version is invalid.',
@@ -127,10 +137,12 @@ function packChecks(candidate) {
     pack.engine === versions.ruleset,
     `Pack requires a different engine; expected ${versions.ruleset}.`,
   );
-  if (encounter)
+  if (encounter || wide)
     required(
       Array.isArray(pack.masteries) && pack.masteries.length === 0,
-      'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+      wide
+        ? 'Wide pack v4 requires masteries: []; optional goals are not supported.'
+        : 'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
     );
   required(
     text(pack.name, 120) && text(pack.description, 4096),
@@ -253,7 +265,7 @@ function packChecks(candidate) {
       'Pack format and campaign simulation versions differ.',
     );
     for (const level of campaign.levels) {
-      exactKeys(level, encounter ? [...levelKeys, 'encounter'] : levelKeys, 'level');
+      exactKeys(level, encounter || wide ? [...levelKeys, 'encounter'] : levelKeys, 'level');
       required(stableId(level.id), 'Level identity is reserved or invalid.');
       required(!levelIds.has(level.id), 'Level IDs must be unique across a pack.');
       levelIds.add(level.id);
@@ -266,7 +278,11 @@ function packChecks(candidate) {
         'Level refers to unknown music.',
       );
       const scenario = {
-        format: encounter ? ENCOUNTER_SCENARIO_VERSION : SCENARIO_VERSION,
+        format: wide
+          ? WIDE_SCENARIO_VERSION
+          : encounter
+            ? ENCOUNTER_SCENARIO_VERSION
+            : SCENARIO_VERSION,
         level,
         theme: themes.get(level.themeId ?? campaign.themeId) ?? pack.themes[0],
         settings: {
@@ -276,7 +292,7 @@ function packChecks(candidate) {
         },
         classRecipes: pack.classRecipes,
         visualOverrides: {},
-        ...(encounter ? { masteryDefinition: null } : {}),
+        ...(encounter || wide ? { masteryDefinition: null } : {}),
       };
       const checked = validateScenario(scenario);
       required(checked.valid, checked.errors.join('; '));
@@ -535,11 +551,13 @@ export function scenarioFromPack(
   };
   const scenario = {
     format:
-      pack.format === ENCOUNTER_PACK_VERSION
-        ? ENCOUNTER_SCENARIO_VERSION
-        : pack.format === MASTERY_PACK_VERSION
-          ? MASTERY_SCENARIO_VERSION
-          : SCENARIO_VERSION,
+      pack.format === WIDE_PACK_VERSION
+        ? WIDE_SCENARIO_VERSION
+        : pack.format === ENCOUNTER_PACK_VERSION
+          ? ENCOUNTER_SCENARIO_VERSION
+          : pack.format === MASTERY_PACK_VERSION
+            ? MASTERY_SCENARIO_VERSION
+            : SCENARIO_VERSION,
     level,
     theme,
     classRecipes: resolved.classRecipes,

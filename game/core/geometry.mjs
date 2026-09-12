@@ -1,3 +1,5 @@
+import { versionsForLevel, resolveVersions, WIDE_VERSIONS } from './versions.mjs';
+
 /** Deterministic continuous geometry. Times returned here are fractions in [0, 1]. */
 export const EPS = 1e-9;
 export const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
@@ -66,4 +68,36 @@ export function movingCirclesTime(a, b, c, d, radius) {
     { x: 0, y: 0 },
     radius,
   );
+}
+
+const board = (width, height) =>
+  Object.freeze({
+    width,
+    height,
+    cellCount: width * height,
+    maxX: width - 0.5,
+    maxY: height - 0.5,
+    interiorWidth: width - 2,
+    interiorHeight: height - 2,
+    perimeter: 2 * (width - 1 + height - 1),
+  });
+export const LEGACY_GEOMETRY = board(48, 36);
+export const WIDE_GEOMETRY = board(72, 36);
+export function geometryForLevel(level) {
+  const pair = versionsForLevel(level);
+  const geometry = pair.ruleset === WIDE_VERSIONS.ruleset ? WIDE_GEOMETRY : LEGACY_GEOMETRY;
+  for (const field of ['width', 'height']) {
+    const property = Object.getOwnPropertyDescriptor(level, field);
+    if (!property || !Object.hasOwn(property, 'value') || property.value !== geometry[field])
+      throw new TypeError('level dimensions do not match its simulation version');
+  }
+  return geometry;
+}
+/** Runs are core-owned; this lookup never changes another run's geometry. */
+export function geometryForRun(run) {
+  const pair = resolveVersions({ ruleset: run.ruleset });
+  const geometry = pair.ruleset === WIDE_VERSIONS.ruleset ? WIDE_GEOMETRY : LEGACY_GEOMETRY;
+  if (run.width !== geometry.width || run.height !== geometry.height)
+    throw new TypeError('run dimensions do not match its simulation version');
+  return geometry;
 }
