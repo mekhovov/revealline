@@ -1,6 +1,6 @@
 # Play and author RevealLine
 
-Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.9.0 working source includes 28 maps: 12 base campaign maps and 16 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter and Equipment Workshop.
+Run `npm run dev` from the repository root and open [solo play](http://127.0.0.1:8768/game/). The page uses local Phaser 4.2.1 and a browser-independent [simulation core](core/README.md). The v0.10.0 working source includes 28 maps: 12 base campaign maps and 16 optional expansion maps across Night Shift, Living Threads, Fieldcraft, the illustrated Homeward Skies chapter and Equipment Workshop.
 
 ## The loop
 
@@ -46,6 +46,8 @@ A hangar switch requires safe ground, no live cut and the configured cooldown. E
 ## Keep progress and pictures
 
 Campaign clears award local progress, medals and cosmetic unlocks. **Collection** contains unlocked bodies and completed pictures; pictures can replay their celebration. Search the gallery and browse 12 pictures per page. **Library & saves → Local scores** searches results grouped by map and exact setup, including class changes, with ten setup groups per page. These are device-local records, not authenticated global rankings.
+
+The source increment after v0.9.0 makes chapter appearances attainable after one clear and after `min(4, campaign map count)` distinct clears. **Collection → Campaign appearances** shows each tier; a new unlock appears beside the completed picture. **Choose appearance** focuses the selector without restarting or auto-equipping. A compatible complete three-map profile qualifies immediately without a retrospective celebration. Appearances change presentation, not abilities, and access stays local to that campaign. Already-cleared missions remain replayable even when an earlier mission has no clear. The [chapter-reward guide](../docs/chapter-rewards.md) separates this implemented behavior from browser verification; frozen v0.9.0 retains its earlier behavior.
 
 For a complete transfer:
 

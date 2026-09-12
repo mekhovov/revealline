@@ -1407,6 +1407,59 @@ dialog textarea {
   width: min(840px, calc(100vw - 28px));
   max-width: 840px;
 }
+.appearance-hint {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 8px 0 14px;
+}
+#collection-choose-appearance {
+  min-height: 44px;
+}
+.appearance-unlock {
+  border-left: 3px solid var(--accent);
+  padding-left: 12px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+.appearance-rewards {
+  display: grid;
+  gap: 12px;
+}
+.appearance-reward {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  border: 1px solid var(--line);
+  padding: 16px;
+  overflow-wrap: anywhere;
+}
+.appearance-reward.earned {
+  border-left: 3px solid var(--accent);
+}
+.appearance-reward img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.appearance-reward h4 {
+  margin: 0 0 8px;
+}
+.appearance-reward p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px 0 0;
+}
+.appearance-reward .reward-progress {
+  font-weight: 600;
+}
+.appearance-reward .reward-detail {
+  opacity: 0.8;
+}
 #save-status,
 #pack-status {
   overflow-wrap: anywhere;
