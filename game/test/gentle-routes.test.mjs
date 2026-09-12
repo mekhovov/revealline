@@ -1,0 +1,129 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
+import { versionsForLevel } from '../core/versions.mjs';
+import {
+  createRecorder,
+  recordInput,
+  recordRelease,
+  exportReplay,
+  verifyReplay,
+  MAX_REPLAY_TICKS,
+} from '../replay.mjs';
+import { validatePack } from '../packs.mjs';
+import { createDifficultyContext, GENTLE_POLICY_VERSION } from '../campaign-difficulty.mjs';
+
+const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
+const [base, classRecipes, packIndex, proof] = await Promise.all([
+  readJSON('../content/campaign.json'),
+  readJSON('../content/classes.json'),
+  readJSON('../content/packs/index.json'),
+  readJSON('../replays/gentle-routes.json'),
+]);
+const originals = [{ packId: null, campaign: { ...base, classRecipes } }];
+for (const ref of packIndex.packs) {
+  const pack = await readJSON(`../content/packs/${ref.path}`);
+  const check = validatePack(pack);
+  assert.equal(check.valid, true, check.errors.join('; '));
+  assert.equal(pack.id, ref.id);
+  // This is structural/core evidence, not installation or image decoding. Use
+  // the declared filtered roster in pack order, as resolvePackCampaign does.
+  for (const campaign of pack.campaigns)
+    originals.push({
+      packId: pack.id,
+      campaign: {
+        ...campaign,
+        classRecipes: pack.classRecipes.filter(
+          (recipe) => !campaign.classIds || campaign.classIds.includes(recipe.id),
+        ),
+      },
+    });
+}
+const sources = originals.map(({ packId, campaign }) => ({
+  packId,
+  campaignId: campaign.id,
+  context: createDifficultyContext(campaign, 'gentle'),
+}));
+const byKey = new Map(sources.map((source) => [source.context.campaignKey, source.context]));
+const routeKey = (route) => JSON.stringify([route.campaignKey, route.levelId, route.turnPolicy]);
+
+test('Gentle proof covers every shipped map and policy with exact source ownership', () => {
+  assert.equal(proof.format, 'xonix-gentle-proof.v1');
+  assert.equal(proof.policyVersion, GENTLE_POLICY_VERSION);
+  assert.equal(byKey.size, sources.length);
+  assert.deepEqual(
+    proof.sources,
+    sources.map(({ packId, campaignId, context }) => ({
+      packId,
+      campaignId,
+      baseCampaignKey: context.baseCampaignKey,
+      campaignKey: context.campaignKey,
+    })),
+  );
+  const expected = sources.flatMap(({ context }) =>
+    context.campaign.levels.flatMap((level) =>
+      ['immediate', 'grid-center'].map((turnPolicy) =>
+        routeKey({ campaignKey: context.campaignKey, levelId: level.id, turnPolicy }),
+      ),
+    ),
+  );
+  assert.equal(expected.length, 58, '29 maps must each retain both real steering routes.');
+  assert.deepEqual(proof.routes.map(routeKey).sort(), expected.sort());
+});
+
+for (const route of proof.routes)
+  test(`Gentle ${route.levelId}/${route.turnPolicy}: legal inputs reproduce the exact win`, () => {
+    const context = byKey.get(route.campaignKey);
+    assert.ok(context, 'Route needs its exact shipped campaign context.');
+    const level = context.campaign.levels.find((candidate) => candidate.id === route.levelId);
+    assert.ok(level, 'Route needs a declared map.');
+    const options = {
+      classId: route.classId,
+      seed: route.seed,
+      turnPolicy: route.turnPolicy,
+      classRecipes: context.campaign.classRecipes,
+    };
+    const run = createRun(level, options);
+    const recorder = createRecorder(level, options, 'gentle-routes-proof');
+    assert.ok(Number.isInteger(route.expected.tick) && route.expected.tick > 0);
+    assert.ok(route.expected.tick <= MAX_REPLAY_TICKS);
+    assert.equal(
+      route.segments.reduce((ticks, segment) => {
+        assert.ok(Number.isInteger(segment.ticks) && segment.ticks > 0);
+        return ticks + segment.ticks;
+      }, 0),
+      route.expected.tick,
+    );
+    for (const segment of route.segments) {
+      if (segment.releaseBefore) {
+        releaseInputs(run);
+        recordRelease(recorder);
+      }
+      for (let tick = 0; tick < segment.ticks; tick++) {
+        assert.ok(
+          run.status === 'running' || run.status === 'respawning',
+          'No recorded command may advance an already terminal run.',
+        );
+        stepRun(run, segment.input, FIXED_DT);
+        recordInput(recorder, segment.input);
+      }
+    }
+    if (route.releaseAfter) {
+      releaseInputs(run);
+      recordRelease(recorder);
+    }
+    const replay = exportReplay(recorder, run);
+    const versions = versionsForLevel(level);
+    assert.equal(replay.version, versions.replayVersion);
+    assert.equal(replay.checkpoint.algorithm, versions.checkpointAlgorithm);
+    assert.deepEqual(replay.segments, route.segments);
+    assert.equal(replay.releaseAfter, route.releaseAfter);
+    assert.deepEqual(replay.summary, route.expected);
+    assert.deepEqual(replay.checkpoint, route.checkpoint);
+    assert.equal(run.status, 'won');
+    assert.ok(run.coverage >= level.goal.coverage);
+    assert.ok(run.objectives.filter((objective) => objective.required).every((o) => o.captured));
+    const verified = verifyReplay(replay);
+    assert.equal(verified.match, true, JSON.stringify(verified.diagnostics));
+  });
