@@ -1,0 +1,234 @@
+{
+  "format": "revealline-source-label-followup.v1",
+  "version": "0.16.0",
+  "releaseVersionConsistency": {
+    "values": {
+      "package.json": "0.16.0",
+      "package-lock.json": "0.16.0",
+      "package-lock.json#packages[empty].version": "0.16.0",
+      "platforms/desktop/package.json": "0.16.0",
+      "platforms/desktop/package-lock.json": "0.16.0",
+      "platforms/desktop/package-lock.json#packages[empty].version": "0.16.0",
+      "platforms/ios/package.json": "0.16.0",
+      "platforms/ios/package-lock.json": "0.16.0",
+      "platforms/ios/package-lock.json#packages[empty].version": "0.16.0",
+      "game/build-config.json": "0.16.0",
+      "game/app.mjs#buildVersion": "0.16.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[0]": "0.16.0",
+      "platforms/ios/native/App/App.xcodeproj/project.pbxproj#MARKETING_VERSION[1]": "0.16.0"
+    },
+    "validationVersion": "0.16.0",
+    "allMatch": true
+  },
+  "earlierPreflight": {
+    "directory": ".cache/round-26/source-gates",
+    "gatesExecuted": 0,
+    "stage": "frozen-release-preservation",
+    "restoredArchives": {
+      "path": ".cache/round-26/source-gates/archive-followup.json",
+      "bytes": 4785,
+      "sha256": "bc7d2cc9ecab496c7ebf1e1164958f4648ef6577a9649e0b4d29449d951ffd98"
+    }
+  },
+  "protectedLegacyInputs": {
+    "sourceInventory": {
+      "path": "docs/verification/round-25/source-inputs.json",
+      "bytes": 53141,
+      "sha256": "3dc1a74fe7932624a5794f90798561e9ee96af8741617211f1237dcc9a4fec96"
+    },
+    "files": 32,
+    "sha256": "eec1b0cfd7b2f54f978be2200b9bd712b5eff49f59a07c8a3c5703044277283d",
+    "changedPaths": [],
+    "unchanged": true
+  },
+  "recordedAt": "2026-09-12T15:15:03.183Z",
+  "startedAt": "2026-09-12T15:14:51.918Z",
+  "baselineRevision": "1044627808f296068bd2e49483bc007e50add1ed",
+  "node": "v22.22.2",
+  "workingTree": true,
+  "scope": "Narrow follow-up after the accepted three-file public display-label normalization. Runs the existing CLI test suite plus lint, formatting and validation once; the 1521 full runtime tests and native-format/motion-syntax gates remain evidence for the preceding inventory and are not repeated or counted again. No gameplay, library, core, fixture or course bytes changed. Every old release tree/tag, prior evidence and original six-gate outputs are preserved. No build:pages or deployment is executed.",
+  "fullGateEvidence": {
+    "report": {
+      "path": "docs/verification/round-26/source-gates.json",
+      "bytes": 9170,
+      "sha256": "94b2f9f4b7a1626eb6cc1412e3055b8e214947ba42f150933533aff237dc17f9"
+    },
+    "inputs": {
+      "path": "docs/verification/round-26/source-inputs.json",
+      "bytes": 56291,
+      "sha256": "4e84c90b037a4e647a9062301be9eb2012d4a89c21f92549d931324bb7a023d7"
+    },
+    "tests": 1521,
+    "fullSuiteRepeated": false
+  },
+  "acceptedDelta": {
+    "paths": ["scripts/game-cli.mjs", "site/index.html", "site/landing.mjs"],
+    "expectedHashes": {
+      "scripts/game-cli.mjs": "7dd99f7663891b54cef30da75c6ed6fd48475f0cafdce200fa801db065321671",
+      "site/index.html": "e9ad003331b67baba55de0eb3610e366f490cc00bc39046e8aa70ee31eab1b99",
+      "site/landing.mjs": "3e714ed8b5fe12822f8d676808191affdea50f5edafa5ae1ae4302e8dd9c83f7"
+    },
+    "actualChangedPaths": ["scripts/game-cli.mjs", "site/index.html", "site/landing.mjs"],
+    "exactlyMatched": true
+  },
+  "runner": {
+    "path": ".cache/round-26/label-followup/run-followup.mjs",
+    "bytes": 16692,
+    "sha256": "87ccf9460fdd35669ae18234b11d649093968d9db07c1309f4b8dc1938c8e892"
+  },
+  "sourceSnapshot": {
+    "before": "a3532d1582596ffee7d1ab3413699bee752b9ee33dc8e6ecb893dd93c753e1f6",
+    "after": "a3532d1582596ffee7d1ab3413699bee752b9ee33dc8e6ecb893dd93c753e1f6",
+    "files": 331,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-26/label-followup/source-inputs-before.json",
+      "bytes": 56291,
+      "sha256": "5b376c936837fa429dc7810773e5f03f896d45321b3b5556fd390901234b3635"
+    },
+    "afterIndex": {
+      "path": ".cache/round-26/label-followup/source-inputs.json",
+      "bytes": 56291,
+      "sha256": "5b376c936837fa429dc7810773e5f03f896d45321b3b5556fd390901234b3635"
+    }
+  },
+  "expectedMinimumTests": {
+    "cli-tests": 23
+  },
+  "checks": [
+    {
+      "id": "cli-tests",
+      "command": "mise exec node@22.22.2 -- node --test scripts/test-game-cli.mjs",
+      "durationMs": 1475,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-26/label-followup/cli-tests.log",
+        "bytes": 5593,
+        "sha256": "95da18584785842a031fdbae8bc08075918b202ae57fdb3255a64e0ef516dd3a"
+      },
+      "tests": {
+        "tests": 23,
+        "pass": 23,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "id": "lint",
+      "command": "mise exec node@22.22.2 -- npm run lint",
+      "durationMs": 1951,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-26/label-followup/lint.log",
+        "bytes": 148,
+        "sha256": "7b9f3250f53ef184153ea1439c62a717b8dfef098e3f37b8711624f768a2177d"
+      }
+    },
+    {
+      "id": "format",
+      "command": "mise exec node@22.22.2 -- npm run format:check",
+      "durationMs": 2847,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-26/label-followup/format.log",
+        "bytes": 195,
+        "sha256": "e935d4d84af241c3e623f0cd2e46f1b67b9fc861b6b85db464e7fa0e54cd9de3"
+      }
+    },
+    {
+      "id": "validate",
+      "command": "mise exec node@22.22.2 -- npm run validate",
+      "durationMs": 1737,
+      "exitCode": 0,
+      "signal": null,
+      "log": {
+        "path": ".cache/round-26/label-followup/validate.log",
+        "bytes": 736,
+        "sha256": "05d1c63e4eaff4c1a401e81c13de72489688b23020d74396d71a03157092c423"
+      },
+      "validation": {
+        "version": "0.16.0",
+        "files": 127,
+        "literalReferencesValid": true,
+        "navigationWarnings": [
+          "game/index.html → ../authoring/motion-lab/",
+          "game/index.html → ../docs/concepts/round-09-reference-atlas.html",
+          "game/index.html → ../releases/",
+          "game/index.html → ../diagnostics/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./game/",
+          "site/index.html → ./privacy.html",
+          "site/index.html → ./credits.html"
+        ],
+        "campaign": "first-signal",
+        "levels": 12,
+        "themes": 4,
+        "classes": 7,
+        "packs": 6,
+        "packLevels": 17,
+        "packGoals": 6
+      }
+    }
+  ],
+  "preservedFrozenBaseline": {
+    "inventory": {
+      "path": ".cache/round-26/integrity/frozen-releases-before-v0160.json",
+      "bytes": 794302,
+      "sha256": "c4a89d3b4401ac7ec699f5d936e80de716d80a58bdab93173e1ec9a441be78ac"
+    },
+    "releaseCount": 19,
+    "fileCount": 2054,
+    "bytes": 2591153392,
+    "preparedComparisonUnchanged": true,
+    "previousEvidenceMatchesPreparation": true,
+    "exactTagsUnchanged": true,
+    "tagCount": 20,
+    "beforeTags": {
+      "path": ".cache/round-26/label-followup/tags-before.json",
+      "bytes": 5407,
+      "sha256": "c394af2c88aa920ff1776250fceccf8dab36c5c0d9bed1d5cb9eab410222fc77"
+    },
+    "afterTags": {
+      "path": ".cache/round-26/label-followup/tags-after.json",
+      "bytes": 5407,
+      "sha256": "c394af2c88aa920ff1776250fceccf8dab36c5c0d9bed1d5cb9eab410222fc77"
+    }
+  },
+  "preservedPreviousEvidence": {
+    "roots": [
+      "docs/verification/round-25",
+      ".cache/round-25",
+      "releases",
+      ".cache/round-26/integrity/frozen-releases-before-v0160.json",
+      ".cache/round-26/integrity/frozen-releases-before-v0160.json.sha256",
+      ".cache/round-26/source-gates",
+      ".cache/round-26/source-gates-restored",
+      "docs/verification/round-26/source-gates.json",
+      "docs/verification/round-26/source-inputs.json",
+      "docs/verification/round-26/source-gates.md"
+    ],
+    "files": 3360,
+    "before": "81e30ef22727da4a208210d89efd2d5bbb0f4c97fcfc342a44a57eba9ccc8c40",
+    "after": "81e30ef22727da4a208210d89efd2d5bbb0f4c97fcfc342a44a57eba9ccc8c40",
+    "allUnchanged": true,
+    "changedDuringChecks": [],
+    "beforeIndex": {
+      "path": ".cache/round-26/label-followup/prior-evidence-before.json",
+      "bytes": 681244,
+      "sha256": "60165738e450261153f0a422b973e4d43058471159c088d3b41305fba6fcdc67"
+    },
+    "afterIndex": {
+      "path": ".cache/round-26/label-followup/prior-evidence-after.json",
+      "bytes": 681244,
+      "sha256": "60165738e450261153f0a422b973e4d43058471159c088d3b41305fba6fcdc67"
+    }
+  },
+  "passed": true
+}

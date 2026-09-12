@@ -40,12 +40,19 @@
             <div><span>TIME</span><strong id="time">0:00</strong></div>
             <div><span id="score-label">SCORE</span><strong id="score">00000</strong></div>
           </div>
+          <p id="first-flight-task" class="first-flight-task" role="status"></p>
           <div id="arena-shell" class="arena-shell">
             <div
               id="game-canvas"
               tabindex="0"
               role="application"
               aria-label="Territory capture game. Arrow keys or WASD move. E uses an ability, R picks up supplies. Escape pauses."
+            ></div>
+            <div
+              id="first-flight-markers"
+              class="first-flight-markers"
+              aria-hidden="true"
+              hidden
             ></div>
             <div id="game-overlay" class="game-overlay">
               <div id="overlay-reading-unit" class="overlay-card">
@@ -121,6 +128,9 @@
                   </button>
                   <button id="choose-appearance" class="button secondary" type="button" hidden>
                     Choose appearance
+                  </button>
+                  <button id="first-flight-enter" class="button secondary" type="button" hidden>
+                    Learn by playing
                   </button>
                 </div>
                 <p id="overlay-footnote" class="overlay-footnote">
@@ -199,6 +209,37 @@
               </button>
             </div>
           </div>
+          <section
+            id="first-flight-panel"
+            class="first-flight-panel"
+            aria-label="First Flight course"
+            hidden
+          >
+            <div class="first-flight-heading">
+              <h2 id="first-flight-title">First Flight</h2>
+              <span>Practice · no rewards</span>
+            </div>
+            <p id="first-flight-outcome"></p>
+            <details class="first-flight-steps">
+              <summary>Lesson steps</summary>
+              <ol id="first-flight-step-list"></ol>
+              <p id="first-flight-controls"></p>
+            </details>
+            <label for="first-flight-select">Choose a lesson</label>
+            <select id="first-flight-select" aria-label="Choose a First Flight lesson"></select>
+            <div class="first-flight-actions">
+              <button id="first-flight-next" class="button primary" type="button" hidden>
+                Next lesson
+              </button>
+              <button id="first-flight-skip" class="button secondary" type="button">
+                Skip lesson
+              </button>
+              <button id="first-flight-exit" class="button secondary" type="button">
+                Return to the game
+              </button>
+            </div>
+            <p id="first-flight-error" role="status" hidden></p>
+          </section>
           <p id="run-message" class="run-message" role="status">
             Your first route: fly down from the marked start to the opposite border.
           </p>
@@ -271,10 +312,13 @@
               </div>
             </div>
           </details>
-          <label class="field">World<select id="theme-select"></select></label>
-          <label class="field">Campaign<select id="campaign-select"></select></label>
+          <label class="field" data-course-hide>World<select id="theme-select"></select></label>
+          <label class="field" data-course-hide
+            >Campaign<select id="campaign-select"></select
+          ></label>
           <div class="loadout-grid">
-            <label class="field">Starting class<select id="class-select"></select></label
+            <label class="field" data-course-hide
+              >Starting class<select id="class-select"></select></label
             ><label class="field"
               >Steering<select id="turn-select">
                 <option value="immediate">Immediate</option>
@@ -293,10 +337,10 @@
             ><input id="match-class-appearance" type="checkbox" /> Match appearance to class</label
           >
           <p id="appearance-hint" class="appearance-hint"></p>
-          <p id="loadout-note" class="micro-note">
+          <p id="loadout-note" class="micro-note" data-course-hide>
             Starting class changes begin a fresh attempt. Use a hangar to switch during flight.
           </p>
-          <div class="deck-actions">
+          <div class="deck-actions" data-course-hide>
             <button id="hangar-button" class="button secondary" type="button">
               Change craft · G</button
             ><button id="save-attempt-button" class="button secondary" type="button">
@@ -373,6 +417,13 @@
         contact by safely cancelling the line.
       </p>
       <button class="button primary" data-close="help-dialog">Ready to fly →</button>
+      <button id="first-flight-help-enter" class="button secondary" type="button" hidden>
+        Learn by playing
+      </button>
+      <p id="first-flight-entry-status" role="status" hidden></p>
+      <button id="first-flight-entry-cancel" class="button secondary" type="button" hidden>
+        Cancel course entry
+      </button>
     </dialog>
     <dialog id="collection-dialog">
       <button class="dialog-close" data-close="collection-dialog" aria-label="Close collection">

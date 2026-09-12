@@ -18,6 +18,7 @@ import {
 import { generateLevel } from '../generator.mjs';
 import { resolvePreviewSize } from './viewport.mjs';
 import { captureControlGeometry } from './control-geometry.mjs';
+import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
@@ -292,6 +293,20 @@ function checked() {
   return true;
 }
 function preview() {
+  if ($('preview-mode').value === 'course') {
+    try {
+      const href = firstFlightPreviewURL({ turnPolicy: $('turn-select').value });
+      $('preview-frame').src = href;
+      $('open-preview').href = href;
+      status(
+        'First Flight course uses three fixed practice lessons. Your editor, history and saved configuration stay unchanged.',
+      );
+      return true;
+    } catch (error) {
+      status(`Course preview was not replaced: ${error.message}`, true);
+      return false;
+    }
+  }
   if ($('preview-mode').value === 'couch') {
     $('preview-frame').src = '../couch/?focus=1';
     $('open-preview').href = '../couch/?focus=1';
@@ -428,7 +443,7 @@ function captureGeometry() {
     $('geometry-readout').textContent = JSON.stringify(report, null, 2);
     geometryCaptured = true;
     $('geometry-status').textContent =
-      `Captured ${report.capturedAt}. Snapshot only; configuration and run are not edited.`;
+      `Captured ${report.capturedAt}${$('preview-mode').value === 'course' ? ' · First Flight course' : ''}. Snapshot only; configuration and run are not edited.`;
   } catch (error) {
     geometryCaptured = false;
     $('geometry-readout').textContent = '';

@@ -10,6 +10,8 @@ Open [catalog.json](catalog.json), the [asset-variation supplement](round-06-ass
 
 The shared CLI loads all five catalogs, including `asset-variant-*`, `animation-*`, `collection-*` and `ability-*` IDs. Use `python3 authoring/prompt.py show ability-03-bomber-pickup-drop` or `list` to browse the complete collection. Local rendering substitutes prompt text; it does not call a model or produce media.
 
+The [eight First Flight prompts](round-26-first-flight.md) cover the working v0.16 optional course: instructional copy, exact capture proofs, recovery, saved-flight handoff, input boundaries, layout, themed proposals and offline release checks. They are prose workflows, not additional CLI templates or completed test results.
+
 ## Choose the right workflow
 
 | Need | Recommended skill | Start with |
@@ -27,7 +29,7 @@ The shared CLI loads all five catalogs, including `asset-variant-*`, `animation-
 | Music direction and actual audio handoff | `xonix-audio-director` | Family `07-soundtrack`, then `shared-21` |
 | Complete pack/readability/device review | `xonix-pack-reviewer` | `shared-10`, `shared-12`, `shared-19`, `shared-22` |
 
-The kit contains 12 repository-local skills. The game runtime, procedural audio, imported expansion campaigns and viewport fixtures exist; an individual template is still not evidence that its requested output was produced. Inspect the actual target and inputs before execution. Aseprite source projects, complete production sprite atlases, native store packages and network multiplayer must not be assumed.
+The kit contains 13 repository-local skills. The game runtime, procedural audio, imported expansion campaigns and viewport fixtures exist; an individual template is still not evidence that its requested output was produced. Inspect the actual target and inputs before execution. Aseprite source projects, complete production sprite atlases, native store packages and network multiplayer must not be assumed.
 
 ## Mode is an operational distinction
 

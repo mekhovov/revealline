@@ -3,6 +3,17 @@ import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from
 import { BoardPainter } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
+import {
+  FIRST_FLIGHT_LESSONS,
+  getFirstFlightLesson,
+  resolveCourseRequest,
+  createLessonScenario,
+  captureLessonFacts,
+  createLessonObserver,
+} from './first-flight.mjs';
+import { attachFirstFlightView } from './ui/first-flight-view.mjs';
+import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
+import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
@@ -137,7 +148,7 @@ try {
     installedEntries = content.entries;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.15.0',
+  let buildVersion = '0.16.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -147,8 +158,17 @@ try {
   $('version').textContent =
     `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}${isRelease ? '' : ' / DEV'}`;
   const params = new URLSearchParams(location.search);
+  let courseRequest = resolveCourseRequest(params);
+  const courseSession = !!courseRequest;
+  const courseEmbedded = window.parent !== window;
+  const courseTheme = themesFile.themes.find((item) => item.id === 'fpv');
   let scenario = null;
-  if (params.get('practice') === '1') {
+  if (courseRequest) {
+    scenario = createLessonScenario(courseRequest.lessonId, {
+      turnPolicy: courseRequest.turnPolicy || 'immediate',
+      theme: courseTheme,
+    });
+  } else if (params.get('practice') === '1') {
     const raw = sessionStorage.getItem('revealline.playground.current');
     if (!raw)
       throw new Error(
@@ -172,9 +192,11 @@ try {
     enabled: practiceSession,
     onBlocked: () =>
       warning(
-        controllerPreviewRequested
-          ? 'Use the Controller practice page’s header links to leave practice.'
-          : 'Use the Playground page’s header links to open the solo game. This preview stays in practice.',
+        courseSession
+          ? 'Use End course or Return to the game to leave First Flight. Practice grants no rewards.'
+          : controllerPreviewRequested
+            ? 'Use the Controller practice page’s header links to leave practice.'
+            : 'Use the Playground page’s header links to open the solo game. This preview stays in practice.',
       ),
   });
   // Each archived release keeps its own profile schema, packs and save slot.
@@ -295,7 +317,15 @@ try {
     musicOverride = false,
     masteryDefinition = null,
     masteryObserver = null,
-    masteryAward = null;
+    masteryAward = null,
+    courseObserver = null,
+    courseUnavailable = null,
+    courseView = null,
+    coursePhase = 'ready',
+    courseEntry = null,
+    courseEntryMessage = '',
+    courseEntryHold = false;
+  const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
     getGeneration: () => libraryGeneration,
     commit: (record) => {
@@ -317,6 +347,11 @@ try {
     : classId;
   turnPolicy = library.preferences.turnPolicy;
   bodyId = library.preferences.bodyId;
+  if (courseRequest && !courseRequest.turnPolicy)
+    scenario = createLessonScenario(courseRequest.lessonId, {
+      turnPolicy: library.preferences.turnPolicy,
+      theme: courseTheme,
+    });
   if (scenario) {
     theme = scenario.theme;
     classId = scenario.settings.classId;
@@ -412,6 +447,7 @@ try {
   function controllerScope() {
     const dialog = controllerDialog();
     if (dialog) return `modal:${dialog.id}`;
+    if (courseBlocked()) return `course:${coursePhase}`;
     if (celebrationActive) return 'celebration';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
@@ -430,6 +466,9 @@ try {
     const scope = controllerScope();
     if (scope === 'celebration') return $('skip-celebration');
     if (scope === 'picture') return $('show-result');
+    if (scope.startsWith('course:')) return $('overlay-read');
+    if (courseSession && scope === 'won')
+      return !$('first-flight-next').hidden ? $('first-flight-next') : $('retry-button');
     if (scope === 'won' || scope.startsWith('overview:')) return $('next-button');
     if (scope === 'lost') return $('retry-button');
     return $('start-button');
@@ -460,6 +499,7 @@ try {
       return;
     }
     const scope = controllerScope();
+    if (courseBlocked()) return;
     if (scope === 'paused') resume();
     else if (scope === 'celebration') $('skip-celebration').click();
     else if (scope === 'picture') $('show-result').click();
@@ -469,10 +509,16 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     onActivity: () => {
-      if (started && paused && !dialogOpen()) resume();
+      if (started && paused && !dialogOpen() && !courseBlocked() && !courseEntryHold)
+        resume({ alignCourseBoard: false });
     },
     tapMode: () => $('tap-steering').checked,
-    active: () => started && !dialogOpen() && !['won', 'lost'].includes(run?.status),
+    active: () =>
+      started &&
+      !courseBlocked() &&
+      !courseEntryHold &&
+      !dialogOpen() &&
+      !['won', 'lost'].includes(run?.status),
     onGamepad: (message) => ($('input-status').textContent = message),
     getBindings: () => library.preferences.keyboardBindings,
     readControllerCommand: () => controllerFrame?.flight,
@@ -496,7 +542,14 @@ try {
       ),
     onBack: controllerBack,
     onMenu: () => {
-      if (!dialogOpen() && started && paused && !['won', 'lost'].includes(run?.status)) resume();
+      if (
+        !courseBlocked() &&
+        !dialogOpen() &&
+        started &&
+        paused &&
+        !['won', 'lost'].includes(run?.status)
+      )
+        resume();
     },
     onHint: (message) => {
       $('controller-ui-hint').textContent = message;
@@ -514,6 +567,7 @@ try {
   handlePageHide = (event) => {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
+    if (courseEntry) cancelCourseEntry();
     pause(true);
     masteryAwards.cancelAll();
     cancelRestore();
@@ -529,6 +583,7 @@ try {
       controller.destroy();
       controllerPreview?.destroy();
       practiceNavigation.destroy();
+      courseView?.destroy();
     }
   };
   window.addEventListener('pageshow', (event) => {
@@ -631,6 +686,244 @@ try {
     }
     accumulator = 0;
   }
+  function courseBlocked() {
+    return (
+      !!courseEntry || (courseSession && ['switching', 'leaving', 'ended'].includes(coursePhase))
+    );
+  }
+  function refreshCourse() {
+    if (!courseView) return;
+    if (courseSession && !['switching', 'leaving', 'ended'].includes(coursePhase))
+      coursePhase = !started
+        ? 'ready'
+        : ['won', 'lost'].includes(run?.status)
+          ? 'review'
+          : paused
+            ? 'paused'
+            : 'playing';
+    const snapshot = courseSnapshot();
+    if (courseSession && snapshot?.outcome === 'complete')
+      courseVisit[courseRequest.lessonId] = 'complete';
+    courseView.render({
+      request: courseRequest,
+      phase: coursePhase,
+      snapshot,
+      visit: courseVisit,
+      error: snapshot?.error || '',
+      embedded: courseEmbedded,
+      entry: {
+        available: !practice && !courseSession && !started && !courseEntry,
+        helpAvailable: !practice && !courseSession,
+        pending: !!courseEntry,
+        message: courseEntryMessage,
+      },
+    });
+    if (!courseSession) return;
+    const progressText = `${Object.values(courseVisit).filter((value) => value === 'complete').length} / ${FIRST_FLIGHT_LESSONS.length} lessons this visit`;
+    if ($('campaign-progress').textContent !== progressText)
+      $('campaign-progress').textContent = progressText;
+    const lesson = getFirstFlightLesson(courseRequest.lessonId);
+    const task =
+      coursePhase === 'ended'
+        ? 'Course ended. Use the parent page’s game link to return.'
+        : snapshot?.outcome === 'lost'
+          ? 'Read the loss explanation, then retry or choose another lesson.'
+          : snapshot?.outcome === 'missed'
+            ? 'Picture revealed. Retry the suggested example or skip it.'
+            : snapshot?.outcome === 'complete'
+              ? 'Lesson complete. Enjoy the picture or choose your next lesson.'
+              : snapshot?.available === false
+                ? 'Guidance is unavailable. You can still play, retry, skip or leave.'
+                : lesson.steps.find((item) => item.id === snapshot?.stepId)?.instruction ||
+                  lesson.summary;
+    const text = `${task}${
+      snapshot?.territoryKept && run?.status === 'respawning'
+        ? ' Your unfinished line was cancelled; earlier secured territory is kept.'
+        : ''
+    }`;
+    if ($('first-flight-task').textContent !== text) $('first-flight-task').textContent = text;
+  }
+  function courseSnapshot() {
+    if (courseObserver) return courseObserver.snapshot();
+    if (!courseUnavailable) return null;
+    return {
+      ...courseUnavailable,
+      outcome: run?.status === 'lost' ? 'lost' : run?.status === 'won' ? 'missed' : 'pending',
+    };
+  }
+  function stopCourseGuidance() {
+    courseUnavailable = {
+      ...(courseObserver?.snapshot() || {
+        lessonId: courseRequest.lessonId,
+        steps: [],
+      }),
+      available: false,
+      error: 'Guidance is unavailable for this attempt. You can still play, retry, skip or leave.',
+    };
+    courseObserver = null;
+  }
+  function cancelCourseEntry(message = 'Course entry cancelled. Your flight remains paused.') {
+    if (!courseEntry) return;
+    courseEntry.controller.abort();
+    courseEntry = null;
+    courseEntryMessage = message;
+    clearInput();
+    refreshCourse();
+  }
+  async function enterFirstFlight() {
+    if (practice || courseSession || courseEntry) return;
+    const ticket = {
+      controller: new AbortController(),
+      run,
+      recorder,
+      runId,
+      generation: libraryGeneration,
+      campaign,
+    };
+    courseEntry = ticket;
+    courseEntryHold = true;
+    cancelRestore();
+    clearInput();
+    paused = true;
+    sound.pause();
+    if (!$('help-dialog').open) $('help-dialog').showModal();
+    courseEntryMessage = 'Preparing First Flight. Your current flight stays paused.';
+    refreshCourse();
+    $('first-flight-entry-cancel').focus({ preventScroll: true });
+    const assertCurrent = () => {
+      if (
+        courseEntry !== ticket ||
+        ticket.controller.signal.aborted ||
+        run !== ticket.run ||
+        recorder !== ticket.recorder ||
+        runId !== ticket.runId ||
+        campaign !== ticket.campaign ||
+        libraryGeneration !== ticket.generation
+      )
+        throw new DOMException('Course entry was cancelled by a newer change.', 'AbortError');
+    };
+    try {
+      if (started && ['running', 'respawning'].includes(run.status)) {
+        await retainFlightForFirstFlight({
+          run,
+          recorder,
+          campaign,
+          campaignKey: campaignKey(campaign),
+          themeId: theme.id,
+          bodyId,
+          runId,
+          storage: localStorage,
+          sessionKey,
+          assertCurrent,
+          assertWritable: async () => {
+            assertWriter();
+            if (
+              !storedStateAdopted ||
+              recovery !== null ||
+              (await readAssetStore(journalKey)) !== null
+            )
+              throw new Error('Stored data needs recovery before this flight can be retained.');
+          },
+          withStorageLock: (work) => {
+            if (!navigator.locks?.request)
+              throw new Error('This browser cannot retain the flight safely before navigation.');
+            return navigator.locks.request(
+              `${libraryKey}.backup-lock`,
+              { signal: ticket.controller.signal },
+              work,
+            );
+          },
+          signal: ticket.controller.signal,
+          onProgress: ({ ticks, total }) => {
+            if (courseEntry !== ticket) return;
+            courseEntryMessage = `Verifying your saved flight: ${ticks} / ${total} ticks.`;
+            refreshCourse();
+          },
+        });
+      }
+      assertCurrent();
+      const target = new URL('./', location.href);
+      target.searchParams.set('course', 'first-flight');
+      target.searchParams.set('lesson', FIRST_FLIGHT_LESSONS[0].id);
+      target.searchParams.set('turn-policy', turnPolicy);
+      // Navigation lifecycle callbacks must not autosave again after the checked
+      // handoff. Only an explicit resume/new attempt releases this save hold.
+      location.assign(target.href);
+    } catch (error) {
+      if (courseEntry !== ticket) return;
+      courseEntry = null;
+      courseEntryHold = true;
+      courseEntryMessage = `${error.message} Your flight remains paused here. You can return to it or use its export controls.`;
+      clearInput();
+      refreshCourse();
+      $('first-flight-help-enter').focus({ preventScroll: true });
+    }
+  }
+  function selectCourseLesson(lessonId) {
+    if (!courseSession || ['switching', 'leaving', 'ended'].includes(coursePhase)) return;
+    getFirstFlightLesson(lessonId);
+    coursePhase = 'switching';
+    clearInput();
+    sound.pause();
+    courseRequest = { course: 'first-flight', lessonId, turnPolicy };
+    scenario = createLessonScenario(lessonId, { turnPolicy, theme: courseTheme });
+    classId = scenario.settings.classId;
+    seed = scenario.settings.seed;
+    theme = scenario.theme;
+    bodyId = theme.player;
+    practice = true;
+    demo = false;
+    coursePhase = 'ready';
+    setTheme();
+    prepare();
+    $('start-button').focus({ preventScroll: true });
+  }
+  function nextCourseLesson(skip = false) {
+    if (!courseSession || courseBlocked()) return;
+    const snapshot = courseSnapshot();
+    if (!skip && snapshot?.outcome !== 'complete') return;
+    if (skip && courseVisit[courseRequest.lessonId] !== 'complete')
+      courseVisit[courseRequest.lessonId] = 'skipped';
+    const index = FIRST_FLIGHT_LESSONS.findIndex((item) => item.id === courseRequest.lessonId);
+    if (index + 1 < FIRST_FLIGHT_LESSONS.length)
+      selectCourseLesson(FIRST_FLIGHT_LESSONS[index + 1].id);
+    else leaveCourse();
+  }
+  function leaveCourse() {
+    if (!courseSession || courseBlocked()) return;
+    clearInput();
+    paused = true;
+    sound.pause();
+    celebrationActive = false;
+    painter.skipCelebration?.();
+    show('skip-celebration', false);
+    show('show-result', false);
+    if (courseEmbedded) {
+      coursePhase = 'ended';
+      show('game-overlay', true);
+      $('game-overlay').dataset.kind = 'course-ended';
+      $('overlay-title').textContent = 'First Flight ended.';
+      $('overlay-copy').textContent =
+        'Practice awarded no progress. Use the parent page’s game link to return to ordinary play.';
+      $('overlay-footnote').textContent = '';
+      for (const id of [
+        'start-button',
+        'retry-button',
+        'next-button',
+        'view-picture',
+        'choose-mission',
+        'result-medals',
+        'retry-consequence',
+      ])
+        show(id, false);
+      refreshCourse();
+      $('overlay-read').focus({ preventScroll: true });
+    } else {
+      coursePhase = 'leaving';
+      refreshCourse();
+      location.assign(new URL('./', location.href).href);
+    }
+  }
   function catalog() {
     const entries = [...installedEntries];
     for (const key of Object.keys(library.campaigns)) {
@@ -660,6 +953,8 @@ try {
     $('campaign-select').value = campaignKey(campaign);
   }
   function persistProfile({ mode = 'merge' } = {}) {
+    if (courseSession || courseEntry)
+      return { ok: false, warning: 'Training does not save player-library changes.' };
     let saved;
     try {
       saved =
@@ -693,6 +988,11 @@ try {
     return saved;
   }
   function preferences(patch) {
+    if (courseEntry)
+      return {
+        ok: false,
+        warning: 'Finish or cancel the course handoff before changing settings.',
+      };
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
     return {
@@ -708,6 +1008,8 @@ try {
     entry,
     { levelId, themeId, seed: selectedSeed, restoreAdoption = false } = {},
   ) {
+    if (courseSession || courseEntry)
+      throw new Error('End First Flight before selecting a campaign.');
     if (!entry) throw new Error('This campaign is not installed.');
     if (selectedSeed !== undefined) {
       if (!Number.isInteger(selectedSeed) || selectedSeed < 0 || selectedSeed > 0xffffffff)
@@ -772,6 +1074,7 @@ try {
     $('continue-saved').title = preview?.title || 'Load saved flight';
   }
   function assertWriter() {
+    if (courseSession) throw new Error('Training does not write campaign data.');
     if (!persistenceReady || !writer.writable)
       throw new Error(writer.reason || 'Storage recovery must finish before saving.');
     if (localStorage.getItem(`${libraryKey}.backup-lock`) !== null)
@@ -790,6 +1093,10 @@ try {
     });
   }
   function persistAttempt(notify = true) {
+    if (courseEntryHold)
+      throw new Error(
+        'The course handoff keeps this flight paused. Resume explicitly before saving again.',
+      );
     assertWriter();
     const session = snapshotAttempt();
     let saved;
@@ -807,6 +1114,8 @@ try {
     return session;
   }
   async function restoreAttempt(candidate) {
+    if (courseSession || courseEntry)
+      throw new Error('End First Flight before loading a campaign flight.');
     if (sessionBusy) throw new Error('A flight is already being verified.');
     let entry = catalog().find((e) => campaignKey(e.campaign) === candidate?.campaignKey);
     if (!entry) {
@@ -953,10 +1262,14 @@ try {
         .join(' '),
     restore: restoreAttempt,
     beforeProfileReplacement: () => {
+      if (courseSession || courseEntry)
+        throw new Error('End First Flight before replacing player data.');
       cancelRestore();
       masteryAwards.cancelAll();
     },
     setLibrary: (next) => {
+      if (courseSession || courseEntry)
+        throw new Error('End First Flight before replacing player data.');
       masteryAwards.cancelAll();
       library = next;
       progress = progressFor(library, campaign);
@@ -968,6 +1281,8 @@ try {
       return saved;
     },
     applyBackup: async (prepared) => {
+      if (courseSession || courseEntry)
+        throw new Error('End First Flight before importing a backup.');
       const content = prepareContentCatalog(prepared.packs);
       if (!writer.writable) throw new Error(writer.reason);
       if (!persistenceReady) {
@@ -1000,6 +1315,7 @@ try {
       return result;
     },
     setPacks: async (next) => {
+      if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
       assertWriter();
       const content = prepareContentCatalog(next);
       pause(true);
@@ -1025,6 +1341,45 @@ try {
       refreshCampaigns();
     },
   });
+  courseView = attachFirstFlightView({
+    onEnter: enterFirstFlight,
+    onCancelEnter: () => cancelCourseEntry(),
+    onNext: () => nextCourseLesson(),
+    onSkip: () => nextCourseLesson(true),
+    onSelect: selectCourseLesson,
+    onExit: leaveCourse,
+    getControlLabels: () => {
+      const keys = bindingLabels(resolveKeyBindings(library.preferences.keyboardBindings));
+      return {
+        directions: `Keys: up ${keys.up}, down ${keys.down}, left ${keys.left}, right ${keys.right}. Touch: direction buttons below the board. Controller: ${controllerStickLabel(library.preferences.controllerBindings, 'flight')} or configured direction buttons`,
+        stop: `Stop: ${keys.stop} / visible Stop / controller ${controllerLabels.flight.stop}`,
+        pause: `Pause: ${keys.pause} / visible Pause / controller ${controllerLabels.flight.pause}`,
+      };
+    },
+  });
+  $('help-dialog').addEventListener('cancel', (event) => {
+    if (!courseEntry) return;
+    event.preventDefault();
+    cancelCourseEntry();
+  });
+  $('help-dialog').addEventListener('close', () => {
+    if (courseEntry) cancelCourseEntry();
+  });
+  if (courseSession) {
+    document.body.classList.add('first-flight-session');
+    for (const id of [
+      'library-button',
+      'collection-button',
+      'demo-button',
+      'campaign-select',
+      'class-select',
+      'theme-select',
+      'hangar-button',
+    ]) {
+      $(id).disabled = true;
+      $(id).hidden = true;
+    }
+  }
   $('library-dialog').addEventListener('close', cancelRestore);
   $('campaign-select').onchange = () =>
     selectEntry(catalog().find((e) => campaignKey(e.campaign) === $('campaign-select').value));
@@ -1037,6 +1392,7 @@ try {
     }
   };
   $('hangar-button').onclick = () => {
+    if (courseSession || courseEntry) return;
     pause(true);
     $('switch-class-select').replaceChildren(
       ...(scenario?.classRecipes || classRegistry).map((c) => new Option(c.label, c.id)),
@@ -1052,6 +1408,7 @@ try {
         ?.description || '';
   };
   $('switch-class-button').onclick = () => {
+    if (courseSession || courseEntry) return;
     const next = $('switch-class-select').value;
     $('hangar-dialog').close();
     resume();
@@ -1277,6 +1634,7 @@ try {
     $('body-select').scrollIntoView({ block: 'center', behavior: 'auto' });
   }
   function leavePractice() {
+    if (courseSession || courseEntry) return;
     scenario = null;
     practice = practiceSession;
     demo = false;
@@ -1291,6 +1649,11 @@ try {
   }
   function paintMissions() {
     $('missions').replaceChildren();
+    if (courseSession) {
+      $('campaign-progress').textContent =
+        `${Object.values(courseVisit).filter((value) => value === 'complete').length} / ${FIRST_FLIGHT_LESSONS.length} lessons this visit`;
+      return;
+    }
     campaign.levels.forEach((level, index) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -1313,6 +1676,7 @@ try {
           : '↗';
       b.append(number, name, medal);
       b.onclick = () => {
+        if (courseEntry) return;
         leavePractice();
         levelIndex = index;
         prepare();
@@ -1336,6 +1700,22 @@ try {
     (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
   }
   function currentBriefing() {
+    if (courseSession) {
+      const lesson = getFirstFlightLesson(courseRequest.lessonId);
+      return {
+        title: lesson.title,
+        copy: lesson.summary,
+        fullTitle: `First Flight · ${lesson.title}`,
+        fullBrief: [
+          lesson.summary,
+          ...lesson.instructions,
+          ...lesson.steps.map((step) => `${step.label}: ${step.instruction}`),
+        ].join('\n\n'),
+        facts:
+          'Optional training · Scout · three lives · no mission deadline · no campaign rewards. Retry starts this lesson again. Skip and Exit are always available.',
+        status: lesson.instructions[0],
+      };
+    }
     return missionBriefing(scenario?.level || campaign.levels[levelIndex], {
       brief: scenario ? undefined : campaign.briefs?.[levelIndex],
       objectiveLabel: theme.labels.objective,
@@ -1468,10 +1848,38 @@ try {
       show('retry-consequence', !!explanation);
       $('overlay-footnote').textContent = '';
     }
+    if (courseSession) {
+      const lesson = getFirstFlightLesson(courseRequest.lessonId);
+      const snapshot = courseSnapshot();
+      $('overlay-eyebrow').textContent = 'FIRST FLIGHT / OPTIONAL TRAINING';
+      show('next-button', false);
+      show('result-medals', false);
+      if (kind === 'ready') {
+        $('overlay-title').textContent = lesson.title;
+        $('start-button').textContent = 'Start lesson ↗';
+        $('overlay-footnote').textContent =
+          'Take your time. Training grants no campaign rewards; you can retry, skip or leave.';
+      } else if (kind === 'won') {
+        $('overlay-title').textContent =
+          snapshot?.outcome === 'complete' ? 'Lesson complete.' : 'Picture revealed.';
+        $('overlay-copy').textContent =
+          snapshot?.outcome === 'complete'
+            ? 'You demonstrated this lesson in the real game. Enjoy the picture, repeat it, or choose your next lesson.'
+            : 'You revealed the picture, but this route did not demonstrate every lesson step. Try again, skip or leave whenever you like.';
+        $('retry-button').textContent = 'Repeat lesson ↻';
+        $('overlay-footnote').textContent =
+          'Training results stay in this visit. No campaign scores, pictures or unlocks are awarded.';
+      }
+    }
     refreshSavedFlight();
     refreshMastery();
+    refreshCourse();
   }
   function prepare({ restoreAdoption = false } = {}) {
+    if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
+    courseEntryHold = false;
+    courseEntryMessage = '';
+    if (courseSession) coursePhase = 'ready';
     if (!restoreAdoption) cancelRestore();
     completionWarning = '';
     appearanceRewardIds = [];
@@ -1487,6 +1895,18 @@ try {
       classRecipes: scenario?.classRecipes || classRegistry,
     });
     runId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
+    courseObserver = null;
+    courseUnavailable = null;
+    if (courseSession)
+      try {
+        courseObserver = createLessonObserver({
+          lessonId: courseRequest.lessonId,
+          runId,
+          initial: captureLessonFacts(run, { runId }),
+        });
+      } catch {
+        stopCourseGuidance();
+      }
     const explicitPractice = [MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(
       scenario?.format,
     );
@@ -1507,11 +1927,13 @@ try {
               );
             })
         : campaign;
-    masteryDefinition = explicitPractice
-      ? scenario.masteryDefinition
-      : observedCampaign
-        ? masteryFor(campaignKey(observedCampaign), run.levelId, masteryCatalog)
-        : null;
+    masteryDefinition = courseSession
+      ? null
+      : explicitPractice
+        ? scenario.masteryDefinition
+        : observedCampaign
+          ? masteryFor(campaignKey(observedCampaign), run.levelId, masteryCatalog)
+          : null;
     masteryObserver = null;
     masteryAward = null;
     $('mastery-announcement').textContent = '';
@@ -1565,27 +1987,36 @@ try {
     );
     $('export-replay').disabled = false;
     captionUntil = 0;
-    $('mode-caption').textContent = practice
-      ? 'PLAYGROUND / PRACTICE'
-      : `${campaign.title || campaign.name || campaign.id} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
-    $('campaign-name').textContent = `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`;
+    $('mode-caption').textContent = courseSession
+      ? 'FIRST FLIGHT / OPTIONAL TRAINING'
+      : practice
+        ? 'PLAYGROUND / PRACTICE'
+        : `${campaign.title || campaign.name || campaign.id} · ${String(levelIndex + 1).padStart(2, '0')} / ${campaign.levels.length}`;
+    $('campaign-name').textContent = courseSession
+      ? 'FIRST FLIGHT / LEARN BY PLAYING'
+      : `CAMPAIGN / ${campaign.title || campaign.name || campaign.id}`;
     updateLoadout();
     refreshMissionBrief();
     paintMissions();
     overlay(campaignOverview && !practice ? 'campaign-complete' : 'ready');
     warning(
-      practice
-        ? 'Practice uses the same simulation; campaign awards are disabled.'
-        : campaignOverview
-          ? 'Campaign complete. View your collection or choose a mission to replay.'
-          : currentBriefing().status,
+      courseSession
+        ? getFirstFlightLesson(courseRequest.lessonId).instructions[0]
+        : practice
+          ? 'Practice uses the same simulation; campaign awards are disabled.'
+          : campaignOverview
+            ? 'Campaign complete. View your collection or choose a mission to replay.'
+            : currentBriefing().status,
     );
     refreshHUD();
   }
-  function resume() {
+  function resume({ alignCourseBoard = true } = {}) {
+    if (courseBlocked()) return;
     cancelRestore();
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
     clearInput();
+    courseEntryHold = false;
+    courseEntryMessage = '';
     started = true;
     paused = false;
     (library.preferences.musicEnabled ? sound.enable?.() : sound.disable())?.catch?.(() => {});
@@ -1593,8 +2024,16 @@ try {
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
     $('pause-button').textContent = 'Ⅱ';
+    refreshCourse();
+    if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
   }
   function pause(force) {
+    if (courseBlocked()) {
+      clearInput();
+      paused = true;
+      sound.pause();
+      return;
+    }
     if (celebrationActive) {
       sound.pause?.();
       return;
@@ -1607,7 +2046,7 @@ try {
     clearInput();
     paused = true;
     sound.pause?.();
-    if (!practice && recorder && !sessionBusy) {
+    if (!practice && !courseEntryHold && recorder && !sessionBusy) {
       try {
         persistAttempt(false);
       } catch {}
@@ -1648,19 +2087,22 @@ try {
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
       `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
-    $('hangar-button').disabled = campaignOverview || ['won', 'lost'].includes(run.status);
-    $('restart-button').disabled = campaignOverview;
-    $('pause-button').disabled = campaignOverview;
+    $('hangar-button').disabled =
+      courseSession || !!courseEntry || campaignOverview || ['won', 'lost'].includes(run.status);
+    $('restart-button').disabled = courseBlocked() || campaignOverview;
+    $('pause-button').disabled = courseBlocked() || campaignOverview;
     $('save-attempt-button').disabled =
       !started || practice || ['won', 'lost'].includes(run.status);
     const near = run.hangars?.some(
       (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
     );
-    $('hangar-state').textContent = run.signal?.zoneIds?.length
-      ? run.signal.resistant
-        ? 'Fiber link · signal zone bypassed; line remains vulnerable.'
-        : 'Signal interference · slower movement or disabled equipment.'
-      : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
+    $('hangar-state').textContent = courseSession
+      ? 'Scout · fixed lesson craft; no hangars in training.'
+      : run.signal?.zoneIds?.length
+        ? run.signal.resistant
+          ? 'Fiber link · signal zone bypassed; line remains vulnerable.'
+          : 'Signal interference · slower movement or disabled equipment.'
+        : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
     const encounter = encounterView(run);
@@ -1671,6 +2113,7 @@ try {
       $('encounter-status').dataset.phase = encounter.phase;
     }
     refreshMastery();
+    refreshCourse();
   }
   function eventFeedback(events) {
     for (const event of events) {
@@ -1798,7 +2241,13 @@ try {
       assigned: !!assigned,
       message: status.message.slice(0, 240),
     });
-    if (!paused && started && !dialogOpen() && !['won', 'lost'].includes(run.status)) {
+    if (
+      !courseBlocked() &&
+      !paused &&
+      started &&
+      !dialogOpen() &&
+      !['won', 'lost'].includes(run.status)
+    ) {
       if (elapsed > 0.25) {
         pause(true);
         warning('Paused after a long frame interruption. Resume to continue safely.');
@@ -1824,6 +2273,13 @@ try {
           );
         }
         const beforeStatus = run.status;
+        let lessonBefore = null;
+        if (courseObserver)
+          try {
+            lessonBefore = captureLessonFacts(run, { runId });
+          } catch {
+            stopCourseGuidance();
+          }
         stepRun(run, command, FIXED_DT);
         controls = controllerBoostAfterRecovery({
           beforeStatus,
@@ -1861,12 +2317,19 @@ try {
               'Replay recording stopped. You can keep playing; start a new attempt to record again.',
             );
           }
+        if (courseObserver)
+          try {
+            courseObserver.observe(lessonBefore, captureLessonFacts(run, { runId }));
+          } catch {
+            stopCourseGuidance();
+          }
         eventFeedback(run.events);
       }
       if (!handled && ['won', 'lost'].includes(run.status)) {
         handled = true;
         paused = true;
         clearInput();
+        refreshCourse();
         if (run.status === 'won' && !practice) {
           const previousProgress = progress;
           try {
@@ -1954,6 +2417,7 @@ try {
   for (const c of scenario?.classRecipes || classRegistry)
     $('class-select').append(new Option(c.label, c.id));
   $('theme-select').onchange = () => {
+    if (courseSession || courseEntry) return;
     cancelRestore();
     themeOverride = true;
     theme =
@@ -1966,6 +2430,7 @@ try {
     preferences({ themeId: theme.id, bodyId });
   };
   $('body-select').onchange = () => {
+    if (courseEntry) return;
     cancelRestore();
     bodyWarning = '';
     bodyId = $('body-select').value;
@@ -1974,15 +2439,21 @@ try {
     $('match-class-appearance').checked = false;
   };
   $('class-select').onchange = () => {
+    if (courseSession || courseEntry) return;
     classId = $('class-select').value;
     demo = false;
     preferences({ classId });
     prepare();
   };
   $('turn-select').onchange = () => {
+    if (courseEntry || courseBlocked()) return;
     turnPolicy = $('turn-select').value;
     demo = false;
     preferences({ turnPolicy });
+    if (courseSession) {
+      selectCourseLesson(courseRequest.lessonId);
+      return;
+    }
     prepare();
   };
   $('start-button').onclick = () => resume();
@@ -2005,12 +2476,13 @@ try {
   };
   $('pause-button').onclick = () => pause();
   $('restart-button').onclick = () => {
-    if (campaignOverview) return;
+    if (campaignOverview || courseBlocked()) return;
     demo = false;
     prepare();
     resume();
   };
   $('retry-button').onclick = () => {
+    if (courseBlocked()) return;
     demo = false;
     prepare();
     resume();
@@ -2028,6 +2500,11 @@ try {
     }
   };
   $('next-button').onclick = () => {
+    if (courseBlocked()) return;
+    if (courseSession) {
+      nextCourseLesson();
+      return;
+    }
     if (campaignOverview && !practice) {
       $('collection-button').click();
       return;
@@ -2054,6 +2531,7 @@ try {
     prepare();
   };
   $('demo-button').onclick = () => {
+    if (courseSession || courseEntry) return;
     leavePractice();
     levelIndex = 0;
     practice = true;
@@ -2081,6 +2559,7 @@ try {
     $('help-dialog').showModal();
   };
   $('collection-button').onclick = () => {
+    if (courseSession || courseEntry) return;
     pause(true);
     $('achievement-campaign').textContent =
       `Campaign achievements · ${campaign.title || campaign.name || campaign.id}`;
@@ -2101,9 +2580,13 @@ try {
   };
   $('choose-appearance').onclick = focusAppearance;
   $('collection-choose-appearance').onclick = focusAppearance;
-  document
-    .querySelectorAll('[data-close]')
-    .forEach((b) => (b.onclick = () => $(b.dataset.close).close()));
+  document.querySelectorAll('[data-close]').forEach(
+    (b) =>
+      (b.onclick = () => {
+        if (b.dataset.close === 'help-dialog' && courseEntry) cancelCourseEntry();
+        $(b.dataset.close).close();
+      }),
+  );
   $('export-replay').onclick = async () => {
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
@@ -2132,6 +2615,8 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
+    if (courseEntry)
+      cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
     controllerPreview?.clear();
     sound.pause();
@@ -2186,8 +2671,9 @@ try {
   $('overlay-title').textContent = 'The game could not load.';
   $('overlay-copy').textContent = error.message;
   show('start-button', false);
-  $('run-message').textContent =
-    new URLSearchParams(location.search).get('practice') === '1'
+  $('run-message').textContent = new URLSearchParams(location.search).has('course')
+    ? 'This course could not open. Use REVEAL / LINE to return to the normal game; no training progress was saved.'
+    : new URLSearchParams(location.search).get('practice') === '1'
       ? 'Open the Playground and choose Play configuration, or use REVEAL / LINE to return to campaign.'
       : 'Serve the project through HTTP and check the content files. Your saved progress is unchanged.';
   console.error(error);

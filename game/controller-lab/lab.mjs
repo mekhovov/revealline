@@ -5,6 +5,8 @@ import {
 import { entryScenario } from '../playground/model.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { preparePack, resolvePackCampaign } from '../packs.mjs';
+import { FIRST_FLIGHT_LESSONS, createLessonScenario } from '../first-flight.mjs';
+import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
 
 const $ = (id) => document.getElementById(id),
   frame = $('game-frame'),
@@ -199,7 +201,14 @@ function selectedMission() {
   return missions[Number($('mission').value)];
 }
 function refreshClasses() {
-  const entry = selectedMission()?.entry;
+  const choice = selectedMission();
+  $('craft').disabled = !!choice?.courseId;
+  if (choice?.courseId) {
+    $('craft').replaceChildren();
+    option($('craft'), 'scout', 'Scout · fixed course class');
+    return;
+  }
+  const entry = choice?.entry;
   if (!entry) return;
   const selected = $('craft').value;
   $('craft').replaceChildren();
@@ -224,17 +233,30 @@ async function loadPractice() {
   $('load').disabled = true;
   status('Validating practice before opening the real game…');
   try {
-    const candidate = entryScenario(choice.entry, choice.levelId, {
-      classId: $('craft').value,
-      turnPolicy: $('steering').value,
-      seed: 1,
-    });
+    const candidate = choice.courseId
+      ? createLessonScenario(choice.courseId, {
+          turnPolicy: $('steering').value,
+          theme: choice.theme,
+        })
+      : entryScenario(choice.entry, choice.levelId, {
+          classId: $('craft').value,
+          turnPolicy: $('steering').value,
+          seed: 1,
+        });
     const { scenario, warnings } = await prepareScenario(candidate);
     if (ticket !== loadEpoch || disposed) return;
     const nextSession = crypto.randomUUID().replaceAll('-', '');
     // The same explicit practice handoff used by Playground. Persist only the
     // fully validated candidate; never write to profile, packs or reward stores.
-    sessionStorage.setItem('revealline.playground.current', JSON.stringify(scenario));
+    if (!choice.courseId)
+      sessionStorage.setItem('revealline.playground.current', JSON.stringify(scenario));
+    const destination = choice.courseId
+      ? firstFlightPreviewURL({
+          lessonId: choice.courseId,
+          turnPolicy: scenario.settings.turnPolicy,
+          controllerSession: nextSession,
+        })
+      : `../?practice=1&controller-preview=1&controller-session=${nextSession}&revision=${++revision}`;
     disconnect();
     loaded = false;
     session = nextSession;
@@ -243,7 +265,7 @@ async function loadPractice() {
     $('scope').textContent = 'Loading practice';
     $('focused').textContent = '—';
     $('pad-status').textContent = 'Not joined';
-    frame.src = `../?practice=1&controller-preview=1&controller-session=${session}&revision=${++revision}`;
+    frame.src = destination;
     status(
       `${choice.label} prepared. Connect the virtual pad when the game appears.${warnings.length ? ` ${warnings.join(' ')}` : ''}`,
     );
@@ -350,6 +372,12 @@ try {
       packNotes.push(`${name} unavailable: ${error.message}`);
     }
   }
+  for (const lesson of FIRST_FLIGHT_LESSONS)
+    missions.push({
+      courseId: lesson.id,
+      theme: themes.themes.find((theme) => theme.id === 'fpv'),
+      label: `First Flight / ${lesson.title}`,
+    });
   if (!disposed) {
     missions.forEach((mission, index) => option($('mission'), String(index), mission.label));
     $('mission').disabled = false;
