@@ -1,5 +1,75 @@
 export const PACK_CATALOG_VERSION = 'xonix-pack-catalog.v1';
 
+export function createPackLaunchGuard() {
+  let generation = 0;
+  const contexts = new WeakMap();
+  const current = (ticket, context) =>
+    !!ticket &&
+    ticket.generation === generation &&
+    contexts.has(ticket) &&
+    contexts.get(ticket) === context;
+  const assertCurrent = (ticket, context) => {
+    if (!current(ticket, context))
+      throw new Error('Pack selection was replaced by a newer action.');
+  };
+  return Object.freeze({
+    begin(context) {
+      const ticket = Object.freeze({ generation: ++generation });
+      contexts.set(ticket, context);
+      return ticket;
+    },
+    invalidate() {
+      generation += 1;
+    },
+    current,
+    assert: assertCurrent,
+    async run(ticket, context, getContext, task) {
+      if (typeof getContext !== 'function' || typeof task !== 'function')
+        throw new TypeError('Guarded pack work needs context and task functions.');
+      assertCurrent(ticket, getContext());
+      if (getContext() !== context)
+        throw new Error('Pack selection was replaced by a newer action.');
+      const result = await task();
+      assertCurrent(ticket, getContext());
+      if (getContext() !== context)
+        throw new Error('Pack selection was replaced by a newer action.');
+      return result;
+    },
+    advance(ticket, before, after) {
+      assertCurrent(ticket, before);
+      contexts.set(ticket, after);
+    },
+  });
+}
+
+export function canAutoStartPackLaunch({
+  current,
+  blocked,
+  started,
+  paused,
+  overlayKind,
+  run,
+  expectedRun,
+  entry,
+  expectedEntry,
+  campaignKey,
+  expectedCampaignKey,
+  levelId,
+  expectedLevelId,
+}) {
+  return (
+    current === true &&
+    blocked === false &&
+    started === false &&
+    paused === true &&
+    overlayKind === 'ready' &&
+    run === expectedRun &&
+    entry === expectedEntry &&
+    campaignKey === expectedCampaignKey &&
+    levelId === expectedLevelId
+  );
+}
+
 const stableId = (value) =>
   typeof value === 'string' && /^[a-z0-9](?:[a-z0-9-]{0,78}[a-z0-9])?$/.test(value);
 const shortText = (value, max = 160) =>
