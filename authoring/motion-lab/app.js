@@ -1,4 +1,5 @@
-import {DIRECTIONS, clamp, createMotionState, advanceMotion, validatePresets} from "./motion.mjs";
+import {DIRECTIONS, clamp, createMotionState, validatePresets} from "./motion.mjs";
+import {createManualSteering} from "./steering.mjs";
 import {nextGridCenter} from "./grid-motion.mjs";
 import {createAnimationState, advanceAnimation, validateAnimationRecipes} from "./animation.mjs";
 import {paintCharacter} from "./render-character.mjs";
@@ -12,7 +13,7 @@ const ctx = canvas.getContext("2d", {alpha: false});
 const inspectionCanvas = $("inspection"), inspectionCtx = inspectionCanvas.getContext("2d", {alpha: false});
 const presetURL = new URL("./presets.json", import.meta.url);
 const keyDirections = new Map([["ArrowUp", "up"], ["KeyW", "up"], ["ArrowRight", "right"], ["KeyD", "right"], ["ArrowDown", "down"], ["KeyS", "down"], ["ArrowLeft", "left"], ["KeyA", "left"]]);
-const held = new Map();
+const steering = createManualSteering();
 const images = new Map();
 const mediaPreference = matchMedia("(prefers-reduced-motion: reduce)");
 let presets, selection, motion, state;
@@ -155,7 +156,7 @@ function setupAbilities(){
     $(id).addEventListener("click",()=>abilityCommand(type));
     $(id).addEventListener("keydown",event=>{if(["Enter","Space"].includes(event.code)){event.preventDefault();if(!event.repeat)abilityCommand(type);}});
   }
-  $("ability-reset").addEventListener("click",()=>{autoplay=false;reset();pause("Ability test reset at its route start. Press Play or move to begin.");$("ability-message").textContent="Toy targets, charges, link budget and effects reset. Selected class, link and appearance kept.";});
+  $("ability-reset").addEventListener("click",()=>{autoplay=false;reset();pause("Ability test reset at its route start. Press Play, then choose a direction.");$("ability-message").textContent="Toy targets, charges, link budget and effects reset. Selected class, link and appearance kept.";});
   $("apply-class-appearance").addEventListener("click",()=>{
     const item=abilityConfig.classes.find(item=>item.id===abilityState.classId),bodyId=item.preferredBodies[currentContext().themeId];
     const result=equipCharacter(collection,profile,bodyId,currentContext(),currentContext());
@@ -514,8 +515,8 @@ function render() {
 function readouts() {
   const heading = ((state.heading * 180 / Math.PI) % 360 + 360) % 360;
   const cardinal = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"][Math.round(heading / 45) % 8];
-  $("speed-value").textContent = state.speed.toFixed(1);
-  $("speed-fill").style.width = `${clamp(state.speed / (16 * motion.boostMultiplier), 0, 1) * 100}%`;
+  $("speed-value").textContent = paused ? "0.0" : state.speed.toFixed(1);
+  $("speed-fill").style.width = `${clamp((paused ? 0 : state.speed) / (16 * motion.boostMultiplier), 0, 1) * 100}%`;
   $("heading-value").textContent = `${cardinal} · ${Math.round(heading).toString().padStart(3, "0")}°`;
   $("heading-arrow").style.transform = `rotate(${heading}deg)`;
   const body = presets.characters[selection.character];
@@ -525,33 +526,31 @@ function readouts() {
   $("rotor-state").textContent = rotor && body.rotors.length ? !showRotors ? "Rotor layer hidden" : reducedMotion ? `${rotor.bladeCount}-blade detail frozen` : paused ? `${rotor.bladeCount}-blade rotors paused` : `${rotor.bladeCount}-blade · ${state.mode === "boost" ? "boost" : state.speed > .1 ? "travel" : "idle"}` : recipe.components.length ? recipe.components.map(component => component.type).join(" + ") : "Static body";
   $("state-label").textContent = paused ? "Paused" : state.mode === "turning" ? "Body turning · cardinal travel" : state.mode === "boost" ? "Boost" : state.mode === "slow" ? "Slow input" : state.speed > 0.1 ? "In motion" : "Ready";
   $("mode-label").textContent = autoplay ? "Autoplay route" : "Manual input";
-  $("turn-queue").textContent = motion.turnPolicy !== "grid-center" ? "Immediate · no queued turn" : autoplay ? "Grid center · autoplay route, human buffer empty" : state.queuedDirection ? `Queued ${state.queuedDirection.toUpperCase()} → next center (${nextGridCenter(state,presets.board).x.toFixed(1)}, ${nextGridCenter(state,presets.board).y.toFixed(1)}) · keep held to turn` : `Grid center · buffer empty · position ${state.x.toFixed(2)}, ${state.y.toFixed(2)}`;
+  $("turn-queue").textContent = motion.turnPolicy !== "grid-center" ? "Immediate · no queued turn" : autoplay ? "Grid center · autoplay route, human buffer empty" : state.queuedDirection ? `Queued ${state.queuedDirection.toUpperCase()} → next center (${nextGridCenter(state,presets.board).x.toFixed(1)}, ${nextGridCenter(state,presets.board).y.toFixed(1)}) · turn retained after release` : `Grid center · buffer empty · position ${state.x.toFixed(2)}, ${state.y.toFixed(2)}`;
   $("play-pause").textContent = paused ? "Play" : "Pause";
   $("autoplay").checked = autoplay;
   for (const [id, active] of [["boost", keyBoost || pointerBoost], ["slow", keySlow || pointerSlow]]) {
     $(id).classList.toggle("is-held", active); $(id).setAttribute("aria-pressed", String(active));
   }
-  for (const button of document.querySelectorAll("[data-direction]")) button.classList.toggle("is-held", [...held.values()].includes(button.dataset.direction));
+  for (const button of document.querySelectorAll("[data-direction]")) button.classList.toggle("is-held", steering.snapshot() === button.dataset.direction);
   abilityReadouts();
 }
 
-function clearHeld() {
-  held.clear(); keyBoost = keySlow = pointerBoost = pointerSlow = false;
-  if (state) state.queuedDirection = null;
+function clearHeld(options) {
+  steering.clear(options); keyBoost = keySlow = pointerBoost = pointerSlow = false;
 }
 
-function pause(reason = "Paused. Press Play or make a movement input to resume.") {
+function pause(reason = "Paused. Press Play to continue the saved direction.") {
   if (!state) return;
-  paused = true; state.speed = 0; state.turning = false; clearHeld(); particles = []; lastTime = null;
+  paused = true; clearHeld({preserveDirection:true}); particles = []; lastTime = null;
   eventNote(reason); readouts(); render();
 }
 
-function resume() {paused = false; lastTime = null; eventNote(autoplay ? "Autoplay follows the same orthogonal route." : "Manual movement ready. Shift boosts; Space slows."); readouts();}
+function resume() {paused = false; lastTime = null; eventNote(autoplay ? "Autoplay follows the same orthogonal route." : "Manual direction continues after release. Shift boosts; Space slows."); readouts();}
 
-function manualStart(key, direction) {
-  autoplay = false;
-  if (!held.has(key)) held.set(key, direction);
-  if (paused) resume();
+function manualStart(key, direction, repeat = false) {
+  if (steering.press(key, direction, {active:!paused, repeat})) autoplay = false;
+  else if (paused) eventNote("Paused. Press Play before choosing a new direction.");
   readouts();
 }
 
@@ -564,7 +563,7 @@ function reset() {
 function setReduced(value) {
   reducedMotion = value; $("reduced-motion").checked = value; particles = [];
   if (value) pause("Reduced motion: particles removed, rotor detail frozen. Press Play when ready.");
-  else eventNote("Rotor and particle effects available. Motion resumes only on your input.");
+  else eventNote("Rotor and particle effects available. Press Play to resume motion.");
   render();
 }
 
@@ -578,7 +577,7 @@ function setupControls() {
   $("turn-policy").value = motion.turnPolicy || "immediate";
   $("turn-policy").addEventListener("change", event => {
     motion.turnPolicy=event.target.value; autoplay=false; reset();
-    pause(`${motion.turnPolicy === "grid-center" ? "Grid-center buffered" : "Immediate"} policy selected. Explicit reset to (${state.x.toFixed(1)}, ${state.y.toFixed(1)}); held commands cleared. Move or press Play to begin.`);
+    pause(`${motion.turnPolicy === "grid-center" ? "Grid-center buffered" : "Immediate"} policy selected. Explicit reset to (${state.x.toFixed(1)}, ${state.y.toFixed(1)}); held commands cleared. Press Play, then choose a direction.`);
   });
   setOptions("theme", presets.themes, selection.theme);
   setOptions("terrain-layer", presets.terrainLayers, selection.terrainLayer);
@@ -605,15 +604,15 @@ function setupControls() {
   $("reset").addEventListener("click", reset);
   $("autoplay").addEventListener("change", event => {autoplay = event.target.checked; clearHeld(); if (autoplay) reset(); resume();});
   for (const button of document.querySelectorAll("[data-direction]")) {
-    setHeldPointer(button, id => manualStart(`pointer-${id}`, button.dataset.direction), id => held.delete(`pointer-${id}`));
+    setHeldPointer(button, id => manualStart(`pointer-${id}`, button.dataset.direction), id => steering.release(`pointer-${id}`));
     button.addEventListener("keydown", event => {if (["Space", "Enter"].includes(event.code) && !event.repeat) {event.preventDefault(); manualStart(`button-${button.dataset.direction}`, button.dataset.direction);}});
-    button.addEventListener("keyup", event => {if (["Space", "Enter"].includes(event.code)) {event.preventDefault(); held.delete(`button-${button.dataset.direction}`);}});
-    button.addEventListener("blur", () => {held.delete(`button-${button.dataset.direction}`); readouts();});
+    button.addEventListener("keyup", event => {if (["Space", "Enter"].includes(event.code)) {event.preventDefault(); steering.release(`button-${button.dataset.direction}`);}});
+    button.addEventListener("blur", () => {steering.release(`button-${button.dataset.direction}`); readouts();});
   }
-  setHeldPointer($("boost"), () => {pointerBoost = true; if (paused) resume(); eventNote("Boost held: higher travel speed and rotor rate.");}, () => {pointerBoost = false;});
-  setHeldPointer($("slow"), () => {pointerSlow = true; if (paused) resume(); eventNote("Slow held: deliberate movement, same direction controls.");}, () => {pointerSlow = false;});
+  setHeldPointer($("boost"), () => {if (paused) return; pointerBoost = true; eventNote("Boost held: higher travel speed and rotor rate.");}, () => {pointerBoost = false;});
+  setHeldPointer($("slow"), () => {if (paused) return; pointerSlow = true; eventNote("Slow held: deliberate movement, same direction controls.");}, () => {pointerSlow = false;});
   for (const [id, setter] of [["boost", value => {pointerBoost = value;}], ["slow", value => {pointerSlow = value;}]]) {
-    $(id).addEventListener("keydown", event => {if (["Space", "Enter"].includes(event.code)) {event.preventDefault(); if (!event.repeat) {setter(true); if (paused) resume();}}});
+    $(id).addEventListener("keydown", event => {if (["Space", "Enter"].includes(event.code)) {event.preventDefault(); if (!event.repeat && !paused) setter(true);}});
     $(id).addEventListener("keyup", event => {if (["Space", "Enter"].includes(event.code)) {event.preventDefault(); setter(false);}});
     $(id).addEventListener("blur", () => {setter(false); readouts();});
   }
@@ -622,17 +621,17 @@ function setupControls() {
     if (event.target.closest("input,select,textarea,button,[contenteditable=true]")) return;
     if(["KeyE","KeyR"].includes(event.code)&&!event.ctrlKey&&!event.metaKey&&!event.altKey){event.preventDefault();if(!event.repeat)abilityCommand(event.code==="KeyE"?"act":"pickup");return;}
     // Key repeat after Pause/focus loss cannot resurrect a cleared command; require a fresh press.
-    if (event.repeat && (paused || keyDirections.has(event.code) && !held.has(event.code) || event.code === "Space" && !keySlow)) return;
+    if (event.repeat) return;
     if (keyDirections.has(event.code)) {event.preventDefault(); manualStart(event.code, keyDirections.get(event.code));}
-    else if (["ShiftLeft", "ShiftRight"].includes(event.code)) {keyBoost = true; if (paused) resume();}
-    else if (event.code === "Space") {event.preventDefault(); keySlow = true; if (paused) resume();}
+    else if (["ShiftLeft", "ShiftRight"].includes(event.code)) {if (!paused) keyBoost = true;}
+    else if (event.code === "Space") {event.preventDefault(); if (!paused) keySlow = true;}
   });
   window.addEventListener("keyup", event => {
-    held.delete(event.code);
+    steering.release(event.code);
     if (["ShiftLeft", "ShiftRight"].includes(event.code)) keyBoost = false;
     if (event.code === "Space") keySlow = false;
   });
-  window.addEventListener("blur", () => pause("Paused when the window lost focus. Press Play or move to resume."));
+  window.addEventListener("blur", () => {pause("Paused when the window lost focus. Press Play to continue the saved direction."); steering.clear({preserveDirection:true,forgetPhysical:true});});
   document.addEventListener("visibilitychange", () => {if (document.hidden) pause("Paused while this tab is hidden. Resume when ready.");});
   mediaPreference.addEventListener("change", event => {if (event.matches) setReduced(true);});
 }
@@ -641,8 +640,7 @@ function frame(time) {
   if (!presets) return;
   const dt = lastTime === null ? 0 : Math.min((time - lastTime) / 1000, 0.25);
   lastTime = time;
-  const directions = [...held.values()];
-  state = advanceMotion(state, {direction: directions.at(-1) || null, boost: keyBoost || pointerBoost, slow: keySlow || pointerSlow, autoplay, paused, reducedMotion}, motion, presets.board, presets.route, dt);
+  state = steering.advance(state, {boost: keyBoost || pointerBoost, slow: keySlow || pointerSlow, autoplay, paused, reducedMotion}, motion, presets.board, presets.route, dt);
   abilityState=advanceAbility(abilityState,{player:abilityPlayer(),paused:paused||!abilityEnabled},dt,abilityConfig);
   updateParticles(dt);
   const travel = {visualSpeed:state.visualSpeed,cruiseSpeed:motion.cruiseSpeed};
@@ -652,7 +650,7 @@ function frame(time) {
   if (time - lastReadout > 80) {
     readouts(); lastReadout = time;
     if (!paused && state.mode !== lastEventMode) {
-      const messages = {boost: "Boost: immediate speed response; turn policy remains unchanged.", slow: "Slow input: finer movement at the selected multiplier.", turning: motion.turnPolicy === "grid-center" ? "Travel turned at a cell center; the body's facing follows visually." : "Cardinal travel changes immediately; only the body's facing is smoothed.", cruise: "Cruise: compact body, stable direction, restrained particles.", idle: "Stopped. Rotors idle while the study is running."};
+      const messages = {boost: "Boost: immediate speed response; turn policy remains unchanged.", slow: "Slow input: finer movement at the selected multiplier.", turning: motion.turnPolicy === "grid-center" ? "Travel turned at a cell center; the body's facing follows visually." : "Cardinal travel changes immediately; only the body's facing is smoothed.", cruise: "Cruise: compact body, stable direction, restrained particles.", idle: "Choose a direction to begin. Release keeps the selected direction; Pause freezes movement."};
       eventNote(messages[state.mode]); lastEventMode = state.mode;
     }
   }

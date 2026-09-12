@@ -155,7 +155,13 @@ export async function settle(predicate, message = 'Asynchronous host action did 
 let sequence = 0;
 export async function soloPage(
   t,
-  { campaign, storage = memoryStorage(), search = '', previewStorage = memoryStorage() } = {},
+  {
+    campaign,
+    storage = memoryStorage(),
+    search = '',
+    previewStorage = memoryStorage(),
+    titleScreen = false,
+  } = {},
 ) {
   const doc = new SoloDocument(),
     win = new Events(),
@@ -261,6 +267,12 @@ export async function soloPage(
     for (const [key, value] of methods) BoardPainter.prototype[key] = value;
   });
   await import(`../../app.mjs?difficultyHost=${++sequence}`);
+  // Ordinary host tests begin at the briefing through real menu handlers.
+  // Shell-specific cases can retain the title with titleScreen:true.
+  if (!titleScreen && $('shell-home').open) {
+    $('shell-play').click();
+    $('shell-briefing').click();
+  }
   assert.ok(
     scene,
     `${$('overlay-title').textContent}: ${$('overlay-copy').textContent}\n${errors.map((e) => e.stack).join('\n')}`,

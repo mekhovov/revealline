@@ -13,7 +13,12 @@ import {
 /** Settings-only key capture. The host applies validated preferences and owns
  * persistence; a failed disk save may still apply the map to this session.
  */
-export function attachKeySettings({ getBindings, setBindings, onChanged = () => {} }) {
+export function attachKeySettings({
+  getBindings,
+  setBindings,
+  onChanged = () => {},
+  continuousSteering = false,
+}) {
   const required = (id) => {
     const element = document.getElementById(id);
     if (!element) throw new Error(`Keyboard settings need #${id}.`);
@@ -94,6 +99,7 @@ export function attachKeySettings({ getBindings, setBindings, onChanged = () => 
       label = document.createElement('span'),
       button = document.createElement('button');
     row.className = 'key-binding-row';
+    row.hidden = continuousSteering && action === 'stop';
     label.className = 'key-binding-label';
     label.textContent = KEY_ACTION_LABELS[action];
     button.type = 'button';

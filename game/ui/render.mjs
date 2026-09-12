@@ -253,8 +253,8 @@ export class BoardPainter {
       );
     }
     if (!fullReveal || revealAlpha > 0) {
-      ctx.fillStyle = p.field;
-      ctx.globalAlpha = 0.94 * revealAlpha;
+      ctx.fillStyle = '#000000';
+      ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
       for (let y = 0; y < 36; y++) {
         let start = -1;

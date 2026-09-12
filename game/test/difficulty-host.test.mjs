@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { createRun, stepRun, releaseInputs, FIXED_DT } from '../core/index.mjs';
+import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { suspendSession, saveSession } from '../sessions.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
@@ -64,11 +64,7 @@ function ticks(page, count) {
 }
 function changeOnly(page, value, expectedPaused) {
   const before = page.rendered.run;
-  // Public release on a detached observation is the permitted neutral-input
-  // oracle; this copy is never supplied to the app or its recorder.
-  const neutral = structuredClone(before);
-  releaseInputs(neutral);
-  const checkpoint = authoritativeCheckpoint(neutral);
+  const checkpoint = authoritativeCheckpoint(before);
   const raw = page.storage.getItem(sessionKey);
   const writes = slotWrites(page).length;
   const reads = page.padReads;
@@ -78,7 +74,7 @@ function changeOnly(page, value, expectedPaused) {
   assert.deepEqual(
     authoritativeCheckpoint(before),
     checkpoint,
-    'only the explicit neutral release is permitted',
+    'settings preserve exact simulation and pending turn',
   );
   assert.equal(page.storage.getItem(sessionKey), raw, 'saved slot bytes remain exact');
   assert.equal(slotWrites(page).length, writes, 'no hidden pause/autosave');
@@ -149,10 +145,11 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const second = pauseAndRead(page, standard);
     assert.equal(second.runId, first.runId);
     assert.equal(second.replay.ticks, 42);
-    assert.deepEqual(second.replay.segments[0], first.replay.segments[0]);
-    assert.equal(second.replay.segments[1].releaseBefore, true);
-    assert.equal(second.replay.segments[1].ticks, 12);
-    assert.equal(second.replay.segments[1].input.direction, 'down');
+    assert.equal(second.format, 'xonix-session.v2');
+    assert.equal(second.continuation.direction, 'down');
+    assert.equal(second.replay.segments.length, 1);
+    assert.equal(second.replay.segments[0].ticks, 42);
+    assert.equal(second.replay.segments[0].input.direction, 'down');
     retryInto(page, gentle, run);
     page.key('ArrowDown');
     ticks(page, 12);
@@ -267,6 +264,7 @@ test('a legally lost Standard attempt retries through the result button into fre
   page.$('start-button').click();
   page.key('ArrowDown');
   ticks(page, 30);
+  page.key('ArrowDown', false);
   const first = pauseAndRead(page, standard);
   const run = page.rendered.run;
   page.$('start-button').click();

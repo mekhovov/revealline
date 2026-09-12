@@ -1,5 +1,5 @@
 import { onNativeInactive, nativePlatform } from './platform.mjs';
-import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
+import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -15,6 +15,7 @@ import { attachFirstFlightView } from './ui/first-flight-view.mjs';
 import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
 import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
+import { attachGameShell } from './ui/game-shell.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -92,13 +93,7 @@ import {
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
-import {
-  createRecorder,
-  recordInput,
-  recordRelease,
-  exportReplay,
-  MAX_REPLAY_TICKS,
-} from './replay.mjs';
+import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
 
 const $ = (id) => document.getElementById(id),
   show = (id, on) => ($(id).hidden = !on);
@@ -430,7 +425,9 @@ try {
     seed = scenario.settings.seed;
     bodyId = theme.player;
   }
-  const sound = new Soundscape();
+  const sound = new Soundscape({ persistentMusic: true });
+  let neutralResumeTick = false;
+  let gameShell = null;
   const painter = new BoardPainter(presets, {
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -487,7 +484,7 @@ try {
   }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
-    return `Controller: ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.stop} stop · ${b.pause} pause.`;
+    return `Tap a direction to fly. ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.pause} pause.`;
   }
   function refreshControllerPrompts() {
     controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
@@ -581,17 +578,15 @@ try {
   const input = attachInput({
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
-    onActivity: () => {
-      if (started && paused && !dialogOpen() && !courseBlocked() && !courseEntryHold)
-        resume({ alignCourseBoard: false });
-    },
+    continuousSteering: () => true,
     tapMode: () => $('tap-steering').checked,
     active: () =>
       started &&
+      !paused &&
       !courseBlocked() &&
       !courseEntryHold &&
       !dialogOpen() &&
-      !['won', 'lost'].includes(run?.status),
+      run?.status === 'running',
     onGamepad: (message) => ($('input-status').textContent = message),
     getBindings: () => library.preferences.keyboardBindings,
     readControllerCommand: () => controllerFrame?.flight,
@@ -646,7 +641,7 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     clearInput();
-    sound.pause();
+    sound.suspend();
     writer.release();
     persistenceReady = false;
     controllerPreview?.clear();
@@ -673,7 +668,7 @@ try {
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
-    const description = `Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; stop ${labels.stop}; pause ${labels.pause}.`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; pause ${labels.pause}. Releasing a direction keeps you moving.`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -687,7 +682,7 @@ try {
       $(id).querySelector('kbd').title = labels[action];
     }
     $('hangar-button').textContent = `Change craft · ${labels.hangar}`;
-    $('stop-button').title = `Stop moving · ${labels.stop}`;
+    $('stop-button').hidden = true;
     for (const button of document.querySelectorAll('[data-move]'))
       button.title = `Move ${button.dataset.move} · ${labels[button.dataset.move]}`;
     if (!started && !campaignOverview)
@@ -695,6 +690,7 @@ try {
         `Move with your configured keys · ${labels.ability} ability · ${labels.pickup} supply · touch controls below`;
   }
   const keySettings = attachKeySettings({
+    continuousSteering: true,
     getBindings: () => library.preferences.keyboardBindings,
     setBindings: (value) => {
       preferences({ keyboardBindings: value });
@@ -712,6 +708,7 @@ try {
     },
   });
   const controllerSettings = attachControllerSettings({
+    continuousSteering: true,
     container: $('controller-settings-root'),
     getBindings: () => library.preferences.controllerBindings,
     onBeforeEdit: () => keySettings.refresh(),
@@ -747,18 +744,15 @@ try {
       return saved;
     },
   });
-  function clearInput({ preserveNavigation = false } = {}) {
+  function clearInput({ preserveNavigation = false, resetDirection = false } = {}) {
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
     controller.clear();
     controllerFrame = null;
     if (!preserveNavigation) controllerNavigation?.clear();
-    input.clear();
-    if (run) {
-      releaseInputs(run);
-      if (recorder && !recordingStopped) recordRelease(recorder);
-    }
+    if (resetDirection) input.clear();
+    else input.clearPhysical();
     accumulator = 0;
   }
   function courseBlocked() {
@@ -888,6 +882,7 @@ try {
           themeId: theme.id,
           bodyId,
           runId,
+          continuation: { direction: input.snapshotDirection() },
           storage: localStorage,
           sessionKey,
           assertCurrent,
@@ -1289,7 +1284,7 @@ try {
     $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
     const track = entry.music?.find((m) => m.id === campaign.musicId) || entry.music?.[0];
     if (track) {
-      sound.setTrack?.(track);
+      sound.setTrack?.(track, { atBoundary: true });
       $('music-select').value = track.genre;
     } else sound.configure?.({ style: library.preferences.musicGenre });
     refreshCampaigns();
@@ -1500,6 +1495,7 @@ try {
       themeId: theme.id,
       bodyId,
       runId,
+      continuation: { direction: input.snapshotDirection() },
     });
   }
   function persistAttempt(notify = true) {
@@ -1580,6 +1576,7 @@ try {
       handled = false;
       recordingStopped = false;
       clearInput();
+      input.restoreDirection(restored.session.continuation?.direction ?? null);
       setTheme();
       painter.setLevel?.(run.level, { seed });
       updateLoadout();
@@ -1966,9 +1963,7 @@ try {
   $('music-preview').onclick = async () => {
     try {
       const ok = await sound.preview({ seconds: 4 });
-      $('music-preview').textContent = ok
-        ? 'Playing a four-second preview ♫'
-        : 'Audio is unavailable';
+      $('music-preview').textContent = ok ? 'Soundtrack playing ♫' : 'Audio is unavailable';
       if (ok) {
         preferences({ musicEnabled: true });
         $('sound-button').setAttribute('aria-pressed', 'true');
@@ -2111,6 +2106,7 @@ try {
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
+    gameShell?.openMissions();
     $('body-select').focus({ preventScroll: true });
     $('body-select').scrollIntoView({ block: 'center', behavior: 'auto' });
   }
@@ -2378,7 +2374,7 @@ try {
     sound.reset?.();
     painter.skipCelebration?.();
     show('skip-celebration', false);
-    clearInput();
+    clearInput({ resetDirection: true });
     run = createRun(scenario?.level || campaign.levels[levelIndex], {
       seed,
       turnPolicy,
@@ -2460,11 +2456,11 @@ try {
         (m) => m.id === (authoredLevel.musicId || campaign.musicId),
       );
       if (track) {
-        sound.setTrack(track);
+        sound.setTrack(track, { atBoundary: true });
         $('music-select').value = track.genre;
       }
     }
-    if (scenario?.music) sound.setTrack(scenario.music);
+    if (scenario?.music) sound.setTrack(scenario.music, { atBoundary: true });
     painter.setLevel?.(run.level, { seed });
     setTheme();
     started = false;
@@ -2509,6 +2505,7 @@ try {
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
     clearInput();
+    neutralResumeTick = true;
     courseEntryHold = false;
     courseEntryMessage = '';
     started = true;
@@ -2709,11 +2706,6 @@ try {
       );
     } else {
       controllerNavigation.handle(controllerFrame.ui);
-      if (controllerFrame?.flight.stop) {
-        pendingAction = false;
-        pendingPickup = false;
-        pendingSwitch = null;
-      }
       if (controllerFrame?.flight.hangar && !$('hangar-button').disabled) {
         $('hangar-button').click();
         clearInput();
@@ -2759,6 +2751,14 @@ try {
               pickup: pendingPickup || controls.pickup,
               switchClass: pendingSwitch,
             };
+        const resuming = neutralResumeTick;
+        if (resuming) {
+          command.boost = false;
+          command.action = false;
+          command.pickup = false;
+          command.switchClass = null;
+          neutralResumeTick = false;
+        }
         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {
           recordingStopped = true;
           recorder = null;
@@ -2768,6 +2768,13 @@ try {
           );
         }
         const beforeStatus = run.status;
+        if (beforeStatus === 'respawning') {
+          command.direction = null;
+          command.boost = false;
+          command.action = false;
+          command.pickup = false;
+          command.switchClass = null;
+        }
         let lessonBefore = null;
         if (courseObserver)
           try {
@@ -2784,6 +2791,11 @@ try {
           frame: controllerFrame,
           controls,
         });
+        if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          input.clear();
+          controller.clear();
+          controls = { direction: null, boost: false, action: false, pickup: false };
+        }
         refreshControllerBoostCue();
         if (masteryObserver)
           try {
@@ -2799,7 +2811,7 @@ try {
           }
         pendingAction = false;
         pendingPickup = false;
-        pendingSwitch = null;
+        if (!resuming) pendingSwitch = null;
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
@@ -3119,7 +3131,7 @@ try {
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
     controllerPreview?.clear();
-    sound.pause();
+    sound.suspend();
     pause(true);
   }
   onNativeInactive(suspendInteraction).catch((error) =>
@@ -3191,6 +3203,12 @@ try {
     fps: { target: 60, forceSetTimeOut: false },
     scene: FieldScene,
     banner: false,
+  });
+  gameShell = attachGameShell({
+    pause,
+    canContinue: () =>
+      (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
+    initial: !practice && !courseSession && !packLaunchRequest,
   });
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {

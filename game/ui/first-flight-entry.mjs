@@ -25,6 +25,7 @@ export async function retainFlightForFirstFlight({
   themeId,
   bodyId,
   runId,
+  continuation,
   storage,
   sessionKey,
   withStorageLock,
@@ -72,7 +73,15 @@ export async function retainFlightForFirstFlight({
     }
   });
   current();
-  const session = suspendSession({ run, recorder, campaignKey, themeId, bodyId, runId });
+  const session = suspendSession({
+    run,
+    recorder,
+    campaignKey,
+    themeId,
+    bodyId,
+    runId,
+    continuation,
+  });
   const checkpoint = canonicalJSON(authoritativeCheckpoint(run));
   const recording = canonicalJSON(session.replay);
   const restored = await restoreSession(session, {

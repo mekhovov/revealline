@@ -2,6 +2,10 @@
   max-width: 1400px;
   margin: auto;
 }
+.race-pad button[data-direction='stop'] {
+  visibility: hidden;
+  pointer-events: none;
+}
 .race-setup {
   display: grid;
   grid-template-columns: minmax(0, 2fr) repeat(2, minmax(0, 1.5fr)) repeat(2, minmax(0, 1fr));

@@ -355,9 +355,7 @@ for (const eventLoss of [false, true]) {
     f.frame();
     f.pads()[0].axes[0] = 1;
     f.frames(6);
-    const expected = f.renders.map((run) => structuredClone(run));
-    expected.forEach(releaseInputs);
-    const before = expected.map(authoritativeCheckpoint);
+    const before = f.checkpoint();
     if (eventLoss) f.win.emit('gamepaddisconnected', { gamepad: f.pads()[0] });
     const replacement = pad(0);
     if (!eventLoss) replacement.id = 'Replacement';
@@ -491,13 +489,17 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         classRecipes: await read('../content/classes.json'),
       });
       let direction = null;
-      for (const segment of route.segments) {
+      for (const [index, segment] of route.segments.entries()) {
         if (direction)
           f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction], false);
-        direction = segment.input.direction;
+        // The archived hold-input proof waits for attack clocks at the outer
+        // boundary. Continuous flight deliberately points into that boundary;
+        // Pause would freeze the clocks and cannot substitute for these waits.
+        direction = segment.input.direction ?? (index === 2 ? 'up' : 'down');
         if (direction) f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction]);
         f.frames(segment.ticks);
-        for (let i = 0; i < segment.ticks; i++) stepRun(oracle, segment.input, FIXED_DT);
+        for (let i = 0; i < segment.ticks; i++)
+          stepRun(oracle, { ...segment.input, direction }, FIXED_DT);
       }
       if (direction)
         f.key({ up: 'KeyW', right: 'KeyD', down: 'KeyS', left: 'KeyA' }[direction], false);
@@ -574,15 +576,92 @@ test('native checkboxes and both held touch pads stay independent after leaving 
   left.emit('pointerup', { pointerId: 42 });
   const positions = f.renders.map((run) => run.player.x);
   f.frames(8);
-  assert.deepEqual(
-    f.renders.map((run) => run.player.x),
-    positions,
-  );
+  assert.ok(f.renders[0].player.x > positions[0]);
+  assert.ok(f.renders[1].player.x < positions[1]);
   right.emit('pointerdown', { pointerId: 43, button: 0 });
   right.emit('pointercancel', { pointerId: 43 });
   f.frame();
   assert.equal(f.state(), 'paused');
 });
+
+for (const turnPolicy of ['immediate', 'grid-center']) {
+  test(`${turnPolicy}: actual Pause retains two different requested turns and explicit Resume continues both`, async (t) => {
+    const f = await page(t, { turnPolicy });
+    f.$('race-start').click();
+    f.frame();
+    f.key('KeyD');
+    f.key('ArrowLeft');
+    f.frames(5);
+    f.key('KeyD', false);
+    f.key('ArrowLeft', false);
+    f.key('KeyS');
+    f.key('ArrowRight');
+    f.frame();
+    f.key('KeyS', false);
+    f.key('ArrowRight', false);
+    const before = f.checkpoint();
+    const expected = f.renders.map((run) => structuredClone(run));
+    if (turnPolicy === 'grid-center')
+      assert.deepEqual(
+        expected.map((run) => run.player.queuedDirection),
+        ['down', 'right'],
+      );
+    f.$('race-pause').click();
+    f.key('KeyW');
+    f.key('ArrowUp');
+    f.frames(20, 100);
+    assert.equal(f.state(), 'paused');
+    assert.deepEqual(f.checkpoint(), before);
+    f.key('KeyW', false);
+    f.key('ArrowUp', false);
+    f.$('race-start').click();
+    f.frame(100);
+    for (let tick = 0; tick < 12; tick++) {
+      stepRun(expected[0], { direction: 'down' }, FIXED_DT);
+      stepRun(expected[1], { direction: 'right' }, FIXED_DT);
+    }
+    assert.equal(f.state(), 'running');
+    assert.deepEqual(f.checkpoint(), expected.map(authoritativeCheckpoint));
+  });
+
+  test(`${turnPolicy}: real recovery clears only that player's continuous intent before later substeps`, async (t) => {
+    const { level } = retryFixture('enemy-player');
+    level.rules = { ...level.rules, lives: 3, respawnSeconds: 0.1, graceSeconds: 0 };
+    const f = await page(t, { campaign: { ...base, levels: [level] }, turnPolicy });
+    f.$('race-start').click();
+    f.frame();
+    f.key('KeyD');
+    f.key('ArrowLeft');
+    f.frames(48);
+    assert.equal(f.renders[0].lives, 3);
+    const beforeTicks = f.renders.map((run) => run.tick);
+    const otherX = f.renders[1].player.x;
+    const reads = f.readCount();
+    f.frame(200);
+    assert.deepEqual(
+      f.renders.map((run, i) => run.tick - beforeTicks[i]),
+      [24, 24],
+    );
+    assert.equal(f.readCount(), reads + 1, 'one physical sample despite recovery within the frame');
+    assert.equal(f.renders[0].status, 'running');
+    assert.equal(f.renders[0].lives, 2);
+    assert.equal(f.renders[0].player.x, level.spawn.x);
+    assert.equal(f.renders[0].player.y, level.spawn.y);
+    assert.equal(f.renders[0].player.speed, 0);
+    assert.equal(f.renders[1].lives, 3);
+    assert.ok(f.renders[1].player.x < otherX);
+    assert.ok(f.observedEvents.some((event) => event.type === 'player.failed'));
+    assert.ok(f.observedEvents.some((event) => event.type === 'player.respawned'));
+    f.key('KeyD');
+    f.frames(3);
+    assert.equal(f.renders[0].player.x, level.spawn.x, 'old held key cannot restart movement');
+    f.key('KeyD', false);
+    f.key('KeyS');
+    f.key('KeyS', false);
+    f.frames(3);
+    assert.ok(f.renders[0].player.y > level.spawn.y);
+  });
+}
 
 test('timeout draw keeps series at zero and needs a fresh explicit Next gesture', async (t) => {
   const f = await page(t, { pads: [pad(0), pad(1), pad(2)] });

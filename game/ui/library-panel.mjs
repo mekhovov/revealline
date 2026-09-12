@@ -360,7 +360,7 @@ export function attachLibraryPanel(api) {
         );
         return;
       }
-      if (parsed.format === 'xonix-session.v1') {
+      if (['xonix-session.v1', 'xonix-session.v2'].includes(parsed.format)) {
         await api.restore(parsed);
         $('library-dialog').close();
         return;
