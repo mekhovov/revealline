@@ -1,12 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRun, FIXED_DT, stepRun, getSummary } from '../core/index.mjs';
-import { CLASSES, DEFAULT_RULES, RULESET, loadoutHash } from '../core/registry.mjs';
+import { CLASSES, DEFAULT_RULES, RULESET, loadoutHash, rosterHash } from '../core/registry.mjs';
 import { EPS } from '../core/geometry.mjs';
 import {
   emptyProgress,
   validateProgress,
   awardCompletion,
+  completionVariantKey,
   canPlay,
   achievements,
   unlockedBodies,
@@ -35,8 +36,11 @@ const campaign = {
 };
 function completion(overrides = {}) {
   const recipe = CLASSES.find((c) => c.id === (overrides.classId ?? 'scout')) ?? CLASSES[0];
-  return {
+  const value = {
     ruleset: RULESET,
+    rosterHash: rosterHash(CLASSES),
+    tick: 3600,
+    switches: 0,
     levelId: level.id,
     revision: level.revision,
     seed: 1,
@@ -53,9 +57,18 @@ function completion(overrides = {}) {
     medal: 'gold',
     ...overrides,
   };
+  value.activeClassId ??= value.classId;
+  value.classHistory ??= [
+    {
+      classId: value.classId,
+      classRevision: value.classRevision,
+      loadoutHash: value.loadoutHash,
+      tick: 0,
+    },
+  ];
+  return value;
 }
-const variantKey = (result) =>
-  `${result.turnPolicy}/${result.classId}/${encodeURIComponent(result.classRevision)}/${result.loadoutHash}/${result.seed}`;
+const variantKey = completionVariantKey;
 function storage() {
   const map = new Map();
   return {
@@ -147,6 +160,9 @@ test('completion identity, ranges and medal coherence match the current core con
     { classId: 'invented' },
     { classRevision: 'old' },
     { loadoutHash: 'loadout-v1-00000000' },
+    { rosterHash: 'roster-v1-00000000' },
+    { classHistory: [] },
+    { switches: 1 },
     { turnPolicy: 'diagonal' },
     { seed: -1 },
     { seed: 2 ** 32 },
@@ -225,6 +241,7 @@ test('tuned recipe identity separates setup records while labels do not change p
     classId: 'carrier',
     classRevision: recipe.revision,
     loadoutHash: loadoutHash(recipe),
+    rosterHash: rosterHash(recipes),
     score: 200,
   });
   const second = awardCompletion(first, tuned, result, { runId: 'tuned' });
@@ -250,6 +267,7 @@ test('tuned recipe identity separates setup records while labels do not change p
     classId: custom.id,
     classRevision: custom.revision,
     loadoutHash: loadoutHash(custom),
+    rosterHash: rosterHash([custom]),
   });
   assert.equal(
     validateProgress(
@@ -344,4 +362,74 @@ test('recovery collisions retain each original and a full campaign unlocks by di
     runId: 'two',
   });
   assert.equal(achievements(progress, campaign).find((a) => a.id === 'last-light').earned, true);
+});
+
+test('roster identity and mixed routes remain separate; forged class transitions do not award', () => {
+  const other = CLASSES.find((c) => c.id === 'bomber'),
+    base = completion();
+  const mixed = completion({
+    activeClassId: other.id,
+    switches: 1,
+    classHistory: [
+      ...base.classHistory,
+      {
+        classId: other.id,
+        classRevision: other.revision,
+        loadoutHash: loadoutHash(other),
+        tick: 120,
+      },
+    ],
+  });
+  const first = awardCompletion(emptyProgress(campaign), campaign, base, { runId: 'single' });
+  const second = awardCompletion(first, campaign, mixed, { runId: 'mixed' });
+  assert.equal(Object.keys(second.clears.first.variants).length, 2);
+  assert.notEqual(completionVariantKey(base), completionVariantKey(mixed));
+  for (const patch of [
+    { rosterHash: undefined },
+    { classHistory: mixed.classHistory.toReversed() },
+    { activeClassId: 'scout' },
+    { tick: 50 },
+    { classHistory: [{ ...base.classHistory[0], tick: 1 }] },
+  ])
+    assert.equal(
+      awardCompletion(first, campaign, { ...mixed, ...patch }, { runId: 'invalid-history' }),
+      first,
+    );
+});
+test('legacy five-part variant records remain readable but new awards create a distinct seven-part entry', () => {
+  const base = completion(),
+    first = awardCompletion(emptyProgress(campaign), campaign, base, { runId: 'new' });
+  const legacy = structuredClone(first),
+    entry = Object.values(legacy.clears.first.variants)[0];
+  legacy.clears.first.variants = {
+    [`${base.turnPolicy}/${base.classId}/${base.classRevision}/${base.loadoutHash}/${base.seed}`]:
+      entry,
+  };
+  assert.equal(validateProgress(legacy, campaign), true);
+  const next = awardCompletion(legacy, campaign, completion(), { runId: 'after-migration' });
+  assert.equal(Object.keys(next.clears.first.variants).length, 2);
+});
+
+test('more than 256 legal setup variants retain aggregate bests and the most recently played setup', () => {
+  let progress = emptyProgress(campaign);
+  for (let seed = 0; seed < 257; seed++)
+    progress = awardCompletion(
+      progress,
+      campaign,
+      completion({ seed, score: seed === 0 ? 9999 : 100 }),
+      { runId: `seed-${seed}` },
+    );
+  assert.equal(Object.keys(progress.clears.first.variants).length, 256);
+  assert.equal(progress.clears.first.score, 9999);
+  assert.equal(
+    Object.hasOwn(progress.clears.first.variants, completionVariantKey(completion({ seed: 0 }))),
+    false,
+  );
+  const updated = awardCompletion(progress, campaign, completion({ seed: 1 }), {
+    runId: 'revisit',
+  });
+  assert.equal(
+    Object.keys(updated.clears.first.variants).at(-1),
+    completionVariantKey(completion({ seed: 1 })),
+  );
 });

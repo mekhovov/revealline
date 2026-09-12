@@ -1,57 +1,464 @@
-// Original synthesized cue palette. No music files, samples, or network requests.
+import {
+  MUSIC_STYLES,
+  DEFAULT_TRACKS,
+  validateTrack,
+  composeStep,
+  scheduleWindow,
+  deriveTension,
+  midiFrequency,
+} from './music.mjs';
+export { MUSIC_STYLES, DEFAULT_TRACKS };
+const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+const voiceLimit = 64;
+const defaultFactory = () => {
+  const Audio = globalThis.AudioContext || globalThis.webkitAudioContext;
+  if (!Audio) return null;
+  return new Audio({ latencyHint: 'interactive' });
+};
+
+/** One shared context, three gain buses, original oscillator/noise instruments.
+ * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
+ */
 export class Soundscape {
-  constructor() {
+  constructor({ contextFactory = defaultFactory } = {}) {
     this.enabled = false;
     this.context = null;
-    this.nextBeat = 0;
-    this.beat = 0;
+    this.contextFactory = contextFactory;
+    this.track = { ...DEFAULT_TRACKS[0] };
+    this.settings = { style: 'synthwave', master: 0.65, music: 0.55, sfx: 0.7 };
+    this.paused = false;
+    this.disposed = false;
+    this.voices = new Set();
+    this.cursor = null;
+    this.musicActive = false;
+    this.tension = 0;
+    this.recentEvents = new Map();
+    this.transition = 0;
+    this.previewTransition = 0;
+    this.previewUntil = null;
+  }
+  getSettings() {
+    return { ...this.settings, trackId: this.track.id };
+  }
+  get previewActive() {
+    return !!(
+      this.enabled &&
+      !this.paused &&
+      this.context &&
+      this.previewUntil !== null &&
+      this.context.currentTime < this.previewUntil
+    );
+  }
+  cancelPreview() {
+    ++this.previewTransition;
+    this.previewUntil = null;
+  }
+  /** Explicit gesture audition, also while the game is paused or terminal.
+   * Keep calling update() from the presentation loop; no timer creates a second scheduler.
+   */
+  async preview({ seconds = 4 } = {}) {
+    if (!Number.isFinite(seconds) || seconds < 1 || seconds > 8)
+      throw new TypeError('Preview duration must be 1..8 seconds');
+    const token = ++this.previewTransition;
+    const enabled = await this.enable();
+    if (
+      token !== this.previewTransition ||
+      !enabled ||
+      this.paused ||
+      this.disposed ||
+      this.context?.state !== 'running'
+    )
+      return false;
+    this.stopVoices('music');
+    this.previewUntil = this.context.currentTime + seconds;
+    this.cursor = null;
+    this.update(false, { family: this.themeFamily });
+    return true;
+  }
+  configure(options = {}) {
+    for (const key of Object.keys(options))
+      if (!['style', 'master', 'music', 'sfx'].includes(key))
+        throw new TypeError(`Unknown audio setting: ${key}`);
+    const next = { ...this.settings };
+    for (const key of ['master', 'music', 'sfx'])
+      if (options[key] !== undefined) {
+        if (!Number.isFinite(options[key]) || options[key] < 0 || options[key] > 1)
+          throw new TypeError(`${key} volume must be 0..1`);
+        next[key] = options[key];
+      }
+    if (options.style !== undefined) {
+      const style = options.style === 'arcade-rock' ? 'rock' : options.style;
+      if (!MUSIC_STYLES.some((s) => s.id === style)) throw new TypeError('Unknown music style');
+      next.style = style;
+    }
+    if (next.style !== this.settings.style) {
+      this.track = { ...DEFAULT_TRACKS.find((t) => t.genre === next.style) };
+      this.stopVoices('music');
+      this.cursor = null;
+    }
+    this.settings = next;
+    this.applyVolumes();
+    return this.getSettings();
+  }
+  setTrack(descriptor) {
+    const checked = validateTrack(descriptor);
+    if (!checked.valid) throw new TypeError(checked.errors.join('; '));
+    this.track = { ...descriptor };
+    this.settings.style = descriptor.genre;
+    this.stopVoices('music');
+    this.cursor = null;
+    return { ...this.track };
+  }
+  setup() {
+    if (this.context) return true;
+    const context = this.contextFactory();
+    if (!context) return false;
+    this.context = context;
+    this.master = context.createGain();
+    this.musicBus = context.createGain();
+    this.sfxBus = context.createGain();
+    this.musicBus.connect(this.master);
+    this.sfxBus.connect(this.master);
+    if (context.createWaveShaper) {
+      const curve = Float32Array.from({ length: 256 }, (_, i) =>
+        Math.tanh(((i / 255) * 2 - 1) * 3),
+      );
+      this.musicDrive = context.createWaveShaper();
+      this.sfxDrive = context.createWaveShaper();
+      for (const [node, bus] of [
+        [this.musicDrive, this.musicBus],
+        [this.sfxDrive, this.sfxBus],
+      ]) {
+        node.curve = curve;
+        node.oversample = 'none';
+        node.connect(bus);
+      }
+    }
+    this.compressor = context.createDynamicsCompressor?.();
+    if (this.compressor) {
+      this.compressor.threshold.value = -12;
+      this.compressor.knee.value = 12;
+      this.compressor.ratio.value = 5;
+      this.master.connect(this.compressor);
+      this.compressor.connect(context.destination);
+    } else this.master.connect(context.destination);
+    const length = Math.ceil(context.sampleRate * 0.25);
+    this.noise = context.createBuffer(1, length, context.sampleRate);
+    const data = this.noise.getChannelData(0);
+    let seed = 0x17a2;
+    for (let i = 0; i < length; i++) {
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      data[i] = seed / 0x80000000 - 1;
+    }
+    this.applyVolumes();
+    return true;
+  }
+  applyVolumes() {
+    if (!this.context) return;
+    const time = this.context.currentTime;
+    for (const [node, key] of [
+      [this.master, 'master'],
+      [this.musicBus, 'music'],
+      [this.sfxBus, 'sfx'],
+    ]) {
+      node.gain.cancelScheduledValues(time);
+      node.gain.setTargetAtTime(this.enabled ? this.settings[key] : 0, time, 0.015);
+    }
+  }
+  async enable() {
+    if (this.disposed) return false;
+    const token = ++this.transition;
+    if (!this.setup()) return false;
+    try {
+      await this.context.resume();
+      if (token !== this.transition || this.disposed) return this.enabled;
+      this.enabled = this.context.state === 'running';
+      this.paused = false;
+      this.cursor = null;
+      this.applyVolumes();
+      return this.enabled;
+    } catch {
+      if (token === this.transition) {
+        this.enabled = false;
+        this.applyVolumes();
+      }
+      return false;
+    }
   }
   async toggle() {
-    if (!this.context) {
-      const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) return false;
-      this.context = new Audio();
+    if (this.disposed) return false;
+    if (!this.enabled) return this.enable();
+    return this.disable();
+  }
+  /** Apply a stored mute preference synchronously. This never creates a context
+   * and invalidates pending enable/preview actions; resume cannot undo it.
+   */
+  disable() {
+    ++this.transition;
+    this.enabled = false;
+    this.paused = true;
+    this.musicActive = false;
+    this.cancelPreview();
+    this.stopVoices();
+    this.cursor = null;
+    this.applyVolumes();
+    try {
+      void Promise.resolve(this.context?.suspend()).catch(() => {});
+    } catch {}
+    return false;
+  }
+  pause() {
+    ++this.transition;
+    this.cancelPreview();
+    this.paused = true;
+    this.musicActive = false;
+    this.cursor = null;
+    this.stopVoices();
+    if (this.context?.state === 'running') void this.context.suspend().catch(() => {});
+  }
+  async resume() {
+    if (!this.enabled || this.disposed) return false;
+    const token = ++this.transition;
+    try {
+      await this.context.resume();
+      if (token !== this.transition || this.disposed) return false;
+      this.paused = false;
+      this.cursor = null;
+      return this.context.state === 'running';
+    } catch {
+      return false;
     }
-    this.enabled = !this.enabled;
-    if (this.enabled) await this.context.resume();
-    return this.enabled;
+  }
+  reset() {
+    this.cancelPreview();
+    this.stopVoices();
+    this.cursor = null;
+    this.tension = 0;
+    this.recentEvents.clear();
+  }
+  stopVoices(bus = null) {
+    for (const voice of [...this.voices]) if (!bus || voice.bus === bus) voice.stop();
+  }
+  async dispose() {
+    if (this.disposed) return;
+    this.disposed = true;
+    this.cancelPreview();
+    ++this.transition;
+    this.enabled = false;
+    this.stopVoices();
+    this.cursor = null;
+    for (const node of [
+      this.musicDrive,
+      this.sfxDrive,
+      this.musicBus,
+      this.sfxBus,
+      this.master,
+      this.compressor,
+    ])
+      try {
+        node?.disconnect();
+      } catch {}
+    try {
+      await this.context?.close();
+    } catch {}
+    this.context = null;
+    this.noise = null;
+  }
+  play(note, time, bus = 'sfx') {
+    const c = this.context;
+    if (!this.enabled || this.paused || this.disposed || !c || c.state !== 'running') return false;
+    if (this.voices.size >= voiceLimit) {
+      const music = [...this.voices].find((v) => v.bus === 'music');
+      if (music) music.stop();
+      else return false;
+    }
+    if (this.settings[bus] === 0 || this.settings.master === 0) return false;
+    if (note.volume === 0) return false;
+    const duration = clamp(note.duration || 0.12, 0.02, 2.5),
+      start = Math.max(c.currentTime + 0.001, time),
+      nodes = [],
+      gain = c.createGain();
+    nodes.push(gain);
+    let source,
+      filter = null;
+    if (['hat', 'snare'].includes(note.kind)) {
+      source = c.createBufferSource();
+      source.buffer = this.noise;
+      filter = c.createBiquadFilter();
+      filter.type = note.kind === 'hat' ? 'highpass' : 'bandpass';
+      filter.frequency.value = note.kind === 'hat' ? 6500 : 1600;
+      filter.Q.value = note.kind === 'hat' ? 0.5 : 0.7;
+    } else {
+      source = c.createOscillator();
+      source.type =
+        note.kind === 'kick'
+          ? 'sine'
+          : {
+              bass: 'triangle',
+              pad: 'sawtooth',
+              lead: 'triangle',
+              chip: 'square',
+              guitar: 'sawtooth',
+              bell: 'sine',
+            }[note.voice] || 'triangle';
+      const freq = clamp(note.frequency || 120, 30, 5000);
+      source.frequency.setValueAtTime(note.kind === 'kick' ? 145 : freq, start);
+      if (note.kind === 'kick') source.frequency.exponentialRampToValueAtTime(44, start + duration);
+      if (note.voice === 'guitar' || note.voice === 'pad') {
+        filter = c.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(note.voice === 'guitar' ? 2400 : 1200, start);
+        filter.frequency.exponentialRampToValueAtTime(
+          note.voice === 'guitar' ? 500 : 750,
+          start + duration,
+        );
+        filter.Q.value = 0.7;
+      }
+    }
+    nodes.push(source);
+    if (filter) {
+      nodes.push(filter);
+      source.connect(filter);
+      filter.connect(gain);
+    } else source.connect(gain);
+    const destination = bus === 'music' ? this.musicBus : this.sfxBus,
+      drive = bus === 'music' ? this.musicDrive : this.sfxDrive;
+    gain.connect(note.voice === 'guitar' && drive ? drive : destination);
+    const attack = note.voice === 'pad' ? 0.07 : 0.005,
+      volume = clamp(note.volume ?? 0.035, 0.001, 0.3);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.linearRampToValueAtTime(volume, start + Math.min(attack, duration / 3));
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    let ended = false;
+    const voice = {
+      bus,
+      stop: () => {
+        if (ended) return;
+        ended = true;
+        try {
+          source.stop();
+        } catch {}
+        for (const n of nodes)
+          try {
+            n.disconnect();
+          } catch {}
+        this.voices.delete(voice);
+      },
+    };
+    source.onended = voice.stop;
+    this.voices.add(voice);
+    source.start(start);
+    source.stop(start + duration + 0.015);
+    return true;
   }
   tone(frequency, duration = 0.1, volume = 0.025, type = 'triangle', offset = 0) {
-    if (!this.enabled || !this.context) return;
-    const t = this.context.currentTime + offset,
-      osc = this.context.createOscillator(),
-      gain = this.context.createGain();
-    osc.type = type;
-    osc.frequency.value = frequency;
-    gain.gain.setValueAtTime(0, t);
-    gain.gain.linearRampToValueAtTime(volume, t + 0.007);
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
-    osc.connect(gain);
-    gain.connect(this.context.destination);
-    osc.start(t);
-    osc.stop(t + duration + 0.02);
+    return this.play(
+      {
+        kind: 'tone',
+        frequency,
+        duration,
+        volume,
+        voice: type === 'square' ? 'chip' : type === 'sawtooth' ? 'guitar' : 'lead',
+      },
+      (this.context?.currentTime || 0) + offset,
+    );
   }
-  event(type) {
-    if (type === 'cells.claimed') {
-      [392, 494, 587].forEach((n, i) => this.tone(n, 0.19, 0.028, 'triangle', i * 0.045));
-    } else if (type === 'player.failed') {
-      this.tone(147, 0.15, 0.025, 'sawtooth');
-      this.tone(98, 0.22, 0.02, 'triangle', 0.1);
-    } else if (type === 'run.completed') {
-      [392, 494, 587, 784].forEach((n, i) => this.tone(n, 0.3, 0.025, 'triangle', i * 0.11));
-    } else if (type === 'boss.warning') this.tone(220, 0.16, 0.023, 'square');
-    else if (type === 'ability.used' || type === 'pickup.collected') this.tone(660, 0.1, 0.015);
+  event(value, details = {}) {
+    const event = typeof value === 'string' ? { ...details, type: value } : value;
+    if (!event || !this.enabled || this.paused || !this.context) return;
+    const now = this.context.currentTime,
+      key =
+        event.type === 'run.completed'
+          ? `${event.type}:${event.levelId || ''}:${event.tick ?? ''}`
+          : event.type;
+    if (
+      this.recentEvents.has(key) &&
+      now - this.recentEvents.get(key) < (event.type === 'run.completed' ? 5 : 0.09)
+    )
+      return;
+    this.recentEvents.set(key, now);
+    if (this.recentEvents.size > 64)
+      this.recentEvents.delete(this.recentEvents.keys().next().value);
+    const base = clamp(this.track.root + 12, 48, 76),
+      cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
+        steps.forEach((n, i) =>
+          this.play(
+            { kind: 'tone', frequency: midiFrequency(base + n), voice, volume: 0.08, duration },
+            now + 0.015 + i * spacing,
+          ),
+        );
+    if (event.type === 'run.completed') {
+      this.stopVoices('music');
+      this.musicActive = false;
+      this.cursor = null;
+      if (event.won === false || event.status === 'lost') {
+        cue([0, -3, -7, -12], 'lead', 0.16, 0.38);
+        this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02);
+      } else {
+        const phrase =
+          this.themeFamily === 'atlas'
+            ? [0, 5, 7, 12, 14, 12]
+            : this.themeFamily === 'navi'
+              ? [0, 4, 9, 7, 12, 16]
+              : [0, 4, 7, 12, 7, 12];
+        cue(phrase, this.themeFamily === 'retro' ? 'chip' : 'bell', 0.13, 0.4);
+        for (const n of [0, 4, 7])
+          this.play(
+            {
+              kind: 'tone',
+              frequency: midiFrequency(base + n),
+              voice: 'pad',
+              volume: 0.045,
+              duration: 1.1,
+            },
+            now + 0.68,
+          );
+      }
+    } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
+    else if (event.type === 'cells.claimed') cue([0, 4, 7], 'bell', 0.04, 0.2);
+    else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
+    else if (event.type === 'boss.warning' || event.type === 'signal.warning')
+      cue([1, 1], 'chip', 0.16, 0.1);
+    else if (event.type === 'shield.absorbed') cue([7, 0, 12], 'bell', 0.045, 0.18);
+    else if (
+      event.type === 'ability.used' ||
+      event.type === 'pickup.collected' ||
+      event.type === 'class.switched'
+    )
+      cue([7, 12], 'lead', 0.05, 0.13);
+    else if (event.type === 'craft.redeployed') cue([0, -5, 7], 'guitar', 0.04, 0.15);
   }
-  update(active, theme) {
-    if (!active || !this.enabled || !this.context) return;
-    const now = this.context.currentTime;
-    if (now < this.nextBeat) return;
-    this.nextBeat = now + 0.27;
-    const notes =
-      theme.scene === 'arcade'
-        ? [196, 0, 294, 392, 247, 0, 330, 294]
-        : [196, 0, 247, 0, 294, 247, 220, 0];
-    const n = notes[this.beat++ % notes.length];
-    if (n) this.tone(n, 0.24, 0.009, 'triangle');
+  update(active, theme, state = {}) {
+    this.themeFamily = theme?.family || theme?.id || 'fpv';
+    if (
+      !this.enabled ||
+      this.paused ||
+      this.disposed ||
+      !this.context ||
+      this.context.state !== 'running'
+    )
+      return;
+    const terminal = state.status === 'won' || state.status === 'lost';
+    const preview = this.previewActive;
+    if (!preview) this.previewUntil = null;
+    if ((!active || terminal) && !preview) {
+      if (this.musicActive) {
+        this.stopVoices('music');
+        this.cursor = null;
+      }
+      this.musicActive = false;
+      return;
+    }
+    this.musicActive = true;
+    this.tension = preview ? 0 : deriveTension(state);
+    const planned = scheduleWindow(this.cursor, this.context.currentTime, this.track.tempo);
+    this.cursor = planned.cursor;
+    for (const step of planned.steps) {
+      // A preview cannot leave a sustained note behind when a tab stops painting.
+      const remaining = preview ? this.previewUntil - step.time - 0.015 : Infinity;
+      if (remaining < 0.02) continue;
+      for (const note of composeStep(this.track, step.index, this.tension))
+        this.play({ ...note, duration: Math.min(note.duration, remaining) }, step.time, 'music');
+    }
   }
 }

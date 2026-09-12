@@ -1,5 +1,13 @@
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
+import { createSceneArt } from './scene-art.mjs';
+import {
+  createCelebration,
+  advanceCelebration,
+  skipCelebration,
+  celebrationFrame,
+  drawCelebration,
+} from './celebration.mjs';
 
 // Simulation uses cells. Everything below is presentation and never mutates a run.
 const CELL = 16,
@@ -48,6 +56,11 @@ export class BoardPainter {
     this.overrides = {};
     this.images = {};
     this.style = 'hybrid';
+    this.levelInfo = {};
+    this.artSeed = 0;
+    this.celebration = null;
+    this._winState = null;
+    this._celebrationPrepared = false;
   }
   async setLook(theme, bodyId, overrides = {}) {
     const token = ++this.loadToken;
@@ -57,7 +70,9 @@ export class BoardPainter {
     this.images = {};
     this.background = this.makeArt(theme);
     this.animation = createAnimationState();
-    const knownBody = this.presets.characters[bodyId],
+    const knownBody = Object.hasOwn(this.presets.characters, bodyId)
+        ? this.presets.characters[bodyId]
+        : null,
       body =
         knownBody ||
         this.presets.characters['neutral-marker'] ||
@@ -98,112 +113,71 @@ export class BoardPainter {
         .join(' '),
     );
   }
-  makeArt(theme) {
-    const c = makeCanvas(384, 288),
-      x = c.getContext('2d'),
-      p = theme.palette;
-    for (let y = 0; y < 288; y += 4) {
-      x.fillStyle = colorMix(p.sky, p.land, Math.min(1, y / 250));
-      x.fillRect(0, y, 384, 4);
-    }
-    x.fillStyle = colorMix(p.accent, '#ffffff', 0.4);
-    x.fillRect(266, 36, 40, 32);
-    x.fillRect(258, 44, 56, 16);
-    if (theme.scene === 'dawn' || theme.scene === 'heritage') {
-      for (let band = 0; band < 3; band++) {
-        const pts = [
-          [0, 288],
-          [0, 130 + band * 35],
-        ];
-        for (let col = 0; col <= 384; col += 16)
-          pts.push([
-            col,
-            120 + band * 38 + Math.round((Math.sin(col * 0.021 + band * 2) * 22) / 4) * 4,
-          ]);
-        pts.push([384, 288]);
-        poly(x, pts, colorMix(p.land, p.ink, 0.15 + band * 0.18));
-      }
-      poly(
-        x,
-        [
-          [203, 146],
-          [213, 146],
-          [242, 178],
-          [228, 200],
-          [275, 236],
-          [268, 288],
-          [179, 288],
-          [217, 233],
-          [199, 200],
-          [222, 178],
-        ],
-        colorMix(p.safe, p.ink, 0.15),
-      );
-      for (let i = 0; i < 12; i++) {
-        const px = 18 + i * 31,
-          py = 180 + (i % 3) * 22;
-        x.fillStyle = colorMix(p.land, p.accent, 0.35);
-        x.fillRect(px, py, 16, 11);
-        poly(
-          x,
-          [
-            [px - 3, py],
-            [px + 8, py - 9],
-            [px + 19, py],
-          ],
-          p.ink,
-        );
-        x.fillStyle = p.accent;
-        x.fillRect(px + 6, py + 4, 4, 5);
-      }
-      for (let y = 242; y < 288; y += 12)
-        for (let xx = 0; xx < 160; xx += 12) {
-          x.fillStyle = (y + xx) % 24 === 0 ? p.accent : colorMix(p.land, p.accent, 0.4);
-          x.fillRect(xx, y, 2, 5);
-        }
-      if (theme.scene === 'heritage')
-        for (let y = 12; y < 288; y += 24)
-          for (const xx of [12, 356]) {
-            x.fillStyle = p.danger;
-            x.fillRect(xx, y, 8, 8);
-            x.fillStyle = p.accent;
-            x.fillRect(xx - 4, y + 4, 4, 4);
-            x.fillRect(xx + 8, y + 4, 4, 4);
-          }
-    } else {
-      x.fillStyle = colorMix(p.ink, p.sky, 0.15);
-      x.fillRect(0, 150, 384, 138);
-      for (let i = 0; i < 18; i++) {
-        const px = i * 23,
-          h = 32 + ((i * 29) % 83);
-        x.fillStyle = colorMix(p.ink, p.safe, 0.12 + (i % 3) * 0.07);
-        x.fillRect(px, 160 - h, 18, h);
-        x.fillStyle = i % 2 ? p.accent : p.safe;
-        for (let a = px + 4; a < px + 17; a += 6)
-          for (let b = 166 - h; b < 152; b += 9) x.fillRect(a, b, 2, 4);
-      }
-      x.strokeStyle = colorMix(p.safe, p.ink, 0.5);
-      x.lineWidth = 1;
-      for (let y = 178; y < 288; y += 13) {
-        x.beginPath();
-        x.moveTo(0, y);
-        x.lineTo(384, y);
-        x.stroke();
-      }
-      for (let xx = -300; xx < 700; xx += 50) {
-        x.beginPath();
-        x.moveTo(192, 160);
-        x.lineTo(xx, 288);
-        x.stroke();
-      }
-      for (let i = 0; i < 16; i++) {
-        const xx = 28 + ((i * 67) % 330),
-          yy = 193 + ((i * 37) % 73);
-        x.fillStyle = i % 3 ? p.safe : p.accent;
-        x.fillRect(xx, yy, 8, 3);
-      }
-    }
-    return c;
+  makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
+    return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
+  }
+  setLevel(level = {}, { seed = 0 } = {}) {
+    this.levelInfo = { id: level.id || 'gallery', revision: level.revision || '1' };
+    this.artSeed = seed;
+    if (this.theme) this.background = this.makeArt(this.theme);
+    this.celebration = null;
+    this._winState = null;
+    this._celebrationPrepared = false;
+    this.effects = [];
+    this.heading = 0;
+    this.bank = 0;
+    this.speedRatio = 0;
+    this.time = 0;
+  }
+  startCelebration({
+    levelId = this.levelInfo.id || '',
+    seed = this.artSeed,
+    reduced = false,
+  } = {}) {
+    this.celebration = createCelebration({ theme: this.theme, levelId, seed, reduced });
+    this._celebrationPrepared = true;
+    return this.celebrationStatus;
+  }
+  skipCelebration() {
+    this.celebration = skipCelebration(this.celebration);
+    return this.celebrationStatus;
+  }
+  get celebrationStatus() {
+    const { particles, equipment, ...status } = celebrationFrame(this.celebration);
+    return status;
+  }
+  drawGallery(
+    ctx,
+    {
+      theme = this.theme,
+      level = this.levelInfo,
+      seed = this.artSeed,
+      width = ctx.canvas?.width || 768,
+      height = ctx.canvas?.height || 576,
+      image = null,
+      fit = 'cover',
+    } = {},
+  ) {
+    if (!theme) return;
+    const source = image || this.makeArt(theme, level, seed);
+    ctx.save();
+    ctx.imageSmoothingEnabled = false;
+    ctx.globalAlpha = 1;
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = theme.palette.field;
+    ctx.fillRect(0, 0, width, height);
+    const ratio =
+      fit === 'contain'
+        ? Math.min(width / source.width, height / source.height)
+        : Math.max(width / source.width, height / source.height);
+    ctx.drawImage(
+      source,
+      (width - source.width * ratio) / 2,
+      (height - source.height * ratio) / 2,
+      source.width * ratio,
+      source.height * ratio,
+    );
+    ctx.restore();
   }
   effectsFor(events = []) {
     for (const e of events) {
@@ -211,9 +185,10 @@ export class BoardPainter {
         e.type === 'cut.closed' ||
         e.type === 'cells.claimed' ||
         e.type === 'player.failed' ||
-        e.type === 'run.completed'
+        e.type === 'run.completed' ||
+        e.type === 'craft.redeployed'
       )
-        this.effects.push({ type: e.type, age: 0 });
+        this.effects.push({ type: e.type, age: 0, x: e.x, y: e.y, radius: e.radius });
     }
     this.effects = this.effects.slice(-8);
   }
@@ -221,9 +196,33 @@ export class BoardPainter {
     ctx,
     state,
     dt,
-    { paused = false, reduced = false, showGrid = false, debug = false, fullReveal = false } = {},
+    {
+      paused = false,
+      reduced = false,
+      showGrid = false,
+      debug = false,
+      fullReveal = false,
+      celebrationPaused = false,
+    } = {},
   ) {
     if (!this.theme || !state) return;
+    if (fullReveal && state.status === 'won') {
+      if (this._winState !== state) {
+        if (!this._celebrationPrepared)
+          this.startCelebration({ levelId: state.levelId, seed: state.seed, reduced });
+        this._winState = state;
+        this._celebrationPrepared = false;
+      }
+      this.celebration = advanceCelebration(this.celebration, dt, {
+        paused: celebrationPaused,
+        reduced,
+      });
+    } else if (!fullReveal) {
+      this._winState = null;
+      this.celebration = null;
+    }
+    const finale = fullReveal ? celebrationFrame(this.celebration) : null;
+    const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
     const p = this.theme.palette,
       t = state.time;
     this.time += paused ? 0 : dt;
@@ -252,9 +251,9 @@ export class BoardPainter {
         backdrop.height * r,
       );
     }
-    if (!fullReveal) {
+    if (!fullReveal || revealAlpha > 0) {
       ctx.fillStyle = p.field;
-      ctx.globalAlpha = 0.94;
+      ctx.globalAlpha = 0.94 * revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
       for (let y = 0; y < 36; y++) {
         let start = -1;
@@ -274,7 +273,9 @@ export class BoardPainter {
         const v = state.cells[y * 48 + x],
           xx = x * CELL,
           yy = y * CELL;
-        if (v === 2 && !fullReveal) {
+        if (v === 2 && (!fullReveal || revealAlpha > 0)) {
+          ctx.save();
+          ctx.globalAlpha = revealAlpha;
           ctx.fillStyle = colorMix(p.muted, p.ink, 0.5);
           ctx.fillRect(xx, yy, CELL, CELL);
           if (this.images.wall) ctx.drawImage(this.images.wall, xx, yy, CELL, CELL);
@@ -288,6 +289,7 @@ export class BoardPainter {
             ctx.fillStyle = p.ink;
             ctx.fillRect(xx + 3, yy + 9, 10, 3);
           }
+          ctx.restore();
         }
         if (v === 1 && !fullReveal) {
           ctx.strokeStyle = p.safe;
@@ -349,6 +351,50 @@ export class BoardPainter {
       }
     }
     if (!fullReveal) {
+      for (const zone of state.signalZones || []) {
+        const suppressed = zone.suppressedUntil > t,
+          xx = zone.x * CELL,
+          yy = zone.y * CELL,
+          ww = zone.w * CELL,
+          hh = zone.h * CELL;
+        ctx.save();
+        ctx.fillStyle = suppressed ? p.safe : p.danger;
+        ctx.globalAlpha = suppressed ? 0.025 : 0.08;
+        ctx.fillRect(xx, yy, ww, hh);
+        ctx.globalAlpha = suppressed ? 0.35 : 0.7;
+        ctx.strokeStyle = ctx.fillStyle;
+        ctx.lineWidth = 1;
+        ctx.setLineDash(suppressed ? [3, 5] : [6, 3]);
+        ctx.strokeRect(xx + 0.5, yy + 0.5, ww - 1, hh - 1);
+        ctx.setLineDash([]);
+        const cx = xx + ww / 2,
+          cy = yy + hh / 2;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 6, 0, TAU);
+        ctx.stroke();
+        ctx.fillRect(cx - 1, cy - 9, 2, 12);
+        ctx.fillRect(cx - 4, cy + 6, 8, 2);
+        ctx.restore();
+      }
+      for (const hangar of state.hangars || []) {
+        const x = hangar.x * CELL,
+          y = hangar.y * CELL,
+          r = (hangar.radius || 2) * CELL;
+        ctx.save();
+        ctx.strokeStyle = p.safe;
+        ctx.globalAlpha = 0.65;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([3, 4]);
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, TAU);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = p.safe;
+        ctx.fillRect(x - 7, y - 7, 3, 14);
+        ctx.fillRect(x + 4, y - 7, 3, 14);
+        ctx.fillRect(x - 4, y - 1, 8, 2);
+        ctx.restore();
+      }
       for (const e of state.enemies) {
         if (
           e.type === 'lane-boss' &&
@@ -423,6 +469,15 @@ export class BoardPainter {
         ctx.globalAlpha = 0.6;
         ctx.strokeStyle = p.safe;
         ctx.stroke();
+        if (f.kind === 'impact-pulse' && !reduced) {
+          const phase = Math.max(
+            0,
+            Math.min(1, 1 - (f.until - t) / (state.classRecipe?.duration || 1)),
+          );
+          ctx.beginPath();
+          ctx.arc(f.x * CELL, f.y * CELL, (f.radius || 3) * CELL * phase, 0, TAU);
+          ctx.stroke();
+        }
         ctx.globalAlpha = 1;
       }
       ctx.strokeStyle = p.accent;
@@ -547,8 +602,24 @@ export class BoardPainter {
       }
     }
     for (const f of this.effects) {
-      if (!paused) f.age += dt;
-      if (!reduced && f.age < 0.6) {
+      if (!paused || fullReveal) f.age += dt;
+      if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
+        ctx.save();
+        ctx.strokeStyle = p.accent;
+        ctx.globalAlpha = (1 - f.age / 0.6) * 0.6;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(
+          (f.x || 0) * CELL,
+          (f.y || 0) * CELL,
+          (f.radius || 2) * CELL * Math.min(1, f.age / 0.35),
+          0,
+          TAU,
+        );
+        ctx.stroke();
+        ctx.restore();
+      }
+      if (!fullReveal && !reduced && f.type !== 'craft.redeployed' && f.age < 0.6) {
         ctx.strokeStyle = f.type === 'player.failed' ? p.danger : p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.55;
         ctx.lineWidth = 4;
@@ -557,6 +628,7 @@ export class BoardPainter {
       }
     }
     this.effects = this.effects.filter((f) => f.age < 0.7);
+    if (fullReveal) drawCelebration(ctx, finale, p, W, H);
   }
   drawActor(c, shape, x, y, size, color, img, t, reduced) {
     if (img) {

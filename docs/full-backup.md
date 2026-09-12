@@ -1,0 +1,116 @@
+# Portable full backup and interrupted-import recovery
+
+A `xonix-backup.v1` JSON archive combines the player library, all installed expansion packs and an optional suspended flight. The existing individual library, pack and attempt exports remain useful for selective transfer. A full backup contains data and embedded supported images; it cannot add scripts, executables, remote downloads or new runtime algorithms.
+
+The pure [backup module](../game/backup.mjs) and [storage coordinator](../game/backup-storage.mjs) are separate. Preparation verifies the entire candidate before it can be adopted. Persistence then uses a durable rollback journal because IndexedDB and localStorage do not share one transaction.
+
+## Use the game controls
+
+Open **Library & saves → Saves & loads → Export complete backup**. The game downloads `revealline-complete-backup.json` and places the same JSON in the copy/paste area. It includes the current in-memory player library and installed packs. If a normal campaign flight is unfinished, it snapshots that current recording; otherwise it includes the previously suspended flight, if one exists. Practice or completed attempts do not replace that fallback. A flight whose recording is unavailable cannot be silently presented as a complete save.
+
+Choose **Load a saved JSON file**, or paste the file into **Copy or paste save JSON** and choose **Load this JSON**. The game validates all members, preserves an Undo snapshot, then replaces the library, packs and suspended slot through the journal protocol below. It does not start the restored flight automatically: choose **Load suspended attempt** to continue it. **Undo complete backup import** restores the previous library, installed packs and flight together using the same validation/storage path. Undo is held in this page session; export first if both collections must remain available after a reload.
+
+Complete backup import is a replacement, not a merge. The separate **Export player library**, **Export installed packs** and **Export attempt** controls remain available for selective transfer. Invalid files leave the current installation unchanged; a storage failure either restores the previous raw data or reports that recovery must finish before further writes.
+
+The game reserves one writing tab for each player-profile channel. Another tab can play, change its own session settings and export its in-memory progress, but cannot persist changes to the owner's library or replace stored packs/flights. To make the second tab writable, close the owning game tab and reload the second; export its session changes before reloading if they should be kept. A browser without the required Web Locks support also runs with session-only progress and export. This is separate from the shorter exclusive lock held during full-backup import.
+
+The visible capacity display reports campaign count, picture count and used profile bytes. The limits are 512 campaign identities, 4,096 picture records and 4 MiB overall; existing pictures are not silently discarded to make room. Archive a complete backup before the limit and retain that file before replacing a collection. Gallery search displays 12 pictures per page; local-score search displays ten setup groups per page. Image bytes live in packs, so picture metadata counts do not represent the artwork's full memory cost.
+
+## File and preparation contract
+
+```json
+{
+  "format": "xonix-backup.v1",
+  "library": { "format": "xonix-library.v1", "...": "complete player export" },
+  "packs": { "format": "xonix-pack-library.v1", "packs": [] },
+  "session": null
+}
+```
+
+This is an illustration; real exports contain the complete existing member formats. `session` must be `null` or a complete `xonix-session.v1` attempt. The archive does not include game executable files, cached offline files, legacy motion-lab profiles, external reference archives or server accounts. The schema contains the suspended flight supplied by its host. The current UI supplies a fresh snapshot of an unfinished normal campaign flight, falling back to the existing saved slot only when there is no such current attempt.
+
+| API | Result |
+|---|---|
+| `prepareBackup(candidate, options)` | Asynchronously return frozen `{library,packs,session}` after all validation; reject on any error |
+| `validateBackup(candidate, options)` | Alias of full preparation, including image decoding and replay verification |
+| `exportBackup({library,packs,session?}, options)` | Prepare and return compact JSON; omitted session becomes `null` |
+| `isPreparedBackup(value)` | Check the in-process preparation capability required by the storage coordinator |
+| `MAX_BACKUP_BYTES` | Outer file-read and parse limit, currently 84 MiB + 32 KiB |
+
+Options are `{campaigns:[], decodeImage, signal, onProgress, resolveCampaign}`. `campaigns` contains trusted built-in content. Included packs provide their own validated campaign/roster definitions. An optional synchronous `resolveCampaign(key)` may reconstruct a known dated challenge from application code; it must return that exact campaign identity or `null`. It must not return arbitrary rules supplied by the backup or fetch uninstalled content. The current UI passes only `[baseEntry.campaign]` as trusted built-in content, plus the known dated-challenge resolver. It does not trust unrelated currently installed pack campaigns: the archive must include the pack required by its flight.
+
+The module snapshots input data and trusted campaign arrays before asynchronous work. Profile validation uses the current migration rules. Pack preparation checks all dependencies, schema/header and image budgets, then fully decodes each image. If a flight exists, the module reconstructs and verifies its replay against an included or trusted campaign and its class roster. A self-consistent recording with different installed rules is rejected. Unknown historical profile partitions remain as metadata under the existing library contract; a missing-pack flight cannot resume from metadata alone.
+
+Use the real browser decoder in the UI. The injectable decoder exists for other hosts and tests; a header-only fixture does not establish that actual media decoded. Abort is checked before work, between image operations and during asynchronous replay verification. An image decoder already running may finish before cancellation is observed.
+
+```js
+import {prepareBackup, exportBackup, MAX_BACKUP_BYTES} from './backup.mjs';
+
+// File size must be checked before allocating the text or parsing JSON.
+if (file.size > MAX_BACKUP_BYTES) throw new Error('Full backup exceeds its file budget.');
+const ready = await prepareBackup(await file.text(), {
+  campaigns: [baseCampaign],
+  signal: controller.signal,
+  resolveCampaign: resolveKnownDailyCampaign,
+  onProgress: ({ticks, total}) => showReplayProgress(ticks, total)
+});
+// Do not replace live library/packs/session until coordinated storage succeeds.
+const json = await exportBackup(ready, {campaigns:[baseCampaign], resolveCampaign:resolveKnownDailyCampaign});
+```
+
+The combined limit accommodates the existing 48 MiB pack-library, 4 MiB player-library and 32 MiB + 16 KiB session limits, plus envelope overhead. Each inner limit still applies. The parser rejects oversized strings before JSON parsing, and bounds nodes, depth, array lengths, finite numbers, fields and keys. Functions, accessors, `toJSON`, cycles and prototype-related keys fail. Keeping the complete original media plus several validated snapshots consumes memory; these are ceilings, not recommended pack sizes for a low-memory phone.
+
+## Durable coordinated import
+
+Use these adapters for `commitBackup(ready, adapters)` and `recoverBackupImport(adapters)`:
+
+```js
+const adapters = {
+  storage: localStorage,
+  readAsset: readAssetStore,
+  writeAsset: writeAssetStore,
+  profileKey, packsKey, sessionKey, journalKey,
+  lockKey: `${profileKey}.backup-lock`,
+  commitProfile: (library, options) => guardedProfileCommit(library, options)
+};
+```
+
+`readAsset(key)` returns the stored value or `null`; `writeAsset(key,value)` resolves only when its IndexedDB transaction completes, or throws/returns `{ok:false,warning}`. This follows the distinction between an individual request and the [IndexedDB transaction completion event](https://developer.mozilla.org/en-US/docs/Web/API/IDBTransaction/complete_event). New packs are stored as the existing portable JSON string. A journal is a plain JSON object; writing `null` clears it. The local adapter provides synchronous `getItem`, `setItem` and `removeItem`. Keys must be distinct.
+
+`commitProfile(library,{mode:'replace',writeLock:{key,token}})` must use the guarded profile writer and return `{ok:true,...metadata}` only when persistence succeeds. Replacement starts the writer's new generation; incoming backup files never select an authoritative storage generation. The coordinator returns that metadata as `result.profile`, allowing the shell to refresh its baseline/generation. Do not call an ordinary merging save for this operation. The callback must only persist and return metadata: it must not adopt the new profile into live application memory before the coordinator succeeds, because a later journal-clear failure can still trigger rollback.
+
+The coordinator takes an exclusive Web Lock named by `lockKey`. A host can inject `withLock(task)` with equivalent exclusive cross-context ownership. Without either, full coordinated import/recovery refuses to mutate data; individual exports remain available. A plain localStorage token alone is not an atomic cross-tab mutex. [MDN Web Locks](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API) documents exclusive ownership across a shared origin, release after the asynchronous callback finishes, and the secure-context requirement.
+
+While holding the exclusive lock, the coordinator writes a plain owner token to `lockKey`. Every ordinary profile writer must honor `{key:lockKey,token:null}`; the guarded profile API does this by default. Ordinary pack installs/removals, session saves/deletes and other authoritative UI writes must also honor the same lock. Only the owning full import/recovery may bypass it with the owner token. Other readers should pause live adoption while the import lock exists.
+
+The ordered operation is:
+
+1. Reject an existing recovery journal or orphan lock; require successful startup recovery first.
+2. Hold the owner token, then capture previous raw profile/session strings and raw pack-store value. Even incompatible previous bytes are preserved within the journal budget.
+3. Persist the complete `xonix-backup-journal.v1` rollback record before changing game data.
+4. Write new packs, write/remove the session slot, then commit the replacement profile with owner credentials.
+5. Clear the journal last, release ownership and return `{ok:true,profile,warning}`. Only then adopt the prepared objects in the live UI.
+
+The local suspended-attempt slot still has a 2 MiB limit. A larger valid portable flight is accepted by archive preparation but refused by coordinated local-slot persistence before journaling. Retain the archive and use its portable attempt separately for that case. Normal browser quota failures are also possible below these explicit limits.
+
+On apply failure, the coordinator restores all prior raw values and clears the journal only after rollback finishes. `{ok:false,rolledBack:true}` means previous storage was restored. `{ok:false,recoveryRequired:true}` means recovery remains unfinished: retain the original archive/journal, stop ordinary writes, and retry startup recovery after storage is available. If journal clearing reports an uncertain failure, the coordinator re-establishes its recovery record before rollback. Lock-cleanup failure after a fully committed import can return `ok:true` with a reload warning; exclusive startup recovery clears that orphan token.
+
+## Startup and crash behavior
+
+Run `await recoverBackupImport(adapters)` **before** ordinary profile, pack or suspended-slot reads. If it returns `ok:false`, preserve the journal and avoid loading a mixed installation into normal play. Display its actionable warning. A valid pending record restores the previous raw data, even if the crash occurred after new profile bytes were written. A crash after the journal was cleared keeps the committed new installation; exclusive recovery only clears any remaining owner token.
+
+Recovery is repeatable. A failed restoration leaves the journal for another attempt. Malformed journals or records naming different storage keys cause no game-data writes and remain available for diagnosis. An unrelated import cannot replace a pending journal. The journal has a bounded 168 MiB + 80 KiB ceiling to accommodate escaped previous raw strings; it temporarily requires additional IndexedDB capacity. Failure to store it prevents the import from touching player data.
+
+This is a recoverable write protocol, not a transaction spanning browser stores. Its guarantees depend on the supplied storage adapters, completed write acknowledgments and every application writer respecting the lock. Clearing site data, storage eviction, device loss or host-added code outside this protocol can remove recovery data. Keep an exported backup outside the browser. [MDN storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria) explains why browser persistence is not an external backup. No cloud service receives these files.
+
+## Verification
+
+Run:
+
+```sh
+node --test game/test/backup.test.mjs game/test/backup-storage.test.mjs
+```
+
+The tests exercise complete member round trips, preserved embedded image bytes, real live-cut continuation in both policies, included-pack and dated-campaign resolution, changed installed rules, async caller mutation, malformed/executable data, cancellation and size limits. Storage tests cover every apply/crash stage, missing prior entries, raw corrupt-data preservation, profile-generation handoff, journal failure, uncertain acknowledgments, failed rollback/retry, pending import refusal, orphan locks and same-page concurrency.
+
+These are injected storage and decoder tests. The current release-candidate browser check exercised **Export complete backup → import → Undo** through the visible controls using native IndexedDB and Web Locks. A second-tab check also confirmed that changing Trapper there did not replace the owning tab's Heavy carrier preference. These checks cover that browser and build; quota/recovery cases, other browsers and physical devices need their own recorded evidence. See [library/packs](library-and-packs.md), [replays](replays.md) and the [public-release gate](public-release.md).

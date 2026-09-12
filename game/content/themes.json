@@ -30,6 +30,15 @@
         "grid": "#193941",
         "sky": "#dfb781",
         "land": "#687c55"
+      },
+      "classBodies": {
+        "scout": "scout-quad",
+        "bomber": "fpv-body",
+        "carrier": "heavy-lift",
+        "interceptor": "scout-quad",
+        "fiber": "fpv-body",
+        "impact": "fpv-body",
+        "trapper": "fpv-body"
       }
     },
     {
@@ -61,6 +70,15 @@
         "grid": "#344154",
         "sky": "#dcb894",
         "land": "#697d73"
+      },
+      "classBodies": {
+        "scout": "ukrainian-bird",
+        "bomber": "ukrainian-bird",
+        "carrier": "ukrainian-bird",
+        "interceptor": "ukrainian-bird",
+        "fiber": "ukrainian-bird",
+        "impact": "ukrainian-bird",
+        "trapper": "ukrainian-bird"
       }
     },
     {
@@ -92,6 +110,15 @@
         "grid": "#293050",
         "sky": "#e49c95",
         "land": "#565270"
+      },
+      "classBodies": {
+        "scout": "retro-craft",
+        "bomber": "retro-craft",
+        "carrier": "retro-craft",
+        "interceptor": "retro-craft",
+        "fiber": "retro-craft",
+        "impact": "retro-craft",
+        "trapper": "retro-craft"
       }
     },
     {
@@ -123,6 +150,15 @@
         "grid": "#1e3d51",
         "sky": "#bbdadd",
         "land": "#689bb1"
+      },
+      "classBodies": {
+        "scout": "navi-avatar",
+        "bomber": "navi-avatar",
+        "carrier": "navi-avatar",
+        "interceptor": "navi-avatar",
+        "fiber": "navi-avatar",
+        "impact": "navi-avatar",
+        "trapper": "navi-avatar"
       }
     }
   ]

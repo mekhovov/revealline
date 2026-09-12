@@ -1,3 +1,4 @@
+import { validateTrack } from './ui/music.mjs';
 import { validateLevel, validateClassRecipes, CLASSES, TURN_POLICIES } from './core/index.mjs';
 
 const plain = (v) =>
@@ -27,6 +28,7 @@ export const CONTENT_LIMITS = Object.freeze({
   maxCombinedImagePixels: 32_000_000,
   maxMetadataChars: 16_384,
   maxContentChars: 65_536,
+  maxClassBodies: 40,
 });
 const forbidden = new Set(['__proto__', 'prototype', 'constructor']);
 const result = (errors, extra = {}) => ({
@@ -171,6 +173,7 @@ function themeChecks(theme, errors) {
       'subtitle',
       'family',
       'player',
+      'classBodies',
       'scene',
       'enemyShape',
       'patrolShape',
@@ -183,7 +186,24 @@ function themeChecks(theme, errors) {
     errors,
   );
   for (const key of ['id', 'family', 'player'])
-    if (!stableId(theme[key])) errors.push(`theme.${key} must be a stable identifier`);
+    if (!stableId(theme[key]) || forbidden.has(theme[key]))
+      errors.push(`theme.${key} must be a non-reserved stable identifier`);
+  if (own(theme, 'classBodies')) {
+    if (!plain(theme.classBodies))
+      errors.push('theme.classBodies must be a mapping of class IDs to body preset IDs');
+    else {
+      if (Object.keys(theme.classBodies).length > CONTENT_LIMITS.maxClassBodies)
+        errors.push(
+          `theme.classBodies may contain at most ${CONTENT_LIMITS.maxClassBodies} entries`,
+        );
+      for (const [classId, bodyId] of Object.entries(theme.classBodies)) {
+        if (!stableId(classId) || forbidden.has(classId))
+          errors.push('theme.classBodies keys must be non-reserved stable class IDs');
+        if (!stableId(bodyId) || forbidden.has(bodyId))
+          errors.push(`theme.classBodies.${classId} must be a non-reserved stable body preset ID`);
+      }
+    }
+  }
   for (const key of ['name', 'subtitle'])
     if (!text(theme[key], 120))
       errors.push(`theme.${key} must be nonempty text of at most 120 characters`);
@@ -229,6 +249,20 @@ export function validateTheme(theme) {
   const errors = checkJSON(theme, 'theme');
   if (!errors.length) themeChecks(theme, errors);
   return result(errors);
+}
+
+/** Presentation recommendation only. The caller must check registered presets and
+ * cosmetic ownership; this function never grants unlocks or changes a class recipe.
+ * Unregistered pack IDs remain valid references for the caller's neutral fallback.
+ */
+export function recommendedBody(theme, classId, fallback = theme?.player || 'neutral-marker') {
+  const mapping = theme?.classBodies;
+  const value =
+    plain(mapping) && stableId(classId) && !forbidden.has(classId) && own(mapping, classId)
+      ? mapping[classId]
+      : null;
+  if (stableId(value) && !forbidden.has(value)) return value;
+  return stableId(fallback) && !forbidden.has(fallback) ? fallback : 'neutral-marker';
 }
 
 const u16be = (b, p) => (b[p] << 8) | b[p + 1];
@@ -395,6 +429,7 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
       'visualOverrides',
       'presentation',
       'metadata',
+      'music',
     ],
     'scenario',
     errors,
@@ -452,6 +487,8 @@ export function validateScenario(value, { classRecipes: defaultRecipes = CLASSES
     }
   }
   if (own(value, 'metadata')) metadata(value.metadata, 'scenario.metadata', errors);
+  if (own(value, 'music'))
+    errors.push(...validateTrack(value.music).errors.map((error) => `music: ${error}`));
   if (!plain(value.visualOverrides)) errors.push('visualOverrides must be an object');
   else {
     let totalPixels = 0;
