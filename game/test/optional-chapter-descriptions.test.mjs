@@ -115,6 +115,7 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
 'retro'].map(
       (theme) => `optional-worlds-source-route-worlds-${theme}-recovery-summary`,
     ),
+    'optional-worlds-source-sentinel-circuit-fpv-recovery-summary',
     'optional-worlds-read',
     'optional-worlds-reload',
     'optional-worlds-manage',
