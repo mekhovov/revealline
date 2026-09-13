@@ -9,6 +9,11 @@ import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import {
+  readPackIndexes,
+  packNavigationSummary,
+  validateNavigationCatalogs,
+} from './pack-indexes.mjs';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const MARKER = '.xonix-build.json';
@@ -143,19 +148,17 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
       new Set(optional).size !== optional.length
     )
       fail('optionalOffline must list at most 12 unique indexed pack JSON paths');
-    const index = JSON.parse(
-      await fs.readFile(path.join(root, 'game/content/packs/index.json'), 'utf8'),
-    );
-    if (index?.format !== 'xonix-pack-index.v1' || !Array.isArray(index.packs))
-      fail('optionalOffline requires a valid pack index');
+    const index = await readPackIndexes(root);
     const indexed = new Set(
-      index.packs.map((entry) => `game/content/packs/${safeRelative(entry.path)}`),
+      index.all.map((entry) => `game/content/packs/${safeRelative(entry.path)}`),
     );
     for (const name of optional) {
       safeRelative(name);
       if (
         !/^game\/content\/packs\/[a-z0-9][a-z0-9-]*\.json$/.test(name) ||
-        name === 'game/content/packs/index.json' ||
+        ['index.json', 'archive-index.json', 'catalog.json', 'archive-catalog.json'].some(
+          (file) => name === `game/content/packs/${file}`,
+        ) ||
         !indexed.has(name)
       )
         fail(`optionalOffline is not an indexed pack JSON: ${name}`);
@@ -373,9 +376,17 @@ function addPublicEntries(entries, info) {
       .toString()
       .replaceAll('__REVEALLINE_VERSION__', html(displayVersion))
       .replaceAll('href="./landing.css"', 'href="./site/landing.css"')
-      .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"');
+      .replaceAll('src="./landing.mjs"', 'src="./site/landing.mjs"')
+      .replaceAll('src="./launch.mjs"', 'src="./site/launch.mjs"')
+      .replaceAll('href="../game/boot.css"', 'href="./game/boot.css"')
+      .replaceAll('href="../game/"', 'href="./game/"');
     entries.splice(entries.indexOf(landing), 1);
     entries.push({ name: 'index.html', bytes: Buffer.from(rendered) });
+    const about = entries.find((entry) => entry.name === 'site/about.html');
+    if (about)
+      about.bytes = Buffer.from(
+        about.bytes.toString().replaceAll('__REVEALLINE_VERSION__', html(displayVersion)),
+      );
   } else if (!has('index.html'))
     entries.push({
       name: 'index.html',
@@ -597,7 +608,11 @@ export async function buildProject({
   if (files.includes('game/content/campaign.json')) await validateLevels(root);
   if (files.includes('game/content/themes.json')) await validateThemes(root);
   if (files.includes('game/content/classes.json')) await validateClasses(root);
-  if (files.includes('game/content/packs/index.json')) await validatePacks(root);
+  if (
+    files.includes('game/content/packs/index.json') ||
+    files.includes('game/content/packs/archive-index.json')
+  )
+    await validatePacks(root);
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -1229,20 +1244,17 @@ export async function inspectGoals({ packPath, root = PROJECT_ROOT } = {}) {
 /** Validate every indexed expansion, including co-installation goal conflicts, before building. */
 export async function validatePacks(root = PROJECT_ROOT) {
   const relative = 'game/content/packs/index.json';
-  if (!(await exists(path.join(root, relative)))) return {};
-  const filename = await noSymlinkPath(root, relative);
-  const { value: index } = await boundedJSONFile(filename, 65536);
-  if (
-    index?.format !== 'xonix-pack-index.v1' ||
-    Object.keys(index).some((key) => !['format', 'packs'].includes(key)) ||
-    !Array.isArray(index.packs) ||
-    index.packs.length > 104
-  )
-    fail('Pack index must have format xonix-pack-index.v1 and at most 104 entries');
+  if (!(await exists(path.join(root, relative)))) {
+    if (await exists(path.join(root, 'game/content/packs/archive-index.json')))
+      fail('Archive pack index requires the active pack index.');
+    return {};
+  }
+  const index = await readPackIndexes(root);
   const tooling = await packTooling(root);
   const ids = new Set(),
     paths = new Set(),
-    entries = [];
+    entries = [],
+    summaries = new Map();
   const basePath = 'game/content/campaign.json';
   if (await exists(path.join(root, basePath))) {
     const { value: campaign } = await boundedJSONFile(
@@ -1261,7 +1273,7 @@ export async function validatePacks(root = PROJECT_ROOT) {
     entries.push({ campaign: { ...campaign, classRecipes }, sourcePackId: null });
   }
   let levels = 0;
-  for (const entry of index.packs) {
+  for (const entry of index.all) {
     if (
       !tooling.plainObject(entry) ||
       !tooling.stableId(entry.id) ||
@@ -1277,10 +1289,12 @@ export async function validatePacks(root = PROJECT_ROOT) {
     const file = await noSymlinkPath(root, `game/content/packs/${entry.path}`);
     const { pack } = await readCheckedPack(file, tooling);
     if (pack.id !== entry.id) fail(`Pack index ID ${entry.id} does not match ${pack.id}`);
+    summaries.set(entry.id, packNavigationSummary(entry, pack));
     entries.push(...packCatalogEntries(pack, tooling));
     levels += pack.campaigns.reduce((count, campaign) => count + campaign.levels.length, 0);
   }
   const catalog = tooling.createMasteryCatalog(entries);
+  await validateNavigationCatalogs(root, index, summaries);
   return { packs: ids.size, packLevels: levels, packGoals: catalog.registrations.length };
 }
 

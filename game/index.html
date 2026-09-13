@@ -1,24 +1,108 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-boot-state="loading">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#112d35" />
-    <title>Reveal / Line — First Signal</title>
+    <meta name="theme-color" content="#070914" />
+    <title>Reveal / Line</title>
+    <style>
+      html {
+        background: #070914;
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        background: #070914;
+        color: #edf2ff;
+      }
+      html:not([data-boot-state='ready']) body > :not(#boot-screen):not(script) {
+        display: none !important;
+      }
+      #boot-screen {
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: 24px;
+        font: 18px/1.5 monospace;
+      }
+      #boot-screen a {
+        color: #68d9fa;
+      }
+      #boot-screen [hidden] {
+        display: none !important;
+      }
+    </style>
+    <link rel="stylesheet" href="boot.css" />
+    <!-- This is intentionally a classic script: the file:// explanation must not depend on modules. -->
+    <script src="boot.mjs"></script>
+
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="ui/controller-settings.css" />
     <link rel="stylesheet" href="ui/game-shell.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
     <link rel="stylesheet" href="ui/mission-picker.css" />
     <link rel="stylesheet" href="ui/enemy-guide.css" />
+    <link rel="stylesheet" href="ui/device-controls.css" />
   </head>
   <body>
-    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
+    <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
+      <div class="launch-card">
+        <p class="launch-kicker">REVEAL / LINE</p>
+        <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
+        <h1 id="boot-title">Your next flight.</h1>
+        <p id="boot-status" class="launch-status" role="status">
+          Preparing your arcade. If this screen stays here, reload or open the online game.
+        </p>
+        <noscript
+          ><p class="launch-notice">
+            JavaScript is disabled. Enable JavaScript to play, then reload this page. Your saved
+            files have not been changed.
+          </p></noscript
+        >
+        <nav class="launch-actions" aria-label="Launch options">
+          <a id="boot-retry" href="" class="launch-action">Reload game</a>
+          <a
+            id="boot-online"
+            href="https://mekhovov.github.io/revealline/game/"
+            class="launch-action"
+            >Play online</a
+          >
+        </nav>
+        <details id="boot-local" class="launch-help">
+          <summary>Playing a downloaded copy?</summary>
+          <p>
+            Open the folder containing <code>game</code> in a terminal, then start a local web
+            server:
+          </p>
+          <code class="launch-command">python3 -m http.server 8768 --bind 127.0.0.1</code>
+          <p>
+            Leave that terminal open and visit
+            <a href="http://127.0.0.1:8768/game/">127.0.0.1:8768/game/</a>. If that port is busy,
+            choose a free port in both the command and address.
+          </p>
+          <p>
+            Opening <code>game/index.html</code> directly as a file cannot start the game. Python is
+            only needed for this local-server option. Playing online opens a different site; local
+            saves are not transferred automatically.
+          </p>
+        </details>
+        <p id="boot-detail" class="launch-detail" hidden></p>
+      </div>
+    </section>
+
     <div class="shell-bar" data-boot-inert inert>
       <button id="shell-menu" type="button" aria-label="Game menu">
         ◩ <span>REVEAL / LINE</span>
       </button>
       <span class="shell-edition">ARCADE EDITION</span>
+      <button
+        id="pause-button"
+        class="icon-button shell-pause"
+        type="button"
+        aria-label="Pause or resume"
+      >
+        Ⅱ
+      </button>
+
       <button id="shell-packs" type="button">Missions</button>
       <button id="shell-collection" type="button">Collection</button>
       <button id="shell-settings" type="button" aria-label="Game settings">Settings</button>
@@ -201,31 +285,6 @@
                 Boost <kbd>Shift</kbd>
               </button>
               <span id="ability-state">Ready</span>
-            </div>
-            <div class="utility-buttons">
-              <button
-                id="pause-button"
-                class="icon-button"
-                type="button"
-                aria-label="Pause or resume"
-              >
-                Ⅱ</button
-              ><button
-                id="restart-button"
-                class="icon-button"
-                type="button"
-                aria-label="Restart mission"
-              >
-                ↻</button
-              ><button
-                id="sound-button"
-                class="icon-button"
-                type="button"
-                aria-label="Enable sound"
-                aria-pressed="false"
-              >
-                ♫
-              </button>
             </div>
           </div>
           <section
@@ -464,7 +523,7 @@
               Enemies on both sides can leave only your line captured. Use that line to begin
               another cut.
             </li>
-            <li>
+            <li id="line-danger-help">
               A field enemy touching your line, or crossing your own line, costs a life. Border
               patrols can also hit you on the outer edge.
             </li>
@@ -680,11 +739,27 @@
       <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
       <div class="settings-assists">
         <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
-        <label><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label>
+        <label class="field"
+          >On-screen steering
+          <select id="screen-controls">
+            <option value="auto">Auto · touch only</option>
+            <option value="always">Always · touch or mouse</option>
+            <option value="off">Off · keyboard or controller</option>
+          </select></label
+        >
+        <p class="micro-note">
+          Auto shows a thumb pad during touch play. Keyboard or controller use hides it. Choose
+          Always for mouse-only steering. The full arena stays clear.
+        </p>
+        <p id="equipment-help" class="micro-note"></p>
+        <label id="screen-boost-setting"
+          ><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label
+        >
       </div>
       <p class="micro-note">
         Reduced effects softens movement and celebration effects. Every direction tap keeps you
-        moving. Use Pause to take a break. On-screen Boost can be held or toggled independently.
+        moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate
+        controls.
       </p>
       <p class="micro-note">
         Built-in original synth playlists and your local MP3 library. The music studio manages
@@ -718,7 +793,11 @@
         </p>
       </details>
       <section id="controller-settings-root" aria-label="Controller controls"></section>
-      <section class="controller-boost-settings" aria-label="Solo controller Boost behavior">
+      <section
+        id="controller-boost-setting"
+        class="controller-boost-settings"
+        aria-label="Solo controller Boost behavior"
+      >
         <label for="controller-boost-mode">Solo controller Boost</label>
         <select id="controller-boost-mode" aria-describedby="controller-boost-help">
           <option value="hold">Hold</option>
@@ -877,7 +956,7 @@
         <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-featured" type="button" class="button primary">
-            First Light R3 · Trail impacts <span>→</span>
+            First Light · Arcade <span>→</span>
           </button>
           <button id="shell-play" type="button" class="button secondary">
             All missions <span>→</span>
@@ -893,6 +972,25 @@
           <button id="shell-options" type="button" class="button secondary">
             Settings & sound
           </button>
+
+          <button
+            id="restart-button"
+            class="button secondary"
+            type="button"
+            aria-label="Restart mission"
+          >
+            Restart mission</button
+          ><button
+            id="sound-button"
+            hidden
+            class="icon-button"
+            type="button"
+            aria-label="Enable sound"
+            aria-pressed="false"
+          >
+            Toggle sound
+          </button>
+
           <button id="shell-music" type="button" class="button secondary">Music on / off</button>
           <button id="shell-help" type="button" class="button secondary">How to play</button>
           <button id="shell-guide" type="button" class="button secondary">
@@ -904,6 +1002,7 @@
         <details class="shell-tools">
           <summary>Studio & extras</summary>
           <nav>
+            <a href="../site/about.html">About & build archive</a>
             <a href="playground/">Playground</a
             ><a href="../authoring/enemy-catalog/">Enemy workshop</a
             ><a href="replay-theater/">Replay Theater</a
@@ -924,7 +1023,6 @@
       <div id="shell-mission-content"></div>
       <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
     </dialog>
-    <script src="vendor/phaser-4.2.1.min.js"></script>
-    <script type="module" src="app.mjs"></script>
+    <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
   </body>
 </html>

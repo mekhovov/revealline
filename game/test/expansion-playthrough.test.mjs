@@ -22,7 +22,18 @@ test('expansion proof covers every supplied map and rejects altered geometry', a
       total + pack.campaigns.reduce((n, campaign) => n + campaign.levels.length * 2, 0),
     0,
   );
-  assert.equal((await verifyExpansionRoutes()).verified, expected);
+  const arcade = await expansionSources({ scope: 'arcade' });
+  const additional = arcade.filter((pack) => !packs.some((old) => old.id === pack.id));
+  assert.deepEqual(
+    additional.map((pack) => pack.id),
+    ['fpv-arcade-r4'],
+  );
+  const additionalRoutes = additional.reduce(
+    (total, pack) =>
+      total + pack.campaigns.reduce((n, campaign) => n + campaign.levels.length * 2, 0),
+    0,
+  );
+  assert.equal((await verifyExpansionRoutes()).verified, expected + additionalRoutes);
   const route = proof.routes[0],
     pack = packs.find((item) => item.id === route.packId),
     level = structuredClone(pack.campaigns[0].levels[0]);

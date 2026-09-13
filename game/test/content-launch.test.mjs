@@ -107,34 +107,39 @@ test('catalog validation rejects drift, duplicate identities and unsupported fie
   );
 });
 
-test('landing and game expose wired pack and level selectors with exact first-mission routes', async () => {
-  const landing = await readFile(new URL('../../site/index.html', import.meta.url), 'utf8');
+test('separate extras and game expose wired pack and level selectors with exact first-mission routes', async () => {
+  const landing = await readFile(new URL('../../site/about.html', import.meta.url), 'utf8');
   const game = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   assert.match(landing, /id="landing-pack-select"/);
   assert.match(landing, /id="landing-level-select"/);
   assert.match(game, /id="pack-select"/);
   assert.match(game, /id="level-select"/);
-  const quick = landing.match(/id="landing-pack-play"[\s\S]*?href="\.\/game\/\?([^"]+)"/);
+  const quick = landing.match(/id="landing-pack-play"[\s\S]*?href="\.\.\/game\/\?([^"]+)"/);
   assert.ok(quick);
   const featured = resolvePackLaunch(
     new URLSearchParams(quick[1].replaceAll('&amp;', '&')),
     catalog,
   );
-  assert.equal(featured.packId, 'fpv-arcade-r3');
-  assert.equal(featured.campaignId, 'fpv-first-light-r3');
+  assert.equal(featured.packId, 'fpv-arcade-r4');
+  assert.equal(featured.campaignId, 'fpv-first-light-r4');
   assert.equal(featured.levelId, 'orchard-window');
   const cards = [
     ...landing.matchAll(/<article\b[^>]*class="[^"]*\bpack-card\b[^"]*"[^>]*>[\s\S]*?<\/article>/g),
   ].map(([markup]) => markup);
-  assert.equal(cards.length, catalog.packs.length);
-  for (const pack of catalog.packs) {
+  const archive = preparePackCatalog(await json('../content/packs/archive-catalog.json'));
+  const allPacks = [...catalog.packs, ...archive.packs];
+  assert.equal(cards.length, allPacks.length);
+  for (const pack of allPacks) {
     const campaign = pack.campaigns[0];
     const level = campaign.levels[0];
     const encoded = `pack=${pack.id}&amp;campaign=${campaign.id}&amp;level=${level.id}&amp;play=1`;
-    const matching = cards.filter((card) => card.includes(`href="./game/?${encoded}"`));
+    const matching = cards.filter((card) => card.includes(`href="../game/?${encoded}"`));
     assert.equal(matching.length, 1, `${pack.name} must have one real first-mission launch card`);
     assert.ok(matching[0].includes(`<h3>${pack.name}</h3>`));
-    const route = resolvePackLaunch(new URLSearchParams(encoded.replaceAll('&amp;', '&')), catalog);
+    const route = resolvePackLaunch(new URLSearchParams(encoded.replaceAll('&amp;', '&')), {
+      ...catalog,
+      packs: allPacks,
+    });
     assert.equal(route.packId, pack.id);
     assert.equal(route.campaignId, campaign.id);
     assert.equal(route.levelId, level.id);

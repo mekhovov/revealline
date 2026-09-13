@@ -1,3 +1,4 @@
+import { resolveScreenControls } from './input-presentation.mjs';
 import { emptyProgress, validateProgress, awardCompletion, PROGRESS_VERSION } from './progress.mjs';
 import { CLASSES, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
 import { versionsForCampaign } from './core/versions.mjs';
@@ -54,6 +55,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   classId: 'scout',
   turnPolicy: 'immediate',
   tapSteering: null,
+  screenControls: 'auto',
   keyboardBindings: null,
   controllerBindings: null,
   controllerBoostMode: DEFAULT_CONTROLLER_BOOST_MODE,
@@ -122,6 +124,7 @@ function preferencesValid(preferences) {
   preferences.controllerBoostMode = resolveControllerBoostMode(preferences.controllerBoostMode);
   preferences.campaignDifficulty = resolveCampaignDifficulty(preferences.campaignDifficulty);
   preferences.textSize = resolveTextSize(preferences.textSize);
+  preferences.screenControls = resolveScreenControls(preferences.screenControls);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -244,6 +247,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.campaignDifficulty = DEFAULT_PREFERENCES.campaignDifficulty;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'textSize'))
     value.preferences.textSize = DEFAULT_PREFERENCES.textSize;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenControls'))
+    value.preferences.screenControls = DEFAULT_PREFERENCES.screenControls;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);
