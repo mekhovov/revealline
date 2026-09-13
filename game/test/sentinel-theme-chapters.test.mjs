@@ -370,14 +370,17 @@ test('explicit pair output is confined to a fresh ordinary cache directory', asy
   assert.deepEqual(await readdir(outside), []);
 });
 
-test('source candidates remain outside released registry, optional catalog and default build inputs', async () => {
-  for (const name of [
-    'game/external-chapter-source.mjs',
-    'game/content/external-worlds.json',
-    'game/build-config.json',
-  ]) {
-    const text = await readFile(path.join(ROOT, name), 'utf8');
-    for (const world of worlds) assert.ok(!text.includes(world.descriptor.campaignKey));
+test('registered theme descriptors are exact while raw compiler and art remain outside default build inputs', async () => {
+  const { sourceExternalChapter } = await import('../external-chapter-source.mjs');
+  const { EXTERNAL_CATALOG } = await import('../external-chapter-catalog.mjs');
+  for (const world of worlds) {
+    assert.deepEqual(sourceExternalChapter(world.descriptor.id), world.descriptor);
+    const item = EXTERNAL_CATALOG.chapters.find((entry) => entry.id === world.descriptor.id);
+    assert.equal(item.campaignKey, world.descriptor.campaignKey);
+    for (const kind of ['pack', 'media']) {
+      assert.equal(item[kind].bytes, world.descriptor[kind].bytes);
+      assert.equal(item[kind].sha256, world.descriptor[kind].sha256);
+    }
   }
   const files = await collectBuildFiles(ROOT);
   assert.ok(!files.some((f) => (typeof f === 'string' ? f : f.path).includes('sentinel-theme-')));
