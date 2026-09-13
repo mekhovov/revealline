@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Viewport lab · Xonix authoring</title>
+    <link rel="stylesheet" href="lab.css" />
+    <script type="module" src="browser.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <header class="lab-header">
+        <div>
+          <p class="eyebrow">Xonix / Authoring tools</p>
+          <h1>Viewport lab</h1>
+          <p class="intro">One running game. Five window sizes. Inspect the whole layout.</p>
+        </div>
+        <a class="guide-link" href="README.md">Lab guide ↗</a>
+      </header>
+
+      <section class="controls" aria-label="Preview controls">
+        <form id="target-form" class="target-controls">
+          <label for="target">Game</label>
+          <select id="target" name="target">
+            <option value="couch">Couch · two players</option>
+            <option value="solo">Solo</option>
+          </select>
+          <button id="load-target" type="submit">Load selected game</button>
+        </form>
+        <div class="size-controls">
+          <label for="preset">Viewport size · CSS pixels</label>
+          <select id="preset">
+            <option value="390x844">390 × 844 · portrait</option>
+            <option value="844x390">844 × 390 · landscape</option>
+            <option value="768x1024">768 × 1024 · portrait</option>
+            <option value="1280x720" selected>1280 × 720 · landscape</option>
+            <option value="1280x800">1280 × 800 · landscape</option>
+          </select>
+        </div>
+      </section>
+
+      <div class="preview-heading">
+        <p>
+          <strong id="loaded-target">No game loaded</strong> <span class="separator">/</span>
+          <output id="dimensions" for="preset">1280 × 720 CSS px</output>
+        </p>
+        <a id="direct-open" href="../../game/couch/" target="_blank" rel="noopener"
+          >Open Couch directly ↗</a
+        >
+      </div>
+      <p id="status" class="status" role="status">
+        Choose a game, then load it. Size changes keep the current game running.
+      </p>
+
+      <section
+        id="stage"
+        class="stage"
+        aria-label="Full-size viewport preview, scroll to inspect every edge"
+        tabindex="0"
+        aria-describedby="stage-help"
+      >
+        <div id="viewport" class="viewport">
+          <div id="empty-preview" class="empty-preview">
+            <span class="window-mark" aria-hidden="true">↔</span>
+            <h2>Your game appears here</h2>
+            <p>Load Solo or Couch using the controls above.</p>
+          </div>
+          <iframe
+            id="game-frame"
+            title="Game viewport preview"
+            width="1280"
+            height="720"
+            hidden
+          ></iframe>
+        </div>
+      </section>
+
+      <aside class="notes" aria-label="How to inspect">
+        <p id="stage-help">
+          <strong>Full size, with scrolling.</strong> The preview is never scaled to fit. Scroll
+          this stage to inspect the far and lower edges.
+        </p>
+        <p>
+          <strong>Viewport preview only.</strong> This does not emulate a physical device, touch
+          input or a controller. To inspect touch controls, select <strong>Always</strong> in the
+          game’s control options.
+        </p>
+        <p>
+          Changing size preserves the iframe. Loading another game replaces it; use the game’s own
+          save and pause controls first. Returning to these controls may pause play—resume
+          explicitly inside the game.
+        </p>
+      </aside>
+      <noscript
+        ><p class="status">
+          Enable JavaScript to resize the preview, or use the direct-open link.
+        </p></noscript
+      >
+    </main>
+  </body>
+</html>
