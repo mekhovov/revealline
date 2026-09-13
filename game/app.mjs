@@ -2791,6 +2791,7 @@ try {
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
+    show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
     $('retry-consequence').textContent = '';
@@ -3171,6 +3172,13 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    $('shell-edition').textContent = courseSession
+      ? 'FIRST FLIGHT'
+      : practice
+        ? 'PRACTICE'
+        : !arcadeActionCapabilities(run?.level).manualAbility
+          ? 'ARCADE EDITION'
+          : 'REVEAL / LINE';
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
@@ -4018,6 +4026,12 @@ try {
     },
   });
   gameShell = attachGameShell({
+    focusBriefing: () => {
+      clearInput();
+      controllerReading.refresh();
+      $('mission-brief-read').focus({ preventScroll: true });
+      return true;
+    },
     focusMissions: () => missionPicker?.focusSelectedChapter(),
     focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
     pause,
