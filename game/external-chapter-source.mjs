@@ -231,7 +231,7 @@ export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   ...routeDescriptors,
 ]);
 const names = [
-  'Pressure Pictures · source originals pilot',
+  'FPV Front · Pressure Pictures',
   'Ukraine Atlas · Route Choices',
   '1994 Forever · Route Choices',
   'Spend Network · Route Choices',
@@ -241,10 +241,12 @@ export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
     Object.freeze({
       descriptor,
       name: names[index],
+      mode: index === 0 ? 'Arcade' : 'Tactical',
+      levels: descriptor.originals.length,
       description:
         index === 0
-          ? 'Three existing Pressure Pictures maps and exact original pictures. Separate progress; existing music.'
-          : 'Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.',
+          ? 'Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.'
+          : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
     }),
   ),
 );
