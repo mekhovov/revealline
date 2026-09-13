@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="ui/game-shell.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
     <link rel="stylesheet" href="ui/mission-picker.css" />
+    <link rel="stylesheet" href="ui/mission-brief.css" />
     <link rel="stylesheet" href="ui/enemy-guide.css" />
     <link rel="stylesheet" href="ui/optional-chapters-panel.css" />
     <link rel="stylesheet" href="ui/device-controls.css" />
@@ -1035,12 +1036,20 @@
     <dialog id="shell-missions" class="shell-missions" aria-labelledby="shell-missions-title">
       <div class="shell-dialog-heading">
         <div>
-          <p class="eyebrow">YOUR NEXT FLIGHT</p>
+          <p id="shell-missions-context" class="eyebrow">YOUR NEXT FLIGHT</p>
           <h2 id="shell-missions-title">Choose your mission</h2>
         </div>
-        <button type="button" class="button secondary" data-close="shell-missions">Back</button>
+        <button
+          id="shell-missions-back"
+          type="button"
+          class="button secondary"
+          data-close="shell-missions"
+        >
+          Back
+        </button>
       </div>
       <div id="shell-mission-content"></div>
+      <div id="shell-brief-content" hidden></div>
       <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>

@@ -123,6 +123,12 @@ for (const policy of ['immediate', 'grid-center']) {
     key(page, 'Enter');
     assert.equal(page.$('shell-missions').open, true);
     assert.equal(page.$('mission-brief').open, true);
+    assert.equal(page.$('shell-missions').dataset.view, 'brief');
+    assert.equal(page.$('shell-mission-content').hidden, true);
+    assert.equal(page.$('shell-briefing').hidden, true);
+    assert.equal(page.$('mission-brief-unit').parentElement, page.$('shell-brief-content'));
+    assert.ok(page.$('mission-picker-stage').closest('[hidden]'));
+    assert.ok(page.$('mission-picker-setup').closest('[hidden]'));
     assert.equal(page.doc.activeElement.id, 'mission-brief-read');
     assert.equal(page.$('mission-brief-copy').textContent, lesson);
     key(page, 'Enter');
@@ -132,6 +138,9 @@ for (const policy of ['immediate', 'grid-center']) {
     assert.equal(page.$('shell-missions').open, true);
     key(page, 'Escape');
     assert.equal(page.$('shell-missions').open, false);
+    assert.equal(page.$('shell-mission-content').hidden, false);
+    assert.equal(page.$('shell-brief-content').hidden, true);
+    assert.equal(page.$('mission-brief-unit').parentElement, page.$('mission-brief'));
     frames(page, 12);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ready);
     assert.equal(page.$('game-overlay').dataset.kind, 'ready');
@@ -179,6 +188,7 @@ for (const policy of ['immediate', 'grid-center']) {
     controls.find('overlay-brief');
     controls.pulse(0);
     assert.equal(page.doc.activeElement.id, 'mission-brief-read');
+    assert.equal(page.$('shell-mission-content').hidden, true);
     controls.pulse(0);
     controls.set(13, true);
     controls.frame();
@@ -208,6 +218,106 @@ for (const policy of ['immediate', 'grid-center']) {
     assert.deepEqual(page.errors, []);
   });
 }
+test('focused brief restores exact picker placement, native Back and normal missions across repeated openings', async (t) => {
+  const page = await practice(t, 'immediate'),
+    unit = page.$('mission-brief-unit'),
+    detail = page.$('mission-brief'),
+    originalChildren = [...detail.children],
+    checkpoint = authoritativeCheckpoint(page.rendered.run),
+    title = page.$('shell-missions-title').textContent,
+    context = page.$('shell-missions-context').textContent;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    page.$('mission-brief-reading').scrollTop = 250;
+    reach(page, 'overlay-brief');
+    key(page, 'Enter');
+    assert.equal(
+      page.$('shell-missions-title').textContent,
+      page.$('mission-brief-title').textContent,
+    );
+    assert.equal(page.$('shell-missions-context').textContent, 'PRACTICE · MISSION BRIEF');
+    assert.equal(page.$('mission-brief-reading').scrollTop, 0);
+    assert.equal(unit.parentElement, page.$('shell-brief-content'));
+    // Native close events can be queued after a rapid re-open. The active
+    // focused view must survive a preceding dialog's delayed event.
+    page.$('shell-missions').emit('close');
+    assert.equal(page.$('shell-missions').dataset.view, 'brief');
+    const visited = new Set();
+    for (let i = 0; i < 8; i++) {
+      visited.add(page.doc.activeElement.id);
+      key(page, 'ArrowDown');
+    }
+    assert.deepEqual([...visited].sort(), ['mission-brief-read', 'shell-missions-back']);
+    reach(page, 'shell-missions-back');
+    key(page, 'Enter');
+    assert.equal(page.$('shell-missions').open, false);
+    assert.equal(page.$('shell-missions').dataset.view, undefined);
+    assert.equal(page.$('shell-missions-title').textContent, title);
+    assert.equal(page.$('shell-missions-context').textContent, context);
+    assert.deepEqual(detail.children, originalChildren);
+    assert.equal(detail.open, false);
+    assert.equal(page.$('shell-brief-content').children.length, 0);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  }
+  reach(page, 'overlay-menu');
+  key(page, 'Enter');
+  reach(page, 'shell-play');
+  key(page, 'Enter');
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.$('shell-missions-title').textContent, title);
+  assert.equal(page.$('shell-mission-content').hidden, false);
+  assert.equal(page.$('shell-briefing').hidden, false);
+  assert.equal(page.$('mission-picker-stage').closest('[hidden]'), null);
+  assert.equal(page.$('mission-picker-setup').closest('[hidden]'), null);
+  assert.ok(page.doc.activeElement.closest('#mission-picker-cards'));
+  assert.deepEqual(detail.children, originalChildren);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+});
+
+test('long brief has scoped fluid reading layout, explicit body sizes and Large preference without simulation changes', async (t) => {
+  const css = await readFile(new URL('../ui/mission-brief.css', import.meta.url), 'utf8'),
+    html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(html, /href="ui\/mission-brief.css"/);
+  // These are source layout contracts, not a browser/computed geometry oracle.
+  assert.match(
+    css,
+    /#shell-brief-content #mission-brief-reading\s*\{[^}]*min-height: 120px;[^}]*max-height: none;[^}]*overflow-y: auto;/,
+  );
+  assert.match(
+    css,
+    /#shell-brief-content #mission-brief-reading > p\s*\{[^}]*font-size: 20px;[^}]*line-height: 1.55;/,
+  );
+  assert.match(
+    css,
+    /\[data-text-size='large'\][^{]*#mission-brief-reading > p\s*\{[^}]*font-size: 22px;/,
+  );
+  assert.match(
+    css,
+    /@media \(max-width: 480px\)[\s\S]*#mission-brief-reading > p\s*\{[^}]*font-size: 18px;/,
+  );
+  const page = await practice(t, 'grid-center'),
+    checkpoint = authoritativeCheckpoint(page.rendered.run);
+  page.$('settings-button').click();
+  page.$('text-size').value = 'large';
+  page.$('text-size').emit('change');
+  page.$('settings-dialog').close();
+  assert.equal(page.doc.body.dataset.textSize, 'large');
+  reach(page, 'overlay-brief');
+  key(page, 'Enter');
+  const region = page.$('mission-brief-reading');
+  // Modeled responsive geometry proves reader ownership across reflow only.
+  region.clientHeight = 240;
+  region.scrollHeight = 1200;
+  key(page, 'Enter');
+  key(page, 'ArrowDown');
+  assert.ok(region.scrollTop > 0);
+  region.clientHeight = 120;
+  key(page, 'End');
+  assert.equal(region.scrollTop, 1080);
+  key(page, 'Escape');
+  key(page, 'Escape');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
 test('an imported authored arcade scenario is still labeled practice', async (t) => {
   const page = await practice(t, 'immediate', { arcade: true });
   assert.equal(page.$('shell-edition').textContent, 'PRACTICE');
