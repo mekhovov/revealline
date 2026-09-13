@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Route Choices in three worlds
 
 | ------------- | ----------------------------------------------------------------------------- | ----------------------- | ----------------- | -------------- |
@@ -13,6 +11,13 @@ are Tactical-only. This addition makes no Arcade completion claim and changes no
 existing primitive, class roster, difficulty rule, music track or story. The
 scenery is independent of collision geometry.
 
+The revised candidate keeps gameplay instructions in player briefings and moves
+the foundry study/difficulty qualification to rights metadata and this guide. The
+pack description describes the missions; media-production limits remain in rights
+metadata and documentation. The published FPV source pack is unchanged. The prior
+`fdaf7bd8` candidate, descriptors and proof are retained in Git and review evidence;
+these newly derived descriptors require a separate coordinated registry refresh.
+
 ## Exact originals and separate payloads
 
 The compiler checks the existing full PNG signature/chunk CRC/decompression/RGB
@@ -22,18 +27,10 @@ resize, recompress or otherwise transform those files. Each presentation uses
 
 | Edition                | Compact normalized gameplay JSON | Paired `.rlmedia` | Original PNG bytes |
 | ---------------------- | -------------------------------: | ----------------: | -----------------: |
-| `route-worlds-ukraine` |                            8,614 |         8,825,996 |          8,814,876 |
-| `route-worlds-retro`   |                            8,516 |         7,589,742 |          7,578,780 |
-
-The compact pack contains no inline image or dependency. Its exact paired media
-file includes the three originals, presentation assignments and retained owner.
-The existing `revealline-external-chapter.v1` validator checks the complete pair
-before returning a prepared value. Descriptor hashes are in
-[ukraine.json](descriptors/ukraine.json), [retro.json](descriptors/retro.json) and
-pack/index and 256 MiB managed-store caps are unchanged.
+| `route-worlds-ukraine` |                            8,405 |         8,825,887 |          8,814,876 |
+| `route-worlds-retro`   |                            8,307 |         7,589,633 |          7,578,780 |
 
 Run from the repository root, using new output directories:
-
 
 Each cache output contains `descriptor.json`, `pack.json`, `media.rlmedia` and
 `inputs.json`. Output must be a new directory beneath this worktree's `.cache`,
