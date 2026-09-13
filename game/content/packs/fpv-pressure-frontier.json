@@ -68,9 +68,7 @@
       "title": "FPV Front · Frontier Lines",
       "themeId": "fpv",
       "musicId": "first-light-orchard-window",
-      "classIds": [
-        "scout"
-      ],
+      "classIds": ["scout"],
       "levels": [
         {
           "version": "xonix-level.v4",
@@ -177,10 +175,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              54,
-              88
-            ],
+            "timeMedals": [54, 88],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },
@@ -366,10 +361,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              58,
-              94
-            ],
+            "timeMedals": [58, 94],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },
@@ -570,10 +562,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              64,
-              105
-            ],
+            "timeMedals": [64, 105],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },

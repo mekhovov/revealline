@@ -62,7 +62,7 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
   assert.deepEqual(CAMPAIGN_DIFFICULTIES, ['standard', 'gentle']);
   assert.equal(
     campaigns.reduce((n, c) => n + c.levels.length, 0),
-    41,
+    47,
   );
   for (const campaign of campaigns) {
     const before = canonicalJSON(campaign),
@@ -93,7 +93,7 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
   }
 });
 
-test('all 38 Gentle maps retain topology, goals, equipment and supported simulation pairs', () => {
+test('all shipped Gentle maps retain topology, goals, equipment and supported simulation pairs', () => {
   const invariant = (level) => {
     const copy = normalizedLevel(level);
     delete copy.revision;
