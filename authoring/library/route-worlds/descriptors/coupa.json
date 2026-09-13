@@ -8,14 +8,14 @@
     "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
   },
   "pack": {
-    "bytes": 8526,
-    "sha256": "ab535097b32996805a9eb36df32f22647a6a3a3e8b0d10e9526667519afef49f"
+    "bytes": 8317,
+    "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813"
   },
   "media": {
-    "bytes": 8281102,
-    "sha256": "22a4201d6bff063e8c4704323e0605cc20626d949e8c265264d4f4c4f7d0bb03"
+    "bytes": 8280993,
+    "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f"
   },
-  "campaignKey": "route-worlds-coupa/1/57042d08e1681c86",
+  "campaignKey": "route-worlds-coupa/1/708c553521008c7d",
   "themeId": "coupa",
   "originals": [
     {
