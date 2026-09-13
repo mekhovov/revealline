@@ -425,7 +425,10 @@ test('old version readers cannot read or write v3; adapters require the explicit
   });
   for (const domain of ['audio', 'media'])
     await assert.rejects(v2.readDomain(domain), { name: 'VersionError' });
-  assert.throws(() => createStillMediaStore({ managedStore: v2, decodeImage }), /v3 manager/);
+  assert.throws(() => createStillMediaStore({ managedStore: v2, decodeImage }), {
+    name: 'TypeError',
+    message: 'Still media requires a compatible rich still manager.',
+  });
   assert.equal((await createSoundtrackStore({ managedStore: v3 }).read()).generation, 1);
   v3.close();
   v2.close();

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, readFile, writeFile, rm, symlink, stat } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, writeFile, rm, symlink, stat } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -157,6 +157,7 @@ test('changed PNG/movie originals fail byte verification rather than gaining can
 });
 
 test('candidate output is exclusive and rejects a symlink parent before any outside file creation', async (t) => {
+  await mkdir(join(ROOT, '.cache'), { recursive: true });
   const scratch = await mkdtemp(join(ROOT, '.cache/dawn-example-test-'));
   const outside = await mkdtemp(join(tmpdir(), 'dawn-example-owned-'));
   t.after(async () => {
