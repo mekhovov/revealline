@@ -1,0 +1,30 @@
+.story-dialog {
+  max-width: min(960px, calc(100vw - 24px));
+}
+.story-dialog .story-stage > canvas,
+.story-dialog .story-stage video {
+  display: block;
+  width: 100%;
+  max-height: 60dvh;
+  object-fit: contain;
+  background: #060914;
+}
+.story-dialog .victory-story > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.story-dialog .victory-story label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.story-dialog .victory-story p {
+  line-height: 1.5;
+}
+
+.story-dialog .victory-story video {
+  max-height: 60dvh !important;
+}

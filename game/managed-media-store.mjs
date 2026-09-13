@@ -527,11 +527,11 @@ export function createManagedMediaStore({
         });
         if (signal?.aborted) cancel();
       } catch (error) {
-        failure = error;
+        failure ??= error;
         try {
           tx.abort();
         } catch {
-          finish(error);
+          finish(failure);
         }
       }
     });
@@ -550,6 +550,25 @@ export function createManagedMediaStore({
           current = row(value, domain, richStillMedia, media);
         if (domain === 'story') validateStoryState(media, current.library);
         return Object.freeze(current);
+      },
+      signal,
+    );
+  }
+
+  /** One readonly transaction fixes poster assignments and movie bindings at the
+   * same instant. Selected original bytes are still acquired separately. */
+  async function readPresentationMetadata({ signal } = {}) {
+    domainValid('story');
+    return readSelected(
+      [
+        ['mediaRecords', 'library'],
+        ['storyRecords', 'library'],
+      ],
+      ([mediaValue, storyValue]) => {
+        const media = row(mediaValue, 'media', true),
+          story = row(storyValue, 'story', true, media.library);
+        validateStoryState(media.library, story.library);
+        return Object.freeze({ media: Object.freeze(media), story: Object.freeze(story) });
       },
       signal,
     );
@@ -977,6 +996,7 @@ export function createManagedMediaStore({
     storyMedia,
     readDomain,
     readDomainMetadata,
+    readPresentationMetadata,
     readSelectedBlob,
     usage,
     reserve,

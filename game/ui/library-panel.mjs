@@ -16,6 +16,7 @@ import { masteryFor, pictureMasteries } from './mastery-view.mjs';
 import { expandDifficultyCampaigns } from '../campaign-contexts.mjs';
 import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
 import { resolveEarnedPicture } from './earned-picture.mjs';
+import { resolveStoryReceipts } from '../story-receipts.mjs';
 import { acquirePresentationImage } from './presentation-image.mjs';
 const $ = (id) => document.getElementById(id);
 const button = (label, fn) => {
@@ -75,6 +76,59 @@ export function attachLibraryPanel(api) {
   }
   const pictureMeta = (picture) =>
     `${picture.theme.name} / ${picture.item.medal.toUpperCase()} · ${picture.label} · ${picture.item.score.toLocaleString()} points${Number.isFinite(picture.item.time) ? ` · ${picture.item.time.toFixed(2)}s` : ''}`;
+  const storyButton = document.createElement('button');
+  storyButton.id = 'gallery-story';
+  storyButton.type = 'button';
+  storyButton.className = 'button secondary';
+  storyButton.textContent = 'Play earned story';
+  storyButton.hidden = true;
+  if (api.openStory) $('gallery-view-dialog').querySelector('.overlay-actions').append(storyButton);
+  const earnedStory = (picture) => {
+    const library = api.get().library,
+      story = library.storyReceipts?.find((row) => row.galleryKey === picture?.item.key);
+    if (!story?.storyPin || !picture.receipt) return null;
+    // The resolved picture already establishes exact execution→retained owner authority.
+    resolveEarnedPicture({
+      item: picture.item,
+      receipt: picture.receipt,
+      metadata: picture.media?.metadata,
+      entries: executionEntries(),
+    });
+    return resolveStoryReceipts([story], [picture.receipt], [picture.item])[0].storyPin;
+  };
+  storyButton.onclick = () => {
+    if (!view || !viewReady || !$('gallery-view-dialog').open || !api.openStory) return;
+    try {
+      const pin = earnedStory(view),
+        source = $('gallery-canvas'),
+        picture = view,
+        backdrop = viewBackdrop;
+      if (!pin) return;
+      if (!backdrop) throw new Error('Restore this earned story’s exact picture before playing.');
+      cancelAnimationFrame(galleryFrame);
+      void api
+        .openStory({
+          pin,
+          title: picture.level.name,
+          drawPoster(canvas) {
+            canvas.width = source.width;
+            canvas.height = source.height;
+            galleryPainter.drawGallery(canvas.getContext('2d'), {
+              theme: picture.theme,
+              level: picture.level,
+              seed: picture.item.seed,
+              width: canvas.width,
+              height: canvas.height,
+              image: backdrop.image,
+              fit: backdrop.fit,
+            });
+          },
+        })
+        .catch((error) => status('gallery-view-meta', error));
+    } catch (error) {
+      status('gallery-view-meta', error);
+    }
+  };
   const galleryPainter = new BoardPainter(api.get().presets);
   const reducedEffects = () =>
     (typeof api.getReducedEffects === 'function'
@@ -377,7 +431,11 @@ export function attachLibraryPanel(api) {
         );
         return;
       }
-      if (['xonix-session.v1', 'xonix-session.v2', 'xonix-session.v3'].includes(parsed.format)) {
+      if (
+        ['xonix-session.v1', 'xonix-session.v2', 'xonix-session.v3', 'xonix-session.v4'].includes(
+          parsed.format,
+        )
+      ) {
         await api.restore(parsed);
         $('library-dialog').close();
         return;
@@ -757,6 +815,14 @@ export function attachLibraryPanel(api) {
     $('gallery-canvas').setAttribute('aria-hidden', String(!ready));
     $('gallery-animate').disabled = !ready || view?.celebratable === false;
     $('gallery-replay').disabled = !ready || view?.replayable === false;
+    storyButton.hidden =
+      !ready ||
+      !api.openStory ||
+      !api
+        .get()
+        .library.storyReceipts?.some(
+          (row) => row.galleryKey === view?.item.key && row.storyPin !== null,
+        );
     $('gallery-view-dialog').setAttribute('aria-busy', String(loading));
   }
   async function openPicture(picture, { variants = [picture], switching = false } = {}) {

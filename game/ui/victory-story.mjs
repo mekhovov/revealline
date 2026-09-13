@@ -51,6 +51,8 @@ export function createVictoryStoryPresentation({
   timers = globalThis,
   musicDucker = null,
   volume = 0.7,
+  masterVolume = 1,
+  muted = false,
   reducedMotion = false,
   timeoutMs = VICTORY_STORY_LIMITS.timeoutMs,
   onChange = () => {},
@@ -85,6 +87,12 @@ export function createVictoryStoryPresentation({
       Number.isFinite(v) && v >= 0 && v <= 1 && typeof reduced === 'boolean',
       'Invalid cinematic volume or reduced-motion preference.',
     );
+  const masterPreferences = (value, silent) =>
+    required(
+      Number.isFinite(value) && value >= 0 && value <= 1 && typeof silent === 'boolean',
+      'Invalid cinematic master volume or mute.',
+    );
+  masterPreferences(masterVolume, muted);
   preferences(volume, reducedMotion);
   const element = document.createElement('section');
   element.className = 'victory-story';
@@ -178,6 +186,8 @@ export function createVictoryStoryPresentation({
             : reducedMotion
               ? 'Reduced motion: the earned picture stays available. Play is optional.'
               : 'Your picture. Story playback is optional.');
+    if (muted || masterVolume === 0)
+      notice.textContent += ' Master sound is muted; cinematic volume does not unmute it.';
     if (audioWarning) notice.textContent += ` ${audioWarning}`;
     const focused = document.activeElement;
     if (Object.values(buttons).includes(focused) && (focused.hidden || focused.disabled)) {
@@ -323,8 +333,8 @@ export function createVictoryStoryPresentation({
         return Promise.resolve(false);
       }
       releaseDuck = allocatedDuck;
-      video.volume = volume;
-      video.muted = volume === 0;
+      video.volume = volume * masterVolume;
+      video.muted = muted || volume === 0 || masterVolume === 0;
       armDeadline('Story playback did not begin. Skip or close the story.');
       // Invoke play within this call, before any await, preserving native user activation.
       const started = video.play();
@@ -424,14 +434,19 @@ export function createVictoryStoryPresentation({
     if (disposed) return;
     const v = next.volume ?? volume,
       reduced = next.reducedMotion ?? reducedMotion;
+    const master = next.masterVolume ?? masterVolume,
+      silent = next.muted ?? muted;
+    masterPreferences(master, silent);
     preferences(v, reduced);
+    masterVolume = master;
+    muted = silent;
     volume = v;
     volumeInput.value = String(v);
     const changed = !reducedMotion && reduced;
     reducedMotion = reduced;
     if (media) {
-      media.volume = volume;
-      media.muted = !desired || volume === 0;
+      media.volume = volume * masterVolume;
+      media.muted = !desired || muted || volume === 0 || masterVolume === 0;
     }
     if (changed) skip();
     else render();
@@ -501,7 +516,7 @@ export function createVictoryStoryPresentation({
     media.muted = true;
     media.playsInline = true;
     media.preload = 'auto';
-    media.volume = volume;
+    media.volume = volume * masterVolume;
     media.style.maxWidth = '100%';
     media.style.maxHeight = '100%';
     media.style.objectFit = 'contain';
