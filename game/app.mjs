@@ -227,6 +227,7 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  $('creator-tools').hidden = practiceSession;
   let packLaunchRequest = null,
     packLaunchError = '';
   if (!practiceSession)
