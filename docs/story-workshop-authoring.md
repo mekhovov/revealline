@@ -1,6 +1,6 @@
 # Optional story authoring in Picture Workshop
 
-This source extension builds on [authored bindings](authored-story-bindings.md) at `8a6e5460fd3eb7d01fb07fa10549e131d718fa69`. The existing Picture Workshop can receive an explicit compatible story store and author a video segment for one exact retained poster. It uses the same dialog, task cancellation and controller navigation. The ordinary workshop host has **not** adopted this capability or database v4. No game/session/earned receipt, runtime playback, build list, version or release changes are included.
+This source extension builds on [authored bindings](authored-story-bindings.md) at `8a6e5460fd3eb7d01fb07fa10549e131d718fa69`. The existing Picture Workshop can receive an explicit compatible story store and author a video segment for one exact retained poster. It uses the same dialog, task cancellation and controller navigation. The original isolated UI slice did not adopt its host or change game/session/earned formats. The current successor now injects the shared v4 store through [story runtime integration](story-runtime-adoption.md); native browser and release acceptance are separate.
 
 ## Injection contract
 
@@ -14,7 +14,7 @@ This source extension builds on [authored bindings](authored-story-bindings.md) 
 | `onStorySaved({generation,document})`   | Optional notification after a successful native commit. A thrown or rejected notification reports **saved, notification failed**; it cannot roll back the completed transaction or leave the panel's generation behind.                                            |
 | `requestStoryDownload({blob,filename})` | Optional native-wrapper download request. Called synchronously by the explicit visible download action, before awaiting anything. It does not run during asynchronous preparation. Native href/download remains available when this capability is absent.          |
 
-The panel adds `back()`: with story capability and an active task, first Back cancels pending work and requires Reload; later Back closes. `close()` remains unconditional Close/lifecycle cleanup. The existing native dialog cancel event uses `back()`. A future host must route its existing navigation `onBack` to `panel.back()`; it must not create another controller router. Keep native file-picker blur separate from actual hidden/pagehide/Close cancellation. Current host wiring remains unchanged in this slice.
+The panel adds `back()`: with story capability and an active task, first Back cancels pending work and requires Reload; later Back closes. `close()` remains unconditional Close/lifecycle cleanup. The existing native dialog cancel event uses `back()`. The integrated host routes its existing navigation `onBack` to `panel.back()`; it does not create another controller router. Keep native file-picker blur separate from actual hidden/pagehide/Close cancellation. The initial standalone UI receipt still describes its original unadopted host scope.
 
 ## One exact picture, one explicit story choice
 
@@ -43,6 +43,10 @@ Restore exact picture originals via `.rlmedia` first when missing. `.rlstory` in
 The panel retains existing bounds: one source at most **64 MiB**, video at most **120 seconds / 1920×1080**, PNG at most **4 MiB**, binary file **256 MiB**, and shared **256 MiB committed plus staging / 2 MiB still+story metadata / 512 physical original rows / four leases**. No cap is raised and no second database bypass is added. Complete-inventory native preparation can refuse a binding change (including null) if another declared available video is missing, corrupt or unsupported. Conservative incoming reservations can refuse repeated imports near capacity despite final deduplication fitting. Lease cleanup is best effort when storage is unavailable; retained reservations expire within 15 minutes.
 
 One parent work serial and AbortController guard every decode, preview, staging and commit. Close/hidden/context invalidation releases candidate URLs and cancels staged reviews; late callbacks cannot publish into a new context. A transaction already committed stays committed even if cancellation races its result: the existing status tells the user to Reload to verify. Native number/file editing stays native; the existing controller editor handles the paired ranges and selects. This does not establish physical controller text entry, file selection, focus reflow or native download behavior.
+
+## Original isolated-slice adoption checklist
+
+The following checklist records the original UI slice before host adoption. Shared-manager wiring and versioned attempt/first-earned authority now exist in the successor source described above; native journey, original-transfer and release qualification remain separate.
 
 Before adoption, wire all current ordinary/practice/course/workshop audio, still and story domains to one compatible manager together. Old v3 readers may receive `VersionError`; use compatible current recovery and exact original exports, never database deletion/downgrade. Add explicitly versioned attempt and first-earned story authority before any automatic post-win story or Collection replay. Then qualify one real win → optional Play/Skip → exact poster → Collection Replay, paired fresh-origin backups, missing-original recovery and cold offline playback. Existing v1 `story:null`, picture pins and earned receipts remain strict; a source binding alone is not a reward.
 

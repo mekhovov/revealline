@@ -1,5 +1,6 @@
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
+import { createStoryMediaStore } from '../story-media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import { readAssetStore } from '../storage.mjs';
@@ -57,7 +58,7 @@ async function readSource({ signal } = {}) {
   };
 }
 
-/** Source-only, explicit real-origin v3 entry. No manager opens on page load. */
+/** Source-only, explicit real-origin v4 entry. No manager opens on page load. */
 export function attachStillMediaHost({
   document: doc = document,
   window: win = window,
@@ -68,6 +69,8 @@ export function attachStillMediaHost({
   createManager = createManagedMediaStore,
   createStills = createStillMediaStore,
   createAudio = createSoundtrackStore,
+  createStories = createStoryMediaStore,
+  storyInspection,
   createPreview = createStillMediaPreview,
   URLImpl = globalThis.URL,
   decodeImage,
@@ -80,6 +83,7 @@ export function attachStillMediaHost({
   let manager = null,
     stills = null,
     audio = null,
+    stories = null,
     panel = null,
     opening = false,
     disposed = false,
@@ -96,7 +100,7 @@ export function attachStillMediaHost({
     getScope: () => (panel?.dialog.open ? 'still-media' : 'still-media-page'),
     getRoot: () => (panel?.dialog.open ? panel.dialog : doc),
     getDefaultFocus: () => (panel?.dialog.open ? $('still-media-reload') : $('still-host-open')),
-    onBack: () => panel?.close(),
+    onBack: () => panel?.back(),
     onNativeInput: () => router.clear(),
     onHint: (text) => {
       status.textContent = text;
@@ -130,8 +134,9 @@ export function attachStillMediaHost({
     panel = null;
     stills?.close();
     audio?.close();
+    stories?.close();
     manager?.close();
-    stills = audio = manager = null;
+    stills = audio = stories = manager = null;
     $('still-host-export-audio').disabled = true;
     router.clear();
   }
@@ -159,12 +164,15 @@ export function attachStillMediaHost({
           channel: channel ?? source.channel ?? 'dev',
         });
         sourceChannel = catalog.channel;
-        manager = createManager({ richStillMedia: true });
+        manager = createManager({ storyMedia: true });
         stills = createStills({ managedStore: manager, decodeImage });
         audio = createAudio({ managedStore: manager });
+        stories = createStories({ managedStore: manager, decodeImage });
         panel = attachStillMediaPanel({
           document: doc,
           store: stills,
+          storyStore: stories,
+          storyInspection,
           catalog,
           preview: createPreview({ canvas: doc.createElement('canvas'), presets: source.presets }),
           decodeImage,

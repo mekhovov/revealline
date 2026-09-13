@@ -6,6 +6,7 @@ import { attachStillMediaHost } from '../ui/still-media-host.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { createStoryMediaStore } from '../story-media-store.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
@@ -66,7 +67,7 @@ async function setup(t, options = {}) {
     lockManager: { request: async (_name, _options, work) => work({}) },
     decodeImage,
     createManager(args) {
-      assert.deepEqual(args, { richStillMedia: true });
+      assert.deepEqual(args, { storyMedia: true });
       const manager = createManagedMediaStore({ ...args, indexedDB: memory.indexedDB });
       managers.push(manager);
       return manager;
@@ -78,6 +79,10 @@ async function setup(t, options = {}) {
     createAudio(args) {
       adapters.push(args.managedStore);
       return createSoundtrackStore(args);
+    },
+    createStories(args) {
+      adapters.push(args.managedStore);
+      return createStoryMediaStore(args);
     },
     createPreview: ({ canvas }) => ({ canvas, show: async () => true, clear() {}, dispose() {} }),
     URLImpl: {
@@ -113,7 +118,7 @@ test('actual authoring entry opens no DB until explicit activation and shares on
   h.$('still-host-open').focus();
   assert.equal(await h.$('still-host-open').onclick(), true);
   assert.equal(h.managers.length, 1);
-  assert.deepEqual(h.adapters, [h.managers[0], h.managers[0]]);
+  assert.deepEqual(h.adapters, [h.managers[0], h.managers[0], h.managers[0]]);
   h.$('still-media-file').files = [new Blob([pngBytes()])];
   h.$('still-media-file').onchange();
   h.$('still-media-credit').value = 'Fixture';
@@ -133,7 +138,7 @@ test('actual authoring entry opens no DB until explicit activation and shares on
   await new Promise(setImmediate);
   assert.ok(h.memory.closed > 0);
 });
-test('v1 MP3 bytes remain exact through shared v3 upgrade and explicit native backup preparation', async (t) => {
+test('v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation', async (t) => {
   const memory = memoryIndexedDB(),
     old = createSoundtrackStore({ indexedDB: memory.indexedDB });
   await old.commit(audioFixture.prepared, { expectedGeneration: 0 });

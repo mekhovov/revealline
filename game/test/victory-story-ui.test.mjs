@@ -681,3 +681,38 @@ test('abort during gain release cannot reopen a disposed story as a static view'
   assert.equal(h.urls.size, 0);
   assert.equal(h.container.children.length, 1);
 });
+
+test('cinematic slider remains independent while explicit playback honors master attenuation and mute', async (t) => {
+  const h = await setup(t, { volume: 0.6, masterVolume: 0.5, muted: false });
+  h.ready();
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.video.volume, 0.3);
+  assert.equal(h.video.muted, false);
+  assert.equal(h.player.snapshot().volume, 0.6);
+  h.player.setPreferences({ masterVolume: 0.25 });
+  assert.equal(h.video.volume, 0.15);
+  assert.equal(h.player.snapshot().volume, 0.6);
+  h.player.setPreferences({ muted: true });
+  assert.equal(h.video.muted, true);
+  h.player.setPreferences({ volume: 0.8 });
+  assert.equal(h.video.volume, 0.2);
+  assert.equal(h.video.muted, true, 'A cinematic slider must not unmute the master');
+  h.player.pause();
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.video.muted, true, 'Explicit Play also respects master mute');
+  h.player.setPreferences({ muted: false, masterVolume: 0 });
+  assert.equal(h.video.volume, 0);
+  assert.equal(h.video.muted, true);
+  h.player.setPreferences({ masterVolume: 1 });
+  assert.equal(h.video.volume, 0.8);
+  assert.equal(h.video.muted, false);
+});
+
+test('invalid master controls refuse without changing current cinematic controls', async (t) => {
+  const h = await setup(t, { volume: 0.6, masterVolume: 0.5 });
+  for (const next of [{ masterVolume: -1 }, { masterVolume: Infinity }, { muted: 1 }]) {
+    assert.throws(() => h.player.setPreferences(next), /master/);
+    assert.equal(h.player.snapshot().volume, 0.6);
+    assert.equal(h.video.volume, 0.3);
+  }
+});

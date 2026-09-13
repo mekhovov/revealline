@@ -1,5 +1,9 @@
 # Optional victory-story foundation
 
+Current successor host adoption is documented in [story runtime integration](story-runtime-adoption.md). It adds versioned flight/earned pins and a shared v4 host while preserving the isolated component contract below. Native/frozen/public story acceptance remains separate; published v0.34 is unchanged.
+
+## Original foundation scope
+
 This isolated successor slice adds a strict story sidecar and a native presentation
 component. It does not attach stories to flights, victories, Collection, stored
 presentations, backups or the offline cache. The published still formats remain

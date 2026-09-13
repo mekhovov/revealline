@@ -10,7 +10,7 @@ import {
   commitMediaBundleRestore,
 } from '../media-bundle.mjs';
 
-/** Administrative still assignments only. No game, profile or Collection API. */
+/** Administrative still/story assignments. No game, profile or Collection API. */
 export function attachStillMediaPanel({
   document: doc = document,
   store,

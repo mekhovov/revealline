@@ -25,10 +25,22 @@ import {
 } from './data-json.mjs';
 
 import { resolvePictureReceipts, mergePictureReceipts } from './picture-receipts.mjs';
-import { validatePresentationPinsForRun } from './presentation-pins.mjs';
+import {
+  FLIGHT_MEDIA_PINS_FORMAT,
+  validateFlightPresentationPinsForRun,
+  presentationPicturePins,
+  storyPinForTheme,
+} from './flight-media-pins.mjs';
+import {
+  STORY_RECEIPT_FORMAT,
+  resolveStoryReceipts,
+  mergeStoryReceipts,
+} from './story-receipts.mjs';
 
 export const LIBRARY_VERSION = 'xonix-library.v2';
 export const PRESENTATION_LIBRARY_VERSION = 'xonix-library.v3';
+export const STORY_LIBRARY_VERSION = 'xonix-library.v4';
+export const DEFAULT_CINEMATIC_VOLUME = 0.75;
 const LEGACY_LIBRARY_VERSION = 'xonix-library.v1';
 export const LIBRARY_LIMITS = Object.freeze({
   maxBytes: 4 * 1024 * 1024,
@@ -228,7 +240,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     throw error;
   }
   const legacy = value.format === LEGACY_LIBRARY_VERSION,
-    pictures = value.format === PRESENTATION_LIBRARY_VERSION;
+    stories = value.format === STORY_LIBRARY_VERSION,
+    pictures = stories || value.format === PRESENTATION_LIBRARY_VERSION;
   exactKeys(
     value,
     [
@@ -239,6 +252,7 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
       'scores',
       ...(legacy ? [] : ['masteries']),
       ...(pictures ? ['pictureReceipts'] : []),
+      ...(stories ? ['storyReceipts', 'cinematicVolume'] : []),
     ],
     'library',
   );
@@ -418,7 +432,19 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
   value.masteries = legacy ? [] : resolveMasteryRecords(value.masteries);
   if (pictures)
     value.pictureReceipts = resolvePictureReceipts(value.pictureReceipts, value.gallery);
-  value.format = pictures ? PRESENTATION_LIBRARY_VERSION : LIBRARY_VERSION;
+  if (stories) {
+    required(finite(value.cinematicVolume, 0, 1), 'Cinematic volume must be between zero and one.');
+    value.storyReceipts = resolveStoryReceipts(
+      value.storyReceipts,
+      value.pictureReceipts,
+      value.gallery,
+    );
+  }
+  value.format = stories
+    ? STORY_LIBRARY_VERSION
+    : pictures
+      ? PRESENTATION_LIBRARY_VERSION
+      : LIBRARY_VERSION;
   if (legacy) {
     // The migrated document must fit the same total library budget, including
     // newly added fields. Never silently discard old collection entries.
@@ -464,6 +490,16 @@ export function updatePreferences(library, patch) {
   preferencesValid(next.preferences);
   return next;
 }
+/** Explicit new-version preference; older library shapes remain byte compatible. */
+export function withCinematicVolume(library, volume) {
+  const next = checkLibrary(library);
+  required(finite(volume, 0, 1), 'Cinematic volume must be between zero and one.');
+  next.format = STORY_LIBRARY_VERSION;
+  next.pictureReceipts ??= [];
+  next.storyReceipts ??= [];
+  next.cinematicVolume = volume;
+  return checkLibrary(next);
+}
 /** Merge portable local metadata only. The caller must establish award authority
  * separately; this helper neither simulates a run nor changes ordinary clears. */
 export function withMasteryRecords(library, records) {
@@ -496,15 +532,20 @@ export function recordLibraryCompletion(
   const pictures =
     presentationPins === undefined
       ? null
-      : validatePresentationPinsForRun(presentationPins, {
+      : validateFlightPresentationPinsForRun(presentationPins, {
           identityCatalog: mediaIdentityCatalog,
           campaignKey: key,
           level,
           themeId,
         });
-  if (pictures && next.format !== PRESENTATION_LIBRARY_VERSION) {
+  if (pictures && ![PRESENTATION_LIBRARY_VERSION, STORY_LIBRARY_VERSION].includes(next.format)) {
     next.format = PRESENTATION_LIBRARY_VERSION;
     next.pictureReceipts = [];
+  }
+  if (pictures?.format === FLIGHT_MEDIA_PINS_FORMAT && next.format !== STORY_LIBRARY_VERSION) {
+    next.format = STORY_LIBRARY_VERSION;
+    next.storyReceipts = [];
+    next.cinematicVolume = DEFAULT_CINEMATIC_VOLUME;
   }
   next.campaigns[key] = progress;
   const galleryKey = `gallery-v1-${dataIdentity([key, level.id, themeId])}`;
@@ -532,15 +573,25 @@ export function recordLibraryCompletion(
   )
     next.gallery = [gallery, ...next.gallery.filter((entry) => entry.key !== galleryKey)];
   // An existing unpinned gallery row is an earned legacy picture, never reassigned retrospectively.
-  if (pictures && !previous)
+  if (pictures && !previous) {
     next.pictureReceipts.push({
       galleryKey,
       earnedRunId: runId,
       earnedAt: completedAt,
       seed: result.seed,
       bodyId,
-      presentationPin: pictures.choices.find((choice) => choice.identity.themeId === themeId),
+      presentationPin: presentationPicturePins(pictures).choices.find(
+        (choice) => choice.identity.themeId === themeId,
+      ),
     });
+    if (next.format === STORY_LIBRARY_VERSION)
+      next.storyReceipts.push({
+        format: STORY_RECEIPT_FORMAT,
+        galleryKey,
+        earnedRunId: runId,
+        storyPin: storyPinForTheme(pictures, themeId),
+      });
+  }
   const history = result.classHistory ?? [
     {
       classId: result.classId,
@@ -676,14 +727,30 @@ export function mergeLibraries(local, remote, { baseline = null } = {}) {
     (a, b) => b.completedAt.localeCompare(a.completedAt) || a.key.localeCompare(b.key),
   );
   if (
-    left.format === PRESENTATION_LIBRARY_VERSION ||
-    right.format === PRESENTATION_LIBRARY_VERSION
+    [PRESENTATION_LIBRARY_VERSION, STORY_LIBRARY_VERSION].includes(left.format) ||
+    [PRESENTATION_LIBRARY_VERSION, STORY_LIBRARY_VERSION].includes(right.format)
   ) {
     next.format = PRESENTATION_LIBRARY_VERSION;
     next.pictureReceipts = mergePictureReceipts(
       left.pictureReceipts ?? [],
       right.pictureReceipts ?? [],
       right.gallery,
+      next.gallery,
+    );
+  }
+  if (left.format === STORY_LIBRARY_VERSION || right.format === STORY_LIBRARY_VERSION) {
+    next.format = STORY_LIBRARY_VERSION;
+    next.cinematicVolume = right.cinematicVolume ?? DEFAULT_CINEMATIC_VOLUME;
+    if (
+      left.format === STORY_LIBRARY_VERSION &&
+      (!base || left.cinematicVolume !== (base.cinematicVolume ?? DEFAULT_CINEMATIC_VOLUME))
+    )
+      next.cinematicVolume = left.cinematicVolume;
+    next.storyReceipts = mergeStoryReceipts(
+      left.storyReceipts ?? [],
+      right.storyReceipts ?? [],
+      right.gallery,
+      next.pictureReceipts,
       next.gallery,
     );
   }

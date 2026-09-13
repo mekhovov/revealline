@@ -11,11 +11,18 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
-import { snapshotPresentationPins, validatePresentationPinsForRun } from './presentation-pins.mjs';
+import { PRESENTATION_PINS_FORMAT } from './presentation-pins.mjs';
+import {
+  FLIGHT_MEDIA_PINS_FORMAT,
+  snapshotFlightPresentationPins,
+  presentationPicturePins,
+  validateFlightPresentationPinsForRun,
+} from './flight-media-pins.mjs';
 
 export const SESSION_FORMAT = 'xonix-session.v1';
 export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
 export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
+export const STORY_SESSION_FORMAT = 'xonix-session.v4';
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
 export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
 const canonical = (v) =>
@@ -74,23 +81,42 @@ function envelope(candidate) {
       'runId',
       'savedAt',
       'replay',
-      ...([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(session.format)
+      ...([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(
+        session.format,
+      )
         ? ['continuation']
         : []),
-      ...(session.format === PRESENTATION_SESSION_FORMAT ? ['presentationPins'] : []),
+      ...([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format)
+        ? ['presentationPins']
+        : []),
     ],
     'saved attempt',
   );
   required(
-    [SESSION_FORMAT, CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(
-      session.format,
-    ),
+    [
+      SESSION_FORMAT,
+      CONTINUOUS_SESSION_FORMAT,
+      PRESENTATION_SESSION_FORMAT,
+      STORY_SESSION_FORMAT,
+    ].includes(session.format),
     'Unsupported saved attempt format.',
   );
-  if ([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(session.format))
+  if (
+    [CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(
+      session.format,
+    )
+  )
     session.continuation = continuationValue(session.continuation);
-  if (session.format === PRESENTATION_SESSION_FORMAT)
-    session.presentationPins = snapshotPresentationPins(session.presentationPins);
+  if ([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format)) {
+    session.presentationPins = snapshotFlightPresentationPins(session.presentationPins);
+    required(
+      session.presentationPins.format ===
+        (session.format === STORY_SESSION_FORMAT
+          ? FLIGHT_MEDIA_PINS_FORMAT
+          : PRESENTATION_PINS_FORMAT),
+      'Saved attempt and presentation versions differ.',
+    );
+  }
   metadata(session);
   required(
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
@@ -128,14 +154,16 @@ export function suspendSession({
   );
   const intent = continuation === undefined ? undefined : continuationValue(continuation);
   const pictures =
-    presentationPins === undefined ? undefined : snapshotPresentationPins(presentationPins);
+    presentationPins === undefined ? undefined : snapshotFlightPresentationPins(presentationPins);
   if (pictures !== undefined)
     required(
       intent !== undefined &&
         pictures.executionKey === campaignKey &&
         pictures.levelId === run.level.id &&
         pictures.levelRevision === run.level.revision &&
-        pictures.choices.some((choice) => choice.identity.themeId === themeId),
+        presentationPicturePins(pictures).choices.some(
+          (choice) => choice.identity.themeId === themeId,
+        ),
       'Saved pictures require matching flight identity and explicit continuation.',
     );
   if (intent === undefined) {
@@ -145,7 +173,9 @@ export function suspendSession({
   return {
     format:
       pictures !== undefined
-        ? PRESENTATION_SESSION_FORMAT
+        ? pictures.format === FLIGHT_MEDIA_PINS_FORMAT
+          ? STORY_SESSION_FORMAT
+          : PRESENTATION_SESSION_FORMAT
         : intent === undefined
           ? SESSION_FORMAT
           : CONTINUOUS_SESSION_FORMAT,
@@ -207,8 +237,8 @@ export async function restoreSession(
       canonical(session.replay.options.classRecipes)
   )
     throw new Error('Saved rules differ from the installed campaign.');
-  if (session.format === PRESENTATION_SESSION_FORMAT)
-    validatePresentationPinsForRun(session.presentationPins, {
+  if ([PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(session.format))
+    validateFlightPresentationPinsForRun(session.presentationPins, {
       identityCatalog: mediaIdentityCatalog,
       campaignKey,
       level,
