@@ -40,12 +40,12 @@ export function attachSoundtrackPanel({
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
     throw new Error('Soundtrack panel requires a document, store and player.');
-  const bindings = [],
-    ownedURLs = new Set();
+  const bindings = [];
   let disposed = false,
     busy = false,
     controller = null,
-    saved = null;
+    saved = null,
+    preparedBackup = null;
   let draft = emptySoundtrackLibrary(),
     assets = [],
     dirty = false,
@@ -125,6 +125,7 @@ export function attachSoundtrackPanel({
   );
   const undoButton = button('undo', 'Undo unsaved changes', () => {
     if (!saved || busy) return;
+    invalidateBackup();
     draft = saved.library;
     assets = [...saved.assets];
     dirty = false;
@@ -490,6 +491,7 @@ export function attachSoundtrackPanel({
       if (!source) throw new Error('Choose a .rlsound backup first.');
       const prepared = await importSoundtrackBundle(source, { signal, probeMedia });
       throwIfSoundtrackAborted(signal);
+      invalidateBackup();
       draft = prepared.library;
       assets = [...prepared.assets];
       dirty = true;
@@ -498,15 +500,70 @@ export function attachSoundtrackPanel({
       bundleInput.element.value = '';
     }),
   );
-  const bundleExport = button('export-bundle', 'Download saved library (.rlsound)', () =>
-    task('Verifying a complete binary soundtrack backup…', async (signal) => {
-      if (!saved) throw new Error('Load the saved music library first.');
-      const blob = await exportSoundtrackBundle(saved.library, saved.assets, { signal });
-      throwIfSoundtrackAborted(signal);
-      await downloadBlob(blob, 'RevealLine-soundtrack.rlsound');
-      status.textContent = `Complete backup prepared (${bytes(blob.size)}). It contains saved metadata and every referenced original MP3. Confirm the download in your browser. Unsaved draft changes are excluded.`;
-    }),
+  const bundleExport = button(
+    'export-bundle',
+    'Prepare saved-library backup (.rlsound)',
+    async () => {
+      const complete = await task(
+        'Verifying a complete binary soundtrack backup…',
+        async (signal) => {
+          if (!saved) throw new Error('Load the saved music library first.');
+          invalidateBackup();
+          const blob = await exportSoundtrackBundle(saved.library, saved.assets, { signal });
+          throwIfSoundtrackAborted(signal);
+          if (disposed) return;
+          preparedBackup = {
+            blob,
+            filename: 'RevealLine-soundtrack.rlsound',
+            generation: saved.generation,
+            url: typeof download === 'function' ? null : URLImpl.createObjectURL(blob),
+          };
+          status.textContent =
+            'Backup prepared. Choose Download prepared backup to request the file. Unsaved draft changes are excluded.';
+        },
+      );
+      if (complete && preparedBackup && dialog.open && !disposed) bundleDownload.focus();
+      return complete;
+    },
   );
+  // A real link allows the browser's native keyboard/touch download behavior.
+  // Injected native adapters receive their own button, invoked before any await.
+  const bundleDownload = node(
+    typeof download === 'function' ? 'button' : 'a',
+    'download-prepared',
+    'Download prepared backup',
+    { class: 'button secondary', ...(typeof download === 'function' ? { type: 'button' } : {}) },
+  );
+  bundleDownload.onclick = (event) => {
+    const prepared = preparedBackup;
+    if (!prepared || busy || disposed || !dialog.open) {
+      event?.preventDefault();
+      return false;
+    }
+    if (typeof download === 'function') {
+      event?.preventDefault();
+      return task('Requesting the prepared backup from the download adapter…', async (signal) => {
+        await download(prepared.blob, prepared.filename, { signal });
+        if (!disposed && preparedBackup === prepared)
+          status.textContent =
+            'Download request handed to the host. Confirm the destination there; the prepared backup is available to retry.';
+      });
+    }
+    status.textContent =
+      'Download requested. Confirm it in your browser. If no file appears, choose Download prepared backup again.';
+    // No async work, synthetic click or automatic navigation here. The visible
+    // anchor's default action uses the already prepared, retained Blob URL.
+    return true;
+  };
+  const discardBackup = button('discard-backup', 'Discard prepared copy', () => {
+    if (busy || disposed) return;
+    invalidateBackup();
+    status.textContent =
+      'Prepared copy discarded. Saved music is unchanged; the browser controls any download already requested.';
+  });
+  const backupInfo = node('p', 'backup-info', '', { class: 'micro-note' });
+  const backupReady = node('div', 'backup-ready', null, { class: 'soundtrack-backup-ready' });
+  backupReady.append(backupInfo, row(bundleDownload, discardBackup));
   const transferSection = section(
     'Local files & backup',
     node(
@@ -516,6 +573,7 @@ export function attachSoundtrackPanel({
       { class: 'micro-note' },
     ),
     row(bundleExport),
+    backupReady,
     bundleInput.field,
     bundleImport,
   );
@@ -568,6 +626,7 @@ export function attachSoundtrackPanel({
     const value = copy(draft);
     work(value);
     draft = resolveSoundtrackLibrary(value);
+    invalidateBackup();
     dirty = true;
   }
   function changePlaylist(work) {
@@ -587,6 +646,28 @@ export function attachSoundtrackPanel({
       : 'Local library is unavailable. Built-in playback remains separate.';
     saveButton.disabled = busy || !saved || !dirty;
     undoButton.disabled = busy || !saved || !dirty;
+  }
+  function invalidateBackup() {
+    if (!disposed && (doc.activeElement === bundleDownload || doc.activeElement === discardBackup))
+      bundleExport.focus();
+    if (preparedBackup?.url) URLImpl.revokeObjectURL(preparedBackup.url);
+    preparedBackup = null;
+    bundleDownload.removeAttribute('href');
+    bundleDownload.removeAttribute('download');
+    backupReady.hidden = true;
+  }
+  function renderBackup() {
+    backupReady.hidden = preparedBackup === null;
+    bundleDownload.disabled = busy || !preparedBackup;
+    bundleDownload.setAttribute('aria-disabled', String(bundleDownload.disabled));
+    discardBackup.disabled = busy || !preparedBackup;
+    if (!preparedBackup) return;
+    backupInfo.textContent = `${bytes(preparedBackup.blob.size)} · saved generation ${preparedBackup.generation} · metadata and every referenced original MP3. Unsaved draft edits are excluded. Preparation does not save a file to disk.`;
+    if (preparedBackup.url) {
+      if (busy) bundleDownload.removeAttribute('href');
+      else bundleDownload.setAttribute('href', preparedBackup.url);
+      bundleDownload.setAttribute('download', preparedBackup.filename);
+    }
   }
   function renderTrack() {
     const track = tracks().find((item) => item.id === tracksSelect.element.value);
@@ -709,6 +790,7 @@ export function attachSoundtrackPanel({
     renderTrack();
     renderPlaylist();
     renderAssignments();
+    renderBackup();
     dirtyState();
     update();
   }
@@ -723,7 +805,7 @@ export function attachSoundtrackPanel({
       await work(signal);
       return true;
     } catch (error) {
-      report(error);
+      if (!disposed) report(error);
       return false;
     } finally {
       busy = false;
@@ -733,6 +815,7 @@ export function attachSoundtrackPanel({
   }
   async function reload() {
     return task('Loading saved music and local audio…', async (signal) => {
+      invalidateBackup();
       const value = await store.read({ signal });
       throwIfSoundtrackAborted(signal);
       saved = value;
@@ -758,6 +841,7 @@ export function attachSoundtrackPanel({
   }
   async function commitDraft(signal) {
     if (!saved) throw new Error('Load the local library before saving.');
+    invalidateBackup();
     pruneAssets();
     const prepared = await prepareSoundtrackLibrary(draft, assets, { signal, probeMedia });
     const usage =
@@ -826,6 +910,7 @@ export function attachSoundtrackPanel({
       }
       const verified = resolveSoundtrackLibrary(next);
       throwIfSoundtrackAborted(signal);
+      invalidateBackup();
       draft = verified;
       assets = [...added].map(([sha256, blob]) => ({ sha256, blob }));
       dirty = true;
@@ -833,26 +918,6 @@ export function attachSoundtrackPanel({
       fileInput.element.value = '';
       status.textContent = `${files.length} MP3 file${files.length === 1 ? '' : 's'} verified and added to the draft. Edit details or audition, then Save all changes.`;
     });
-  }
-  async function downloadBlob(blob, filename) {
-    if (download) return download(blob, filename);
-    // A new explicit download releases the prior download handle. The browser
-    // has already received that handle; do not retain unlimited backup Blobs.
-    for (const previous of ownedURLs) URLImpl.revokeObjectURL(previous);
-    ownedURLs.clear();
-    const url = URLImpl.createObjectURL(blob);
-    ownedURLs.add(url);
-    const anchor = doc.createElement('a');
-    anchor.href = url;
-    anchor.download = filename;
-    anchor.hidden = true;
-    doc.body.append(anchor);
-    try {
-      anchor.click();
-    } finally {
-      anchor.remove();
-    }
-    // Keep the URL until disposal so delayed browser download consumers can read it.
   }
   async function stopAudition(restore = false) {
     auditionToken++;
@@ -958,7 +1023,11 @@ export function attachSoundtrackPanel({
     if (!saved) await reload();
     else {
       render();
-      status.textContent = dirty ? 'Your unsaved draft is still here.' : 'Music library ready.';
+      status.textContent = preparedBackup
+        ? 'Your prepared saved-library backup is still available to download. Unsaved draft changes are excluded.'
+        : dirty
+          ? 'Your unsaved draft is still here.'
+          : 'Music library ready.';
     }
   }
   function close() {
@@ -984,10 +1053,10 @@ export function attachSoundtrackPanel({
       event.metaKey ||
       event.altKey ||
       !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key) ||
-      event.target?.tagName?.toLowerCase() !== 'button'
+      !['button', 'a'].includes(event.target?.tagName?.toLowerCase())
     )
       return;
-    const controls = [...dialog.querySelectorAll('button,input,select,audio')].filter(
+    const controls = [...dialog.querySelectorAll('button,input,select,audio,a')].filter(
       (element) =>
         !element.disabled &&
         !element.hidden &&
@@ -1066,8 +1135,7 @@ export function attachSoundtrackPanel({
     disposed = true;
     void stopAudition(false);
     for (const unbind of bindings) unbind();
-    for (const url of ownedURLs) URLImpl.revokeObjectURL(url);
-    ownedURLs.clear();
+    invalidateBackup();
     dialog.remove();
     style.remove();
   }
