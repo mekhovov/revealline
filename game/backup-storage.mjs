@@ -2,6 +2,8 @@ import { boundedJSON, exactKeys, plainObject, required } from './data-json.mjs';
 import { isPreparedBackup, MAX_BACKUP_BYTES } from './backup.mjs';
 import { exportPackLibrary } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
+import { isExternalChapterBackup } from './external-chapter-backup.mjs';
+import { EXTERNAL_BACKUP_JOURNAL_FORMAT } from './external-backup-assets.mjs';
 
 export const BACKUP_JOURNAL_FORMAT = 'xonix-backup-journal.v1';
 export const MAX_BACKUP_JOURNAL_BYTES = MAX_BACKUP_BYTES * 2 + 16384;
@@ -22,6 +24,8 @@ function context(adapters) {
     journalKey,
     commitProfile,
     withLock,
+    externalBackup,
+    signal,
     lockKey = `${profileKey}.backup-lock`,
   } = adapters;
   required(
@@ -40,6 +44,17 @@ function context(adapters) {
     withLock === undefined || typeof withLock === 'function',
     'Invalid backup lock adapter.',
   );
+  required(
+    externalBackup === undefined || isExternalChapterBackup(externalBackup),
+    'Use a verified external backup companion.',
+  );
+  if (externalBackup)
+    for (const key of ['profileKey', 'packsKey', 'sessionKey', 'journalKey', 'lockKey'])
+      required(
+        externalBackup.assets.keys[key] ===
+          { profileKey, packsKey, sessionKey, journalKey, lockKey }[key],
+        'External backup storage keys differ.',
+      );
   return {
     storage,
     readAsset,
@@ -51,6 +66,8 @@ function context(adapters) {
     lockKey,
     commitProfile,
     withLock,
+    externalBackup,
+    signal,
   };
 }
 function journalCopy(candidate, ctx) {
@@ -169,6 +186,14 @@ export async function commitBackup(prepared, adapters) {
       'This attempt exceeds the 2 MiB local slot. Keep the full backup and use a portable attempt file to resume it.',
     );
     const packs = exportPackLibrary(prepared.packs);
+    required(
+      !Object.hasOwn(prepared, 'externalChapters') || ctx.externalBackup,
+      'External game data requires its index-aware storage companion.',
+    );
+    if (ctx.externalBackup)
+      return await serialized(ctx, (exclusive) =>
+        commitExternal(prepared, ctx, session, packs, exclusive),
+      );
     return await serialized(ctx, async (exclusive) => {
       required(
         exclusive,
@@ -272,6 +297,19 @@ export async function recoverBackupImport(adapters) {
   try {
     const ctx = context(adapters);
     return await serialized(ctx, async (exclusive) => {
+      if (ctx.externalBackup) {
+        const state = await ctx.externalBackup.assets.snapshot();
+        required(
+          state.external === null,
+          'An external install journal must be reviewed before backup recovery; mixed journals are kept.',
+        );
+        if (state.backup?.format === EXTERNAL_BACKUP_JOURNAL_FORMAT)
+          return recoverExternal(ctx, state.backup, exclusive);
+        required(
+          state.backup === null || state.index === null,
+          'A legacy backup journal beside an external index cannot be recovered automatically.',
+        );
+      }
       const raw = await ctx.readAsset(ctx.journalKey);
       if (raw === null) {
         const token = ctx.storage.getItem(ctx.lockKey);
@@ -318,4 +356,137 @@ export async function recoverBackupImport(adapters) {
       warning: `Backup recovery could not finish. Original journal data was kept. ${error.message}`,
     };
   }
+}
+
+async function restoreExternal(ctx, journal) {
+  const failures = [],
+    assets = ctx.externalBackup.assets;
+  // Re-establish the owned recovery journal and restore packs+index atomically,
+  // even when final journal clearing committed before an uncertain response.
+  try {
+    await assets.restore(journal);
+  } catch (error) {
+    return [`external assets: ${error.message}`];
+  }
+  for (const [name, key] of [
+    ['session', ctx.sessionKey],
+    ['profile', ctx.profileKey],
+  ]) {
+    try {
+      setRaw(ctx, key, journal.previous[name]);
+    } catch (error) {
+      failures.push(`${name}: ${error.message}`);
+    }
+  }
+  if (!failures.length) {
+    try {
+      await assets.finish(journal, { restored: true });
+    } catch (error) {
+      failures.push(`journal: ${error.message}`);
+    }
+  }
+  return failures;
+}
+async function commitExternal(prepared, ctx, session, packs, exclusive) {
+  required(exclusive, 'External backup import requires the exclusive backup lock.');
+  const companion = ctx.externalBackup,
+    assets = companion.assets;
+  // Actual required original bytes are checked before marker or journal writes.
+  const review = await companion.verify(prepared, { signal: ctx.signal });
+  const token = tokenFor();
+  const journal = assets.journal({
+    format: EXTERNAL_BACKUP_JOURNAL_FORMAT,
+    token,
+    targets: {
+      profileKey: ctx.profileKey,
+      packsKey: ctx.packsKey,
+      sessionKey: ctx.sessionKey,
+      lockKey: ctx.lockKey,
+      indexKey: assets.keys.indexKey,
+    },
+    previous: {
+      profile: ctx.storage.getItem(ctx.profileKey),
+      session: ctx.storage.getItem(ctx.sessionKey),
+      packs: review.before.packs,
+      index: review.before.index,
+    },
+    next: { packs, index: review.index },
+  });
+  ownLock(ctx, token);
+  try {
+    await assets.begin(review.before, journal, { signal: ctx.signal });
+  } catch (error) {
+    let pending = true;
+    try {
+      pending = (await assets.snapshot()).backup !== null;
+    } catch {}
+    if (!pending) releaseLock(ctx, token);
+    return {
+      ok: false,
+      recoveryRequired: pending,
+      warning: `External backup journal could not be saved; player data is unchanged. ${error.message}`,
+    };
+  }
+  try {
+    await review.assertCurrent({ ownedToken: token });
+    await assets.publish(journal);
+    setRaw(ctx, ctx.sessionKey, session);
+    const profile = await ctx.commitProfile(prepared.library, {
+      mode: 'replace',
+      writeLock: { key: ctx.lockKey, token },
+    });
+    required(
+      plainObject(profile) && profile.ok === true,
+      profile?.warning || 'Player profile commit failed.',
+    );
+    await assets.finish(journal);
+    let warning = '';
+    try {
+      releaseLock(ctx, token);
+    } catch {
+      warning = 'Backup imported, but its write lock needs cleanup on reload.';
+    }
+    return { ok: true, profile, warning, recoveryRequired: false };
+  } catch (error) {
+    const failures = await restoreExternal(ctx, journal);
+    if (!failures.length) {
+      try {
+        releaseLock(ctx, token);
+      } catch (cleanup) {
+        failures.push(`write lock: ${cleanup.message}`);
+      }
+    }
+    return {
+      ok: false,
+      rolledBack: failures.length === 0,
+      recoveryRequired: failures.length > 0,
+      warning: failures.length
+        ? `External backup recovery is incomplete. Keep both companion files and reload before playing. ${error.message} ${failures.join('; ')}`
+        : `External backup import failed; the exact previous player data and descriptor index were restored. ${error.message}`,
+    };
+  }
+}
+async function recoverExternal(ctx, raw, exclusive) {
+  required(exclusive, 'External backup recovery requires the exclusive backup lock.');
+  const journal = ctx.externalBackup.assets.journal(raw);
+  const marker = ctx.storage.getItem(ctx.lockKey);
+  required(
+    marker === null || marker === journal.token,
+    'Another operation owns the backup recovery marker.',
+  );
+  ownLock(ctx, journal.token);
+  const failures = await restoreExternal(ctx, journal);
+  if (failures.length)
+    return {
+      ok: false,
+      recovered: false,
+      recoveryRequired: true,
+      warning: `External backup recovery is incomplete; its journal is retained. ${failures.join('; ')}`,
+    };
+  releaseLock(ctx, journal.token);
+  return {
+    ok: true,
+    recovered: true,
+    warning: 'Interrupted game-data import was rolled back with its exact prior descriptor index.',
+  };
 }
