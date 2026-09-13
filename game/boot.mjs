@@ -24,6 +24,10 @@
     if (!mounted) return;
     doc.documentElement.dataset.bootState = state;
     $('boot-screen').hidden = false;
+    $('boot-status').hidden = false;
+    doc.querySelectorAll('[data-boot-inert]').forEach((element) => {
+      element.inert = true;
+    });
     $('boot-title').textContent = state === 'file' ? 'Open your arcade.' : 'Flight on hold.';
     $('boot-status').textContent =
       state === 'file'
@@ -152,7 +156,12 @@
         $('boot-status').textContent =
           'Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.';
     }, 15000);
-    import(appURL).catch(fail);
+    import(appURL)
+      .then(() => {
+        if (state === 'loading')
+          fail(new Error('The game did not confirm startup. Open the current online edition.'));
+      })
+      .catch(fail);
   }
   host.RevealLineBoot = Object.freeze({ ready, fail });
   host.addEventListener('error', resourceError, true);

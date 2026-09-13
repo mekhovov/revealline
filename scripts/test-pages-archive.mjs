@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { buildPages, pagesBytes } from './build-pages.mjs';
 import { inspectPagesCapacity, PAGES_BUDGET_BYTES } from './pages-capacity.mjs';
+import { planCurrentEntries } from './pages-current-entry.mjs';
 import {
   validateArchivePlan,
   archiveRedirect,
@@ -107,10 +108,10 @@ async function fixture(t) {
   return { root, records, revision, git, options: { projectRoot: root, repository } };
 }
 
-test('read-only capacity matches the unchanged default build and cannot certify a hypothetical fit', async (t) => {
+test('read-only capacity matches the immutable-entry default build and cannot certify a hypothetical fit', async (t) => {
   const f = await fixture(t),
     before = await files(path.join(f.root, 'releases'));
-  const measured = await inspectPagesCapacity({ ...f.options, nextPlayableBytes: 500_000_000 });
+  const measured = await inspectPagesCapacity({ ...f.options, nextPlayableBytes: 1_000_000_000 });
   const built = await buildPages(f.options);
   assert.equal(measured.totalBytes, built.totalBytes);
   assert.equal(measured.totalBytes, await pagesBytes(path.join(f.root, 'dist')));
@@ -128,7 +129,7 @@ test('read-only capacity matches the unchanged default build and cannot certify 
     await assert.rejects(inspectPagesCapacity({ ...f.options, nextPlayableBytes: invalid }));
 });
 
-test('explicit main routing preserves latest bytes, every old HTML entry, metadata and original Release downloads', async (t) => {
+test('main routing declares every current override and preserves latest versioned bytes, old bridges and Release downloads', async (t) => {
   const f = await fixture(t),
     before = await files(path.join(f.root, 'releases')),
     tags = f.git('show-ref', '--tags');
@@ -151,9 +152,23 @@ test('explicit main routing preserves latest bytes, every old HTML entry, metada
     );
   await assert.rejects(fs.access(path.join(output, 'releases/v0.1.0/site/game/app.mjs')));
   const latest = await files(path.join(f.root, 'releases/v0.2.0/site'));
+  const current = await planCurrentEntries({
+    source: path.join(f.root, 'releases/v0.2.0/site'),
+    repository,
+    record: f.records[1],
+  });
+  const overrides = new Map(current.metadata.rootOverrides.map((entry) => [entry.path, entry]));
+  assert.equal(report.currentHTMLAliases, 6);
+  assert.equal(overrides.size, 7);
+  assert.deepEqual(
+    JSON.parse(await fs.readFile(path.join(output, 'current-entry-routing.json'))),
+    current.metadata,
+  );
   for (const [name, sha] of Object.entries(latest)) {
     if (name.startsWith('distribution.zip')) continue;
-    assert.equal(hash(await fs.readFile(path.join(output, name))), sha);
+    const override = overrides.get(name);
+    assert.equal(hash(await fs.readFile(path.join(output, name))), override?.sha256 || sha);
+    if (override) assert.equal(override.sourceSha256, sha);
     assert.equal(hash(await fs.readFile(path.join(output, 'releases/v0.2.0/site', name))), sha);
   }
   const index = JSON.parse(await fs.readFile(path.join(output, 'releases/index.json')));
@@ -185,6 +200,7 @@ test('archive mode copies every canonical payload exactly, including original wo
     await fs.readFile(path.join(f.root, 'releases/v0.1.0/release.json')),
   );
   await assert.rejects(fs.access(path.join(f.root, 'dist/releases/v0.2.0')));
+  await assert.rejects(fs.access(path.join(f.root, 'dist/current-entry-routing.json')));
   assert.deepEqual(await files(path.join(f.root, 'releases')), before);
 });
 
@@ -313,4 +329,15 @@ test('a corrupted canonical payload fails its frozen manifest before replacing t
   await fs.writeFile(path.join(f.root, 'releases/v0.1.0/site/game/art.bin'), 'corrupted');
   await assert.rejects(buildPages({ ...f.options, archivePlan: plan }), /Frozen asset mismatch/);
   assert.deepEqual(await files(path.join(f.root, 'dist')), before);
+});
+
+test('a reserved current-entry source path fails atomically without altering prior output or release tags', async (t) => {
+  const f = await fixture(t);
+  await buildPages(f.options);
+  const before = await files(path.join(f.root, 'dist')),
+    tags = f.git('show-ref', '--tags');
+  await fs.writeFile(path.join(f.root, 'releases/v0.2.0/site/current-entry-routing.json'), '{}');
+  await assert.rejects(buildPages(f.options), /Reserved or unsafe current entry/);
+  assert.deepEqual(await files(path.join(f.root, 'dist')), before);
+  assert.equal(f.git('show-ref', '--tags'), tags);
 });

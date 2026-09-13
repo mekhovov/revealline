@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { releaseSnapshot } from './game-cli.mjs';
+import { planCurrentEntries, writeCurrentEntries } from './pages-current-entry.mjs';
 import {
   validateArchivePlan,
   canonicalArchiveSite,
@@ -103,6 +104,14 @@ export async function buildPages({
   const canonicalSites = Object.fromEntries(
     shards.flatMap((shard) => shard.versions.map((tag) => [tag, canonicalArchiveSite(shard, tag)])),
   );
+  const latest = records.find((record) => record.version === version),
+    currentEntries = selected
+      ? null
+      : await planCurrentEntries({
+          source: path.join(releasesRoot, version, 'site'),
+          repository,
+          record: latest,
+        });
   const distTarget = path.resolve(outputDirectory);
   await fs.mkdir(path.dirname(distTarget), { recursive: true });
   const dist = await fs.mkdtemp(path.join(path.dirname(distTarget), '.pages-staging-'));
@@ -149,7 +158,6 @@ export async function buildPages({
       JSON.stringify(index.json, null, 2) + '\n',
     );
     await fs.writeFile(path.join(pagesReleases, 'index.html'), index.html);
-    const latest = records.find((record) => record.version === version);
     if (selected) {
       await fs.writeFile(
         path.join(dist, 'index.html'),
@@ -157,6 +165,7 @@ export async function buildPages({
       );
     } else {
       await fs.writeFile(path.join(dist, 'release.json'), JSON.stringify(latest, null, 2) + '\n');
+      await writeCurrentEntries(currentEntries, dist);
     }
     if (archivePlan)
       await fs.writeFile(
@@ -184,6 +193,13 @@ export async function buildPages({
       sourceRevision: latest.sourceRevision,
       totalBytes,
       playableVersions: publishedRecords.length,
+      ...(currentEntries
+        ? {
+            currentEntryMetadata: 'current-entry-routing.json',
+            currentCanonicalSite: currentEntries.metadata.canonicalSite,
+            currentHTMLAliases: currentEntries.metadata.htmlEntries.length,
+          }
+        : {}),
       ...(archivePlan
         ? {
             target: selected?.id || 'main',

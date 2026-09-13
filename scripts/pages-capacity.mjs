@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-/** Read-only capacity planning for the unchanged, fully duplicated Pages layout. */
+/** Read-only capacity planning for all local versions plus immutable current-entry routing. */
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { publishedReleaseIndex } from './build-pages.mjs';
 import { MAIN_PAGES_BUDGET_BYTES } from './pages-archive.mjs';
+import { planCurrentEntries } from './pages-current-entry.mjs';
 
 export const PAGES_BUDGET_BYTES = MAIN_PAGES_BUDGET_BYTES;
 const VERSION = /^v\d+\.\d+\.\d+$/;
@@ -86,6 +87,11 @@ export async function inspectPagesCapacity({
   }
   const current = releases.find((release) => release.version === latest),
     record = records.find((release) => release.version === latest),
+    currentEntries = await planCurrentEntries({
+      source: path.join(projectRoot, 'releases', latest, 'site'),
+      repository,
+      record,
+    }),
     index = publishedReleaseIndex(records, repository, latest),
     historicalPlayableBytes = releases.reduce((sum, release) => sum + release.bytes, 0),
     metadataBytes =
@@ -93,11 +99,11 @@ export async function inspectPagesCapacity({
       jsonBytes(index.json) +
       Buffer.byteLength(index.html) +
       jsonBytes(record),
-    totalBytes = historicalPlayableBytes + current.bytes + metadataBytes;
+    totalBytes = historicalPlayableBytes + current.bytes + currentEntries.byteDelta + metadataBytes;
   if (!Number.isSafeInteger(totalBytes)) throw new Error('Pages total exceeds integer bounds.');
   const report = {
     formatVersion: 1,
-    layout: 'exact-root-and-all-versioned-sites',
+    layout: 'immutable-current-entry-and-all-versioned-sites',
     latest,
     sourceRevision: current.sourceRevision,
     budgetBytes: PAGES_BUDGET_BYTES,
@@ -105,16 +111,17 @@ export async function inspectPagesCapacity({
     headroomBytes: PAGES_BUDGET_BYTES - totalBytes,
     withinBudget: totalBytes <= PAGES_BUDGET_BYTES,
     playableVersions: releases.length,
-    files: releases.reduce((sum, release) => sum + release.files + 1, 0) + current.files + 4,
+    files: releases.reduce((sum, release) => sum + release.files + 1, 0) + current.files + 5,
     historicalPlayableBytes,
     latestRootCopyBytes: current.bytes,
+    currentEntryByteDelta: currentEntries.byteDelta,
     metadataBytes,
     releases,
   };
   if (nextPlayableBytes !== undefined) {
-    // Root changes to the new tree; all existing versioned trees remain, plus the new one.
-    // Exclude ALL metadata, so this is a strict payload-only lower bound, not a pass prediction.
-    const minimumBytes = historicalPlayableBytes + nextPlayableBytes * 2;
+    // Root HTML/worker are replaced, so a total playable size cannot predict its retained
+    // root payload. Only the new immutable site is a defensible payload-only lower bound.
+    const minimumBytes = historicalPlayableBytes + nextPlayableBytes;
     if (!Number.isSafeInteger(minimumBytes))
       throw new Error('Next Pages total exceeds integer bounds.');
     report.nextRelease = {

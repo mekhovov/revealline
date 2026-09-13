@@ -1,6 +1,6 @@
 ---
 name: xonix-character-collection
-description: "Author selectable and earned Xonix character collections, cosmetic variants, context eligibility, selection fallbacks and applied-asset review. Use when organizing or swapping a roster across games, themes, cases or levels; theme art direction and individual animation production remain separate workflows."
+description: 'Author selectable and earned Xonix character collections, cosmetic variants, context eligibility, selection fallbacks and applied-asset review. Use when organizing or swapping a roster across games, themes, cases or levels; theme art direction and individual animation production remain separate workflows.'
 ---
 
 # Xonix Character Collection
@@ -38,4 +38,4 @@ For implemented changes, follow the shared [feature delivery workflow](../../../
 
 ## Preserve native launch and input access
 
-For any playable theme, asset, rule, interface or pack change, follow the shared [native launch, entry and device contract](../../../docs/boot-launch.md#authoring-and-device-contract). Preserve dark first paint and safe failure guidance, the native player journey, authored action availability, independent keyboard/touch/controller navigation, historical run identities and truthful device evidence. Do not reintroduce legacy webpage controls or advertise unavailable actions. Source, browser, listening and physical-device checks remain separate.
+For any playable theme, asset, rule, interface or pack change, follow the shared [native launch, entry and device contract](../../../docs/boot-launch.md#authoring-and-device-contract). Preserve dark first paint and safe failure guidance, the native player journey, authored action availability, independent keyboard/touch/controller navigation, historical run identities and truthful device evidence. Do not reintroduce legacy webpage controls or advertise unavailable actions. Source, browser, listening and physical-device checks remain separate. Public entry must use the complete immutable edition graph; follow the [entry and retirement contract](../../../docs/boot-launch.md#immutable-public-entry--p77). Verify fresh and previously cached browsers separately from public-byte hashes. Preserve old caches, profiles and live games during normal worker retirement; never clear site data or force takeover to make an upgrade pass. Keep actual storage limits distinct from planned media budgets.

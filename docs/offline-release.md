@@ -22,6 +22,14 @@ The ZIP, source archive, distribution checksum manifest, hosting `_headers`, off
 
 The builder caps the offline resource inventory at 2,000 files and 64 MiB. Bigger optional libraries belong in separately installed packs. This limit is a distribution budget, not a guarantee that every browser grants that much persistent storage.
 
+## Public root and immutable editions
+
+The [P7.7 entry correction](boot-launch.md#immutable-public-entry--p77) makes public root HTML an alias into a complete immutable edition. Prepare offline play at that canonical versioned address, not an assumed mutable-root runtime. The standalone ZIP still has its own distribution-scoped worker and offline inventory.
+
+v0.29's network inventory passed while an already cached root browser mixed its new HTML with an older app. The immutable v0.29 address boots. The v0.29.1 patch is in progress; its [source, migration and public gates](verification/round-38/v0291-entry.md) remain separate. A successful Node fetch/hash audit does not prove which bytes an existing browser worker serves.
+
+The mutable-root retirement worker is a delivery exception, not a new game cache. It handles only its finite root HTML entries, excludes `/releases/`, and unregisters itself on normal activation. It neither accesses/deletes caches or profile/IDB nor calls `skipWaiting`, takes over clients or navigates active games. Existing root tabs may need a normal close/reopen before retirement; the explicit immutable permalink remains available. Fresh preparation at the canonical scope is a separate player action. Do not clear site data or discard a saved run as an update strategy.
+
 ## Integrity and update policy
 
 The worker fetches and checks all resource bytes before writing a new content-addressed cache. A completed marker is written last. A failed download, redirect, mismatched hash or failed cache write prevents that worker from activating. A failed new version does not delete the old version's cache. The app also exposes a worker message that recomputes all saved hashes, so a successful registration is not mistaken for a successful complete download.
@@ -59,7 +67,7 @@ Run `node --test game/test/offline.test.mjs scripts/test-game-cli.mjs`, then `np
 
 A real browser release check should:
 
-1. Open a built release online and prepare offline play through its visible control.
+1. On public hosting, verify fresh and previously cached root entries reach the immutable graph with query/fragment and saved data retained. Do not force worker activation or purge caches. Then open that built release online and prepare offline play through its visible control.
 2. Run the visible file checker and record a complete verified inventory.
 3. Close and reopen the release without connectivity. Confirm entry page, campaign, images, a playable cut, gallery and local packs/saves.
 4. Check the built playground at its nested path as well as the main game.

@@ -4,7 +4,7 @@ This correction implements the player's September 13 feedback before the next ro
 
 ## Player contract
 
-The normal root URL opens the native game title. About, archive information and development tools are under **Main menu → Studio & extras**. A raw local HTML file cannot load the game's origin-dependent content; the independent [boot screen](boot-launch.md) keeps the old inactive page hidden and offers explicit online/local-server entry. It never transfers a profile to another origin by itself.
+The intended public root journey is a native title inside the current immutable edition. The v0.29.1 [entry correction](boot-launch.md#immutable-public-entry--p77) is being qualified after a previously cached mutable `/game/` mixed editions; the immutable v0.29 permalink remains playable. About, archive information and development tools are under **Main menu → Studio & extras**. A raw local HTML file cannot load the game's origin-dependent content; the independent [boot screen](boot-launch.md) keeps the old inactive page hidden and offers explicit online/local-server entry. It never transfers a profile to another origin by itself.
 
 - **Keyboard/controller:** no permanent bottom toolbar. The top Game menu and Pause controls remain available; Restart and music belong to the menu/settings.
 - **Touch Auto:** a cardinal pad appears only while flight owns input. Up is above the empty center, Down below it, Left and Right on opposite sides. Portrait uses the lower thumb area; short landscape uses side gutters. Controls do not cover the arena.
@@ -22,11 +22,11 @@ This is an explicit validated `classic.arcadeActions: { "version": "arcade-actio
 
 Legacy/advanced chapters keep their authored equipment:
 
-| Action | What it does | When meaningful |
-| --- | --- | --- |
+| Action     | What it does                                                                    | When meaningful                                                                         |
+| ---------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Scout Scan | Reveals nearby hidden objectives and briefly shows moving enemy direction hints | Authored discovery/scouting objectives; no damage, slowdown, capture or invulnerability |
-| Supply | Refills a charge-based craft at a supply pad | A charged craft and a map with supplies; Scout has no ammo to refill |
-| Boost | Multiplies current flight speed | Editions explicitly retaining manual Boost; no invulnerability |
+| Supply     | Refills a charge-based craft at a supply pad                                    | A charged craft and a map with supplies; Scout has no ammo to refill                    |
+| Boost      | Multiplies current flight speed                                                 | Editions explicitly retaining manual Boost; no invulnerability                          |
 
 Classic field pickups are independent of Supply and collect automatically on contact. Future Tactical scenarios must author meaningful objectives, charges and counterplay before exposing new equipment. Removing a button alone does not change a replay's rules.
 
@@ -38,6 +38,6 @@ No storage cap increased. Current seven normalized packs use 34,211,353 bytes; a
 
 ## Verification boundaries
 
-See [v0.29 verification](verification/round-38/v029-release.md) for exact source/release evidence. Modeled host tests exercise real input, core, recorder, preference and backup handlers; they do not certify physical touchscreens/controllers. Browser measurements use rendered rectangles, not a claim that viewport resizing is a real phone. Direct `file://` browser navigation was denied by tool policy; independent boot tests cover that path without claiming a live browser result.
+See [v0.29 verification](verification/round-38/v029-release.md) for exact source/release evidence. Its 2,355 tests and all 1,207 public network files passed, but mutable-path cached-browser startup failed. The [v0.29.1 entry gate](verification/round-38/v0291-entry.md) remains pending; it changes launch/delivery, not R4 input or recorded rules. Modeled host tests exercise real input, core, recorder, preference and backup handlers; they do not certify physical touchscreens/controllers. Browser measurements use rendered rectangles, not a claim that viewport resizing is a real phone. Direct `file://` browser navigation was denied by tool policy; independent boot tests cover that path without claiming a live browser result.
 
 Remaining release-quality work includes actual phones/controllers, accessible large-text/lifecycle journeys, measured performance and human challenge/replay assessment. Bulk media production, Tactical demonstrations and native stores are separate roadmap deliverables.
