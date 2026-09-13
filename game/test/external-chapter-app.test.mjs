@@ -305,16 +305,14 @@ test('cleared assignment still selects descriptor original; missing original ref
   assert.match(p.$('run-message').textContent, /original|missing|unavailable/i);
 });
 
-test('ordinary native removal and backup exports refuse indexed content without dropping pointer or index', async (t) => {
+test('ordinary native removal and pack-only export refuse indexed content without dropping pointer or index', async (t) => {
   const p = await page(t);
   await install(p);
   const before = p.fixture.assets.contents().get('assets');
   p.$('optional-worlds-manage').click();
   p.$('export-packs').click();
-  await settle(() => /not supported/.test(p.$('pack-status').textContent));
+  await settle(() => /Pack-only export/.test(p.$('pack-status').textContent));
   assert.equal(p.$('pack-json').value || '', '');
-  p.$('export-backup').click();
-  await settle(() => /not supported/.test(p.$('save-status').textContent));
   const remove = [...p.$('installed-packs').querySelectorAll('button')].find((b) =>
     /remove/i.test(b.textContent),
   );

@@ -203,7 +203,9 @@ export function attachOptionalChaptersPanel({
         sourceState.status === 'installed'
           ? 'Exact originals ready · Install kept your current flight; Choose changes the mission.'
           : sourceState.status === 'absent'
-            ? 'Optional source-only pair · backups and removal are not supported yet.'
+            ? sourceChapter.backupSupported
+              ? 'Optional source-only pair · game-data backup keeps its descriptor; keep .rlmedia originals separately. Removal is not supported yet.'
+              : 'Optional source-only pair · backups and removal are not supported yet.'
             : sourceState.message ||
               `Stored state: ${sourceState.status}. Recover the exact files before choosing.`;
     }

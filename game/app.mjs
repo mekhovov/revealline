@@ -1,4 +1,5 @@
 import { createExternalChapterHost } from './external-chapter-host.mjs';
+import { createExternalChapterBackup } from './external-chapter-backup.mjs';
 import {
   SOURCE_EXTERNAL_CHAPTER,
   SOURCE_EXTERNAL_CHAPTERS,
@@ -324,6 +325,17 @@ try {
         knownDescriptors: isRelease ? [] : SOURCE_EXTERNAL_CHAPTERS,
       })
     : null;
+  const externalBackup = externalChapters
+    ? createExternalChapterBackup({
+        profileKey: libraryKey,
+        packsKey,
+        storage: localStorage,
+        writer,
+        getManagedStore: getPictureManager,
+        registeredEntries: [baseEntry],
+        knownDescriptors: isRelease ? [] : SOURCE_EXTERNAL_CHAPTERS,
+      })
+    : null;
   async function inspectChapters({ signal } = {}) {
     if (externalChapters) return externalChapters.inspect({ signal });
     const values = await Promise.all([
@@ -353,7 +365,8 @@ try {
     const review = await externalChapters.prepareMutation(snapshot, value ?? emptyPackLibrary());
     return externalChapters.commitMutation(review);
   }
-  async function assertExternalBackupUnsupported() {
+  async function assertExternalBackupSupported(options) {
+    if (externalBackup) return externalBackup.assertSupported(options);
     const snapshot = await checkedChapters();
     if (snapshot.index?.chapters.length)
       throw new Error(
@@ -365,8 +378,8 @@ try {
   window.addEventListener('pagehide', (event) => handlePageHide(event));
   const journalKey = `${libraryKey}.backup-journal`;
   async function writeLegacyBackupPacks(value) {
-    // Existing backup owns this channel's writer and backup lock. Until its
-    // external companion is adopted, never write compact gameplay without index.
+    // Legacy recovery owns this channel's writer and backup lock. V2 uses
+    // the companion's native pack/index pair transaction, never this path.
     if (
       (await readAssetStore(`${libraryKey}.external-chapter-index.v1`)) !== null ||
       (await readAssetStore(`${libraryKey}.external-chapter-journal.v1`)) !== null
@@ -377,6 +390,7 @@ try {
     return writeAssetStore(packsKey, value);
   }
   const backupAdapters = () => ({
+    externalBackup: externalBackup ?? undefined,
     storage: localStorage,
     readAsset: readAssetStore,
     writeAsset: (key, value) =>
@@ -1238,6 +1252,7 @@ try {
       pictureStore?.close();
       storyStore?.close();
       externalChapters?.close();
+      externalBackup?.close();
       pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
@@ -2223,7 +2238,7 @@ try {
     if (localStorage.getItem(`${libraryKey}.backup-lock`) !== null)
       throw new Error('A backup is being restored. Saving resumes when it finishes.');
   }
-  function snapshotAttempt() {
+  function snapshotAttempt(savedAt) {
     if (practice || !recorder || !started || ['won', 'lost'].includes(run.status))
       throw new Error('Start an unfinished campaign flight to save it.');
     return suspendSession({
@@ -2233,8 +2248,26 @@ try {
       themeId: theme.id,
       bodyId,
       runId,
+      savedAt,
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
+    });
+  }
+  function currentBackupSession(savedAt) {
+    return started && recorder && !practice && !['won', 'lost'].includes(run.status)
+      ? snapshotAttempt(savedAt)
+      : savedAttempt();
+  }
+  function snapshotCurrentBackup() {
+    const savedAt = new Date().toISOString();
+    return externalBackup.snapshot(() => {
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        throw new Error('Finish the pending content or save operation before exporting.');
+      if (started && !paused && !['won', 'lost'].includes(run.status))
+        throw new Error('Pause the current flight before preparing game data.');
+      // Capture time belongs to this export, while all actual host contents are
+      // read again after waits so resumed/replaced state cannot pass as unchanged.
+      return { library, packs, session: currentBackupSession(savedAt) };
     });
   }
   function persistAttempt(notify = true) {
@@ -2422,7 +2455,11 @@ try {
   const libraryPanel = attachLibraryPanel({
     focusMission,
     pictureMedia,
-    assertExternalBackupSupported: assertExternalBackupUnsupported,
+    assertExternalBackupSupported,
+    backupPreparation: externalBackup
+      ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
+      : undefined,
+    backupSnapshot: externalBackup ? snapshotCurrentBackup : undefined,
     openStory: (request) => storyDialog.open(request),
     resolveMediaIdentityCatalog: (metadata) =>
       createBackupPictureIdentityResolver({
@@ -2436,6 +2473,7 @@ try {
           readAsset: readAssetStore,
           lockManager: navigator.locks,
           currentVersion: buildVersion,
+          ...(externalBackup ? { readExternalSnapshot: externalBackup.readExternalSnapshot } : {}),
         }
       : null,
     get: () => ({
@@ -2466,10 +2504,7 @@ try {
       invalidateContentSwitch();
       return attemptFiles.prepare(options);
     },
-    currentSession: () =>
-      started && recorder && !practice && !['won', 'lost'].includes(run.status)
-        ? snapshotAttempt()
-        : savedAttempt(),
+    currentSession: () => currentBackupSession(),
     canSnapshotBackup: () => storedStateAdopted,
     sessionNote: () =>
       [
@@ -2507,14 +2542,14 @@ try {
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
-      await assertExternalBackupUnsupported();
+      await assertExternalBackupSupported({ kind: 'backup' });
       backupBusy = true;
       invalidateContentSwitch();
       packCommits.markIntent();
       contentSwitchBusy = true;
+      let committed = false;
       try {
         refreshContentSelectors();
-        const content = prepareContentCatalog(prepared.packs);
         if (!writer.writable) throw new Error(writer.reason);
         if (!persistenceReady) {
           const recovered = await recoverBackupImport(backupAdapters());
@@ -2528,6 +2563,11 @@ try {
           if (result.recoveryRequired) persistenceReady = false;
           throw new Error(result.warning);
         }
+        committed = true;
+        const checked = await checkedChapters();
+        for (const descriptor of checked.index?.chapters ?? [])
+          await externalChapters.readiness(checked, descriptor.id);
+        const content = contentFromChapters(checked);
         persistenceReady = true;
         storedStateAdopted = true;
         saveSucceeded = true;
@@ -2545,6 +2585,16 @@ try {
         adoptPreferences();
         refreshCampaigns();
         return result;
+      } catch (error) {
+        if (committed) {
+          persistenceReady = false;
+          storedStateAdopted = false;
+          void packCommits.noteStaleCommit();
+          throw new Error(
+            `Game data committed. Reload and restore its exact originals before continuing. ${error.message}`,
+          );
+        }
+        throw error;
       } finally {
         backupBusy = false;
         contentSwitchBusy = false;
@@ -4294,6 +4344,7 @@ try {
         ? {
             id: SOURCE_EXTERNAL_CHAPTER.id,
             name: 'Pressure Pictures · source originals pilot',
+            backupSupported: !!externalBackup,
             async inspect({ signal }) {
               const snapshot = await inspectChapters({ signal });
               if (snapshot.status !== 'checked') return { status: snapshot.reason };
