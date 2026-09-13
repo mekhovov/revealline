@@ -168,3 +168,5 @@ For any playable theme, asset, rule, interface or pack change, follow the shared
 ## Preserve first-attempt transfers
 
 Earlier-release discovery must include exact suspended-slot namespaces as well as saved player libraries. A never-written profile may become an empty/default library only when the same source has a fully verified non-null flight; undefined, malformed, locked, recovering or wholly absent sources never become an empty replacement. Keep source locks, copy-time revalidation and exact difficulty expansion. Verify the actual old-release → new-release picker with a first unfinished flight, separately from the complete-backup fallback. See [continuity transfer](../../../docs/continuity-transfer.md).
+
+For optional illustrated chapters, use the [shared chapter contract](../../../docs/feature-delivery-workflow.md#optional-chapter-authoring-contract) and [requests](../../prompts/optional-worlds.md). Keep original pictures, reused geometries, installed-pack storage and separately managed media explicit.

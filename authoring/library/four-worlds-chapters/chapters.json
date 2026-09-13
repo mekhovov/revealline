@@ -1,0 +1,124 @@
+{
+  "format": "revealline-original-chapter-recipes.v1",
+  "distribution": "manual-optional-import",
+  "geometryPack": "fpv-arcade-r5",
+  "geometryLevels": ["orchard-crossing", "courtyard-exits", "night-crossfire"],
+  "chapters": [
+    {
+      "id": "original-fpv-pressure",
+      "campaignId": "original-fpv-pressure-lines",
+      "themeId": "fpv",
+      "sourceTheme": "fpv",
+      "name": "FPV Front · Illustrated Pressure",
+      "subtitle": "Original pictures · Pressure Lines variation",
+      "scoutLabel": "FPV Scout",
+      "maps": [
+        {
+          "imageId": "orchard-crossing",
+          "id": "original-fpv-orchard-crossing",
+          "name": "Orchard Crossing",
+          "description": "Reveal a blossoming orchard, canal and village beyond a Ukrainian FPV. Watch the warned hunter and choose between the two offset exits."
+        },
+        {
+          "imageId": "courtyard-exits",
+          "id": "original-fpv-courtyard-exits",
+          "name": "Courtyard Exits",
+          "description": "Reveal a sunlit rail-workshop courtyard through short, secured cuts. Two hunters commit to locked targets; choose another opening before they arrive."
+        },
+        {
+          "imageId": "night-crossfire",
+          "id": "original-fpv-night-crossfire",
+          "name": "Night Crossfire",
+          "description": "Reveal a night canal and warm windows behind the crossfire. Watch the lane warning and keep a safe return path. The distant vehicles are illustration, not additional actors."
+        }
+      ]
+    },
+    {
+      "id": "original-ukraine-atlas",
+      "campaignId": "original-ukraine-woven-lines",
+      "themeId": "ukraine",
+      "sourceTheme": "heritage",
+      "name": "Ukraine Atlas · Woven Lines",
+      "subtitle": "Original pictures · Pressure Lines variation",
+      "scoutLabel": "Atlas Scout",
+      "maps": [
+        {
+          "imageId": "carpathian-woven-dawn",
+          "id": "original-atlas-woven-dawn",
+          "name": "Carpathian Woven Dawn",
+          "description": "Reveal a carved porch, woven blanket and misty mountain ridges. Two offset walls offer different exits from the warned hunter. The setting is an original interpretation, not a documented historic site."
+        },
+        {
+          "imageId": "petrykivka-sun-courtyard",
+          "id": "original-atlas-sun-courtyard",
+          "name": "Petrykivka Sun Courtyard",
+          "description": "Reveal a bright courtyard and invented floral mural. Let a hunter commit before choosing another opening. The digital artwork interprets floral painting; it does not authenticate a traditional specimen."
+        },
+        {
+          "imageId": "dnipro-autumn-watch",
+          "id": "original-atlas-autumn-watch",
+          "name": "Dnipro Autumn Watch",
+          "description": "Reveal an autumn river, timber settlement and boats. Secure short cuts between lane warnings. Buildings and terrain are imaginative rather than an archaeological reconstruction."
+        }
+      ]
+    },
+    {
+      "id": "original-retro-1994",
+      "campaignId": "original-retro-after-hours",
+      "themeId": "retro",
+      "sourceTheme": "retro",
+      "name": "1994 Forever · After Hours",
+      "subtitle": "Original pictures · Pressure Lines variation",
+      "scoutLabel": "Arcade Scout",
+      "maps": [
+        {
+          "imageId": "midnight-arcade",
+          "id": "original-retro-midnight-arcade",
+          "name": "Midnight Arcade",
+          "description": "Reveal warm CRT cabinets and the cool street outside. Watch the hunter bracket, then pick an exit around the offset walls. Cabinet screens are static art, not interactive games."
+        },
+        {
+          "imageId": "rainy-video-rental",
+          "id": "original-retro-video-rental",
+          "name": "Rainy Video Rental",
+          "description": "Reveal a rainy shop, cassette case and neon reflections. Bait the locked interceptor and take a different opening. The rental covers and devices are invented and unbranded."
+        },
+        {
+          "imageId": "last-train-cassette",
+          "id": "original-retro-last-train",
+          "name": "Last Train, Side B",
+          "description": "Reveal a cassette player and a dusk train journey. Keep a return route between the lane warnings. The still picture contains no recorded song or moving train animation."
+        }
+      ]
+    },
+    {
+      "id": "original-spend-network",
+      "campaignId": "original-spend-shared-routes",
+      "themeId": "coupa",
+      "sourceTheme": "coupa",
+      "name": "Spend Network · Shared Routes",
+      "subtitle": "Original pictures · Pressure Lines variation",
+      "scoutLabel": "Network Scout",
+      "maps": [
+        {
+          "imageId": "shared-value-harbor",
+          "id": "original-spend-shared-harbor",
+          "name": "Shared Value Harbor",
+          "description": "Reveal a fictional harbor and reusable supplies. Choose between two exits after the hunter locks its target. Decorative leaf emblems are invented; no Coupa logo, product capability or real savings are claimed."
+        },
+        {
+          "imageId": "city-savings-observatory",
+          "id": "original-spend-city-wins",
+          "name": "City of Small Wins",
+          "description": "Reveal a fictional planning instrument overlooking a connected city. Bait the interceptor before changing your route. The apparatus is an illustration, not software or a financial result."
+        },
+        {
+          "imageId": "thoughtful-market-workshop",
+          "id": "original-spend-market-workshop",
+          "name": "The Thoughtful Market",
+          "description": "Reveal a craft market, repair tools and shared materials. Secure your cut between the lane warnings. Score is a fictional arcade measure, not actual procurement savings."
+        }
+      ]
+    }
+  ]
+}

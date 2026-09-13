@@ -7,6 +7,7 @@ export function attachGameShell({
   canContinue,
   initial = true,
   onFeatured,
+  onWorlds,
   getTopDialog,
   focusMissions,
   focusGame = () => doc.getElementById('start-button')?.focus(),
@@ -46,6 +47,15 @@ export function attachGameShell({
   $('shell-menu').onclick = openHome;
   const overlayMenu = $('overlay-menu');
   if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
+  const worlds = $('shell-worlds');
+  if (worlds) {
+    worlds.hidden = !onWorlds;
+    worlds.onclick = () => {
+      pause(true);
+      closeHome();
+      onWorlds?.();
+    };
+  }
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
