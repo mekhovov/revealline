@@ -74,6 +74,7 @@ export function attachGameShell({
     else focusGame();
   };
   forward('shell-collection', 'collection-button');
+  forward('shell-gallery', 'collection-button');
   forward('shell-settings', 'settings-button');
   forward('shell-library', 'library-button');
   forward('shell-options', 'settings-button');

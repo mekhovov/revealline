@@ -782,3 +782,145 @@ body.game-shell:not(.first-flight-session) {
 .game-shell[data-flight-state='picture'] .appearance-unlock {
   display: none;
 }
+
+/* Pause is a small control dock on the board, not another briefing screen. */
+.game-shell .game-overlay[data-kind='pause'] {
+  position: absolute;
+  inset: auto 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  background: transparent;
+  pointer-events: none;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  width: max-content;
+  max-width: 100%;
+  max-height: none;
+  padding: 8px 10px;
+  overflow: visible;
+  pointer-events: auto;
+  background: #080e20;
+}
+.game-shell .game-overlay[data-kind='pause'] .pause-label {
+  margin: 0;
+  color: #9ee9ff;
+  font-size: 18px;
+  line-height: 1.2;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions .button {
+  flex: 0 1 auto;
+  min-height: 44px;
+  padding: 7px 10px;
+  font-size: 16px;
+}
+.game-shell .home-status {
+  max-width: 52ch;
+  color: #9edcf2;
+  font-size: 17px;
+  line-height: 1.35;
+}
+.game-shell .home-status[data-kind='error'] {
+  color: #ffcc83;
+}
+
+/* Enlarge interface text without scaling the simulation or its collision geometry. */
+.game-shell[data-text-size='large'] {
+  font-size: 23px;
+}
+.game-shell[data-text-size='large'] dialog,
+.game-shell[data-text-size='large'] dialog :is(button, select, input, textarea, label, summary),
+.game-shell[data-text-size='large'] .shell-bar button,
+.game-shell[data-text-size='large'] .mission .name,
+.game-shell[data-text-size='large'] .game-overlay .overlay-actions .button {
+  font-size: 22px;
+}
+.game-shell[data-text-size='large']
+  :is(
+    .micro-note,
+    .field,
+    .reading-hint,
+    .overlay-footnote,
+    .mission-brief,
+    .difficulty-details,
+    .appearance-hint,
+    .home-status,
+    .enemy-guide-copy,
+    .class-description,
+    .soundtrack-field > span
+  ),
+.game-shell[data-text-size='large'] #difficulty-note,
+.game-shell[data-text-size='large'] .enemy-guide-dialog p,
+.game-shell[data-text-size='large'] #overlay-copy,
+.game-shell[data-text-size='large'] #overlay-difficulty {
+  font-size: 21px;
+  line-height: 1.4;
+}
+.game-shell[data-text-size='large']
+  :is(
+    .play-controls .button,
+    .flight-status,
+    .run-message,
+    .encounter-status,
+    .deck-heading,
+    .section-line
+  ) {
+  font-size: 20px;
+}
+.game-shell[data-text-size='large'] .telemetry strong {
+  font-size: 30px;
+}
+.game-shell[data-text-size='large'] .telemetry :is(.stat-label, span, label, em) {
+  font-size: 17px;
+}
+.game-shell[data-text-size='large'] .game-overlay[data-kind='pause'] :is(.pause-label, .button) {
+  font-size: 20px;
+}
+@media (max-width: 680px) {
+  .game-shell[data-text-size='large'] .shell-bar button {
+    font-size: 18px;
+  }
+  .game-shell[data-text-size='large'] .telemetry strong {
+    font-size: 26px;
+  }
+  .game-shell[data-text-size='large'] .telemetry :is(.stat-label, span, label, em) {
+    font-size: 16px;
+  }
+}
+
+/* Small screens keep the entire paused arena visible; flight controls yield to Resume. */
+@media (max-width: 680px) {
+  .game-shell .shell-bar {
+    gap: 0;
+  }
+  .game-shell .shell-bar button {
+    padding-inline: 6px;
+  }
+  .game-shell[data-flight-state='paused'] .play-controls {
+    display: none;
+  }
+  .game-shell[data-flight-state='paused'] .arena-shell {
+    margin-bottom: 82px;
+  }
+  .game-shell .game-overlay[data-kind='pause'] {
+    inset: calc(100% + 10px) 0 auto;
+    padding: 0;
+  }
+}
+@media (max-width: 360px) {
+  .game-shell[data-flight-state='paused'] .arena-shell {
+    margin-bottom: 116px;
+  }
+}

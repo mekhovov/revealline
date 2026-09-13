@@ -1,6 +1,7 @@
 const FORMAT = 'revealline.enemy-workshop-return.v1';
 const PARAM = 'enemy-workshop-session';
 const validToken = (value) => typeof value === 'string' && /^[a-f0-9]{32}$/.test(value);
+const destinations = ['workshop', 'enemy-guide'];
 
 function returnMessage(value, token) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
@@ -19,8 +20,14 @@ export function attachEnemyWorkshopReturnHost({
   window: host = globalThis.window,
   frame,
   onReturn,
+  gameURL = null,
+  returnTo = 'workshop',
 }) {
   const origin = new URL(host.location.href).origin;
+  if (!destinations.includes(returnTo)) throw new TypeError('Unknown practice return destination.');
+  const target = new URL(gameURL ?? '../../game/', host.location.href);
+  if (!['http:', 'https:'].includes(target.protocol) || target.origin !== origin)
+    throw new TypeError('Practice must remain on the same origin.');
   let token = null,
     disposed = false;
   const receive = (event) => {
@@ -43,9 +50,12 @@ export function attachEnemyWorkshopReturnHost({
       if (disposed) throw new Error('The enemy workshop is closed.');
       const bytes = host.crypto.getRandomValues(new Uint8Array(16));
       token = Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
-      const url = new URL('../../game/', host.location.href);
+      const url = new URL(target);
+      url.search = '';
+      url.hash = '';
       url.searchParams.set('practice', '1');
       url.searchParams.set(PARAM, token);
+      if (returnTo !== 'workshop') url.searchParams.set('practice-return', returnTo);
       return url.href;
     },
     dispose() {
@@ -67,12 +77,15 @@ export function attachEnemyWorkshopReturn({
   if (!enabled || host.parent === host) return noop;
   const url = new URL(host.location.href),
     token = url.searchParams.get(PARAM),
+    returnTo = url.searchParams.get('practice-return') ?? 'workshop',
     actions = doc.getElementById('game-overlay')?.querySelector('.overlay-actions');
   if (
     !['http:', 'https:'].includes(url.protocol) ||
     url.searchParams.getAll('practice').length !== 1 ||
     url.searchParams.get('practice') !== '1' ||
     url.searchParams.getAll(PARAM).length !== 1 ||
+    url.searchParams.getAll('practice-return').length > 1 ||
+    !destinations.includes(returnTo) ||
     !validToken(token) ||
     !actions
   )
@@ -81,7 +94,7 @@ export function attachEnemyWorkshopReturn({
   button.id = 'enemy-workshop-return';
   button.type = 'button';
   button.className = 'button secondary';
-  button.textContent = 'Return to workshop';
+  button.textContent = returnTo === 'enemy-guide' ? 'Return to field guide' : 'Return to workshop';
   let disposed = false;
   button.onclick = () => {
     if (disposed || button.disabled) return;
