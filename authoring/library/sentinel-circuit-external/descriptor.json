@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "sentinel-circuit-fpv",
+  "revision": 1,
+  "source": {
+    "id": "sentinel-circuit",
+    "bytes": 8943,
+    "sha256": "cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40"
+  },
+  "pack": {
+    "bytes": 9238,
+    "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+  },
+  "media": {
+    "bytes": 8596058,
+    "sha256": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c"
+  },
+  "campaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+  "themeId": "fpv",
+  "originals": [
+    {
+      "assetId": "sentinel-circuit-fpv-poster-1",
+      "presentationId": "sentinel-circuit-fpv-poster-1-presentation",
+      "levelId": "sentinel-circuit-fpv-listening-court",
+      "levelRevision": "1",
+      "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+      "bytes": 2948372,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "sentinel-circuit-fpv-poster-2",
+      "presentationId": "sentinel-circuit-fpv-poster-2-presentation",
+      "levelId": "sentinel-circuit-fpv-switchyard-gates",
+      "levelRevision": "1",
+      "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+      "bytes": 2933729,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "sentinel-circuit-fpv-poster-3",
+      "presentationId": "sentinel-circuit-fpv-poster-3-presentation",
+      "levelId": "sentinel-circuit-fpv-open-circuit",
+      "levelRevision": "1",
+      "sha256": "102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3",
+      "bytes": 2701967,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}
