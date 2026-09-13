@@ -3209,7 +3209,7 @@ try {
     started = true;
     paused = false;
     if ($('run-message').textContent === picturePreparingMessage)
-      warning('Picture ready. Flight is running.');
+      warning('Picture ready.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
