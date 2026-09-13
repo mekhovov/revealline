@@ -14,6 +14,14 @@ The intended public root journey is a native title inside the current immutable 
 
 The same original input nodes are repositioned, preserving pointer capture and keyboard/assistive handlers. Physical cleanup must never discard an already accepted fresh controller direction or erase logical heading. Joining, returning focus and holding an old key/pad remain neutral-gated.
 
+## Training navigation
+
+First Flight has its own non-awarding context. During an active lesson, the visible Game menu and Settings header share the same keyboard/controller navigation as the ready, paused, picture and result controls. Settings never starts or replaces the lesson. Its modal retains focus until closed.
+
+The training menu offers Back to lesson, Settings & sound, Music on/off and How to play. Campaign selection, Collection, scores, downloads, couch and creator destinations are hidden because they cannot operate in that course session. Back to lesson restores its current briefing or result without resuming. Embedded End course hides the shell and leaves the terminal reader; the parent page owns returning to the game.
+
+This follows the [Game Accessibility Guidelines recommendation](https://gameaccessibilityguidelines.com/ensure-that-all-areas-of-the-user-interface-can-be-accessed-using-the-same-input-method-as-the-gameplay/) to support the gameplay input method throughout menus. Source-host checks model controller hardware separately from real browser keyboard checks; neither certifies physical controllers.
+
 ## Arcade and authored equipment
 
 First Light R4 is the new featured three-map chapter. The map sets craft/speed, and the four classic bonuses activate on contact. Completing a mission earns its picture and opens the next available challenge. Manual Scan, Supply and Boost are absent from this edition, including core processing of keyboard/controller/replay commands. Authored movement speed is 15, preserving the proven earlier boosted route pace without a held extra key.

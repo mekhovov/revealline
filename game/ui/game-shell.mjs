@@ -6,6 +6,7 @@ export function attachGameShell({
   pause,
   canContinue,
   initial = true,
+  training = false,
   onFeatured,
   onWorlds,
   getTopDialog,
@@ -58,9 +59,14 @@ export function attachGameShell({
     pause(true);
     if (missions.open) missions.close();
     restoreMissionView();
-    $('shell-continue').hidden = !canContinue();
+    $('shell-continue').hidden = training || !canContinue();
     if (!home.open) home.showModal();
-    (canContinue() ? $('shell-continue') : $('shell-play')).focus();
+    (training
+      ? $('shell-course-return')
+      : canContinue()
+        ? $('shell-continue')
+        : $('shell-play')
+    ).focus();
   };
   const forward = (source, target) => {
     $(source).onclick = () => {
@@ -73,7 +79,7 @@ export function attachGameShell({
   if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
   const worlds = $('shell-worlds');
   if (worlds) {
-    worlds.hidden = !onWorlds;
+    worlds.hidden = training || !onWorlds;
     worlds.onclick = () => {
       pause(true);
       closeHome();
@@ -152,6 +158,28 @@ export function attachGameShell({
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
   forward('shell-help', 'help-button');
+  const courseReturn = $('shell-course-return');
+  if (courseReturn) {
+    courseReturn.hidden = !training;
+    courseReturn.onclick = () => {
+      closeHome();
+      focusGame();
+    };
+  }
+  if (training) {
+    // These destinations cannot operate on the course's isolated, non-awarding
+    // session. Show only usable settings and the explicit lesson return.
+    for (const id of [
+      'shell-featured',
+      'shell-play',
+      'shell-library',
+      'shell-gallery',
+      'shell-guide',
+    ])
+      $(id).hidden = true;
+    for (const element of doc.querySelectorAll('.home-actions a, .shell-tools'))
+      element.hidden = true;
+  }
   const cancelHome = () =>
     queueMicrotask(() => {
       if (!destroyed && !home.open && !topDialog()) focusGame();
