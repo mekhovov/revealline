@@ -1,11 +1,11 @@
 {
   "format": "revealline-art-provenance.v1",
-  "recordedAt": "2026-09-13T12:07:03.623783+00:00",
+  "recordedAt": "2026-09-13T12:08:52.912014+00:00",
   "status": "Original illustration; challenge map binding and runtime checks pending",
   "generation": {
     "tool": "OpenAI built-in image_gen.imagegen",
     "mode": "New generation; one output per asset",
-    "calls": 1,
+    "calls": 2,
     "editCalls": 0,
     "model": "Not exposed by tool result",
     "fallbackCLI": false,
@@ -22,6 +22,17 @@
       "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-28948e83-6a89-425c-ab07-1600984f3588.png",
       "processing": "Exact byte copy; no crop, scaling, recompression, color changes or image editing.",
       "inspection": "Wide rain-soaked industrial yard at blue hour, amber foundry windows, two lanes, small foreground blue/yellow quad with four rotor rings, unmarked disabled vehicle and radar dish, sunflowers, no visible lettering, HUD, people or gore. Detailed pixel-art treatment. Generated appearance is stylized, not a claim of a specific real incident or airframe."
+    },
+    {
+      "id": "crosswind-depot",
+      "file": "originals/crosswind-depot.png",
+      "width": 1774,
+      "height": 887,
+      "bytes": 3136739,
+      "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+      "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-46609fe8-1223-4161-a307-29339cedaf73.png",
+      "processing": "Exact byte copy; no crop, scaling, recompression, color changes or image editing.",
+      "inspection": "Golden-hour brick agricultural depot with curved dirt route, wheat field, crates, sunflowers, distant unmarked armored truck and a grounded six-arm heavy-lift multirotor with blue/yellow ribbon. Warm detailed pixel-art scene distinct from the foundry; no visible text, HUD, people or gore. Stylized fictional scenery, not an identified airframe or incident."
     }
   ],
   "review": {

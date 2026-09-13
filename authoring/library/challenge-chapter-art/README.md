@@ -2,9 +2,11 @@
 
 Original illustrations for the next distinct-layout chapter. Each full picture is generated separately using the built-in image tool; exact prompts and original-byte provenance are retained alongside it.
 
-## Current asset
+## Current assets
 
 - **Split Signal Foundry**: Ukrainian FPV Front, a blue-hour railway yard with warm windows and rain reflections. This scenic reward picture is independent of gameplay geometry and actor sprites.
+
+- **Crosswind Depot**: Ukrainian FPV Front, a golden-hour supply compound and grounded heavy-lift multirotor.
 
 ## Integration gate
 
