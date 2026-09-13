@@ -28,11 +28,14 @@ export const SOURCE_LEVEL_IDS = Object.freeze([
   'route-choices-switchback',
 ]);
 const ART_ROOTS = ['ukraine-route-art', 'retro-route-art', 'spend-route-art'];
+const SOURCE_AUDIT_NOTE =
+  'This is an original route-choice study with fixed Standard grades, not a human-qualified difficulty rating.';
 export const physicalLevel = (level) => {
   const copy = structuredClone(level);
   for (const key of ['id', 'name', 'themeId']) delete copy[key];
   delete copy.metadata.title;
   delete copy.metadata.rightsStatus;
+  delete copy.metadata.description;
   return copy;
 };
 
@@ -115,8 +118,8 @@ export async function buildRouteWorld(themeId) {
   next.id = `route-worlds-${themeId}`;
   next.name = `${theme.name} · Route Choices — Tactical`;
   next.description =
-    'Three original reward pictures over the three Route Choices Tactical layouts. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Install the exact paired originals before choosing this separate edition. Existing theme music; no new track, actor set or story movie.';
-  next.metadata.rightsStatus = `Original project scenarios and AI-assisted ${theme.name} artwork; exact prompts and original PNGs retained. Fictional scenes, not copied game art or authenticated equipment, history or product UI.`;
+    'Three Tactical missions with original reward pictures. Choose an exit, time a carrier field or take a route without equipment, and cross the signal band or follow the safe rim.';
+  next.metadata.rightsStatus = `Original project scenarios and AI-assisted ${theme.name} artwork; exact prompts and original PNGs retained. Fictional scenes, not copied game art or authenticated equipment, history or product UI. Existing theme music; no new track, actor set or story movie.`;
   next.themes = [theme];
   next.visualOverrides = {};
   next.levelVisuals = [];
@@ -131,18 +134,34 @@ export async function buildRouteWorld(themeId) {
     level.name = picture.title;
     level.themeId = themeId;
     level.metadata.title = picture.title;
+    if (index === 0) {
+      const suffix = ` ${SOURCE_AUDIT_NOTE}`;
+      assert.ok(
+        level.metadata.description.endsWith(suffix),
+        'Exact source audit sentence required.',
+      );
+      level.metadata.description = level.metadata.description.slice(0, -suffix.length);
+    }
     level.metadata.rightsStatus =
-      'Reuses a reviewed abstract Tactical layout with a new edition identity and original scenic reward. Scenery is independent of collision geometry.';
+      index === 0
+        ? `Original scenery; separate edition. ${SOURCE_AUDIT_NOTE}`
+        : 'Reuses a reviewed abstract Tactical layout with a new edition identity and original scenic reward. Scenery is independent of collision geometry.';
   }
   const { pack } = await preparePack(next, { decodeImage });
   assert.deepEqual(pack.classRecipes, prior.classRecipes);
   assert.deepEqual(pack.music, prior.music);
-  for (const [i, level] of pack.campaigns[0].levels.entries())
+  for (const [i, level] of pack.campaigns[0].levels.entries()) {
+    const description = prior.campaigns[0].levels[i].metadata.description;
+    assert.equal(
+      level.metadata.description,
+      i === 0 ? description.slice(0, -` ${SOURCE_AUDIT_NOTE}`.length) : description,
+    );
     assert.deepEqual(
       physicalLevel(level),
       physicalLevel(prior.campaigns[0].levels[i]),
       'Only edition/name/world/presentation metadata may differ.',
     );
+  }
   const resolved = resolvePackCampaign(pack, campaign.id);
   const executionCatalog = createExecutionCatalog([resolved]);
   const baseCampaignKey = campaignKey(resolved.campaign);

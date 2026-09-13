@@ -106,10 +106,23 @@ test('changed physical outcome and saved-picture evidence are rejected by actual
 
 test('new payloads are exact originals and a foreign paired media file cannot be reassigned by changing its outer hash', async () => {
   const ukraine = await buildRouteWorld('ukraine'),
-    retro = await buildRouteWorld('retro');
+    retro = await buildRouteWorld('retro'),
+    coupa = await buildRouteWorld('coupa');
   assert.notEqual(ukraine.descriptor.campaignKey, retro.descriptor.campaignKey);
   assert.ok(ukraine.payloads.pack.size < 32768 && retro.payloads.pack.size < 32768);
-  for (const world of [ukraine, retro]) {
+  for (const world of [ukraine, retro, coupa]) {
+    const pack = world.prepared.pack;
+    assert.doesNotMatch(pack.description, /exact paired|separate edition|no new track|story movie/);
+    assert.match(pack.metadata.rightsStatus, /Existing theme music; no new track/);
+    for (const [i, level] of pack.campaigns[0].levels.entries()) {
+      const source = world.prior.campaigns[0].levels[i].metadata.description;
+      const audit =
+        ' This is an original route-choice study with fixed Standard grades, not a human-qualified difficulty rating.';
+      assert.equal(level.metadata.description, i === 0 ? source.slice(0, -audit.length) : source);
+      assert.doesNotMatch(level.metadata.description, /route-choice study|human-qualified/);
+      assert.match(level.metadata.description, /^Recommended:/);
+      if (i === 0) assert.ok(source.endsWith(audit) && level.metadata.rightsStatus.endsWith(audit));
+    }
     for (const original of world.descriptor.originals) {
       const input = world.inputPins.find((p) => p.sha256 === original.sha256);
       const imported = world.prepared.imported.assets.find((a) => a.sha256 === original.sha256);
