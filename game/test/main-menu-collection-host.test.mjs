@@ -48,9 +48,13 @@ function controls(page, t, mode) {
   return { next: () => pulse(13), confirm: () => pulse(0), back: () => pulse(1) };
 }
 function activate(page, input, target, scope) {
+  const surfaces = Array.isArray(scope) ? scope : [scope];
   for (let step = 0; step < 80 && page.doc.activeElement !== target; step++) {
     input.next();
-    assert.ok(scope.contains(page.doc.activeElement), 'focus stays in the visible menu');
+    assert.ok(
+      surfaces.some((surface) => surface.contains(page.doc.activeElement)),
+      'focus stays in the requested visible menu surfaces',
+    );
   }
   assert.equal(
     page.doc.activeElement,
@@ -59,6 +63,13 @@ function activate(page, input, target, scope) {
   );
   input.confirm();
   page.frame(0);
+}
+function nonmodalOverlay(page) {
+  // Only the four visible header actions join a nonmodal overlay. Dialog
+  // callers still supply their single native modal and keep strict containment.
+  return ['game-overlay', 'shell-menu', 'shell-packs', 'shell-collection', 'shell-settings'].map(
+    (id) => page.$(id),
+  );
 }
 
 for (const mode of ['keyboard', 'controller']) {
@@ -109,7 +120,7 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.$('collection-dialog').open, false);
     assert.equal(page.$('collection-dialog').contains(page.doc.activeElement), false);
     assert.equal(page.rendered.paused, true);
-    activate(page, input, page.$('overlay-menu'), page.$('game-overlay'));
+    activate(page, input, page.$('overlay-menu'), nonmodalOverlay(page));
     assert.equal(home.open, true);
     activate(page, input, page.$('shell-library'), home);
     assert.equal(home.open, false);
@@ -120,7 +131,7 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.$('library-dialog').open, false);
     assert.equal(page.$('library-dialog').contains(page.doc.activeElement), false);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), ready);
-    activate(page, input, page.$('start-button'), page.$('game-overlay'));
+    activate(page, input, page.$('start-button'), nonmodalOverlay(page));
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     for (let i = 0; i < 20; i++) page.frame();
@@ -129,7 +140,7 @@ for (const mode of ['keyboard', 'controller']) {
     page.key('Escape', false);
     page.frame(0);
     const paused = authoritativeCheckpoint(page.rendered.run);
-    activate(page, input, page.$('overlay-menu'), page.$('game-overlay'));
+    activate(page, input, page.$('overlay-menu'), nonmodalOverlay(page));
     activate(page, input, page.$('shell-gallery'), home);
     assert.equal(page.$('collection-dialog').open, true);
     input.back();

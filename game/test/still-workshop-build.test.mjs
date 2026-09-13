@@ -4,7 +4,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { createHash } from 'node:crypto';
+import { createHash, webcrypto } from 'node:crypto';
 import vm from 'node:vm';
 import { readBuildConfig, collectBuildFiles, buildProject } from '../../scripts/game-cli.mjs';
 import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
@@ -16,6 +16,18 @@ const workshopEntries = [
   'authoring/still-media/launch.js',
   'authoring/still-media/workshop.mjs',
 ];
+const posterEntries = [
+  'authoring/video-poster/index.html',
+  'authoring/video-poster/launch.js',
+  'authoring/video-poster/workshop.mjs',
+  'authoring/video-poster/workshop.css',
+];
+const teachingScenarios = [
+  'tactical-read-clearing',
+  'tactical-borrowed-seconds',
+  'tactical-quiet-crossing',
+].map((id) => `authoring/library/tactical-teaching/scenarios/${id}.json`);
+const publicationEntries = [...workshopEntries, ...posterEntries, ...teachingScenarios];
 const requiredRuntime = [
   'game/ui/still-media-host.mjs',
   'game/ui/still-media-panel.mjs',
@@ -34,17 +46,26 @@ const requiredRuntime = [
 test('actual release allowlist ships the standalone still entry and exact existing runtime/content dependencies', async () => {
   const config = await readBuildConfig(sourceRoot),
     files = await collectBuildFiles(sourceRoot, config);
-  for (const name of [...workshopEntries, ...requiredRuntime])
+  for (const name of [
+    ...publicationEntries,
+    ...requiredRuntime,
+    'game/video-poster.mjs',
+    'game/ui/video-poster-workshop.mjs',
+  ])
     assert.ok(files.includes(name), `Missing workshop distribution dependency: ${name}`);
   assert.equal(config.include.filter((entry) => entry === 'authoring/still-media').length, 1);
   assert.equal(
     files.some((name) => name.startsWith('game/test/')),
     false,
   );
-  assert.equal(
-    files.some((name) => name.startsWith('authoring/library/')),
-    false,
-    'Generated originals are not implicitly distributed.',
+  assert.deepEqual(
+    files.filter((name) => name.startsWith('authoring/library/')).sort(),
+    [...teachingScenarios].sort(),
+    'Only the three explicit teaching documents ship; generated originals and proof tooling stay excluded.',
+  );
+  assert.deepEqual(
+    files.filter((name) => name.startsWith('authoring/video-poster/')).sort(),
+    [...posterEntries].sort(),
   );
 });
 
@@ -81,7 +102,8 @@ async function fixture(t) {
   // launcher's known dynamic workshop import explicitly. No game/app or earned
   // state is run; the unrelated game HTML below is a declared fixture entry.
   for (const name of [
-    ...workshopEntries,
+    ...publicationEntries,
+    'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
     'game/offline/service-worker.template.js',
@@ -96,7 +118,13 @@ async function fixture(t) {
     JSON.stringify({
       version: '0.32.0',
       entry: 'game/index.html',
-      include: ['game', 'authoring/still-media', 'authoring/motion-lab'],
+      include: [
+        'game',
+        'authoring/still-media',
+        'authoring/motion-lab',
+        ...posterEntries,
+        ...teachingScenarios,
+      ],
     }),
   );
   return { directory, root, originals };
@@ -132,7 +160,10 @@ for (const version of ['0.32.0', 'v0.32.0'])
       offline = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8')),
       zip = zipEntries(await fs.readFile(path.join(out, 'distribution.zip')));
     for (const name of [
-      ...workshopEntries,
+      ...publicationEntries,
+      'game/video-poster.mjs',
+      'game/ui/video-poster-workshop.mjs',
+      'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
       'game/ui/still-media-host.mjs',
       'game/ui/still-media-panel.css',
       'game/media-bundle.mjs',
@@ -181,45 +212,172 @@ test('Pages automatically gives the shipped workshop an immutable same-edition H
     repository: 'owner/game',
     record: { version, sourceRevision: 'b'.repeat(40), manifestSha256: digest(manifest) },
   });
-  const name = 'authoring/still-media/index.html',
-    entry = plan.metadata.htmlEntries.find((row) => row.path === name);
-  assert.ok(entry);
-  assert.equal(entry.target, `https://owner.github.io/game/releases/${version}/site/${name}`);
-  for (const prefix of ['https://owner.github.io/game/', 'http://localhost:8888/preview/']) {
-    for (const suffix of ['authoring/still-media', 'authoring/still-media/', name]) {
-      const current = new URL(`${prefix}${suffix}?restore=1#originals`),
-        link = {};
-      let destination;
-      vm.runInNewContext(plan.files.get(name).match(/<script>([\s\S]*?)<\/script>/)[1], {
-        URL,
-        location: {
-          href: current.href,
-          search: current.search,
-          hash: current.hash,
-          replace: (url) => (destination = url),
-        },
-        document: { querySelector: () => link },
-      });
-      assert.equal(destination, `${prefix}releases/${version}/site/${name}?restore=1#originals`);
-      const moduleURL = new URL('../../game/ui/still-media-host.mjs', destination);
-      assert.equal(
-        new URL('../build-info.json', moduleURL).href,
-        `${prefix}releases/${version}/site/game/build-info.json`,
-      );
-      assert.equal(
-        new URL('../../game/', destination).href,
-        `${prefix}releases/${version}/site/game/`,
-      );
+  for (const name of ['authoring/still-media/index.html', 'authoring/video-poster/index.html']) {
+    const directory = path.posix.dirname(name),
+      entry = plan.metadata.htmlEntries.find((row) => row.path === name);
+    assert.ok(entry);
+    assert.equal(entry.target, `https://owner.github.io/game/releases/${version}/site/${name}`);
+    for (const prefix of ['https://owner.github.io/game/', 'http://localhost:8888/preview/']) {
+      for (const suffix of [directory, `${directory}/`, name]) {
+        const current = new URL(`${prefix}${suffix}?restore=1#originals`),
+          link = {};
+        let destination;
+        vm.runInNewContext(plan.files.get(name).match(/<script>([\s\S]*?)<\/script>/)[1], {
+          URL,
+          location: {
+            href: current.href,
+            search: current.search,
+            hash: current.hash,
+            replace: (url) => (destination = url),
+          },
+          document: { querySelector: () => link },
+        });
+        assert.equal(destination, `${prefix}releases/${version}/site/${name}?restore=1#originals`);
+        const moduleURL = new URL('../../game/ui/still-media-host.mjs', destination);
+        assert.equal(
+          new URL('../build-info.json', moduleURL).href,
+          `${prefix}releases/${version}/site/game/build-info.json`,
+        );
+        assert.equal(
+          new URL('../../game/', destination).href,
+          `${prefix}releases/${version}/site/game/`,
+        );
+      }
     }
+    assert.ok(
+      plan.metadata.navigationRoutes.some(
+        (row) => row.from === `${directory}/` && row.to === `${directory}/`,
+      ),
+    );
+    assert.deepEqual(
+      await fs.readFile(path.join(out, name)),
+      f.originals.get(name),
+      'Alias planning does not rewrite the frozen workshop.',
+    );
   }
-  assert.ok(
-    plan.metadata.navigationRoutes.some(
-      (row) => row.from === 'authoring/still-media/' && row.to === 'authoring/still-media/',
+});
+
+test('built poster/still links and teaching requests retain their edition and work from a prepared cache without a network', async (t) => {
+  const f = await fixture(t),
+    out = path.join(f.directory, 'offline-site');
+  await buildProject({ root: f.root, out, version: 'v0.32.0', sourceRevision: 'c'.repeat(40) });
+  const inventory = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
+  assert.ok(inventory.files.reduce((sum, file) => sum + file.bytes, 0) <= 64 * 1024 * 1024);
+  const bodies = new Map(
+    await Promise.all(
+      inventory.files.map(async ({ path: name }) => [
+        name,
+        await fs.readFile(path.join(out, name)),
+      ]),
     ),
   );
-  assert.deepEqual(
-    await fs.readFile(path.join(out, name)),
-    f.originals.get(name),
-    'Alias planning does not rewrite the frozen workshop.',
+  const worker = await fs.readFile(path.join(out, 'service-worker.js'), 'utf8');
+  const gameHTML = await fs.readFile(path.join(sourceRoot, 'game/index.html'), 'utf8');
+  const creatorLink = gameHTML.match(/href="([^"]+)"[^>]*>\s*Video poster workshop\s*<\/a>/)?.[1];
+  assert.ok(creatorLink, 'A native Creator tools link opens the poster workshop.');
+  const posterHTML = bodies.get('authoring/video-poster/index.html').toString();
+  const stillLink = posterHTML.match(/id="video-poster-still" href="([^"]+)"/)?.[1];
+  assert.ok(stillLink);
+  const playground = await fs.readFile(
+    path.join(sourceRoot, 'game/playground/playground.mjs'),
+    'utf8',
   );
+  assert.ok(playground.includes('../../authoring/library/tactical-teaching/scenarios/${id}.json'));
+  for (const scope of [
+    'https://owner.github.io/game/releases/v0.32.0/site/',
+    'http://localhost:8888/preview/releases/v0.32.0/site/',
+    'http://localhost:8888/',
+  ]) {
+    const handlers = {},
+      storage = new Map();
+    let online = true,
+      networkCalls = 0;
+    const caches = {
+      async keys() {
+        return [...storage.keys()];
+      },
+      async delete(key) {
+        return storage.delete(key);
+      },
+      async open(key) {
+        if (!storage.has(key)) storage.set(key, new Map());
+        const entries = storage.get(key);
+        return {
+          async match(url) {
+            return entries.get(typeof url === 'string' ? url : url.url)?.clone();
+          },
+          async put(url, response) {
+            entries.set(
+              typeof url === 'string' ? url : url.url,
+              new Response(await response.arrayBuffer(), {
+                status: response.status,
+                headers: response.headers,
+              }),
+            );
+          },
+        };
+      },
+    };
+    vm.runInNewContext(worker, {
+      self: {
+        registration: { scope },
+        addEventListener: (name, callback) => (handlers[name] = callback),
+      },
+      caches,
+      crypto: webcrypto,
+      URL,
+      Request,
+      Response,
+      Headers,
+      Uint8Array,
+      fetch: async (request) => {
+        networkCalls++;
+        assert.equal(online, true, 'No network is available after Prepare finishes.');
+        const url = new URL(request.url),
+          base = new URL(scope);
+        assert.equal(url.origin, base.origin);
+        assert.ok(url.pathname.startsWith(base.pathname));
+        const bytes = bodies.get(decodeURI(url.pathname.slice(base.pathname.length)));
+        assert.ok(bytes, 'Prepare requests only inventoried original bytes.');
+        return new Response(bytes);
+      },
+    });
+    let install;
+    handlers.install({ waitUntil: (job) => (install = job) });
+    await install;
+    online = false;
+    const preparedCalls = networkCalls;
+    const game = new URL('game/', scope),
+      poster = new URL(creatorLink, game),
+      still = new URL(stillLink, poster);
+    assert.equal(poster.href, `${scope}authoring/video-poster/`);
+    assert.equal(still.href, `${scope}authoring/still-media/`);
+    const requests = [
+      [new URL('?capture=1#poster', poster), 'authoring/video-poster/index.html'],
+      [new URL('?restore=1#originals', still), 'authoring/still-media/index.html'],
+      ...publicationEntries.map((name) => [new URL(name, scope), name]),
+      ...[
+        'game/video-poster.mjs',
+        'game/ui/video-poster-workshop.mjs',
+        'game/build-info.json',
+        'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
+      ].map((name) => [new URL(name, scope), name]),
+      ...teachingScenarios.map((name) => [
+        new URL(`../../${name}`, new URL('game/playground/', scope)),
+        name,
+      ]),
+    ];
+    for (const [url, name] of requests) {
+      let reply;
+      handlers.fetch({
+        request: { url: url.href, method: 'GET' },
+        respondWith: (job) => (reply = job),
+      });
+      assert.ok(reply, `${name} must be handled under its exact distribution prefix.`);
+      const response = await reply;
+      assert.equal(response.status, 200);
+      assert.deepEqual(Buffer.from(await response.arrayBuffer()), bodies.get(name));
+    }
+    assert.equal(networkCalls, preparedCalls);
+  }
 });

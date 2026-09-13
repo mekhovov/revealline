@@ -9,7 +9,7 @@ import { readOptionalDistributionEntries } from './optional-distribution.mjs';
 const source = fileURLToPath(new URL('../', import.meta.url));
 const all = JSON.parse(await readFile(path.join(source, 'game/content/optional-worlds.json')));
 const item = all.packs[0];
-async function fixture(t) {
+async function fixture(t, chapter = item) {
   const dir = await realpath(await mkdtemp(path.join(os.tmpdir(), 'revealline-optional-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const root = path.join(dir, 'source'),
@@ -24,8 +24,8 @@ async function fixture(t) {
     'game/offline/service-worker.template.js',
     await readFile(path.join(source, 'game/offline/service-worker.template.js')),
   );
-  await put('game/content/optional-worlds.json', JSON.stringify({ ...all, packs: [item] }));
-  await put(item.path, await readFile(path.join(source, item.path)));
+  await put('game/content/optional-worlds.json', JSON.stringify({ ...all, packs: [chapter] }));
+  await put(chapter.path, await readFile(path.join(source, chapter.path)));
   const config = { version: 'fixture-1', entry: 'game/index.html', include: ['game'] };
   const saveConfig = () => put('game/build-config.json', JSON.stringify(config));
   await saveConfig();
@@ -106,4 +106,51 @@ test('bad optional hash, path, symbolic source and duplicate default inclusion p
   await f.saveConfig();
   await assert.rejects(buildProject(f), /outside automatic build/);
   assert.deepEqual(await readFile(path.join(f.out, 'distribution.zip')), before);
+});
+
+test('Route Choices publishes its exact original body once in loose/manifest/ZIP while core preparation stays small', async (t) => {
+  const chapter = all.packs.find((entry) => entry.id === 'fpv-route-choices');
+  assert.ok(chapter);
+  const f = await fixture(t, chapter);
+  f.config.optionalChapters = f.optIn;
+  await f.saveConfig();
+  assert.equal((await collectBuildFiles(f.root)).includes(chapter.path), false);
+  await buildProject({ ...f, version: 'v0.34.0', sourceRevision: 'a'.repeat(40) });
+  const manifest = JSON.parse(await readFile(path.join(f.out, 'manifest.json'))),
+    offline = JSON.parse(await readFile(path.join(f.out, 'offline-cache.json'))),
+    original = await readFile(path.join(source, chapter.path));
+  const entries = manifest.files.filter((entry) => entry.path === chapter.path);
+  assert.equal(entries.length, 1);
+  assert.equal(entries[0].sha256, chapter.sha256);
+  assert.equal(entries[0].bytes, original.length);
+  assert.deepEqual(await readFile(path.join(f.out, chapter.path)), original);
+  assert.equal(
+    offline.files.some((entry) => entry.path === chapter.path),
+    false,
+  );
+  assert.ok(offline.files.some((entry) => entry.path === f.optIn.catalog));
+  assert.ok(offline.optionalPacks.some((entry) => entry.path === chapter.path));
+  assert.ok(offline.files.reduce((total, entry) => total + entry.bytes, 0) < 64 * 1048576);
+  const zip = await readFile(path.join(f.out, 'distribution.zip'));
+  let offset = 0,
+    matches = 0;
+  while (zip.readUInt32LE(offset) === 0x04034b50) {
+    assert.equal(zip.readUInt16LE(offset + 8), 0);
+    const length = zip.readUInt32LE(offset + 18),
+      nameLength = zip.readUInt16LE(offset + 26),
+      extraLength = zip.readUInt16LE(offset + 28),
+      start = offset + 30 + nameLength + extraLength,
+      name = zip.subarray(offset + 30, offset + 30 + nameLength).toString();
+    if (name === chapter.path) {
+      matches++;
+      assert.deepEqual(zip.subarray(start, start + length), original);
+    }
+    offset = start + length;
+  }
+  assert.equal(zip.readUInt32LE(offset), 0x02014b50);
+  assert.equal(matches, 1);
+  assert.equal(
+    manifest.files.some((entry) => /\/originals\/|\/routes\.json$/.test(entry.path)),
+    false,
+  );
 });

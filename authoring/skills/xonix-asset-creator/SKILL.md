@@ -58,7 +58,7 @@ For registered enemy roles, optional travelling line impacts and theme-specific 
 
 ## Source still-picture workshop
 
-Use the [source-only workshop](../../../docs/still-media-workshop.md) for original PNG/JPEG Preview then Save assignment to an exact installed dev map/world. Its explicit real same-origin v3 opening affects older audio-reader compatibility; never describe it as a sandbox. Keep external originals and existing limits. Its saved assignments and isolated canvas do not replace game/Collection art, create earned receipts or establish browser/device readiness.
+Use the [still workshop](../../../docs/still-media-workshop.md) for original PNG/JPEG Preview then Save assignment to an exact installed map/world in the matching dev or release channel. Its explicit same-origin v3 opening affects older audio-reader compatibility; never describe it as a sandbox. The adopted still host selects assignments for fresh attempts, while saved flights and first-earned Collection retain their exact pins. Preview/Save assignment itself creates no gameplay award. Keep external originals, existing limits and separate browser/device qualification.
 
 ## Preserve native launch and input access
 
@@ -71,3 +71,7 @@ For optional illustrated chapters, use the [shared chapter contract](../../../do
 ## Keep live pictures and earned originals stable
 
 When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
+
+## Capture an owned video as a still
+
+Use the [video poster acquisition contract](../../../docs/video-poster-acquisition.md), [native workshop guide](../../video-poster/README.md) and [copyable prompts](../../prompts/video-poster.md). Capture and download the actual PNG explicitly; keep original-video SHA, requested seek, observed frame timestamp and approximate playhead separate. A single silent desktop H.264 source was natively captured, downloaded, manually assigned through the still workshop and shown after a real win; the guide pins that source evidence. It does not qualify stored video, original-video backup, stories, public delivery, every codec or physical controls. Preserve the MP4 externally and use the exact downloaded PNG as an ordinary still with `story: null`; do not add capture fields to strict media schemas or re-encode accepted PNG bytes. Saved-flight and first-earned art keep their existing immutable pins. A no-frame-callback fallback must say timestamp unavailable/approximate, and capture must never start audible playback.

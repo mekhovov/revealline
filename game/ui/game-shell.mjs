@@ -10,6 +10,7 @@ export function attachGameShell({
   onWorlds,
   getTopDialog,
   focusMissions,
+  focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
 } = {}) {
   const $ = (id) => doc.getElementById(id);
@@ -25,8 +26,30 @@ export function attachGameShell({
   const closeHome = () => {
     if (home.open) home.close();
   };
+  let briefing = null;
+  const restoreMissionView = () => {
+    if (!briefing) return;
+    const { brief, unit, marker, open, title, context } = briefing;
+    briefing = null;
+    marker.after(unit);
+    marker.remove();
+    brief.open = open;
+    $('shell-brief-content').hidden = true;
+    $('shell-mission-content').hidden = false;
+    $('shell-briefing').hidden = false;
+    $('shell-missions-title').textContent = title;
+    if ($('shell-missions-context')) $('shell-missions-context').textContent = context;
+    delete missions.dataset.view;
+  };
+  const closedMissions = () => {
+    // Native close events may arrive after a new showModal. Do not dismantle
+    // the current reading view because a previous close was queued.
+    if (!missions.open) restoreMissionView();
+  };
+  missions.addEventListener('close', closedMissions);
   const openMissions = () => {
     pause(true);
+    restoreMissionView();
     closeHome();
     if (!missions.open) missions.showModal();
     if (!focusMissions?.()) $('pack-select').focus();
@@ -34,6 +57,7 @@ export function attachGameShell({
   const openHome = () => {
     pause(true);
     if (missions.open) missions.close();
+    restoreMissionView();
     $('shell-continue').hidden = !canContinue();
     if (!home.open) home.showModal();
     (canContinue() ? $('shell-continue') : $('shell-play')).focus();
@@ -56,6 +80,43 @@ export function attachGameShell({
       onWorlds?.();
     };
   }
+  const overlayBrief = $('overlay-brief');
+  if (overlayBrief)
+    overlayBrief.onclick = () => {
+      pause(true);
+      closeHome();
+      const brief = $('mission-brief'),
+        unit = $('mission-brief-unit'),
+        slot = $('shell-brief-content');
+      if (brief && unit && slot && !briefing) {
+        const marker = doc.createElement('span');
+        marker.hidden = true;
+        briefing = {
+          brief,
+          unit,
+          marker,
+          open: brief.open,
+          title: $('shell-missions-title').textContent,
+          context: $('shell-missions-context')?.textContent,
+        };
+        unit.after(marker);
+        slot.append(unit);
+        slot.hidden = false;
+        $('shell-mission-content').hidden = true;
+        $('shell-briefing').hidden = true;
+        missions.dataset.view = 'brief';
+        $('shell-missions-title').textContent =
+          $('mission-brief-title').textContent || 'Mission brief';
+        if ($('shell-missions-context'))
+          $('shell-missions-context').textContent =
+            `${$('shell-edition')?.textContent || 'CURRENT FLIGHT'} · MISSION BRIEF`;
+        missions.scrollTop = 0;
+        $('mission-brief-reading').scrollTop = 0;
+      }
+      if (brief) brief.open = true;
+      if (!missions.open) missions.showModal();
+      if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
+    };
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
@@ -123,7 +184,10 @@ export function attachGameShell({
     openMissions,
     destroy() {
       destroyed = true;
+      restoreMissionView();
+      missions.removeEventListener('close', closedMissions);
       if (overlayMenu) overlayMenu.onclick = null;
+      if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();

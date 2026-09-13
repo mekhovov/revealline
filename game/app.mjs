@@ -195,7 +195,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.33.0',
+  let buildVersion = '0.34.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -227,6 +227,7 @@ try {
   // Switching source maps inside an authored preview must not turn the same
   // session into an awarding game, even when the configured scenario is cleared.
   const practiceSession = !!scenario;
+  $('creator-tools').hidden = practiceSession;
   let packLaunchRequest = null,
     packLaunchError = '';
   if (!practiceSession)
@@ -478,14 +479,14 @@ try {
   const soundtrackLoad = new AbortController();
   // This edition explicitly adopts rich v3. Both adapters share its single ledger;
   // training keeps its existing legacy presentation and never creates picture pins.
-  const pictureManager = practice ? null : createManagedMediaStore({ richStillMedia: true });
-  const pictureStore = pictureManager
-    ? createStillMediaStore({ managedStore: pictureManager })
-    : null;
+  const pictureManager = createManagedMediaStore({ richStillMedia: true });
+  const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
   let flightPictures = null,
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
+  const picturePreparingMessage =
+    'Preparing the chosen picture. Flight stays paused until it is ready.';
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   legacyPictureButton.textContent = 'Use original pack artwork';
@@ -608,9 +609,7 @@ try {
         throw new Error(
           'This browser does not provide file-audio playback. Built-in sound remains available.',
         );
-      soundtrackStore = createSoundtrackStore(
-        pictureManager ? { managedStore: pictureManager } : {},
-      );
+      soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
         soundscape: sound,
         audioElement,
@@ -824,7 +823,7 @@ try {
     if (scope === 'lost') return $('retry-button');
     return $('start-button');
   }
-  function controllerMenuRoot() {
+  function controllerMenuRegion() {
     const dialog = controllerDialog();
     if (dialog) return dialog;
     if (!$('game-overlay').hidden)
@@ -832,6 +831,33 @@ try {
     if (defeatActive || celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
       return $('arena-shell');
     return document;
+  }
+  let controllerCompositeRegion = null;
+  const controllerShellBar = document.querySelector('.shell-bar');
+  function controllerMenuRoot() {
+    const region = controllerMenuRegion();
+    // Nonmodal overlays share navigation with the visible shell bar. The
+    // accept predicate still confines this composite root to those two regions.
+    controllerCompositeRegion =
+      region !== document && !controllerDialog() && !courseSession && !courseBlocked()
+        ? region
+        : null;
+    return controllerCompositeRegion ? document.body : region;
+  }
+  function controllerMenuAccepts(element) {
+    return (
+      (!controllerCompositeRegion ||
+        controllerCompositeRegion.contains(element) ||
+        !!controllerShellBar?.contains(element)) &&
+      (!courseSession ||
+        $('game-overlay').hidden ||
+        !!controllerDialog() ||
+        $('game-overlay').contains(element) ||
+        $('first-flight-panel').contains(element)) &&
+      !element.matches(
+        '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
+      )
+    );
   }
   function controllerBack() {
     const dialog = controllerDialog();
@@ -918,15 +944,7 @@ try {
       confirm: controllerLabels.menu.confirm,
       back: controllerLabels.menu.back,
     }),
-    accept: (element) =>
-      (!courseSession ||
-        $('game-overlay').hidden ||
-        !!controllerDialog() ||
-        $('game-overlay').contains(element) ||
-        $('first-flight-panel').contains(element)) &&
-      !element.matches(
-        '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
-      ),
+    accept: controllerMenuAccepts,
     onNativeInput: (event) => {
       setInputModality(nextInputModality(document.body.dataset.inputMode, event));
       if (controllerScope() !== 'flight') controller.clear();
@@ -2793,6 +2811,7 @@ try {
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
+    show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
     $('retry-consequence').textContent = '';
@@ -3073,7 +3092,7 @@ try {
       pictureResume = ticket;
       paused = true;
       clearInput();
-      warning('Preparing the chosen picture. Flight stays paused until it is ready.');
+      warning(picturePreparingMessage);
       void owner
         .ensure(selectedTheme)
         .then(() => {
@@ -3108,6 +3127,8 @@ try {
     courseEntryMessage = '';
     started = true;
     paused = false;
+    if ($('run-message').textContent === picturePreparingMessage)
+      warning('Picture ready. Flight is running.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
@@ -3173,6 +3194,13 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    $('shell-edition').textContent = courseSession
+      ? 'FIRST FLIGHT'
+      : practice
+        ? 'PRACTICE'
+        : !arcadeActionCapabilities(run?.level).manualAbility
+          ? 'ARCADE EDITION'
+          : 'REVEAL / LINE';
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
@@ -4020,6 +4048,12 @@ try {
     },
   });
   gameShell = attachGameShell({
+    focusBriefing: () => {
+      clearInput();
+      controllerReading.refresh();
+      $('mission-brief-read').focus({ preventScroll: true });
+      return true;
+    },
     focusMissions: () => missionPicker?.focusSelectedChapter(),
     focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
     pause,
