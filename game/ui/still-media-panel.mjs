@@ -1,6 +1,12 @@
 import { canonicalJSON } from '../data-json.mjs';
 import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
+import {
+  exportMediaBundle,
+  importMediaBundle,
+  prepareMediaBundleRestore,
+  commitMediaBundleRestore,
+} from '../media-bundle.mjs';
 
 /** Administrative still assignments only. No game, profile or Collection API. */
 export function attachStillMediaPanel({
@@ -11,6 +17,7 @@ export function attachStillMediaPanel({
   onClose = () => {},
   onSaved = () => {},
   decodeImage,
+  URLImpl = globalThis.URL,
   makeId = () => `still-${crypto.randomUUID()}`,
 }) {
   const node = (tag, id, text = '') => {
@@ -36,12 +43,12 @@ export function attachStillMediaPanel({
   status.setAttribute('role', 'status');
   const stats = node('p', 'stats');
   const fields = node('div', 'fields');
-  const control = (tag, id, label, attrs = {}) => {
+  const control = (tag, id, label, attrs = {}, parent = fields) => {
     const field = node(tag, id);
     for (const [key, value] of Object.entries(attrs)) field.setAttribute(key, value);
     const wrapper = node('label', `${id}-label`, label);
     wrapper.append(field);
-    fields.append(wrapper);
+    parent.append(wrapper);
     return field;
   };
   const campaign = control('select', 'campaign', 'Installed chapter');
@@ -95,10 +102,70 @@ export function attachStillMediaPanel({
   const reload = button('reload', 'Reload saved media and installed maps', () => load());
   const cancel = button('cancel', 'Cancel pending work', () => cancelWork());
   const close = button('close', 'Close workshop', () => closePanel());
+  const bundleSection = node('section', 'bundles'),
+    bundleTitle = node('h3', 'bundle-title', 'Original picture files'),
+    bundleNote = node(
+      'p',
+      'bundle-note',
+      'A .rlmedia file includes every referenced still original, retained generic original and exact owner history. Game progress, flights, packs and audio-only files need their separate backups.',
+    ),
+    bundleFields = node('div', 'bundle-fields');
+  const bundleFile = control(
+    'input',
+    'bundle-file',
+    'Originals backup (.rlmedia, at most 256 MiB)',
+    { type: 'file', accept: '.rlmedia,application/vnd.revealline.media' },
+    bundleFields,
+  );
+  const bundleMode = control(
+    'select',
+    'bundle-mode',
+    'Assignment restore policy',
+    {},
+    bundleFields,
+  );
+  options(
+    bundleMode,
+    [
+      ['preserve', 'Keep current assignments; add missing bindings'],
+      ['restore', 'Use the bundle’s exact assignment set'],
+    ],
+    'preserve',
+  );
+  const bundlePolicy = node('p', 'bundle-policy'),
+    bundleReview = node('p', 'bundle-review', 'No originals backup has been reviewed.'),
+    bundleActions = node('div', 'bundle-actions');
+  const bundleButton = (id, text, handler) => {
+    const item = node('button', id, text);
+    item.type = 'button';
+    item.onclick = handler;
+    bundleActions.append(item);
+    return item;
+  };
+  const prepareOriginals = bundleButton('prepare-originals', 'Prepare originals download', () =>
+    prepareDownload(),
+  );
+  const downloadOriginals = node('a', 'download-originals', 'Download originals');
+  downloadOriginals.hidden = true;
+  bundleActions.append(downloadOriginals);
+  const reviewOriginals = bundleButton('review-originals', 'Review chosen originals backup', () =>
+    reviewBundle(),
+  );
+  const restoreOriginals = bundleButton('restore-originals', 'Restore reviewed originals', () =>
+    restoreBundle(),
+  );
+  bundleSection.append(
+    bundleTitle,
+    bundleNote,
+    bundleFields,
+    bundlePolicy,
+    bundleReview,
+    bundleActions,
+  );
   const canvas = preview.canvas;
   canvas.id = 'still-media-preview-canvas';
   canvas.setAttribute('aria-label', 'Isolated still picture preview; no gameplay or rewards');
-  dialog.append(title, note, stats, fields, canvas, actions, status);
+  dialog.append(title, note, stats, fields, canvas, actions, bundleSection, status);
   doc.body.append(dialog);
   let saved = null,
     context = null,
@@ -109,7 +176,18 @@ export function attachStillMediaPanel({
     serial = 0,
     disposed = false,
     ready = false,
-    returnFocus = null;
+    returnFocus = null,
+    bundleURL = null,
+    reviewedBundle = null;
+  function discardBundles() {
+    if (bundleURL !== null) URLImpl.revokeObjectURL(bundleURL);
+    bundleURL = null;
+    reviewedBundle = null;
+    downloadOriginals.hidden = true;
+    downloadOriginals.removeAttribute('href');
+    downloadOriginals.removeAttribute('download');
+    bundleReview.textContent = 'No originals backup has been reviewed.';
+  }
   function message(error) {
     return error instanceof Error ? error.message : String(error);
   }
@@ -118,6 +196,7 @@ export function attachStillMediaPanel({
     ++serial;
     task?.abort();
     task = null;
+    discardBundles();
     status.textContent =
       'Pending work cancelled. Any completed save stays saved; reload to verify.';
     sync();
@@ -135,6 +214,15 @@ export function attachStillMediaPanel({
     reload.disabled = busy;
     cancel.disabled = !busy;
     close.disabled = false;
+    bundleFile.disabled = bundleMode.disabled = busy || !ready;
+    prepareOriginals.disabled = busy || !ready;
+    reviewOriginals.disabled = busy || !ready || !bundleFile.files?.[0];
+    restoreOriginals.disabled = busy || !ready || !reviewedBundle;
+    downloadOriginals.hidden = !bundleURL || busy;
+    bundlePolicy.textContent =
+      bundleMode.value === 'restore'
+        ? 'Use exactly the assignments in this file, including removing current bindings absent from it. Every retained original and revision stays saved.'
+        : 'Keep destination assignments when they conflict, and add only missing bindings. Every retained original and revision stays saved.';
     stats.textContent = saved
       ? `${saved.document.library.assets.length} retained image records · ${saved.document.library.presentations.length} immutable revisions · saved generation ${saved.generation}`
       : 'No verified saved media loaded.';
@@ -178,6 +266,7 @@ export function attachStillMediaPanel({
     changeContext();
   }
   function changeContext(keepPreview = false) {
+    discardBundles();
     draft = null;
     if (!keepPreview) preview.clear();
     const selected = current();
@@ -203,18 +292,27 @@ export function attachStillMediaPanel({
       'Exact map/world selected. Preview an original or a saved revision before saving.';
     sync();
   }
-  campaign.onchange = contexts;
-  level.onchange = theme.onchange = () => changeContext();
+  campaign.onchange = () => {
+    if (task) return cancelWork();
+    contexts();
+  };
+  level.onchange = theme.onchange = () => {
+    if (task) return cancelWork();
+    changeContext();
+  };
   file.onchange = () => {
+    discardBundles();
     if (file.files?.length) draft = null;
     sync();
   };
   for (const item of [kind, credit, source, description])
     item.oninput = item.onchange = () => {
+      discardBundles();
       draft = null;
       sync();
     };
   history.onchange = () => {
+    discardBundles();
     draft = null;
     sync();
   };
@@ -244,6 +342,8 @@ export function attachStillMediaPanel({
     }
   }
   async function load() {
+    if (task) return false;
+    discardBundles();
     return work('Verifying saved originals and installed maps…', async (signal, check) => {
       ready = false;
       const nextContext = await catalog.read({ signal });
@@ -283,6 +383,7 @@ export function attachStillMediaPanel({
       candidate = file.files[0];
     const declared = { kind: kind.value, credit: credit.value, source: source.value },
       caption = description.value;
+    discardBundles();
     return work(
       'Checking the original signature, dimensions, decode and hash…',
       async (signal, check) => {
@@ -309,6 +410,7 @@ export function attachStillMediaPanel({
   async function savedPreview(authored = false) {
     if (!ready || !current()) return false;
     const selected = current();
+    discardBundles();
     return work('Loading the selected preview…', async (signal, check) => {
       const p =
         !authored &&
@@ -336,6 +438,7 @@ export function attachStillMediaPanel({
       selectedDraft = draft,
       baseline = saved,
       ticket = context;
+    discardBundles();
     return work('Preparing a complete, atomic media save…', async (signal, check) => {
       const library = structuredClone(baseline.document.library),
         assets = [...baseline.assets];
@@ -405,6 +508,102 @@ export function attachStillMediaPanel({
     preview.clear();
     onClose();
     if (returnFocus?.isConnected) returnFocus.focus();
+  }
+  bundleFile.onchange = bundleMode.onchange = () => {
+    if (task) return cancelWork();
+    discardBundles();
+    sync();
+    status.textContent = 'Review this file and policy before restoring. Saved data is unchanged.';
+  };
+  downloadOriginals.onclick = (event) => {
+    if (!bundleURL || task || disposed) {
+      event?.preventDefault();
+      return false;
+    }
+    status.textContent =
+      'Originals download requested. Confirm the destination in your browser; this prepared copy remains available to retry.';
+  };
+  async function prepareDownload() {
+    if (!ready || task) return false;
+    discardBundles();
+    return work('Verifying all retained originals for download…', async (signal, check) => {
+      const latest = await store.read({ signal });
+      check();
+      const blob = await exportMediaBundle(latest.document, latest.assets, { signal, decodeImage });
+      check();
+      let candidate = null;
+      try {
+        candidate = URLImpl.createObjectURL(blob);
+        check();
+        bundleURL = candidate;
+        candidate = null;
+      } finally {
+        if (candidate !== null) URLImpl.revokeObjectURL(candidate);
+      }
+      downloadOriginals.href = bundleURL;
+      downloadOriginals.download = 'RevealLine-originals.rlmedia';
+      downloadOriginals.hidden = false;
+      status.textContent = `Originals backup prepared from generation ${latest.generation} (${blob.size} bytes, ${latest.assets.length} distinct originals). Choose Download originals. Preparation has not saved a file to disk.`;
+      downloadOriginals.focus();
+    });
+  }
+  async function reviewBundle() {
+    if (!ready || task || !bundleFile.files?.[0]) return false;
+    const file = bundleFile.files[0],
+      assignmentMode = bundleMode.value;
+    discardBundles();
+    return work(
+      'Verifying the complete originals backup and target history…',
+      async (signal, check) => {
+        const imported = await importMediaBundle(file, { signal, decodeImage });
+        check();
+        const review = await prepareMediaBundleRestore(imported, {
+          store,
+          assignmentMode,
+          signal,
+          decodeImage,
+        });
+        check();
+        reviewedBundle = { review, context, file, assignmentMode };
+        bundleReview.textContent = `Reviewed target generation ${review.expectedGeneration}: ${review.originals} distinct retained originals, ${review.originalBytes} bytes, ${review.document.owners.length} exact historical owners, ${review.document.library.presentations.length} immutable picture revisions, ${review.document.library.assignments.length} resulting assignments. ${assignmentMode === 'restore' ? 'The file’s complete assignment set will be selected.' : 'Current assignments win; missing bindings are added.'} No data has been restored yet.`;
+        status.textContent =
+          'Review complete. Choose Restore reviewed originals to commit this exact policy and target generation.';
+        restoreOriginals.disabled = false;
+        restoreOriginals.focus();
+      },
+    );
+  }
+  async function restoreBundle() {
+    if (!ready || task || !reviewedBundle) return false;
+    const chosen = reviewedBundle;
+    if (
+      chosen.file !== bundleFile.files?.[0] ||
+      chosen.assignmentMode !== bundleMode.value ||
+      chosen.context !== context
+    ) {
+      discardBundles();
+      sync();
+      status.textContent = 'The reviewed file, policy or installed context changed. Review again.';
+      return false;
+    }
+    reviewedBundle = null;
+    return work('Restoring the reviewed originals atomically…', async (signal, check) => {
+      await catalog.withCurrent(
+        chosen.context,
+        () => commitMediaBundleRestore(chosen.review, { signal }),
+        { signal },
+      );
+      // A completed transaction stays completed even if lifecycle cancellation
+      // raced its result. cancelWork already tells the user to reload to verify.
+      check();
+      discardBundles();
+      draft = null;
+      ready = false;
+      status.textContent =
+        'Originals and the reviewed assignments were restored. Retained history was preserved. Reload saved media and installed maps to verify; game progress and flights were not imported.';
+      reload.disabled = false;
+      reload.focus();
+    });
   }
   dialog.addEventListener('cancel', (event) => {
     event.preventDefault();

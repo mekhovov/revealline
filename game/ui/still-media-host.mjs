@@ -3,12 +3,32 @@ import { createStillMediaStore } from '../media-store.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import { readAssetStore } from '../storage.mjs';
-import { createStillAuthoringCatalog } from './still-media-catalog.mjs';
+import { createStillAuthoringCatalog, stillAuthoringKeys } from './still-media-catalog.mjs';
 import { attachStillMediaPanel } from './still-media-panel.mjs';
 import { createStillMediaPreview } from './still-media-preview.mjs';
 import { createControllerRouter } from './controller-router.mjs';
 import { attachControllerNavigation } from './controller-navigation.mjs';
 
+export async function readStillWorkshopChannel({ signal, fetchImpl = globalThis.fetch } = {}) {
+  const check = () => {
+    if (signal?.aborted) throw new DOMException('Workshop channel load cancelled.', 'AbortError');
+  };
+  check();
+  const response = await fetchImpl(new URL('../build-info.json', import.meta.url), { signal });
+  check();
+  if (response.status === 404) return 'dev';
+  if (!response.ok)
+    throw new Error(
+      'Workshop build information could not load. Retry the complete edition; no game channel was selected.',
+    );
+  const info = await response.json();
+  check();
+  if (!info || typeof info.version !== 'string')
+    throw new Error('Workshop build version is invalid; no game channel was selected.');
+  const channel = `release-${info.version}`;
+  stillAuthoringKeys(channel);
+  return channel;
+}
 async function readSource({ signal } = {}) {
   const get = async (path) => {
     const response = await fetch(new URL(path, import.meta.url), { signal });
@@ -16,11 +36,12 @@ async function readSource({ signal } = {}) {
       throw new Error('Source game content could not load. Serve this repository over HTTP.');
     return response.json();
   };
-  const [campaign, themes, classes, presets] = await Promise.all([
+  const [campaign, themes, classes, presets, channel] = await Promise.all([
     get('../content/campaign.json'),
     get('../content/themes.json'),
     get('../content/classes.json'),
     get('../../authoring/motion-lab/presets.json'),
+    readStillWorkshopChannel({ signal }),
   ]);
   return {
     baseEntry: {
@@ -32,6 +53,7 @@ async function readSource({ signal } = {}) {
       levelVisuals: [],
     },
     presets,
+    channel,
   };
 }
 
@@ -50,7 +72,9 @@ export function attachStillMediaHost({
   URLImpl = globalThis.URL,
   decodeImage,
   readPads,
+  channel,
 } = {}) {
+  if (channel !== undefined) stillAuthoringKeys(channel);
   const $ = (id) => doc.getElementById(id),
     status = $('still-host-status');
   let manager = null,
@@ -62,6 +86,7 @@ export function attachStillMediaHost({
     audioTask = null,
     audioURL = null,
     frame = null,
+    sourceChannel = channel ?? 'dev',
     openSerial = 0,
     openController = null;
   const router = createControllerRouter({ eventTarget: win, ...(readPads ? { readPads } : {}) });
@@ -131,7 +156,9 @@ export function attachStillMediaHost({
           readAsset,
           lockManager,
           decodeImage,
+          channel: channel ?? source.channel ?? 'dev',
         });
+        sourceChannel = catalog.channel;
         manager = createManager({ richStillMedia: true });
         stills = createStills({ managedStore: manager, decodeImage });
         audio = createAudio({ managedStore: manager });
@@ -141,6 +168,7 @@ export function attachStillMediaHost({
           catalog,
           preview: createPreview({ canvas: doc.createElement('canvas'), presets: source.presets }),
           decodeImage,
+          URLImpl,
           onClose: () => {
             router.clear();
             navigation.sync();
@@ -153,7 +181,7 @@ export function attachStillMediaHost({
         router.clear();
         navigation.sync();
         status.textContent = result
-          ? 'Real local media opened. Workshop assignments are separate from game artwork.'
+          ? `Real local media opened for ${channel ?? sourceChannel}. Workshop assignments are separate from game artwork.`
           : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.';
       }
       return result;

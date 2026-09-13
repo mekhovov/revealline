@@ -1,6 +1,6 @@
-# Source still-picture workshop
+# Still-picture workshop
 
-The source-only page at `authoring/still-media/` supports original PNG/JPEG upload, exact map/world assignment and isolated preview through the opt-in v3 store. It does not replace pictures in live flights, saves or Collection, or award completions. No generated artwork is automatically imported. This slice does not add the page to the release build allowlist.
+The standalone page at `authoring/still-media/` supports original PNG/JPEG upload, exact map/world assignment and isolated preview through the opt-in v3 store. It does not replace pictures in live flights, saves or Collection, or award completions. No generated artwork is automatically imported. Packaging is a separate build integration; these host APIs do not add a page to the release build allowlist.
 
 Serve the repository with the existing source CLI and open `/authoring/still-media/` on that same localhost address. `file://` fails visibly. Different hosts, ports or protocols select different browser storage; they cannot inspect the first origin's saved files.
 
@@ -14,7 +14,11 @@ The page explains the upgrade before the action. MP3 metadata and original bytes
 
 ## Exact installed ownership
 
-The catalog reads only `revealline.packs.dev.v1`, the source game's explicit **dev** pack channel, plus its base campaign/classes/themes. Install an intended pack in the source game first, then close that game. This workshop does not discover historical profiles, install packs, read progress or write the asset database. Only an actual `null` pack read means no installed packs; corrupt/unreadable data fails.
+The default host reads module-relative `game/build-info.json` before creating a media manager. Its exact `version` selects `release-${version}`; a leading `v` is preserved to match the game host. Only an actual HTTP 404 selects source **dev**. Network/server failures, invalid JSON, missing/invalid version and cancellation stop opening; they never silently select dev. A packaged workshop must include the same edition's build information and content. The source path still works with its existing dev keys.
+
+`attachStillMediaHost({channel})` and `createStillAuthoringCatalog({channel = 'dev', ...})` also allow an explicit bounded channel. `stillAuthoringKeys(channel)` accepts dev or a numeric three-component release version with optional leading v. The four exact keys are `revealline.packs.${channel}.v1` and `revealline.library.${channel}.v1.{writer,backup-lock,backup-journal}`. No profile scanning, closest-version guessing or channel normalization occurs. All channels share the same origin's media database; these selected keys bind installed-game ownership and writer/recovery coordination.
+
+Install an intended pack in that exact game edition first, then close that game. This workshop does not install packs, read progress or write the asset database. Only an actual `null` pack read means no installed packs; corrupt/unreadable data fails.
 
 Reads use the source game's existing writer and backup Web Locks and reject pending backup tokens/journals. Browsers without Web Locks refuse editing. Before final media commit, the same locks are held while the exact original pack-library value is compared again. Changed packs require reload/review; independent media CAS rejects another media writer. These locks protect participating game/backup writers, not arbitrary direct database modification.
 
@@ -32,10 +36,25 @@ The preview uses separate `BoardPainter.drawGallery` rendering with one decoded 
 
 Existing controller navigation operates native controls and dialog focus. Back closes the active editor/dialog; it never starts a game. Native file dialogs may blur without invalidating the selected file; genuinely hiding the page cancels its pending context. File picking and text entry rely on browser/OS controls, with no controller virtual keyboard. Modeled inputs do not certify physical hardware.
 
+## Portable originals: prepare, download, review, restore
+
+Inside the modal, **Prepare originals download** performs a fresh full store read and `.rlmedia` verification. It prepares one retained Blob URL and focuses the visible native **Download originals** link. There is no automatic click. Native keyboard, pointer/touch or controller activation requests the download; only the browser can confirm the destination and disk completion. The same prepared copy supports retry. Repreparation, draft/context changes, review, cancellation, close, hiding or disposal invalidate it and revoke its URL.
+
+For import, choose one `.rlmedia` file, then choose an assignment policy:
+
+- **Keep current assignments; add missing bindings** gives destination assignments priority and adds only missing bindings.
+- **Use the bundle's exact assignment set** replaces the assignment set, including removing destination bindings absent from the file. It retains all original assets, immutable revisions, owner histories and generic references.
+
+**Review chosen originals backup** verifies the complete binary file, its exact retained owner history and every referenced original. It prepares a merge against a fresh verified target read. The visible review reports target generation, policy and resulting original/revision/assignment counts, without writing any data. Changing the file, policy or installed context invalidates the review. An explicit **Restore reviewed originals** commits only that reviewed candidate under catalog locks and the existing media CAS. Concurrent edits, missing/corrupt original bytes, immutable-ID collisions, budget limits and write/quota errors refuse before or roll back the whole transaction. A successful transaction cannot be undone by a late Cancel; the UI directs a fresh **Reload saved media and installed maps** to verify the result.
+
+Restore does not clear the already inspected canvas on failure or success; the user reloads and explicitly previews the saved binding. That canvas may therefore still show the prior preview until a new preview is chosen. Neither assignment policy deletes retained history. The source file remains available to repeat review. Restoring an old file with the exact-assignment policy can restore older bindings; it cannot erase originals added since then, and is not a general history/GC Undo.
+
+`.rlmedia` contains every referenced still and retained generic original plus exact owner metadata. It excludes audio-only files, player profiles, saved flights and installed pack payloads. It is an originals backup, not complete game-data backup by itself. Use the game's separate backup/transfer workflow and `.rlsound` alongside it where needed. Imported removed-pack owners retain provenance/history without installing content or granting an earned picture. See [binary bundle validation and bounds](media-bundle.md).
+
 ## Bounds and remaining gates
 
 Limits stay at 4 MiB per still, 8,192 pixels per side and 16 megapixels for source images; an assigned poster must be at most 1,920 × 1,080. Shared committed-plus-staging storage remains 256 MiB; rich metadata including owners 2 MiB; image records 512; retained presentation revisions 256. Append-only history consumes these limits. Reads verify all referenced originals sequentially and are cancellable, without a per-file progress meter yet.
 
-Focused tests use actual schema/store/hash/export APIs with finite IndexedDB, injected decode and DOM/device boundaries. They check lazy shared v3 access, original MP3 export equality, exact-context/CAS refusal, failed writes, cancellation, native navigation and preview cleanup. Actual browser upgrade, native files, decoded visual quality and physical-device qualification remain separate parent-run gates.
+Focused tests use actual host/panel/schema/store/hash/bundle APIs with finite IndexedDB, injected decode and DOM/device boundaries. They check all-original restore/export equality including retained generic bytes, both assignment policies, no-write review, catalog/CAS refusal, corrupt bytes, quota rollback, cancellation/allocation cleanup, release/dev channel authority and unchanged MP3 recovery. The actual shared controller router prevents a held Review Confirm from applying Restore; native Enter is left unprevented and its browser default is explicitly modeled. File choosing/text entry still needs the browser/OS controls. Actual new binary UI downloads, upload/review/restore, decoded visual quality and physical-device qualification remain parent-run gates. Earlier workshop upgrade/image/audio browser evidence does not certify this newly added binary journey.
 
-Live adoption still needs versioned run/session presentation pins and earned-receipt reconciliation across profile localStorage and media IndexedDB. The strict v3 document has no receipt/pin fields; do not append them silently. Story playback, durable earned pictures, `.rlmedia` complete backup, optional binary/offline downloads and safe pruning remain subsequent work. See [storage](media-storage.md), [still identities](media-presentation.md) and [the broader media design](media-library-design.md).
+Runtime pin/receipt models and original acquisition APIs are separate integration work; this standalone page does not wire live flights or Collection. The strict v3 media document has no receipt/pin fields; do not append them silently. Paired game-data/original recovery, stories, optional binary/offline downloads and safe pruning need their own complete host gates. See [storage](media-storage.md), [still identities](media-presentation.md) and [the broader media design](media-library-design.md).
