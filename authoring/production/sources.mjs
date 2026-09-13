@@ -17,6 +17,7 @@ const PATHS = Object.freeze({
   route: 'authoring/library/fpv-route-choices/distribution.json',
   world: 'authoring/library/route-worlds/editions.json',
   sentinel: 'authoring/library/sentinel-circuit-external/descriptor.json',
+  'sentinel-world': 'authoring/library/sentinel-theme-chapters/editions.json',
   body: 'game/content/themes.json',
   dawn: 'authoring/still-media/examples/dawn-signal/manifest.json',
   synth: 'game/ui/music.mjs',
@@ -223,6 +224,50 @@ export async function verifyProductionSources(input, { root, files = false } = {
       )
         throw new Error('Sentinel source path/dimensions differ');
       owners = [own(d, o)];
+    } else if (w.adapter === 'sentinel-world') {
+      const cohort = await json(PATHS['sentinel-world']);
+      if (
+        cohort.format !== 'revealline-sentinel-theme-editions.v1' ||
+        cohort.artRoot !== 'authoring/library/sentinel-theme-art' ||
+        cohort.provenanceSha256 !==
+          declared.get('authoring/library/sentinel-theme-art/provenance.json')?.sha256 ||
+        !['ukraine', 'retro', 'coupa'].includes(w.themeId)
+      )
+        throw new Error('Unknown Sentinel theme cohort');
+      const edition = cohort.editions.find((e) => e.themeId === w.themeId);
+      if (!edition || edition.id !== `sentinel-circuit-${w.themeId}`)
+        throw new Error('Unknown Sentinel theme edition');
+      const d = await descriptorRows(
+        `authoring/library/sentinel-theme-chapters/descriptors/${w.themeId}.json`,
+      );
+      const index = d.originals.findIndex((o) => o.assetId === w.sourceId),
+        original = d.originals[index],
+        source = edition.images[index];
+      if (
+        d.id !== edition.id ||
+        d.themeId !== w.themeId ||
+        !original ||
+        !source ||
+        original.sha256 !== source.sha256 ||
+        !source.sourceLevelId.startsWith('sentinel-circuit-') ||
+        original.levelId !== source.sourceLevelId.replace('sentinel-circuit-', `${edition.id}-`) ||
+        !source.path.startsWith(`${w.themeId}/originals/`) ||
+        source.sourceCellId !==
+          `sentinel-circuit/${source.path
+            .split('/')
+            .at(-1)
+            .replace(/\.png$/, '')}/${w.themeId}`
+      )
+        throw new Error('Sentinel theme source/owner differs');
+      matchesFile(w, original);
+      if (
+        w.files.length !== 1 ||
+        w.files[0].file.path !== `${cohort.artRoot}/${source.path}` ||
+        w.files[0].width !== original.width ||
+        w.files[0].height !== original.height
+      )
+        throw new Error('Sentinel theme original path/dimensions differ');
+      owners = [own(d, original)];
     } else if (w.adapter === 'dawn') {
       const d = await json(PATHS.dawn);
       if (w.sourceId !== d.story.id || w.revision !== d.story.revision)

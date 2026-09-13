@@ -28,7 +28,17 @@ const ENEMIES = [
   'lane-boss',
   'relay-sentinel',
 ];
-const ADAPTERS = ['pressure', 'route', 'world', 'sentinel', 'body', 'dawn', 'synth', 'authored'];
+const ADAPTERS = [
+  'pressure',
+  'route',
+  'world',
+  'sentinel',
+  'sentinel-world',
+  'body',
+  'dawn',
+  'synth',
+  'authored',
+];
 const KINDS = ['picture', 'presentation', 'story', 'track'];
 const CHECKS = Object.freeze({
   picture: {
@@ -331,6 +341,7 @@ export function validateProductionRegister(input, { previous = null } = {}) {
       route: 'picture',
       world: 'picture',
       sentinel: 'picture',
+      'sentinel-world': 'picture',
       body: 'presentation',
       dawn: 'story',
       synth: 'track',
