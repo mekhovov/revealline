@@ -1,5 +1,25 @@
 # Device-aware flight and Arcade R4
 
+## September 13, 2026 — current chapter menu source
+
+The current source features R5, eight current packs and four older First Light
+editions (R1–R4). In All missions, **Older chapters (4)** is a native disclosure,
+closed initially. A currently selected older edition opens the group when the
+menu focuses its chapter. All exact native select options, installed content,
+saved flights, Collection and replay identities remain available. Opening or
+closing the group never chooses a pack or resumes a flight.
+
+Tab/Shift-Tab and Enter/Space, controller directions/Confirm, and pointer/touch
+activation use the existing controls. Closed chapter cards are excluded from
+navigation; Back/Escape retain the mission dialog's normal behavior. The summary
+has a 44 px minimum and uses the existing text-size settings. Native browser and
+physical-device acceptance must still be recorded separately from source tests.
+
+The R4 delivery history and earlier pack-count/byte measurements below describe
+their original milestone; they are not current storage measurements.
+
+## Original R4 delivery context
+
 This correction implements the player's September 13 feedback before the next roadmap phase. The game entry, input presentation and authored mechanics change together; earlier campaign editions and frozen releases keep their own rules. [Research and primary platform guidance](research/round-38-device-controls.md) records what was inspected and what remains device qualification.
 
 ## Player contract
