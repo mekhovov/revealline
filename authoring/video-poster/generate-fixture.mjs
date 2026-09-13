@@ -16,9 +16,33 @@ if (argv.length !== 2 || argv[0] !== '--out') {
   process.exit(argv.includes('--help') ? 0 : 2);
 }
 const out = path.resolve(root, argv[1]);
-if (!out.startsWith(path.join(root, '.cache') + path.sep))
+const cache = path.join(root, '.cache');
+if (!out.startsWith(cache + path.sep))
   throw new Error('Use a new directory under this worktree’s .cache.');
+async function ordinaryDirectory(directory) {
+  try {
+    await fs.mkdir(directory);
+  } catch (error) {
+    if (error.code !== 'EEXIST') throw error;
+  }
+  const info = await fs.lstat(directory);
+  if (info.isSymbolicLink() || !info.isDirectory())
+    throw new Error('Fixture cache ancestors must be ordinary directories, never symbolic links.');
+}
+await ordinaryDirectory(cache);
+const realCache = await fs.realpath(cache);
+if (realCache !== path.join(await fs.realpath(root), '.cache'))
+  throw new Error('Fixture cache must belong to this worktree.');
+let parent = cache;
+for (const component of path.relative(cache, path.dirname(out)).split(path.sep).filter(Boolean)) {
+  parent = path.join(parent, component);
+  await ordinaryDirectory(parent);
+  if ((await fs.realpath(parent)) !== path.join(realCache, path.relative(cache, parent)))
+    throw new Error('Fixture cache parent resolves outside its owned location.');
+}
 await fs.mkdir(out); // Never replace a prior clip or its evidence.
+if ((await fs.realpath(out)) !== path.join(realCache, path.relative(cache, out)))
+  throw new Error('Fixture output changed location before generation.');
 const clip = path.join(out, 'owned-poster-fixture.mp4');
 const ffmpeg = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' });
 let command, engine, generator;
