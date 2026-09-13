@@ -170,6 +170,7 @@ export async function soloPage(
     audio,
     soundtrackIndexedDB,
     rendering,
+    parentWindow,
   } = {},
 ) {
   const doc = new SoloDocument(),
@@ -222,7 +223,7 @@ export async function soloPage(
       return element;
     };
   }
-  win.parent = win;
+  win.parent = parentWindow ?? win;
   doc.parentNode = win;
   const html = await readFile(new URL('../../index.html', import.meta.url), 'utf8');
   mount(doc, html);

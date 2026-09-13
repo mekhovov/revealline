@@ -1,3 +1,11 @@
+import {
+  nextLineImpactSeed,
+  nextLineImpactEvent,
+  advanceLineImpacts,
+  finishLineImpactDepartures,
+  seedLineImpact,
+  clearLineImpacts,
+} from './line-impact.mjs';
 import { CELL, FIXED_DT } from './registry.mjs';
 import { EPS, boxTime, circleTime } from './geometry.mjs';
 import { positionAt, cellIndex, pathPoint, patrolDistance } from './movement.mjs';
@@ -255,6 +263,9 @@ function world(state, input, hooks) {
       ...plans.map((plan) => plan.event?.time ?? Infinity),
       erosionDue(state) ? 0 : Infinity,
     );
+    const impactSeed = recovering ? null : nextLineImpactSeed(state, plans, trace, horizon);
+    const impactEvent = recovering ? null : nextLineImpactEvent(state, trace, horizon);
+    horizon = Math.min(horizon, impactSeed?.time ?? Infinity, impactEvent?.time ?? Infinity);
     const hits = recovering ? [] : pickupContacts(state, playerPlan.paths, horizon);
     horizon = Math.min(horizon, hits[0]?.time ?? Infinity);
     const self = recovering ? null : selfContact(state, trace, horizon);
@@ -262,7 +273,21 @@ function world(state, input, hooks) {
       challengeContact(state, trace, horizon),
       self === null ? null : { time: self, kind: 'self-contact', id: 'player' },
       recovering ? null : materialContact(state, playerPlan.paths, horizon),
-      recovering ? null : enemyContact(state, playerPlan.paths, plans, trace, horizon),
+      recovering
+        ? null
+        : enemyContact(state, playerPlan.paths, plans, trace, horizon, {
+            ignoreTrail: !!state.classic.lineImpact,
+          }),
+      impactEvent?.kind === 'player' &&
+      impactEvent.time <= horizon + EPS &&
+      !(trace.closure !== null && trace.closure <= impactEvent.time + EPS)
+        ? {
+            time: impactEvent.time,
+            kind: 'enemy-trail',
+            id: impactEvent.front.actorId,
+            impact: impactEvent.front,
+          }
+        : null,
     ]);
     const elapsed = Math.min(horizon, failure?.time ?? Infinity);
     const position = positionAt(playerPlan.paths, elapsed, state.player),
@@ -280,15 +305,28 @@ function world(state, input, hooks) {
       applyClassicEnemy(enemy, plans[i], elapsed, remaining);
       if (enemy.type === 'border-patrol') enemy.perimeter = patrolDistance(enemy, state);
     }
+    advanceLineImpacts(state, elapsed);
     state.time += elapsed;
     if (!classicEffectActive(state, 'enemy-freeze')) state.classic.actorTime += elapsed;
     remaining -= elapsed;
+    finishLineImpactDepartures(state);
     if (failure) {
+      if (failure.impact)
+        state.events.push({
+          type: 'lineImpact.arrived',
+          tick: state.tick,
+          time: state.time,
+          id: failure.impact.id,
+          actorId: failure.id,
+          x: state.player.x,
+          y: state.player.y,
+        });
       state.failureCause = failure.kind;
       if (failure.kind !== 'mission-timeout') hooks.recover(state, failure);
       interrupted = true;
     } else if (!recovering) {
       if (trace.closure !== null && trace.closure <= elapsed + EPS) {
+        clearLineImpacts(state, 'capture');
         commitCapture(state);
         if (state.rules.stopOnCapture === true) {
           blocked = true;
@@ -297,6 +335,8 @@ function world(state, input, hooks) {
           state.events.push({ type: 'capture.stopped', tick: state.tick, time: state.time });
         }
       }
+      if (impactSeed && impactSeed.time <= elapsed + EPS)
+        for (const contact of impactSeed.contacts) seedLineImpact(state, contact);
       collect(state, hits, elapsed);
       if (trace.stop !== null && trace.stop <= elapsed + EPS) {
         blocked = true;

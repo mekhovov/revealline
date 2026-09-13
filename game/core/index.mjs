@@ -1,3 +1,4 @@
+import { clearLineImpacts } from './line-impact.mjs';
 import {
   CELL,
   CLASSES,
@@ -179,6 +180,7 @@ export function releaseInputs(state) {
 
 function complete(state, won) {
   if (state._terminalEmitted) return;
+  clearLineImpacts(state, 'completed');
   state.status = won ? 'won' : 'lost';
   state._terminalEmitted = true;
   releaseInputs(state);
@@ -195,6 +197,7 @@ function complete(state, won) {
 }
 
 function recover(state, contact) {
+  clearLineImpacts(state, 'recovery');
   state.failureCause = contact.kind;
   const absorbed =
     ![

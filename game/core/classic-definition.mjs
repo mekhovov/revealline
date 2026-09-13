@@ -24,7 +24,17 @@ const has = (value, keys, label) => {
 /** The caller supplies already-owned bounded JSON; no code or inferred actor roles. */
 export function resolveClassicDefinition(level) {
   const { width, height } = level;
-  has(level.classic, ['version', 'terrain', 'powerups'], 'classic');
+  exactKeys(level.classic, ['version', 'terrain', 'powerups', 'lineImpact'], 'classic');
+  required(
+    ['version', 'terrain', 'powerups'].every((key) => Object.hasOwn(level.classic, key)),
+    'classic fields are required',
+  );
+  if (Object.hasOwn(level.classic, 'lineImpact')) {
+    const impact = level.classic.lineImpact;
+    has(impact, ['version', 'speed'], 'line impact');
+    required(impact.version === 'line-impact.v1', 'unsupported line impact definition');
+    required(number(impact.speed, 4, 60), 'line impact speed must be 4..60 cells per second');
+  }
   const value = level.classic;
   required(value.version === 'classic.v1', 'unsupported classic definition');
   required(

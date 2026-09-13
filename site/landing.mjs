@@ -100,7 +100,7 @@ try {
 
   packSelect.replaceChildren(
     ...catalog.packs.map(
-      (pack) => new Option(pack.name, pack.id, false, pack.id === 'homeward-skies'),
+      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r3'),
     ),
   );
   populateLevels();

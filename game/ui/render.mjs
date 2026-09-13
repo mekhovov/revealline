@@ -1,3 +1,4 @@
+import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import {
@@ -6,6 +7,7 @@ import {
   drawClassicPickups,
   drawClassicEnemy,
   drawClassicStatus,
+  drawLineImpacts,
 } from './classic-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
@@ -217,26 +219,14 @@ export class BoardPainter {
     );
     ctx.restore();
   }
-  effectsFor(events = []) {
-    for (const e of events) {
-      if (
-        e.type === 'cut.closed' ||
-        e.type === 'cells.claimed' ||
-        e.type === 'player.failed' ||
-        e.type === 'run.completed' ||
-        e.type === 'craft.redeployed'
-      )
-        this.effects.push({
-          type: e.type,
-          age: 0,
-          x: e.x,
-          y: e.y,
-          radius: e.radius,
-          ...(Array.isArray(e.indices) ? { indices: e.indices.slice(0, 2592) } : {}),
-        });
+  effectsFor(events = [], run = null) {
+    for (const event of events) {
+      const effect = presentationEvent(event, run);
+      if (effect) this.effects.push(effect);
     }
     this.effects = this.effects.slice(-8);
   }
+
   draw(
     ctx,
     state,
@@ -248,9 +238,11 @@ export class BoardPainter {
       debug = false,
       fullReveal = false,
       celebrationPaused = false,
+      defeatEffectsRunning = false,
       actorScale = 1,
       playerScale = 1,
       displayCSSWidth = null,
+      actorSkins = {},
     } = {},
   ) {
     if (!this.theme || !state) return;
@@ -296,6 +288,7 @@ export class BoardPainter {
       screenScale: canvasCSSWidth / W,
       canvasCSSWidth,
       scale: actorScale,
+      actorSkins,
     });
     this.time += paused ? 0 : dt;
     ctx.clearRect(0, 0, W, H);
@@ -501,7 +494,10 @@ export class BoardPainter {
         }
       }
       drawEncounterLane(ctx, state, p);
-      drawClassicPickups(ctx, classic, p, this.images);
+      drawClassicPickups(ctx, classic, p, this.images, {
+        screenScale: canvasCSSWidth / W,
+        canvasCSSWidth,
+      });
       for (const pad of state.supplies) {
         if (this.images.supply)
           ctx.drawImage(this.images.supply, pad.x * CELL - 8, pad.y * CELL - 8, 16, 16);
@@ -573,6 +569,7 @@ export class BoardPainter {
         time: this.time,
         reduced,
       });
+      drawLineImpacts(ctx, classic, { screenScale: canvasCSSWidth / W });
       for (const e of state.enemies) {
         if (
           drawClassicEnemy(
@@ -624,7 +621,7 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
-      drawClassicStatus(ctx, classic, p);
+      drawClassicStatus(ctx, classic, p, { screenScale: canvasCSSWidth / W, canvasCSSWidth });
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
         this.heading;
@@ -710,7 +707,21 @@ export class BoardPainter {
       }
     }
     for (const f of this.effects) {
-      if (fullReveal ? !celebrationPaused : !paused) f.age += dt;
+      if (
+        fullReveal
+          ? !celebrationPaused
+          : !paused ||
+            (defeatEffectsRunning && state.status === 'lost' && f.type === 'player.failed')
+      )
+        f.age += dt;
+      if (!fullReveal)
+        drawEventFeedback(ctx, f, p, {
+          themeId: this.theme.id,
+          reduced,
+          screenScale: canvasCSSWidth / W,
+          width: W,
+          height: H,
+        });
       if (!fullReveal && f.type === 'cells.claimed')
         drawCapturePulse(ctx, f, columns, state.cells, p, reduced);
       if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
@@ -737,6 +748,7 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
       }
     }
+    if (!fullReveal) drawRecoveryCue(ctx, state, p, { screenScale: canvasCSSWidth / W, width: W });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);
   }

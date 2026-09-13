@@ -450,9 +450,9 @@ test('public fixture generator emits six proven sessions/scenarios and a legally
   assert.equal(await readFile(path.join(out, manifest.files[0].name), 'utf8'), 'edited');
 });
 
-test('all eight actual indexed packs fit the unchanged installed-library budget with exact Homeward, Workshop and First Light image bytes', async () => {
+test('nine indexed packs exceed the unchanged installed-library cap; explicit older-edition removal preserves eight exact-art packs', async () => {
   const index = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs/index.json')));
-  assert.equal(index.packs.length, 8);
+  assert.equal(index.packs.length, 9);
   const known = new Map(
     current.levelVisuals.map((entry) => {
       const dataUrl = entry.visualOverrides.background.dataUrl;
@@ -508,17 +508,36 @@ test('all eight actual indexed packs fit the unchanged installed-library budget 
   );
   const text = JSON.stringify({ format: 'xonix-pack-library.v1', packs });
   assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
-  assert.ok(Buffer.byteLength(text) <= PACK_LIMITS.libraryBytes);
+  assert.ok(Buffer.byteLength(text) > PACK_LIMITS.libraryBytes);
   let decoded = 0;
-  const installed = await importPackLibrary(text, {
-    decodeImage: async (dataUrl) => {
-      const info = known.get(dataUrl);
-      assert.ok(info, 'Only exact Homeward, Workshop and First Light originals');
-      decoded++;
-      return { naturalWidth: info.width, naturalHeight: info.height };
-    },
-  });
-  assert.equal(decoded, 12); // R2 reuses three originals; each pack validates its own records.
-  assert.equal(installed.packs.length, 8);
-  assert.equal(exportPackLibrary(installed), text);
+  const decodeImage = async (dataUrl) => {
+    const info = known.get(dataUrl);
+    assert.ok(info, 'Only exact Homeward, Workshop and First Light originals');
+    decoded++;
+    return { naturalWidth: info.width, naturalHeight: info.height };
+  };
+  await assert.rejects(importPackLibrary(text, { decodeImage }), /byte budget/);
+  assert.equal(decoded, 0, 'Over-budget libraries fail before image decoding or adoption.');
+  for (const removedId of ['fpv-arcade', 'fpv-arcade-r2']) {
+    const selected = packs.filter((p) => p.id !== removedId);
+    const eight = JSON.stringify({ format: 'xonix-pack-library.v1', packs: selected });
+    assert.ok(Buffer.byteLength(eight) <= PACK_LIMITS.libraryBytes);
+    decoded = 0;
+    const installed = await importPackLibrary(eight, { decodeImage });
+    assert.equal(decoded, 12);
+    assert.equal(installed.packs.length, 8);
+    assert.equal(exportPackLibrary(installed), eight);
+    const omitted = (
+      await preparePack(
+        packs.find((p) => p.id === removedId),
+        { decodeImage },
+      )
+    ).pack;
+    assert.throws(() => installPack(installed, omitted), /byte budget/);
+    assert.equal(
+      exportPackLibrary(installed),
+      eight,
+      'Rejected ninth pack never evicts or changes the installed library.',
+    );
+  }
 });

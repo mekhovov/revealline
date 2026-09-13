@@ -24,6 +24,18 @@ Standard `visualOverrides` keys are exactly `background`, `player`, `enemy`, `pa
 
 Replacing a slot does not rename its behavior, change its contact domain or remove warning/rejoining brackets, dormant outlines, powerup badges or collision-center cues. Enemy overrides are square body images facing upward at zero rotation. Player overrides instead retain their aspect ratio inside the selected rig's source rectangle. Rig recipes and normalized anchors remain independently authored in the motion-lab presets; an image upload does not define a new rig or animation schema. Do not serialize `trail`, `rotors`, `capture`, `actorScale` or `playerScale` as new visual-override roles. Trail/capture refinements use the existing presentation renderer; new configurable primitives require an explicit supported extension.
 
+### Enemy workshop and event feedback (upcoming v0.27)
+
+Read the [enemy catalog guide](../../../../docs/enemy-catalog.md) and `game/enemy-catalog.mjs` before creating another enemy skin. Each of the seven registered types has a distinct original silhouette, fixed role color and non-color badge; custom body images cannot hide that badge or contact core. A catalog `<type>.<theme>.v1` skin is a registered renderer choice, not an arbitrary actor field. Enable/disable choices affect new generator drafts only. They must never silently filter an existing campaign or scored run. The standalone `/authoring/enemy-catalog/` workshop previews choices and opens a separate validated practice study; its release inclusion is an explicit build allowlist gate.
+
+Keep the four pickup glyphs readable on opaque dark plates: heart/life, double-chevron/speed, hourglass/slow and snowflake/freeze. The dark game palette can invert `ink` and `paper`; never assume `palette.ink` is a dark plate. Uploaded pickup artwork retains its colored type badge. Timed labels read world ticks; warnings read the Classic actor clock. Check both clocks while freeze is active.
+
+`effectsFor(events, run)` captures a pickup by immutable ID and a failure/recovery point only from a matching event tick or explicit event x/y. Copy those values immediately, before another fixed substep. A later respawn must not drag the wreck to spawn, and a batched historical event cannot invent an earlier player position. Theme-specific short fragments, pickup labels and recovery cues are cosmetic, bounded to eight queued effects, and cannot award anything. Pause holds effect age; reduced effects keep the explanation without moving fragments. Recovery labels read `respawnAt - time`.
+
+For optional traveling line impacts, draw only the core's current `classic.lineImpact.fronts` positions. `classicView` supplies at most 48 owned markers. Keep both directions distinct and the active cut readable; reduced effects may simplify a seed spark but cannot hide a damaging front. Never derive propagation from animation age, fake an impact by removing a life, or retain fronts after the core clears them.
+
+Add `game/test/enemy-catalog.test.mjs` and `game/test/enemy-catalog-panel.test.mjs` to the affected presentation checks, then inspect actual browser playback. Current geometry/DOM tests establish contracts, not raster quality or physical-controller certification. Use the existing `presentation-02-four-theme-enemies` prompt with the exact catalog type, body slot, fixed badge and compact/detailed treatment in its target brief.
+
 ### Screen size and geometry
 
 The board still paints 16 logical pixels per cell: legacy 48×36 uses 768×576, wide 72×36 uses 1152×576. CSS display size is separate from those logical dimensions and from source-image pixels. Preserve the entire wide arena on portrait displays.
@@ -133,3 +145,7 @@ For each asset/clip record:
 - Remaining defects, unsupported dependencies and any missing runtime/device evidence.
 
 A contact sheet can help inspect silhouettes and frame consistency. It cannot prove a seamless loop, cancellation behavior, timing, responsive performance or input feel. Never describe a generated video of a mockup as evidence that the game itself implements those behaviors.
+
+## Terminal defeat handoff
+
+In the solo game, terminal loss freezes the authoritative run and world motion, then advances only the local `player.failed` feedback for 0.65 rendered seconds before showing Retry/Main menu. The renderer option `defeatEffectsRunning` is true only for this active, focused presentation; it must never advance actors, trails, recovery timers, score or replay input. Each render contributes at most 0.1 seconds. `Show defeat menu` is the explicit skip. Pause/dialog/focus loss holds the cue and fresh confirmation must not leak into Retry. Keep this behavior distinct from nonterminal recovery, which reads actual simulation time. Reduced effects retain the static loss explanation. Labels are `CRAFT LOST` (FPV), `LIFE LOST` (Ukraine/retro), and `LINK LOST` (business), with the consistent life-decrement annotation. Verify all four themes through `game/test/defeat-presentation-host.test.mjs` and retain a real-browser visual check; modeled Canvas commands alone cannot prove the cue is actually readable.

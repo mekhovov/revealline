@@ -173,27 +173,51 @@
           <label>
             Pack
             <select id="landing-pack-select" aria-describedby="landing-pack-status">
-              <option value="homeward-skies">Homeward Skies</option>
+              <option value="fpv-arcade-r3">FPV Front · First Light R3</option>
             </select>
           </label>
           <label>
             Level
             <select id="landing-level-select" aria-describedby="landing-pack-status">
-              <option value="homeward-01">01 · Copper Orchard</option>
+              <option value="orchard-window">01 · Orchard Window</option>
             </select>
           </label>
           <a
             id="landing-pack-play"
             class="button button-primary"
-            href="./game/?pack=homeward-skies&amp;campaign=homeward-skies&amp;level=homeward-01&amp;play=1"
+            href="./game/?pack=fpv-arcade-r3&amp;campaign=fpv-first-light-r3&amp;level=orchard-window&amp;play=1"
             >Install &amp; play <i aria-hidden="true">↗</i></a
           >
           <p id="landing-pack-status" class="launcher-status" role="status">
-            Homeward Skies · Copper Orchard ready to launch.
+            FPV Front · First Light R3 · Orchard Window ready to launch.
           </p>
         </div>
 
         <div class="pack-grid">
+          <article class="pack-card pack-homeward">
+            <div class="pack-art" aria-hidden="true">
+              <span class="pack-moon"></span><span class="pack-land land-a"></span
+              ><span class="pack-land land-b"></span><span class="pack-signal"></span>
+            </div>
+            <div class="pack-body">
+              <div class="pack-meta"><span>03 WIDE MISSIONS</span><span>R3 IMPACTS</span></div>
+              <h3>FPV Front · First Light R3</h3>
+              <p>
+                Travelling trail impacts, eroding ground and timed lanes. Close your cut before a
+                chasing pulse reaches your drone. Reach 65%, 75% and 85% to reveal the original
+                First Light pictures. Each closed cut stops your drone; choose a fresh direction to
+                continue.
+              </p>
+              <div class="pack-footer">
+                <span class="pack-price">INCLUDED</span>
+                <a
+                  href="./game/?pack=fpv-arcade-r3&amp;campaign=fpv-first-light-r3&amp;level=orchard-window&amp;play=1"
+                  aria-label="Install First Light R3 and play Orchard Window"
+                  >Install &amp; play <span aria-hidden="true">↗</span></a
+                >
+              </div>
+            </div>
+          </article>
           <article class="pack-card pack-homeward">
             <div class="pack-art" aria-hidden="true">
               <span class="pack-moon"></span><span class="pack-land land-a"></span
@@ -427,6 +451,7 @@
             >
           </div>
           <p id="version-status" class="version-status" role="status">Loading preserved builds…</p>
+          <a href="./authoring/enemy-catalog/">Enemy workshop · preview, configure and practice</a>
         </div>
       </details>
     </main>

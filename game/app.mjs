@@ -32,6 +32,7 @@ import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
+import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
 import { controllerBindingLabels, controllerStickLabel } from './controller-bindings.mjs';
 import { attachKeySettings } from './ui/key-settings.mjs';
@@ -169,7 +170,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.25.0',
+  let buildVersion = '0.27.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -380,6 +381,9 @@ try {
     completionWarning = '',
     appearanceRewardIds = [],
     celebrationActive = false,
+    defeatActive = false,
+    defeatPaused = false,
+    defeatRemaining = 0,
     sessionBusy = false,
     restoreController = null,
     themeOverride = false,
@@ -677,6 +681,7 @@ try {
     if (dialog) return `modal:${dialog.id}`;
     if (courseBlocked()) return `course:${coursePhase}`;
     if (celebrationActive) return 'celebration';
+    if (defeatActive) return 'defeat-presentation';
     if (run?.status === 'won') return $('show-result').hidden ? 'won' : 'picture';
     if (run?.status === 'lost') return 'lost';
     if (campaignOverview) return `overview:${campaign.id}`;
@@ -692,7 +697,7 @@ try {
       return dialog.querySelector('button:not(:disabled),select:not(:disabled),summary');
     }
     const scope = controllerScope();
-    if (scope === 'celebration') return $('skip-celebration');
+    if (scope === 'celebration' || scope === 'defeat-presentation') return $('skip-celebration');
     if (scope === 'picture') return $('show-result');
     if (scope.startsWith('course:')) return $('overlay-read');
     if (courseSession && scope === 'won')
@@ -706,7 +711,7 @@ try {
     if (dialog) return dialog;
     if (!$('game-overlay').hidden)
       return courseSession ? $('game-overlay').closest('.arena-panel') : $('game-overlay');
-    if (celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
+    if (defeatActive || celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
       return $('arena-shell');
     return document;
   }
@@ -739,7 +744,8 @@ try {
     const scope = controllerScope();
     if (courseBlocked()) return;
     if (scope === 'paused') resume();
-    else if (scope === 'celebration') $('skip-celebration').click();
+    else if (scope === 'celebration' || scope === 'defeat-presentation')
+      $('skip-celebration').click();
     else if (scope === 'picture') $('show-result').click();
     else controllerFocus()?.focus();
   }
@@ -821,6 +827,10 @@ try {
     pause,
     onTransition: () => clearInput({ preserveNavigation: true }),
   });
+  const enemyWorkshopReturn = attachEnemyWorkshopReturn({
+    enabled: practiceSession && !courseSession && !controllerPreviewRequested,
+    onReturn: () => pause(true),
+  });
   handlePageHide = (event) => {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
@@ -849,6 +859,7 @@ try {
       controller.destroy();
       controllerPreview?.destroy();
       practiceNavigation.destroy();
+      enemyWorkshopReturn.dispose();
       courseView?.destroy();
     }
   };
@@ -1164,6 +1175,9 @@ try {
     paused = true;
     sound.pause();
     celebrationActive = false;
+    defeatActive = false;
+    defeatPaused = false;
+    defeatRemaining = 0;
     painter.skipCelebration?.();
     show('skip-celebration', false);
     show('show-result', false);
@@ -1567,7 +1581,17 @@ try {
       operation,
       before,
       () => packs,
-      () => preparePack(source, { library: before }),
+      async () => {
+        try {
+          return await preparePack(source, { library: before });
+        } catch (error) {
+          if (error.message === 'JSON exceeds its byte budget.')
+            throw new Error(
+              'This pack does not fit the installed library’s 48 MiB limit. Export a complete backup in Library, then explicitly remove an older pack and try again. No installed packs were removed.',
+            );
+          throw error;
+        }
+      },
     );
     await replacePackLibrary(installPack(before, prepared.pack), {
       contentSwitchTicket: operation,
@@ -2097,6 +2121,10 @@ try {
     }
   });
   $('skip-celebration').onclick = () => {
+    if (defeatActive) {
+      finishDefeatPresentation();
+      return;
+    }
     painter.skipCelebration?.();
     celebrationActive = false;
     show('skip-celebration', false);
@@ -2578,6 +2606,10 @@ try {
     completionWarning = '';
     appearanceRewardIds = [];
     celebrationActive = false;
+    defeatActive = false;
+    defeatPaused = false;
+    defeatRemaining = 0;
+    $('skip-celebration').textContent = 'Keep picture →';
     sound.reset?.();
     painter.skipCelebration?.();
     show('skip-celebration', false);
@@ -2725,11 +2757,37 @@ try {
     refreshCourse();
     if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
   }
+  function finishDefeatPresentation() {
+    if (!defeatActive) return;
+    defeatActive = false;
+    defeatPaused = false;
+    defeatRemaining = 0;
+    clearInput();
+    show('skip-celebration', false);
+    overlay('lost');
+    warning('Flight ended. Read the details or try again.');
+  }
+  function defeatEffectsRunning() {
+    return (
+      defeatActive && !defeatPaused && !document.hidden && document.hasFocus() && !dialogOpen()
+    );
+  }
+  function advanceDefeatPresentation(dt) {
+    if (!defeatEffectsRunning()) return;
+    defeatRemaining = Math.max(0, defeatRemaining - Math.max(0, Math.min(0.1, dt)));
+    if (defeatRemaining <= 1e-9) finishDefeatPresentation();
+  }
   function pause(force) {
     if (courseBlocked()) {
       clearInput();
       paused = true;
       sound.pause();
+      return;
+    }
+    if (defeatActive) {
+      defeatPaused = true;
+      clearInput();
+      warning('Defeat presentation paused. Choose Show defeat menu when ready.');
       return;
     }
     if (celebrationActive) {
@@ -2754,7 +2812,7 @@ try {
   }
   function refreshHUD() {
     document.body.dataset.flightState =
-      celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+      defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
         : campaignOverview || ['won', 'lost'].includes(run.status)
           ? 'result'
@@ -2798,7 +2856,7 @@ try {
       `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
     $('hangar-button').disabled =
       courseSession || !!courseEntry || campaignOverview || ['won', 'lost'].includes(run.status);
-    $('restart-button').disabled = courseBlocked() || campaignOverview;
+    $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
     $('pause-button').disabled = courseBlocked() || campaignOverview;
     $('save-attempt-button').disabled =
       !started || practice || ['won', 'lost'].includes(run.status);
@@ -2853,6 +2911,10 @@ try {
             'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
         );
+      if (event.type === 'lineImpact.seeded')
+        warning('Line struck! Reach safe ground before the travelling spark catches you.');
+      if (event.type === 'lineImpact.arrived')
+        warning('The travelling impact reached your craft. One life lost.');
       if (event.type === 'shield.absorbed')
         warning('Shield absorbed the hit. Your unfinished line is cancelled; no life lost.');
       if (event.type === 'ability.rejected')
@@ -2910,7 +2972,7 @@ try {
       if (event.type === 'boss.warning')
         warning(`${theme.labels.boss}: the marked lane will activate shortly.`);
     }
-    painter.effectsFor(events);
+    painter.effectsFor(events, run);
   }
   function update(elapsed) {
     if (document.hidden || !document.hasFocus()) {
@@ -3160,8 +3222,15 @@ try {
           show('show-result', false);
           warning('Picture unlocked. A whole world, from one brave line.');
         } else {
-          overlay('lost');
-          warning('Flight ended. Read the details or try again.');
+          defeatActive = true;
+          defeatPaused = false;
+          defeatRemaining = 0.65;
+          show('game-overlay', false);
+          show('show-result', false);
+          $('skip-celebration').textContent = 'Show defeat menu';
+          show('skip-celebration', true);
+          $('skip-celebration').focus({ preventScroll: true });
+          warning('Life lost. Showing the final impact; choose Show defeat menu to continue.');
         }
       }
     } else {
@@ -3249,13 +3318,13 @@ try {
   };
   $('pause-button').onclick = () => pause();
   $('restart-button').onclick = () => {
-    if (campaignOverview || courseBlocked()) return;
+    if (defeatActive || campaignOverview || courseBlocked()) return;
     demo = false;
     prepare();
     resume();
   };
   $('retry-button').onclick = () => {
-    if (courseBlocked()) return;
+    if (defeatActive || courseBlocked()) return;
     demo = false;
     prepare();
     resume();
@@ -3482,7 +3551,9 @@ try {
         fullReveal: run.status === 'won',
         showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
         celebrationPaused: document.hidden || dialogOpen(),
+        defeatEffectsRunning: defeatEffectsRunning(),
       });
+      advanceDefeatPresentation(Math.min(dt, 0.1));
     }
   }
   new Phaser.Game({
@@ -3509,7 +3580,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
-    onFeatured: () => activatePack('fpv-arcade-r2', { campaignId: 'fpv-first-light-r2' }),
+    onFeatured: () => activatePack('fpv-arcade-r3', { campaignId: 'fpv-first-light-r3' }),
   });
   void initializeSoundtrack();
   if (autoplayPackLaunch)
