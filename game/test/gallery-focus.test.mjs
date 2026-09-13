@@ -8,6 +8,7 @@ import { createRun, CLASSES, stepRun, getSummary, FIXED_DT } from '../core/index
 import { dataIdentity } from '../data-json.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { earnedPictureFixture } from './helpers/earned-picture-fixture.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
@@ -994,8 +995,9 @@ test('a trusted Challenge picture keeps its activity label and replay has no cam
 });
 
 const flushGallery = async (condition) => {
-  for (let i = 0; i < 100 && !condition(); i++) await new Promise(setImmediate);
-  assert.equal(condition(), true, 'gallery operation must settle through the observable DOM');
+  await waitFor(() => condition() === true, {
+    message: 'gallery operation must settle through the observable DOM',
+  });
 };
 
 async function managedGallery(t, { removed = false, metadataFailure = false } = {}) {
@@ -1113,13 +1115,18 @@ for (const reopen of [false, true])
     t.after(() => f.manager.close());
     let releaseRead,
       reads = 0;
+    const mediaReads = [];
     const delayed = new Promise((resolve) => {
       releaseRead = resolve;
     });
     const h = await setup(t, 0, {
-      pictureMedia: async () => {
-        if (++reads > 1) await delayed;
-        return { store: f.store, metadata: await f.store.readMetadata() };
+      pictureMedia: () => {
+        const pending = (async () => {
+          if (++reads > 1) await delayed;
+          return { store: f.store, metadata: await f.store.readMetadata() };
+        })();
+        mediaReads.push(pending);
+        return pending;
       },
     });
     h.setLibrary(f.profile);
@@ -1146,7 +1153,8 @@ for (const reopen of [false, true])
     } else h.node('library-dialog').showModal();
     const target = h.document.activeElement;
     releaseRead();
-    for (let i = 0; i < 20; i++) await new Promise(setImmediate);
+    await Promise.all(mediaReads);
+    if (reopen) await flushGallery(() => h.decodeJobs.length === 3);
     assert.equal(h.node('collection-dialog').open, reopen);
     assert.equal(h.document.activeElement, target);
     assert.equal(
