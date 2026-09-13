@@ -1,6 +1,6 @@
 # Live still-picture and recovery prompts
 
-These are copyable prose requests, not new `prompt.py` IDs. The [live host](../../docs/flight-pictures.md), [still workshop](../../docs/still-media-workshop.md), [identity model](../../docs/media-presentation.md) and [shared delivery contract](../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) define implemented APIs. The integrated P5 still source and bounded browser gates pass; frozen/offline/public P5 remain open, and v0.31 remains the verified published milestone. See [current evidence](../../docs/feature-delivery-workflow.md#current-still-integration-evidence). A rendered prompt is not executed asset, browser or recovery evidence.
+These are copyable prose requests, not new `prompt.py` IDs. The [live host](../../docs/flight-pictures.md), [still workshop](../../docs/still-media-workshop.md), [identity model](../../docs/media-presentation.md) and [shared delivery contract](../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) define implemented APIs. The integrated P5 still source and bounded browser gates pass; frozen/offline/public P5 remain open, and v0.32 is the verified published milestone; the still-only v0.33 candidate remains unreleased. See [current evidence](../../docs/feature-delivery-workflow.md#current-still-integration-evidence). A rendered prompt is not executed asset, browser or recovery evidence.
 
 ## 1. Preserve saved A after assigning B
 
