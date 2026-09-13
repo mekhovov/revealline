@@ -404,7 +404,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     1,
   );
   assert.equal(audio.revoked.includes(url), false);
-  const shared = createManagedMediaStore({ indexedDB: db.indexedDB, richStillMedia: true });
+  const shared = createManagedMediaStore({ indexedDB: db.indexedDB, storyMedia: true });
   const reader = createSoundtrackStore({ managedStore: shared });
   assert.equal(
     (await reader.read()).generation,
