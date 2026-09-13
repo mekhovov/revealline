@@ -70,6 +70,8 @@ New presentation records require installed exact contexts. Previously validated,
 
 That retention currently requires the branded **in-memory** `previous` library. After a restart, validating stored/exported JSON with `previous:null` fails if its owning pack is uninstalled; supplying unvalidated JSON as `previous` is also rejected. Future storage adoption must supply a validated historical owner catalog or implement an explicit unavailable-history hydration contract before it can preserve Collection across pack removal and restart. There is no persistent receipt retention or history pruning/garbage collection in this foundation.
 
+The subsequent opt-in [v3 storage slice](media-storage.md) now supplies a separate rich document with fully validated historical owners and byte verification. It can hydrate that document after restart without an installed pack. This does not change the three foundation modules' API or establish earned Collection receipts, host adoption or safe pruning.
+
 ## Image preparation
 
 [`prepareStillAsset(blob, {id, provenance}, {decodeImage, signal})`](../game/media-still.mjs) returns `{asset, blob}` after:
