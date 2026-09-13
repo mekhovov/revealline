@@ -142,10 +142,11 @@ function mergeById(current, incoming, key, label) {
   return [...result.values()];
 }
 function mergedDocument(current, incoming, assignmentMode) {
-  const legacy = new Map(current.legacy.items.map((item) => [item.id, item.sha256]));
-  required(
-    incoming.legacy.items.every((item) => legacy.get(item.id) === item.sha256),
-    'This store cannot adopt the bundle’s retained generic-v2 references. Keep the original file; no data was changed.',
+  const legacy = mergeById(
+    current.legacy.items,
+    incoming.legacy.items,
+    (item) => item.id,
+    'retained generic reference',
   );
   const owners = new Map(
     current.owners.map((owner) => [campaignKey(owner.campaign), structuredClone(owner)]),
@@ -186,7 +187,7 @@ function mergedDocument(current, incoming, assignmentMode) {
       assignments:
         assignmentMode === 'restore' ? incoming.library.assignments : [...assignments.values()],
     },
-    legacy: current.legacy,
+    legacy: { format: current.legacy.format, items: legacy },
   });
   assertStoredStillTransition(current, document);
   return document;

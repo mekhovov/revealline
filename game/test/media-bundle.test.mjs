@@ -555,7 +555,7 @@ test('valid restore preserves the exact separate .rlsound export and original MP
   );
 });
 
-test('retained generic originals export exactly but incompatible targets refuse before mutation', async () => {
+test('retained generic originals round-trip into fresh and matching v2-history stores', async () => {
   const extra = new Blob(['generic source bytes, not an image']),
     hash = sha(await bytes(extra));
   const doc = structuredClone(source.library);
@@ -570,23 +570,23 @@ test('retained generic originals export exactly but incompatible targets refuse 
     await bytes(legacy.assets.find((item) => item.sha256 === hash).blob),
     await bytes(extra),
   );
-  const target = setup();
-  await target.store.read();
-  const before = await savedContents(target.memory);
-  await assert.rejects(
-    prepareMediaBundleRestore(legacy, { store: target.store, decodeImage }),
-    /generic-v2 references/,
-  );
-  assert.deepEqual(await savedContents(target.memory), before);
-  const raw = await prepareManagedMediaBytes(
-    { format: 'revealline-managed-bytes.v1', items: doc.legacy.items },
-    [{ sha256: hash, blob: extra }],
-  );
-  await target.manager.commitDomain('media', raw, { expectedGeneration: 0 });
-  const review = await prepareMediaBundleRestore(legacy, { store: target.store, decodeImage });
-  await commitMediaBundleRestore(review);
-  assert.deepEqual((await target.store.read()).document.legacy, doc.legacy);
-  assert.deepEqual(await bytes(await target.store.readBlob(hash)), await bytes(extra));
+  for (const matching of [false, true]) {
+    const target = setup();
+    await target.store.read();
+    if (matching) {
+      const raw = await prepareManagedMediaBytes(
+        { format: 'revealline-managed-bytes.v1', items: doc.legacy.items },
+        [{ sha256: hash, blob: extra }],
+      );
+      await target.manager.commitDomain('media', raw, { expectedGeneration: 0 });
+    }
+    const before = await savedContents(target.memory);
+    const review = await prepareMediaBundleRestore(legacy, { store: target.store, decodeImage });
+    assert.deepEqual(await savedContents(target.memory), before);
+    await commitMediaBundleRestore(review);
+    assert.deepEqual((await target.store.read()).document.legacy, doc.legacy);
+    assert.deepEqual(await bytes(await target.store.readBlob(hash)), await bytes(extra));
+  }
 });
 
 test('valid unused owner records are retained exactly without granting installed contexts', async () => {
