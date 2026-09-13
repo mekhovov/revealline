@@ -18,6 +18,7 @@ import {
 } from './capture.mjs';
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
+import { arcadeCommand } from './arcade-actions.mjs';
 import { switchClass, updateSignal, challengeContact } from './systems.mjs';
 import { updateEncounter, canReleaseIsolated } from './encounter.mjs';
 import { CLASSIC_EFFECTS, classicEffectActive } from './classic-state.mjs';
@@ -398,6 +399,7 @@ function world(state, input, hooks) {
 }
 
 export function stepClassic(state, input, hooks) {
+  input = arcadeCommand(state.level, input);
   state.tick++;
   const endTime = state.time + FIXED_DT;
   state.classic.tickClaims = [];

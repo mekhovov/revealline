@@ -177,7 +177,7 @@ function backupStore(before) {
 }
 
 for (const source of oldProfiles)
-  test(`${source.version} omission migrates only the new preference and leaves raw storage untouched`, () => {
+  test(`${source.version} omitted preferences migrate to explicit defaults and leave raw storage untouched`, () => {
     assert.equal(sha(source.profileText), source.profileSha256);
     const old = JSON.parse(source.profileText),
       text = JSON.stringify(old);
@@ -194,6 +194,7 @@ for (const source of oldProfiles)
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
       textSize: 'standard',
+      screenControls: 'auto',
     });
     for (const name of ['campaigns', 'gallery', 'scores', 'masteries'])
       assert.deepEqual(migrated[name], old[name] ?? []);

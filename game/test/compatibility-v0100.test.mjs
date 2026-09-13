@@ -80,12 +80,15 @@ test('v0.10 profile export, chapter continuation, rewards and campaign identity 
       bodyId: 'fpv-body',
       completedAt: '2026-09-12T12:00:00.000Z',
     });
-  // The optional input preference migrates forward; every older field stays exact.
+  // Optional preferences migrate forward; every older field stays exact.
   for (const exported of [
     exportLibrary(library),
     exportLibrary(importLibrary(fixture.library, { campaigns: [campaign] })),
   ]) {
     const owned = JSON.parse(exported);
+    assert.equal(Object.hasOwn(owned.preferences, 'screenControls'), true);
+    assert.equal(owned.preferences.screenControls, 'auto');
+    delete owned.preferences.screenControls;
     assert.equal(Object.hasOwn(owned.preferences, 'textSize'), true);
     assert.equal(owned.preferences.textSize, 'standard');
     delete owned.preferences.textSize;

@@ -4,6 +4,10 @@ The application uses a browser-independent ES-module simulation with Phaser pres
 
 Run `npm run dev`, then open [solo play](http://127.0.0.1:8768/game/), [couch race](http://127.0.0.1:8768/game/couch/), [Replay Theater](http://127.0.0.1:8768/game/replay-theater/), [the playground](http://127.0.0.1:8768/game/playground/) or [Controller practice](http://127.0.0.1:8768/game/controller-lab/). Refresh after source edits; the server has no bundler or hot reload. It serves GET/HEAD and correct MIME types, refusing hidden files, traversal and symbolic links. It provides no upload endpoint or application backend.
 
+## Current correction
+
+The frozen, independently verified v0.29 release implements [device-aware controls and Arcade R4](device-controls.md) and the [native boot/entry contract](boot-launch.md). Its [verification record](verification/round-38/v029-release.md) separates source, frozen and public gates. The v0.28 deployment has since completed through merged PR#3 and successful Pages run34733239863; its exact public artifact passed974 files.
+
 ## Verified v0.28 development milestone
 
 v0.28.0 is frozen from `f79f3c56b0a3cd88ca4e98b7f31689398523da74`. All six exact-source gates and **2,311 tests** pass; the independent artifact and offline inventory checks pass. It includes the compact pause dock, Field Guide, Standard/Large text, optional-chapter errors and direct Picture collection menu entry. See [release verification](verification/round-37/v028-release.md). Public delivery remains a separate step: [PR #3](https://github.com/mekhovov/revealline/pull/3) is under CI review at this documentation handoff, and the [GitHub Release delivery record](https://github.com/mekhovov/revealline/releases/tag/v0.28.0) is the place for final merge, Pages and public-byte evidence. Follow the [shared delivery workflow](feature-delivery-workflow.md); frozen does not mean publicly deployed.

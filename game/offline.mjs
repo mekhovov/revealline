@@ -4,7 +4,7 @@ const MARKER = 'meta[name="revealline-offline"]';
 function optionalNote(config) {
   const packs = config.optionalPacks;
   if (!Array.isArray(packs) || !packs.length) return '';
-  return ` ${packs.map((pack) => pack.name).join(', ')} is optional: install once while online to keep playing it offline. Already-installed packs remain in device storage; keep a complete backup.`;
+  return ` ${packs.map((pack) => pack.name).join(', ')} ${packs.length === 1 ? 'is' : 'are'} optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.`;
 }
 function configFromPage(documentRef = globalThis.document, locationRef = globalThis.location) {
   const marker = documentRef?.querySelector(MARKER)?.content;

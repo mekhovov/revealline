@@ -1,3 +1,5 @@
+import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
+import { nextInputModality, showScreenControls } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
@@ -117,14 +119,22 @@ const timeLabel = (time) =>
 
 try {
   let attemptFiles = null;
-  const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource] = await Promise.all([
-    getJSON('content/campaign.json'),
-    getJSON('content/themes.json'),
-    getJSON('../authoring/motion-lab/presets.json'),
-    getJSON('content/classes.json'),
-    getJSON('content/packs/catalog.json'),
-  ]);
-  const packCatalog = preparePackCatalog(packCatalogSource);
+  const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
+    await Promise.all([
+      getJSON('content/campaign.json'),
+      getJSON('content/themes.json'),
+      getJSON('../authoring/motion-lab/presets.json'),
+      getJSON('content/classes.json'),
+      getJSON('content/packs/catalog.json'),
+      getJSON('content/packs/archive-catalog.json'),
+    ]);
+  const packCatalog = preparePackCatalog({
+    ...packCatalogSource,
+    packs: [
+      ...preparePackCatalog(packCatalogSource).packs,
+      ...preparePackCatalog(archiveCatalogSource).packs,
+    ],
+  });
   let campaign = baseCampaign,
     classRegistry = baseClasses;
   campaign.classRecipes = classRegistry;
@@ -172,7 +182,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.28.0',
+  let buildVersion = '0.29.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -652,7 +662,8 @@ try {
   }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
-    return `Tap a direction to fly. ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.pause} pause.`;
+    const actions = arcadeActionCapabilities(run?.level);
+    return `Tap a direction to fly. ${actions.manualAbility ? `${b.ability} ability · ` : ''}${actions.manualPickup && run?.ability.capacity ? `${b.pickup} supply · ` : ''}${actions.manualBoost ? `${b.boost} boost · ` : ''}${run?.hangars?.length ? `${b.hangar} hangar · ` : ''}${b.pause} pause.${actions.manualAbility ? '' : ' Collect bonuses by contact.'}`;
   }
   function refreshControllerPrompts() {
     controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
@@ -670,7 +681,10 @@ try {
       $('controller-boost-cue'),
       controller.boostState(),
       controllerLabels.flight.boost,
-      !!controllerFrame?.assigned && controllerScope() === 'flight' && run?.status === 'running',
+      !!controllerFrame?.assigned &&
+        controllerScope() === 'flight' &&
+        run?.status === 'running' &&
+        arcadeActionCapabilities(run?.level).manualBoost,
     );
   }
   function adoptControllerBoostMode({ force = false } = {}) {
@@ -778,6 +792,23 @@ try {
       refreshControllerBoostCue();
     },
   });
+  function setInputModality(mode) {
+    if (document.body.dataset.inputMode === mode) return;
+    if (mode === 'controller') input.releaseLocalControls();
+    else input.clearPhysical();
+    document.body.dataset.inputMode = mode;
+    refreshInputPresentation();
+  }
+  function refreshInputPresentation() {
+    const visible = showScreenControls({
+      preference: library.preferences.screenControls,
+      modality: document.body.dataset.inputMode,
+      scope: controllerScope(),
+      running: run?.status === 'running',
+    });
+    const next = visible ? 'shown' : 'hidden';
+    if (document.body.dataset.screenControls !== next) document.body.dataset.screenControls = next;
+  }
   controllerNavigation = attachControllerNavigation({
     getScope: controllerScope,
     getRoot: controllerMenuRoot,
@@ -798,8 +829,7 @@ try {
         '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
       ),
     onNativeInput: (event) => {
-      document.body.dataset.inputMode =
-        event.type === 'keydown' ? 'keyboard' : event.pointerType === 'touch' ? 'touch' : 'pointer';
+      setInputModality(nextInputModality(document.body.dataset.inputMode, event));
       if (controllerScope() !== 'flight') controller.clear();
     },
     onBack: controllerBack,
@@ -920,7 +950,8 @@ try {
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
+    const actions = arcadeActionCapabilities(run?.level);
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${actions.manualPickup && run?.ability.capacity ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${run?.hangars?.length ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -939,7 +970,7 @@ try {
       button.title = `Move ${button.dataset.move} · ${labels[button.dataset.move]}`;
     if (!started && !campaignOverview)
       $('overlay-footnote').textContent =
-        `Move with your configured keys · ${labels.ability} ability · ${labels.pickup} supply · touch controls below`;
+        `Tap a direction to fly. ${actions.manualAbility ? 'Equipment controls are in How to play.' : 'Bonuses activate on contact.'} ${labels.pause} pauses.`;
   }
   const keySettings = attachKeySettings({
     continuousSteering: true,
@@ -2273,6 +2304,12 @@ try {
     preferences({ style: $('terrain-select').value });
     setTheme();
   };
+  $('screen-controls').onchange = () => {
+    clearInput();
+    preferences({ screenControls: $('screen-controls').value });
+    syncAssistControls();
+    refreshInputPresentation();
+  };
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
   function refreshTextSize() {
     const size = library.preferences.textSize;
@@ -2283,6 +2320,7 @@ try {
   function syncAssistControls() {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
+    $('screen-controls').value = library.preferences.screenControls;
   }
   for (const id of ['reduced-effects', 'settings-reduced-effects']) {
     $(id).onchange = () => {
@@ -2466,7 +2504,25 @@ try {
     const recipe =
       run?.classRecipe || (scenario?.classRecipes || classRegistry).find((c) => c.id === classId);
     $('class-description').textContent = recipe.description;
-    $('action-button').firstChild.textContent = `${recipe.label} `;
+    const actions = arcadeActionCapabilities(run?.level);
+    $('action-button').firstChild.textContent = `${recipe.id === 'scout' ? 'Scan' : recipe.label} `;
+    show('action-button', actions.manualAbility);
+    show(
+      'pickup-button',
+      actions.manualPickup && !!run?.ability.capacity && !!run?.supplies?.length,
+    );
+    show('boost-button', actions.manualBoost);
+    show('screen-boost-setting', actions.manualBoost);
+    show('controller-boost-setting', actions.manualBoost);
+    show('ability-state', actions.manualAbility);
+    $('equipment-help').textContent = actions.manualAbility
+      ? 'This edition uses manual equipment. Scout Scan reveals nearby objectives and briefly shows enemy direction hints. Supply refills charge-based craft at supply pads. Boost increases speed without making you invulnerable. Field bonuses activate on contact.'
+      : 'Arcade: steer and close lines. The map sets your craft and flight speed; bonuses activate on contact. There is no manual Scan, Supply or Boost. Completing missions unlocks the next challenge and picture.';
+    $('line-danger-help').textContent = run?.level.classic?.lineImpact
+      ? 'An enemy striking your unfinished line sends impacts along it in both directions. Close the cut before an impact reaches your craft to escape. Direct collisions, lethal terrain and crossing your own line can still cost a life.'
+      : 'A field enemy touching your unfinished line, or crossing your own line, costs a life. Border patrols can hit you on captured edges.';
+    refreshKeyPrompts();
+    refreshControllerPrompts();
     $('class-select').value = classId;
     $('turn-select').value = turnPolicy;
   }
@@ -2921,6 +2977,8 @@ try {
     $('hangar-button').disabled =
       courseSession || !!courseEntry || campaignOverview || ['won', 'lost'].includes(run.status);
     $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
+    $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
+    refreshInputPresentation();
     $('pause-button').disabled = courseBlocked() || campaignOverview;
     $('save-attempt-button').disabled =
       !started || practice || ['won', 'lost'].includes(run.status);
@@ -3055,6 +3113,7 @@ try {
       return;
     }
     enemyGuide?.update(elapsed, { reduced: $('reduced-effects').checked });
+    refreshInputPresentation();
     const scope = controllerScope();
     controllerFrame = controller.sample({
       scope,
@@ -3070,7 +3129,7 @@ try {
       (flightModality !== lastControllerModality &&
         Object.values(controllerFrame.flight).some(Boolean))
     )
-      document.body.dataset.inputMode = 'controller';
+      setInputModality('controller');
     lastControllerModality = flightModality;
     if (status.message !== controllerStatus) {
       controllerStatus = status.message;
@@ -3390,6 +3449,7 @@ try {
   $('pause-button').onclick = () => pause();
   $('restart-button').onclick = () => {
     if (defeatActive || campaignOverview || courseBlocked()) return;
+    if ($('shell-home').open) $('shell-home').close();
     demo = false;
     prepare();
     resume();
@@ -3609,6 +3669,8 @@ try {
       this.game.canvas.setAttribute('aria-hidden', 'true');
     }
     update(now, delta) {
+      if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
+        return;
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
       const { width, height } = boardPaintSizeForRun(run);
@@ -3658,7 +3720,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
-    onFeatured: () => activatePack('fpv-arcade-r3', { campaignId: 'fpv-first-light-r3' }),
+    onFeatured: () => activatePack('fpv-arcade-r4', { campaignId: 'fpv-first-light-r4' }),
   });
   void initializeSoundtrack();
   if (autoplayPackLaunch)
@@ -3683,7 +3745,18 @@ try {
       )
         resume({ contentSwitchTicket: autoplayPackLaunch.ticket });
     });
+  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
+  else {
+    document.querySelectorAll('[data-boot-inert]').forEach((element) => {
+      element.inert = false;
+      element.removeAttribute('aria-busy');
+    });
+    $('boot-status').hidden = true;
+  }
+  controllerReading?.refresh();
+  controllerFocus()?.focus({ preventScroll: true });
 } catch (error) {
+  globalThis.RevealLineBoot?.fail(error);
   $('overlay-title').textContent = 'The game could not load.';
   $('overlay-copy').textContent = error.message;
   show('start-button', false);
@@ -3693,10 +3766,4 @@ try {
       ? 'Open the Playground and choose Play configuration, or use REVEAL / LINE to return to campaign.'
       : 'Serve the project through HTTP and check the content files. Your saved progress is unchanged.';
   console.error(error);
-} finally {
-  document.querySelectorAll('[data-boot-inert]').forEach((element) => {
-    element.inert = false;
-    element.removeAttribute('aria-busy');
-  });
-  $('boot-status').hidden = true;
 }

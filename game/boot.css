@@ -1,0 +1,163 @@
+@font-face {
+  font-family: 'Reveal Launch';
+  src: url('./ui/fonts/pixelify-sans/PixelifySans.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+/* The inline head guard covers missing CSS and the first paint. These rules
+   style only the launch surface; they never resize or recolor a live arena. */
+html:not([data-boot-state='ready']) body {
+  height: auto !important;
+  min-height: 100svh;
+  overflow: auto !important;
+}
+#boot-screen.launch-screen {
+  position: relative;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100svh;
+  padding: max(24px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right))
+    max(24px, env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  background: #070914;
+  color: #edf2ff;
+  font:
+    20px/1.4 'Reveal Launch',
+    monospace;
+}
+#boot-screen .launch-card {
+  width: min(100%, 620px);
+  margin: auto;
+  box-sizing: border-box;
+  padding: clamp(20px, 5vw, 40px);
+  border: 2px solid #293f66;
+  box-shadow: 8px 8px 0 #02040c;
+  background: #0c1223;
+}
+#boot-screen .launch-kicker {
+  margin: 0 0 28px;
+  color: #68d9fa;
+  font: inherit;
+  letter-spacing: 0.12em;
+}
+#boot-screen h1 {
+  margin: 24px 0 16px;
+  color: #edf2ff;
+  font:
+    700 clamp(32px, 8vw, 52px) / 1 'Reveal Launch',
+    monospace;
+  text-transform: none;
+  letter-spacing: 0;
+}
+#boot-screen .launch-status {
+  position: static;
+  margin: 0 0 24px;
+  color: #bccde9;
+  font: inherit;
+}
+#boot-screen .launch-signal {
+  display: flex;
+  align-items: end;
+  gap: 6px;
+  width: fit-content;
+  border-bottom: 3px solid #68d9fa;
+  padding: 0 4px 7px;
+}
+#boot-screen .launch-signal i {
+  display: block;
+  width: 12px;
+  height: 12px;
+  background: #68d9fa;
+}
+#boot-screen .launch-signal i:nth-child(2) {
+  height: 22px;
+}
+#boot-screen .launch-signal i:nth-child(3) {
+  height: 32px;
+}
+#boot-screen .launch-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+#boot-screen .launch-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 18px;
+  box-sizing: border-box;
+  border: 2px solid #68d9fa;
+  background: #14283c;
+  color: #edf2ff;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+}
+#boot-screen a {
+  color: #8de6ff;
+}
+#boot-screen a:focus-visible,
+#boot-screen summary:focus-visible {
+  outline: 3px solid #ffdd70;
+  outline-offset: 4px;
+  background: #253347;
+}
+#boot-screen .launch-help {
+  margin-top: 24px;
+  border-top: 1px solid #293f66;
+  padding-top: 12px;
+  color: #afc2e0;
+  font-size: 18px;
+}
+#boot-screen .launch-help summary {
+  min-height: 44px;
+  align-content: center;
+  color: #edf2ff;
+  cursor: pointer;
+}
+#boot-screen .launch-help p {
+  margin: 12px 0;
+}
+#boot-screen code {
+  font: 16px/1.5 monospace;
+  overflow-wrap: anywhere;
+}
+#boot-screen .launch-command {
+  display: block;
+  padding: 12px;
+  border-left: 3px solid #68d9fa;
+  background: #050914;
+  user-select: all;
+}
+#boot-screen .launch-detail,
+#boot-screen .launch-notice {
+  margin: 20px 0 0;
+  color: #ffca83;
+  font-size: 18px;
+}
+#boot-screen .launch-detail {
+  font-family: monospace;
+  font-size: 14px;
+}
+#boot-screen[hidden],
+#boot-screen [hidden] {
+  display: none !important;
+}
+@media (max-width: 420px) {
+  #boot-screen.launch-screen {
+    padding: 16px;
+  }
+  #boot-screen .launch-card {
+    padding: 20px;
+  }
+  #boot-screen .launch-action {
+    width: 100%;
+  }
+}

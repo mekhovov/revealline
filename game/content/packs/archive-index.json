@@ -1,0 +1,17 @@
+{
+  "format": "xonix-pack-index.v1",
+  "packs": [
+    {
+      "id": "fpv-arcade-r3",
+      "path": "fpv-arcade-r3.json"
+    },
+    {
+      "id": "fpv-arcade-r2",
+      "path": "fpv-arcade-r2.json"
+    },
+    {
+      "id": "fpv-arcade",
+      "path": "fpv-arcade.json"
+    }
+  ]
+}

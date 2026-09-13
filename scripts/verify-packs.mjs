@@ -6,6 +6,8 @@ import { resolve } from 'node:path';
 import { findRoute, replayProof, digest } from './verify-campaign.mjs';
 import { verifyFpvR2Proof } from './verify-fpv-r2.mjs';
 import { verifyFpvR3Proof } from './verify-fpv-r3.mjs';
+import { verifyFpvR4Proof } from './verify-fpv-r4.mjs';
+import { readPackIndexes, readPackJSON } from './pack-indexes.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
 import {
   validatePack,
@@ -28,6 +30,7 @@ const encounterProofFile = new URL('game/replays/sentinel-routes.json', root);
 const wideProofFile = new URL('game/replays/first-light-routes.json', root);
 const r2ProofFile = new URL('game/replays/fpv-arcade-r2-routes.json', root);
 const r3ProofFile = new URL('game/replays/fpv-arcade-r3-routes.json', root);
+const r4ProofFile = new URL('game/replays/fpv-arcade-r4-routes.json', root);
 const impactDemoFile = new URL('game/content/scenarios/line-impact-demo.json', root);
 // Indexed source includes on-demand editions that cannot all be installed together.
 // This read-only tooling bound does not change PACK_LIMITS.libraryBytes (48 MiB).
@@ -43,13 +46,33 @@ const proofCopy = (value) =>
     maxArray: 20000,
     maxString: 4096,
   });
-export async function expansionSources() {
-  const index = JSON.parse(await readFile(new URL('game/content/packs/index.json', root), 'utf8'));
-  return Promise.all(
-    index.packs.map(async (entry) =>
-      JSON.parse(await readFile(new URL(`game/content/packs/${entry.path}`, root), 'utf8')),
-    ),
+/** Historical proof context stays below 64 MiB. R4 is independently verified
+ * with R3 authority; never combine all artwork into an over-budget request. */
+export async function expansionSources({
+  scope = 'historical',
+  sourceRoot = fileURLToPath(root),
+} = {}) {
+  required(['historical', 'arcade'].includes(scope), 'Unknown expansion proof source scope.');
+  const index = await readPackIndexes(sourceRoot);
+  const refs = index.all.filter((entry) =>
+    scope === 'historical'
+      ? entry.id !== 'fpv-arcade-r4'
+      : ['fpv-arcade-r4', 'fpv-arcade-r3'].includes(entry.id),
   );
+  const packs = [];
+  let bytes = 2; // The JSON array brackets, then each owned pack and separator.
+  for (const entry of refs) {
+    const { value: pack } = await readPackJSON(
+      sourceRoot,
+      `game/content/packs/${entry.path}`,
+      PACK_LIMITS.maxBytes,
+    );
+    required(pack.id === entry.id, 'Indexed proof source ID differs.');
+    bytes += Buffer.byteLength(JSON.stringify(pack)) + (packs.length ? 1 : 0);
+    required(bytes <= INDEXED_SOURCE_BYTES, 'Expansion proof batch exceeds its byte budget.');
+    packs.push(pack);
+  }
+  return packs;
 }
 export async function verifyExpansionRoutes() {
   const packs = await expansionSources(),
@@ -66,7 +89,7 @@ export async function verifyExpansionRoutes() {
     hasR3 = packs.some((pack) => pack.id === 'fpv-arcade-r3'),
     r3Proof = hasR3 ? JSON.parse(await readFile(r3ProofFile, 'utf8')) : null,
     impactDemo = hasR3 ? JSON.parse(await readFile(impactDemoFile, 'utf8')) : null;
-  return verifyExpansionProofs({
+  const historical = verifyExpansionProofs({
     packs,
     proof,
     encounterProof,
@@ -75,6 +98,39 @@ export async function verifyExpansionRoutes() {
     r3Proof,
     impactDemo,
   });
+  const index = await readPackIndexes(fileURLToPath(root));
+  const coveredPacks = new Set(packs.map((pack) => pack.id));
+  if (index.all.some((entry) => entry.id === 'fpv-arcade-r4')) {
+    const arcade = await expansionSources({ scope: 'arcade' });
+    const pack = arcade.find((item) => item.id === 'fpv-arcade-r4');
+    const prior = arcade.find((item) => item.id === 'fpv-arcade-r3');
+    required(
+      coveredPacks.has('fpv-arcade-r3') && prior && r3Proof,
+      'R4 requires completed historical R3 proof authority.',
+    );
+    required(
+      digest(prior) === digest(packs.find((item) => item.id === prior.id)),
+      'R3 authority changed between proof batches.',
+    );
+    const r4Proof = JSON.parse(await readFile(r4ProofFile, 'utf8'));
+    const checked = verifyFpvR4Proof({ pack, prior, priorProof: r3Proof, proof: r4Proof });
+    required(checked.routes.length === 12, 'Incomplete R4 proof.');
+    const standard = r4Proof.routes.filter((route) => route.difficulty === 'standard');
+    const gentle = r4Proof.routes.filter((route) => route.difficulty === 'gentle');
+    required(standard.length === 6 && gentle.length === 6, 'Incomplete R4 difficulty coverage.');
+    historical.results.push(...standard.map((route) => route.expected));
+    historical.supplementalGentleResults ??= [];
+    historical.supplementalGentleResults.push(...gentle.map((route) => route.expected));
+    historical.verified = historical.results.length;
+    historical.supplementalGentleVerified = historical.supplementalGentleResults.length;
+    coveredPacks.add(pack.id);
+  }
+  required(
+    coveredPacks.size === index.all.length &&
+      index.all.every((entry) => coveredPacks.has(entry.id)),
+    'Incomplete indexed expansion batch coverage.',
+  );
+  return historical;
 }
 
 /** Owned proof data; verify one outcome per exact indexed pack/campaign/map/policy.
@@ -498,6 +554,7 @@ export function assertDiscoverySupported(packs) {
 async function discover() {
   const packs = await expansionSources(),
     routes = [];
+  assertDiscoverySupported(await expansionSources({ scope: 'arcade' }));
   assertDiscoverySupported(packs);
   let examined = 0,
     simulatedTicks = 0;

@@ -1,5 +1,7 @@
 # Earlier release evidence
 
+v0.29.0 frozen and independently verified (2,355 tests): [native entry and device-aware Arcade controls](device-controls.md), versioned automatic-pickup First Light R4, optional historical editions and preserved old replay authority. [Verification/delivery record](verification/round-38/v029-release.md).
+
 These notes retain the scoped results recorded for releases through v0.17.1. Current availability is described in the [project guide](../README.md) and [public-release guide](public-release.md). Each frozen version keeps its own source and evidence; later fixes do not change earlier results.
 
 v0.17.1 repairs offline installation while retaining [Equipment Workshop 1.1.0](equipment-workshop.md)'s three illustrated rewards: **Garden of Threads**, **Neon Switchboard** and **Clear Ledger**. Installing that edition updates previously collected pictures without changing campaign progress, scores, equipment seals or map rules. Static PNGs remain separate from theme celebrations; the [authored-art workflow](authored-art.md) preserves originals and prompts. The optional [First Flight course](first-flight.md)—**Close a line**, **Find the empty side**, **Bring the picture home**—adds three separate, non-awarding lessons.

@@ -32,9 +32,10 @@ const base = await json('../content/campaign.json');
 base.classRecipes = await json('../content/classes.json');
 const baseline = await json('./fixtures/compatibility-v060.json');
 const index = await json('../content/packs/index.json');
+const archiveIndex = await json('../content/packs/archive-index.json');
 const campaigns = [base],
   packs = [];
-for (const entry of index.packs) {
+for (const entry of [...index.packs, ...archiveIndex.packs]) {
   const source = await json(`../content/packs/${entry.path}`);
   // Artwork decoding is a separate transport test; keep every gameplay field.
   source.visualOverrides = {};
@@ -61,7 +62,7 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
   assert.deepEqual(CAMPAIGN_DIFFICULTIES, ['standard', 'gentle']);
   assert.equal(
     campaigns.reduce((n, c) => n + c.levels.length, 0),
-    38,
+    41,
   );
   for (const campaign of campaigns) {
     const before = canonicalJSON(campaign),

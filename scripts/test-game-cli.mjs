@@ -7,6 +7,7 @@ import { request } from 'node:http';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { generatePackCatalogs } from './generate-pack-catalogs.mjs';
 import {
   buildProject,
   collectBuildFiles,
@@ -134,6 +135,14 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     new URL('./game-cli.mjs', import.meta.url),
     path.join(scripts, 'build-implementation.mjs'),
   );
+  // Archive the implementation's real metadata dependencies too. No module may
+  // resolve back into the current working tree during the frozen build.
+  for (const relative of [
+    'scripts/pack-indexes.mjs',
+    'game/data-json.mjs',
+    'game/content-launch.mjs',
+  ])
+    await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
   // Retain the historical argv/URL guard in the archived entry. The real build
   // implementation runs behind it, so fixing only the current entry guard would
   // still fail this old-revision snapshot when TMPDIR contains a symlink.
@@ -787,6 +796,8 @@ test('optional offline policy rejects non-pack, unknown, duplicate, unsafe, miss
     'game/app.mjs',
     ['game/app.mjs'],
     ['game/content/packs/index.json'],
+    ['game/content/packs/archive-index.json'],
+    ['game/content/packs/archive-catalog.json'],
     ['game/content/packs/missing.json'],
     ['game/content/packs/../night-shift.json'],
     [...config.optionalOffline, ...config.optionalOffline],
@@ -803,6 +814,44 @@ test('optional offline policy rejects non-pack, unknown, duplicate, unsafe, miss
   await setConfig(config);
   await fs.rm(path.join(root, config.optionalOffline[0]));
   await assert.rejects(readBuildConfig(root));
+});
+test('archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache', async (t) => {
+  const { root, out, config } = await optionalPackFixture(t);
+  const folder = path.join(root, 'game/content/packs');
+  await fs.rename(path.join(folder, 'index.json'), path.join(folder, 'archive-index.json'));
+  await fs.writeFile(
+    path.join(folder, 'index.json'),
+    JSON.stringify({ format: 'xonix-pack-index.v1', packs: [] }),
+  );
+  await generatePackCatalogs({ root, write: true });
+  assert.deepEqual((await readBuildConfig(root)).optionalOffline, config.optionalOffline);
+  await buildProject({ root, out });
+  const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
+  const name = config.optionalOffline[0];
+  assert.equal(
+    cache.files.some((file) => file.path === name),
+    false,
+  );
+  assert.deepEqual(
+    await fs.readFile(path.join(out, name)),
+    await fs.readFile(path.join(root, name)),
+  );
+  for (const metadata of [
+    'index.json',
+    'catalog.json',
+    'archive-index.json',
+    'archive-catalog.json',
+  ])
+    assert.ok(cache.files.some((file) => file.path === `game/content/packs/${metadata}`));
+  const before = await fs.readFile(path.join(out, 'manifest.json'));
+  const archived = JSON.parse(await fs.readFile(path.join(folder, 'archive-catalog.json')));
+  archived.packs[0].campaigns[0].levels[0].name = 'Incorrect archived map';
+  await fs.writeFile(path.join(folder, 'archive-catalog.json'), JSON.stringify(archived));
+  await assert.rejects(buildProject({ root, out }), /catalog differs/);
+  assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
+  await fs.rm(path.join(folder, 'archive-catalog.json'));
+  await assert.rejects(buildProject({ root, out }));
+  assert.deepEqual(await fs.readFile(path.join(out, 'manifest.json')), before);
 });
 test('declaring an optional pack does not relax the 64 MiB core cache budget', async (t) => {
   const { root, out } = await optionalPackFixture(t);

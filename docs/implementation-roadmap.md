@@ -2,6 +2,30 @@
 
 Approved for implementation on 2026-09-12. This is the execution register for the user's **RevealLine — revised implementation plan**. It supersedes the earlier proposed roadmaps; historical release documents describe their original editions. All earlier versions remain immutable. v0.28.0 is frozen and independently verified. The [GitHub Release delivery record](https://github.com/mekhovov/revealline/releases/tag/v0.28.0) tracks its separate public deployment gate; source verification and public delivery are distinguished below.
 
+
+## Current priority — v0.29 device controls and game entry
+
+This feedback correction takes priority before further roadmap implementation. v0.29 is frozen and independently verified:2,355 tests pass. P7.6 below separates the public delivery gate; its linked GitHub Release receipt is authoritative after deployment. The v0.28 delivery is complete: PR #3 merged, Pages run34733239863 succeeded, and all974 public files/205,661,769 bytes matched the staged artifact. Its original handoff reports remain historical snapshots.
+
+| Step | Priority | Status | Outcome / completion evidence |
+| --- | --- | --- | --- |
+| P1.8 | Critical | Complete | Contextual touch pad with fixed cardinal positions, no desktop toolbar, explicit mouse override, menu-owned utilities; [device contract](device-controls.md) and actual-host/browser checks |
+| P1.9 | Critical | Complete | Native root-to-title entry, independent loading/error screen, direct-file explanation, separate About/archive; [boot contract](boot-launch.md) |
+| P4.6 | Critical | Complete | First Light R4 ignores manual equipment at fixed-tick authority; authored pace and contact pickups;12 direction-only legal wins; all old editions retained |
+| P7.6 | Critical | Verification | Exact source gates → immutable v0.29 → reviewed PR/merge → Pages deployment → exact public-byte audit; [delivery record](verification/round-38/v029-release.md) |
+
+**Remaining priorities for review after v0.29:**
+
+1. **P3 — finish music qualification.** Real `.rlsound` download → fresh-origin reimport/save → exact-byte backup → stopped-server offline playback. Complete ordered/shuffled/mixed playlists and interruptions. Actual MP3 upload, natural MP3-to-synth transition and earlier offline playback already exist.
+2. **P4 — authored Tactical scenarios.** Make Scout discovery, supply/charges, carrier objectives, interference/fiber, interception/nets and class switching meaningful on selected maps. Preserve the simpler Arcade default. Demonstration/proof for each advertised role; no empty ability buttons or automatic effects without an authored purpose.
+3. **P5 — images and victory stories.** Qualify opt-in shared storage; admin image replacement; video/GIF upload, scrub/select poster frame, optional skippable story playback, Collection replay, media-inclusive export/import and offline recovery. This reward pipeline precedes bulk production.
+4. **P6 — full campaign and content.**29 authored wide maps,116 unique map/theme pictures,12 stories,40 reserve illustrations,56 character presentation sets and24 finished/auditioned tracks. The current three reused FPV pictures and procedural music do not meet these totals. Continue Ukrainian FPV, Ukrainian heritage,80s/90s and Coupa themes.
+5. **P7 — public product qualification.** Real phone/tablet/controller/handheld journeys; performance/memory/offline/compatibility support matrix; human challenge, readability and replay-value assessment. Current deployable builds are playtest releases, not a claim that the full product gate is complete.
+6. **P8 — native iPhone/macOS/Steam.** Complete wrappers, lifecycle, files/audio/controllers, packaging/signing and individual store/device gates. Repair the isolated iOS tooling dependency before qualification.
+7. **P9 — private online races.** Authoritative simulation, reconnect and network failures. Couch play already exists; network matchmaking/cloud/global rankings do not block the browser game.
+
+Keep P0 reference/audio comparison and P2 human feel/challenge work running alongside these phases. Recommended next improvements within existing phases: first-use contextual pickup explanations (P4), per-map difficulty telemetry with opt-in local playtest logs (P2/P7), and richer earned picture/story transitions (P5/P6). No new live-service scope or monetization is implied. The user can reorder these priorities or add requirements before the next phase begins.
+
 ## Delivery order and checkpoints
 
 P0 → P1 → P2 → P3/P4 → P5 → P6 → P7 → P8. P9 is a later extension. The first major playable checkpoint is three polished, wide FPV levels. Human feedback on that chapter precedes bulk production. Automated wins establish correctness, not enjoyment or hardware certification.
@@ -103,7 +127,7 @@ The first human checkpoint did **not** pass. The eight reported shortcomings tak
 | P2.7 | High     | Verification | Larger facing-aware actors, four themed body vocabularies, clearer active cuts and restrained capture effects | 97 affected presentation/host checks pass, including the real offscreen-canvas seam. Frozen browser visual review performed; effects remain separate from collision and score authority.                                                                                                      |
 | P2.8 | Critical | Complete     | Freeze and compare a verified new playable revision                                                           | v0.25.0 from `da557b2`: six source gates, 2,152 tests, independent 185-file rebuild and frozen keyboard journeys pass. All 29 prior releases preserved. [Evidence](verification/round-34/playtest-revision.md).                                                                               |
 
-Current sequence: finish the separate v0.28 public-delivery gate → close P3 browser binary-workflow checks → author P4.3 Tactical demonstrations → complete P5 storage migration and media authoring → produce P6 content → complete P7 device/performance/public quality gates. Keep P2.4/P2.6 human challenge and feel assessment open alongside this work. P5 shared storage remains explicit opt-in; video authoring and bulk P6 production remain unfinished.
+Current sequence: close the v0.29 device-controls correction and its public-delivery gate → review the remaining priorities with the user → close P3 browser binary-workflow checks → author P4.3 Tactical demonstrations → complete P5 storage migration and media authoring → produce P6 content → complete P7 device/performance/public quality gates. Keep P2.4/P2.6 human challenge and feel assessment open alongside this work. P5 shared storage remains explicit opt-in; video authoring and bulk P6 production remain unfinished.
 
 ## First Light R2 milestone — v0.25.0
 
@@ -143,7 +167,7 @@ After the v0.28 correction gate, the execution sequence is P3 MP3 binary-workflo
 | P1.10 | High     | Verification | Standard/Large text persists through the actual profile save/merge/import/Undo path. Six actual-host tests and compact browser checks pass; physical devices remain P7.                                                                                                         |
 | P1.11 | High     | Verification | Optional-chapter failures give an online/retry action while retaining installed content, selection and flight. Source and actual-host guards pass; public delivery remains tracked above.                                                                                       |
 | P2.10 | High     | Verification | Eight-topic Field Guide covers seven roles and travelling impacts across four themes. Real practice, explicit return, no awards and retained parent flight/music pass; human comprehension and physical input remain open.                                                      |
-| P7.5  | Critical | Verification | Canonical archive public audit passes 3,888 exact files; local old-scope migration and actual saved-profile public-canonical journey pass. Projected main Pages output is 205,661,769 bytes. Actual main routing cutover/public verification remains pending.                   |
+| P7.5  | Critical | Complete | Canonical archive public audit passes 3,888 exact files; local old-scope migration and actual saved-profile public-canonical journey pass. Projected main Pages output is 205,661,769 bytes. Main cutover completed through PR#3 / Pages run34733239863; all974 v0.28 public files matched.                   |
 
 ### Ranked next priorities
 
