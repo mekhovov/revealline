@@ -4,7 +4,7 @@ Reviewed 2026-09-13. Implementation is active. The [production plan](production-
 
 **Latest verified release: v0.35.0.** [Play](https://mekhovov.github.io/revealline/releases/v0.35.0/site/game/) · [Delivery evidence](verification/round-45/v035-delivery.md). Its optional earned-story journey, Collection replay, keyboard training settings, six source gates, 3,008 tests, complete public site and release ZIP passed. One story is a milestone, not the complete story collection or product qualification.
 
-**Next candidate: v0.36 portable original chapters.** Source work adds a shared external-original installer, exact game-data backup adapters, clearer chapter cards and keyboard focus, nine new themed Route Choices pictures and three new Sentinel missions with three more originals. Native source install/choose/win/Collection, backup/Undo/fresh-original restore and Older chapters grouping have evidence. Five-entry final integration and release qualification are still pending. Nothing here changes an older frozen edition.
+**Next candidate: v0.36 portable original chapters.** Source work adds a shared external-original installer, exact game-data backup adapters, clearer chapter cards and keyboard focus, nine new themed Route Choices pictures and three new Sentinel missions with three more originals. Native source install/choose/win/Collection, backup/Undo/fresh-original restore and Older chapters grouping have evidence. All five entries and their packaged build are integrated. The first Sentinel mission passed keyboard download, separate Choose, Scan, capture stop, Gold win and earned-picture reopening. Exact-source and release qualification remain pending. Nothing here changes an older frozen edition.
 
 ## All eight requested corrections
 
