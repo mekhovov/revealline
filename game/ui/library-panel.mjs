@@ -352,6 +352,7 @@ export function attachLibraryPanel(api) {
     }
   }
   async function backupOptions() {
+    await api.assertExternalBackupSupported?.({ kind: 'backup' });
     let media = null;
     try {
       media = api.pictureMedia ? await api.pictureMedia() : null;
@@ -359,6 +360,7 @@ export function attachLibraryPanel(api) {
       /* Game-data backup remains available without unrelated original media. */
     }
     return {
+      ...(api.backupPreparation ?? {}),
       ...(api.resolveMediaIdentityCatalog
         ? { resolveMediaIdentityCatalog: api.resolveMediaIdentityCatalog(media?.metadata ?? null) }
         : {}),
@@ -371,7 +373,8 @@ export function attachLibraryPanel(api) {
       },
     };
   }
-  function backupContents() {
+  async function backupContents() {
+    if (api.backupSnapshot) return api.backupSnapshot();
     const { library, packs } = api.get();
     return { library, packs, session: api.currentSession() };
   }
@@ -422,7 +425,7 @@ export function attachLibraryPanel(api) {
       )
         throw new Error('This backup exceeds the import budget.');
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
-      if (parsed.format === 'xonix-backup.v1') {
+      if (['xonix-backup.v1', 'xonix-backup.v2'].includes(parsed.format)) {
         const prepared = await prepareBackup(parsed, await backupOptions());
         const applied = await applyPrepared(prepared);
         status(
@@ -458,11 +461,19 @@ export function attachLibraryPanel(api) {
     api.beforeProfileReplacement?.();
     let old = null;
     try {
-      if (api.canSnapshotBackup())
+      if (api.canSnapshotBackup()) {
+        const options = await backupOptions();
+        const contents = await backupContents();
         old = await prepareBackup(
-          { format: 'xonix-backup.v1', ...backupContents() },
-          await backupOptions(),
+          {
+            format: Object.hasOwn(contents, 'externalChapters')
+              ? 'xonix-backup.v2'
+              : 'xonix-backup.v1',
+            ...contents,
+          },
+          options,
         );
+      }
     } catch {}
     const applied = await api.applyBackup(prepared);
     previousBackup = old;
@@ -482,12 +493,13 @@ export function attachLibraryPanel(api) {
     b.onclick = () => open(b.dataset.libraryPanel);
   $('export-backup').onclick = () =>
     task('save-status', async () => {
-      const text = await exportBackup(backupContents(), await backupOptions());
+      const options = await backupOptions();
+      const text = await exportBackup(await backupContents(), options);
       $('save-json').value = text;
       const exported = await downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
       status(
         'save-status',
-        `Game data prepared: player library, packs and saved flight. Uploaded pictures need a separate .rlmedia originals backup; custom music needs .rlsound. ${exported.message} ${api.sessionNote?.() || ''}`,
+        `Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. ${exported.message} ${api.sessionNote?.() || ''}`,
       );
     });
   $('undo-backup').onclick = () =>
@@ -555,6 +567,7 @@ export function attachLibraryPanel(api) {
   };
   $('export-packs').onclick = () =>
     task('pack-status', async () => {
+      await api.assertExternalBackupSupported?.({ kind: 'packs' });
       const text = exportPackLibrary(api.get().packs);
       $('pack-json').value = text;
       const exported = await downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');

@@ -1,9 +1,14 @@
-import { BACKUP_FORMAT, isPreparedBackup, prepareBackup } from './backup.mjs';
+import {
+  BACKUP_FORMAT,
+  EXTERNAL_BACKUP_FORMAT,
+  isPreparedBackup,
+  prepareBackup,
+} from './backup.mjs';
 import { emptyLibrary, importLibrary } from './library.mjs';
 import { emptyPackLibrary, PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { browserDecodeImage } from './imports.mjs';
-import { canonicalJSON, plainObject, required } from './data-json.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, plainObject, required } from './data-json.mjs';
 
 export const TRANSFER_LIMITS = Object.freeze({
   storageKeys: 4096,
@@ -30,8 +35,11 @@ async function sha256(bytes) {
  */
 export async function transferFingerprint(prepared, { digest = sha256 } = {}) {
   required(isPreparedBackup(prepared), 'Fingerprint only a prepared complete backup.');
+  return fingerprintValue(prepared, digest);
+}
+async function fingerprintValue(value, digest) {
   required(typeof digest === 'function', 'A SHA-256 digest function is required.');
-  const result = await digest(new TextEncoder().encode(canonicalJSON(prepared)));
+  const result = await digest(new TextEncoder().encode(canonicalJSON(value)));
   const bytes =
     result instanceof ArrayBuffer
       ? new Uint8Array(result)
@@ -193,6 +201,8 @@ export async function prepareProfileTransfer(
     resolveCampaign,
     expandCampaigns,
     resolveMediaIdentityCatalog,
+    prepareExternalChapters,
+    readExternalSnapshot,
     decodeImage = browserDecodeImage,
     digest = sha256,
     signal,
@@ -209,6 +219,10 @@ export async function prepareProfileTransfer(
   required(
     lockManager && typeof lockManager.request === 'function',
     'Safe collection transfer requires Web Locks; export a complete backup in the earlier release instead.',
+  );
+  required(
+    readExternalSnapshot === undefined || typeof readExternalSnapshot === 'function',
+    'Use a trusted external source snapshot reader.',
   );
   const op = operation(signal, timeoutMs);
   // The Web Locks API forbids combining signal with ifAvailable. Cancellation
@@ -228,6 +242,25 @@ export async function prepareProfileTransfer(
   try {
     return await locked(source.writerKey, () =>
       locked(source.lockKey, async () => {
+        const readExternal = async () => {
+          const value = boundedJSON(
+            await op.wait(() => readExternalSnapshot(source, { signal: op.signal })),
+            {
+              maxBytes: PACK_LIMITS.libraryBytes + 1024 * 1024,
+              maxString: PACK_LIMITS.libraryBytes,
+              maxNodes: 900000,
+              maxArray: 4096,
+              maxDepth: 28,
+            },
+          );
+          exactKeys(value, ['packs', 'index', 'backup', 'external'], 'earlier external snapshot');
+          required(
+            value.backup === null && value.external === null,
+            'The earlier release has pending external or backup recovery.',
+          );
+          return value;
+        };
+        const external = readExternalSnapshot ? await readExternal() : null;
         required(
           storage.getItem(source.lockKey) === null,
           'The earlier release has an unfinished backup lock. Open it to recover before copying progress.',
@@ -244,7 +277,9 @@ export async function prepareProfileTransfer(
         );
         // Unlike loadLibrary, importLibrary never falls back to an empty profile.
         const library = rawProfile === null ? null : importLibrary(rawProfile, { campaigns });
-        const rawPacks = await op.wait(() => readAsset(source.packsKey));
+        const rawPacks = external
+          ? external.packs
+          : await op.wait(() => readAsset(source.packsKey));
         const rawSession = storage.getItem(source.sessionKey);
         required(
           rawSession === null || typeof rawSession === 'string',
@@ -268,12 +303,20 @@ export async function prepareProfileTransfer(
         );
         const prepared = await op.wait(() =>
           prepareBackup(
-            { format: BACKUP_FORMAT, library: library ?? emptyLibrary(), packs, session },
+            {
+              format:
+                external?.index === null || !external ? BACKUP_FORMAT : EXTERNAL_BACKUP_FORMAT,
+              library: library ?? emptyLibrary(),
+              packs,
+              session,
+              ...(external?.index ? { externalChapters: external.index } : {}),
+            },
             {
               campaigns,
               resolveCampaign,
               expandCampaigns,
               resolveMediaIdentityCatalog,
+              prepareExternalChapters,
               decodeImage: (...args) => op.wait(() => decodeImage(...args)),
               signal: op.signal,
               onProgress,
@@ -285,7 +328,22 @@ export async function prepareProfileTransfer(
           library !== null || prepared.session !== null,
           'An absent player profile requires a verified saved flight; no empty replacement was created.',
         );
-        const fingerprint = await op.wait(() => transferFingerprint(prepared, { digest }));
+        if (external) {
+          required(
+            canonicalJSON(external) === canonicalJSON(await readExternal()) &&
+              rawProfile === storage.getItem(source.profileKey) &&
+              rawSession === storage.getItem(source.sessionKey),
+            'The earlier release changed during transfer review.',
+          );
+        }
+        const fingerprint = await op.wait(() =>
+          external
+            ? fingerprintValue(
+                { prepared, sourceId: source.id, rawProfile, rawSession, assets: external },
+                digest,
+              )
+            : transferFingerprint(prepared, { digest }),
+        );
         op.check();
         const packIds = new Set(prepared.packs.packs.map((pack) => pack.id));
         const missingPackIds = Object.freeze(

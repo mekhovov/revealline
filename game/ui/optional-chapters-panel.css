@@ -93,3 +93,30 @@
     width: 100%;
   }
 }
+
+.optional-world-recovery {
+  margin-top: 12px;
+}
+.optional-world-recovery > summary {
+  box-sizing: border-box;
+  min-height: 44px;
+  padding: 12px 8px;
+  border: 1px solid #37546d;
+  cursor: pointer;
+  line-height: 1.4;
+}
+.optional-world-recovery label {
+  display: block;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.optional-world-recovery input[type='file'] {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  margin-top: 6px;
+  color: inherit;
+}

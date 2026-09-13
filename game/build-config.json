@@ -1,5 +1,5 @@
 {
-  "version": "0.35.0",
+  "version": "0.36.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -28,5 +28,9 @@
   "optionalChapters": {
     "format": "revealline-optional-distribution.v1",
     "catalog": "game/content/optional-worlds.json"
+  },
+  "externalChapters": {
+    "format": "revealline-external-distribution.v1",
+    "catalog": "game/content/external-worlds.json"
   }
 }

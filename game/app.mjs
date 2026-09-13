@@ -1,3 +1,16 @@
+import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
+import { createExternalChapterHost } from './external-chapter-host.mjs';
+import { createExternalChapterBackup } from './external-chapter-backup.mjs';
+import {
+  SOURCE_EXTERNAL_CHAPTER,
+  SOURCE_EXTERNAL_CHAPTERS,
+  SOURCE_EXTERNAL_EDITIONS,
+  sourceExternalChapter,
+  prepareSourceExternalChapter,
+} from './external-chapter-source.mjs';
+import { validateMediaLibrary } from './media-library.mjs';
+import { createPresentationPins } from './presentation-pins.mjs';
+import { createFlightPresentationPins } from './flight-media-pins.mjs';
 import {
   loadOptionalCatalog,
   prepareOptionalDownload,
@@ -167,6 +180,7 @@ try {
   };
   let activeEntry = baseEntry,
     packs = emptyPackLibrary();
+  let chapterSnapshot = null;
   let installedEntries = [baseEntry],
     executionCatalog = createExecutionCatalog(installedEntries),
     masteryCatalog = createMasteryCatalog([{ campaign: baseEntry.campaign, sourcePackId: null }]);
@@ -196,11 +210,12 @@ try {
   function adoptContentCatalog(content) {
     attemptFiles?.invalidate();
     packs = content.packs;
+    chapterSnapshot = content.chapterSnapshot ?? null;
     installedEntries = content.entries;
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.35.0',
+  let buildVersion = '0.36.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -267,10 +282,9 @@ try {
   const packsKey = `revealline.packs.${channel}.v1`;
   const sessionKey = `revealline.suspended.${channel}.v1`;
   const packCommits = createPackCommitCoordinator({
-    read: () => readAssetStore(packsKey),
-    write: (value) => writeAssetStore(packsKey, value),
-    prepare: async (value) =>
-      prepareContentCatalog(value ? await importPackLibrary(value) : emptyPackLibrary()),
+    read: () => checkedChapters(),
+    write: (value) => writeCheckedPacks(value),
+    prepare: (snapshot) => contentFromChapters(snapshot),
     adopt: adoptContentCatalog,
     canAdopt: () =>
       canReconcilePackCommit({
@@ -300,15 +314,92 @@ try {
         release() {},
       }
     : await claimProfileWriter(navigator.locks, `${libraryKey}.writer`);
+  let pictureManager = null;
+  const getPictureManager = () =>
+    (pictureManager ??= createManagedMediaStore({ storyMedia: true }));
+  const externalChapters = navigator.locks?.request
+    ? createExternalChapterHost({
+        profileKey: libraryKey,
+        packsKey,
+        storage: localStorage,
+        writer,
+        getManagedStore: getPictureManager,
+        registeredEntries: [baseEntry],
+        knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
+      })
+    : null;
+  const externalBackup = externalChapters
+    ? createExternalChapterBackup({
+        profileKey: libraryKey,
+        packsKey,
+        storage: localStorage,
+        writer,
+        getManagedStore: getPictureManager,
+        registeredEntries: [baseEntry],
+        knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
+      })
+    : null;
+  async function inspectChapters({ signal } = {}) {
+    if (externalChapters) return externalChapters.inspect({ signal });
+    const values = await Promise.all([
+      readAssetStore(`${libraryKey}.external-chapter-index.v1`),
+      readAssetStore(`${libraryKey}.external-chapter-journal.v1`),
+      readAssetStore(`${libraryKey}.backup-journal`),
+    ]);
+    if (values.some((value) => value !== null))
+      throw new Error('Safe chapter recovery requires Web Locks. Stored data is preserved.');
+    const raw = await readAssetStore(packsKey);
+    return { status: 'checked', packs: raw ? await importPackLibrary(raw) : emptyPackLibrary() };
+  }
+  async function checkedChapters(options) {
+    const snapshot = await inspectChapters(options);
+    if (snapshot.status !== 'checked')
+      throw new Error(
+        `Pending ${snapshot.reason}: recover the exact files before adopting stored chapters. Both journals are preserved when ambiguous.`,
+      );
+    return snapshot;
+  }
+  function contentFromChapters(snapshot) {
+    return { ...prepareContentCatalog(snapshot.packs), chapterSnapshot: snapshot };
+  }
+  async function writeCheckedPacks(value) {
+    const snapshot = await checkedChapters();
+    if (!externalChapters) return writeAssetStore(packsKey, value);
+    const review = await externalChapters.prepareMutation(snapshot, value ?? emptyPackLibrary());
+    return externalChapters.commitMutation(review);
+  }
+  async function assertExternalBackupSupported(options) {
+    if (externalBackup) return externalBackup.assertSupported(options);
+    const snapshot = await checkedChapters();
+    if (snapshot.index?.chapters.length)
+      throw new Error(
+        'External chapter backup/transfer is not supported in this source pilot yet. Keep the exact descriptor, gameplay and originals files. No stored data was changed.',
+      );
+  }
   let persistenceReady = writer.writable;
   let handlePageHide = () => writer.release();
   window.addEventListener('pagehide', (event) => handlePageHide(event));
   const journalKey = `${libraryKey}.backup-journal`;
+  async function writeLegacyBackupPacks(value) {
+    // Legacy recovery owns this channel's writer and backup lock. V2 uses
+    // the companion's native pack/index pair transaction, never this path.
+    if (
+      (await readAssetStore(`${libraryKey}.external-chapter-index.v1`)) !== null ||
+      (await readAssetStore(`${libraryKey}.external-chapter-journal.v1`)) !== null
+    )
+      throw new Error(
+        'External chapter backup recovery needs its compatible adapter. Stored data is preserved.',
+      );
+    return writeAssetStore(packsKey, value);
+  }
   const backupAdapters = () => ({
+    externalBackup: externalBackup ?? undefined,
     storage: localStorage,
     readAsset: readAssetStore,
     writeAsset: (key, value) =>
-      key === packsKey ? packCommits.commit(value) : writeAssetStore(key, value),
+      key === packsKey
+        ? packCommits.commit(value, { writeValue: writeLegacyBackupPacks })
+        : writeAssetStore(key, value),
     profileKey: libraryKey,
     packsKey,
     sessionKey,
@@ -327,6 +418,11 @@ try {
   let packWarning = scenario ? '' : writer.reason || '';
   if (persistenceReady) {
     try {
+      const chapters = await inspectChapters();
+      if (chapters.status === 'recovery-required' && chapters.reason !== 'backup-recovery')
+        throw new Error(
+          `Pending ${chapters.reason}; use the exact pilot recovery files. Ambiguous journals were left untouched.`,
+        );
       const result = await recoverBackupImport(backupAdapters());
       if (!result.ok) persistenceReady = false;
       if (result.warning) packWarning = result.warning;
@@ -339,25 +435,18 @@ try {
   let loaded = { library: emptyLibrary(), warning: '', recovery: null, generation: 'legacy' };
   let storedStateAdopted = false;
   async function readSavedState() {
-    if (
-      localStorage.getItem(`${libraryKey}.backup-lock`) !== null ||
-      (await readAssetStore(journalKey)) !== null
-    )
-      throw new Error(
-        'An interrupted backup needs recovery. Stored data is preserved; reload after recovery before saving.',
-      );
-    const rawPacks = await readAssetStore(packsKey);
-    const prepared = rawPacks ? await importPackLibrary(rawPacks) : emptyPackLibrary();
-    const content = prepareContentCatalog(prepared);
-    const profile = loadLibrary(localStorage, libraryKey, {
-      campaigns: content.executions.entries.map((entry) => entry.campaign),
-    });
-    return { content, profile };
+    const chapters = await checkedChapters();
+    const read = () => {
+      const content = contentFromChapters(chapters);
+      const profile = loadLibrary(localStorage, libraryKey, {
+        campaigns: content.executions.entries.map((entry) => entry.campaign),
+      });
+      return { content, profile };
+    };
+    return externalChapters ? externalChapters.withCurrent(chapters, read) : read();
   }
   try {
-    const snapshot = navigator.locks?.request
-      ? await navigator.locks.request(`${libraryKey}.backup-lock`, readSavedState)
-      : await readSavedState();
+    const snapshot = await readSavedState();
     adoptContentCatalog(snapshot.content);
     loaded = snapshot.profile;
     storedStateAdopted = loaded.recovery === null;
@@ -484,7 +573,7 @@ try {
   const soundtrackLoad = new AbortController();
   // This edition explicitly adopts v4. All media adapters share its single ledger;
   // training keeps its existing legacy presentation and never creates picture pins.
-  const pictureManager = createManagedMediaStore({ storyMedia: true });
+  getPictureManager();
   const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
   const storyStore = practice ? null : createStoryMediaStore({ managedStore: pictureManager });
   let flightPictures = null,
@@ -590,6 +679,58 @@ try {
       pins,
       legacy,
       explicitLegacy,
+      selectPins:
+        !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
+          ? async ({ media, selection, explicitLegacy, signal }) => {
+              const checked = await checkedChapters({ signal });
+              const original = await externalChapters.authoredPicture(
+                checked,
+                {
+                  executionKey: selection.executionKey,
+                  levelId: selection.levelId,
+                  levelRevision: selection.levelRevision,
+                  themeId: nextThemeId,
+                },
+                { signal },
+              );
+              if (original.metadata.generation !== media.metadata.generation)
+                throw new Error(
+                  'Picture choices changed during chapter readiness. Retry the paused flight.',
+                );
+              const current = createPresentationPins(selection);
+              const fallback =
+                explicitLegacy || current.choices.some((choice) => choice.kind === 'legacy');
+              const library = fallback
+                ? validateMediaLibrary(
+                    {
+                      ...media.metadata.document.library,
+                      assignments: [
+                        ...media.metadata.document.library.assignments.filter(
+                          (assignment) =>
+                            canonicalJSON(assignment.identity) !==
+                            canonicalJSON(original.pin.identity),
+                        ),
+                        {
+                          identity: original.pin.identity,
+                          presentationId: original.pin.presentationId,
+                          revision: original.pin.presentationRevision,
+                        },
+                      ],
+                    },
+                    { identityCatalog: selection.identityCatalog },
+                  )
+                : selection.library;
+              return createFlightPresentationPins(
+                {
+                  ...selection,
+                  library,
+                  stillDocument: media.metadata.document,
+                  storyDocument: media.story.document,
+                },
+                { signal },
+              );
+            }
+          : undefined,
     });
   }
   function cancelPictureStart() {
@@ -1113,6 +1254,8 @@ try {
       flightPictures?.dispose();
       pictureStore?.close();
       storyStore?.close();
+      externalChapters?.close();
+      externalBackup?.close();
       pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
@@ -1809,7 +1952,7 @@ try {
         throw new Error('Installing a world must preserve every existing pack.');
       packLaunchGuard.assert(operation, before);
       assertWriter();
-      const content = prepareContentCatalog(next);
+      let content = prepareContentCatalog(next);
       if (!preserveCurrentRun || !paused) pause(true);
       cancelRestore();
       if (!preserveCurrentRun) masteryAwards.cancelAll();
@@ -1825,6 +1968,8 @@ try {
         await packCommits.noteStaleCommit();
         packLaunchGuard.assert(operation, packs);
       }
+      content = contentFromChapters(await checkedChapters());
+      packLaunchGuard.assert(operation, before);
       adoptContentCatalog(content);
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
@@ -1891,6 +2036,64 @@ try {
       contentSwitchTicket: operation,
     });
     return { pack: prepared.pack, installed: true };
+  }
+  async function installSourceChapter(chapterId, files, { signal, download = false } = {}) {
+    const descriptor = sourceExternalChapter(chapterId);
+    if (practiceSession || courseEntry || !writer.writable)
+      throw new Error('Open the writable game to install this chapter.');
+    const operation = packLaunchGuard.begin(packs),
+      before = packs;
+    packCommits.markIntent();
+    contentSwitchBusy = true;
+    refreshContentSelectors();
+    const cancel = () => {
+      if (packLaunchGuard.current(operation, packs)) invalidateContentSwitch();
+    };
+    signal?.addEventListener('abort', cancel, { once: true });
+    let committed = false;
+    try {
+      const prepared = download
+        ? await prepareExternalDownload(descriptor.id, {
+            signal,
+            baseURL: new URL('../', location.href),
+          })
+        : await prepareSourceExternalChapter(files, { chapterId: descriptor.id, signal });
+      packLaunchGuard.assert(operation, before);
+      const snapshot = await inspectChapters({ signal });
+      if (snapshot.status !== 'checked' && snapshot.reason !== 'external-recovery')
+        throw new Error(
+          'Backup and mixed recovery must be resolved before this chapter can install.',
+        );
+      await externalChapters[snapshot.reason === 'external-recovery' ? 'recover' : 'install'](
+        prepared,
+        { signal },
+      );
+      committed = true;
+      const next = await checkedChapters({ signal });
+      await externalChapters.readiness(next, descriptor.id, { signal });
+      packLaunchGuard.assert(operation, before);
+      adoptContentCatalog(contentFromChapters(next));
+      packLaunchGuard.advance(operation, before, packs);
+      packCommits.acceptCurrent();
+      // Recovery never silently re-enables profile writes from an unreadable baseline.
+      // A clean reload adopts the preserved profile and saved flight together.
+      refreshCampaigns();
+    } catch (error) {
+      if (committed) {
+        void packCommits.noteStaleCommit();
+        throw new Error(
+          `The chapter installation committed. Reload/recheck before choosing it. ${error.message}`,
+        );
+      }
+      throw error;
+    } finally {
+      signal?.removeEventListener('abort', cancel);
+      if (packLaunchGuard.current(operation, packs)) {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+        await packCommits.reconcile();
+      }
+    }
   }
   async function installOptionalChapter(summary, { signal } = {}) {
     if (courseEntry || courseSession || practice)
@@ -2044,7 +2247,7 @@ try {
     if (localStorage.getItem(`${libraryKey}.backup-lock`) !== null)
       throw new Error('A backup is being restored. Saving resumes when it finishes.');
   }
-  function snapshotAttempt() {
+  function snapshotAttempt(savedAt) {
     if (practice || !recorder || !started || ['won', 'lost'].includes(run.status))
       throw new Error('Start an unfinished campaign flight to save it.');
     return suspendSession({
@@ -2054,8 +2257,26 @@ try {
       themeId: theme.id,
       bodyId,
       runId,
+      savedAt,
       continuation: { direction: input.snapshotDirection() },
       presentationPins: flightPictures?.pins(),
+    });
+  }
+  function currentBackupSession(savedAt) {
+    return started && recorder && !practice && !['won', 'lost'].includes(run.status)
+      ? snapshotAttempt(savedAt)
+      : savedAttempt();
+  }
+  function snapshotCurrentBackup() {
+    const savedAt = new Date().toISOString();
+    return externalBackup.snapshot(() => {
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        throw new Error('Finish the pending content or save operation before exporting.');
+      if (started && !paused && !['won', 'lost'].includes(run.status))
+        throw new Error('Pause the current flight before preparing game data.');
+      // Capture time belongs to this export, while all actual host contents are
+      // read again after waits so resumed/replaced state cannot pass as unchanged.
+      return { library, packs, session: currentBackupSession(savedAt) };
     });
   }
   function persistAttempt(notify = true) {
@@ -2243,6 +2464,11 @@ try {
   const libraryPanel = attachLibraryPanel({
     focusMission,
     pictureMedia,
+    assertExternalBackupSupported,
+    backupPreparation: externalBackup
+      ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
+      : undefined,
+    backupSnapshot: externalBackup ? snapshotCurrentBackup : undefined,
     openStory: (request) => storyDialog.open(request),
     resolveMediaIdentityCatalog: (metadata) =>
       createBackupPictureIdentityResolver({
@@ -2256,6 +2482,7 @@ try {
           readAsset: readAssetStore,
           lockManager: navigator.locks,
           currentVersion: buildVersion,
+          ...(externalBackup ? { readExternalSnapshot: externalBackup.readExternalSnapshot } : {}),
         }
       : null,
     get: () => ({
@@ -2286,10 +2513,7 @@ try {
       invalidateContentSwitch();
       return attemptFiles.prepare(options);
     },
-    currentSession: () =>
-      started && recorder && !practice && !['won', 'lost'].includes(run.status)
-        ? snapshotAttempt()
-        : savedAttempt(),
+    currentSession: () => currentBackupSession(),
     canSnapshotBackup: () => storedStateAdopted,
     sessionNote: () =>
       [
@@ -2327,13 +2551,14 @@ try {
     applyBackup: async (prepared) => {
       if (courseSession || courseEntry)
         throw new Error('End First Flight before importing a backup.');
+      await assertExternalBackupSupported({ kind: 'backup' });
       backupBusy = true;
       invalidateContentSwitch();
       packCommits.markIntent();
       contentSwitchBusy = true;
+      let committed = false;
       try {
         refreshContentSelectors();
-        const content = prepareContentCatalog(prepared.packs);
         if (!writer.writable) throw new Error(writer.reason);
         if (!persistenceReady) {
           const recovered = await recoverBackupImport(backupAdapters());
@@ -2347,6 +2572,11 @@ try {
           if (result.recoveryRequired) persistenceReady = false;
           throw new Error(result.warning);
         }
+        committed = true;
+        const checked = await checkedChapters();
+        for (const descriptor of checked.index?.chapters ?? [])
+          await externalChapters.readiness(checked, descriptor.id);
+        const content = contentFromChapters(checked);
         persistenceReady = true;
         storedStateAdopted = true;
         saveSucceeded = true;
@@ -2364,6 +2594,16 @@ try {
         adoptPreferences();
         refreshCampaigns();
         return result;
+      } catch (error) {
+        if (committed) {
+          persistenceReady = false;
+          storedStateAdopted = false;
+          void packCommits.noteStaleCommit();
+          throw new Error(
+            `Game data committed. Reload and restore its exact originals before continuing. ${error.message}`,
+          );
+        }
+        throw error;
       } finally {
         backupBusy = false;
         contentSwitchBusy = false;
@@ -3208,8 +3448,7 @@ try {
     courseEntryMessage = '';
     started = true;
     paused = false;
-    if ($('run-message').textContent === picturePreparingMessage)
-      warning('Picture ready. Flight is running.');
+    if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
@@ -4013,8 +4252,10 @@ try {
   }
   window.addEventListener('focus', restoreListening);
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) suspendInteraction();
-    else {
+    if (document.hidden) {
+      optionalWorlds?.close(false);
+      suspendInteraction();
+    } else {
       void packCommits.reconcile();
       restoreListening();
     }
@@ -4102,11 +4343,55 @@ try {
     scene: FieldScene,
     banner: false,
   });
-  missionPicker = attachMissionPicker();
+  missionPicker = attachMissionPicker({
+    archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
+  });
   optionalWorlds = attachOptionalChaptersPanel({
     getLibrary: () => packs,
-    loadCatalog: ({ signal }) =>
-      loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) }),
+    getUsage: () => chapterSnapshot?.usage,
+    sourceChapters: !practiceSession
+      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description, mode, levels }) => ({
+          id: descriptor.id,
+          controlId:
+            descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
+          name,
+          description,
+          mode,
+          levels,
+          sourceOnly: !isRelease,
+          bytes: descriptor.pack.bytes + descriptor.media.bytes,
+          download: isRelease
+            ? (options) => installSourceChapter(descriptor.id, null, { ...options, download: true })
+            : null,
+          backupSupported: !!externalBackup,
+          async inspect({ signal }) {
+            const snapshot = await inspectChapters({ signal });
+            if (snapshot.status !== 'checked') return { status: snapshot.reason };
+            const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+            if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
+            return { status: installed ? 'installed' : 'absent' };
+          },
+          install: (files, options) => installSourceChapter(descriptor.id, files, options),
+          async choose({ signal }) {
+            if (!storedStateAdopted || !persistenceReady)
+              throw new Error(
+                'Reload after recovery to adopt the preserved profile before choosing this chapter.',
+              );
+            const snapshot = await checkedChapters({ signal });
+            await externalChapters.readiness(snapshot, descriptor.id, { signal });
+            if (signal.aborted)
+              throw new DOMException('Chapter selection cancelled.', 'AbortError');
+            adoptContentCatalog(contentFromChapters(snapshot));
+            const pack = packs.packs.find((p) => p.id === descriptor.id);
+            selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+          },
+        }))
+      : [],
+    loadCatalog: async ({ signal }) => {
+      const options = { signal, baseURL: new URL('../', location.href) };
+      if (isRelease) await loadExternalCatalog(options);
+      return loadOptionalCatalog(options);
+    },
     install: installOptionalChapter,
     choose: async (summary, { signal }) => {
       if (courseEntry || courseSession || practice)

@@ -145,7 +145,16 @@ for (const explicit of [false, true])
     h.rows.set(STILL_AUTHORING_KEYS.packs, 'invalid foreign dev data');
     await h.open();
     const keys = stillAuthoringKeys(channel);
-    assert.deepEqual(new Set(h.reads), new Set([keys.lock, keys.journal, keys.packs]));
+    assert.deepEqual(
+      new Set(h.reads),
+      new Set([
+        keys.lock,
+        keys.journal,
+        keys.packs,
+        `revealline.library.${channel}.v1.external-chapter-index.v1`,
+        `revealline.library.${channel}.v1.external-chapter-journal.v1`,
+      ]),
+    );
     assert.deepEqual(new Set(h.locks), new Set([keys.writer, keys.lock]));
     assert.match(h.hostNode('status').textContent, new RegExp(channel.replaceAll('.', '\\.')));
     await h.upload();

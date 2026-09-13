@@ -79,7 +79,7 @@ function deferred() {
   return { promise, resolve, reject };
 }
 
-function setup(t) {
+function setup(t, options = {}) {
   const nodes = new Map(),
     events = new Map(),
     requests = [],
@@ -159,6 +159,8 @@ function setup(t) {
       return job.promise;
     },
     suspend: () => assert.fail('The panel must never call the old suspend callback.'),
+    currentSession: () => null,
+    ...options,
   });
   panel.open('saves');
   const session = {
@@ -363,3 +365,32 @@ test('ordinary library transactions retain their protected cancellation behavior
   assert.equal(h.dialog.requestClose().defaultPrevented, false);
   assert.equal(h.dialog.open, false);
 });
+
+for (const action of ['export-backup', 'export-packs', 'import-save']) {
+  test(`${action} awaits the external backup guard before preparation or download`, async (t) => {
+    const gate = deferred();
+    let guarded = 0;
+    const h = setup(t, {
+      assertExternalBackupSupported: () => {
+        guarded++;
+        return gate.promise;
+      },
+      pictureMedia: () => assert.fail('Refused backup must not acquire media.'),
+      applyBackup: () => assert.fail('Refused backup must not commit.'),
+    });
+    if (action === 'import-save')
+      h.node('save-json').value = JSON.stringify({ format: 'xonix-backup.v1' });
+    const before = h.node('save-json').value;
+    const pending = h.node(action).onclick();
+    assert.equal(guarded, 1);
+    assert.equal(h.downloads.length, 0);
+    gate.reject(new Error('External originals require their supported companion backup.'));
+    await pending;
+    assert.equal(h.downloads.length, 0);
+    assert.equal(h.node('save-json').value, before);
+    assert.match(
+      h.node(action === 'export-packs' ? 'pack-status' : 'save-status').textContent,
+      /supported companion/,
+    );
+  });
+}

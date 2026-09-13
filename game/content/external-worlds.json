@@ -1,0 +1,95 @@
+{
+  "format": "revealline-external-chapters.v1",
+  "chapters": [
+    {
+      "id": "original-fpv-pressure-external",
+      "name": "FPV Front · Pressure Pictures",
+      "description": "Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+      "pack": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "bytes": 9398,
+        "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "media": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia",
+        "bytes": 8037391,
+        "sha256": "abaf15494ff0f3c5b3d70ffff7b41469346b8b322d1ffbe9cc8de930fbac780e"
+      }
+    },
+    {
+      "id": "route-worlds-ukraine",
+      "name": "Ukraine Atlas · Route Choices",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "bytes": 8405,
+        "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+        "bytes": 8825887,
+        "sha256": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0"
+      }
+    },
+    {
+      "id": "route-worlds-retro",
+      "name": "1994 Forever · Route Choices",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "route-worlds-retro/1/31673372d46ee993",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-retro/pack.json",
+        "bytes": 8307,
+        "sha256": "ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+        "bytes": 7589633,
+        "sha256": "e47adb1f39845cfab801ed70ebb7127815b80667c6b33bfe763cbd4c1e10fd34"
+      }
+    },
+    {
+      "id": "route-worlds-coupa",
+      "name": "Spend Network · Route Choices",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
+      "themeId": "coupa",
+      "levels": 3,
+      "campaignKey": "route-worlds-coupa/1/708c553521008c7d",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "bytes": 8317,
+        "sha256": "96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+        "bytes": 8280993,
+        "sha256": "f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f"
+      }
+    },
+    {
+      "id": "sentinel-circuit-fpv",
+      "name": "FPV Front · Sentinel Circuit",
+      "description": "Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+      "pack": {
+        "path": "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "bytes": 9238,
+        "sha256": "ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb"
+      },
+      "media": {
+        "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+        "bytes": 8596058,
+        "sha256": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c"
+      }
+    }
+  ]
+}
