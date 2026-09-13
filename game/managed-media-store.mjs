@@ -195,7 +195,7 @@ export function createManagedMediaStore({
     if (!storyMedia) return;
     storyRecords.validateStoredStories(story, media);
     required(
-      encoded(media) + (story.stories.length ? encoded(story) : 0) <=
+      encoded(media) + storyRecords.storedStoryMetadataBytes(story) <=
         MANAGED_MEDIA_LIMITS.metadataBytes,
       'Still and story metadata exceed the shared 2 MiB budget.',
     );

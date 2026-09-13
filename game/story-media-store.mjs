@@ -9,6 +9,9 @@ import {
   prepareStoredStories,
   assertStoredStoryTransition,
   ownStoryOriginals,
+  STORY_BINDINGS_FORMAT,
+  verifyStoredStoryBindings,
+  changeStoredStoryBinding,
 } from './story-storage-record.mjs';
 
 export const STORY_INVENTORY_FORMAT = 'revealline-story-inventory.v1';
@@ -86,6 +89,7 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
     const op = operation(signal);
     try {
       const read = await manager.readDomainMetadata('story', { signal: op.controller.signal });
+      await verifyStoredStoryBindings(read.library, { signal: op.controller.signal });
       return Object.freeze({ generation: read.generation, document: read.library });
     } finally {
       op.cleanup();
@@ -172,8 +176,12 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
    */
   async function stageRestore(
     { document: source, assets: sourceAssets },
-    { signal, ...inspection } = {},
+    { signal, restoreBindings = false, ...inspection } = {},
   ) {
+    required(
+      typeof restoreBindings === 'boolean',
+      'Choose an explicit story binding restore policy.',
+    );
     const incoming = boundedJSON(source, {
       maxBytes: 2 * 1024 * 1024,
       maxNodes: 100000,
@@ -208,9 +216,25 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
           stories.push(story);
         }
       }
+      await verifyStoredStoryBindings(checked, { signal: active });
+      const useBindings =
+          current.library.format === STORY_BINDINGS_FORMAT ||
+          (restoreBindings && checked.format === STORY_BINDINGS_FORMAT),
+        selections = new Map(
+          (current.library.bindings ?? []).map((binding) => [
+            canonicalJSON(binding.picturePin),
+            binding,
+          ]),
+        );
+      if (restoreBindings)
+        for (const binding of checked.bindings ?? [])
+          selections.set(canonicalJSON(binding.picturePin), binding);
       const document = validateStoredStories(
           {
             ...current.library,
+            ...(useBindings
+              ? { format: STORY_BINDINGS_FORMAT, bindings: [...selections.values()] }
+              : {}),
             stories,
             originals: [...new Set([...current.library.originals, ...checked.originals])],
           },
@@ -240,6 +264,64 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
         expectedGeneration: current.generation,
         document,
         reservedSourceBytes: newBytes,
+      });
+      reviews.set(review, { op, prepared });
+      return review;
+    } catch (error) {
+      await op.release();
+      throw error;
+    }
+  }
+  /** Deliberate current selection only; unchanged history/bytes still use one
+   * prepared generation-checked transaction, and never become award authority.
+   */
+  async function stageBinding(request, { expectedGeneration, signal, ...inspection } = {}) {
+    const own = boundedJSON(request, {
+      maxBytes: 8192,
+      maxArray: 16,
+      maxNodes: 256,
+      maxString: 2048,
+    });
+    required(
+      Number.isSafeInteger(expectedGeneration) && expectedGeneration >= 0,
+      'Story binding needs the reviewed generation.',
+    );
+    const op = operation(signal),
+      active = op.controller.signal;
+    try {
+      const [current, metadata] = await Promise.all([
+        manager.readDomain('story', { signal: active }),
+        stillStore.readMetadata({ signal: active }),
+      ]);
+      required(
+        current.generation === expectedGeneration,
+        'Story bindings changed; review the current selection again.',
+      );
+      const document = await changeStoredStoryBinding(current.library, own, metadata.document, {
+        signal: active,
+      });
+      if (own.story !== null) {
+        const selected = document.stories.find(
+          (s) => s.id === own.story.id && s.revision === own.story.revision,
+        );
+        required(
+          document.originals.includes(selected.source.sha256),
+          'Restore the selected story original before binding it.',
+        );
+        await stillStore.readAsset(metadata, selected.picturePin.assetId, { signal: active });
+      }
+      await reserveStage(op, { generation: current.generation, document, bytes: 0 });
+      const prepared = await prepareStoredStories(document, current.assets, {
+        ...inspection,
+        still: metadata.document,
+        signal: active,
+      });
+      abort(active);
+      const review = freezeMedia({
+        format: 'revealline-story-stage.v1',
+        expectedGeneration,
+        document,
+        reservedSourceBytes: 0,
       });
       reviews.set(review, { op, prepared });
       return review;
@@ -337,6 +419,7 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
       active = op.controller.signal;
     try {
       const current = await manager.readDomain('story', { signal: active });
+      await verifyStoredStoryBindings(current.library, { signal: active });
       required(
         current.assets.length === current.library.originals.length,
         'Restore missing story originals before exporting the complete available inventory.',
@@ -376,6 +459,7 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
     readMetadata,
     stage,
     stageRestore,
+    stageBinding,
     commit,
     cancel,
     acquire,

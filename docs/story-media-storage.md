@@ -4,6 +4,8 @@ This isolated P5 foundation extends the [reviewed story preparation/player](vict
 
 The subsequent isolated [`.rlstory` transfer slice](story-bundle.md) adds complete binary original export/import and one atomic `stageRestore` merge. The original storage-stage evidence below remains scoped to this foundation; host adoption and earned-story authority are still pending.
 
+The subsequent [authored-binding model](authored-story-bindings.md) adds deliberate logical-v2 selection inside the same opt-in database v4. Old logical-v1 reads remain unchanged; no current host or earned receipt adopts that choice yet.
+
 ## Explicit storage version
 
 `createManagedMediaStore({storyMedia:true})` explicitly opens version **4** of the existing `revealline-soundtrack-v1` database. It also provides the rich-still capability. Default manager callers still request v2; `richStillMedia:true` without the story opt-in still requests v3. The optional record validator is loaded lazily after a v4 request, so those existing paths do not fetch the new story modules.
