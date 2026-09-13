@@ -664,14 +664,25 @@ export function createManagedMediaStore({
             'Committed media plus staging exceeds the 256 MiB managed budget.',
           );
           const target = domain === 'audio' ? 'audio' : 'mediaBlobs';
-          for (const { sha256, blob } of newAssets)
-            stores[state.blobs.get(sha256)?.store ?? target].put(blob, sha256);
           const other = domain === 'audio' ? 'media' : 'audio',
             formerlyOwned = hashes(domain, current.library),
             retained = new Set([
               ...hashes(domain, prepared.library),
               ...hashes(other, state[`${other}Row`].library),
             ]);
+          // Reads bound each physical store, including unexplained originals.
+          // Check the post-commit inventory before writing; reference-table
+          // limits alone do not include retained orphans or cross-domain reuse.
+          const physical = { audio: 0, mediaBlobs: 0 };
+          for (const [hash, old] of state.blobs)
+            if (!formerlyOwned.has(hash) || retained.has(hash)) physical[old.store]++;
+          for (const asset of newAssets) if (!state.blobs.has(asset.sha256)) physical[target]++;
+          required(
+            Object.values(physical).every((count) => count <= MANAGED_MEDIA_LIMITS.assets),
+            'Managed physical inventory exceeds its budget; retained originals are preserved.',
+          );
+          for (const { sha256, blob } of newAssets)
+            stores[state.blobs.get(sha256)?.store ?? target].put(blob, sha256);
           let finalBlobBytes = state.blobBytes;
           for (const asset of newAssets) {
             const old = state.blobs.get(asset.sha256);
