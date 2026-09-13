@@ -8,7 +8,7 @@ function exportOptions(value) {
   const options = {};
   for (const key of Reflect.ownKeys(value)) {
     required(
-      ['campaign', 'signal', 'onProgress'].includes(key),
+      ['campaign', 'signal', 'onProgress', 'mediaIdentityCatalog'].includes(key),
       'Unsupported attempt export option.',
     );
     const descriptor = Object.getOwnPropertyDescriptor(value, key);
@@ -57,7 +57,7 @@ function freeze(value) {
  * context always rejects. Neither result grants persistence or award authority.
  */
 export async function prepareAttemptExport(candidate, options = {}) {
-  const { campaign, signal, onProgress } = exportOptions(options);
+  const { campaign, signal, onProgress, mediaIdentityCatalog } = exportOptions(options);
   checkAbort(signal);
   // Own all portable data before yielding or calling host progress callbacks.
   const session = snapshotSession(candidate);
@@ -71,7 +71,13 @@ export async function prepareAttemptExport(candidate, options = {}) {
     );
     // Restore verifies the actual map, entire roster, checkpoint and unfinished
     // state. Discard its run/recorder: resuspending would alter release markers.
-    await restoreSession(session, { campaign: installed, campaignKey: key, signal, onProgress });
+    await restoreSession(session, {
+      campaign: installed,
+      campaignKey: key,
+      signal,
+      onProgress,
+      mediaIdentityCatalog,
+    });
     context = 'installed-campaign';
   } else {
     const checked = await verifyReplayAsync(session.replay, { signal, onProgress });

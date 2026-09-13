@@ -5,6 +5,7 @@ import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
 import { SOUNDTRACK_DATABASE } from '../../soundtrack-store.mjs';
 import { audioHarness } from './soundtrack-audio.mjs';
+import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 
 export class SoloElement extends Element {
   constructor(document, tag, options) {
@@ -171,11 +172,14 @@ export async function soloPage(
     soundtrackIndexedDB,
     rendering,
     parentWindow,
+    pictures,
+    waitForPictures = true,
   } = {},
 ) {
   const doc = new SoloDocument(),
     win = new Events(),
     db = assetDatabase();
+  const mediaDB = soundtrackIndexedDB ?? memoryIndexedDB().indexedDB;
   const audioElements = [];
   if (audio?.filePlayback !== false && audio) {
     const createElement = doc.createElement.bind(doc);
@@ -243,11 +247,11 @@ export async function soloPage(
     location: { href: `http://localhost/game/${search}`, search, origin: 'http://localhost' },
     localStorage: storage,
     sessionStorage: previewStorage,
-    indexedDB: soundtrackIndexedDB
+    indexedDB: mediaDB
       ? {
           open(name, ...args) {
             return name === SOUNDTRACK_DATABASE
-              ? soundtrackIndexedDB.open(name, ...args)
+              ? mediaDB.open(name, ...args)
               : db.open(name, ...args);
           },
         }
@@ -334,7 +338,7 @@ export async function soloPage(
       },
     },
   };
-  if (rendering?.Image) globals.Image = rendering.Image;
+  if (pictures?.Image || rendering?.Image) globals.Image = pictures?.Image ?? rendering.Image;
   if (audio) {
     globals.AudioContext = function () {
       return audio.context;
@@ -406,6 +410,11 @@ export async function soloPage(
     now += ms;
     scene.update(now, ms);
   }
+  if (waitForPictures)
+    await settle(
+      () => doc.body.dataset.pictureState === 'ready',
+      'Actual host must finish its initial picture choice before synchronous input tests.',
+    );
   frame(0);
   function key(code, held = true) {
     $('game-canvas').emit(held ? 'keydown' : 'keyup', {
