@@ -8,6 +8,7 @@ import {
   snapshotSession,
   SESSION_IMPORT_BYTES,
   PRESENTATION_SESSION_FORMAT,
+  STORY_SESSION_FORMAT,
 } from './sessions.mjs';
 import { MAX_REPLAY_TICKS } from './replay.mjs';
 import { isMediaIdentityCatalog } from './media-library.mjs';
@@ -158,7 +159,7 @@ export async function prepareBackup(
   }
   let mediaIdentityCatalog;
   if (
-    value.session?.format === PRESENTATION_SESSION_FORMAT ||
+    [PRESENTATION_SESSION_FORMAT, STORY_SESSION_FORMAT].includes(value.session?.format) ||
     value.library.pictureReceipts?.length
   ) {
     required(

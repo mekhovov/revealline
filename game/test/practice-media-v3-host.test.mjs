@@ -122,8 +122,8 @@ async function journey(t, mode, version) {
   );
   assert.equal(page.$('soundtrack-selection').value, 'qa.mix');
   assert.equal(page.$('soundtrack-dialog').open, true);
-  assert.equal(requestedVersions[0], 3, 'Every current-edition audio host adopts its v3 manager.');
-  assert.ok(requestedVersions.every((value) => value === 3));
+  assert.equal(requestedVersions[0], 4, 'Every current-edition audio host adopts its v4 manager.');
+  assert.ok(requestedVersions.every((value) => value === 4));
   page.$('soundtrack-play').click();
   await settle(
     () =>
@@ -163,5 +163,5 @@ for (const mode of ['ordinary', 'practice', 'course'])
   test(`${mode}: shared v3 custom music reads and plays without changing existing audio/still history`, async (t) =>
     journey(t, mode, 3));
 for (const version of [1, 2])
-  test(`practice: current-edition v${version} to v3 opening preserves every original and metadata row`, async (t) =>
+  test(`practice: current-edition v${version} to v4 opening preserves every original and metadata row`, async (t) =>
     journey(t, 'practice', version));

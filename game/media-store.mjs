@@ -8,29 +8,44 @@ import {
   verifyStoredStillAssets,
 } from './media-storage-record.mjs';
 
-/** Explicit v3 adoption. A supplied shared manager must also be v3; the host
- * must use that same manager for its soundtrack adapter. The integrated solo host opts in through its shared media manager.
+/** Standalone v3 default; an injected compatible v3/v4 manager is shared with
+ * the host’s soundtrack/story adapters. Current solo/workshop hosts opt into v4.
  */
 export function createStillMediaStore({ managedStore, decodeImage, ...options } = {}) {
   const manager = managedStore ?? createManagedMediaStore({ ...options, richStillMedia: true });
   if (manager.richStillMedia !== true)
-    throw new TypeError('Still media requires the shared v3 manager.');
+    throw new TypeError('Still media requires a compatible rich still manager.');
   let closed = false;
   const snapshots = new WeakSet();
   const check = () => {
     if (closed) throw new Error('Still media store is closed.');
   };
+  const snapshot = (saved) => {
+    const result = Object.freeze({
+      generation: saved.generation,
+      document: hydrateStoredStillMedia(saved.library),
+    });
+    check();
+    snapshots.add(result);
+    return result;
+  };
   return Object.freeze({
     async readMetadata({ signal } = {}) {
       check();
       const saved = await manager.readDomainMetadata('media', { signal });
-      const result = Object.freeze({
-        generation: saved.generation,
-        document: hydrateStoredStillMedia(saved.library),
-      });
+      return snapshot(saved);
+    },
+    async readPresentationMetadata({ signal } = {}) {
       check();
-      snapshots.add(result);
-      return result;
+      required(
+        manager.storyMedia === true,
+        'Combined presentation reads need the shared v4 manager.',
+      );
+      const saved = await manager.readPresentationMetadata({ signal });
+      return Object.freeze({
+        metadata: snapshot(saved.media),
+        story: Object.freeze({ generation: saved.story.generation, document: saved.story.library }),
+      });
     },
     async readAsset(snapshot, assetId, { signal, decodeImage: decoder = decodeImage } = {}) {
       check();
