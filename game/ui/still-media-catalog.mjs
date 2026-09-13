@@ -1,18 +1,28 @@
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { emptyPackLibrary, importPackLibrary, resolvePackCampaign } from '../packs.mjs';
+import { required } from '../data-json.mjs';
 
-const profile = 'revealline.library.dev.v1';
-export const STILL_AUTHORING_KEYS = Object.freeze({
-  writer: `${profile}.writer`,
-  lock: `${profile}.backup-lock`,
-  journal: `${profile}.backup-journal`,
-  packs: 'revealline.packs.dev.v1',
-});
+export function stillAuthoringKeys(channel = 'dev') {
+  required(
+    typeof channel === 'string' &&
+      (channel === 'dev' ||
+        /^release-v?(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/.test(channel)),
+    'Unsupported still workshop game channel.',
+  );
+  const profile = `revealline.library.${channel}.v1`;
+  return Object.freeze({
+    writer: `${profile}.writer`,
+    lock: `${profile}.backup-lock`,
+    journal: `${profile}.backup-journal`,
+    packs: `revealline.packs.${channel}.v1`,
+  });
+}
+export const STILL_AUTHORING_KEYS = stillAuthoringKeys();
 const check = (signal) => {
   if (signal?.aborted) throw new DOMException('Catalog check cancelled.', 'AbortError');
 };
 
-/** Read only the source game's installed dev channel. Hold its existing locks
+/** Read only the explicit game channel (source dev by default). Hold its existing locks
  * through a media commit so a pack replacement cannot change its authority.
  */
 export function createStillAuthoringCatalog({
@@ -21,7 +31,9 @@ export function createStillAuthoringCatalog({
   readAsset,
   lockManager,
   decodeImage,
+  channel = 'dev',
 }) {
+  const keys = stillAuthoringKeys(channel);
   const snapshots = new WeakSet();
   let generation = 0;
   async function locked(work, signal) {
@@ -39,16 +51,13 @@ export function createStillAuthoringCatalog({
           );
         return next();
       });
-    return lock(STILL_AUTHORING_KEYS.writer, () =>
-      lock(STILL_AUTHORING_KEYS.lock, async () => {
-        if (
-          storage.getItem(STILL_AUTHORING_KEYS.lock) !== null ||
-          (await readAsset(STILL_AUTHORING_KEYS.journal)) !== null
-        )
+    return lock(keys.writer, () =>
+      lock(keys.lock, async () => {
+        if (storage.getItem(keys.lock) !== null || (await readAsset(keys.journal)) !== null)
           throw new Error(
             'The source game has a pending backup recovery. Recover it before editing media.',
           );
-        const raw = await readAsset(STILL_AUTHORING_KEYS.packs);
+        const raw = await readAsset(keys.packs);
         check(signal);
         if (raw !== null && typeof raw !== 'string')
           throw new Error(
@@ -59,6 +68,8 @@ export function createStillAuthoringCatalog({
     );
   }
   return Object.freeze({
+    channel,
+    keys,
     async read({ signal } = {}) {
       return locked(async (raw) => {
         const packs =
