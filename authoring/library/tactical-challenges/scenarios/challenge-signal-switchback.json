@@ -1,0 +1,222 @@
+{
+  "format": "xonix-playground.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "id": "challenge-signal-switchback",
+    "revision": "1",
+    "name": "Signal Switchback",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": []
+    },
+    "spawn": {
+      "x": 0.5,
+      "y": 18.5
+    },
+    "walls": [
+      {
+        "x": 10,
+        "y": 8,
+        "w": 2,
+        "h": 8
+      },
+      {
+        "x": 24,
+        "y": 24,
+        "w": 18,
+        "h": 2
+      },
+      {
+        "x": 51,
+        "y": 5,
+        "w": 2,
+        "h": 9
+      }
+    ],
+    "enemies": [
+      {
+        "id": "switchback-patrol",
+        "type": "bouncer",
+        "x": 55.5,
+        "y": 29.5,
+        "vx": 1,
+        "vy": 0.5,
+        "radius": 0.25
+      }
+    ],
+    "objectives": [
+      {
+        "id": "switchback-relay",
+        "x": 18.5,
+        "y": 8.5,
+        "required": true,
+        "hidden": true
+      }
+    ],
+    "supplies": [],
+    "signalZones": [
+      {
+        "id": "switchback-band",
+        "x": 18,
+        "y": 1,
+        "w": 18,
+        "h": 34,
+        "speedFactor": 0.25,
+        "disableBoost": true,
+        "lockAbility": true
+      }
+    ],
+    "hangars": [],
+    "goal": {
+      "coverage": 0.48
+    },
+    "rules": {
+      "lives": 1,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "graceSeconds": 0,
+      "respawnSeconds": 0.1,
+      "stopOnCapture": true,
+      "cutTimeLimitSeconds": 8,
+      "maxTrailCells": 76,
+      "timeLimitSeconds": 45,
+      "timeMedals": [11, 25]
+    },
+    "metadata": {
+      "description": "Recommended: Fiber relay. Reveal 48% and capture the northern relay. Cross Right through the interference band and Scan there; Fiber keeps its speed and equipment, but its live cable still has an eight-second and 76-cell limit. A long downward dogleg breaks that cable. An ordinary craft can instead travel around the safe northern rim and cut outside the band. Walls shape the upper pockets and lower approach. Procedural placeholder artwork; an original Tactical route study."
+    }
+  },
+  "theme": {
+    "id": "fpv",
+    "name": "FPV Front",
+    "subtitle": "Dawn over home",
+    "family": "fpv",
+    "player": "fpv-body",
+    "enemyShape": "tank",
+    "patrolShape": "drone",
+    "bossShape": "radar",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply pad",
+      "enemy": "Invader patrol",
+      "boss": "Signal sentinel",
+      "currency": "Score",
+      "ability": "Equipment"
+    },
+    "palette": {
+      "ink": "#112d35",
+      "paper": "#f5f1e6",
+      "muted": "#8baaa5",
+      "accent": "#e9c46a",
+      "safe": "#81b5bf",
+      "danger": "#f08168",
+      "field": "#102831",
+      "grid": "#193941",
+      "sky": "#dfb781",
+      "land": "#687c55"
+    },
+    "classBodies": {
+      "scout": "scout-quad",
+      "bomber": "fpv-body",
+      "carrier": "heavy-lift",
+      "interceptor": "scout-quad",
+      "fiber": "fpv-body",
+      "impact": "fpv-body",
+      "trapper": "fpv-body"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "fiber",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {},
+  "masteryDefinition": null
+}
