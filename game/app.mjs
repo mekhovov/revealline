@@ -479,10 +479,8 @@ try {
   const soundtrackLoad = new AbortController();
   // This edition explicitly adopts rich v3. Both adapters share its single ledger;
   // training keeps its existing legacy presentation and never creates picture pins.
-  const pictureManager = practice ? null : createManagedMediaStore({ richStillMedia: true });
-  const pictureStore = pictureManager
-    ? createStillMediaStore({ managedStore: pictureManager })
-    : null;
+  const pictureManager = createManagedMediaStore({ richStillMedia: true });
+  const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
   let flightPictures = null,
     pictureResume = null,
     pictureThemePending = null,
@@ -611,9 +609,7 @@ try {
         throw new Error(
           'This browser does not provide file-audio playback. Built-in sound remains available.',
         );
-      soundtrackStore = createSoundtrackStore(
-        pictureManager ? { managedStore: pictureManager } : {},
-      );
+      soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
         soundscape: sound,
         audioElement,
