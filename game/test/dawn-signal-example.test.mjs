@@ -41,6 +41,21 @@ test('Dawn example deterministically retains the exact owned movie and fully dec
   assert.deepEqual(second.manifest, candidate.manifest);
   for (let i = 0; i < candidate.files.length; i++)
     assert.deepEqual(await bytes(second.files[i].blob), await bytes(candidate.files[i].blob));
+  for (const item of candidate.files)
+    assert.deepEqual(
+      await readFile(join(ROOT, 'authoring/still-media/examples/dawn-signal', item.name)),
+      await bytes(item.blob),
+      'The published example is the exact reproducible CLI pair.',
+    );
+  assert.deepEqual(
+    JSON.parse(
+      await readFile(
+        join(ROOT, 'authoring/still-media/examples/dawn-signal/manifest.json'),
+        'utf8',
+      ),
+    ),
+    candidate.manifest,
+  );
   assert.deepEqual(candidate.manifest.identity, {
     baseCampaignKey: 'first-signal/2/88639f3aab7b6cc1',
     levelId: 'signal-01',
