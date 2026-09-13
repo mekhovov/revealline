@@ -41,6 +41,14 @@ class Element {
     this.attributes.set(key, value);
     if (key === 'hidden') this.hidden = true;
   }
+  getAttribute(key) {
+    return this.attributes.get(key) ?? null;
+  }
+  closest() {
+    for (let element = this; element; element = element.parentNode)
+      if (element.hidden || element.attributes.has('inert')) return element;
+    return null;
+  }
   removeAttribute(key) {
     this.attributes.delete(key);
     if (key === 'src') this.src = '';
@@ -100,7 +108,21 @@ class Element {
     this.emit('close');
   }
   click() {
-    if (!this.disabled) return this.onclick?.();
+    if (this.disabled) return;
+    const event = {
+      target: this,
+      defaultPrevented: false,
+      preventDefault() {
+        this.defaultPrevented = true;
+      },
+    };
+    const result = this.onclick?.(event);
+    if (this.tagName === 'A' && this.getAttribute('href') && !event.defaultPrevented)
+      this.document.nativeDownloads.push({
+        href: this.getAttribute('href'),
+        filename: this.getAttribute('download'),
+      });
+    return result;
   }
   load() {}
   async play() {
@@ -123,7 +145,7 @@ async function setup(
     callbacks = {},
   } = {},
 ) {
-  const doc = { nodes: new Map(), activeElement: null, hidden: false };
+  const doc = { nodes: new Map(), activeElement: null, hidden: false, nativeDownloads: [] };
   const eventRoot = new Element(doc, 'document');
   doc.addEventListener = (...args) => eventRoot.addEventListener(...args);
   doc.removeEventListener = (...args) => eventRoot.removeEventListener(...args);
@@ -329,6 +351,8 @@ test('binary download and replacement draft preserve exact original audio; Undo 
   const initial = await fixture(),
     app = await setup(t, { initial });
   await app.click('export-bundle');
+  assert.equal(app.downloads.length, 0, 'Preparation never calls the injected download adapter.');
+  await app.click('download-prepared');
   assert.equal(app.downloads[0].filename, 'RevealLine-soundtrack.rlsound');
   const bundle = app.downloads[0].blob;
   const checked = await importSoundtrackBundle(bundle, { probeMedia: structuralProbe });
@@ -620,4 +644,177 @@ test('ordinary audition transport controls pause/resume, seek and change only au
   assert.equal(app.node('toggle-audition').disabled, true);
   assert.equal(app.node('audition-seek').disabled, true);
   assert.equal(app.state.desired, true);
+});
+
+test('preparing a visible native link is read-only and retains exact saved bytes for explicit retry', async (t) => {
+  const initial = await fixture(),
+    app = await setup(t, { initial, callbacks: { download: undefined } });
+  await app.click('clone-playlist');
+  const draftState = app.node('draft-state').textContent;
+  const saved = await app.store.read();
+  await app.click('export-bundle');
+  const link = app.node('download-prepared');
+  assert.equal(link.tagName, 'A');
+  assert.equal(app.node('backup-ready').hidden, false);
+  assert.equal(app.doc.activeElement, link);
+  assert.equal(
+    app.doc.nativeDownloads.length,
+    0,
+    'The async preparation does not activate any link.',
+  );
+  assert.equal(app.node('draft-state').textContent, draftState);
+  assert.deepEqual(await app.store.read(), saved);
+  const url = link.getAttribute('href'),
+    blob = app.urls.get(url);
+  assert.ok(blob instanceof Blob);
+  const restored = await importSoundtrackBundle(blob, { probeMedia: structuralProbe });
+  assert.deepEqual(restored.library, saved.library, 'The unsaved cloned playlist is excluded.');
+  assert.deepEqual(
+    Buffer.from(await restored.assets[0].blob.arrayBuffer()),
+    Buffer.from(await initial.blob.arrayBuffer()),
+  );
+  assert.match(app.node('backup-info').textContent, /saved generation 1/);
+  assert.match(app.node('backup-info').textContent, /does not save a file to disk/);
+  app.click('download-prepared');
+  app.click('download-prepared');
+  assert.deepEqual(app.doc.nativeDownloads, [
+    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
+    { href: url, filename: 'RevealLine-soundtrack.rlsound' },
+  ]);
+  assert.equal(app.urls.size, 1, 'Retry reuses one bounded Blob and handle.');
+  assert.equal(app.revoked.length, 0, 'The browser may consume its link asynchronously.');
+  assert.match(app.node('status').textContent, /Download requested/);
+  assert.doesNotMatch(app.node('status').textContent, /successfully saved|download complete/i);
+  app.panel.close();
+  assert.equal(app.revoked.length, 0, 'Ordinary close keeps a pending download handle alive.');
+  app.click('download-prepared');
+  assert.equal(app.doc.nativeDownloads.length, 2, 'A closed dialog cannot request a download.');
+  await app.panel.open();
+  assert.equal(link.getAttribute('href'), url);
+  await app.click('export-bundle');
+  assert.deepEqual(app.revoked, [url]);
+  assert.equal(app.urls.size, 2);
+  const replacement = link.getAttribute('href');
+  app.panel.dispose();
+  assert.deepEqual(app.revoked, [url, replacement]);
+  assert.equal(link.getAttribute('href'), null);
+  assert.equal(app.node('backup-ready').hidden, true);
+});
+
+test('prepared download participates in local keyboard focus and discard never changes saved music', async (t) => {
+  const app = await setup(t, { callbacks: { download: undefined } });
+  await app.click('export-bundle');
+  const link = app.node('download-prepared'),
+    url = link.getAttribute('href');
+  const saved = await app.store.read();
+  app.node('dialog').emit('keydown', { target: link, key: 'ArrowRight' });
+  assert.equal(app.doc.activeElement, app.node('discard-backup'));
+  app.node('dialog').emit('keydown', { target: app.node('discard-backup'), key: 'ArrowLeft' });
+  assert.equal(app.doc.activeElement, link);
+  app.click('discard-backup');
+  assert.equal(app.doc.activeElement, app.node('export-bundle'));
+  assert.equal(link.getAttribute('href'), null);
+  assert.deepEqual(app.revoked, [url]);
+  assert.deepEqual(await app.store.read(), saved);
+  app.click('download-prepared');
+  assert.equal(app.doc.nativeDownloads.length, 0);
+});
+
+test('adopted draft edits, Undo, import, save and reload invalidate a prepared copy without auto-downloading', async (t) => {
+  const initial = await fixture(),
+    app = await setup(t, { initial, callbacks: { download: undefined } });
+  const prepare = async () => {
+    await app.click('export-bundle');
+    const url = app.node('download-prepared').getAttribute('href');
+    assert.ok(url);
+    return url;
+  };
+  const invalidated = (url) => {
+    assert.equal(app.node('backup-ready').hidden, true);
+    assert.equal(app.node('download-prepared').getAttribute('href'), null);
+    assert.ok(app.revoked.includes(url));
+  };
+  let url = await prepare();
+  await app.click('clone-playlist');
+  invalidated(url);
+  url = await prepare();
+  await app.click('undo');
+  invalidated(url);
+  url = await prepare();
+  app.node('mp3-files').files = [file('Extra.mp3')];
+  await app.click('import-mp3');
+  invalidated(url);
+  url = await prepare();
+  await app.click('save');
+  invalidated(url);
+  assert.equal((await app.store.read()).generation, 2);
+  url = await prepare();
+  const bundle = app.urls.get(url);
+  app.node('bundle-file').files = [bundle];
+  await app.click('import-bundle');
+  invalidated(url);
+  url = await prepare();
+  await app.click('reload');
+  invalidated(url);
+  assert.equal((await app.store.read()).generation, 2);
+  assert.equal(app.doc.nativeDownloads.length, 0);
+});
+
+test('cancellation and disposal during real binary preparation cannot expose a late download', async (t) => {
+  for (const ending of ['cancel', 'dispose']) {
+    const initial = await fixture(),
+      app = await setup(t, { initial, callbacks: { download: undefined } });
+    const saved = await app.store.read();
+    const preparing = app.click('export-bundle');
+    assert.equal(app.node('cancel').hidden, false);
+    if (ending === 'cancel') app.click('cancel');
+    else app.panel.dispose();
+    assert.equal(await preparing, false);
+    assert.equal(app.urls.size, 0);
+    assert.equal(app.doc.nativeDownloads.length, 0);
+    assert.equal(app.node('backup-ready').hidden, true);
+    assert.deepEqual(await app.store.read(), saved);
+    if (ending === 'cancel') assert.match(app.node('status').textContent, /Operation cancelled/);
+  }
+});
+
+test('native adapter receives prepared bytes synchronously on explicit activation and can retry a refusal', async (t) => {
+  let activation = false,
+    reject = true;
+  const requests = [];
+  const app = await setup(t, {
+    initial: await fixture(),
+    callbacks: {
+      URLImpl: {
+        createObjectURL() {
+          throw Error('No browser URL required by a native adapter');
+        },
+      },
+      download(blob, filename, { signal }) {
+        assert.equal(activation, true, 'No await or export runs ahead of the adapter call.');
+        assert.equal(signal.aborted, false);
+        requests.push({ blob, filename });
+        if (reject) throw Error('Host declined this download');
+      },
+    },
+  });
+  await app.click('export-bundle');
+  assert.equal(requests.length, 0);
+  assert.equal(app.node('download-prepared').tagName, 'BUTTON');
+  activation = true;
+  const refused = app.click('download-prepared');
+  activation = false;
+  await refused;
+  assert.match(app.node('status').textContent, /Host declined/);
+  assert.equal(app.node('backup-ready').hidden, false);
+  reject = false;
+  activation = true;
+  const retry = app.click('download-prepared');
+  activation = false;
+  await retry;
+  assert.equal(requests.length, 2);
+  assert.equal(requests[0].blob, requests[1].blob);
+  assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
+  assert.match(app.node('status').textContent, /request handed to the host/);
+  assert.equal((await app.store.read()).generation, 1);
 });

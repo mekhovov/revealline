@@ -311,3 +311,110 @@ test('a visible back/forward-cache pageshow restores music without requiring an 
   assert.equal(page.rendered.paused, true);
   assert.match(page.$('save-warning').textContent, /session-only mode/);
 });
+
+test('actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight', async (t) => {
+  const { page, audio, original, db } = await setup(t);
+  page.$('start-button').click();
+  ticks(page, 5);
+  await openStudio(page);
+  page.frame(0);
+  const { authoritativeCheckpoint } = await import('../replay.mjs');
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const link = page.$('soundtrack-download-prepared');
+  let requested = 0;
+  link.addEventListener('click', () => requested++);
+  let held = [];
+  globalThis.navigator.getGamepads = () => [
+    {
+      id: 'owned-soundtrack-pad',
+      index: 0,
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, (_, i) => ({
+        pressed: held.includes(i),
+        value: held.includes(i) ? 1 : 0,
+      })),
+    },
+  ];
+  const sample = (buttons, ms = 0) => {
+    held = buttons;
+    page.frame(ms);
+  };
+  sample([]);
+  sample([0]); // Join consumes this edge rather than activating a dialog control.
+  sample([]);
+  for (let i = 0; page.doc.activeElement !== page.$('soundtrack-export-bundle') && i < 100; i++) {
+    sample([13]);
+    sample([]);
+  }
+  assert.equal(
+    page.doc.activeElement,
+    page.$('soundtrack-export-bundle'),
+    'Controller reaches Prepare through the actual dialog focus scope.',
+  );
+  sample([0]);
+  await waitFor(
+    () => !page.$('soundtrack-backup-ready').hidden,
+    'Actual binary preparation finishes',
+  );
+  assert.equal(page.doc.activeElement, link);
+  assert.equal(requested, 0, 'Preparation focuses but never activates the download.');
+  const url = link.getAttribute('href');
+  const prepared = audio.created.find((item) => item.url === url);
+  assert.ok(prepared?.blob instanceof Blob);
+  const { importSoundtrackBundle } = await import('../soundtrack-bundle.mjs');
+  const recovered = await importSoundtrackBundle(prepared.blob, { probeMedia: structuralProbe });
+  assert.deepEqual(
+    Buffer.from(await recovered.assets[0].blob.arrayBuffer()),
+    Buffer.from(await original.blob.arrayBuffer()),
+  );
+  sample([0], 1200);
+  assert.equal(requested, 0, 'Held Confirm cannot activate the newly focused action.');
+  sample([]);
+  sample([0]);
+  assert.equal(requested, 1);
+  sample([0], 1200);
+  assert.equal(requested, 1, 'Held Confirm does not request duplicate downloads.');
+  sample([]);
+  const enter = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: false });
+  assert.equal(
+    enter.defaultPrevented,
+    false,
+    'The shared keyboard handler retains native link activation.',
+  );
+  link.click(); // Model the browser's unprevented Enter default; the DOM adapter does not implement it.
+  link.emit('keyup', { code: 'Enter', key: 'Enter' });
+  assert.equal(requested, 2);
+  const repeated = link.emit('keydown', { code: 'Enter', key: 'Enter', repeat: true });
+  assert.equal(
+    repeated.defaultPrevented,
+    true,
+    'Held Enter cannot repeatedly activate the new link.',
+  );
+  link.emit('pointerdown', { pointerType: 'touch', pointerId: 7, button: 0, isPrimary: true });
+  link.emit('pointerup', { pointerType: 'touch', pointerId: 7, button: 0, isPrimary: true });
+  link.click(); // Browser default navigation/download itself is outside this DOM model.
+  assert.equal(requested, 3);
+  assert.equal(link.getAttribute('href'), url);
+  assert.equal(
+    audio.created.filter((item) => item.blob.type === 'application/vnd.revealline.soundtrack')
+      .length,
+    1,
+  );
+  assert.equal(audio.revoked.includes(url), false);
+  const reader = createSoundtrackStore({ indexedDB: db.indexedDB });
+  assert.equal(
+    (await reader.read()).generation,
+    1,
+    'Preparing and requesting files never saves a music draft.',
+  );
+  reader.close();
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.match(page.$('soundtrack-status').textContent, /Download requested/);
+  leaveStudio(page);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
