@@ -122,27 +122,33 @@ export function attachInput({
       boostButton.setAttribute('aria-pressed', String(pressed));
     }
   };
-  // Neither reset touches simulation state. Hosts retain intent for UI/lifecycle
-  // transitions, and use clear() for a new attempt or recovery instead.
-  const clearPhysical = () => {
+  // A sampled controller gesture may take ownership without being neutralized
+  // by cleanup of the local pointer/keyboard controls it replaces.
+  const releaseLocalControls = () => {
     const captured = [...captures];
     held.clear();
     buttons.clear();
     captures.clear();
     latched = null;
     boostLatched = false;
-    padBoost = false;
     action = false;
     pickup = false;
-    blockedPad = true;
-    lastPadDirection = null;
-    localDirectionPending = false;
     finishBoostKeyGesture();
     syncPressed();
     for (const [id, element] of captured)
       try {
         if (element.hasPointerCapture?.(id)) element.releasePointerCapture(id);
       } catch {}
+  };
+  // Neither reset touches simulation state. Hosts retain intent for UI/lifecycle
+  // transitions, and use clear() for a new attempt or recovery instead.
+  const clearPhysical = () => {
+    releaseLocalControls();
+    padBoost = false;
+    blockedPad = true;
+    lastPadDirection = null;
+    localDirectionPending = false;
+    syncPressed();
     // The host may cancel a controller-owned toggle, but must not recursively
     // call clear(). Inactive polling also reaches this path; preserve pad/menu
     // ownership rather than invoking the router's full clear/neutral gate.
@@ -477,6 +483,7 @@ export function attachInput({
   return {
     poll,
     clear,
+    releaseLocalControls,
     clearPhysical,
     snapshotDirection: () => (continuous() && !destroyed ? intentDirection : null),
     restoreDirection,

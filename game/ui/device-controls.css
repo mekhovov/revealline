@@ -1,0 +1,263 @@
+/* Fullscreen flight surface. Input chooses controls; viewport chooses geometry. */
+.game-shell {
+  --touch-gutter: 0px;
+  --side-gutter: 0px;
+}
+.game-shell .shell-bar {
+  padding: max(4px, var(--safe-top)) max(12px, var(--safe-right)) 4px max(12px, var(--safe-left));
+}
+.game-shell .shell-pause {
+  font-family: Arial, sans-serif;
+  margin-left: auto;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 22px;
+}
+.game-shell[data-flight-state='running']
+  .shell-bar
+  > :is(#shell-packs, #shell-collection, #shell-settings, .shell-edition) {
+  display: none;
+}
+.game-shell .play-controls {
+  display: none;
+  border: 0;
+  padding: 0;
+}
+.game-shell .play-controls .direction-controls [data-move='up'] {
+  grid-area: 1 / 2;
+}
+.game-shell .play-controls .direction-controls [data-move='left'] {
+  grid-area: 2 / 1;
+}
+.game-shell .play-controls .direction-controls [data-move='right'] {
+  grid-area: 2 / 3;
+}
+.game-shell .play-controls .direction-controls [data-move='down'] {
+  grid-area: 3 / 2;
+}
+.game-shell .play-controls .direction-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 46px);
+  grid-template-rows: repeat(3, 46px);
+  gap: 4px;
+}
+.game-shell .direction-controls button {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0;
+  border: 2px solid #5386a8;
+  background: #101d32ee;
+  color: #c4f3ff;
+  border-radius: 0;
+  font:
+    bold 25px/1 Arial,
+    sans-serif;
+  touch-action: none;
+  box-shadow: inset 0 -4px #203952;
+}
+.game-shell .direction-controls button.pressed {
+  background: #315d79;
+  border-color: #a4efff;
+  color: white;
+  transform: translateY(1px);
+}
+.game-shell[data-screen-controls='shown'] {
+  --touch-gutter: 164px;
+}
+.game-shell[data-screen-controls='shown'] .play-controls {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  position: fixed;
+  z-index: 7;
+  bottom: max(10px, var(--safe-bottom));
+  left: max(12px, var(--safe-left));
+  right: max(12px, var(--safe-right));
+  pointer-events: none;
+}
+.game-shell[data-screen-controls='shown'] .play-controls > * {
+  pointer-events: auto;
+}
+.game-shell .play-controls .ability-buttons {
+  flex: 0 1 160px;
+  justify-content: end;
+  gap: 4px;
+}
+.game-shell .play-controls .ability-buttons:has(> button:not([hidden])) {
+  display: flex;
+}
+.game-shell .play-controls .ability-buttons:not(:has(> button:not([hidden]))) {
+  display: none;
+}
+.game-shell .play-controls .ability-buttons .button {
+  min-height: 44px;
+  padding: 4px 8px;
+  font-size: 17px;
+}
+.game-shell .play-controls .ability-buttons kbd {
+  display: none;
+}
+.game-shell .ability-buttons > span {
+  font-size: 14px;
+  text-align: right;
+}
+.game-shell main {
+  height: auto;
+  padding: 8px max(12px, var(--safe-right)) 0 max(12px, var(--safe-left));
+}
+.game-shell .game-layout {
+  display: block;
+  max-width: none;
+  margin: 0;
+}
+.game-shell .arena-panel,
+.game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']) {
+  width: 100%;
+  margin: 0 auto;
+  max-width: min(
+    calc(100% - var(--side-gutter)),
+    calc(
+      (
+          100dvh - var(--flight-chrome, 230px) - var(--touch-gutter) - var(--safe-top) -
+            var(--safe-bottom)
+        ) *
+        var(--board-aspect, 1.333333)
+    )
+  );
+}
+.game-shell .telemetry {
+  margin-bottom: 8px;
+}
+.game-shell .flight-status {
+  margin: 8px 0 0;
+  font-size: 16px;
+}
+.game-shell .run-message {
+  margin: 4px 0;
+  font-size: 16px;
+  line-height: 1.25;
+  min-height: 0;
+}
+.game-shell .encounter-status:not([hidden]):not([data-phase='open']) {
+  font-size: 15px;
+  margin: 4px 0;
+  padding: 4px 8px;
+}
+.game-shell .encounter-status #classic-summary {
+  display: none;
+}
+.game-shell .arena-shell {
+  max-height: none;
+}
+.game-shell #controller-ui-hint {
+  display: none;
+}
+.game-shell .shell-bar .shell-edition {
+  flex: 1;
+}
+@media (max-width: 680px) {
+  .game-shell .shell-bar > :is(#shell-packs, #shell-collection, #shell-settings, .shell-edition) {
+    display: none;
+  }
+  .game-shell .arena-panel {
+    max-width: 100%;
+  }
+  .game-shell .flight-status > strong {
+    display: none;
+  }
+  .game-shell .shell-bar {
+    min-height: 48px;
+    height: auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 540px) {
+  .game-shell[data-screen-controls='shown'] {
+    --touch-gutter: 0px;
+    --side-gutter: 314px;
+  }
+  .game-shell .shell-bar {
+    height: 48px;
+  }
+  .game-shell .telemetry {
+    min-height: 46px;
+    padding: 0;
+    margin-bottom: 4px;
+  }
+  .game-shell .telemetry strong {
+    font-size: 23px;
+  }
+  .game-shell .telemetry span,
+  .game-shell .telemetry em {
+    font-size: 13px;
+  }
+  .game-shell .arena-panel,
+  .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']) {
+    max-width: min(
+      calc(100% - var(--side-gutter)),
+      calc(
+        (100dvh - var(--compact-chrome, 175px) - var(--safe-top) - var(--safe-bottom)) *
+          var(--board-aspect, 1.333333)
+      )
+    );
+  }
+  .game-shell .flight-status {
+    font-size: 14px;
+    margin-top: 3px;
+  }
+  .game-shell .run-message {
+    font-size: 14px;
+  }
+}
+/* Hidden HTML controls must not regain boxes through a flex/grid rule. */
+.game-shell .play-controls [hidden],
+.game-shell #sound-button[hidden] {
+  display: none !important;
+}
+
+.game-shell[data-text-size='large'] {
+  --flight-chrome: 260px;
+  --compact-chrome: 205px;
+}
+.game-shell .run-message {
+  max-height: 2.5em;
+  overflow: hidden;
+}
+
+.game-shell .arena-panel,
+.game-shell .arena-panel:has(> .encounter-status:not([hidden])) {
+  display: block;
+  min-width: 0;
+}
+.game-shell .arena-panel > .arena-shell,
+.game-shell .arena-panel:has(> .encounter-status:not([hidden])) > .arena-shell {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.game-shell .play-controls .ability-buttons {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+@media (max-width: 680px) and (orientation: portrait) {
+  .game-shell .play-controls .direction-controls {
+    grid-template-columns: repeat(3, 56px);
+    grid-template-rows: repeat(3, 56px);
+  }
+  .game-shell .play-controls .direction-controls button {
+    width: 56px;
+    height: 56px;
+    min-height: 56px;
+  }
+  .game-shell[data-screen-controls='shown'] {
+    --touch-gutter: 196px;
+  }
+  .game-shell #shell-menu::after {
+    content: ' MENU';
+    font-size: 17px;
+    letter-spacing: 1px;
+  }
+}

@@ -15,19 +15,29 @@ import { validatePack } from '../packs.mjs';
 import { createDifficultyContext, GENTLE_POLICY_VERSION } from '../campaign-difficulty.mjs';
 
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
-const [base, classRecipes, packIndex, proof, firstLightProof, r2Proof, r3Proof] = await Promise.all(
-  [
-    readJSON('../content/campaign.json'),
-    readJSON('../content/classes.json'),
-    readJSON('../content/packs/index.json'),
-    readJSON('../replays/gentle-routes.json'),
-    readJSON('../replays/first-light-gentle-routes.json'),
-    readJSON('../replays/fpv-arcade-r2-routes.json'),
-    readJSON('../replays/fpv-arcade-r3-routes.json'),
-  ],
-);
+const [
+  base,
+  classRecipes,
+  packIndex,
+  proof,
+  firstLightProof,
+  r2Proof,
+  r3Proof,
+  archiveIndex,
+  r4Proof,
+] = await Promise.all([
+  readJSON('../content/campaign.json'),
+  readJSON('../content/classes.json'),
+  readJSON('../content/packs/index.json'),
+  readJSON('../replays/gentle-routes.json'),
+  readJSON('../replays/first-light-gentle-routes.json'),
+  readJSON('../replays/fpv-arcade-r2-routes.json'),
+  readJSON('../replays/fpv-arcade-r3-routes.json'),
+  readJSON('../content/packs/archive-index.json'),
+  readJSON('../replays/fpv-arcade-r4-routes.json'),
+]);
 const originals = [{ packId: null, campaign: { ...base, classRecipes } }];
-for (const ref of packIndex.packs) {
+for (const ref of [...packIndex.packs, ...archiveIndex.packs]) {
   const pack = await readJSON(`../content/packs/${ref.path}`);
   const check = validatePack(pack);
   assert.equal(check.valid, true, check.errors.join('; '));
@@ -60,7 +70,12 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   assert.deepEqual(
     proof.sources,
     sources
-      .filter((source) => !['fpv-arcade', 'fpv-arcade-r2', 'fpv-arcade-r3'].includes(source.packId))
+      .filter(
+        (source) =>
+          !['fpv-arcade', 'fpv-arcade-r2', 'fpv-arcade-r3', 'fpv-arcade-r4'].includes(
+            source.packId,
+          ),
+      )
       .map(({ packId, campaignId, context }) => ({
         packId,
         campaignId,
@@ -95,7 +110,14 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   const r3Gentle = r3Proof.routes.filter((route) => route.difficulty === 'gentle');
   assert.equal(r3Gentle.length, 6);
   assert.ok(r3Gentle.every((route) => route.campaignKey === r3[0].context.campaignKey));
+  const r4 = sources.filter((source) => source.packId === 'fpv-arcade-r4');
+  assert.equal(r4.length, 1);
+  assert.equal(r4Proof.baseCampaignKey, r4[0].context.baseCampaignKey);
+  const r4Gentle = r4Proof.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(r4Gentle.length, 6);
+  assert.ok(r4Gentle.every((route) => route.campaignKey === r4[0].context.campaignKey));
   const combined = [
+    ...r4Gentle,
     ...r3Gentle,
     ...r2Gentle,
     ...proof.routes,
@@ -104,7 +126,11 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
       campaignKey: firstLightProof.campaignKey,
     })),
   ];
-  assert.equal(expected.length, 76, 'All 38 shipped maps need both real steering routes.');
+  assert.equal(
+    expected.length,
+    82,
+    'All 41 active and archived maps need both real steering routes.',
+  );
   assert.deepEqual(combined.map(routeKey).sort(), expected.sort());
 });
 
@@ -186,4 +212,12 @@ test('R3 Gentle coverage is backed by twelve route wins and four real impact dem
   assert.equal(gentle.length, 6);
   assert.ok(gentle.every((route) => route.lives === 5 && route.livesLost === 0));
   assert.equal(result.demonstrations.length, 4);
+});
+
+test('R4 Gentle coverage is backed by twelve direction-only exact core and replay wins', async () => {
+  const { verifyFpvR4 } = await import('../../scripts/verify-fpv-r4.mjs');
+  const result = await verifyFpvR4();
+  const gentle = result.routes.filter((route) => route.id.startsWith('gentle/'));
+  assert.equal(gentle.length, 6);
+  assert.ok(gentle.every((route) => route.lives === 5 && route.livesLost === 0));
 });
