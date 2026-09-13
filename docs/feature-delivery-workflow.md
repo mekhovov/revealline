@@ -86,6 +86,8 @@ For the current root correction, retire only the mutable-root registration throu
 
 ## Reusable agent requests
 
+For device-aware controls, follow the [current touch presentation review](research/round-47-collection-and-production.md#touch-presentation-follow-up). Show only available authored actions; keep Arcade pickups automatic. Verify input-device changes preserve pause and clear stale physical input, action icons match their effects, and touch controls respect safe areas without covering the complete arena. A simulated adapter or resized window does not qualify a physical controller or phone.
+
 - “Finish the terminal menu feature; reproduce win/loss using the actual host; verify every visible action without a mouse; preserve saved runs; follow the delivery path and report the public source SHA.”
 - “Create a new enemy appearance for a registered role, inspect its direction and damage cues on phone and desktop, compare simulation checkpoints, and publish the validated cosmetic feature without altering old campaigns.”
 - “Prepare an MP3 playlist update with source credits and an exact binary backup. Keep the session song playing across menus and ordinary pause. Verify actual uploaded audio separately from synthetic fixtures.”
