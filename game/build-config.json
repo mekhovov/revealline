@@ -8,7 +8,8 @@
     "authoring/motion-lab/render-character.mjs",
     "authoring/motion-lab/presets.json",
     "authoring/motion-lab/assets",
-    "authoring/enemy-catalog"
+    "authoring/enemy-catalog",
+    "authoring/still-media"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
