@@ -1,6 +1,9 @@
 # Still-picture identity prompts
 
-These prose examples use the [still-image foundation](../../docs/media-presentation.md). They do not add registered CLI IDs, install art, migrate storage or prove browser readiness.
+These prose examples use the [still-image foundation](../../docs/media-presentation.md). They do not add registered CLI IDs, install art, migrate storage or prove browser readiness. The explicit [source workshop](../../docs/still-media-workshop.md) has a separate real v3 opening and administrative assignment boundary.
+
+- “Use the source still-picture workshop to import this original PNG for an installed dev map/world. Explain the real shared v3 upgrade before opening, preview the decoded bytes, save explicitly and reload. Preserve the original file; report assignment/byte checks separately from unchanged live game and Collection artwork.”
+- “Review a pending still assignment while another tab changes the installed pack or media generation. Confirm final save refuses stale context under the source locks/CAS, the prior preview survives decode/write failure, and audio recovery exports the unchanged `.rlsound` bytes through the same v3 manager. Do not claim earned receipt, complete still backup or hardware coverage.”
 
 - “Prepare this original PNG or JPEG with its full source/prompt provenance through `prepareStillAsset` using a real decoder. Report actual original hash, bytes and dimensions. Preserve the file, reject invalid/oversized media and keep generated source artwork outside runtime packs until explicit integration.”
 - “Create four explicit presentation assignments for one installed map's four themes. Derive each exact authored tuple through the execution catalog. Check Standard and Gentle's actual map revisions resolve to the same base tuple; do not edit the level's theme, name, revision, campaign or roster to attach the pictures.”
