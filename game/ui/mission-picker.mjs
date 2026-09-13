@@ -1,7 +1,10 @@
 const attached = new WeakMap();
 
 /** Reorganize the existing mission controls. Native selects remain the host boundary. */
-export function attachMissionPicker({ document: doc = globalThis.document } = {}) {
+export function attachMissionPicker({
+  document: doc = globalThis.document,
+  archivedIds = [],
+} = {}) {
   if (attached.has(doc)) return attached.get(doc);
   const deck = doc.querySelector('.flight-deck'),
     pack = doc.getElementById('pack-select'),
@@ -9,6 +12,9 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
     missions = doc.getElementById('missions'),
     status = doc.getElementById('content-select-status');
   if (!deck || !pack || !levels || !missions || !status) return null;
+  // The host supplies IDs from its validated archive catalog. Names and
+  // installed/custom pack identities never infer an archive classification.
+  const olderIds = new Set(archivedIds);
   const original = [...deck.children];
   const heading = original.find((node) => node.classList.contains('deck-heading')),
     campaignHeading = original.find((node) => node.classList.contains('section-line')),
@@ -25,6 +31,15 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
     chapters = node('section', 'mission-picker-chapters', 'mission-picker-chapter-section'),
     title = node('h3', 'mission-picker-title', '', 'Choose a chapter'),
     cards = node('div', 'mission-picker-cards', 'mission-picker-cards'),
+    older = node('details', 'mission-picker-older', 'mission-picker-older'),
+    olderSummary = node('summary', 'mission-picker-older-summary', '', 'Older chapters'),
+    olderNote = node(
+      'p',
+      null,
+      'mission-picker-older-note',
+      'Earlier First Light editions keep their original rules and progress.',
+    ),
+    olderCards = node('div', 'mission-picker-older-cards', 'mission-picker-cards'),
     missionArea = node('section', 'mission-picker-missions', 'mission-picker-missions'),
     setup = node('details', 'mission-picker-setup', 'mission-picker-setup'),
     summary = node('summary', null, '', 'Flight setup'),
@@ -33,8 +48,12 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
   chapters.setAttribute('aria-labelledby', title.id);
   cards.setAttribute('role', 'group');
   cards.setAttribute('aria-labelledby', title.id);
+  olderSummary.setAttribute('aria-controls', olderCards.id);
+  olderCards.setAttribute('role', 'group');
+  olderCards.setAttribute('aria-labelledby', olderSummary.id);
   missionArea.setAttribute('aria-label', 'Missions in this chapter');
-  chapters.append(title, cards);
+  older.append(olderSummary, olderNote, olderCards);
+  chapters.append(title, cards, older);
   missionArea.append(status);
   if (campaignHeading) missionArea.append(campaignHeading);
   missionArea.append(missions);
@@ -97,7 +116,8 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
     setAttribute(stage, 'data-status', status.dataset.kind === 'error' ? 'error' : 'normal');
     const options = [...pack.options],
       wanted = new Set(options.map((option) => option.value));
-    const order = [];
+    const order = [],
+      archivedOrder = [];
     for (const option of options) {
       let row = rows.get(option.value);
       if (!row) {
@@ -130,7 +150,7 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
       row.button.disabled =
         disabled || option.disabled || !!option.parentElement?.disabled || currentActivity;
       setAttribute(row.button, 'aria-pressed', String(selected));
-      order.push(row.button);
+      (olderIds.has(option.value) ? archivedOrder : order).push(row.button);
     }
     for (const [value, row] of rows)
       if (!wanted.has(value)) {
@@ -139,14 +159,23 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
         rows.delete(value);
       }
     // Keep native button identity and focus when options are rebuilt in place.
-    if (
-      order.length !== cards.children.length ||
-      order.some((button, index) => cards.children[index] !== button)
-    ) {
-      const focused = cards.contains(doc.activeElement) ? doc.activeElement : null;
-      cards.append(...order);
-      if (focused?.isConnected && !focused.disabled) focused.focus({ preventScroll: true });
+    for (const [container, buttons] of [
+      [cards, order],
+      [olderCards, archivedOrder],
+    ]) {
+      if (
+        buttons.length !== container.children.length ||
+        buttons.some((button, index) => container.children[index] !== button)
+      ) {
+        const focused = container.contains(doc.activeElement) ? doc.activeElement : null;
+        container.append(...buttons);
+        if (focused?.isConnected && !focused.disabled && (container !== olderCards || older.open))
+          focused.focus({ preventScroll: true });
+      }
     }
+    older.hidden = archivedOrder.length === 0;
+    const olderLabel = `Older chapters (${archivedOrder.length})`;
+    if (olderSummary.textContent !== olderLabel) olderSummary.textContent = olderLabel;
   }
   function schedule() {
     if (destroyed || scheduled) return;
@@ -168,6 +197,11 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
     });
   listen(pack, 'change', schedule);
   listen(levels, 'change', schedule);
+  listen(older, 'toggle', () => {
+    // A native summary click already owns focus. Also handle deliberate
+    // programmatic collapse without leaving focus on a now-hidden card.
+    if (!destroyed && !older.open && olderCards.contains(doc.activeElement)) olderSummary.focus();
+  });
   sync();
   const api = Object.freeze({
     sync,
@@ -180,6 +214,7 @@ export function attachMissionPicker({ document: doc = globalThis.document } = {}
           ? target
           : [...rows.values()].find((row) => !row.button.disabled)?.button;
       if (!available) return false;
+      if (olderCards.contains(available)) older.open = true;
       available.focus();
       available.scrollIntoView({ block: 'nearest', inline: 'nearest' });
       return true;
