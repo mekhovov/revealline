@@ -1,0 +1,197 @@
+{
+  "format": "xonix-playground.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "id": "tactical-borrowed-seconds",
+    "revision": "1",
+    "name": "Borrowed seconds",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": []
+    },
+    "spawn": {
+      "x": 36.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "enemies": [
+      {
+        "id": "crossing-patrol",
+        "type": "bouncer",
+        "x": 40.5,
+        "y": 5.5,
+        "vx": -2,
+        "vy": 0
+      }
+    ],
+    "objectives": [
+      {
+        "id": "clearing-relay",
+        "x": 18.5,
+        "y": 18.5,
+        "required": true,
+        "hidden": false
+      }
+    ],
+    "supplies": [
+      {
+        "id": "home-supply",
+        "x": 36.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ],
+    "signalZones": [],
+    "hangars": [],
+    "goal": {
+      "coverage": 0.45
+    },
+    "rules": {
+      "lives": 1,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "graceSeconds": 0,
+      "respawnSeconds": 0.1,
+      "stopOnCapture": true,
+      "cutTimeLimitSeconds": 8,
+      "timeLimitSeconds": 30,
+      "timeMedals": [8, 15]
+    },
+    "metadata": {
+      "description": "Recommended: Light carrier. Collect a charge on the home supply pad. Fly Down about five cells, then use Equipment to hold the approaching field patrol while you finish the cut. Secure 45% and the relay. Supply is a separate action; an empty carrier cannot place a field. The field grants time, not territory or relay delivery. One life; keep moving while the cable is exposed. Original abstract teaching board."
+    }
+  },
+  "theme": {
+    "id": "fpv",
+    "name": "FPV Front",
+    "subtitle": "Dawn over home",
+    "family": "fpv",
+    "player": "fpv-body",
+    "enemyShape": "tank",
+    "patrolShape": "drone",
+    "bossShape": "radar",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply pad",
+      "enemy": "Invader patrol",
+      "boss": "Signal sentinel",
+      "currency": "Score",
+      "ability": "Equipment"
+    },
+    "palette": {
+      "ink": "#112d35",
+      "paper": "#f5f1e6",
+      "muted": "#8baaa5",
+      "accent": "#e9c46a",
+      "safe": "#81b5bf",
+      "danger": "#f08168",
+      "field": "#102831",
+      "grid": "#193941",
+      "sky": "#dfb781",
+      "land": "#687c55"
+    },
+    "classBodies": {
+      "scout": "scout-quad",
+      "bomber": "fpv-body",
+      "carrier": "heavy-lift",
+      "interceptor": "scout-quad",
+      "fiber": "fpv-body",
+      "impact": "fpv-body",
+      "trapper": "fpv-body"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "Scout",
+      "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    },
+    {
+      "id": "bomber",
+      "label": "Light carrier",
+      "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+      "primitive": "stun-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "carrier",
+      "label": "Heavy carrier",
+      "description": "Carry two charges; each creates the same temporary stun field.",
+      "primitive": "stun-field",
+      "capacity": 2,
+      "cooldown": 2,
+      "duration": 2.5,
+      "radius": 3,
+      "revision": "1"
+    },
+    {
+      "id": "interceptor",
+      "label": "Interceptor",
+      "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+      "primitive": "shield",
+      "capacity": 0,
+      "cooldown": 9,
+      "duration": 1.5,
+      "radius": 0,
+      "revision": "1"
+    },
+    {
+      "id": "fiber",
+      "label": "Fiber relay",
+      "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 7,
+      "duration": 3,
+      "radius": 30,
+      "signalResistance": true,
+      "moveSpeedMultiplier": 1,
+      "revision": "1"
+    },
+    {
+      "id": "impact",
+      "label": "Impact craft",
+      "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+      "primitive": "impact-pulse",
+      "capacity": 0,
+      "cooldown": 10,
+      "duration": 3,
+      "radius": 5,
+      "revision": "1"
+    },
+    {
+      "id": "trapper",
+      "label": "Trapper",
+      "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+      "primitive": "slow-field",
+      "capacity": 1,
+      "cooldown": 2,
+      "duration": 4,
+      "radius": 4,
+      "slowFactor": 0.25,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "bomber",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {},
+  "masteryDefinition": null
+}
