@@ -26,6 +26,9 @@ const r2URL = new URL('../game/replays/fpv-arcade-r2-routes.json', import.meta.u
 const r3Proof = JSON.parse(
   await readFile(new URL('../game/replays/fpv-arcade-r3-routes.json', import.meta.url)),
 );
+const r4Proof = JSON.parse(
+  await readFile(new URL('../game/replays/fpv-arcade-r4-routes.json', import.meta.url)),
+);
 const impactDemo = JSON.parse(
   await readFile(new URL('../game/content/scenarios/line-impact-demo.json', import.meta.url)),
 );
@@ -50,12 +53,12 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide plus six R2 and six R3 Standard outcomes with twelve separate Gentle outcomes', async () => {
+test('bounded aggregate batches preserve 52 historical outcomes and add six R4 Standard with eighteen separate Gentle outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
   assert.equal(proof.routes.length, 32);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 52);
-  assert.equal(result.supplementalGentleVerified, 12);
+  assert.equal(result.verified, 58);
+  assert.equal(result.supplementalGentleVerified, 18);
   assert.deepEqual(
     result.results.slice(0, 32),
     proof.routes.map((route) => route.expected),
@@ -84,13 +87,36 @@ test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then v
     r2Proof.routes.filter((route) => route.difficulty === 'gentle').map((route) => route.expected),
   );
   assert.deepEqual(
-    result.results.slice(46),
+    result.results.slice(46, 52),
     r3Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
   );
   assert.deepEqual(
-    result.supplementalGentleResults.slice(6),
+    result.supplementalGentleResults.slice(6, 12),
     r3Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
   );
+  assert.deepEqual(
+    result.results.slice(52),
+    r4Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
+  );
+  assert.deepEqual(
+    result.supplementalGentleResults.slice(12),
+    r4Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
+  );
+  const arcade = await expansionSources({ scope: 'arcade' });
+  assert.deepEqual(arcade.map((pack) => pack.id).sort(), ['fpv-arcade-r3', 'fpv-arcade-r4']);
+  for (const batch of [packs, arcade])
+    assert.ok(Buffer.byteLength(JSON.stringify(batch)) < 64 * 1024 * 1024);
+  const [{ readPackIndexes }, { fileURLToPath }] = await Promise.all([
+    import('./pack-indexes.mjs'),
+    import('node:url'),
+  ]);
+  const index = await readPackIndexes(fileURLToPath(new URL('../', import.meta.url)));
+  assert.deepEqual(
+    [...new Set([...packs, ...arcade].map((pack) => pack.id))].sort(),
+    index.all.map((entry) => entry.id).sort(),
+  );
+  assert.equal(index.all.length, 10);
+  await assert.rejects(expansionSources({ scope: 'skip-archives' }), /source scope/);
   assert.equal(result.impactDemonstrations.length, 4);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });

@@ -362,6 +362,60 @@ test('physical clears keep Boost independent and notify after reset without poll
   assert.deepEqual(f.input.poll(), { ...neutral(), direction: 'right' });
 });
 
+test('local release frees captures and local actions while preserving a fresh controller direction and Boost', (t) => {
+  let clears = 0;
+  const f = fixture(t, { tap: true, onClear: () => clears++ });
+  f.input.poll();
+  f.down('down', 1);
+  f.input.poll();
+  f.down('boost', 2);
+  f.lift('boost', 2);
+  f.key('KeyE');
+  f.key('KeyR');
+  assert.equal(f.controls.down.hasPointerCapture(1), true);
+  assert.equal(f.input.localBoostActive(), true);
+  f.setCommand({ direction: 'right', boost: true });
+  const reads = f.reads;
+  f.input.releaseLocalControls();
+  assert.equal(f.reads, reads, 'Cleanup never samples the controller twice.');
+  assert.equal(f.controls.down.hasPointerCapture(1), false);
+  assert.equal(f.input.localBoostActive(), false);
+  assert.equal(clears, 0, 'Local cleanup does not invoke the host controller-toggle cancellation.');
+  assert.deepEqual(f.input.poll(), { ...neutral(), direction: 'right', boost: true });
+});
+
+test('local release preserves a pending local tie and cannot revive a stationary held controller direction', (t) => {
+  const f = fixture(t);
+  f.input.poll();
+  f.setCommand({ direction: 'right' });
+  assert.equal(f.input.poll().direction, 'right');
+  f.key('KeyW');
+  f.setCommand({ direction: 'down' });
+  f.input.releaseLocalControls();
+  assert.equal(f.input.poll().direction, 'up', 'New local input wins the same-sample tie.');
+  assert.equal(
+    f.input.poll().direction,
+    'up',
+    'The consumed held pad cannot reclaim a later frame.',
+  );
+  f.setCommand({});
+  f.input.poll();
+  f.setCommand({ direction: 'left' });
+  assert.equal(f.input.poll().direction, 'left');
+});
+
+test('local release never relaxes the existing pause/restore held-pad neutral gate', (t) => {
+  const f = fixture(t);
+  f.setCommand({ direction: 'left', boost: true });
+  f.input.restoreDirection('right');
+  f.input.releaseLocalControls();
+  assert.deepEqual(f.input.poll(), { ...neutral(), direction: 'right' });
+  f.setCommand({});
+  f.input.poll();
+  f.setCommand({ direction: 'left', boost: true });
+  assert.deepEqual(f.input.poll(), { ...neutral(), direction: 'left', boost: true });
+});
+
 test('default sampler preserves intent on owner disconnect and gates its replacement', (t) => {
   const f = fixture(t, { external: false }),
     first = makePad(4),

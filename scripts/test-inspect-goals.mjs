@@ -189,7 +189,7 @@ test('CLI report writes a new file once and cannot overwrite source or an existi
 });
 
 test('all indexed packs include First Light and retain old fallback registrations', async () => {
-  assert.deepEqual(await validatePacks(), { packs: 9, packLevels: 26, packGoals: 6 });
+  assert.deepEqual(await validatePacks(), { packs: 10, packLevels: 29, packGoals: 6 });
 });
 
 test('index validation rejects traversal, duplicate IDs, mismatches and bad local references', async (t) => {

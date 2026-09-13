@@ -1,4 +1,5 @@
 import { preparePackCatalog, packLaunchHref } from '../game/content-launch.mjs';
+import { archivedPlayHref } from './release-links.mjs';
 
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
@@ -10,8 +11,6 @@ const packSelect = document.querySelector('#landing-pack-select');
 const levelSelect = document.querySelector('#landing-level-select');
 const packPlay = document.querySelector('#landing-pack-play');
 const packStatus = document.querySelector('#landing-pack-status');
-
-const historicalPlayPath = (record) => `./releases/${record.play}`;
 
 const savedClears = (campaign) => {
   try {
@@ -45,18 +44,22 @@ picker.addEventListener('change', () => {
 });
 
 try {
-  const response = await fetch('./releases/index.json', { cache: 'no-cache' });
+  const response = await fetch('../releases/index.json', { cache: 'no-cache' });
   if (!response.ok) throw new Error('archive unavailable');
   const payload = await response.json();
   const releases = Array.isArray(payload.releases) ? payload.releases : [];
   releases.sort((a, b) =>
     String(b.version).localeCompare(String(a.version), undefined, { numeric: true }),
   );
+  let available = 0;
   for (const record of releases) {
     if (!record || typeof record.version !== 'string' || typeof record.play !== 'string') continue;
-    addOption(`${record.version} · preserved`, historicalPlayPath(record));
+    const href = archivedPlayHref(record.canonicalPlay) ?? archivedPlayHref(record.play);
+    if (!href) continue;
+    addOption(`${record.version} · preserved`, href);
+    available++;
   }
-  status.textContent = `${releases.length} preserved build${releases.length === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
+  status.textContent = `${available} preserved build${available === 1 ? '' : 's'} · ${currentLabel} remains the default.`;
 } catch {
   status.textContent = `The current build is ready. Preserved builds will appear when the archive is available.`;
 }
@@ -89,7 +92,7 @@ try {
     const pack = catalog.packs.find((item) => item.id === packSelect.value);
     const level = levelSelect.selectedOptions[0];
     if (!pack || !level) return;
-    packPlay.href = packLaunchHref('./game/', {
+    packPlay.href = packLaunchHref('../game/', {
       packId: pack.id,
       campaignId: level.dataset.campaignId,
       levelId: level.value,
@@ -100,7 +103,7 @@ try {
 
   packSelect.replaceChildren(
     ...catalog.packs.map(
-      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r3'),
+      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r4'),
     ),
   );
   populateLevels();

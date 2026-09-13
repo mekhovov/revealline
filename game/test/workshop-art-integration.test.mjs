@@ -450,9 +450,18 @@ test('public fixture generator emits six proven sessions/scenarios and a legally
   assert.equal(await readFile(path.join(out, manifest.files[0].name), 'utf8'), 'edited');
 });
 
-test('nine indexed packs exceed the unchanged installed-library cap; explicit older-edition removal preserves eight exact-art packs', async () => {
+test('historical nine packs retain their budget boundary; seven active packs allow any one archived edition without raising the cap', async () => {
   const index = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs/index.json')));
-  assert.equal(index.packs.length, 9);
+  const archiveIndex = JSON.parse(
+    await readFile(path.join(ROOT, 'game/content/packs/archive-index.json')),
+  );
+  assert.equal(index.packs.length, 7);
+  assert.equal(archiveIndex.packs.length, 3);
+  const historicalRefs = [
+    ...index.packs.filter((entry) => entry.id !== 'fpv-arcade-r4'),
+    ...archiveIndex.packs,
+  ];
+  assert.equal(historicalRefs.length, 9);
   const known = new Map(
     current.levelVisuals.map((entry) => {
       const dataUrl = entry.visualOverrides.background.dataUrl;
@@ -502,7 +511,7 @@ test('nine indexed packs exceed the unchanged installed-library cap; explicit ol
   }
   assert.equal(known.size, 9);
   const packs = await Promise.all(
-    index.packs.map(async (entry) =>
+    historicalRefs.map(async (entry) =>
       JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path))),
     ),
   );
@@ -539,5 +548,44 @@ test('nine indexed packs exceed the unchanged installed-library cap; explicit ol
       eight,
       'Rejected ninth pack never evicts or changes the installed library.',
     );
+  }
+  const active = [];
+  for (const entry of index.packs) {
+    const source = JSON.parse(await readFile(path.join(ROOT, 'game/content/packs', entry.path)));
+    active.push((await preparePack(source, { decodeImage })).pack);
+  }
+  const activeText = JSON.stringify({ format: 'xonix-pack-library.v1', packs: active });
+  assert.ok(Buffer.byteLength(activeText) < PACK_LIMITS.libraryBytes);
+  const installed = await importPackLibrary(activeText, { decodeImage });
+  assert.equal(installed.packs.length, 7);
+  for (const { id } of archiveIndex.packs) {
+    const archived = (
+      await preparePack(
+        packs.find((pack) => pack.id === id),
+        { decodeImage },
+      )
+    ).pack;
+    const withArchive = installPack(installed, archived);
+    assert.equal(withArchive.packs.length, 8);
+    const bytes = exportPackLibrary(withArchive);
+    assert.ok(Buffer.byteLength(bytes) <= PACK_LIMITS.libraryBytes);
+    assert.equal(exportPackLibrary(await importPackLibrary(bytes, { decodeImage })), bytes);
+    const another = (
+      await preparePack(
+        packs.find((pack) =>
+          archiveIndex.packs.some((entry) => entry.id === pack.id && entry.id !== id),
+        ),
+        { decodeImage },
+      )
+    ).pack;
+    assert.throws(() => installPack(withArchive, another), /byte budget/);
+    assert.equal(
+      exportPackLibrary(withArchive),
+      bytes,
+      'No archived edition is evicted to make room.',
+    );
+    const removed = removePack(withArchive, id);
+    assert.equal(exportPackLibrary(removed), activeText);
+    assert.equal(exportPackLibrary(installPack(removed, archived)), bytes);
   }
 });
