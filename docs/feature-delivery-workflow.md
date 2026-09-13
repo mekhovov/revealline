@@ -1,3 +1,5 @@
+> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
 # Feature delivery and public verification
 
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
@@ -131,3 +133,4 @@ All thirteen project skills already follow this shared workflow. For new asset p
 Preserve generated originals, actual tool output, effective prompts, reference roles and versioned provenance. Reuse the existing raster media importer and finite production adapters. Append new work and binding history to a separate candidate; validate with `--previous` and the expected current binding revision before an exclusive CLI proposal. Never overwrite an original pathname with different historical bytes, silently retarget a saved/earned owner, or infer a new campaign owner from art. Expanded theme ownership uses an immutable `variantOf` layout record in the same planning slot. Runtime/pack adoption remains a separately reviewed change.
 
 Keep the 29 map slots, 116 picture cells, seven player classes × four themes × two treatments, twelve stories, forty curated reserves and twenty-four tracks distinct. Shared rigs, reused layouts, derivatives, synth recipes and candidate music must not inflate finished counts. Human assessments name the actual reviewer, date, subject revision and evidence; unresolved failures and missing work stay visible. Viewing or generating an image never automatically fills quality, listening, device, browser or release checks.
+

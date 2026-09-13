@@ -4,6 +4,14 @@ This authoring tool tracks selected work and missing production checks. It suppl
 
 The seed describes source `62a92651b1dc51fc74ca25a545dd9bde35c2574c`, before v0.36 delivery. Its [production targets](../../docs/content-production-register.md) remain incomplete.
 
+```sh
+node authoring/production/cli.mjs report authoring/production/register-sentinel-themes.json
+node authoring/production/cli.mjs validate authoring/production/register-sentinel-themes.json --previous authoring/production/register.json --files
+node authoring/production/cli.mjs inspect authoring/production/register-sentinel-themes.json --slot picture.sentinel-listening.ukraine
+```
+
+This candidate contains 36 unique pictures, 80 unbound picture slots and the same nine proposed layout families. It grants no production assessments and does not install a chapter. The finite `sentinel-world` adapter reads the exact theme compiler metadata and descriptors; it checks original hashes, paths, dimensions, theme and authored owners without executing a producer or game. New layout records explicitly expand each old Sentinel family with the additional owners, retaining every earlier layout, work, binding and assessment.
+
 ## Run from the repository root
 
 ```sh
