@@ -38,7 +38,7 @@ node --test game/test/tactical-challenges.test.mjs
 | Blocked center                        | Enemy-trail loss after a seeded line front arrives; 660 immediate / 650 grid-center ticks |
 | Depot supply + field                  | 51.2998%, 12,340, 415 ticks; 300 enemy-stun ticks                                         |
 | Depot omitted pickup or omitted field | Enemy-trail loss, 195 ticks                                                               |
-| Depot equipment-free western gate     | 75.0867%, 17,830, 1,687 ticks, two captures                                               |
+| Depot equipment-free western gate     | 75.0867%, 17,830, 1,687 immediate / 1,699 grid-center ticks, two captures                 |
 | Fiber shortcut with or without Scan   | 53.0736%, 12,760, 846 ticks                                                               |
 | Fiber long dogleg                     | Cable-limit loss, 919 ticks, before the time limit                                        |
 | Scout through the same band           | Scan rejected by interference, cut-timeout loss, 966 ticks                                |
