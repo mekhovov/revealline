@@ -37,7 +37,7 @@ The real difficulty/campaign/level/class validators check these snapshots, inclu
 
 On new preparation, the current execution catalog must authorize every new picture revision. Already retained history can remain when that catalog is empty. Owner campaigns cannot change or disappear; their theme-ID sets may only grow. Asset and presentation history stays append-only under the foundation's immutable rules. Assignments can change or be removed without deleting originals.
 
-`legacy` preserves the entire prior v2 generic byte-reference document exactly. Generic originals may be audio, unknown source data or other binary media; they are never invented into image records. Once rich state exists, the manager refuses a generic-byte replacement, including through its low-level API. Existing unexplained physical files remain retained and counted for recovery under the manager's existing policy.
+`legacy` preserves every prior v2 generic ID→hash exactly. Verified new generic references may be added through [still-originals bundle restore](media-bundle.md); removal, replacement and ID collisions remain forbidden. Generic originals may be audio, unknown source data or other binary media; they are never invented into image records. Once rich state exists, the manager refuses a generic-byte replacement, including through its low-level API. Existing unexplained physical files remain retained and counted for recovery under the manager's existing policy.
 
 ## Adapter API
 
@@ -72,6 +72,8 @@ All still-image originals pass `prepareStillAsset`: bounded signature/header che
 Media and audio have independent generations but share one serialized six-store transaction scope, quota ledger, physical-hash inventory and reservation pool. Before the final write, the manager rechecks the actual current row's generation and all immutable rich history/owners/legacy references. A prepared object from another snapshot cannot overwrite changed history merely by guessing the current generation.
 
 The existing bounds remain unchanged: **256 MiB committed plus staging**, **64 MiB per generic source**, **2 MiB total rich metadata including owner snapshots**, at most **512 unique referenced files per media-domain transfer**, four concurrent reservations and a 15-minute lease. Still originals retain the smaller 4 MiB image limit; selected posters retain 1920 × 1080. The rich library's existing asset/revision/assignment caps also apply. These are ceilings, with additional JSON structural/string limits; the owner snapshots consume real metadata capacity rather than receiving a separate uncounted allowance.
+
+Each physical Blob store also retains its existing 512-row read bound. The final write transaction now checks that prospective count, including unexplained retained originals and cross-domain reuse, before inserting files. A 512-reference import alongside an unrelated retained original therefore refuses; 511 plus that original fits. It does not remove unexplained files to manufacture room or commit a state the next read would reject.
 
 Existing files with matching verified hashes are reused without staging another physical copy. Media references protect shared originals when audio removes its own reference. Reported browser storage headroom can refuse a write, but remains advisory; a real quota/write failure aborts the whole IndexedDB transaction. Existing rows and blobs survive, and only this operation's reservation is released. Other operations and unknown originals remain intact. No cap is increased to accept a candidate.
 
