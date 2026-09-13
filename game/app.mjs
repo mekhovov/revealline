@@ -486,6 +486,8 @@ try {
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
+  const picturePreparingMessage =
+    'Preparing the chosen picture. Flight stays paused until it is ready.';
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   legacyPictureButton.textContent = 'Use original pack artwork';
@@ -3073,7 +3075,7 @@ try {
       pictureResume = ticket;
       paused = true;
       clearInput();
-      warning('Preparing the chosen picture. Flight stays paused until it is ready.');
+      warning(picturePreparingMessage);
       void owner
         .ensure(selectedTheme)
         .then(() => {
@@ -3108,6 +3110,8 @@ try {
     courseEntryMessage = '';
     started = true;
     paused = false;
+    if ($('run-message').textContent === picturePreparingMessage)
+      warning('Picture ready. Flight is running.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
