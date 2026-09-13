@@ -352,6 +352,7 @@ export function attachLibraryPanel(api) {
     }
   }
   async function backupOptions() {
+    await api.assertExternalBackupSupported?.();
     let media = null;
     try {
       media = api.pictureMedia ? await api.pictureMedia() : null;
@@ -555,6 +556,7 @@ export function attachLibraryPanel(api) {
   };
   $('export-packs').onclick = () =>
     task('pack-status', async () => {
+      await api.assertExternalBackupSupported?.();
       const text = exportPackLibrary(api.get().packs);
       $('pack-json').value = text;
       const exported = await downloadJSON(JSON.parse(text), 'revealline-expansion-packs.json');
