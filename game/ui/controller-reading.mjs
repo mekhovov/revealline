@@ -1,4 +1,4 @@
-/** Bind the two first-party reading surfaces. The navigation adapter owns
+/** Bind the finite first-party reading surfaces. The navigation adapter owns
  * scrolling/focus; this host layer owns visible controls and the pause boundary. */
 export function attachControllerReading({
   document: doc = globalThis.document,
@@ -7,10 +7,13 @@ export function attachControllerReading({
   getScope,
   pause = () => {},
   onTransition = () => {},
+  additionalSurfaces = [],
+  compactOverlay = false,
 } = {}) {
   const definitions = [
     ['overlay-reading', 'overlay-read', 'Mission details', 'overlay-reading-unit'],
     ['mission-brief-reading', 'mission-brief-read', 'Mission brief', 'mission-brief-unit'],
+    ...additionalSurfaces,
   ];
   const surfaces = definitions.map(([id, entryId, label, unitId]) => {
     const surface = {
@@ -46,6 +49,20 @@ export function attachControllerReading({
       surface.hint.textContent = active
         ? `Reading ${surface.label}. ${prompt()}`
         : 'Read without starting or resuming.';
+      if (compactOverlay && surface.id === 'overlay-reading') {
+        const { clientHeight, scrollHeight } = surface.region;
+        const measured =
+          Number.isFinite(clientHeight) && clientHeight > 0 && Number.isFinite(scrollHeight);
+        const needed = active || !measured || scrollHeight > clientHeight + 1;
+        surface.entry.hidden = !needed;
+        surface.done.hidden = !active;
+        surface.hint.hidden = !active;
+        surface.region.tabIndex = needed ? 0 : -1;
+        const toolbar = surface.entry.closest?.('.reading-toolbar');
+        if (toolbar) toolbar.hidden = !needed;
+        if (!needed && [surface.entry, surface.done].includes(doc.activeElement))
+          getNavigation().engage();
+      }
     }
   }
   function changed(state) {
@@ -68,6 +85,10 @@ export function attachControllerReading({
       if (destroyed || getNavigation().readingState()?.regionId === surface.id) return;
       if (surface.id === 'mission-brief-reading' && getScope() === 'flight') pause(true);
       if (getScope() === 'flight') return;
+      // The navigation adapter validates the exit before entering. Compact
+      // panels expose it for this synchronous transition, then refresh from
+      // the accepted reading state (or hide it again if entry was rejected).
+      if (compactOverlay && surface.id === 'overlay-reading') surface.done.hidden = false;
       if (
         getNavigation().beginReading({
           region: surface.region,
@@ -78,6 +99,7 @@ export function attachControllerReading({
       ) {
         surface.unit.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
       }
+      refresh();
     });
     // End-only: a preceding pointerdown may already have relinquished reading.
     // The stable button never becomes a Start/Resume action or toggles back in.
@@ -91,6 +113,17 @@ export function attachControllerReading({
       if (!brief.open && getNavigation().readingState()?.regionId === 'mission-brief-reading')
         getNavigation().endReading({ restoreFocus: false });
     });
+  const overlay = compactOverlay
+    ? surfaces.find((surface) => surface.id === 'overlay-reading')
+    : null;
+  const Resize = doc.defaultView?.ResizeObserver ?? globalThis.ResizeObserver;
+  const Mutation = doc.defaultView?.MutationObserver ?? globalThis.MutationObserver;
+  const resize = overlay && typeof Resize === 'function' ? new Resize(refresh) : null;
+  const mutation = overlay && typeof Mutation === 'function' ? new Mutation(refresh) : null;
+  if (overlay) {
+    resize?.observe(overlay.region);
+    mutation?.observe(overlay.region, { subtree: true, childList: true, characterData: true });
+  }
   refresh();
   return {
     changed,
@@ -100,6 +133,8 @@ export function attachControllerReading({
       if (destroyed) return;
       getNavigation().endReading({ restoreFocus: false });
       destroyed = true;
+      resize?.disconnect();
+      mutation?.disconnect();
       for (const remove of listeners) remove();
     },
   };

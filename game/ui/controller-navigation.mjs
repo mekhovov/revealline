@@ -14,6 +14,8 @@ export function attachControllerNavigation({
   onMenu = () => {},
   onHint = () => {},
   onReadingChange = () => {},
+  onNativeInput = () => {},
+  keyboard = false,
 } = {}) {
   let scope = null,
     root = null,
@@ -198,14 +200,27 @@ export function attachControllerNavigation({
       // now would disable Done before its click can restore the reading origin.
       // No action runs on pointerdown, so dragging away may still cancel a click.
       event.preventDefault();
+      onNativeInput(event);
       return;
     }
     relinquish();
+    onNativeInput(event);
   });
   listen('pointercancel', () => {
     if (reading) relinquish();
   });
-  listen('keydown', relinquish);
+  listen('keydown', (event) => {
+    if (keyboard && keyboardNavigation(event)) {
+      onNativeInput(event);
+      return;
+    }
+    if ((reading || editing) && event.key === 'Escape' && !event.defaultPrevented) {
+      event.preventDefault();
+      if (reading) endReading();
+      else cancelEdit('Choice cancelled.');
+    } else relinquish();
+    onNativeInput(event);
+  });
   listen('focusin', (event) => {
     if (focusing) return;
     if (reading && event.target !== reading.region)
@@ -433,6 +448,117 @@ export function attachControllerNavigation({
         `${boundary === 'all' ? 'All text is visible.' : boundary === 'start' ? 'Start of details.' : 'End of details.'} ${readingHint()}`,
       );
     reading.boundary = boundary;
+  }
+  function keyboardNavigation(event) {
+    if (
+      event.defaultPrevented ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      ![
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'Tab',
+        'Escape',
+        'Enter',
+        ' ',
+        'PageUp',
+        'PageDown',
+        'Home',
+        'End',
+      ].includes(event.key)
+    )
+      return false;
+    sync();
+    if (scope === 'flight' || root === doc || !root) return false;
+    // Holding the key that opened a panel must not activate its new primary
+    // action (or immediately resume a flight just paused by Escape).
+    if (
+      event.repeat &&
+      (event.key === 'Escape' ||
+        (['Enter', ' '].includes(event.key) &&
+          !event.target?.closest?.(
+            'input,select,textarea,[contenteditable]:not([contenteditable="false"])',
+          )))
+    ) {
+      event.preventDefault();
+      return true;
+    }
+    if (reading) {
+      if (['ArrowUp', 'ArrowDown'].includes(event.key)) {
+        event.preventDefault();
+        readDirection(event.key === 'ArrowUp' ? 'up' : 'down');
+        return true;
+      }
+      if (['Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) {
+        event.preventDefault();
+        const metrics = readingMetrics(reading.region);
+        const target =
+          event.key === 'Home'
+            ? 0
+            : event.key === 'End'
+              ? metrics.max
+              : reading.region.scrollTop +
+                (event.key === 'PageUp' ? -1 : 1) * reading.region.clientHeight;
+        reading.region.scrollTop = Math.max(0, Math.min(metrics.max, target));
+        return true;
+      }
+      if (['Enter', ' ', 'Escape'].includes(event.key)) {
+        event.preventDefault();
+        endReading();
+        return true;
+      }
+      if (event.key === 'Tab') endReading({ restoreFocus: false });
+      else return false;
+    }
+    if (editing && event.key === 'Escape') {
+      event.preventDefault();
+      cancelEdit('Choice cancelled.');
+      return true;
+    }
+    if (event.key === 'Escape') {
+      // Native dialogs keep their cancellable Escape lifecycle.
+      if (root.tagName === 'DIALOG') return false;
+      event.preventDefault();
+      relinquish();
+      onBack();
+      return true;
+    }
+    const items = controls(),
+      current = items.indexOf(doc.activeElement);
+    if (event.key === 'Tab') {
+      if (root.tagName === 'DIALOG') return false;
+      if (!items.length) return false;
+      event.preventDefault();
+      relinquish();
+      const next =
+        current < 0
+          ? event.shiftKey
+            ? items.length - 1
+            : 0
+          : (current + (event.shiftKey ? -1 : 1) + items.length) % items.length;
+      focus(items[next]);
+      return true;
+    }
+    if (['Enter', ' '].includes(event.key)) {
+      if (current >= 0) return false; // Native activation owns actual controls.
+      event.preventDefault();
+      ensureFocus(); // A first key from outside the panel only restores focus.
+      return true;
+    }
+    if (!event.key.startsWith('Arrow')) return false;
+    const nativeEditor = event.target?.closest?.(
+      'input,select,textarea,[contenteditable]:not([contenteditable="false"])',
+    );
+    if (nativeEditor && visible(nativeEditor)) return false;
+    event.preventDefault();
+    relinquish();
+    if (current < 0) ensureFocus();
+    else
+      move({ ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' }[event.key]);
+    return true;
   }
   function handle(command = {}) {
     if (destroyed) return;

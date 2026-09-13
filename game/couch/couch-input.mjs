@@ -33,13 +33,19 @@ export function attachCouchInput({
   arena = doc.getElementById('race-canvas-0'),
   active = () => true,
   tapMode = () => false,
+  continuousSteering = () => false,
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
 } = {}) {
+  if (typeof continuousSteering !== 'function')
+    throw new TypeError('continuousSteering must be a function.');
   const held = new Map(),
     captures = new Map(),
     keyDown = new Set(),
+    physicalKeys = new Set(),
+    physicalPointers = new Set(),
+    freshGestures = new WeakSet(),
     listeners = [];
   const players = Array.from({ length: 2 }, () => ({
     direction: null,
@@ -49,6 +55,8 @@ export function attachCouchInput({
     blocked: true,
     pad: neutralPad(),
     slot: null,
+    lastPadDirection: null,
+    localDirectionPending: false,
   }));
   const buttons = [...doc.querySelectorAll('.race-pad')].flatMap((pad) =>
     [...pad.querySelectorAll('button')].map((element) => ({
@@ -62,13 +70,38 @@ export function attachCouchInput({
   );
   let order = 0,
     destroyed = false;
-  const listen = (target, type, fn) => {
-    target.addEventListener(type, fn);
-    listeners.push(() => target.removeEventListener(type, fn));
+  const continuous = () => continuousSteering() === true;
+  const listen = (target, type, fn, options) => {
+    target.addEventListener(type, fn, options);
+    listeners.push(() => target.removeEventListener(type, fn, options));
   };
   const editing = (target) =>
     !!target?.closest?.('input,select,textarea,[contenteditable]:not([contenteditable="false"])');
   const activation = (e) => e.key === 'Enter' || e.key === ' ';
+  const freshKey = (e) => (continuous() ? freshGestures.has(e) : !e.repeat);
+  listen(
+    win,
+    'keydown',
+    (e) => {
+      if (!continuous()) return;
+      if (!e.repeat && !physicalKeys.has(e.code)) freshGestures.add(e);
+      physicalKeys.add(e.code);
+    },
+    true,
+  );
+  listen(win, 'keyup', (e) => physicalKeys.delete(e.code), true);
+  listen(
+    win,
+    'pointerdown',
+    (e) => {
+      if (!continuous()) return;
+      if (!physicalPointers.has(e.pointerId)) freshGestures.add(e);
+      physicalPointers.add(e.pointerId);
+    },
+    true,
+  );
+  listen(win, 'pointerup', (e) => physicalPointers.delete(e.pointerId), true);
+  listen(win, 'pointercancel', (e) => physicalPointers.delete(e.pointerId), true);
   const commandFor = (player) => {
     const state = players[player],
       values = [...held.values()].filter((v) => v.player === player);
@@ -76,7 +109,9 @@ export function attachCouchInput({
       .filter((v) => directions.includes(v.kind))
       .sort((a, b) => b.order - a.order)[0]?.kind;
     return {
-      direction: direction || state.direction || state.pad.direction,
+      direction: continuous()
+        ? state.direction
+        : direction || state.direction || state.pad.direction,
       boost: state.boost || state.pad.boost || values.some((v) => v.kind === 'boost'),
       action: state.pending.action || state.pad.action,
       pickup: state.pending.pickup || state.pad.pickup,
@@ -111,16 +146,18 @@ export function attachCouchInput({
       button.keyTimer = null;
     }, 0);
   };
-  function clearPlayer(player) {
+  function resetPlayer(player, preserveDirection = false) {
     const state = players[player];
     for (const [key, value] of held) if (value.player === player) held.delete(key);
     for (const code of keyDown) if (bindings[code]?.[0] === player) keyDown.delete(code);
-    state.direction = null;
+    if (!preserveDirection) state.direction = null;
     state.boost = false;
     state.pending = { action: false, pickup: false };
     state.last = neutralCommand();
     state.pad = neutralPad();
     state.blocked = true;
+    state.lastPadDirection = null;
+    state.localDirectionPending = false;
     for (const [id, capture] of [...captures]) if (capture.player === player) releaseCapture(id);
     for (const button of buttons)
       if (button.player === player) {
@@ -128,19 +165,46 @@ export function attachCouchInput({
         if (button.keyGuard) endGuard(button);
       }
   }
+  function requirePlayer(player) {
+    if (player !== 0 && player !== 1) throw new TypeError('Player must be 0 or 1.');
+  }
+  function clearPlayer(player) {
+    requirePlayer(player);
+    resetPlayer(player);
+    sync();
+  }
+  function clearPhysical(player) {
+    if (player === undefined) players.forEach((_, i) => resetPlayer(i, true));
+    else {
+      requirePlayer(player);
+      resetPlayer(player, true);
+    }
+    sync();
+  }
+  function restoreDirection(player, direction) {
+    requirePlayer(player);
+    if (direction !== null && !directions.includes(direction))
+      throw new TypeError('Saved direction must be a cardinal direction or null.');
+    if (destroyed || !continuous())
+      throw new Error('Restoring direction requires active continuous steering.');
+    resetPlayer(player, true);
+    players[player].direction = direction;
+    sync();
+  }
   function clear() {
-    players.forEach((_, i) => clearPlayer(i));
+    players.forEach((_, i) => resetPlayer(i));
     keyDown.clear();
     sync();
   }
   function stop(player) {
-    if (destroyed || ![0, 1].includes(player)) return;
+    if (destroyed || continuous() || ![0, 1].includes(player)) return;
     clearPlayer(player);
     onStop(player);
     sync();
   }
   function pause() {
-    clear();
+    if (continuous()) clearPhysical();
+    else clear();
     onPause();
   }
   const begin = (player, kind, key, { toggle = false, element = null, code = null } = {}) => {
@@ -150,7 +214,11 @@ export function attachCouchInput({
       return;
     }
     const state = players[player];
-    if (kind === 'action' || kind === 'pickup') state.pending[kind] = true;
+    if (continuous() && directions.includes(kind)) {
+      state.direction = kind;
+      state.localDirectionPending = true;
+      held.set(key, { player, kind, element, code, order: ++order });
+    } else if (kind === 'action' || kind === 'pickup') state.pending[kind] = true;
     else if (toggle) {
       if (kind === 'boost') state.boost = !state.boost;
       else state.direction = state.direction === kind ? null : kind;
@@ -164,7 +232,7 @@ export function attachCouchInput({
     if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === 'Escape') {
       e.preventDefault();
-      if (!e.repeat) pause();
+      if (freshKey(e)) pause();
       return;
     }
     if (editing(e.target) || !active() || destroyed) return;
@@ -174,7 +242,7 @@ export function attachCouchInput({
     const binding = bindings[e.code];
     if (!binding) return;
     e.preventDefault();
-    if (e.repeat || keyDown.has(e.code)) return;
+    if (!freshKey(e) || keyDown.has(e.code)) return;
     keyDown.add(e.code);
     begin(...binding, `key:${e.code}`, { code: e.code });
   });
@@ -184,7 +252,11 @@ export function attachCouchInput({
     for (const button of buttons) if (button.keys.delete(e.code)) endGuard(button);
     sync();
   });
-  listen(win, 'blur', pause);
+  listen(win, 'blur', () => {
+    physicalKeys.clear();
+    physicalPointers.clear();
+    pause();
+  });
   // Capture may be unavailable on an older browser; an outside release must
   // still release a held direction/boost instead of leaving it stuck.
   listen(win, 'pointerup', (e) => {
@@ -203,6 +275,7 @@ export function attachCouchInput({
     const { element, player, kind } = button;
     listen(element, 'pointerdown', (e) => {
       if (destroyed || !active() || (e.button !== undefined && e.button !== 0)) return;
+      if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
       begin(player, kind, `pointer:${e.pointerId}`, { toggle: tapMode(), element });
       if (kind === 'stop') return;
@@ -222,7 +295,7 @@ export function attachCouchInput({
     listen(element, 'keydown', (e) => {
       if (!activation(e) || e.ctrlKey || e.metaKey || e.altKey) return;
       e.preventDefault();
-      if (destroyed || !active() || e.repeat || button.keys.has(e.code)) return;
+      if (destroyed || !active() || !freshKey(e) || button.keys.has(e.code)) return;
       clearTimeout(button.keyTimer);
       button.keyTimer = null;
       button.keyGuard = true;
@@ -245,7 +318,8 @@ export function attachCouchInput({
     });
     listen(element, 'click', (e) => {
       if (e.detail !== 0 || button.keyGuard || destroyed || !active()) return;
-      // An unaccompanied assistive click has no held release, so it toggles movement.
+      // An assistive click selects a persistent direction in continuous mode;
+      // legacy tap steering and Boost retain their separate toggle behavior.
       begin(player, kind, 'assist', { toggle: true, element });
     });
   }
@@ -280,7 +354,8 @@ export function attachCouchInput({
       return players.map(neutralCommand);
     }
     if (!active()) {
-      clear();
+      if (continuous()) clearPhysical();
+      else clear();
       return players.map(neutralCommand);
     }
     for (const player of players) {
@@ -294,6 +369,17 @@ export function attachCouchInput({
       pause();
       return players.map(neutralCommand);
     }
+    if (continuous())
+      for (const player of players) {
+        if (
+          player.pad.direction &&
+          player.pad.direction !== player.lastPadDirection &&
+          !player.localDirectionPending
+        )
+          player.direction = player.pad.direction;
+        player.lastPadDirection = player.pad.direction;
+        player.localDirectionPending = false;
+      }
     sync();
     return players.map((_, i) => commandFor(i));
   }
@@ -327,6 +413,13 @@ export function attachCouchInput({
     poll,
     consume,
     clear,
+    clearPlayer,
+    clearPhysical,
+    snapshotDirection: (player) => {
+      requirePlayer(player);
+      return continuous() && !destroyed ? players[player].direction : null;
+    },
+    restoreDirection,
     stop,
     destroy,
     focus: () => {

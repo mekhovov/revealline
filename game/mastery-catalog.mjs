@@ -1,6 +1,12 @@
 import { boundedJSON, canonicalJSON, dataIdentity, plainObject, stableId } from './data-json.mjs';
 import { CLASSES, rosterHash, validateClassRecipes } from './core/registry.mjs';
-import { LEGACY_VERSIONS, ENCOUNTER_VERSIONS, versionsForCampaign } from './core/versions.mjs';
+import {
+  LEGACY_VERSIONS,
+  ENCOUNTER_VERSIONS,
+  WIDE_VERSIONS,
+  CLASSIC_VERSIONS,
+  versionsForCampaign,
+} from './core/versions.mjs';
 import { normalizedLevel } from './core/level.mjs';
 import { createRun } from './core/index.mjs';
 import {
@@ -265,19 +271,27 @@ export function createMasteryCatalog(source) {
     );
     const format = entry.sourcePackFormat ?? 'xonix-pack.v1';
     requireValue(
-      ['xonix-pack.v1', 'xonix-pack.v2', 'xonix-pack.v3'].includes(format),
+      [
+        'xonix-pack.v1',
+        'xonix-pack.v2',
+        'xonix-pack.v3',
+        'xonix-pack.v4',
+        'xonix-pack.v5',
+      ].includes(format),
       'Unsupported mastery source pack format.',
     );
     requireValue(
       !Object.hasOwn(entry, 'sourcePackFormat') || entry.sourcePackFormat === format,
       'A source format must be explicit text or omitted.',
     );
+    const classic = format === 'xonix-pack.v5';
+    const wide = format === 'xonix-pack.v4';
     const encounter = format === 'xonix-pack.v3';
-    const authored = format === 'xonix-pack.v2' || encounter;
+    const authored = format === 'xonix-pack.v2' || encounter || wide || classic;
     requireValue(
       authored ? Array.isArray(entry.masteries) : !Object.hasOwn(entry, 'masteries'),
       authored
-        ? 'A v2/v3 mastery catalog entry requires its explicit masteries array.'
+        ? 'A v2/v3/v4/v5 mastery catalog entry requires its explicit masteries array.'
         : 'A v1 entry cannot declare masteries.',
     );
     const context = campaignContext(entry.campaign),
@@ -285,12 +299,22 @@ export function createMasteryCatalog(source) {
       definitionIds = new Set();
     requireValue(
       context.versions.ruleset ===
-        (encounter ? ENCOUNTER_VERSIONS.ruleset : LEGACY_VERSIONS.ruleset),
+        (classic
+          ? CLASSIC_VERSIONS.ruleset
+          : wide
+            ? WIDE_VERSIONS.ruleset
+            : encounter
+              ? ENCOUNTER_VERSIONS.ruleset
+              : LEGACY_VERSIONS.ruleset),
       'Pack format and campaign simulation versions differ.',
     );
     requireValue(
-      !encounter || entry.masteries.length === 0,
-      'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
+      !(encounter || wide || classic) || entry.masteries.length === 0,
+      classic
+        ? 'Classic pack v5 requires masteries: []; optional goals are not supported.'
+        : wide
+          ? 'Wide pack v4 requires masteries: []; optional goals are not supported.'
+          : 'Encounter pack v3 requires masteries: []; encounter goals are not supported.',
     );
     totalLevels += context.levels.length;
     requireValue(

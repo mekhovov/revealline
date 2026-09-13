@@ -7,6 +7,18 @@ const json = (path) => JSON.parse(fs.readFileSync(new URL(path, import.meta.url)
 const classes = json('../content/classes.json');
 const campaign = json('../content/campaign.json');
 const homeward = json('../content/packs/homeward-skies.json');
+const classicLab = json('../content/packs/classic-lab.json');
+
+test('classic ready cards name contact pickups, material hazards and claimed-ground threats', () => {
+  const levels = classicLab.campaigns[0].levels;
+  assert.match(missionBriefing(levels[0]).copy, /Touch pickups/);
+  assert.match(missionBriefing(levels[2]).copy, /newly captured edges/);
+  assert.match(missionBriefing(levels[3]).copy, /Rovers wake/);
+  assert.match(missionBriefing(levels[4]).copy, /reopening captured ground/);
+  assert.match(missionBriefing(levels[5]).copy, /Red crosshatched fields damage/);
+  for (const level of levels)
+    assert.equal(missionBriefing(level).fullBrief, level.metadata.description);
+});
 
 test('Homeward ready cards retain factual requirements without copying route paragraphs', () => {
   const levels = homeward.campaigns[0].levels;

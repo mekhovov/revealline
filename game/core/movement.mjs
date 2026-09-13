@@ -1,7 +1,8 @@
 import { CELL, DIRECTIONS } from './registry.mjs';
-import { EPS, clamp, boxTime, pointAt } from './geometry.mjs';
+import { EPS, clamp, boxTime, pointAt, LEGACY_GEOMETRY } from './geometry.mjs';
 
-export const cellIndex = (x, y) => clamp(Math.floor(y), 0, 35) * 48 + clamp(Math.floor(x), 0, 47);
+export const cellIndex = (x, y, { width, height } = LEGACY_GEOMETRY) =>
+  clamp(Math.floor(y), 0, height - 1) * width + clamp(Math.floor(x), 0, width - 1);
 export const isCenter = (p) =>
   Math.abs(p.x - (Math.floor(p.x) + 0.5)) < EPS && Math.abs(p.y - (Math.floor(p.y) + 0.5)) < EPS;
 export const pathPoint = (path, time) =>
@@ -27,15 +28,15 @@ const segment = (a, b, t0, t1, direction) => ({
 });
 
 /** Earliest contact with nearby committed topology; art and live trails absent. */
-function obstacleHit(cells, a, b, radius, fieldEnemy = false) {
+function obstacleHit(cells, a, b, radius, fieldEnemy = false, { width, height } = LEGACY_GEOMETRY) {
   let best = null;
-  const xmin = clamp(Math.floor(Math.min(a.x, b.x) - radius), 0, 47),
-    xmax = clamp(Math.floor(Math.max(a.x, b.x) + radius), 0, 47);
-  const ymin = clamp(Math.floor(Math.min(a.y, b.y) - radius), 0, 35),
-    ymax = clamp(Math.floor(Math.max(a.y, b.y) + radius), 0, 35);
+  const xmin = clamp(Math.floor(Math.min(a.x, b.x) - radius), 0, width - 1),
+    xmax = clamp(Math.floor(Math.max(a.x, b.x) + radius), 0, width - 1);
+  const ymin = clamp(Math.floor(Math.min(a.y, b.y) - radius), 0, height - 1),
+    ymax = clamp(Math.floor(Math.max(a.y, b.y) + radius), 0, height - 1);
   for (let y = ymin; y <= ymax; y++)
     for (let x = xmin; x <= xmax; x++) {
-      const kind = cells[y * 48 + x];
+      const kind = cells[y * width + x];
       if (kind !== CELL.WALL && !(fieldEnemy && kind === CELL.SAFE)) continue;
       const box = { x: x - radius, y: y - radius, w: 1 + radius * 2, h: 1 + radius * 2 };
       const t = boxTime(a, b, box);
@@ -64,6 +65,7 @@ function obstacleHit(cells, a, b, radius, fieldEnemy = false) {
 }
 
 export function planPlayer(state, input, duration) {
+  const { width, height } = state;
   const start = state.player,
     p = { ...start },
     paths = [];
@@ -95,11 +97,14 @@ export function planPlayer(state, input, duration) {
     const d = DIRECTIONS[p.direction],
       a = { x: p.x, y: p.y };
     if (state.turnPolicy === 'grid-center' && isCenter(p)) {
-      const next = { x: clamp(a.x + d.x, 0.5, 47.5), y: clamp(a.y + d.y, 0.5, 35.5) };
-      const blocked = obstacleHit(state.cells, a, next, state.rules.playerRadius);
+      const next = {
+        x: clamp(a.x + d.x, 0.5, width - 0.5),
+        y: clamp(a.y + d.y, 0.5, height - 0.5),
+      };
+      const blocked = obstacleHit(state.cells, a, next, state.rules.playerRadius, false, state);
       const protectedExit =
         state.player.graceUntil > state.time + EPS &&
-        state.cells[cellIndex(next.x, next.y)] === CELL.FIELD;
+        state.cells[cellIndex(next.x, next.y, state)] === CELL.FIELD;
       // Do not leave a reachable center toward a blocked center. This lets a
       // held reverse/perpendicular command escape a wall without a snap.
       if (blocked || protectedExit) {
@@ -115,8 +120,11 @@ export function planPlayer(state, input, duration) {
       const next = sign > 0 ? Math.floor(v - 0.5 + EPS) + 1.5 : Math.ceil(v - 0.5 - EPS) - 0.5;
       travel = Math.min(travel, Math.abs(next - v));
     }
-    let b = { x: clamp(a.x + d.x * travel, 0.5, 47.5), y: clamp(a.y + d.y * travel, 0.5, 35.5) };
-    const hit = obstacleHit(state.cells, a, b, state.rules.playerRadius);
+    let b = {
+      x: clamp(a.x + d.x * travel, 0.5, width - 0.5),
+      y: clamp(a.y + d.y * travel, 0.5, height - 0.5),
+    };
+    const hit = obstacleHit(state.cells, a, b, state.rules.playerRadius, false, state);
     if (hit) b = pointAt(a, b, hit.t);
     const distance = Math.abs(b.x - a.x) + Math.abs(b.y - a.y),
       used = distance / speed;
@@ -135,18 +143,23 @@ export function planPlayer(state, input, duration) {
   return { player: p, paths };
 }
 
-export function patrolDistance(p) {
+export function patrolDistance(p, { width, height } = LEGACY_GEOMETRY) {
+  const right = width - 1,
+    bottom = height - 1;
   if (p.y === 0.5) return p.x - 0.5;
-  if (p.x === 47.5) return 47 + p.y - 0.5;
-  if (p.y === 35.5) return 82 + 47.5 - p.x;
-  return 129 + 35.5 - p.y;
+  if (p.x === width - 0.5) return right + p.y - 0.5;
+  if (p.y === height - 0.5) return right + bottom + (width - 0.5) - p.x;
+  return 2 * right + bottom + (height - 0.5) - p.y;
 }
-function perimeterPoint(t) {
-  t = ((t % 164) + 164) % 164;
-  if (t <= 47) return { x: 0.5 + t, y: 0.5 };
-  if (t <= 82) return { x: 47.5, y: 0.5 + t - 47 };
-  if (t <= 129) return { x: 47.5 - (t - 82), y: 35.5 };
-  return { x: 0.5, y: 35.5 - (t - 129) };
+function perimeterPoint(t, { width, height } = LEGACY_GEOMETRY) {
+  const right = width - 1,
+    bottom = height - 1,
+    perimeter = 2 * (right + bottom);
+  t = ((t % perimeter) + perimeter) % perimeter;
+  if (t <= right) return { x: 0.5 + t, y: 0.5 };
+  if (t <= right + bottom) return { x: width - 0.5, y: 0.5 + t - right };
+  if (t <= 2 * right + bottom) return { x: width - 0.5 - (t - (right + bottom)), y: height - 0.5 };
+  return { x: 0.5, y: height - 0.5 - (t - (2 * right + bottom)) };
 }
 export function planEnemy(state, enemy, duration) {
   const e = { ...enemy },
@@ -160,19 +173,25 @@ export function planEnemy(state, enemy, duration) {
         ? (e.slowFactor ?? 0.25)
         : 1;
   if (e.type === 'border-patrol') {
+    const right = state.width - 1,
+      bottom = state.height - 1,
+      perimeter = 2 * (right + bottom);
     const speed = (e.speed ?? 4) * factor,
       sign = e.clockwise === false ? -1 : 1;
     for (let guard = 0; left > EPS && speed > 0 && guard < 8; guard++) {
-      const t = ((e.perimeter % 164) + 164) % 164;
-      const limits = sign > 0 ? [47, 82, 129, 164] : [129, 82, 47, 0];
+      const t = ((e.perimeter % perimeter) + perimeter) % perimeter;
+      const limits =
+        sign > 0
+          ? [right, right + bottom, 2 * right + bottom, perimeter]
+          : [2 * right + bottom, right + bottom, right, 0];
       const target = sign > 0 ? limits.find((v) => v > t + EPS) : limits.find((v) => v < t - EPS);
-      const edge = target ?? (sign > 0 ? 164 : 0),
-        distance = Math.abs(edge - t) || 164;
+      const edge = target ?? (sign > 0 ? perimeter : 0),
+        distance = Math.abs(edge - t) || perimeter;
       const travel = Math.min(speed * left, distance),
         used = travel / speed,
         a = { x: e.x, y: e.y };
       e.perimeter += sign * travel;
-      const b = perimeterPoint(e.perimeter);
+      const b = perimeterPoint(e.perimeter, state);
       e.x = b.x;
       e.y = b.y;
       paths.push(segment(a, b, time, time + used));
@@ -183,7 +202,7 @@ export function planEnemy(state, enemy, duration) {
     for (let guard = 0; left > EPS && factor > 0 && guard < 8; guard++) {
       const a = { x: e.x, y: e.y },
         b = { x: a.x + e.vx * factor * left, y: a.y + e.vy * factor * left };
-      const hit = obstacleHit(state.cells, a, b, e.radius, true),
+      const hit = obstacleHit(state.cells, a, b, e.radius, true, state),
         fraction = hit ? hit.t : 1,
         used = left * fraction,
         end = pointAt(a, b, fraction);
@@ -209,7 +228,7 @@ export function planEnemy(state, enemy, duration) {
 }
 
 /** Split cardinal paths at cell edges, retaining exact times. */
-export function ownershipSpans(paths) {
+export function ownershipSpans(paths, geometry = LEGACY_GEOMETRY) {
   const spans = [];
   for (const p of paths) {
     const dx = p.x2 - p.x1,
@@ -229,7 +248,7 @@ export function ownershipSpans(paths) {
       // integer boundary. It must not create an extra historical trail segment.
       if (Math.abs(b.x - a.x) + Math.abs(b.y - a.y) < EPS) continue;
       const middle = pointAt(a, b, 0.5),
-        index = cellIndex(middle.x, middle.y);
+        index = cellIndex(middle.x, middle.y, geometry);
       spans.push({
         ...segment(
           a,
@@ -245,7 +264,7 @@ export function ownershipSpans(paths) {
   return spans;
 }
 
-export function applyPlannedEnemy(enemy, plan, time, duration) {
+export function applyPlannedEnemy(enemy, plan, time, duration, geometry = LEGACY_GEOMETRY) {
   const at = positionAt(plan.paths, time, enemy);
   if (time >= duration - EPS) Object.assign(enemy, plan.enemy);
   else {
@@ -260,7 +279,7 @@ export function applyPlannedEnemy(enemy, plan, time, duration) {
         if (path.y2 !== path.y1) enemy.vy = Math.sign(path.y2 - path.y1) * Math.abs(enemy.vy);
       }
     }
-    if (enemy.type === 'border-patrol') enemy.perimeter = patrolDistance(at);
+    if (enemy.type === 'border-patrol') enemy.perimeter = patrolDistance(at, geometry);
   }
   enemy.x = at.x;
   enemy.y = at.y;

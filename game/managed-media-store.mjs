@@ -1,0 +1,693 @@
+import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
+import {
+  SOUNDTRACK_LIMITS,
+  emptySoundtrackLibrary,
+  resolveSoundtrackLibrary,
+  freezeSoundtrack,
+} from './soundtrack.mjs';
+import { isPreparedSoundtrackLibrary, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
+import { inspectMP3, throwIfSoundtrackAborted } from './mp3.mjs';
+
+export const MANAGED_MEDIA_DATABASE = 'revealline-soundtrack-v1';
+export const MANAGED_MEDIA_VERSION = 2;
+export const MANAGED_MEDIA_LIMITS = Object.freeze({
+  bytes: 256 * 1024 * 1024,
+  sourceBytes: 64 * 1024 * 1024,
+  metadataBytes: 2 * 1024 * 1024,
+  assets: 512,
+  reservations: 4,
+  leaseMs: 15 * 60 * 1000,
+});
+const STORES = ['metadata', 'audio', 'mediaRecords', 'mediaBlobs', 'managedState', 'reservations'];
+const OVERHEAD = 4096,
+  RESERVATION_OVERHEAD = 512;
+const preparedMedia = new WeakSet();
+const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
+const size = (blob) => nativeSize.call(blob);
+const encoded = (value) => new TextEncoder().encode(canonicalJSON(value)).byteLength;
+const integer = (n) => Number.isSafeInteger(n) && n >= 0 && n < Number.MAX_SAFE_INTEGER;
+const hashValid = (v) => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
+const abort = throwIfSoundtrackAborted;
+const domainValid = (d) =>
+  required(d === 'audio' || d === 'media', 'Unknown managed media domain.');
+const emptyMedia = () => freezeSoundtrack({ format: 'revealline-managed-bytes.v1', items: [] });
+function mediaLibrary(value) {
+  const copy = boundedJSON(value, {
+    maxBytes: MANAGED_MEDIA_LIMITS.metadataBytes,
+    maxNodes: 4096,
+    maxDepth: 5,
+    maxArray: 512,
+    maxString: 128,
+  });
+  exactKeys(copy, ['format', 'items'], 'managed byte library');
+  required(
+    copy.format === 'revealline-managed-bytes.v1' && Array.isArray(copy.items),
+    'Unsupported managed byte library.',
+  );
+  const ids = new Set();
+  for (const item of copy.items) {
+    exactKeys(item, ['id', 'sha256'], 'managed byte reference');
+    required(
+      typeof item.id === 'string' &&
+        /^[a-z0-9][a-z0-9._-]{0,127}$/.test(item.id) &&
+        !ids.has(item.id) &&
+        hashValid(item.sha256),
+      'Invalid or duplicate managed byte reference.',
+    );
+    ids.add(item.id);
+  }
+  return freezeSoundtrack(copy);
+}
+function row(value, domain) {
+  if (value === undefined)
+    return { generation: 0, library: domain === 'audio' ? emptySoundtrackLibrary() : emptyMedia() };
+  const copy = boundedJSON(value, {
+    maxBytes:
+      (domain === 'audio' ? SOUNDTRACK_LIMITS.metadataBytes : MANAGED_MEDIA_LIMITS.metadataBytes) +
+      1024,
+    maxNodes: 32000,
+    maxDepth: 10,
+    maxArray: 512,
+    maxString: 1024,
+  });
+  exactKeys(copy, ['generation', 'library'], 'managed domain');
+  required(integer(copy.generation), 'Invalid managed domain generation.');
+  return {
+    generation: copy.generation,
+    library:
+      domain === 'audio' ? resolveSoundtrackLibrary(copy.library) : mediaLibrary(copy.library),
+  };
+}
+function ownMediaAssets(value) {
+  required(
+    Array.isArray(value) &&
+      Object.getPrototypeOf(value) === Array.prototype &&
+      value.length <= MANAGED_MEDIA_LIMITS.assets,
+    'Invalid managed asset table.',
+  );
+  const descriptors = Object.getOwnPropertyDescriptors(value),
+    seen = new Set(),
+    result = [];
+  required(
+    Reflect.ownKeys(descriptors).length === value.length + 1,
+    'Sparse or decorated managed asset table.',
+  );
+  for (let i = 0; i < value.length; i++) {
+    const d = descriptors[i];
+    required(
+      d?.enumerable &&
+        Object.hasOwn(d, 'value') &&
+        d.value &&
+        Object.getPrototypeOf(d.value) === Object.prototype,
+      'Invalid managed asset entry.',
+    );
+    const fields = Object.getOwnPropertyDescriptors(d.value);
+    required(
+      Reflect.ownKeys(fields).length === 2 &&
+        ['sha256', 'blob'].every((k) => fields[k]?.enumerable && Object.hasOwn(fields[k], 'value')),
+      'Managed asset requires owned hash and Blob.',
+    );
+    const hash = fields.sha256.value,
+      blob = fields.blob.value,
+      bytes = size(blob);
+    required(
+      hashValid(hash) &&
+        !seen.has(hash) &&
+        integer(bytes) &&
+        bytes > 0 &&
+        bytes <= MANAGED_MEDIA_LIMITS.sourceBytes,
+      'Invalid managed asset hash or byte budget.',
+    );
+    seen.add(hash);
+    result.push(Object.freeze({ sha256: hash, blob: Blob.prototype.slice.call(blob, 0, bytes) }));
+  }
+  return Object.freeze(result);
+}
+async function digest(blob, signal) {
+  abort(signal);
+  const bytes = await blob.arrayBuffer();
+  abort(signal);
+  const result = await globalThis.crypto.subtle.digest('SHA-256', bytes);
+  abort(signal);
+  return [...new Uint8Array(result)].map((v) => v.toString(16).padStart(2, '0')).join('');
+}
+/** Internal byte-storage boundary only. This does not certify an image/video or make it playable. */
+export async function prepareManagedMediaBytes(library, assets, { signal } = {}) {
+  const safe = mediaLibrary(library),
+    owned = ownMediaAssets(assets),
+    wanted = new Set(safe.items.map((i) => i.sha256));
+  required(
+    wanted.size === owned.length && owned.every((a) => wanted.has(a.sha256)),
+    'Managed byte transfer requires every referenced asset and no extras.',
+  );
+  required(
+    owned.reduce((n, a) => n + size(a.blob), 0) <= MANAGED_MEDIA_LIMITS.bytes,
+    'Managed assets exceed the byte budget.',
+  );
+  for (const asset of owned)
+    required(
+      (await digest(asset.blob, signal)) === asset.sha256,
+      'Managed asset hash differs from original bytes.',
+    );
+  const prepared = Object.freeze({ library: safe, assets: owned });
+  preparedMedia.add(prepared);
+  return prepared;
+}
+function hashes(domain, library) {
+  return new Set(
+    domain === 'audio'
+      ? library.tracks.map((t) => t.asset.sha256)
+      : library.items.map((i) => i.sha256),
+  );
+}
+function changed(domain) {
+  return `${domain === 'audio' ? 'Soundtrack' : 'Media library'} changed in another operation. Reload it before saving.`;
+}
+
+/** One v2 database and transaction scope serialize every media-domain writer across tabs. */
+export function createManagedMediaStore({
+  indexedDB = globalThis.indexedDB,
+  estimate = () => globalThis.navigator?.storage?.estimate?.(),
+  now = Date.now,
+} = {}) {
+  let opening = null,
+    closed = false;
+  const handles = new WeakMap();
+  function clock() {
+    const t = now();
+    required(integer(t) && integer(t + MANAGED_MEDIA_LIMITS.leaseMs), 'Invalid media lease clock.');
+    return t;
+  }
+  function open() {
+    if (closed) return Promise.reject(new Error('Managed media store is closed.'));
+    if (!indexedDB)
+      return Promise.reject(new Error('This browser does not provide soundtrack storage.'));
+    opening ??= new Promise((resolve, reject) => {
+      let failed = false;
+      const request = indexedDB.open(MANAGED_MEDIA_DATABASE, MANAGED_MEDIA_VERSION);
+      request.onupgradeneeded = () => {
+        // A blocked open request cannot be cancelled directly. If it becomes
+        // unblocked after failure/close, abort before committing any schema change.
+        if (failed || closed) {
+          failed = true;
+          request.transaction.abort();
+          reject(new Error('Managed media store is closed.'));
+          return;
+        }
+        try {
+          for (const name of STORES)
+            if (!request.result.objectStoreNames.contains(name))
+              request.result.createObjectStore(name);
+        } catch (e) {
+          failed = true;
+          request.transaction?.abort();
+          reject(e);
+        }
+      };
+      request.onerror = () => {
+        failed = true;
+        opening = null;
+        reject(request.error || new Error('Media storage could not open.'));
+      };
+      request.onblocked = () => {
+        failed = true;
+        opening = null;
+        reject(new Error('Close older game tabs to upgrade media storage.'));
+      };
+      request.onsuccess = () => {
+        const db = request.result;
+        if (failed || closed) {
+          db.close();
+          reject(new Error('Managed media store is closed.'));
+          return;
+        }
+        db.onversionchange = () => {
+          db.close();
+          opening = null;
+        };
+        resolve(db);
+      };
+    });
+    return opening;
+  }
+  async function transact(mode, body, signal) {
+    abort(signal);
+    const db = await open();
+    abort(signal);
+    required(!closed, 'Managed media store is closed.');
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORES, mode),
+        stores = Object.fromEntries(STORES.map((name) => [name, tx.objectStore(name)]));
+      let result,
+        failure = null,
+        settled = false;
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        signal?.removeEventListener('abort', cancel);
+        if (error) reject(error);
+        else resolve(result);
+      };
+      const fail = (error) => {
+        failure = error;
+        try {
+          tx.abort();
+        } catch {
+          finish(error);
+        }
+      };
+      const cancel = () => {
+        const previous = failure;
+        failure = new DOMException('Media operation cancelled.', 'AbortError');
+        try {
+          tx.abort();
+        } catch (e) {
+          if (e?.name === 'InvalidStateError') failure = previous;
+          else finish(e);
+        }
+      };
+      tx.oncomplete = () => finish(failure);
+      tx.onerror = () => {
+        failure ??= tx.error;
+      };
+      tx.onabort = () => finish(failure || tx.error || new Error('Media transaction failed.'));
+      signal?.addEventListener('abort', cancel, { once: true });
+      const values = {};
+      let left = 8;
+      function read(key, request) {
+        request.onsuccess = () => {
+          values[key] = request.result;
+          if (--left) return;
+          try {
+            abort(signal);
+            const audioRow = row(values.audioRow, 'audio'),
+              mediaRow = row(values.mediaRow, 'media'),
+              blobs = new Map();
+            let blobBytes = 0;
+            for (const [kind, keys, files] of [
+              ['audio', values.audioKeys, values.audioBlobs],
+              ['mediaBlobs', values.mediaKeys, values.mediaBlobs],
+            ]) {
+              required(
+                keys.length <= MANAGED_MEDIA_LIMITS.assets && keys.length === files.length,
+                'Stored media inventory exceeds its budget; recovery required.',
+              );
+              keys.forEach((key, i) => {
+                required(hashValid(key), 'Invalid stored media hash; recovery required.');
+                const bytes = size(files[i]);
+                required(integer(bytes), 'Invalid stored media bytes; recovery required.');
+                blobBytes += bytes;
+                const entry = {
+                  store: kind,
+                  sha256: key,
+                  blob: Blob.prototype.slice.call(files[i], 0, bytes),
+                  bytes,
+                };
+                required(!blobs.has(key), 'Duplicate physical media hash; recovery required.');
+                blobs.set(key, entry);
+              });
+            }
+            required(
+              Array.isArray(values.reservations) &&
+                values.reservations.length <= MANAGED_MEDIA_LIMITS.reservations,
+              'Invalid stored media reservations.',
+            );
+            const reservations = values.reservations.map((r) => {
+              exactKeys(
+                r,
+                ['id', 'domain', 'generation', 'maxNewBytes', 'maxMetadataBytes', 'expiresAt'],
+                'reservation',
+              );
+              domainValid(r.domain);
+              required(
+                typeof r.id === 'string' &&
+                  r.id.length <= 128 &&
+                  [r.generation, r.maxNewBytes, r.maxMetadataBytes, r.expiresAt].every(integer),
+                'Invalid stored reservation.',
+              );
+              return r;
+            });
+            const usedBytes = blobBytes + encoded(audioRow) + encoded(mediaRow) + OVERHEAD;
+            const state = {
+              audioRow,
+              mediaRow,
+              blobs,
+              blobBytes,
+              usedBytes,
+              reservations,
+              revision: values.state?.revision ?? 0,
+            };
+            required(integer(state.revision), 'Invalid managed storage revision.');
+            result = body(state, stores);
+          } catch (e) {
+            fail(e);
+          }
+        };
+      }
+      try {
+        read('audioRow', stores.metadata.get('library'));
+        read('mediaRow', stores.mediaRecords.get('library'));
+        read('audioKeys', stores.audio.getAllKeys());
+        read('audioBlobs', stores.audio.getAll());
+        read('mediaKeys', stores.mediaBlobs.getAllKeys());
+        read('mediaBlobs', stores.mediaBlobs.getAll());
+        read('reservations', stores.reservations.getAll());
+        read('state', stores.managedState.get('ledger'));
+        if (signal?.aborted) cancel();
+      } catch (e) {
+        fail(e);
+      }
+    });
+  }
+  const active = (state, t) => state.reservations.filter((r) => r.expiresAt > t);
+  const reservationBytes = (rs) =>
+    rs.reduce((n, r) => n + r.maxNewBytes + r.maxMetadataBytes + RESERVATION_OVERHEAD, 0);
+  function expire(state, stores, t) {
+    for (const r of state.reservations) if (r.expiresAt <= t) stores.reservations.delete(r.id);
+  }
+  function ledger(state, stores, bytes = state.usedBytes) {
+    required(
+      integer(state.revision + 1),
+      'Managed storage revision exhausted; export for recovery.',
+    );
+    stores.managedState.put(
+      { format: 'revealline-managed-state.v1', revision: state.revision + 1, usedBytes: bytes },
+      'ledger',
+    );
+  }
+  function snapshot(state, domain) {
+    const current = state[`${domain}Row`],
+      wanted = hashes(domain, current.library);
+    const assets = [...state.blobs.values()]
+      .filter((a) => wanted.has(a.sha256))
+      .sort((a, b) => a.sha256.localeCompare(b.sha256))
+      .map(({ sha256, blob }) => Object.freeze({ sha256, blob }));
+    return Object.freeze({ ...current, assets: Object.freeze(assets) });
+  }
+  async function readDomain(domain, { signal } = {}) {
+    domainValid(domain);
+    return transact('readonly', (state) => snapshot(state, domain), signal);
+  }
+  async function usage({ signal } = {}) {
+    return transact(
+      'readonly',
+      (state) =>
+        Object.freeze({
+          usedBytes: state.usedBytes,
+          reservedBytes: reservationBytes(active(state, clock())),
+          limitBytes: MANAGED_MEDIA_LIMITS.bytes,
+          generations: Object.freeze({
+            audio: state.audioRow.generation,
+            media: state.mediaRow.generation,
+          }),
+          reservations: active(state, clock()).length,
+        }),
+      signal,
+    );
+  }
+  async function reserve({
+    domain,
+    expectedGeneration,
+    maxNewBytes,
+    maxMetadataBytes = 0,
+    signal,
+  } = {}) {
+    domainValid(domain);
+    required(
+      [expectedGeneration, maxNewBytes, maxMetadataBytes].every(integer) &&
+        maxNewBytes <= MANAGED_MEDIA_LIMITS.bytes &&
+        maxMetadataBytes <= MANAGED_MEDIA_LIMITS.metadataBytes + 1024,
+      'Invalid media reservation allowance.',
+    );
+    const id = globalThis.crypto.randomUUID();
+    const result = await transact(
+      'readwrite',
+      (state, stores) => {
+        const t = clock(),
+          rs = active(state, t);
+        required(state[`${domain}Row`].generation === expectedGeneration, changed(domain));
+        required(
+          rs.length < MANAGED_MEDIA_LIMITS.reservations,
+          'Too many media imports; finish or cancel another operation.',
+        );
+        required(
+          state.usedBytes +
+            reservationBytes(rs) +
+            maxNewBytes +
+            maxMetadataBytes +
+            RESERVATION_OVERHEAD <=
+            MANAGED_MEDIA_LIMITS.bytes,
+          'Committed media plus staging exceeds the 256 MiB managed budget.',
+        );
+        const record = {
+          id,
+          domain,
+          generation: expectedGeneration,
+          maxNewBytes,
+          maxMetadataBytes,
+          expiresAt: t + MANAGED_MEDIA_LIMITS.leaseMs,
+        };
+        expire(state, stores, t);
+        stores.reservations.put(record, id);
+        ledger(state, stores);
+        return record;
+      },
+      signal,
+    );
+    const handle = Object.freeze({ id: result.id });
+    handles.set(handle, result);
+    return handle;
+  }
+  function token(handle) {
+    const known = handles.get(handle);
+    required(known, 'Unknown media reservation capability.');
+    return known;
+  }
+  async function renew(handle, { signal } = {}) {
+    const known = token(handle);
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const t = clock(),
+          saved = state.reservations.find((r) => r.id === known.id);
+        required(saved && saved.expiresAt > t, 'Media reservation expired; prepare again.');
+        required(
+          state[`${saved.domain}Row`].generation === saved.generation,
+          changed(saved.domain),
+        );
+        stores.reservations.put(
+          { ...saved, expiresAt: t + MANAGED_MEDIA_LIMITS.leaseMs },
+          saved.id,
+        );
+        ledger(state, stores);
+        return true;
+      },
+      signal,
+    );
+  }
+  async function release(handle, { signal } = {}) {
+    const known = token(handle);
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        stores.reservations.delete(known.id);
+        ledger(state, stores);
+        return true;
+      },
+      signal,
+    );
+  }
+  async function commitPreparedDomain(
+    domain,
+    prepared,
+    { expectedGeneration, reservation, signal, otherManagedBytes = 0 } = {},
+  ) {
+    domainValid(domain);
+    required(
+      domain === 'audio' ? isPreparedSoundtrackLibrary(prepared) : preparedMedia.has(prepared),
+      'Commit requires a verified soundtrack import or prepared managed bytes.',
+    );
+    required(
+      integer(expectedGeneration) &&
+        integer(expectedGeneration + 1) &&
+        integer(otherManagedBytes) &&
+        otherManagedBytes <= MANAGED_MEDIA_LIMITS.bytes,
+      'Invalid soundtrack generation or managed usage.',
+    );
+    const assets =
+        domain === 'audio' ? ownSoundtrackAssets(prepared.assets) : ownMediaAssets(prepared.assets),
+      nextRow = { generation: expectedGeneration + 1, library: prepared.library };
+    const before = await transact(
+      'readonly',
+      (state) => ({ state, current: snapshot(state, domain) }),
+      signal,
+    );
+    required(before.current.generation === expectedGeneration, changed(domain));
+    const reusable = new Set();
+    for (const asset of assets) {
+      const old = before.state.blobs.get(asset.sha256);
+      if (!old || old.bytes !== size(asset.blob)) continue;
+      try {
+        if (
+          (domain === 'audio'
+            ? (await inspectMP3(old.blob, { signal })).sha256
+            : await digest(old.blob, signal)) === asset.sha256 &&
+          old.bytes === size(asset.blob)
+        )
+          reusable.add(asset.sha256);
+      } catch {
+        abort(signal);
+      }
+    }
+    const newAssets = assets.filter((a) => !reusable.has(a.sha256)),
+      newBytes = newAssets.reduce((n, a) => n + size(a.blob), 0),
+      metadataBytes = encoded(nextRow);
+    let quota = null;
+    try {
+      const q = await estimate();
+      if (Number.isFinite(q?.quota) && Number.isFinite(q?.usage) && q.quota >= 0 && q.usage >= 0)
+        quota = Math.max(0, q.quota - q.usage);
+    } catch {}
+    abort(signal);
+    required(
+      quota === null || newBytes + metadataBytes <= quota,
+      'There is not enough reported storage space to stage this soundtrack.',
+    );
+    // Deprecated caller headroom can only refuse; it never replaces the shared inventory.
+    required(
+      otherManagedBytes +
+        before.current.assets.reduce((n, a) => n + size(a.blob), 0) +
+        newBytes +
+        metadataBytes +
+        encoded({ generation: before.current.generation, library: before.current.library }) <=
+        MANAGED_MEDIA_LIMITS.bytes,
+      'Committed media plus staging exceeds the 256 MiB managed budget.',
+    );
+    const handle =
+        reservation ??
+        (await reserve({
+          domain,
+          expectedGeneration,
+          maxNewBytes: newBytes,
+          maxMetadataBytes: metadataBytes,
+          signal,
+        })),
+      known = token(handle);
+    try {
+      return await transact(
+        'readwrite',
+        (state, stores) => {
+          const t = clock(),
+            saved = state.reservations.find((r) => r.id === known.id),
+            current = state[`${domain}Row`];
+          required(saved && saved.expiresAt > t, 'Media reservation expired; prepare again.');
+          required(
+            saved.domain === domain &&
+              saved.generation === expectedGeneration &&
+              current.generation === expectedGeneration,
+            changed(domain),
+          );
+          required(
+            newBytes <= saved.maxNewBytes && metadataBytes <= saved.maxMetadataBytes,
+            'Prepared media exceeds its reservation.',
+          );
+          for (const hash of reusable) {
+            const old = state.blobs.get(hash),
+              prior = before.state.blobs.get(hash);
+            required(
+              old && old.bytes === prior.bytes && old.store === prior.store,
+              'Media assets changed during staging.',
+            );
+          }
+          required(
+            state.usedBytes +
+              reservationBytes(active(state, t).filter((r) => r.id !== saved.id)) +
+              newBytes +
+              metadataBytes +
+              RESERVATION_OVERHEAD <=
+              MANAGED_MEDIA_LIMITS.bytes,
+            'Committed media plus staging exceeds the 256 MiB managed budget.',
+          );
+          const target = domain === 'audio' ? 'audio' : 'mediaBlobs';
+          for (const { sha256, blob } of newAssets)
+            stores[state.blobs.get(sha256)?.store ?? target].put(blob, sha256);
+          const other = domain === 'audio' ? 'media' : 'audio',
+            formerlyOwned = hashes(domain, current.library),
+            retained = new Set([
+              ...hashes(domain, prepared.library),
+              ...hashes(other, state[`${other}Row`].library),
+            ]);
+          let finalBlobBytes = state.blobBytes;
+          for (const asset of newAssets) {
+            const old = state.blobs.get(asset.sha256);
+            finalBlobBytes += size(asset.blob) - (old?.bytes ?? 0);
+          }
+          for (const [hash, old] of state.blobs)
+            if (formerlyOwned.has(hash) && !retained.has(hash)) {
+              // Remove only records this edit relinquished. Unexplained legacy
+              // originals stay counted and available for explicit recovery.
+              stores[old.store].delete(hash);
+              finalBlobBytes -= old.bytes;
+            }
+          stores[domain === 'audio' ? 'metadata' : 'mediaRecords'].put(nextRow, 'library');
+          stores.reservations.delete(saved.id);
+          expire(state, stores, t);
+          ledger(
+            state,
+            stores,
+            finalBlobBytes + metadataBytes + encoded(state[`${other}Row`]) + OVERHEAD,
+          );
+          return Object.freeze(nextRow);
+        },
+        signal,
+      );
+    } catch (error) {
+      if (reservation === undefined)
+        try {
+          await release(handle);
+        } catch {
+          /* The bounded lease still expires. */
+        }
+      throw error;
+    }
+  }
+  async function commitDomain(domain, prepared, options = {}) {
+    const { reservation } = options;
+    if (reservation !== undefined) token(reservation);
+    try {
+      return await commitPreparedDomain(domain, prepared, options);
+    } catch (error) {
+      // Explicit leases cover preparation as well as the final transaction.
+      // A stale generation, aborted verification or quota refusal must release
+      // this operation even when it fails before entering the final write.
+      if (reservation !== undefined)
+        try {
+          await release(reservation);
+        } catch {
+          /* A closed or unavailable store still has a bounded lease. */
+        }
+      throw error;
+    }
+  }
+  async function readBlob(hash, { signal } = {}) {
+    required(hashValid(hash), 'Invalid media hash.');
+    return transact('readonly', (state) => state.blobs.get(hash)?.blob ?? null, signal);
+  }
+  function close() {
+    closed = true;
+    opening?.then(
+      (db) => db.close(),
+      () => {},
+    );
+  }
+  return Object.freeze({
+    readDomain,
+    usage,
+    reserve,
+    renew,
+    release,
+    commitDomain,
+    readBlob,
+    close,
+  });
+}

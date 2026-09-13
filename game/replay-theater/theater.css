@@ -97,12 +97,16 @@ main {
   --stage-viewport: 100vh;
   --stage-space: 240px;
   --stage-height: max(120px, calc(var(--stage-viewport) - var(--stage-space)));
-  width: min(100%, 768px, calc(var(--stage-height) * 4 / 3));
+  width: min(
+    100%,
+    var(--board-width, 768px),
+    calc(var(--stage-height) * var(--board-ratio, 1.3333333333))
+  );
   margin-inline: auto;
   overflow: hidden;
   border-radius: 9px;
   background: #112d35;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: var(--board-ratio, 4 / 3);
 }
 @supports (height: 100svh) {
   .stage {
@@ -113,7 +117,7 @@ canvas {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: var(--board-ratio, 4 / 3);
   image-rendering: pixelated;
 }
 button,

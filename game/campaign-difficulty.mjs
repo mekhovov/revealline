@@ -13,6 +13,7 @@ import { versionsForCampaign } from './core/versions.mjs';
 export const DEFAULT_CAMPAIGN_DIFFICULTY = 'standard';
 export const CAMPAIGN_DIFFICULTIES = Object.freeze(['standard', 'gentle']);
 export const GENTLE_POLICY_VERSION = 'gentle.v1';
+export const CLASSIC_GENTLE_POLICY_VERSION = 'gentle-classic.v1';
 export const CAMPAIGN_DIFFICULTY_LIMITS = Object.freeze({
   maxBytes: 16 * 1024 * 1024,
   maxNodes: 400000,
@@ -131,17 +132,18 @@ function keyFor(campaign) {
   })}`;
 }
 
-function gentleLevel(source, token) {
+function gentleLevel(source, token, classic = false) {
   const level = normalizedLevel(source);
-  level.revision = `gentle-v1-${dataIdentity({ token, levelId: source.id, sourceRevision: source.revision })}`;
+  level.revision = `${classic ? 'gentle-classic-v1' : 'gentle-v1'}-${dataIdentity({ token, levelId: source.id, sourceRevision: source.revision })}`;
   level.rules.lives = Math.max(level.rules.lives, 5);
   for (const key of ['timeLimitSeconds', 'cutTimeLimitSeconds', 'maxTrailCells'])
     level.rules[key] = 0;
   for (const enemy of level.enemies) {
-    if (enemy.type === 'bouncer') {
+    if (enemy.type === 'bouncer' || (classic && ['claimed-rover', 'eroder'].includes(enemy.type))) {
       enemy.vx *= 0.6;
       enemy.vy *= 0.6;
-    } else if (enemy.type === 'border-patrol') enemy.speed = (enemy.speed ?? 4) * 0.6;
+    } else if (enemy.type === 'border-patrol' || (classic && enemy.type === 'contour-patrol'))
+      enemy.speed = (enemy.speed ?? 4) * 0.6;
     else if (enemy.type === 'lane-boss') {
       const warning = enemy.warningSeconds ?? 1.5,
         active = enemy.activeSeconds ?? 0.7,
@@ -166,15 +168,17 @@ function gentleLevel(source, token) {
 
 function contextFor(base, mode, baseCampaignKey) {
   const campaign = structuredClone(base);
+  const classic = versionsForCampaign(base).ruleset === 'xonix-core.v5';
+  const policyVersion = classic ? CLASSIC_GENTLE_POLICY_VERSION : GENTLE_POLICY_VERSION;
   if (mode === 'gentle') {
-    const token = dataIdentity({ policyVersion: GENTLE_POLICY_VERSION, baseCampaignKey });
-    campaign.id = `gentle-v1-${token}`;
+    const token = dataIdentity({ policyVersion, baseCampaignKey });
+    campaign.id = `${classic ? 'gentle-classic-v1' : 'gentle-v1'}-${token}`;
     campaign.revision = '1';
-    campaign.levels = base.levels.map((level) => gentleLevel(level, token));
+    campaign.levels = base.levels.map((level) => gentleLevel(level, token, classic));
   }
   return freeze({
     mode,
-    policyVersion: mode === 'gentle' ? GENTLE_POLICY_VERSION : null,
+    policyVersion: mode === 'gentle' ? policyVersion : null,
     baseCampaignKey,
     campaign,
     campaignKey: mode === 'standard' ? baseCampaignKey : keyFor(campaign),

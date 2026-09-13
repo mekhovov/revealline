@@ -1,0 +1,244 @@
+{
+  "format": "revealline-reference-study.v1",
+  "studyOnly": true,
+  "notAnImportableGameLevel": true,
+  "edition": "XPOSED RELOADED",
+  "inspectedOn": "2026-09-12",
+  "projection": {
+    "width": 72,
+    "height": 36,
+    "coordinates": "Original integer study cells; not a measured source grid",
+    "base": "interior field; one-cell outer safe border",
+    "materialOrder": ["slow", "lethal", "wall"],
+    "overlapRule": "Later material wins; masks are separate from ownership",
+    "rectangles": "Half-open [x,x+w) by [y,y+h)",
+    "ringRule": "Outer rectangle minus inset-one rectangle"
+  },
+  "unknown": [
+    "Exact source cell count and collision radius",
+    "Enemy speeds, trajectories, spawn algorithm and timing",
+    "Full source fill-anchor rules and tie ordering",
+    "Whether disappeared wall art also removes collision"
+  ],
+  "playthroughVerified": false,
+  "sourceAssetsCopied": false,
+  "id": "bars-hollow-chambers",
+  "title": "Pack6Level7 bars and paired hollow chambers",
+  "source": [
+    {
+      "path": "docs/research/evidence/round-06/reloaded-pack6-l7-012.png",
+      "sha256": "87d41155c09743d99771eac4c1e1788537fc108579f2059cdf7353cd9658988b",
+      "url": "https://www.youtube.com/watch?v=-qG4k6dkd-c&t=12s",
+      "sourceTime": "00:12",
+      "observed": "Alternating tall cyan bars and paired hollow cyan rectangles inside red outlines and blue slow ground; HUD00/70."
+    },
+    {
+      "path": "docs/research/evidence/round-06/reloaded-pack6-l7-114.png",
+      "sha256": "eec355db921604fbf9cc113cdd68dfbf7ad735b90d6074c1405bb3d10f65dadc",
+      "url": "https://www.youtube.com/watch?v=-qG4k6dkd-c&t=114s",
+      "sourceTime": "01:54.0",
+      "observed": "Left diamond beside a frontier before another small notch."
+    },
+    {
+      "path": "docs/research/evidence/round-06/reloaded-pack6-l7-0114-2.png",
+      "sha256": "e5bfa2f32b2e70b761e2f9e1d4a9cac70eeb620b48824f4d5a6a21c24b9e145c",
+      "url": "https://www.youtube.com/watch?v=-qG4k6dkd-c&t=114s",
+      "sourceTime": "01:54.2",
+      "observed": "New covered notch and cyan particles at the left diamond. Integer coverage and displayed score are unchanged."
+    }
+  ],
+  "reconstructionStatus": "Normalized alternating-module study. Source topology family is observed; cell coordinates, actors and materials after capture are proposed controls.",
+  "materials": {
+    "slow": [
+      {
+        "x": 6,
+        "y": 3,
+        "w": 60,
+        "h": 29
+      }
+    ],
+    "lethal": [
+      {
+        "ring": {
+          "x": 6,
+          "y": 4,
+          "w": 4,
+          "h": 28
+        }
+      },
+      {
+        "ring": {
+          "x": 24,
+          "y": 4,
+          "w": 4,
+          "h": 28
+        }
+      },
+      {
+        "ring": {
+          "x": 42,
+          "y": 4,
+          "w": 4,
+          "h": 28
+        }
+      },
+      {
+        "ring": {
+          "x": 60,
+          "y": 4,
+          "w": 4,
+          "h": 28
+        }
+      },
+      {
+        "ring": {
+          "x": 14,
+          "y": 3,
+          "w": 6,
+          "h": 13
+        }
+      },
+      {
+        "ring": {
+          "x": 14,
+          "y": 20,
+          "w": 6,
+          "h": 13
+        }
+      },
+      {
+        "ring": {
+          "x": 32,
+          "y": 3,
+          "w": 6,
+          "h": 13
+        }
+      },
+      {
+        "ring": {
+          "x": 32,
+          "y": 20,
+          "w": 6,
+          "h": 13
+        }
+      },
+      {
+        "ring": {
+          "x": 50,
+          "y": 3,
+          "w": 6,
+          "h": 13
+        }
+      },
+      {
+        "ring": {
+          "x": 50,
+          "y": 20,
+          "w": 6,
+          "h": 13
+        }
+      }
+    ],
+    "wall": [
+      {
+        "x": 7,
+        "y": 5,
+        "w": 2,
+        "h": 26
+      },
+      {
+        "x": 25,
+        "y": 5,
+        "w": 2,
+        "h": 26
+      },
+      {
+        "x": 43,
+        "y": 5,
+        "w": 2,
+        "h": 26
+      },
+      {
+        "x": 61,
+        "y": 5,
+        "w": 2,
+        "h": 26
+      },
+      {
+        "ring": {
+          "x": 15,
+          "y": 4,
+          "w": 4,
+          "h": 11
+        }
+      },
+      {
+        "ring": {
+          "x": 15,
+          "y": 21,
+          "w": 4,
+          "h": 11
+        }
+      },
+      {
+        "ring": {
+          "x": 33,
+          "y": 4,
+          "w": 4,
+          "h": 11
+        }
+      },
+      {
+        "ring": {
+          "x": 33,
+          "y": 21,
+          "w": 4,
+          "h": 11
+        }
+      },
+      {
+        "ring": {
+          "x": 51,
+          "y": 4,
+          "w": 4,
+          "h": 11
+        }
+      },
+      {
+        "ring": {
+          "x": 51,
+          "y": 21,
+          "w": 4,
+          "h": 11
+        }
+      }
+    ]
+  },
+  "studySetup": {
+    "spawn": {
+      "x": 39.5,
+      "y": 35.5
+    },
+    "fieldActors": [
+      {
+        "id": "left-seed",
+        "x": 11.5,
+        "y": 18.5,
+        "movement": "stationary test control"
+      },
+      {
+        "id": "right-seed",
+        "x": 67.5,
+        "y": 18.5,
+        "movement": "stationary test control"
+      }
+    ],
+    "coverageGoal": 0.7
+  },
+  "experiments": [
+    "Use a center passage separator with seeds on both sides; contrast with a later unseeded pocket closure.",
+    "Run separate tests with contour, exposed-ground and eroder roles one at a time before mixing them.",
+    "Prove capture/erosion/reclaim changes current coverage but never repeats first-capture score.",
+    "Keep removable-wall parity marked unresolved: this study starts with proposed permanent walls."
+  ]
+}

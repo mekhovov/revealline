@@ -1,4 +1,5 @@
 import { CLASSES, validateLevel } from '../core/index.mjs';
+import { geometryForLevel } from '../core/geometry.mjs';
 import { versionsForLevel } from '../core/versions.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { boundedJSON, required } from '../data-json.mjs';
@@ -7,6 +8,9 @@ import {
   validateScenario,
   MASTERY_SCENARIO_VERSION,
   ENCOUNTER_SCENARIO_VERSION,
+  WIDE_SCENARIO_VERSION,
+  CLASSIC_SCENARIO_VERSION,
+  CLASSIC_VISUAL_ROLES,
 } from '../content.mjs';
 import { createMasteryCatalog } from '../mastery-catalog.mjs';
 import {
@@ -18,6 +22,8 @@ import {
   validatePack,
   MASTERY_PACK_VERSION,
   ENCOUNTER_PACK_VERSION,
+  WIDE_PACK_VERSION,
+  CLASSIC_PACK_VERSION,
 } from '../packs.mjs';
 
 export function expansionEntries(library) {
@@ -37,14 +43,28 @@ export function editorScenario(scenario) {
   current.presentation ??= { style: 'hybrid', showGrid: false };
   return current;
 }
+/** Only explicit whole-level replacements discard bindings unavailable in the new edition. */
+export function visualsForLevelReplacement(current, format) {
+  return Object.fromEntries(
+    Object.entries(current.visualOverrides).filter(([role]) =>
+      current.format !== CLASSIC_SCENARIO_VERSION || format === CLASSIC_SCENARIO_VERSION
+        ? true
+        : !CLASSIC_VISUAL_ROLES.includes(role),
+    ),
+  );
+}
 /** Choose an explicit authored preview; null deliberately disables shipped fallback. */
 export function withScenarioMastery(current, definition) {
   const candidate = {
     ...current,
     format:
-      current.format === ENCOUNTER_SCENARIO_VERSION
-        ? ENCOUNTER_SCENARIO_VERSION
-        : MASTERY_SCENARIO_VERSION,
+      current.format === CLASSIC_SCENARIO_VERSION
+        ? CLASSIC_SCENARIO_VERSION
+        : current.format === WIDE_SCENARIO_VERSION
+          ? WIDE_SCENARIO_VERSION
+          : current.format === ENCOUNTER_SCENARIO_VERSION
+            ? ENCOUNTER_SCENARIO_VERSION
+            : MASTERY_SCENARIO_VERSION,
     masteryDefinition: structuredClone(definition),
   };
   const checked = validateScenario(candidate);
@@ -55,9 +75,23 @@ export function withScenarioMastery(current, definition) {
 export function withScenarioEncounter(current, descriptor) {
   const candidate = {
     ...current,
-    format: ENCOUNTER_SCENARIO_VERSION,
+    format:
+      current.format === CLASSIC_SCENARIO_VERSION
+        ? CLASSIC_SCENARIO_VERSION
+        : current.format === WIDE_SCENARIO_VERSION
+          ? WIDE_SCENARIO_VERSION
+          : ENCOUNTER_SCENARIO_VERSION,
     masteryDefinition: null,
-    level: { ...current.level, version: 'xonix-level.v2', encounter: structuredClone(descriptor) },
+    level: {
+      ...current.level,
+      version:
+        current.format === CLASSIC_SCENARIO_VERSION
+          ? 'xonix-level.v4'
+          : current.format === WIDE_SCENARIO_VERSION
+            ? 'xonix-level.v3'
+            : 'xonix-level.v2',
+      encounter: structuredClone(descriptor),
+    },
   };
   const checked = validateScenario(candidate);
   required(checked.valid, checked.errors.join('; '));
@@ -68,10 +102,14 @@ export function withoutScenarioEncounter(current) {
   required(current.level.encounter, 'This map has no staged encounter.');
   const level = structuredClone(current.level);
   level.enemies = level.enemies.filter((enemy) => enemy.id !== level.encounter.enemyId);
-  delete level.encounter;
-  level.version = 'xonix-level.v1';
+  const wide = [WIDE_SCENARIO_VERSION, CLASSIC_SCENARIO_VERSION].includes(current.format);
+  if (wide) level.encounter = null;
+  else {
+    delete level.encounter;
+    level.version = 'xonix-level.v1';
+  }
   return editScenario(current, {
-    format: MASTERY_SCENARIO_VERSION,
+    format: wide ? current.format : MASTERY_SCENARIO_VERSION,
     masteryDefinition: null,
     level,
   });
@@ -112,15 +150,25 @@ export function entryScenario(
     entry.themes[0];
   const current = {
     format:
-      entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
-        ? ENCOUNTER_SCENARIO_VERSION
-        : entry.sourcePackFormat === MASTERY_PACK_VERSION
-          ? MASTERY_SCENARIO_VERSION
-          : 'xonix-playground.v1',
-    ...([MASTERY_PACK_VERSION, ENCOUNTER_PACK_VERSION].includes(entry.sourcePackFormat)
+      level.version === 'xonix-level.v4'
+        ? CLASSIC_SCENARIO_VERSION
+        : level.version === 'xonix-level.v3'
+          ? WIDE_SCENARIO_VERSION
+          : entry.sourcePackFormat === ENCOUNTER_PACK_VERSION
+            ? ENCOUNTER_SCENARIO_VERSION
+            : entry.sourcePackFormat === MASTERY_PACK_VERSION
+              ? MASTERY_SCENARIO_VERSION
+              : 'xonix-playground.v1',
+    ...(['xonix-level.v3', 'xonix-level.v4'].includes(level.version) ||
+    [
+      MASTERY_PACK_VERSION,
+      ENCOUNTER_PACK_VERSION,
+      WIDE_PACK_VERSION,
+      CLASSIC_PACK_VERSION,
+    ].includes(entry.sourcePackFormat)
       ? {
           masteryDefinition:
-            entry.masteries.find((definition) => definition.levelId === levelId) ?? null,
+            entry.masteries?.find((definition) => definition.levelId === levelId) ?? null,
         }
       : {}),
     level,
@@ -165,6 +213,8 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
       'xonix-pack.v1',
       MASTERY_PACK_VERSION,
       ENCOUNTER_PACK_VERSION,
+      WIDE_PACK_VERSION,
+      CLASSIC_PACK_VERSION,
       'xonix-pack-library.v1',
     ].includes(value.format)
   ) {
@@ -196,17 +246,35 @@ export async function prepareDocument(candidate, { current, packLibrary, decodeI
     };
   }
   const candidateScenario =
-    value.version === 'xonix-level.v2'
-      ? { ...current, format: ENCOUNTER_SCENARIO_VERSION, masteryDefinition: null, level: value }
-      : value.version === 'xonix-level.v1'
-        ? {
-            ...current,
-            ...(current?.format === ENCOUNTER_SCENARIO_VERSION
-              ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
-              : {}),
-            level: value,
-          }
-        : value;
+    value.version === 'xonix-level.v4'
+      ? { ...current, format: CLASSIC_SCENARIO_VERSION, masteryDefinition: null, level: value }
+      : value.version === 'xonix-level.v3'
+        ? { ...current, format: WIDE_SCENARIO_VERSION, masteryDefinition: null, level: value }
+        : value.version === 'xonix-level.v2'
+          ? {
+              ...current,
+              format: ENCOUNTER_SCENARIO_VERSION,
+              masteryDefinition: null,
+              level: value,
+            }
+          : value.version === 'xonix-level.v1'
+            ? {
+                ...current,
+                ...([
+                  ENCOUNTER_SCENARIO_VERSION,
+                  WIDE_SCENARIO_VERSION,
+                  CLASSIC_SCENARIO_VERSION,
+                ].includes(current?.format)
+                  ? { format: MASTERY_SCENARIO_VERSION, masteryDefinition: null }
+                  : {}),
+                level: value,
+              }
+            : value;
+  if (['xonix-level.v1', 'xonix-level.v2', 'xonix-level.v3'].includes(value.version))
+    candidateScenario.visualOverrides = visualsForLevelReplacement(
+      current,
+      candidateScenario.format,
+    );
   const prepared = await prepareScenario(candidateScenario, {
     ...(decodeImage ? { decodeImage } : {}),
   });
@@ -232,12 +300,13 @@ export function paintLevel(
   y,
   { signalWidth = 8, signalHeight = 6, speedFactor = 0.5 } = {},
 ) {
+  const { width, height } = geometryForLevel(source);
   required(
-    Number.isInteger(x) && x >= 0 && x < 48 && Number.isInteger(y) && y >= 0 && y < 36,
+    Number.isInteger(x) && x >= 0 && x < width && Number.isInteger(y) && y >= 0 && y < height,
     'Paint coordinates must lie on the board.',
   );
   const level = structuredClone(source),
-    inside = x > 0 && x < 47 && y > 0 && y < 35;
+    inside = x > 0 && x < width - 1 && y > 0 && y < height - 1;
   for (const key of ['walls', 'enemies', 'objectives', 'supplies', 'signalZones'])
     level[key] ??= [];
   if (brush === 'wall' && inside) level.walls.push({ x, y, w: 1, h: 1 });
@@ -272,8 +341,8 @@ export function paintLevel(
       id: uid('signal', allActors(level)),
       x,
       y,
-      w: Math.min(signalWidth, 47 - x),
-      h: Math.min(signalHeight, 35 - y),
+      w: Math.min(signalWidth, width - 1 - x),
+      h: Math.min(signalHeight, height - 1 - y),
       speedFactor,
       disableBoost: true,
       lockAbility: true,
@@ -317,10 +386,18 @@ export function interactionPreset(kind, current, classRecipes = CLASSES) {
   );
   const scenario = structuredClone(current),
     close = kind !== 'fiber';
-  if ([MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(scenario.format)) {
+  if (
+    [
+      MASTERY_SCENARIO_VERSION,
+      ENCOUNTER_SCENARIO_VERSION,
+      WIDE_SCENARIO_VERSION,
+      CLASSIC_SCENARIO_VERSION,
+    ].includes(scenario.format)
+  ) {
     scenario.format = MASTERY_SCENARIO_VERSION;
     scenario.masteryDefinition = null;
   }
+  scenario.visualOverrides = visualsForLevelReplacement(current, scenario.format);
   scenario.level = {
     version: 'xonix-level.v1',
     id: `workshop-${kind}`,
@@ -386,12 +463,21 @@ export function expansionFromScenario(
   delete level.musicId;
   const pack = {
     format:
-      current.format === ENCOUNTER_SCENARIO_VERSION
-        ? ENCOUNTER_PACK_VERSION
-        : current.format === MASTERY_SCENARIO_VERSION
-          ? MASTERY_PACK_VERSION
-          : 'xonix-pack.v1',
-    ...([MASTERY_SCENARIO_VERSION, ENCOUNTER_SCENARIO_VERSION].includes(current.format)
+      current.format === CLASSIC_SCENARIO_VERSION
+        ? CLASSIC_PACK_VERSION
+        : current.format === WIDE_SCENARIO_VERSION
+          ? WIDE_PACK_VERSION
+          : current.format === ENCOUNTER_SCENARIO_VERSION
+            ? ENCOUNTER_PACK_VERSION
+            : current.format === MASTERY_SCENARIO_VERSION
+              ? MASTERY_PACK_VERSION
+              : 'xonix-pack.v1',
+    ...([
+      MASTERY_SCENARIO_VERSION,
+      ENCOUNTER_SCENARIO_VERSION,
+      WIDE_SCENARIO_VERSION,
+      CLASSIC_SCENARIO_VERSION,
+    ].includes(current.format)
       ? {
           masteries: current.masteryDefinition
             ? [

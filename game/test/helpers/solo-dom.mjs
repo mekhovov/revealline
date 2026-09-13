@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { BoardPainter } from '../../ui/render.mjs';
 import { Document, Element, Events } from './couch-dom.mjs';
+import { SOUNDTRACK_DATABASE } from '../../soundtrack-store.mjs';
+import { audioHarness } from './soundtrack-audio.mjs';
 
 export class SoloElement extends Element {
   constructor(document, tag, options) {
@@ -30,6 +32,9 @@ export class SoloElement extends Element {
   }
   get childNodes() {
     return this.textContent ? [this.firstChild, ...this.children] : this.children;
+  }
+  get lastElementChild() {
+    return this.children.at(-1) ?? null;
   }
   showModal() {
     this.open = true;
@@ -155,11 +160,68 @@ export async function settle(predicate, message = 'Asynchronous host action did 
 let sequence = 0;
 export async function soloPage(
   t,
-  { campaign, storage = memoryStorage(), search = '', previewStorage = memoryStorage() } = {},
+  {
+    campaign,
+    storage = memoryStorage(),
+    search = '',
+    previewStorage = memoryStorage(),
+    titleScreen = false,
+    fetchJSON,
+    audio,
+    soundtrackIndexedDB,
+    rendering,
+  } = {},
 ) {
   const doc = new SoloDocument(),
     win = new Events(),
     db = assetDatabase();
+  const audioElements = [];
+  if (audio?.filePlayback !== false && audio) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => {
+      const element = createElement(tag);
+      if (tag.toLowerCase() !== 'audio') return element;
+      // The app still constructs the real player and Soundscape. Only the
+      // browser's media element is modeled, with one independent event target
+      // and stream position per element, including probes and audition.
+      const media = audioHarness().media;
+      for (const [name, value] of Object.entries(media)) {
+        if (['emit', 'addEventListener', 'removeEventListener', 'removeAttribute'].includes(name))
+          continue;
+        element[name] = value;
+      }
+      element.canPlayType = (type) => (type === 'audio/mpeg' ? 'probably' : '');
+      element.load = () => {
+        media.load.call(element);
+        if (element.src) {
+          element.duration = audio.durationSeconds ?? 1;
+          element.readyState = 2;
+          queueMicrotask(() => {
+            element.emit('loadedmetadata');
+            element.emit('loadeddata');
+          });
+        }
+      };
+      element.removeAttribute = (name) => {
+        SoloElement.prototype.removeAttribute.call(element, name);
+        if (name === 'src') element.src = '';
+      };
+      audioElements.push(element);
+      return element;
+    };
+  }
+  if (rendering) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => {
+      const element = createElement(tag);
+      if (tag.toLowerCase() === 'canvas') {
+        // Real Phaser textures are detached canvases: their CSS width is zero.
+        element.clientWidth = 0;
+        element.getContext = () => rendering.contextFor(element);
+      }
+      return element;
+    };
+  }
   win.parent = win;
   doc.parentNode = win;
   const html = await readFile(new URL('../../index.html', import.meta.url), 'utf8');
@@ -180,7 +242,15 @@ export async function soloPage(
     location: { href: `http://localhost/game/${search}`, search, origin: 'http://localhost' },
     localStorage: storage,
     sessionStorage: previewStorage,
-    indexedDB: db,
+    indexedDB: soundtrackIndexedDB
+      ? {
+          open(name, ...args) {
+            return name === SOUNDTRACK_DATABASE
+              ? soundtrackIndexedDB.open(name, ...args)
+              : db.open(name, ...args);
+          },
+        }
+      : db,
     navigator: {
       getGamepads() {
         padReads++;
@@ -200,10 +270,13 @@ export async function soloPage(
     },
     fetch: async (path) => ({
       ok: path !== 'build-info.json',
-      json: async () =>
-        path === 'content/campaign.json' && campaign
+      json: async () => {
+        const replacement = fetchJSON?.(path);
+        if (replacement !== undefined) return structuredClone(replacement);
+        return path === 'content/campaign.json' && campaign
           ? structuredClone(campaign)
-          : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8')),
+          : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8'));
+      },
     }),
     requestAnimationFrame(callback) {
       const id = ++nextFrame;
@@ -219,15 +292,63 @@ export async function soloPage(
       Game: class {
         constructor(config) {
           scene = new config.scene();
-          scene.textures = { createCanvas: () => ({ context: {} }) };
-          scene.add = { image: () => ({ setOrigin() {} }) };
+          scene.textures = {
+            createCanvas: (id, width, height) => {
+              const canvas = doc.createElement('canvas');
+              canvas.width = width;
+              canvas.height = height;
+              return {
+                context: rendering ? canvas.getContext('2d') : {},
+                width,
+                height,
+                setSize(w, h) {
+                  this.width = canvas.width = w;
+                  this.height = canvas.height = h;
+                },
+              };
+            },
+          };
+          scene.add = {
+            image: () => ({
+              setOrigin() {
+                return this;
+              },
+              setSizeToFrame() {},
+            }),
+          };
           scene.game = { canvas: doc.createElement('canvas') };
+          scene.game.canvas.width = config.width;
+          scene.game.canvas.height = config.height;
+          if (rendering) scene.game.canvas.clientWidth = rendering.displayCSSWidth ?? config.width;
+          scene.scale = {
+            resize(width, height) {
+              scene.game.canvas.width = width;
+              scene.game.canvas.height = height;
+            },
+          };
+          scene.cameras = { main: { setSize() {} } };
           $('game-canvas').append(scene.game.canvas);
           scene.create();
         }
       },
     },
   };
+  if (rendering?.Image) globals.Image = rendering.Image;
+  if (audio) {
+    globals.AudioContext = function () {
+      return audio.context;
+    };
+    if (audio.URLImpl) {
+      globals.URL = class extends globalThis.URL {
+        static createObjectURL(blob) {
+          return audio.URLImpl.createObjectURL(blob);
+        }
+        static revokeObjectURL(url) {
+          return audio.URLImpl.revokeObjectURL(url);
+        }
+      };
+    }
+  }
   win.location = globals.location;
   for (const [key, value] of Object.entries(globals)) {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -244,12 +365,15 @@ export async function soloPage(
     'draw',
   ]) {
     methods.set(key, BoardPainter.prototype[key]);
-    BoardPainter.prototype[key] =
-      key === 'draw'
-        ? (_context, run, _dt, options) => {
-            rendered = { run, ...options };
-          }
-        : () => {};
+    if (key === 'draw') {
+      BoardPainter.prototype[key] = function (context, run, dt, options) {
+        rendered = { run, ...options };
+        if (rendering) {
+          methods.get('draw').call(this, context, run, dt, options);
+          rendering.onDraw?.({ painter: this, context, run, dt, options });
+        }
+      };
+    } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(async () => {
     win.emit('pagehide', { persisted: false });
@@ -261,6 +385,12 @@ export async function soloPage(
     for (const [key, value] of methods) BoardPainter.prototype[key] = value;
   });
   await import(`../../app.mjs?difficultyHost=${++sequence}`);
+  // Ordinary host tests begin at the briefing through real menu handlers.
+  // Shell-specific cases can retain the title with titleScreen:true.
+  if (!titleScreen && $('shell-home').open) {
+    $('shell-play').click();
+    $('shell-briefing').click();
+  }
   assert.ok(
     scene,
     `${$('overlay-title').textContent}: ${$('overlay-copy').textContent}\n${errors.map((e) => e.stack).join('\n')}`,
@@ -296,6 +426,7 @@ export async function soloPage(
     key,
     change,
     errors,
+    audioElements,
     get rendered() {
       return rendered;
     },

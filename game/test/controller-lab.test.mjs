@@ -312,7 +312,7 @@ test('practice page keeps virtual holds, releases and import failures isolated f
       },
     );
     await t.test(
-      'hold mode combines movement+boost; release all clears both without disconnecting',
+      'hold mode combines physical direction+Boost buttons; release all releases both without disconnecting',
       async () => {
         elements.gesture.value = 'hold';
         await elements.gesture.emit('change');

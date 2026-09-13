@@ -8,7 +8,7 @@ import {
   exportPackLibrary,
 } from '../packs.mjs';
 import { downloadJSON } from '../content.mjs';
-import { BoardPainter } from './render.mjs';
+import { BoardPainter, boardPaintSizeForLevel } from './render.mjs';
 import { createRun } from '../core/index.mjs';
 import { challengeCampaign } from '../challenges.mjs';
 import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
@@ -360,7 +360,7 @@ export function attachLibraryPanel(api) {
         );
         return;
       }
-      if (parsed.format === 'xonix-session.v1') {
+      if (['xonix-session.v1', 'xonix-session.v2'].includes(parsed.format)) {
         await api.restore(parsed);
         $('library-dialog').close();
         return;
@@ -526,6 +526,12 @@ export function attachLibraryPanel(api) {
     .catch((e) => status('pack-status', e));
 
   async function drawPicture(canvas, picture, accept = () => true) {
+    const size = boardPaintSizeForLevel(picture.level);
+    const width = canvas === $('gallery-canvas') ? size.width : 320;
+    const height = (width * size.height) / size.width;
+    if (canvas.width !== width) canvas.width = width;
+    if (canvas.height !== height) canvas.height = height;
+    canvas.style.aspectRatio = `${size.width} / ${size.height}`;
     const args = {
       theme: picture.theme,
       level: picture.level,

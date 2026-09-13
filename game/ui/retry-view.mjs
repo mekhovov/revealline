@@ -17,11 +17,15 @@ const explanations = Object.freeze({
   ],
   'cut-timeout': [
     'The time allowed for one open line ran out.',
-    'Rejoin safe ground sooner. Stopping movement does not pause the line timer.',
+    'Rejoin safe ground sooner. Pause the game when you need time to plan.',
   ],
   'cable-limit': [
     'Your open line exceeded its length limit.',
     'Plan a shorter line back to safe ground.',
+  ],
+  'lethal-terrain': [
+    'Your character touched a lethal field.',
+    'Route around its warning pattern or enclose it from safe ground before crossing.',
   ],
   'mission-timeout': [
     'The mission clock ran out.',

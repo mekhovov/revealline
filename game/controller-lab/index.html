@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title>Reveal / Line — Controller practice</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../ui/pixel-theme.css" />
   </head>
   <body>
     <header>
@@ -206,14 +207,16 @@
             <dd id="pad-status">Not joined</dd>
           </dl>
           <p class="guide">
-            Hold mode keeps a button pressed when you activate another. Release all before a new
-            menu gesture. Moving between this panel and the game may pause play; the next virtual
-            gesture focuses the game first.
+            Hold mode keeps a physical button pressed when you activate another. Release all before
+            a new menu gesture. In flight, a direction press selects continuous movement; releasing
+            buttons or sticks does not stop it. Use Pause, then explicit Resume to continue. Moving
+            between this panel and the game may pause play; the next virtual gesture focuses the
+            game first.
           </p>
           <p class="guide default-hints">
-            <strong>Default layout only:</strong> 0 confirms / uses ability; 1 goes back / stops; 2
-            picks up; 3 opens Hangar; 5 boosts; 9 pauses. Remap controls in the game's Settings;
-            this panel always sends the physical positions and indices shown.
+            <strong>Default layout only:</strong> 0 confirms / uses ability; 1 goes back; 2 picks
+            up; 3 opens Hangar; 5 boosts; 9 pauses. Remap controls in the game's Settings; this
+            panel always sends the physical positions and indices shown.
           </p>
         </aside>
         <section class="stage" aria-label="Actual practice game">

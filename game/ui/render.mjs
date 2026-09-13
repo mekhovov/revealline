@@ -1,7 +1,22 @@
+import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
+import {
+  classicView,
+  drawClassicTerrain,
+  drawClassicPickups,
+  drawClassicEnemy,
+  drawClassicStatus,
+} from './classic-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
-import { paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
+import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { createSceneArt } from './scene-art.mjs';
+import {
+  createActorPresentation,
+  actorDiameter,
+  drawPresentedActor,
+  drawActiveTrail,
+  drawCapturePulse,
+} from './actor-presentation.mjs';
 import {
   createCelebration,
   advanceCelebration,
@@ -12,9 +27,28 @@ import {
 
 // Simulation uses cells. Everything below is presentation and never mutates a run.
 const CELL = 16,
-  W = 768,
-  H = 576,
   TAU = Math.PI * 2;
+const paintSize = ({ width, height }) => ({
+  width: width * CELL,
+  height: height * CELL,
+  cellSize: CELL,
+});
+export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
+export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
+function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
+  const s = Math.max(0.1, Math.min(4, screenScale)),
+    fitted = fittedBodySize(body, image),
+    // Keep the contained source rectangle and all attachment anchors intact.
+    // The current drone art includes transparent margins: a 24/16 CSS-pixel
+    // image box gives its visible silhouette roughly 18/12 pixels of span.
+    extent = image
+      ? Math.max(fitted.width, fitted.height)
+      : Math.max(fitted.width * 0.54, fitted.height * 0.66),
+    minimum = canvasCSSWidth >= 480 ? 24 : 16,
+    desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
+    diameter = Math.max(18, Math.min(64, 32 / s, Math.max(minimum / s, desired)));
+  return { diameter, scale: diameter / (extent * CELL) };
+}
 const makeCanvas = (w, h) => {
   const c = document.createElement('canvas');
   c.width = w;
@@ -50,6 +84,7 @@ export class BoardPainter {
     this.presets = presets;
     this.onAsset = onAsset;
     this.animation = createAnimationState();
+    this.actorPresentation = createActorPresentation();
     this.heading = 0;
     this.time = 0;
     this.effects = [];
@@ -71,6 +106,7 @@ export class BoardPainter {
     this.images = {};
     this.background = this.makeArt(theme);
     this.animation = createAnimationState();
+    this.actorPresentation.reset();
     const knownBody = Object.hasOwn(this.presets.characters, bodyId)
         ? this.presets.characters[bodyId]
         : null,
@@ -129,6 +165,7 @@ export class BoardPainter {
     this.bank = 0;
     this.speedRatio = 0;
     this.time = 0;
+    this.actorPresentation.reset();
   }
   startCelebration({
     levelId = this.levelInfo.id || '',
@@ -189,7 +226,14 @@ export class BoardPainter {
         e.type === 'run.completed' ||
         e.type === 'craft.redeployed'
       )
-        this.effects.push({ type: e.type, age: 0, x: e.x, y: e.y, radius: e.radius });
+        this.effects.push({
+          type: e.type,
+          age: 0,
+          x: e.x,
+          y: e.y,
+          radius: e.radius,
+          ...(Array.isArray(e.indices) ? { indices: e.indices.slice(0, 2592) } : {}),
+        });
     }
     this.effects = this.effects.slice(-8);
   }
@@ -204,9 +248,15 @@ export class BoardPainter {
       debug = false,
       fullReveal = false,
       celebrationPaused = false,
+      actorScale = 1,
+      playerScale = 1,
+      displayCSSWidth = null,
     } = {},
   ) {
     if (!this.theme || !state) return;
+    const { width: columns, height: rows } = geometryForRun(state);
+    const W = columns * CELL,
+      H = rows * CELL;
     if (fullReveal && state.status === 'won') {
       if (this._winState !== state) {
         if (!this._celebrationPrepared)
@@ -226,6 +276,27 @@ export class BoardPainter {
     const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
     const p = this.theme.palette,
       t = state.time;
+    const classic = fullReveal ? null : classicView(state);
+    const canvasCSSWidth =
+      Number.isFinite(displayCSSWidth) && displayCSSWidth > 0
+        ? displayCSSWidth
+        : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
+          ? ctx.canvas.clientWidth
+          : W;
+    const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
+      tick: state.tick,
+      time: state.time,
+      dt,
+      paused: paused || state.status !== 'running',
+      reduced,
+      classic,
+      themeId: this.theme.id,
+      themeFamily: this.theme.family,
+      style: this.style,
+      screenScale: canvasCSSWidth / W,
+      canvasCSSWidth,
+      scale: actorScale,
+    });
     this.time += paused ? 0 : dt;
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
@@ -253,13 +324,13 @@ export class BoardPainter {
       );
     }
     if (!fullReveal || revealAlpha > 0) {
-      ctx.fillStyle = p.field;
-      ctx.globalAlpha = 0.94 * revealAlpha;
+      ctx.fillStyle = '#000000';
+      ctx.globalAlpha = revealAlpha;
       // Horizontal runs keep the reveal mask cheap and deterministic.
-      for (let y = 0; y < 36; y++) {
+      for (let y = 0; y < rows; y++) {
         let start = -1;
-        for (let x = 0; x <= 48; x++) {
-          const covered = x < 48 && state.cells[y * 48 + x] === 0;
+        for (let x = 0; x <= columns; x++) {
+          const covered = x < columns && state.cells[y * columns + x] === 0;
           if (covered && start < 0) start = x;
           if (!covered && start >= 0) {
             ctx.fillRect(start * CELL, y * CELL, (x - start) * CELL, CELL);
@@ -269,9 +340,10 @@ export class BoardPainter {
       }
       ctx.globalAlpha = 1;
     }
-    for (let y = 0; y < 36; y++)
-      for (let x = 0; x < 48; x++) {
-        const v = state.cells[y * 48 + x],
+    drawClassicTerrain(ctx, classic, p, this.images);
+    for (let y = 0; y < rows; y++)
+      for (let x = 0; x < columns; x++) {
+        const v = state.cells[y * columns + x],
           xx = x * CELL,
           yy = y * CELL;
         if (v === 2 && (!fullReveal || revealAlpha > 0)) {
@@ -297,19 +369,19 @@ export class BoardPainter {
           ctx.globalAlpha = 0.7;
           ctx.lineWidth = 1.5;
           ctx.beginPath();
-          if (y > 0 && state.cells[(y - 1) * 48 + x] === 0) {
+          if (y > 0 && state.cells[(y - 1) * columns + x] === 0) {
             ctx.moveTo(xx, yy);
             ctx.lineTo(xx + CELL, yy);
           }
-          if (y < 35 && state.cells[(y + 1) * 48 + x] === 0) {
+          if (y < rows - 1 && state.cells[(y + 1) * columns + x] === 0) {
             ctx.moveTo(xx, yy + CELL);
             ctx.lineTo(xx + CELL, yy + CELL);
           }
-          if (x > 0 && state.cells[y * 48 + x - 1] === 0) {
+          if (x > 0 && state.cells[y * columns + x - 1] === 0) {
             ctx.moveTo(xx, yy);
             ctx.lineTo(xx, yy + CELL);
           }
-          if (x < 47 && state.cells[y * 48 + x + 1] === 0) {
+          if (x < columns - 1 && state.cells[y * columns + x + 1] === 0) {
             ctx.moveTo(xx + CELL, yy);
             ctx.lineTo(xx + CELL, yy + CELL);
           }
@@ -403,10 +475,14 @@ export class BoardPainter {
           e.bossPhase !== 'idle' &&
           e.bossPhase !== 'recovery'
         ) {
+          const frozen = classic?.enemies.some((enemy) => enemy.id === e.id && enemy.frozen);
           ctx.save();
-          ctx.fillStyle = p.danger;
-          ctx.globalAlpha =
-            e.bossPhase === 'active' ? 0.35 : 0.1 + (reduced ? 0 : Math.sin(t * 8) * 0.03);
+          ctx.fillStyle = frozen ? p.muted : p.danger;
+          ctx.globalAlpha = frozen
+            ? 0.12
+            : e.bossPhase === 'active'
+              ? 0.35
+              : 0.1 + (reduced ? 0 : Math.sin(t * 8) * 0.03);
           if (e.axis === 'horizontal')
             ctx.fillRect(
               16,
@@ -425,6 +501,7 @@ export class BoardPainter {
         }
       }
       drawEncounterLane(ctx, state, p);
+      drawClassicPickups(ctx, classic, p, this.images);
       for (const pad of state.supplies) {
         if (this.images.supply)
           ctx.drawImage(this.images.supply, pad.x * CELL - 8, pad.y * CELL - 8, 16, 16);
@@ -488,45 +565,25 @@ export class BoardPainter {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
         const stunned = (e.stunnedUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        this.drawActor(
-          ctx,
-          this.theme.bossShape || 'core',
-          e.x * CELL,
-          e.y * CELL,
-          32,
-          stunned ? p.muted : p.danger,
-          this.images.boss,
-          t,
-          reduced,
-        );
+        drawPresentedActor(ctx, actorFrames.get(e.id), p, this.images.boss);
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
-      ctx.strokeStyle = p.accent;
-      ctx.lineWidth = 3;
-      ctx.lineCap = 'square';
-      ctx.beginPath();
-      for (const s of state.trailSegments) {
-        ctx.moveTo(s.x1 * CELL, s.y1 * CELL);
-        ctx.lineTo(s.x2 * CELL, s.y2 * CELL);
-      }
-      ctx.stroke();
-      for (const point of state.trail) {
-        ctx.fillStyle = p.accent;
-        ctx.globalAlpha = 0.28;
-        ctx.fillRect(Math.floor(point.x) * CELL, Math.floor(point.y) * CELL, CELL, CELL);
-        ctx.globalAlpha = 0.65;
-        ctx.strokeStyle = p.accent;
-        ctx.lineWidth = 0.7;
-        ctx.strokeRect(
-          Math.floor(point.x) * CELL + 0.5,
-          Math.floor(point.y) * CELL + 0.5,
-          CELL - 1,
-          CELL - 1,
-        );
-        ctx.globalAlpha = 1;
-      }
+      drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
+        time: this.time,
+        reduced,
+      });
       for (const e of state.enemies) {
+        if (
+          drawClassicEnemy(
+            ctx,
+            classic?.enemies.find((enemy) => enemy.id === e.id),
+            p,
+            this.images,
+            actorFrames.get(e.id),
+          )
+        )
+          continue;
         if (e.type === 'relay-sentinel') {
           if (!state.encounter?.defeated) {
             ctx.strokeStyle = p.danger;
@@ -547,18 +604,7 @@ export class BoardPainter {
         const stunned = (e.stunnedUntil || 0) > t,
           slowed = (e.slowUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        const size = role === 'boss' ? 32 : 20;
-        this.drawActor(
-          ctx,
-          this.theme[`${role}Shape`] || 'orb',
-          e.x * CELL,
-          e.y * CELL,
-          size,
-          stunned ? p.muted : p.danger,
-          this.images[role],
-          t,
-          reduced,
-        );
+        drawPresentedActor(ctx, actorFrames.get(e.id), p, this.images[role]);
         ctx.globalAlpha = 1;
         if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
           ctx.strokeStyle = p.accent;
@@ -578,6 +624,7 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
+      drawClassicStatus(ctx, classic, p);
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
         this.heading;
@@ -594,6 +641,12 @@ export class BoardPainter {
         dt,
         { paused, reducedMotion: reduced },
       );
+      const playerSize = playerPaintSize(this.body, this.image, {
+        screenScale: canvasCSSWidth / W,
+        canvasCSSWidth,
+        style: this.style,
+        scale: playerScale,
+      });
       ctx.save();
       ctx.scale(CELL, CELL);
       if (state.status === 'respawning')
@@ -604,7 +657,7 @@ export class BoardPainter {
         recipe: this.recipe,
         animation: this.animation,
         colors: { body: p.safe, accent: p.accent },
-        scale: 1,
+        scale: playerSize.scale,
         x: state.player.x,
         y: state.player.y,
         heading: this.heading,
@@ -614,18 +667,36 @@ export class BoardPainter {
         pixel: 1 / CELL,
       });
       ctx.restore();
+      // This ring stays at the simulation contact radius, independent of body
+      // size, source padding, banking and display scale. It is not a larger hitbox.
+      ctx.save();
+      ctx.globalAlpha = state.status === 'respawning' ? 0.55 : 0.85;
+      ctx.beginPath();
+      ctx.arc(
+        state.player.x * CELL,
+        state.player.y * CELL,
+        state.rules.playerRadius * CELL,
+        0,
+        TAU,
+      );
+      ctx.strokeStyle = p.ink;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.strokeStyle = debug ? '#ffffff' : p.paper;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.restore();
       if ((state.ability.shieldUntil || 0) > t || state.player.graceUntil > t) {
         ctx.strokeStyle = p.safe;
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.arc(state.player.x * CELL, state.player.y * CELL, 17, 0, TAU);
-        ctx.stroke();
-      }
-      if (debug) {
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.arc(state.player.x * CELL, state.player.y * CELL, 2.9, 0, TAU);
+        ctx.arc(
+          state.player.x * CELL,
+          state.player.y * CELL,
+          Math.max(17, playerSize.diameter / 2 + 3),
+          0,
+          TAU,
+        );
         ctx.stroke();
       }
       if (state.player.queuedDirection) {
@@ -633,13 +704,15 @@ export class BoardPainter {
         ctx.font = '12px monospace';
         ctx.fillText(
           { up: '↑', right: '→', down: '↓', left: '←' }[state.player.queuedDirection],
-          state.player.x * CELL + 13,
-          state.player.y * CELL - 12,
+          state.player.x * CELL + playerSize.diameter / 2 + 3,
+          state.player.y * CELL - playerSize.diameter / 2 - 2,
         );
       }
     }
     for (const f of this.effects) {
-      if (!paused || fullReveal) f.age += dt;
+      if (fullReveal ? !celebrationPaused : !paused) f.age += dt;
+      if (!fullReveal && f.type === 'cells.claimed')
+        drawCapturePulse(ctx, f, columns, state.cells, p, reduced);
       if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
         ctx.strokeStyle = p.accent;
@@ -656,7 +729,7 @@ export class BoardPainter {
         ctx.stroke();
         ctx.restore();
       }
-      if (!fullReveal && !reduced && f.type !== 'craft.redeployed' && f.age < 0.6) {
+      if (!fullReveal && !reduced && f.type === 'player.failed' && f.age < 0.6) {
         ctx.strokeStyle = f.type === 'player.failed' ? p.danger : p.accent;
         ctx.globalAlpha = (1 - f.age / 0.6) * 0.55;
         ctx.lineWidth = 4;

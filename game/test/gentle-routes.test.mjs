@@ -15,11 +15,13 @@ import { validatePack } from '../packs.mjs';
 import { createDifficultyContext, GENTLE_POLICY_VERSION } from '../campaign-difficulty.mjs';
 
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
-const [base, classRecipes, packIndex, proof] = await Promise.all([
+const [base, classRecipes, packIndex, proof, firstLightProof, r2Proof] = await Promise.all([
   readJSON('../content/campaign.json'),
   readJSON('../content/classes.json'),
   readJSON('../content/packs/index.json'),
   readJSON('../replays/gentle-routes.json'),
+  readJSON('../replays/first-light-gentle-routes.json'),
+  readJSON('../replays/fpv-arcade-r2-routes.json'),
 ]);
 const originals = [{ packId: null, campaign: { ...base, classRecipes } }];
 for (const ref of packIndex.packs) {
@@ -48,18 +50,20 @@ const sources = originals.map(({ packId, campaign }) => ({
 const byKey = new Map(sources.map((source) => [source.context.campaignKey, source.context]));
 const routeKey = (route) => JSON.stringify([route.campaignKey, route.levelId, route.turnPolicy]);
 
-test('Gentle proof covers every shipped map and policy with exact source ownership', () => {
+test('Gentle proofs cover every shipped map and policy while preserving the legacy oracle', () => {
   assert.equal(proof.format, 'xonix-gentle-proof.v1');
   assert.equal(proof.policyVersion, GENTLE_POLICY_VERSION);
   assert.equal(byKey.size, sources.length);
   assert.deepEqual(
     proof.sources,
-    sources.map(({ packId, campaignId, context }) => ({
-      packId,
-      campaignId,
-      baseCampaignKey: context.baseCampaignKey,
-      campaignKey: context.campaignKey,
-    })),
+    sources
+      .filter((source) => !['fpv-arcade', 'fpv-arcade-r2'].includes(source.packId))
+      .map(({ packId, campaignId, context }) => ({
+        packId,
+        campaignId,
+        baseCampaignKey: context.baseCampaignKey,
+        campaignKey: context.campaignKey,
+      })),
   );
   const expected = sources.flatMap(({ context }) =>
     context.campaign.levels.flatMap((level) =>
@@ -68,8 +72,30 @@ test('Gentle proof covers every shipped map and policy with exact source ownersh
       ),
     ),
   );
-  assert.equal(expected.length, 58, '29 maps must each retain both real steering routes.');
-  assert.deepEqual(proof.routes.map(routeKey).sort(), expected.sort());
+  assert.equal(proof.routes.length, 58, 'The 29-map legacy oracle remains unchanged.');
+  const firstLight = sources.filter((source) => source.packId === 'fpv-arcade');
+  assert.equal(firstLight.length, 1);
+  assert.equal(firstLightProof.campaignId, firstLight[0].campaignId);
+  assert.equal(firstLightProof.campaignKey, firstLight[0].context.campaignKey);
+  assert.equal(firstLightProof.baseCampaignKey, firstLight[0].context.baseCampaignKey);
+  assert.equal(firstLightProof.policyVersion, GENTLE_POLICY_VERSION);
+  assert.equal(firstLightProof.difficulty, 'gentle');
+  const r2 = sources.filter((source) => source.packId === 'fpv-arcade-r2');
+  assert.equal(r2.length, 1);
+  assert.equal(r2Proof.baseCampaignKey, r2[0].context.baseCampaignKey);
+  const r2Gentle = r2Proof.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(r2Gentle.length, 6);
+  assert.ok(r2Gentle.every((route) => route.campaignKey === r2[0].context.campaignKey));
+  const combined = [
+    ...r2Gentle,
+    ...proof.routes,
+    ...firstLightProof.routes.map((route) => ({
+      ...route,
+      campaignKey: firstLightProof.campaignKey,
+    })),
+  ];
+  assert.equal(expected.length, 70, 'All 35 shipped maps need both real steering routes.');
+  assert.deepEqual(combined.map(routeKey).sort(), expected.sort());
 });
 
 for (const route of proof.routes)
@@ -127,3 +153,18 @@ for (const route of proof.routes)
     const verified = verifyReplay(replay);
     assert.equal(verified.match, true, JSON.stringify(verified.diagnostics));
   });
+
+test('First Light Gentle routes reproduce six exact wins with their own source and checkpoints', async () => {
+  const { verifyFirstLight } = await import('../../scripts/verify-first-light.mjs');
+  const result = await verifyFirstLight({ difficulty: 'gentle' });
+  assert.equal(result.routes.length, 6);
+  assert.ok(result.routes.every((route) => route.lives === 5));
+});
+
+test('R2 Gentle coverage is backed by the complete strict twelve-route release-gesture verifier', async () => {
+  const { verifyFpvR2 } = await import('../../scripts/verify-fpv-r2.mjs');
+  const result = await verifyFpvR2();
+  const gentle = result.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(gentle.length, 6);
+  assert.ok(gentle.every((route) => route.lives >= 5 && route.livesLost === 0));
+});

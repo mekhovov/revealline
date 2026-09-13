@@ -61,7 +61,7 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
   assert.deepEqual(CAMPAIGN_DIFFICULTIES, ['standard', 'gentle']);
   assert.equal(
     campaigns.reduce((n, c) => n + c.levels.length, 0),
-    29,
+    35,
   );
   for (const campaign of campaigns) {
     const before = canonicalJSON(campaign),
@@ -92,19 +92,22 @@ test('Standard preserves every shipped campaign shape, key and frozen legacy boa
   }
 });
 
-test('all 29 Gentle maps retain topology, goals, equipment and supported simulation pairs', () => {
+test('all 35 Gentle maps retain topology, goals, equipment and supported simulation pairs', () => {
   const invariant = (level) => {
     const copy = normalizedLevel(level);
     delete copy.revision;
     for (const key of ['lives', 'timeLimitSeconds', 'cutTimeLimitSeconds', 'maxTrailCells'])
       delete copy.rules[key];
     for (const e of copy.enemies) {
-      for (const key of e.type === 'bouncer'
-        ? ['vx', 'vy']
-        : e.type === 'border-patrol'
-          ? ['speed']
-          : ['warningSeconds', 'period'])
-        delete e[key];
+      const adjusted = {
+        bouncer: ['vx', 'vy'],
+        'border-patrol': ['speed'],
+        'lane-boss': ['warningSeconds', 'period'],
+        'contour-patrol': ['speed'],
+        'claimed-rover': ['vx', 'vy'],
+        eroder: ['vx', 'vy'],
+      };
+      for (const key of adjusted[e.type] ?? []) delete e[key];
     }
     if (copy.encounter) {
       for (const key of ['warningTicks', 'restTicks']) delete copy.encounter.shielded[key];
@@ -122,6 +125,22 @@ test('all 29 Gentle maps retain topology, goals, equipment and supported simulat
     for (const [i, level] of context.campaign.levels.entries()) {
       assert.notEqual(level.revision, campaign.levels[i].revision);
       assert.deepEqual(invariant(level), invariant(campaign.levels[i]));
+      const original = normalizedLevel(campaign.levels[i]);
+      for (const [j, enemy] of level.enemies.entries()) {
+        const prior = original.enemies[j];
+        if (['bouncer', 'claimed-rover', 'eroder'].includes(enemy.type)) {
+          assert.equal(enemy.vx, prior.vx * 0.6, `${enemy.id}: Gentle horizontal velocity`);
+          assert.equal(enemy.vy, prior.vy * 0.6, `${enemy.id}: Gentle vertical velocity`);
+        } else if (['border-patrol', 'contour-patrol'].includes(enemy.type)) {
+          assert.equal(enemy.speed, (prior.speed ?? 4) * 0.6, `${enemy.id}: Gentle patrol speed`);
+        } else if (enemy.type === 'lane-boss') {
+          assert.ok(enemy.warningSeconds >= (prior.warningSeconds ?? 1.5));
+          assert.ok(
+            enemy.period - enemy.warningSeconds >=
+              (prior.period ?? 6) - (prior.warningSeconds ?? 1.5),
+          );
+        }
+      }
       const state = createRun(level, { classRecipes: context.campaign.classRecipes });
       assert.equal(state.rules.lives, Math.max(normalizedLevel(campaign.levels[i]).rules.lives, 5));
       assert.equal(state.rules.timeLimitSeconds, 0);

@@ -163,7 +163,7 @@ test('future packet version gate uses the explicitly selected match and preserve
   );
   assert.equal(validateDuelPacket(packet, { ...context, ruleset: encounter.ruleset }), false);
   assert.equal(validateDuelPacket(packet, { ...context, ruleset: RULESET }), true);
-  for (const ruleset of ['xonix-core.v1', 'xonix-core.v4', 'xonix-level.v2', null, 3, {}, []])
+  for (const ruleset of ['xonix-core.v1', 'xonix-core.v99', 'xonix-level.v2', null, 3, {}, []])
     assert.equal(validateDuelPacket({ ...packet, ruleset }, { ...context, ruleset }), false);
 });
 

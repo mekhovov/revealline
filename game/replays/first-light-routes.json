@@ -1,0 +1,1018 @@
+{
+  "format": "revealline-first-light-proof.v1",
+  "packId": "fpv-arcade",
+  "packVersion": "1.0.0",
+  "packSha256": "0e904bb8b021b130d4a2d420e2acfb4ab5d97402d5e3019109ea430d081d0b13",
+  "campaignId": "fpv-first-light",
+  "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+  "routes": [
+    {
+      "levelId": "orchard-window",
+      "turnPolicy": "immediate",
+      "levelSha256": "3d8519056999e144af9c7b14817e5a25bcfc0eb3a0b987652fa019c642ec78dc",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 264,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 192,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 275,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "orchard-window",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 1852,
+        "time": 15.433333333333097,
+        "lives": 3,
+        "score": 21080,
+        "coverage": 0.8857142857142857,
+        "claimedCount": 2108,
+        "totalClaimable": 2380,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "abd178b2352afafe",
+        "sections": {
+          "identity": "367355c063350780",
+          "configuration": "c271d3b87405b909",
+          "board": "2fb96690986960ee",
+          "player": "8f8ada75dee99987",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "9cf89d86956208eb",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "a2f5bc94905ffce1",
+          "clock": "83090588cb60ad78",
+          "continuation": "a9d828ced6380d30",
+          "result": "503b18abc7a1cf05",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    {
+      "levelId": "orchard-window",
+      "turnPolicy": "grid-center",
+      "levelSha256": "3d8519056999e144af9c7b14817e5a25bcfc0eb3a0b987652fa019c642ec78dc",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 264,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 192,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 275,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "orchard-window",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 1852,
+        "time": 15.433333333333097,
+        "lives": 3,
+        "score": 21080,
+        "coverage": 0.8857142857142857,
+        "claimedCount": 2108,
+        "totalClaimable": 2380,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "a95f6fb4e2becce9",
+        "sections": {
+          "identity": "99cc348710f6a0d9",
+          "configuration": "c271d3b87405b909",
+          "board": "2fb96690986960ee",
+          "player": "8f8ada75dee99987",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "9cf89d86956208eb",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "a2f5bc94905ffce1",
+          "clock": "83090588cb60ad78",
+          "continuation": "a9d828ced6380d30",
+          "result": "0c2e5a10e9852fb8",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    {
+      "levelId": "split-courtyard",
+      "turnPolicy": "immediate",
+      "levelSha256": "3aec4697f5c4062735546f1eaf70b89178d0f510e39ddfb92dd07ab492a4de84",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 136,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 104,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 376,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 24,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 195,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "split-courtyard",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 2788,
+        "time": 23.233333333332656,
+        "lives": 3,
+        "score": 19900,
+        "coverage": 0.860726643598616,
+        "claimedCount": 1990,
+        "totalClaimable": 2312,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "3183747c40704875",
+        "sections": {
+          "identity": "ebdf3989e73a84fe",
+          "configuration": "f3e875dff279155c",
+          "board": "a28df8bab98049fe",
+          "player": "efa4c531d3160855",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "7cb203c1b64f29d4",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "109e78fa4b9eecdd",
+          "clock": "c5d8abb3304df03c",
+          "continuation": "a9d828ced6380d30",
+          "result": "1db8117efc5de91f",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    {
+      "levelId": "split-courtyard",
+      "turnPolicy": "grid-center",
+      "levelSha256": "3aec4697f5c4062735546f1eaf70b89178d0f510e39ddfb92dd07ab492a4de84",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 136,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 104,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 376,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 24,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 195,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "split-courtyard",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 2788,
+        "time": 23.233333333332656,
+        "lives": 3,
+        "score": 19900,
+        "coverage": 0.860726643598616,
+        "claimedCount": 1990,
+        "totalClaimable": 2312,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "776984a2c0f3f0a5",
+        "sections": {
+          "identity": "a9a2c372cdf4e71b",
+          "configuration": "f3e875dff279155c",
+          "board": "a28df8bab98049fe",
+          "player": "efa4c531d3160855",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "7cb203c1b64f29d4",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "109e78fa4b9eecdd",
+          "clock": "c5d8abb3304df03c",
+          "continuation": "a9d828ced6380d30",
+          "result": "da4bc02e3d057aee",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    {
+      "levelId": "night-signal",
+      "turnPolicy": "immediate",
+      "levelSha256": "6b485e086c638d455812676b518ebebb4cc941b96d9052d246277c0ef4019405",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 200,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 147,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "night-signal",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 2052,
+        "time": 17.09999999999967,
+        "lives": 3,
+        "score": 20040,
+        "coverage": 0.8608247422680413,
+        "claimedCount": 2004,
+        "totalClaimable": 2328,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "926af171948bd497",
+        "sections": {
+          "identity": "b134c0acf1db889b",
+          "configuration": "7f4c0e64e94c58aa",
+          "board": "f61e813316359b1e",
+          "player": "3ae02060fb8647e1",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "31fbcc036fdda658",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "3c2650222e03893d",
+          "clock": "a4eebea9dc99b643",
+          "continuation": "a9d828ced6380d30",
+          "result": "f9b70b0248ed8b2f",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    {
+      "levelId": "night-signal",
+      "turnPolicy": "grid-center",
+      "levelSha256": "6b485e086c638d455812676b518ebebb4cc941b96d9052d246277c0ef4019405",
+      "classesSha256": "7252e81e1d29b4b58957b2ffed727606a34fe95a402c3ac9c91e0fef0e1e1cf2",
+      "segments": [
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 200,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 280,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "right",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 279,
+          "input": {
+            "direction": "up",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 152,
+          "input": {
+            "direction": "down",
+            "boost": true,
+            "action": false
+          }
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": true
+          }
+        },
+        {
+          "ticks": 147,
+          "input": {
+            "direction": "left",
+            "boost": true,
+            "action": false
+          }
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v4",
+        "levelId": "night-signal",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-5a15358b",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 2052,
+        "time": 17.09999999999967,
+        "lives": 3,
+        "score": 20040,
+        "coverage": 0.8608247422680413,
+        "claimedCount": 2004,
+        "totalClaimable": 2328,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v4",
+        "hash": "735643ffb3a9556f",
+        "sections": {
+          "identity": "49f28182c68ace46",
+          "configuration": "7f4c0e64e94c58aa",
+          "board": "f61e813316359b1e",
+          "player": "3ae02060fb8647e1",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "31fbcc036fdda658",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "3c2650222e03893d",
+          "clock": "a4eebea9dc99b643",
+          "continuation": "a9d828ced6380d30",
+          "result": "0b7695527d9ad8fe",
+          "encounter": "5b9bc4ba528108e4"
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,12 @@
-import { validateScenario, downloadJSON, inspectImageDataUrl } from '../content.mjs';
+import { geometryForLevel } from '../core/geometry.mjs';
+import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
+import {
+  validateScenario,
+  downloadJSON,
+  inspectImageDataUrl,
+  VISUAL_ROLES,
+  CLASSIC_VISUAL_ROLES,
+} from '../content.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { emptyPackLibrary, exportPackLibrary, PACK_LIMITS } from '../packs.mjs';
 import {
@@ -14,6 +22,7 @@ import {
   withoutScenarioEncounter,
   editScenario,
   entryMastery,
+  visualsForLevelReplacement,
 } from './model.mjs';
 import { generateLevel } from '../generator.mjs';
 import { resolvePreviewSize } from './viewport.mjs';
@@ -36,9 +45,32 @@ let campaign,
   width = 390,
   height = 844,
   importEpoch = 0,
+  pendingImport = null,
+  previousPreviewHref = null,
   replayEpoch = 0,
   replayController = null;
-const beginImport = () => ({ epoch: ++importEpoch, editRevision, before: JSON.stringify(current) });
+const beginImport = () => {
+  if (pendingImport === null) previousPreviewHref = $('open-preview').getAttribute('href');
+  const ticket = { epoch: ++importEpoch, editRevision, before: JSON.stringify(current) };
+  pendingImport = ticket.epoch;
+  $('preview-button').disabled = true;
+  $('preview-mode').disabled = true;
+  $('open-preview').setAttribute('aria-disabled', 'true');
+  $('open-preview').removeAttribute('href');
+  $('editor-status').setAttribute('aria-busy', 'true');
+  status('Preparing the selected content. Play becomes available after validation and decoding.');
+  return ticket;
+};
+const finishImport = (ticket) => {
+  if (pendingImport !== ticket.epoch) return;
+  pendingImport = null;
+  $('preview-button').disabled = false;
+  $('preview-mode').disabled = false;
+  $('open-preview').removeAttribute('aria-disabled');
+  if (previousPreviewHref !== null) $('open-preview').setAttribute('href', previousPreviewHref);
+  previousPreviewHref = null;
+  $('editor-status').removeAttribute('aria-busy');
+};
 const importCurrent = (ticket) => ticket.epoch === importEpoch;
 const assertImportCurrent = (ticket) => {
   if (
@@ -82,21 +114,25 @@ function useEntry(key, levelId) {
   themes = { themes: entry.themes };
 }
 async function adoptDocument(candidate, message, ticket = beginImport()) {
-  assertImportCurrent(ticket);
-  const prepared = await prepareDocument(candidate, { current, packLibrary });
-  assertImportCurrent(ticket);
-  remember();
-  if (prepared.kind === 'expansion') {
-    packLibrary = prepared.packLibrary;
-    catalog = [baseEntry, ...prepared.entries];
-    activeKey = prepared.activeKey;
-    campaign = selectedEntry().campaign;
-    themes = { themes: selectedEntry().themes };
+  try {
+    assertImportCurrent(ticket);
+    const prepared = await prepareDocument(candidate, { current, packLibrary });
+    assertImportCurrent(ticket);
+    remember();
+    if (prepared.kind === 'expansion') {
+      packLibrary = prepared.packLibrary;
+      catalog = [baseEntry, ...prepared.entries];
+      activeKey = prepared.activeKey;
+      campaign = selectedEntry().campaign;
+      themes = { themes: selectedEntry().themes };
+    }
+    current = editorScenario(prepared.scenario);
+    sync();
+    status([message, ...prepared.warnings].join(' '));
+    return prepared;
+  } finally {
+    finishImport(ticket);
   }
-  current = editorScenario(prepared.scenario);
-  sync();
-  status([message, ...prepared.warnings].join(' '));
-  return prepared;
 }
 function sync() {
   $('campaign-select').replaceChildren(
@@ -107,19 +143,27 @@ function sync() {
     `${selectedEntry().label} · ${campaign.levels.length} maps. Editing a working copy; Undo returns to the previous configuration and source.`;
   $('export-catalog').disabled = !packLibrary.packs.length;
   const definition = current.masteryDefinition;
+  const noMasteries = [
+    'xonix-playground.v3',
+    'xonix-playground.v4',
+    'xonix-playground.v5',
+  ].includes(current.format);
   $('mastery-json').value = definition ? JSON.stringify(definition, null, 2) : '';
   $('mastery-readout').textContent =
-    current.format === 'xonix-playground.v3'
-      ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
-      : current.format === 'xonix-playground.v2'
-        ? definition
-          ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
-          : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
-        : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
-  $('use-campaign-goal').disabled =
-    current.format === 'xonix-playground.v3' || !entryMastery(selectedEntry(), current.level.id);
-  $('apply-mastery').disabled = current.format === 'xonix-playground.v3';
-  $('clear-goal').disabled = current.format === 'xonix-playground.v3';
+    current.format === 'xonix-playground.v5'
+      ? 'Classic edition. Terrain, contact pickups and enemy roles stay in the map JSON. Optional equipment goals are unavailable.'
+      : current.format === 'xonix-playground.v4'
+        ? 'Wide edition. Optional equipment goals are unavailable; the map retains its explicit encounter or no-encounter choice.'
+        : current.format === 'xonix-playground.v3'
+          ? 'Staged encounter. This ruleset has no optional equipment goals; its two-stage requirements are part of the map.'
+          : current.format === 'xonix-playground.v2'
+            ? definition
+              ? `${definition.name} · ${definition.description} References validate against this map and roster; play the route to test completion.`
+              : 'No optional goal. This explicit choice is retained in practice and expansion exports.'
+            : 'Legacy scenario: only exact shipped content can use its built-in goal. Copy the campaign goal to edit it explicitly, or choose no optional goal.';
+  $('use-campaign-goal').disabled = noMasteries || !entryMastery(selectedEntry(), current.level.id);
+  $('apply-mastery').disabled = noMasteries;
+  $('clear-goal').disabled = noMasteries;
   const encounter = current.level.encounter;
   $('encounter-fields').disabled = !encounter;
   $('encounter-readout').textContent = encounter
@@ -191,76 +235,42 @@ function sync() {
   drawAssets();
 }
 function drawMap() {
-  const c = $('map-editor').getContext('2d'),
-    s = 16;
-  c.fillStyle = current.theme.palette.field;
-  c.fillRect(0, 0, 768, 576);
-  c.fillStyle = current.theme.palette.safe;
-  c.fillRect(0, 0, 768, s);
-  c.fillRect(0, 560, 768, s);
-  c.fillRect(0, 0, s, 576);
-  c.fillRect(752, 0, s, 576);
-  c.strokeStyle = current.theme.palette.grid;
-  c.lineWidth = 0.6;
-  for (let x = 0; x <= 768; x += s) {
-    c.beginPath();
-    c.moveTo(x, 0);
-    c.lineTo(x, 576);
-    c.stroke();
-  }
-  for (let y = 0; y <= 576; y += s) {
-    c.beginPath();
-    c.moveTo(0, y);
-    c.lineTo(768, y);
-    c.stroke();
-  }
-  for (const zone of current.level.signalZones ?? []) {
-    c.fillStyle = '#a875ce35';
-    c.fillRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
-    c.strokeStyle = '#bb86d7';
-    c.lineWidth = 2;
-    c.setLineDash([4, 4]);
-    c.strokeRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
-    c.setLineDash([]);
-    c.fillStyle = '#e4c9f4';
-    c.font = 'bold 10px monospace';
-    c.fillText(`SIGNAL ${Math.round(zone.speedFactor * 100)}%`, zone.x * s + 3, zone.y * s + 12);
-  }
-  const hangars = current.level.hangars ?? [{ ...current.level.spawn, radius: 2 }];
-  for (const h of hangars) {
-    c.strokeStyle = '#7cdfb0';
-    c.lineWidth = 2;
-    c.strokeRect(h.x * s - 7, h.y * s - 7, 14, 14);
-    c.fillStyle = '#7cdfb0';
-    c.font = 'bold 10px monospace';
-    c.fillText('H', h.x * s - 3, h.y * s + 4);
-  }
-  c.fillStyle = '#849496';
-  for (const w of current.level.walls) c.fillRect(w.x * s, w.y * s, w.w * s, w.h * s);
-  for (const e of current.level.enemies) {
-    c.fillStyle = current.theme.palette.danger;
-    c.beginPath();
-    c.arc(e.x * s, e.y * s, e.type === 'lane-boss' ? 12 : 6, 0, Math.PI * 2);
-    c.fill();
-  }
-  for (const o of current.level.objectives) {
-    c.strokeStyle = current.theme.palette.accent;
-    c.lineWidth = 2;
-    c.strokeRect(o.x * s - 5, o.y * s - 5, 10, 10);
-  }
-  for (const p of current.level.supplies) {
-    c.fillStyle = '#ffffff';
-    c.fillRect(p.x * s - 3, p.y * s - 1, 6, 2);
-    c.fillRect(p.x * s - 1, p.y * s - 3, 2, 6);
-  }
-  c.fillStyle = current.theme.palette.accent;
-  c.beginPath();
-  c.arc(current.level.spawn.x * s, current.level.spawn.y * s, 6, 0, Math.PI * 2);
-  c.fill();
+  const { hangarCount } = paintEditorMap($('map-editor'), current);
+  const { width: columns, height: rows } = geometryForLevel(current.level);
+  $('paint-x').max = String(columns - 1);
+  $('paint-y').max = String(rows - 1);
+  $('trail-limit').max = String((columns - 2) * (rows - 2));
   $('map-readout').textContent =
-    `${current.level.walls.length} wall rectangles · ${current.level.enemies.length} enemies · ${current.level.objectives.length} objectives · ${current.level.signalZones?.length ?? 0} signal zones · ${hangars.length} hangars · start ${current.level.spawn.x}, ${current.level.spawn.y}`;
+    `${columns} × ${rows} cells · ${current.level.walls.length} wall rectangles · ${current.level.enemies.length} enemies · ${current.level.objectives.length} objectives · ${current.level.signalZones?.length ?? 0} signal zones · ${hangarCount} hangars · start ${current.level.spawn.x}, ${current.level.spawn.y}`;
 }
+const visualRoleLabels = {
+  background: 'Reveal background',
+  player: 'Player body',
+  enemy: 'Field enemy',
+  patrol: 'Border patrol',
+  boss: 'Boss',
+  objective: 'Objective / support',
+  supply: 'Supply pad',
+  wall: 'Wall tile',
+  contour: 'Contour patrol',
+  rover: 'Claimed rover',
+  eroder: 'Eroder',
+  slowTerrain: 'Slow terrain',
+  lethalTerrain: 'Lethal terrain',
+  lifePickup: 'Extra life pickup',
+  speedPickup: 'Player speed pickup',
+  slowPickup: 'Enemy slow pickup',
+  freezePickup: 'Enemy freeze pickup',
+};
 function drawAssets() {
+  const select = $('asset-role'),
+    prior = select.value;
+  const roles =
+    current.format === 'xonix-playground.v5'
+      ? [...VISUAL_ROLES, ...CLASSIC_VISUAL_ROLES]
+      : VISUAL_ROLES;
+  select.replaceChildren(...roles.map((role) => new Option(visualRoleLabels[role], role)));
+  select.value = roles.includes(prior) ? prior : 'background';
   $('asset-list').replaceChildren();
   for (const [role, item] of Object.entries(current.visualOverrides)) {
     const card = document.createElement('div');
@@ -275,14 +285,18 @@ function drawAssets() {
   }
 }
 async function adopt(candidate, message, ticket = beginImport()) {
-  assertImportCurrent(ticket);
-  const prepared = await prepareScenario(candidate);
-  assertImportCurrent(ticket);
-  remember();
-  current = editorScenario(prepared.scenario);
-  sync();
-  status([message, ...prepared.warnings].join(' '));
-  return prepared;
+  try {
+    assertImportCurrent(ticket);
+    const prepared = await prepareScenario(candidate);
+    assertImportCurrent(ticket);
+    remember();
+    current = editorScenario(prepared.scenario);
+    sync();
+    status([message, ...prepared.warnings].join(' '));
+    return prepared;
+  } finally {
+    finishImport(ticket);
+  }
 }
 function checked() {
   const result = validateScenario(current);
@@ -293,6 +307,12 @@ function checked() {
   return true;
 }
 function preview() {
+  if (pendingImport !== null) {
+    status(
+      'The selected content is still being prepared. Wait for validation and decoding before playing.',
+    );
+    return false;
+  }
   if ($('preview-mode').value === 'course') {
     try {
       const href = firstFlightPreviewURL({ turnPolicy: $('turn-select').value });
@@ -383,7 +403,9 @@ function measure() {
       ...doc.querySelectorAll(
         '[data-move],#stop-button,#action-button,#pickup-button,#boost-button,#pause-button,#restart-button,#sound-button,.race-pad button,#race-start,#race-pause,#race-focus',
       ),
-    ].map((button) => button.getBoundingClientRect());
+    ]
+      .map((button) => button.getBoundingClientRect())
+      .filter((rect) => rect.width > 0 && rect.height > 0);
     const reachable = controls.every(
       (r) =>
         r.left >= 0 &&
@@ -393,11 +415,26 @@ function measure() {
     );
     $('control-readout').textContent =
       `Controls: minimum ${Math.min(...controls.map((r) => r.width)).toFixed(0)} × ${Math.min(...controls.map((r) => r.height)).toFixed(0)} · ${reachable ? 'all actions visible' : 'scroll to reach some actions'}`;
+    const launchVisible = (button, b) => {
+      if (
+        b.left < 0 ||
+        b.top < 0 ||
+        b.right > view.innerWidth + 1 ||
+        b.bottom > view.innerHeight + 1
+      )
+        return false;
+      const hit = doc.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
+      return hit === button || button.contains(hit);
+    };
     const launch = [...doc.querySelectorAll('#game-overlay button:not([hidden])')]
-      .map((button) => ({ label: button.textContent.trim(), rect: button.getBoundingClientRect() }))
+      .map((button) => ({
+        button,
+        label: button.textContent.trim(),
+        rect: button.getBoundingClientRect(),
+      }))
       .filter(({ rect }) => rect.width > 0 && rect.height > 0);
     $('launch-readout').textContent = launch.length
-      ? `Launch actions: ${launch.map(({ label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${b.left >= r.left && b.top >= r.top && b.right <= r.right + 1 && b.bottom <= r.bottom + 1 && b.left >= 0 && b.top >= 0 && b.right <= view.innerWidth + 1 && b.bottom <= view.innerHeight + 1 ? 'visible inside arena' : 'scroll needed'}`).join('; ')}`
+      ? `Launch actions: ${launch.map(({ button, label, rect: b }) => `${label} ${b.width.toFixed(0)} × ${b.height.toFixed(0)} · ${launchVisible(button, b) ? 'visible in viewport' : 'scroll needed or covered'}`).join('; ')}`
       : 'No launch overlay is active.';
   } catch {}
 }
@@ -457,7 +494,15 @@ try {
   ]);
   const recipes = await fetch('../content/classes.json').then((r) => r.json());
   current = {
-    format: 'xonix-playground.v1',
+    format:
+      campaign.levels[0].version === 'xonix-level.v4'
+        ? 'xonix-playground.v5'
+        : campaign.levels[0].version === 'xonix-level.v3'
+          ? 'xonix-playground.v4'
+          : 'xonix-playground.v1',
+    ...(['xonix-level.v3', 'xonix-level.v4'].includes(campaign.levels[0].version)
+      ? { masteryDefinition: null }
+      : {}),
     level: clone(campaign.levels[0]),
     theme: clone(themes.themes[0]),
     settings: { classId: 'scout', turnPolicy: 'immediate', seed: 1 },
@@ -498,10 +543,13 @@ try {
             'Interaction preset ready without an optional goal. Play configuration to try it; Undo restores the previous map and goal.',
             ticket,
           );
-          $('preset-readout').textContent = PRESET_HELP[button.dataset.preset];
+          $('preset-readout').textContent =
+            `New 48 × 36 Standard practice map. ${PRESET_HELP[button.dataset.preset]}`;
           preview();
         } catch (error) {
           if (importCurrent(ticket)) status(error.message, true);
+        } finally {
+          finishImport(ticket);
         }
       }),
   );
@@ -511,7 +559,8 @@ try {
       return r.json();
     })
     .then((index) => {
-      for (const entry of index.packs) {
+      // The role lab is an explicit authoring example, separate from campaign progression.
+      for (const entry of [...index.packs, { id: 'classic-lab', path: 'classic-lab.json' }]) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'button secondary';
@@ -528,6 +577,8 @@ try {
             );
           } catch (error) {
             if (importCurrent(ticket)) status(error.message, true);
+          } finally {
+            finishImport(ticket);
           }
         };
         $('example-packs').append(button);
@@ -577,6 +628,8 @@ try {
       );
     } catch (error) {
       if (importCurrent(ticket)) status(`Goal rejected: ${error.message}`, true);
+    } finally {
+      finishImport(ticket);
     }
   };
   $('clear-goal').onclick = () => {
@@ -698,8 +751,14 @@ try {
       const level = await generateLevel($('seed-input').value);
       assertImportCurrent(ticket);
       const next = editScenario(current, {
-        ...(current.format === 'xonix-playground.v3'
-          ? { format: 'xonix-playground.v2', masteryDefinition: null }
+        ...(['xonix-playground.v3', 'xonix-playground.v4', 'xonix-playground.v5'].includes(
+          current.format,
+        )
+          ? {
+              format: 'xonix-playground.v2',
+              masteryDefinition: null,
+              visualOverrides: visualsForLevelReplacement(current, 'xonix-playground.v2'),
+            }
           : {}),
         level,
         settings: { ...current.settings, seed: parseInt(level.id.slice(10, 18), 16) >>> 0 },
@@ -708,7 +767,7 @@ try {
       current = next;
       sync();
       status(
-        'Deterministic map generated and validated. Dynamic difficulty still needs playtesting.',
+        'New 48 × 36 Standard map generated and validated. This replaces the working map and its Classic-only artwork bindings; Undo restores the previous edition and artwork. Dynamic difficulty still needs playtesting.',
       );
     } catch (error) {
       if (importCurrent(ticket))
@@ -716,6 +775,8 @@ try {
           `${error.message} If the current goal names objects on the previous map, choose No optional goal before generating a new map.`,
           true,
         );
+    } finally {
+      finishImport(ticket);
     }
   };
   document.querySelectorAll('[data-brush]').forEach(
@@ -747,11 +808,13 @@ try {
     }
   }
   $('map-editor').addEventListener('pointerdown', (event) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    paintAt(
-      Math.floor(((event.clientX - rect.left) / rect.width) * 48),
-      Math.floor(((event.clientY - rect.top) / rect.height) * 36),
+    const cell = editorCellFromPointer(
+      current.level,
+      event.currentTarget,
+      event.clientX,
+      event.clientY,
     );
+    if (cell) paintAt(cell.x, cell.y);
   });
   $('paint-cell').onclick = () => paintAt(Number($('paint-x').value), Number($('paint-y').value));
   $('undo-button').onclick = () => {
@@ -802,6 +865,8 @@ try {
       );
     } catch (error) {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
+    } finally {
+      finishImport(ticket);
     }
   };
   $('apply-json').onclick = async () => {
@@ -825,6 +890,8 @@ try {
       );
     } catch (error) {
       if (importCurrent(ticket)) status(error.message, true);
+    } finally {
+      finishImport(ticket);
     }
   };
   $('asset-file').onchange = async () => {
@@ -861,6 +928,8 @@ try {
         `${file.name}: ${inspected.width} × ${inspected.height}. Bound to ${role}; original bytes unchanged.`;
     } catch (error) {
       if (importCurrent(ticket)) status(error.message, true);
+    } finally {
+      finishImport(ticket);
     }
   };
   $('clear-asset').onclick = () => {
@@ -889,6 +958,8 @@ try {
       );
     } catch (error) {
       if (importCurrent(ticket)) status(`Import rejected: ${error.message}`, true);
+    } finally {
+      finishImport(ticket);
     }
   };
   $('export-expansion').onclick = async () => {

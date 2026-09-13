@@ -1,0 +1,516 @@
+{
+  "format": "xonix-pack.v5",
+  "id": "fpv-arcade-r2",
+  "version": "2.0.0",
+  "name": "FPV Front · First Light R2",
+  "description": "Three revised wide missions: faster crossing pressure, changing secured-ground threats and visible terrain choices. Capture stops your craft; use a fresh direction to continue. The three original First Light pictures are reused as revision rewards.",
+  "engine": "xonix-core.v5",
+  "dependencies": [],
+  "metadata": {
+    "author": "Reveal Line",
+    "license": "Original project content",
+    "rightsStatus": "Original fictional arcade design; generated artwork provenance accompanies the source."
+  },
+  "themes": [
+    {
+      "id": "fpv",
+      "name": "FPV Front",
+      "subtitle": "First Light R2 · Arcade",
+      "family": "fpv",
+      "player": "fpv-body",
+      "enemyShape": "tank",
+      "patrolShape": "drone",
+      "bossShape": "radar",
+      "scene": "dawn",
+      "labels": {
+        "objective": "Relay",
+        "supply": "Supply pad",
+        "enemy": "Invader patrol",
+        "boss": "Signal sentinel",
+        "currency": "Score",
+        "ability": "Equipment"
+      },
+      "palette": {
+        "ink": "#e3ecee",
+        "paper": "#0b121b",
+        "muted": "#8c9cac",
+        "accent": "#f2ce62",
+        "safe": "#3d7586",
+        "danger": "#ff796e",
+        "field": "#000000",
+        "grid": "#13202b",
+        "sky": "#dfb781",
+        "land": "#687c55"
+      },
+      "classBodies": {
+        "scout": "fpv-body"
+      }
+    }
+  ],
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "campaigns": [
+    {
+      "version": "xonix-campaign.v1",
+      "id": "fpv-first-light-r2",
+      "revision": "2",
+      "title": "FPV Front · First Light R2",
+      "themeId": "fpv",
+      "musicId": "first-light-orchard-window",
+      "classIds": ["scout"],
+      "levels": [
+        {
+          "version": "xonix-level.v4",
+          "revision": "2",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "encounter": null,
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "id": "orchard-window",
+          "name": "Orchard Window",
+          "spawn": {
+            "x": 36.5,
+            "y": 0.5
+          },
+          "walls": [],
+          "enemies": [
+            {
+              "id": "west-sweep",
+              "type": "bouncer",
+              "x": 15.5,
+              "y": 9.5,
+              "vx": 7.8,
+              "vy": 5.4,
+              "radius": 0.3
+            },
+            {
+              "id": "east-sweep",
+              "type": "bouncer",
+              "x": 57.5,
+              "y": 26.5,
+              "vx": -7.2,
+              "vy": -6.6,
+              "radius": 0.3
+            },
+            {
+              "id": "orchard-contour",
+              "type": "contour-patrol",
+              "edge": {
+                "x": 1,
+                "y": 26,
+                "side": "west"
+              },
+              "clockwise": true,
+              "speed": 5.6,
+              "radius": 0.25
+            }
+          ],
+          "goal": {
+            "coverage": 0.65
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 12,
+            "boostMultiplier": 1.25,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [24, 48],
+            "timeLimitSeconds": 150,
+            "stopOnCapture": true
+          },
+          "musicId": "first-light-orchard-window",
+          "metadata": {
+            "title": "Orchard Window",
+            "description": "Open 65%. Two faster crossing patrols threaten your live line; the contour scout follows the changing reveal boundary. The central mud strip halves flight speed while it is covered. Detour for the speed pickup or choose a clear crossing. Closing a cut stops you: release held controls, then press a fresh direction. Boost with Shift; Pause remains available.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original revised fictional arcade routing layout; same original First Light picture reward, not an additional unique image or reference-game reconstruction."
+          },
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "orchard-mud",
+                "kind": "slow",
+                "x": 34,
+                "y": 13,
+                "w": 5,
+                "h": 5
+              }
+            ],
+            "powerups": [
+              {
+                "id": "orchard-speed",
+                "kind": "player-speed",
+                "x": 18.5,
+                "y": 8.5
+              }
+            ]
+          }
+        },
+        {
+          "version": "xonix-level.v4",
+          "revision": "2",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "encounter": null,
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "id": "split-courtyard",
+          "name": "Split Courtyard",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "walls": [
+            {
+              "x": 22,
+              "y": 7,
+              "w": 2,
+              "h": 9
+            },
+            {
+              "x": 22,
+              "y": 22,
+              "w": 2,
+              "h": 7
+            },
+            {
+              "x": 48,
+              "y": 6,
+              "w": 2,
+              "h": 10
+            },
+            {
+              "x": 48,
+              "y": 22,
+              "w": 2,
+              "h": 8
+            }
+          ],
+          "enemies": [
+            {
+              "id": "north-crosser",
+              "type": "bouncer",
+              "x": 36.5,
+              "y": 6.5,
+              "vx": 7.290000000000001,
+              "vy": 6.48,
+              "radius": 0.3
+            },
+            {
+              "id": "west-crosser",
+              "type": "bouncer",
+              "x": 10.5,
+              "y": 28.5,
+              "vx": 5.670000000000001,
+              "vy": -7.290000000000001,
+              "radius": 0.3
+            },
+            {
+              "id": "east-crosser",
+              "type": "bouncer",
+              "x": 62.5,
+              "y": 25.5,
+              "vx": -7.290000000000001,
+              "vy": -5.670000000000001,
+              "radius": 0.3
+            },
+            {
+              "id": "courtyard-eroder",
+              "type": "eroder",
+              "x": 35.5,
+              "y": 25.5,
+              "vx": -6.6,
+              "vy": 4.8,
+              "radius": 0.3
+            },
+            {
+              "id": "courtyard-rover",
+              "type": "claimed-rover",
+              "x": 12.5,
+              "y": 8.5,
+              "vx": 6.6,
+              "vy": 4.2,
+              "radius": 0.28
+            }
+          ],
+          "goal": {
+            "coverage": 0.75
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 12,
+            "boostMultiplier": 1.25,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [38, 65],
+            "timeLimitSeconds": 150,
+            "stopOnCapture": true
+          },
+          "musicId": "first-light-split-courtyard",
+          "metadata": {
+            "title": "Split Courtyard",
+            "description": "Open 75%. Wall gaps leave broad crossings, but mud slows the direct route. Three fast field patrols share the field with an eroder: its warning marks one threatened secured cell. A rover wakes after its ground is revealed and a visible warning completes; newly opened space can become dangerous. Slow and freeze pickups offer exposed detours. Walls never close a cut. Reconnect, stop, then choose your next fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original revised fictional arcade routing layout; same original First Light picture reward, not an additional unique image or reference-game reconstruction."
+          },
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "west-mud",
+                "kind": "slow",
+                "x": 18,
+                "y": 16,
+                "w": 4,
+                "h": 4
+              },
+              {
+                "id": "east-mud",
+                "kind": "slow",
+                "x": 50,
+                "y": 18,
+                "w": 4,
+                "h": 4
+              }
+            ],
+            "powerups": [
+              {
+                "id": "courtyard-slow",
+                "kind": "enemy-slow",
+                "x": 10.5,
+                "y": 12.5
+              },
+              {
+                "id": "courtyard-freeze",
+                "kind": "enemy-freeze",
+                "x": 59.5,
+                "y": 20.5
+              }
+            ]
+          }
+        },
+        {
+          "version": "xonix-level.v4",
+          "revision": "2",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "encounter": null,
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "id": "night-signal",
+          "name": "Night Signal",
+          "spawn": {
+            "x": 36.5,
+            "y": 0.5
+          },
+          "walls": [
+            {
+              "x": 13,
+              "y": 12,
+              "w": 13,
+              "h": 2
+            },
+            {
+              "x": 47,
+              "y": 24,
+              "w": 13,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "night-west",
+              "type": "bouncer",
+              "x": 12.5,
+              "y": 24.5,
+              "vx": 8.100000000000001,
+              "vy": 6.48,
+              "radius": 0.3
+            },
+            {
+              "id": "night-east",
+              "type": "bouncer",
+              "x": 61.5,
+              "y": 8.5,
+              "vx": -7.290000000000001,
+              "vy": 7.290000000000001,
+              "radius": 0.3
+            },
+            {
+              "id": "night-center",
+              "type": "bouncer",
+              "x": 36.5,
+              "y": 28.5,
+              "vx": 6.48,
+              "vy": -8.100000000000001,
+              "radius": 0.3
+            },
+            {
+              "id": "signal-lane",
+              "type": "lane-boss",
+              "x": 53.5,
+              "y": 18.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.25,
+              "activeSeconds": 0.85,
+              "period": 4.8,
+              "laneWidth": 1.25,
+              "radius": 0.38
+            },
+            {
+              "id": "night-contour",
+              "type": "contour-patrol",
+              "edge": {
+                "x": 8,
+                "y": 1,
+                "side": "north"
+              },
+              "clockwise": true,
+              "speed": 6.8,
+              "radius": 0.25
+            },
+            {
+              "id": "night-rover",
+              "type": "claimed-rover",
+              "x": 58.5,
+              "y": 29.5,
+              "vx": 7.2,
+              "vy": 4.8,
+              "radius": 0.28
+            },
+            {
+              "id": "cross-signal",
+              "type": "lane-boss",
+              "x": 30.5,
+              "y": 8.5,
+              "axis": "vertical",
+              "warningSeconds": 1.4,
+              "activeSeconds": 0.7,
+              "period": 6.1,
+              "laneWidth": 1.25,
+              "radius": 0.38
+            }
+          ],
+          "goal": {
+            "coverage": 0.85
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 12,
+            "boostMultiplier": 1.25,
+            "respawnSeconds": 0.7,
+            "graceSeconds": 0.8,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [50, 80],
+            "timeLimitSeconds": 150,
+            "stopOnCapture": true
+          },
+          "musicId": "first-light-night-signal",
+          "metadata": {
+            "title": "Night Signal",
+            "description": "Open 85%. Horizontal and vertical warning lanes operate on different repeating schedules; watch the visible warnings and keep routing rather than waiting for a scripted opening. Fast field patrols, a contour scout and an awakening secured-ground rover pressure different parts of the board. Mud slows your craft; the marked hot zone is lethal while unrevealed. Optional freeze and life pickups reward a risky detour. A closed cut stops at safe ground; give a fresh direction to continue.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original revised fictional arcade routing layout; same original First Light picture reward, not an additional unique image or reference-game reconstruction."
+          },
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "night-mud",
+                "kind": "slow",
+                "x": 32,
+                "y": 14,
+                "w": 5,
+                "h": 5
+              },
+              {
+                "id": "night-hot-zone",
+                "kind": "lethal",
+                "x": 56,
+                "y": 5,
+                "w": 5,
+                "h": 3
+              }
+            ],
+            "powerups": [
+              {
+                "id": "night-freeze",
+                "kind": "enemy-freeze",
+                "x": 43.5,
+                "y": 30.5
+              },
+              {
+                "id": "night-life",
+                "kind": "extra-life",
+                "x": 9.5,
+                "y": 18.5
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "visualOverrides": {},
+  "levelVisuals": [],
+  "music": [
+    {
+      "id": "first-light-orchard-window",
+      "name": "Orchard Circuit",
+      "genre": "synthwave",
+      "tempo": 108,
+      "root": 48,
+      "scale": "dorian"
+    },
+    {
+      "id": "first-light-split-courtyard",
+      "name": "Courtyard Afterglow",
+      "genre": "synthwave",
+      "tempo": 120,
+      "root": 45,
+      "scale": "minor"
+    },
+    {
+      "id": "first-light-night-signal",
+      "name": "Night Carrier",
+      "genre": "synthwave",
+      "tempo": 126,
+      "root": 50,
+      "scale": "dorian"
+    }
+  ],
+  "masteries": []
+}

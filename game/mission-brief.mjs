@@ -44,6 +44,33 @@ export function missionBriefing(
   const encounterGoal = encounter
     ? `Capture the shield relay. Then close ${encounter.minReleaseCutCells} new trail cells during CORE OPEN, or isolate the core.`
     : '';
+  const classicHint =
+    level.version === 'xonix-level.v4'
+      ? [
+          level.classic?.powerups?.length ? 'Touch pickups to collect their effects.' : '',
+          level.classic?.terrain?.some((tile) => tile.kind === 'lethal')
+            ? 'Red crosshatched fields damage on contact; enclose them before crossing.'
+            : level.classic?.terrain?.some((tile) => tile.kind === 'slow')
+              ? 'Striped fields slow your craft while they remain hidden.'
+              : '',
+          level.enemies?.some((enemy) => enemy.type === 'contour-patrol')
+            ? 'Contour patrols follow newly captured edges.'
+            : '',
+          level.enemies?.some((enemy) => enemy.type === 'claimed-rover')
+            ? 'Rovers wake on claimed ground after a warning.'
+            : '',
+          level.enemies?.some((enemy) => enemy.type === 'eroder')
+            ? 'Eroders warn before reopening captured ground.'
+            : '',
+        ]
+          .filter(Boolean)
+          .slice(0, 2)
+          .join('\n')
+      : '';
+  const captureHint =
+    rules.stopOnCapture === true
+      ? 'Closing a cut stops your craft. Tap a fresh direction to fly again.'
+      : '';
   const facts = [goal, encounterGoal, limits, recommendation].filter(Boolean).join('\n');
   return Object.freeze({
     title,
@@ -52,7 +79,7 @@ export function missionBriefing(
     facts,
     copy: intro
       ? `Leave safe ground, draw a line and return.\nReveal ${coverage}% by enclosing regions without a field enemy.`
-      : facts,
+      : [facts, captureHint, classicHint].filter(Boolean).join('\n'),
     fullBrief:
       authored ||
       'Return to safe ground to secure each line. Regions without a field enemy are revealed.',
@@ -60,6 +87,6 @@ export function missionBriefing(
       ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
-        : 'Choose your route. Open Mission brief in the flight deck for guidance.',
+        : 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }

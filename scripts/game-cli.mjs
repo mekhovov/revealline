@@ -37,6 +37,9 @@ const MIME = {
   '.mp3': 'audio/mpeg',
   '.ogg': 'audio/ogg',
   '.wav': 'audio/wav',
+  '.ttf': 'font/ttf',
+  '.woff2': 'font/woff2',
+  '.txt': 'text/plain; charset=utf-8',
   '.zip': 'application/zip',
   '.md': 'text/plain; charset=utf-8',
 };
@@ -355,7 +358,7 @@ function addPublicEntries(entries, info) {
     bytes: Buffer.from(
       publicPage(
         'Privacy and local storage',
-        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs use IndexedDB. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
+        '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
       ),
     ),
   });
@@ -364,7 +367,12 @@ function addPublicEntries(entries, info) {
     bytes: Buffer.from(
       publicPage(
         'Credits and notices',
-        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Browser music is produced by the original procedural score recipes shipped with this build.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>',
+        '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
+          (has('game/ui/fonts/pixelify-sans/OFL.txt')
+            ? '<p>Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href="./game/ui/fonts/pixelify-sans/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+            : has('game/ui/fonts/OFL.txt')
+              ? '<p>Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href="./game/ui/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+              : ''),
       ),
     ),
   });
@@ -1096,7 +1104,12 @@ function packCatalogEntries(pack, tooling) {
     },
     sourcePackId: pack.id,
     sourcePackFormat: pack.format,
-    ...([tooling.MASTERY_PACK_VERSION, tooling.ENCOUNTER_PACK_VERSION].includes(pack.format)
+    ...([
+      tooling.MASTERY_PACK_VERSION,
+      tooling.ENCOUNTER_PACK_VERSION,
+      tooling.WIDE_PACK_VERSION,
+      tooling.CLASSIC_PACK_VERSION,
+    ].includes(pack.format)
       ? { masteries: pack.masteries.filter((definition) => definition.campaignId === source.id) }
       : {}),
   }));
