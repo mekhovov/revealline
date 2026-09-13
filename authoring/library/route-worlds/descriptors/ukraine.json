@@ -8,14 +8,14 @@
     "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
   },
   "pack": {
-    "bytes": 8614,
-    "sha256": "9f1c9fe462d7b962b6d47bdca0faf1f18cca1066abdbce13fb161caa124c13fb"
+    "bytes": 8405,
+    "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
   },
   "media": {
-    "bytes": 8825996,
-    "sha256": "41f346b01ab86bf0bbcc7205563666be9c369d07734eaddac56e16f72c5cef94"
+    "bytes": 8825887,
+    "sha256": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0"
   },
-  "campaignKey": "route-worlds-ukraine/1/86e773bc0cd5d0da",
+  "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
   "themeId": "ukraine",
   "originals": [
     {
