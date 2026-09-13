@@ -1,0 +1,157 @@
+{
+  "format": "revealline-source-art-provenance.v1",
+  "scope": "Three new static source candidates only; no runtime/pack/story/award authority.",
+  "baseCommit": "f1a5d0cb4b13bc57f65c8892b81b2a405479f1e7",
+  "generatedOn": "2026-09-13",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 3,
+  "editCalls": 0,
+  "referenceImages": [],
+  "rawOriginalsPreserved": true,
+  "pixelTransformations": [],
+  "legalScope": "Generated original compositions with recorded prompts; no claim of exclusivity, third-party license certification or historical authenticity.",
+  "contextPins": [
+    {
+      "path": "authoring/library/fpv-route-choices/routes.json",
+      "bytes": 239987,
+      "sha256": "d6af87beb11f55b81cf33b6b07254c51d19923d8823d2d80c17606db0e4c1245"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/README.md",
+      "bytes": 8857,
+      "sha256": "9859bc5e3feb51831992df7b40ce1e0f199945ba1ebb5e7f7a8b85be60fa2bfb"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "bytes": 11949780,
+      "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+    },
+    {
+      "path": "authoring/library/ukraine-atlas-art/README.md",
+      "bytes": 4703,
+      "sha256": "a6b76b906239ccb76c933868bc29b5773f382c73fcd8d6bea91db88f9c9fece7"
+    },
+    {
+      "path": "authoring/examples/ukraine-atlas.pack.json",
+      "bytes": 11560,
+      "sha256": "95a5af5390a420959ccde0b1812781b4ef37aa471f93bab82f226ea58d5cf8e1"
+    },
+    {
+      "path": "authoring/prompts/catalog.json",
+      "bytes": 94483,
+      "sha256": "f958c787d2af470f457827ad498cb8f597efb720a279b7122d139a1796bab100"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "path": "game/content.mjs",
+      "bytes": 23214,
+      "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "bytes": 14206,
+      "sha256": "c68a0e3138398c5277095c9698292a1bc194adcd0e152ed69bba48adf969b6a6"
+    }
+  ],
+  "primaryReferences": [
+    {
+      "url": "https://www.pyrohiv.com/exponat/kuznya-iz-selishcha-novi-sanzhari",
+      "use": "Forge building/materials and household repair vocabulary; no building replica."
+    },
+    {
+      "url": "https://art-deco.chnu.edu.ua/novyny-kafedry/ekspedytsiia-do-sertsia-hutsulskoho-lizhnykarstva-an-expedition-to-the-heart-of-hutsul-lizhnyk-making/",
+      "use": "Firsthand wool/handloom observations; all depicted designs invented."
+    },
+    {
+      "url": "https://dytiacha.uz.gov.ua/kyiv",
+      "use": "Museum/depot/steam/trolley vocabulary only; no live travel recommendation or exact station reconstruction."
+    }
+  ],
+  "images": [
+    {
+      "id": "two-lanes-forge",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-c8d3b0ec-d31d-46cd-89d7-f3a09c0ad71c.png",
+      "path": "originals/two-lanes-forge.png",
+      "bytes": 2780010,
+      "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true,
+      "promptSha256": "c74c5f80747d1c9edff35ad396317d9c8e1b0e9c4a7234f8b3c67d5de31315a0",
+      "visualReview": {
+        "composition": "Central amber forge with two visible side passages, repair work, broad quiet blue sky and dark corners.",
+        "culturalLimit": "Invented Poltava-inspired workshop, garments and tools; no exact working-method or historical reconstruction claim.",
+        "detailRisk": "Dense cobbles and foliage need real active-trail contrast review."
+      },
+      "title": "Two Lanes, One Forge",
+      "proposedRoleOnly": "route-choices-foundry",
+      "runtimeBinding": null
+    },
+    {
+      "id": "crosswind-market-depot",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-cbb39627-fd92-4e02-a016-b6a12735841b.png",
+      "path": "originals/crosswind-market-depot.png",
+      "bytes": 3107900,
+      "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true,
+      "promptSha256": "2c90e482bce5efb033467348bc4b630455b062a4e41c7c05c26e001dfff596b8",
+      "visualReview": {
+        "composition": "Diagonal railway, foreground supplies, market corridor to a gate and illuminated depot.",
+        "culturalLimit": "Fictional town, station and locomotive; heritage reference supports broad motifs only.",
+        "detailRisk": "Tiny notice-like marks despite no-lettering prompt; no readable text relied on. Dense market/rail detail needs gameplay inspection."
+      },
+      "title": "Crosswind Market Depot",
+      "proposedRoleOnly": "route-choices-depot",
+      "runtimeBinding": null
+    },
+    {
+      "id": "carpathian-thread-relay",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-33147347-55de-4920-a50b-463094929282.png",
+      "path": "originals/carpathian-thread-relay.png",
+      "bytes": 2926966,
+      "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true,
+      "promptSha256": "95280b7714df609289e89c87fc4fab55976c2ed8a6f96784bee546ade654c7fa",
+      "visualReview": {
+        "composition": "Close loom and wool, wide misty valley, footbridge and distant ridge path/relay.",
+        "culturalLimit": "Invented textile motifs and garments, dramatic mountain setting and civilian relay; no named artisan, symbolic meaning or authenticated site.",
+        "detailRisk": "Wool texture and illuminated mist need real partial-reveal/actor contrast review."
+      },
+      "title": "Carpathian Thread Relay",
+      "proposedRoleOnly": "route-choices-switchback",
+      "runtimeBinding": null
+    }
+  ],
+  "notQualified": [
+    "browser decoding",
+    "partial-reveal contrast",
+    "installed identity",
+    "combined pack/store budget",
+    "offline inventory",
+    "physical input devices",
+    "animation or movie timestamps",
+    "audio or finished soundtrack"
+  ]
+}
