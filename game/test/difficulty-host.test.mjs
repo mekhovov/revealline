@@ -157,8 +157,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const second = pauseAndRead(page, standard);
     assert.equal(second.runId, first.runId);
     assert.equal(second.replay.ticks, 42);
-    assert.equal(second.format, 'xonix-session.v3');
-    assert.ok(second.presentationPins.choices.every((choice) => choice.kind === 'legacy'));
+    assert.equal(second.format, 'xonix-session.v4');
+    assert.equal(second.presentationPins.format, 'revealline-flight-pictures.v2');
+    assert.ok(
+      second.presentationPins.choices.every(
+        (choice) => choice.picture.kind === 'legacy' && choice.story === null,
+      ),
+    );
     assert.equal(second.continuation.direction, 'down');
     assert.equal(second.replay.segments.length, 1);
     assert.equal(second.replay.segments[0].ticks, 42);
