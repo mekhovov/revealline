@@ -113,6 +113,7 @@ export function attachOptionalChaptersPanel({
         const pack = sourcePack.files?.[0],
           media = sourceMedia.files?.[0];
         if (!pack || !media) throw new Error('Choose both exact pilot files before installing.');
+        status.textContent = 'Checking gameplay and original pictures…';
         await sourceChapter.install({ pack, media }, { signal });
         const next = await sourceChapter.inspect({ signal });
         if (current()) {
@@ -135,6 +136,7 @@ export function attachOptionalChaptersPanel({
   }
   async function inspectSource(signal, current) {
     if (!sourceChapter) return;
+    if (current()) status.textContent = 'Checking installed pictures…';
     let next;
     try {
       next = await sourceChapter.inspect({ signal });
@@ -324,9 +326,14 @@ export function attachOptionalChaptersPanel({
     if (!catalog) await reloadCatalog();
     else
       await run(async (signal, current) => {
+        if (sourceChapter) status.textContent = 'Checking installed pictures…';
         await inspectInstalled(signal);
         await inspectSource(signal, current);
+        if (!current()) return;
         refresh();
+        if (sourceChapter)
+          status.textContent =
+            'Choose a world to install. Installation keeps your current flight; Choose chapter changes the selected mission.';
       });
   }
   function close(notify = true) {
