@@ -1,5 +1,6 @@
-import { boundedJSON, exactKeys, required, stableId } from './data-json.mjs';
+import { boundedJSON, canonicalJSON, exactKeys, required, stableId } from './data-json.mjs';
 import { snapshotPictureChoice } from './presentation-pins.mjs';
+import { isMediaIdentityCatalog } from './media-library.mjs';
 
 export const PICTURE_RECEIPT_LIMITS = Object.freeze({ records: 4096, bytes: 2 * 1024 * 1024 });
 const stamp = (value) =>
@@ -70,4 +71,28 @@ export function mergePictureReceipts(local, remote, remoteGallery, mergedGallery
     if (!kept.has(record.galleryKey) && !existing.has(record.galleryKey))
       kept.set(record.galleryKey, record);
   return resolvePictureReceipts([...kept.values()], mergedGallery);
+}
+
+/** Reconstruct exact execution→authored ownership from installed or retained owners. */
+export function validatePictureReceiptOwners(source, gallery, identityCatalog) {
+  required(
+    isMediaIdentityCatalog(identityCatalog),
+    'Earned pictures need a verified execution catalog.',
+  );
+  const records = resolvePictureReceipts(source, gallery),
+    rows = new Map(gallery.map((row) => [row.key, row]));
+  for (const record of records) {
+    const row = rows.get(record.galleryKey),
+      identity = identityCatalog.resolve({
+        executionKey: row.campaignKey,
+        levelId: row.levelId,
+        levelRevision: row.levelRevision,
+        themeId: row.themeId,
+      });
+    required(
+      identity && canonicalJSON(identity) === canonicalJSON(record.presentationPin.identity),
+      'Earned picture owner differs from the completed execution.',
+    );
+  }
+  return records;
 }
