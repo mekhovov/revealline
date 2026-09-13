@@ -1,10 +1,10 @@
-# v0.28 candidate — pause, learning and readable settings
+# v0.28 implementation evidence — pause, learning and readable settings
 
-The requested ‘Take a breath’ panel was the ordinary Pause state, also reached after focus loss and returning from game menus. It prevented unnoticed movement and preserved an unfinished cut. The candidate removes its full-screen explanation, background dimming and repeated reading controls. A compact Paused / Resume / Main menu dock retains explicit resumption and the saved heading. At phone widths the dock sits below the complete arena and inactive flight buttons hide until Resume.
+The requested ‘Take a breath’ panel was the ordinary Pause state, also reached after focus loss and returning from game menus. It prevented unnoticed movement and preserved an unfinished cut. v0.28 removes its full-screen explanation, background dimming and repeated reading controls. A compact Paused / Resume / Main menu dock retains explicit resumption and the saved heading. At phone widths the dock sits below the complete arena and inactive flight buttons hide until Resume.
 
-The candidate also supplies an eight-topic Field Guide with four appearance themes and isolated practice, a persisted Standard/Large text option, actionable optional-chapter failures and bounded archive hosting. The Field Guide teaches the delivered seven enemy roles and R3 travelling impacts. It is not a claim that all planned Tactical roles or the full campaign are complete.
+v0.28 also supplies an eight-topic Field Guide with four appearance themes and isolated practice, a persisted Standard/Large text option, actionable optional-chapter failures and bounded archive hosting. The Field Guide teaches the delivered seven enemy roles and R3 travelling impacts. It is not a claim that all planned Tactical roles or the full campaign are complete.
 
-## Evidence before freezing
+## Focused implementation evidence
 
 - Existing continuous-host, terminal-navigation and reading regression batch: 25/25 pass. Pausing still retains directions/queued turns and never resumes on an accidental input.
 - Guide affected batch: 48/48 pass, including real parent and child hosts across modeled browser boundaries. Five parent cases retain exact run/profile/attempt bytes, isolate controller polling and preserve music-only Pause and stream position. Two additional embedded course Pause → End cases pass in the 17-test reading/course batch.
@@ -19,8 +19,10 @@ The final menu review also added a direct **Picture collection** title action an
 
 A clear Paused label and Resume action, concise instruction and readable cross-device text are consistent with [Google’s playable game design guidance](https://developers.google.com/youtube/gaming/playables/certification/best_practices_design). Adjustable text and preserved preferences are also recommended in [Microsoft’s accessible game guidance](https://learn.microsoft.com/en-us/windows/uwp/gaming/accessibility-for-games). These support the interface decisions; they do not certify accessibility or establish XPOSED’s exact input behavior.
 
-## Delivery gates
+## Frozen release and delivery boundary
 
-The archive infrastructure is committed as `b2e1ff3e99da1731429f50a306e756593f296cba`. The initial archive deployment succeeded but excluded historical `.xonix-build.json` files through the upload action’s default hidden-file filter. A corrected upload includes the strictly constructed artifact’s hidden metadata; public hash verification and old-scope browser migration must pass before main routing changes. Historical frozen sources/tags remain untouched.
+This implementation is now frozen as **v0.28.0** from `f79f3c56b0a3cd88ca4e98b7f31689398523da74`. All six exact-source gates and **2,311 tests** pass. Independent reproduction verifies 209 files, 205 manifest entries, 206 ZIP entries and the 201-file / 56,469,824-byte offline inventory; all 32 earlier releases and 33 prior tags remain exact. See [the release verification record](v028-release.md).
 
-Exact candidate SHA, full source gates, immutable release hashes, PR, public deployment and final browser evidence are recorded after they actually complete. This document currently records candidate work only. See [the roadmap](../../implementation-roadmap.md) for unfinished phases and [archive hosting](../../archive-hosting-design.md) for URL/offline limits.
+The canonical archive's corrected public audit passes all 3,888 files; local migration and an actual saved-profile public-canonical journey also pass. The earlier successful workflows that omitted hidden metadata remain historical failures, not accepted inventory checks. Actual main routing cutover is separate and pending at this handoff.
+
+[PR #3](https://github.com/mekhovov/revealline/pull/3) is under CI review. The [GitHub Release delivery record](https://github.com/mekhovov/revealline/releases/tag/v0.28.0) will carry final merge, Pages and public verification evidence after those actions complete. This report does not claim that v0.28 is already deployed. See [the roadmap](../../implementation-roadmap.md) for unfinished phases and [archive hosting](../../archive-hosting-design.md) for URL/offline limits.
