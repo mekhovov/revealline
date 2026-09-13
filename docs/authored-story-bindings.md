@@ -1,5 +1,7 @@
 # Explicit authored story selection
 
+The next [optional Picture Workshop extension](story-workshop-authoring.md) now consumes this model through an injected story adapter. Its panel source can prepare/save/clear exact authored bindings and separately review/restore `.rlstory`; ordinary hosts, attempts and first-earned authority remain unadopted. The model-stage evidence below stays unchanged.
+
 This isolated continuation of [story transfer](story-bundle.md) at `92f310371be98915f17168012f07276ffec464e7` connects an exact retained picture to a deliberately selected optional story. It supplies a model for later fresh attempts. It does not change game/session/library/UI hosts, award a story, add playback, adopt a default database, or enter v0.34. The next integration must adopt authoring, attempts, first-earned receipts and Collection together.
 
 ## Logical v2 inside explicit database v4
