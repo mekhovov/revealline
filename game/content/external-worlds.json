@@ -1,0 +1,77 @@
+{
+  "format": "revealline-external-chapters.v1",
+  "chapters": [
+    {
+      "id": "original-fpv-pressure-external",
+      "name": "Pressure Pictures · source originals pilot",
+      "description": "Three existing Pressure Pictures maps and exact original pictures. Separate progress; existing music.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+      "pack": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/pack.json",
+        "bytes": 9398,
+        "sha256": "09fabce4207875dc73eefe49aaea8bc4aed491855e756b9dfda39cd4c35abe2c"
+      },
+      "media": {
+        "path": "optional/external-chapters/original-fpv-pressure-external/media.rlmedia",
+        "bytes": 8037391,
+        "sha256": "abaf15494ff0f3c5b3d70ffff7b41469346b8b322d1ffbe9cc8de930fbac780e"
+      }
+    },
+    {
+      "id": "route-worlds-ukraine",
+      "name": "Ukraine Atlas · Route Choices",
+      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "route-worlds-ukraine/1/86e773bc0cd5d0da",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "bytes": 8614,
+        "sha256": "9f1c9fe462d7b962b6d47bdca0faf1f18cca1066abdbce13fb161caa124c13fb"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+        "bytes": 8825996,
+        "sha256": "41f346b01ab86bf0bbcc7205563666be9c369d07734eaddac56e16f72c5cef94"
+      }
+    },
+    {
+      "id": "route-worlds-retro",
+      "name": "1994 Forever · Route Choices",
+      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "route-worlds-retro/1/c2ebcf492cdb07a8",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-retro/pack.json",
+        "bytes": 8516,
+        "sha256": "4d765a182603ff8db78c0c4db446a9100146a4dabcbd0a4587a661ae506c5271"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+        "bytes": 7589742,
+        "sha256": "f42fa22b651dd32f4627f2260625b64ca52bfb8c871341637705658b718eec5d"
+      }
+    },
+    {
+      "id": "route-worlds-coupa",
+      "name": "Spend Network · Route Choices",
+      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "themeId": "coupa",
+      "levels": 3,
+      "campaignKey": "route-worlds-coupa/1/57042d08e1681c86",
+      "pack": {
+        "path": "optional/external-chapters/route-worlds-coupa/pack.json",
+        "bytes": 8526,
+        "sha256": "ab535097b32996805a9eb36df32f22647a6a3a3e8b0d10e9526667519afef49f"
+      },
+      "media": {
+        "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+        "bytes": 8281102,
+        "sha256": "22a4201d6bff063e8c4704323e0605cc20626d949e8c265264d4f4c4f7d0bb03"
+      }
+    }
+  ]
+}

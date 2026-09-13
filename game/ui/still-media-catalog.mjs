@@ -73,7 +73,7 @@ export function createStillAuthoringCatalog({
           getManagedStore,
           registeredEntries: [baseEntry],
           decodeImage,
-          knownDescriptors: channel === 'dev' ? SOURCE_EXTERNAL_CHAPTERS : [],
+          knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
         });
         try {
           const snapshot = await host.inspect({ signal });

@@ -11,6 +11,7 @@ export function attachOptionalChaptersPanel({
   getLibrary,
   getUsage = () => null,
   sourceChapter = null,
+  sourceChapters = sourceChapter ? [sourceChapter] : [],
   loadCatalog = loadOptionalCatalog,
   install,
   choose,
@@ -79,72 +80,98 @@ export function attachOptionalChaptersPanel({
   doc.body.append(dialog);
   const rows = new Map(),
     matches = new WeakMap();
-  let sourceState = { status: 'checking' };
-  const sourceCard = sourceChapter ? node('section', 'source-pilot') : null;
-  let sourcePack, sourceMedia, sourceInstall, sourceChoose, sourceStatus;
-  if (sourceCard) {
-    sourceCard.className = 'optional-world-card';
-    const heading = node('h3', null, sourceChapter.name);
+  const sourceRows = sourceChapters.map((chapter) => {
+    const prefix =
+      chapter.controlId || (chapter === sourceChapter ? 'source' : `source-${chapter.id}`);
+    const card = node('section', prefix === 'source' ? 'source-pilot' : `${prefix}-card`);
+    card.className = 'optional-world-card';
+    const heading = node('h3', null, chapter.name);
     const detail = node(
       'p',
       null,
-      'Source pilot · three existing maps and exact originals. Choose the generated pack.json and media.rlmedia pair. This does not migrate another edition.',
+      `${chapter.description || 'Three existing maps and exact original pictures.'} ${chapter.sourceOnly === false ? 'Optional exact gameplay and original pictures. Install keeps your current flight.' : 'Source candidate: choose its generated pack.json and media.rlmedia pair.'} This does not migrate another edition.`,
     );
     const file = (id, label, accept) => {
       const wrapper = node('label', null, label),
-        input = node('input', id);
+        input = node('input', `${prefix}-${id}`);
       input.type = 'file';
       input.accept = accept;
       input.onchange = () => cancelPending();
       wrapper.append(input);
-      sourceCard.append(wrapper);
+      card.append(wrapper);
       return input;
     };
-    sourceCard.append(heading, detail);
-    sourcePack = file('source-pack', 'Gameplay file (.json)', '.json,application/json');
-    sourceMedia = file(
-      'source-media',
+    card.append(heading, detail);
+    const pack = file('pack', 'Gameplay file (.json)', '.json,application/json');
+    const media = file(
+      'media',
       'Exact picture originals (.rlmedia)',
       '.rlmedia,application/octet-stream',
     );
-    sourceStatus = node('p', 'source-state');
-    sourceInstall = action('source-install', 'Install / recover exact pair', () =>
+    const state = node('p', `${prefix}-state`);
+    const row = { chapter, card, pack, media, state, result: { status: 'checking' } };
+    row.install = action(`${prefix}-install`, 'Install / recover exact pair', () =>
       run(async (signal, current) => {
-        const pack = sourcePack.files?.[0],
-          media = sourceMedia.files?.[0];
-        if (!pack || !media) throw new Error('Choose both exact pilot files before installing.');
+        const packFile = pack.files?.[0],
+          mediaFile = media.files?.[0];
+        if (!packFile || !mediaFile)
+          throw new Error('Choose both exact chapter files before installing.');
         status.textContent = 'Checking gameplay and original pictures…';
-        await sourceChapter.install({ pack, media }, { signal });
-        const next = await sourceChapter.inspect({ signal });
+        await chapter.install({ pack: packFile, media: mediaFile }, { signal });
+        if (!current()) return;
+        const next = await chapter.inspect({ signal });
         if (current()) {
-          sourceState = next;
+          row.result = next;
           status.textContent =
             'Exact original pair committed. Your paused flight is kept. Choose the chapter separately; reload after recovery to restore the saved profile.';
         }
       }),
     );
-    sourceChoose = action('source-choose', 'Choose pilot chapter', () =>
+    row.choose = action(`${prefix}-choose`, 'Choose chapter', () =>
       run(async (signal, current) => {
-        await sourceChapter.choose({ signal });
+        await chapter.choose({ signal });
         if (current()) {
           close(false);
           onChosen();
         }
       }),
     );
-    sourceCard.append(sourceStatus, sourceInstall, sourceChoose);
-  }
-  async function inspectSource(signal, current) {
-    if (!sourceChapter) return;
-    if (current()) status.textContent = 'Checking installed pictures…';
-    let next;
-    try {
-      next = await sourceChapter.inspect({ signal });
-    } catch (error) {
-      if (error.name === 'AbortError') throw error;
-      next = { status: 'unavailable', message: error.message };
+    if (chapter.download) {
+      row.download = action(
+        `${prefix}-download`,
+        `Download & install · ${(chapter.bytes / 1048576).toFixed(1)} MiB`,
+        () =>
+          run(async (signal, current) => {
+            status.textContent = `Downloading and checking ${chapter.name}…`;
+            await chapter.download({ signal });
+            if (!current()) return;
+            const next = await chapter.inspect({ signal });
+            if (current()) {
+              row.result = next;
+              status.textContent =
+                'Exact original pair committed. Your paused flight is kept. Choose the chapter separately.';
+            }
+          }),
+      );
+      card.append(row.download);
     }
-    if (current()) sourceState = next;
+    card.append(state, row.install, row.choose);
+    return row;
+  });
+  async function inspectSource(signal, current) {
+    if (!sourceRows.length) return;
+    if (current()) status.textContent = 'Checking installed pictures…';
+    for (const row of sourceRows) {
+      if (!current()) return;
+      let next;
+      try {
+        next = await row.chapter.inspect({ signal });
+      } catch (error) {
+        if (error.name === 'AbortError') throw error;
+        next = { status: 'unavailable', message: error.message };
+      }
+      if (current()) row.result = next;
+    }
   }
   let measuredLibrary = null,
     measuredBytes = 0;
@@ -195,16 +222,18 @@ export function attachOptionalChaptersPanel({
           ? 'This ID contains different artwork/content. Use Manage packs & backups before installing this original.'
           : 'Optional download · choose Install when connected';
     }
-    if (sourceCard) {
-      sourceInstall.disabled = busy || sourceState.status === 'installed';
-      sourceChoose.disabled = busy || sourceState.status !== 'installed';
-      sourcePack.disabled = sourceMedia.disabled = busy;
-      sourceStatus.textContent =
+    for (const row of sourceRows) {
+      const sourceState = row.result;
+      row.install.disabled = busy || sourceState.status === 'installed';
+      if (row.download) row.download.disabled = row.install.disabled;
+      row.choose.disabled = busy || sourceState.status !== 'installed';
+      row.pack.disabled = row.media.disabled = busy;
+      row.state.textContent =
         sourceState.status === 'installed'
           ? 'Exact originals ready · Install kept your current flight; Choose changes the mission.'
           : sourceState.status === 'absent'
-            ? sourceChapter.backupSupported
-              ? 'Optional source-only pair · game-data backup keeps its descriptor; keep .rlmedia originals separately. Removal is not supported yet.'
+            ? row.chapter.backupSupported
+              ? `${row.chapter.sourceOnly === false ? 'Optional exact pair' : 'Optional source-only pair'} · game-data backup keeps its descriptor; keep .rlmedia originals separately. Removal is not supported yet.`
               : 'Optional source-only pair · backups and removal are not supported yet.'
             : sourceState.message ||
               `Stored state: ${sourceState.status}. Recover the exact files before choosing.`;
@@ -230,7 +259,7 @@ export function attachOptionalChaptersPanel({
       cards.append(card);
       rows.set(item.id, { install: installButton, choose: chooseButton, state });
     }
-    if (sourceCard) cards.append(sourceCard);
+    for (const row of sourceRows) cards.append(row.card);
     refresh();
   }
   function cancelPending() {
@@ -328,12 +357,12 @@ export function attachOptionalChaptersPanel({
     if (!catalog) await reloadCatalog();
     else
       await run(async (signal, current) => {
-        if (sourceChapter) status.textContent = 'Checking installed pictures…';
+        if (sourceRows.length) status.textContent = 'Checking installed pictures…';
         await inspectInstalled(signal);
         await inspectSource(signal, current);
         if (!current()) return;
         refresh();
-        if (sourceChapter)
+        if (sourceRows.length)
           status.textContent =
             'Choose a world to install. Installation keeps your current flight; Choose chapter changes the selected mission.';
       });

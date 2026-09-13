@@ -1,8 +1,11 @@
+import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
 import {
   SOURCE_EXTERNAL_CHAPTER,
   SOURCE_EXTERNAL_CHAPTERS,
+  SOURCE_EXTERNAL_EDITIONS,
+  sourceExternalChapter,
   prepareSourceExternalChapter,
 } from './external-chapter-source.mjs';
 import { validateMediaLibrary } from './media-library.mjs';
@@ -322,7 +325,7 @@ try {
         writer,
         getManagedStore: getPictureManager,
         registeredEntries: [baseEntry],
-        knownDescriptors: isRelease ? [] : SOURCE_EXTERNAL_CHAPTERS,
+        knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
       })
     : null;
   const externalBackup = externalChapters
@@ -333,7 +336,7 @@ try {
         writer,
         getManagedStore: getPictureManager,
         registeredEntries: [baseEntry],
-        knownDescriptors: isRelease ? [] : SOURCE_EXTERNAL_CHAPTERS,
+        knownDescriptors: SOURCE_EXTERNAL_CHAPTERS,
       })
     : null;
   async function inspectChapters({ signal } = {}) {
@@ -2034,9 +2037,10 @@ try {
     });
     return { pack: prepared.pack, installed: true };
   }
-  async function installSourceChapter(files, { signal } = {}) {
-    if (isRelease || practiceSession || courseEntry || !writer.writable)
-      throw new Error('Open the writable source game to install this pilot.');
+  async function installSourceChapter(chapterId, files, { signal, download = false } = {}) {
+    const descriptor = sourceExternalChapter(chapterId);
+    if (practiceSession || courseEntry || !writer.writable)
+      throw new Error('Open the writable game to install this chapter.');
     const operation = packLaunchGuard.begin(packs),
       before = packs;
     packCommits.markIntent();
@@ -2048,12 +2052,17 @@ try {
     signal?.addEventListener('abort', cancel, { once: true });
     let committed = false;
     try {
-      const prepared = await prepareSourceExternalChapter(files, { signal });
+      const prepared = download
+        ? await prepareExternalDownload(descriptor.id, {
+            signal,
+            baseURL: new URL('../', location.href),
+          })
+        : await prepareSourceExternalChapter(files, { chapterId: descriptor.id, signal });
       packLaunchGuard.assert(operation, before);
       const snapshot = await inspectChapters({ signal });
       if (snapshot.status !== 'checked' && snapshot.reason !== 'external-recovery')
         throw new Error(
-          'Backup and mixed recovery must be resolved before this pilot can install.',
+          'Backup and mixed recovery must be resolved before this chapter can install.',
         );
       await externalChapters[snapshot.reason === 'external-recovery' ? 'recover' : 'install'](
         prepared,
@@ -2061,7 +2070,7 @@ try {
       );
       committed = true;
       const next = await checkedChapters({ signal });
-      await externalChapters.readiness(next, SOURCE_EXTERNAL_CHAPTER.id, { signal });
+      await externalChapters.readiness(next, descriptor.id, { signal });
       packLaunchGuard.assert(operation, before);
       adoptContentCatalog(contentFromChapters(next));
       packLaunchGuard.advance(operation, before, packs);
@@ -2073,7 +2082,7 @@ try {
       if (committed) {
         void packCommits.noteStaleCommit();
         throw new Error(
-          `The pilot installation committed. Reload/recheck before choosing it. ${error.message}`,
+          `The chapter installation committed. Reload/recheck before choosing it. ${error.message}`,
         );
       }
       throw error;
@@ -3439,8 +3448,7 @@ try {
     courseEntryMessage = '';
     started = true;
     paused = false;
-    if ($('run-message').textContent === picturePreparingMessage)
-      warning('Picture ready.');
+    if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
@@ -4341,40 +4349,47 @@ try {
   optionalWorlds = attachOptionalChaptersPanel({
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
-    sourceChapter:
-      !isRelease && !practiceSession
-        ? {
-            id: SOURCE_EXTERNAL_CHAPTER.id,
-            name: 'Pressure Pictures · source originals pilot',
-            backupSupported: !!externalBackup,
-            async inspect({ signal }) {
-              const snapshot = await inspectChapters({ signal });
-              if (snapshot.status !== 'checked') return { status: snapshot.reason };
-              const installed = snapshot.index.chapters.some(
-                (d) => d.id === SOURCE_EXTERNAL_CHAPTER.id,
+    sourceChapters: !practiceSession
+      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description }) => ({
+          id: descriptor.id,
+          controlId:
+            descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
+          name,
+          description,
+          sourceOnly: !isRelease,
+          bytes: descriptor.pack.bytes + descriptor.media.bytes,
+          download: isRelease
+            ? (options) => installSourceChapter(descriptor.id, null, { ...options, download: true })
+            : null,
+          backupSupported: !!externalBackup,
+          async inspect({ signal }) {
+            const snapshot = await inspectChapters({ signal });
+            if (snapshot.status !== 'checked') return { status: snapshot.reason };
+            const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+            if (installed) await externalChapters.readiness(snapshot, descriptor.id, { signal });
+            return { status: installed ? 'installed' : 'absent' };
+          },
+          install: (files, options) => installSourceChapter(descriptor.id, files, options),
+          async choose({ signal }) {
+            if (!storedStateAdopted || !persistenceReady)
+              throw new Error(
+                'Reload after recovery to adopt the preserved profile before choosing this chapter.',
               );
-              if (installed)
-                await externalChapters.readiness(snapshot, SOURCE_EXTERNAL_CHAPTER.id, { signal });
-              return { status: installed ? 'installed' : 'absent' };
-            },
-            install: installSourceChapter,
-            async choose({ signal }) {
-              if (!storedStateAdopted || !persistenceReady)
-                throw new Error(
-                  'Reload after recovery to adopt the preserved profile before choosing this chapter.',
-                );
-              const snapshot = await checkedChapters({ signal });
-              await externalChapters.readiness(snapshot, SOURCE_EXTERNAL_CHAPTER.id, { signal });
-              if (signal.aborted)
-                throw new DOMException('Chapter selection cancelled.', 'AbortError');
-              adoptContentCatalog(contentFromChapters(snapshot));
-              const pack = packs.packs.find((p) => p.id === SOURCE_EXTERNAL_CHAPTER.id);
-              selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
-            },
-          }
-        : null,
-    loadCatalog: ({ signal }) =>
-      loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) }),
+            const snapshot = await checkedChapters({ signal });
+            await externalChapters.readiness(snapshot, descriptor.id, { signal });
+            if (signal.aborted)
+              throw new DOMException('Chapter selection cancelled.', 'AbortError');
+            adoptContentCatalog(contentFromChapters(snapshot));
+            const pack = packs.packs.find((p) => p.id === descriptor.id);
+            selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+          },
+        }))
+      : [],
+    loadCatalog: async ({ signal }) => {
+      const options = { signal, baseURL: new URL('../', location.href) };
+      if (isRelease) await loadExternalCatalog(options);
+      return loadOptionalCatalog(options);
+    },
     install: installOptionalChapter,
     choose: async (summary, { signal }) => {
       if (courseEntry || courseSession || practice)
