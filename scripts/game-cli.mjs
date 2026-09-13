@@ -123,7 +123,7 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   if (!config || typeof config !== 'object' || Array.isArray(config))
     fail('Build config must be an object');
   const unknown = Object.keys(config).filter(
-    (k) => !['version', 'entry', 'include', 'optionalOffline'].includes(k),
+    (k) => !['version', 'entry', 'include', 'optionalOffline', 'optionalChapters'].includes(k),
   );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
   safeVersion(config.version);
@@ -166,6 +166,10 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
       if (!(await fs.stat(file)).isFile())
         fail(`optionalOffline must name a regular file: ${name}`);
     }
+  }
+  if (config.optionalChapters !== undefined) {
+    const { validateOptionalDistributionConfig } = await import('./optional-distribution.mjs');
+    validateOptionalDistributionConfig(config.optionalChapters);
   }
   return config;
 }
@@ -499,7 +503,7 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-async function addOfflineEntries(root, entries, info, buildConfig) {
+async function addOfflineEntries(root, entries, info, buildConfig, optionalDownloads = []) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
   const template = await fs.readFile(
     path.join(root, 'game/offline/service-worker.template.js'),
@@ -508,7 +512,7 @@ async function addOfflineEntries(root, entries, info, buildConfig) {
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
-  const optional = new Set(buildConfig.optionalOffline ?? []);
+  const optional = new Set([...(buildConfig.optionalOffline ?? []), ...optionalDownloads]);
   const optionalPacks = entries
     .filter((entry) => optional.has(entry.name))
     .map((entry) => {
@@ -613,6 +617,16 @@ export async function buildProject({
     files.includes('game/content/packs/archive-index.json')
   )
     await validatePacks(root);
+  const optionalEntries =
+    config.optionalChapters === undefined
+      ? []
+      : await (
+          await import('./optional-distribution.mjs')
+        ).readOptionalDistributionEntries(root, config.optionalChapters);
+  if (optionalEntries.some((entry) => files.includes(entry.name)))
+    fail('Optional chapter bodies must remain outside automatic build includes');
+  if (config.optionalChapters && !files.includes(config.optionalChapters.catalog))
+    fail('Optional chapter catalog must be included in the core build');
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -620,6 +634,7 @@ export async function buildProject({
     const entries = [];
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
+    entries.push(...optionalEntries);
     const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
     const replace = (name, bytes) => {
       const found = entries.find((e) => e.name === name);
@@ -628,7 +643,13 @@ export async function buildProject({
     };
     replace('game/build-info.json', json(info));
     addPublicEntries(entries, info);
-    await addOfflineEntries(root, entries, info, config);
+    await addOfflineEntries(
+      root,
+      entries,
+      info,
+      config,
+      optionalEntries.map((entry) => entry.name),
+    );
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
     const manifest = {
       ...info,

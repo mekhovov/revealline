@@ -1,3 +1,9 @@
+import {
+  loadOptionalCatalog,
+  prepareOptionalDownload,
+  verifyOptionalInstalled,
+} from './optional-chapters.mjs';
+import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
 import { nextInputModality, showScreenControls } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
@@ -182,7 +188,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.31.0',
+  let buildVersion = '0.32.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -451,7 +457,8 @@ try {
   let neutralResumeTick = false;
   let gameShell = null,
     missionPicker = null,
-    enemyGuide = null;
+    enemyGuide = null,
+    optionalWorlds = null;
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
     soundtrackPanel = null,
@@ -907,6 +914,7 @@ try {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
     if (courseEntry) cancelCourseEntry();
+    optionalWorlds?.close(false);
     invalidateContentSwitch();
     pause(true);
     masteryAwards.cancelAll();
@@ -920,6 +928,7 @@ try {
       soundtrackDisposed = true;
       soundtrackLoad.abort();
       enemyGuide.dispose();
+      optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
       soundtrackStore?.close();
@@ -1588,7 +1597,10 @@ try {
     refreshCampaigns();
     prepare({ restoreAdoption, contentSwitchTicket, difficulty });
   }
-  async function replacePackLibrary(next, { contentSwitchTicket = null } = {}) {
+  async function replacePackLibrary(
+    next,
+    { contentSwitchTicket = null, preserveCurrentRun = false } = {},
+  ) {
     if (courseEntry) throw new Error('Cancel the course handoff before changing packs.');
     attemptFiles?.invalidate();
     const ownsOperation = !contentSwitchTicket;
@@ -1600,12 +1612,20 @@ try {
     }
     try {
       const before = packs;
+      if (
+        preserveCurrentRun &&
+        before.packs.some(
+          (old) =>
+            JSON.stringify(next.packs.find((item) => item.id === old.id)) !== JSON.stringify(old),
+        )
+      )
+        throw new Error('Installing a world must preserve every existing pack.');
       packLaunchGuard.assert(operation, before);
       assertWriter();
       const content = prepareContentCatalog(next);
-      pause(true);
+      if (!preserveCurrentRun || !paused) pause(true);
       cancelRestore();
-      masteryAwards.cancelAll();
+      if (!preserveCurrentRun) masteryAwards.cancelAll();
       try {
         await packCommits.commit(exportPackLibrary(next), {
           beforeWrite: () => packLaunchGuard.assert(operation, packs),
@@ -1622,11 +1642,12 @@ try {
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
       if (
+        !preserveCurrentRun &&
         activeEntry.sourcePackId &&
         !packs.packs.some((pack) => pack.id === activeEntry.sourcePackId)
       )
         selectEntry(baseEntry, { contentSwitchTicket: operation });
-      else if (activeEntry.sourcePackId) {
+      else if (!preserveCurrentRun && activeEntry.sourcePackId) {
         const pack = packs.packs.find((item) => item.id === activeEntry.sourcePackId);
         const authoredId = activeEntry.baseCampaign?.id || campaign.id;
         selectEntry(
@@ -1683,6 +1704,49 @@ try {
       contentSwitchTicket: operation,
     });
     return { pack: prepared.pack, installed: true };
+  }
+  async function installOptionalChapter(summary, { signal } = {}) {
+    if (courseEntry || courseSession || practice)
+      throw new Error('Return from practice before installing worlds.');
+    const old = packs.packs.find((item) => item.id === summary.id);
+    if (old) return verifyOptionalInstalled(old, summary, { signal });
+    if (signal?.aborted) throw new DOMException('Download cancelled.', 'AbortError');
+    cancelRestore();
+    const operation = packLaunchGuard.begin(packs),
+      before = packs;
+    packCommits.markIntent();
+    contentSwitchBusy = true;
+    refreshContentSelectors();
+    const cancelled = () => {
+      if (packLaunchGuard.current(operation, packs)) invalidateContentSwitch();
+    };
+    signal?.addEventListener('abort', cancelled, { once: true });
+    try {
+      const pack = await packLaunchGuard.run(
+        operation,
+        before,
+        () => packs,
+        () =>
+          prepareOptionalDownload(summary, {
+            library: before,
+            signal,
+            baseURL: new URL('../', location.href),
+          }),
+      );
+      packLaunchGuard.assert(operation, packs);
+      await replacePackLibrary(installPack(before, pack), {
+        contentSwitchTicket: operation,
+        preserveCurrentRun: true,
+      });
+      return pack;
+    } finally {
+      signal?.removeEventListener('abort', cancelled);
+      if (packLaunchGuard.current(operation, packs)) {
+        contentSwitchBusy = false;
+        refreshContentSelectors();
+        await packCommits.reconcile();
+      }
+    }
   }
   async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
     attemptFiles?.invalidate();
@@ -3713,6 +3777,42 @@ try {
     banner: false,
   });
   missionPicker = attachMissionPicker();
+  optionalWorlds = attachOptionalChaptersPanel({
+    getLibrary: () => packs,
+    loadCatalog: ({ signal }) =>
+      loadOptionalCatalog({ signal, baseURL: new URL('../', location.href) }),
+    install: installOptionalChapter,
+    choose: async (summary, { signal }) => {
+      if (courseEntry || courseSession || practice)
+        throw new Error('Return from practice before choosing a world.');
+      const pack = packs.packs.find((item) => item.id === summary.id);
+      if (!pack) throw new Error('Install this world before choosing it.');
+      await verifyOptionalInstalled(pack, summary, { signal });
+      if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
+      if (packs.packs.find((item) => item.id === summary.id) !== pack)
+        throw new Error('Installed content changed; choose this world again.');
+      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+      return true;
+    },
+    onOpen: () => {
+      pause(true);
+      clearInput();
+    },
+    onClose: () => {
+      clearInput();
+      gameShell?.openHome();
+    },
+    onChosen: () => {
+      clearInput();
+      controllerReading.refresh();
+      controllerFocus()?.focus({ preventScroll: true });
+    },
+    onRead: (request) => controllerNavigation.beginReading(request),
+    onManage: () => {
+      clearInput();
+      libraryPanel.open('packs');
+    },
+  });
   gameShell = attachGameShell({
     focusMissions: () => missionPicker?.focusSelectedChapter(),
     focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
@@ -3722,6 +3822,7 @@ try {
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
     onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
+    onWorlds: () => optionalWorlds.open(),
   });
   void initializeSoundtrack();
   if (autoplayPackLaunch)

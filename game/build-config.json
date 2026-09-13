@@ -1,5 +1,5 @@
 {
-  "version": "0.31.0",
+  "version": "0.32.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -16,5 +16,9 @@
     "game/content/packs/fpv-arcade.json",
     "game/content/packs/fpv-arcade-r4.json",
     "game/content/packs/fpv-pressure-frontier.json"
-  ]
+  ],
+  "optionalChapters": {
+    "format": "revealline-optional-distribution.v1",
+    "catalog": "game/content/optional-worlds.json"
+  }
 }
