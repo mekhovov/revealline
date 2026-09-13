@@ -2,8 +2,12 @@
   "format": "xonix-pack-index.v1",
   "packs": [
     {
-      "id": "fpv-arcade-r4",
-      "path": "fpv-arcade-r4.json"
+      "id": "fpv-arcade-r5",
+      "path": "fpv-arcade-r5.json"
+    },
+    {
+      "id": "fpv-pressure-frontier",
+      "path": "fpv-pressure-frontier.json"
     },
     {
       "id": "night-shift",

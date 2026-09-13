@@ -4,13 +4,13 @@ The application uses a browser-independent ES-module simulation with Phaser pres
 
 Run `npm run dev`, then open [solo play](http://127.0.0.1:8768/game/), [couch race](http://127.0.0.1:8768/game/couch/), [Replay Theater](http://127.0.0.1:8768/game/replay-theater/), [the playground](http://127.0.0.1:8768/game/playground/) or [Controller practice](http://127.0.0.1:8768/game/controller-lab/). Refresh after source edits; the server has no bundler or hot reload. It serves GET/HEAD and correct MIME types, refusing hidden files, traversal and symbolic links. It provides no upload endpoint or application backend.
 
-## Current correction
+## Current implementation
 
-v0.29 is frozen from `f40e1d9ecf262ba94915ddc3fc05eda074058b7a` with six passing gates and 2,355 tests. Its artifact and all 1,207 public network files matched, but a previously visited mutable `/game/` failed startup with new launch HTML and a hidden status, consistent with cached v0.28 app completion. The immutable [v0.29 game](https://mekhovov.github.io/revealline/releases/v0.29.0/site/game/) boots; keep the original release unchanged.
+v0.29.2 is publicly verified: 2,374 source tests and six gates, independent artifact reproduction, complete public-byte audit and actual public keyboard entry/capture/continued play/Pause/save restoration passed. Local earlier-save copying and server-stopped play passed separately. [Final receipt](https://github.com/mekhovov/revealline/releases/download/v0.29.2/v0292-delivery-receipt.json). Keep the v0.29 mutable-entry failure and v0.29.1 captured-domain crash evidence; neither older artifact is rewritten.
 
-**Current blocker — v0.29.2 / P7.7.** Frozen v0.29.1 passed 2,364 tests and independent artifact checks, but an ordinary first Down cut in First Light R4 threw `Classic event horizon bound exceeded` after capture, before the HUD/paint update. The failure reproduced in a separate stopped-server browser. Startup and saved-flight restoration succeeded; the complete offline play journey did **not** pass. Preserve v0.29.1 and its failure evidence. The bounded simulation correction and new candidate/browser/public gates are [in progress](verification/round-39/v0292-capture.md); no later roadmap phase advances.
+Implementation now follows the [active production plan](production-plan.md): stronger and varied enemy pressure, legible actors/trails and consistent player navigation first, then sound/media tools, Tactical interactions and full content. The [register](implementation-roadmap.md) retains historical phase evidence. These remain playtest editions, not a claim of finished content or physical-device qualification.
 
-The [entry contract](boot-launch.md) remains: public aliases choose a complete immutable graph; source/ZIP/native staging retain local entry. A core regression must exercise the reported ordinary first cut and subsequent ticks without changing a saved state to bypass it. Repeat that route in the frozen browser before and after offline preparation.
+The [entry contract](boot-launch.md) remains: public aliases choose a complete immutable graph; source/ZIP/native staging retain local entry. Every core change must preserve the ordinary first cut and subsequent stationary ticks, without mutating saved state to bypass a failure. Repeat that route in the frozen browser before and after offline preparation.
 
 ## Verified v0.28 development milestone
 

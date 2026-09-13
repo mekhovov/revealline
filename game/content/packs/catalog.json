@@ -2,26 +2,52 @@
   "format": "xonix-pack-catalog.v1",
   "packs": [
     {
-      "id": "fpv-arcade-r4",
-      "path": "fpv-arcade-r4.json",
-      "name": "FPV Front · First Light Arcade R4",
+      "id": "fpv-arcade-r5",
+      "path": "fpv-arcade-r5.json",
+      "name": "FPV Front · Pressure Lines",
       "campaigns": [
         {
-          "id": "fpv-first-light-r4",
-          "revision": "4",
-          "title": "FPV Front · First Light Arcade R4",
+          "id": "fpv-pressure-lines",
+          "revision": "1",
+          "title": "FPV Front · Pressure Lines",
           "levels": [
             {
-              "id": "orchard-window",
-              "name": "Orchard Window"
+              "id": "orchard-crossing",
+              "name": "Orchard Crossing"
             },
             {
-              "id": "split-courtyard",
-              "name": "Split Courtyard"
+              "id": "courtyard-exits",
+              "name": "Courtyard Exits"
             },
             {
-              "id": "night-signal",
-              "name": "Night Signal"
+              "id": "night-crossfire",
+              "name": "Night Crossfire"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fpv-pressure-frontier",
+      "path": "fpv-pressure-frontier.json",
+      "name": "FPV Front · Frontier Lines",
+      "campaigns": [
+        {
+          "id": "fpv-pressure-frontier",
+          "revision": "1",
+          "title": "FPV Front · Frontier Lines",
+          "levels": [
+            {
+              "id": "copper-switchyard",
+              "name": "Copper Switchyard"
+            },
+            {
+              "id": "river-frontiers",
+              "name": "River Frontiers"
+            },
+            {
+              "id": "last-beacon",
+              "name": "Last Beacon"
             }
           ]
         }

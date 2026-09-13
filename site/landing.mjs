@@ -103,7 +103,7 @@ try {
 
   packSelect.replaceChildren(
     ...catalog.packs.map(
-      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r4'),
+      (pack) => new Option(pack.name, pack.id, false, pack.id === 'fpv-arcade-r5'),
     ),
   );
   populateLevels();

@@ -25,6 +25,7 @@ const [
   r3Proof,
   archiveIndex,
   r4Proof,
+  r5Proof,
 ] = await Promise.all([
   readJSON('../content/campaign.json'),
   readJSON('../content/classes.json'),
@@ -35,6 +36,7 @@ const [
   readJSON('../replays/fpv-arcade-r3-routes.json'),
   readJSON('../content/packs/archive-index.json'),
   readJSON('../replays/fpv-arcade-r4-routes.json'),
+  readJSON('../replays/fpv-arcade-r5-routes.json'),
 ]);
 const originals = [{ packId: null, campaign: { ...base, classRecipes } }];
 for (const ref of [...packIndex.packs, ...archiveIndex.packs]) {
@@ -72,9 +74,14 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
     sources
       .filter(
         (source) =>
-          !['fpv-arcade', 'fpv-arcade-r2', 'fpv-arcade-r3', 'fpv-arcade-r4'].includes(
-            source.packId,
-          ),
+          ![
+            'fpv-arcade',
+            'fpv-arcade-r2',
+            'fpv-arcade-r3',
+            'fpv-arcade-r4',
+            'fpv-arcade-r5',
+            'fpv-pressure-frontier',
+          ].includes(source.packId),
       )
       .map(({ packId, campaignId, context }) => ({
         packId,
@@ -116,7 +123,23 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   const r4Gentle = r4Proof.routes.filter((route) => route.difficulty === 'gentle');
   assert.equal(r4Gentle.length, 6);
   assert.ok(r4Gentle.every((route) => route.campaignKey === r4[0].context.campaignKey));
+  const pressure = sources.filter((source) =>
+    ['fpv-arcade-r5', 'fpv-pressure-frontier'].includes(source.packId),
+  );
+  assert.equal(pressure.length, 2);
+  const r5Gentle = r5Proof.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(r5Gentle.length, 12);
+  for (const source of pressure) {
+    assert.equal(
+      r5Proof.packs.find((pack) => pack.id === source.packId)?.campaignKey,
+      source.context.baseCampaignKey,
+    );
+    const routes = r5Gentle.filter((route) => route.packId === source.packId);
+    assert.equal(routes.length, 6);
+    assert.ok(routes.every((route) => route.campaignKey === source.context.campaignKey));
+  }
   const combined = [
+    ...r5Gentle,
     ...r4Gentle,
     ...r3Gentle,
     ...r2Gentle,
@@ -128,8 +151,8 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   ];
   assert.equal(
     expected.length,
-    82,
-    'All 41 active and archived maps need both real steering routes.',
+    94,
+    'All 47 base, active and archived maps need both real steering routes.',
   );
   assert.deepEqual(combined.map(routeKey).sort(), expected.sort());
 });
@@ -220,4 +243,20 @@ test('R4 Gentle coverage is backed by twelve direction-only exact core and repla
   const gentle = result.routes.filter((route) => route.id.startsWith('gentle/'));
   assert.equal(gentle.length, 6);
   assert.ok(gentle.every((route) => route.lives === 5 && route.livesLost === 0));
+});
+
+test('both pressure chapters supply twelve Gentle wins within the exact twenty-four-route verifier', async () => {
+  const { verifyFpvR5 } = await import('../../scripts/verify-fpv-r5.mjs');
+  const result = await verifyFpvR5();
+  assert.equal(result.routes.length, 24);
+  const gentle = result.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(gentle.length, 12);
+  assert.ok(gentle.every((route) => route.lives === 5 && route.livesLost === 0));
+  for (const id of ['fpv-arcade-r5', 'fpv-pressure-frontier'])
+    assert.equal(gentle.filter((route) => route.packId === id).length, 6);
+  assert.equal(
+    result.ordinaryProbes.length,
+    24,
+    'Probes are separate from winning-route coverage.',
+  );
 });

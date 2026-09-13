@@ -47,6 +47,9 @@ export function missionBriefing(
   const classicHint =
     level.version === 'xonix-level.v4'
       ? [
+          level.classic?.enemyPressure?.actors?.length
+            ? 'AIM locks a target. Turn before CHASE; REST returns it to patrol.'
+            : '',
           level.classic?.powerups?.length ? 'Touch pickups to collect their effects.' : '',
           level.classic?.terrain?.some((tile) => tile.kind === 'lethal')
             ? 'Red crosshatched fields damage on contact; enclose them before crossing.'
@@ -90,6 +93,8 @@ export function missionBriefing(
       ? 'Capture the shield relay first. Watch the patterned lane before each attack.'
       : intro
         ? 'Your first route: fly down from the marked start to the opposite border.'
-        : 'Choose your route. Open Missions → Mission brief for guidance.',
+        : level.classic?.enemyPressure?.actors?.length
+          ? 'AIM → CHASE → REST. Bait a locked target, then choose another exit.'
+          : 'Choose your route. Open Missions → Mission brief for guidance.',
   });
 }
