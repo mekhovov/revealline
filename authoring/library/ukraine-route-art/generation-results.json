@@ -1,0 +1,48 @@
+{
+  "tool": "image_gen.imagegen",
+  "calls": 3,
+  "edits": 0,
+  "inputImages": [],
+  "cliFallback": false,
+  "generated": [
+    {
+      "id": "two-lanes-forge",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-c8d3b0ec-d31d-46cd-89d7-f3a09c0ad71c.png",
+      "path": "originals/two-lanes-forge.png",
+      "bytes": 2780010,
+      "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true
+    },
+    {
+      "id": "crosswind-market-depot",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-cbb39627-fd92-4e02-a016-b6a12735841b.png",
+      "path": "originals/crosswind-market-depot.png",
+      "bytes": 3107900,
+      "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true
+    },
+    {
+      "id": "carpathian-thread-relay",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-33147347-55de-4920-a50b-463094929282.png",
+      "path": "originals/carpathian-thread-relay.png",
+      "bytes": 2926966,
+      "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+      "width": 1672,
+      "height": 941,
+      "requestedWidth": 1536,
+      "requestedHeight": 864,
+      "aspectRatio": 1.7768331562167907,
+      "sourceBytesEqual": true
+    }
+  ]
+}
