@@ -89,9 +89,18 @@ function selection(state) {
  * transition, including resume/re-pause with no intervening simulation tick.
  */
 export function createAttemptFilePreparer(config) {
-  const host = ownOptions(config, adapters, 'Attempt export adapters');
+  const host = ownOptions(
+    config,
+    [...adapters, 'resolveMediaIdentityCatalog'],
+    'Attempt export adapters',
+  );
   for (const key of adapters)
     required(typeof host[key] === 'function', `${key} must be a function.`);
+  required(
+    host.resolveMediaIdentityCatalog === undefined ||
+      typeof host.resolveMediaIdentityCatalog === 'function',
+    'The picture identity resolver must be a trusted function.',
+  );
   let generation = 0,
     active = null;
 
@@ -296,6 +305,9 @@ export function createAttemptFilePreparer(config) {
       // other value is supplied to the strict verifier and must not downgrade.
       const prepared = await prepareAttemptExport(session, {
         ...(campaign === null || campaign === undefined ? {} : { campaign }),
+        ...(session.presentationPins
+          ? { mediaIdentityCatalog: host.resolveMediaIdentityCatalog?.() }
+          : {}),
         signal: controller.signal,
         onProgress: (progress) => {
           stateCurrent(ticket, baseline, selected.source);

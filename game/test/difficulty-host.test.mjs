@@ -96,9 +96,13 @@ function pauseAndRead(page, expectedContext) {
   assert.equal(checked.match, true, JSON.stringify(checked.diagnostics));
   return session;
 }
-function retryInto(page, context, previous, control = 'restart-button') {
+async function retryInto(page, context, previous, control = 'restart-button') {
   assert.equal(page.$(control).hidden, false);
   page.$(control).click(); // Actual explicit restart or terminal Retry handler.
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Retry prepares its new picture before flight.',
+  );
   page.frame(0);
   assert.notStrictEqual(page.rendered.run, previous);
   assert.equal(page.rendered.paused, false);
@@ -120,6 +124,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const page = await soloPage(t, { campaign, storage: initialStorage(turnPolicy) });
     assert.equal(page.$('difficulty-select').value, 'standard');
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.key('ArrowDown');
     ticks(page, 30);
     const run = page.rendered.run;
@@ -136,6 +144,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     changeOnly(page, 'standard', true);
     changeOnly(page, 'gentle', true);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.frame(0);
     assert.strictEqual(page.rendered.run, run);
     assert.equal(page.rendered.paused, false);
@@ -145,12 +157,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const second = pauseAndRead(page, standard);
     assert.equal(second.runId, first.runId);
     assert.equal(second.replay.ticks, 42);
-    assert.equal(second.format, 'xonix-session.v2');
+    assert.equal(second.format, 'xonix-session.v3');
+    assert.ok(second.presentationPins.choices.every((choice) => choice.kind === 'legacy'));
     assert.equal(second.continuation.direction, 'down');
     assert.equal(second.replay.segments.length, 1);
     assert.equal(second.replay.segments[0].ticks, 42);
     assert.equal(second.replay.segments[0].input.direction, 'down');
-    retryInto(page, gentle, run);
+    await retryInto(page, gentle, run);
     page.key('ArrowDown');
     ticks(page, 12);
     const fresh = pauseAndRead(page, gentle);
@@ -162,6 +175,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: recovery preference changes cannot replace the run or save, and Resume retains its recovery`, async (t) => {
     const page = await soloPage(t, { campaign, storage: initialStorage(turnPolicy) });
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.key('ArrowDown');
     ticks(page, 30);
     page.key('ArrowDown', false);
@@ -180,6 +197,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     changeOnly(page, 'gentle', true);
     const checkpoint = authoritativeCheckpoint(run);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.frame(0);
     assert.strictEqual(page.rendered.run, run);
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
@@ -190,7 +211,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     const continued = pauseAndRead(page, standard);
     assert.equal(continued.runId, session.runId);
     assert.equal(continued.replay.ticks, 271);
-    retryInto(page, gentle, run);
+    await retryInto(page, gentle, run);
     assert.deepEqual(page.errors, []);
   });
 
@@ -217,13 +238,17 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(storage.getItem(sessionKey), bytes);
     assert.equal(slotWrites(page).length, writes);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.key('ArrowDown');
     ticks(page, 12);
     const continued = pauseAndRead(page, gentle);
     assert.equal(continued.runId, original.runId);
     assert.equal(continued.replay.ticks, 42);
     assert.deepEqual(continued.replay.segments[0], original.replay.segments[0]);
-    retryInto(page, standard, run);
+    await retryInto(page, standard, run);
     assert.deepEqual(page.errors, []);
   });
 }
@@ -262,12 +287,20 @@ test('actual preference handler adopts the three-way merged saved value before p
 test('a legally lost Standard attempt retries through the result button into fresh Gentle', async (t) => {
   const page = await soloPage(t, { campaign, storage: initialStorage('immediate') });
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   ticks(page, 30);
   page.key('ArrowDown', false);
   const first = pauseAndRead(page, standard);
   const run = page.rendered.run;
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   for (let remaining = 2; remaining >= 0; remaining--) {
     page.key('ArrowUp');
     ticks(page, 1);
@@ -289,7 +322,7 @@ test('a legally lost Standard attempt retries through the result button into fre
   assert.equal(page.rendered.paused, true);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   changeOnly(page, 'gentle', true);
-  retryInto(page, gentle, run, 'retry-button');
+  await retryInto(page, gentle, run, 'retry-button');
   page.key('ArrowDown');
   ticks(page, 12);
   const retried = pauseAndRead(page, gentle);
@@ -352,6 +385,10 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   assert.equal(page.rendered.run.lives, 5);
 
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   ticks(page, 12);
   const current = page.rendered.run;
@@ -379,6 +416,10 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   );
   page.$('library-dialog').close();
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   ticks(page, 12);
   const next = pauseAndRead(page, expectedStandard);
@@ -456,6 +497,10 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   assert.match(page.$('overlay-eyebrow').textContent, /PRACTICE/);
   assert.equal(preference(page), 'gentle', 'Practice must not persist a different preference.');
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   for (let tick = 0; page.rendered.run.status === 'running' && tick < 600; tick++) page.frame();
   assert.equal(page.rendered.run.status, 'won');

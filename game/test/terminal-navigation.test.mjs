@@ -194,6 +194,10 @@ test('held Confirm cannot cross result → next briefing; keyboard Pause and fre
   assert.equal(key(page, 'Enter', { repeat: true }).defaultPrevented, true);
   assert.equal(page.rendered.run.tick, 0);
   key(page, 'Enter');
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'A fresh confirmed attempt starts only after its picture is ready.',
+  );
   page.frame(0);
   assert.equal(page.doc.body.dataset.flightState, 'running');
   steps(page, 6);
