@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir, mkdtemp, symlink, stat, rm } from 'node:fs/promises';
+import path from 'node:path';
+import { tmpdir } from 'node:os';
 import { runInNewContext } from 'node:vm';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -312,6 +314,43 @@ test('fixture generator explains usage and refuses output outside its exclusive 
   const refused = spawnSync(process.execPath, [script, '--out', 'game/test'], { encoding: 'utf8' });
   assert.equal(refused.status, 1);
   assert.match(refused.stderr, /new directory under.*cache/);
+});
+
+test('fixture generator refuses symlink ancestors before writing outside its cache and preserves existing directories', async (t) => {
+  const root = fileURLToPath(new URL('../../', import.meta.url));
+  const cache = path.join(root, '.cache');
+  await mkdir(cache, { recursive: true });
+  const inside = await mkdtemp(path.join(cache, 'video-generator-test-'));
+  const outside = await mkdtemp(path.join(tmpdir(), 'revealline-video-generator-'));
+  t.after(async () => {
+    await rm(inside, { recursive: true, force: true });
+    await rm(outside, { recursive: true, force: true });
+  });
+  const script = fileURLToPath(
+    new URL('../../authoring/video-poster/generate-fixture.mjs', import.meta.url),
+  );
+  const nested = path.join(inside, 'ordinary');
+  await mkdir(nested);
+  await symlink(outside, path.join(nested, 'linked'), 'dir');
+  const refused = spawnSync(
+    process.execPath,
+    [script, '--out', path.join(nested, 'linked', 'escape')],
+    {
+      encoding: 'utf8',
+      env: { ...process.env, PATH: '' },
+    },
+  );
+  assert.equal(refused.status, 1);
+  assert.match(refused.stderr, /never symbolic links/);
+  await assert.rejects(stat(path.join(outside, 'escape')), { code: 'ENOENT' });
+  const existing = spawnSync(process.execPath, [script, '--out', nested], {
+    encoding: 'utf8',
+    env: { ...process.env, PATH: '' },
+  });
+  assert.equal(existing.status, 1);
+  assert.match(existing.stderr, /EEXIST/);
+  assert.equal((await stat(nested)).isDirectory(), true);
+  await assert.rejects(stat(path.join(nested, 'fixture.json')), { code: 'ENOENT' });
 });
 
 test('Cancel and source change reject late capture publication while retaining prior result only for same source', async (t) => {
