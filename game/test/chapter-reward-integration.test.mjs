@@ -182,7 +182,17 @@ test('chapter reward work preserves original route and campaign identity oracles
   assert.equal(owned.preferences.controllerBoostMode, 'hold');
   // Allow only these explicit preference additions; retain the exact old serialized oracle.
   delete owned.preferences.controllerBoostMode;
+  assert.equal(Object.hasOwn(owned.preferences, 'screenControls'), true);
+  assert.equal(owned.preferences.screenControls, 'auto');
+  const withScreenControls = JSON.stringify(owned);
+  const addedPreferenceBytes = Buffer.byteLength(',"screenControls":"auto"');
+  assert.equal(addedPreferenceBytes, 24);
+  delete owned.preferences.screenControls;
   const portable = JSON.stringify(owned);
+  assert.equal(
+    Buffer.byteLength(withScreenControls) - Buffer.byteLength(portable),
+    addedPreferenceBytes,
+  );
   assert.equal(Buffer.byteLength(portable), 3830);
   assert.equal(sha(portable), '046288ac3e835b01d295b65b6a6c612f9ae0b9de916c45d0cebb0a229e240658');
 });
