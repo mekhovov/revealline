@@ -21,6 +21,8 @@ v0.29.0 is frozen from `f40e1d9ecf262ba94915ddc3fc05eda074058b7a`: six exact-sou
 
 The earlier v0.28 delivery completed through merged [PR #3](https://github.com/mekhovov/revealline/pull/3), successful Pages run 34733239863 and 974 exact public files / 205,661,769 bytes. Its archive audit passed 3,888 exact files; retain earlier hidden-metadata failures as historical evidence. Physical-device qualification, actual P3 binary browser restoration, Tactical scenarios, P5 authoring and P6 production remain unfinished.
 
+**v0.30 / P7.8 is delivered.** Source `da573579fa10f41830e5743b4f9e7e3991e7613a`, PR #6, main Pages34744509726, 2,451 tests and all1,881 public files passed. Public new capture, continued simulation, Pause and saved restoration passed; old v0.29.2 complete-backup transfer preserved exact state. [Receipt](https://github.com/mekhovov/revealline/releases/download/v0.30.0/v030-delivery-receipt.json). The discovered suspended-only picker omission is retained as P7.9 and corrected in the next edition, not patched into the frozen artifact. Actual native soundtrack downloads, different-origin byte-exact transfer and packaged cold offline startup/playback now pass locally for the v0.31 flow; its own frozen/public gates remain separate.
+
 ## Pages storage
 
 The [archive hosting design](archive-hosting-design.md) and [explicit shard plan](../scripts/pages-archives.json) preserve all independently playable versions. The default Pages command retains the old layout; supplying `--archive-plan` activates the reviewed allocation. Main output is capped at 950 MB and each archive at 800 MB. Do not raise these limits or silently remove versions. New allocations use a new bounded shard; existing canonical version locations remain fixed.

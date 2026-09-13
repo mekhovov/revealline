@@ -4,9 +4,9 @@ Updated 2026-09-13 after the user's renewed implementation request. **Implementa
 
 ## Verified starting point
 
-v0.29.2 is the latest public baseline: runtime `d611f1429272ce402db6c38dde763bd3e15498cb`, merged through [PR #5](https://github.com/mekhovov/revealline/pull/5) as `5e5c25a0c3ce7e266050bf502d42855b0e5ceb91`. All 2,374 source tests and six gates passed; main Pages run34740322685 succeeded. All 1,650 public files matched. Actual public keyboard entry, first capture, continued simulation, Pause and saved restoration passed. Separate local earlier-save copying and server-stopped play passed. [Final evidence](https://github.com/mekhovov/revealline/releases/download/v0.29.2/v0292-delivery-receipt.json).
+v0.30.0 is the latest published milestone: source `da573579fa10f41830e5743b4f9e7e3991e7613a`, merged through [PR #6](https://github.com/mekhovov/revealline/pull/6) as `5d854f779d9ae74c26129b5ec4f99b8878e734ca`. All **2,451 tests and six source gates** passed; main Pages run34744509726 succeeded. All **1,881 public files / 584,554,810 bytes** matched. Actual public keyboard entry, new first capture, continued simulation, Pause and exact saved restoration passed. Local frozen online/offline play and previous v0.29.2 complete-backup transfer also passed. [Final evidence](https://github.com/mekhovov/revealline/releases/download/v0.30.0/v030-delivery-receipt.json).
 
-This closes the current P1.12/P1.13/P7.7 correction. It does not establish complete device support, enjoyable difficulty, finished soundtracks, video authoring or the full asset catalogue. Older artifacts and failed-candidate evidence remain intact.
+One upgrade edge remains in that frozen version: the earlier-progress list can omit an unfinished first flight without a saved profile. The old flight is retained and complete-backup transfer works. **P7.9 corrects discovery in v0.31**, preserving strict source validation. Earlier v0.29.2 and failed-candidate evidence remain unchanged. Browser technical delivery does not establish human enjoyment, physical-device certification, finished soundtracks, complete media authoring or the full asset catalogue.
 
 ## Requirements and behavior that must stay consistent
 
@@ -28,23 +28,23 @@ The pasted earlier plans are requirements context. Their older instruction to pa
 
 ### A — Challenge, readability and native control (P0/P1/P2/P4)
 
-Current milestone: v0.30, two independently downloadable three-map pressure chapters, preserving the old First Light editions. Twenty-four legal wins are recorded; exact-source/artifact/browser/public delivery gates are in progress. [Milestone evidence](verification/round-40/v030-pressure.md).
+Delivered milestone: v0.30, two independently downloadable three-map pressure chapters, preserving old First Light editions. Twenty-four legal wins and exact-source/artifact/browser/public delivery passed. Human tuning remains ongoing. [Milestone evidence](verification/round-40/v030-pressure.md).
 
 | Step  | Status      | Player-visible result                                                    | Acceptance                                                                                                                                                                                           |
 | ----- | ----------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | P0.5  | In progress | Updated reference comparison and concrete design decisions               | Inspect existing concepts/manual/footage; primary-source web research; distinguish observed/documented/inferred/original. Record actual listening separately.                                        |
-| P2.11 | In progress | More varied boards and credible pressure; capture stops retained         | New immutable chapter identity, authored route choices, ordinary-input wins/losses in both turn modes and Standard/Gentle, saved-prefix reconstruction, no changes to old proof results.             |
+| P2.11 | Complete    | More varied boards and credible pressure; capture stops retained         | New immutable chapter identity, authored route choices, ordinary-input wins/losses in both turn modes and Standard/Gentle, saved-prefix reconstruction, no changes to old proof results.             |
 | P4.7  | In progress | Enemies can visibly acquire and commit to a limited pursuit/interception | Validated opt-in data, fixed-tick deterministic targeting, finite sensing/path work, warning/commit/cooldown, topology and freeze recovery, old absent-descriptor state unchanged.                   |
-| P2.12 | In progress | Distinct animated silhouettes and a clearly visible active cut           | Measure occupied size at desktop/phone scales; bright functional ink independent of dark theme colors; preserve colliders/checkpoints, custom-image priority, reduced effects and readable warnings. |
-| P1.14 | Ready       | Remaining player surfaces use predictable keyboard/controller navigation | Audit nested dialogs, replay controls, settings, results, guide and couch; repair concrete failures; whole keyboard journeys and finite controller-host tests; physical tests separately.            |
-| P7.8  | Ready       | Published challenge/presentation milestone                               | Full applicable source gates, actual browser play beyond capture, independent artifact reproduction, reviewed PR, Pages/public-byte checks and live-site play.                                       |
+| P2.12 | Complete    | Distinct animated silhouettes and a clearly visible active cut           | Measure occupied size at desktop/phone scales; bright functional ink independent of dark theme colors; preserve colliders/checkpoints, custom-image priority, reduced effects and readable warnings. |
+| P1.14 | In progress | Remaining player surfaces use predictable keyboard/controller navigation | Replay Theater corrected in v0.30. Continue auditing nested dialogs, settings, results, guide and couch; whole keyboard journeys and finite controller-host tests; physical tests separately.        |
+| P7.8  | Complete    | Published challenge/presentation milestone                               | Full applicable source gates, actual browser play beyond capture, independent artifact reproduction, reviewed PR, Pages/public-byte checks and live-site play.                                       |
 
 Difficulty is evaluated by choices and failure causes, not only enemy speed. Keep the introduction readable, increase interaction between threats gradually, and preserve fast expert solutions. Automated route proofs establish solvability and consistency, not human enjoyment. Continue collecting human feedback without blocking work already authorized.
 
 ### B — Finish sound library and reward-media infrastructure (P3/P5)
 
-1. Close P3.1–P3.3 with actual MP3 import, ordered/shuffled/mixed playlists, repeats, assignments, session continuity and error recovery. Obtain a real UI-downloaded `.rlsound`, reimport it through UI on a separate origin, save, re-export exact bytes and play with the source server stopped.
-2. Qualify opt-in P5 shared storage with migration, cancellation, interrupted imports, quota refusal and concurrent tabs before enabling it normally. A failed import preserves the working edition.
+1. Close P3.1–P3.3 with actual MP3 import, ordered/shuffled/mixed playlists, repeats, assignments, session continuity and error recovery. The explicit download flow now passes local UI download, different-origin import/save/re-export with exact original bytes, and development-packaged cold offline startup/playback. v0.31 exact-source, frozen and public delivery gates follow; [round 41](verification/round-41/v031-media.md) keeps these stages separate.
+2. The independent still-image API and opt-in v3 store are implemented and tested, without runtime adoption. Stored exact owners preserve history across restart and pack removal; original bytes share the bounded ledger with music. Model tests cover migration, cancellation, stale writes and quota refusal. Qualify actual browser upgrades and recovery before enabling them normally. A failed import preserves the working edition.
 3. Deliver per-map image replacement, video/GIF upload, scrubbing, independent poster and story segment selection, partial-reveal previews and optimized runtime derivatives. Preserve original uploads.
 4. Win records progression first, reveals the full earned picture, optionally plays the story from its beginning, then returns to that exact picture. Skip/replay never duplicates awards. Keep earned still images independently available when optional story media is removed.
 5. Validate complete media backup/import, pack editing/replacement/removal and optional offline chapter/theme bundles. Existing JSON-only backups are not advertised as full soundtrack/video backups.
@@ -86,6 +86,10 @@ Complete iPhone/macOS/Steam wrappers independently: lifecycle, files, audio sess
 ### G — Online multiplayer (P9, later extension)
 
 Private authoritative races, reconnect and network-failure handling follow the browser product. Couch remains supported throughout. Online matchmaking, cloud saves and global rankings have separate identities and deployment needs; they do not block the initial browser release.
+
+## Current correction — P7.9 / v0.31
+
+The transfer picker now discovers exact suspended-slot keys as well as library keys. An absent profile may contribute default preferences and an empty collection only when its saved flight fully verifies; malformed or missing sources still reject. Gentle expansion is forwarded through the existing backup verifier. The preview explains the empty collection before explicit Copy. Focused source/finite-host tests pass; frozen and public verification remain mandatory. This correction ships with the explicit soundtrack-download flow and opt-in still-media foundation.
 
 ## Framework, tools and tracking
 
