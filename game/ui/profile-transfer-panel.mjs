@@ -38,7 +38,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   const status = node('p', null, { id: 'transfer-status', role: 'status' });
   const fallback = node(
     'p',
-    'Another browser, address, device or native app needs Export game data in the old game, then Import here. Keep uploaded originals in .rlmedia and custom music in .rlsound alongside it; restore originals before game data. Close earlier game tabs before reviewing or copying.',
+    'Another browser, address, device or native app needs Export game data in the old game, then Import here. Keep picture originals in .rlmedia, stories in .rlstory and custom music in .rlsound alongside it; restore originals before game data. Close earlier game tabs before reviewing or copying.',
     { class: 'micro-note' },
   );
   details.append(summary, explanation, source, review, copy, cancel, preview, status, fallback);
