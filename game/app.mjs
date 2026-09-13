@@ -827,7 +827,7 @@ try {
     if (scope === 'lost') return $('retry-button');
     return $('start-button');
   }
-  function controllerMenuRoot() {
+  function controllerMenuRegion() {
     const dialog = controllerDialog();
     if (dialog) return dialog;
     if (!$('game-overlay').hidden)
@@ -835,6 +835,33 @@ try {
     if (defeatActive || celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
       return $('arena-shell');
     return document;
+  }
+  let controllerCompositeRegion = null;
+  const controllerShellBar = document.querySelector('.shell-bar');
+  function controllerMenuRoot() {
+    const region = controllerMenuRegion();
+    // Nonmodal overlays share navigation with the visible shell bar. The
+    // accept predicate still confines this composite root to those two regions.
+    controllerCompositeRegion =
+      region !== document && !controllerDialog() && !courseSession && !courseBlocked()
+        ? region
+        : null;
+    return controllerCompositeRegion ? document.body : region;
+  }
+  function controllerMenuAccepts(element) {
+    return (
+      (!controllerCompositeRegion ||
+        controllerCompositeRegion.contains(element) ||
+        !!controllerShellBar?.contains(element)) &&
+      (!courseSession ||
+        $('game-overlay').hidden ||
+        !!controllerDialog() ||
+        $('game-overlay').contains(element) ||
+        $('first-flight-panel').contains(element)) &&
+      !element.matches(
+        '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
+      )
+    );
   }
   function controllerBack() {
     const dialog = controllerDialog();
@@ -921,15 +948,7 @@ try {
       confirm: controllerLabels.menu.confirm,
       back: controllerLabels.menu.back,
     }),
-    accept: (element) =>
-      (!courseSession ||
-        $('game-overlay').hidden ||
-        !!controllerDialog() ||
-        $('game-overlay').contains(element) ||
-        $('first-flight-panel').contains(element)) &&
-      !element.matches(
-        '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
-      ),
+    accept: controllerMenuAccepts,
     onNativeInput: (event) => {
       setInputModality(nextInputModality(document.body.dataset.inputMode, event));
       if (controllerScope() !== 'flight') controller.clear();
