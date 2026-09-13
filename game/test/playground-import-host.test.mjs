@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { deferred } from './helpers/media-fixtures.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const settle = async () => {
@@ -78,7 +79,7 @@ function mount(document, html) {
     if (!['meta', 'link', 'input', 'br', 'img', 'hr'].includes(tag)) stack.push(node);
   }
 }
-async function harness(t, { deferImage = false, classicRole = false } = {}) {
+async function harness(t, { deferImage = false, classicRole = false, tacticalResponse } = {}) {
   const document = new EditorDocument(),
     window = new Events(),
     images = [],
@@ -96,6 +97,14 @@ async function harness(t, { deferImage = false, classicRole = false } = {}) {
       ].map(async (path) => [`../content/${path}`, await read(`../content/${path}`)]),
     ),
   );
+  for (const id of [
+    'tactical-read-clearing',
+    'tactical-borrowed-seconds',
+    'tactical-quiet-crossing',
+  ]) {
+    const path = `../../authoring/library/tactical-teaching/scenarios/${id}.json`;
+    documents.set(path, await read(path));
+  }
   const originals = new Map();
   const set = (key, value) => {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -140,6 +149,8 @@ async function harness(t, { deferImage = false, classicRole = false } = {}) {
   set('fetch', async (path) => {
     assert.ok(documents.has(path), `Expected authoring fetch ${path}`);
     const value = structuredClone(documents.get(path));
+    if (tacticalResponse && String(path).includes('/tactical-teaching/'))
+      return tacticalResponse(path, value);
     if ((deferImage || classicRole) && String(path).endsWith('/classic-lab.json'))
       value.visualOverrides = {
         [classicRole ? 'rover' : 'background']: {
@@ -165,6 +176,8 @@ async function harness(t, { deferImage = false, classicRole = false } = {}) {
     images,
     writes,
     storage,
+    teaching: (id) =>
+      $('teaching-examples').children.find((node) => node.dataset.teachingScenario === id),
     current: () => JSON.parse($('level-json').value),
     saved: () => JSON.parse(storage.get('revealline.playground.current')),
     finishImage: async (index) => {
@@ -232,6 +245,73 @@ test('actual Playground entry blocks Play/open/mode launch during chosen pack de
   assert.equal(f.saved().format, 'xonix-playground.v5');
   assert.equal(f.saved().level.id, 'contour-watch');
   assert.notEqual(f.$('preview-frame').src, source);
+});
+
+test('three native teaching buttons adopt exact scenarios only through import and explicit practice launch', async (t) => {
+  const f = await harness(t);
+  assert.equal(f.$('teaching-examples').children.length, 3);
+  for (const id of [
+    'tactical-read-clearing',
+    'tactical-borrowed-seconds',
+    'tactical-quiet-crossing',
+  ]) {
+    const scenario = await read(`../../authoring/library/tactical-teaching/scenarios/${id}.json`);
+    const before = f.current(),
+      priorPreview = f.$('preview-frame').src,
+      writes = f.writes.length;
+    const button = f.teaching(id);
+    assert.equal(button.type, 'button');
+    await button.onclick();
+    assert.deepEqual(f.current(), scenario.level);
+    assert.equal(f.$('class-select').value, scenario.settings.classId);
+    assert.equal(f.$('preview-frame').src, priorPreview);
+    assert.equal(f.writes.length, writes, 'loading does not launch or write any game record');
+    assert.match(f.$('editor-status').textContent, /Practice grants no campaign awards/);
+    f.$('preview-button').click();
+    assert.deepEqual(f.saved().level, scenario.level);
+    assert.deepEqual(f.saved().classRecipes, scenario.classRecipes);
+    assert.equal(f.saved().settings.classId, scenario.settings.classId);
+    assert.match(f.$('preview-frame').src, /^\.\.\/\?practice=1&revision=/);
+    assert.deepEqual([...f.storage.keys()], ['revealline.playground.current']);
+    f.$('undo-button').click();
+    assert.deepEqual(f.current(), before, 'Undo restores the prior editable map');
+  }
+});
+
+test('teaching requests retain the import gate across stale responses and preserve prior content on failure', async (t) => {
+  const first = deferred(),
+    next = deferred();
+  let calls = 0;
+  const f = await harness(t, {
+    tacticalResponse: (_path, value) => {
+      const gate = ++calls === 1 ? first : calls === 2 ? next : null;
+      return gate
+        ? gate.promise.then(() => ({ ok: true, json: async () => value }))
+        : { ok: false };
+    },
+  });
+  const before = f.current(),
+    preview = f.$('preview-frame').src,
+    writes = f.writes.length;
+  const old = f.teaching('tactical-read-clearing').onclick();
+  const latest = f.teaching('tactical-borrowed-seconds').onclick();
+  first.resolve();
+  await old;
+  assert.equal(f.$('preview-button').disabled, true);
+  assert.equal(f.$('preview-button').onclick(), false);
+  assert.deepEqual(f.current(), before);
+  assert.equal(f.$('preview-frame').src, preview);
+  assert.equal(f.writes.length, writes);
+  next.resolve();
+  await latest;
+  assert.equal(f.current().id, 'tactical-borrowed-seconds');
+  assert.equal(f.$('preview-button').disabled, false);
+  const accepted = f.current();
+  await f.teaching('tactical-quiet-crossing').onclick();
+  assert.deepEqual(f.current(), accepted);
+  assert.equal(f.$('preview-button').disabled, false);
+  assert.match(f.$('editor-status').textContent, /Teaching scenario is unavailable/);
+  assert.equal(f.writes.length, writes);
 });
 
 test('older decode completion cannot release a newer import; failed reads release the gate and preserve current content', async (t) => {
