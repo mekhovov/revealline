@@ -25,6 +25,92 @@ const proof = JSON.parse(
   await readFile(new URL('../../authoring/library/route-worlds/routes.json', import.meta.url)),
 );
 const settle = (fn) => waitFor(fn, { timeoutMs: 30000 });
+// Full retained-original verification is substantially slower in shared CI.
+// This test allowance does not change any runtime deadline or storage lease.
+const INVENTORY_TIMEOUT_MS = 180000;
+const CANCEL_JOIN_TIMEOUT_MS = 15000;
+function inventoryDiagnostic(p, phase) {
+  return JSON.stringify({
+    phase,
+    status: p.$('optional-worlds-status')?.textContent,
+    reloadDisabled: p.$('optional-worlds-reload')?.disabled,
+    rows: allEditions.map((e) => ({
+      id: e.descriptor.id,
+      state: p.$(id(e, 'state'))?.textContent,
+      chooseDisabled: p.$(id(e, 'choose'))?.disabled,
+    })),
+    errors: p.errors.map((error) => String(error?.stack ?? error)),
+  });
+}
+function clickOperation(p, control) {
+  const button = p.$(control),
+    original = button.onclick;
+  assert.equal(button.disabled, false, `${control} must be enabled`);
+  let operation;
+  button.onclick = function (...args) {
+    operation = original.apply(this, args);
+    return operation;
+  };
+  try {
+    button.click();
+  } finally {
+    button.onclick = original;
+  }
+  assert.equal(typeof operation?.then, 'function', `${control} must expose its action promise`);
+  return operation;
+}
+async function waitInventory(
+  p,
+  phase,
+  {
+    operation,
+    ready = () => !p.$('optional-worlds-reload').disabled,
+    timeoutMs = INVENTORY_TIMEOUT_MS,
+    cancelJoinTimeoutMs = CANCEL_JOIN_TIMEOUT_MS,
+  } = {},
+) {
+  let completed = !operation,
+    rejected = false,
+    failure;
+  operation?.then(
+    () => {
+      completed = true;
+    },
+    (error) => {
+      completed = rejected = true;
+      failure = error;
+    },
+  );
+  try {
+    await waitFor(() => completed && (operation || ready()), { timeoutMs, message: phase });
+    if (rejected) throw failure;
+    // A fulfilled panel handler can still report a refused installation.
+    assert.ok(ready(), `Completed action is not ready: ${inventoryDiagnostic(p, phase)}`);
+  } catch (error) {
+    const beforeCancel = inventoryDiagnostic(p, phase);
+    let cleanup = 'No pending action to cancel.';
+    if (!completed || (!operation && p.$('optional-worlds-reload')?.disabled)) {
+      const cancel = p.$('optional-worlds-cancel');
+      if (p.$('optional-worlds-dialog')?.open && cancel && !cancel.hidden) {
+        cancel.click();
+        cleanup = 'Actual panel Cancel requested.';
+      }
+      if (operation) {
+        try {
+          await waitFor(() => completed, { timeoutMs: cancelJoinTimeoutMs });
+          cleanup += ' Action promise settled after cancellation.';
+        } catch {
+          cleanup += ' Action promise did not settle within the cleanup allowance.';
+        }
+      } else {
+        // The shell's open callback exposes no promise. Its native Cancel path
+        // still aborts the panel; this cannot claim all async unwind has joined.
+        cleanup += ' Shell open exposes no promise to join.';
+      }
+    }
+    assert.fail(`${phase}: ${error?.message ?? error}\n${beforeCancel}\n${cleanup}`);
+  }
+}
 class Locks {
   held = new Set();
   async request(name, options, callback) {
@@ -128,17 +214,16 @@ const id = (e, kind) =>
 async function open(p) {
   p.$('shell-menu').click();
   p.$('shell-worlds').click();
-  await settle(
-    () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
-  );
+  await waitInventory(p, 'Open More worlds and authenticate installed originals', {
+    ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
+  });
 }
 async function install(p, e) {
   p.$(id(e, 'pack')).files = [e.payloads.pack];
   p.$(id(e, 'media')).files = [e.payloads.media];
-  p.$(id(e, 'install')).click();
-  await waitFor(() => !p.$('optional-worlds-reload').disabled, {
-    timeoutMs: 90000,
-    message: `Exact ${e.descriptor.id} install/readiness did not settle.`,
+  await waitInventory(p, `Install and authenticate exact ${e.descriptor.id}`, {
+    operation: clickOperation(p, id(e, 'install')),
+    ready: () => !p.$('optional-worlds-reload').disabled && !p.$(id(e, 'choose')).disabled,
   });
   assert.equal(p.$(id(e, 'choose')).disabled, false, p.$('optional-worlds-status').textContent);
 }
@@ -161,7 +246,8 @@ function ticks(p, n) {
 
 test('five exact registered editions install together within unchanged budgets, preserve a paused cut, and separately Choose/earn Route Choices and Sentinel originals', async (t) => {
   const f = {};
-  let receipts;
+  let receipts,
+    setupComplete = false;
   await t.test('five native pairs, three Route Choices wins and one Sentinel win', async (t) => {
     const p = await page(t, f);
     p.$('start-button').click();
@@ -242,9 +328,15 @@ test('five exact registered editions install together within unchanged budgets, 
     );
     assert(!p.$('save-json').value.includes('data:image'));
     assert.deepEqual(p.errors, []);
+    setupComplete = true;
   });
   await t.test(
     'restart authenticates all five indexed editions and retains exact first-earned pictures',
+    {
+      skip: setupComplete
+        ? false
+        : 'The prior install/win/backup setup failed; restart has no complete fixture to verify.',
+    },
     async (t) => {
       const p = await page(t, f);
       await open(p);
@@ -310,4 +402,70 @@ test('released host reads the exact small catalog then explicitly downloads only
     await choose(p, editions[0]);
     assert.equal(p.rendered.backdrop.pin.sha256, editions[0].descriptor.originals[0].sha256);
   });
+});
+
+function inventoryBoundary({ ready = false, status = 'Checking exact originals', cancel } = {}) {
+  const nodes = {
+    'optional-worlds-reload': { disabled: !ready },
+    'optional-worlds-status': { textContent: status },
+    'optional-worlds-dialog': { open: true },
+    'optional-worlds-cancel': { hidden: false, click: () => cancel?.() },
+  };
+  return { $: (name) => nodes[name], errors: [] };
+}
+
+test('inventory completion still refuses a fulfilled action without verified readiness', async () => {
+  const p = inventoryBoundary({ status: 'Exact original hash differs. Nothing was removed.' });
+  await assert.rejects(
+    waitInventory(p, 'refused original', { operation: Promise.resolve(), timeoutMs: 1000 }),
+    /Completed action is not ready.*Exact original hash differs/s,
+  );
+  assert.equal(p.$('optional-worlds-reload').disabled, true);
+});
+
+test('inventory deadline cancels through the panel and joins the pending action before failure', async () => {
+  let finish,
+    cancelled = 0,
+    joined = false;
+  const operation = new Promise((resolve) => {
+    finish = resolve;
+  });
+  const p = inventoryBoundary({
+    cancel() {
+      cancelled++;
+      setTimeout(() => {
+        joined = true;
+        finish();
+      }, 5);
+    },
+  });
+  p.errors.push(new Error('retained diagnostic'));
+  await assert.rejects(
+    waitInventory(p, 'pending exact original', {
+      operation,
+      timeoutMs: 15,
+      cancelJoinTimeoutMs: 1000,
+    }),
+    /pending exact original[\s\S]*retained diagnostic[\s\S]*Action promise settled after cancellation/,
+  );
+  assert.equal(cancelled, 1);
+  assert.equal(joined, true);
+});
+
+test('inventory cleanup reports a still-pending action within its separate finite allowance', async () => {
+  let cancelled = 0;
+  const p = inventoryBoundary({
+    cancel() {
+      cancelled++;
+    },
+  });
+  await assert.rejects(
+    waitInventory(p, 'unsettled original', {
+      operation: new Promise(() => {}),
+      timeoutMs: 15,
+      cancelJoinTimeoutMs: 15,
+    }),
+    /Action promise did not settle within the cleanup allowance/,
+  );
+  assert.equal(cancelled, 1);
 });
