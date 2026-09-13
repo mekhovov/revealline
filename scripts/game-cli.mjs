@@ -123,7 +123,15 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   if (!config || typeof config !== 'object' || Array.isArray(config))
     fail('Build config must be an object');
   const unknown = Object.keys(config).filter(
-    (k) => !['version', 'entry', 'include', 'optionalOffline', 'optionalChapters'].includes(k),
+    (k) =>
+      ![
+        'version',
+        'entry',
+        'include',
+        'optionalOffline',
+        'optionalChapters',
+        'externalChapters',
+      ].includes(k),
   );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
   safeVersion(config.version);
@@ -170,6 +178,10 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   if (config.optionalChapters !== undefined) {
     const { validateOptionalDistributionConfig } = await import('./optional-distribution.mjs');
     validateOptionalDistributionConfig(config.optionalChapters);
+  }
+  if (config.externalChapters !== undefined) {
+    const { validateExternalDistributionConfig } = await import('./external-distribution.mjs');
+    validateExternalDistributionConfig(config.externalChapters);
   }
   return config;
 }
@@ -503,7 +515,14 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-async function addOfflineEntries(root, entries, info, buildConfig, optionalDownloads = []) {
+async function addOfflineEntries(
+  root,
+  entries,
+  info,
+  buildConfig,
+  optionalDownloads = [],
+  excludedBodyPaths = [],
+) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
   const template = await fs.readFile(
     path.join(root, 'game/offline/service-worker.template.js'),
@@ -574,8 +593,9 @@ async function addOfflineEntries(root, entries, info, buildConfig, optionalDownl
   );
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
+  const excluded = new Set([...optional, ...excludedBodyPaths]);
   const files = [...entries]
-    .filter((entry) => entry.name !== '_headers' && !optional.has(entry.name))
+    .filter((entry) => entry.name !== '_headers' && !excluded.has(entry.name))
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
@@ -627,6 +647,22 @@ export async function buildProject({
     fail('Optional chapter bodies must remain outside automatic build includes');
   if (config.optionalChapters && !files.includes(config.optionalChapters.catalog))
     fail('Optional chapter catalog must be included in the core build');
+  const externalEntries =
+    config.externalChapters === undefined
+      ? []
+      : await (
+          await import('./external-distribution.mjs')
+        ).readExternalDistributionEntries(root, config.externalChapters);
+  if (config.externalChapters && !files.includes(config.externalChapters.catalog))
+    fail('External chapter catalog must be included in the core build');
+  const declared = new Set([...files, ...optionalEntries.map((entry) => entry.name)]);
+  for (const entry of externalEntries) {
+    if (declared.has(entry.name))
+      fail(
+        'External chapter bodies must remain outside automatic build includes and other downloads',
+      );
+    declared.add(entry.name);
+  }
   await fs.mkdir(path.dirname(out), { recursive: true });
   const staging = await fs.mkdtemp(path.join(path.dirname(out), '.xonix-build-'));
   let old;
@@ -634,7 +670,7 @@ export async function buildProject({
     const entries = [];
     for (const name of files)
       entries.push({ name, bytes: await fs.readFile(path.join(root, name)) });
-    entries.push(...optionalEntries);
+    entries.push(...optionalEntries, ...externalEntries);
     const info = { formatVersion: FORMAT_VERSION, version, sourceRevision, entry: config.entry };
     const replace = (name, bytes) => {
       const found = entries.find((e) => e.name === name);
@@ -649,6 +685,7 @@ export async function buildProject({
       info,
       config,
       optionalEntries.map((entry) => entry.name),
+      externalEntries.map((entry) => entry.name),
     );
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
     const manifest = {

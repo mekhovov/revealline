@@ -57,10 +57,145 @@ export const SOURCE_EXTERNAL_CHAPTER = validateExternalChapter({
   ],
 });
 
-// Later candidates must be explicitly reviewed and appended here; persisted files
-// never self-register as trusted descriptors. The public catalog is separate.
-export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([SOURCE_EXTERNAL_CHAPTER]);
-
-export function prepareSourceExternalChapter({ pack, media }, { signal } = {}) {
-  return prepareExternalChapter(SOURCE_EXTERNAL_CHAPTER, { pack, media }, { signal });
+// Reviewed candidates are literal source authority, never inferred from uploaded
+// files, installed names or catalog ordering. Release publication is separate.
+const routeDescriptors = [{
+    format: 'revealline-external-chapter.v1',
+    id: 'route-worlds-ukraine',
+    revision: 1,
+    source: {
+      id: 'fpv-route-choices',
+      bytes: 11949780,
+      sha256: '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
+    },
+    pack: {
+      bytes: 8614,
+      sha256: '9f1c9fe462d7b962b6d47bdca0faf1f18cca1066abdbce13fb161caa124c13fb',
+    },
+    media: {
+      bytes: 8825996,
+      sha256: '41f346b01ab86bf0bbcc7205563666be9c369d07734eaddac56e16f72c5cef94',
+    },
+    campaignKey: 'route-worlds-ukraine/1/86e773bc0cd5d0da',
+    themeId: 'ukraine',
+    originals: [
+      {
+        assetId: 'route-worlds-ukraine-poster-1',
+        presentationId: 'route-worlds-ukraine-poster-1-presentation',
+        levelId: 'route-worlds-ukraine-foundry',
+        levelRevision: '1',
+        sha256: '571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719',
+        bytes: 2780010,
+        mime: 'image/png',
+        width: 1672,
+        height: 941,
+      },
+      {
+        assetId: 'route-worlds-ukraine-poster-2',
+        presentationId: 'route-worlds-ukraine-poster-2-presentation',
+        levelId: 'route-worlds-ukraine-depot',
+        levelRevision: '1',
+        sha256: '18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5',
+        bytes: 3107900,
+        mime: 'image/png',
+        width: 1672,
+        height: 941,
+      },
+      {
+        assetId: 'route-worlds-ukraine-poster-3',
+        presentationId: 'route-worlds-ukraine-poster-3-presentation',
+        levelId: 'route-worlds-ukraine-switchback',
+        levelRevision: '1',
+        sha256: '6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f',
+        bytes: 2926966,
+        mime: 'image/png',
+        width: 1672,
+        height: 941,
+      },
+    ],
+  },
+{
+    format: 'revealline-external-chapter.v1',
+    id: 'route-worlds-retro',
+    revision: 1,
+    source: {
+      id: 'fpv-route-choices',
+      bytes: 11949780,
+      sha256: '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
+    },
+    pack: {
+      bytes: 8516,
+      sha256: '4d765a182603ff8db78c0c4db446a9100146a4dabcbd0a4587a661ae506c5271',
+    },
+    media: {
+      bytes: 7589742,
+      sha256: 'f42fa22b651dd32f4627f2260625b64ca52bfb8c871341637705658b718eec5d',
+    },
+    campaignKey: 'route-worlds-retro/1/c2ebcf492cdb07a8',
+    themeId: 'retro',
+    originals: [
+      {
+        assetId: 'route-worlds-retro-poster-1',
+        presentationId: 'route-worlds-retro-poster-1-presentation',
+        levelId: 'route-worlds-retro-foundry',
+        levelRevision: '1',
+        sha256: '39e0cb08e60bcdfafa93a4e57be6a2fb6751c6d72659360e2aa84534a57568a7',
+        bytes: 2378256,
+        mime: 'image/png',
+        width: 1672,
+        height: 940,
+      },
+      {
+        assetId: 'route-worlds-retro-poster-2',
+        presentationId: 'route-worlds-retro-poster-2-presentation',
+        levelId: 'route-worlds-retro-depot',
+        levelRevision: '1',
+        sha256: 'a18d10b88cbd52432436c473b45405950708df48ff115264ea47a56500cba80f',
+        bytes: 2760396,
+        mime: 'image/png',
+        width: 1672,
+        height: 941,
+      },
+      {
+        assetId: 'route-worlds-retro-poster-3',
+        presentationId: 'route-worlds-retro-poster-3-presentation',
+        levelId: 'route-worlds-retro-switchback',
+        levelRevision: '1',
+        sha256: '9e21db2d3ce3b29eef175afb6244a0bf4a1a63f3009803619b681cbb4d67b6b4',
+        bytes: 2440128,
+        mime: 'image/png',
+        width: 1672,
+        height: 941,
+      },
+    ],
+  }].map((descriptor) => validateExternalChapter(descriptor));
+export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
+  SOURCE_EXTERNAL_CHAPTER,
+  ...routeDescriptors,
+]);
+const names = ['Pressure Pictures · source originals pilot',
+'Ukraine Atlas · Route Choices',
+'1994 Forever · Route Choices'];
+export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
+  SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
+    Object.freeze({
+      descriptor,
+      name: names[index],
+      description:
+        index === 0
+          ? 'Three existing Pressure Pictures maps and exact original pictures. Separate progress; existing music.'
+          : 'Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.',
+    }),
+  ),
+);
+export function sourceExternalChapter(id) {
+  const descriptor = SOURCE_EXTERNAL_CHAPTERS.find((entry) => entry.id === id);
+  if (!descriptor) throw new Error('Choose a registered external chapter.');
+  return descriptor;
+}
+export function prepareSourceExternalChapter(
+  { pack, media },
+  { chapterId = SOURCE_EXTERNAL_CHAPTER.id, signal } = {},
+) {
+  return prepareExternalChapter(sourceExternalChapter(chapterId), { pack, media }, { signal });
 }

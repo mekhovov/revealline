@@ -54,7 +54,8 @@ function tab(page) {
   if (!event.defaultPrevented) {
     // The finite DOM has no browser default Tab action. Native dialog controls
     // and explicit tabIndex still determine that action; no ID list drives it.
-    const descendants = (node) => node.children.flatMap((child) => [child, ...descendants(child)]);
+    const descendants = (node) =>
+      (node.children ?? []).flatMap((child) => [child, ...descendants(child)]);
     const dialog = target.closest('dialog[open]');
     const controls = descendants(dialog).filter(
       (node) =>
@@ -80,16 +81,16 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
   await open(page);
   page.frame(0);
   const saved = new Map(page.storage.map);
-  assert.equal(catalog.packs.length, 5);
+  assert.equal(catalog.packs.length, 4);
   for (const item of catalog.packs) {
     const description = page.$(descriptionId(item));
     assert.ok(description, `Visible description for ${item.id}`);
     assert.equal(description.tagName, 'P');
     assert.equal(description.textContent, item.description);
     assert.equal(description.tabIndex, -1);
-    assert.equal(description.children.length, 0);
+    assert.equal(description.children.filter((child) => child.nodeType === 1).length, 0);
   }
-  for (const item of catalog.packs.slice(0, 4)) {
+  for (const item of catalog.packs.slice(0, 3)) {
     assert.match(page.$(descriptionId(item)).textContent, /proven Pressure Lines layouts/);
     assert.match(page.$(descriptionId(item)).textContent, /Direction-only Arcade/);
   }
@@ -103,6 +104,12 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     'optional-worlds-source-pack',
     'optional-worlds-source-media',
     'optional-worlds-source-install',
+    ...['ukraine',
+'retro'].flatMap((theme) =>
+      ['pack', 'media', 'install'].map(
+        (kind) => `optional-worlds-source-route-worlds-${theme}-${kind}`,
+      ),
+    ),
     'optional-worlds-read',
     'optional-worlds-reload',
     'optional-worlds-manage',
@@ -158,7 +165,7 @@ test('cancelled catalog refresh retains prior descriptions; accepted refreshed c
   await page.$('optional-worlds-reload').onclick();
   const description = page.$(descriptionId(first));
   assert.equal(description.textContent, next.packs[0].description);
-  assert.equal(description.children.length, 0);
+  assert.equal(description.children.filter((child) => child.nodeType === 1).length, 0);
   assert.equal(description.tabIndex, -1);
   assert.equal(page.$('unexpected-world-action'), null);
   page.frame(0);

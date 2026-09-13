@@ -153,6 +153,7 @@ export async function soloPage(
     previewStorage = memoryStorage(),
     titleScreen = false,
     fetchJSON,
+    buildInfo,
     audio,
     soundtrackIndexedDB,
     assetIndexedDB,
@@ -261,8 +262,9 @@ export async function soloPage(
       }
     },
     fetch: async (path) => ({
-      ok: path !== 'build-info.json',
+      ok: path !== 'build-info.json' || !!buildInfo,
       json: async () => {
+        if (path === 'build-info.json' && buildInfo) return structuredClone(buildInfo);
         const replacement = fetchJSON?.(path);
         if (replacement !== undefined) return structuredClone(replacement);
         return path === 'content/campaign.json' && campaign
