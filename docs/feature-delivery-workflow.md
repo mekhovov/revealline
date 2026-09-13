@@ -123,3 +123,11 @@ Example agent requests:
 4. “Generate a new original reward for one exact map/theme. Retain the complete prompt and unmodified tool result, inspect the picture at arena scale, create a new presentation revision, and prove that saved and first-earned older pictures remain unchanged.”
 
 5. “Simplify a chapter card without changing its immutable descriptor. Keep Download and Choose primary; verify closed recovery fields are skipped, Enter opens them, cancellation retains a valid focus, and successful asynchronous download reaches Choose using only keyboard input.”
+
+## Production register intake
+
+All thirteen project skills already follow this shared workflow. For new asset production or replacement, first use the [production register](../authoring/production/README.md) and [concrete intake requests](../authoring/prompts/production-intake.md). Run `node authoring/production/cli.mjs report authoring/production/register.json`, inspect the exact slot with `inspect ... --slot SLOT_ID`, then use `validate ... --files` to distinguish declared metadata from available original bytes. The standalone source view is a read-only aid; it cannot approve, save or adopt work.
+
+Preserve generated originals, actual tool output, effective prompts, reference roles and versioned provenance. Reuse the existing raster media importer and finite production adapters. Append new work and binding history to a separate candidate; validate with `--previous` and the expected current binding revision before an exclusive CLI proposal. Never overwrite an original pathname with different historical bytes, silently retarget a saved/earned owner, or infer a new campaign owner from art. Expanded theme ownership uses an immutable `variantOf` layout record in the same planning slot. Runtime/pack adoption remains a separately reviewed change.
+
+Keep the 29 map slots, 116 picture cells, seven player classes × four themes × two treatments, twelve stories, forty curated reserves and twenty-four tracks distinct. Shared rigs, reused layouts, derivatives, synth recipes and candidate music must not inflate finished counts. Human assessments name the actual reviewer, date, subject revision and evidence; unresolved failures and missing work stay visible. Viewing or generating an image never automatically fills quality, listening, device, browser or release checks.
