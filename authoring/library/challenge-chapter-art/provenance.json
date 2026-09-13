@@ -1,11 +1,11 @@
 {
   "format": "revealline-art-provenance.v1",
-  "recordedAt": "2026-09-13T12:08:52.912014+00:00",
+  "recordedAt": "2026-09-13T12:10:18.757417+00:00",
   "status": "Original illustration; challenge map binding and runtime checks pending",
   "generation": {
     "tool": "OpenAI built-in image_gen.imagegen",
     "mode": "New generation; one output per asset",
-    "calls": 2,
+    "calls": 3,
     "editCalls": 0,
     "model": "Not exposed by tool result",
     "fallbackCLI": false,
@@ -33,6 +33,17 @@
       "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-46609fe8-1223-4161-a307-29339cedaf73.png",
       "processing": "Exact byte copy; no crop, scaling, recompression, color changes or image editing.",
       "inspection": "Golden-hour brick agricultural depot with curved dirt route, wheat field, crates, sunflowers, distant unmarked armored truck and a grounded six-arm heavy-lift multirotor with blue/yellow ribbon. Warm detailed pixel-art scene distinct from the foundry; no visible text, HUD, people or gore. Stylized fictional scenery, not an identified airframe or incident."
+    },
+    {
+      "id": "signal-switchback",
+      "file": "originals/signal-switchback.png",
+      "width": 1774,
+      "height": 887,
+      "bytes": 3047928,
+      "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+      "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-ddb40f48-15ce-4a99-91cc-de823cc29846.png",
+      "processing": "Exact byte copy; no crop, scaling, recompression, color changes or image editing.",
+      "inspection": "Winter hill village at dawn with switchback road, masonry bridge and blue shadows/warm windows. Four-rotor camera quad with underside spool and blue/yellow ribbon in near foreground, distant unmarked utility vehicle and mast. No visible text, HUD, people or gore. Foreground quad is larger than requested small narrative detail; exact three-blade geometry is not independently verified. Illustration is stylized and is not a playable sprite or a specific real airframe claim."
     }
   ],
   "review": {
