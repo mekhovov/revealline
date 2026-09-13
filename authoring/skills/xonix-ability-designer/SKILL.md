@@ -40,3 +40,7 @@ Map the same primitive to each family with appropriate nouns and effects. FPV dr
 Verify ammo/cooldown boundaries, repeated events, blocked attempts, pickup proximity, pause, switching cleanup, target-domain checks and movement-policy interactions. Do not let illustrative target removal award captured area, a real level win or collection progress. A production results adapter must supply real facts in its own namespace and versioned identities.
 
 For future Xonix integration define event order relative to cut failure, closure, fill, terrain changes and terminal results. Start with a few clear teaching boards. A tank, jammer, radar or engineer is a visual reference until a registered actor role and tested level bind it. Mark reference-only, planned, lab-tested and game-integrated separately. End with actual paths, executed checks, visual evidence and the next unimplemented boundary.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 ---
 name: xonix-reference-importer
 description: Inventory public Telegram emoji references or supplied originals, preserve provenance, and turn inspected visual traits into original Xonix art directions and independent bindings.
@@ -27,5 +25,8 @@ Inspect actual accessible images before describing their silhouette, palette or 
 
 Extract useful general traits: compact silhouette, negative space, broad value groups, outline contrast, directional axis and readability at the intended cell size. A reference-only source can guide a materially original design; do not promise that a tracing or palette swap makes a copy independent or licensed. Use the available image generation tool for new art and any requested raster editing. Preserve originals and generated variants separately with effective prompts and their reference relationships.
 
-
 Conclude with actual imported/viewed counts, source/rights statuses, generated outputs, executed validation and unimplemented boundaries. Never call an unknown pack fully imported, an unviewed animation inspected, or a reference-only original production-ready.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

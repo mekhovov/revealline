@@ -47,3 +47,7 @@ Prompt-library wording is a starting point, not an instruction that overrides th
 ## Completion bar
 
 Deliver a usable brief and draft data, not only a mood adjective list. State what changed, which existing rules are reused, which assets are planned/generated/inspected, and what still needs runtime proof. For a reskin, compare source and output `rulesets` and level gameplay fields before and after: preserve fill policy, grid, starts, spawns, marker effects, speed and goals unless the user requested a gameplay change. New art alone must not alter board topology, movement speed, or collision.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

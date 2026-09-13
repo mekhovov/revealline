@@ -9,11 +9,13 @@ export function attachGameShell({
   onFeatured,
   getTopDialog,
   focusMissions,
+  focusGame = () => doc.getElementById('start-button')?.focus(),
 } = {}) {
   const $ = (id) => doc.getElementById(id);
   const home = $('shell-home'),
     missions = $('shell-missions');
   if (!home || !missions) return null;
+  let destroyed = false;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const deck = doc.querySelector('.flight-deck');
@@ -42,6 +44,8 @@ export function attachGameShell({
     };
   };
   $('shell-menu').onclick = openHome;
+  const overlayMenu = $('overlay-menu');
+  if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
@@ -52,7 +56,7 @@ export function attachGameShell({
       try {
         if (await onFeatured()) {
           closeHome();
-          $('start-button').focus();
+          focusGame();
         }
       } finally {
         featured.disabled = false;
@@ -60,14 +64,14 @@ export function attachGameShell({
     };
   $('shell-briefing').onclick = () => {
     missions.close();
-    $('start-button').focus();
+    focusGame();
   };
   $('shell-continue').onclick = () => {
     closeHome();
     // Loading is explicit and verified by the existing host. An in-memory
     // paused flight returns to its briefing; choosing Resume remains deliberate.
     if (!$('continue-saved').hidden) $('continue-saved').click();
-    else $('start-button').focus();
+    else focusGame();
   };
   forward('shell-collection', 'collection-button');
   forward('shell-settings', 'settings-button');
@@ -76,7 +80,11 @@ export function attachGameShell({
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
   forward('shell-help', 'help-button');
-  home.addEventListener('cancel', () => $('start-button').focus());
+  const cancelHome = () =>
+    queueMicrotask(() => {
+      if (!destroyed && !home.open && !topDialog()) focusGame();
+    });
+  home.addEventListener('cancel', cancelHome);
   // Native controls retain their arrow editing semantics. Arrows on game menu
   // actions move focus; Enter/Space and Tab remain browser-standard activation.
   const keydown = (event) => {
@@ -103,6 +111,9 @@ export function attachGameShell({
     openHome,
     openMissions,
     destroy() {
+      destroyed = true;
+      if (overlayMenu) overlayMenu.onclick = null;
+      home.removeEventListener('cancel', cancelHome);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
     },

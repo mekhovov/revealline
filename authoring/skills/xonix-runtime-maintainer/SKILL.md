@@ -138,3 +138,7 @@ Follow the user's existing authorization for edits and local artifacts; do not a
 Read [deployment.md](../../../docs/deployment.md) when delivery matters. Browser builds are implemented; only claim PWA/offline or native readiness after testing the corresponding actual files and target. Capacitor, Electron and Steam packaging require their own configured projects and validation. Record the exact commands, version/source revision, observed results and remaining limitations in the handoff.
 
 For the implemented Electron/Capacitor wrappers, use [Native Packager](../xonix-native-packager/SKILL.md) and [native distribution](../../../docs/native-distribution.md). Keep host exports/lifecycle in the shared platform adapter and preserve deterministic replay behavior.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
