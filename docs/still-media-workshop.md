@@ -1,5 +1,7 @@
 # Still-picture workshop
 
+The [optional story-authoring extension](story-workshop-authoring.md) adds video inspection, exact saved-poster bindings and separate `.rlstory` transfer only when a compatible story adapter is injected. The existing host and its v3/default behavior remain unchanged; this is a source capability for later coordinated host adoption, not a delivered story journey.
+
 The standalone page at `authoring/still-media/` supports original PNG/JPEG upload, exact map/world assignment and isolated preview through the shared v3 store. The integrated solo host freezes all world choices when preparing a fresh attempt. Assignments do not alter existing saved flights or first-earned Collection receipts, and the workshop never awards completions. No generated artwork is automatically imported. The game Settings links to the workshop for its exact edition; its build inclusion has an independent verification gate. See [flight picture adoption](flight-pictures.md) and [earned pictures](earned-picture-view.md).
 
 Serve the repository with the existing source CLI and open `/authoring/still-media/` on that same localhost address. `file://` fails visibly. Different hosts, ports or protocols select different browser storage; they cannot inspect the first origin's saved files.

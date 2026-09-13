@@ -12,6 +12,7 @@ import {
 } from './helpers/media-fixtures.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
+import { presentationPicturePins } from '../flight-media-pins.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
@@ -59,7 +60,7 @@ const ticks = (p, n) => {
 };
 async function setup(t) {
   const memory = memoryIndexedDB(),
-    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, richStillMedia: true });
+    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, storyMedia: true });
   const store = createStillMediaStore({
     managedStore: manager,
     decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
@@ -129,9 +130,11 @@ for (const policy of ['immediate', 'grid-center'])
     p.frame(0);
     const saved = JSON.parse(p.storage.getItem(sessionKey)),
       beforeTime = p.rendered.run.time;
-    assert.equal(saved.format, 'xonix-session.v3');
+    assert.equal(saved.format, 'xonix-session.v4');
     assert.equal(
-      saved.presentationPins.choices.find((x) => x.identity.themeId === 'fpv').assetId,
+      presentationPicturePins(saved.presentationPins).choices.find(
+        (x) => x.identity.themeId === 'fpv',
+      ).assetId,
       'picture-a',
     );
     assert.equal(p.rendered.backdrop.pin.sha256, f.a.asset.sha256);
@@ -242,7 +245,9 @@ test('unavailable storage blocks a new flight until explicit original-art choice
   ticks(p, 12);
   p.$('pause-button').click();
   const saved = JSON.parse(p.storage.getItem(sessionKey));
-  assert.ok(saved.presentationPins.choices.every((pin) => pin.kind === 'legacy'));
+  assert.ok(
+    presentationPicturePins(saved.presentationPins).choices.every((pin) => pin.kind === 'legacy'),
+  );
   assert.equal(p.rendered.backdrop, null);
 });
 
@@ -270,7 +275,7 @@ test('a missing saved original cannot adopt a different picture or overwrite the
   assert.equal(image.pin.assetId, 'picture-b');
   // Model lost/corrupt user storage through the actual IDB transaction boundary.
   const db = await new Promise((resolve, reject) => {
-    const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 3);
+    const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 4);
     r.onsuccess = () => resolve(r.result);
     r.onerror = () => reject(r.error);
   });
@@ -338,7 +343,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('export-session').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const exported = JSON.parse(p.$('save-json').value);
-  assert.equal(exported.format, 'xonix-session.v3');
+  assert.equal(exported.format, 'xonix-session.v4');
   assert.deepEqual(exported.presentationPins, raw.presentationPins);
   assert.equal(verifyReplay(exported.replay).match, true);
   p.$('library-dialog').close();
@@ -346,7 +351,7 @@ test('managed current attempt export and First Flight handoff preserve the exact
   p.$('first-flight-help-enter').click();
   await settle(() => navigation !== null);
   const retained = JSON.parse(p.storage.getItem(sessionKey));
-  assert.equal(retained.format, 'xonix-session.v3');
+  assert.equal(retained.format, 'xonix-session.v4');
   assert.deepEqual(retained.presentationPins, raw.presentationPins);
   assert.deepEqual(retained.continuation, raw.continuation);
   assert.equal(verifyReplay(retained.replay).match, true);
@@ -366,9 +371,11 @@ test('raw installed campaign plus retained normalized owner can export a complet
   p.$('export-backup').click();
   await settle(() => p.$('save-json').value.startsWith('{'));
   const backup = JSON.parse(p.$('save-json').value);
-  assert.equal(backup.session.format, 'xonix-session.v3');
+  assert.equal(backup.session.format, 'xonix-session.v4');
   assert.equal(
-    backup.session.presentationPins.choices.find((x) => x.identity.themeId === 'fpv').assetId,
+    presentationPicturePins(backup.session.presentationPins).choices.find(
+      (x) => x.identity.themeId === 'fpv',
+    ).assetId,
     'picture-a',
   );
   assert.equal(verifyReplay(backup.session.replay).match, true);

@@ -51,8 +51,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.$('pause-button').click();
     page.frame(0);
     const saved = JSON.parse(storage.getItem(sessionKey));
-    assert.equal(saved.format, 'xonix-session.v3');
-    assert.ok(saved.presentationPins.choices.every((choice) => choice.kind === 'legacy'));
+    assert.equal(saved.format, 'xonix-session.v4');
+    assert.equal(saved.presentationPins.format, 'revealline-flight-pictures.v2');
+    assert.ok(
+      saved.presentationPins.choices.every(
+        (choice) => choice.picture.kind === 'legacy' && choice.story === null,
+      ),
+    );
     assert.equal(saved.continuation.direction, 'right');
     assert.deepEqual(saved.replay.checkpoint, checkpoint);
     assert.equal(verifyReplay(saved.replay).match, true);

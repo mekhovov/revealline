@@ -1,0 +1,462 @@
+{
+  "captures" : [
+    {
+      "bytes" : 403009,
+      "height" : 360,
+      "observedMediaTime" : 0,
+      "path" : "frame-00.png",
+      "requestedTime" : 0,
+      "sha256" : "0652f1b9d7a50821a69a512ef1a181dfab06dbdb3af7d138684c4373fa24c1b7",
+      "timingEvidence" : "AVAssetImageGenerator.actualTime",
+      "width" : 640
+    },
+    {
+      "bytes" : 414333,
+      "height" : 360,
+      "observedMediaTime" : 2,
+      "path" : "frame-24.png",
+      "requestedTime" : 2,
+      "sha256" : "32d0125a4c29e9c0f70821027d7e33265e5d7e5048e242a65365d65e7b810af2",
+      "timingEvidence" : "AVAssetImageGenerator.actualTime",
+      "width" : 640
+    },
+    {
+      "bytes" : 422581,
+      "height" : 360,
+      "observedMediaTime" : 4,
+      "path" : "poster.png",
+      "requestedTime" : 4,
+      "sha256" : "71fad383778452f730bb9278858acb86aeba275e2a5d3c9e050c221603e02707",
+      "timingEvidence" : "AVAssetImageGenerator.actualTime",
+      "width" : 640
+    },
+    {
+      "bytes" : 442239,
+      "height" : 360,
+      "observedMediaTime" : 6,
+      "path" : "frame-72.png",
+      "requestedTime" : 6,
+      "sha256" : "8a824fc1a25133c2873c91c85b36a774d6725ce2c93cc8a7273064e5dd99c0c8",
+      "timingEvidence" : "AVAssetImageGenerator.actualTime",
+      "width" : 640
+    },
+    {
+      "bytes" : 442522,
+      "height" : 360,
+      "observedMediaTime" : 7.916666666666667,
+      "path" : "frame-95.png",
+      "requestedTime" : 7.916666666666667,
+      "sha256" : "7f851f9806a1be994b2279f3d1acc4f2f39884ac6cf2fdf6b8a7813e61c73745",
+      "timingEvidence" : "AVAssetImageGenerator.actualTime",
+      "width" : 640
+    }
+  ],
+  "decodedSamples" : [
+    {
+      "decodedPixelSha256" : "61de4703f9f53b1c5441743476fb3251f245e45a55e9eedf31caa684ad259475",
+      "mediaTime" : 0
+    },
+    {
+      "decodedPixelSha256" : "8009b243d334e9d7d8f0d62f0f09c9f686ae59fdae1742be022ee76c60e143e9",
+      "mediaTime" : 0.083333333333333329
+    },
+    {
+      "decodedPixelSha256" : "d013659dc79034b13e44f23e71228e5f8a3b53197890a57bd8f53b3caadd66d9",
+      "mediaTime" : 0.16666666666666666
+    },
+    {
+      "decodedPixelSha256" : "e6606f85dbc4b42503ed6579af3e26285114e9d4dc5a674d7f1b5f9dc6a6b8bd",
+      "mediaTime" : 0.25
+    },
+    {
+      "decodedPixelSha256" : "6d82ad0004bec5a022bcfe3043cc7efa0b6a2c72b129007fd76ffe0ad1fe7189",
+      "mediaTime" : 0.33333333333333331
+    },
+    {
+      "decodedPixelSha256" : "04e1c82640f49be674f0d7eaf24431a1890edb5c1af28d85b7e577b33ba9ba72",
+      "mediaTime" : 0.41666666666666669
+    },
+    {
+      "decodedPixelSha256" : "829fe68a18fc4155a75f881b43b811bd1105fe30c1a9d87f79a9e3424557698c",
+      "mediaTime" : 0.5
+    },
+    {
+      "decodedPixelSha256" : "1256459c2191f37ea172b6be4af8ca009b088dff823197cf5329840c89c6c844",
+      "mediaTime" : 0.58333333333333337
+    },
+    {
+      "decodedPixelSha256" : "7874a5be57cf0a64505511ae192bb1dec98dc74d15d8f60edf20ed67f069a487",
+      "mediaTime" : 0.66666666666666663
+    },
+    {
+      "decodedPixelSha256" : "e2329f05cc9b30531037b1b4679aedc434e56a833b9450d2993e0b5d10b09ef3",
+      "mediaTime" : 0.75
+    },
+    {
+      "decodedPixelSha256" : "9b3e2b2b54e088ccdb23391220fb26ec9129fcd20396629349f8d897ead08d09",
+      "mediaTime" : 0.83333333333333337
+    },
+    {
+      "decodedPixelSha256" : "ddf5f7b2ba393dd7e09046c5390c62f1c10ea5c022e72bac969d33a65a723494",
+      "mediaTime" : 0.91666666666666663
+    },
+    {
+      "decodedPixelSha256" : "1ad33a8798fa4c019f4a04d43e75b8cd73f743f5a2693b9264c05260bdd2dda3",
+      "mediaTime" : 1
+    },
+    {
+      "decodedPixelSha256" : "d6015535e4f11c958d9ce54b7f6de8f977fde74c023b623c5e865b7cf3e682af",
+      "mediaTime" : 1.0833333333333333
+    },
+    {
+      "decodedPixelSha256" : "2c5cd97cd55d33e1e495b5d1e0b2f3227c1ea5eeeb6787bb1927d928f9b51cf0",
+      "mediaTime" : 1.1666666666666667
+    },
+    {
+      "decodedPixelSha256" : "67df84e4b64f1d4397c5177f31b7c784074ac8d4c87561c4cad0bfbbc3673c96",
+      "mediaTime" : 1.25
+    },
+    {
+      "decodedPixelSha256" : "a36f98e6391f793d0c37d6bafbd145761e3102edfb3f5688bc3a7b8dba7fb81e",
+      "mediaTime" : 1.3333333333333333
+    },
+    {
+      "decodedPixelSha256" : "96b7c1aa2f241810f5ea8b8d307d765f8ddd46882e0a224de6fa886175b3534b",
+      "mediaTime" : 1.4166666666666667
+    },
+    {
+      "decodedPixelSha256" : "8dd9c8f2ea0e2b2930ee8b2e98a8e7d019e1852e6fac5f9c3d7995c4b56e2b15",
+      "mediaTime" : 1.5
+    },
+    {
+      "decodedPixelSha256" : "fe1b942f5355061ca071c92b3d67e78073e54dc9f47b2c8cac13fc5750a38212",
+      "mediaTime" : 1.5833333333333333
+    },
+    {
+      "decodedPixelSha256" : "a68c6e9c75d4b082d85bd6813ce597070d856a631c1f14dbb484c4ce5337b94a",
+      "mediaTime" : 1.6666666666666667
+    },
+    {
+      "decodedPixelSha256" : "ef28795580ca4461c32104b8e1adb2c0f0bd779983579946dccb8256da1413d0",
+      "mediaTime" : 1.75
+    },
+    {
+      "decodedPixelSha256" : "ef02c77690a6fd2c94c2dfeafd6b5506c6cd9370cc220dcb21ac9199d25e0ac8",
+      "mediaTime" : 1.8333333333333333
+    },
+    {
+      "decodedPixelSha256" : "bca9647c5bd17f1aff816a41ada51f7bc74ffe8946fbdda438b7362ba257c6fa",
+      "mediaTime" : 1.9166666666666667
+    },
+    {
+      "decodedPixelSha256" : "d7b8b154cf08fbc0c5a5ce69241703a528d12c52762610c6724ff539ff69a73f",
+      "mediaTime" : 2
+    },
+    {
+      "decodedPixelSha256" : "7a0fcbf147cf83308bba8828a1c950ef130624245aff5ab8ca0191b9b0105dcd",
+      "mediaTime" : 2.0833333333333335
+    },
+    {
+      "decodedPixelSha256" : "adec90f19a1eee1132a41e96a57e15cee655ed2e86990bf93f24ef37aac54a40",
+      "mediaTime" : 2.1666666666666665
+    },
+    {
+      "decodedPixelSha256" : "9e6fa3bf9f30bd34b191648a8f34fc0081082d870afb340dc37a66b412bc795d",
+      "mediaTime" : 2.25
+    },
+    {
+      "decodedPixelSha256" : "9e483c09b41ad3f494912314d344b7f65641e6ec4ff3eaf165a86725b6675359",
+      "mediaTime" : 2.3333333333333335
+    },
+    {
+      "decodedPixelSha256" : "3b4dcf0322b6d43e38777f4eb4d055e976c2625fe25974e63d783a487ed6f041",
+      "mediaTime" : 2.4166666666666665
+    },
+    {
+      "decodedPixelSha256" : "a8ce78a8b001e1aab94149d6b78a21ae039b725b5ba434f70df32dc57d42ecf5",
+      "mediaTime" : 2.5
+    },
+    {
+      "decodedPixelSha256" : "5668ee3b28a84f4f064cd51a898d54ae7363e738513c5c4ec1cd43aa4eef9304",
+      "mediaTime" : 2.5833333333333335
+    },
+    {
+      "decodedPixelSha256" : "f889665f1a7ba988641208930b43de22ca20c37c2f33d3a7bf44249e2817a2ce",
+      "mediaTime" : 2.6666666666666665
+    },
+    {
+      "decodedPixelSha256" : "add0cc59e26ffd561a10de29a0cb938c9283086cad98615bae020d2777aa86a8",
+      "mediaTime" : 2.75
+    },
+    {
+      "decodedPixelSha256" : "8348b3e27f0876c9e208df4e90f082d75832e34b48bf9df922a744a7ecc21e5e",
+      "mediaTime" : 2.8333333333333335
+    },
+    {
+      "decodedPixelSha256" : "561f1322708beacf2a4d57af91c517380770b651840598d3cf7bc5168a63cb00",
+      "mediaTime" : 2.9166666666666665
+    },
+    {
+      "decodedPixelSha256" : "4c5518df795902d4a9e37dce420e86a07a0b7a8d296e49696546846d12f0508e",
+      "mediaTime" : 3
+    },
+    {
+      "decodedPixelSha256" : "4ccc49f53fd14a491136d411bff6486a3d77a953c2bda1246bf03b83bccb7a73",
+      "mediaTime" : 3.0833333333333335
+    },
+    {
+      "decodedPixelSha256" : "cdbb992d0cb4c5b83a5dc6df981d8f74dceadfa2acf1e6c9f511a6c2a143eb96",
+      "mediaTime" : 3.1666666666666665
+    },
+    {
+      "decodedPixelSha256" : "0babd46558dc56b303f4ce9fa1027af564d491e04598e73203e36c59605da3bd",
+      "mediaTime" : 3.25
+    },
+    {
+      "decodedPixelSha256" : "d9af7fdedff389dc3a5efe218c8f1f11448e61741fa4489a3d3cc42b2e001940",
+      "mediaTime" : 3.3333333333333335
+    },
+    {
+      "decodedPixelSha256" : "515ca41c9520c7c1c4c830abbc6362422b2889eddd7dda1cfca6123497e751d5",
+      "mediaTime" : 3.4166666666666665
+    },
+    {
+      "decodedPixelSha256" : "abf89d0aeee38d54dc531a455a45bf6240bddd8707abe5a9a5d88eddb08b68b0",
+      "mediaTime" : 3.5
+    },
+    {
+      "decodedPixelSha256" : "01dbe896abe1aa2122814a9db2198ca036dace65059857bd894e02bfe82be41c",
+      "mediaTime" : 3.5833333333333335
+    },
+    {
+      "decodedPixelSha256" : "809829d8a4f76ba00bf54c8453bf20b227ca02e06448bdb842694587684b6dd1",
+      "mediaTime" : 3.6666666666666665
+    },
+    {
+      "decodedPixelSha256" : "155c4f4607718e3cde7c5109db4e91f90fa7328b601c028a34ac7b3c7148a759",
+      "mediaTime" : 3.75
+    },
+    {
+      "decodedPixelSha256" : "dc492db6fa1e74d3821a27656a1a5453201487a4179f159470bae4f69dfee3d9",
+      "mediaTime" : 3.8333333333333335
+    },
+    {
+      "decodedPixelSha256" : "1a4dd81db35fb81150ae668391b9ae3f39c33415284b3137c9f7bfcc649a5871",
+      "mediaTime" : 3.9166666666666665
+    },
+    {
+      "decodedPixelSha256" : "2f15478bad7d76abdffc6393f54d7ae6ff3469abb35d040faec0f4ea65453b3f",
+      "mediaTime" : 4
+    },
+    {
+      "decodedPixelSha256" : "210367cbb6a4fdf2675bbd039da6e622adc62279e5124d273a0dbc11aae94307",
+      "mediaTime" : 4.083333333333333
+    },
+    {
+      "decodedPixelSha256" : "c80c70167796cbba8b00bc77d6ee8ec1b87fc4706085721fe5a463c6b9eefd7e",
+      "mediaTime" : 4.166666666666667
+    },
+    {
+      "decodedPixelSha256" : "1219e65d26fc611b5f617a5214355bd1bd286a5c419b15e6ee32b5a984d4aa5b",
+      "mediaTime" : 4.25
+    },
+    {
+      "decodedPixelSha256" : "b34ea38eebb9dd0d5ca712058453d5aa10c9354cf002ddfb725aaba1374b85ff",
+      "mediaTime" : 4.333333333333333
+    },
+    {
+      "decodedPixelSha256" : "192b921939b75a42de7a651b09b4d31ff85ae58063e9960a307f29e95338460f",
+      "mediaTime" : 4.416666666666667
+    },
+    {
+      "decodedPixelSha256" : "f8b00a7d5f28fea653a3b0c85cfdc5b26b48b1be64a6778b9393805e48bdffb6",
+      "mediaTime" : 4.5
+    },
+    {
+      "decodedPixelSha256" : "3d9870ecfcc61523aa0145dc7b645bd0a11a509e653849546465cfe441c7a7b0",
+      "mediaTime" : 4.583333333333333
+    },
+    {
+      "decodedPixelSha256" : "08905388a947a6f53d29b3c510a44e7d4d84de6a0ef0e23e1feb69efb4a1f38a",
+      "mediaTime" : 4.666666666666667
+    },
+    {
+      "decodedPixelSha256" : "4048aac1be3421f0e478b7a5b1510011997b36737fd5d26c6e4ebabc2f2f8734",
+      "mediaTime" : 4.75
+    },
+    {
+      "decodedPixelSha256" : "9d95879cd7489623f01a04c90a217577f88f674d40d1bdd73090bc0ae90dcd1c",
+      "mediaTime" : 4.833333333333333
+    },
+    {
+      "decodedPixelSha256" : "c6cdc2391b8088e504ebffdf19af00622938891de7d198643d3be35484d43ca9",
+      "mediaTime" : 4.916666666666667
+    },
+    {
+      "decodedPixelSha256" : "8c5aac8489f1304e4da5833890f8e86b513e1a960d01c0270a8079da0083a790",
+      "mediaTime" : 5
+    },
+    {
+      "decodedPixelSha256" : "5ff4d365e1066eecc1c0b2f01525d119fad41d64ced889fdf6314cd1fce47fe5",
+      "mediaTime" : 5.083333333333333
+    },
+    {
+      "decodedPixelSha256" : "a915ae69907cb8fb238f459e5b6212897a86f854a6fec3a6a1aa5e771390811c",
+      "mediaTime" : 5.166666666666667
+    },
+    {
+      "decodedPixelSha256" : "0d776ab4e209209072e0cba961749b927b6e534ddde3bd79560a9db679db2ef8",
+      "mediaTime" : 5.25
+    },
+    {
+      "decodedPixelSha256" : "356a44afd718d1dc2a2749cf6aa3d7c19807b1b9a2fa23b837d294644fdf5603",
+      "mediaTime" : 5.333333333333333
+    },
+    {
+      "decodedPixelSha256" : "b2f152e43f689f10d0c7f04f80bf3cd84b2da12805db32eafacd95e1b1ca011f",
+      "mediaTime" : 5.416666666666667
+    },
+    {
+      "decodedPixelSha256" : "ee55fe77e8e257c8d38219d6199d1c0a15dc411342c73d979cf053fb85507ef3",
+      "mediaTime" : 5.5
+    },
+    {
+      "decodedPixelSha256" : "cd80e07764503fe51ece0c34af591c3fff7fdbc78659790751e76f38364ddb44",
+      "mediaTime" : 5.583333333333333
+    },
+    {
+      "decodedPixelSha256" : "c2c3da42211280772811c5eae2e7c8846a9914dd11305e707cd00ef4b0b231a4",
+      "mediaTime" : 5.666666666666667
+    },
+    {
+      "decodedPixelSha256" : "fc78b9e1f275bb53517b468ed809938bffd94e2d2695d24a99b6537fd5480a61",
+      "mediaTime" : 5.75
+    },
+    {
+      "decodedPixelSha256" : "5393fd93115d8aee9ba88219fd616f86fc5dd645d28560685e018127fb8b0717",
+      "mediaTime" : 5.833333333333333
+    },
+    {
+      "decodedPixelSha256" : "f053a3cf14481b7802b9e3d72b05e0769dd33b1f55a9cc5a1c48760b9cf7e0e7",
+      "mediaTime" : 5.916666666666667
+    },
+    {
+      "decodedPixelSha256" : "769d0c217744b7101ab54ef778fbe9a30abfc7ddc754e4d86b6e5ef81452557b",
+      "mediaTime" : 6
+    },
+    {
+      "decodedPixelSha256" : "ca450fc21b3f1f0ca0b8449b783148063d5d87264cd8f558ee7b623eb431aaab",
+      "mediaTime" : 6.083333333333333
+    },
+    {
+      "decodedPixelSha256" : "29e0eccbcd33eb94991c8df2a87b65dfc09abd5c07da9c564f7f30fd9538ac3e",
+      "mediaTime" : 6.166666666666667
+    },
+    {
+      "decodedPixelSha256" : "d38156f5ec04bb836a3018e87334d396d1463e6a7f24482256dace398363f31d",
+      "mediaTime" : 6.25
+    },
+    {
+      "decodedPixelSha256" : "c0bcf5f400f477cd0de6d7270d8d5eb359379b1ad8a3e09040d9e2722d27a479",
+      "mediaTime" : 6.333333333333333
+    },
+    {
+      "decodedPixelSha256" : "96a011858e273766ee8aedd73ad614c62a2555fa7291b2bb951c95ef2ce70a81",
+      "mediaTime" : 6.416666666666667
+    },
+    {
+      "decodedPixelSha256" : "a886753e65208eade04627f047e622d160280f831e7b97d4018222a821b93721",
+      "mediaTime" : 6.5
+    },
+    {
+      "decodedPixelSha256" : "3eb60b019321a956884a2fdd99eab3d55a1c368dec866889c3c16c68b09537e9",
+      "mediaTime" : 6.583333333333333
+    },
+    {
+      "decodedPixelSha256" : "7ac44aaf96cdaf20d54046cae136b24fc482c133dcd63ee65af51281b13e8474",
+      "mediaTime" : 6.666666666666667
+    },
+    {
+      "decodedPixelSha256" : "3c1e1cf8d40011ed97d4db6a73803bb4bc3612523e8b3175b8b4681088b6b893",
+      "mediaTime" : 6.75
+    },
+    {
+      "decodedPixelSha256" : "73dfcf94070474176989d92b8b29895f914bddce94765d41217a7bc92d00b144",
+      "mediaTime" : 6.833333333333333
+    },
+    {
+      "decodedPixelSha256" : "a211815da084346564630666497e437a1255459bd5ecde859d43473273c31e02",
+      "mediaTime" : 6.916666666666667
+    },
+    {
+      "decodedPixelSha256" : "83d739697c7f6802e6c0230d514a470aa3b61a53b3830a3faa9fe40ecdbb3a39",
+      "mediaTime" : 7
+    },
+    {
+      "decodedPixelSha256" : "b3e4fcecd6a33b326a425c20cc8457e3e00469574ca3facc368c71733dd43557",
+      "mediaTime" : 7.083333333333333
+    },
+    {
+      "decodedPixelSha256" : "bbd83a2565cf62af535fb41e9658da9d7a17faa4a1f7e85210c471b074663729",
+      "mediaTime" : 7.166666666666667
+    },
+    {
+      "decodedPixelSha256" : "11028c1003acfd7f60fc2eaf2a6e33151faa14d9a15bec86a1592c5b15493ae0",
+      "mediaTime" : 7.25
+    },
+    {
+      "decodedPixelSha256" : "6db50eeb01b4cc3936fc620f66db2798b7530b3a2bb6ed70d154dcb2b4a440c0",
+      "mediaTime" : 7.333333333333333
+    },
+    {
+      "decodedPixelSha256" : "2d68ee3a92001e5b3ced8d02289a69ee30b175112aec09fc0e28807b08940668",
+      "mediaTime" : 7.416666666666667
+    },
+    {
+      "decodedPixelSha256" : "6dd75c715d653e7e3f4cdf2a828fe9902e98ae6a0fed361026dee0c7539ca7b4",
+      "mediaTime" : 7.5
+    },
+    {
+      "decodedPixelSha256" : "fbb410d2e27a7000026d949f3e1dbf72a71caaba3611629dd47692dcb99f0078",
+      "mediaTime" : 7.583333333333333
+    },
+    {
+      "decodedPixelSha256" : "21a4ec7b476b0f8cac7411eff4b19b218081521ecf5a96d33627f6dc532d2472",
+      "mediaTime" : 7.666666666666667
+    },
+    {
+      "decodedPixelSha256" : "dca68de96af934359b06589e1fe9b085da4fadccd7527a1921eccf28837505eb",
+      "mediaTime" : 7.75
+    },
+    {
+      "decodedPixelSha256" : "79e70cb02731446e34c587fbbc35485452e3aadc14209bb3cb45a1fbc901a654",
+      "mediaTime" : 7.833333333333333
+    },
+    {
+      "decodedPixelSha256" : "b8f86bd214c7dedbd4aa308fe54820ef6bbfdc29e0936dfb34a51ff59785d6c6",
+      "mediaTime" : 7.916666666666667
+    }
+  ],
+  "determinism" : "Illustration bytes unchanged; motion is deterministic from frame index. Encoded MP4\/PNG bytes may differ across encoder\/SDK versions; preserve exact accepted outputs.",
+  "format" : "revealline-original-story-generation.v1",
+  "illustration" : {
+    "bytes" : 2364251,
+    "height" : 941,
+    "path" : "\/Users\/oleksandr.mekhovov\/work\/my_projects\/go_test\/.cache\/worktrees\/dawn-signal-story\/authoring\/library\/dawn-signal-story\/illustration-original.png",
+    "sha256" : "89c20feea755849120c3570af3ec235d5358e9a60d7551dddc78ff7df80fbc84",
+    "width" : 1672
+  },
+  "qualification" : "Actual macOS AVFoundation encoding and96-frame native decode. No browser, hardware-controller, integrated story\/earned, offline, public or soundtrack qualification.",
+  "video" : {
+    "audioTracks" : 0,
+    "bytes" : 713732,
+    "durationSeconds" : 8,
+    "fps" : 12,
+    "frames" : 96,
+    "height" : 360,
+    "mime" : "video\/mp4",
+    "path" : "dawn-signal.mp4",
+    "sha256" : "d643a6ebbf92b93dc57a0cfe65ca4bcf484ceecd8ed632ed6476707ec720e85a",
+    "width" : 640
+  }
+}

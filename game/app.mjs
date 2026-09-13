@@ -8,7 +8,7 @@ import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
 import { nextInputModality, showScreenControls } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
-import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
+import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
 import { classicView } from './ui/classic-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
@@ -51,6 +51,9 @@ import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
 import { createStillMediaStore } from './media-store.mjs';
+import { createStoryMediaStore } from './story-media-store.mjs';
+import { storyPinForTheme, validateFlightPresentationPinsForRun } from './flight-media-pins.mjs';
+import { createStoryDialog } from './ui/story-dialog.mjs';
 import { createFlightPictures } from './ui/flight-pictures.mjs';
 import {
   createPictureIdentityCatalog,
@@ -74,6 +77,8 @@ import {
   campaignKey,
   updatePreferences,
   withMasteryRecords,
+  withCinematicVolume,
+  DEFAULT_CINEMATIC_VOLUME,
 } from './library.mjs';
 import {
   emptyPackLibrary,
@@ -195,7 +200,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.34.0',
+  let buildVersion = '0.35.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -477,16 +482,74 @@ try {
     soundtrackGeneration = -1,
     soundtrackDisposed = false;
   const soundtrackLoad = new AbortController();
-  // This edition explicitly adopts rich v3. Both adapters share its single ledger;
+  // This edition explicitly adopts v4. All media adapters share its single ledger;
   // training keeps its existing legacy presentation and never creates picture pins.
-  const pictureManager = createManagedMediaStore({ richStillMedia: true });
+  const pictureManager = createManagedMediaStore({ storyMedia: true });
   const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
+  const storyStore = practice ? null : createStoryMediaStore({ managedStore: pictureManager });
   let flightPictures = null,
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
   const picturePreparingMessage =
     'Preparing the chosen picture. Flight stays paused until it is ready.';
+  const storyDialog = createStoryDialog({
+    readMedia: pictureMedia,
+    settings: () => ({
+      volume: library.cinematicVolume ?? DEFAULT_CINEMATIC_VOLUME,
+      masterVolume: library.preferences.masterVolume,
+      muted: !sound.enabled,
+      reducedMotion: $('reduced-effects').checked,
+    }),
+    saveVolume(volume) {
+      if (practice || courseEntry)
+        throw new Error('Training does not change cinematic preferences.');
+      library = withCinematicVolume(library, volume);
+      const saved = persistProfile();
+      if (!saved.ok) throw new Error(saved.warning);
+    },
+    musicDucker: {
+      acquire(factor) {
+        return soundtrackPlayer?.acquireGain({ factor }).release ?? (() => {});
+      },
+    },
+    neutralize: () => clearInput(),
+  });
+  const victoryStoryButton = document.createElement('button');
+  victoryStoryButton.id = 'view-victory-story';
+  victoryStoryButton.textContent = 'Victory story';
+  victoryStoryButton.hidden = true;
+  document.querySelector('.overlay-actions').append(victoryStoryButton);
+  victoryStoryButton.onclick = () => {
+    if (practice || run.status !== 'won' || completionWarning) return;
+    try {
+      const pins = validateFlightPresentationPinsForRun(flightPictures.pins(), {
+        identityCatalog: flightPictures.identityCatalog,
+        campaignKey: campaignKey(campaign),
+        level: run.level,
+        themeId: theme.id,
+      });
+      const pin = storyPinForTheme(pins, theme.id),
+        backdrop = flightPictures.current();
+      if (!pin || !backdrop || canonicalJSON(pin.picturePin) !== canonicalJSON(backdrop.pin))
+        throw new Error('This attempt’s exact story poster is unavailable.');
+      const size = boardPaintSizeForLevel(run.level),
+        args = { theme, level: run.level, seed, image: backdrop.image, fit: backdrop.fit, ...size };
+      void storyDialog
+        .open({
+          pin,
+          title: run.level.name,
+          drawPoster(canvas) {
+            canvas.width = size.width;
+            canvas.height = size.height;
+            new BoardPainter(presets).drawGallery(canvas.getContext('2d'), args);
+          },
+        })
+        .catch((error) => warning(error.message));
+    } catch (error) {
+      warning(error.message);
+    }
+  };
   const legacyPictureButton = document.createElement('button');
   legacyPictureButton.id = 'picture-use-legacy';
   legacyPictureButton.textContent = 'Use original pack artwork';
@@ -494,7 +557,11 @@ try {
   document.querySelector('.overlay-actions').append(legacyPictureButton);
   async function pictureMedia({ signal } = {}) {
     if (!pictureStore) throw new Error('Practice uses its original artwork.');
-    return { store: pictureStore, metadata: await pictureStore.readMetadata({ signal }) };
+    return {
+      store: pictureStore,
+      storyStore,
+      ...(await pictureStore.readPresentationMetadata({ signal })),
+    };
   }
   function pictureIdentity(metadata) {
     return createPictureIdentityCatalog({ entries: installedEntries, metadata });
@@ -837,21 +904,21 @@ try {
   function controllerMenuRoot() {
     const region = controllerMenuRegion();
     // Nonmodal overlays share navigation with the visible shell bar. The
-    // accept predicate still confines this composite root to those two regions.
+    // accept predicate confines it to the overlay, shell and active lesson panel.
     controllerCompositeRegion =
-      region !== document && !controllerDialog() && !courseSession && !courseBlocked()
-        ? region
-        : null;
+      region !== document && !controllerDialog() && !courseBlocked() ? region : null;
     return controllerCompositeRegion ? document.body : region;
   }
   function controllerMenuAccepts(element) {
     return (
       (!controllerCompositeRegion ||
         controllerCompositeRegion.contains(element) ||
+        (courseSession && $('first-flight-panel').contains(element)) ||
         !!controllerShellBar?.contains(element)) &&
       (!courseSession ||
         $('game-overlay').hidden ||
         !!controllerDialog() ||
+        (!courseBlocked() && !!controllerShellBar?.contains(element)) ||
         $('game-overlay').contains(element) ||
         $('first-flight-panel').contains(element)) &&
       !element.matches(
@@ -1045,6 +1112,7 @@ try {
       soundtrackStore?.close();
       flightPictures?.dispose();
       pictureStore?.close();
+      storyStore?.close();
       pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
@@ -1194,6 +1262,8 @@ try {
       },
     });
     if (!courseSession) return;
+    // Ended/transitioning embedded courses retain only their terminal reader.
+    if (controllerShellBar) controllerShellBar.hidden = courseBlocked();
     const progressText = `${Object.values(courseVisit).filter((value) => value === 'complete').length} / ${FIRST_FLIGHT_LESSONS.length} lessons this visit`;
     if ($('campaign-progress').textContent !== progressText)
       $('campaign-progress').textContent = progressText;
@@ -1387,6 +1457,7 @@ try {
       show('pause-label', false);
       show('overlay-reading', true);
       show('overlay-footnote', true);
+      show('overlay-menu', false);
       $('overlay-title').textContent = 'First Flight ended.';
       $('overlay-copy').textContent =
         'Practice awarded no progress. Use the parent page’s game link to return to ordinary play.';
@@ -2172,6 +2243,7 @@ try {
   const libraryPanel = attachLibraryPanel({
     focusMission,
     pictureMedia,
+    openStory: (request) => storyDialog.open(request),
     resolveMediaIdentityCatalog: (metadata) =>
       createBackupPictureIdentityResolver({
         baseEntries: [baseEntry],
@@ -2338,6 +2410,8 @@ try {
       'class-select',
       'theme-select',
       'hangar-button',
+      'shell-packs',
+      'shell-collection',
     ]) {
       $(id).disabled = true;
       $(id).hidden = true;
@@ -2807,6 +2881,12 @@ try {
     show('game-overlay', true);
     show('show-result', false);
     show('view-picture', kind === 'won');
+    victoryStoryButton.hidden =
+      kind !== 'won' ||
+      practice ||
+      !!completionWarning ||
+      !flightPictures?.pins() ||
+      !storyPinForTheme(flightPictures.pins(), theme.id);
     show('next-button', kind === 'won' || kind === 'campaign-complete');
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
@@ -2932,6 +3012,7 @@ try {
       applyNextDifficulty(difficulty);
     }
     cancelPictureStart();
+    storyDialog.close();
     if (!restoreAdoption) {
       flightPictures?.dispose();
       flightPictures = null;
@@ -3194,6 +3275,16 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    show(
+      'pause-button',
+      started &&
+        !paused &&
+        !courseBlocked() &&
+        !campaignOverview &&
+        !celebrationActive &&
+        !defeatActive &&
+        !['won', 'lost'].includes(run.status),
+    );
     $('shell-edition').textContent = courseSession
       ? 'FIRST FLIGHT'
       : practice
@@ -3646,6 +3737,7 @@ try {
       show('skip-celebration', false);
       overlay('won');
     }
+    storyDialog.syncSettings();
     if (soundtrackPlayer) soundtrackPlayer.update(!paused && started, theme, run);
     else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
@@ -4048,6 +4140,7 @@ try {
     },
   });
   gameShell = attachGameShell({
+    training: courseSession,
     focusBriefing: () => {
       clearInput();
       controllerReading.refresh();

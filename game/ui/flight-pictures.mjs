@@ -1,9 +1,13 @@
 import {
   createPresentationPins,
   snapshotPresentationPins,
-  validatePresentationPinsForRun,
   PRESENTATION_PINS_FORMAT,
 } from '../presentation-pins.mjs';
+import {
+  createFlightPresentationPins,
+  presentationPicturePins,
+  validateFlightPresentationPinsForRun,
+} from '../flight-media-pins.mjs';
 import { createPresentationImageSlot } from './presentation-image.mjs';
 
 /** One attempt's immutable choices and one currently displayed decoded original.
@@ -24,7 +28,7 @@ export function createFlightPictures({
   let pins =
     savedPins === undefined
       ? undefined
-      : validatePresentationPinsForRun(savedPins, {
+      : validateFlightPresentationPinsForRun(savedPins, {
           identityCatalog,
           campaignKey: context.executionKey,
           level,
@@ -82,16 +86,30 @@ export function createFlightPictures({
       if (!pins) {
         media = await readMedia({ signal: controller.signal });
         check();
-        pins = createPresentationPins({
+        const selection = {
           library: media.metadata.document.library,
           identityCatalog,
           executionKey: context.executionKey,
           levelId: level.id,
           levelRevision: level.revision,
           themeIds: worlds,
-        });
+        };
+        const selected = media.story
+          ? await createFlightPresentationPins(
+              {
+                ...selection,
+                stillDocument: media.metadata.document,
+                storyDocument: media.story.document,
+              },
+              { signal: controller.signal },
+            )
+          : createPresentationPins(selection);
+        check();
+        pins = selected;
       }
-      const pin = pins.choices.find((choice) => choice.identity.themeId === themeId);
+      const pin = presentationPicturePins(pins).choices.find(
+        (choice) => choice.identity.themeId === themeId,
+      );
       if (!pin) throw new Error('This saved attempt has no picture choice for that world.');
       if (pin.kind === 'still') {
         media ??= await readMedia({ signal: controller.signal });

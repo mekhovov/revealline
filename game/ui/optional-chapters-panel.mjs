@@ -138,10 +138,11 @@ export function attachOptionalChaptersPanel({
       card.className = `optional-world-card world-${item.themeId}`;
       const heading = node('h3', null, item.name),
         detail = node('p', null, `${item.levels} original pictures · separate progress`),
+        description = node('p', `description-${item.id}`, item.description),
         state = node('p');
       const installButton = action(`install-${item.id}`, 'Install', () => installItem(item)),
         chooseButton = action(`choose-${item.id}`, 'Choose chapter', () => chooseItem(item));
-      card.append(heading, detail, state, installButton, chooseButton);
+      card.append(heading, detail, description, state, installButton, chooseButton);
       cards.append(card);
       rows.set(item.id, { install: installButton, choose: chooseButton, state });
     }
