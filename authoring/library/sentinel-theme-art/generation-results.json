@@ -1,0 +1,117 @@
+{
+  "format": "revealline-source-art-generation-results.v1",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 9,
+  "edits": 0,
+  "transportNote": "The returned image_url data representation is preserved as the exact original PNG file; output_hint is retained verbatim. No fallback CLI, input images, retries or pixel transformations.",
+  "generated": [
+    {
+      "cellId": "sentinel-circuit/listening-court/ukraine",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-727c2475-caf5-418c-839b-3b61f261e469.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-727c2475-caf5-418c-839b-3b61f261e469.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "ukraine/originals/listening-court.png",
+      "bytes": 3018491,
+      "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+      "promptSha256": "5cd3898f1d6e9adca051c3d7dd446128f5b2b1c3e693269f75d0b8b4416a1dbf"
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/ukraine",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0218ee74-b6be-4e72-a1c2-b058564af3fd.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0218ee74-b6be-4e72-a1c2-b058564af3fd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "ukraine/originals/switchyard-gates.png",
+      "bytes": 2682645,
+      "sha256": "2d8864ab2d18b130d80f0f8b3738689f00cf65e68093286753e5485db1c3d0a3",
+      "promptSha256": "4730af0ed6658bd12955fcd907b70090fff0622e06d077d972094550e674d8f1"
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/ukraine",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0b37e34f-3262-431c-a595-75b5c920e613.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0b37e34f-3262-431c-a595-75b5c920e613.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "ukraine/originals/open-the-circuit.png",
+      "bytes": 2462247,
+      "sha256": "47fde83552f6fc155f4efc41ca834c8a672b116fb392c5bdd893d6f8e6565ebb",
+      "promptSha256": "c23a4e61b9f287dfc066e07561012c626f57dac2df50ec0b977aa540216397a1"
+    },
+    {
+      "cellId": "sentinel-circuit/listening-court/retro",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e1125b92-78b6-4c46-ad96-75b8a1aa0bee.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e1125b92-78b6-4c46-ad96-75b8a1aa0bee.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "retro/originals/listening-court.png",
+      "bytes": 2455383,
+      "sha256": "93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf",
+      "promptSha256": "4e104b380db32f9089c8506131bfc2a7edb4ac372357c4390652e85ebde28805"
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/retro",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-df18ad02-aff9-45ea-b01e-0780c561e989.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-df18ad02-aff9-45ea-b01e-0780c561e989.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "retro/originals/switchyard-gates.png",
+      "bytes": 2662328,
+      "sha256": "0acd0b721c9d066e890970a1e6d429f4d2ccb8d94b31893e2fdae34f37a75239",
+      "promptSha256": "d20c31b620b291996e96876f089dcabbd4397fb7a0fa5465fd45500cecb28808"
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/retro",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-aad69ee2-e6a2-4324-ad9c-00a37a8fcd22.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-aad69ee2-e6a2-4324-ad9c-00a37a8fcd22.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "retro/originals/open-the-circuit.png",
+      "bytes": 2423183,
+      "sha256": "03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee",
+      "promptSha256": "b2ff77b248260356f5ad60e5c22f3cd03eef743bd0a3ea775e6031caef6c850c"
+    },
+    {
+      "cellId": "sentinel-circuit/listening-court/coupa",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-23a30a93-1433-4da2-8815-a948b85e7091.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-23a30a93-1433-4da2-8815-a948b85e7091.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "coupa/originals/listening-court.png",
+      "bytes": 2767187,
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "promptSha256": "273a9cd5801621a624ab8ea519a0f617c1c6e4d8a83aa5a6899a585fe7a90763"
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/coupa",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-f7821459-047f-4d8f-89bc-34971d7d5c8e.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-f7821459-047f-4d8f-89bc-34971d7d5c8e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "coupa/originals/switchyard-gates.png",
+      "bytes": 2187660,
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "promptSha256": "3bf77746486510871fd85ad883d78eee7b090a44d59aecd69e3a05424ad38de3"
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/coupa",
+      "tool": "image_gen.imagegen built-in",
+      "mode": "generate",
+      "inputImages": [],
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e3fd72c2-0863-4cff-98f4-ceb59ebb7fa3.png",
+      "outputHint": "Generated images are saved to /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb as /Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e3fd72c2-0863-4cff-98f4-ceb59ebb7fa3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "workspacePath": "coupa/originals/open-the-circuit.png",
+      "bytes": 2449288,
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "promptSha256": "15d94d99127f228cd0c61d8ef70f758efba49333e63f54a0abafc7312283ec87"
+    }
+  ]
+}

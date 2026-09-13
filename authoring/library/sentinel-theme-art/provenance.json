@@ -1,0 +1,273 @@
+{
+  "format": "revealline-source-art-provenance.v1",
+  "scope": "Nine independent static source candidates for the three existing Sentinel mission roles in Ukraine Atlas, 1994 Forever and Spend Network. No runtime, descriptor, registry, seed or release adoption.",
+  "baseCommit": "4a9b040100312fe69c121064320810011c9b8d39",
+  "proposalSourceContext": "fb6a199a4617554d51fa3f9fe9968754244543eb",
+  "approvedProposalSha256": "f2e02c01d6ab1d3b7289d8fef9cb30051bcb7b2caa54e3c74eddcef4f131155b",
+  "generatedOn": "2026-09-13",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 9,
+  "editCalls": 0,
+  "referenceImages": [],
+  "rawOriginalsPreserved": true,
+  "pixelTransformations": [],
+  "rightsScope": "New AI-generated originals made for this project from independent prompts. Primary text references inform materials only; no source images were copied into the tool. This is provenance, not exclusive-rights or historical-authenticity certification.",
+  "references": [
+    {
+      "url": "https://www.pyrohiv.com/exponat/kuznya-iz-selishcha-novi-sanzhari",
+      "retrieved": "2026-09-13",
+      "use": "Museum’s forge materials and household-repair objects; no replica, historic geographic certainty, live-work instruction or authentic brand stamp.",
+      "status": "Primary museum page read during proposal."
+    },
+    {
+      "url": "https://art-deco.chnu.edu.ua/novyny-kafedry/ekspedytsiia-do-sertsia-hutsulskoho-lizhnykarstva-an-expedition-to-the-heart-of-hutsul-lizhnyk-making/",
+      "retrieved": "2026-09-13",
+      "use": "University firsthand observation of wool, hand spinning and wooden handloom. All pictured textile designs and people will be invented; no copied artisan patterns or assigned symbolism.",
+      "status": "Primary university account read during proposal."
+    },
+    {
+      "url": "https://dytiacha.uz.gov.ua/kyiv",
+      "retrieved": "2026-09-13",
+      "use": "Railway-operated page as general rail/museum/viaduct visual vocabulary; no exact station reconstruction or claim that the fictional Carpathian scene represents Kyiv.",
+      "status": "Primary railway page opened during proposal; no image downloaded."
+    }
+  ],
+  "contextPins": [
+    {
+      "path": "authoring/library/sentinel-circuit-art/README.md",
+      "bytes": 3611,
+      "sha256": "1809dafcb1a69cd0cef3f659135374533a8e7493fcad8a003961187049b1a7bd"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/prompts.json",
+      "bytes": 5239,
+      "sha256": "f9b49ac3e9ecee16b7da7e3d5e8512f97e4c1b63aa683d10eb03ed8ab07c3dcd"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit/README.md",
+      "bytes": 9959,
+      "sha256": "472c2a2a52e3ee9938bc26004fa0c3e9e3426afe8c126d44b38b732bca17dc37"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+      "bytes": 1766,
+      "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "bytes": 2948372,
+      "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "bytes": 2933729,
+      "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "bytes": 2701967,
+      "sha256": "102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/prompts.json",
+      "bytes": 8000,
+      "sha256": "174ddd61513939cebf605a5bb17c922b5e7f36958cab510a134b9a833d3e4a33"
+    },
+    {
+      "path": "authoring/library/ukraine-route-art/provenance.json",
+      "bytes": 6805,
+      "sha256": "3adda886c26bad6ad56322c1cc2472104f80d4c9d572d8f54a499652b6934139"
+    },
+    {
+      "path": "authoring/library/retro-route-art/prompts.json",
+      "bytes": 5057,
+      "sha256": "08a8f9959c9fa11c17488a107e028645e7b3f1d04e30620b12369e82a1a348da"
+    },
+    {
+      "path": "authoring/library/retro-route-art/provenance.json",
+      "bytes": 4104,
+      "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
+    },
+    {
+      "path": "authoring/library/spend-route-art/prompts.json",
+      "bytes": 5088,
+      "sha256": "6ad44570fe6576f2880802e427f8c4fc793ab35061d1273a1061c6d00bd01c55"
+    },
+    {
+      "path": "authoring/library/spend-route-art/provenance.json",
+      "bytes": 5024,
+      "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
+    }
+  ],
+  "images": [
+    {
+      "cellId": "sentinel-circuit/listening-court/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "listening-court",
+      "title": "Courtyard of quiet craft",
+      "path": "ukraine/originals/listening-court.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-727c2475-caf5-418c-839b-3b61f261e469.png",
+      "bytes": 3018491,
+      "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "5cd3898f1d6e9adca051c3d7dd446128f5b2b1c3e693269f75d0b8b4416a1dbf",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Information: separate passages and inspectable details; Scout Scan remains a gameplay ability, not a painted effect.",
+      "visualReview": "Foreground iron tools, chest fittings, timber shelter and warm hearth frame a bright cobbled courtyard and distant artisan. Clear two-passage rhythm. Actual hearth is lit although the prompt requested a cold forge; retain this output and qualify the difference. Fictional architecture and decorative textiles, not a Poltava reconstruction."
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "switchyard-gates",
+      "title": "Carpathian station exchange",
+      "path": "ukraine/originals/switchyard-gates.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0218ee74-b6be-4e72-a1c2-b058564af3fd.png",
+      "bytes": 2682645,
+      "sha256": "2d8864ab2d18b130d80f0f8b3738689f00cf65e68093286753e5485db1c3d0a3",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "4730af0ed6658bd12955fcd907b70090fff0622e06d077d972094550e674d8f1",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Timing/control: a legible crossing and gate rhythm; no claim that pictured gates or workers implement the carrier field.",
+      "visualReview": "Two timber rail arches and converging tracks frame an amber mountain exchange with produce baskets, rugs and small workers. Distinct deep platforms and sunset silhouette. Pointed snowy peaks are fictional mountainous scenery, not evidence of an authentic Carpathian location. Banner motifs and cloth designs are invented decoration."
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "open-the-circuit",
+      "title": "The mountain thread hall",
+      "path": "ukraine/originals/open-the-circuit.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-0b37e34f-3262-431c-a595-75b5c920e613.png",
+      "bytes": 2462247,
+      "sha256": "47fde83552f6fc155f4efc41ca834c8a672b116fb392c5bdd893d6f8e6565ebb",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "c23a4e61b9f287dfc066e07561012c626f57dac2df50ec0b977aa540216397a1",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Opening/release: a circular vista and completed textile provide reward imagery, not an extra boss phase or cable-engineering diagram.",
+      "visualReview": "A large round wooden window and lit loom occupy the right, with layered violet mountains, misty valley and a broad foreground path to the left. Woven surfaces and small artisan give a warm focal scene. The sunburst and textile motifs have no assigned historical or ritual meaning; geography is fictional."
+    },
+    {
+      "cellId": "sentinel-circuit/listening-court/retro",
+      "themeId": "retro",
+      "missionSlot": "listening-court",
+      "title": "The radio-repair courtyard",
+      "path": "retro/originals/listening-court.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e1125b92-78b6-4c46-ad96-75b8a1aa0bee.png",
+      "bytes": 2455383,
+      "sha256": "93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "4e104b380db32f9089c8506131bfc2a7edb4ac372357c4390652e85ebde28805",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Information: discovering distinct listening stations and paths without portraying a UI or automated solution.",
+      "visualReview": "Open brick electronics bays, mint CRT light, a tree and broad wet courtyard establish a cyan dawn composition. A small repair worker, radios and wheeled equipment give detail. Tiny display/instrument marks are abstract decorative pixels, not verified text, a functioning UI or identifiable manufacturer design."
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/retro",
+      "themeId": "retro",
+      "missionSlot": "switchyard-gates",
+      "title": "After-hours cassette dispatch",
+      "path": "retro/originals/switchyard-gates.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-df18ad02-aff9-45ea-b01e-0780c561e989.png",
+      "bytes": 2662328,
+      "sha256": "0acd0b721c9d066e890970a1e6d429f4d2ccb8d94b31893e2fdae34f37a75239",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "d20c31b620b291996e96876f089dcabbd4397fb7a0fa5465fd45500cecb28808",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Timing/control: crossing and waiting are scenery; no new delivery mission, vehicle or damage rule.",
+      "visualReview": "Two steel loading gantries, converging wet rails, amber kiosk and waiting cyclist sit against a purple city dusk. Unlabelled parcels and audio equipment provide period texture. Rail signals, crates and tiny device marks are scenery, not instructions or actual equipment behavior."
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/retro",
+      "themeId": "retro",
+      "missionSlot": "open-the-circuit",
+      "title": "The hilltop night transmission",
+      "path": "retro/originals/open-the-circuit.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-aad69ee2-e6a2-4324-ad9c-00a37a8fcd22.png",
+      "bytes": 2423183,
+      "sha256": "03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "b2ff77b248260356f5ad60e5c22f3cd03eef743bd0a3ea775e6031caef6c850c",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Opening/release: quiet arrival at a connected listening space; decorative cable is never collision or signal-immunity proof.",
+      "visualReview": "A large inert dish on the right balances a warm open radio room on the left, with two small people joining a cable and a wide terrace above the city. CRT star points and a waveform are decorative. Tiny wall markings are not readable schematics or frequencies; no precise 1994 hardware authenticity is claimed."
+    },
+    {
+      "cellId": "sentinel-circuit/listening-court/coupa",
+      "themeId": "coupa",
+      "missionSlot": "listening-court",
+      "title": "The shared inventory court",
+      "path": "coupa/originals/listening-court.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-23a30a93-1433-4da2-8815-a948b85e7091.png",
+      "bytes": 2767187,
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "273a9cd5801621a624ab8ea519a0f617c1c6e4d8a83aa5a6899a585fe7a90763",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Information: material visibility and two passages echo observation, with no fictitious business-performance measurement.",
+      "visualReview": "A glass-and-brick civic court surrounds a tree and broad paved yard; a person and cobalt helper examine sample tiles at the lower left. Cool storage light contrasts with dawn. Repeated flower-like geometric banner emblems were generated despite the no-logo prompt; they are invented set decoration, not a real Coupa mark or endorsement."
+    },
+    {
+      "cellId": "sentinel-circuit/switchyard-gates/coupa",
+      "themeId": "coupa",
+      "missionSlot": "switchyard-gates",
+      "title": "The inland exchange yard",
+      "path": "coupa/originals/switchyard-gates.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-f7821459-047f-4d8f-89bc-34971d7d5c8e.png",
+      "bytes": 2187660,
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "3bf77746486510871fd85ad883d78eee7b090a44d59aecd69e3a05424ad38de3",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Timing/control: coordinated crossing as environmental metaphor, not automated financial or carrier-field authority.",
+      "visualReview": "Two loading doors and converging rail lines surround a clear crossing, small cart, cobalt parcels and a glazed waiting shelter at sunset. Navy and amber silhouettes distinguish the inland yard. Chevron-like crate marks and banner motifs are invented decoration, not real brands or a logistics operating diagram."
+    },
+    {
+      "cellId": "sentinel-circuit/open-the-circuit/coupa",
+      "themeId": "coupa",
+      "missionSlot": "open-the-circuit",
+      "title": "The illuminated exchange hall",
+      "path": "coupa/originals/open-the-circuit.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a097a2-47c9-7462-8534-695c751580eb/exec-e3fd72c2-0863-4cff-98f4-ceb59ebb7fa3.png",
+      "bytes": 2449288,
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "15d94d99127f228cd0c61d8ef70f758efba49333e63f54a0abafc7312283ec87",
+      "sourceBytesEqual": true,
+      "runtimeBinding": null,
+      "proposedRoleOnly": "Opening/release: a complete shared space becoming visible; no new game mechanic, achievement or additional boss schedule.",
+      "visualReview": "A circular glass hall on the right holds an amber spiral light sculpture, with a broad terrace, cyan light seams, small helper and city horizon. Calm violet and gold finish the sequence. Generated banner motifs and the sculpture are fictional decoration, not a product interface, performance metric or functional network."
+    }
+  ],
+  "notQualified": [
+    "Exact authored owner, presentation or asset binding; new theme chapter compiler or runtime adoption",
+    "Partial-reveal actor contrast, native game decoding, storage, offline, public or physical-device qualification",
+    "Animation, movie timestamps, story playback, soundtrack or music counts",
+    "Geographic reconstruction, period hardware authenticity, real product branding or exclusive rights"
+  ]
+}
