@@ -1,0 +1,19 @@
+# Owned video poster and manual still-handoff prompts
+
+These are copyable prose requests, not new `prompt.py` IDs. Use the [acquisition contract](../../docs/video-poster-acquisition.md) and [standalone workshop](../video-poster/README.md). One exact source-browser H.264 capture/download/manual-still-win journey is verified; the guide names its commit and receipt. A prompt, modeled decoder test or native link activation is not by itself executed browser or disk evidence. Current still presentations remain `revealline-media-presentation.v1` with `story: null`.
+
+## 1. Inspect, seek and download an actual frame
+
+“Use the standalone video poster workshop with an owned diagnostic MP4. Preserve its exact original bytes, SHA, encoder command, dimensions and duration. Choose it through the native file picker; inspect the metadata without playing the video. Capture 2.0 seconds, 2.05 seconds and the valid duration endpoint, then request a value beyond the end. Record requested seek, observed `mediaTime` and approximate playhead separately. Do not assume the same decoder chooses the same frame on another system. An invalid request must refuse without clamping or replacing the prior valid poster. Inspect the downloaded picture and confirm its dimensions, bytes and SHA match the visible result. Activate the persistent Download exact PNG link explicitly by keyboard or touch; preserve the actual disk file. Record any browser/OS picker limitation.”
+
+## 2. Adopt the PNG through the existing still workflow
+
+“Manually upload that exact downloaded PNG to the still workshop on the same edition and origin as the intended game. Describe the owned clip, source SHA and requested/observed times in the existing human-readable source declaration; do not invent strict schema fields. Preview, select the exact installed chapter/map/theme and Save assignment explicitly. Save assignment must not grant an award. Start an ordinary flight, make a real winning cut and inspect its full picture and first-earned image without injecting game state. Keep actors, masks, collisions, score and rules unchanged. Preserve the downloaded PNG separately; current `.rlmedia` can retain this accepted still, not its MP4 source. JSON game data and `.rlsound` audio remain separate inventories.”
+
+## 3. Preserve prior art and distinguish untested boundaries
+
+“Keep a valid captured poster while trying a failed or cancelled capture from the same video; a new source must clear the old download authority. Test real cancellation, changed source, close/reopen and delayed native callbacks without hidden playback. If the browser lacks frame callbacks, display timestamp unavailable/approximate and preserve the actual PNG, never substitute requested time as observed evidence. Extend to an owned audible clip, WebM or variable-frame-rate input only with explicit codec/browser records. Do not describe the silent desktop H.264 test as physical-phone, controller, audio or full codec qualification. When testing assignment A then B, follow the existing saved-A and first-earned-A contracts rather than resolving saved history through the latest assignment.”
+
+## 4. Design stored video and a story separately
+
+“Before storing an original video or adding story playback, propose a versioned media schema and exact original/poster inventory, atomic shared audio-plus-picture-plus-video reservation, migration and binary recovery contract. Preserve the selected PNG as an immutable earned still. Define optional, replayable and skippable presentation, with a static alternative and one-time award authority; missing video must not block progress or replace the earned image. Keep requested time, observed timestamp, segment boundaries and runtime derivatives distinct. Do not change current `story: null`, host behavior or `.rlmedia` acceptance while merely planning this extension. Record source/model/browser/public/device evidence as separate stages.”
