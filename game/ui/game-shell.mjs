@@ -10,6 +10,7 @@ export function attachGameShell({
   onWorlds,
   getTopDialog,
   focusMissions,
+  focusBriefing,
   focusGame = () => doc.getElementById('start-button')?.focus(),
 } = {}) {
   const $ = (id) => doc.getElementById(id);
@@ -56,6 +57,16 @@ export function attachGameShell({
       onWorlds?.();
     };
   }
+  const overlayBrief = $('overlay-brief');
+  if (overlayBrief)
+    overlayBrief.onclick = () => {
+      pause(true);
+      closeHome();
+      if (!missions.open) missions.showModal();
+      const brief = $('mission-brief');
+      if (brief) brief.open = true;
+      if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
+    };
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
@@ -124,6 +135,7 @@ export function attachGameShell({
     destroy() {
       destroyed = true;
       if (overlayMenu) overlayMenu.onclick = null;
+      if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
