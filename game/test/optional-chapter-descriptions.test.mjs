@@ -61,7 +61,16 @@ function tab(page) {
       (node) =>
         node.tabIndex >= 0 &&
         !node.disabled &&
-        !node.closest('[hidden],[inert],[aria-hidden="true"]'),
+        !node.closest('[hidden],[inert],[aria-hidden="true"]') &&
+        (() => {
+          // Native Tab excludes a closed details body while retaining its summary.
+          for (let parent = node.parentElement; parent; parent = parent.parentElement)
+            if (parent.tagName === 'DETAILS' && !parent.open) {
+              const summary = parent.querySelector('summary');
+              if (node !== summary && !summary?.contains(node)) return false;
+            }
+          return true;
+        })(),
     );
     controls[(controls.indexOf(target) + 1) % controls.length].focus();
   }
@@ -101,14 +110,10 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     'optional-worlds-top-back',
     'optional-worlds-summary',
     ...catalog.packs.map((item) => `optional-worlds-install-${item.id}`),
-    'optional-worlds-source-pack',
-    'optional-worlds-source-media',
-    'optional-worlds-source-install',
+    'optional-worlds-source-recovery-summary',
     ...['ukraine',
-'retro'].flatMap((theme) =>
-      ['pack', 'media', 'install'].map(
-        (kind) => `optional-worlds-source-route-worlds-${theme}-${kind}`,
-      ),
+'retro'].map(
+      (theme) => `optional-worlds-source-route-worlds-${theme}-recovery-summary`,
     ),
     'optional-worlds-read',
     'optional-worlds-reload',

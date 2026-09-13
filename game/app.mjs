@@ -4348,12 +4348,14 @@ try {
     getLibrary: () => packs,
     getUsage: () => chapterSnapshot?.usage,
     sourceChapters: !practiceSession
-      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description }) => ({
+      ? SOURCE_EXTERNAL_EDITIONS.map(({ descriptor, name, description, mode, levels }) => ({
           id: descriptor.id,
           controlId:
             descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
           name,
           description,
+          mode,
+          levels,
           sourceOnly: !isRelease,
           bytes: descriptor.pack.bytes + descriptor.media.bytes,
           download: isRelease
