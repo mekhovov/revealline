@@ -36,11 +36,11 @@ Import verification does not access a database. Preparing a restore reads and ve
 
 The manager repeats actual-current-row history checks within its serialized write transaction. A newer media writer invalidates the review. Reported browser quota, actual shared staging budget, transaction failure or abort before commit preserves the prior authoritative records. Only that operation's staging reservation is released. Abort after the transaction completed cannot turn a successful save into a claimed rollback. Closing a borrowed store follows its existing lifecycle convention; pass the operation signal to cancel in-flight work.
 
-## Explicit generic-history limitation
+## Retained generic-history portability
 
-The current manager requires pre-still generic-v2 references to remain exact. A bundle carrying a generic reference absent from, or different in, the destination is valid portable **inventory**, but cannot be adopted there by this API. Review refuses before domain mutation with a specific recovery message. Keep the original bundle; do not label that refused transfer a complete restore. An empty incoming generic set can preserve a destination's existing references. Incoming references already present with identical IDs/hashes can round-trip alongside rich still history.
+Every current generic ID→hash remains immutable. Verified new IDs may be added, so a bundle containing rich stills and generic originals can restore its full referenced inventory into a fresh v3 store. Import unions both reference sets, deduplicates identical entries and rejects an existing ID with a different hash before domain mutation. An empty incoming set preserves the destination's references. Neither assignment restore nor Undo removes these references or their originals.
 
-The smallest later policy extension would make only generic-reference additions legal while keeping every current ID/hash immutable, rejecting all ID collisions and every rich-to-generic downgrade. The final serialized transaction would enforce that monotonic rule and the same combined inventory/staging caps. Tests must cover fresh-target generic restore, shared audio hashes, concurrent foreign preparations, changed/removal IDs, and quota/abort rollback. That manager/schema-policy change is deliberately not implemented in this new-files-only slice.
+The same monotonic rule runs before staging and inside the existing serialized transaction, even for a preparation from another store. A rich-to-generic downgrade remains forbidden. Generic bytes are hash verified, not automatically certified as images or MP3 tracks. A hash already held by the audio domain is reused and remains retained if audio later relinquishes it. No DB version, store count or quota was changed. Conflicting identities, insufficient capacity or missing originals still make a destination restore fail; never present such a refusal as a completed backup restore.
 
 ## Backup ordering and Undo
 
@@ -48,6 +48,6 @@ Use verified media restore before adopting game-data files that reference those 
 
 Undo can explicitly restore an earlier assignment set using a new current-generation review, while keeping all later originals/history. A stale review cannot be reused after a successful commit. Neither ordinary import nor Undo deletes history or reclaims bytes. GC, durable earned receipts and live-session pins are separate versioned runtime work.
 
-Focused tests cover binary corruption and strict owners, original-byte round trips, removed-pack restart hydration, assignment restore/Undo, immutable conflicts, cancellation, stale writers, quota/transaction refusal, original MP3 preservation and the generic-reference refusal. They use finite modeled IndexedDB and injected decoders. Real browser upgrade, native download/file import, decoded image inspection and runtime/Collection adoption remain unqualified here.
+Focused tests cover binary corruption and strict owners, original-byte round trips, removed-pack restart hydration, assignment restore/Undo, immutable conflicts, cancellation, stale writers, quota/transaction refusal, original MP3 preservation and generic-reference portability. They use finite modeled IndexedDB and injected decoders. Real browser upgrade, native download/file import, decoded image inspection and runtime/Collection adoption remain unqualified here.
 
 See [storage](media-storage.md), [still identity](media-presentation.md) and the [source workshop](still-media-workshop.md).

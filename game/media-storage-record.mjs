@@ -146,8 +146,9 @@ export function storedStillHashes(value) {
  */
 export function assertStoredStillTransition(current, next) {
   const old = hydrateStoredStillMedia(current);
+  const retained = new Map(next.legacy.items.map((item) => [item.id, item.sha256]));
   required(
-    canonicalJSON(old.legacy) === canonicalJSON(next.legacy),
+    old.legacy.items.every((item) => retained.get(item.id) === item.sha256),
     'Retained legacy media references cannot change or be removed.',
   );
   for (const owner of old.owners) {
