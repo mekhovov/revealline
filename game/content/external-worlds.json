@@ -3,8 +3,8 @@
   "chapters": [
     {
       "id": "original-fpv-pressure-external",
-      "name": "Pressure Pictures · source originals pilot",
-      "description": "Three existing Pressure Pictures maps and exact original pictures. Separate progress; existing music.",
+      "name": "FPV Front · Pressure Pictures",
+      "description": "Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.",
       "themeId": "fpv",
       "levels": 3,
       "campaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
@@ -22,7 +22,7 @@
     {
       "id": "route-worlds-ukraine",
       "name": "Ukraine Atlas · Route Choices",
-      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "ukraine",
       "levels": 3,
       "campaignKey": "route-worlds-ukraine/1/86e773bc0cd5d0da",
@@ -40,7 +40,7 @@
     {
       "id": "route-worlds-retro",
       "name": "1994 Forever · Route Choices",
-      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "retro",
       "levels": 3,
       "campaignKey": "route-worlds-retro/1/c2ebcf492cdb07a8",
@@ -58,7 +58,7 @@
     {
       "id": "route-worlds-coupa",
       "name": "Spend Network · Route Choices",
-      "description": "Three Route Choices Tactical layouts with three original reward pictures. Choose an exit, time a carrier field or take the equipment-free gate, and compare signal-resistant travel with the safe rim. Existing music; no new movie.",
+      "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "coupa",
       "levels": 3,
       "campaignKey": "route-worlds-coupa/1/57042d08e1681c86",
