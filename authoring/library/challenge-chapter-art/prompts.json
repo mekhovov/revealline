@@ -1,0 +1,11 @@
+{
+  "format": "revealline-art-prompts.v1",
+  "generation": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "split-signal-foundry",
+      "file": "originals/split-signal-foundry.png",
+      "prompt": "Use case: stylized-concept. Asset type: original collectible background picture for RevealLine, a modern pixel-art territory-reveal game. Create one finished wide 2:1 image, ideally 1792 by 896 pixels, with no border or text. Theme: Ukrainian FPV Front. Scene: 'Split Signal Foundry', a rain-soaked abandoned brick railway foundry in eastern Ukraine at blue hour, two distinct lanes between weathered workshops leading toward a distant radio tower, warm amber windows, teal rain reflections, a small blue-and-yellow cloth pennant tied to a civilian workshop railing, sparse wild sunflowers reclaiming industrial ground. A grounded compact Ukrainian FPV quad with four clearly recognizable open propeller circles rests in the foreground on a wooden equipment crate, a tiny understated narrative detail rather than a huge hero. Far across the yard a disabled unmarked invader armored vehicle and broken radar dish suggest an ended confrontation, no people or gore. Beautiful handcrafted modern pixel art with 1990s cinematic adventure and 16-bit arcade nostalgia: crisp clustered pixels, economical dithering, deliberate stair-step edges, rich environmental detail, restrained cobalt/ink/teal shadows and copper/gold lights, strong focal hierarchy, atmospheric depth. Keep principal visual interest inside the central 85 percent so browser cover fitting does not cut important details. The collectible is a scenic illustration, not a gameplay board: no grid, no trails, no crosshairs, no HUD, no labels, no letters, no logos, no visible pseudo-text, no added characters. Avoid photorealism, smooth vector shapes, smeared painterly textures, excessive bloom. Entire image opaque. Original composition, not copied from another game."
+    }
+  ]
+}
