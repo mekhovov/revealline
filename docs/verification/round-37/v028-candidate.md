@@ -13,6 +13,8 @@ The candidate also supplies an eight-topic Field Guide with four appearance them
 - Source browser: keyboard menu → Settings → Large → Field Guide → impact Observe → actual loss → Return → ordinary game. 390×640 and 320×568 portrait were inspected. The 320px check initially exposed 6px of header overflow and a dock obscuring the arena; corrected padding and below-board pause placement remove both. These are desktop browser viewport checks, not physical phones or controllers.
 - Independent review found and fixed an embedded course reader refresh omission and parent audio restoration during child practice. Tests ran with the fixes present; no executed pre-fix failure is claimed.
 
+The final menu review also added a direct **Picture collection** title action and renamed the separate library entry **Scores & saves**. Two actual-host keyboard/controller cases preserve a paused cut while visiting both destinations; their affected batch passes 17/17. The source-browser Enter action opens the picture collection without using the header or winning first.
+
 ## Reference decisions
 
 A clear Paused label and Resume action, concise instruction and readable cross-device text are consistent with [Google’s playable game design guidance](https://developers.google.com/youtube/gaming/playables/certification/best_practices_design). Adjustable text and preserved preferences are also recommended in [Microsoft’s accessible game guidance](https://learn.microsoft.com/en-us/windows/uwp/gaming/accessibility-for-games). These support the interface decisions; they do not certify accessibility or establish XPOSED’s exact input behavior.
