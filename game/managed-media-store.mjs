@@ -16,9 +16,17 @@ import {
   isPreparedStoredStillMedia,
 } from './media-storage-record.mjs';
 
+// Load the optional domain only after an explicit v4 request. Existing v2/v3
+// entry graphs do not fetch story code or require a publication change.
+let storyRecords;
+async function loadStoryRecords() {
+  storyRecords ??= await import('./story-storage-record.mjs');
+}
+
 export const MANAGED_MEDIA_DATABASE = 'revealline-soundtrack-v1';
 export const MANAGED_MEDIA_VERSION = 2;
 export const RICH_STILL_MEDIA_VERSION = 3;
+export const STORY_MEDIA_VERSION = 4;
 export const MANAGED_MEDIA_LIMITS = Object.freeze({
   bytes: 256 * 1024 * 1024,
   sourceBytes: 64 * 1024 * 1024,
@@ -37,21 +45,29 @@ const encoded = (value) => new TextEncoder().encode(canonicalJSON(value)).byteLe
 const integer = (n) => Number.isSafeInteger(n) && n >= 0 && n < Number.MAX_SAFE_INTEGER;
 const hashValid = (v) => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
 const abort = throwIfSoundtrackAborted;
-const domainValid = (d) =>
-  required(d === 'audio' || d === 'media', 'Unknown managed media domain.');
+const recordStore = (domain) =>
+  ({ audio: 'metadata', media: 'mediaRecords', story: 'storyRecords' })[domain];
 const emptyMedia = emptyGenericMediaLibrary;
 const mediaLibrary = validateGenericMediaLibrary;
-function row(value, domain, richStillMedia) {
+function row(value, domain, richStillMedia, still) {
   if (value === undefined)
-    return { generation: 0, library: domain === 'audio' ? emptySoundtrackLibrary() : emptyMedia() };
+    return {
+      generation: 0,
+      library:
+        domain === 'audio'
+          ? emptySoundtrackLibrary()
+          : domain === 'story'
+            ? storyRecords.emptyStoredStories()
+            : emptyMedia(),
+    };
   const copy = boundedJSON(value, {
     maxBytes:
       (domain === 'audio' ? SOUNDTRACK_LIMITS.metadataBytes : MANAGED_MEDIA_LIMITS.metadataBytes) +
       1024,
-    maxNodes: domain === 'media' && richStillMedia ? 100000 : 32000,
-    maxDepth: domain === 'media' && richStillMedia ? 26 : 10,
+    maxNodes: (domain === 'media' && richStillMedia) || domain === 'story' ? 100000 : 32000,
+    maxDepth: domain === 'media' && richStillMedia ? 26 : domain === 'story' ? 18 : 10,
     maxArray: domain === 'media' && richStillMedia ? 4096 : 512,
-    maxString: domain === 'media' && richStillMedia ? 65536 : 1024,
+    maxString: domain === 'media' && richStillMedia ? 65536 : domain === 'story' ? 2048 : 1024,
   });
   exactKeys(copy, ['generation', 'library'], 'managed domain');
   required(integer(copy.generation), 'Invalid managed domain generation.');
@@ -60,9 +76,11 @@ function row(value, domain, richStillMedia) {
     library:
       domain === 'audio'
         ? resolveSoundtrackLibrary(copy.library)
-        : richStillMedia && isStoredStillMedia(copy.library)
-          ? validateStoredStillMedia(copy.library)
-          : mediaLibrary(copy.library),
+        : domain === 'story'
+          ? storyRecords.validateStoredStories(copy.library, still)
+          : richStillMedia && isStoredStillMedia(copy.library)
+            ? validateStoredStillMedia(copy.library)
+            : mediaLibrary(copy.library),
   };
 }
 function ownMediaAssets(value) {
@@ -141,6 +159,7 @@ export async function prepareManagedMediaBytes(library, assets, { signal } = {})
   return prepared;
 }
 function hashes(domain, library) {
+  if (domain === 'story') return storyRecords.storedStoryHashes(library);
   if (domain === 'media' && isStoredStillMedia(library)) return storedStillHashes(library);
   return new Set(
     domain === 'audio'
@@ -160,8 +179,27 @@ export function createManagedMediaStore({
   estimate = () => globalThis.navigator?.storage?.estimate?.(),
   now = Date.now,
   richStillMedia = false,
+  storyMedia = false,
 } = {}) {
-  required(typeof richStillMedia === 'boolean', 'Invalid rich still media opt-in.');
+  required(
+    typeof richStillMedia === 'boolean' && typeof storyMedia === 'boolean',
+    'Invalid managed media opt-in.',
+  );
+  richStillMedia ||= storyMedia;
+  const domains = storyMedia ? ['audio', 'media', 'story'] : ['audio', 'media'];
+  const storesInUse = storyMedia ? [...STORES, 'storyRecords'] : STORES;
+  const domainValid = (d) => required(domains.includes(d), 'Unknown managed media domain.');
+  const metadataBytes = (state, except) =>
+    domains.filter((d) => d !== except).reduce((n, d) => n + encoded(state[`${d}Row`]), 0);
+  function validateStoryState(media, story) {
+    if (!storyMedia) return;
+    storyRecords.validateStoredStories(story, media);
+    required(
+      encoded(media) + (story.stories.length ? encoded(story) : 0) <=
+        MANAGED_MEDIA_LIMITS.metadataBytes,
+      'Still and story metadata exceed the shared 2 MiB budget.',
+    );
+  }
   let opening = null,
     closed = false;
   const handles = new WeakMap();
@@ -172,6 +210,7 @@ export function createManagedMediaStore({
   }
   function open(signal) {
     abort(signal);
+    if (storyMedia && !storyRecords) return loadStoryRecords().then(() => open(signal));
     if (closed) return Promise.reject(new Error('Managed media store is closed.'));
     if (!indexedDB)
       return Promise.reject(new Error('This browser does not provide soundtrack storage.'));
@@ -183,7 +222,11 @@ export function createManagedMediaStore({
         settled = false;
       const request = indexedDB.open(
         MANAGED_MEDIA_DATABASE,
-        richStillMedia ? RICH_STILL_MEDIA_VERSION : MANAGED_MEDIA_VERSION,
+        storyMedia
+          ? STORY_MEDIA_VERSION
+          : richStillMedia
+            ? RICH_STILL_MEDIA_VERSION
+            : MANAGED_MEDIA_VERSION,
       );
       const rejectOpen = (error) => {
         failed = true;
@@ -220,7 +263,7 @@ export function createManagedMediaStore({
           return;
         }
         try {
-          for (const name of STORES)
+          for (const name of storesInUse)
             if (!request.result.objectStoreNames.contains(name))
               request.result.createObjectStore(name);
         } catch (e) {
@@ -273,8 +316,8 @@ export function createManagedMediaStore({
     abort(signal);
     required(!closed, 'Managed media store is closed.');
     return new Promise((resolve, reject) => {
-      const tx = db.transaction(STORES, mode),
-        stores = Object.fromEntries(STORES.map((name) => [name, tx.objectStore(name)]));
+      const tx = db.transaction(storesInUse, mode),
+        stores = Object.fromEntries(storesInUse.map((name) => [name, tx.objectStore(name)]));
       let result,
         failure = null,
         settled = false;
@@ -310,7 +353,7 @@ export function createManagedMediaStore({
       tx.onabort = () => finish(failure || tx.error || new Error('Media transaction failed.'));
       signal?.addEventListener('abort', cancel, { once: true });
       const values = {};
-      let left = 8;
+      let left = storyMedia ? 9 : 8;
       function read(key, request) {
         request.onsuccess = () => {
           values[key] = request.result;
@@ -319,6 +362,9 @@ export function createManagedMediaStore({
             abort(signal);
             const audioRow = row(values.audioRow, 'audio', richStillMedia),
               mediaRow = row(values.mediaRow, 'media', richStillMedia),
+              storyRow = storyMedia
+                ? row(values.storyRow, 'story', true, mediaRow.library)
+                : undefined,
               blobs = new Map();
             let blobBytes = 0;
             for (const [kind, keys, files] of [
@@ -364,10 +410,17 @@ export function createManagedMediaStore({
               );
               return r;
             });
-            const usedBytes = blobBytes + encoded(audioRow) + encoded(mediaRow) + OVERHEAD;
+            validateStoryState(mediaRow.library, storyRow?.library);
+            const usedBytes =
+              blobBytes +
+              encoded(audioRow) +
+              encoded(mediaRow) +
+              (storyMedia ? encoded(storyRow) : 0) +
+              OVERHEAD;
             const state = {
               audioRow,
               mediaRow,
+              ...(storyMedia ? { storyRow } : {}),
               blobs,
               blobBytes,
               usedBytes,
@@ -384,6 +437,7 @@ export function createManagedMediaStore({
       try {
         read('audioRow', stores.metadata.get('library'));
         read('mediaRow', stores.mediaRecords.get('library'));
+        if (storyMedia) read('storyRow', stores.storyRecords.get('library'));
         read('audioKeys', stores.audio.getAllKeys());
         read('audioBlobs', stores.audio.getAll());
         read('mediaKeys', stores.mediaBlobs.getAllKeys());
@@ -485,11 +539,22 @@ export function createManagedMediaStore({
   async function readDomainMetadata(domain, { signal } = {}) {
     domainValid(domain);
     return readSelected(
-      [[domain === 'audio' ? 'metadata' : 'mediaRecords', 'library']],
-      ([value]) => Object.freeze(row(value, domain, richStillMedia)),
+      domain === 'story'
+        ? [
+            ['storyRecords', 'library'],
+            ['mediaRecords', 'library'],
+          ]
+        : [[recordStore(domain), 'library']],
+      ([value, still]) => {
+        const media = domain === 'story' ? row(still, 'media', true).library : undefined,
+          current = row(value, domain, richStillMedia, media);
+        if (domain === 'story') validateStoryState(media, current.library);
+        return Object.freeze(current);
+      },
       signal,
     );
   }
+
   async function readSelectedBlob(
     hash,
     { signal, maxBytes = MANAGED_MEDIA_LIMITS.sourceBytes } = {},
@@ -532,6 +597,7 @@ export function createManagedMediaStore({
           generations: Object.freeze({
             audio: state.audioRow.generation,
             media: state.mediaRow.generation,
+            ...(storyMedia ? { story: state.storyRow.generation } : {}),
           }),
           reservations: active(state, clock()).length,
         }),
@@ -636,10 +702,16 @@ export function createManagedMediaStore({
     { expectedGeneration, reservation, signal, otherManagedBytes = 0 } = {},
   ) {
     domainValid(domain);
+    if (storyMedia) {
+      await loadStoryRecords();
+      abort(signal);
+    }
     required(
       domain === 'audio'
         ? isPreparedSoundtrackLibrary(prepared)
-        : preparedMedia.has(prepared) || (richStillMedia && isPreparedStoredStillMedia(prepared)),
+        : domain === 'story'
+          ? storyRecords.isPreparedStoredStories(prepared)
+          : preparedMedia.has(prepared) || (richStillMedia && isPreparedStoredStillMedia(prepared)),
       'Commit requires a verified soundtrack import or prepared managed bytes.',
     );
     required(
@@ -666,6 +738,16 @@ export function createManagedMediaStore({
       if (isStoredStillMedia(prepared.library))
         assertStoredStillTransition(before.current.library, prepared.library);
     }
+    if (domain === 'story')
+      storyRecords.assertStoredStoryTransition(
+        before.current.library,
+        prepared.library,
+        before.state.mediaRow.library,
+      );
+    validateStoryState(
+      domain === 'media' ? prepared.library : before.state.mediaRow.library,
+      domain === 'story' ? prepared.library : before.state.storyRow?.library,
+    );
     const reusable = new Set();
     for (const asset of assets) {
       const old = before.state.blobs.get(asset.sha256);
@@ -684,7 +766,7 @@ export function createManagedMediaStore({
     }
     const newAssets = assets.filter((a) => !reusable.has(a.sha256)),
       newBytes = newAssets.reduce((n, a) => n + size(a.blob), 0),
-      metadataBytes = encoded(nextRow);
+      nextMetadataBytes = encoded(nextRow);
     let quota = null;
     try {
       const q = await estimate();
@@ -693,7 +775,7 @@ export function createManagedMediaStore({
     } catch {}
     abort(signal);
     required(
-      quota === null || newBytes + metadataBytes <= quota,
+      quota === null || newBytes + nextMetadataBytes <= quota,
       'There is not enough reported storage space to stage this soundtrack.',
     );
     // Deprecated caller headroom can only refuse; it never replaces the shared inventory.
@@ -701,7 +783,7 @@ export function createManagedMediaStore({
       otherManagedBytes +
         before.current.assets.reduce((n, a) => n + size(a.blob), 0) +
         newBytes +
-        metadataBytes +
+        nextMetadataBytes +
         encoded({ generation: before.current.generation, library: before.current.library }) <=
         MANAGED_MEDIA_LIMITS.bytes,
       'Committed media plus staging exceeds the 256 MiB managed budget.',
@@ -712,7 +794,7 @@ export function createManagedMediaStore({
           domain,
           expectedGeneration,
           maxNewBytes: newBytes,
-          maxMetadataBytes: metadataBytes,
+          maxMetadataBytes: nextMetadataBytes,
           signal,
         })),
       known = token(handle);
@@ -738,8 +820,18 @@ export function createManagedMediaStore({
             if (isStoredStillMedia(prepared.library))
               assertStoredStillTransition(current.library, prepared.library);
           }
+          if (domain === 'story')
+            storyRecords.assertStoredStoryTransition(
+              current.library,
+              prepared.library,
+              state.mediaRow.library,
+            );
+          validateStoryState(
+            domain === 'media' ? prepared.library : state.mediaRow.library,
+            domain === 'story' ? prepared.library : state.storyRow?.library,
+          );
           required(
-            newBytes <= saved.maxNewBytes && metadataBytes <= saved.maxMetadataBytes,
+            newBytes <= saved.maxNewBytes && nextMetadataBytes <= saved.maxMetadataBytes,
             'Prepared media exceeds its reservation.',
           );
           for (const hash of reusable) {
@@ -754,17 +846,18 @@ export function createManagedMediaStore({
             state.usedBytes +
               reservationBytes(active(state, t).filter((r) => r.id !== saved.id)) +
               newBytes +
-              metadataBytes +
+              nextMetadataBytes +
               RESERVATION_OVERHEAD <=
               MANAGED_MEDIA_LIMITS.bytes,
             'Committed media plus staging exceeds the 256 MiB managed budget.',
           );
           const target = domain === 'audio' ? 'audio' : 'mediaBlobs';
-          const other = domain === 'audio' ? 'media' : 'audio',
-            formerlyOwned = hashes(domain, current.library),
+          const formerlyOwned = hashes(domain, current.library),
             retained = new Set([
               ...hashes(domain, prepared.library),
-              ...hashes(other, state[`${other}Row`].library),
+              ...domains
+                .filter((d) => d !== domain)
+                .flatMap((d) => [...hashes(d, state[`${d}Row`].library)]),
             ]);
           // Reads bound each physical store, including unexplained originals.
           // Check the post-commit inventory before writing; reference-table
@@ -791,13 +884,13 @@ export function createManagedMediaStore({
               stores[old.store].delete(hash);
               finalBlobBytes -= old.bytes;
             }
-          stores[domain === 'audio' ? 'metadata' : 'mediaRecords'].put(nextRow, 'library');
+          stores[recordStore(domain)].put(nextRow, 'library');
           stores.reservations.delete(saved.id);
           expire(state, stores, t);
           ledger(
             state,
             stores,
-            finalBlobBytes + metadataBytes + encoded(state[`${other}Row`]) + OVERHEAD,
+            finalBlobBytes + nextMetadataBytes + metadataBytes(state, domain) + OVERHEAD,
           );
           return Object.freeze(nextRow);
         },
@@ -831,6 +924,42 @@ export function createManagedMediaStore({
       throw error;
     }
   }
+  async function removeStoryOriginal(hash, { expectedGeneration, signal } = {}) {
+    domainValid('story');
+    required(hashValid(hash) && integer(expectedGeneration), 'Invalid story removal.');
+    return transact(
+      'readwrite',
+      (state, stores) => {
+        const current = state.storyRow;
+        required(current.generation === expectedGeneration, changed('story'));
+        required(current.library.originals.includes(hash), 'Story original is already detached.');
+        const library = storyRecords.validateStoredStories(
+            { ...current.library, originals: current.library.originals.filter((h) => h !== hash) },
+            state.mediaRow.library,
+          ),
+          next = { generation: expectedGeneration + 1, library };
+        required(integer(next.generation), 'Story generation exhausted.');
+        storyRecords.assertStoredStoryTransition(current.library, library, state.mediaRow.library);
+        const retained = new Set([
+            ...hashes('audio', state.audioRow.library),
+            ...hashes('media', state.mediaRow.library),
+          ]),
+          old = state.blobs.get(hash);
+        if (old && !retained.has(hash)) stores[old.store].delete(hash);
+        stores.storyRecords.put(next, 'library');
+        ledger(
+          state,
+          stores,
+          state.usedBytes -
+            encoded(current) +
+            encoded(next) -
+            (old && !retained.has(hash) ? old.bytes : 0),
+        );
+        return Object.freeze(next);
+      },
+      signal,
+    );
+  }
   async function readBlob(hash, { signal } = {}) {
     required(hashValid(hash), 'Invalid media hash.');
     return transact('readonly', (state) => state.blobs.get(hash)?.blob ?? null, signal);
@@ -845,6 +974,7 @@ export function createManagedMediaStore({
   }
   return Object.freeze({
     richStillMedia,
+    storyMedia,
     readDomain,
     readDomainMetadata,
     readSelectedBlob,
@@ -854,6 +984,7 @@ export function createManagedMediaStore({
     release,
     commitDomain,
     readBlob,
+    ...(storyMedia ? { removeStoryOriginal } : {}),
     close,
   });
 }
