@@ -1,0 +1,10 @@
+# Still-picture identity prompts
+
+These prose examples use the [still-image foundation](../../docs/media-presentation.md). They do not add registered CLI IDs, install art, migrate storage or prove browser readiness.
+
+- “Prepare this original PNG or JPEG with its full source/prompt provenance through `prepareStillAsset` using a real decoder. Report actual original hash, bytes and dimensions. Preserve the file, reject invalid/oversized media and keep generated source artwork outside runtime packs until explicit integration.”
+- “Create four explicit presentation assignments for one installed map's four themes. Derive each exact authored tuple through the execution catalog. Check Standard and Gentle's actual map revisions resolve to the same base tuple; do not edit the level's theme, name, revision, campaign or roster to attach the pictures.”
+- “Replace the currently selected picture with revision 2. Supply the last accepted media library as `previous`, retain every old asset/revision unchanged, and change only the exact assignment. Verify real winning replay/checkpoint, board identity and existing profile export bytes remain equal. Do not grant a new clear, score, seal or gallery award.”
+- “Review a candidate media library for unsupported fields, unknown contexts, duplicate IDs, changed immutable records, conflicting facts for one hash, foreign map/theme assignment and missing poster bytes. Treat metadata validity, byte integrity, decoder success and actual visual quality as separate evidence.”
+- “Remove the installed context, then resolve an old presentation. Require `unavailable-context` and the host's existing-art fallback; retain old metadata for later exact restoration. Reject new revisions while context is unavailable. Do not infer ownership from a Gentle-looking ID or a shared map name.”
+- “Plan a later ending-frame reward that reveals the story's final/key frame, plays the finite full story from its beginning and returns to the earned still. Keep poster time and story segment independent. Record it as future work: current `revealline-media-presentation.v1` requires `story:null` and cannot import a video or GIF.”

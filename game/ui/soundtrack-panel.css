@@ -73,7 +73,8 @@
 }
 .soundtrack-dialog input,
 .soundtrack-dialog select,
-.soundtrack-dialog button {
+.soundtrack-dialog button,
+.soundtrack-dialog a.button {
   box-sizing: border-box;
   min-height: 44px;
   max-width: 100%;
@@ -101,10 +102,19 @@
 .soundtrack-dialog option {
   padding: 5px;
 }
-.soundtrack-dialog button {
+.soundtrack-dialog button,
+.soundtrack-dialog a.button {
   cursor: pointer;
 }
-.soundtrack-dialog :disabled {
+.soundtrack-dialog a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none;
+}
+.soundtrack-dialog :disabled,
+.soundtrack-dialog [aria-disabled='true'] {
   opacity: 0.46;
   cursor: default;
 }
@@ -130,7 +140,8 @@
   color: #dce9ff;
 }
 #soundtrack-save,
-#soundtrack-use-selection {
+#soundtrack-use-selection,
+#soundtrack-download-prepared {
   border-color: #80decf;
   color: #b7fff2;
 }
@@ -150,7 +161,8 @@
   .soundtrack-footer {
     position: static;
   }
-  .soundtrack-actions > button {
+  .soundtrack-actions > button,
+  .soundtrack-actions > a.button {
     flex: 1 1 150px;
   }
 }

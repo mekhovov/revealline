@@ -3,13 +3,22 @@ import {
   SOUNDTRACK_LIMITS,
   emptySoundtrackLibrary,
   resolveSoundtrackLibrary,
-  freezeSoundtrack,
 } from './soundtrack.mjs';
 import { isPreparedSoundtrackLibrary, ownSoundtrackAssets } from './soundtrack-bundle.mjs';
 import { inspectMP3, throwIfSoundtrackAborted } from './mp3.mjs';
+import {
+  emptyGenericMediaLibrary,
+  validateGenericMediaLibrary,
+  isStoredStillMedia,
+  validateStoredStillMedia,
+  storedStillHashes,
+  assertStoredStillTransition,
+  isPreparedStoredStillMedia,
+} from './media-storage-record.mjs';
 
 export const MANAGED_MEDIA_DATABASE = 'revealline-soundtrack-v1';
 export const MANAGED_MEDIA_VERSION = 2;
+export const RICH_STILL_MEDIA_VERSION = 3;
 export const MANAGED_MEDIA_LIMITS = Object.freeze({
   bytes: 256 * 1024 * 1024,
   sourceBytes: 64 * 1024 * 1024,
@@ -30,52 +39,30 @@ const hashValid = (v) => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
 const abort = throwIfSoundtrackAborted;
 const domainValid = (d) =>
   required(d === 'audio' || d === 'media', 'Unknown managed media domain.');
-const emptyMedia = () => freezeSoundtrack({ format: 'revealline-managed-bytes.v1', items: [] });
-function mediaLibrary(value) {
-  const copy = boundedJSON(value, {
-    maxBytes: MANAGED_MEDIA_LIMITS.metadataBytes,
-    maxNodes: 4096,
-    maxDepth: 5,
-    maxArray: 512,
-    maxString: 128,
-  });
-  exactKeys(copy, ['format', 'items'], 'managed byte library');
-  required(
-    copy.format === 'revealline-managed-bytes.v1' && Array.isArray(copy.items),
-    'Unsupported managed byte library.',
-  );
-  const ids = new Set();
-  for (const item of copy.items) {
-    exactKeys(item, ['id', 'sha256'], 'managed byte reference');
-    required(
-      typeof item.id === 'string' &&
-        /^[a-z0-9][a-z0-9._-]{0,127}$/.test(item.id) &&
-        !ids.has(item.id) &&
-        hashValid(item.sha256),
-      'Invalid or duplicate managed byte reference.',
-    );
-    ids.add(item.id);
-  }
-  return freezeSoundtrack(copy);
-}
-function row(value, domain) {
+const emptyMedia = emptyGenericMediaLibrary;
+const mediaLibrary = validateGenericMediaLibrary;
+function row(value, domain, richStillMedia) {
   if (value === undefined)
     return { generation: 0, library: domain === 'audio' ? emptySoundtrackLibrary() : emptyMedia() };
   const copy = boundedJSON(value, {
     maxBytes:
       (domain === 'audio' ? SOUNDTRACK_LIMITS.metadataBytes : MANAGED_MEDIA_LIMITS.metadataBytes) +
       1024,
-    maxNodes: 32000,
-    maxDepth: 10,
-    maxArray: 512,
-    maxString: 1024,
+    maxNodes: domain === 'media' && richStillMedia ? 100000 : 32000,
+    maxDepth: domain === 'media' && richStillMedia ? 26 : 10,
+    maxArray: domain === 'media' && richStillMedia ? 4096 : 512,
+    maxString: domain === 'media' && richStillMedia ? 65536 : 1024,
   });
   exactKeys(copy, ['generation', 'library'], 'managed domain');
   required(integer(copy.generation), 'Invalid managed domain generation.');
   return {
     generation: copy.generation,
     library:
-      domain === 'audio' ? resolveSoundtrackLibrary(copy.library) : mediaLibrary(copy.library),
+      domain === 'audio'
+        ? resolveSoundtrackLibrary(copy.library)
+        : richStillMedia && isStoredStillMedia(copy.library)
+          ? validateStoredStillMedia(copy.library)
+          : mediaLibrary(copy.library),
   };
 }
 function ownMediaAssets(value) {
@@ -154,6 +141,7 @@ export async function prepareManagedMediaBytes(library, assets, { signal } = {})
   return prepared;
 }
 function hashes(domain, library) {
+  if (domain === 'media' && isStoredStillMedia(library)) return storedStillHashes(library);
   return new Set(
     domain === 'audio'
       ? library.tracks.map((t) => t.asset.sha256)
@@ -164,12 +152,16 @@ function changed(domain) {
   return `${domain === 'audio' ? 'Soundtrack' : 'Media library'} changed in another operation. Reload it before saving.`;
 }
 
-/** One v2 database and transaction scope serialize every media-domain writer across tabs. */
+/** One database/ledger serialize every domain. Rich still storage opts into v3;
+ * ordinary soundtrack callers retain their explicit v1/v2 behavior.
+ */
 export function createManagedMediaStore({
   indexedDB = globalThis.indexedDB,
   estimate = () => globalThis.navigator?.storage?.estimate?.(),
   now = Date.now,
+  richStillMedia = false,
 } = {}) {
+  required(typeof richStillMedia === 'boolean', 'Invalid rich still media opt-in.');
   let opening = null,
     closed = false;
   const handles = new WeakMap();
@@ -178,20 +170,53 @@ export function createManagedMediaStore({
     required(integer(t) && integer(t + MANAGED_MEDIA_LIMITS.leaseMs), 'Invalid media lease clock.');
     return t;
   }
-  function open() {
+  function open(signal) {
+    abort(signal);
     if (closed) return Promise.reject(new Error('Managed media store is closed.'));
     if (!indexedDB)
       return Promise.reject(new Error('This browser does not provide soundtrack storage.'));
-    opening ??= new Promise((resolve, reject) => {
-      let failed = false;
-      const request = indexedDB.open(MANAGED_MEDIA_DATABASE, MANAGED_MEDIA_VERSION);
+    if (opening) return opening.promise;
+    const attempt = {};
+    opening = attempt;
+    attempt.promise = new Promise((resolve, reject) => {
+      let failed = false,
+        settled = false;
+      const request = indexedDB.open(
+        MANAGED_MEDIA_DATABASE,
+        richStillMedia ? RICH_STILL_MEDIA_VERSION : MANAGED_MEDIA_VERSION,
+      );
+      const rejectOpen = (error) => {
+        failed = true;
+        signal?.removeEventListener('abort', cancel);
+        if (opening === attempt) opening = null;
+        if (!settled) {
+          settled = true;
+          reject(error);
+        }
+      };
+      const cancel = () => {
+        if (settled) return;
+        try {
+          request.transaction?.abort();
+        } catch {}
+        rejectOpen(
+          closed
+            ? new Error('Managed media store is closed.')
+            : new DOMException('Media storage opening cancelled.', 'AbortError'),
+        );
+      };
+      attempt.cancel = cancel;
+      signal?.addEventListener('abort', cancel, { once: true });
       request.onupgradeneeded = () => {
         // A blocked open request cannot be cancelled directly. If it becomes
         // unblocked after failure/close, abort before committing any schema change.
-        if (failed || closed) {
-          failed = true;
+        if (failed || closed || signal?.aborted) {
           request.transaction.abort();
-          reject(new Error('Managed media store is closed.'));
+          rejectOpen(
+            signal?.aborted
+              ? new DOMException('Media storage opening cancelled.', 'AbortError')
+              : new Error('Managed media store is closed.'),
+          );
           return;
         }
         try {
@@ -199,40 +224,52 @@ export function createManagedMediaStore({
             if (!request.result.objectStoreNames.contains(name))
               request.result.createObjectStore(name);
         } catch (e) {
-          failed = true;
           request.transaction?.abort();
-          reject(e);
+          rejectOpen(e);
         }
       };
       request.onerror = () => {
-        failed = true;
-        opening = null;
-        reject(request.error || new Error('Media storage could not open.'));
+        const error = request.error || new Error('Media storage could not open.');
+        if (error.name === 'VersionError') {
+          const incompatible = new Error(
+            'This media library uses a newer storage version. Open the newer game and export it for recovery; do not delete or downgrade the database.',
+          );
+          incompatible.name = 'VersionError';
+          rejectOpen(incompatible);
+        } else rejectOpen(error);
       };
       request.onblocked = () => {
-        failed = true;
-        opening = null;
-        reject(new Error('Close older game tabs to upgrade media storage.'));
+        rejectOpen(new Error('Close older game tabs to upgrade media storage.'));
       };
       request.onsuccess = () => {
         const db = request.result;
-        if (failed || closed) {
+        signal?.removeEventListener('abort', cancel);
+        if (failed || closed || signal?.aborted) {
           db.close();
-          reject(new Error('Managed media store is closed.'));
+          rejectOpen(
+            signal?.aborted
+              ? new DOMException('Media storage opening cancelled.', 'AbortError')
+              : new Error('Managed media store is closed.'),
+          );
           return;
         }
         db.onversionchange = () => {
           db.close();
-          opening = null;
+          if (opening === attempt) opening = null;
         };
+        settled = true;
         resolve(db);
       };
+      if (signal?.aborted) cancel();
+    }).catch((error) => {
+      if (opening === attempt) opening = null;
+      throw error;
     });
-    return opening;
+    return attempt.promise;
   }
   async function transact(mode, body, signal) {
     abort(signal);
-    const db = await open();
+    const db = await open(signal);
     abort(signal);
     required(!closed, 'Managed media store is closed.');
     return new Promise((resolve, reject) => {
@@ -280,8 +317,8 @@ export function createManagedMediaStore({
           if (--left) return;
           try {
             abort(signal);
-            const audioRow = row(values.audioRow, 'audio'),
-              mediaRow = row(values.mediaRow, 'media'),
+            const audioRow = row(values.audioRow, 'audio', richStillMedia),
+              mediaRow = row(values.mediaRow, 'media', richStillMedia),
               blobs = new Map();
             let blobBytes = 0;
             for (const [kind, keys, files] of [
@@ -504,7 +541,9 @@ export function createManagedMediaStore({
   ) {
     domainValid(domain);
     required(
-      domain === 'audio' ? isPreparedSoundtrackLibrary(prepared) : preparedMedia.has(prepared),
+      domain === 'audio'
+        ? isPreparedSoundtrackLibrary(prepared)
+        : preparedMedia.has(prepared) || (richStillMedia && isPreparedStoredStillMedia(prepared)),
       'Commit requires a verified soundtrack import or prepared managed bytes.',
     );
     required(
@@ -523,6 +562,14 @@ export function createManagedMediaStore({
       signal,
     );
     required(before.current.generation === expectedGeneration, changed(domain));
+    if (domain === 'media') {
+      required(
+        !isStoredStillMedia(before.current.library) || isStoredStillMedia(prepared.library),
+        'Rich still history cannot be downgraded to generic byte storage.',
+      );
+      if (isStoredStillMedia(prepared.library))
+        assertStoredStillTransition(before.current.library, prepared.library);
+    }
     const reusable = new Set();
     for (const asset of assets) {
       const old = before.state.blobs.get(asset.sha256);
@@ -587,6 +634,14 @@ export function createManagedMediaStore({
               current.generation === expectedGeneration,
             changed(domain),
           );
+          if (domain === 'media') {
+            required(
+              !isStoredStillMedia(current.library) || isStoredStillMedia(prepared.library),
+              'Rich still history cannot be downgraded to generic byte storage.',
+            );
+            if (isStoredStillMedia(prepared.library))
+              assertStoredStillTransition(current.library, prepared.library);
+          }
           required(
             newBytes <= saved.maxNewBytes && metadataBytes <= saved.maxMetadataBytes,
             'Prepared media exceeds its reservation.',
@@ -675,12 +730,14 @@ export function createManagedMediaStore({
   }
   function close() {
     closed = true;
-    opening?.then(
+    opening?.cancel?.();
+    opening?.promise?.then(
       (db) => db.close(),
       () => {},
     );
   }
   return Object.freeze({
+    richStillMedia,
     readDomain,
     usage,
     reserve,
