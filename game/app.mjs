@@ -182,7 +182,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.29.0',
+  let buildVersion = '0.29.2',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -2929,6 +2929,7 @@ try {
     }
     overlay('pause');
     $('pause-button').textContent = '▶';
+    refreshHUD();
   }
   function refreshHUD() {
     document.body.dataset.flightState =

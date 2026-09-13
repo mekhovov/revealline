@@ -54,6 +54,23 @@ function imageBoundary(t) {
 
 // Actual app/input/core/recorder/storage handlers. Modeled events and DOM expose
 // presentation state, not CSS geometry, native focus defaults or physical devices.
+test('pause updates flight presentation before another animation frame can run', async (t) => {
+  const page = await soloPage(t, { campaign });
+  page.$('start-button').click();
+  page.frame(0);
+  touch(page.$('game-canvas'));
+  touch(page.doc.querySelector('[data-move="down"]'));
+  ticks(page, 13);
+  controls(page, 'shown');
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  page.$('pause-button').click();
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.equal(page.$('flight-state').textContent, 'Paused');
+  controls(page, 'hidden');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual(page.errors, []);
+});
+
 test('featured R4 hides manual actions and actual keyboard action attempts cannot change its flight', async (t) => {
   imageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
@@ -95,6 +112,33 @@ test('featured R4 hides manual actions and actual keyboard action attempts canno
 });
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
+  test(`${turnPolicy}: first Arcade Down cut keeps rendering and saves after a batched capture`, async (t) => {
+    imageBoundary(t);
+    const page = await soloPage(t, { titleScreen: true, storage: storageWith({ turnPolicy }) });
+    page.$('shell-featured').click();
+    await settle(() => !page.$('shell-featured').disabled);
+    page.$('start-button').click();
+    page.frame(0);
+    page.key('ArrowDown');
+    page.key('ArrowDown', false);
+    for (let frame = 0; frame < 240 && page.rendered.run.coverage === 0; frame++)
+      page.frame(1000 / 60);
+    const run = page.rendered.run;
+    assert.ok(run.coverage > 0.5, 'The ordinary first cut closes through the central slow field.');
+    assert.equal(run.player.cutting, false);
+    const stopped = { x: run.player.x, y: run.player.y };
+    for (let frame = 0; frame < 60; frame++) page.frame(1000 / 60);
+    assert.deepEqual({ x: run.player.x, y: run.player.y }, stopped);
+    assert.equal(run.status, 'running');
+    assert.equal(page.$('coverage').textContent, `${(run.coverage * 100).toFixed(1)}%`);
+    assert.equal(page.$('score').textContent, String(run.score).padStart(5, '0'));
+    page.$('pause-button').click();
+    const saved = JSON.parse(page.storage.getItem(sessionKey));
+    assert.equal(verifyReplay(saved.replay).match, true);
+    assert.deepEqual(saved.replay.checkpoint, authoritativeCheckpoint(run));
+    assert.deepEqual(page.errors, []);
+  });
+
   test(`${turnPolicy}: Auto appears for actual touch flight, hides after keyboard use and preserves the logical heading`, async (t) => {
     const page = await soloPage(t, { campaign, storage: storageWith({ turnPolicy }) });
     assert.equal(page.$('screen-controls').value, 'auto');
