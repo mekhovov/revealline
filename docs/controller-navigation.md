@@ -1,22 +1,24 @@
 # Controller navigation
 
-The current source supports solo menu navigation, deliberate controller assignment, configurable controller layouts and explicit reading of mission/result details. The reader is source work after frozen v0.11.0; release and target-device validation are recorded separately. Territory rules, steering choices and normalized recorded commands remain unchanged. A connected but idle controller does not take over the interface.
+The current source supports solo menu navigation, deliberate controller assignment, configurable controller layouts and explicit reading of mission/result details. The reader originated after v0.11; current source adds a focused Ready/paused Mission brief. Release, browser and target-device validation are recorded separately in the [next-milestone review](research/round-43-next-milestone-review.md). Territory rules, steering choices and normalized recorded commands remain unchanged. A connected but idle controller does not take over the interface.
 
 Release its controls, then press a physical face button or Menu to join. Release again before starting a mission. The first press selects the controller; it cannot also start a flight or use an ability. Joining always uses physical indices 0, 1, 2, 3 or 9, independently of remapped Confirm. Only standard Gamepad API mappings are supported. The table shows the defaults; help and edit prompts follow your applied layout.
 
-| Context       | Control            | Action                             |
-| ------------- | ------------------ | ---------------------------------- |
-| Flight        | D-pad / left stick | Move in a cardinal direction       |
-| Flight        | South / A          | Equipped ability                   |
-| Flight        | West / X           | Collect supplies                   |
-| Flight        | Right shoulder     | Boost while held; optional Toggle  |
-| Flight        | North / Y          | Open the hangar                    |
-| Flight        | East / B           | Stop                               |
-| Flight        | Menu               | Pause                              |
-| Menus         | D-pad / left stick | Move the visible focus ring        |
-| Menus         | South / A          | Activate, or begin/confirm an edit |
-| Menus         | East / B           | Cancel an edit, or go back         |
-| Paused flight | Menu               | Resume when no dialog is open      |
+| Context       | Control            | Action                               |
+| ------------- | ------------------ | ------------------------------------ |
+| Flight        | D-pad / left stick | Move in a cardinal direction         |
+| Flight        | South / A          | Equipped ability                     |
+| Flight        | West / X           | Collect supplies                     |
+| Flight        | Right shoulder     | Boost while held; optional Toggle    |
+| Flight        | North / Y          | Open the hangar                      |
+| Legacy flight | East / B           | Stop; ignored by continuous steering |
+| Flight        | Menu               | Pause                                |
+| Menus         | D-pad / left stick | Move the visible focus ring          |
+| Menus         | South / A          | Activate, or begin/confirm an edit   |
+| Menus         | East / B           | Cancel an edit, or go back           |
+| Paused flight | Menu               | Resume when no dialog is open        |
+
+Flight equipment is available only under the current level policy. First Light Arcade has no manual Scan/Supply/Boost; the stored legacy Stop binding does not add a Stop action to tap-to-steer play.
 
 Confirm a campaign, class or other select to preview its choices. Directions move through enabled options without restarting the game. Confirm applies the choice; Back cancels. Volume sliders use the same preview/commit behavior. Existing keyboard and touch controls remain usable, and using them ends the controller's current edit.
 
@@ -26,7 +28,9 @@ Disconnecting the selected pad pauses the flight even if another pad remains con
 
 ## Read details without starting a flight
 
-Choose **Read details** on a visible ready, paused or result overlay. For the complete authored description, open **Mission brief** in the flight deck and choose **Read mission brief**. The full brief includes its title, authored paragraphs, generated requirements and optional seal explanation. Entering that reader during flight first pauses; entering from Ready does not start the mission.
+Choose **Mission brief** from Ready or the compact paused dock. The focused view shows the current map, authored description and actual requirements; chapter cards and flight setup are hidden for this view. **Read mission brief / Done reading** controls the existing reader, and **Back** returns to the logical Ready/paused scope. Reading or Back never starts/resumes the flight. Ordinary mission selection restores the full chapter/setup view. First Flight keeps its own course lesson route; imported practice is labeled PRACTICE, the course FIRST FLIGHT, and ARCADE requires an actual validated Arcade policy.
+
+Keep the full text in the bounded scroll region with readable Standard/Large type. A newly opened focused brief begins at the top; read entry/exit within that unchanged view keeps the reader's scroll behavior below. The source desktop keyboard journey passed; compact CSS/DOM reflow and controller tests remain modeled, with physical-device review separate. Creator tools belong in ordinary Settings; practice/course navigation isolation must hide unavailable links as well as retaining its guard.
 
 While reading, your configured menu Up/Down scroll only the named text region. Left/Right do not switch controls or move the page sideways. Short text still supports entry and an immediate exit. The visible local prompt uses your applied Confirm and Back labels; reaching the top or bottom does not wrap around. Re-entering unchanged text retains its scroll position; content changed since the previous entry starts at the top. Resizing clamps the current position to the new bounds.
 
@@ -60,4 +64,4 @@ Browser history can retain a page in memory. This app suspends a flight before r
 
 Text entry, date entry and native file pickers still use keyboard or touch. Some browsers require a trusted keyboard or pointer action before audio, sharing or other protected APIs are available. Polling a controller does not create that activation; menu navigation and silent play remain usable. See the primary API/accessibility sources in the [controller plan](round-15-controller-plan.md).
 
-This increment covers the solo interface and its practice preview. The v0.13 working source adds [optional solo Boost Toggle](controller-boost.md), defaulting to Hold; it is separate from binding drafts and resets on pause, Stop and recovery. Couch players retain their existing separate Hold controls; complete couch menu ownership and Replay Theater menu navigation are future work. Controller toggle steering, physical-button capture, haptics and arbitrary nonstandard mappings are not provided. Touch tap steering/Boost remains a separate existing option. Physical controller/browser/native-device sessions must be reported separately from simulated input and DOM tests. No hardware certification or universal controller-only OS interaction is implied.
+This increment covers the solo interface and its practice preview. The v0.13 working source adds [optional solo Boost Toggle](controller-boost.md), defaulting to Hold; it is separate from binding drafts and resets on pause, Stop and recovery. Couch players retain their existing separate Hold controls; Replay Theater menu navigation was delivered in v0.30; the complete couch/menu/device matrix remains open. Controller toggle steering, physical-button capture, haptics and arbitrary nonstandard mappings are not provided. Touch tap steering/Boost remains a separate existing option. Physical controller/browser/native-device sessions must be reported separately from simulated input and DOM tests. No hardware certification or universal controller-only OS interaction is implied.
