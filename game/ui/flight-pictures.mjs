@@ -22,6 +22,7 @@ export function createFlightPictures({
   legacy = false,
   explicitLegacy = false,
   acquire,
+  selectPins,
 }) {
   const ownContext = Object.freeze({ ...context });
   const worlds = Object.freeze([...themeIds]);
@@ -34,7 +35,7 @@ export function createFlightPictures({
           level,
           themeId: context.themeId,
         });
-  if (explicitLegacy)
+  if (explicitLegacy && !selectPins)
     pins = snapshotPresentationPins({
       format: PRESENTATION_PINS_FORMAT,
       executionKey: context.executionKey,
@@ -94,18 +95,27 @@ export function createFlightPictures({
           levelRevision: level.revision,
           themeIds: worlds,
         };
-        const selected = media.story
-          ? await createFlightPresentationPins(
-              {
-                ...selection,
-                stillDocument: media.metadata.document,
-                storyDocument: media.story.document,
-              },
-              { signal: controller.signal },
-            )
-          : createPresentationPins(selection);
+        const selected = selectPins
+          ? await selectPins({ media, selection, explicitLegacy, signal: controller.signal })
+          : media.story
+            ? await createFlightPresentationPins(
+                {
+                  ...selection,
+                  stillDocument: media.metadata.document,
+                  storyDocument: media.story.document,
+                },
+                { signal: controller.signal },
+              )
+            : createPresentationPins(selection);
         check();
-        pins = selected;
+        pins = selectPins
+          ? validateFlightPresentationPinsForRun(selected, {
+              identityCatalog,
+              campaignKey: context.executionKey,
+              level,
+              themeId: context.themeId,
+            })
+          : selected;
       }
       const pin = presentationPicturePins(pins).choices.find(
         (choice) => choice.identity.themeId === themeId,

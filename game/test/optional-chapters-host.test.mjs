@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { soloPage } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
+// Full multi-row chapter validation authenticates existing large embedded originals.
+const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 30000, message });
 import { authoritativeCheckpoint } from '../replay.mjs';
 const root = new URL('../../', import.meta.url);
 const catalog = JSON.parse(await readFile(new URL('game/content/optional-worlds.json', root)));
@@ -154,22 +158,10 @@ test('native More worlds installs separately, preserves an unrelated paused pack
 
 test('a failed asset transaction keeps the installed library and current run; explicit Install retries', async (t) => {
   images(t);
-  const page = await soloPage(t, { titleScreen: true });
+  const assets = managedIndexedDB();
+  const page = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   downloads(t);
-  const request = globalThis.indexedDB.open('revealline-assets-v1', 1);
-  const db = await new Promise((resolve) => {
-    request.onsuccess = () => resolve(request.result);
-  });
-  const transaction = db.transaction.bind(db);
-  let refuse = true;
-  db.transaction = (...args) => {
-    if (refuse && args[1] === 'readwrite')
-      throw new DOMException('Test storage quota', 'QuotaExceededError');
-    return transaction(...args);
-  };
-  t.after(() => {
-    db.transaction = transaction;
-  });
+  assets.failAnyPutAt = 1;
   const run = page.rendered.run,
     checkpoint = authoritativeCheckpoint(run);
   await open(page);
@@ -181,7 +173,7 @@ test('a failed asset transaction keeps the installed library and current run; ex
   assert.deepEqual(page.storage.map, stored);
   assert.equal(page.rendered.run, run);
   assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
-  refuse = false;
+  assets.failAnyPutAt = null;
   page.$(`optional-worlds-install-${first.id}`).click();
   await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
   page.frame(0);
@@ -401,7 +393,7 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
       assert.equal(card.children[0].tagName, 'H3');
       return card.children[0].textContent;
     }),
-    catalog.packs.map((item) => item.name),
+    [...catalog.packs.map((item) => item.name), 'Pressure Pictures · source originals pilot'],
     'Cancelled list does not publish its reduced card set',
   );
   assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, false);

@@ -68,13 +68,15 @@ export function createPackCommitCoordinator({
   let pending = false;
   let reconciliation = null;
 
-  const commit = (value, { beforeWrite } = {}) => {
+  const commit = (value, { beforeWrite, writeValue = write } = {}) => {
+    if (typeof writeValue !== 'function')
+      throw new TypeError('Pack commit writer must be a function.');
     if (beforeWrite !== undefined && typeof beforeWrite !== 'function')
       throw new TypeError('Pack commit preflight must be a function.');
     const commitRevision = ++revision;
     const result = writeTail.then(async () => {
       beforeWrite?.();
-      await write(value);
+      await writeValue(value);
       return commitRevision;
     });
     writeTail = result.then(
