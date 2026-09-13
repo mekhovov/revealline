@@ -2,6 +2,8 @@
 
 This isolated P5 slice adds `.rlstory` framing and a complete-inventory restore transaction to the [opt-in v4 story store](story-media-storage.md) at `582ab5d8dc17a5e06c8af56c39a3977bab27cfcd`. It prepares original video recovery for the later win → optional story → Collection journey. It does not adopt v4 in any host, add an earned-story receipt, choose a current assignment, change a build/version, or provide a new browser preview. Existing JSON game-data, `.rlmedia` and `.rlsound` formats remain exact.
 
+The subsequent isolated [authored-binding model](authored-story-bindings.md) adds explicit logical-v2 selections and matched binary-v2 dispatch. This guide preserves the original v1 transfer layout/evidence; both old and new files retain the same byte, codec and paired-recovery boundaries.
+
 ## Contents and authority
 
 A bundle contains the strict `revealline-story-storage.v1` descriptor history, its explicit available-original hash list, the retained still metadata/owners needed to interpret those descriptors, and each available original video's exact bytes. It contains **no poster image bytes, audio originals, progress, saves, packs or awards**. The still metadata is context for validation; importing `.rlstory` never installs that context into a destination. Recover the exact still context and poster originals through `.rlmedia` separately.

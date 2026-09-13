@@ -4,10 +4,15 @@ import {
   validateStoredStories,
   ownStoryOriginals,
   prepareStoredStories,
+  STORY_STORAGE_FORMAT,
+  STORY_BINDINGS_FORMAT,
+  storedStoryMetadataBytes,
+  verifyStoredStoryBindings,
 } from './story-storage-record.mjs';
 import { MANAGED_MEDIA_LIMITS } from './managed-media-store.mjs';
 
 export const STORY_BUNDLE_FORMAT = 'revealline-story-bundle.v1';
+export const STORY_BINDING_BUNDLE_FORMAT = 'revealline-story-bundle.v2';
 export const STORY_BUNDLE_LIMITS = Object.freeze({
   bytes: MANAGED_MEDIA_LIMITS.bytes,
   manifestBytes: MANAGED_MEDIA_LIMITS.metadataBytes + 65536,
@@ -15,6 +20,9 @@ export const STORY_BUNDLE_LIMITS = Object.freeze({
   sourceBytes: MANAGED_MEDIA_LIMITS.sourceBytes,
 });
 const MAGIC = new TextEncoder().encode('RLSRB1\r\n');
+const BINDING_MAGIC = new TextEncoder().encode('RLSRB2\r\n');
+const bundleFormat = (document) =>
+  document.format === STORY_BINDINGS_FORMAT ? STORY_BINDING_BUNDLE_FORMAT : STORY_BUNDLE_FORMAT;
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const imported = new WeakSet(),
   restores = new WeakMap();
@@ -28,7 +36,7 @@ function context(documentSource, stillSource) {
   const still = validateStoredStillMedia(stillSource),
     document = validateStoredStories(documentSource, still);
   required(
-    encoded(still).length + (document.stories.length ? encoded(document).length : 0) <=
+    encoded(still).length + storedStoryMetadataBytes(document) <=
       MANAGED_MEDIA_LIMITS.metadataBytes,
     'Still and story metadata exceed the shared 2 MiB budget.',
   );
@@ -74,8 +82,9 @@ export async function exportStoryBundle(
   abort(signal);
   const { document, still } = context(documentSource, stillSource),
     assets = [...(await verifyOriginalBytes(document, sourceAssets, signal))].sort(sortHashes),
+    verified = await verifyStoredStoryBindings(document, { signal }),
     manifest = encoded({
-      format: STORY_BUNDLE_FORMAT,
+      format: bundleFormat(verified),
       document,
       still,
       assets: assets.map(({ sha256, blob }) => ({ sha256, bytes: nativeSize.call(blob) })),
@@ -87,7 +96,7 @@ export async function exportStoryBundle(
   const length = 12 + manifest.length + assets.reduce((n, a) => n + nativeSize.call(a.blob), 0);
   required(length <= STORY_BUNDLE_LIMITS.bytes, 'Story bundle exceeds 256 MiB including metadata.');
   const header = new Uint8Array(12);
-  header.set(MAGIC);
+  header.set(document.format === STORY_BINDINGS_FORMAT ? BINDING_MAGIC : MAGIC);
   new DataView(header.buffer).setUint32(8, manifest.length, false);
   abort(signal);
   return new Blob([header, manifest, ...assets.map((a) => a.blob)], {
@@ -103,10 +112,9 @@ export async function inspectStoryBundle(source, { signal } = {}) {
   const blob = ownBundle(source),
     header = new Uint8Array(await blob.slice(0, 12).arrayBuffer());
   abort(signal);
-  required(
-    MAGIC.every((b, i) => header[i] === b),
-    'Unsupported story bundle.',
-  );
+  const v1 = MAGIC.every((b, i) => header[i] === b),
+    v2 = BINDING_MAGIC.every((b, i) => header[i] === b);
+  required(v1 || v2, 'Unsupported story bundle.');
   const length = new DataView(header.buffer).getUint32(8, false);
   required(
     length > 0 && length <= STORY_BUNDLE_LIMITS.manifestBytes && 12 + length <= blob.size,
@@ -124,7 +132,14 @@ export async function inspectStoryBundle(source, { signal } = {}) {
     maxString: 65536,
   });
   exactKeys(manifest, ['format', 'document', 'still', 'assets'], 'story bundle');
-  required(manifest.format === STORY_BUNDLE_FORMAT, 'Unsupported story bundle manifest.');
+  required(
+    manifest.format === (v2 ? STORY_BINDING_BUNDLE_FORMAT : STORY_BUNDLE_FORMAT),
+    'Unsupported or crossed story bundle manifest.',
+  );
+  required(
+    manifest.document?.format === (v2 ? STORY_BINDINGS_FORMAT : STORY_STORAGE_FORMAT),
+    'Story bundle and storage document versions differ.',
+  );
   const { document, still } = context(manifest.document, manifest.still);
   required(
     Array.isArray(manifest.assets) && manifest.assets.length <= STORY_BUNDLE_LIMITS.assets,
@@ -150,8 +165,9 @@ export async function inspectStoryBundle(source, { signal } = {}) {
   }
   required(offset === blob.size, 'Story bundle has trailing bytes.');
   const owned = await verifyOriginalBytes(document, assets, signal);
+  await verifyStoredStoryBindings(document, { signal });
   abort(signal);
-  return Object.freeze({ format: STORY_BUNDLE_FORMAT, document, still, assets: owned });
+  return Object.freeze({ format: manifest.format, document, still, assets: owned });
 }
 
 /** Default import uses real native silent video inspection. A byte-only CLI
@@ -194,6 +210,7 @@ export async function prepareStoryBundleRestore(bundle, { store, signal, ...insp
     document: staged.document,
     originals: staged.document.originals.length,
     reservedSourceBytes: staged.reservedSourceBytes,
+    bindingPolicy: inspection.restoreBindings === true ? 'restore-incoming' : 'keep-current',
   });
   restores.set(review, { store, staged });
   return review;

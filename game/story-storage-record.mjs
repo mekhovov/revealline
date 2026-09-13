@@ -4,9 +4,19 @@ import {
   hydrateStoredStillMedia,
   createStoredStillIdentityCatalog,
 } from './media-storage-record.mjs';
+import { snapshotPictureChoice } from './presentation-pins.mjs';
 import { validateVictoryStory, prepareVictoryStory } from './victory-story.mjs';
 
 export const STORY_STORAGE_FORMAT = 'revealline-story-storage.v1';
+export const STORY_BINDINGS_FORMAT = 'revealline-story-storage.v2';
+const hashValid = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
+const abort = (signal) => {
+  if (signal?.aborted) throw new DOMException('Story binding cancelled.', 'AbortError');
+};
+export const storedStoryMetadataBytes = (document) =>
+  document.stories.length || document.bindings?.length
+    ? new TextEncoder().encode(canonicalJSON(document)).length
+    : 0;
 const preparations = new WeakSet();
 const nativeSize = Object.getOwnPropertyDescriptor(Blob.prototype, 'size').get;
 const key = (story) => JSON.stringify([story.id, story.revision]);
@@ -25,9 +35,14 @@ export function validateStoredStories(source, stillSource) {
     maxArray: 512,
     maxString: 2048,
   });
-  exactKeys(value, ['format', 'stories', 'originals'], 'stored stories');
+  const bindings = value.format === STORY_BINDINGS_FORMAT;
+  exactKeys(
+    value,
+    ['format', 'stories', 'originals', ...(bindings ? ['bindings'] : [])],
+    'stored stories',
+  );
   required(
-    value.format === STORY_STORAGE_FORMAT &&
+    (value.format === STORY_STORAGE_FORMAT || bindings) &&
       Array.isArray(value.stories) &&
       Array.isArray(value.originals),
     'Unsupported stored stories.',
@@ -59,12 +74,143 @@ export function validateStoredStories(source, stillSource) {
     bytes += sources.get(hash).bytes;
   }
   required(bytes <= 256 * 1024 * 1024, 'Story inventory exceeds the shared managed budget.');
+  if (bindings) {
+    required(
+      Array.isArray(value.bindings) && value.bindings.length <= 512,
+      'Expected explicit bounded story bindings.',
+    );
+    const bound = new Set();
+    value.bindings = value.bindings.map((binding) => {
+      exactKeys(binding, ['picturePin', 'story'], 'authored story binding');
+      const picturePin = pictureInContext(binding.picturePin, still, identityCatalog),
+        id = canonicalJSON(picturePin);
+      required(!bound.has(id), 'Duplicate exact picture story binding.');
+      bound.add(id);
+      if (binding.story !== null) {
+        exactKeys(
+          binding.story,
+          ['id', 'revision', 'descriptorSha256'],
+          'authored story reference',
+        );
+        const selected = value.stories.find(
+          (story) => story.id === binding.story.id && story.revision === binding.story.revision,
+        );
+        required(
+          selected &&
+            canonicalJSON(selected.picturePin) === id &&
+            hashValid(binding.story.descriptorSha256),
+          'Story binding needs the exact retained descriptor and picture.',
+        );
+      }
+      return { picturePin, story: binding.story };
+    });
+  }
   return freezeMedia(value);
+}
+
+function pictureInContext(source, still, owners) {
+  const pin = snapshotPictureChoice(source),
+    presentation = still.library.presentations.find(
+      (p) => p.id === pin.presentationId && p.revision === pin.presentationRevision,
+    ),
+    asset = still.library.assets.find((a) => a.id === pin.assetId);
+  required(
+    pin.kind === 'still' &&
+      owners.has(pin.identity) &&
+      presentation &&
+      asset &&
+      canonicalJSON(presentation.identity) === canonicalJSON(pin.identity) &&
+      presentation.poster.assetId === pin.assetId &&
+      asset.sha256 === pin.sha256,
+    'Restore the exact historical poster and owner for this story binding.',
+  );
+  return pin;
+}
+export function validateStoredStoryPicture(source, stillSource) {
+  const still = hydrateStoredStillMedia(stillSource);
+  return pictureInContext(source, still, createStoredStillIdentityCatalog(still));
+}
+
+export async function storyDescriptorSha256(descriptor, { signal } = {}) {
+  abort(signal);
+  const own = boundedJSON(descriptor, {
+      maxBytes: 8192,
+      maxArray: 16,
+      maxNodes: 256,
+      maxString: 2048,
+    }),
+    bytes = new TextEncoder().encode(canonicalJSON(own)),
+    digest = await crypto.subtle.digest('SHA-256', bytes);
+  abort(signal);
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/** Structural validation stays synchronous for IndexedDB's final transaction.
+ * Rehash every declared reference before publishing asynchronous read/preparation authority.
+ */
+export async function verifyStoredStoryBindings(document, { signal } = {}) {
+  abort(signal);
+  for (const binding of document.bindings ?? [])
+    if (binding.story !== null) {
+      const selected = document.stories.find(
+        (s) => s.id === binding.story.id && s.revision === binding.story.revision,
+      );
+      required(
+        selected &&
+          (await storyDescriptorSha256(selected, { signal })) === binding.story.descriptorSha256,
+        'Authored story descriptor hash differs from its immutable history.',
+      );
+    }
+  abort(signal);
+  return document;
+}
+
+/** Deliberate authoring operation. Missing/null does not select the first history row. */
+export async function changeStoredStoryBinding(source, request, stillSource, { signal } = {}) {
+  const context = hydrateStoredStillMedia(stillSource),
+    safe = validateStoredStories(source, context),
+    own = boundedJSON(request, { maxBytes: 8192, maxArray: 16, maxNodes: 256, maxString: 2048 });
+  exactKeys(own, ['picturePin', 'story'], 'story binding request');
+  const picturePin = validateStoredStoryPicture(own.picturePin, context),
+    bindings = [...(safe.bindings ?? [])];
+  let story = null;
+  if (own.story !== null) {
+    exactKeys(own.story, ['id', 'revision'], 'story selection');
+    const selected = safe.stories.find(
+      (s) => s.id === own.story.id && s.revision === own.story.revision,
+    );
+    required(
+      selected && canonicalJSON(selected.picturePin) === canonicalJSON(picturePin),
+      'Select an exact existing story for this poster.',
+    );
+    story = {
+      id: selected.id,
+      revision: selected.revision,
+      descriptorSha256: await storyDescriptorSha256(selected, { signal }),
+    };
+  }
+  await verifyStoredStoryBindings(safe, { signal });
+  const index = bindings.findIndex(
+      (b) => canonicalJSON(b.picturePin) === canonicalJSON(picturePin),
+    ),
+    next = { picturePin, story };
+  if (index < 0) bindings.push(next);
+  else bindings[index] = next;
+  return validateStoredStories({ ...safe, format: STORY_BINDINGS_FORMAT, bindings }, context);
 }
 export function assertStoredStoryTransition(current, next, still) {
   const old = validateStoredStories(current, still),
     safe = validateStoredStories(next, still),
     retained = new Map(safe.stories.map((story) => [key(story), story]));
+  required(
+    old.format !== STORY_BINDINGS_FORMAT || safe.format === STORY_BINDINGS_FORMAT,
+    'Story bindings cannot be downgraded to v1.',
+  );
+  const bound = new Set((safe.bindings ?? []).map((binding) => canonicalJSON(binding.picturePin)));
+  required(
+    (old.bindings ?? []).every((binding) => bound.has(canonicalJSON(binding.picturePin))),
+    'Authored binding identities cannot be removed; choose explicit null.',
+  );
   for (const story of old.stories)
     required(
       canonicalJSON(retained.get(key(story)) ?? null) === canonicalJSON(story),
@@ -140,6 +286,7 @@ export async function prepareStoredStories(document, sourceAssets, { still, ...o
     identityCatalog = createStoredStillIdentityCatalog(context),
     owned = ownStoryOriginals(sourceAssets, safe.originals);
   // Snapshot all caller-controlled input before the first decoder/hash await.
+  await verifyStoredStoryBindings(safe, options);
   const assets = [];
   for (const item of owned) {
     const descriptor = safe.stories.find((story) => story.source.sha256 === item.sha256),
