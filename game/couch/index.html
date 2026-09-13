@@ -1,150 +1,295 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#112d35" />
-    <title>Reveal / Line — Couch race</title>
+    <title>Couch race · Reveal Line</title>
     <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="couch.css" />
     <link rel="stylesheet" href="../ui/game-shell.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
+    <link rel="stylesheet" href="couch.css" />
   </head>
   <body>
-    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
-    <header class="masthead" data-boot-inert inert>
-      <a class="wordmark" href="../">◩ REVEAL / LINE</a>
-      <nav>
-        <a id="race-solo-return" href="../">Solo campaign ↗</a>
-        <span class="version">COUCH / TWO PLAYERS</span>
-      </nav>
-    </header>
-    <main data-boot-inert inert aria-busy="true" class="couch-page">
-      <div class="edition">
-        <span>SAME MAP. TWO DIFFERENT LINES.</span><span id="series-score">0 : 0</span>
-      </div>
-      <section class="race-setup" aria-label="Race setup">
-        <label class="field">Map<select id="race-level"></select></label>
-        <label class="field">World<select id="race-theme"></select></label>
-        <label class="field">Shared class<select id="race-class"></select></label>
-        <label class="field"
-          >Steering<select id="race-turn">
-            <option value="immediate">Immediate</option>
-            <option value="grid-center">Grid + buffer</option>
-          </select></label
+    <p id="boot-status" role="status">Preparing both boards…</p>
+    <main id="couch-app" data-boot-inert inert aria-busy="true">
+      <div id="race-hud" class="race-hud" hidden>
+        <button id="race-pause" type="button" disabled>Pause</button>
+        <span class="race-score"
+          ><span class="sun">SUNFLOWER</span> <strong id="series-score">0 : 0</strong>
+          <span class="sky">SKYLINE</span></span
         >
-        <label class="field"
-          >Round<select id="race-time">
-            <option value="90">90 seconds</option>
-            <option value="180">3 minutes</option>
-            <option value="30">30 seconds</option>
-          </select></label
-        >
-      </section>
-      <div class="race-actions">
-        <button id="race-start" class="button primary">Start round ↗</button
-        ><button id="race-focus" class="button secondary">Focus boards</button
-        ><button id="race-pause" class="button secondary" disabled>Pause</button
-        ><button id="race-reset" class="button secondary">New match</button
-        ><button id="race-audio" class="button secondary">Enable music ♫</button
-        ><button id="race-menu-release" class="button secondary" type="button" hidden disabled>
-          Release menu controller</button
-        ><label><input id="race-tap" type="checkbox" /> Toggle on-screen Boost</label
-        ><label><input id="race-reduced" type="checkbox" /> Reduced effects</label
-        ><strong id="race-clock">1:30</strong>
+        <strong id="race-clock">1:30</strong>
       </div>
-      <p
-        id="race-menu-status"
-        class="race-menu-status"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        Fixed couch menu: South selects; East cancels. Release controls, then press a face button or
-        Menu to join. Keyboard and touch also work.
-      </p>
-      <p id="race-message" class="race-message" role="status">
-        Choose your side. First clear wins. Equal finishes draw. No campaign rewards are changed.
-      </p>
-      <div id="race-boards" class="race-boards">
-        <section class="racer" data-player="0">
+      <div id="race-boards" class="race-boards" aria-label="Two separate race boards" hidden>
+        <section class="racer" data-player="0" aria-label="Player 1: Sunflower">
           <div class="racer-heading">
-            <strong>01 / SUNFLOWER</strong><span id="racer-state-0">Ready</span>
+            <h2>Sunflower</h2>
+            <span id="racer-state-0">Ready</span>
           </div>
-          <canvas
-            id="race-canvas-0"
-            tabindex="-1"
-            width="768"
-            height="576"
-            role="img"
-            aria-label="Player one territory board"
-          ></canvas>
-          <div id="racer-stats-0" class="racer-stats">0% · 3 lives</div>
+          <div class="race-arena">
+            <canvas
+              id="race-canvas-0"
+              width="768"
+              height="576"
+              tabindex="-1"
+              role="img"
+              aria-label="Player 1 race board"
+            ></canvas>
+          </div>
+          <p id="racer-stats-0" class="racer-stats">0.0% · 3 lives · 0 points</p>
           <div
             id="racer-encounter-0"
             class="racer-encounter"
             role="group"
-            aria-label="Sunflower encounter phase"
+            aria-label="Player 1 encounter"
             hidden
           >
-            <strong id="racer-encounter-title-0"></strong>
-            <span id="racer-encounter-instruction-0"></span>
+            <strong id="racer-encounter-title-0"></strong
+            ><span id="racer-encounter-instruction-0"></span>
           </div>
-          <div class="race-pad" data-player="0">
-            <button data-direction="up" aria-label="Player one up">↑</button
-            ><button data-direction="left" aria-label="Player one left">←</button
-            ><button data-direction="stop" aria-label="Player one stop">■</button
-            ><button data-direction="right" aria-label="Player one right">→</button
-            ><button data-direction="down" aria-label="Player one down">↓</button
-            ><button data-action="action">Ability</button
-            ><button data-action="pickup">Supply</button
-            ><button data-action="boost" aria-pressed="false">Boost</button>
+          <div class="race-pad" data-player="0" aria-label="Player 1 touch controls" hidden>
+            <div class="race-cross" role="group" aria-label="Player 1 directions">
+              <button type="button" data-direction="up" aria-label="Player 1 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 1 left">←</button>
+              <span class="cross-center" aria-hidden="true">1</span>
+              <button type="button" data-direction="right" aria-label="Player 1 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 1 down">↓</button>
+            </div>
+            <div class="race-equipment" role="group" aria-label="Player 1 equipment">
+              <button type="button" data-action="action">Ability</button>
+              <button type="button" data-action="pickup">Supply</button>
+              <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+            </div>
           </div>
-          <p>WASD · Q ability · E supply · Left Shift boost</p>
+          <p id="racer-input-0" class="racer-input"></p>
         </section>
-        <section class="racer" data-player="1">
+        <section class="racer" data-player="1" aria-label="Player 2: Skyline">
           <div class="racer-heading">
-            <strong>02 / SKYLINE</strong><span id="racer-state-1">Ready</span>
+            <h2>Skyline</h2>
+            <span id="racer-state-1">Ready</span>
           </div>
-          <canvas
-            id="race-canvas-1"
-            width="768"
-            height="576"
-            role="img"
-            aria-label="Player two territory board"
-          ></canvas>
-          <div id="racer-stats-1" class="racer-stats">0% · 3 lives</div>
+          <div class="race-arena">
+            <canvas
+              id="race-canvas-1"
+              width="768"
+              height="576"
+              tabindex="-1"
+              role="img"
+              aria-label="Player 2 race board"
+            ></canvas>
+          </div>
+          <p id="racer-stats-1" class="racer-stats">0.0% · 3 lives · 0 points</p>
           <div
             id="racer-encounter-1"
             class="racer-encounter"
             role="group"
-            aria-label="Skyline encounter phase"
+            aria-label="Player 2 encounter"
             hidden
           >
-            <strong id="racer-encounter-title-1"></strong>
-            <span id="racer-encounter-instruction-1"></span>
+            <strong id="racer-encounter-title-1"></strong
+            ><span id="racer-encounter-instruction-1"></span>
           </div>
-          <div class="race-pad" data-player="1">
-            <button data-direction="up" aria-label="Player two up">↑</button
-            ><button data-direction="left" aria-label="Player two left">←</button
-            ><button data-direction="stop" aria-label="Player two stop">■</button
-            ><button data-direction="right" aria-label="Player two right">→</button
-            ><button data-direction="down" aria-label="Player two down">↓</button
-            ><button data-action="action">Ability</button
-            ><button data-action="pickup">Supply</button
-            ><button data-action="boost" aria-pressed="false">Boost</button>
+          <div class="race-pad" data-player="1" aria-label="Player 2 touch controls" hidden>
+            <div class="race-cross" role="group" aria-label="Player 2 directions">
+              <button type="button" data-direction="up" aria-label="Player 2 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 2 left">←</button>
+              <span class="cross-center" aria-hidden="true">2</span>
+              <button type="button" data-direction="right" aria-label="Player 2 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 2 down">↓</button>
+            </div>
+            <div class="race-equipment" role="group" aria-label="Player 2 equipment">
+              <button type="button" data-action="action">Ability</button>
+              <button type="button" data-action="pickup">Supply</button>
+              <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+            </div>
           </div>
-          <p>Arrow keys · Enter ability · / supply · Right Shift boost</p>
+          <p id="racer-input-1" class="racer-input"></p>
         </section>
       </div>
-      <p id="race-pad-status" class="micro-note">
-        One keyboard, two sets of touch controls, or two standard controllers. Escape pauses both
-        boards. First to two round wins takes the match; draws do not add points.
-      </p>
-      <p class="micro-note">
-        Boards are separate and use identical rules and seed. If time runs out, coverage wins; lives
-        and score break ties. Network transport is planned; this mode runs on this device.
-      </p>
+      <div id="race-shell" class="race-shell">
+        <section id="race-main" class="race-screen" aria-labelledby="race-title">
+          <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
+          <h1 id="race-title">Two boards.<br />One race.</h1>
+          <p id="race-message" role="status">Both boards use the same map, class and seed.</p>
+          <p id="race-summary" class="race-summary"></p>
+          <div class="race-seats">
+            <article class="seat sun">
+              <span>PLAYER 1</span>
+              <h2>Sunflower</h2>
+              <p id="race-seat-0">W A S D</p>
+              <p id="race-result-0" hidden></p>
+            </article>
+            <article class="seat sky">
+              <span>PLAYER 2</span>
+              <h2>Skyline</h2>
+              <p id="race-seat-1">Arrow keys</p>
+              <p id="race-result-1" hidden></p>
+            </article>
+          </div>
+          <div class="race-menu-actions">
+            <button id="race-start" class="race-primary" type="button">Start round</button>
+            <button id="race-focus" type="button">Race setup</button>
+            <button id="race-options" type="button">Options</button>
+            <button id="race-help" type="button">How to play</button>
+            <button id="race-review" type="button" hidden>View both boards</button>
+            <a id="race-solo-return" href="../">Return to solo</a>
+          </div>
+          <p class="race-footnote">
+            First to two rounds. Couch races do not change your solo progress.
+          </p>
+        </section>
+        <section
+          id="race-setup"
+          class="race-screen"
+          aria-labelledby="race-setup-title"
+          hidden
+          inert
+        >
+          <p class="race-kicker">SAME CONDITIONS / TWO ROUTES</p>
+          <h1 id="race-setup-title">Race setup</h1>
+          <p>Choose together. Each player starts with the same map, craft and time.</p>
+          <div class="race-fields">
+            <label>Map<select id="race-level"></select></label>
+            <label>World<select id="race-theme"></select></label>
+            <label id="race-class-field">Craft<select id="race-class"></select></label>
+            <label
+              >Steering<select id="race-turn">
+                <option value="immediate">Immediate turns</option>
+                <option value="grid-center">Grid-center turns</option>
+              </select></label
+            >
+            <label
+              >Round time<select id="race-time">
+                <option value="90">90 seconds</option>
+                <option value="180">3 minutes</option>
+                <option value="30">30 seconds</option>
+              </select></label
+            >
+          </div>
+          <p id="race-loadout" class="race-summary"></p>
+          <button id="race-setup-back" type="button">Done · back to lobby</button>
+        </section>
+        <section
+          id="race-options-panel"
+          class="race-screen"
+          aria-labelledby="race-options-title"
+          hidden
+          inert
+        >
+          <p class="race-kicker">MAKE YOURSELF AT HOME</p>
+          <h1 id="race-options-title">Options</h1>
+          <div class="race-fields">
+            <label
+              >Player 1 touch controls<select id="race-touch-0">
+                <option value="auto">Auto</option>
+                <option value="always">Always</option>
+                <option value="off">Off</option>
+              </select></label
+            >
+            <label
+              >Player 2 touch controls<select id="race-touch-1">
+                <option value="auto">Auto</option>
+                <option value="always">Always</option>
+                <option value="off">Off</option>
+              </select></label
+            >
+          </div>
+          <p>
+            Auto shows a player's controls after a touch on their board. Keyboard or controller use
+            hides them at the next pause. Choose Always to play with a mouse.
+          </p>
+          <label id="race-tap-field" class="race-check"
+            ><input id="race-tap" type="checkbox" /> Toggle on-screen Boost</label
+          >
+          <label class="race-check"
+            ><input id="race-reduced" type="checkbox" /> Reduced effects</label
+          >
+          <button id="race-audio" type="button">Enable music</button>
+          <button id="race-menu-release" type="button" hidden disabled>
+            Release menu controller
+          </button>
+          <p id="race-pad-status" class="race-footnote"></p>
+          <button id="race-options-back" type="button">Back</button>
+        </section>
+        <section
+          id="race-help-panel"
+          class="race-screen"
+          aria-labelledby="race-help-title"
+          hidden
+          inert
+        >
+          <p class="race-kicker">FIND YOUR OWN LINE</p>
+          <h1 id="race-help-title">How to play</h1>
+          <button id="race-help-read" type="button">Read controls</button>
+          <div
+            id="race-help-reading"
+            role="region"
+            aria-label="Couch controls and rules"
+            tabindex="0"
+            data-game-reading
+          >
+            <p>
+              Leave the safe edge, draw a line, and return to safety to capture territory. Avoid
+              enemies touching you or your unfinished line.
+            </p>
+            <p>
+              A direction keeps moving after release. Turn with a fresh direction. Capture and
+              recovery stop that player's movement; choose a fresh direction to leave again.
+            </p>
+            <div class="race-seats">
+              <article class="seat sun">
+                <h2>Player 1</h2>
+                <p id="race-help-0"></p>
+              </article>
+              <article class="seat sky">
+                <h2>Player 2</h2>
+                <p id="race-help-1"></p>
+              </article>
+            </div>
+            <p id="race-controller-help"></p>
+            <p>
+              Escape or either controller's Menu pauses both boards. Resume is always explicit. Each
+              controller needs neutral controls before it can join or resume.
+            </p>
+            <p>
+              First clear wins the round. At the time limit: coverage, then lives, then score
+              decide. First to two round wins takes the match.
+            </p>
+          </div>
+          <button id="race-help-back" type="button">Back</button>
+        </section>
+        <section
+          id="race-confirm"
+          class="race-screen"
+          aria-labelledby="race-confirm-title"
+          hidden
+          inert
+        >
+          <p class="race-kicker">BOTH PLAYERS ARE PAUSED</p>
+          <h1 id="race-confirm-title">Start a new match?</h1>
+          <p>
+            The current couch round and series score will be replaced. Your solo progress stays
+            saved.
+          </p>
+          <button id="race-confirm-back" class="race-primary" type="button">Keep this match</button>
+          <button id="race-confirm-reset" type="button">New match · edit setup</button>
+        </section>
+        <section
+          id="race-leave-panel"
+          class="race-screen"
+          aria-labelledby="race-leave-title"
+          hidden
+          inert
+        >
+          <h1 id="race-leave-title">Return to solo?</h1>
+          <p>
+            This couch match is not saved when you leave. Your separate solo flight stays saved.
+          </p>
+          <button id="race-leave-back" class="race-primary" type="button">Stay here</button
+          ><a id="race-leave" href="../">Leave couch · return to solo</a>
+        </section>
+        <p id="race-menu-status" class="race-menu-status" role="status"></p>
+      </div>
     </main>
     <script type="module" src="couch.mjs"></script>
   </body>

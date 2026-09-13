@@ -37,9 +37,18 @@ export function attachCouchInput({
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
+  onAcceptedInput = () => {},
 } = {}) {
   if (typeof continuousSteering !== 'function')
     throw new TypeError('continuousSteering must be a function.');
+  if (typeof onAcceptedInput !== 'function')
+    throw new TypeError('onAcceptedInput must be a function.');
+  const accepted = (player, source) => {
+    // Optional display notification: a broken observer cannot reject an input.
+    try {
+      onAcceptedInput(player, source);
+    } catch {}
+  };
   const held = new Map(),
     captures = new Map(),
     keyDown = new Set(),
@@ -207,7 +216,12 @@ export function attachCouchInput({
     else clear();
     onPause();
   }
-  const begin = (player, kind, key, { toggle = false, element = null, code = null } = {}) => {
+  const begin = (
+    player,
+    kind,
+    key,
+    { toggle = false, element = null, code = null, source = 'keyboard' } = {},
+  ) => {
     if (destroyed || !active()) return;
     if (kind === 'stop') {
       stop(player);
@@ -227,6 +241,7 @@ export function attachCouchInput({
       held.set(key, { player, kind, element, code, order: ++order });
     }
     sync();
+    accepted(player, source);
   };
   listen(win, 'keydown', (e) => {
     if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -277,7 +292,11 @@ export function attachCouchInput({
       if (destroyed || !active() || (e.button !== undefined && e.button !== 0)) return;
       if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
-      begin(player, kind, `pointer:${e.pointerId}`, { toggle: tapMode(), element });
+      begin(player, kind, `pointer:${e.pointerId}`, {
+        toggle: tapMode(),
+        element,
+        source: e.pointerType === 'touch' ? 'touch' : 'pointer',
+      });
       if (kind === 'stop') return;
       captures.set(e.pointerId, { element, player });
       try {
@@ -320,7 +339,7 @@ export function attachCouchInput({
       if (e.detail !== 0 || button.keyGuard || destroyed || !active()) return;
       // An assistive click selects a persistent direction in continuous mode;
       // legacy tap steering and Boost retain their separate toggle behavior.
-      begin(player, kind, 'assist', { toggle: true, element });
+      begin(player, kind, 'assist', { toggle: true, element, source: 'pointer' });
     });
   }
   function poll() {
@@ -358,30 +377,51 @@ export function attachCouchInput({
       else clear();
       return players.map(neutralCommand);
     }
-    for (const player of players) {
+    const priorPads = players.map((player) => player.pad);
+    const freshButtons = [false, false];
+    for (const [i, player] of players.entries()) {
       const next = gamepadCommand(pads.find((p) => p.index === player.slot));
       if (player.blocked) {
         if (emptyPad(next)) player.blocked = false;
         player.pad = neutralPad();
-      } else player.pad = next;
+      } else {
+        freshButtons[i] = ['action', 'pickup', 'boost', 'pause'].some(
+          (key) => next[key] && !priorPads[i][key],
+        );
+        player.pad = next;
+      }
     }
     if (players.some((player) => player.pad.pause)) {
+      const pausing = players.map((player, i) => player.pad.pause && !priorPads[i].pause);
       pause();
+      for (const [i, fresh] of pausing.entries()) if (fresh) accepted(i, 'controller');
       return players.map(neutralCommand);
     }
+    const freshDirections = [false, false];
     if (continuous())
-      for (const player of players) {
+      for (const [i, player] of players.entries()) {
         if (
           player.pad.direction &&
           player.pad.direction !== player.lastPadDirection &&
           !player.localDirectionPending
-        )
+        ) {
           player.direction = player.pad.direction;
+          freshDirections[i] = true;
+        }
         player.lastPadDirection = player.pad.direction;
         player.localDirectionPending = false;
       }
+    else
+      for (const [i, player] of players.entries())
+        freshDirections[i] =
+          !!player.pad.direction &&
+          player.pad.direction !== priorPads[i].direction &&
+          commandFor(i).direction === player.pad.direction;
     sync();
-    return players.map((_, i) => commandFor(i));
+    const commands = players.map((_, i) => commandFor(i));
+    for (let i = 0; i < 2; i++)
+      if (freshDirections[i] || freshButtons[i]) accepted(i, 'controller');
+    return commands;
   }
   function consume() {
     if (destroyed || !active()) return players.map(neutralCommand);
