@@ -89,6 +89,7 @@ export function createSoundtrackPlayer({
   let failed = new Set(),
     fallbackUsed = false,
     listeners = [];
+  const gainLeases = new Map();
   const tracks = () => [
     ...BUILTIN_SOUNDTRACK_TRACKS,
     ...library.tracks,
@@ -162,8 +163,37 @@ export function createSoundtrackPlayer({
   }
   function gains() {
     const master = soundscape.getSettings().master;
-    soundscape.configure({ music: volume * fade });
-    media.volume = Math.max(0, Math.min(1, master * volume * fade));
+    let factor = 1;
+    for (const value of gainLeases.values()) factor = Math.min(factor, value);
+    soundscape.configure({ music: volume * fade * factor });
+    media.volume = Math.max(0, Math.min(1, master * volume * fade * factor));
+  }
+  /** Temporary attenuation only; the player remains the owner of base volume/intent.
+   * Overlapping owners use the lowest factor. Each owner releases only its lease.
+   */
+  function acquireGain({ factor } = {}) {
+    required(Number.isFinite(factor) && factor >= 0 && factor <= 1, 'Music gain must be 0..1.');
+    required(!disposed, 'The soundtrack player is disposed.');
+    const token = {};
+    gainLeases.set(token, factor);
+    try {
+      gains();
+      required(!disposed, 'The soundtrack player is disposed.');
+    } catch (failure) {
+      gainLeases.delete(token);
+      try {
+        gains();
+      } catch {
+        /* Preserve the failed mixer application; later transport updates can retry. */
+      }
+      throw failure;
+    }
+    return Object.freeze({
+      release() {
+        if (!gainLeases.delete(token) || disposed) return;
+        gains();
+      },
+    });
   }
   function cancel() {
     generation++;
@@ -581,6 +611,7 @@ export function createSoundtrackPlayer({
     soundscape.pauseMusic();
     clearMedia();
     fade = 1;
+    gainLeases.clear();
     gains();
     status = 'disposed';
     emit();
@@ -601,6 +632,7 @@ export function createSoundtrackPlayer({
     previous,
     seek,
     setVolume,
+    acquireGain,
     update,
     suspend,
     resume,
