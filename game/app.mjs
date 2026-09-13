@@ -4100,7 +4100,9 @@ try {
     scene: FieldScene,
     banner: false,
   });
-  missionPicker = attachMissionPicker();
+  missionPicker = attachMissionPicker({
+    archivedIds: preparePackCatalog(archiveCatalogSource).packs.map(({ id }) => id),
+  });
   optionalWorlds = attachOptionalChaptersPanel({
     getLibrary: () => packs,
     loadCatalog: ({ signal }) =>
