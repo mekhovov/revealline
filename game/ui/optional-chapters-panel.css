@@ -1,0 +1,95 @@
+.optional-worlds-dialog {
+  width: min(58rem, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 20px;
+  border: 2px solid var(--accent, #77d6ee);
+  border-radius: 0;
+  background: #071321;
+  color: #edf2e8;
+  overflow: auto;
+}
+.optional-worlds-top {
+  position: sticky;
+  top: -20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  margin-top: -12px;
+  background: #071321;
+  border-bottom: 1px solid #37546d;
+}
+.optional-worlds-top h2 {
+  margin: 0;
+}
+.optional-worlds-top .button {
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.optional-worlds-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.optional-world-card {
+  border: 1px solid #37546d;
+  border-top: 4px solid #70cace;
+  padding: 14px;
+  background: #101f30;
+  min-width: 0;
+}
+.optional-world-card.world-ukraine {
+  border-top-color: #e3bd69;
+}
+.optional-world-card.world-retro {
+  border-top-color: #d68ce9;
+}
+.optional-world-card.world-coupa {
+  border-top-color: #75b6ef;
+}
+.optional-world-card h3 {
+  margin: 0 0 8px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+}
+.optional-world-card p {
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.optional-world-card .button {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 8px;
+  white-space: normal;
+}
+.optional-worlds-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.optional-worlds-actions .button {
+  min-height: 44px;
+}
+#optional-worlds-status {
+  min-height: 2.8em;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 640px) {
+  .optional-worlds-dialog {
+    padding: 12px;
+  }
+  .optional-worlds-top {
+    top: -12px;
+  }
+  .optional-worlds-cards {
+    grid-template-columns: 1fr;
+  }
+  .optional-worlds-actions .button {
+    width: 100%;
+  }
+}
