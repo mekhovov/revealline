@@ -837,21 +837,21 @@ try {
   function controllerMenuRoot() {
     const region = controllerMenuRegion();
     // Nonmodal overlays share navigation with the visible shell bar. The
-    // accept predicate still confines this composite root to those two regions.
+    // accept predicate confines it to the overlay, shell and active lesson panel.
     controllerCompositeRegion =
-      region !== document && !controllerDialog() && !courseSession && !courseBlocked()
-        ? region
-        : null;
+      region !== document && !controllerDialog() && !courseBlocked() ? region : null;
     return controllerCompositeRegion ? document.body : region;
   }
   function controllerMenuAccepts(element) {
     return (
       (!controllerCompositeRegion ||
         controllerCompositeRegion.contains(element) ||
+        (courseSession && $('first-flight-panel').contains(element)) ||
         !!controllerShellBar?.contains(element)) &&
       (!courseSession ||
         $('game-overlay').hidden ||
         !!controllerDialog() ||
+        (!courseBlocked() && !!controllerShellBar?.contains(element)) ||
         $('game-overlay').contains(element) ||
         $('first-flight-panel').contains(element)) &&
       !element.matches(
@@ -1194,6 +1194,8 @@ try {
       },
     });
     if (!courseSession) return;
+    // Ended/transitioning embedded courses retain only their terminal reader.
+    if (controllerShellBar) controllerShellBar.hidden = courseBlocked();
     const progressText = `${Object.values(courseVisit).filter((value) => value === 'complete').length} / ${FIRST_FLIGHT_LESSONS.length} lessons this visit`;
     if ($('campaign-progress').textContent !== progressText)
       $('campaign-progress').textContent = progressText;
@@ -1387,6 +1389,7 @@ try {
       show('pause-label', false);
       show('overlay-reading', true);
       show('overlay-footnote', true);
+      show('overlay-menu', false);
       $('overlay-title').textContent = 'First Flight ended.';
       $('overlay-copy').textContent =
         'Practice awarded no progress. Use the parent page’s game link to return to ordinary play.';
@@ -2338,6 +2341,8 @@ try {
       'class-select',
       'theme-select',
       'hangar-button',
+      'shell-packs',
+      'shell-collection',
     ]) {
       $(id).disabled = true;
       $(id).hidden = true;
@@ -3194,6 +3199,16 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    show(
+      'pause-button',
+      started &&
+        !paused &&
+        !courseBlocked() &&
+        !campaignOverview &&
+        !celebrationActive &&
+        !defeatActive &&
+        !['won', 'lost'].includes(run.status),
+    );
     $('shell-edition').textContent = courseSession
       ? 'FIRST FLIGHT'
       : practice
@@ -4048,6 +4063,7 @@ try {
     },
   });
   gameShell = attachGameShell({
+    training: courseSession,
     focusBriefing: () => {
       clearInput();
       controllerReading.refresh();

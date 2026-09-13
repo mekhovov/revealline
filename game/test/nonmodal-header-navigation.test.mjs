@@ -266,27 +266,106 @@ for (const policy of ['immediate', 'grid-center']) {
     assert.ok(page.rendered.run.tick > pausedTick);
     assert.deepEqual(page.errors, []);
   });
-  test(`${policy}: First Flight ready and ended gates retain original course-only scope`, async (t) => {
+  for (const state of ['ready', 'paused', 'picture', 'result']) {
+    test(`${policy}: First Flight ${state} exposes usable header/menu actions and preserves its lesson`, async (t) => {
+      const page = await fixture(t, policy, {
+        search: `?course=first-flight&lesson=close-line&turn-policy=${policy}`,
+        parentWindow: {},
+      });
+      if (state === 'paused') startCut(page);
+      if (['picture', 'result'].includes(state)) {
+        win(page);
+        if (state === 'result') {
+          page.$('show-result').click();
+          page.frame(0);
+        }
+      }
+      const before = snapshot(page),
+        writes = page.storage.writes.length;
+      assert.equal(page.$('shell-edition').textContent, 'FIRST FLIGHT');
+      assert.equal(page.$('shell-packs').hidden, true);
+      assert.equal(page.$('shell-collection').hidden, true);
+      assert.equal(page.$('pause-button').hidden, true, 'inactive Pause is not an unused action');
+      const visited = new Set();
+      page.$('shell-settings').focus();
+      for (let i = 0; i < 60; i++) {
+        key(page, 'Tab');
+        visited.add(page.doc.activeElement.id);
+      }
+      assert.ok(visited.has('shell-settings'));
+      assert.ok(visited.has('shell-menu'));
+      assert.ok(visited.has('first-flight-exit'), 'lesson actions stay reachable with the picture');
+      assert.equal(visited.has('shell-packs'), false);
+      assert.equal(visited.has('shell-collection'), false);
+      page.$('shell-settings').focus();
+      key(page, 'Enter');
+      assert.equal(page.$('settings-dialog').open, true);
+      for (let i = 0; i < 20; i++) {
+        key(page, 'ArrowDown');
+        assert.ok(page.$('settings-dialog').contains(page.doc.activeElement));
+      }
+      key(page, 'Escape');
+      assert.equal(page.$('settings-dialog').open, false);
+      const controls = pad(page, t);
+      controls.reach('shell-settings');
+      controls.pulse(0);
+      assert.equal(page.$('settings-dialog').open, true);
+      controls.pulse(1);
+      assert.equal(page.$('settings-dialog').open, false);
+      controls.reach('shell-menu');
+      controls.pulse(0);
+      assert.equal(page.$('shell-home').open, true);
+      assert.equal(page.doc.activeElement.id, 'shell-course-return');
+      for (const id of [
+        'shell-featured',
+        'shell-play',
+        'shell-worlds',
+        'shell-library',
+        'shell-gallery',
+        'shell-guide',
+        'shell-continue',
+      ])
+        assert.equal(
+          page.$(id).hidden,
+          true,
+          `${id} does not offer an unavailable course destination`,
+        );
+      for (const element of page.doc.querySelectorAll('.home-actions a, .shell-tools'))
+        assert.equal(element.hidden, true);
+      const menuVisits = new Set();
+      for (let i = 0; i < 25; i++) {
+        key(page, 'ArrowDown');
+        menuVisits.add(page.doc.activeElement.id);
+      }
+      assert.ok(menuVisits.has('shell-course-return'));
+      assert.ok(menuVisits.has('shell-options'));
+      assert.ok(menuVisits.has('shell-music'));
+      controls.frame(); // Observe a released pad after the keyboard-to-controller change.
+      controls.reach('shell-course-return');
+      controls.pulse(0);
+      assert.equal(page.$('shell-home').open, false);
+      frames(page, 20);
+      unchanged(page, before);
+      assert.equal(
+        page.storage.writes.length,
+        writes,
+        'navigation awards and saves no course progress',
+      );
+      assert.deepEqual(page.errors, []);
+    });
+  }
+  test(`${policy}: ended embedded First Flight hides shell actions and keeps the terminal reader`, async (t) => {
     const page = await fixture(t, policy, {
       search: `?course=first-flight&lesson=close-line&turn-policy=${policy}`,
       parentWindow: {},
     });
-    assert.equal(page.$('shell-edition').textContent, 'FIRST FLIGHT');
-    assert.equal(page.$('game-overlay').hidden, false, 'course begins in ready panel');
-    const before = snapshot(page);
-    for (let i = 0; i < 25; i++) {
-      key(page, 'Tab');
-      assert.equal(!!page.doc.activeElement.closest('.shell-bar'), false);
-    }
-    const controls = pad(page, t);
-    assert.equal(page.$('game-overlay').hidden, false, 'joining leaves course ready');
-    for (let i = 0; i < 25; i++) {
-      controls.pulse(13);
-      assert.equal(!!page.doc.activeElement.closest('.shell-bar'), false);
-    }
+    const before = snapshot(page),
+      controls = pad(page, t);
     page.$('first-flight-exit').focus();
     key(page, 'Enter');
     assert.equal(page.$('game-overlay').dataset.kind, 'course-ended');
+    assert.equal(page.doc.querySelector('.shell-bar').hidden, true);
+    assert.equal(page.$('overlay-menu').hidden, true);
     for (let i = 0; i < 25; i++) {
       key(page, 'Tab');
       controls.pulse(13);

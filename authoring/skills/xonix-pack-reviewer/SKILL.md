@@ -74,3 +74,7 @@ For optional illustrated chapters, use the [shared chapter contract](../../../do
 ## Keep live pictures and earned originals stable
 
 When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
+
+## Training shell availability
+
+Apply the [training navigation contract](../../../docs/device-controls.md#training-navigation) when changing course/player navigation. Active First Flight includes its visible Game menu and Settings in keyboard/controller traversal; campaign-only destinations stay hidden. Back to lesson restores focus without resuming, and embedded End course keeps only the terminal reader. Test native Tab/Enter separately from modeled pad navigation and include a released-input frame when changing devices. Do not weaken neutral gates to make an old held input activate a menu.
