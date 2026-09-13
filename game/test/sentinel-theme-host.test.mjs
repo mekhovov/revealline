@@ -18,6 +18,92 @@ const proof = JSON.parse(
   ),
 );
 const settle = (fn) => waitFor(fn, { timeoutMs: 90000 });
+// Full retained-original verification is substantially slower in shared CI.
+// This test allowance does not change any runtime deadline or storage lease.
+const INVENTORY_TIMEOUT_MS = 180000;
+const CANCEL_JOIN_TIMEOUT_MS = 15000;
+function inventoryDiagnostic(p, phase) {
+  return JSON.stringify({
+    phase,
+    status: p.$('optional-worlds-status')?.textContent,
+    reloadDisabled: p.$('optional-worlds-reload')?.disabled,
+    rows: allEditions.map((e) => ({
+      id: e.descriptor.id,
+      state: p.$(id(e, 'state'))?.textContent,
+      chooseDisabled: p.$(id(e, 'choose'))?.disabled,
+    })),
+    errors: p.errors.map((error) => String(error?.stack ?? error)),
+  });
+}
+function clickOperation(p, control) {
+  const button = p.$(control),
+    original = button.onclick;
+  assert.equal(button.disabled, false, `${control} must be enabled`);
+  let operation;
+  button.onclick = function (...args) {
+    operation = original.apply(this, args);
+    return operation;
+  };
+  try {
+    button.click();
+  } finally {
+    button.onclick = original;
+  }
+  assert.equal(typeof operation?.then, 'function', `${control} must expose its action promise`);
+  return operation;
+}
+async function waitInventory(
+  p,
+  phase,
+  {
+    operation,
+    ready = () => !p.$('optional-worlds-reload').disabled,
+    timeoutMs = INVENTORY_TIMEOUT_MS,
+    cancelJoinTimeoutMs = CANCEL_JOIN_TIMEOUT_MS,
+  } = {},
+) {
+  let completed = !operation,
+    rejected = false,
+    failure;
+  operation?.then(
+    () => {
+      completed = true;
+    },
+    (error) => {
+      completed = rejected = true;
+      failure = error;
+    },
+  );
+  try {
+    await waitFor(() => completed && (operation || ready()), { timeoutMs, message: phase });
+    if (rejected) throw failure;
+    // A fulfilled panel handler can still report a refused installation.
+    assert.ok(ready(), `Completed action is not ready: ${inventoryDiagnostic(p, phase)}`);
+  } catch (error) {
+    const beforeCancel = inventoryDiagnostic(p, phase);
+    let cleanup = 'No pending action to cancel.';
+    if (!completed || (!operation && p.$('optional-worlds-reload')?.disabled)) {
+      const cancel = p.$('optional-worlds-cancel');
+      if (p.$('optional-worlds-dialog')?.open && cancel && !cancel.hidden) {
+        cancel.click();
+        cleanup = 'Actual panel Cancel requested.';
+      }
+      if (operation) {
+        try {
+          await waitFor(() => completed, { timeoutMs: cancelJoinTimeoutMs });
+          cleanup += ' Action promise settled after cancellation.';
+        } catch {
+          cleanup += ' Action promise did not settle within the cleanup allowance.';
+        }
+      } else {
+        // The shell's open callback exposes no promise. Its native Cancel path
+        // still aborts the panel; this cannot claim all async unwind has joined.
+        cleanup += ' Shell open exposes no promise to join.';
+      }
+    }
+    assert.fail(`${phase}: ${error?.message ?? error}\n${beforeCancel}\n${cleanup}`);
+  }
+}
 class Locks {
   held = new Set();
   async request(name, options, callback) {
@@ -120,9 +206,9 @@ const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
 async function open(p) {
   p.$('shell-menu').click();
   p.$('shell-worlds').click();
-  await settle(
-    () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
-  );
+  await waitInventory(p, 'Open More worlds and authenticate installed Sentinel originals', {
+    ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
+  });
 }
 async function choose(p, e) {
   p.$(id(e, 'choose')).click();
@@ -143,7 +229,9 @@ function ticks(p, n) {
 
 test('three Sentinel theme downloads preserve an unrelated cut, require Choose and retain distinct earned owners through backup/restart', async (t) => {
   const f = {};
-  let receipts, stories;
+  let receipts,
+    stories,
+    setupComplete = false;
   await t.test(
     'three explicit downloads, independent real wins and exact metadata backup',
     async (t) => {
@@ -165,8 +253,10 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
           SOURCE_EXTERNAL_CHAPTERS.find((d) => d.id === e.descriptor.id),
           e.descriptor,
         );
-        p.$(id(e, 'download')).click();
-        await settle(() => !p.$('optional-worlds-reload').disabled);
+        await waitInventory(p, `Download and authenticate exact ${e.descriptor.id}`, {
+          operation: clickOperation(p, id(e, 'download')),
+          ready: () => !p.$('optional-worlds-reload').disabled && !p.$(id(e, 'choose')).disabled,
+        });
         assert.equal(
           p.$(id(e, 'choose')).disabled,
           false,
@@ -227,10 +317,16 @@ test('three Sentinel theme downloads preserve an unrelated cut, require Choose a
       );
       assert(!p.$('save-json').value.includes('data:image'));
       assert.deepEqual(p.errors, []);
+      setupComplete = true;
     },
   );
   await t.test(
     'new app retains exact first-earned still/null-story pins and authenticates all three editions',
+    {
+      skip: setupComplete
+        ? false
+        : 'The prior download/win/backup setup failed; restart has no complete fixture to verify.',
+    },
     async (t) => {
       const p = await page(t, f, true);
       await open(p);
