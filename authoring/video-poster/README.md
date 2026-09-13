@@ -1,6 +1,6 @@
 # Standalone video poster workshop
 
-This source-only preview makes the [owned video acquisition API](../../game/video-poster.mjs) reviewable before story/schema integration. It opens no profile, media database, pack library, game or audio engine. It never saves an assignment or awards a picture. The existing still workshop and released game remain unchanged; this new directory is not yet in the build allowlist.
+This standalone preview makes the [owned video acquisition API](../../game/video-poster.mjs) reviewable before story/schema integration. It opens no profile, media database, pack library, game or audio engine. It never saves an assignment or awards a picture. The next source build explicitly includes its four browser entry assets, reached from the game’s Creator tools. The generator and this guide remain source-only. The already frozen v0.33 game is unchanged.
 
 From this worktree, run the repository server and open the explicit authoring URL:
 
@@ -9,6 +9,8 @@ node scripts/game-cli.mjs serve --port 8930
 ```
 
 Open `http://127.0.0.1:8930/authoring/video-poster/`. File URLs and failed module imports show local-server guidance with disabled source controls. Do not substitute a browser automation surface or inject application state to make a check pass.
+
+The Picture workshop link stays in the same origin and immutable edition, whose build metadata selects its profile/pack channel. Download a PNG before following it; the video page does not transfer bytes or upgrade a database automatically.
 
 Choose an owned MP4/WebM, inspect its dimensions/duration/hash, and select a time using the numeric field or slider. **Capture poster** is explicit. The preview displays requested seek, the reported frame timestamp (when available), approximate playhead, PNG dimensions/bytes/SHA and source SHA. **Download exact PNG** is a visible native link; asynchronous capture does not click it. The prepared Blob URL stays available for retry until source replacement, successful recapture, Clear, page exit or disposal.
 
