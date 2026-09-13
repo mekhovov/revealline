@@ -8,7 +8,7 @@ import { soloPage, settle } from './helpers/solo-dom.mjs';
 const load = async (name) =>
   JSON.parse(await readFile(new URL(`../content/packs/${name}.json`, import.meta.url), 'utf8'));
 const original = await load('fpv-arcade');
-const r4 = await load('fpv-arcade-r4');
+const featured = await load('fpv-arcade-r5');
 
 function chapterFetch(t, intercept) {
   const actual = globalThis.fetch;
@@ -109,7 +109,7 @@ test('featured download failure is visible inside the retained title and its but
   let available = false,
     requests = 0;
   chapterFetch(t, async (url, request) => {
-    if (url === 'content/packs/fpv-arcade-r4.json') {
+    if (url === 'content/packs/fpv-arcade-r5.json') {
       requests++;
       if (!available) throw new TypeError('Failed to fetch');
     }
@@ -129,7 +129,7 @@ test('featured download failure is visible inside the retained title and its but
   assert.ok(page.$('shell-home').contains(status));
   assert.equal(status.hidden, false);
   assert.equal(status.getAttribute('role'), 'status');
-  assert.match(status.textContent, /First Light Arcade R4/);
+  assert.match(status.textContent, /Pressure Lines/);
   assert.match(status.textContent, /choose this chapter again/);
   assert.equal(requests, 1);
   available = true;
@@ -138,8 +138,8 @@ test('featured download failure is visible inside the retained title and its but
   page.frame(0);
   assert.equal(requests, 2);
   assert.equal(page.$('shell-home').open, false);
-  assert.equal(page.$('pack-select').value, r4.id);
-  assert.deepEqual(page.rendered.run.level, normalizedLevel(r4.campaigns[0].levels[0]));
+  assert.equal(page.$('pack-select').value, featured.id);
+  assert.deepEqual(page.rendered.run.level, normalizedLevel(featured.campaigns[0].levels[0]));
   assert.deepEqual(page.errors, []);
 });
 

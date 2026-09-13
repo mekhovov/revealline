@@ -8,6 +8,7 @@ import {
   drawClassicEnemy,
   drawClassicStatus,
   drawLineImpacts,
+  drawEnemyPressure,
 } from './classic-view.mjs';
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
@@ -18,6 +19,8 @@ import {
   drawPresentedActor,
   drawActiveTrail,
   drawCapturePulse,
+  PRESENTATION_INK,
+  PRESENTATION_PLATE,
 } from './actor-presentation.mjs';
 import {
   createCelebration,
@@ -291,6 +294,14 @@ export class BoardPainter {
       actorSkins,
     });
     this.time += paused ? 0 : dt;
+    for (const effect of this.effects)
+      if (
+        fullReveal
+          ? !celebrationPaused
+          : !paused ||
+            (defeatEffectsRunning && state.status === 'lost' && effect.type === 'player.failed')
+      )
+        effect.age += dt;
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
     const backdrop = this.images.background || this.background;
@@ -334,6 +345,12 @@ export class BoardPainter {
       ctx.globalAlpha = 1;
     }
     drawClassicTerrain(ctx, classic, p, this.images);
+    // Reveal decoration belongs below current hazards, actors and live cuts.
+    // An old capture pulse must never wash over a newly opened live line.
+    if (!fullReveal)
+      for (const effect of this.effects)
+        if (effect.type === 'cells.claimed')
+          drawCapturePulse(ctx, effect, columns, state.cells, p, reduced);
     for (let y = 0; y < rows; y++)
       for (let x = 0; x < columns; x++) {
         const v = state.cells[y * columns + x],
@@ -565,9 +582,11 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
+      drawEnemyPressure(ctx, classic, p, { screenScale: canvasCSSWidth / W, frames: actorFrames });
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,
         reduced,
+        screenScale: canvasCSSWidth / W,
       });
       drawLineImpacts(ctx, classic, { screenScale: canvasCSSWidth / W });
       for (const e of state.enemies) {
@@ -621,7 +640,11 @@ export class BoardPainter {
           ctx.strokeRect(e.x * CELL - 13, e.y * CELL - 13, 26, 26);
         }
       }
-      drawClassicStatus(ctx, classic, p, { screenScale: canvasCSSWidth / W, canvasCSSWidth });
+      drawClassicStatus(ctx, classic, p, {
+        screenScale: canvasCSSWidth / W,
+        canvasCSSWidth,
+        frames: actorFrames,
+      });
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
         this.heading;
@@ -676,10 +699,10 @@ export class BoardPainter {
         0,
         TAU,
       );
-      ctx.strokeStyle = p.ink;
+      ctx.strokeStyle = PRESENTATION_PLATE;
       ctx.lineWidth = 3;
       ctx.stroke();
-      ctx.strokeStyle = debug ? '#ffffff' : p.paper;
+      ctx.strokeStyle = debug ? '#ffffff' : PRESENTATION_INK;
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.restore();
@@ -707,13 +730,6 @@ export class BoardPainter {
       }
     }
     for (const f of this.effects) {
-      if (
-        fullReveal
-          ? !celebrationPaused
-          : !paused ||
-            (defeatEffectsRunning && state.status === 'lost' && f.type === 'player.failed')
-      )
-        f.age += dt;
       if (!fullReveal)
         drawEventFeedback(ctx, f, p, {
           themeId: this.theme.id,
@@ -722,8 +738,6 @@ export class BoardPainter {
           width: W,
           height: H,
         });
-      if (!fullReveal && f.type === 'cells.claimed')
-        drawCapturePulse(ctx, f, columns, state.cells, p, reduced);
       if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
         ctx.strokeStyle = p.accent;

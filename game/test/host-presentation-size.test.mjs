@@ -127,8 +127,8 @@ for (const width of [306, 600]) {
     assert.equal(current.options.displayCSSWidth, width);
     assert.ok(playerSpan(current, width) >= minimum - 1e-9);
     assert.ok(playerSpan(current, width) <= 32 + 1e-9);
-    assert.ok(firstEnemySpan(current, width) >= (width >= 480 ? 18 : 12) - 1e-9);
-    assert.ok(firstEnemySpan(current, width) <= 28 + 1e-9);
+    assert.ok(firstEnemySpan(current, width) >= (width >= 480 ? 24 : 16) - 1e-9);
+    assert.ok(firstEnemySpan(current, width) <= 32 + 1e-9);
     assert.ok(
       current.context.calls.some(
         (c) =>

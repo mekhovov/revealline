@@ -118,15 +118,15 @@ test('cosmetic size targets desktop/phone readability without altering contact r
   for (const css of [320, 390, 600, 1152]) {
     const scale = css / 1152,
       diameter = actorDiameter({ screenScale: scale, canvasCSSWidth: css });
-    assert.ok(diameter * scale >= (css >= 480 ? 18 : 12) - 1e-9);
-    assert.ok(diameter * scale <= 28 + 1e-9);
+    assert.ok(diameter * scale >= (css >= 480 ? 24 : 16) - 1e-9);
+    assert.ok(diameter * scale <= 32 + 1e-9);
   }
   const small = createActorPresentation()
     .sample([actor], { screenScale: 0.3, canvasCSSWidth: 345 })
     .get(actor.id);
   assert.equal(small.radius, actor.radius * 16);
   assert.ok(small.diameter > 30);
-  assert.ok(actorDiameter({ screenScale: 0.01, scale: 100 }) <= 48);
+  assert.ok(actorDiameter({ screenScale: 0.01, scale: 100 }) <= 64);
 });
 test('four themes have distinct geometric silhouettes even with identical colors', () => {
   const palette = themes[0].palette,
@@ -220,9 +220,12 @@ test('capture pulse touches only newly secured cells and is absent for reduced m
     s = surface();
   drawCapturePulse(s.ctx, effect, 72, cells, themes[0].palette);
   const blocks = s.calls.filter((c) => c.op === 'fillRect');
-  assert.equal(blocks.length, 1);
+  assert.equal(blocks.length, 4, 'fill and exposed rim stay inside the one still-safe cell');
   assert.deepEqual(blocks[0].args, [16, 16, 16, 16]);
-  assert.ok(blocks[0].globalAlpha <= 0.2);
+  assert.ok(blocks.every((block) => block.globalAlpha <= 0.2));
+  assert.ok(
+    blocks.every(({ args: [x, y, w, h] }) => x >= 16 && y >= 16 && x + w <= 32 && y + h <= 32),
+  );
   const reduced = surface();
   drawCapturePulse(reduced.ctx, effect, 72, cells, themes[0].palette, true);
   assert.deepEqual(reduced.calls, []);

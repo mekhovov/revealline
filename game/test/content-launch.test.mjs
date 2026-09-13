@@ -120,9 +120,9 @@ test('separate extras and game expose wired pack and level selectors with exact 
     new URLSearchParams(quick[1].replaceAll('&amp;', '&')),
     catalog,
   );
-  assert.equal(featured.packId, 'fpv-arcade-r4');
-  assert.equal(featured.campaignId, 'fpv-first-light-r4');
-  assert.equal(featured.levelId, 'orchard-window');
+  assert.equal(featured.packId, 'fpv-arcade-r5');
+  assert.equal(featured.campaignId, 'fpv-pressure-lines');
+  assert.equal(featured.levelId, 'orchard-crossing');
   const cards = [
     ...landing.matchAll(/<article\b[^>]*class="[^"]*\bpack-card\b[^"]*"[^>]*>[\s\S]*?<\/article>/g),
   ].map(([markup]) => markup);

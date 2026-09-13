@@ -15,7 +15,7 @@
   </head>
   <body>
     <header class="page-head">
-      <a href="../">← Back to the game</a>
+      <a id="return-game" href="../">← Back to the game</a>
       <span class="eyebrow">Reveal Line / Replay Theater</span>
       <h1>Watch the route unfold.</h1>
       <p>Pause at a turning point. Follow the cable. See what each craft changes.</p>
@@ -79,6 +79,10 @@
           Playback starts only when you choose Play.
         </p>
         <p id="asset-status" class="quiet"></p>
+        <p id="navigation-status" class="quiet" role="status" aria-live="polite">
+          Arrow keys move focus · Enter activates · Escape pauses and focuses Back to the game.
+          Controller: release controls, then press a face button to join.
+        </p>
         <details>
           <summary>Recorded events</summary>
           <ol id="events" class="event-list">
@@ -103,9 +107,10 @@
             <summary>Import your own replay</summary>
             <p>
               Choose a <code>xonix-replay.v3</code>, <code>xonix-replay.v4</code> or
-              <code>xonix-replay.v5</code> JSON file, or paste one below. Version 4 supports staged
-              encounters; version 5 supports 72 × 36 boards with optional encounters. Maximum 32 MiB
-              / 30 recorded minutes.
+              <code>xonix-replay.v5</code> or <code>xonix-replay.v6</code> JSON file, or paste one
+              below. Version 4 supports staged encounters; version 5 supports 72 × 36 boards with
+              optional encounters; version 6 supports Classic rules. Maximum 32 MiB / 30 recorded
+              minutes.
             </p>
             <label for="replay-file">Replay file</label>
             <input id="replay-file" type="file" accept=".json,application/json" />
