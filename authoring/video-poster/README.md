@@ -10,6 +10,8 @@ node scripts/game-cli.mjs serve --port 8930
 
 Open `http://127.0.0.1:8930/authoring/video-poster/`. File URLs and failed module imports show local-server guidance with disabled source controls. Do not substitute a browser automation surface or inject application state to make a check pass.
 
+Creator tools are available from ordinary game Settings. Practice and First Flight hide these links because their navigation stays isolated; leave through the Playground header or the course’s explicit return action first.
+
 The Picture workshop link stays in the same origin and immutable edition, whose build metadata selects its profile/pack channel. Download a PNG before following it; the video page does not transfer bytes or upgrade a database automatically.
 
 Choose an owned MP4/WebM, inspect its dimensions/duration/hash, and select a time using the numeric field or slider. **Capture poster** is explicit. The preview displays requested seek, the reported frame timestamp (when available), approximate playhead, PNG dimensions/bytes/SHA and source SHA. **Download exact PNG** is a visible native link; asynchronous capture does not click it. The prepared Blob URL stays available for retry until source replacement, successful recapture, Clear, page exit or disposal.
