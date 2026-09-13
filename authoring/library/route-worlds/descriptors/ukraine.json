@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "route-worlds-ukraine",
+  "revision": 1,
+  "source": {
+    "id": "fpv-route-choices",
+    "bytes": 11949780,
+    "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+  },
+  "pack": {
+    "bytes": 8405,
+    "sha256": "911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0"
+  },
+  "media": {
+    "bytes": 8825887,
+    "sha256": "39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0"
+  },
+  "campaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+  "themeId": "ukraine",
+  "originals": [
+    {
+      "assetId": "route-worlds-ukraine-poster-1",
+      "presentationId": "route-worlds-ukraine-poster-1-presentation",
+      "levelId": "route-worlds-ukraine-foundry",
+      "levelRevision": "1",
+      "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719",
+      "bytes": 2780010,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "assetId": "route-worlds-ukraine-poster-2",
+      "presentationId": "route-worlds-ukraine-poster-2-presentation",
+      "levelId": "route-worlds-ukraine-depot",
+      "levelRevision": "1",
+      "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+      "bytes": 3107900,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "assetId": "route-worlds-ukraine-poster-3",
+      "presentationId": "route-worlds-ukraine-poster-3-presentation",
+      "levelId": "route-worlds-ukraine-switchback",
+      "levelRevision": "1",
+      "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+      "bytes": 2926966,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

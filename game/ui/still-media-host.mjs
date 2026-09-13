@@ -64,6 +64,8 @@ export function attachStillMediaHost({
   window: win = window,
   readBase = readSource,
   readAsset = readAssetStore,
+  externalCatalog = readAsset === readAssetStore,
+  indexedDB = globalThis.indexedDB,
   storage,
   lockManager = globalThis.navigator?.locks,
   createManager = createManagedMediaStore,
@@ -162,6 +164,8 @@ export function attachStillMediaHost({
           lockManager,
           decodeImage,
           channel: channel ?? source.channel ?? 'dev',
+          getManagedStore: externalCatalog ? () => manager : undefined,
+          indexedDB,
         });
         sourceChannel = catalog.channel;
         manager = createManager({ storyMedia: true });
