@@ -2,6 +2,8 @@
 
 This isolated P5 foundation extends the [reviewed story preparation/player](victory-story-playback.md) at `36a5efd8e535d02cf5af7a162d44362dae7406a8`. It supplies persistent, authenticated video originals and immutable story history for a later complete win → optional story → Collection journey. It is not adopted by the game, workshops, first-earned receipts, saved flights, build inventory or v0.34. No story is awarded or played by opening this store.
 
+The subsequent isolated [`.rlstory` transfer slice](story-bundle.md) adds complete binary original export/import and one atomic `stageRestore` merge. The original storage-stage evidence below remains scoped to this foundation; host adoption and earned-story authority are still pending.
+
 ## Explicit storage version
 
 `createManagedMediaStore({storyMedia:true})` explicitly opens version **4** of the existing `revealline-soundtrack-v1` database. It also provides the rich-still capability. Default manager callers still request v2; `richStillMedia:true` without the story opt-in still requests v3. The optional record validator is loaded lazily after a v4 request, so those existing paths do not fetch the new story modules.

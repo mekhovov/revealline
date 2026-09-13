@@ -72,13 +72,20 @@ export function assertStoredStoryTransition(current, next, still) {
     );
 }
 
-/** Complete original inventory prepared through the real owned-video inspector.
- * JSON facts or a shape-compatible fake are never codec/hash authority.
- */
-export async function prepareStoredStories(document, sourceAssets, { still, ...options } = {}) {
-  const safe = validateStoredStories(document, still),
-    context = hydrateStoredStillMedia(still),
-    identityCatalog = createStoredStillIdentityCatalog(context);
+/** Own a complete bounded original table without claiming decoded-video authority. */
+export function ownStoryOriginals(sourceAssets, originals) {
+  originals = boundedJSON(originals, {
+    maxBytes: 65536,
+    maxArray: 512,
+    maxNodes: 600,
+    maxString: 64,
+  });
+  required(
+    Array.isArray(originals) &&
+      originals.every((hash) => typeof hash === 'string' && /^[a-f0-9]{64}$/.test(hash)) &&
+      new Set(originals).size === originals.length,
+    'Invalid story original reference table.',
+  );
   required(
     Array.isArray(sourceAssets) &&
       Object.getPrototypeOf(sourceAssets) === Array.prototype &&
@@ -112,7 +119,7 @@ export async function prepareStoredStories(document, sourceAssets, { still, ...o
       blob = d.blob.value,
       bytes = nativeSize.call(blob);
     required(
-      safe.originals.includes(hash) && !seen.has(hash) && bytes > 0 && bytes <= 64 * 1024 * 1024,
+      originals.includes(hash) && !seen.has(hash) && bytes > 0 && bytes <= 64 * 1024 * 1024,
       'Unknown/duplicate story original or source byte budget exceeded.',
     );
     total += bytes;
@@ -120,10 +127,18 @@ export async function prepareStoredStories(document, sourceAssets, { still, ...o
     seen.add(hash);
     owned.push({ sha256: hash, blob: Blob.prototype.slice.call(blob, 0, bytes) });
   }
-  required(
-    seen.size === safe.originals.length,
-    'Restore every available story original before saving.',
-  );
+  required(seen.size === originals.length, 'Restore every available story original before saving.');
+  return Object.freeze(owned.map(Object.freeze));
+}
+
+/** Complete original inventory prepared through the real owned-video inspector.
+ * JSON facts or a shape-compatible fake are never codec/hash authority.
+ */
+export async function prepareStoredStories(document, sourceAssets, { still, ...options } = {}) {
+  const safe = validateStoredStories(document, still),
+    context = hydrateStoredStillMedia(still),
+    identityCatalog = createStoredStillIdentityCatalog(context),
+    owned = ownStoryOriginals(sourceAssets, safe.originals);
   // Snapshot all caller-controlled input before the first decoder/hash await.
   const assets = [];
   for (const item of owned) {
