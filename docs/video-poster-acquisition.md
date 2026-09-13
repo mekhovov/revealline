@@ -1,6 +1,6 @@
 # Owned video → inspected poster acquisition
 
-This isolated source addition starts from `e29f2ac9207b047c07e6b72f94fa24cea9b00e1c`. It implements only a local video inspection/seek/capture capability in [video-poster.mjs](../game/video-poster.mjs). No game, workshop, Collection or store imports it. Existing still presentations remain strict `revealline-media-presentation.v1` records with `story: null`; no host, saved run, award, playback or backup format changes here. A future build of this branch would include the new module through the ordinary `game` include; the already frozen edition is unchanged.
+This isolated source addition starts from `e29f2ac9207b047c07e6b72f94fa24cea9b00e1c`. It implements only a local video inspection/seek/capture capability in [video-poster.mjs](../game/video-poster.mjs). The separate source-only [video poster workshop](../authoring/video-poster/README.md) now imports it for explicit inspection/capture/download. No game, still workshop, Collection or store imports it. Existing still presentations remain strict `revealline-media-presentation.v1` records with `story: null`; no host, saved run, award, playback or backup format changes here. A future build of this branch would include the new module through the ordinary `game` include; the already frozen edition is unchanged.
 
 ## Acquisition contract
 
