@@ -766,6 +766,19 @@
         Built-in original synth playlists and your local MP3 library. The music studio manages
         custom tracks, playlists and complete audio backups.
       </p>
+      <details class="creator-tools">
+        <summary>Creator tools and original media</summary>
+        <p class="micro-note">
+          Assign original pictures to maps and worlds in the separate workshop. Fresh attempts use
+          the selected revision; saved flights and earned pictures keep their original choice. This
+          opens the workshop for this exact edition.
+        </p>
+        <a class="button secondary" href="../authoring/still-media/">Picture workshop</a>
+        <p class="micro-note">
+          Back up original pictures with .rlmedia and music with .rlsound. Game-data JSON keeps
+          progress and picture references, and does not contain these uploaded files.
+        </p>
+      </details>
       <details id="keyboard-settings">
         <summary>Keyboard controls</summary>
         <p class="micro-note">
@@ -852,14 +865,15 @@
       </section>
       <section id="library-saves" hidden>
         <p id="library-capacity" class="micro-note"></p>
-        <button id="export-backup" class="button primary">Export complete backup</button>
+        <button id="export-backup" class="button primary">Export game data</button>
         <p>
-          One backup includes your player library, installed packs, and saved flight. Importing it
-          replaces those three together; export your current backup first to keep both collections.
+          This JSON includes your player library, installed packs and saved flight. Importing it
+          replaces those three together. Uploaded originals and custom music need their separate
+          .rlmedia and .rlsound backups. Restore originals first when transferring saved custom
+          pictures, then import the game data. Keep your current backups to preserve both
+          collections.
         </p>
-        <button id="undo-backup" class="button secondary" disabled>
-          Undo complete backup import
-        </button>
+        <button id="undo-backup" class="button secondary" disabled>Undo game-data import</button>
         <p id="suspended-status">No suspended attempt.</p>
         <div class="overlay-actions">
           <button id="resume-save" class="button primary">Load suspended attempt</button

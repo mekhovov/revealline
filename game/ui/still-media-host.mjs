@@ -181,7 +181,7 @@ export function attachStillMediaHost({
         router.clear();
         navigation.sync();
         status.textContent = result
-          ? `Real local media opened for ${channel ?? sourceChannel}. Workshop assignments are separate from game artwork.`
+          ? `Real local media opened for ${channel ?? sourceChannel}. Picture assignments are ready for fresh flights in this edition.`
           : 'Workshop open failed. Read its error; saved data was not replaced. Audio recovery can be attempted after closing the dialog.';
       }
       return result;

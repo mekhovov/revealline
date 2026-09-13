@@ -33,7 +33,7 @@ export function attachStillMediaPanel({
   const note = node(
     'p',
     'note',
-    'Save exact map/world assignments for this workshop. Flights and earned Collection pictures keep their existing artwork. Originals remain unchanged.',
+    'Save exact map/world assignments for fresh flights. Existing saved flights and earned Collection pictures keep their original revision. Original files remain unchanged.',
   );
   const status = node(
     'p',
@@ -363,7 +363,7 @@ export function attachStillMediaPanel({
       ready = true;
       contexts();
       status.textContent =
-        'Saved originals verified. Assignments affect this workshop only; live flights and Collection are unchanged.';
+        'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.';
     });
   }
   const view = (selected, asset, blob) => ({

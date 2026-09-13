@@ -14,7 +14,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   const summary = node('summary', 'Bring progress from an earlier release');
   const explanation = node(
     'p',
-    'Copy a collection saved by an earlier release in this browser on this site. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current complete backup first to keep both. The earlier release stays unchanged.',
+    'Copy a collection saved by an earlier release in this browser on this site. This replaces this release’s pictures, scores, preferences, installed packs and saved flight together. Export your current game-data backup first to keep both. The earlier release stays unchanged.',
     { class: 'micro-note' },
   );
   const source = node('select', null, { id: 'transfer-source', 'aria-label': 'Earlier release' });
@@ -38,7 +38,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
   const status = node('p', null, { id: 'transfer-status', role: 'status' });
   const fallback = node(
     'p',
-    'Another browser, address, device or native app needs Export complete backup in the old game, then Import here. Close earlier game tabs before reviewing or copying.',
+    'Another browser, address, device or native app needs Export game data in the old game, then Import here. Keep uploaded originals in .rlmedia and custom music in .rlsound alongside it; restore originals before game data. Close earlier game tabs before reviewing or copying.',
     { class: 'micro-note' },
   );
   details.append(summary, explanation, source, review, copy, cancel, preview, status, fallback);
@@ -75,7 +75,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
       copy.disabled = !reviewed;
       if (!candidates.length)
         status.textContent =
-          'No compatible earlier collection was found at this address. Use a complete backup file to transfer from another location.';
+          'No compatible earlier collection was found at this address. Use a game-data backup file to transfer from another location.';
     } catch (error) {
       source.disabled = review.disabled = copy.disabled = true;
       status.textContent = error.message;
@@ -98,7 +98,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
       try {
         const fresh = await prepareProfileTransfer(source.value, {
           ...api.profileTransfer,
-          ...backupOptions(),
+          ...(await backupOptions()),
           signal: controller.signal,
         });
         const unchanged =
@@ -118,7 +118,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
         cancel.hidden = true;
         status.textContent = 'Copying the verified collection…';
         const result = await applyPrepared(fresh.prepared);
-        status.textContent = `Copied from ${fresh.source.version}. ${result.undo ? 'Undo complete backup import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`;
+        status.textContent = `Copied from ${fresh.source.version}. ${result.undo ? 'Undo game-data import restores the previous collection.' : 'The previous collection could not form a verified backup; Undo is unavailable.'} ${fresh.preview.hasSession ? 'Your saved flight is ready to load, paused.' : ''} ${result.warning || ''}`;
         reviewed = null;
       } finally {
         controller = null;
