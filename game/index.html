@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="ui/game-shell.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
     <link rel="stylesheet" href="ui/mission-picker.css" />
+    <link rel="stylesheet" href="ui/enemy-guide.css" />
   </head>
   <body>
     <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
@@ -68,6 +69,7 @@
             ></div>
             <div id="game-overlay" class="game-overlay">
               <div id="overlay-reading-unit" class="overlay-card">
+                <p id="pause-label" class="pause-label" role="status" hidden>Paused</p>
                 <div
                   id="overlay-reading"
                   class="overlay-message"
@@ -663,6 +665,12 @@
       </button>
       <p id="soundtrack-summary" class="micro-note" role="status">Loading music library…</p>
       <label class="field"
+        >Text size<select id="text-size">
+          <option value="standard">Standard</option>
+          <option value="large">Large</option>
+        </select></label
+      >
+      <label class="field"
         >Terrain detail<select id="terrain-select">
           <option value="hybrid">Balanced detail</option>
           <option value="microtile">Small pixel tiles</option>
@@ -886,7 +894,11 @@
           </button>
           <button id="shell-music" type="button" class="button secondary">Music on / off</button>
           <button id="shell-help" type="button" class="button secondary">How to play</button>
+          <button id="shell-guide" type="button" class="button secondary">
+            Field guide & practice
+          </button>
         </nav>
+        <p id="shell-featured-status" class="home-status" role="status" hidden></p>
         <p class="home-hint">Tap a direction to fly. Tap another to turn.</p>
         <details class="shell-tools">
           <summary>Studio & extras</summary>

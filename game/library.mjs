@@ -6,6 +6,7 @@ import { resolveKeyBindings } from './key-bindings.mjs';
 import { resolveControllerBindings } from './controller-bindings.mjs';
 import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from './controller-boost.mjs';
 import { DEFAULT_CAMPAIGN_DIFFICULTY, resolveCampaignDifficulty } from './campaign-difficulty.mjs';
+import { DEFAULT_TEXT_SIZE, resolveTextSize } from './text-size.mjs';
 import {
   resolveMasteryRecords,
   mergeMasteryRecords,
@@ -57,6 +58,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   controllerBindings: null,
   controllerBoostMode: DEFAULT_CONTROLLER_BOOST_MODE,
   campaignDifficulty: DEFAULT_CAMPAIGN_DIFFICULTY,
+  textSize: DEFAULT_TEXT_SIZE,
   style: 'hybrid',
   showGrid: false,
   matchClassAppearance: true,
@@ -119,6 +121,7 @@ function preferencesValid(preferences) {
     preferences.controllerBindings = resolveControllerBindings(preferences.controllerBindings);
   preferences.controllerBoostMode = resolveControllerBoostMode(preferences.controllerBoostMode);
   preferences.campaignDifficulty = resolveCampaignDifficulty(preferences.campaignDifficulty);
+  preferences.textSize = resolveTextSize(preferences.textSize);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -239,6 +242,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.controllerBoostMode = DEFAULT_PREFERENCES.controllerBoostMode;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'campaignDifficulty'))
     value.preferences.campaignDifficulty = DEFAULT_PREFERENCES.campaignDifficulty;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'textSize'))
+    value.preferences.textSize = DEFAULT_PREFERENCES.textSize;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);
