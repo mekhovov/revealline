@@ -1,6 +1,10 @@
-# v0.29.1 immutable-entry correction — in progress
+# v0.29.1 immutable-entry correction — frozen, capture journey failed
 
-This is the living status record for **P7.7**. It is not a frozen release receipt. Source SHA, candidate gate counts, artifact hashes, PR/deployment and public-browser results remain pending until attached by the release owner.
+This living status record preserves **P7.7** evidence. v0.29.1 is frozen from `90b974bfd733ccb11d74383e154467bd172b31d0`; all six exact-source gates and **2,364 tests** passed. Independent reconstruction matched 221 loose files, 217 manifest assets and 218 ZIP entries, with 211 offline files / 44,864,929 bytes; all 34 earlier release trees and 35 prior tags remained unchanged.
+
+**Actual ordinary capture failed.** Initial Down in First Light R4 reached a first capture (about 51.4% in the owner's state inspection), then threw `Classic event horizon bound exceeded` in `classic-step.mjs:397` before the HUD/paint refresh. The same exception reproduced in a separate stopped-server frozen browser. Startup and saved-flight restoration succeeded, but the full offline gameplay journey did not pass. Keep this release/tag and evidence immutable; the [v0.29.2 correction](../round-39/v0292-capture.md) is now the active release gate. No public promotion is claimed.
+
+Evidence: `.cache/releases/verification-90b974bfd733/source-gates.json`, `.cache/round39/revision-audit-90b974bfd733-attempt-1/integrity.json`, `.cache/round39/browser/capture-hud-console.json` and `.cache/round39/browser/offline-capture-console.json`.
 
 ## Trigger and preserved evidence
 
@@ -24,14 +28,14 @@ This passes the bounded source-browser missing-handshake recovery check. It is n
 
 ## Qualification status
 
-| Gate                                   | Status      | Required evidence                                                                                                                                                            |
-| -------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Logical source and focused regressions | In progress | Exact changed-file checks, boot import/readiness failures, alias prefix/query/hash behavior and conservative worker scope                                                    |
-| Source-browser stale-app recovery      | Passed      | Actual HTTP fixture displays Flight on hold, focused Reload, hidden/inert main; retained round-39 browser snapshot and screenshot                                            |
-| Exact candidate                        | Pending     | Source SHA; six isolated gates; version consistency; complete test counts/logs                                                                                               |
-| Freeze and independent rebuild         | Pending     | New immutable tag/artifacts, exact inventory/ZIP/source hashes, old releases/tags unchanged                                                                                  |
-| Browser migration                      | Pending     | Fresh and previously cached root entry, actual document/module URLs, normal root-worker lifecycle, preserved saved flight, explicit Resume and canonical offline preparation |
-| Public delivery                        | Pending     | Reviewed/merged PR, successful Pages workflow, complete public inventory against prepared overrides and immutable bytes, actual public cached/fresh-browser startup          |
+| Gate                                   | Status         | Required evidence                                                                                                                 |
+| -------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Logical source and focused regressions | Passed         | Included in the exact six-gate candidate; separate runtime capture failure below                                                  |
+| Source-browser stale-app recovery      | Passed         | Actual HTTP fixture displays Flight on hold, focused Reload, hidden/inert main; retained round-39 browser snapshot and screenshot |
+| Exact candidate                        | Passed         | 90b974bfd733ccb11d74383e154467bd172b31d0; six gates and 2,364 tests                                                               |
+| Freeze and independent rebuild         | Passed         | New immutable tag/artifacts; independent 221-file / 218-ZIP-entry comparison; old releases/tags unchanged                         |
+| Browser migration / ordinary flight    | Failed journey | Startup/restore passed, but first R4 capture crashed in local-online and stopped-server frozen browsers                           |
+| Public delivery                        | Held           | Ordinary-capture failure blocks promotion; continue the entry/capture gate in v0.29.2                                             |
 
 No cache or profile deletion is an acceptable migration shortcut. If an old active root worker still serves an old page until tabs close normally, record that limitation rather than forcing takeover. A direct versioned link and usable native error screen provide explicit recovery.
 
