@@ -8,6 +8,7 @@ import {
   validateStoredStories,
   prepareStoredStories,
   assertStoredStoryTransition,
+  ownStoryOriginals,
 } from './story-storage-record.mjs';
 
 export const STORY_INVENTORY_FORMAT = 'revealline-story-inventory.v1';
@@ -90,6 +91,27 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
       op.cleanup();
     }
   }
+  async function reserveStage(op, { generation, document, bytes }) {
+    const active = op.controller.signal,
+      reservation = await manager.reserve({
+        domain: 'story',
+        expectedGeneration: generation,
+        maxNewBytes: bytes,
+        maxMetadataBytes: encoded({ generation: generation + 1, library: document }),
+        signal: active,
+      });
+    if (op.done || active.aborted) {
+      try {
+        await manager.release(reservation);
+      } catch {
+        /* Bounded lease on unavailable storage. */
+      }
+      abort(active);
+      throw new Error('Story store is closed.');
+    }
+    op.reservation = reservation;
+    abort(active);
+  }
   async function stage({ descriptor, blob }, { signal, ...inspection } = {}) {
     // Own all mutable input before storage/decoder awaits.
     const raw = ownDescriptor(descriptor),
@@ -121,31 +143,14 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
         metadata.document,
       );
       assertStoredStoryTransition(current.library, document, metadata.document);
-      const reservation = await manager.reserve({
-        domain: 'story',
-        expectedGeneration: current.generation,
-        maxNewBytes: original.size,
-        maxMetadataBytes: encoded({ generation: current.generation + 1, library: document }),
-        signal: active,
-      });
-      if (op.done || active.aborted) {
-        try {
-          await manager.release(reservation);
-        } catch {
-          /* Bounded lease on unavailable storage. */
-        }
-        abort(active);
-        throw new Error('Story store is closed.');
-      }
-      op.reservation = reservation;
-      abort(active);
+      await reserveStage(op, { generation: current.generation, document, bytes: original.size });
       const assets = new Map(current.assets.map((a) => [a.sha256, a]));
       assets.set(selected.source.sha256, { sha256: selected.source.sha256, blob: original });
       // New binding requires the actual historical poster too; no newer assignment fallback.
       await stillStore.readAsset(metadata, selected.picturePin.assetId, { signal: active });
       const prepared = await prepareStoredStories(document, [...assets.values()], {
-        still: metadata.document,
         ...inspection,
+        still: metadata.document,
         signal: active,
       });
       abort(active);
@@ -154,6 +159,87 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
         expectedGeneration: current.generation,
         document,
         reservedSourceBytes: original.size,
+      });
+      reviews.set(review, { op, prepared });
+      return review;
+    } catch (error) {
+      await op.release();
+      throw error;
+    }
+  }
+  /** Merge a reviewed complete inventory in one CAS transaction. Neither missing
+   * incoming availability nor older selections remove destination history/bytes.
+   */
+  async function stageRestore(
+    { document: source, assets: sourceAssets },
+    { signal, ...inspection } = {},
+  ) {
+    const incoming = boundedJSON(source, {
+      maxBytes: 2 * 1024 * 1024,
+      maxNodes: 100000,
+      maxDepth: 16,
+      maxArray: 512,
+      maxString: 2048,
+    });
+    required(
+      Array.isArray(incoming.originals),
+      'Story restore needs an explicit original inventory.',
+    );
+    const incomingAssets = ownStoryOriginals(sourceAssets, incoming.originals),
+      op = operation(signal),
+      active = op.controller.signal;
+    try {
+      const [current, metadata] = await Promise.all([
+        manager.readDomain('story', { signal: active }),
+        stillStore.readMetadata({ signal: active }),
+      ]);
+      const checked = validateStoredStories(incoming, metadata.document),
+        stories = [...current.library.stories],
+        byId = new Map(stories.map((s) => [JSON.stringify([s.id, s.revision]), s]));
+      for (const story of checked.stories) {
+        const key = JSON.stringify([story.id, story.revision]),
+          old = byId.get(key);
+        required(
+          !old || canonicalJSON(old) === canonicalJSON(story),
+          'Imported story conflicts with an immutable revision.',
+        );
+        if (!old) {
+          byId.set(key, story);
+          stories.push(story);
+        }
+      }
+      const document = validateStoredStories(
+          {
+            ...current.library,
+            stories,
+            originals: [...new Set([...current.library.originals, ...checked.originals])],
+          },
+          metadata.document,
+        ),
+        assets = new Map(current.assets.map((a) => [a.sha256, a])),
+        newBytes = incomingAssets.reduce((sum, a) => sum + a.blob.size, 0);
+      assertStoredStoryTransition(current.library, document, metadata.document);
+      for (const item of incomingAssets) assets.set(item.sha256, item);
+      await reserveStage(op, { generation: current.generation, document, bytes: newBytes });
+      // Validate actual poster originals for available incoming stories, including
+      // shared-posters only once. Context metadata alone is not availability.
+      const posters = new Set(
+        checked.stories
+          .filter((s) => checked.originals.includes(s.source.sha256))
+          .map((s) => s.picturePin.assetId),
+      );
+      for (const id of posters) await stillStore.readAsset(metadata, id, { signal: active });
+      const prepared = await prepareStoredStories(document, [...assets.values()], {
+        ...inspection,
+        still: metadata.document,
+        signal: active,
+      });
+      abort(active);
+      const review = freezeMedia({
+        format: 'revealline-story-stage.v1',
+        expectedGeneration: current.generation,
+        document,
+        reservedSourceBytes: newBytes,
       });
       reviews.set(review, { op, prepared });
       return review;
@@ -289,6 +375,7 @@ export function createStoryMediaStore({ managedStore, decodeImage, ...options } 
   return Object.freeze({
     readMetadata,
     stage,
+    stageRestore,
     commit,
     cancel,
     acquire,
