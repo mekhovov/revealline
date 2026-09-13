@@ -630,6 +630,11 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
+  let lastControllerModality = '';
+  document.body.dataset.inputMode =
+    navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
+      ? 'touch'
+      : 'keyboard';
   const modalNavigation = attachModalNavigation();
   const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
@@ -696,6 +701,15 @@ try {
     if (scope === 'lost') return $('retry-button');
     return $('start-button');
   }
+  function controllerMenuRoot() {
+    const dialog = controllerDialog();
+    if (dialog) return dialog;
+    if (!$('game-overlay').hidden)
+      return courseSession ? $('game-overlay').closest('.arena-panel') : $('game-overlay');
+    if (celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
+      return $('arena-shell');
+    return document;
+  }
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
@@ -751,7 +765,8 @@ try {
   });
   controllerNavigation = attachControllerNavigation({
     getScope: controllerScope,
-    getRoot: () => controllerDialog() || document,
+    getRoot: controllerMenuRoot,
+    keyboard: true,
     getDefaultFocus: controllerFocus,
     getControlLabels: () => ({
       directions: 'Direction controls',
@@ -759,10 +774,17 @@ try {
       back: controllerLabels.menu.back,
     }),
     accept: (element) =>
+      (!courseSession ||
+        $('game-overlay').hidden ||
+        !!controllerDialog() ||
+        $('game-overlay').contains(element) ||
+        $('first-flight-panel').contains(element)) &&
       !element.matches(
         '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
       ),
-    onNativeInput: () => {
+    onNativeInput: (event) => {
+      document.body.dataset.inputMode =
+        event.type === 'keydown' ? 'keyboard' : event.pointerType === 'touch' ? 'touch' : 'pointer';
       if (controllerScope() !== 'flight') controller.clear();
     },
     onBack: controllerBack,
@@ -783,6 +805,7 @@ try {
     onReadingChange: (state) => controllerReading?.changed(state),
   });
   controllerReading = attachControllerReading({
+    compactOverlay: !courseSession,
     additionalSurfaces: [
       ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
       [
@@ -2537,6 +2560,8 @@ try {
     refreshMastery();
     refreshCourse();
     refreshDifficulty();
+    controllerReading?.refresh();
+    if (!controllerDialog()) controllerFocus()?.focus({ preventScroll: true });
   }
   function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
@@ -2728,6 +2753,16 @@ try {
     $('pause-button').textContent = '▶';
   }
   function refreshHUD() {
+    document.body.dataset.flightState =
+      celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+        ? 'picture'
+        : campaignOverview || ['won', 'lost'].includes(run.status)
+          ? 'result'
+          : !started
+            ? 'briefing'
+            : paused
+              ? 'paused'
+              : 'running';
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
@@ -2782,6 +2817,7 @@ try {
     const encounter = encounterView(run),
       classic = classicView(run);
     show('encounter-status', !!(encounter || classic) && !campaignOverview);
+    $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
     $('encounter-title').textContent = encounter?.title || 'Classic field';
     $('encounter-instruction').textContent = encounter?.instruction || '';
     show('encounter-instruction', !!encounter);
@@ -2894,6 +2930,15 @@ try {
     });
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
+    const flightModality = JSON.stringify(controllerFrame.flight);
+    if (
+      status.code === 'joined' ||
+      Object.values(controllerFrame.ui).some(Boolean) ||
+      (flightModality !== lastControllerModality &&
+        Object.values(controllerFrame.flight).some(Boolean))
+    )
+      document.body.dataset.inputMode = 'controller';
+    lastControllerModality = flightModality;
     if (status.message !== controllerStatus) {
       controllerStatus = status.message;
       $('input-status').textContent =
@@ -3197,6 +3242,7 @@ try {
     }
   };
   $('choose-mission').onclick = () => {
+    gameShell?.openMissions();
     const mission = $('missions').querySelector('button:not(:disabled)');
     mission?.focus();
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -3457,6 +3503,7 @@ try {
   missionPicker = attachMissionPicker();
   gameShell = attachGameShell({
     focusMissions: () => missionPicker?.focusSelectedChapter(),
+    focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
     pause,
     getTopDialog: controllerDialog,
     canContinue: () =>

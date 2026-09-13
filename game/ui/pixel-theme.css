@@ -1,9 +1,18 @@
 @font-face {
   font-family: 'Reveal Pixel';
-  src: url('./fonts/Tiny5-Regular.ttf') format('truetype');
+  src: url('./fonts/pixelify-sans/PixelifySans.ttf') format('truetype');
   font-style: normal;
-  font-weight: 400;
+  font-weight: 400 700;
   font-display: swap;
+}
+@font-face {
+  font-family: 'Reveal Cyrillic';
+  src: url('./fonts/Tiny5-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  /* Pixelify Sans omits the Ukrainian capital I; keep a local pixel fallback. */
+  unicode-range: U+0406;
 }
 
 /* Shared visual language for game screens, dialogs and the separate workshop. */
@@ -17,8 +26,9 @@ body.game-shell {
   --accent: #68d9fa;
   --safe: #68d9fa;
   --danger: #fa68b4;
-  --pixel-font: 'Reveal Pixel', monospace;
+  --pixel-font: 'Reveal Pixel', 'Reveal Cyrillic', monospace;
 }
+
 html {
   background: #070914;
   scrollbar-color: #5d8bc5 #0a1021;
@@ -29,7 +39,7 @@ body.game-shell {
   color: #edf2ff;
   font-family: var(--pixel-font);
   font-size: 20px;
-  line-height: 1.35;
+  line-height: 1.5;
   font-synthesis: none;
 }
 h1,
@@ -710,4 +720,44 @@ input[type='range']::-moz-range-thumb {
   z-index: 5;
   padding-block: 10px;
   background: #080e20;
+}
+
+/* Keep a clear pixel face for prose and use ordinary symbol glyphs for controls. */
+.game-shell .direction-controls button,
+.game-shell .utility-buttons .icon-button {
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+}
+.game-shell .overlay-actions .button {
+  min-height: 48px;
+}
+.game-shell .encounter-status[data-kind='classic'][data-phase='open'] {
+  display: none;
+}
+.game-shell .encounter-status[data-kind='classic'][data-phase='warning'] {
+  border-left-color: #ffa45b;
+}
+@media (hover: hover) and (pointer: fine) and (min-width: 681px) {
+  .game-shell:not([data-input-mode='touch']) .direction-controls {
+    display: none;
+  }
+}
+.game-shell[data-input-mode='controller'] .play-controls kbd {
+  display: none;
+}
+
+/* Static threat explanations belong in the briefing; live warnings keep their space. */
+@media (min-width: 681px) and (min-height: 501px) {
+  .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']) {
+    max-width: min(
+      100%,
+      calc((100dvh - 275px - var(--safe-top) - var(--safe-bottom)) * var(--board-aspect, 1.333333))
+    );
+  }
+}
+.game-shell[data-flight-state='running'] .shell-edition {
+  visibility: hidden;
+}
+.game-shell[data-flight-state='running'] .run-message {
+  min-height: 1.5em;
 }

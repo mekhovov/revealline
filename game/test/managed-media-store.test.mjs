@@ -98,10 +98,10 @@ test('a v1 connection closes on versionchange; upgraded reads work without copyi
   assert.equal(notified, true);
   manager.close();
 });
-test('actual frozen v0.24 adapter yields its connection and cannot write past the v2 authority', async () => {
+test('retained legacy adapter yields its connection and cannot write past the v2 authority', async () => {
   const [{ createSoundtrackStore: createLegacyStore }, legacyBundle] = await Promise.all([
-    import('../../releases/v0.24.0/site/game/soundtrack-store.mjs'),
-    import('../../releases/v0.24.0/site/game/soundtrack-bundle.mjs'),
+    import('../soundtrack-store-legacy.mjs'),
+    import('../soundtrack-bundle.mjs'),
   ]);
   const memory = memoryIndexedDB(),
     legacy = createLegacyStore({ indexedDB: memory.indexedDB }),
@@ -185,7 +185,7 @@ test('two connections cannot reserve the same free capacity; reservation account
 });
 test('active media reservation constrains P3 audio even with otherManagedBytes zero', async () => {
   const { memory, manager } = setup(),
-    store = createSoundtrackStore({ indexedDB: memory.indexedDB });
+    store = createSoundtrackStore({ managedStore: manager });
   const used = (await manager.usage()).usedBytes;
   const reservation = await manager.reserve({
     domain: 'media',
@@ -473,4 +473,18 @@ test('closing an audio adapter does not close a host-owned shared manager', asyn
   await assert.rejects(store.read(), /closed/);
   await manager.commitDomain('media', scene, { expectedGeneration: 0 });
   assert.equal((await manager.usage()).generations.media, 1);
+});
+
+test('ordinary soundtrack access preserves v1 bytes without opting into migration', async () => {
+  const memory = memoryIndexedDB();
+  await seedV1(memory);
+  const store = createSoundtrackStore({ indexedDB: memory.indexedDB });
+  const original = await store.read();
+  assert.equal(original.generation, 7);
+  assert.deepEqual(await bytes(original.assets[0].blob), await bytes(audio.blob));
+  const db = await open(memory, 1);
+  assert.equal(db.version, 1);
+  assert.deepEqual([...memory.contents().keys()].sort(), ['audio', 'metadata']);
+  db.close();
+  store.close();
 });

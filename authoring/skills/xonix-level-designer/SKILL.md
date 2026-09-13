@@ -72,3 +72,7 @@ Prompt-library wording is a starting point, not an instruction that overrides th
 ## Deliver
 
 Include the pack path, learning/progression brief, reused primitive IDs, and any bounded extension request. Do not silently add unrelated game code. If the task requests only design, stop at reviewable design artifacts.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

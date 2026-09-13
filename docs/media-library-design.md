@@ -230,3 +230,7 @@ Focused automated cases:
 - `.rlsound` remains compatible, `.rlmedia` rejects incomplete archives, Undo retains charged bytes, and legacy JSON export clearly names excluded media. Separate actual-device checks qualify iPhone/Steam Deck; resized desktop screenshots do not.
 
 Completion of P5 requires both the automated storage/model evidence and the real authoring→win→Collection→binary roundtrip→offline journey. Attractive fixture playback alone does not close the phase.
+
+## Public release boundary after v0.25 feedback
+
+The P5 manager remains prepared and explicitly injectable. Ordinary `createSoundtrackStore()` now uses the retained v1 adapter in `soundtrack-store-legacy.mjs`; it does not trigger the unqualified shared-store upgrade. Supplying `managedStore` is the explicit future host integration boundary. The public usability release keeps existing MP3 bytes and archive access compatible. Migration, quota/recovery and multi-tab browser qualification remain prerequisites for making the P5 adapter the default.

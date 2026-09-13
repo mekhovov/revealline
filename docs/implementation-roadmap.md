@@ -112,3 +112,17 @@ Current sequence: reassess P2.4/P2.6 challenge and feel using frozen v0.25 → c
 [First Light R2 is playable](http://127.0.0.1:8767/releases/v0.25.0/site/game/). It adds cut-completion stops, stronger authored threats, larger facing-aware animated actors, brighter cuts/capture feedback, reliable modal Back behavior and a shared dark pixel UI with native chapter cards. The [verification record](verification/round-34/playtest-revision.md) includes rejected/superseded candidates, exact source/artifact evidence and measured browser sizes.
 
 This closes P2.8 and the tested capture-stop/classic-role contracts. It does **not** close the human chapter quality checkpoint, bulk content, video rewards, physical-device qualification or public release. P5 shared storage is committed separately after the freeze (`dd6c1f7`, 73 focused checks), with its real-browser and full-media gates still open.
+
+## Current correction cycle — user feedback on v0.25
+
+The latest user request authorizes commit → immutable release → reviewed/merged PR → verified GitHub Pages delivery for every completed feature or phase. See [the delivery workflow](feature-delivery-workflow.md). Public completion now requires a successful deployment and matching public source identity, not only a local snapshot.
+
+| Step | Priority | Status | Outcome and evidence |
+| --- | --- | --- | --- |
+| P1.8 | Critical | Verification | Pixelify Sans readability, focused terminal menus, reachable in-game Main menu, adaptive short readers and device-sensitive flight controls. Target v0.26. |
+| P7.4 | Critical | Verification | PR checks, exact-tag Pages root, all playable archives, separate GitHub ZIP assets, public source verification. Target v0.26. |
+| P4.4 | Critical | In progress | New authored edition with bidirectional travelling line impacts; closure can escape before arrival; old replay rules unchanged. Target v0.27. |
+| P2.9 | High | In progress | Distinct enemy roles/catalog, pickup icon/effect feedback, theme-aware life-loss and recovery animations. Target v0.27. |
+| P5.1a | High | In progress | Shared media manager is explicit opt-in; ordinary MP3 storage keeps the qualified v1 adapter. Real migration and media authoring remain unfinished. |
+
+After these corrections, the execution sequence remains P3 remaining media checks/P4 Tactical scenarios → P5 image/video authoring → P6 campaign/art/audio volume → P7 full device/performance/public quality gate → P8 native distribution. P9 online multiplayer remains later. The first three-level human quality gate stays open; automated route proofs do not establish fun or retention.

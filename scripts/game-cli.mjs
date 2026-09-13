@@ -368,9 +368,11 @@ function addPublicEntries(entries, info) {
       publicPage(
         'Credits and notices',
         '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
-          (has('game/ui/fonts/OFL.txt')
-            ? '<p>Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href="./game/ui/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>'
-            : ''),
+          (has('game/ui/fonts/pixelify-sans/OFL.txt')
+            ? '<p>Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href="./game/ui/fonts/pixelify-sans/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+            : has('game/ui/fonts/OFL.txt')
+              ? '<p>Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href="./game/ui/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+              : ''),
       ),
     ),
   });

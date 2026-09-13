@@ -31,3 +31,7 @@ Use [the collection handoff](references/collection-handoff.md) when authoring re
 Apply and switch the actual supplied assets in the available preview, then inspect normal size, small viewport, bright/dark artwork, pause/resume and relevant earned/context fixtures. Compare identical geometry and motion across compact/microtile, detailed-object and hybrid terrain. Test the declared fallback and distinguish reviewed scenarios from missing ones. Browser viewport inspection is not native iPhone or controller verification.
 
 Report collection-data validity, media provenance, applied visual review, motion playback, simulated unlock behavior and runtime evidence separately. A template, generated contact sheet, planned reward or working selection preview does not establish a finished character set or implemented game progression. Keep deeper game-plan questions and unsupported stat changes in the design handoff rather than implementing game logic as a side effect.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

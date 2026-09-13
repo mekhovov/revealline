@@ -1,4 +1,5 @@
-import { createManagedMediaStore, MANAGED_MEDIA_DATABASE } from './managed-media-store.mjs';
+import { MANAGED_MEDIA_DATABASE } from './managed-media-store.mjs';
+import { createSoundtrackStore as createLegacySoundtrackStore } from './soundtrack-store-legacy.mjs';
 
 export const SOUNDTRACK_DATABASE = MANAGED_MEDIA_DATABASE;
 /** Compatible P3 adapter. A supplied manager remains owned by its shared host. */
@@ -7,7 +8,8 @@ export function createSoundtrackStore({
   indexedDB = globalThis.indexedDB,
   estimate = () => globalThis.navigator?.storage?.estimate?.(),
 } = {}) {
-  const manager = managedStore ?? createManagedMediaStore({ indexedDB, estimate });
+  if (!managedStore) return createLegacySoundtrackStore({ indexedDB, estimate });
+  const manager = managedStore;
   let closed = false;
   const check = () => {
     if (closed) throw new Error('Soundtrack store is closed.');
@@ -23,7 +25,7 @@ export function createSoundtrackStore({
     },
     close() {
       closed = true;
-      if (!managedStore) manager.close();
+      // The explicitly supplied manager remains owned by its host.
     },
   });
 }

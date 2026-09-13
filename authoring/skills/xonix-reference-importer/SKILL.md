@@ -28,3 +28,7 @@ Extract useful general traits: compact silhouette, negative space, broad value g
 Bind a reviewed variant as a cosmetic body or icon through the actual presentation manifest. Keep motor/wing anchors, animation recipe, scale, gameplay center, class ability, equipment, faction/role and level rules independent. A military silhouette does not grant a weapon or identify its operator. A Coupa-inspired helper must remain an original concept unless official brand assets and permission are supplied.
 
 Conclude with actual imported/viewed counts, source/rights statuses, generated outputs, executed validation and unimplemented boundaries. Never call an unknown pack fully imported, an unviewed animation inspected, or a reference-only original production-ready.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

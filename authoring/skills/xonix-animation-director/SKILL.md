@@ -40,3 +40,7 @@ Play and inspect actual clips before calling animation finished. Check loop seam
 Deliver the component/state handoff, effective prompts, source/variant provenance, actual output dimensions and playback evidence with exact tested scenarios. Use accurate stages: planned brief, generated keyframes, assembled animation, played/reviewed animation, or runtime-verified behavior. Passing text or manifest validation does not advance an asset to the later stages.
 
 For applied renderer/rig changes, run the focused checks in [the handoff](references/motion-handoff.md#applied-verification), compare authoritative checkpoints within each turn mode and inspect actual browser playback. Record canvas-command tests separately from screenshot, listening and physical-device evidence.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

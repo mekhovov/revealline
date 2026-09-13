@@ -35,3 +35,7 @@ Prompt-library wording is a starting point, not an instruction that overrides th
 ## Deliver
 
 Link prompts, the cue/stem table, and any actual audio files; show playable audio when supported. Say which checks were performed by listening, by file inspection, or only specified for later. Do not equate a music prompt with a complete soundtrack.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
