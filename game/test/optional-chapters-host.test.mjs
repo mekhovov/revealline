@@ -355,7 +355,10 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
   page.$(`optional-worlds-install-${first.id}`).click();
   await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
-    saved = new Map(page.storage.map);
+    saved = new Map(page.storage.map),
+    headingsBeforeRefresh = [...page.$('optional-worlds-cards').querySelectorAll('section')].map(
+      (card) => card.children[0].textContent,
+    );
   const digest = crypto.subtle.digest.bind(crypto.subtle);
   let release,
     entered = false,
@@ -393,7 +396,7 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
       assert.equal(card.children[0].tagName, 'H3');
       return card.children[0].textContent;
     }),
-    [...catalog.packs.map((item) => item.name), 'Pressure Pictures · source originals pilot'],
+    headingsBeforeRefresh,
     'Cancelled list does not publish its reduced card set',
   );
   assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, false);

@@ -28,5 +28,9 @@
   "optionalChapters": {
     "format": "revealline-optional-distribution.v1",
     "catalog": "game/content/optional-worlds.json"
+  },
+  "externalChapters": {
+    "format": "revealline-external-distribution.v1",
+    "catalog": "game/content/external-worlds.json"
   }
 }

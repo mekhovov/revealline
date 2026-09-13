@@ -103,6 +103,11 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     'optional-worlds-source-pack',
     'optional-worlds-source-media',
     'optional-worlds-source-install',
+    ...['ukraine', 'retro', 'coupa'].flatMap((theme) =>
+      ['pack', 'media', 'install'].map(
+        (kind) => `optional-worlds-source-route-worlds-${theme}-${kind}`,
+      ),
+    ),
     'optional-worlds-read',
     'optional-worlds-reload',
     'optional-worlds-manage',
