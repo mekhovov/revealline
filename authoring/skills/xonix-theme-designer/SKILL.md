@@ -1,6 +1,6 @@
 ---
 name: xonix-theme-designer
-description: "Design or revise Xonix game themes and content packs, including Ukrainian FPV Front, Ukrainian culture and history, 1980s–1990s nostalgia, Coupa Navi Network, and new visual families. Use for theme bibles, palettes, image collections, character roles, progression concepts, or a reskin that preserves game rules."
+description: 'Design or revise Xonix game themes and content packs, including Ukrainian FPV Front, Ukrainian culture and history, 1980s–1990s nostalgia, Coupa Navi Network, and new visual families. Use for theme bibles, palettes, image collections, character roles, progression concepts, or a reskin that preserves game rules.'
 ---
 
 # Xonix Theme Designer
@@ -56,4 +56,4 @@ For registered enemy roles, optional travelling line impacts and theme-specific 
 
 ## Preserve native launch and input access
 
-For any playable theme, asset, rule, interface or pack change, follow the shared [native launch, entry and device contract](../../../docs/boot-launch.md#authoring-and-device-contract). Preserve dark first paint and safe failure guidance, the native player journey, authored action availability, independent keyboard/touch/controller navigation, historical run identities and truthful device evidence. Do not reintroduce legacy webpage controls or advertise unavailable actions. Source, browser, listening and physical-device checks remain separate.
+For any playable theme, asset, rule, interface or pack change, follow the shared [native launch, entry and device contract](../../../docs/boot-launch.md#authoring-and-device-contract). Preserve dark first paint and safe failure guidance, the native player journey, authored action availability, independent keyboard/touch/controller navigation, historical run identities and truthful device evidence. Do not reintroduce legacy webpage controls or advertise unavailable actions. Source, browser, listening and physical-device checks remain separate. Public entry must use the complete immutable edition graph; follow the [entry and retirement contract](../../../docs/boot-launch.md#immutable-public-entry--p77). Verify fresh and previously cached browsers separately from public-byte hashes. Preserve old caches, profiles and live games during normal worker retirement; never clear site data or force takeover to make an upgrade pass. Keep actual storage limits distinct from planned media budgets. Verify an ordinary first capture and continued flight in the frozen browser online and with its server stopped; clean startup, restored saves and complete file inventories do not prove the gameplay journey. Preserve simulation exceptions as release blockers even when source tests pass.

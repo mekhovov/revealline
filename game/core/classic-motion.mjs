@@ -9,6 +9,7 @@ import {
   cellIndex,
 } from './movement.mjs';
 import { classicEffectActive } from './classic-state.mjs';
+import { fitsClassicDomain } from './classic-topology.mjs';
 import {
   classicContourGraph,
   orientedContourEdge,
@@ -147,7 +148,37 @@ export function classicEnemyFactor(state, enemy) {
   );
 }
 
-export function planClassicEnemy(state, enemy, duration) {
+/** Resolve only a penetration with no collision normal, never an ordinary rebound.
+ * A closing line can secure the cell beneath a field actor before its impact arrives.
+ * The old zero-time reversal cannot leave that cell. Project into the nearest legal
+ * domain footprint, with row-major ties, then resume ordinary swept motion at this
+ * same horizon. No capture, score, clock, or authored descriptor is changed.
+ */
+function domainRepair(state, enemy, domain) {
+  const margin = enemy.radius + EPS * 4;
+  let best = null;
+  for (let y = 0; y < state.height; y++)
+    for (let x = 0; x < state.width; x++) {
+      if (state.cells[y * state.width + x] !== domain) continue;
+      const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
+      const xs = [clamp(enemy.x, x, x + 1), clamp(enemy.x, x + margin, x + 1 - margin)],
+        ys = [clamp(enemy.y, y, y + 1), clamp(enemy.y, y + margin, y + 1 - margin)];
+      for (const px of xs)
+        for (const py of ys) {
+          const point = { x: px, y: py };
+          if (!fitsClassicDomain(state, point, margin, domain)) continue;
+          const distance = (px - enemy.x) ** 2 + (py - enemy.y) ** 2;
+          if (!best || distance < best.distance - EPS) best = { ...point, distance };
+        }
+    }
+  if (!best) throw new Error('No legal classic domain recovery position');
+  const repaired = { ...enemy, x: best.x, y: best.y };
+  if ((best.x - enemy.x) * enemy.vx < -EPS) repaired.vx = -enemy.vx;
+  if ((best.y - enemy.y) * enemy.vy < -EPS) repaired.vy = -enemy.vy;
+  return repaired;
+}
+
+export function planClassicEnemy(state, enemy, duration, { penetrationRecovery = null } = {}) {
   const e = { ...enemy, classic: structuredClone(enemy.classic ?? null) },
     factor = classicEnemyFactor(state, e);
   if (e.type === 'border-patrol') {
@@ -232,7 +263,19 @@ export function planClassicEnemy(state, enemy, duration) {
     b = { x: a.x + e.vx * factor * duration, y: a.y + e.vy * factor * duration };
   const hit = domainHit(state, a, b, e.radius, domain),
     used = duration * (hit?.t ?? 1),
-    end = pointAt(a, b, hit?.t ?? 1);
+    end = pointAt(a, b, hit?.t ?? 1),
+    penetration =
+      hit && hit.t <= EPS && !hit.nx && !hit.ny && !fitsClassicDomain(state, a, e.radius, domain);
+  if (penetration && penetrationRecovery)
+    return {
+      enemy: domainRepair(
+        state,
+        { ...e, vx: penetrationRecovery.vx, vy: penetrationRecovery.vy },
+        domain,
+      ),
+      paths: [segment(a, a, 0, duration)],
+      event: { time: 0, kind: 'domain-repair' },
+    };
   e.x = end.x;
   e.y = end.y;
   if (hit) {
@@ -251,12 +294,23 @@ export function planClassicEnemy(state, enemy, duration) {
       segment(a, end, 0, used),
       ...(used < duration - EPS ? [segment(end, end, used, duration)] : []),
     ],
-    event: hit ? { time: used, kind: 'domain-hit', indices: hit.indices } : null,
+    event: hit
+      ? {
+          time: used,
+          kind: 'domain-hit',
+          indices: hit.indices,
+          ...(penetration ? { penetration: true } : {}),
+        }
+      : null,
   };
 }
 
 export function applyClassicEnemy(enemy, plan, elapsed, duration) {
   const at = positionAt(plan.paths, elapsed, enemy);
+  if (plan.event?.kind === 'domain-repair' && elapsed >= plan.event.time - EPS) {
+    Object.assign(enemy, plan.enemy);
+    return;
+  }
   if (elapsed >= duration - EPS || (plan.event && elapsed >= plan.event.time - EPS))
     Object.assign(enemy, plan.enemy);
   else if (enemy.type === 'contour-patrol') {
