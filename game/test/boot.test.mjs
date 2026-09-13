@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { Script, createContext } from 'node:vm';
+import { readFile, mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { Script, createContext, constants as vmConstants } from 'node:vm';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const source = await readFile(new URL('../boot.mjs', import.meta.url), 'utf8');
@@ -9,7 +12,11 @@ const landing = await readFile(new URL('../../site/launch.mjs', import.meta.url)
 
 // Actual classic source runs in an isolated VM. DOM, time and pad samples are
 // finite browser boundaries; there is no layout, network or device assertion.
-function boundary({ href = 'https://game.example/releases/v29/site/game/', renderer = true } = {}) {
+function boundary({
+  href = 'https://game.example/releases/v29/site/game/',
+  renderer = true,
+  importModuleDynamically,
+} = {}) {
   const document = new Document();
   document.readyState = 'loading';
   document.documentElement.dataset.bootState = 'loading';
@@ -65,7 +72,9 @@ function boundary({ href = 'https://game.example/releases/v29/site/game/', rende
     removeEventListener: events.removeEventListener.bind(events),
   });
   function run() {
-    new Script(source, { filename: 'game/boot.mjs' }).runInContext(context);
+    new Script(source, { filename: 'game/boot.mjs', importModuleDynamically }).runInContext(
+      context,
+    );
   }
   function mount() {
     document.emit('DOMContentLoaded');
@@ -103,6 +112,44 @@ function boundary({ href = 'https://game.example/releases/v29/site/game/', rende
     online,
     local,
   };
+}
+
+async function moduleBoundary(t, initialize) {
+  const directory = await mkdtemp(path.join(tmpdir(), 'revealline-boot-import-'));
+  const key = path.basename(directory);
+  const page = boundary({ importModuleDynamically: vmConstants.USE_MAIN_CONTEXT_DEFAULT_LOADER });
+  const deferred = () => {
+    let resolve;
+    const promise = new Promise((done) => {
+      resolve = done;
+    });
+    return { promise, resolve };
+  };
+  const started = deferred();
+  const settled = deferred();
+  // A real ES module with top-level await runs through production import(). Only
+  // its initialization callback is supplied; no boot source is rewritten.
+  globalThis[key] = async () => {
+    started.resolve();
+    try {
+      return await initialize(page);
+    } finally {
+      settled.resolve();
+    }
+  };
+  page.appStarted = started.promise;
+  page.appSettled = settled.promise;
+  await writeFile(path.join(directory, 'app.mjs'), `await globalThis[${JSON.stringify(key)}]();\n`);
+  page.document.currentScript.src = pathToFileURL(path.join(directory, 'boot.mjs')).href;
+  t.after(async () => {
+    delete globalThis[key];
+    await rm(directory, { recursive: true, force: true });
+  });
+  return page;
+}
+
+async function settle() {
+  for (let i = 0; i < 8; i++) await new Promise((resolve) => setImmediate(resolve));
 }
 
 test('downloaded file shows usable native launch options without importing or redirecting', () => {
@@ -161,6 +208,107 @@ test('app import rejection has an actual caught promise path and stays concealed
   assert.equal(page.game.inert, true);
   assert.equal(page.timers.size, 0);
 });
+
+test(
+  'resolved legacy app cannot substitute hidden status for the ready handshake',
+  { timeout: 5000 },
+  async (t) => {
+    let imported = false;
+    const page = await moduleBoundary(t, (oldPage) => {
+      imported = true;
+      oldPage.document.getElementById('boot-status').hidden = true;
+      oldPage.game.inert = false;
+      oldPage.game.removeAttribute('aria-busy');
+      oldPage.dialog.open = true;
+    });
+    page.run();
+    page.mount();
+    await page.appSettled;
+    await settle();
+    assert.equal(imported, true);
+    assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+    assert.equal(page.document.getElementById('boot-status').hidden, false);
+    assert.match(page.document.getElementById('boot-status').textContent, /could not start/);
+    assert.match(
+      page.document.getElementById('boot-detail').textContent,
+      /did not confirm startup/,
+    );
+    assert.equal(page.screen.hidden, false);
+    assert.equal(page.game.inert, true);
+    assert.equal(page.dialog.open, false);
+    assert.equal(page.document.activeElement, page.retry);
+    assert.equal(page.context.RevealLineBoot.ready(), false);
+    assert.equal(page.timers.size, 0);
+    const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+    assert.match(
+      html,
+      /html:not\(\[data-boot-state='ready'\]\) body > :not\(#boot-screen\):not\(script\)\s*\{\s*display: none !important;/,
+      'the actual inline guard conceals failed gameplay even if an older app removed inert',
+    );
+  },
+);
+
+test(
+  'pending top-level await keeps loading and real ready succeeds before import completion',
+  { timeout: 5000 },
+  async (t) => {
+    let release;
+    const pending = new Promise((resolve) => {
+      release = resolve;
+    });
+    t.after(() => release());
+    let initialized = false;
+    const page = await moduleBoundary(t, async (currentPage) => {
+      await pending;
+      initialized = currentPage.context.RevealLineBoot.ready();
+    });
+    page.run();
+    page.mount();
+    await page.appStarted;
+    await settle();
+    assert.equal(page.document.documentElement.dataset.bootState, 'loading');
+    assert.equal(page.screen.hidden, false);
+    assert.equal(page.game.inert, true);
+    for (const callback of page.timers.values()) callback();
+    assert.match(page.document.getElementById('boot-status').textContent, /Still preparing/);
+    assert.equal(page.document.documentElement.dataset.bootState, 'loading');
+    release();
+    await page.appSettled;
+    await settle();
+    assert.equal(initialized, true);
+    assert.equal(page.document.documentElement.dataset.bootState, 'ready');
+    assert.equal(page.screen.hidden, true);
+    assert.equal(page.game.inert, false);
+    assert.equal(page.frames.size, 0);
+    assert.equal(page.timers.size, 0);
+  },
+);
+
+test(
+  'rejected real app import restores its hidden status and retains the import error',
+  { timeout: 5000 },
+  async (t) => {
+    const page = await moduleBoundary(t, (partialPage) => {
+      partialPage.document.getElementById('boot-status').hidden = true;
+      partialPage.game.inert = false;
+      throw new Error('Owned module initialization rejected');
+    });
+    page.run();
+    page.mount();
+    await page.appSettled;
+    await settle();
+    assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+    assert.equal(page.document.getElementById('boot-status').hidden, false);
+    assert.match(
+      page.document.getElementById('boot-detail').textContent,
+      /Owned module initialization rejected/,
+    );
+    assert.equal(page.screen.hidden, false);
+    assert.equal(page.game.inert, true);
+    assert.equal(page.document.activeElement, page.retry);
+    assert.equal(page.context.RevealLineBoot.ready(), false);
+  },
+);
 
 test('only successful ready reveals the game and shuts down boot scheduling/listeners', () => {
   const page = boundary();

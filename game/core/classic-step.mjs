@@ -231,6 +231,7 @@ function erosionDue(state) {
 }
 
 function world(state, input, hooks) {
+  const stalledDomains = new Map();
   let remaining = FIXED_DT,
     blocked = false,
     interrupted = state.status === 'respawning';
@@ -256,7 +257,19 @@ function world(state, input, hooks) {
     const trace = recovering
       ? { additions: [], cells: [], started: null, closure: null, stop: null }
       : tracePlan(state, playerPlan.paths, remaining);
-    const plans = state.enemies.map((e) => planClassicEnemy(state, e, remaining));
+    const topologyRevision = state.classic.topologyRevision;
+    const plans = state.enemies.map((enemy) => {
+      const stalled = stalledDomains.get(enemy.id);
+      return planClassicEnemy(state, enemy, remaining, {
+        penetrationRecovery:
+          stalled?.x === enemy.x &&
+          stalled?.y === enemy.y &&
+          stalled?.topologyRevision === topologyRevision
+            ? stalled
+            : null,
+      });
+    });
+    const incoming = state.enemies.map(({ x, y, vx, vy }) => ({ x, y, vx, vy }));
     let horizon = Math.min(
       remaining,
       trace.closure ?? Infinity,
@@ -372,6 +385,22 @@ function world(state, input, hooks) {
     }
     if (erosionDue(state)) commitClassicErosion(state);
     updateActors(state);
+    // Let the first zero-time hit keep historical capture/erosion/failure order.
+    // Only a repeated penetration in unchanged geometry can use recovery. Keep
+    // its original approach velocity, not the artificial no-normal reversal.
+    for (const [i, enemy] of state.enemies.entries()) {
+      const before = incoming[i];
+      if (
+        elapsed <= EPS &&
+        plans[i].event?.penetration &&
+        plans[i].event.time <= elapsed + EPS &&
+        topologyRevision === state.classic.topologyRevision &&
+        enemy.x === before.x &&
+        enemy.y === before.y
+      )
+        stalledDomains.set(enemy.id, { ...before, topologyRevision });
+      else stalledDomains.delete(enemy.id);
+    }
     if (failure?.kind === 'mission-timeout' || state.lives <= 0) {
       hooks.complete(state, false);
       return true;
