@@ -6,6 +6,7 @@ import { Document, Element, Events } from './couch-dom.mjs';
 import { SOUNDTRACK_DATABASE } from '../../soundtrack-store.mjs';
 import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
+import { waitFor } from './wait-for.mjs';
 
 export class SoloElement extends Element {
   constructor(document, tag, options) {
@@ -152,11 +153,7 @@ function assetDatabase() {
   };
 }
 export async function settle(predicate, message = 'Asynchronous host action did not settle.') {
-  for (let i = 0; i < 150; i++) {
-    if (predicate()) return;
-    await new Promise((resolve) => setImmediate(resolve));
-  }
-  assert.ok(predicate(), message);
+  await waitFor(predicate, { message });
 }
 let sequence = 0;
 export async function soloPage(
