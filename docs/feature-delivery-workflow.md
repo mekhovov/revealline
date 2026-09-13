@@ -1,5 +1,3 @@
-> Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
-
 # Feature delivery and public verification
 
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
@@ -138,3 +136,8 @@ Preserve generated originals, actual tool output, effective prompts, reference r
 
 Keep the 29 map slots, 116 picture cells, seven player classes × four themes × two treatments, twelve stories, forty curated reserves and twenty-four tracks distinct. Shared rigs, reused layouts, derivatives, synth recipes and candidate music must not inflate finished counts. Human assessments name the actual reviewer, date, subject revision and evidence; unresolved failures and missing work stay visible. Viewing or generating an image never automatically fills quality, listening, device, browser or release checks.
 
+## Closed media connections and missing originals
+
+All thirteen project AI agents and their skills follow the [media connection recovery contract](verification/round-47/media-connection-recovery.md). Invalidate a closed cached handle only if it is still the owned connection; preserve the current failure and allow the next deliberate operation to reconnect. Never automatically replay an ambiguous mutation, delete or downgrade a database to recover, or let an old close event invalidate a replacement connection. Explicit manager close remains terminal. Test both transaction-creation paths, cancellation and saved-pin recovery.
+
+Investigate missing pack rows or originals separately. Retain saved/earned identities and the original failure evidence; use explicit matching-original recovery without substituting artwork or inferring a storage-loss cause. Keep modeled regression checks, unpatched native recovery, patched browser checks and complete release gates distinct. An interrupted source run with partial passing cases is not qualification.
