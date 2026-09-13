@@ -1,5 +1,5 @@
 # Embedded-image packs are compiled from inspected originals and provenance.
-authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json linguist-generated=true
-authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json linguist-generated=true
-authoring/library/four-worlds-chapters/packs/original-retro-1994.json linguist-generated=true
-authoring/library/four-worlds-chapters/packs/original-spend-network.json linguist-generated=true
+authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json linguist-generated=true -diff
+authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json linguist-generated=true -diff
+authoring/library/four-worlds-chapters/packs/original-retro-1994.json linguist-generated=true -diff
+authoring/library/four-worlds-chapters/packs/original-spend-network.json linguist-generated=true -diff
