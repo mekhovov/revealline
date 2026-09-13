@@ -36,7 +36,7 @@ async function ordinary(root, name, maximum) {
   required(bytes.length <= maximum, 'Optional distribution grew during reading.');
   return bytes;
 }
-/** Opt-in only: four complete JSON downloads join manifest/ZIP, never core cache.
+/** Opt-in only: cataloged complete JSON downloads join manifest/ZIP, never core cache.
  * Existing builds without this versioned config receive no additional entries.
  */
 export async function readOptionalDistributionEntries(root, option) {

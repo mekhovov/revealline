@@ -56,6 +56,20 @@
       "sha256": "5ab9a0c7362ca8e05819ff3d68c0a7246ab5057b4d796a063d3d69af115504ac",
       "campaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
       "normalizedSha256": "86088205a8335a6689370d9edcaa5759a217b6e0c469435f119add348d6aa610"
+    },
+    {
+      "id": "fpv-route-choices",
+      "version": "1.0.0",
+      "name": "FPV Front · Route Choices — Tactical",
+      "description": "Tactical: three distinct routes and original pictures. Choose around a warned interceptor, time a Light carrier field or use a longer gate, and compare Fiber resistance with a safe rim. Manual equipment; recommended roles in each Mission brief. Standard challenges and separate Gentle practice; existing music.",
+      "themeId": "fpv",
+      "levels": 3,
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "bytes": 11949780,
+      "normalizedBytes": 11944013,
+      "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989",
+      "campaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+      "normalizedSha256": "db6e45beb68d3d7cc03444a8516f3ba2096debd011e36d7b7693e7dd3551ac6e"
     }
   ]
 }
