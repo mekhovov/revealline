@@ -49,7 +49,7 @@ export function attachProfileTransferPanel({ api, container, backupOptions, task
 
   function showPreview(value) {
     const p = value.preview;
-    preview.textContent = `${value.source.version} → ${api.profileTransfer.currentVersion}: ${p.completedLevels} completed maps · ${p.pictures} pictures · ${p.scores} score records · ${p.campaigns} campaigns · ${p.packs} packs · ${p.hasSession ? 'one saved flight' : 'no saved flight'}. ${p.missingPackIds.length ? `Some collected pictures need removed packs: ${p.missingPackIds.join(', ')}. Their records will be preserved.` : ''}`;
+    preview.textContent = `${value.source.version} → ${api.profileTransfer.currentVersion}: ${p.completedLevels} completed maps · ${p.pictures} pictures · ${p.scores} score records · ${p.campaigns} campaigns · ${p.packs} packs · ${p.hasSession ? 'one saved flight' : 'no saved flight'}. ${p.profileAbsent ? 'This release has a saved flight but no saved player profile. Copy includes an empty collection and default preferences. ' : ''}${p.missingPackIds.length ? `Some collected pictures need removed packs: ${p.missingPackIds.join(', ')}. Their records will be preserved.` : ''}`;
   }
   function refresh() {
     if (checking) return;
