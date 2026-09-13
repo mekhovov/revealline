@@ -27,17 +27,20 @@ async function fixture(t) {
   return { base, packs, write };
 }
 
-test('active and archive navigation are exact generated authority for all ten immutable editions', async () => {
+test('active and archive navigation are exact generated authority for all twelve immutable editions', async () => {
   const sources = await readPackIndexes(root);
-  assert.equal(sources.active.length, 7);
-  assert.equal(sources.archive.length, 3);
-  assert.equal(sources.active[0].id, 'fpv-arcade-r4');
+  assert.equal(sources.active.length, 8);
+  assert.equal(sources.archive.length, 4);
+  assert.deepEqual(
+    sources.active.slice(0, 2).map((entry) => entry.id),
+    ['fpv-arcade-r5', 'fpv-pressure-frontier'],
+  );
   assert.deepEqual(
     sources.archive.map((entry) => entry.id),
-    ['fpv-arcade-r3', 'fpv-arcade-r2', 'fpv-arcade'],
+    ['fpv-arcade-r4', 'fpv-arcade-r3', 'fpv-arcade-r2', 'fpv-arcade'],
   );
-  assert.equal(new Set(sources.all.map((entry) => entry.id)).size, 10);
-  assert.deepEqual(await generatePackCatalogs(), { active: 7, archive: 3, total: 10 });
+  assert.equal(new Set(sources.all.map((entry) => entry.id)).size, 12);
+  assert.deepEqual(await generatePackCatalogs(), { active: 8, archive: 4, total: 12 });
 });
 
 test('archive index rejects cross-list duplicate IDs/paths, metadata-as-pack, malformed fields and traversal', async (t) => {

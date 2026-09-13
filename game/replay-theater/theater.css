@@ -159,7 +159,8 @@ button#play-pause:hover:enabled,
 button#load-example:hover:enabled {
   background: #113f38;
 }
-:focus-visible {
+:focus-visible,
+.controller-focus {
   outline: 3px solid #d3912e;
   outline-offset: 3px;
 }

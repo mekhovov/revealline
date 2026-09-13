@@ -182,7 +182,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.29.2',
+  let buildVersion = '0.30.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -3721,7 +3721,7 @@ try {
     canContinue: () =>
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
-    onFeatured: () => activatePack('fpv-arcade-r4', { campaignId: 'fpv-first-light-r4' }),
+    onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
   });
   void initializeSoundtrack();
   if (autoplayPackLaunch)

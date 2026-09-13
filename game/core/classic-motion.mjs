@@ -10,6 +10,7 @@ import {
 } from './movement.mjs';
 import { classicEffectActive } from './classic-state.mjs';
 import { fitsClassicDomain } from './classic-topology.mjs';
+import { pressureWaypoint } from './enemy-pressure.mjs';
 import {
   classicContourGraph,
   orientedContourEdge,
@@ -148,8 +149,9 @@ export function classicEnemyFactor(state, enemy) {
   );
 }
 
-/** Resolve only a penetration with no collision normal, never an ordinary rebound.
+/** Resolve only a repeated illegal penetration, never an ordinary lawful rebound.
  * A closing line can secure the cell beneath a field actor before its impact arrives.
+ * A boundary normal from an adjacent cell does not clear an embedded footprint.
  * The old zero-time reversal cannot leave that cell. Project into the nearest legal
  * domain footprint, with row-major ties, then resume ordinary swept motion at this
  * same horizon. No capture, score, clock, or authored descriptor is changed.
@@ -259,13 +261,18 @@ export function planClassicEnemy(state, enemy, duration, { penetrationRecovery =
     };
   }
   const domain = e.type === 'claimed-rover' ? CELL.SAFE : CELL.FIELD;
+  const waypoint = pressureWaypoint(e, factor, duration),
+    motionTime = waypoint?.duration ?? duration;
+  if (waypoint) {
+    e.vx = waypoint.vx;
+    e.vy = waypoint.vy;
+  }
   const a = { x: e.x, y: e.y },
-    b = { x: a.x + e.vx * factor * duration, y: a.y + e.vy * factor * duration };
+    b = { x: a.x + e.vx * factor * motionTime, y: a.y + e.vy * factor * motionTime };
   const hit = domainHit(state, a, b, e.radius, domain),
-    used = duration * (hit?.t ?? 1),
+    used = motionTime * (hit?.t ?? 1),
     end = pointAt(a, b, hit?.t ?? 1),
-    penetration =
-      hit && hit.t <= EPS && !hit.nx && !hit.ny && !fitsClassicDomain(state, a, e.radius, domain);
+    penetration = hit && hit.t <= EPS && !fitsClassicDomain(state, a, e.radius, domain);
   if (penetration && penetrationRecovery)
     return {
       enemy: domainRepair(
@@ -279,6 +286,7 @@ export function planClassicEnemy(state, enemy, duration, { penetrationRecovery =
   e.x = end.x;
   e.y = end.y;
   if (hit) {
+    if (waypoint) e.classic.pressure.aborted = true;
     if (hit.nx) e.vx = -e.vx;
     if (hit.ny) e.vy = -e.vy;
     if (!hit.nx && !hit.ny) {
@@ -288,8 +296,12 @@ export function planClassicEnemy(state, enemy, duration, { penetrationRecovery =
     e.x += hit.nx * EPS * 2;
     e.y += hit.ny * EPS * 2;
   }
+  const reached =
+    waypoint && !hit && Math.hypot(end.x - waypoint.target.x, end.y - waypoint.target.y) <= EPS;
+  if (reached) e.classic.pressure.pathIndex++;
   return {
     enemy: e,
+    ...(waypoint ? { pressureVelocity: { vx: waypoint.vx, vy: waypoint.vy } } : {}),
     paths: [
       segment(a, end, 0, used),
       ...(used < duration - EPS ? [segment(end, end, used, duration)] : []),
@@ -301,12 +313,15 @@ export function planClassicEnemy(state, enemy, duration, { penetrationRecovery =
           indices: hit.indices,
           ...(penetration ? { penetration: true } : {}),
         }
-      : null,
+      : reached
+        ? { time: used, kind: 'pressure-waypoint' }
+        : null,
   };
 }
 
 export function applyClassicEnemy(enemy, plan, elapsed, duration) {
   const at = positionAt(plan.paths, elapsed, enemy);
+  if (plan.pressureVelocity) Object.assign(enemy, plan.pressureVelocity);
   if (plan.event?.kind === 'domain-repair' && elapsed >= plan.event.time - EPS) {
     Object.assign(enemy, plan.enemy);
     return;

@@ -1,5 +1,6 @@
 import { exactKeys, required, stableId } from '../data-json.mjs';
 import { ARCADE_ACTIONS_VERSION } from './arcade-actions.mjs';
+import { validateEnemyPressure } from './enemy-pressure.mjs';
 
 export const CLASSIC_ENEMY_TYPES = Object.freeze([
   'bouncer',
@@ -27,7 +28,7 @@ export function resolveClassicDefinition(level) {
   const { width, height } = level;
   exactKeys(
     level.classic,
-    ['version', 'terrain', 'powerups', 'lineImpact', 'arcadeActions'],
+    ['version', 'terrain', 'powerups', 'lineImpact', 'arcadeActions', 'enemyPressure'],
     'classic',
   );
   required(
@@ -47,6 +48,7 @@ export function resolveClassicDefinition(level) {
   }
   const value = level.classic;
   required(value.version === 'classic.v1', 'unsupported classic definition');
+  validateEnemyPressure(level);
   required(
     Array.isArray(value.terrain) && value.terrain.length <= 100,
     'at most 100 terrain rectangles',

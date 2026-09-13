@@ -9,7 +9,7 @@ const profileKey = 'revealline.library.dev.v1',
   sessionKey = 'revealline.suspended.dev.v1';
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const pack = JSON.parse(
-  await readFile(new URL('../content/packs/fpv-arcade-r4.json', import.meta.url)),
+  await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url)),
 );
 const ticks = (page, count) => {
   for (let n = 0; n < count; n++) page.frame();
@@ -71,13 +71,13 @@ test('pause updates flight presentation before another animation frame can run',
   assert.deepEqual(page.errors, []);
 });
 
-test('featured R4 hides manual actions and actual keyboard action attempts cannot change its flight', async (t) => {
+test('featured pressure chapter hides manual actions and actual keyboard action attempts cannot change its flight', async (t) => {
   imageBoundary(t);
   const page = await soloPage(t, { titleScreen: true });
   controls(page, 'hidden');
   page.$('shell-featured').click();
   await settle(() => !page.$('shell-featured').disabled);
-  assert.equal(page.$('pack-select').value, 'fpv-arcade-r4');
+  assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
   for (const id of ['action-button', 'pickup-button', 'boost-button', 'ability-state'])
     assert.equal(page.$(id).hidden, true, id);
   page.$('start-button').click();

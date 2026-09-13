@@ -7,6 +7,7 @@ import { findRoute, replayProof, digest } from './verify-campaign.mjs';
 import { verifyFpvR2Proof } from './verify-fpv-r2.mjs';
 import { verifyFpvR3Proof } from './verify-fpv-r3.mjs';
 import { verifyFpvR4Proof } from './verify-fpv-r4.mjs';
+import { verifyFpvR5Proof } from './verify-fpv-r5.mjs';
 import { readPackIndexes, readPackJSON } from './pack-indexes.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
 import {
@@ -31,6 +32,8 @@ const wideProofFile = new URL('game/replays/first-light-routes.json', root);
 const r2ProofFile = new URL('game/replays/fpv-arcade-r2-routes.json', root);
 const r3ProofFile = new URL('game/replays/fpv-arcade-r3-routes.json', root);
 const r4ProofFile = new URL('game/replays/fpv-arcade-r4-routes.json', root);
+const r5ProofFile = new URL('game/replays/fpv-arcade-r5-routes.json', root);
+const pressurePackIds = ['fpv-arcade-r5', 'fpv-pressure-frontier'];
 const impactDemoFile = new URL('game/content/scenarios/line-impact-demo.json', root);
 // Indexed source includes on-demand editions that cannot all be installed together.
 // This read-only tooling bound does not change PACK_LIMITS.libraryBytes (48 MiB).
@@ -46,18 +49,24 @@ const proofCopy = (value) =>
     maxArray: 20000,
     maxString: 4096,
   });
-/** Historical proof context stays below 64 MiB. R4 is independently verified
- * with R3 authority; never combine all artwork into an over-budget request. */
+/** Historical proof context stays below 64 MiB. R4 and the two pressure
+ * chapters use separate batches with their previously verified source authority. */
 export async function expansionSources({
   scope = 'historical',
   sourceRoot = fileURLToPath(root),
 } = {}) {
-  required(['historical', 'arcade'].includes(scope), 'Unknown expansion proof source scope.');
+  required(
+    ['historical', 'arcade', 'pressure'].includes(scope),
+    'Unknown expansion proof source scope.',
+  );
   const index = await readPackIndexes(sourceRoot);
   const refs = index.all.filter((entry) =>
     scope === 'historical'
-      ? entry.id !== 'fpv-arcade-r4'
-      : ['fpv-arcade-r4', 'fpv-arcade-r3'].includes(entry.id),
+      ? !['fpv-arcade-r4', ...pressurePackIds].includes(entry.id)
+      : (scope === 'arcade'
+          ? ['fpv-arcade-r4', 'fpv-arcade-r3']
+          : [...pressurePackIds, 'fpv-arcade-r4', 'homeward-skies']
+        ).includes(entry.id),
   );
   const packs = [];
   let bytes = 2; // The JSON array brackets, then each owned pack and separator.
@@ -100,6 +109,7 @@ export async function verifyExpansionRoutes() {
   });
   const index = await readPackIndexes(fileURLToPath(root));
   const coveredPacks = new Set(packs.map((pack) => pack.id));
+  const verifiedSources = new Map(packs.map((pack) => [pack.id, digest(pack)]));
   if (index.all.some((entry) => entry.id === 'fpv-arcade-r4')) {
     const arcade = await expansionSources({ scope: 'arcade' });
     const pack = arcade.find((item) => item.id === 'fpv-arcade-r4');
@@ -124,6 +134,44 @@ export async function verifyExpansionRoutes() {
     historical.verified = historical.results.length;
     historical.supplementalGentleVerified = historical.supplementalGentleResults.length;
     coveredPacks.add(pack.id);
+    verifiedSources.set(pack.id, digest(pack));
+  }
+  if (index.all.some((entry) => pressurePackIds.includes(entry.id))) {
+    const pressure = await expansionSources({ scope: 'pressure' });
+    const chapters = pressurePackIds.map((id) => pressure.find((pack) => pack.id === id));
+    required(
+      chapters.every(Boolean),
+      'Both indexed pressure chapters require complete proof coverage.',
+    );
+    const prior = pressure.find((pack) => pack.id === 'fpv-arcade-r4');
+    const homeward = pressure.find((pack) => pack.id === 'homeward-skies');
+    for (const authority of [prior, homeward])
+      required(
+        authority &&
+          coveredPacks.has(authority.id) &&
+          digest(authority) === verifiedSources.get(authority.id),
+        'Pressure chapter source authority is missing or changed between proof batches.',
+      );
+    const r5Proof = JSON.parse(await readFile(r5ProofFile, 'utf8'));
+    const checked = verifyFpvR5Proof({ packs: chapters, prior, homeward, proof: r5Proof });
+    required(checked.routes.length === 24, 'Incomplete pressure chapter route set.');
+    const standard = r5Proof.routes.filter((route) => route.difficulty === 'standard');
+    const gentle = r5Proof.routes.filter((route) => route.difficulty === 'gentle');
+    for (const id of pressurePackIds)
+      required(
+        standard.filter((route) => route.packId === id).length === 6 &&
+          gentle.filter((route) => route.packId === id).length === 6,
+        'Incomplete pressure chapter difficulty coverage.',
+      );
+    historical.results.push(...standard.map((route) => route.expected));
+    historical.supplementalGentleResults ??= [];
+    historical.supplementalGentleResults.push(...gentle.map((route) => route.expected));
+    historical.verified = historical.results.length;
+    historical.supplementalGentleVerified = historical.supplementalGentleResults.length;
+    // Ordinary and pressure-disabled probes describe behavior; they are never
+    // added to either map-completion count.
+    historical.pressure = checked;
+    for (const pack of chapters) coveredPacks.add(pack.id);
   }
   required(
     coveredPacks.size === index.all.length &&

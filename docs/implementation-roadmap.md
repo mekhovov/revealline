@@ -2,7 +2,17 @@
 
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
 
-## Current priority — v0.29.2 entry and ordinary-capture reliability
+## Current priority — pressure, presentation and native navigation
+
+The latest user instruction renews implementation and moves challenge, character/trail readability and complete menu control ahead of bulk content. The [active production plan](production-plan.md) is the current prioritized execution plan. It includes the repeated requirements and retains the stable IDs below. Work continues without another routine approval pause.
+
+**v0.29.2 public delivery is complete.** PR #5 merged as `5e5c25a0c3ce7e266050bf502d42855b0e5ceb91`; main Pages run `34740322685` passed. All 1,650 public files matched, and actual public keyboard launch, first capture, continued simulation, Pause and saved restoration passed. Separate local save-copy and stopped-server play passed. [Final receipt](https://github.com/mekhovov/revealline/releases/download/v0.29.2/v0292-delivery-receipt.json). P7.7 is Complete. Older failed candidates remain unchanged.
+
+Current work: **P0.5** fresh evidence review; **P2.11** varied pressure chapter; **P4.7** optional finite pursuit/interception; **P2.12** actor/trail clarity; **P1.14** remaining native navigation; **P7.8** verified release. See the active plan for statuses and acceptance. Full content, soundtrack transfer, video stories and device qualification remain unfinished.
+
+## Historical v0.29.2 freeze handoff — superseded by public receipt
+
+The following records the state at freeze, before its successful public delivery:
 
 The v0.29 source `f40e1d9ecf262ba94915ddc3fc05eda074058b7a` passed six gates and **2,355 tests**; its independent artifact and all **1,207 public files / 297,561,239 bytes** matched. However, a previously visited browser at mutable `/game/` did not finish startup: new launch HTML and a hidden status matched the older v0.28 completion behavior. The immutable [v0.29 game](https://mekhovov.github.io/revealline/releases/v0.29.0/site/game/) boots. Preserve both results and the original artifact; public byte equality did not establish a consistent browser module graph.
 
@@ -34,7 +44,7 @@ P1.12 and P1.13 are the stable v0.29 correction IDs. Historical **P1.8** remains
 
 Keep **P0 reference/audio comparison and P2 human R4 feel/challenge review** active throughout. Perform an early real-phone/controller smoke check before bulk production; do not defer all device feedback to P7. The supplied video-example directory contains no files. Priorities can be revised without treating planned features as delivered.
 
-## Delivery order and checkpoints
+## Original delivery order and checkpoints
 
 P0 → P1 → P2 → P3/P4 → P5 → P6 → P7 → P8. P9 is a later extension. The first major playable checkpoint is three polished, wide FPV levels. Human feedback on that chapter precedes bulk production. Automated wins establish correctness, not enjoyment or hardware certification.
 

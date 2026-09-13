@@ -40,11 +40,11 @@ Add `game/test/enemy-catalog.test.mjs` and `game/test/enemy-catalog-panel.test.m
 
 The board still paints 16 logical pixels per cell: legacy 48×36 uses 768×576, wide 72×36 uses 1152×576. CSS display size is separate from those logical dimensions and from source-image pixels. Preserve the entire wide arena on portrait displays.
 
-| Presentation               | Current footprint policy                                                                                                              |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Ordinary enemy             | 18–28 CSS pixels when the displayed canvas is at least 480 CSS pixels wide; at least 12 on ordinary phones; maximum 48 logical pixels |
-| Boss                       | Same responsive approach, with maxima of 34 CSS and 60 logical pixels                                                                 |
-| Player contained image box | 24–32 CSS pixels on desktop and at least 16 on ordinary phones; maximum 64 logical pixels                                             |
+| Presentation               | Current footprint policy                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Ordinary enemy             | 24–32 CSS-pixel body box when displayed canvas is at least 480 CSS pixels wide; at least 16 on ordinary phones; maximum 64 logical pixels |
+| Boss                       | Same responsive approach, with maxima of 40 CSS and 80 logical pixels                                                                     |
+| Player contained image box | 24–32 CSS pixels on desktop and at least 16 on ordinary phones; maximum 64 logical pixels                                                 |
 
 The current FPV image margins make the visible player roughly 18/12 pixels at its desktop/phone minima. Measure replacement-art alpha bounds; a nominal box is not proof of occupied pixels. The neutral marker is scaled by its visible triangle extent. Logical caps take precedence on unusually tiny embedded canvases. `BoardPainter.draw(...,{actorScale,playerScale})` exposes separate bounded cosmetic adjustments; neither changes the collider nor becomes a persisted preference automatically. Maintain player `rules.playerRadius` and enemy radius markers outside the cosmetic body transform. Keep shield and queued-turn cues clear of the enlarged player.
 
@@ -52,12 +52,12 @@ The current FPV image margins make the visible player roughly 18/12 pixels at it
 
 ### Motion and cut invariants
 
-- Enemies retain a bounded previous-position cache (64 actors). Facing is measured on new simulation ticks; initial velocity is a fallback. Never write a cosmetic heading, speed or tail into a simulation entity. Stationary treads/walking stay still; rotors/radar may idle.
+- Enemies retain a bounded previous-position cache (64 actors). Facing is measured on new simulation ticks; initial velocity is a fallback. Never write a cosmetic heading, speed or tail into a simulation entity. Stationary treads/walking stay still; rotors/radar may idle. Microtile simplification keeps locomotion rather than turning it off. Optional pressure AIM/CHASE/REST cues read owned core targets and actor-clock deadlines; this is an original extension, not reference-game AI evidence.
 - Player body orientation follows resolved `player.direction`, while rate and banking read current motion. Keep configurable blade counts distinct from hub counts, alias-aware phase sampling and independent non-rotor recipes. Classic enemy freeze does not freeze the player's rotors.
 - Gameplay Pause holds world presentation. Enemy stun, dormancy and classic freeze hold their relevant pose clocks. Reduced effects retain facing and necessary static cues while removing banking, moving accents and capture pulses. Terminal full-picture celebration has its own pause/lifecycle input.
 - Enemy tails have at most three points within 1.15 cells of the actor. Do not scatter decorative particles across active lines, narrow routes or hazards.
-- The active cut uses an 8-logical-pixel dark outline, 4-pixel accent and 1-pixel light center, plus an 8/4-pixel head. Its one moving 3-pixel highlight stays on the last short section of the real cut. Reduced effects keep the complete static line/head and trail-cell occupancy cue.
-- `cells.claimed` copies at most 2592 indices into a bounded effect queue (eight effects). The capture sweep touches only those indices still SAFE, lasts less than 0.65 seconds and has opacity at most 0.2. Pause holds its age; reduced effects omit it. It grants no score, coverage, damage or awards.
+- The active cut uses CSS-aware widths: roughly 5-pixel dark outline, 3-pixel accent and 1-pixel light center, plus a bright bounded head. Functional light ink is independent of inverted theme `ink`/`paper` tokens. Its one moving 3-pixel highlight stays on the last short section of the real cut. Reduced effects keep the complete static line/head and trail-cell occupancy cue.
+- `cells.claimed` copies at most 2592 indices into a bounded effect queue (eight effects). The capture sweep and inner perimeter touch only those indices still SAFE, last less than 0.65 seconds and have opacity at most 0.2. Paint capture decoration beneath current actors, hazards and the live cut. Pause holds its age; reduced effects omit it. It grants no score, coverage, damage or awards.
 - Opaque black conceals unrevealed art. Full-art victory is presentation after the real win and must preserve recorded coverage and one-time rewards. Do not bypass the core's authored capture-stop rule or use a victory clip to trigger a second award.
 
 ## Presentation prompt supplement

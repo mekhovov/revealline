@@ -3,6 +3,7 @@ import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
+import { attachReplayNavigation } from './navigation.mjs';
 
 const $ = (id) => document.getElementById(id);
 const examples = {
@@ -53,7 +54,10 @@ try {
     controller = null,
     lastFrame = 0,
     lastClass = null,
-    eventLines = [];
+    eventLines = [],
+    disposed = false,
+    frameId = null,
+    nativeUnsubscribe = null;
   const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
@@ -132,6 +136,7 @@ try {
     updateControls();
   }
   async function load(getSource, label) {
+    if (disposed) return;
     controller?.abort();
     const ticket = ++epoch;
     const nextController = new AbortController();
@@ -140,7 +145,7 @@ try {
     player?.pause();
     updateControls();
     $('import-status').textContent = `Reading ${clipped(label)}…`;
-    const current = () => ticket === epoch && !nextController.signal.aborted;
+    const current = () => !disposed && ticket === epoch && !nextController.signal.aborted;
     try {
       const source = await getSource(nextController.signal);
       if (!current()) return;
@@ -155,7 +160,7 @@ try {
       const nextPainter = new BoardPainter(presets, {
         onAsset: (message) => {
           assetMessage = message;
-          if (painter === nextPainter) $('asset-status').textContent = message;
+          if (!disposed && painter === nextPainter) $('asset-status').textContent = message;
         },
       });
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
@@ -214,6 +219,7 @@ try {
         : 'Paused. The next recorded input is preserved.';
   }
   function safely(action) {
+    if (disposed) return;
     try {
       action();
     } catch (error) {
@@ -274,27 +280,37 @@ try {
         'Presentation changed. The recording remains paused at the same tick.';
     }),
   );
-  $('board').addEventListener('keydown', (event) => {
-    if (event.code === 'Space' || event.code === 'ArrowRight') {
-      event.preventDefault();
-      if (!event.repeat) safely(event.code === 'Space' ? togglePlay : step);
-    }
+  const navigation = attachReplayNavigation({
+    pending: () => pending,
+    cancelLoad,
+    pause: () => {
+      if (player?.phase === 'playing') consume(player.pause());
+      lastFrame = 0;
+    },
+    togglePlay: () => safely(togglePlay),
+    step: () => safely(step),
+    onInactive: () => {
+      lastFrame = 0;
+      $('transport-status').textContent = 'Playback paused. Choose Play to continue.';
+    },
+    onDispose: () => {
+      disposed = true;
+      globalThis.cancelAnimationFrame?.(frameId);
+      nativeUnsubscribe?.();
+    },
   });
-  onNativeInactive(() => {
-    lastFrame = 0;
-    if (player?.phase === 'playing') consume(player.pause());
-  }).catch((error) => {
-    $('transport-status').textContent = `App lifecycle adapter unavailable: ${error.message}`;
-  });
-  document.addEventListener('visibilitychange', () => {
-    lastFrame = 0;
-    if (document.hidden && player?.phase === 'playing') {
-      consume(player.pause());
-      $('transport-status').textContent =
-        'Paused while this page is hidden. Choose Play to continue.';
-    }
-  });
+  onNativeInactive(navigation.suspend)
+    .then((unsubscribe) => {
+      if (disposed) unsubscribe();
+      else nativeUnsubscribe = unsubscribe;
+    })
+    .catch((error) => {
+      if (!disposed)
+        $('transport-status').textContent = `App lifecycle adapter unavailable: ${error.message}`;
+    });
   function frame(now) {
+    if (disposed) return;
+    navigation.sample(now);
     const dt = lastFrame ? Math.max(0, (now - lastFrame) / 1000) : 0;
     lastFrame = now;
     safely(() => {
@@ -309,13 +325,13 @@ try {
         });
       }
     });
-    requestAnimationFrame(frame);
+    frameId = requestAnimationFrame(frame);
   }
   exampleBrief();
   document.querySelector('main').inert = false;
   document.querySelector('main').removeAttribute('aria-busy');
   $('boot-status').hidden = true;
-  requestAnimationFrame(frame);
+  frameId = requestAnimationFrame(frame);
   void load(fetchExample, 'Copper Crossing example');
 } catch (error) {
   $('boot-status').textContent =

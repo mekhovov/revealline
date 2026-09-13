@@ -466,9 +466,15 @@ test('Classic artwork roles dispatch independently without removing material, co
       .some((call) => call.op === 'strokeRect' && call.strokeStyle === themes[0].palette.danger),
   );
   assert.equal(calls.filter((call) => call.op === 'arc' && call.args[2] === 0.2 * 16).length, 3);
+  const roverBody = drawn.find((call) => call.args[0].role === 'rover');
   assert.ok(
-    calls.some((call) => call.op === 'strokeRect' && call.args.join() === '-12,-11,24,22'),
-    'Dormant rover cue survives replacement',
+    calls.some(
+      (call) =>
+        call.op === 'strokeRect' &&
+        call.args[2] > roverBody.args[3] &&
+        call.args[3] > roverBody.args[4],
+    ),
+    'Dormant rover cue encloses the replaced cosmetic body',
   );
   // Detached projection tests warning presentation, not acquisition of a warning.
   const warning = canvas();
