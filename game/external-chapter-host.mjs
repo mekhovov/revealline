@@ -79,7 +79,8 @@ export function createExternalChapterHost({
   let closed = false,
     active = null,
     media = null,
-    mediaPending = null;
+    mediaPending = null,
+    catalogCache = null;
   function check(signal, writing = false) {
     abortExternalChapter(signal);
     required(!closed, 'Chapter host is closed.');
@@ -303,6 +304,15 @@ export function createExternalChapterHost({
     return state;
   }
   async function catalog(rawPacks, rawIndex, signal) {
+    check(signal);
+    const indexKey = rawIndex === null ? null : canonicalJSON(rawIndex);
+    if (
+      catalogCache &&
+      typeof rawPacks === 'string' &&
+      rawPacks === catalogCache.packText &&
+      indexKey === catalogCache.indexKey
+    )
+      return catalogCache.content;
     const packs =
       rawPacks === null ? emptyPackLibrary() : await importPackLibrary(rawPacks, { decodeImage });
     check(signal);
@@ -364,7 +374,9 @@ export function createExternalChapterHost({
       indexBytes: rawIndex === null ? 0 : bytes(index),
       limit: PACK_LIMITS.libraryBytes,
     });
-    return { packs, index, entries, executions, usage };
+    const content = { packs, index, entries, executions, usage };
+    catalogCache = { packText: exportPackLibrary(packs), indexKey, content };
+    return content;
   }
   function closure(content, metadata) {
     const identityCatalog = createPictureIdentityCatalog({ entries: content.entries, metadata });
@@ -518,6 +530,16 @@ export function createExternalChapterHost({
   return Object.freeze({
     keys,
     inspect: ({ signal } = {}) => operation(signal, false, inspectInside),
+    withCurrent(snapshot, work, { signal } = {}) {
+      required(typeof work === 'function', 'A guarded catalog operation is required.');
+      return operation(signal, false, async (s) => {
+        await current(snapshot, s);
+        // The caller holds its writer lease; this operation owns the backup lock.
+        // A completed callback may already have committed: never label a later
+        // cancellation as rollback by checking again after durable completion.
+        return work(snapshot);
+      });
+    },
     readiness: (snapshot, id, { signal } = {}) =>
       operation(signal, false, async (s) => {
         const result = await readyInside(snapshot, id, s);
@@ -594,6 +616,7 @@ export function createExternalChapterHost({
     close() {
       if (closed) return;
       closed = true;
+      catalogCache = null;
       active?.abort();
       media?.store.close();
       pointer.close();

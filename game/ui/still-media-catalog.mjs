@@ -1,5 +1,13 @@
+import { createExternalChapterHost } from '../external-chapter-host.mjs';
+import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
+import { canonicalJSON } from '../data-json.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
-import { emptyPackLibrary, importPackLibrary, resolvePackCampaign } from '../packs.mjs';
+import {
+  emptyPackLibrary,
+  importPackLibrary,
+  resolvePackCampaign,
+  exportPackLibrary,
+} from '../packs.mjs';
 import { required } from '../data-json.mjs';
 
 export function stillAuthoringKeys(channel = 'dev') {
@@ -32,6 +40,8 @@ export function createStillAuthoringCatalog({
   lockManager,
   decodeImage,
   channel = 'dev',
+  getManagedStore,
+  indexedDB = globalThis.indexedDB,
 }) {
   const keys = stillAuthoringKeys(channel);
   const snapshots = new WeakSet();
@@ -51,11 +61,47 @@ export function createStillAuthoringCatalog({
           );
         return next();
       });
-    return lock(keys.writer, () =>
-      lock(keys.lock, async () => {
+    return lock(keys.writer, async () => {
+      if (getManagedStore) {
+        const host = createExternalChapterHost({
+          indexedDB,
+          profileKey: keys.writer.slice(0, -'.writer'.length),
+          packsKey: keys.packs,
+          storage,
+          lockManager,
+          writer: { writable: true },
+          getManagedStore,
+          registeredEntries: [baseEntry],
+          decodeImage,
+          knownDescriptors: channel === 'dev' ? SOURCE_EXTERNAL_CHAPTERS : [],
+        });
+        try {
+          const snapshot = await host.inspect({ signal });
+          if (snapshot.status !== 'checked')
+            throw new Error(
+              `The game needs ${snapshot.reason}. Recover its exact files before editing media.`,
+            );
+          return await host.withCurrent(
+            snapshot,
+            () => work(exportPackLibrary(snapshot.packs), snapshot),
+            { signal },
+          );
+        } finally {
+          host.close();
+        }
+      }
+      return lock(keys.lock, async () => {
         if (storage.getItem(keys.lock) !== null || (await readAsset(keys.journal)) !== null)
           throw new Error(
             'The source game has a pending backup recovery. Recover it before editing media.',
+          );
+        const profile = keys.writer.slice(0, -'.writer'.length);
+        if (
+          (await readAsset(`${profile}.external-chapter-index.v1`)) !== null ||
+          (await readAsset(`${profile}.external-chapter-journal.v1`)) !== null
+        )
+          throw new Error(
+            'External chapters need the compatible shared-media Workshop before editing.',
           );
         const raw = await readAsset(keys.packs);
         check(signal);
@@ -64,32 +110,42 @@ export function createStillAuthoringCatalog({
             'The installed pack library is unreadable. No empty replacement was made.',
           );
         return work(raw);
-      }),
-    );
+      });
+    });
   }
   return Object.freeze({
     channel,
     keys,
     async read({ signal } = {}) {
-      return locked(async (raw) => {
+      return locked(async (raw, external) => {
         const packs =
           raw === null ? emptyPackLibrary() : await importPackLibrary(raw, { decodeImage });
         check(signal);
-        const executionCatalog = createExecutionCatalog([
-          baseEntry,
-          ...packs.packs.flatMap((pack) =>
-            pack.campaigns.map((c) => resolvePackCampaign(pack, c.id)),
-          ),
-        ]);
-        const snapshot = Object.freeze({ generation: ++generation, executionCatalog, raw });
+        const executionCatalog =
+          external?.executionCatalog ??
+          createExecutionCatalog([
+            baseEntry,
+            ...packs.packs.flatMap((pack) =>
+              pack.campaigns.map((c) => resolvePackCampaign(pack, c.id)),
+            ),
+          ]);
+        const snapshot = Object.freeze({
+          generation: ++generation,
+          executionCatalog,
+          raw,
+          external: external ? canonicalJSON(external.index) : null,
+        });
         snapshots.add(snapshot);
         return snapshot;
       }, signal);
     },
     async withCurrent(snapshot, work, { signal } = {}) {
       if (!snapshots.has(snapshot)) throw new Error('Reload the installed catalog before saving.');
-      return locked(async (raw) => {
-        if (snapshot.raw !== raw)
+      return locked(async (raw, external) => {
+        if (
+          snapshot.raw !== raw ||
+          snapshot.external !== (external ? canonicalJSON(external.index) : null)
+        )
           throw new Error(
             'Installed packs changed. Reload the catalog and review the assignment before saving.',
           );
