@@ -1,0 +1,75 @@
+{
+  "version": "1.0.0",
+  "scope": "Enemy catalog and impact/feedback authoring; templates do not invoke models or certify output.",
+  "prompts": [
+    {
+      "id": "enemy-role-skin",
+      "family": "cross-family",
+      "asset_type": "enemy_animation",
+      "mode": "asset_execution",
+      "intent": "Create an independently replaceable enemy appearance",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/enemy-catalog.md",
+        "docs/feature-delivery-workflow.md"
+      ],
+      "variables": [
+        "ROLE",
+        "THEME"
+      ],
+      "prompt": "Inspect registered role {{ROLE}} in game/enemy-catalog.mjs and presentation family {{THEME}}. Preserve its collider, behavior, image-slot name, risk badge and heading convention. Create original art with the image tool if raster assets are requested; preserve source/provenance and compare compact and detailed treatments at actual play size. Bind only through supported visual overrides; test pause, freeze, warning and reduced effects. Use the enemy workshop to preview and practice. Changing a catalog enable switch affects future authoring only. Follow docs/feature-delivery-workflow.md for a completed implementation.",
+      "example_request": "Render enemy-role-skin using the requested theme or registered role; inspect outputs before publication."
+    },
+    {
+      "id": "enemy-authoring-roster",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Prepare a theme-specific generator roster",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/enemy-catalog.md",
+        "docs/feature-delivery-workflow.md"
+      ],
+      "variables": [
+        "THEME"
+      ],
+      "prompt": "Use the enemy workshop to prepare a {{THEME}} roster with seven explicit registered role records. Explain each role\u2019s location, movement, danger and cue. Save/reload and export/import the bounded catalog document; test disabled roles cannot start a study. Apply a roster only to a new draft level through the existing catalog materialization seam. Never silently remove actors from an existing campaign, save or rated run. New primitives require code and tests.",
+      "example_request": "Render enemy-authoring-roster using the requested theme or registered role; inspect outputs before publication."
+    },
+    {
+      "id": "line-impact-challenge",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Author a playable trail-impact race",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/enemy-catalog.md",
+        "docs/feature-delivery-workflow.md"
+      ],
+      "variables": [
+        "MAP_ID"
+      ],
+      "prompt": "Create a new authored map {{MAP_ID}} using optional classic.lineImpact version line-impact.v1 and validated speed. Explain two fronts, growing trails, capture-before-arrival escape and immediate direct-body contact. Prove ordinary input outcomes for both turning modes, queued-turn save/restore, pause, multiple seeds and recovery. Reuse a prior image only with honest provenance. Preserve older campaign IDs/proofs and enforce pack/offline budgets. Do not present inferred XPOSED timing as measured fact.",
+      "example_request": "Render line-impact-challenge using the requested theme or registered role; inspect outputs before publication."
+    },
+    {
+      "id": "pickup-defeat-feedback",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Refine pickup and life-loss feedback across a theme",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/enemy-catalog.md",
+        "docs/feature-delivery-workflow.md"
+      ],
+      "variables": [
+        "THEME"
+      ],
+      "prompt": "Inspect actual {{THEME}} play, four pickup glyphs and theme-aware destruction/recovery in game/ui/event-feedback.mjs and classic-view.mjs. Keep heart, chevrons, hourglass and snowflake distinct even without color. Copy event-time coordinates; never place an old batched event at the current player position. Read effect timers and impact fronts from authoritative simulation state. Preserve bounded queues and static reduced-effects meaning, avoid flashes that obscure the route, inspect actual playback, and compare unchanged checkpoint hashes. Prompts and contact sheets are not completed animations.",
+      "example_request": "Render pickup-defeat-feedback using the requested theme or registered role; inspect outputs before publication."
+    }
+  ]
+}

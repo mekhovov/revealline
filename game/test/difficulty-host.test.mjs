@@ -284,6 +284,8 @@ test('a legally lost Standard attempt retries through the result button into fre
     }
   }
   assert.equal(run.status, 'lost');
+  assert.equal(page.$('game-overlay').hidden, true);
+  ticks(page, 80);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   changeOnly(page, 'gentle', true);

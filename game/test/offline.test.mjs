@@ -673,3 +673,46 @@ test('repair cache-write failure returns 503 and keeps unrelated verified entrie
   assert.equal(await cache.get(`${scope}game/index.html`).clone().text(), untouched);
   assert.equal(await cache.get(`${scope}.offline-ready`).clone().text(), marker);
 });
+
+test('optional pack preparation and verification explicitly distinguish core cache from already-installed device packs', async () => {
+  const optionalMarker = {
+    ...marker,
+    optionalPacks: [
+      {
+        path: 'game/content/packs/fpv-arcade.json',
+        id: 'fpv-arcade',
+        name: 'FPV Front · First Light',
+      },
+    ],
+  };
+  const worker = {
+    state: 'activated',
+    postMessage(_message, ports) {
+      ports[0].postMessage({ status: 'ready', buildId: marker.buildId, verified: 3, bytes: 123 });
+      ports[0].close();
+    },
+  };
+  const registration = { scope, active: worker, waiting: null, installing: null };
+  const env = {
+    documentRef: { querySelector: () => ({ content: JSON.stringify(optionalMarker) }) },
+    locationRef,
+    secure: true,
+    navigatorRef: {
+      serviceWorker: {
+        register: async () => registration,
+        getRegistration: async () => registration,
+      },
+    },
+    MessageChannelImpl: MessageChannel,
+  };
+  const available = offlineAvailability(env);
+  assert.match(available.note, /First Light.*install once while online/);
+  assert.match(available.note, /Already-installed packs/);
+  const messages = [];
+  const result = await prepareOffline({ ...env, onStatus: (s) => messages.push(s.message) });
+  assert.equal(result.status, 'ready');
+  assert.ok(messages.every((m) => m.includes('install once while online')));
+  assert.match((await checkOffline(env)).message, /install once while online/);
+  optionalMarker.optionalPacks = [{ name: 42 }];
+  assert.equal(offlineAvailability(env).available, false);
+});

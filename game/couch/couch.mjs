@@ -491,7 +491,7 @@ try {
           accumulator -= FIXED_DT;
           for (let i = 0; i < 2; i++)
             if (match.runs[i].tick !== before[i]) {
-              painters[i].effectsFor(match.runs[i].events);
+              painters[i].effectsFor(match.runs[i].events, match.runs[i]);
               for (const event of match.runs[i].events) sound.event(event);
             }
         }

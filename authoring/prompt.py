@@ -13,7 +13,8 @@ SUPPLEMENTS = (CATALOG.parent / "round-06-asset-variations.json",
                CATALOG.parent / "round-09-abilities-and-world.json",
                CATALOG.parent / "native-edition-workflows.json",
                CATALOG.parent / "classic-workflows.json",
-               CATALOG.parent / "presentation-workflows.json")
+               CATALOG.parent / "presentation-workflows.json",
+               CATALOG.parent / "enemy-workflows.json")
 TOKEN = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 
 

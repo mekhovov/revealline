@@ -114,6 +114,15 @@ test('landing and game expose wired pack and level selectors with exact first-mi
   assert.match(landing, /id="landing-level-select"/);
   assert.match(game, /id="pack-select"/);
   assert.match(game, /id="level-select"/);
+  const quick = landing.match(/id="landing-pack-play"[\s\S]*?href="\.\/game\/\?([^"]+)"/);
+  assert.ok(quick);
+  const featured = resolvePackLaunch(
+    new URLSearchParams(quick[1].replaceAll('&amp;', '&')),
+    catalog,
+  );
+  assert.equal(featured.packId, 'fpv-arcade-r3');
+  assert.equal(featured.campaignId, 'fpv-first-light-r3');
+  assert.equal(featured.levelId, 'orchard-window');
   const cards = [
     ...landing.matchAll(/<article\b[^>]*class="[^"]*\bpack-card\b[^"]*"[^>]*>[\s\S]*?<\/article>/g),
   ].map(([markup]) => markup);

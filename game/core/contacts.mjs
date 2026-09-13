@@ -18,7 +18,14 @@ function remember(best, time, kind, id, classic = false) {
   return best;
 }
 
-export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
+export function enemyContact(
+  state,
+  playerPaths,
+  enemyPlans,
+  trace,
+  horizon,
+  { ignoreTrail = false } = {},
+) {
   if (state.player.graceUntil > state.time + EPS) return null;
   if (classicEffectActive(state, 'enemy-freeze')) return null;
   let best = null;
@@ -33,7 +40,7 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
       const endTime = Math.min(path.t1, horizon),
         start = a(path),
         end = pathPoint(path, endTime);
-      for (const trail of state.trail) {
+      for (const trail of ignoreTrail ? [] : state.trail) {
         const t = boxTime(start, end, {
           x: trail.x - enemy.radius,
           y: trail.y - enemy.radius,
@@ -49,7 +56,7 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
             !!state.classic,
           );
       }
-      for (const trail of trace.cells) {
+      for (const trail of ignoreTrail ? [] : trace.cells) {
         const lo = Math.max(path.t0, trail.time),
           hi = endTime;
         if (lo <= hi + EPS) {
@@ -104,9 +111,9 @@ export function enemyContact(state, playerPaths, enemyPlans, trace, horizon) {
         cell.x + 1 >= box.x &&
         cell.y <= box.y + box.h &&
         cell.y + 1 >= box.y;
-      for (const trail of state.trail)
+      for (const trail of ignoreTrail ? [] : state.trail)
         if (overlaps(trail)) best = remember(best, 0, 'boss-lane', enemy.id, !!state.classic);
-      for (const trail of trace.cells) {
+      for (const trail of ignoreTrail ? [] : trace.cells) {
         if (trail.time > horizon + EPS) continue;
         if (overlaps({ x: trail.index % state.width, y: Math.floor(trail.index / state.width) }))
           best = remember(best, trail.time, 'boss-lane', enemy.id, !!state.classic);

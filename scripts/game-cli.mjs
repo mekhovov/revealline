@@ -117,7 +117,9 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
   const config = JSON.parse(await fs.readFile(path.join(root, 'game/build-config.json'), 'utf8'));
   if (!config || typeof config !== 'object' || Array.isArray(config))
     fail('Build config must be an object');
-  const unknown = Object.keys(config).filter((k) => !['version', 'entry', 'include'].includes(k));
+  const unknown = Object.keys(config).filter(
+    (k) => !['version', 'entry', 'include', 'optionalOffline'].includes(k),
+  );
   if (unknown.length) fail(`Unknown build-config fields: ${unknown.join(', ')}`);
   safeVersion(config.version);
   safeRelative(config.entry);
@@ -132,6 +134,35 @@ export async function readBuildConfig(root = PROJECT_ROOT) {
         .some((p) => p.startsWith('.') || ['node_modules', 'dist', 'releases'].includes(p))
     )
       fail(`Build include contains a private/generated path: ${included}`);
+  }
+  if (config.optionalOffline !== undefined) {
+    const optional = config.optionalOffline;
+    if (
+      !Array.isArray(optional) ||
+      optional.length > 12 ||
+      new Set(optional).size !== optional.length
+    )
+      fail('optionalOffline must list at most 12 unique indexed pack JSON paths');
+    const index = JSON.parse(
+      await fs.readFile(path.join(root, 'game/content/packs/index.json'), 'utf8'),
+    );
+    if (index?.format !== 'xonix-pack-index.v1' || !Array.isArray(index.packs))
+      fail('optionalOffline requires a valid pack index');
+    const indexed = new Set(
+      index.packs.map((entry) => `game/content/packs/${safeRelative(entry.path)}`),
+    );
+    for (const name of optional) {
+      safeRelative(name);
+      if (
+        !/^game\/content\/packs\/[a-z0-9][a-z0-9-]*\.json$/.test(name) ||
+        name === 'game/content/packs/index.json' ||
+        !indexed.has(name)
+      )
+        fail(`optionalOffline is not an indexed pack JSON: ${name}`);
+      const file = await noSymlinkPath(root, name);
+      if (!(await fs.stat(file)).isFile())
+        fail(`optionalOffline must name a regular file: ${name}`);
+    }
   }
   return config;
 }
@@ -149,6 +180,8 @@ export async function collectBuildFiles(root = PROJECT_ROOT, config) {
     }
   }
   if (!files.has(config.entry)) fail(`Build include does not contain entry ${config.entry}`);
+  for (const name of config.optionalOffline ?? [])
+    if (!files.has(name)) fail(`optionalOffline pack is not shipped: ${name}`);
   if (
     [
       'manifest.json',
@@ -369,7 +402,7 @@ function addPublicEntries(entries, info) {
         'Credits and notices',
         '<p><a href="./">← Game home</a></p><h1>Credits and notices</h1><p>Reveal Line is an original territory-capture game inspired by the Xonix/Qix tradition. Reference games informed design research; their proprietary music, pictures, code and logos are not bundled as game assets.</p><p>The included Phaser engine retains its <a href="./game/vendor/PHASER-LICENSE.md">MIT license and copyright notice</a>. Built-in music uses original procedural score recipes. Uploaded MP3s retain their author-supplied metadata and source records.</p><p>The worlds, backgrounds and character rigs are changeable. FPV gameplay is a fictional arcade abstraction. The business-spend theme is a design concept and does not claim endorsement or actual business-product functionality.</p><p>The Telegram emoji collection researched for inspiration is not included as imported artwork. A pack author must supply appropriate attribution and rights for every asset they distribute; importing a file is not a redistribution license.</p>' +
           (has('game/ui/fonts/pixelify-sans/OFL.txt')
-            ? '<p>Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href="./game/ui/fonts/pixelify-sans/OFL.txt">SIL Open Font License 1.1</a>.</p>'
+            ? '<p>Interface type: Pixelify Sans by Stefie Justprince, used unmodified under the <a href="./game/ui/fonts/pixelify-sans/OFL.txt">SIL Open Font License 1.1</a>. Tiny5 by Stefan Schmidt supplies the Ukrainian capital І under its bundled <a href="./game/ui/fonts/OFL.txt">OFL</a>.</p>'
             : has('game/ui/fonts/OFL.txt')
               ? '<p>Interface type: Tiny5 by Stefan Schmidt, used unmodified under the <a href="./game/ui/fonts/OFL.txt">SIL Open Font License 1.1</a>.</p>'
               : ''),
@@ -455,7 +488,7 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-async function addOfflineEntries(root, entries, info) {
+async function addOfflineEntries(root, entries, info, buildConfig) {
   if (!entries.some((e) => e.name === 'game/offline.mjs')) return;
   const template = await fs.readFile(
     path.join(root, 'game/offline/service-worker.template.js'),
@@ -464,6 +497,13 @@ async function addOfflineEntries(root, entries, info) {
   if (!template.includes('__XONIX_OFFLINE_CONFIG__'))
     fail('Offline worker template has no configuration marker');
   entries.push(...offlineIcons());
+  const optional = new Set(buildConfig.optionalOffline ?? []);
+  const optionalPacks = entries
+    .filter((entry) => optional.has(entry.name))
+    .map((entry) => {
+      const pack = JSON.parse(entry.bytes);
+      return { path: entry.name, id: pack.id, name: pack.name };
+    });
   const manifest = {
     id: './',
     name: 'Reveal Line',
@@ -495,6 +535,7 @@ async function addOfflineEntries(root, entries, info) {
       buildId: placeholder,
       scope: `${relativeRoot}/`,
       worker: `${relativeRoot}/service-worker.js`,
+      ...(optionalPacks.length ? { optionalPacks } : {}),
     };
     const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324"><meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     const source = entry.bytes.toString();
@@ -519,12 +560,18 @@ async function addOfflineEntries(root, entries, info) {
   for (const entry of injected)
     entry.bytes = Buffer.from(entry.bytes.toString().replace(placeholder, buildId));
   const files = [...entries]
-    .filter((entry) => entry.name !== '_headers')
+    .filter((entry) => entry.name !== '_headers' && !optional.has(entry.name))
     .sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))
     .map((e) => ({ path: e.name, bytes: e.bytes.length, sha256: sha256(e.bytes) }));
   if (files.length > 2000 || files.reduce((n, f) => n + f.bytes, 0) > 64 * 1024 * 1024)
     fail('Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs');
-  const config = { format: 'revealline-offline.v1', version: info.version, buildId, files };
+  const config = {
+    format: 'revealline-offline.v1',
+    version: info.version,
+    buildId,
+    files,
+    ...(optionalPacks.length ? { optionalPacks } : {}),
+  };
   entries.push({ name: 'offline-cache.json', bytes: Buffer.from(json(config)) });
   entries.push({
     name: 'service-worker.js',
@@ -566,7 +613,7 @@ export async function buildProject({
     };
     replace('game/build-info.json', json(info));
     addPublicEntries(entries, info);
-    await addOfflineEntries(root, entries, info);
+    await addOfflineEntries(root, entries, info, config);
     entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
     const manifest = {
       ...info,

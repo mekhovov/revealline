@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — enemy workshop</title>
+    <link rel="stylesheet" href="../../game/ui/enemy-catalog-panel.css" />
+    <link rel="stylesheet" href="../../game/ui/pixel-theme.css" />
+  </head>
+  <body style="padding: 20px">
+    <h1>Enemy workshop</h1>
+    <p>
+      Preview every registered role, prepare future generator choices and try a separate practice
+      map.
+    </p>
+    <button id="open-catalog" type="button">Open workshop</button>
+    <a href="../../game/playground/">Level playground</a>
+    <p id="catalog-host-status" role="status">Loading registered themes…</p>
+    <p>
+      Keyboard: Tab/arrows and Enter. Controller: face button to join, D-pad, South to choose, East
+      to return. Touch and mouse use the same controls.
+    </p>
+    <iframe
+      id="catalog-practice"
+      title="Enemy workshop practice; no campaign rewards"
+      style="width: 100%; height: 72dvh; border: 1px solid #516680"
+      hidden
+    ></iframe>
+    <script type="module" src="./workshop.mjs"></script>
+  </body>
+</html>

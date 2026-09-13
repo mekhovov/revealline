@@ -240,9 +240,7 @@ test('opaque art concealment precedes distinct terrain; reduced motion preserves
     assert.equal(
       calls.filter(
         (c) =>
-          c.op === 'fillRect' &&
-          c.fillStyle === theme.palette.ink &&
-          c.args.join() === '-8,-8,16,16',
+          c.op === 'fillRect' && c.fillStyle === '#0c1423' && c.args.join() === '-12,-12,24,24',
       ).length,
       4,
     );
