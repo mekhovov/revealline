@@ -32,7 +32,7 @@ export const FIRST_FLIGHT_LESSONS = freeze([
     instructions: [
       'Start at the marked top edge. Fly down to the opposite safe edge to close a live line.',
       'Your live line is vulnerable until it closes. Reaching safe ground secures the line and reveals territory with no enemy inside.',
-      'Direction controls steer. Stop pauses movement, not enemies. Boost is optional. Scout equipment is optional; there is no class switching in this course.',
+      'Tap a direction to fly. Tap another to turn. Pause to take a break. Boost and Scout equipment are optional; there is no class switching in this course.',
     ],
     steps: [
       {

@@ -1,0 +1,150 @@
+{
+  "version": "1.0.0",
+  "scope": "Native game, wide levels and MP3 playlist workflows",
+  "prompts": [
+    {
+      "id": "soundtrack-01-local-library",
+      "family": "cross-family",
+      "asset_type": "audio_library",
+      "mode": "text_generate",
+      "intent": "soundtrack 01 local library",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "LIBRARY_BRIEF"
+      ],
+      "prompt": "Prepare {{LIBRARY_BRIEF}} using the current soundtrack library and studio. Preserve each MP3 original, probe actual decoding, record title/artist/source declaration, and stage edits before one atomic save. Respect current total and staging limits. Deliver an exact .rlsound backup and distinguish structural tests, real browser playback and offline evidence. Do not place audio bytes into legacy game JSON.",
+      "example_request": "Apply soundtrack-01-local-library to the current RevealLine edition."
+    },
+    {
+      "id": "soundtrack-02-mixed-playlist",
+      "family": "cross-family",
+      "asset_type": "playlist",
+      "mode": "text_generate",
+      "intent": "soundtrack 02 mixed playlist",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "PLAYLIST_BRIEF"
+      ],
+      "prompt": "Create {{PLAYLIST_BRIEF}} from validated built-in and imported track IDs. Define ordered or shuffle playback and repeat all/one/off. Save the explicit choice or an exact map/campaign/theme/global assignment. Verify automatic boundary changes, immediate explicit selection, current-song continuity during edits, and each-entry traversal before repeats. Keep random ordering outside the simulation RNG.",
+      "example_request": "Apply soundtrack-02-mixed-playlist to the current RevealLine edition."
+    },
+    {
+      "id": "soundtrack-03-audio-production",
+      "family": "cross-family",
+      "asset_type": "music",
+      "mode": "text_generate",
+      "intent": "soundtrack 03 audio production",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "MUSIC_BRIEF"
+      ],
+      "prompt": "Produce {{MUSIC_BRIEF}} with original motifs and an authored beginning, development and ending. Prefer 80s/90s synth texture where requested, while preserving the selected theme. Deliver an actual MP3 and source master only if an audio production tool is available; otherwise label a production brief. Audition clipping, warning audibility, transition seams and dynamics. Register finished files separately from procedural recipes and do not count a prompt as a finished track.",
+      "example_request": "Apply soundtrack-03-audio-production to the current RevealLine edition."
+    },
+    {
+      "id": "soundtrack-04-continuity-check",
+      "family": "cross-family",
+      "asset_type": "audio_verification",
+      "mode": "text_generate",
+      "intent": "soundtrack 04 continuity check",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "JOURNEY"
+      ],
+      "prompt": "Verify {{JOURNEY}} in the actual host: title, settings, flight, ordinary Pause, Retry, picture, results and collection preserve the song. Music-only Pause retains SFX. Autoplay denial stays visible; file-picker/visibility/native interruptions retain intent without resuming flight. Use actual browser media for playback claims and distinguish simulated controllers from real hardware.",
+      "example_request": "Apply soundtrack-04-continuity-check to the current RevealLine edition."
+    },
+    {
+      "id": "soundtrack-05-backup-recovery",
+      "family": "cross-family",
+      "asset_type": "audio_backup",
+      "mode": "text_generate",
+      "intent": "soundtrack 05 backup recovery",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "TRANSFER_CASE"
+      ],
+      "prompt": "Exercise {{TRANSFER_CASE}} with original MP3 bytes, the .rlsound container and transactional store. Compare hashes after import, handle missing media and corrupt containers, keep the current edition on quota or generation conflicts, and verify server-stopped playback separately. An ordinary JSON profile backup must not be described as including audio.",
+      "example_request": "Apply soundtrack-05-backup-recovery to the current RevealLine edition."
+    },
+    {
+      "id": "wide-01-chapter-design",
+      "family": "cross-family",
+      "asset_type": "level_design",
+      "mode": "text_generate",
+      "intent": "wide 01 chapter design",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "CHAPTER_BRIEF"
+      ],
+      "prompt": "Author {{CHAPTER_BRIEF}} from the current First Light wide contract. Keep full72x36 routing, opaque hidden artwork, persistent steering and separate Immediate/Grid+buffer play. Introduce threats deliberately, preserve room for expert fast routes, and deliver legal winning and failure traces with original reward art. Reference observations and inferred values must be labelled. Do not advertise unregistered classic or Tactical primitives.",
+      "example_request": "Apply wide-01-chapter-design to the current RevealLine edition."
+    },
+    {
+      "id": "wide-02-theme-variation",
+      "family": "cross-family",
+      "asset_type": "background",
+      "mode": "text_generate",
+      "intent": "wide 02 theme variation",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "THEME_BRIEF"
+      ],
+      "prompt": "Create {{THEME_BRIEF}} as a2:1 original picture suited to incremental reveal. Preserve the approved map/character collision identity and black concealment. Produce a distinct readable focal story and inspect the real pixels before registration. Keep masters/provenance, theme/map association and optional future ending-video timestamps separate. Use current registered art fields, and do not count a repeated recolor as a new scene.",
+      "example_request": "Apply wide-02-theme-variation to the current RevealLine edition."
+    },
+    {
+      "id": "wide-03-motion-variation",
+      "family": "cross-family",
+      "asset_type": "animation",
+      "mode": "text_generate",
+      "intent": "wide 03 motion variation",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "CHARACTER_BRIEF"
+      ],
+      "prompt": "Adapt {{CHARACTER_BRIEF}} into independently replaceable compact and detailed rigs using registered rotor/blade anchors and speed/direction responses. Preserve a small readable hit silhouette, clear active trail head, banking/boost/recovery states and reduced-effects mode. Inspect real reference images and distinguish model appearance from fictional gameplay ability. Never change collision rules through cosmetic artwork.",
+      "example_request": "Apply wide-03-motion-variation to the current RevealLine edition."
+    },
+    {
+      "id": "wide-04-release-regression",
+      "family": "cross-family",
+      "asset_type": "verification",
+      "mode": "text_generate",
+      "intent": "wide 04 release regression",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "Current runtime schema, approved roadmap and relevant authoring skill."
+      ],
+      "variables": [
+        "MILESTONE"
+      ],
+      "prompt": "Qualify {{MILESTONE}} from an exact committed archive. Preserve legacy simulation/save/replay fixtures and separate new wide Standard/Gentle proofs. Check real host menu-to-win/loss/retry/load, current images, keyboard/touch/controller adapter behavior and complete arena layouts. Record actual physical devices separately from resized windows, and keep unfinished parallel changes out of the frozen artifact.",
+      "example_request": "Apply wide-04-release-regression to the current RevealLine edition."
+    }
+  ]
+}

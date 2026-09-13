@@ -1,0 +1,177 @@
+{
+  "passed": true,
+  "version": "v0.23.0",
+  "sourceCommit": "2455efd306aefea285725b8f502854678a692aa0",
+  "finishedAt": "2026-09-12T22:08:01.867776+00:00",
+  "tag": {
+    "name": "v0.23.0",
+    "object": "46be19b49016eebb0d05fefa12ed23df3982d0e6",
+    "kind": "tag",
+    "peeled": "2455efd306aefea285725b8f502854678a692aa0",
+    "objectBytes": 498,
+    "objectSha256": "b3dc8dd7c533d1bfc6e3aa1aa2b6a6b1877350330bae73f1135ee2d8a8f3f148"
+  },
+  "sourceGateReport": {
+    "path": ".cache/round-32/p2-verification-2455efd/source-gates.json",
+    "bytes": 4653,
+    "sha256": "0a65410181760ba2cf399e5dcec43ed3e033d9e1347806ec20c12d8f0927f408"
+  },
+  "sourceInventory": {
+    "path": ".cache/round-32/p2-verification-2455efd/source-inputs-after.json",
+    "bytes": 198003,
+    "sha256": "6444d913df0cce33f321fa655932e5cee6c0d290da5f1fcab37b892a3656879d"
+  },
+  "sourceFiles": 1163,
+  "sourceBytes": 170203788,
+  "archive": {
+    "path": "releases/v0.23.0/source.tar",
+    "bytes": 171182080,
+    "sha256": "98617461e3da0d3a0f69f95b5cac5a7a80532d5880487b2f29507b65563bf6c9"
+  },
+  "sourceArchiveEqualsGateArchive": true,
+  "sourceArchiveEqualsIndependentFreshGitArchive": true,
+  "freshGitArchive": {
+    "path": ".cache/round-32/p2-verification-2455efd/fresh-git-source.tar",
+    "bytes": 171182080,
+    "sha256": "98617461e3da0d3a0f69f95b5cac5a7a80532d5880487b2f29507b65563bf6c9"
+  },
+  "independentBuild": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-32/p2-verification-2455efd/audit-source/scripts/game-cli.mjs",
+      "build",
+      "--out",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-32/p2-verification-2455efd/rebuilt-site",
+      "--version",
+      "v0.23.0",
+      "--revision",
+      "2455efd306aefea285725b8f502854678a692aa0"
+    ],
+    "cwd": ".cache/round-32/p2-verification-2455efd/audit-source",
+    "startedAt": "2026-09-12T22:07:48.474011+00:00",
+    "durationMs": 2902,
+    "exitCode": 0,
+    "stdout": {
+      "path": ".cache/round-32/p2-verification-2455efd/independent-build.stdout.json",
+      "bytes": 303,
+      "sha256": "fc6e9cdd44aff1016f037447abc90c1bccb58648e7f5e91bba87f03213cdf49f"
+    },
+    "stderr": {
+      "path": ".cache/round-32/p2-verification-2455efd/independent-build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "manifest": {
+    "path": "releases/v0.23.0/site/manifest.json",
+    "bytes": 25135,
+    "sha256": "99a9d7ddf8eedaefa55518bae1dcab0780a8348ad511c0f27ba456a5acf458fa"
+  },
+  "manifestFiles": 154,
+  "manifestBytes": 43934460,
+  "distribution": {
+    "path": "releases/v0.23.0/site/distribution.zip",
+    "bytes": 43979573,
+    "sha256": "649f649426083f6d55f1af7111678bfbcd525876aaa68083c6d3dbdf89690bd1"
+  },
+  "zipEntries": 155,
+  "zipUncompressedBytes": 43959595,
+  "zipCrcAndAllPayloadBytesMatch": true,
+  "looseFiles": 158,
+  "looseBytes": 87939304,
+  "independentBuildAllFilesByteEqual": true,
+  "offlineArtifactCommand": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-32/p2-verification-2455efd/verify-offline.mjs",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/releases/v0.23.0/site",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round-32/p2-verification-2455efd/audit-source"
+    ],
+    "cwd": ".",
+    "startedAt": "2026-09-12T22:07:51.542031+00:00",
+    "durationMs": 80,
+    "exitCode": 0,
+    "stdout": {
+      "path": ".cache/round-32/p2-verification-2455efd/offline-artifact.stdout.json",
+      "bytes": 1626,
+      "sha256": "66fe87211503ca652deda291d31359f684ee89ba555eca3001172dc4ab9c9bb9"
+    },
+    "stderr": {
+      "path": ".cache/round-32/p2-verification-2455efd/offline-artifact.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "offlineArtifact": {
+    "format": "revealline-offline.v1",
+    "version": "v0.23.0",
+    "buildId": "74ceff8ca260ad9c8d30622cff7c37f57f0010ca00cb8ae2d251d2cee46ec1db",
+    "precacheFiles": 151,
+    "precacheBytes": 43882022,
+    "inventoryMatchesManifestExcluding": [
+      "_headers",
+      "offline-cache.json",
+      "service-worker.js"
+    ],
+    "allFileHashesMatch": true,
+    "embeddedWorkerConfigMatchesSidecar": true,
+    "workerExactlyMatchesArchivedTemplateWithConfig": true,
+    "buildIdRecomputedFromFrozenInfoTemplateAndNormalizedAssets": true,
+    "gameHtmlMarkers": [
+      {
+        "path": "game/controller-lab/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/couch/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/index.html",
+        "scope": "../",
+        "worker": "../service-worker.js"
+      },
+      {
+        "path": "game/playground/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      },
+      {
+        "path": "game/replay-theater/index.html",
+        "scope": "../../",
+        "worker": "../../service-worker.js"
+      }
+    ],
+    "allMarkersMatchVersionBuildAndLocalRootScope": true,
+    "webManifestStartUrl": "./game/",
+    "webManifestScope": "./",
+    "webManifestIconsExist": true,
+    "serviceWorkerSha256": "47f0da5f331689de6645f879996ac5e4914085c9b02d7d41f3f459f207f076ec",
+    "offlineCacheSha256": "915d61f24912fac96f2fbd5bcd215119162e609cd8ccaa6a5134e0f64bd42acf",
+    "boundary": "Offline artifact identity only. Actual browser installation, offline navigation and storage behavior are tested separately."
+  },
+  "olderReleaseTrees": 27,
+  "olderReleaseFiles": 3238,
+  "olderReleaseBytes": 4248242964,
+  "olderTagCount": 28,
+  "olderReleasesAndTagsUnchanged": true,
+  "releaseIndexExactlyPriorPlusNew": true,
+  "limits": "Local P2 archived-source gates and artifact identity only; no browser, native runtime, physical hardware, public deployment or human quality acceptance. Wide gameplay tests do not prove enjoyment or device comfort.",
+  "runner": {
+    "path": ".cache/round-32/p2-verification-2455efd/audit-freeze.py",
+    "bytes": 8791,
+    "sha256": "79aa87b09cad1656d1dec402295ccb648f006db22651cf11941b9577ea493074"
+  },
+  "freezeDriver": {
+    "path": ".cache/round-32/p2-verification-2455efd/freeze.mjs",
+    "bytes": 1162,
+    "sha256": "0862354e4533bf53748e35ca5c1d136dd05cf2b36eaef4681110a858cb399ad3"
+  },
+  "offlineVerifier": {
+    "path": ".cache/round-32/p2-verification-2455efd/verify-offline.mjs",
+    "bytes": 5000,
+    "sha256": "a47ac7c0d2fadd114e9fce0315a28ba672a036d299e90c106b49ab773f73690a"
+  }
+}

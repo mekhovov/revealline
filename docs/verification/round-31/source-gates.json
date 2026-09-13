@@ -1,0 +1,162 @@
+{
+  "sourceCommit": "a45c27d8e78cf0d4a20e9d1cbe26c331ea105f9b",
+  "source": ".cache/round-31/p1-source",
+  "startedAt": "2026-09-12T21:35:40.870753+00:00",
+  "archive": {
+    "path": ".cache/round-31/p1-verification/source.tar",
+    "bytes": 150517760,
+    "sha256": "c7bf50ff769be7784b32ee459dda3af643fa03ffa1a3ac3a7f783058021b9788"
+  },
+  "runtime": {
+    "node": "v22.22.2",
+    "execPath": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node"
+  },
+  "dependencyLink": {
+    "path": "node_modules",
+    "target": "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules",
+    "purpose": "tooling only; never archived or frozen"
+  },
+  "sourceFiles": 1142,
+  "sourceBytes": 149557697,
+  "sourceInventorySha256": "d32f48319a3416906f9fb7acafc2a68b1cbb0cb095b42c2ab23185a28c098b36",
+  "runner": {
+    "path": ".cache/round-31/p1-verification/run-gates.py",
+    "sha256": "cb35dca0c99cb0a135debc503b2a2fc5d042beb63178d7f06edc9267d717f8d8"
+  },
+  "gates": [
+    {
+      "name": "test",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "npm",
+        "test"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:35:40.931842+00:00",
+      "durationMs": 27820,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/test.log",
+      "bytes": 456887,
+      "sha256": "e8d54a4a2448b10ab51637d606daefa1ebaf33762346953ebc9a03c7bac6b9a9",
+      "tap": {
+        "tests": 1885,
+        "pass": 1885,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "tapAccepted": true,
+      "sourceUnchanged": true
+    },
+    {
+      "name": "lint",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "npm",
+        "run",
+        "lint"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:36:08.874051+00:00",
+      "durationMs": 1678,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/lint.log",
+      "bytes": 148,
+      "sha256": "c12cf98f28ce6a25c86da445669fb9a89aff689e0838f702351daa34c049772e",
+      "sourceUnchanged": true
+    },
+    {
+      "name": "format",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:36:10.648999+00:00",
+      "durationMs": 2533,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/format.log",
+      "bytes": 195,
+      "sha256": "bf2db429e3cc04829ee843804461120ccdd617f5e82a8a31688cbce9d26c9cd3",
+      "sourceUnchanged": true
+    },
+    {
+      "name": "native-format",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "npm",
+        "run",
+        "format:native:check"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:36:13.277929+00:00",
+      "durationMs": 364,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/native-format.log",
+      "bytes": 254,
+      "sha256": "ff806cd7b68d8a601be339192b831b7ac5857acd72a5cb65e7fc727f2037bf18",
+      "sourceUnchanged": true
+    },
+    {
+      "name": "validate",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "npm",
+        "run",
+        "validate"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:36:13.740707+00:00",
+      "durationMs": 1717,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/validate.log",
+      "bytes": 1916,
+      "sha256": "527cb963f790c6d39305117b602c613d5b9a20e844dee82e1a9e5d848f8d34af",
+      "sourceUnchanged": true
+    },
+    {
+      "name": "motion-lab-syntax",
+      "command": [
+        "mise",
+        "exec",
+        "node@22.22.2",
+        "--",
+        "node",
+        "--check",
+        "authoring/motion-lab/app.js"
+      ],
+      "cwd": ".cache/round-31/p1-source",
+      "startedAt": "2026-09-12T21:36:15.554632+00:00",
+      "durationMs": 38,
+      "exitCode": 0,
+      "log": ".cache/round-31/p1-verification/motion-lab-syntax.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceUnchanged": true
+    }
+  ],
+  "finishedAt": "2026-09-12T21:36:20.127329+00:00",
+  "sourceUnchanged": true,
+  "runnerUnchanged": true,
+  "priorReleasesUnchanged": true,
+  "priorTagsUnchanged": true,
+  "passed": true
+}

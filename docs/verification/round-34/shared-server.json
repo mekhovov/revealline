@@ -1,0 +1,27 @@
+{
+  "base": "http://127.0.0.1:8767/releases/v0.25.0/site/",
+  "requests": [
+    {
+      "path": "game/index.html",
+      "status": 200,
+      "bytes": 41368,
+      "sha256": "58e74464724cb663dd0fb338ad10d6d641c0bfd6a1b40541be4c98cde93efce5",
+      "matchesFrozen": true
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "status": 200,
+      "bytes": 14305,
+      "sha256": "603eac012f23c76558b60e6804f7226ef4e4082d8a9ebb499abb446c91943874",
+      "matchesFrozen": true
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "status": 200,
+      "bytes": 11706060,
+      "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
+      "matchesFrozen": true
+    }
+  ],
+  "scope": "HTTP byte identity on existing shared server; no server lifecycle change."
+}

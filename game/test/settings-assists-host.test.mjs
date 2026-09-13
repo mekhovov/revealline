@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { releaseInputs } from '../core/index.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
@@ -12,7 +11,7 @@ const sessionKey = 'revealline.suspended.dev.v1';
 
 // Actual app handlers and profile/session APIs run inside the shared Node browser
 // boundary. No CSS layout, OS media preference or physical-device claim.
-test('Settings and arena assists synchronize, persist across app reload, and release latched steering', async (t) => {
+test('Settings and arena assists synchronize, persist across app reload, and retain continuous direction', async (t) => {
   const storage = memoryStorage();
   let dispose = null;
   const lifetime = {
@@ -49,8 +48,7 @@ test('Settings and arena assists synchronize, persist across app reload, and rel
   assert.equal(run.player.cutting, true);
   assert.ok(run.player.speed > 0, 'A released direction tap still moves with Tap steering on.');
   assert.equal(page.rendered.reduced, true);
-  const neutral = structuredClone(run);
-  releaseInputs(neutral); // Detached public release oracle, never supplied to the host.
+  const checkpoint = authoritativeCheckpoint(run);
   const raw = storage.getItem(sessionKey);
   const writes = storage.writes.filter(([key]) => key === sessionKey).length;
   page.$('tap-steering').click();
@@ -58,12 +56,12 @@ test('Settings and arena assists synchronize, persist across app reload, and rel
   page.frame(0);
   assert.strictEqual(page.rendered.run, run);
   assert.equal(page.rendered.paused, false);
-  assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(neutral));
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
   const position = [run.player.x, run.player.y],
     tickBefore = run.tick;
   tick(page, 12);
   assert.equal(run.tick, tickBefore + 12, 'Changing Tap steering does not pause simulation.');
-  assert.deepEqual([run.player.x, run.player.y], position, 'The old tap latch cannot move again.');
+  assert.ok(run.player.y > position[1], 'Changing Boost mode cannot erase continuous direction.');
   assert.equal(storage.getItem(sessionKey), raw);
   assert.equal(storage.writes.filter(([key]) => key === sessionKey).length, writes);
 

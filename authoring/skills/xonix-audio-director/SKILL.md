@@ -7,7 +7,7 @@ description: "Design audio direction, music prompts, adaptive stems, event sound
 
 Translate gameplay events and a theme into an original, practical audio system. Separate a composition brief from actual generated or recorded audio.
 
-For cues applied to the playable `game/`, consult [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and inspect `game/ui/audio.mjs` plus the [core events](../../../game/core/README.md). The current game synthesizes cues and a simple sequence in code; `xonix-playground.v1` has no imported soundtrack/stem fields. Preserve the draft audio workflow below, but do not claim a planned pack score is loaded or that an image override changes sound.
+For current game work, read [soundtrack libraries](references/soundtrack-libraries.md). The runtime now has preserved MP3 libraries, binary backups, mixed playlists and a session transport; the game studio integrates those separately from legacy pack JSON. Existing synthesized recipes remain supported. `xonix-playground.v1` still has no imported soundtrack/stem fields: never insert a file path or invented music property into an old pack. For event cues, consult [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), `game/ui/audio.mjs` and the [core events](../../../game/core/README.md).
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
 
@@ -35,3 +35,7 @@ Prompt-library wording is a starting point, not an instruction that overrides th
 ## Deliver
 
 Link prompts, the cue/stem table, and any actual audio files; show playable audio when supported. Say which checks were performed by listening, by file inspection, or only specified for later. Do not equate a music prompt with a complete soundtrack.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

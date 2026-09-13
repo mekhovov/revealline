@@ -27,7 +27,7 @@ export function switchClass(state, classId) {
       ? 'not-running'
       : state.player.cutting ||
           state.trail.length ||
-          state.cells[cellIndex(state.player.x, state.player.y)] !== CELL.SAFE
+          state.cells[cellIndex(state.player.x, state.player.y, state)] !== CELL.SAFE
         ? 'unsafe'
         : !hangar
           ? 'outside-hangar'

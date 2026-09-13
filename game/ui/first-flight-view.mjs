@@ -167,7 +167,7 @@ export function attachFirstFlightView({
                 : 'Your real cuts advance these steps. Reading and course choices never move the craft.';
     text('outcome', outcome);
     const labels = getControlLabels() || {};
-    const hints = ['directions', 'stop', 'pause']
+    const hints = ['directions', 'pause']
       .map((key) => (typeof labels[key] === 'string' ? labels[key] : ''))
       .filter(Boolean);
     text('controls', hints.join(' · '));

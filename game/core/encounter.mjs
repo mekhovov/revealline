@@ -17,8 +17,9 @@ const DESCRIPTOR_KEYS = [
   'laneWidth',
 ];
 const ticks = (value) => Number.isInteger(value) && value >= 1 && value <= 7200;
+const actorTick = (state) => (state.classic ? state.classic.actorTick : state.tick);
 
-/** Called only after the surrounding v2 level has passed ordinary geometry checks. */
+/** Called only after the surrounding staged level has passed ordinary geometry checks. */
 export function resolveEncounterDescriptor(source, level) {
   required(plainObject(source), 'encounter must be an object');
   const value = boundedJSON(source, { maxBytes: 4096, maxNodes: 40, maxDepth: 3, maxString: 80 });
@@ -49,7 +50,9 @@ export function resolveEncounterDescriptor(source, level) {
     Number.isFinite(value.laneWidth) && value.laneWidth >= 0.25 && value.laneWidth <= 5,
     'encounter.laneWidth must be 0.25..5',
   );
-  const claimable = 46 * 34 - (level.walls ?? []).reduce((sum, wall) => sum + wall.w * wall.h, 0);
+  const claimable =
+    (level.width - 2) * (level.height - 2) -
+    (level.walls ?? []).reduce((sum, wall) => sum + wall.w * wall.h, 0);
   required(
     Number.isInteger(value.minReleaseCutCells) &&
       value.minReleaseCutCells >= 1 &&
@@ -83,17 +86,17 @@ export function resolveEncounterDescriptor(source, level) {
   );
   required(
     Math.floor(shield.x) >= 1 &&
-      Math.floor(shield.x) <= 46 &&
+      Math.floor(shield.x) <= level.width - 2 &&
       Math.floor(shield.y) >= 1 &&
-      Math.floor(shield.y) <= 34,
+      Math.floor(shield.y) <= level.height - 2,
     'shield relay must occupy a claimable interior cell',
   );
   required(
-    cellIndex(core.x, core.y) === cellIndex(sentinel.x, sentinel.y),
+    cellIndex(core.x, core.y, level) === cellIndex(sentinel.x, sentinel.y, level),
     'core must occupy the sentinel cell',
   );
   required(
-    cellIndex(shield.x, shield.y) !== cellIndex(core.x, core.y),
+    cellIndex(shield.x, shield.y, level) !== cellIndex(core.x, core.y, level),
     'shield relay must occupy another cell',
   );
   return value;
@@ -138,13 +141,13 @@ function fact(state, type) {
 function warning(state) {
   const e = state.encounter;
   e.phase = 'warning';
-  e.phaseStartTick = state.tick;
-  e.phaseEndTick = state.tick + state.level.encounter[e.stage].warningTicks;
+  e.phaseStartTick = actorTick(state);
+  e.phaseEndTick = actorTick(state) + state.level.encounter[e.stage].warningTicks;
   e.axis = e.stage === 'shielded' ? 'horizontal' : 'vertical';
   e.lane = clamp(
     Math.floor(e.axis === 'horizontal' ? state.player.y : state.player.x) + 0.5,
     1.5,
-    e.axis === 'horizontal' ? 34.5 : 46.5,
+    e.axis === 'horizontal' ? state.height - 1.5 : state.width - 1.5,
   );
   e.cycle++;
 }
@@ -152,7 +155,7 @@ function warning(state) {
 /** Integer half-open phases resolve once, before all contacts/captures in a tick. */
 export function updateEncounter(state) {
   const e = state.encounter;
-  if (!e || e.defeated || state.tick < e.phaseEndTick) return;
+  if (!e || e.defeated || actorTick(state) < e.phaseEndTick) return;
   if (e.phase === 'transition') {
     e.stage = 'exposed';
     warning(state);
@@ -160,10 +163,10 @@ export function updateEncounter(state) {
   } else if (['delay', 'rest', 'open'].includes(e.phase)) warning(state);
   else {
     e.phase = e.phase === 'warning' ? 'active' : e.stage === 'shielded' ? 'rest' : 'open';
-    e.phaseStartTick = state.tick;
+    e.phaseStartTick = actorTick(state);
     const key =
       e.phase === 'active' ? 'activeTicks' : e.phase === 'rest' ? 'restTicks' : 'openTicks';
-    e.phaseEndTick = state.tick + state.level.encounter[e.stage][key];
+    e.phaseEndTick = actorTick(state) + state.level.encounter[e.stage][key];
   }
   state.events.push(fact(state, 'encounter.phaseChanged'));
 }
@@ -204,9 +207,9 @@ export function finishEncounterCapture(state, releaseCells) {
     e.stage = 'transition';
     e.phase = 'transition';
     // A mid-tick closure cancels the old lane now; the full transition starts next tick.
-    e.phaseStartTick = state.tick + 1;
-    e.phaseEndTick = state.tick + 1 + state.level.encounter.transitionTicks;
-    e.transitionTick = state.tick;
+    e.phaseStartTick = actorTick(state) + 1;
+    e.phaseEndTick = actorTick(state) + 1 + state.level.encounter.transitionTicks;
+    e.transitionTick = actorTick(state);
     e.axis = 'vertical';
     e.lane = null;
     e.cycle = 0;
@@ -224,7 +227,7 @@ export function canReleaseIsolated(state) {
     state.status === 'running' &&
     !state.player.cutting &&
     state.trail.length === 0 &&
-    state.cells[cellIndex(state.player.x, state.player.y)] === CELL.SAFE &&
+    state.cells[cellIndex(state.player.x, state.player.y, state)] === CELL.SAFE &&
     state.cells.reduce((sum, cell) => sum + Number(cell === CELL.FIELD), 0) <=
       state.level.encounter.minReleaseCutCells
   );
@@ -240,10 +243,10 @@ export function defeatEncounter(state, cause, cutCells = 0) {
   if (!core?.captured) throw new Error('encounter release did not capture core');
   e.stage = 'defeated';
   e.phase = 'defeated';
-  e.phaseStartTick = state.tick;
+  e.phaseStartTick = actorTick(state);
   e.phaseEndTick = null;
   e.defeated = true;
-  e.defeatTick = state.tick;
+  e.defeatTick = actorTick(state);
   e.defeatCause = cause;
   e.qualifyingCutCells = cutCells;
   state.events.push({ ...fact(state, 'encounter.defeated'), cause, qualifyingCutCells: cutCells });

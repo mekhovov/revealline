@@ -13,6 +13,7 @@ import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
 
 export const SESSION_FORMAT = 'xonix-session.v1';
+export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
 export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
 const canonical = (v) =>
@@ -40,6 +41,15 @@ function metadata(session) {
   );
   required(stamp(session.savedAt), 'Saved attempt date must be a valid UTC ISO timestamp.');
 }
+function continuationValue(value) {
+  const owned = boundedJSON(value, { maxBytes: 1024 });
+  exactKeys(owned, ['direction'], 'saved flight continuation');
+  required(
+    owned.direction === null || ['up', 'down', 'left', 'right'].includes(owned.direction),
+    'Saved flight continuation must contain a cardinal direction or null.',
+  );
+  return owned;
+}
 function envelope(candidate) {
   required(
     candidate !== null && candidate !== undefined,
@@ -54,10 +64,24 @@ function envelope(candidate) {
   });
   exactKeys(
     session,
-    ['format', 'campaignKey', 'themeId', 'bodyId', 'runId', 'savedAt', 'replay'],
+    [
+      'format',
+      'campaignKey',
+      'themeId',
+      'bodyId',
+      'runId',
+      'savedAt',
+      'replay',
+      ...(session.format === CONTINUOUS_SESSION_FORMAT ? ['continuation'] : []),
+    ],
     'saved attempt',
   );
-  required(session.format === SESSION_FORMAT, 'Unsupported saved attempt format.');
+  required(
+    [SESSION_FORMAT, CONTINUOUS_SESSION_FORMAT].includes(session.format),
+    'Unsupported saved attempt format.',
+  );
+  if (session.format === CONTINUOUS_SESSION_FORMAT)
+    session.continuation = continuationValue(session.continuation);
   metadata(session);
   required(
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
@@ -83,6 +107,7 @@ export function suspendSession({
   bodyId,
   runId,
   savedAt = new Date().toISOString(),
+  continuation,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -91,15 +116,19 @@ export function suspendSession({
     recorder && typeof recorder === 'object',
     'This attempt has no recoverable input recording.',
   );
-  releaseInputs(run);
-  recordRelease(recorder);
+  const intent = continuation === undefined ? undefined : continuationValue(continuation);
+  if (intent === undefined) {
+    releaseInputs(run);
+    recordRelease(recorder);
+  }
   return {
-    format: SESSION_FORMAT,
+    format: intent === undefined ? SESSION_FORMAT : CONTINUOUS_SESSION_FORMAT,
     campaignKey,
     themeId,
     bodyId,
     runId,
     savedAt,
+    ...(intent === undefined ? {} : { continuation: intent }),
     replay: exportReplay(recorder, run),
   };
 }
@@ -159,8 +188,10 @@ export async function restoreSession(
   recorder.segments = structuredClone(session.replay.segments);
   recorder.ticks = session.replay.ticks;
   recorder.releaseAfter = session.replay.releaseAfter;
-  releaseInputs(checked.state);
-  recordRelease(recorder);
+  if (session.format === SESSION_FORMAT) {
+    releaseInputs(checked.state);
+    recordRelease(recorder);
+  }
   const { replay: _replay, ...identity } = session;
   if (mastery === undefined) return { session: identity, run: checked.state, recorder };
   // Take only after installed map/roster checks. This in-memory continuation

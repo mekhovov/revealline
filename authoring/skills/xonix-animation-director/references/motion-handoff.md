@@ -1,6 +1,76 @@
 # Motion handoff and review record
 
-This is a proposed authoring format. Before serializing it, check the actual preview/runtime schema. Existing raster-media metadata does not automatically accept animation states, audio cues or component graphs.
+The generic handoff below is a proposed authoring format. The next section records the implemented game interfaces. Before serializing either, check the active preview/runtime schema: raster-media metadata does not automatically accept animation states, audio cues or component graphs.
+
+## Implemented game presentation
+
+Read [`render.mjs`](../../../../game/ui/render.mjs), [`actor-presentation.mjs`](../../../../game/ui/actor-presentation.mjs), [`classic-view.mjs`](../../../../game/ui/classic-view.mjs) and the role arrays in [`content.mjs`](../../../../game/content.mjs) when changing the playable presentation. The [presentation guide](../../../../docs/actor-presentation.md) explains the current visual intent; source and focused tests determine accepted behavior.
+
+### Independent asset bindings
+
+Standard `visualOverrides` keys are exactly `background`, `player`, `enemy`, `patrol`, `boss`, `objective`, `supply`, `wall`. Classic `xonix-playground.v5` additionally accepts exactly `contour`, `rover`, `eroder`, `slowTerrain`, `lethalTerrain`, `lifePickup`, `speedPickup`, `slowPickup`, `freezePickup`. Earlier scenario formats retain their narrower role list.
+
+| Runtime type or purpose             | Existing image slot             |
+| ----------------------------------- | ------------------------------- |
+| `bouncer` and ordinary field actor  | `enemy`                         |
+| `border-patrol`                     | `patrol`                        |
+| `lane-boss` or staged sentinel core | `boss`                          |
+| `contour-patrol`                    | `contour`                       |
+| `claimed-rover`                     | `rover`                         |
+| `eroder`                            | `eroder`                        |
+| Slow / lethal material              | `slowTerrain` / `lethalTerrain` |
+| Extra life / faster player          | `lifePickup` / `speedPickup`    |
+| Slower / frozen enemies             | `slowPickup` / `freezePickup`   |
+
+Replacing a slot does not rename its behavior, change its contact domain or remove warning/rejoining brackets, dormant outlines, powerup badges or collision-center cues. Enemy overrides are square body images facing upward at zero rotation. Player overrides instead retain their aspect ratio inside the selected rig's source rectangle. Rig recipes and normalized anchors remain independently authored in the motion-lab presets; an image upload does not define a new rig or animation schema. Do not serialize `trail`, `rotors`, `capture`, `actorScale` or `playerScale` as new visual-override roles. Trail/capture refinements use the existing presentation renderer; new configurable primitives require an explicit supported extension.
+
+### Screen size and geometry
+
+The board still paints 16 logical pixels per cell: legacy 48×36 uses 768×576, wide 72×36 uses 1152×576. CSS display size is separate from those logical dimensions and from source-image pixels. Preserve the entire wide arena on portrait displays.
+
+| Presentation               | Current footprint policy                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Ordinary enemy             | 18–28 CSS pixels when the displayed canvas is at least 480 CSS pixels wide; at least 12 on ordinary phones; maximum 48 logical pixels |
+| Boss                       | Same responsive approach, with maxima of 34 CSS and 60 logical pixels                                                                 |
+| Player contained image box | 24–32 CSS pixels on desktop and at least 16 on ordinary phones; maximum 64 logical pixels                                             |
+
+The current FPV image margins make the visible player roughly 18/12 pixels at its desktop/phone minima. Measure replacement-art alpha bounds; a nominal box is not proof of occupied pixels. The neutral marker is scaled by its visible triangle extent. Logical caps take precedence on unusually tiny embedded canvases. `BoardPainter.draw(...,{actorScale,playerScale})` exposes separate bounded cosmetic adjustments; neither changes the collider nor becomes a persisted preference automatically. Maintain player `rules.playerRadius` and enemy radius markers outside the cosmetic body transform. Keep shield and queued-turn cues clear of the enlarged player.
+
+`presentation.style` values remain `microtile`, `hybrid` and `props`. Preserve distinct four-theme shapes, not only palettes: FPV vehicles/rotors/radar, Ukrainian patterned creatures/botanical forms, retro robots/comets/glitches, and business invoices/parcels/linked blocks. The renderer maps theme families `fpv`, `atlas`, `retro`, `navi` to these existing treatments. Keep source crop, center and rotor anchors locked when making a cosmetic trim; an intentional crop requires a new measured anchor record.
+
+### Motion and cut invariants
+
+- Enemies retain a bounded previous-position cache (64 actors). Facing is measured on new simulation ticks; initial velocity is a fallback. Never write a cosmetic heading, speed or tail into a simulation entity. Stationary treads/walking stay still; rotors/radar may idle.
+- Player body orientation follows resolved `player.direction`, while rate and banking read current motion. Keep configurable blade counts distinct from hub counts, alias-aware phase sampling and independent non-rotor recipes. Classic enemy freeze does not freeze the player's rotors.
+- Gameplay Pause holds world presentation. Enemy stun, dormancy and classic freeze hold their relevant pose clocks. Reduced effects retain facing and necessary static cues while removing banking, moving accents and capture pulses. Terminal full-picture celebration has its own pause/lifecycle input.
+- Enemy tails have at most three points within 1.15 cells of the actor. Do not scatter decorative particles across active lines, narrow routes or hazards.
+- The active cut uses an 8-logical-pixel dark outline, 4-pixel accent and 1-pixel light center, plus an 8/4-pixel head. Its one moving 3-pixel highlight stays on the last short section of the real cut. Reduced effects keep the complete static line/head and trail-cell occupancy cue.
+- `cells.claimed` copies at most 2592 indices into a bounded effect queue (eight effects). The capture sweep touches only those indices still SAFE, lasts less than 0.65 seconds and has opacity at most 0.2. Pause holds its age; reduced effects omit it. It grants no score, coverage, damage or awards.
+- Opaque black conceals unrevealed art. Full-art victory is presentation after the real win and must preserve recorded coverage and one-time rewards. Do not bypass the core's authored capture-stop rule or use a victory clip to trigger a second award.
+
+## Presentation prompt supplement
+
+[`presentation-workflows.json`](../../../prompts/presentation-workflows.json) follows the existing `prompts` catalog format and contains three unexecuted templates registered in `authoring/prompt.py`. Its explicit `SUPPLEMENTS` tuple includes `CATALOG.parent / "presentation-workflows.json"` exactly once. For an older checkout without that entry, add it once; no main-catalog rewrite or new loader is needed.
+
+Run from the repository root:
+
+```sh
+python3 authoring/prompt.py render presentation-01-fpv-rig --set BODY_ID=fpv-body --set SOURCE_ART=authoring/motion-lab/assets/fpv-body.png --set TARGET_PACK=game/content/packs/fpv-arcade-r2.json
+python3 authoring/prompt.py render presentation-02-four-theme-enemies --set TARGET_PACK=game/content/packs/classic-lab.json --set DETAIL_TREATMENTS=microtile,hybrid,props
+python3 authoring/prompt.py render presentation-03-cut-reveal --set TARGET_PACK=game/content/packs/fpv-arcade-r2.json --set EFFECT_DIRECTION='A brighter short trail head and a quiet diagonal sweep over newly secured cells'
+```
+
+`load_catalog()` checks unique IDs and matching declared/template variables; `render()` rejects missing, unknown or duplicate assignments and unresolved delimiters. Those checks validate prompt wiring, not produced assets. Keep source requirements and the rendered effective prompt with the actual generation/implementation record.
+
+## Applied verification
+
+For a renderer or rig change, use the existing focused checks:
+
+```sh
+node --test game/test/actor-presentation.test.mjs game/test/classic-presentation.test.mjs game/test/wide-presentation.test.mjs game/test/rewards.test.mjs game/test/gallery-reduced-effects.test.mjs
+```
+
+For an asset-only change, validate the actual scenario/pack through its current authoring tool, then inspect decoded images and actual playback. Check each changed slot independently, Immediate and Grid + buffer against their own unchanged input proof, 320/390/600/1152 CSS-pixel canvas fixtures, legacy/wide geometry as applicable, pause/reduced/freeze/respawn, and non-square player images. Keep exact checkpoint comparisons and visual evidence separate. Node Canvas-command fixtures are not screenshots, physical controllers, phone certification, animation-quality approval or a human playtest.
 
 ## Component boundaries
 
@@ -20,17 +90,17 @@ Non-rotor recipes differ by material and identity. A bird wing may oscillate aro
 
 Use the actual simulation phase as authority. The following table is a starting point, not a fixed ruleset or implemented state machine.
 
-| State/event | Possible visible response | Timing and interruption decision |
-|---|---|---|
-| Idle | Stable body and restrained rotor/wing loop | World clock; preserve facing at zero velocity. Reduced motion can hold a quiet frame. |
-| Move | Direction-facing pose, modest velocity-driven loop rate | Read actual velocity; continuous loop; stop or blend when authoritative velocity changes. |
-| Turn | Short directional pose change | Cosmetic pose follows the documented movement state. Add no steering delay beyond the configured immediate or buffered turn policy. |
-| Slow | Clear drag cue with an existing slow-state symbol | State-driven overlay; cancel when slow state clears. Do not slow simulation through art. |
-| Boost | Short restrained wake or brighter attachment | State-driven; cancel on boost end or higher-priority hit/respawn. Avoid masking the live trail. |
-| Hit | Local brief response at the authoritative event position | One-shot keyed to a unique event; interrupts cosmetic turn/boost effects. Does not apply damage itself. |
-| Respawn | Stable arrival marker with optional short outline | Triggered by an actual respawn phase/event; replace hit visuals. Never invent invulnerability duration. |
-| Capture | Local closure pulse and fill-region highlight | Separate component; can coexist with movement. Uses supplied captured-region geometry, not painted estimates. |
-| Victory | Calm full-artwork presentation plus optional avatar gesture | Only after authoritative victory; ordinary movement inputs follow the actual game phase. Preserve recorded capture percentage. |
+| State/event | Possible visible response                                   | Timing and interruption decision                                                                                                    |
+| ----------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Idle        | Stable body and restrained rotor/wing loop                  | World clock; preserve facing at zero velocity. Reduced motion can hold a quiet frame.                                               |
+| Move        | Direction-facing pose, modest velocity-driven loop rate     | Read actual velocity; continuous loop; stop or blend when authoritative velocity changes.                                           |
+| Turn        | Short directional pose change                               | Cosmetic pose follows the documented movement state. Add no steering delay beyond the configured immediate or buffered turn policy. |
+| Slow        | Clear drag cue with an existing slow-state symbol           | State-driven overlay; cancel when slow state clears. Do not slow simulation through art.                                            |
+| Boost       | Short restrained wake or brighter attachment                | State-driven; cancel on boost end or higher-priority hit/respawn. Avoid masking the live trail.                                     |
+| Hit         | Local brief response at the authoritative event position    | One-shot keyed to a unique event; interrupts cosmetic turn/boost effects. Does not apply damage itself.                             |
+| Respawn     | Stable arrival marker with optional short outline           | Triggered by an actual respawn phase/event; replace hit visuals. Never invent invulnerability duration.                             |
+| Capture     | Local closure pulse and fill-region highlight               | Separate component; can coexist with movement. Uses supplied captured-region geometry, not painted estimates.                       |
+| Victory     | Calm full-artwork presentation plus optional avatar gesture | Only after authoritative victory; ordinary movement inputs follow the actual game phase. Preserve recorded capture percentage.      |
 
 Resolve simultaneous states per component. Terminal game phase overrides ordinary motion; respawn presentation supersedes stale hit effects. An active trail and a local capture pulse can coexist. Slow and boost visuals follow the simulation's actual combined state rather than guessing which gameplay modifier wins.
 

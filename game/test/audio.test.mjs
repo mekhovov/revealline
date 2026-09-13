@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Soundscape, DEFAULT_TRACKS, MUSIC_STYLES } from '../ui/audio.mjs';
+import { Soundscape, DEFAULT_TRACKS, MUSIC_STYLES, SYNTH_SONG_STEPS } from '../ui/audio.mjs';
 import { composeStep, scheduleWindow, deriveTension, validateTrack } from '../ui/music.mjs';
 class Param {
   constructor() {
@@ -108,12 +108,39 @@ class AudioContextFake {
       }
   }
 }
-const setup = async () => {
+const setup = async (options = {}) => {
   const context = new AudioContextFake(),
-    sound = new Soundscape({ contextFactory: () => context });
+    sound = new Soundscape({ ...options, contextFactory: () => context });
   await sound.enable();
   return { context, sound };
 };
+
+test('classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music', async () => {
+  const { context, sound } = await setup({ persistentMusic: true });
+  sound.update(true, { id: 'fpv' }, { status: 'running' });
+  const cues = [];
+  for (const event of [
+    { type: 'powerup.collected', kind: 'extra-life' },
+    { type: 'powerup.collected', kind: 'enemy-freeze' },
+    { type: 'erosion.warning' },
+    { type: 'cells.eroded' },
+  ]) {
+    context.advance(1);
+    const before = context.sources.length;
+    sound.event(event);
+    const notes = context.sources.slice(before).map((source) => source.frequency.value);
+    assert.ok(notes.length > 0);
+    cues.push(notes);
+  }
+  assert.notDeepEqual(cues[0], cues[1]);
+  assert.notDeepEqual(cues[2], cues[3]);
+  sound.pause();
+  const before = context.sources.length;
+  sound.event({ type: 'powerup.collected', kind: 'player-speed' });
+  sound.event({ type: 'rover.warning' });
+  assert.equal(context.sources.length, before);
+  sound.dispose();
+});
 
 test('no context or sound is created before an explicit user audio action', async () => {
   let calls = 0;
@@ -383,5 +410,253 @@ test('pause, reset, mute and disposal cancel preview without restarting after a 
   assert.equal(await pending, false);
   assert.equal(sound.previewActive, false);
   assert.equal(context.sources.length, 0);
+  await sound.dispose();
+});
+
+test('persistent soundtrack opt-in remains silent until an allowed audio action', async () => {
+  let contexts = 0;
+  const sound = new Soundscape({
+    persistentMusic: true,
+    contextFactory: () => {
+      contexts++;
+      return new AudioContextFake();
+    },
+  });
+  sound.setTrack(DEFAULT_TRACKS[2], { atBoundary: true });
+  sound.update(false, {}, { status: 'won' });
+  sound.pause();
+  sound.reset();
+  assert.equal(await sound.resume(), false);
+  assert.equal(contexts, 0);
+  assert.equal(sound.musicState().active, false);
+  assert.throws(() => new Soundscape({ persistentMusic: 'true' }), /boolean/);
+  assert.equal(await sound.enable(), true);
+  sound.update(false, {}, { status: 'ready' });
+  assert.equal(contexts, 1);
+  assert.equal(sound.musicState().active, true);
+  assert.ok(sound.voices.size > 0);
+  await sound.dispose();
+});
+
+test('persistent music survives menu, gameplay pause, terminal cues and attempt reset', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(false, {}, { status: 'ready' });
+  const initialMusic = [...sound.voices],
+    initialCursor = { ...sound.cursor };
+  sound.pause();
+  assert.equal(context.state, 'running');
+  assert.equal(context.suspendCount, 0);
+  assert.deepEqual([...sound.voices], initialMusic);
+  assert.deepEqual(sound.cursor, initialCursor);
+  sound.event('cells.claimed');
+  assert.deepEqual([...sound.voices], initialMusic);
+  context.advance(0.3);
+  sound.update(false, {}, { status: 'running', lives: 1, player: { cutting: true } });
+  assert.ok(sound.cursor.index > initialCursor.index);
+  assert.equal(sound.tension, 0);
+  const pausedCursor = { ...sound.cursor };
+  assert.equal(await sound.resume(), true);
+  assert.equal(context.resumeCount, 1);
+  assert.deepEqual(sound.cursor, pausedCursor);
+  sound.update(true, {});
+  sound.event('cut.started');
+  assert.ok([...sound.voices].some((voice) => voice.bus === 'sfx'));
+  for (const won of [true, false]) {
+    const before = { ...sound.cursor },
+      music = [...sound.voices].filter((voice) => voice.bus === 'music');
+    sound.event({ type: 'run.completed', won, tick: won ? 10 : 20 });
+    assert.ok([...sound.voices].some((voice) => voice.bus === 'sfx'));
+    assert.ok(music.every((voice) => sound.voices.has(voice)));
+    assert.deepEqual(sound.cursor, before);
+    context.advance(0.15);
+    sound.update(false, {}, { status: won ? 'won' : 'lost' });
+    assert.equal(sound.musicState().active, true);
+    assert.ok(sound.cursor.index > before.index);
+    const after = { ...sound.cursor };
+    sound.reset();
+    assert.deepEqual(sound.cursor, after);
+    assert.ok([...sound.voices].every((voice) => voice.bus === 'music'));
+    sound.update(true, {});
+  }
+  await sound.dispose();
+});
+
+test('automatic authored tracks wait for a real song boundary and adopt the new tempo there', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(true, {});
+  const original = sound.musicState(),
+    boundary = 0.025 + (SYNTH_SONG_STEPS * 60) / original.track.tempo / 4,
+    selected = { ...DEFAULT_TRACKS[4], id: 'queued-ambient' };
+  sound.setTrack(DEFAULT_TRACKS[1], { atBoundary: true });
+  sound.setTrack(selected, { atBoundary: true });
+  selected.tempo = 180;
+  const snapshot = sound.musicState();
+  snapshot.pendingTrack.root = 84;
+  snapshot.track.name = 'external change';
+  assert.equal(sound.musicState().pendingTrack.tempo, 72);
+  assert.equal(sound.musicState().pendingTrack.root, DEFAULT_TRACKS[4].root);
+  assert.deepEqual(sound.musicState().track, original.track);
+  assert.equal(sound.musicState().step, original.step);
+  let firstNewSources = null,
+    oldSources = null;
+  while (context.currentTime < boundary + 0.1) {
+    const count = context.sources.length;
+    context.advance(0.025);
+    sound.update(true, {});
+    if (sound.track.id === 'queued-ambient' && firstNewSources === null) {
+      oldSources = context.sources.slice(0, count);
+      firstNewSources = context.sources.slice(count);
+      assert.ok(context.currentTime >= boundary - 0.12 - 1e-8);
+    }
+  }
+  assert.ok(firstNewSources?.length > 0);
+  assert.ok(firstNewSources.every((source) => Math.abs(source.started - boundary) < 1e-8));
+  assert.ok(oldSources.every((source) => source.stopped <= boundary + 1e-8));
+  assert.equal(sound.musicState().pendingTrack, null);
+  assert.equal(sound.getSettings().style, 'ambient');
+  const count = context.sources.length;
+  while (context.currentTime < boundary + 1.3) {
+    context.advance(0.025);
+    sound.update(false, {}, { status: 'won' });
+  }
+  const bell = context.sources.slice(count).find((source) => source.type === 'sine');
+  // Ambient's next note is six sixteenths after its first chord, at the new 72 BPM.
+  assert.ok(bell);
+  assert.ok(Math.abs(bell.started - (boundary + (6 * 60) / 72 / 4)) < 1e-8);
+  await sound.dispose();
+});
+
+test('same authored context cancels a queued change without restart; explicit selection replaces it', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(true, {});
+  context.advance(0.3);
+  sound.update(true, {});
+  const cursor = { ...sound.cursor },
+    sources = [...sound.voices];
+  sound.setTrack(DEFAULT_TRACKS[1], { atBoundary: true });
+  sound.setTrack({ ...DEFAULT_TRACKS[0] }, { atBoundary: true });
+  assert.equal(sound.musicState().pendingTrack, null);
+  assert.deepEqual(sound.cursor, cursor);
+  assert.deepEqual([...sound.voices], sources);
+  sound.setTrack(DEFAULT_TRACKS[1], { atBoundary: true });
+  const before = sound.musicState();
+  assert.throws(() => sound.setTrack(DEFAULT_TRACKS[2], { atBoundary: 'yes' }), /boolean/);
+  assert.throws(() => sound.setTrack({ ...DEFAULT_TRACKS[2], url: 'track.mp3' }), /field/);
+  assert.deepEqual(sound.musicState(), before);
+  sound.event('cut.started');
+  sound.setTrack(DEFAULT_TRACKS[3]);
+  assert.equal(sound.musicState().track.id, DEFAULT_TRACKS[3].id);
+  assert.equal(sound.musicState().pendingTrack, null);
+  assert.equal(sound.cursor, null);
+  assert.ok([...sound.voices].some((voice) => voice.bus === 'sfx'));
+  assert.ok([...sound.voices].every((voice) => voice.bus === 'sfx'));
+  sound.update(true, {});
+  assert.equal(sound.cursor.index, 1);
+  assert.ok([...sound.voices].some((voice) => voice.bus === 'music'));
+  await sound.dispose();
+});
+
+test('persistent lifecycle suspension and mute silence sources but retain the musical position', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(true, {});
+  for (let i = 0; i < 20; i++) {
+    context.advance(0.1);
+    sound.update(true, {});
+  }
+  sound.setTrack(DEFAULT_TRACKS[3], { atBoundary: true });
+  const step = sound.musicState().step,
+    count = context.sources.length;
+  sound.suspend();
+  assert.equal(sound.voices.size, 0);
+  assert.equal(sound.musicState().active, false);
+  context.advance(900);
+  sound.suspend();
+  sound.update(false, {});
+  assert.equal(context.sources.length, count);
+  assert.equal(sound.musicState().step, step);
+  assert.equal(await sound.resume(), true);
+  sound.update(false, {});
+  assert.ok(sound.musicState().step >= step && sound.musicState().step <= step + 1);
+  assert.ok(context.sources.slice(count).every((source) => source.started >= 900));
+  assert.equal(sound.musicState().pendingTrack.id, DEFAULT_TRACKS[3].id);
+  const mutedStep = sound.musicState().step;
+  sound.disable();
+  assert.equal(sound.voices.size, 0);
+  assert.equal(await sound.resume(), false);
+  context.advance(90);
+  assert.equal(await sound.enable(), true);
+  sound.update(false, {});
+  assert.ok(sound.musicState().step >= mutedStep && sound.musicState().step <= mutedStep + 1);
+  assert.equal(sound.musicState().pendingTrack.id, DEFAULT_TRACKS[3].id);
+  context.state = 'suspended';
+  assert.equal(sound.musicState().active, false);
+  await sound.dispose();
+});
+
+test('persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes', async () => {
+  for (const cancel of ['suspend', 'disable', 'dispose']) {
+    const context = new AudioContextFake();
+    let finish;
+    context.resume = () =>
+      new Promise((resolve) => {
+        finish = () => {
+          context.state = 'running';
+          resolve();
+        };
+      });
+    const sound = new Soundscape({ persistentMusic: true, contextFactory: () => context });
+    const pending = sound.enable();
+    await sound[cancel]();
+    finish();
+    assert.equal(await pending, false, cancel);
+    sound.update(false, {}, { status: 'ready' });
+    assert.equal(context.sources.length, 0, cancel);
+    assert.equal(sound.musicState().active, false, cancel);
+    await sound.dispose();
+  }
+});
+
+test('persistent audition returns to the ongoing soundtrack without a cursor reset', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(true, {});
+  context.advance(0.5);
+  sound.update(true, {});
+  const step = sound.musicState().step;
+  assert.equal(await sound.preview({ seconds: 1 }), true);
+  assert.equal(sound.musicState().step, step);
+  for (let i = 0; i < 15; i++) {
+    context.advance(0.1);
+    sound.update(false, {}, { status: 'won' });
+  }
+  assert.equal(sound.previewActive, false);
+  assert.equal(sound.musicState().active, true);
+  assert.ok(sound.musicState().step > step);
+  assert.ok(sound.voices.size > 0);
+  sound.pause();
+  assert.equal(sound.previewActive, false);
+  assert.equal(sound.musicState().active, true);
+  await sound.dispose();
+});
+
+test('persistent scheduler remains bounded after a stall and only explicit music reset restarts it', async () => {
+  const { sound, context } = await setup({ persistentMusic: true });
+  sound.update(true, {});
+  const step = sound.musicState().step;
+  context.advance(900);
+  const count = context.sources.length;
+  sound.update(false, {});
+  assert.ok(sound.musicState().step > step && sound.musicState().step <= step + 4);
+  assert.ok(context.sources.length - count <= 40);
+  assert.ok(context.sources.slice(count).every((source) => source.started >= 900));
+  sound.update(true, {});
+  sound.event('cut.started');
+  sound.setTrack(DEFAULT_TRACKS[2], { atBoundary: true });
+  sound.resetMusic();
+  assert.equal(sound.cursor, null);
+  assert.equal(sound.musicState().pendingTrack, null);
+  assert.ok([...sound.voices].length > 0);
+  assert.ok([...sound.voices].every((voice) => voice.bus === 'sfx'));
+  sound.update(false, {});
+  assert.equal(sound.cursor.index, 1);
   await sound.dispose();
 });

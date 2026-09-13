@@ -2,6 +2,58 @@
   "format": "xonix-pack-catalog.v1",
   "packs": [
     {
+      "id": "fpv-arcade-r2",
+      "path": "fpv-arcade-r2.json",
+      "name": "FPV Front · First Light R2",
+      "campaigns": [
+        {
+          "id": "fpv-first-light-r2",
+          "revision": "2",
+          "title": "FPV Front · First Light R2",
+          "levels": [
+            {
+              "id": "orchard-window",
+              "name": "Orchard Window"
+            },
+            {
+              "id": "split-courtyard",
+              "name": "Split Courtyard"
+            },
+            {
+              "id": "night-signal",
+              "name": "Night Signal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fpv-arcade",
+      "path": "fpv-arcade.json",
+      "name": "FPV Front · First Light",
+      "campaigns": [
+        {
+          "id": "fpv-first-light",
+          "revision": "1",
+          "title": "FPV Front · First Light",
+          "levels": [
+            {
+              "id": "orchard-window",
+              "name": "Orchard Window"
+            },
+            {
+              "id": "split-courtyard",
+              "name": "Split Courtyard"
+            },
+            {
+              "id": "night-signal",
+              "name": "Night Signal"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "night-shift",
       "path": "night-shift.json",
       "name": "Night Shift",
@@ -11,9 +63,18 @@
           "revision": "1",
           "title": "Night Shift",
           "levels": [
-            { "id": "night-shift-01", "name": "Midnight Channel" },
-            { "id": "night-shift-02", "name": "Voltage Garden" },
-            { "id": "night-shift-03", "name": "Afterglow Sentinel" }
+            {
+              "id": "night-shift-01",
+              "name": "Midnight Channel"
+            },
+            {
+              "id": "night-shift-02",
+              "name": "Voltage Garden"
+            },
+            {
+              "id": "night-shift-03",
+              "name": "Afterglow Sentinel"
+            }
           ]
         }
       ]
@@ -28,9 +89,18 @@
           "revision": "1",
           "title": "Living Threads",
           "levels": [
-            { "id": "living-threads-01", "name": "Petals at Dawn" },
-            { "id": "living-threads-02", "name": "The Woven Path" },
-            { "id": "living-threads-03", "name": "Garden of Memory" }
+            {
+              "id": "living-threads-01",
+              "name": "Petals at Dawn"
+            },
+            {
+              "id": "living-threads-02",
+              "name": "The Woven Path"
+            },
+            {
+              "id": "living-threads-03",
+              "name": "Garden of Memory"
+            }
           ]
         }
       ]
@@ -45,10 +115,22 @@
           "revision": "1",
           "title": "Fieldcraft",
           "levels": [
-            { "id": "fieldcraft-01", "name": "Copper Crossing" },
-            { "id": "fieldcraft-02", "name": "Switchyard Circuit" },
-            { "id": "fieldcraft-03", "name": "Pulse Recall" },
-            { "id": "fieldcraft-04", "name": "Net Loom" }
+            {
+              "id": "fieldcraft-01",
+              "name": "Copper Crossing"
+            },
+            {
+              "id": "fieldcraft-02",
+              "name": "Switchyard Circuit"
+            },
+            {
+              "id": "fieldcraft-03",
+              "name": "Pulse Recall"
+            },
+            {
+              "id": "fieldcraft-04",
+              "name": "Net Loom"
+            }
           ]
         }
       ]
@@ -63,9 +145,18 @@
           "revision": "1",
           "title": "Homeward Skies",
           "levels": [
-            { "id": "homeward-01", "name": "Copper Orchard" },
-            { "id": "homeward-02", "name": "River Switchyard" },
-            { "id": "homeward-03", "name": "Home Beacon" }
+            {
+              "id": "homeward-01",
+              "name": "Copper Orchard"
+            },
+            {
+              "id": "homeward-02",
+              "name": "River Switchyard"
+            },
+            {
+              "id": "homeward-03",
+              "name": "Home Beacon"
+            }
           ]
         }
       ]
@@ -80,9 +171,18 @@
           "revision": "1",
           "title": "Equipment Workshop",
           "levels": [
-            { "id": "workshop-01", "name": "Garden of Threads" },
-            { "id": "workshop-02", "name": "Neon Switchboard" },
-            { "id": "workshop-03", "name": "Clear Ledger" }
+            {
+              "id": "workshop-01",
+              "name": "Garden of Threads"
+            },
+            {
+              "id": "workshop-02",
+              "name": "Neon Switchboard"
+            },
+            {
+              "id": "workshop-03",
+              "name": "Clear Ledger"
+            }
           ]
         }
       ]
@@ -96,7 +196,12 @@
           "id": "sentinel-relay",
           "revision": "1",
           "title": "Sentinel Relay",
-          "levels": [{ "id": "sentinel-relay-01", "name": "Sentinel Relay" }]
+          "levels": [
+            {
+              "id": "sentinel-relay-01",
+              "name": "Sentinel Relay"
+            }
+          ]
         }
       ]
     }

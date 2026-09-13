@@ -11,7 +11,7 @@ import {
   rosterHash,
 } from './registry.mjs';
 import { normalizedLevel, validateLevel } from './level.mjs';
-import { EPS, clamp } from './geometry.mjs';
+import { EPS, clamp, geometryForLevel, geometryForRun } from './geometry.mjs';
 import {
   planPlayer,
   planEnemy,
@@ -31,6 +31,8 @@ import { createEncounter, updateEncounter, canReleaseIsolated } from './encounte
 import { enemyContact } from './contacts.mjs';
 import { updateAbilities, useAbilities } from './abilities.mjs';
 import { createAbility, switchClass, updateSignal, challengeContact } from './systems.mjs';
+import { createClassicState } from './classic-state.mjs';
+import { initializeClassicActors, stepClassic } from './classic-step.mjs';
 export {
   validateLevel,
   validateClassRecipes,
@@ -43,12 +45,14 @@ export {
   MAX_CLASS_HISTORY,
   RULESET,
   TURN_POLICIES,
+  geometryForLevel,
+  geometryForRun,
 };
 
 /**
  * Owns one mutable deterministic run. Rendering may READ public fields; mutation
  * outside this module invalidates replay guarantees. No DOM, art or clock reads.
- * @param {object} source validated xonix-level.v1 or xonix-level.v2
+ * @param {object} source validated xonix-level.v1, v2, v3 or v4
  * @param {{seed?:number,turnPolicy?:'immediate'|'grid-center',classId?:string,classRecipes?:object[]}} options
  */
 export function createRun(
@@ -56,6 +60,8 @@ export function createRun(
   { seed = 1, turnPolicy = 'immediate', classId = 'scout', classRecipes = CLASSES } = {},
 ) {
   const level = normalizedLevel(source);
+  const geometry = geometryForLevel(level),
+    { width, height } = geometry;
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff)
     throw new TypeError('seed must be a uint32');
   if (!TURN_POLICIES.includes(turnPolicy)) throw new TypeError('unsupported turnPolicy');
@@ -64,13 +70,14 @@ export function createRun(
     throw new TypeError(`Invalid classRecipes: ${validation.errors.join('; ')}`);
   const recipe = classRecipes.find((c) => c.id === classId);
   if (!recipe) throw new TypeError('unsupported classId');
-  const cells = new Uint8Array(48 * 36);
-  for (let y = 0; y < 36; y++)
-    for (let x = 0; x < 48; x++)
-      if (x === 0 || x === 47 || y === 0 || y === 35) cells[y * 48 + x] = CELL.SAFE;
+  const cells = new Uint8Array(geometry.cellCount);
+  for (let y = 0; y < height; y++)
+    for (let x = 0; x < width; x++)
+      if (x === 0 || x === width - 1 || y === 0 || y === height - 1)
+        cells[y * width + x] = CELL.SAFE;
   for (const w of level.walls)
     for (let y = w.y; y < w.y + w.h; y++)
-      for (let x = w.x; x < w.x + w.w; x++) cells[y * 48 + x] = CELL.WALL;
+      for (let x = w.x; x < w.x + w.w; x++) cells[y * width + x] = CELL.WALL;
   const totalClaimable = cells.filter((c) => c === CELL.FIELD).length;
   const state = {
     ruleset: versionsForLevel(level).ruleset,
@@ -92,8 +99,8 @@ export function createRun(
     loadoutHash: loadoutHash(recipe),
     level,
     rules: level.rules,
-    width: 48,
-    height: 36,
+    width,
+    height,
     status: 'running',
     tick: 0,
     time: 0,
@@ -119,7 +126,7 @@ export function createRun(
       stunnedUntil: 0,
       slowUntil: 0,
       slowFactor: 1,
-      ...(e.type === 'border-patrol' ? { perimeter: patrolDistance(e) } : {}),
+      ...(e.type === 'border-patrol' ? { perimeter: patrolDistance(e, geometry) } : {}),
       ...(e.type === 'lane-boss'
         ? {
             bossPhase: 'idle',
@@ -152,7 +159,12 @@ export function createRun(
     _abilitySerial: 0,
     _terminalEmitted: false,
   };
-  if (level.version === 'xonix-level.v2') state.encounter = createEncounter(level.encounter);
+  if (['xonix-level.v2', 'xonix-level.v3', 'xonix-level.v4'].includes(level.version))
+    state.encounter = level.encounter === null ? null : createEncounter(level.encounter);
+  if (level.version === 'xonix-level.v4') {
+    state.classic = createClassicState(level, cells);
+    initializeClassicActors(state);
+  }
   state._loadouts[classId] = state.ability;
   updateSignal(state);
   return state;
@@ -171,7 +183,8 @@ function complete(state, won) {
   state._terminalEmitted = true;
   releaseInputs(state);
   state.medal = won
-    ? state.time <= state.rules.timeMedals[0] + EPS && state.lives === state.rules.lives
+    ? state.time <= state.rules.timeMedals[0] + EPS &&
+      (state.classic ? state.classic.livesLost === 0 : state.lives === state.rules.lives)
       ? 'gold'
       : state.time <= state.rules.timeMedals[1] + EPS
         ? 'silver'
@@ -184,8 +197,12 @@ function complete(state, won) {
 function recover(state, contact) {
   state.failureCause = contact.kind;
   const absorbed =
-    !['self-contact', 'cut-timeout', 'cable-limit'].includes(contact.kind) &&
-    state.ability.shieldUntil > state.time + EPS;
+    ![
+      'self-contact',
+      'cut-timeout',
+      'cable-limit',
+      ...(state.classic ? ['lethal-terrain'] : []),
+    ].includes(contact.kind) && state.ability.shieldUntil > state.time + EPS;
   state.trail = [];
   state.trailSegments = [];
   state.player.cutting = false;
@@ -195,6 +212,11 @@ function recover(state, contact) {
   state.ability.fields = [];
   state.ability.shieldUntil = 0;
   if (!absorbed) state.lives--;
+  if (state.classic) {
+    if (!absorbed) state.classic.livesLost++;
+    state.classic.effects['player-speed'] = { from: 0, until: 0 };
+    state.classic.departure = null;
+  }
   state.events.push({
     type: absorbed ? 'shield.absorbed' : 'player.failed',
     tick: state.tick,
@@ -203,7 +225,7 @@ function recover(state, contact) {
     actorId: contact.id,
     lives: state.lives,
   });
-  if (state.lives <= 0) {
+  if (state.lives <= 0 && !state.classic) {
     complete(state, false);
     return;
   }
@@ -212,17 +234,18 @@ function recover(state, contact) {
 }
 
 function updateBosses(state) {
+  const clock = state.classic ? state.classic.actorTime : state.time;
   for (const e of state.enemies)
     if (e.type === 'lane-boss') {
-      if (state.time + EPS >= e.nextWarningAt) {
+      if (clock + EPS >= e.nextWarningAt) {
         e.lane = clamp(
           Math.floor(e.axis === 'horizontal' ? state.player.y : state.player.x) + 0.5,
           1.5,
-          e.axis === 'horizontal' ? 34.5 : 46.5,
+          e.axis === 'horizontal' ? state.height - 1.5 : state.width - 1.5,
         );
-        e.warningUntil = state.time + (e.warningSeconds ?? 1.5);
+        e.warningUntil = clock + (e.warningSeconds ?? 1.5);
         e.activeUntil = e.warningUntil + (e.activeSeconds ?? 0.7);
-        e.nextWarningAt = state.time + (e.period ?? 6);
+        e.nextWarningAt = clock + (e.period ?? 6);
         state.events.push({
           type: 'boss.warning',
           tick: state.tick,
@@ -234,11 +257,7 @@ function updateBosses(state) {
         });
       }
       e.bossPhase =
-        state.time < e.warningUntil - EPS
-          ? 'warning'
-          : state.time < e.activeUntil - EPS
-            ? 'active'
-            : 'idle';
+        clock < e.warningUntil - EPS ? 'warning' : clock < e.activeUntil - EPS ? 'active' : 'idle';
     }
 }
 
@@ -277,7 +296,7 @@ function worldStep(state, input, duration) {
     state.player.x = position.x;
     state.player.y = position.y;
     for (let i = 0; i < state.enemies.length; i++)
-      applyPlannedEnemy(state.enemies[i], enemyPlans[i], elapsed, remaining);
+      applyPlannedEnemy(state.enemies[i], enemyPlans[i], elapsed, remaining, state);
     state.time += elapsed;
     remaining -= elapsed;
     if (failure && failure.time <= horizon + EPS) {
@@ -308,7 +327,7 @@ function worldStep(state, input, duration) {
           : remaining;
       const restPlans = state.enemies.map((e) => planEnemy(state, e, rest));
       for (let i = 0; i < state.enemies.length; i++)
-        applyPlannedEnemy(state.enemies[i], restPlans[i], rest, rest);
+        applyPlannedEnemy(state.enemies[i], restPlans[i], rest, rest, state);
       state.time += rest;
       remaining = 0;
       if (state.rules.timeLimitSeconds > 0 && state.time + EPS >= state.rules.timeLimitSeconds) {
@@ -324,12 +343,13 @@ function worldStep(state, input, duration) {
   if (remaining > EPS && state.status === 'respawning') {
     const plans = state.enemies.map((e) => planEnemy(state, e, remaining));
     for (let i = 0; i < state.enemies.length; i++)
-      applyPlannedEnemy(state.enemies[i], plans[i], remaining, remaining);
+      applyPlannedEnemy(state.enemies[i], plans[i], remaining, remaining, state);
     state.time += remaining;
   }
 }
 
 function fixedStep(state, input) {
+  if (state.classic) return stepClassic(state, input, { complete, recover, updateBosses });
   state.tick++;
   const endTime = state.time + FIXED_DT;
   updateBosses(state);
@@ -348,7 +368,7 @@ function fixedStep(state, input) {
     }
     const plans = state.enemies.map((e) => planEnemy(state, e, FIXED_DT));
     for (let i = 0; i < state.enemies.length; i++)
-      applyPlannedEnemy(state.enemies[i], plans[i], FIXED_DT, FIXED_DT);
+      applyPlannedEnemy(state.enemies[i], plans[i], FIXED_DT, FIXED_DT, state);
     state.time = endTime;
     if (state.time + EPS >= state.respawnAt) {
       Object.assign(state.player, state.level.spawn, {
@@ -444,6 +464,7 @@ export function getSummary(state) {
     tick: state.tick,
     time: state.time,
     lives: state.lives,
+    ...(state.classic ? { livesLost: state.classic.livesLost } : {}),
     score: state.score,
     coverage: state.coverage,
     claimedCount: state.claimedCount,

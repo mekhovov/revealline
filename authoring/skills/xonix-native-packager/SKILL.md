@@ -31,3 +31,7 @@ Package locally within the user's authorized scope. Retain the source revision, 
 - “Transfer a completed-picture collection and installed expansion from the browser into the desktop build using the full-backup UI. Verify the result after restart.”
 - “Update the iOS wrapper after a game change. Bundle the official plugin bridge, stage diagnostics, sync the project, and report executable/device checks separately from scaffold checks.”
 - “Investigate a cancelled native export. Preserve the prepared JSON, reproduce cancellation through the Save/Share UI, and fix the status without claiming an unsaved file is a backup.”
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

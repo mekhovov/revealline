@@ -1,0 +1,128 @@
+# RevealLine implementation roadmap
+
+Approved for implementation on 2026-09-12. This is the execution register for the user's **RevealLine — revised implementation plan**. It supersedes the earlier proposed roadmaps; historical release documents describe their original editions. Public v0.21 remains immutable. Work takes place on `feature/native-game-edition`.
+
+## Delivery order and checkpoints
+
+P0 → P1 → P2 → P3/P4 → P5 → P6 → P7 → P8. P9 is a later extension. The first major playable checkpoint is three polished, wide FPV levels. Human feedback on that chapter precedes bulk production. Automated wins establish correctness, not enjoyment or hardware certification.
+
+Each step records priority, status, outcome, evidence, playable version and outstanding issue. Statuses: Ready, In progress, Verification, Complete, Blocked. Complete means the stated acceptance passed; dependencies alone do not make a step complete. Versions are frozen only after their applicable checks, with logical changes committed independently.
+
+| Step | Priority | Status       | Player-visible outcome / acceptance                                                                 | Evidence / version / outstanding work                                                                                                                                                    |
+| ---- | -------- | ------------ | --------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P0.1 | Critical | Complete     | Close v0.21 documentation without changing the release                                              | Commit `763bea6`; [v0.21 public verification](verification/round-30/v021-public.md); release remains v0.21.0                                                                             |
+| P0.2 | Critical | Complete     | One prioritized register with stable IDs                                                            | This document; user-approved plan                                                                                                                                                        |
+| P0.3 | Critical | In progress  | Reference comparison for title, settings, gallery, cutting, failure, recovery, victory/results      | [Reference specification](reference-specification.md); distinguish observed/documented/inferred/unresolved; audio listening still outstanding                                            |
+| P0.4 | High     | Verification        | Three routing studies: opening, Pack 1 wall/slow field at 4:33, Pack 6 Level 7                      | Three Classic Lab motif studies and 18 legal winning routes; reference timings remain unknown                                                                                                                                   |
+| P1.1 | Critical | Complete     | Continuous keyboard, touch, pointer and controller direction commands                               | [Continuous steering](continuous-steering.md); adapter/host/couch regressions; [v0.22 source/artifact evidence](verification/round-31/p1-local.md); real hardware qualification stays P7 |
+| P1.2 | Critical | Complete     | Pause/save/load retain exact heading and buffered turn; explicit Resume only                        | Session v2 exact pause/save/load and queued-turn tests; v0.22.0; old readers/replays preserved                                                                                           |
+| P1.3 | Critical | In progress | Full-browser dark game interface and opaque black concealment                                       | Dark persistent shell and black mask in v0.22.0; native-size wide layouts in P2; responsive/player-journey review still ongoing                                                          |
+| P1.4 | High     | Complete     | Music continues across menus, pause, results and collection                                         | Persistent synthesis ownership, boundary track changes and lifecycle tests in v0.22.0; MP3 remains P3                                                                                    |
+| P1.5 | High     | Complete     | Help, practice and control prompts teach tap-to-steer; no Stop in Arcade                            | Tap-to-steer prompts in solo/couch/course/controller practice/motion lab; Stop removed from active Arcade controls                                                                       |
+| P2.1 | Critical | Complete | Versioned 72×36 boards with square cells | Local v0.23.0: core/renderer/editor/theater/gallery/couch integration; six source gates, 1,926 tests and independent artifact reproduction. |
+| P2.2 | Critical | In progress | Orchard Window, Split Courtyard, Night Signal | First Light v0.23.0: three original pictures and arrangements; six Standard and six Gentle legal routes. Human feedback found pressure too weak; v0.25.0 supplies the separate R2 revision, preserving the original edition. Another human quality assessment remains open. |
+| P2.3 | High     | Complete  | Small animated FPV with configurable blades/rotors and motion response                              | v0.25.0: replaceable Daybreak FPV, configurable rotors, motion response and visible-canvas size correction; 97 affected checks plus frozen browser inspection. Broader presentation production remains P6                                     |
+| P2.4 | Critical | In progress | Three-level Arcade chapter quality checkpoint | [P2 local evidence](verification/round-32/p2-local.md); source-browser tap/release/contact/pause and responsive layouts checked. Human review found eight control, pressure, animation and menu deficiencies; follow-up revision is required. Physical-device qualification remains open. |
+| P3.1 | High | Verification | Admin MP3 import, validation, audition, metadata and library | v0.24.0 studio is playable. Actual browser upload/probe, two preserved MP3 fixtures, saved-library restore and file playback position verified; finished recordings remain P6. |
+| P3.2 | High | Verification | Ordered/shuffled/mixed playlists, repeat, seek and assignments | v0.24.0 model/player/host checks pass; actual browser MP3 → synth transition observed. Remaining browser/device qualification is recorded in round-33. |
+| P3.3 | High | Verification | Optional soundtrack download and complete media backup | Raw-byte .rlsound tests pass. Server-stopped reload and MP3 playback passed; actual browser download capture/reimport remains open; prepared download alone is not a pass. |
+| P4.1 | High | Complete | Field, contour, exposed-ground and erosion enemies | New core.v5 source: 40 focused tests and 298 affected tests pass. Nine-board Classic Lab and R2 integrate the roles; independent review and v0.25 source/artifact gates passed. Tactical extensions remain P4.3. |
+| P4.2 | High | Complete | Wall, slow, lethal terrain and four classic pickups | New source implements four contact pickups, effect clocks and materials. Actual browser down-cut collected four pickups and earned a fourth life. Legal host recovery/save/resume tests and v0.25 source/artifact gates pass. |
+| P4.3 | High     | Ready        | Tactical roles, objectives, cable/signal, supplies, interception, nets and bosses                   | Registered arcade behaviors, readable effects and interactions                                                                                                                           |
+| P4.4 | High | Verification | Reference routing studies and original production variations | Three observed-motif studies compile to exact declared material masks. Eighteen legal Classic Lab winning routes found; compare our geometry without claiming measured reference physics. |
+| P5.1 | High | In progress | Per-map/theme pictures, video scrubbing, independent poster/segment, GIF ingestion | [Media design](media-library-design.md) reviewed; shared storage manager prepared and model-tested, excluded from v0.25. Real migration, video/frame UI and upload pipeline remain pending. |
+| P5.2 | High     | Ready        | Full picture → optional story → exact picture; Collection replay                                    | Win before playback; no duplicate awards; skip/reduced-effects/missing media                                                                                                             |
+| P5.3 | High     | Ready        | Media packs, generation, import/export and offline bundles                                          | Both owned animation and uploaded clip complete the end-to-end journey                                                                                                                   |
+| P6.1 | High     | Ready        | 29 wide maps × 4 themes = 116 unique pictures, 12 stories, 40 reserve pictures                      | Actual asset coverage matrix; reserve/originals not precached                                                                                                                            |
+| P6.2 | High     | Ready        | 56 character presentation sets, enemy/terrain/UI/reward/promotion assets                            | Seven roles × four themes × compact/detailed; supplied reference inventory                                                                                                               |
+| P6.3 | High     | Ready        | 24 finished built-in tracks, predominantly 80s/90s synth, plus SFX                                  | Auditioned arrangements; chiptune/rock/metal also supported                                                                                                                              |
+| P6.4 | High     | Ready        | Arcade/Tactical recipes, Gentle/Standard/Expert, chapters, craft rewards and three-star progression | All advertised modes playable; mandatory vs optional objectives clear                                                                                                                    |
+| P6.5 | High | In progress | AI skills, prompt variants, CLI, development/authoring/maintenance guides | Three skills updated and nine native-edition/audio prompt examples validated in commit6c88159. Classic and video/media guides continue with their implementation. |
+| P7.1 | Critical | Ready        | Keyboard/mouse/touch/controller player journeys                                                     | Physical device evidence distinguished from simulated input/viewport checks                                                                                                              |
+| P7.2 | Critical | Ready        | Performance, offline, storage, backup and compatibility qualification                               | 60 fps target on ordinary declared hardware; bounded memory and rollback                                                                                                                 |
+| P7.3 | Critical | Ready        | Public browser release with support matrix, help and credits                                        | Exact artifact/public verification; human comfort/challenge/replay assessment                                                                                                            |
+| P8.1 | Later    | Ready        | iPhone, macOS and Steam packages                                                                    | Lifecycle, files/audio/controllers, signing, real devices, store gates individually                                                                                                      |
+| P9.1 | Later    | Ready        | Private network races                                                                               | Authority, reconnect and failure handling; does not block browser release                                                                                                                |
+
+## Contracts that implementation must preserve
+
+### Continuous steering and saved continuation
+
+Immediate and Grid + buffer remain separate turning settings. A fresh direction selects persistent movement; releasing, repeating the same direction, pointer-up or centered stick never stops it. The newest deliberate device input wins; old held inputs cannot reclaim control. No diagonal movement, automatic bounce, auto-corner or auto-reverse. Walls/edges block until a different direction. **2026-09-13 playtest correction:** closing a cut stops at the secured line in the revised chapter. A fresh direction restarts movement; an old held input cannot restart it. This supersedes the original continuation-on-capture choice. Historical editions retain their behavior; new level.v4 recipes opt in with `rules.stopOnCapture:true`. Ordinary safe-ground movement and press/release steering remain continuous.
+
+Pause freezes the exact simulation and buffered turn. Explicit Resume resumes saved direction; browser focus alone, direction, Confirm or Boost cannot resume accidentally. New run, lost life and redeployment clear intent and wait for a fresh command after recovery. Menu navigation remains normal. Arcade has Pause only; any Tactical hover must be an authored ability. Boost hold/toggle stays independent.
+
+Session v2 adds `continuation.direction` without duplicating the verified core's queued turn. Pause/save/load clear physical controls without mutating the run or recording a release. First resumed real tick uses saved direction with neutral actions; physical inputs re-arm after release and a fresh gesture. Old session/replay null semantics remain intact.
+
+Mandatory proofs include tap/release and same-direction behavior, mixed-device arbitration, queued turn after release and pause/load, pre-tick direction selection, focus non-resumption, held Confirm, recovery between fixed substeps, independent couch input and unchanged historical replay fixtures.
+
+### Presentation, rewards and audio
+
+Title → Play/Continue → Packs → Map → Briefing/Hangar → Flight → Full picture → Optional story → Results. Collection, settings, help, saves and couch use the game interface; diagnostics/authoring are separate. Dark pixel aesthetics, compact HUD, focus brackets and readable small actors; no website chrome during flight. Full browser page without permission; optional fullscreen. Portrait preserves the complete wide arena with controls outside it.
+
+Hidden artwork is opaque black. Actors, hazards and trails remain visible. Completing the real coverage requirement reveals the whole picture as a presentation reward without changing recorded coverage. Save the win before playing optional story from its beginning, then return to the exact selected poster. Skip, reduced effects and Collection replay never grant rewards again.
+
+Music persists after allowed activation through all routes, ordinary pause and levels. Preserve mute and report actual autoplay denial. MP3 library and the 24 finished built-in tracks are distinct deliveries. Playback supports ordered/shuffle, repeat all/one/off, previous/next/pause/seek and mixed synth/file queues. Explicit player choice overrides map → campaign → theme → global; automatic assignment waits for song end, explicit choice fades immediately. Queue edits retain current song. Skip broken entries once per traversal, then explain built-in fallback. Stream songs; never decode a whole album.
+
+Initial limits: 32 MiB/12 minutes per track, 128 recorded tracks, 32 playlists, 128 entries each, within managed storage. Optional bundles up to 64 MiB and managed media up to 256 MiB including staging; retain core offline budget. Preserve working edition on failed imports/quota errors. Binary assets, track/playlist records and assignments have separate versioned identities. Full-media transfer includes bytes; legacy JSON export is not labelled a complete custom-media backup.
+
+### Framework and content
+
+Keep frontend-friendly JS/Phaser and deterministic simulation. Add the wide version branch, preserve immutable legacy recipes/readers and score identity. Resolve edition → Arcade/Tactical → difficulty; never convert a live run through settings. Media binds campaign edition/map/theme/revision and never changes score authority. Data packs compose registered primitives, not executable scripts. New primitives require tested code.
+
+Themes: FPV Front, Ukraine Atlas, 1994 Forever, Coupa/spend management. Reauthor all 29 maps, unique 116 pictures, 12 stories (three/theme), 40 reserve pictures, 56 role/detail/theme sets, 24 finished tracks. Use readable abstract game interactions for military-inspired units. Every asset is independently replaceable with bounded manifests, provenance and consistent animations. Bulk production waits for the three-map human quality checkpoint and media pipeline.
+
+Erosion has a fixed coverage denominator, protects border/wall/spawn/required anchors and cannot farm score. Every classic/Tactical behavior gets a demonstration. Gentle/Standard/Expert and advertised mode recipes must all validate. Completion, clean play and speed are distinct reward dimensions. Couch is included; online/cloud/global services are later.
+
+## Progress reporting
+
+Update this register and the applicable verification report at each logical milestone. Report changes, passed checks, unresolved failures and next steps. Preserve Git history and immutable playable milestones. Do not label P7 or P8 complete based on resized desktop windows or automated controller inputs. A missing human/device/signing dependency gets a specific pending entry while independent work continues.
+
+## First Light milestone — v0.23.0
+
+First Light is frozen from `2455efd` with 1,926 passing tests and an independently reproduced artifact. [P2 local evidence](verification/round-32/p2-local.md) records exact checks and limits. Human chapter feedback has arrived: challenge, capture stopping, actor readability, effects and menu consistency need another iteration. P2 quality and device qualification are not complete. P3 preserved MP3 model/storage/transport landed in `f201d22`; its game studio integration is included in v0.24.0. P4 classic engine work proceeds on a separate version branch, without migrating old campaigns.
+
+## Soundtrack Studio integration
+
+P3 now includes preserved MP3 records/storage, six built-in playlists, a session transport, Settings → Music library & playlists and seven real-host regression scenarios with finite media boundaries. Real source-browser file selection, decoder probing, MP3 playback progress and saved playlist restoration have passed. Binary export preparation succeeded in the in-app browser, but its download event timed out and no output file was observed; exact browser download/restore remains open. Frozen v0.24 offline reload, saved playlist restoration and MP3 playback passed with its test server stopped. The 24 finished recordings are still P6, separate from current recipes and silent transport fixtures.
+
+## Latest playable audio milestone — v0.24.0
+
+Soundtrack Studio is frozen from `45a0241` with 2,012 passing tests and independently reproduced artifacts. [P3 local evidence](verification/round-33/p3-local.md) separates actual source-browser MP3 playback, successful frozen offline playback and pending binary-download checks. P4 classic source is being implemented separately; no new classic campaign is advertised in v0.24. P5 shared media storage implementation proceeds independently; video authoring and rewards remain pending.
+
+
+## Active priority: First Light playtest revision — 2026-09-13
+
+The first human checkpoint did **not** pass. The eight reported shortcomings take priority over bulk content and further media UI. The existing three images are retained for this gameplay comparison; they are not counted as new illustrations.
+
+| Step | Priority | Status | Outcome | Evidence / remaining work |
+| --- | --- | --- | --- | --- |
+| P1.6 | Critical | Verification | Keyboard/controller operate the topmost menu; no stale held input steals focus | 133 affected checks pass. Browser keyboard nested-menu Back and opener restoration verified; Help/achievement readers and music audition controls included. Physical controllers remain P7. |
+| P1.7 | Critical | Verification | Consistent dark pixel UI across title, settings, collection, flight and secondary game screens | Bundled Tiny5 with OFL provenance, sharp controls, native chapter cards and screen panels. Frozen keyboard chapter/Collection/Studio journeys passed. Six measured live-flight sizes fit without scrolling, including 320×568 and 844×390; physical devices remain P7. |
+| P2.5 | Critical | Complete | A completed cut stops at secured ground until a fresh direction | Optional level.v4 contract, 12 core regressions, both actual solo-host turning modes including multi-substep and save/load pass. Four couch multi-substep keyboard/controller regressions also pass; real R2 chapter launches through the native picker. |
+| P2.6 | Critical | Verification | Faster, more varied threats and meaningful route decisions | Separate First Light R2 pack with 65/75/85% goals, contour/rover/erosion pressure and telegraphed lanes. Twelve legal routes pass across Standard/Gentle and both turning policies. Old routes remain valid for their original edition. Human challenge quality still needs another playtest. |
+| P2.7 | High | Verification | Larger facing-aware actors, four themed body vocabularies, clearer active cuts and restrained capture effects | 97 affected presentation/host checks pass, including the real offscreen-canvas seam. Frozen browser visual review performed; effects remain separate from collision and score authority. |
+| P2.8 | Critical | Complete | Freeze and compare a verified new playable revision | v0.25.0 from `da557b2`: six source gates, 2,152 tests, independent 185-file rebuild and frozen keyboard journeys pass. All 29 prior releases preserved. [Evidence](verification/round-34/playtest-revision.md). |
+
+Current sequence: reassess P2.4/P2.6 challenge and feel using frozen v0.25 → close P3 browser media-transfer checks and begin P4.3 Tactical scenarios → complete P5.1a real storage migration/recovery before video authoring. P5 shared storage is prepared source only; video authoring has not shipped. P6 volume production remains behind the quality gate.
+
+
+## Latest playtest milestone — v0.25.0
+
+[First Light R2 is playable](http://127.0.0.1:8767/releases/v0.25.0/site/game/). It adds cut-completion stops, stronger authored threats, larger facing-aware animated actors, brighter cuts/capture feedback, reliable modal Back behavior and a shared dark pixel UI with native chapter cards. The [verification record](verification/round-34/playtest-revision.md) includes rejected/superseded candidates, exact source/artifact evidence and measured browser sizes.
+
+This closes P2.8 and the tested capture-stop/classic-role contracts. It does **not** close the human chapter quality checkpoint, bulk content, video rewards, physical-device qualification or public release. P5 shared storage is committed separately after the freeze (`dd6c1f7`, 73 focused checks), with its real-browser and full-media gates still open.
+
+## Current correction cycle — user feedback on v0.25
+
+The latest user request authorizes commit → immutable release → reviewed/merged PR → verified GitHub Pages delivery for every completed feature or phase. See [the delivery workflow](feature-delivery-workflow.md). Public completion now requires a successful deployment and matching public source identity, not only a local snapshot.
+
+| Step | Priority | Status | Outcome and evidence |
+| --- | --- | --- | --- |
+| P1.8 | Critical | Verification | Pixelify Sans readability, focused terminal menus, reachable in-game Main menu, adaptive short readers and device-sensitive flight controls. Target v0.26. |
+| P7.4 | Critical | Verification | PR checks, exact-tag Pages root, all playable archives, separate GitHub ZIP assets, public source verification. Target v0.26. |
+| P4.4 | Critical | In progress | New authored edition with bidirectional travelling line impacts; closure can escape before arrival; old replay rules unchanged. Target v0.27. |
+| P2.9 | High | In progress | Distinct enemy roles/catalog, pickup icon/effect feedback, theme-aware life-loss and recovery animations. Target v0.27. |
+| P5.1a | High | In progress | Shared media manager is explicit opt-in; ordinary MP3 storage keeps the qualified v1 adapter. Real migration and media authoring remain unfinished. |
+
+After these corrections, the execution sequence remains P3 remaining media checks/P4 Tactical scenarios → P5 image/video authoring → P6 campaign/art/audio volume → P7 full device/performance/public quality gate → P8 native distribution. P9 online multiplayer remains later. The first three-level human quality gate stays open; automated route proofs do not establish fun or retention.

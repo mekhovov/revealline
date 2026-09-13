@@ -4,18 +4,35 @@ import assert from 'node:assert/strict';
 
 export class Events {
   listeners = new Map();
-  addEventListener(type, fn) {
-    if (!this.listeners.has(type)) this.listeners.set(type, new Set());
-    this.listeners.get(type).add(fn);
+  captureListeners = new Map();
+  addEventListener(type, fn, options) {
+    const map = options === true || options?.capture ? this.captureListeners : this.listeners;
+    if (!map.has(type)) map.set(type, new Set());
+    map.get(type).add(fn);
   }
-  removeEventListener(type, fn) {
-    this.listeners.get(type)?.delete(fn);
+  removeEventListener(type, fn, options) {
+    const map = options === true || options?.capture ? this.captureListeners : this.listeners;
+    map.get(type)?.delete(fn);
   }
   dispatchEvent(event) {
     if (!event.target) Object.defineProperty(event, 'target', { configurable: true, value: this });
-    for (const fn of [...(this.listeners.get(event.type) || [])]) fn(event);
-    this[`on${event.type}`]?.(event);
-    if (event.bubbles && this.parentNode) this.parentNode.dispatchEvent(event);
+    const ancestors = [];
+    for (let node = this.parentNode; node; node = node.parentNode) ancestors.push(node);
+    for (const node of [...ancestors].reverse()) {
+      for (const fn of [...(node.captureListeners.get(event.type) || [])]) fn(event);
+      if (event.cancelBubble) return !event.defaultPrevented;
+    }
+    for (const fn of [...(this.captureListeners.get(event.type) || [])]) fn(event);
+    const bubble = (node) => {
+      for (const fn of [...(node.listeners.get(event.type) || [])]) fn(event);
+      node[`on${event.type}`]?.(event);
+    };
+    bubble(this);
+    if (event.bubbles)
+      for (const node of ancestors) {
+        if (event.cancelBubble) break;
+        bubble(node);
+      }
     return !event.defaultPrevented;
   }
   emit(type, extra = {}) {
@@ -28,7 +45,7 @@ export class Events {
         this.defaultPrevented = true;
       },
       stopPropagation() {
-        this.bubbles = false;
+        this.cancelBubble = true;
       },
       ...extra,
     };
@@ -66,7 +83,11 @@ export class Element extends Events {
     this.attributes = new Map();
     this.classList = new Classes();
     this.dataset = {};
-    this.style = {};
+    this.style = {
+      setProperty(name, value) {
+        this[name] = String(value);
+      },
+    };
     this.hidden = false;
     this.disabled = false;
     this.inert = false;

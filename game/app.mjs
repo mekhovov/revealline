@@ -1,7 +1,8 @@
 import { onNativeInactive, nativePlatform } from './platform.mjs';
-import { createRun, stepRun, getSummary, releaseInputs, CLASSES, FIXED_DT } from './core/index.mjs';
-import { BoardPainter } from './ui/render.mjs';
+import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
+import { BoardPainter, boardPaintSizeForRun } from './ui/render.mjs';
 import { encounterView } from './ui/encounter-view.mjs';
+import { classicView } from './ui/classic-view.mjs';
 import { retryExplanation } from './ui/retry-view.mjs';
 import {
   FIRST_FLIGHT_LESSONS,
@@ -15,6 +16,9 @@ import { attachFirstFlightView } from './ui/first-flight-view.mjs';
 import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
 import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
+import { attachGameShell } from './ui/game-shell.mjs';
+import { attachMissionPicker } from './ui/mission-picker.mjs';
+import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -33,6 +37,9 @@ import { controllerBindingLabels, controllerStickLabel } from './controller-bind
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
+import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
+import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
@@ -92,13 +99,7 @@ import {
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
-import {
-  createRecorder,
-  recordInput,
-  recordRelease,
-  exportReplay,
-  MAX_REPLAY_TICKS,
-} from './replay.mjs';
+import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
 
 const $ = (id) => document.getElementById(id),
   show = (id, on) => ($(id).hidden = !on);
@@ -168,7 +169,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.21.0',
+  let buildVersion = '0.25.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -430,7 +431,156 @@ try {
     seed = scenario.settings.seed;
     bodyId = theme.player;
   }
-  const sound = new Soundscape();
+  const sound = new Soundscape({ persistentMusic: true });
+  let neutralResumeTick = false;
+  let gameShell = null,
+    missionPicker = null;
+  let soundtrackPlayer = null,
+    soundtrackPanel = null,
+    soundtrackStore = null;
+  let soundtrackAssets = new Map(),
+    soundtrackSuspended = false;
+  let authoredMusic = null,
+    soundtrackGeneration = -1,
+    soundtrackDisposed = false;
+  const soundtrackLoad = new AbortController();
+  function soundtrackContext() {
+    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
+    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
+    return {
+      themeId: theme.id,
+      campaignKey: edition,
+      mapKey: JSON.stringify([edition, level.id, level.revision, theme.id]),
+    };
+  }
+  function assignMusic(track, { atBoundary = true } = {}) {
+    authoredMusic = track || null;
+    if (soundtrackPlayer) soundtrackPlayer.setAuthoredTrack(authoredMusic);
+    else if (track) sound.setTrack(track, { atBoundary });
+  }
+  function configureAudio(settings) {
+    if (!soundtrackPlayer) return sound.configure(settings);
+    const { style: _style, music, ...mix } = settings;
+    sound.configure(mix);
+    if (music !== undefined) soundtrackPlayer.setVolume(music);
+  }
+  async function activateAudio({ explicit = false } = {}) {
+    if (!soundtrackPlayer) return sound.enable();
+    if (soundtrackSuspended) {
+      soundtrackSuspended = false;
+      await soundtrackPlayer.resume();
+    }
+    if (explicit || !soundtrackPlayer.snapshot().track) return soundtrackPlayer.play();
+    // Ordinary Resume enables effects but keeps an intentional music-only Pause.
+    return sound.enable();
+  }
+  function muteAudio() {
+    soundtrackPlayer?.pause();
+    sound.disable();
+  }
+  function suspendAudio() {
+    soundtrackSuspended = true;
+    if (soundtrackPlayer) soundtrackPlayer.suspend();
+    else sound.suspend();
+  }
+  function soundtrackStatus(message) {
+    $('soundtrack-summary').textContent = message;
+  }
+  async function initializeSoundtrack() {
+    try {
+      const audioElement = document.createElement('audio');
+      if (typeof audioElement.play !== 'function')
+        throw new Error(
+          'This browser does not provide file-audio playback. Built-in sound remains available.',
+        );
+      soundtrackStore = createSoundtrackStore();
+      soundtrackPlayer = createSoundtrackPlayer({
+        soundscape: sound,
+        audioElement,
+        readAsset: async (hash) => {
+          const blob = soundtrackAssets.get(hash);
+          if (!blob)
+            throw new Error('This song is missing locally. Restore its soundtrack backup.');
+          return blob;
+        },
+        onChange: (state) => {
+          soundtrackPanel?.update(state);
+          soundtrackStatus(
+            state.error ||
+              state.notice ||
+              (state.track
+                ? `${state.track.title} · ${state.status}`
+                : 'Choose a playlist or import MP3 songs.'),
+          );
+        },
+      });
+      soundtrackPlayer.setAuthoredTrack(authoredMusic);
+      soundtrackPlayer.setContext(soundtrackContext());
+      if (soundtrackSuspended) soundtrackPlayer.suspend();
+      soundtrackPanel = attachSoundtrackPanel({
+        document,
+        store: soundtrackStore,
+        player: soundtrackPlayer,
+        getContext: soundtrackContext,
+        onLibrary: (_library, snapshot) => {
+          if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
+          soundtrackGeneration = snapshot.generation;
+          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+        },
+        onError: (error) => soundtrackStatus(error.message || String(error)),
+        onOpen: () => {
+          pause(true);
+          clearInput();
+          $('settings-dialog').close();
+        },
+        onClose: () => {
+          clearInput();
+          $('settings-dialog').showModal();
+          $('soundtrack-open').focus();
+        },
+        onVolume: (value) => {
+          $('music-volume').value = value;
+          preferences({ musicVolume: value });
+        },
+        onAudioEnabled: () => preferences({ musicEnabled: true }),
+        beforeAudio: async () => {
+          if (soundtrackSuspended) {
+            soundtrackSuspended = false;
+            await soundtrackPlayer.resume();
+          }
+        },
+      });
+      // The studio owns persisted playlist selection. Keep the legacy genre selector
+      // only for browsers that cannot attach the file-audio transport.
+      $('music-select').closest('label').hidden = true;
+      $('music-preview').textContent = 'Play selected playlist ♫';
+      $('soundtrack-open').disabled = false;
+      $('soundtrack-open').onclick = () => soundtrackPanel.open();
+      try {
+        const snapshot = await soundtrackStore.read({ signal: soundtrackLoad.signal });
+        if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
+          soundtrackGeneration = snapshot.generation;
+          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+          soundtrackPlayer.setLibrary(snapshot.library);
+        }
+      } catch (error) {
+        if (!soundtrackDisposed)
+          soundtrackStatus(
+            `Custom music storage: ${error.message}. Built-in playback is available; the studio can retry.`,
+          );
+      }
+    } catch (error) {
+      soundtrackPanel?.dispose();
+      soundtrackPlayer?.dispose();
+      soundtrackStore?.close();
+      soundtrackPlayer = null;
+      soundtrackPanel = null;
+      sound.resumeMusic();
+      $('soundtrack-open').disabled = true;
+      $('music-select').closest('label').hidden = false;
+      if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
+    }
+  }
   const painter = new BoardPainter(presets, {
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -453,13 +603,13 @@ try {
   $('terrain-select').value = library.preferences.style;
   $('settings-grid').checked = library.preferences.showGrid;
   $('match-class-appearance').checked = library.preferences.matchClassAppearance;
-  sound.configure?.({
+  configureAudio({
     style: library.preferences.musicGenre,
     master: library.preferences.masterVolume,
     music: library.preferences.musicVolume,
     sfx: library.preferences.sfxVolume,
   });
-  if (scenario?.music) sound.setTrack(scenario.music);
+  if (scenario?.music) assignMusic(scenario.music);
   function warning(message) {
     $('run-message').textContent = message;
     captionUntil = (run?.time || 0) + 5;
@@ -480,14 +630,20 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
-  const controllerDialog = () => [...document.querySelectorAll('dialog[open]')].at(-1);
+  let lastControllerModality = '';
+  document.body.dataset.inputMode =
+    navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
+      ? 'touch'
+      : 'keyboard';
+  const modalNavigation = attachModalNavigation();
+  const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
     return `Controller: direction controls move focus · ${b.confirm} confirms · ${b.back} goes back · ${b.menu} resumes a paused flight.`;
   }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
-    return `Controller: ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.stop} stop · ${b.pause} pause.`;
+    return `Tap a direction to fly. ${b.ability} ability · ${b.pickup} supply · ${b.boost} boost · ${b.hangar} hangar · ${b.pause} pause.`;
   }
   function refreshControllerPrompts() {
     controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
@@ -545,6 +701,15 @@ try {
     if (scope === 'lost') return $('retry-button');
     return $('start-button');
   }
+  function controllerMenuRoot() {
+    const dialog = controllerDialog();
+    if (dialog) return dialog;
+    if (!$('game-overlay').hidden)
+      return courseSession ? $('game-overlay').closest('.arena-panel') : $('game-overlay');
+    if (celebrationActive || (run?.status === 'won' && !$('show-result').hidden))
+      return $('arena-shell');
+    return document;
+  }
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
@@ -581,17 +746,15 @@ try {
   const input = attachInput({
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
-    onActivity: () => {
-      if (started && paused && !dialogOpen() && !courseBlocked() && !courseEntryHold)
-        resume({ alignCourseBoard: false });
-    },
+    continuousSteering: () => true,
     tapMode: () => $('tap-steering').checked,
     active: () =>
       started &&
+      !paused &&
       !courseBlocked() &&
       !courseEntryHold &&
       !dialogOpen() &&
-      !['won', 'lost'].includes(run?.status),
+      run?.status === 'running',
     onGamepad: (message) => ($('input-status').textContent = message),
     getBindings: () => library.preferences.keyboardBindings,
     readControllerCommand: () => controllerFrame?.flight,
@@ -602,7 +765,8 @@ try {
   });
   controllerNavigation = attachControllerNavigation({
     getScope: controllerScope,
-    getRoot: () => controllerDialog() || document,
+    getRoot: controllerMenuRoot,
+    keyboard: true,
     getDefaultFocus: controllerFocus,
     getControlLabels: () => ({
       directions: 'Direction controls',
@@ -610,9 +774,19 @@ try {
       back: controllerLabels.menu.back,
     }),
     accept: (element) =>
+      (!courseSession ||
+        $('game-overlay').hidden ||
+        !!controllerDialog() ||
+        $('game-overlay').contains(element) ||
+        $('first-flight-panel').contains(element)) &&
       !element.matches(
         '[data-move],#stop-button,#boost-button,#action-button,#pickup-button,#pause-button',
       ),
+    onNativeInput: (event) => {
+      document.body.dataset.inputMode =
+        event.type === 'keydown' ? 'keyboard' : event.pointerType === 'touch' ? 'touch' : 'pointer';
+      if (controllerScope() !== 'flight') controller.clear();
+    },
     onBack: controllerBack,
     onMenu: () => {
       if (
@@ -631,6 +805,16 @@ try {
     onReadingChange: (state) => controllerReading?.changed(state),
   });
   controllerReading = attachControllerReading({
+    compactOverlay: !courseSession,
+    additionalSurfaces: [
+      ['help-reading', 'help-read', 'How to play', 'help-reading-unit'],
+      [
+        'collection-reading',
+        'collection-read',
+        'Achievements and appearances',
+        'collection-reading-unit',
+      ],
+    ],
     getNavigation: () => controllerNavigation,
     getControlLabels: () => controllerLabels.menu,
     getScope: controllerScope,
@@ -646,13 +830,21 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     clearInput();
-    sound.pause();
+    suspendAudio();
     writer.release();
     persistenceReady = false;
     controllerPreview?.clear();
     if (!event.persisted) {
+      soundtrackDisposed = true;
+      soundtrackLoad.abort();
+      soundtrackPlayer?.dispose();
+      soundtrackPanel?.dispose();
+      soundtrackStore?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
+      gameShell?.destroy();
+      missionPicker?.destroy();
+      modalNavigation.destroy();
       input.destroy();
       controller.destroy();
       controllerPreview?.destroy();
@@ -662,6 +854,7 @@ try {
   };
   window.addEventListener('pageshow', (event) => {
     if (!event.persisted) return;
+    restoreListening();
     controller.invalidate();
     clearInput();
     pause(true);
@@ -673,7 +866,7 @@ try {
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
-    const description = `Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; stop ${labels.stop}; pause ${labels.pause}.`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ability ${labels.ability}; supply ${labels.pickup}; boost ${labels.boost}; change craft ${labels.hangar}; pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -687,7 +880,7 @@ try {
       $(id).querySelector('kbd').title = labels[action];
     }
     $('hangar-button').textContent = `Change craft · ${labels.hangar}`;
-    $('stop-button').title = `Stop moving · ${labels.stop}`;
+    $('stop-button').hidden = true;
     for (const button of document.querySelectorAll('[data-move]'))
       button.title = `Move ${button.dataset.move} · ${labels[button.dataset.move]}`;
     if (!started && !campaignOverview)
@@ -695,6 +888,7 @@ try {
         `Move with your configured keys · ${labels.ability} ability · ${labels.pickup} supply · touch controls below`;
   }
   const keySettings = attachKeySettings({
+    continuousSteering: true,
     getBindings: () => library.preferences.keyboardBindings,
     setBindings: (value) => {
       preferences({ keyboardBindings: value });
@@ -712,6 +906,7 @@ try {
     },
   });
   const controllerSettings = attachControllerSettings({
+    continuousSteering: true,
     container: $('controller-settings-root'),
     getBindings: () => library.preferences.controllerBindings,
     onBeforeEdit: () => keySettings.refresh(),
@@ -747,18 +942,15 @@ try {
       return saved;
     },
   });
-  function clearInput({ preserveNavigation = false } = {}) {
+  function clearInput({ preserveNavigation = false, resetDirection = false } = {}) {
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
     controller.clear();
     controllerFrame = null;
     if (!preserveNavigation) controllerNavigation?.clear();
-    input.clear();
-    if (run) {
-      releaseInputs(run);
-      if (recorder && !recordingStopped) recordRelease(recorder);
-    }
+    if (resetDirection) input.clear();
+    else input.clearPhysical();
     accumulator = 0;
   }
   function courseBlocked() {
@@ -888,6 +1080,7 @@ try {
           themeId: theme.id,
           bodyId,
           runId,
+          continuation: { direction: input.snapshotDirection() },
           storage: localStorage,
           sessionKey,
           assertCurrent,
@@ -1289,9 +1482,9 @@ try {
     $('class-select').replaceChildren(...classRegistry.map((c) => new Option(c.label, c.id)));
     const track = entry.music?.find((m) => m.id === campaign.musicId) || entry.music?.[0];
     if (track) {
-      sound.setTrack?.(track);
+      assignMusic(track);
       $('music-select').value = track.genre;
-    } else sound.configure?.({ style: library.preferences.musicGenre });
+    } else assignMusic(DEFAULT_TRACKS.find((t) => t.genre === library.preferences.musicGenre));
     refreshCampaigns();
     prepare({ restoreAdoption, contentSwitchTicket, difficulty });
   }
@@ -1500,6 +1693,7 @@ try {
       themeId: theme.id,
       bodyId,
       runId,
+      continuation: { direction: input.snapshotDirection() },
     });
   }
   function persistAttempt(notify = true) {
@@ -1580,6 +1774,7 @@ try {
       handled = false;
       recordingStopped = false;
       clearInput();
+      input.restoreDirection(restored.session.continuation?.direction ?? null);
       setTheme();
       painter.setLevel?.(run.level, { seed });
       updateLoadout();
@@ -1618,13 +1813,13 @@ try {
     clearInput();
     refreshKeyPrompts();
     refreshControllerPrompts();
-    sound.configure?.({
+    configureAudio({
       style: p.musicGenre,
       master: p.masterVolume,
       music: p.musicVolume,
       sfx: p.sfxVolume,
     });
-    if (!p.musicEnabled) sound.disable();
+    if (!p.musicEnabled) muteAudio();
     themeOverride = true;
     musicOverride = true;
     prepare();
@@ -1944,11 +2139,14 @@ try {
     }
   };
   function tuneMusic(event) {
-    if (event?.target.id === 'music-select') {
+    if (event?.target.id === 'music-select' && !soundtrackPlayer) {
       musicOverride = true;
-      sound.setTrack(DEFAULT_TRACKS.find((t) => t.genre === $('music-select').value));
+      assignMusic(
+        DEFAULT_TRACKS.find((t) => t.genre === $('music-select').value),
+        { atBoundary: false },
+      );
     }
-    sound.configure?.({
+    configureAudio({
       style: $('music-select').value,
       master: Number($('master-volume').value),
       music: Number($('music-volume').value),
@@ -1965,10 +2163,10 @@ try {
     $(id).onchange = tuneMusic;
   $('music-preview').onclick = async () => {
     try {
-      const ok = await sound.preview({ seconds: 4 });
-      $('music-preview').textContent = ok
-        ? 'Playing a four-second preview ♫'
-        : 'Audio is unavailable';
+      const ok = soundtrackPlayer
+        ? await activateAudio({ explicit: true })
+        : await sound.preview({ seconds: 4 });
+      $('music-preview').textContent = ok ? 'Soundtrack playing ♫' : 'Audio is unavailable';
       if (ok) {
         preferences({ musicEnabled: true });
         $('sound-button').setAttribute('aria-pressed', 'true');
@@ -2048,6 +2246,7 @@ try {
     painter.style = scenario?.presentation?.style || library.preferences.style;
     updateBodies();
     painter.setLook(theme, bodyId, visuals());
+    soundtrackPlayer?.setContext(soundtrackContext());
   }
   function updateBodies() {
     const allowed = availableBodies();
@@ -2111,6 +2310,8 @@ try {
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
+    gameShell?.openMissions();
+    missionPicker?.revealSetup();
     $('body-select').focus({ preventScroll: true });
     $('body-select').scrollIntoView({ block: 'center', behavior: 'auto' });
   }
@@ -2359,6 +2560,8 @@ try {
     refreshMastery();
     refreshCourse();
     refreshDifficulty();
+    controllerReading?.refresh();
+    if (!controllerDialog()) controllerFocus()?.focus({ preventScroll: true });
   }
   function prepare({ restoreAdoption = false, contentSwitchTicket = null, difficulty } = {}) {
     if (courseEntry || (courseSession && ['leaving', 'ended'].includes(coursePhase))) return;
@@ -2378,7 +2581,7 @@ try {
     sound.reset?.();
     painter.skipCelebration?.();
     show('skip-celebration', false);
-    clearInput();
+    clearInput({ resetDirection: true });
     run = createRun(scenario?.level || campaign.levels[levelIndex], {
       seed,
       turnPolicy,
@@ -2460,11 +2663,11 @@ try {
         (m) => m.id === (authoredLevel.musicId || campaign.musicId),
       );
       if (track) {
-        sound.setTrack(track);
+        assignMusic(track);
         $('music-select').value = track.genre;
       }
     }
-    if (scenario?.music) sound.setTrack(scenario.music);
+    if (scenario?.music) assignMusic(scenario.music);
     painter.setLevel?.(run.level, { seed });
     setTheme();
     started = false;
@@ -2509,11 +2712,12 @@ try {
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
     clearInput();
+    neutralResumeTick = true;
     courseEntryHold = false;
     courseEntryMessage = '';
     started = true;
     paused = false;
-    (library.preferences.musicEnabled ? sound.enable?.() : sound.disable())?.catch?.(() => {});
+    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
@@ -2549,6 +2753,16 @@ try {
     $('pause-button').textContent = '▶';
   }
   function refreshHUD() {
+    document.body.dataset.flightState =
+      celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+        ? 'picture'
+        : campaignOverview || ['won', 'lost'].includes(run.status)
+          ? 'result'
+          : !started
+            ? 'briefing'
+            : paused
+              ? 'paused'
+              : 'running';
     $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
     $('coverage-bar').style.width = `${run.coverage * 100}%`;
     $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
@@ -2600,13 +2814,18 @@ try {
         : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
-    const encounter = encounterView(run);
-    show('encounter-status', !!encounter && !campaignOverview);
-    if (encounter) {
-      $('encounter-title').textContent = encounter.title;
-      $('encounter-instruction').textContent = encounter.instruction;
-      $('encounter-status').dataset.phase = encounter.phase;
-    }
+    const encounter = encounterView(run),
+      classic = classicView(run);
+    show('encounter-status', !!(encounter || classic) && !campaignOverview);
+    $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
+    $('encounter-title').textContent = encounter?.title || 'Classic field';
+    $('encounter-instruction').textContent = encounter?.instruction || '';
+    show('encounter-instruction', !!encounter);
+    $('classic-summary').textContent = classic?.summary || '';
+    show('classic-summary', !!classic);
+    $('encounter-status').dataset.phase =
+      encounter?.phase ||
+      (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
     refreshMastery();
     refreshCourse();
   }
@@ -2631,6 +2850,7 @@ try {
             'mission-timeout': 'The mission clock ran out. Try a faster route.',
             'cut-timeout': 'Your live line stayed open too long. Make a shorter cut.',
             'cable-limit': 'Your cable budget ran out. Close a shorter line.',
+            'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
         );
       if (event.type === 'shield.absorbed')
@@ -2655,6 +2875,30 @@ try {
         );
       if (event.type === 'pickup.collected')
         warning('Supplies ready. Choose your next opportunity.');
+      if (event.type === 'capture.stopped')
+        warning(
+          `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+        );
+      if (event.type === 'powerup.collected')
+        warning(
+          {
+            'extra-life': event.gain
+              ? 'Extra life collected.'
+              : 'Life pickup collected. Already at the nine-life limit.',
+            'player-speed': 'Speed pickup: faster flight for five seconds.',
+            'enemy-slow': 'Slow pickup: enemies move at half speed for six seconds.',
+            'enemy-freeze':
+              'Freeze pickup: enemies are held for three seconds. Terrain and the mission clock stay active.',
+          }[event.kind] || 'Powerup collected.',
+        );
+      if (event.type === 'rover.warning')
+        warning('Claimed-ground rover waking in one second. Watch the marked actor.');
+      if (event.type === 'rover.activated')
+        warning('Claimed-ground rover active. Your secured ground still has a moving threat.');
+      if (event.type === 'erosion.warning')
+        warning('The marked captured cell is about to reopen. Watch the edge timer.');
+      if (event.type === 'cells.eroded')
+        warning('Ground reopened. Reclaiming it restores coverage, without repeat capture points.');
       if (
         event.type === 'encounter.stageChanged' ||
         event.type === 'encounter.phaseChanged' ||
@@ -2686,6 +2930,15 @@ try {
     });
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
+    const flightModality = JSON.stringify(controllerFrame.flight);
+    if (
+      status.code === 'joined' ||
+      Object.values(controllerFrame.ui).some(Boolean) ||
+      (flightModality !== lastControllerModality &&
+        Object.values(controllerFrame.flight).some(Boolean))
+    )
+      document.body.dataset.inputMode = 'controller';
+    lastControllerModality = flightModality;
     if (status.message !== controllerStatus) {
       controllerStatus = status.message;
       $('input-status').textContent =
@@ -2709,11 +2962,6 @@ try {
       );
     } else {
       controllerNavigation.handle(controllerFrame.ui);
-      if (controllerFrame?.flight.stop) {
-        pendingAction = false;
-        pendingPickup = false;
-        pendingSwitch = null;
-      }
       if (controllerFrame?.flight.hangar && !$('hangar-button').disabled) {
         $('hangar-button').click();
         clearInput();
@@ -2759,6 +3007,14 @@ try {
               pickup: pendingPickup || controls.pickup,
               switchClass: pendingSwitch,
             };
+        const resuming = neutralResumeTick;
+        if (resuming) {
+          command.boost = false;
+          command.action = false;
+          command.pickup = false;
+          command.switchClass = null;
+          neutralResumeTick = false;
+        }
         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {
           recordingStopped = true;
           recorder = null;
@@ -2768,6 +3024,13 @@ try {
           );
         }
         const beforeStatus = run.status;
+        if (beforeStatus === 'respawning') {
+          command.direction = null;
+          command.boost = false;
+          command.action = false;
+          command.pickup = false;
+          command.switchClass = null;
+        }
         let lessonBefore = null;
         if (courseObserver)
           try {
@@ -2784,6 +3047,19 @@ try {
           frame: controllerFrame,
           controls,
         });
+        if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          input.clear();
+          controller.clear();
+          controls = { direction: null, boost: false, action: false, pickup: false };
+        }
+        if (run.events.some((event) => event.type === 'capture.stopped')) {
+          // Record the closure tick unchanged; later substeps wait for a fresh gesture.
+          input.clear();
+          controller.clear();
+          controllerFrame = null;
+          controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingSwitch = null;
+        }
         refreshControllerBoostCue();
         if (masteryObserver)
           try {
@@ -2799,7 +3075,7 @@ try {
           }
         pendingAction = false;
         pendingPickup = false;
-        pendingSwitch = null;
+        if (!resuming) pendingSwitch = null;
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
@@ -2897,7 +3173,8 @@ try {
       show('skip-celebration', false);
       overlay('won');
     }
-    sound.update(!paused && started, theme, run);
+    if (soundtrackPlayer) soundtrackPlayer.update(!paused && started, theme, run);
+    else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       $('music-preview').textContent = 'Preview music ♫';
     $('sound-button').setAttribute('aria-pressed', String(sound.enabled));
@@ -2929,6 +3206,7 @@ try {
     bodyWarning = '';
     bodyId = $('body-select').value;
     painter.setLook(theme, bodyId, visuals());
+    soundtrackPlayer?.setContext(soundtrackContext());
     preferences({ bodyId, matchClassAppearance: false });
     $('match-class-appearance').checked = false;
   };
@@ -2964,6 +3242,7 @@ try {
     }
   };
   $('choose-mission').onclick = () => {
+    gameShell?.openMissions();
     const mission = $('missions').querySelector('button:not(:disabled)');
     mission?.focus();
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -3036,7 +3315,11 @@ try {
   };
   $('sound-button').onclick = async () => {
     try {
-      const on = await sound.toggle();
+      let on;
+      if (sound.enabled) {
+        muteAudio();
+        on = false;
+      } else on = await activateAudio({ explicit: true });
       $('sound-button').setAttribute('aria-pressed', String(on));
       $('sound-button').setAttribute('aria-label', on ? 'Mute sound' : 'Enable sound');
       preferences({ musicEnabled: on });
@@ -3119,16 +3402,25 @@ try {
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
     controllerPreview?.clear();
-    sound.pause();
+    suspendAudio();
     pause(true);
   }
   onNativeInactive(suspendInteraction).catch((error) =>
     warning(`App lifecycle adapter unavailable: ${error.message}`),
   );
   window.addEventListener('blur', suspendInteraction);
+  function restoreListening() {
+    if (document.hidden || soundtrackDisposed || !soundtrackPlayer || !soundtrackSuspended) return;
+    soundtrackSuspended = false;
+    void soundtrackPlayer.resume();
+  }
+  window.addEventListener('focus', restoreListening);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) suspendInteraction();
-    else void packCommits.reconcile();
+    else {
+      void packCommits.reconcile();
+      restoreListening();
+    }
   });
   setTheme();
   refreshCampaigns();
@@ -3161,14 +3453,30 @@ try {
   refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
-      this.boardTexture = this.textures.createCanvas('field', 768, 576);
+      this.boardSize = boardPaintSizeForRun(run);
+      const { width, height } = this.boardSize;
+      this.boardTexture = this.textures.createCanvas('field', width, height);
+      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+      document.documentElement.style.setProperty('--board-aspect', String(width / height));
       this.boardImage = this.add.image(0, 0, 'field').setOrigin(0);
       this.game.canvas.setAttribute('aria-hidden', 'true');
     }
     update(now, delta) {
       const dt = clamp(delta / 1000, 0, 1);
       update(dt);
+      const { width, height } = boardPaintSizeForRun(run);
+      if (width !== this.boardSize.width || height !== this.boardSize.height) {
+        this.boardTexture.setSize(width, height);
+        this.boardImage.setSizeToFrame();
+        this.scale.resize(width, height);
+        this.cameras.main.setSize(width, height);
+        this.boardSize = { width, height };
+        document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+        document.documentElement.style.setProperty('--board-aspect', String(width / height));
+      }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+        // The texture is detached; only the displayed Phaser canvas has a CSS size.
+        displayCSSWidth: this.game.canvas.clientWidth,
         paused,
         reduced: $('reduced-effects').checked,
         fullReveal: run.status === 'won',
@@ -3180,8 +3488,8 @@ try {
   new Phaser.Game({
     type: Phaser.CANVAS,
     parent: 'game-canvas',
-    width: 768,
-    height: 576,
+    width: boardPaintSizeForRun(run).width,
+    height: boardPaintSizeForRun(run).height,
     backgroundColor: theme.palette.field,
     pixelArt: true,
     roundPixels: true,
@@ -3192,6 +3500,18 @@ try {
     scene: FieldScene,
     banner: false,
   });
+  missionPicker = attachMissionPicker();
+  gameShell = attachGameShell({
+    focusMissions: () => missionPicker?.focusSelectedChapter(),
+    focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
+    pause,
+    getTopDialog: controllerDialog,
+    canContinue: () =>
+      (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
+    initial: !practice && !courseSession && !packLaunchRequest,
+    onFeatured: () => activatePack('fpv-arcade-r2', { campaignId: 'fpv-first-light-r2' }),
+  });
+  void initializeSoundtrack();
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {
       const currentLevelId = campaign.levels[levelIndex]?.id;

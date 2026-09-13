@@ -1,0 +1,156 @@
+.soundtrack-dialog {
+  box-sizing: border-box;
+  width: min(1120px, calc(100vw - 24px));
+  max-width: none;
+  max-height: calc(100dvh - 24px);
+  margin: auto;
+  padding: clamp(12px, 2vw, 24px);
+  color: #eaf2ff;
+  background: #080d19;
+  border: 2px solid #438ca5;
+  border-radius: 2px;
+  box-shadow:
+    0 0 0 4px #080d19,
+    0 0 64px #000b;
+  font:
+    14px/1.5 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.soundtrack-dialog::backdrop {
+  background: #01030cef;
+}
+.soundtrack-dialog h2,
+.soundtrack-dialog h3 {
+  color: #a5f5ec;
+  letter-spacing: 0.06em;
+}
+.soundtrack-dialog h2 {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 30px);
+  flex: 1;
+}
+.soundtrack-dialog h3 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+.soundtrack-dialog p {
+  overflow-wrap: anywhere;
+}
+.soundtrack-dialog .micro-note {
+  color: #a7b6ce;
+  font-size: 12px;
+}
+.soundtrack-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.soundtrack-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.soundtrack-section {
+  min-width: 0;
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid #273a52;
+  background: #0c1424;
+}
+.soundtrack-field {
+  display: grid;
+  gap: 5px;
+  margin: 10px 0;
+  color: #cbd8ef;
+}
+.soundtrack-field > span {
+  font-size: 12px;
+}
+.soundtrack-dialog input,
+.soundtrack-dialog select,
+.soundtrack-dialog button {
+  box-sizing: border-box;
+  min-height: 44px;
+  max-width: 100%;
+  border: 1px solid #405775;
+  border-radius: 2px;
+  padding: 9px;
+  color: #e8f5ff;
+  background: #12223a;
+  font: inherit;
+}
+.soundtrack-dialog input,
+.soundtrack-dialog select {
+  width: 100%;
+}
+.soundtrack-dialog input[type='range'] {
+  padding: 0;
+  accent-color: #89ead8;
+}
+.soundtrack-dialog input[type='file'] {
+  font-size: 12px;
+}
+.soundtrack-dialog select[size] {
+  min-height: 112px;
+}
+.soundtrack-dialog option {
+  padding: 5px;
+}
+.soundtrack-dialog button {
+  cursor: pointer;
+}
+.soundtrack-dialog :disabled {
+  opacity: 0.46;
+  cursor: default;
+}
+.soundtrack-dialog :focus-visible {
+  outline: 3px solid #f5bded;
+  outline-offset: 3px;
+}
+.soundtrack-dialog audio {
+  width: 100%;
+  margin: 12px 0;
+}
+.soundtrack-dialog [hidden] {
+  display: none !important;
+}
+.soundtrack-footer {
+  position: static;
+  padding: 12px 0 4px;
+  background: #080d19f5;
+  border-top: 1px solid #438ca5;
+}
+#soundtrack-status {
+  min-height: 3em;
+  color: #dce9ff;
+}
+#soundtrack-save,
+#soundtrack-use-selection {
+  border-color: #80decf;
+  color: #b7fff2;
+}
+@media (max-width: 720px) {
+  .soundtrack-columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .soundtrack-dialog {
+    width: calc(100vw - 12px);
+    max-height: calc(100dvh - 12px);
+    padding: 12px;
+  }
+  .soundtrack-section {
+    padding: 12px;
+  }
+  .soundtrack-footer {
+    position: static;
+  }
+  .soundtrack-actions > button {
+    flex: 1 1 150px;
+  }
+}

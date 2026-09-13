@@ -46,3 +46,7 @@ Show completed visuals when produced and link the variant records. Distinguish r
 ## Register in the local media library
 
 When this kit is available, use [the media CLI](../../media/README.md): `import` preserves original bytes, `derive` registers an already-created styled result and its parent, and `bind` changes a role/variant reference. None invokes an AI model or modifies image pixels. Supply allegiance from the brief, preserve the source, and record an unavailable model version honestly rather than inventing it. The media manifest version is separate from the content-pack schema and has no runtime compiler yet. Its `--ready` gate checks explicit review records and file metadata; it does not prove sprite, animation or game readiness.
+
+## Deliver the completed feature
+
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.

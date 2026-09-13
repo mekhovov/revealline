@@ -8,6 +8,11 @@ import {
   midiFrequency,
 } from './music.mjs';
 export { MUSIC_STYLES, DEFAULT_TRACKS };
+// Existing procedural recipes have no file duration. A persistent rendition
+// uses 32 four-beat bars before accepting an automatic authored track change.
+export const SYNTH_SONG_STEPS = 32 * 16;
+const trackFields = ['id', 'name', 'genre', 'tempo', 'root', 'scale'];
+const sameTrack = (a, b) => trackFields.every((key) => a[key] === b[key]);
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const voiceLimit = 64;
 const defaultFactory = () => {
@@ -20,8 +25,11 @@ const defaultFactory = () => {
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
  */
 export class Soundscape {
-  constructor({ contextFactory = defaultFactory } = {}) {
+  constructor({ contextFactory = defaultFactory, persistentMusic = false } = {}) {
+    if (typeof persistentMusic !== 'boolean')
+      throw new TypeError('persistentMusic must be a boolean');
     this.enabled = false;
+    this.persistentMusic = persistentMusic;
     this.context = null;
     this.contextFactory = contextFactory;
     this.track = { ...DEFAULT_TRACKS[0] };
@@ -36,9 +44,76 @@ export class Soundscape {
     this.transition = 0;
     this.previewTransition = 0;
     this.previewUntil = null;
+    this.pendingTrack = null;
+    this.gameplayPaused = false;
+    this.musicSuspendedAt = null;
+    this.musicTransportPaused = false;
+    this.songEndHandler = null;
+    this.songEnded = null;
   }
   getSettings() {
     return { ...this.settings, trackId: this.track.id };
+  }
+  musicState() {
+    return {
+      persistent: this.persistentMusic,
+      active: this.enabled && !this.paused && this.musicActive && this.context?.state === 'running',
+      suspended: this.paused,
+      gameplayPaused: this.gameplayPaused,
+      track: { ...this.track },
+      pendingTrack: this.pendingTrack ? { ...this.pendingTrack } : null,
+      step: this.cursor?.index ?? 0,
+      songSteps: SYNTH_SONG_STEPS,
+    };
+  }
+  /** Optional external playlist owner. Null preserves the original looping scheduler. */
+  setSongEndHandler(handler) {
+    if (handler !== null && typeof handler !== 'function')
+      throw new TypeError('Song end handler must be a function or null');
+    if (handler !== null && !this.persistentMusic)
+      throw new TypeError('A playlist requires persistent music');
+    this.songEndHandler = handler;
+  }
+  pauseMusic() {
+    this.musicTransportPaused = true;
+    this.holdMusicClock();
+    this.stopVoices('music');
+    this.musicActive = false;
+  }
+  resumeMusic() {
+    this.musicTransportPaused = false;
+    if (this.persistentMusic && this.cursor && this.musicSuspendedAt !== null) {
+      // Transport seeks may sit within a sixteenth. Keep their signed remainder;
+      // the legacy lifecycle restore still uses its original backlog clamp.
+      this.cursor = {
+        index: this.cursor.index,
+        time: this.context.currentTime + this.cursor.time - this.musicSuspendedAt,
+      };
+      this.musicSuspendedAt = null;
+    } else this.restoreMusicClock();
+  }
+  musicPosition() {
+    const step = 60 / this.track.tempo / 4,
+      durationSeconds = SYNTH_SONG_STEPS * step;
+    const now = this.musicSuspendedAt ?? this.context?.currentTime ?? 0;
+    const positionSeconds = this.cursor
+      ? clamp(this.cursor.index * step - (this.cursor.time - now), 0, durationSeconds)
+      : 0;
+    return { positionSeconds, durationSeconds };
+  }
+  seekMusic(seconds) {
+    const step = 60 / this.track.tempo / 4,
+      duration = SYNTH_SONG_STEPS * step;
+    if (!Number.isFinite(seconds) || seconds < 0 || seconds > duration)
+      throw new TypeError('Invalid synth seek position');
+    if (!this.context) return false;
+    this.stopVoices('music');
+    const now = this.context.currentTime,
+      index = Math.floor(seconds / step);
+    this.cursor = { index, time: now + index * step - seconds };
+    this.musicSuspendedAt = this.musicTransportPaused || this.paused ? now : null;
+    this.songEnded = null;
+    return true;
   }
   get previewActive() {
     return !!(
@@ -69,9 +144,9 @@ export class Soundscape {
       this.context?.state !== 'running'
     )
       return false;
-    this.stopVoices('music');
+    if (!this.persistentMusic) this.stopVoices('music');
     this.previewUntil = this.context.currentTime + seconds;
-    this.cursor = null;
+    if (!this.persistentMusic) this.cursor = null;
     this.update(false, { family: this.themeFamily });
     return true;
   }
@@ -93,21 +168,57 @@ export class Soundscape {
     }
     if (next.style !== this.settings.style) {
       this.track = { ...DEFAULT_TRACKS.find((t) => t.genre === next.style) };
-      this.stopVoices('music');
-      this.cursor = null;
+      if (this.persistentMusic) this.resetMusic();
+      else {
+        this.stopVoices('music');
+        this.cursor = null;
+      }
     }
     this.settings = next;
     this.applyVolumes();
     return this.getSettings();
   }
-  setTrack(descriptor) {
+  setTrack(descriptor, { atBoundary = false } = {}) {
+    if (typeof atBoundary !== 'boolean') throw new TypeError('atBoundary must be a boolean');
     const checked = validateTrack(descriptor);
     if (!checked.valid) throw new TypeError(checked.errors.join('; '));
+    if (this.persistentMusic && sameTrack(this.track, descriptor)) {
+      this.pendingTrack = null;
+      return { ...this.track };
+    }
+    if (this.persistentMusic && atBoundary && this.cursor) {
+      this.pendingTrack = { ...descriptor };
+      return { ...this.pendingTrack };
+    }
     this.track = { ...descriptor };
     this.settings.style = descriptor.genre;
+    if (this.persistentMusic) this.resetMusic();
+    else {
+      this.stopVoices('music');
+      this.cursor = null;
+    }
+    return { ...this.track };
+  }
+  resetMusic() {
     this.stopVoices('music');
     this.cursor = null;
-    return { ...this.track };
+    this.pendingTrack = null;
+    this.musicSuspendedAt = null;
+    this.musicActive = false;
+    this.songEnded = null;
+  }
+  holdMusicClock() {
+    if (this.persistentMusic && this.cursor && this.musicSuspendedAt === null)
+      this.musicSuspendedAt = this.context.currentTime;
+  }
+  restoreMusicClock() {
+    if (this.musicTransportPaused) return;
+    if (this.persistentMusic && this.cursor && this.musicSuspendedAt !== null)
+      this.cursor = {
+        index: this.cursor.index,
+        time: this.context.currentTime + Math.max(0, this.cursor.time - this.musicSuspendedAt),
+      };
+    this.musicSuspendedAt = null;
   }
   setup() {
     if (this.context) return true;
@@ -169,12 +280,18 @@ export class Soundscape {
     if (this.disposed) return false;
     const token = ++this.transition;
     if (!this.setup()) return false;
+    if (this.persistentMusic && this.enabled && !this.paused && this.context.state === 'running') {
+      this.gameplayPaused = false;
+      return true;
+    }
     try {
       await this.context.resume();
       if (token !== this.transition || this.disposed) return this.enabled;
       this.enabled = this.context.state === 'running';
       this.paused = false;
-      this.cursor = null;
+      this.gameplayPaused = false;
+      if (this.persistentMusic) this.restoreMusicClock();
+      else this.cursor = null;
       this.applyVolumes();
       return this.enabled;
     } catch {
@@ -197,10 +314,12 @@ export class Soundscape {
     ++this.transition;
     this.enabled = false;
     this.paused = true;
+    this.gameplayPaused = true;
     this.musicActive = false;
     this.cancelPreview();
+    this.holdMusicClock();
     this.stopVoices();
-    this.cursor = null;
+    if (!this.persistentMusic) this.cursor = null;
     this.applyVolumes();
     try {
       void Promise.resolve(this.context?.suspend()).catch(() => {});
@@ -208,22 +327,41 @@ export class Soundscape {
     return false;
   }
   pause() {
+    if (this.persistentMusic) {
+      this.gameplayPaused = true;
+      this.cancelPreview();
+      this.stopVoices('sfx');
+      this.tension = 0;
+      return;
+    }
+    this.suspend();
+  }
+  /** Full lifecycle interruption; ordinary persistent-mode pause is gameplay only. */
+  suspend() {
     ++this.transition;
     this.cancelPreview();
     this.paused = true;
+    this.gameplayPaused = true;
     this.musicActive = false;
-    this.cursor = null;
+    this.holdMusicClock();
+    if (!this.persistentMusic) this.cursor = null;
     this.stopVoices();
     if (this.context?.state === 'running') void this.context.suspend().catch(() => {});
   }
   async resume() {
     if (!this.enabled || this.disposed) return false;
     const token = ++this.transition;
+    if (this.persistentMusic && !this.paused && this.context.state === 'running') {
+      this.gameplayPaused = false;
+      return true;
+    }
     try {
       await this.context.resume();
       if (token !== this.transition || this.disposed) return false;
       this.paused = false;
-      this.cursor = null;
+      this.gameplayPaused = false;
+      if (this.persistentMusic) this.restoreMusicClock();
+      else this.cursor = null;
       return this.context.state === 'running';
     } catch {
       return false;
@@ -231,8 +369,8 @@ export class Soundscape {
   }
   reset() {
     this.cancelPreview();
-    this.stopVoices();
-    this.cursor = null;
+    this.stopVoices(this.persistentMusic ? 'sfx' : null);
+    if (!this.persistentMusic) this.cursor = null;
     this.tension = 0;
     this.recentEvents.clear();
   }
@@ -247,6 +385,8 @@ export class Soundscape {
     this.enabled = false;
     this.stopVoices();
     this.cursor = null;
+    this.pendingTrack = null;
+    this.musicSuspendedAt = null;
     for (const node of [
       this.musicDrive,
       this.sfxDrive,
@@ -267,6 +407,7 @@ export class Soundscape {
   play(note, time, bus = 'sfx') {
     const c = this.context;
     if (!this.enabled || this.paused || this.disposed || !c || c.state !== 'running') return false;
+    if (this.persistentMusic && this.gameplayPaused && bus === 'sfx') return false;
     if (this.voices.size >= voiceLimit) {
       const music = [...this.voices].find((v) => v.bus === 'music');
       if (music) music.stop();
@@ -365,7 +506,14 @@ export class Soundscape {
   }
   event(value, details = {}) {
     const event = typeof value === 'string' ? { ...details, type: value } : value;
-    if (!event || !this.enabled || this.paused || !this.context) return;
+    if (
+      !event ||
+      !this.enabled ||
+      this.paused ||
+      (this.persistentMusic && this.gameplayPaused) ||
+      !this.context
+    )
+      return;
     const now = this.context.currentTime,
       key =
         event.type === 'run.completed'
@@ -388,9 +536,11 @@ export class Soundscape {
           ),
         );
     if (event.type === 'run.completed') {
-      this.stopVoices('music');
-      this.musicActive = false;
-      this.cursor = null;
+      if (!this.persistentMusic) {
+        this.stopVoices('music');
+        this.musicActive = false;
+        this.cursor = null;
+      }
       if (event.won === false || event.status === 'lost') {
         cue([0, -3, -7, -12], 'lead', 0.16, 0.38);
         this.play({ kind: 'snare', volume: 0.07, duration: 0.22 }, now + 0.02);
@@ -416,7 +566,16 @@ export class Soundscape {
       }
     } else if (event.type === 'player.failed') cue([0, -5, -12], 'lead', 0.065, 0.17);
     else if (event.type === 'cells.claimed') cue([0, 4, 7], 'bell', 0.04, 0.2);
-    else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
+    else if (event.type === 'cells.eroded') cue([7, 3, 0], 'chip', 0.07, 0.12);
+    else if (event.type === 'powerup.collected') {
+      const notes = {
+        'extra-life': [0, 4, 7, 12],
+        'player-speed': [0, 7, 14],
+        'enemy-slow': [12, 7, 4],
+        'enemy-freeze': [12, 0, 12],
+      }[event.kind];
+      if (notes) cue(notes, 'bell', 0.055, 0.18);
+    } else if (event.type === 'cut.started') cue([0, 7], 'chip', 0.035, 0.05);
     else if (event.type === 'encounter.phaseChanged' && event.phase === 'open')
       cue([0, 7, 12], 'bell', 0.08, 0.16);
     else if (event.type === 'encounter.stageChanged' && event.stage === 'transition')
@@ -424,6 +583,8 @@ export class Soundscape {
     else if (
       event.type === 'boss.warning' ||
       event.type === 'signal.warning' ||
+      event.type === 'rover.warning' ||
+      event.type === 'erosion.warning' ||
       (event.type === 'encounter.phaseChanged' && event.phase === 'warning')
     )
       cue([1, 1], 'chip', 0.16, 0.1);
@@ -447,9 +608,11 @@ export class Soundscape {
     )
       return;
     const terminal = state.status === 'won' || state.status === 'lost';
+    if (this.persistentMusic) this.gameplayPaused = !active || terminal;
+    if (this.musicTransportPaused) return;
     const preview = this.previewActive;
     if (!preview) this.previewUntil = null;
-    if ((!active || terminal) && !preview) {
+    if ((!active || terminal) && !preview && !this.persistentMusic) {
       if (this.musicActive) {
         this.stopVoices('music');
         this.cursor = null;
@@ -458,15 +621,59 @@ export class Soundscape {
       return;
     }
     this.musicActive = true;
-    this.tension = preview ? 0 : deriveTension(state);
-    const planned = scheduleWindow(this.cursor, this.context.currentTime, this.track.tempo);
+    this.tension = preview || !active || terminal ? 0 : deriveTension(state);
+    const planned = this.persistentMusic
+      ? this.persistentWindow(this.context.currentTime)
+      : scheduleWindow(this.cursor, this.context.currentTime, this.track.tempo);
     this.cursor = planned.cursor;
     for (const step of planned.steps) {
       // A preview cannot leave a sustained note behind when a tab stops painting.
-      const remaining = preview ? this.previewUntil - step.time - 0.015 : Infinity;
+      const remaining =
+        preview && !this.persistentMusic
+          ? this.previewUntil - step.time - 0.015
+          : (step.remaining ?? Infinity);
       if (remaining < 0.02) continue;
-      for (const note of composeStep(this.track, step.index, this.tension))
+      for (const note of composeStep(step.track ?? this.track, step.index, this.tension))
         this.play({ ...note, duration: Math.min(note.duration, remaining) }, step.time, 'music');
     }
+    const ended = this.songEnded;
+    this.songEnded = null;
+    if (ended) this.songEndHandler?.(ended);
+  }
+  persistentWindow(now) {
+    let cursor = this.cursor;
+    const steps = [];
+    // One step at a time permits a tempo change exactly at the authored boundary,
+    // while retaining the shared scheduler's four-step look-ahead/backlog bounds.
+    for (let n = 0; n < 4; n++) {
+      if (cursor?.index === SYNTH_SONG_STEPS && this.songEndHandler) {
+        // External queues wait for the audible boundary, not the look-ahead window.
+        if (cursor.time <= now) {
+          this.musicTransportPaused = true;
+          this.musicSuspendedAt = cursor.time;
+          this.musicActive = false;
+          this.songEnded = Object.freeze({ trackId: this.track.id });
+        }
+        break;
+      }
+      if (cursor?.index === SYNTH_SONG_STEPS && cursor.time < now + 0.12) {
+        if (this.pendingTrack) {
+          this.track = this.pendingTrack;
+          this.settings.style = this.track.genre;
+          this.pendingTrack = null;
+        }
+        cursor = { index: 0, time: cursor.time };
+      }
+      const next = scheduleWindow(cursor, now, this.track.tempo, { maxSteps: 1 });
+      if (!next.steps.length) break;
+      const step = next.steps[0];
+      steps.push({
+        ...step,
+        track: this.track,
+        remaining: (SYNTH_SONG_STEPS - step.index) * (60 / this.track.tempo / 4) - 0.015,
+      });
+      cursor = next.cursor;
+    }
+    return { cursor, steps };
   }
 }
