@@ -203,6 +203,22 @@ export function createManagedMediaStore({
   let opening = null,
     closed = false;
   const handles = new WeakMap();
+  function discardConnection(db) {
+    if (opening?.db === db) opening = null;
+    try {
+      db.close();
+    } catch {}
+  }
+  function createTransaction(db, stores, mode) {
+    try {
+      return db.transaction(stores, mode);
+    } catch (error) {
+      // No transaction exists yet. Preserve this failure; a later deliberate
+      // operation can reopen, without replaying a possibly committed write.
+      if (error?.name === 'InvalidStateError') discardConnection(db);
+      throw error;
+    }
+  }
   function clock() {
     const t = now();
     required(integer(t) && integer(t + MANAGED_MEDIA_LIMITS.leaseMs), 'Invalid media lease clock.');
@@ -296,10 +312,9 @@ export function createManagedMediaStore({
           );
           return;
         }
-        db.onversionchange = () => {
-          db.close();
-          if (opening === attempt) opening = null;
-        };
+        attempt.db = db;
+        db.onclose = () => discardConnection(db);
+        db.onversionchange = () => discardConnection(db);
         settled = true;
         resolve(db);
       };
@@ -316,7 +331,7 @@ export function createManagedMediaStore({
     abort(signal);
     required(!closed, 'Managed media store is closed.');
     return new Promise((resolve, reject) => {
-      const tx = db.transaction(storesInUse, mode),
+      const tx = createTransaction(db, storesInUse, mode),
         stores = Object.fromEntries(storesInUse.map((name) => [name, tx.objectStore(name)]));
       let result,
         failure = null,
@@ -487,7 +502,7 @@ export function createManagedMediaStore({
     abort(signal);
     required(!closed, 'Managed media store is closed.');
     return new Promise((resolve, reject) => {
-      const tx = db.transaction([...new Set(requests.map(([name]) => name))], 'readonly');
+      const tx = createTransaction(db, [...new Set(requests.map(([name]) => name))], 'readonly');
       let result,
         failure = null,
         remaining = requests.length;
