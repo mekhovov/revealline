@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { findRoute, replayProof, digest } from './verify-campaign.mjs';
 import { verifyFpvR2Proof } from './verify-fpv-r2.mjs';
+import { verifyFpvR3Proof } from './verify-fpv-r3.mjs';
 import { boundedJSON, exactKeys, required } from '../game/data-json.mjs';
 import {
   validatePack,
@@ -26,6 +27,11 @@ const proofFile = new URL('game/replays/expansion-routes.json', root);
 const encounterProofFile = new URL('game/replays/sentinel-routes.json', root);
 const wideProofFile = new URL('game/replays/first-light-routes.json', root);
 const r2ProofFile = new URL('game/replays/fpv-arcade-r2-routes.json', root);
+const r3ProofFile = new URL('game/replays/fpv-arcade-r3-routes.json', root);
+const impactDemoFile = new URL('game/content/scenarios/line-impact-demo.json', root);
+// Indexed source includes on-demand editions that cannot all be installed together.
+// This read-only tooling bound does not change PACK_LIMITS.libraryBytes (48 MiB).
+const INDEXED_SOURCE_BYTES = 64 * 1024 * 1024;
 const policies = ['immediate', 'grid-center'];
 const routeKey = (pack, campaign, level, policy) =>
   `${pack.id}/${campaign.id}/${level.id}/${policy}`;
@@ -54,10 +60,21 @@ export async function verifyExpansionRoutes() {
     wideProof = packs.some((pack) => pack.format === WIDE_PACK_VERSION)
       ? JSON.parse(await readFile(wideProofFile, 'utf8'))
       : null,
-    r2Proof = packs.some((pack) => pack.format === CLASSIC_PACK_VERSION)
+    r2Proof = packs.some((pack) => pack.id === 'fpv-arcade-r2')
       ? JSON.parse(await readFile(r2ProofFile, 'utf8'))
-      : null;
-  return verifyExpansionProofs({ packs, proof, encounterProof, wideProof, r2Proof });
+      : null,
+    hasR3 = packs.some((pack) => pack.id === 'fpv-arcade-r3'),
+    r3Proof = hasR3 ? JSON.parse(await readFile(r3ProofFile, 'utf8')) : null,
+    impactDemo = hasR3 ? JSON.parse(await readFile(impactDemoFile, 'utf8')) : null;
+  return verifyExpansionProofs({
+    packs,
+    proof,
+    encounterProof,
+    wideProof,
+    r2Proof,
+    r3Proof,
+    impactDemo,
+  });
 }
 
 /** Owned proof data; verify one outcome per exact indexed pack/campaign/map/policy.
@@ -65,15 +82,19 @@ export async function verifyExpansionRoutes() {
  */
 export function verifyExpansionProofs(source) {
   const request = boundedJSON(source, {
-    maxBytes: PACK_LIMITS.libraryBytes + 8 * 1024 * 1024,
+    maxBytes: INDEXED_SOURCE_BYTES + 8 * 1024 * 1024,
     maxNodes: 360000,
     maxDepth: 20,
     maxArray: 20000,
     maxString: PACK_LIMITS.maxBytes,
   });
-  exactKeys(request, ['packs', 'proof', 'encounterProof', 'wideProof', 'r2Proof'], 'proof request');
+  exactKeys(
+    request,
+    ['packs', 'proof', 'encounterProof', 'wideProof', 'r2Proof', 'r3Proof', 'impactDemo'],
+    'proof request',
+  );
   const packs = boundedJSON(request.packs, {
-    maxBytes: PACK_LIMITS.libraryBytes,
+    maxBytes: INDEXED_SOURCE_BYTES,
     maxNodes: 160000,
     maxDepth: 18,
     maxArray: 4096,
@@ -82,7 +103,8 @@ export function verifyExpansionProofs(source) {
   const proof = proofCopy(request.proof),
     encounter = request.encounterProof === null ? null : proofCopy(request.encounterProof),
     wide = request.wideProof == null ? null : proofCopy(request.wideProof),
-    r2 = request.r2Proof == null ? null : proofCopy(request.r2Proof);
+    r2 = request.r2Proof == null ? null : proofCopy(request.r2Proof),
+    r3 = request.r3Proof == null ? null : proofCopy(request.r3Proof);
   required(Array.isArray(packs) && packs.length <= PACK_LIMITS.installed, 'Invalid indexed packs.');
   const expected = new Map(),
     packIds = new Set();
@@ -413,6 +435,37 @@ export function verifyExpansionProofs(source) {
     }
     required(supplementalGentleResults.length === 6, 'Incomplete R2 Gentle route set.');
   }
+  let impactDemonstrations = null;
+  if (r3 !== null) {
+    const pack = packs.find((item) => item.id === r3.packId),
+      prior = packs.find((item) => item.id === 'fpv-arcade-r2');
+    required(
+      pack?.format === CLASSIC_PACK_VERSION && prior && r2 && request.impactDemo,
+      'Invalid or unknown R3 proof context.',
+    );
+    const checked = verifyFpvR3Proof({
+      pack,
+      prior,
+      priorProof: r2,
+      demo: request.impactDemo,
+      proof: r3,
+    });
+    required(
+      checked.routes.length === 12 && checked.demonstrations.length === 4,
+      'Incomplete R3 proof.',
+    );
+    supplementalGentleResults ??= [];
+    for (const route of r3.routes) {
+      if (route.difficulty === 'gentle') supplementalGentleResults.push(route.expected);
+      else {
+        const { key } = identify(pack.id, route.levelId, route.turnPolicy);
+        seen.add(key);
+        results.push(route.expected);
+      }
+    }
+    impactDemonstrations = checked.demonstrations;
+  } else
+    required(request.impactDemo == null, 'An impact demonstration requires R3 proof authority.');
   required(
     seen.size === expected.size && [...expected.keys()].every((key) => seen.has(key)),
     'Incomplete expansion proof.',
@@ -420,6 +473,7 @@ export function verifyExpansionProofs(source) {
   return {
     verified: results.length,
     results,
+    ...(impactDemonstrations === null ? {} : { impactDemonstrations }),
     ...(supplementalGentleResults === null
       ? {}
       : {

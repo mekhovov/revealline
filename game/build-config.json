@@ -1,5 +1,5 @@
 {
-  "version": "0.26.0",
+  "version": "0.27.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -7,6 +7,8 @@
     "authoring/motion-lab/animation.mjs",
     "authoring/motion-lab/render-character.mjs",
     "authoring/motion-lab/presets.json",
-    "authoring/motion-lab/assets"
-  ]
+    "authoring/motion-lab/assets",
+    "authoring/enemy-catalog"
+  ],
+  "optionalOffline": ["game/content/packs/fpv-arcade.json"]
 }

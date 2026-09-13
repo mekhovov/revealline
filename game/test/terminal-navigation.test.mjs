@@ -158,6 +158,11 @@ test('a legal terminal self-contact focuses Retry and keyboard retry starts a fr
   const failed = page.rendered.run;
   assert.equal(failed.status, 'lost');
   assert.equal(failed.failureCause, 'self-contact');
+  const failureCheckpoint = authoritativeCheckpoint(failed);
+  assert.equal(page.$('game-overlay').hidden, true);
+  assert.equal(page.doc.activeElement.id, 'skip-celebration');
+  steps(page, 80);
+  assert.deepEqual(authoritativeCheckpoint(failed), failureCheckpoint);
   assert.equal(page.$('game-overlay').dataset.kind, 'lost');
   assert.equal(page.doc.activeElement.id, 'retry-button');
   key(page, 'Enter');

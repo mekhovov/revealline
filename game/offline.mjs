@@ -1,6 +1,11 @@
 import { nativePlatform } from './platform.mjs';
-/** Explicit, opt-in preparation of a generated distribution's complete local cache. */
+/** Explicit preparation of a generated distribution's declared core cache. */
 const MARKER = 'meta[name="revealline-offline"]';
+function optionalNote(config) {
+  const packs = config.optionalPacks;
+  if (!Array.isArray(packs) || !packs.length) return '';
+  return ` ${packs.map((pack) => pack.name).join(', ')} is optional: install once while online to keep playing it offline. Already-installed packs remain in device storage; keep a complete backup.`;
+}
 function configFromPage(documentRef = globalThis.document, locationRef = globalThis.location) {
   const marker = documentRef?.querySelector(MARKER)?.content;
   if (!marker || !locationRef?.href) return null;
@@ -11,6 +16,15 @@ function configFromPage(documentRef = globalThis.document, locationRef = globalT
     return null;
   }
   if (config.format !== 'revealline-offline.v1' || !/^[0-9a-f]{64}$/.test(config.buildId))
+    return null;
+  if (
+    config.optionalPacks !== undefined &&
+    (!Array.isArray(config.optionalPacks) ||
+      config.optionalPacks.length > 12 ||
+      config.optionalPacks.some(
+        (p) => !p || typeof p.name !== 'string' || !p.name.length || p.name.length > 120,
+      ))
+  )
     return null;
   const page = new URL(locationRef.href),
     scope = new URL(config.scope, page),
@@ -50,7 +64,13 @@ export function offlineAvailability({
       available: false,
       reason: 'Offline play needs a browser with service workers on HTTPS or localhost.',
     };
-  return { available: true, version: config.version, buildId: config.buildId, scope: config.scope };
+  return {
+    available: true,
+    version: config.version,
+    buildId: config.buildId,
+    scope: config.scope,
+    ...(config.optionalPacks?.length ? { note: optionalNote(config).trim() } : {}),
+  };
 }
 function requestReport(
   worker,
@@ -127,7 +147,10 @@ export async function prepareOffline(options = {}) {
   const env = environment(options),
     config = requireConfig(env),
     status = options.onStatus ?? (() => {});
-  status({ status: 'preparing', message: 'Downloading and verifying this complete game version…' });
+  status({
+    status: 'preparing',
+    message: 'Downloading and verifying this version’s core offline files…' + optionalNote(config),
+  });
   const registration = await env.navigatorRef.serviceWorker.register(config.worker, {
     scope: config.scope,
     updateViaCache: 'none',
@@ -146,9 +169,10 @@ export async function prepareOffline(options = {}) {
     ...report,
     status: registration.waiting === worker ? 'waiting' : 'ready',
     message:
-      registration.waiting === worker
+      (registration.waiting === worker
         ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
-        : 'Offline files verified. This version can open without a connection while the browser retains its storage.',
+        : 'Offline files verified. This version can open without a connection while the browser retains its storage.') +
+      optionalNote(config),
   };
   status(result);
   return result;
@@ -169,7 +193,12 @@ export async function checkOffline(options = {}) {
   const report = await requestReport(worker, options);
   const result =
     report.buildId === config.buildId
-      ? report
+      ? {
+          ...report,
+          ...(report.status === 'ready' && config.optionalPacks?.length
+            ? { message: (report.message || 'Core offline files verified.') + optionalNote(config) }
+            : {}),
+        }
       : {
           ...report,
           status: 'not-ready',

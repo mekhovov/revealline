@@ -15,14 +15,17 @@ import { validatePack } from '../packs.mjs';
 import { createDifficultyContext, GENTLE_POLICY_VERSION } from '../campaign-difficulty.mjs';
 
 const readJSON = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
-const [base, classRecipes, packIndex, proof, firstLightProof, r2Proof] = await Promise.all([
-  readJSON('../content/campaign.json'),
-  readJSON('../content/classes.json'),
-  readJSON('../content/packs/index.json'),
-  readJSON('../replays/gentle-routes.json'),
-  readJSON('../replays/first-light-gentle-routes.json'),
-  readJSON('../replays/fpv-arcade-r2-routes.json'),
-]);
+const [base, classRecipes, packIndex, proof, firstLightProof, r2Proof, r3Proof] = await Promise.all(
+  [
+    readJSON('../content/campaign.json'),
+    readJSON('../content/classes.json'),
+    readJSON('../content/packs/index.json'),
+    readJSON('../replays/gentle-routes.json'),
+    readJSON('../replays/first-light-gentle-routes.json'),
+    readJSON('../replays/fpv-arcade-r2-routes.json'),
+    readJSON('../replays/fpv-arcade-r3-routes.json'),
+  ],
+);
 const originals = [{ packId: null, campaign: { ...base, classRecipes } }];
 for (const ref of packIndex.packs) {
   const pack = await readJSON(`../content/packs/${ref.path}`);
@@ -57,7 +60,7 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   assert.deepEqual(
     proof.sources,
     sources
-      .filter((source) => !['fpv-arcade', 'fpv-arcade-r2'].includes(source.packId))
+      .filter((source) => !['fpv-arcade', 'fpv-arcade-r2', 'fpv-arcade-r3'].includes(source.packId))
       .map(({ packId, campaignId, context }) => ({
         packId,
         campaignId,
@@ -86,7 +89,14 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
   const r2Gentle = r2Proof.routes.filter((route) => route.difficulty === 'gentle');
   assert.equal(r2Gentle.length, 6);
   assert.ok(r2Gentle.every((route) => route.campaignKey === r2[0].context.campaignKey));
+  const r3 = sources.filter((source) => source.packId === 'fpv-arcade-r3');
+  assert.equal(r3.length, 1);
+  assert.equal(r3Proof.baseCampaignKey, r3[0].context.baseCampaignKey);
+  const r3Gentle = r3Proof.routes.filter((route) => route.difficulty === 'gentle');
+  assert.equal(r3Gentle.length, 6);
+  assert.ok(r3Gentle.every((route) => route.campaignKey === r3[0].context.campaignKey));
   const combined = [
+    ...r3Gentle,
     ...r2Gentle,
     ...proof.routes,
     ...firstLightProof.routes.map((route) => ({
@@ -94,7 +104,7 @@ test('Gentle proofs cover every shipped map and policy while preserving the lega
       campaignKey: firstLightProof.campaignKey,
     })),
   ];
-  assert.equal(expected.length, 70, 'All 35 shipped maps need both real steering routes.');
+  assert.equal(expected.length, 76, 'All 38 shipped maps need both real steering routes.');
   assert.deepEqual(combined.map(routeKey).sort(), expected.sort());
 });
 
@@ -167,4 +177,13 @@ test('R2 Gentle coverage is backed by the complete strict twelve-route release-g
   const gentle = result.routes.filter((route) => route.difficulty === 'gentle');
   assert.equal(gentle.length, 6);
   assert.ok(gentle.every((route) => route.lives >= 5 && route.livesLost === 0));
+});
+
+test('R3 Gentle coverage is backed by twelve route wins and four real impact demonstrations', async () => {
+  const { verifyFpvR3 } = await import('../../scripts/verify-fpv-r3.mjs');
+  const result = await verifyFpvR3();
+  const gentle = result.routes.filter((route) => route.id.startsWith('gentle/'));
+  assert.equal(gentle.length, 6);
+  assert.ok(gentle.every((route) => route.lives === 5 && route.livesLost === 0));
+  assert.equal(result.demonstrations.length, 4);
 });

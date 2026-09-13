@@ -23,6 +23,12 @@ const wideURL = new URL('../game/replays/first-light-routes.json', import.meta.u
 const r2URL = new URL('../game/replays/fpv-arcade-r2-routes.json', import.meta.url),
   r2Bytes = await readFile(r2URL),
   r2Proof = JSON.parse(r2Bytes);
+const r3Proof = JSON.parse(
+  await readFile(new URL('../game/replays/fpv-arcade-r3-routes.json', import.meta.url)),
+);
+const impactDemo = JSON.parse(
+  await readFile(new URL('../game/content/scenarios/line-impact-demo.json', import.meta.url)),
+);
 const packs = await expansionSources(),
   sentinel = packs.find((pack) => pack.id === encounterProof.packId),
   legacy = packs.find((pack) => pack.id === proof.routes[0].packId);
@@ -44,12 +50,12 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide plus six R2 Standard and six R2 Gentle outcomes', async () => {
+test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then verifies six wide plus six R2 and six R3 Standard outcomes with twelve separate Gentle outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
   assert.equal(proof.routes.length, 32);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 46);
-  assert.equal(result.supplementalGentleVerified, 6);
+  assert.equal(result.verified, 52);
+  assert.equal(result.supplementalGentleVerified, 12);
   assert.deepEqual(
     result.results.slice(0, 32),
     proof.routes.map((route) => route.expected),
@@ -68,15 +74,24 @@ test('aggregate coverage preserves 32 existing and two Sentinel outcomes, then v
     wideProof.routes.map((route) => route.expected),
   );
   assert.deepEqual(
-    result.results.slice(40),
+    result.results.slice(40, 46),
     r2Proof.routes
       .filter((route) => route.difficulty === 'standard')
       .map((route) => route.expected),
   );
   assert.deepEqual(
-    result.supplementalGentleResults,
+    result.supplementalGentleResults.slice(0, 6),
     r2Proof.routes.filter((route) => route.difficulty === 'gentle').map((route) => route.expected),
   );
+  assert.deepEqual(
+    result.results.slice(46),
+    r3Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
+  );
+  assert.deepEqual(
+    result.supplementalGentleResults.slice(6),
+    r3Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
+  );
+  assert.equal(result.impactDemonstrations.length, 4);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
 });
 test('exact indexed identities reject missing, duplicate, unknown and unsupported legacy policy entries', () => {
@@ -523,4 +538,51 @@ test('R2 aggregate owns hostile input without invoking accessors or editing hist
   assert.deepEqual(await readFile(r2URL), r2Bytes);
   assert.deepEqual(await readFile(wideURL), wideBytes);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
+});
+
+function r3Fixture() {
+  return {
+    ...r2Fixture(),
+    packs: packs.filter((p) => ['fpv-arcade', 'fpv-arcade-r2', 'fpv-arcade-r3'].includes(p.id)),
+    r3Proof: structuredClone(r3Proof),
+    impactDemo: structuredClone(impactDemo),
+  };
+}
+test('indexed R3 cannot omit or borrow proof and demo authority', () => {
+  for (const change of [
+    (p) => {
+      delete p.r3Proof;
+      delete p.impactDemo;
+    },
+    (p) => {
+      p.r3Proof.routes.pop();
+    },
+    (p) => {
+      p.r3Proof.routes[1] = structuredClone(p.r3Proof.routes[0]);
+    },
+    (p) => {
+      p.r3Proof.demoSha256 = 'wrong';
+    },
+    (p) => {
+      p.impactDemo.level.classic.lineImpact.speed++;
+    },
+    (p) => {
+      p.r3Proof.routes[0].expected.score++;
+    },
+    (p) => {
+      p.r3Proof.routes[0].checkpoint.hash = 'wrong';
+    },
+  ]) {
+    const input = r3Fixture();
+    change(input);
+    assert.throws(() => verify(input));
+  }
+});
+test('unrecognized extra classic campaign cannot hide behind the R3 outcome count', () => {
+  const input = r3Fixture(),
+    extra = structuredClone(input.packs.find((p) => p.id === 'fpv-arcade-r3'));
+  extra.id = 'foreign-impact-pack';
+  extra.campaigns[0].id = 'foreign-impact-campaign';
+  input.packs.push(extra);
+  assert.throws(() => verify(input), /Incomplete/);
 });

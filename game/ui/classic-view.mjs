@@ -130,6 +130,18 @@ export function classicView(run) {
       );
       if (collectedTick === null) powerups.push({ id, kind, label: LABELS[kind], ...point });
     }
+    const lineImpacts = [];
+    const impact = own(state, 'lineImpact');
+    if (impact !== undefined) {
+      check(own(impact, 'version') === 'line-impact-state.v1');
+      for (const front of dense(own(impact, 'fronts'), 48)) {
+        const id = identity(front),
+          point = position(front),
+          direction = own(front, 'direction');
+        check(direction === -1 || direction === 1);
+        lineImpacts.push({ id, ...point, direction });
+      }
+    }
     const erosion = [];
     const enemies = dense(own(run, 'enemies'), 24).map((enemy) => {
       const id = identity(enemy),
@@ -195,6 +207,7 @@ export function classicView(run) {
     return freeze({
       actorTick,
       actorTime,
+      lineImpacts,
       terrain,
       powerups,
       effects,
@@ -239,77 +252,31 @@ const polygon = (ctx, points) => {
   ctx.fill();
   ctx.stroke();
 };
-function icon(ctx, kind) {
-  if (kind === 'extra-life')
-    polygon(ctx, [
-      [0, 6],
-      [-6, 0],
-      [-6, -4],
-      [-3, -6],
-      [0, -3],
-      [3, -6],
-      [6, -4],
-      [6, 0],
-    ]);
-  else if (kind === 'player-speed')
-    lines(ctx, [
-      [
-        [-6, -5],
-        [-1, 0],
-      ],
-      [
-        [-1, 0],
-        [-6, 5],
-      ],
-      [
-        [1, -5],
-        [6, 0],
-      ],
-      [
-        [6, 0],
-        [1, 5],
-      ],
-    ]);
-  else if (kind === 'enemy-slow')
-    lines(ctx, [
-      [
-        [-5, -6],
-        [5, -6],
-      ],
-      [
-        [-5, 6],
-        [5, 6],
-      ],
-      [
-        [-4, -5],
-        [4, 5],
-      ],
-      [
-        [4, -5],
-        [-4, 5],
-      ],
-    ]);
-  else {
-    lines(ctx, [
-      [
-        [-6, 0],
-        [6, 0],
-      ],
-      [
-        [0, -6],
-        [0, 6],
-      ],
-      [
-        [-4, -4],
-        [4, 4],
-      ],
-      [
-        [-4, 4],
-        [4, -4],
-      ],
-    ]);
-    ctx.strokeRect(-2, -2, 4, 4);
-  }
+export const PICKUP_COLORS = Object.freeze({
+  'extra-life': '#ff759e',
+  'player-speed': '#f8d46d',
+  'enemy-slow': '#bd9cff',
+  'enemy-freeze': '#75e2f4',
+});
+const PICKUP_PIXELS = Object.freeze({
+  'extra-life': ['0110110', '1111111', '1111111', '0111110', '0011100', '0001000'],
+  'player-speed': ['1101100', '0110110', '0011011', '0110110', '1101100'],
+  'enemy-slow': ['1111111', '0100010', '0010100', '0001000', '0011100', '0111110', '1111111'],
+  'enemy-freeze': ['1001001', '0101010', '0011100', '1111111', '0011100', '0101010', '1001001'],
+});
+export function drawPickupIcon(ctx, kind) {
+  const rows = PICKUP_PIXELS[kind];
+  if (!rows) return;
+  rows.forEach((row, y) =>
+    [...row].forEach((pixel, x) => {
+      if (pixel === '1') ctx.fillRect(x * 2 - 7, y * 2 - rows.length, 2, 2);
+    }),
+  );
+}
+const icon = drawPickupIcon;
+export function pickupDiameter({ screenScale = 1, canvasCSSWidth = 1152 } = {}) {
+  const scale = Number.isFinite(screenScale) && screenScale > 0 ? Math.max(0.1, screenScale) : 1;
+  return Math.min(56, Math.max(24, (canvasCSSWidth < 480 ? 14 : 18) / scale));
 }
 
 /** Functional material is painted over the opaque art mask, only while FIELD. */
@@ -351,16 +318,19 @@ export function drawClassicTerrain(ctx, view, palette, images = {}) {
   ctx.restore();
 }
 
-export function drawClassicPickups(ctx, view, palette, images = {}) {
+export function drawClassicPickups(ctx, view, palette, images = {}, options = {}) {
   if (!view) return;
   for (const item of view.powerups) {
+    const diameter = pickupDiameter(options),
+      color = PICKUP_COLORS[item.kind];
     ctx.save();
     ctx.translate(item.x * SIZE, item.y * SIZE);
-    ctx.fillStyle = palette.ink;
-    ctx.strokeStyle = palette.paper;
-    ctx.lineWidth = 1;
-    ctx.fillRect(-8, -8, 16, 16);
-    ctx.strokeRect(-8, -8, 16, 16);
+    ctx.scale(diameter / 24, diameter / 24);
+    ctx.fillStyle = '#0c1423';
+    ctx.fillRect(-12, -12, 24, 24);
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-11, -11, 22, 22);
     const role = {
       'extra-life': 'lifePickup',
       'player-speed': 'speedPickup',
@@ -368,15 +338,12 @@ export function drawClassicPickups(ctx, view, palette, images = {}) {
       'enemy-freeze': 'freezePickup',
     }[item.kind];
     if (images[role]) {
-      ctx.drawImage(images[role], -8, -8, 16, 16);
-      // Retain a small type badge even when artwork replaces the main symbol.
-      ctx.translate(6, 6);
-      ctx.scale(0.6, 0.6);
-      ctx.fillRect(-8, -8, 16, 16);
+      ctx.drawImage(images[role], -11, -11, 22, 22);
+      ctx.translate(8, 8);
+      ctx.scale(0.65, 0.65);
+      ctx.fillRect(-10, -10, 20, 20);
     }
-    ctx.strokeStyle = palette.accent;
-    ctx.fillStyle = palette.accent;
-    ctx.lineWidth = 1.5;
+    ctx.fillStyle = color;
     icon(ctx, item.kind);
     ctx.restore();
   }
@@ -505,7 +472,12 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
   return true;
 }
 
-export function drawClassicStatus(ctx, view, palette) {
+export function drawClassicStatus(
+  ctx,
+  view,
+  palette,
+  { screenScale = 1, canvasCSSWidth = 1152 } = {},
+) {
   if (!view) return;
   for (const enemy of view.enemies) {
     if (!enemy.frozen && !enemy.slowed) continue;
@@ -516,6 +488,7 @@ export function drawClassicStatus(ctx, view, palette) {
     if (enemy.frozen) {
       ctx.strokeRect(-14, -14, 28, 28);
       ctx.translate(0, -18);
+      ctx.fillStyle = PICKUP_COLORS['enemy-freeze'];
       icon(ctx, 'enemy-freeze');
     } else
       lines(ctx, [
@@ -530,23 +503,52 @@ export function drawClassicStatus(ctx, view, palette) {
       ]);
     ctx.restore();
   }
+  const unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale))),
+    compact = canvasCSSWidth < 700;
   view.effects.forEach((effect, i) => {
     ctx.save();
-    ctx.translate(22 + i * 174, 552);
-    ctx.fillStyle = palette.ink;
-    ctx.fillRect(-3, -12, 170, 24);
-    ctx.strokeStyle = palette.paper;
-    ctx.fillStyle = palette.paper;
-    ctx.lineWidth = 1.5;
+    const width = compact ? 94 : 174;
+    ctx.translate((12 + i * width) * unit, 576 - 14 * unit);
+    ctx.scale(unit, unit);
+    ctx.fillStyle = '#0c1423';
+    ctx.fillRect(-9, -11, width - 3, 22);
+    ctx.fillStyle = PICKUP_COLORS[effect.kind];
+    ctx.save();
+    ctx.scale(0.65, 0.65);
     icon(ctx, effect.kind);
-    ctx.font = '12px monospace';
+    ctx.restore();
+    ctx.font = '10px monospace';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
+    const label = compact
+      ? { 'player-speed': 'SPEED', 'enemy-slow': 'SLOW', 'enemy-freeze': 'FREEZE' }[effect.kind]
+      : effect.label;
     ctx.fillText(
-      `${effect.label} ${effect.phase === 'pending' ? 'next tick' : `${effect.seconds.toFixed(1)}s`}`,
-      12,
+      `${label} ${effect.phase === 'pending' ? 'next' : `${effect.seconds.toFixed(1)}s`}`,
+      10,
       0,
     );
     ctx.restore();
   });
+}
+
+/** Front locations belong to the core. No interpolation, extrapolation or cosmetic hazard radius. */
+export function drawLineImpacts(ctx, view, { screenScale = 1 } = {}) {
+  if (!view?.lineImpacts?.length) return;
+  const unit = Math.min(2.2, Math.max(1, 0.9 / Math.max(0.1, screenScale)));
+  ctx.save();
+  for (const front of view.lineImpacts) {
+    ctx.save();
+    ctx.translate(front.x * 16, front.y * 16);
+    ctx.scale(unit, unit);
+    ctx.fillStyle = '#101320';
+    ctx.fillRect(-4, -4, 8, 8);
+    ctx.fillStyle = front.direction === 1 ? '#ff815c' : '#ffc56d';
+    ctx.fillRect(-3, -1, 6, 2);
+    ctx.fillRect(-1, -3, 2, 6);
+    ctx.fillStyle = '#fff3c4';
+    ctx.fillRect(-1, -1, 2, 2);
+    ctx.restore();
+  }
+  ctx.restore();
 }

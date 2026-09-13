@@ -107,7 +107,7 @@ try {
     $('events').replaceChildren(...items);
   }
   function consume(result) {
-    painter.effectsFor(result.events);
+    painter.effectsFor(result.events, player.state);
     if (result.events.length) displayEvents(result.events);
     if (lastClass !== player.state.activeClassId) {
       lastClass = player.state.activeClassId;
