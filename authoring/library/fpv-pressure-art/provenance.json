@@ -1,0 +1,114 @@
+{
+  "format": "revealline-art-provenance.v1",
+  "recordedAt": "2026-09-13T06:27:44.151305+00:00",
+  "status": "Three generated originals; next-milestone integration pending",
+  "generation": {
+    "tool": "OpenAI built-in image_gen.imagegen",
+    "mode": "New generation, one prompt and one output per requested illustration",
+    "calls": 3,
+    "editCalls": 0,
+    "model": "Not exposed by the built-in tool response; no model version claim",
+    "fallbackCLI": false,
+    "promptType": "Exact tool arguments preserved in tool-requests.json; prompts/*.txt mirror each prompt with a repository terminal newline",
+    "toolRequestsFile": "tool-requests.json"
+  },
+  "images": [
+    {
+      "id": "orchard-crossing",
+      "file": "originals/orchard-crossing.png",
+      "width": 1774,
+      "height": 887,
+      "aspectRatio": 2.0,
+      "bytes": 2999096,
+      "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc",
+      "prompt": "prompts/orchard-crossing.txt",
+      "promptSha256": "083b89605d2ceb86e8a7060f6c2905ea2ea607167f55919ebb6a739b722033d5",
+      "toolOutputFile": "exec-572641fd-9685-4b6a-8e1c-a041f4c33114.png",
+      "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-572641fd-9685-4b6a-8e1c-a041f4c33114.png",
+      "processing": "Exact byte copy of raw built-in tool output; no rescale, crop, color adjustment, recompression or Python image editing.",
+      "inspection": "One oblique orchard/canal/culvert composition at dawn; Ukrainian blue-yellow FPV with four rotors; subdued tracked vehicle and truck at distant road junction. Visible blossom clusters and village layers. New composition differs from the earlier foreground gateway scene."
+    },
+    {
+      "id": "courtyard-exits",
+      "file": "originals/courtyard-exits.png",
+      "width": 1774,
+      "height": 887,
+      "aspectRatio": 2.0,
+      "bytes": 2912184,
+      "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+      "prompt": "prompts/courtyard-exits.txt",
+      "promptSha256": "29fbd22fd679e700b9a1a1a8ab6254cddcbc480fc9948a74514f50f2273cce1d",
+      "toolOutputFile": "exec-dc476882-0282-4320-aee2-828b5876b0d1.png",
+      "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-dc476882-0282-4320-aee2-828b5876b0d1.png",
+      "processing": "Exact byte copy of raw built-in tool output; no rescale, crop, color adjustment, recompression or Python image editing.",
+      "inspection": "One asymmetric brick rail-workshop courtyard with multiple exits, stairs and ivy; blue-yellow four-rotor FPV and distant armored car partly hidden behind broken masonry/camouflage cover. Warm afternoon light and open paving differ from the older blue-hour centered courtyard."
+    },
+    {
+      "id": "night-crossfire",
+      "file": "originals/night-crossfire.png",
+      "width": 1774,
+      "height": 887,
+      "aspectRatio": 2.0,
+      "bytes": 2113587,
+      "sha256": "139a1860eb42e8c315b4bcd997acb1d41fa315db29a1330ebba89b474d67b618",
+      "prompt": "prompts/night-crossfire.txt",
+      "promptSha256": "8d8bd05804cbe054543a392a101bf79e140d726c4cecf846b7978d56e9dd090a",
+      "toolOutputFile": "exec-aff1ed3f-be0f-4f80-b6ee-d96652b50500.png",
+      "originalToolOutputPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09400-f402-7f71-8289-ab75741bf69b/exec-aff1ed3f-be0f-4f80-b6ee-d96652b50500.png",
+      "processing": "Exact byte copy of raw built-in tool output; no rescale, crop, color adjustment, recompression or Python image editing.",
+      "inspection": "One canal-lock/roofline/bridge composition at dusk; four-rotor Ukrainian FPV, distant communications truck and two armored silhouettes. Warm window reflections separate layered dark architecture. Foreground is deliberately dark and needs actual phone-size contrast qualification before integration."
+    }
+  ],
+  "referencesInspected": [
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/orchard-window.png",
+      "sha256": "e748ccee83cdb51fb9d385c626d6824d37eeef254f1684e27e54b12e42b35823",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    },
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/split-courtyard.png",
+      "sha256": "b5f74dd3ec1f97320646c64c6906121d215609401a6f24682e10fce80c5fba01",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    },
+    {
+      "path": "authoring/library/fpv-arcade/backgrounds/night-signal.png",
+      "sha256": "668f0668befdf07e0cd07abae9329ea56e95cf1c44333833aff021d542b38506",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    },
+    {
+      "path": "docs/concepts/round-07-fpv-body.png",
+      "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    },
+    {
+      "path": "docs/research/drones-examples/drone-example-skin.png",
+      "sha256": "d67ed37652e1a907e82a70db80cdfa6dfca514a10154137e5096f8495c1b85a2",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    },
+    {
+      "path": "docs/research/drones-examples/drone_sign.png",
+      "sha256": "8647556134fe4c46b96429a6d5a83dd0e7c6d7b1575619070fef6ba4e04a2389",
+      "role": "Inspected for project visual language and FPV four-arm/camera proportions; not passed as image input and not copied into generated pixels."
+    }
+  ],
+  "review": {
+    "method": "Visual inspection of each full generated output plus raw PNG header, size, byte-copy equality and SHA-256 inspection.",
+    "observations": [
+      "Three distinct separate images; no contact sheet substituted for assets.",
+      "Observed no lettering, logos, Z markings, HUD, crosshairs, baked capture trails, gore or bodies.",
+      "Each image has one blue-yellow FPV with four visible rotors and separately subdued fictional military equipment.",
+      "Russian invading force is the fictional narrative brief; unmarked equipment is not an identification claim about a real force or incident.",
+      "Illustrations use detailed modern pixel-art treatment; no claim of hand-authored pixel-grid or sprite-animation readiness."
+    ],
+    "pending": [
+      "Phone-scale contrast/readability and fit with bright runtime actors, especially Night Crossfire.",
+      "Derivative size/encoding budget, image import/decode, pack ownership and browser/render checks.",
+      "Final artistic acceptance and any targeted refinement before a future immutable content edition."
+    ]
+  },
+  "rightsAndRelease": {
+    "provenance": "Original AI-assisted compositions generated for this project. Existing project artwork and user-supplied drone photos were only visually studied, not embedded or edited. No reference-game asset was used.",
+    "suppliedReferenceRights": "No new license or ownership assertion for the supplied photographs.",
+    "currentRelease": "Not referenced by current packs, catalogs, builds or versions; current v0.30 candidate keeps its previously proven pictures. Raw originals and exact prompts are retained here for a later integration decision."
+  }
+}
