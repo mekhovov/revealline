@@ -789,8 +789,11 @@ export function attachLibraryPanel(api) {
       const title = document.createElement('strong');
       title.textContent = item.levelName;
       const copy = document.createElement('span');
+      const otherDifficulties = [...new Set(group.variants.map((variant) => variant.label))].filter(
+        (label) => label !== picture?.label,
+      );
       copy.textContent = picture
-        ? `${picture.theme.name} · ${group.variants.map((variant) => resolver.label(variant.item.campaignKey)).join(' + ')} · ${picture.label}: ${item.medal.toUpperCase()} · ${item.score.toLocaleString()} points`
+        ? `${picture.theme.name} · ${picture.label}: ${item.medal.toUpperCase()} · ${item.score.toLocaleString()} points${otherDifficulties.length ? ` · Also earned: ${otherDifficulties.join(' + ')}` : ''}`
         : receipts.get(item.key)?.presentationPin.kind === 'still'
           ? 'Original picture unavailable · restore its .rlmedia originals'
           : 'Archived picture · reinstall its exact pack to view';
