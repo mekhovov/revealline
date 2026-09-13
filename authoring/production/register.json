@@ -1,0 +1,4065 @@
+{
+  "format": "revealline-production-register.v1",
+  "revision": 1,
+  "basis": {
+    "maps": 29,
+    "themes": ["fpv", "ukraine", "retro", "coupa"],
+    "classes": ["scout", "bomber", "carrier", "interceptor", "fiber", "impact", "trapper"],
+    "treatments": ["compact", "detailed"],
+    "presentationBasis": "player-class",
+    "storiesPerTheme": 3,
+    "reserves": 40,
+    "tracks": 24
+  },
+  "context": {
+    "sourceCommit": "62a92651b1dc51fc74ca25a545dd9bde35c2574c",
+    "limitations": [
+      "Nine proposed geometry families are not an approved final 29-map campaign. Theme editions reuse those families.",
+      "Historical delivery is recorded separately from unfilled final production quality assessments; no visual, human balance or listening approval is fabricated.",
+      "The twelve Route Worlds/Sentinel originals are source integrated at 0106; release 036 was not accepted when this register was authored.",
+      "The five external entries carry fifteen originals, including three reused FPV Pressure originals. They do not add fifteen new pictures.",
+      "Dawn is one silent eight-second story. Native export-to-disk and full backup qualification retain the stated delivery limits.",
+      "Seven player classes times four themes times two treatments defines 56 slots. Enemies are supporting handles, not a second completed set.",
+      "Thirteen licensed candidate songs remain separate unregistered intake context. Five synth recipes are not five finished, listened recordings.",
+      "Files and source references do not perform inspection or permit changing saved, earned or released ownership."
+    ]
+  },
+  "layouts": [
+    {
+      "id": "pressure-orchard",
+      "title": "Orchard Crossing",
+      "source": {
+        "path": "authoring/library/four-worlds-chapters/chapters.json",
+        "bytes": 5847,
+        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-orchard-crossing",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-orchard-crossing-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-woven-dawn",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-midnight-arcade",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-shared-harbor",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "pressure-courtyard",
+      "title": "Courtyard Exits",
+      "source": {
+        "path": "authoring/library/four-worlds-chapters/chapters.json",
+        "bytes": 5847,
+        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-courtyard-exits",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-courtyard-exits-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-sun-courtyard",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-video-rental",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-city-wins",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "pressure-crossfire",
+      "title": "Night Crossfire",
+      "source": {
+        "path": "authoring/library/four-worlds-chapters/chapters.json",
+        "bytes": 5847,
+        "sha256": "8fd00b9607aa8b4dba2bd8151d560938ef705f061ce6d4068b2ce028d7c42920"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-night-crossfire",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-night-crossfire-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-autumn-watch",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-last-train",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-market-workshop",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "route-foundry",
+      "title": "Split Signal Foundry",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-foundry",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-foundry",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-foundry",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-foundry",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "route-depot",
+      "title": "Crosswind Depot",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-depot",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-depot",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-depot",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-depot",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "route-switchback",
+      "title": "Signal Switchback",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-switchback",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-switchback",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        },
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-switchback",
+          "levelRevision": "1",
+          "themeId": "retro"
+        },
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-switchback",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ]
+    },
+    {
+      "id": "sentinel-listening",
+      "title": "Listening Court",
+      "source": {
+        "path": "authoring/library/sentinel-circuit/routes.json",
+        "bytes": 1296963,
+        "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-listening-court",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ]
+    },
+    {
+      "id": "sentinel-switchyard",
+      "title": "Switchyard Gates",
+      "source": {
+        "path": "authoring/library/sentinel-circuit/routes.json",
+        "bytes": 1296963,
+        "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-switchyard-gates",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ]
+    },
+    {
+      "id": "sentinel-circuit",
+      "title": "Open the Circuit",
+      "source": {
+        "path": "authoring/library/sentinel-circuit/routes.json",
+        "bytes": 1296963,
+        "sha256": "eb235f9bc26ea3670137f3f7d7ac86ac5e8c4b56b98502b8ef61f0ad98d95e70"
+      },
+      "variantOf": null,
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-open-circuit",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ]
+    }
+  ],
+  "maps": [
+    {
+      "id": "pressure-orchard",
+      "selection": "proposed",
+      "layoutId": "pressure-orchard"
+    },
+    {
+      "id": "pressure-courtyard",
+      "selection": "proposed",
+      "layoutId": "pressure-courtyard"
+    },
+    {
+      "id": "pressure-crossfire",
+      "selection": "proposed",
+      "layoutId": "pressure-crossfire"
+    },
+    {
+      "id": "route-foundry",
+      "selection": "proposed",
+      "layoutId": "route-foundry"
+    },
+    {
+      "id": "route-depot",
+      "selection": "proposed",
+      "layoutId": "route-depot"
+    },
+    {
+      "id": "route-switchback",
+      "selection": "proposed",
+      "layoutId": "route-switchback"
+    },
+    {
+      "id": "sentinel-listening",
+      "selection": "proposed",
+      "layoutId": "sentinel-listening"
+    },
+    {
+      "id": "sentinel-switchyard",
+      "selection": "proposed",
+      "layoutId": "sentinel-switchyard"
+    },
+    {
+      "id": "sentinel-circuit",
+      "selection": "proposed",
+      "layoutId": "sentinel-circuit"
+    },
+    {
+      "id": "unassigned-10",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-11",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-12",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-13",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-14",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-15",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-16",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-17",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-18",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-19",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-20",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-21",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-22",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-23",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-24",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-25",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-26",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-27",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-28",
+      "selection": "unassigned",
+      "layoutId": null
+    },
+    {
+      "id": "unassigned-29",
+      "selection": "unassigned",
+      "layoutId": null
+    }
+  ],
+  "works": [
+    {
+      "id": "picture-orchard-crossing",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Orchard Crossing",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "orchard-crossing",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/fpv-pressure-art/originals/orchard-crossing.png",
+            "bytes": 2999096,
+            "sha256": "20f3a1c03a074d3aae981c989cb063a092d577cb0c0318ea4a1fd1df1d0653fc"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-orchard-crossing",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-orchard-crossing-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/fpv-pressure-art/provenance.json",
+          "bytes": 7620,
+          "sha256": "62b1c68194c5fdffba885e7d2432f496651fc50f94875db404283378064048a3"
+        },
+        {
+          "path": "authoring/library/external-chapter-pilot/descriptor.json",
+          "bytes": 1759,
+          "sha256": "3e34ccd73ae64fb439014e9364739293946a99d8932800a091fbb7f3225b1624"
+        }
+      ]
+    },
+    {
+      "id": "picture-courtyard-exits",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Courtyard Exits",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "courtyard-exits",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/fpv-pressure-art/originals/courtyard-exits.png",
+            "bytes": 2912184,
+            "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-courtyard-exits",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-courtyard-exits-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/fpv-pressure-art/provenance.json",
+          "bytes": 7620,
+          "sha256": "62b1c68194c5fdffba885e7d2432f496651fc50f94875db404283378064048a3"
+        },
+        {
+          "path": "authoring/library/external-chapter-pilot/descriptor.json",
+          "bytes": 1759,
+          "sha256": "3e34ccd73ae64fb439014e9364739293946a99d8932800a091fbb7f3225b1624"
+        }
+      ]
+    },
+    {
+      "id": "picture-night-crossfire",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Night Crossfire",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "night-crossfire",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/fpv-pressure-art/originals/night-crossfire.png",
+            "bytes": 2113587,
+            "sha256": "139a1860eb42e8c315b4bcd997acb1d41fa315db29a1330ebba89b474d67b618"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-night-crossfire",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        {
+          "baseCampaignKey": "original-fpv-pressure-lines-external/1/60d1f9c4f1304d7d",
+          "levelId": "original-fpv-night-crossfire-external",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/fpv-pressure-art/provenance.json",
+          "bytes": 7620,
+          "sha256": "62b1c68194c5fdffba885e7d2432f496651fc50f94875db404283378064048a3"
+        },
+        {
+          "path": "authoring/library/external-chapter-pilot/descriptor.json",
+          "bytes": 1759,
+          "sha256": "3e34ccd73ae64fb439014e9364739293946a99d8932800a091fbb7f3225b1624"
+        }
+      ]
+    },
+    {
+      "id": "picture-carpathian-woven-dawn",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Carpathian Woven Dawn",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "carpathian-woven-dawn",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+            "bytes": 2920551,
+            "sha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-woven-dawn",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/ukraine-atlas-art/provenance.json",
+          "bytes": 9230,
+          "sha256": "4387b783a6fde268fb2ee5dbe002874dbab81d8e587a0c58ca737d84837eac53"
+        }
+      ]
+    },
+    {
+      "id": "picture-petrykivka-sun-courtyard",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Petrykivka Sun Courtyard",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "petrykivka-sun-courtyard",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+            "bytes": 3286349,
+            "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-sun-courtyard",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/ukraine-atlas-art/provenance.json",
+          "bytes": 9230,
+          "sha256": "4387b783a6fde268fb2ee5dbe002874dbab81d8e587a0c58ca737d84837eac53"
+        }
+      ]
+    },
+    {
+      "id": "picture-dnipro-autumn-watch",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Dnipro Autumn Watch",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "dnipro-autumn-watch",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+            "bytes": 3046555,
+            "sha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-autumn-watch",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/ukraine-atlas-art/provenance.json",
+          "bytes": 9230,
+          "sha256": "4387b783a6fde268fb2ee5dbe002874dbab81d8e587a0c58ca737d84837eac53"
+        }
+      ]
+    },
+    {
+      "id": "picture-midnight-arcade",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Midnight Arcade",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "midnight-arcade",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+            "bytes": 2522301,
+            "sha256": "8782b71fffc1f84b7c802d1740cec684bbcf1738beb4528106135311afdc72f0"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-midnight-arcade",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/1994-forever-art/provenance.json",
+          "bytes": 6650,
+          "sha256": "337a8f5ab80e7f843e41d99fb13d64d9486632c5ab87f34f3a15c3050c2cfd5c"
+        }
+      ]
+    },
+    {
+      "id": "picture-rainy-video-rental",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Rainy Video Rental",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "rainy-video-rental",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+            "bytes": 2779895,
+            "sha256": "03288b467e66b56ad6068142f26db2cd597e4cfc9547bf679af4d043aba1a1f9"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-video-rental",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/1994-forever-art/provenance.json",
+          "bytes": 6650,
+          "sha256": "337a8f5ab80e7f843e41d99fb13d64d9486632c5ab87f34f3a15c3050c2cfd5c"
+        }
+      ]
+    },
+    {
+      "id": "picture-last-train-cassette",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Last Train Cassette",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "last-train-cassette",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+            "bytes": 2429841,
+            "sha256": "cac113104f328a57eb7e5f857c5e381aae8d3d1aa0541ba426fdb1f87506d63c"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-last-train",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/1994-forever-art/provenance.json",
+          "bytes": 6650,
+          "sha256": "337a8f5ab80e7f843e41d99fb13d64d9486632c5ab87f34f3a15c3050c2cfd5c"
+        }
+      ]
+    },
+    {
+      "id": "picture-shared-value-harbor",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Shared Value Harbor",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "shared-value-harbor",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+            "bytes": 2577915,
+            "sha256": "d80e371a2bc008ce1b893268725add92a5b9a18bc8589e7b5145cbb4a75b46fa"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-shared-harbor",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/spend-network-art/provenance.json",
+          "bytes": 8373,
+          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
+        }
+      ]
+    },
+    {
+      "id": "picture-city-savings-observatory",
+      "revision": 1,
+      "kind": "picture",
+      "title": "City Savings Observatory",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "city-savings-observatory",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+            "bytes": 2702090,
+            "sha256": "71e39606ce0283c0bb6fe120f22e2429415aba1d9dac0d412f629b686ba82175"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-city-wins",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/spend-network-art/provenance.json",
+          "bytes": 8373,
+          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
+        }
+      ]
+    },
+    {
+      "id": "picture-thoughtful-market-workshop",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Thoughtful Market Workshop",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/four-worlds-source/catalog.json",
+        "bytes": 12360,
+        "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+      },
+      "sourceId": "thoughtful-market-workshop",
+      "adapter": "pressure",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+            "bytes": 3005071,
+            "sha256": "4f64115023245871c5ae126ddc8f711e9b0b48d130316045a1ba3baf08934fa0"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-market-workshop",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/four-worlds-chapters/distribution.json",
+          "bytes": 4255,
+          "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+        },
+        {
+          "path": "authoring/library/spend-network-art/provenance.json",
+          "bytes": 8373,
+          "sha256": "e9210678ac08512c8962a15b11f01bd98ea3a626379c246d442e35d2cc8d3cf6"
+        }
+      ]
+    },
+    {
+      "id": "picture-split-signal-foundry",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Split Signal Foundry",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "sourceId": "split-signal-foundry",
+      "adapter": "route",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+            "bytes": 2765609,
+            "sha256": "dfc6398db48c897df00254f4516704b44b134a9bfbb4bd993d659996077f0749"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-foundry",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/challenge-chapter-art/provenance.json",
+          "bytes": 3861,
+          "sha256": "4bea88060c4d5b8b6e484e6ba85afebe4b22ff315ab03c327b8916321caa9d18"
+        }
+      ]
+    },
+    {
+      "id": "picture-crosswind-depot",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Crosswind Depot",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "sourceId": "crosswind-depot",
+      "adapter": "route",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+            "bytes": 3136739,
+            "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-depot",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/challenge-chapter-art/provenance.json",
+          "bytes": 3861,
+          "sha256": "4bea88060c4d5b8b6e484e6ba85afebe4b22ff315ab03c327b8916321caa9d18"
+        }
+      ]
+    },
+    {
+      "id": "picture-signal-switchback",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Signal Switchback",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/fpv-route-choices/distribution.json",
+        "bytes": 3446,
+        "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+      },
+      "sourceId": "signal-switchback",
+      "adapter": "route",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+            "bytes": 3047928,
+            "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-switchback",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/challenge-chapter-art/provenance.json",
+          "bytes": 3861,
+          "sha256": "4bea88060c4d5b8b6e484e6ba85afebe4b22ff315ab03c327b8916321caa9d18"
+        }
+      ]
+    },
+    {
+      "id": "picture-ukraine-two-lanes-forge",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Two Lanes, One Forge",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "two-lanes-forge",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-route-art/originals/two-lanes-forge.png",
+            "bytes": 2780010,
+            "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-foundry",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/ukraine.json",
+          "bytes": 1754,
+          "sha256": "256c3f7ae7c6a7aa2878113ea3438dd9428844d69b7087c2dc8e56ec197db908"
+        },
+        {
+          "path": "authoring/library/ukraine-route-art/provenance.json",
+          "bytes": 6805,
+          "sha256": "3adda886c26bad6ad56322c1cc2472104f80d4c9d572d8f54a499652b6934139"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-ukraine-crosswind-market-depot",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Crosswind Market Depot",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "crosswind-market-depot",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+            "bytes": 3107900,
+            "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-depot",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/ukraine.json",
+          "bytes": 1754,
+          "sha256": "256c3f7ae7c6a7aa2878113ea3438dd9428844d69b7087c2dc8e56ec197db908"
+        },
+        {
+          "path": "authoring/library/ukraine-route-art/provenance.json",
+          "bytes": 6805,
+          "sha256": "3adda886c26bad6ad56322c1cc2472104f80d4c9d572d8f54a499652b6934139"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-ukraine-carpathian-thread-relay",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Carpathian Thread Relay",
+      "themeId": "ukraine",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "carpathian-thread-relay",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+            "bytes": 2926966,
+            "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-switchback",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/ukraine.json",
+          "bytes": 1754,
+          "sha256": "256c3f7ae7c6a7aa2878113ea3438dd9428844d69b7087c2dc8e56ec197db908"
+        },
+        {
+          "path": "authoring/library/ukraine-route-art/provenance.json",
+          "bytes": 6805,
+          "sha256": "3adda886c26bad6ad56322c1cc2472104f80d4c9d572d8f54a499652b6934139"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-retro-midnight-workshop",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Midnight Workshop",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "midnight-workshop",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/retro-route-art/originals/midnight-workshop.png",
+            "bytes": 2378256,
+            "sha256": "39e0cb08e60bcdfafa93a4e57be6a2fb6751c6d72659360e2aa84534a57568a7"
+          },
+          "width": 1672,
+          "height": 940,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-foundry",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/retro.json",
+          "bytes": 1730,
+          "sha256": "f0c9a6ca4a4b9b3f2ff1a28fa0eaad48ff6d6553a8ded0b193c87d6b0aee2bf1"
+        },
+        {
+          "path": "authoring/library/retro-route-art/provenance.json",
+          "bytes": 4104,
+          "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-retro-crosswind-courier",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Crosswind Courier",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "crosswind-courier",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/retro-route-art/originals/crosswind-courier.png",
+            "bytes": 2760396,
+            "sha256": "a18d10b88cbd52432436c473b45405950708df48ff115264ea47a56500cba80f"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-depot",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/retro.json",
+          "bytes": 1730,
+          "sha256": "f0c9a6ca4a4b9b3f2ff1a28fa0eaad48ff6d6553a8ded0b193c87d6b0aee2bf1"
+        },
+        {
+          "path": "authoring/library/retro-route-art/provenance.json",
+          "bytes": 4104,
+          "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-retro-signal-thread",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Signal Thread",
+      "themeId": "retro",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "signal-thread",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/retro-route-art/originals/signal-thread.png",
+            "bytes": 2440128,
+            "sha256": "9e21db2d3ce3b29eef175afb6244a0bf4a1a63f3009803619b681cbb4d67b6b4"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-switchback",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/retro.json",
+          "bytes": 1730,
+          "sha256": "f0c9a6ca4a4b9b3f2ff1a28fa0eaad48ff6d6553a8ded0b193c87d6b0aee2bf1"
+        },
+        {
+          "path": "authoring/library/retro-route-art/provenance.json",
+          "bytes": 4104,
+          "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-coupa-value-foundry",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Value Foundry",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "value-foundry",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-route-art/originals/value-foundry.png",
+            "bytes": 2725160,
+            "sha256": "0f0c8022f3b80732c24131324ce3ecf404219f5de6546ead11ff825e3dbed518"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-foundry",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/coupa.json",
+          "bytes": 1730,
+          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+        },
+        {
+          "path": "authoring/library/spend-route-art/provenance.json",
+          "bytes": 5024,
+          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-coupa-shared-harbor",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Shared Harbor",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "shared-harbor",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-route-art/originals/shared-harbor.png",
+            "bytes": 2686912,
+            "sha256": "8abf21258aef8cee936909fe7d2d8c4eb86a9eb8aff61c6fae6e6f918f5a8e3d"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-depot",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/coupa.json",
+          "bytes": 1730,
+          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+        },
+        {
+          "path": "authoring/library/spend-route-art/provenance.json",
+          "bytes": 5024,
+          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-coupa-network-garden",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Network Garden",
+      "themeId": "coupa",
+      "source": {
+        "path": "authoring/library/route-worlds/editions.json",
+        "bytes": 2049,
+        "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+      },
+      "sourceId": "network-garden",
+      "adapter": "world",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/spend-route-art/originals/network-garden.png",
+            "bytes": 2858095,
+            "sha256": "65d18bb0e98d901b9ba4820e62724dfbe32da6cd31c5580fe03096eedbfd39f0"
+          },
+          "width": 1672,
+          "height": 941,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-switchback",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/route-worlds/descriptors/coupa.json",
+          "bytes": 1730,
+          "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+        },
+        {
+          "path": "authoring/library/spend-route-art/provenance.json",
+          "bytes": 5024,
+          "sha256": "273a5ef4dfbb51e9f4da2fabdf7aeb7f6d788cf1470a7fb8efaa4c62d482e4bc"
+        },
+        {
+          "path": "authoring/library/route-worlds/build.mjs",
+          "bytes": 13370,
+          "sha256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43"
+        }
+      ]
+    },
+    {
+      "id": "picture-sentinel-listening-court",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Listening Court",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+        "bytes": 1766,
+        "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d"
+      },
+      "sourceId": "sentinel-circuit-fpv-poster-1",
+      "adapter": "sentinel",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+            "bytes": 2948372,
+            "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-listening-court",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/sentinel-circuit-art/provenance.json",
+          "bytes": 4445,
+          "sha256": "a863d2401e01f9107d59d30b9e54daf1a7ebc27235f04d351584e5e5dd83eda7"
+        },
+        {
+          "path": "authoring/library/sentinel-circuit-external/build.mjs",
+          "bytes": 10172,
+          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+        }
+      ]
+    },
+    {
+      "id": "picture-sentinel-switchyard-gates",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Switchyard Gates",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+        "bytes": 1766,
+        "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d"
+      },
+      "sourceId": "sentinel-circuit-fpv-poster-2",
+      "adapter": "sentinel",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+            "bytes": 2933729,
+            "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-switchyard-gates",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/sentinel-circuit-art/provenance.json",
+          "bytes": 4445,
+          "sha256": "a863d2401e01f9107d59d30b9e54daf1a7ebc27235f04d351584e5e5dd83eda7"
+        },
+        {
+          "path": "authoring/library/sentinel-circuit-external/build.mjs",
+          "bytes": 10172,
+          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+        }
+      ]
+    },
+    {
+      "id": "picture-sentinel-open-the-circuit",
+      "revision": 1,
+      "kind": "picture",
+      "title": "Open the Circuit",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+        "bytes": 1766,
+        "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d"
+      },
+      "sourceId": "sentinel-circuit-fpv-poster-3",
+      "adapter": "sentinel",
+      "files": [
+        {
+          "role": "original",
+          "file": {
+            "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+            "bytes": 2701967,
+            "sha256": "102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3"
+          },
+          "width": 1774,
+          "height": 887,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-open-circuit",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/sentinel-circuit-art/provenance.json",
+          "bytes": 4445,
+          "sha256": "a863d2401e01f9107d59d30b9e54daf1a7ebc27235f04d351584e5e5dd83eda7"
+        },
+        {
+          "path": "authoring/library/sentinel-circuit-external/build.mjs",
+          "bytes": 10172,
+          "sha256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88"
+        }
+      ]
+    },
+    {
+      "id": "rig-fpv-body",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Fpv Body",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "fpv-body",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/fpv-body.png",
+            "bytes": 644588,
+            "sha256": "31a742f952415fb9dd2742eb9ba7ef1dc7a5aedca4593d817713c61932fe68c4"
+          },
+          "width": 1254,
+          "height": 1254,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "rig-heavy-lift",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Heavy Lift",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "heavy-lift",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/heavy-lift.png",
+            "bytes": 795459,
+            "sha256": "2e1b871f2336fe2dc6434ed83afb46572f5afffd17803733914a567d39c517ec"
+          },
+          "width": 1312,
+          "height": 1199,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "rig-navi-avatar",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Navi Avatar",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "navi-avatar",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/navi-avatar.png",
+            "bytes": 384917,
+            "sha256": "3bc265ce6af451a76bc9ab2e9c5c8991c69e43d3d57efbc47c0dea2728e9ff69"
+          },
+          "width": 1254,
+          "height": 1254,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "rig-retro-craft",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Retro Craft",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "retro-craft",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/retro-craft.png",
+            "bytes": 477364,
+            "sha256": "1d0340673c2cf19ab9b88fed271219da5003f82bcd1bd45da4477c774708551b"
+          },
+          "width": 1223,
+          "height": 1286,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "rig-scout-quad",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Scout Quad",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "scout-quad",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/scout-quad.png",
+            "bytes": 641545,
+            "sha256": "14b18895b5b1c457b8db47a5c7a0485b502ad6b8fccb91697ae6b46397e73c99"
+          },
+          "width": 1254,
+          "height": 1254,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "rig-ukrainian-bird",
+      "revision": 1,
+      "kind": "presentation",
+      "title": "Ukrainian Bird",
+      "themeId": null,
+      "source": {
+        "path": "game/content/themes.json",
+        "bytes": 4266,
+        "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+      },
+      "sourceId": "ukrainian-bird",
+      "adapter": "body",
+      "files": [
+        {
+          "role": "concept",
+          "file": {
+            "path": "authoring/motion-lab/assets/ukrainian-bird.png",
+            "bytes": 290701,
+            "sha256": "fb43fb88833c5a161937097ac74e5588868c82f3b8c896c28139a77c9dffafad"
+          },
+          "width": 1145,
+          "height": 1374,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/motion-lab/presets.json",
+          "bytes": 23077,
+          "sha256": "edbb5c4e73e03b7e516825575bf2fed6d234745cecc514241667097a3d3f8eca"
+        },
+        {
+          "path": "authoring/motion-lab/animation.mjs",
+          "bytes": 8068,
+          "sha256": "e739040d96daea57fd782f13991d96241e11022803038af8d4d184be15981c40"
+        },
+        {
+          "path": "authoring/motion-lab/render-character.mjs",
+          "bytes": 6489,
+          "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+        },
+        {
+          "path": "game/ui/actor-presentation.mjs",
+          "bytes": 25033,
+          "sha256": "4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a"
+        }
+      ]
+    },
+    {
+      "id": "story-dawn-signal",
+      "revision": 1,
+      "kind": "story",
+      "title": "Dawn Signal",
+      "themeId": "fpv",
+      "source": {
+        "path": "authoring/still-media/examples/dawn-signal/manifest.json",
+        "bytes": 2840,
+        "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a"
+      },
+      "sourceId": "dawn-signal-story-v1",
+      "adapter": "dawn",
+      "files": [
+        {
+          "role": "movie",
+          "file": {
+            "path": "authoring/library/dawn-signal-story/candidate-v1/dawn-signal.mp4",
+            "bytes": 713732,
+            "sha256": "d643a6ebbf92b93dc57a0cfe65ca4bcf484ceecd8ed632ed6476707ec720e85a"
+          },
+          "width": 640,
+          "height": 360,
+          "durationSeconds": 8
+        },
+        {
+          "role": "poster",
+          "file": {
+            "path": "authoring/library/dawn-signal-story/candidate-v1/frame-95.png",
+            "bytes": 442522,
+            "sha256": "7f851f9806a1be994b2279f3d1acc4f2f39884ac6cf2fdf6b8a7813e61c73745"
+          },
+          "width": 640,
+          "height": 360,
+          "durationSeconds": null
+        }
+      ],
+      "owners": [
+        {
+          "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1",
+          "levelId": "signal-01",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      ],
+      "derivedFrom": null,
+      "dependencies": [
+        {
+          "path": "authoring/library/dawn-signal-story/provenance.json",
+          "bytes": 7008,
+          "sha256": "29037037cc5f866b59e6b3b4f70d66d810f4cba17bab6a18eb5a37611707ed00"
+        },
+        {
+          "path": "authoring/library/dawn-signal-story/candidate-v1/native-inspection.json",
+          "bytes": 16540,
+          "sha256": "574953a11d125edfb0d76a7af80c24741f5682ad81f89836a7a2459cff84e8ef"
+        }
+      ]
+    },
+    {
+      "id": "recipe-signal-afterglow",
+      "revision": 1,
+      "kind": "track",
+      "title": "Signal Afterglow",
+      "themeId": null,
+      "source": {
+        "path": "game/ui/music.mjs",
+        "bytes": 7050,
+        "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      },
+      "sourceId": "signal-afterglow",
+      "adapter": "synth",
+      "files": [],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": []
+    },
+    {
+      "id": "recipe-pocket-constellation",
+      "revision": 1,
+      "kind": "track",
+      "title": "Pocket Constellation",
+      "themeId": null,
+      "source": {
+        "path": "game/ui/music.mjs",
+        "bytes": 7050,
+        "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      },
+      "sourceId": "pocket-constellation",
+      "adapter": "synth",
+      "files": [],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": []
+    },
+    {
+      "id": "recipe-copper-highway",
+      "revision": 1,
+      "kind": "track",
+      "title": "Copper Highway",
+      "themeId": null,
+      "source": {
+        "path": "game/ui/music.mjs",
+        "bytes": 7050,
+        "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      },
+      "sourceId": "copper-highway",
+      "adapter": "synth",
+      "files": [],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": []
+    },
+    {
+      "id": "recipe-iron-comet",
+      "revision": 1,
+      "kind": "track",
+      "title": "Iron Comet",
+      "themeId": null,
+      "source": {
+        "path": "game/ui/music.mjs",
+        "bytes": 7050,
+        "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      },
+      "sourceId": "iron-comet",
+      "adapter": "synth",
+      "files": [],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": []
+    },
+    {
+      "id": "recipe-quiet-orchard",
+      "revision": 1,
+      "kind": "track",
+      "title": "Quiet Orchard",
+      "themeId": null,
+      "source": {
+        "path": "game/ui/music.mjs",
+        "bytes": 7050,
+        "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+      },
+      "sourceId": "quiet-orchard",
+      "adapter": "synth",
+      "files": [],
+      "owners": [],
+      "derivedFrom": null,
+      "dependencies": []
+    }
+  ],
+  "bindings": [
+    {
+      "slotId": "picture.pressure-orchard.fpv",
+      "revision": 1,
+      "workId": "picture-orchard-crossing",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-orchard-crossing",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-courtyard.fpv",
+      "revision": 1,
+      "workId": "picture-courtyard-exits",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-courtyard-exits",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-crossfire.fpv",
+      "revision": 1,
+      "workId": "picture-night-crossfire",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-fpv-pressure-lines/1/b86804fb3ab94151",
+          "levelId": "original-fpv-night-crossfire",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-orchard.ukraine",
+      "revision": 1,
+      "workId": "picture-carpathian-woven-dawn",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-woven-dawn",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-courtyard.ukraine",
+      "revision": 1,
+      "workId": "picture-petrykivka-sun-courtyard",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-sun-courtyard",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-crossfire.ukraine",
+      "revision": 1,
+      "workId": "picture-dnipro-autumn-watch",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-ukraine-woven-lines/1/f9ac733132be4765",
+          "levelId": "original-atlas-autumn-watch",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-orchard.retro",
+      "revision": 1,
+      "workId": "picture-midnight-arcade",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-midnight-arcade",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-courtyard.retro",
+      "revision": 1,
+      "workId": "picture-rainy-video-rental",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-video-rental",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-crossfire.retro",
+      "revision": 1,
+      "workId": "picture-last-train-cassette",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-retro-after-hours/1/ccd70c475a070df5",
+          "levelId": "original-retro-last-train",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-orchard.coupa",
+      "revision": 1,
+      "workId": "picture-shared-value-harbor",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-shared-harbor",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-courtyard.coupa",
+      "revision": 1,
+      "workId": "picture-city-savings-observatory",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-city-wins",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.pressure-crossfire.coupa",
+      "revision": 1,
+      "workId": "picture-thoughtful-market-workshop",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "original-spend-shared-routes/1/7a36efe129711f19",
+          "levelId": "original-spend-market-workshop",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-foundry.fpv",
+      "revision": 1,
+      "workId": "picture-split-signal-foundry",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-foundry",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-depot.fpv",
+      "revision": 1,
+      "workId": "picture-crosswind-depot",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-depot",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-switchback.fpv",
+      "revision": 1,
+      "workId": "picture-signal-switchback",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "fpv-route-choices/1/4a7f15a0b07d557d",
+          "levelId": "route-choices-switchback",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-foundry.ukraine",
+      "revision": 1,
+      "workId": "picture-ukraine-two-lanes-forge",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-foundry",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-depot.ukraine",
+      "revision": 1,
+      "workId": "picture-ukraine-crosswind-market-depot",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-depot",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-switchback.ukraine",
+      "revision": 1,
+      "workId": "picture-ukraine-carpathian-thread-relay",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-ukraine/1/6fc246baf830fe27",
+          "levelId": "route-worlds-ukraine-switchback",
+          "levelRevision": "1",
+          "themeId": "ukraine"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-foundry.retro",
+      "revision": 1,
+      "workId": "picture-retro-midnight-workshop",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-foundry",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-depot.retro",
+      "revision": 1,
+      "workId": "picture-retro-crosswind-courier",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-depot",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-switchback.retro",
+      "revision": 1,
+      "workId": "picture-retro-signal-thread",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-retro/1/31673372d46ee993",
+          "levelId": "route-worlds-retro-switchback",
+          "levelRevision": "1",
+          "themeId": "retro"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-foundry.coupa",
+      "revision": 1,
+      "workId": "picture-coupa-value-foundry",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-foundry",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-depot.coupa",
+      "revision": 1,
+      "workId": "picture-coupa-shared-harbor",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-depot",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.route-switchback.coupa",
+      "revision": 1,
+      "workId": "picture-coupa-network-garden",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "route-worlds-coupa/1/708c553521008c7d",
+          "levelId": "route-worlds-coupa-switchback",
+          "levelRevision": "1",
+          "themeId": "coupa"
+        }
+      }
+    },
+    {
+      "slotId": "picture.sentinel-listening.fpv",
+      "revision": 1,
+      "workId": "picture-sentinel-listening-court",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-listening-court",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.sentinel-switchyard.fpv",
+      "revision": 1,
+      "workId": "picture-sentinel-switchyard-gates",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-switchyard-gates",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "picture.sentinel-circuit.fpv",
+      "revision": 1,
+      "workId": "picture-sentinel-open-the-circuit",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "picture",
+        "owner": {
+          "baseCampaignKey": "sentinel-circuit-fpv/1/398c82081d2d49df",
+          "levelId": "sentinel-circuit-fpv-open-circuit",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        }
+      }
+    },
+    {
+      "slotId": "presentation.scout.fpv.compact",
+      "revision": 1,
+      "workId": "rig-scout-quad",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "scout-quad",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.scout.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-scout-quad",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "scout-quad",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.fpv.compact",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "fpv-body",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "fpv-body",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.fpv.compact",
+      "revision": 1,
+      "workId": "rig-heavy-lift",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "heavy-lift",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-heavy-lift",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "heavy-lift",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.fpv.compact",
+      "revision": 1,
+      "workId": "rig-scout-quad",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "scout-quad",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-scout-quad",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "scout-quad",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.fpv.compact",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "fpv-body",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "fpv-body",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.impact.fpv.compact",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "fpv-body",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.impact.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "fpv-body",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.fpv.compact",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "fpv",
+        "treatmentId": "compact",
+        "bodyId": "fpv-body",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.fpv.detailed",
+      "revision": 1,
+      "workId": "rig-fpv-body",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "fpv",
+        "treatmentId": "detailed",
+        "bodyId": "fpv-body",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.scout.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.scout.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.impact.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.impact.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.ukraine.compact",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "ukraine",
+        "treatmentId": "compact",
+        "bodyId": "ukrainian-bird",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.ukraine.detailed",
+      "revision": 1,
+      "workId": "rig-ukrainian-bird",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "ukraine",
+        "treatmentId": "detailed",
+        "bodyId": "ukrainian-bird",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.scout.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.scout.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.impact.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.impact.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.retro.compact",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "retro",
+        "treatmentId": "compact",
+        "bodyId": "retro-craft",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.retro.detailed",
+      "revision": 1,
+      "workId": "rig-retro-craft",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "retro",
+        "treatmentId": "detailed",
+        "bodyId": "retro-craft",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.scout.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.scout.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "scout",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.bomber.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "bomber",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.carrier.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "carrier",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.interceptor.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "interceptor",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.fiber.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "fiber",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.impact.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.impact.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "impact",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.coupa.compact",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "coupa",
+        "treatmentId": "compact",
+        "bodyId": "navi-avatar",
+        "style": "microtile"
+      }
+    },
+    {
+      "slotId": "presentation.trapper.coupa.detailed",
+      "revision": 1,
+      "workId": "rig-navi-avatar",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "presentation",
+        "classId": "trapper",
+        "themeId": "coupa",
+        "treatmentId": "detailed",
+        "bodyId": "navi-avatar",
+        "style": "hybrid"
+      }
+    },
+    {
+      "slotId": "story.fpv.1",
+      "revision": 1,
+      "workId": "story-dawn-signal",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "story",
+        "owner": {
+          "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1",
+          "levelId": "signal-01",
+          "levelRevision": "1",
+          "themeId": "fpv"
+        },
+        "storyId": "dawn-signal-story-v1",
+        "storyRevision": 1
+      }
+    },
+    {
+      "slotId": "track.1",
+      "revision": 1,
+      "workId": "recipe-signal-afterglow",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "track",
+        "trackId": "signal-afterglow"
+      }
+    },
+    {
+      "slotId": "track.2",
+      "revision": 1,
+      "workId": "recipe-pocket-constellation",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "track",
+        "trackId": "pocket-constellation"
+      }
+    },
+    {
+      "slotId": "track.3",
+      "revision": 1,
+      "workId": "recipe-copper-highway",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "track",
+        "trackId": "copper-highway"
+      }
+    },
+    {
+      "slotId": "track.4",
+      "revision": 1,
+      "workId": "recipe-iron-comet",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "track",
+        "trackId": "iron-comet"
+      }
+    },
+    {
+      "slotId": "track.5",
+      "revision": 1,
+      "workId": "recipe-quiet-orchard",
+      "workRevision": 1,
+      "previous": null,
+      "handle": {
+        "kind": "track",
+        "trackId": "quiet-orchard"
+      }
+    }
+  ],
+  "assessments": [],
+  "deliveries": [
+    {
+      "id": "prior035-pictures",
+      "title": "Fifteen optional originals delivered before v036; historical milestone only",
+      "works": [
+        {
+          "workId": "picture-orchard-crossing",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-courtyard-exits",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-night-crossfire",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-carpathian-woven-dawn",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-petrykivka-sun-courtyard",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-dnipro-autumn-watch",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-midnight-arcade",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-rainy-video-rental",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-last-train-cassette",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-shared-value-harbor",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-city-savings-observatory",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-thoughtful-market-workshop",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-split-signal-foundry",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-crosswind-depot",
+          "workRevision": 1
+        },
+        {
+          "workId": "picture-signal-switchback",
+          "workRevision": 1
+        }
+      ],
+      "evidence": {
+        "path": "docs/verification/round-44/v034-delivery.md",
+        "bytes": 3136,
+        "sha256": "b6c1a06ed0f928a20649b5abbf57ab0004305b97d00764a81c320051075f7097"
+      }
+    },
+    {
+      "id": "prior035-dawn",
+      "title": "Dawn Signal delivered in v035; one bounded story journey",
+      "works": [
+        {
+          "workId": "story-dawn-signal",
+          "workRevision": 1
+        }
+      ],
+      "evidence": {
+        "path": "docs/verification/round-45/v035-delivery.md",
+        "bytes": 4101,
+        "sha256": "70a28661245b0dca8b218addd0d70ad270e4a1b119fb1aa815a74f2805e14fcf"
+      }
+    }
+  ],
+  "enemies": [
+    {
+      "typeId": "bouncer",
+      "themeId": "fpv",
+      "skinId": "bouncer.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "bouncer",
+      "themeId": "ukraine",
+      "skinId": "bouncer.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "bouncer",
+      "themeId": "retro",
+      "skinId": "bouncer.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "bouncer",
+      "themeId": "coupa",
+      "skinId": "bouncer.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "border-patrol",
+      "themeId": "fpv",
+      "skinId": "border-patrol.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "border-patrol",
+      "themeId": "ukraine",
+      "skinId": "border-patrol.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "border-patrol",
+      "themeId": "retro",
+      "skinId": "border-patrol.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "border-patrol",
+      "themeId": "coupa",
+      "skinId": "border-patrol.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "contour-patrol",
+      "themeId": "fpv",
+      "skinId": "contour-patrol.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "contour-patrol",
+      "themeId": "ukraine",
+      "skinId": "contour-patrol.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "contour-patrol",
+      "themeId": "retro",
+      "skinId": "contour-patrol.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "contour-patrol",
+      "themeId": "coupa",
+      "skinId": "contour-patrol.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "claimed-rover",
+      "themeId": "fpv",
+      "skinId": "claimed-rover.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "claimed-rover",
+      "themeId": "ukraine",
+      "skinId": "claimed-rover.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "claimed-rover",
+      "themeId": "retro",
+      "skinId": "claimed-rover.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "claimed-rover",
+      "themeId": "coupa",
+      "skinId": "claimed-rover.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "eroder",
+      "themeId": "fpv",
+      "skinId": "eroder.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "eroder",
+      "themeId": "ukraine",
+      "skinId": "eroder.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "eroder",
+      "themeId": "retro",
+      "skinId": "eroder.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "eroder",
+      "themeId": "coupa",
+      "skinId": "eroder.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "lane-boss",
+      "themeId": "fpv",
+      "skinId": "lane-boss.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "lane-boss",
+      "themeId": "ukraine",
+      "skinId": "lane-boss.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "lane-boss",
+      "themeId": "retro",
+      "skinId": "lane-boss.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "lane-boss",
+      "themeId": "coupa",
+      "skinId": "lane-boss.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "relay-sentinel",
+      "themeId": "fpv",
+      "skinId": "relay-sentinel.fpv.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "relay-sentinel",
+      "themeId": "ukraine",
+      "skinId": "relay-sentinel.ukraine.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "relay-sentinel",
+      "themeId": "retro",
+      "skinId": "relay-sentinel.retro.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    },
+    {
+      "typeId": "relay-sentinel",
+      "themeId": "coupa",
+      "skinId": "relay-sentinel.coupa.v1",
+      "source": {
+        "path": "game/enemy-catalog.mjs",
+        "bytes": 5966,
+        "sha256": "46ce076af222227c5895bec7c8516f4e6e8098cfc81a9432d9fb0d6546e6c447"
+      }
+    }
+  ],
+  "authorities": [
+    {
+      "path": "authoring/library/external-chapter-pilot/descriptor.json",
+      "bytes": 1759,
+      "sha256": "3e34ccd73ae64fb439014e9364739293946a99d8932800a091fbb7f3225b1624"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/distribution.json",
+      "bytes": 4255,
+      "sha256": "11ad3664a02f7efdef01b601adadf62b4b275f7db6d03c37ae8d9e78f9e9bcb6"
+    },
+    {
+      "path": "authoring/library/four-worlds-source/catalog.json",
+      "bytes": 12360,
+      "sha256": "dcc82dfcf403ad86e83e1d985e8c9ecd530fbfad1c7bf9d556eaff9ba0530d29"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/distribution.json",
+      "bytes": 3446,
+      "sha256": "c85097a58e9c84037083907484cbac739592ccbebb5156ac6f27afab76fc1dab"
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/coupa.json",
+      "bytes": 1730,
+      "sha256": "38849fc20068802638304d14b2df6fbcefdca1a6f76fdeb6a2520464b5612503"
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/retro.json",
+      "bytes": 1730,
+      "sha256": "f0c9a6ca4a4b9b3f2ff1a28fa0eaad48ff6d6553a8ded0b193c87d6b0aee2bf1"
+    },
+    {
+      "path": "authoring/library/route-worlds/descriptors/ukraine.json",
+      "bytes": 1754,
+      "sha256": "256c3f7ae7c6a7aa2878113ea3438dd9428844d69b7087c2dc8e56ec197db908"
+    },
+    {
+      "path": "authoring/library/route-worlds/editions.json",
+      "bytes": 2049,
+      "sha256": "f1cf474b1f02b48bcbafb60fbab080416afc9c2c135c68a2def2ae90865300fc"
+    },
+    {
+      "path": "authoring/library/sentinel-circuit-external/descriptor.json",
+      "bytes": 1766,
+      "sha256": "4bfccdbd97cddc63b5a89b10e07aacbab9e45cfc20a8aa154f6d0142815c539d"
+    },
+    {
+      "path": "authoring/still-media/examples/dawn-signal/manifest.json",
+      "bytes": 2840,
+      "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a"
+    },
+    {
+      "path": "game/content/classes.json",
+      "bytes": 2227,
+      "sha256": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84"
+    },
+    {
+      "path": "game/content/themes.json",
+      "bytes": 4266,
+      "sha256": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    }
+  ]
+}
