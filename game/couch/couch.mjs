@@ -1,3 +1,4 @@
+import { createCouchShell } from './couch-shell.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
@@ -102,7 +103,7 @@ try {
     disposed = false,
     frameId = null,
     stopNative = () => {};
-  let menuRouter, navigation;
+  let menuRouter, navigation, shell;
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
   $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function clear({ resetDirection = false } = {}) {
@@ -169,6 +170,7 @@ try {
     updateMenu();
   }
   $('race-start').onclick = () => {
+    if (disposed || match.status === 'running' || shell.scope() !== 'main') return;
     if (match.status === 'finished') {
       if (won.some((n) => n >= 2)) won = [0, 0];
       prepare();
@@ -176,13 +178,15 @@ try {
     clear();
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
-    focusBoards(true);
     sound.resume().catch(() => {});
     $('race-message').textContent = 'Make your line count. First clear wins.';
     updateMenu();
     input.focus();
   };
-  $('race-pause').onclick = pause;
+  $('race-pause').onclick = () => {
+    if (shell.scope() === 'review') shell.back();
+    else pause();
+  };
   onNativeInactive(suspend)
     .then((stop) => {
       if (disposed) stop();
@@ -192,28 +196,14 @@ try {
       if (!disposed)
         $('race-message').textContent = `App lifecycle adapter unavailable: ${error.message}`;
     });
-  function focusBoards(on) {
-    document.body.classList.toggle('race-focus', on);
-    $('race-focus').textContent = on ? 'Show setup' : 'Focus boards';
-    clear();
-    updateMenu();
-  }
-  $('race-focus').onclick = () => {
-    const on = !document.body.classList.contains('race-focus');
-    if (!on && match?.status === 'running') pause();
-    focusBoards(on);
-  };
-  $('race-reset').onclick = () => {
-    won = [0, 0];
-    focusBoards(false);
-    prepare();
-  };
   for (const id of ['race-level', 'race-class', 'race-turn', 'race-time'])
     $(id).onchange = () => {
+      if (match?.status !== 'ready' || disposed) return;
       won = [0, 0];
       prepare();
     };
   $('race-theme').onchange = () => {
+    if (match?.status !== 'ready' || disposed) return;
     const entry = maps.find((m) => m.key === $('race-level').value);
     theme = entry.themes.find((t) => t.id === $('race-theme').value);
     painters.forEach((p) =>
@@ -223,9 +213,10 @@ try {
   $('race-audio').onclick = async () => {
     try {
       const on = await sound.toggle();
+      if (disposed) return;
       $('race-audio').textContent = on ? 'Mute music ♫' : 'Enable music ♫';
     } catch (e) {
-      $('race-message').textContent = e.message;
+      if (!disposed) $('race-menu-status').textContent = e.message;
     }
   };
   $('race-tap').onchange = clear;
@@ -235,6 +226,7 @@ try {
     active: () => match?.status === 'running',
     tapMode: () => $('race-tap').checked,
     onPause: pause,
+    onAcceptedInput: (player, source) => shell?.observe(player, source),
     onStop: (player) => {
       if (match) releaseInputs(match.runs[player]);
     },
@@ -245,10 +237,19 @@ try {
       if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
     },
   });
+  shell = createCouchShell({
+    coarse: matchMedia('(pointer: coarse)').matches,
+    onTransition: () => clear(),
+    onNewMatch: () => {
+      if (match?.status === 'running' || disposed) return;
+      won = [0, 0];
+      prepare();
+    },
+  });
   function couchScope() {
     return match?.status === 'running'
       ? 'flight'
-      : `couch:${match?.status || 'loading'}:${generation}:${document.body.classList.contains('race-focus') ? 'focus' : 'setup'}`;
+      : `couch:${match?.status || 'loading'}:${generation}:${shell?.scope() || 'main'}`;
   }
   function readCachedPads() {
     if (frameReadError) throw frameReadError;
@@ -300,7 +301,7 @@ try {
   }
   function focusPrimaryAction() {
     if (!match || match.status === 'running' || disposed) return;
-    $('race-start').focus({ preventScroll: true });
+    shell.focus();
     navigation.engage();
     menuHint = 'Choose the primary action with South when everyone is ready.';
     updateMenu();
@@ -312,42 +313,68 @@ try {
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
+    const entry = maps.find((m) => m.key === selectedMapKey);
+    shell?.update({
+      match,
+      won,
+      summary: `${entry.level.name} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+    });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
-      ? 'Fixed couch controls: D-pad/left stick move; South ability; West supply; right shoulder holds Boost; Menu pauses both boards.'
-      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu focuses ${$('race-start').textContent.replace(/[↗→]/g, '').trim()}.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
+      ? shell.controllerHint()
+      : `${owner >= 0 ? `Player ${owner + 1} controller has the menu. South selects; East cancels; Menu goes back.` : menuStatus}${menuGate ? ` ${menuGate}` : ''}${menuHint ? ` ${menuHint}` : ''} Keyboard and touch remain available.`;
     if ($('race-menu-status').textContent !== text) $('race-menu-status').textContent = text;
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const menuIds = new Set([
+    'race-start',
+    'race-focus',
+    'race-options',
+    'race-help',
+    'race-solo-return',
     'race-level',
     'race-theme',
     'race-class',
     'race-turn',
     'race-time',
-    'race-start',
-    'race-focus',
-    'race-pause',
-    'race-reset',
-    'race-audio',
+    'race-setup-back',
+    'race-touch-0',
+    'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-audio',
     'race-menu-release',
-    'race-solo-return',
+    'race-options-back',
+    'race-help-back',
+    'race-help-read',
+    'race-help-reading',
+    'race-review',
+    'race-pause',
+    'race-confirm-back',
+    'race-confirm-reset',
+    'race-leave-back',
+    'race-leave',
   ]);
   navigation = attachControllerNavigation({
     getScope: couchScope,
-    getRoot: () => document,
-    getDefaultFocus: () => $('race-start'),
+    getRoot: () => shell.root(),
+    getDefaultFocus: () => shell.primary(),
+    keyboard: true,
     accept: (element) => menuIds.has(element.id),
     getControlLabels: () => ({ directions: 'D-pad / left stick', confirm: 'South', back: 'East' }),
-    onBack: focusPrimaryAction,
-    onMenu: focusPrimaryAction,
+    onBack: () => shell.back(),
+    onMenu: () => shell.back(),
     onHint: (message) => {
       menuHint = message;
       updateMenu();
     },
   });
+  $('race-help-read').onclick = () =>
+    navigation.beginReading({
+      region: $('race-help-reading'),
+      origin: $('race-help-read'),
+      label: 'Couch controls',
+    });
   $('race-menu-release').onclick = () => {
     if (match.status === 'running' || !menuOwner) return;
     menuRouter.invalidate();
@@ -356,7 +383,7 @@ try {
     menuStatus =
       'Menu controller released. Release controls, then press a face button or Menu to join.';
     updateMenu();
-    $('race-start').focus({ preventScroll: true });
+    shell.focus();
   };
   function sampleMenu(now) {
     const scope = couchScope();
@@ -387,9 +414,13 @@ try {
       updateMenu();
       return;
     }
-    if (menuOwner && (scope !== menuScope || result.status.code === 'joined')) {
+    if (menuOwner && result.status.code === 'joined') {
       menuScope = scope;
       focusPrimaryAction();
+    } else if (scope !== menuScope) {
+      menuScope = scope;
+      navigation.clear();
+      navigation.sync();
     } else {
       navigation.handle(result.ui);
     }
@@ -430,6 +461,7 @@ try {
     input.destroy();
     menuRouter.destroy();
     navigation.destroy();
+    shell.destroy();
     stopNative();
     cancelAnimationFrame(frameId);
     window.removeEventListener('blur', suspend);
@@ -569,7 +601,6 @@ try {
     frameId = requestAnimationFrame(frame);
   }
   prepare();
-  if (new URLSearchParams(location.search).get('focus') === '1') focusBoards(true);
   frameId = requestAnimationFrame(frame);
 } catch (error) {
   $('race-message').textContent = `The race could not load: ${error.message}`;
