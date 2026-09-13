@@ -1,6 +1,8 @@
 import { canonicalJSON } from '../data-json.mjs';
 import { createMediaIdentityCatalog, MEDIA_PRESENTATION_FORMAT } from '../media-library.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
+import { snapshotPictureChoice } from '../presentation-pins.mjs';
+import { createStillStoryPanel } from './still-story-panel.mjs';
 import {
   exportMediaBundle,
   importMediaBundle,
@@ -19,6 +21,11 @@ export function attachStillMediaPanel({
   decodeImage,
   URLImpl = globalThis.URL,
   makeId = () => `still-${crypto.randomUUID()}`,
+  storyStore,
+  storyInspection,
+  onStorySaved,
+  makeStoryId = () => `story-${crypto.randomUUID()}`,
+  requestStoryDownload,
 }) {
   const node = (tag, id, text = '') => {
     const value = doc.createElement(tag);
@@ -179,6 +186,83 @@ export function attachStillMediaPanel({
     returnFocus = null,
     bundleURL = null,
     reviewedBundle = null;
+  const story = storyStore
+    ? createStillStoryPanel({
+        doc,
+        store,
+        storyStore,
+        work: (text, action) =>
+          work(text, async (signal, check) => {
+            await action(signal, check);
+            check();
+            status.textContent = story.statusText();
+          }),
+        cancelWork,
+        getSelection: storySelection,
+        catalog,
+        URLImpl,
+        inspection: storyInspection,
+        onCaptured: capturedDraft,
+        onSaved: onStorySaved,
+        makeId: makeStoryId,
+        requestDownload: requestStoryDownload,
+      })
+    : null;
+  if (story) dialog.append(story.section);
+
+  function storySelection() {
+    const selected = current();
+    if (!selected) return { ticket: context, saved };
+    const p =
+      (!draft || draft.existing) &&
+      saved.document.library.presentations.find(
+        (p) =>
+          JSON.stringify([p.id, p.revision]) === history.value &&
+          canonicalJSON(p.identity) === canonicalJSON(selected.identity),
+      );
+    const asset = p && saved.document.library.assets.find((a) => a.id === p.poster.assetId);
+    const assignment = saved.document.library.assignments.find(
+      (a) => canonicalJSON(a.identity) === canonicalJSON(selected.identity),
+    );
+    return {
+      ...selected,
+      saved,
+      ticket: context,
+      pin: asset
+        ? snapshotPictureChoice({
+            kind: 'still',
+            identity: p.identity,
+            presentationId: p.id,
+            presentationRevision: p.revision,
+            assetId: asset.id,
+            sha256: asset.sha256,
+          })
+        : null,
+      caption: p ? `${p.description} · revision ${p.revision}` : '',
+      assigned: !!p && assignment?.presentationId === p.id && assignment?.revision === p.revision,
+      provenance: { kind: kind.value, credit: credit.value, source: source.value },
+      description: description.value,
+    };
+  }
+  async function capturedDraft(captured, selected, signal, check) {
+    if (!selected.description?.trim() || selected.description.length > 2048)
+      throw new Error('Add a picture description before capturing.');
+    const shown = await preview.show(view(selected, captured.asset, captured.blob), { signal });
+    check();
+    if (!shown) throw new Error('Preview cancelled. The prior picture is kept.');
+    discardBundles();
+    draft = {
+      asset: captured.asset,
+      blob: captured.blob,
+      identity: selected.identity,
+      description: selected.description,
+    };
+    status.textContent =
+      'Captured original PNG is a picture draft. Choose Save assignment to retain it.';
+    // The child deliberately adopts this one verified selection transition only
+    // after its stale guard has passed; ordinary changes still cancel it.
+    return storySelection();
+  }
   function discardBundles() {
     if (bundleURL !== null) URLImpl.revokeObjectURL(bundleURL);
     bundleURL = null;
@@ -197,6 +281,7 @@ export function attachStillMediaPanel({
     task?.abort();
     task = null;
     discardBundles();
+    story?.cancel();
     status.textContent =
       'Pending work cancelled. Any completed save stays saved; reload to verify.';
     sync();
@@ -226,6 +311,7 @@ export function attachStillMediaPanel({
     stats.textContent = saved
       ? `${saved.document.library.assets.length} retained image records · ${saved.document.library.presentations.length} immutable revisions · saved generation ${saved.generation}`
       : 'No verified saved media loaded.';
+    story?.sync({ ready, busy });
   }
   function current() {
     const entry = entries.find((e) => e.baseCampaignKey === campaign.value);
@@ -301,17 +387,23 @@ export function attachStillMediaPanel({
     changeContext();
   };
   file.onchange = () => {
+    if (story && task) return cancelWork();
+    story?.invalidate();
     discardBundles();
     if (file.files?.length) draft = null;
     sync();
   };
   for (const item of [kind, credit, source, description])
     item.oninput = item.onchange = () => {
+      if (story && task) return cancelWork();
+      story?.invalidate();
       discardBundles();
       draft = null;
       sync();
     };
   history.onchange = () => {
+    if (story && task) return cancelWork();
+    story?.invalidate();
     discardBundles();
     draft = null;
     sync();
@@ -362,6 +454,7 @@ export function attachStillMediaPanel({
       );
       ready = true;
       contexts();
+      if (story) await story.load({ signal, check });
       status.textContent =
         'Saved originals verified. Fresh flights use the current assignment; existing flights and earned pictures keep their saved revision.';
     });
@@ -506,6 +599,7 @@ export function attachStillMediaPanel({
     ready = false;
     dialog.close();
     preview.clear();
+    story?.close();
     onClose();
     if (returnFocus?.isConnected) returnFocus.focus();
   }
@@ -607,8 +701,12 @@ export function attachStillMediaPanel({
   }
   dialog.addEventListener('cancel', (event) => {
     event.preventDefault();
-    closePanel();
+    back();
   });
+  function back() {
+    if (story && task) return cancelWork();
+    return closePanel();
+  }
   return Object.freeze({
     dialog,
     async open() {
@@ -621,6 +719,7 @@ export function attachStillMediaPanel({
       return load();
     },
     close: closePanel,
+    back,
     invalidateContext() {
       if (disposed) return;
       cancelWork();
@@ -644,6 +743,7 @@ export function attachStillMediaPanel({
       closePanel();
       disposed = true;
       preview.dispose();
+      story?.dispose();
       dialog.remove();
     },
   });
