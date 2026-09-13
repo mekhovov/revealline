@@ -115,38 +115,26 @@ export function memoryStorage(entries = {}) {
     },
   };
 }
-function assetDatabase() {
-  const assets = new Map();
-  const db = {
-    close() {},
-    createObjectStore() {},
-    transaction() {
-      const transaction = {
-        objectStore: () => ({
-          get(key) {
-            const request = {};
-            queueMicrotask(() => {
-              request.result = structuredClone(assets.get(key));
-              request.onsuccess();
-            });
-            return request;
-          },
-          put(value, key) {
-            assets.set(key, structuredClone(value));
-            queueMicrotask(() => transaction.oncomplete());
-          },
-        }),
-      };
-      return transaction;
-    },
-  };
+function assetDatabase(indexedDB = memoryIndexedDB().indexedDB) {
+  const connections = new Set();
   return {
-    db,
-    open() {
-      const request = {};
-      queueMicrotask(() => {
-        request.result = db;
-        request.onsuccess();
+    close() {
+      for (const db of connections) {
+        db.onversionchange?.();
+        db.close();
+      }
+    },
+    open(...args) {
+      const request = indexedDB.open(...args);
+      let success;
+      Object.defineProperty(request, 'onsuccess', {
+        get: () => success,
+        set: (callback) => {
+          success = (...events) => {
+            connections.add(request.result);
+            callback?.(...events);
+          };
+        },
       });
       return request;
     },
@@ -167,6 +155,8 @@ export async function soloPage(
     fetchJSON,
     audio,
     soundtrackIndexedDB,
+    assetIndexedDB,
+    lockManager,
     rendering,
     parentWindow,
     pictures,
@@ -175,7 +165,7 @@ export async function soloPage(
 ) {
   const doc = new SoloDocument(),
     win = new Events(),
-    db = assetDatabase();
+    db = assetDatabase(assetIndexedDB);
   const mediaDB = soundtrackIndexedDB ?? memoryIndexedDB().indexedDB;
   const audioElements = [];
   if (audio?.filePlayback !== false && audio) {
@@ -258,7 +248,7 @@ export async function soloPage(
         padReads++;
         return [];
       },
-      locks: {
+      locks: lockManager ?? {
         request(name, options, callback) {
           return Promise.resolve((callback ?? options)({ name }));
         },
@@ -382,7 +372,7 @@ export async function soloPage(
   t.after(async () => {
     win.emit('pagehide', { persisted: false });
     await new Promise((resolve) => setImmediate(resolve));
-    db.db.onversionchange?.();
+    db.close();
     console.error = originalError;
     for (const [key, value] of originals)
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
