@@ -1,5 +1,5 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
-import { drawPresentedActor } from './actor-presentation.mjs';
+import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -182,6 +182,29 @@ export function classicView(run) {
       const stunnedUntil = own(enemy, 'stunnedUntil') ?? 0,
         slowUntil = own(enemy, 'slowUntil') ?? 0;
       check(Number.isFinite(stunnedUntil) && Number.isFinite(slowUntil));
+      const rawPressure = detail == null ? undefined : own(detail, 'pressure');
+      let pressure;
+      if (rawPressure !== undefined) {
+        check(type === 'bouncer' && own(rawPressure, 'version') === 'enemy-pressure-state.v1');
+        const phase = own(rawPressure, 'phase');
+        check(['patrol', 'warning', 'committed', 'cooldown'].includes(phase));
+        const rawTarget = own(rawPressure, 'target');
+        check(rawTarget === null || ['warning', 'committed'].includes(phase));
+        const target = rawTarget === null ? null : position(rawTarget);
+        check(!['warning', 'committed'].includes(phase) || target !== null);
+        const deadlineKey = {
+          warning: 'warningUntil',
+          committed: 'commitUntil',
+          cooldown: 'cooldownUntil',
+        }[phase];
+        const deadline = deadlineKey ? own(rawPressure, deadlineKey) : null;
+        check(deadline === null ? phase === 'patrol' : integer(deadline));
+        pressure = {
+          phase,
+          target,
+          seconds: deadline === null ? 0 : Math.max(0, deadline - actorTick) * FIXED_DT,
+        };
+      }
       return {
         id,
         type,
@@ -192,6 +215,7 @@ export function classicView(run) {
         frozen: active('enemy-freeze'),
         stunned: stunnedUntil > time + 1e-8,
         slowed: !active('enemy-freeze') && (active('enemy-slow') || slowUntil > time + 1e-8),
+        ...(pressure ? { pressure } : {}),
       };
     });
     const roles = [
@@ -378,15 +402,16 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
     drawPresentedActor(ctx, presentation, palette, images[role]);
     ctx.save();
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
-    ctx.strokeStyle = palette.paper;
+    ctx.strokeStyle = PRESENTATION_INK;
+    const radius = Math.max(12, presentation.diameter / 2 + 3);
     if (enemy.mode === 'dormant') {
       ctx.setLineDash([2, 2]);
-      ctx.strokeRect(-12, -11, 24, 22);
+      ctx.strokeRect(-radius, -radius, radius * 2, radius * 2);
     }
     if (enemy.mode === 'warning' || enemy.mode === 'rejoining') {
       ctx.strokeStyle = palette.accent;
       ctx.setLineDash([3, 2]);
-      ctx.strokeRect(-13, -13, 26, 26);
+      ctx.strokeRect(-radius, -radius, radius * 2, radius * 2);
     }
     ctx.restore();
     return true;
@@ -397,7 +422,7 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
     enemy.stunned || enemy.mode === 'dormant' || enemy.mode === 'idle'
       ? palette.muted
       : palette.danger;
-  ctx.strokeStyle = palette.paper;
+  ctx.strokeStyle = PRESENTATION_INK;
   ctx.lineWidth = 1.5;
   const image =
     images[{ 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[enemy.type]];
@@ -416,7 +441,7 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
       [0, 10],
       [-9, 0],
     ]);
-    ctx.strokeStyle = palette.ink;
+    ctx.strokeStyle = PRESENTATION_PLATE;
     lines(ctx, [
       [
         [-4, -3],
@@ -434,10 +459,10 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
       ctx.fillRect(x, -9, 3, 6);
       ctx.fillRect(x, 3, 3, 6);
     }
-    ctx.fillStyle = palette.ink;
+    ctx.fillStyle = PRESENTATION_PLATE;
     ctx.fillRect(-3, -2, 6, 4);
     if (enemy.mode === 'dormant') {
-      ctx.strokeStyle = palette.paper;
+      ctx.strokeStyle = PRESENTATION_INK;
       ctx.setLineDash([2, 2]);
       ctx.strokeRect(-12, -11, 24, 22);
     }
@@ -456,7 +481,7 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
       [-8, 5],
       [-7, 0],
     ]);
-    ctx.fillStyle = palette.ink;
+    ctx.fillStyle = PRESENTATION_PLATE;
     ctx.fillRect(-3, -3, 6, 6);
   }
   if (image && enemy.mode === 'dormant') {
@@ -476,7 +501,7 @@ export function drawClassicStatus(
   ctx,
   view,
   palette,
-  { screenScale = 1, canvasCSSWidth = 1152 } = {},
+  { screenScale = 1, canvasCSSWidth = 1152, frames = new Map() } = {},
 ) {
   if (!view) return;
   for (const enemy of view.enemies) {
@@ -485,20 +510,21 @@ export function drawClassicStatus(
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
     ctx.strokeStyle = palette.safe;
     ctx.lineWidth = 2;
+    const radius = Math.max(14, (frames.get(enemy.id)?.diameter ?? 22) / 2 + 3);
     if (enemy.frozen) {
-      ctx.strokeRect(-14, -14, 28, 28);
-      ctx.translate(0, -18);
+      ctx.strokeRect(-radius, -radius, radius * 2, radius * 2);
+      ctx.translate(0, -radius - 6);
       ctx.fillStyle = PICKUP_COLORS['enemy-freeze'];
       icon(ctx, 'enemy-freeze');
     } else
       lines(ctx, [
         [
-          [-12, 11],
-          [12, 11],
+          [-12, radius - 3],
+          [12, radius - 3],
         ],
         [
-          [-12, 15],
-          [12, 15],
+          [-12, radius + 1],
+          [12, radius + 1],
         ],
       ]);
     ctx.restore();
@@ -530,6 +556,73 @@ export function drawClassicStatus(
     );
     ctx.restore();
   });
+}
+
+/** Original opt-in pressure extension: copy core targets, never predict a chase. */
+export function drawEnemyPressure(
+  ctx,
+  view,
+  palette,
+  { screenScale = 1, frames = new Map() } = {},
+) {
+  if (!view) return;
+  const unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
+  for (const enemy of view.enemies) {
+    const pressure = enemy.pressure;
+    if (!pressure || pressure.phase === 'patrol') continue;
+    const warning = pressure.phase === 'warning',
+      cooldown = pressure.phase === 'cooldown',
+      color = cooldown ? palette.safe : warning ? '#ffd17a' : '#ff866e';
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = unit;
+    if (pressure.target) {
+      const x = pressure.target.x * SIZE,
+        y = pressure.target.y * SIZE,
+        r = 4 * unit;
+      if (warning) {
+        // Dashed amber acquisition never resembles the continuous white live cut.
+        ctx.globalAlpha = 0.5;
+        ctx.setLineDash([3 * unit, 5 * unit]);
+        lines(ctx, [
+          [
+            [enemy.x * SIZE, enemy.y * SIZE],
+            [x, y],
+          ],
+        ]);
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+      }
+      for (const [sx, sy] of [
+        [-1, -1],
+        [-1, 1],
+        [1, -1],
+        [1, 1],
+      ])
+        lines(ctx, [
+          [
+            [x + sx * r, y + (sy * r) / 2],
+            [x + sx * r, y + sy * r],
+            [x + (sx * r) / 2, y + sy * r],
+          ],
+        ]);
+    }
+    const label = cooldown ? 'REST' : warning ? 'AIM' : 'CHASE',
+      textWidth = (label.length * 6 + 4) * unit,
+      x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
+      y = Math.max(
+        11 * unit,
+        enemy.y * SIZE - (frames.get(enemy.id)?.diameter ?? 30) / 2 - 5 * unit,
+      );
+    ctx.fillStyle = PRESENTATION_PLATE;
+    ctx.fillRect(x, y - 10 * unit, textWidth, 11 * unit);
+    ctx.font = `${9 * unit}px monospace`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = color;
+    ctx.fillText(label, x + 2 * unit, y - 4 * unit);
+    ctx.restore();
+  }
 }
 
 /** Front locations belong to the core. No interpolation, extrapolation or cosmetic hazard radius. */

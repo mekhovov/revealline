@@ -2,6 +2,32 @@
   "format": "xonix-pack-catalog.v1",
   "packs": [
     {
+      "id": "fpv-arcade-r4",
+      "path": "fpv-arcade-r4.json",
+      "name": "FPV Front · First Light Arcade R4",
+      "campaigns": [
+        {
+          "id": "fpv-first-light-r4",
+          "revision": "4",
+          "title": "FPV Front · First Light Arcade R4",
+          "levels": [
+            {
+              "id": "orchard-window",
+              "name": "Orchard Window"
+            },
+            {
+              "id": "split-courtyard",
+              "name": "Split Courtyard"
+            },
+            {
+              "id": "night-signal",
+              "name": "Night Signal"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "fpv-arcade-r3",
       "path": "fpv-arcade-r3.json",
       "name": "FPV Front · First Light R3",

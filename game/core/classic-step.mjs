@@ -35,6 +35,7 @@ import {
   repairClassicContours,
 } from './classic-contour.mjs';
 import { planClassicPlayer, planClassicEnemy, applyClassicEnemy } from './classic-motion.mjs';
+import { initializeEnemyPressure, updateEnemyPressure } from './enemy-pressure.mjs';
 
 export function initializeClassicActors(state) {
   for (const enemy of state.enemies) {
@@ -56,6 +57,7 @@ export function initializeClassicActors(state) {
       };
     }
   }
+  initializeEnemyPressure(state);
   updateClassicAnchors(state);
 }
 
@@ -385,9 +387,10 @@ function world(state, input, hooks) {
     }
     if (erosionDue(state)) commitClassicErosion(state);
     updateActors(state);
+    updateEnemyPressure(state);
     // Let the first zero-time hit keep historical capture/erosion/failure order.
     // Only a repeated penetration in unchanged geometry can use recovery. Keep
-    // its original approach velocity, not the artificial no-normal reversal.
+    // its original approach velocity, not the repeated zero-time reversal.
     for (const [i, enemy] of state.enemies.entries()) {
       const before = incoming[i];
       if (
@@ -445,6 +448,7 @@ export function stepClassic(state, input, hooks) {
     state.classic.departure = null;
   }
   updateActors(state);
+  updateEnemyPressure(state);
   const interrupted = world(state, input, hooks);
   if (state.status === 'won' || state.status === 'lost') return;
   state.time = endTime;
@@ -463,6 +467,7 @@ export function stepClassic(state, input, hooks) {
   if (!interrupted && canReleaseIsolated(state)) {
     releaseIsolatedCapture(state);
     updateActors(state);
+    updateEnemyPressure(state);
     if (won(state)) hooks.complete(state, true);
   }
 }

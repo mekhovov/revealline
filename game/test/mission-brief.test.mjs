@@ -121,3 +121,13 @@ test('all bundled pack ready cards remain compact while retaining the complete a
     }
   }
 });
+
+test('pressure brief explains locked commitment while preserving the full authored routing lesson', () => {
+  const level = structuredClone(classicLab.campaigns[0].levels[0]);
+  level.classic.enemyPressure = { version: 'enemy-pressure.v1', actors: [{ id: 'demo' }] };
+  const result = missionBriefing(level);
+  assert.match(result.copy, /AIM locks a target/);
+  assert.match(result.copy, /Turn before CHASE/);
+  assert.match(result.status, /choose another exit/);
+  assert.equal(result.fullBrief, level.metadata.description);
+});

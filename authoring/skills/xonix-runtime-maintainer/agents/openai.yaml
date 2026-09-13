@@ -1,4 +1,4 @@
 interface:
-  display_name: "Xonix Runtime Maintainer"
-  short_description: "Maintain, test and archive the playable browser game"
-  default_prompt: "Use $xonix-runtime-maintainer to update the playable game through its actual core and content contracts, verify both turn policies, build the static distribution, and retain the authorized saved version."
+  display_name: 'Xonix Runtime Maintainer'
+  short_description: 'Maintain, test and archive the playable browser game'
+  default_prompt: "Use $xonix-runtime-maintainer to update the playable game through its actual core and content contracts. Preserve historical identities, exact pressure warning/commitment continuation, direction-only chapter rules and Replay Theater's silent read-only boundary; verify both turn policies and the authorized delivery scope."

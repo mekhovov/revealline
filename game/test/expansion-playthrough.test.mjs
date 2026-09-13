@@ -23,17 +23,31 @@ test('expansion proof covers every supplied map and rejects altered geometry', a
     0,
   );
   const arcade = await expansionSources({ scope: 'arcade' });
-  const additional = arcade.filter((pack) => !packs.some((old) => old.id === pack.id));
+  const pressure = await expansionSources({ scope: 'pressure' });
+  const earlier = [...packs, ...arcade];
+  const r4 = arcade.filter((pack) => !packs.some((old) => old.id === pack.id));
   assert.deepEqual(
-    additional.map((pack) => pack.id),
+    r4.map((pack) => pack.id),
     ['fpv-arcade-r4'],
   );
-  const additionalRoutes = additional.reduce(
+  const additional = pressure.filter((pack) => !earlier.some((old) => old.id === pack.id));
+  assert.deepEqual(
+    additional.map((pack) => pack.id),
+    ['fpv-arcade-r5', 'fpv-pressure-frontier'],
+  );
+  const additionalRoutes = [...r4, ...additional].reduce(
     (total, pack) =>
       total + pack.campaigns.reduce((n, campaign) => n + campaign.levels.length * 2, 0),
     0,
   );
-  assert.equal((await verifyExpansionRoutes()).verified, expected + additionalRoutes);
+  const result = await verifyExpansionRoutes();
+  assert.equal(result.verified, expected + additionalRoutes);
+  assert.equal(result.verified, 70, 'All 35 indexed expansion maps have both Standard routes.');
+  assert.equal(result.supplementalGentleVerified, 30);
+  assert.equal(result.pressure.routes.length, 24);
+  assert.equal(result.pressure.ordinaryProbes.length, 24);
+  for (const batch of [packs, arcade, pressure])
+    assert.ok(Buffer.byteLength(JSON.stringify(batch)) < 64 * 1024 * 1024);
   const route = proof.routes[0],
     pack = packs.find((item) => item.id === route.packId),
     level = structuredClone(pack.campaigns[0].levels[0]);

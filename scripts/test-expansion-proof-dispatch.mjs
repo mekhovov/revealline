@@ -29,6 +29,9 @@ const r3Proof = JSON.parse(
 const r4Proof = JSON.parse(
   await readFile(new URL('../game/replays/fpv-arcade-r4-routes.json', import.meta.url)),
 );
+const r5Proof = JSON.parse(
+  await readFile(new URL('../game/replays/fpv-arcade-r5-routes.json', import.meta.url)),
+);
 const impactDemo = JSON.parse(
   await readFile(new URL('../game/content/scenarios/line-impact-demo.json', import.meta.url)),
 );
@@ -53,12 +56,12 @@ const selected = (value) =>
   );
 const verify = (value) => verifyExpansionProofs(value);
 
-test('bounded aggregate batches preserve 52 historical outcomes and add six R4 Standard with eighteen separate Gentle outcomes', async () => {
+test('bounded aggregate batches preserve 58 previous wins and add twelve pressure Standard wins with thirty separate Gentle outcomes', async () => {
   assert.equal(sha(bytes), originalSHA);
   assert.equal(proof.routes.length, 32);
   const result = await verifyExpansionRoutes();
-  assert.equal(result.verified, 58);
-  assert.equal(result.supplementalGentleVerified, 18);
+  assert.equal(result.verified, 70);
+  assert.equal(result.supplementalGentleVerified, 30);
   assert.deepEqual(
     result.results.slice(0, 32),
     proof.routes.map((route) => route.expected),
@@ -95,16 +98,44 @@ test('bounded aggregate batches preserve 52 historical outcomes and add six R4 S
     r3Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
   );
   assert.deepEqual(
-    result.results.slice(52),
+    result.results.slice(52, 58),
     r4Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
   );
   assert.deepEqual(
-    result.supplementalGentleResults.slice(12),
+    result.supplementalGentleResults.slice(12, 18),
     r4Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
   );
+  assert.deepEqual(
+    result.results.slice(58),
+    r5Proof.routes.filter((r) => r.difficulty === 'standard').map((r) => r.expected),
+  );
+  assert.deepEqual(
+    result.supplementalGentleResults.slice(18),
+    r5Proof.routes.filter((r) => r.difficulty === 'gentle').map((r) => r.expected),
+  );
+  assert.equal(result.pressure.routes.length, 24);
+  assert.equal(result.pressure.ordinaryProbes.length, 24);
+  for (const id of ['fpv-arcade-r5', 'fpv-pressure-frontier']) {
+    const routes = result.pressure.routes.filter((route) => route.packId === id);
+    assert.equal(routes.length, 12);
+    assert.equal(routes.filter((route) => route.difficulty === 'standard').length, 6);
+    assert.equal(routes.filter((route) => route.difficulty === 'gentle').length, 6);
+  }
   const arcade = await expansionSources({ scope: 'arcade' });
   assert.deepEqual(arcade.map((pack) => pack.id).sort(), ['fpv-arcade-r3', 'fpv-arcade-r4']);
-  for (const batch of [packs, arcade])
+  const pressure = await expansionSources({ scope: 'pressure' });
+  assert.deepEqual(pressure.map((pack) => pack.id).sort(), [
+    'fpv-arcade-r4',
+    'fpv-arcade-r5',
+    'fpv-pressure-frontier',
+    'homeward-skies',
+  ]);
+  assert.ok(
+    packs.every(
+      (pack) => !['fpv-arcade-r4', 'fpv-arcade-r5', 'fpv-pressure-frontier'].includes(pack.id),
+    ),
+  );
+  for (const batch of [packs, arcade, pressure])
     assert.ok(Buffer.byteLength(JSON.stringify(batch)) < 64 * 1024 * 1024);
   const [{ readPackIndexes }, { fileURLToPath }] = await Promise.all([
     import('./pack-indexes.mjs'),
@@ -112,10 +143,10 @@ test('bounded aggregate batches preserve 52 historical outcomes and add six R4 S
   ]);
   const index = await readPackIndexes(fileURLToPath(new URL('../', import.meta.url)));
   assert.deepEqual(
-    [...new Set([...packs, ...arcade].map((pack) => pack.id))].sort(),
+    [...new Set([...packs, ...arcade, ...pressure].map((pack) => pack.id))].sort(),
     index.all.map((entry) => entry.id).sort(),
   );
-  assert.equal(index.all.length, 10);
+  assert.equal(index.all.length, 12);
   await assert.rejects(expansionSources({ scope: 'skip-archives' }), /source scope/);
   assert.equal(result.impactDemonstrations.length, 4);
   assert.equal(sha(await readFile(legacyURL)), originalSHA);
