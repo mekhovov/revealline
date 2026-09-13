@@ -43,7 +43,7 @@ export function attachOptionalChaptersPanel({
     summary = node(
       'p',
       'summary',
-      'Four original picture collections over the same three proven Pressure Lines layouts. Separate progress; existing music. Steer continuously, collect contact pickups and watch for warned hunters.',
+      'Optional picture chapters with separate progress and existing music. Choose Arcade for continuous steering and contact pickups, or read the Tactical chapter’s recommended equipment and route choices.',
     ),
     capacity = node('p', 'capacity'),
     cards = node('div', 'cards'),

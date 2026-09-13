@@ -37,7 +37,8 @@ function downloads(t, intercept = () => null) {
     if (response) return response;
     const target = String(url).includes('optional-worlds.json')
       ? 'game/content/optional-worlds.json'
-      : first.path;
+      : catalog.packs.find((item) => String(url).endsWith(item.path))?.path;
+    assert.ok(target, `Unexpected optional chapter request: ${url}`);
     return new Response(await readFile(new URL(target, root)));
   };
   t.after(() => {
@@ -54,6 +55,56 @@ async function open(page) {
       !page.$(`optional-worlds-install-${first.id}`).disabled,
   );
 }
+test('native More worlds discovers Tactical separately and keeps the default run until explicit Choose', async (t) => {
+  images(t);
+  const page = await soloPage(t, { titleScreen: true });
+  page.$('shell-featured').click();
+  await settle(
+    () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.frame(0);
+  const requests = downloads(t),
+    chapter = catalog.packs.find((item) => item.id === 'fpv-route-choices'),
+    originalRun = page.rendered.run,
+    before = authoritativeCheckpoint(originalRun);
+  assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
+  await open(page);
+  assert.match(page.$('optional-worlds-summary').textContent, /Arcade.*Tactical/);
+  const stored = new Map(page.storage.map);
+  page.$(`optional-worlds-install-${chapter.id}`).click();
+  await settle(
+    () =>
+      !!page.$(`optional-worlds-choose-${chapter.id}`) &&
+      !page.$(`optional-worlds-choose-${chapter.id}`).disabled,
+  );
+  page.frame(0);
+  assert.equal(page.rendered.run, originalRun);
+  assert.deepEqual(authoritativeCheckpoint(originalRun), before);
+  assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
+  for (const [key, value] of stored)
+    if (!key.includes('packs')) assert.equal(page.storage.map.get(key), value, key);
+  assert.equal(requests.length, 2);
+  assert.ok(requests[1].endsWith(chapter.path));
+  page.$(`optional-worlds-choose-${chapter.id}`).click();
+  await settle(
+    () => !page.$('optional-worlds-dialog').open && page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.frame(0);
+  assert.equal(page.$('pack-select').value, chapter.id);
+  assert.deepEqual(
+    [...page.$('level-select').options].map((option) => option.value),
+    ['route-choices-foundry', 'route-choices-depot', 'route-choices-switchback'],
+  );
+  assert.equal(page.rendered.run.level.id, 'route-choices-foundry');
+  assert.equal(page.rendered.run.level.classic.arcadeActions, undefined);
+  assert.equal(page.$('action-button').hidden, false);
+  assert.equal(page.$('boost-button').hidden, false);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, true);
+  assert.match(page.$('mission-brief-copy').textContent, /Tactical challenge/);
+  assert.equal(page.doc.activeElement, page.$('start-button'));
+  assert.deepEqual(page.errors, []);
+});
 test('native More worlds installs separately, preserves an unrelated paused pack run and chooses only on explicit action', async (t) => {
   images(t);
   const page = await soloPage(t);
@@ -345,9 +396,12 @@ test('cancelling a refreshed catalog during installed-art inspection retains a c
   assert.equal(page.$('optional-worlds-dialog').open, false);
   page.$('shell-worlds').click();
   await settle(() => page.$('optional-worlds-dialog').getAttribute('aria-busy') === 'false');
-  assert.equal(
-    page.$('optional-worlds-cards').querySelectorAll('section').length,
-    4,
+  assert.deepEqual(
+    [...page.$('optional-worlds-cards').querySelectorAll('section')].map((card) => {
+      assert.equal(card.children[0].tagName, 'H3');
+      return card.children[0].textContent;
+    }),
+    catalog.packs.map((item) => item.name),
     'Cancelled list does not publish its reduced card set',
   );
   assert.equal(page.$(`optional-worlds-choose-${first.id}`).disabled, false);

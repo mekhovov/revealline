@@ -27,6 +27,7 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { createDifficultyContext } from '../campaign-difficulty.mjs';
 import { readBuildConfig, collectBuildFiles } from '../../scripts/game-cli.mjs';
+import { prepareOptionalCatalog, assertOptionalPack } from '../optional-chapters.mjs';
 
 const source = await buildRouteChoices(),
   proof = JSON.parse(await readFile(path.join(ROOT, PROOF_FILE), 'utf8'));
@@ -199,25 +200,51 @@ test('existing image/pack/library caps accept this pack and allow addition to th
   );
 });
 
-test('new optional body and raw art remain outside the current build includes and catalogs', async () => {
+test('new chapter has one exact optional catalog entry while raw art and automatic/indexed content stay excluded', async () => {
   const files = await collectBuildFiles(ROOT, await readBuildConfig(ROOT));
-  assert.ok(
-    !files.some(
-      (f) =>
-        f.startsWith('authoring/library/fpv-route-choices/') ||
-        f.startsWith('authoring/library/challenge-chapter-art/'),
-    ),
+  assert.deepEqual(
+    files
+      .filter(
+        (f) =>
+          f.startsWith('authoring/library/fpv-route-choices/') ||
+          f.startsWith('authoring/library/challenge-chapter-art/'),
+      )
+      .sort(),
+    [
+      'authoring/library/challenge-chapter-art/originals/crosswind-depot.png',
+      'authoring/library/challenge-chapter-art/originals/signal-switchback.png',
+      'authoring/library/challenge-chapter-art/originals/split-signal-foundry.png',
+      'authoring/library/challenge-chapter-art/provenance.json',
+      'authoring/library/fpv-route-choices/distribution.json',
+    ],
   );
   for (const name of [
     'packs/index.json',
     'packs/archive-index.json',
     'packs/catalog.json',
     'packs/archive-catalog.json',
-    'optional-worlds.json',
   ]) {
     const raw = await readFile(path.join(ROOT, 'game/content', name), 'utf8');
     assert.ok(!raw.includes('fpv-route-choices'));
   }
+  const catalog = prepareOptionalCatalog(
+    JSON.parse(await readFile(path.join(ROOT, 'game/content/optional-worlds.json'), 'utf8')),
+  );
+  const entries = catalog.packs.filter((item) => item.id === source.pack.id);
+  assert.equal(entries.length, 1);
+  const [entry] = entries,
+    distribution = distributionFor(source);
+  assert.equal(assertOptionalPack(prepared, entry), prepared);
+  for (const key of [
+    'path',
+    'bytes',
+    'sha256',
+    'normalizedBytes',
+    'normalizedSha256',
+    'campaignKey',
+  ])
+    assert.equal(entry[key], distribution[key]);
+  assert.match(entry.description, /Tactical/);
 });
 
 test('verifier refuses different valid image assignments, changed Tactical policy, missing routes and false context/verdict', async () => {

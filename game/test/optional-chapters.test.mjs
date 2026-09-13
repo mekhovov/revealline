@@ -41,6 +41,50 @@ test('strict optional metadata is owned; unsafe paths, oversized files, duplicat
   assert.throws(() => prepareOptionalCatalog(source));
   assert.equal(reads, 0);
 });
+test('Route Choices uses its one explicit source path and rejects arbitrary authoring paths or foreign IDs', () => {
+  const chapter = catalog.packs.find((entry) => entry.id === 'fpv-route-choices');
+  assert.ok(chapter);
+  assert.equal(chapter.path, 'authoring/library/fpv-route-choices/packs/fpv-route-choices.json');
+  for (const patch of [
+    { path: 'authoring/library/fpv-route-choices/packs/other.json' },
+    { path: 'authoring/library/four-worlds-chapters/packs/fpv-route-choices.json' },
+    { path: 'authoring/library/foreign/packs/fpv-route-choices.json' },
+    { id: 'foreign-chapter' },
+  ])
+    assert.throws(
+      () => prepareOptionalCatalog({ ...catalog, packs: [{ ...chapter, ...patch }] }),
+      /exact local distribution/,
+    );
+});
+test('actual Tactical download preserves its exact identity below both immutable release and local preview prefixes', async () => {
+  const chapter = catalog.packs.find((entry) => entry.id === 'fpv-route-choices'),
+    original = await readFile(new URL(chapter.path, root));
+  for (const baseURL of [
+    'https://mekhovov.github.io/revealline/releases/v0.34.0/site/',
+    'http://127.0.0.1:8933/preview/',
+  ]) {
+    const library = emptyPackLibrary(),
+      requests = [];
+    const pack = await prepareOptionalDownload(chapter, {
+      baseURL,
+      library,
+      decodeImage,
+      fetch: async (url, options) => {
+        requests.push([url, options.redirect]);
+        return new Response(original);
+      },
+    });
+    assert.deepEqual(requests, [[baseURL + chapter.path, 'error']]);
+    assert.equal(assertOptionalPack(pack, chapter), pack);
+    assert.equal(pack.campaigns[0].levels.length, 3);
+    assert.equal(
+      pack.campaigns[0].levels.some((level) => level.classic.arcadeActions),
+      false,
+    );
+    assert.equal(library.packs.length, 0);
+    assert.equal(installPack(library, pack).packs[0].id, chapter.id);
+  }
+});
 test('exact original pack download passes streaming byte/hash, real pack preparation and installation', async () => {
   const requests = [],
     library = emptyPackLibrary();
