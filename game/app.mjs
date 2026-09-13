@@ -18,6 +18,7 @@ import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
+import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
@@ -33,6 +34,7 @@ import { attachControllerReading } from './ui/controller-reading.mjs';
 import { attachControllerPreview } from './ui/controller-preview.mjs';
 import { attachPracticeNavigation } from './ui/practice-navigation.mjs';
 import { attachEnemyWorkshopReturn } from './ui/enemy-workshop-return.mjs';
+import { attachEnemyGuide } from './ui/enemy-guide.mjs';
 import { attachControllerSettings } from './ui/controller-settings.mjs';
 import { controllerBindingLabels, controllerStickLabel } from './controller-bindings.mjs';
 import { attachKeySettings } from './ui/key-settings.mjs';
@@ -170,7 +172,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.27.0',
+  let buildVersion = '0.28.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -438,7 +440,9 @@ try {
   const sound = new Soundscape({ persistentMusic: true });
   let neutralResumeTick = false;
   let gameShell = null,
-    missionPicker = null;
+    missionPicker = null,
+    enemyGuide = null;
+  let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
     soundtrackPanel = null,
     soundtrackStore = null;
@@ -600,6 +604,7 @@ try {
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
   syncAssistControls();
+  refreshTextSize();
   $('music-select').value = library.preferences.musicGenre;
   $('master-volume').value = library.preferences.masterVolume;
   $('music-volume').value = library.preferences.musicVolume;
@@ -718,6 +723,10 @@ try {
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'enemy-guide-dialog') {
+        enemyGuide.close();
+        return;
+      }
       if (dialog.id === 'library-dialog' && libraryPanel.cancelAttemptExport()) return;
       const transferCancel = $('transfer-cancel');
       if (
@@ -831,6 +840,39 @@ try {
     enabled: practiceSession && !courseSession && !controllerPreviewRequested,
     onReturn: () => pause(true),
   });
+  enemyGuide = attachEnemyGuide({
+    themes: themesFile.themes,
+    getThemeId: () => theme.id,
+    getTurnPolicy: () => turnPolicy,
+    loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
+    onPractice: () => {
+      clearInput();
+      guideMusicWasPlaying = soundtrackPlayer?.snapshot().desired ?? sound.enabled;
+      suspendAudio();
+    },
+    onReturn: () => {
+      clearInput();
+      if (
+        !soundtrackDisposed &&
+        guideMusicWasPlaying &&
+        library.preferences.musicEnabled &&
+        !document.hidden &&
+        document.hasFocus()
+      )
+        activateAudio().catch(() => {});
+      guideMusicWasPlaying = false;
+    },
+    onClose: () => {
+      clearInput();
+      if (!controllerDialog()) controllerFocus()?.focus({ preventScroll: true });
+    },
+    onRead: (request) => controllerNavigation.beginReading(request),
+  });
+  $('shell-guide').onclick = () => {
+    pause(true);
+    if ($('shell-home').open) $('shell-home').close();
+    enemyGuide.open();
+  };
   handlePageHide = (event) => {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
@@ -847,6 +889,7 @@ try {
     if (!event.persisted) {
       soundtrackDisposed = true;
       soundtrackLoad.abort();
+      enemyGuide.dispose();
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
       soundtrackStore?.close();
@@ -1185,6 +1228,9 @@ try {
       coursePhase = 'ended';
       show('game-overlay', true);
       $('game-overlay').dataset.kind = 'course-ended';
+      show('pause-label', false);
+      show('overlay-reading', true);
+      show('overlay-footnote', true);
       $('overlay-title').textContent = 'First Flight ended.';
       $('overlay-copy').textContent =
         'Practice awarded no progress. Use the parent page’s game link to return to ordinary play.';
@@ -1200,6 +1246,7 @@ try {
       ])
         show(id, false);
       refreshCourse();
+      controllerReading?.refresh();
       $('overlay-read').focus({ preventScroll: true });
     } else {
       coursePhase = 'leaving';
@@ -1331,6 +1378,12 @@ try {
     $('content-select-status').textContent = message;
     if (error) $('content-select-status').dataset.kind = 'error';
     else delete $('content-select-status').dataset.kind;
+    const homeStatus = $('shell-featured-status');
+    if (homeStatus) {
+      homeStatus.textContent = message;
+      homeStatus.hidden = !message;
+      homeStatus.dataset.kind = error ? 'error' : 'status';
+    }
   }
   function invalidateContentSwitch({ announce = false } = {}) {
     attemptFiles?.invalidate();
@@ -1428,6 +1481,7 @@ try {
       show('save-warning', true);
     }
     refreshDifficulty();
+    refreshTextSize();
     return saved;
   }
   function preferences(patch) {
@@ -1438,6 +1492,7 @@ try {
       };
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
+    refreshTextSize();
     return {
       ok: false,
       warning:
@@ -1575,7 +1630,7 @@ try {
       operation,
       before,
       () => packs,
-      () => getJSON(`content/packs/${summary.path}`),
+      () => fetchBundledChapter(summary),
     );
     const prepared = await packLaunchGuard.run(
       operation,
@@ -1814,6 +1869,7 @@ try {
   }
   function adoptPreferences() {
     const p = library.preferences;
+    refreshTextSize();
     turnPolicy = p.turnPolicy;
     classId = classRegistry.some((c) => c.id === p.classId) ? p.classId : classRegistry[0].id;
     theme = themesFile.themes.find((t) => t.id === p.themeId) || theme;
@@ -2217,6 +2273,12 @@ try {
     preferences({ style: $('terrain-select').value });
     setTheme();
   };
+  $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
+  function refreshTextSize() {
+    const size = library.preferences.textSize;
+    $('text-size').value = size;
+    document.body.dataset.textSize = size;
+  }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
@@ -2453,7 +2515,7 @@ try {
     show('mastery-brief', visible);
     show('mastery-status', visible && $('game-overlay').hidden);
     const kind = $('game-overlay').dataset.kind;
-    show('mastery-overlay', visible && ['ready', 'pause', 'won', 'lost'].includes(kind));
+    show('mastery-overlay', visible && ['ready', 'won', 'lost'].includes(kind));
     if (!visible) return;
     const preview = masteryObserver?.snapshot();
     for (const id of ['mastery-status', 'mastery-overlay']) {
@@ -2469,6 +2531,9 @@ try {
   }
   function overlay(kind) {
     $('game-overlay').dataset.kind = kind;
+    show('pause-label', kind === 'pause');
+    show('overlay-reading', kind !== 'pause');
+    show('overlay-footnote', kind !== 'pause');
     $('game-overlay').dataset.intro = String(
       kind === 'ready' &&
         !practice &&
@@ -2522,11 +2587,10 @@ try {
       $('overlay-footnote').textContent = 'Your earned pictures and best results are kept.';
     }
     if (kind === 'pause') {
-      $('overlay-title').textContent = 'Take a breath.';
-      $('overlay-copy').textContent =
-        'Your line, enemies and clock are paused. Continue when you are ready.';
+      $('overlay-title').textContent = 'Paused';
+      $('overlay-copy').textContent = '';
       $('start-button').textContent = 'Resume →';
-      $('overlay-footnote').textContent = 'Focus loss pauses the game and releases held controls.';
+      $('overlay-footnote').textContent = '';
     }
     if (kind === 'won') {
       $('overlay-title').textContent = 'A little more light.';
@@ -2984,6 +3048,13 @@ try {
       return;
     }
     controllerInactive = false;
+    // The isolated lesson owns its controller; the paused parent must not
+    // sample the same pad or turn a child Confirm into a parent menu action.
+    if (enemyGuide?.ownsPracticeFocus()) {
+      clearInput();
+      return;
+    }
+    enemyGuide?.update(elapsed, { reduced: $('reduced-effects').checked });
     const scope = controllerScope();
     controllerFrame = controller.sample({
       scope,
@@ -3479,7 +3550,14 @@ try {
   );
   window.addEventListener('blur', suspendInteraction);
   function restoreListening() {
-    if (document.hidden || soundtrackDisposed || !soundtrackPlayer || !soundtrackSuspended) return;
+    if (
+      document.hidden ||
+      soundtrackDisposed ||
+      !soundtrackPlayer ||
+      !soundtrackSuspended ||
+      enemyGuide?.practiceActive
+    )
+      return;
     soundtrackSuspended = false;
     void soundtrackPlayer.resume();
   }

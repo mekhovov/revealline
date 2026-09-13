@@ -143,6 +143,7 @@ for (const source of fixture.sources) {
       controllerBindings: old.preferences.controllerBindings ?? null,
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
+      textSize: 'standard',
     });
     unchangedRecords(migrated, old);
     assert.equal(JSON.stringify(old), bytes);

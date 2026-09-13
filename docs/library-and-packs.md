@@ -140,6 +140,12 @@ Use **Library & saves → Saves & loads → Export complete backup** for one por
 
 In v0.18, the game's **Pack** and **Level** selectors provide ordinary navigation; choosing a bundled pack can install it before presenting its levels. The public landing page also offers pack launch links. These choices have their own installation and launch behavior. In the new working-source export flow, a pending content operation blocks export, and changing content invalidates verification. Selecting a different mission never changes which stored checkpoint is exported.
 
+The original **First Light** chapter is optional in the current offline cache. Preparing core offline play does not download that chapter. Select it once while online to install its complete pack; an already-installed copy can be selected without another network request. R2 and R3 remain separate campaign editions. Keep a complete backup because browser storage can be cleared or evicted.
+
+The working chapter-download feedback names the chapter when its files cannot be fetched. Connect to the internet and choose the chapter again; for an unavailable HTTP response or unreadable download, reload the game while online before retrying. The featured button shows failures inside the title menu, and chapter selection shows them beside the missions. A failed download keeps the current flight and installed chapters. Opening Missions or the title menu still has its ordinary pause/autosave behavior; the error handler does not create another save or silently start a replacement. Retries are explicit. Content validation, image decoding and the unchanged 48 MiB installed-pack budget remain separate checks, with no automatic removal of older packs.
+
+Maintainers: [chapter-download.mjs](../game/chapter-download.mjs) handles only fetching and reading a validated catalog entry. Keep it inside the existing pack-launch guard and before `preparePack`; cancelled or superseded work must not publish a late message or replace the selected run. See the [request tests](../game/test/chapter-download.test.mjs) and [actual-app tests](../game/test/chapter-download-host.test.mjs). Their modeled network, storage, DOM and image-decoder boundaries do not establish browser offline-cache retention.
+
 ```js
 import {
   emptyPackLibrary,

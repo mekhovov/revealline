@@ -9,14 +9,8 @@
       "mode": "asset_execution",
       "intent": "Create an independently replaceable enemy appearance",
       "status": "template_not_executed",
-      "reference_requirements": [
-        "docs/enemy-catalog.md",
-        "docs/feature-delivery-workflow.md"
-      ],
-      "variables": [
-        "ROLE",
-        "THEME"
-      ],
+      "reference_requirements": ["docs/enemy-catalog.md", "docs/feature-delivery-workflow.md"],
+      "variables": ["ROLE", "THEME"],
       "prompt": "Inspect registered role {{ROLE}} in game/enemy-catalog.mjs and presentation family {{THEME}}. Preserve its collider, behavior, image-slot name, risk badge and heading convention. Create original art with the image tool if raster assets are requested; preserve source/provenance and compare compact and detailed treatments at actual play size. Bind only through supported visual overrides; test pause, freeze, warning and reduced effects. Use the enemy workshop to preview and practice. Changing a catalog enable switch affects future authoring only. Follow docs/feature-delivery-workflow.md for a completed implementation.",
       "example_request": "Render enemy-role-skin using the requested theme or registered role; inspect outputs before publication."
     },
@@ -27,14 +21,9 @@
       "mode": "asset_execution",
       "intent": "Prepare a theme-specific generator roster",
       "status": "template_not_executed",
-      "reference_requirements": [
-        "docs/enemy-catalog.md",
-        "docs/feature-delivery-workflow.md"
-      ],
-      "variables": [
-        "THEME"
-      ],
-      "prompt": "Use the enemy workshop to prepare a {{THEME}} roster with seven explicit registered role records. Explain each role\u2019s location, movement, danger and cue. Save/reload and export/import the bounded catalog document; test disabled roles cannot start a study. Apply a roster only to a new draft level through the existing catalog materialization seam. Never silently remove actors from an existing campaign, save or rated run. New primitives require code and tests.",
+      "reference_requirements": ["docs/enemy-catalog.md", "docs/feature-delivery-workflow.md"],
+      "variables": ["THEME"],
+      "prompt": "Use the enemy workshop to prepare a {{THEME}} roster with seven explicit registered role records. Explain each role’s location, movement, danger and cue. Save/reload and export/import the bounded catalog document; test disabled roles cannot start a study. Apply a roster only to a new draft level through the existing catalog materialization seam. Never silently remove actors from an existing campaign, save or rated run. New primitives require code and tests.",
       "example_request": "Render enemy-authoring-roster using the requested theme or registered role; inspect outputs before publication."
     },
     {
@@ -44,13 +33,8 @@
       "mode": "asset_execution",
       "intent": "Author a playable trail-impact race",
       "status": "template_not_executed",
-      "reference_requirements": [
-        "docs/enemy-catalog.md",
-        "docs/feature-delivery-workflow.md"
-      ],
-      "variables": [
-        "MAP_ID"
-      ],
+      "reference_requirements": ["docs/enemy-catalog.md", "docs/feature-delivery-workflow.md"],
+      "variables": ["MAP_ID"],
       "prompt": "Create a new authored map {{MAP_ID}} using optional classic.lineImpact version line-impact.v1 and validated speed. Explain two fronts, growing trails, capture-before-arrival escape and immediate direct-body contact. Prove ordinary input outcomes for both turning modes, queued-turn save/restore, pause, multiple seeds and recovery. Reuse a prior image only with honest provenance. Preserve older campaign IDs/proofs and enforce pack/offline budgets. Do not present inferred XPOSED timing as measured fact.",
       "example_request": "Render line-impact-challenge using the requested theme or registered role; inspect outputs before publication."
     },
@@ -61,15 +45,42 @@
       "mode": "asset_execution",
       "intent": "Refine pickup and life-loss feedback across a theme",
       "status": "template_not_executed",
+      "reference_requirements": ["docs/enemy-catalog.md", "docs/feature-delivery-workflow.md"],
+      "variables": ["THEME"],
+      "prompt": "Inspect actual {{THEME}} play, four pickup glyphs and theme-aware destruction/recovery in game/ui/event-feedback.mjs and classic-view.mjs. Keep heart, chevrons, hourglass and snowflake distinct even without color. Copy event-time coordinates; never place an old batched event at the current player position. Read effect timers and impact fronts from authoritative simulation state. Preserve bounded queues and static reduced-effects meaning, avoid flashes that obscure the route, inspect actual playback, and compare unchanged checkpoint hashes. Prompts and contact sheets are not completed animations.",
+      "example_request": "Render pickup-defeat-feedback using the requested theme or registered role; inspect outputs before publication."
+    },
+    {
+      "id": "enemy-player-introduction",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Teach one registered enemy through concise copy and isolated practice",
+      "status": "template_not_executed",
       "reference_requirements": [
+        "docs/enemy-guide.md",
         "docs/enemy-catalog.md",
         "docs/feature-delivery-workflow.md"
       ],
-      "variables": [
-        "THEME"
+      "variables": ["ROLE", "THEME"],
+      "prompt": "Inspect registered role {{ROLE}} in the {{THEME}} presentation family. Refine its player field-guide Spot / Risk / Try copy in game/enemy-guide.mjs using actual core behavior, existing silhouette and fixed risk badge. Reuse its validated guide scenario with separate practice identity and actual turning policy. Verify keyboard/controller/touch entry, legal interaction, Retry and Return to the same guide topic while the original campaign checkpoint, profile and saved slot stay intact. Never advertise a hidden authoring switch, reference-game asset or fictional military specification as player behavior. Verify source tests and actual browser comprehension separately; follow the feature delivery workflow for an implemented change.",
+      "example_request": "python3 authoring/prompt.py render enemy-player-introduction --set ROLE=claimed-rover --set THEME=ukraine"
+    },
+    {
+      "id": "impact-player-lesson",
+      "family": "cross-family",
+      "asset_type": "runtime_workflow",
+      "mode": "asset_execution",
+      "intent": "Verify or refine the observe-and-escape impact lesson",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/enemy-guide.md",
+        "authoring/library/fpv-arcade-r3/README.md",
+        "docs/feature-delivery-workflow.md"
       ],
-      "prompt": "Inspect actual {{THEME}} play, four pickup glyphs and theme-aware destruction/recovery in game/ui/event-feedback.mjs and classic-view.mjs. Keep heart, chevrons, hourglass and snowflake distinct even without color. Copy event-time coordinates; never place an old batched event at the current player position. Read effect timers and impact fronts from authoritative simulation state. Preserve bounded queues and static reduced-effects meaning, avoid flashes that obscure the route, inspect actual playback, and compare unchanged checkpoint hashes. Prompts and contact sheets are not completed animations.",
-      "example_request": "Render pickup-defeat-feedback using the requested theme or registered role; inspect outputs before publication."
+      "variables": ["THEME"],
+      "prompt": "Review the {{THEME}} player impact lesson using game/content/scenarios/line-impact-demo.json through the existing practice host. Teach an unboosted Down attempt that visibly seeds two travelling fronts and loses, then a fresh Boost-before-Down attempt that closes safely before arrival. Preserve the original level geometry, declared rules, both turning modes and replay authority. Keep Hold versus Toggle instructions truthful; no synthetic win or duplicate reward. Prove Retry retains one life and the 45 percent target, and Return restores the same guide with parent flight paused and only one audible music owner. Test canceled preparation, held input at return, nested-release URLs and unchanged saved data. Record real browser and human comprehension limits; do not infer reference timing from the preview illustration.",
+      "example_request": "python3 authoring/prompt.py render impact-player-lesson --set THEME=retro"
     }
   ]
 }

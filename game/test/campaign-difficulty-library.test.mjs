@@ -193,6 +193,7 @@ for (const source of oldProfiles)
       controllerBindings: old.preferences.controllerBindings ?? null,
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
+      textSize: 'standard',
     });
     for (const name of ['campaigns', 'gallery', 'scores', 'masteries'])
       assert.deepEqual(migrated[name], old[name] ?? []);
