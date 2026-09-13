@@ -112,8 +112,20 @@ the first focused run passed eight of nine cases, with the last failing because
 its new test named `external-chapters.json` instead of the existing
 `external-worlds.json`. Neither required a shared runtime change.
 
-Runtime registry/catalog/build admission, native install and separate Choose,
-active-run preservation, Collection, original recovery, backup/offline and
-public/device acceptance remain separate integration work. Existing embedded
-packs and historical owners are not migrated or replaced. These candidates are
-outside the frozen v0.36.0 source and do not complete the larger content target.
+The initial compiler commit `f2556cc607f3383a3fd4a6268803a1b01b81f307` and its
+source-proof receipt remain a separate historical qualification. A later source
+admission appends these three exact descriptors to the existing shared runtime
+registry/catalog and adds explicit compiler dispatch to the distribution build
+adapter; it does not alter these owners, original bytes or route proofs. See
+[the delivery contract](../../../docs/external-chapter-delivery.md) for the eight
+external choices, sixteen paired bodies and pending build/native/public gates.
+
+Source tests cover explicit Download followed by separate Choose, paused-run
+preservation, independent first-earned still/null-story pins, metadata backup
+and restart using the actual app with modeled DOM, image dimensions and storage.
+No full site build or native browser qualification is claimed for this admission.
+Eight external plus five embedded choices exceed the unchanged twelve-pack
+installation limit; count, 48 MiB pack/index and 256 MiB media staging refusals
+remain explicit with no eviction. Existing embedded packs and historical owners
+are not migrated or replaced. These additions are outside frozen v0.36.0 and do
+not complete the larger content target.

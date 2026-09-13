@@ -281,10 +281,178 @@ const sentinelDescriptor = validateExternalChapter({
     },
   ],
 });
+const sentinelThemeDescriptors = [
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'sentinel-circuit-ukraine',
+    revision: 1,
+    source: {
+      id: 'sentinel-circuit',
+      bytes: 8943,
+      sha256: 'cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40',
+    },
+    pack: {
+      bytes: 9440,
+      sha256: 'b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85',
+    },
+    media: {
+      bytes: 8175624,
+      sha256: 'dc95ace9a12923999c2a740cccfffaa073542344e190c49b5d3b2310ea459afd',
+    },
+    campaignKey: 'sentinel-circuit-ukraine/1/2c5a77757c64c4d1',
+    themeId: 'ukraine',
+    originals: [
+      {
+        assetId: 'sentinel-circuit-ukraine-poster-1',
+        presentationId: 'sentinel-circuit-ukraine-poster-1-presentation',
+        levelId: 'sentinel-circuit-ukraine-listening-court',
+        levelRevision: '1',
+        sha256: 'f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91',
+        bytes: 3018491,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-ukraine-poster-2',
+        presentationId: 'sentinel-circuit-ukraine-poster-2-presentation',
+        levelId: 'sentinel-circuit-ukraine-switchyard-gates',
+        levelRevision: '1',
+        sha256: '2d8864ab2d18b130d80f0f8b3738689f00cf65e68093286753e5485db1c3d0a3',
+        bytes: 2682645,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-ukraine-poster-3',
+        presentationId: 'sentinel-circuit-ukraine-poster-3-presentation',
+        levelId: 'sentinel-circuit-ukraine-open-circuit',
+        levelRevision: '1',
+        sha256: '47fde83552f6fc155f4efc41ca834c8a672b116fb392c5bdd893d6f8e6565ebb',
+        bytes: 2462247,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'sentinel-circuit-retro',
+    revision: 1,
+    source: {
+      id: 'sentinel-circuit',
+      bytes: 8943,
+      sha256: 'cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40',
+    },
+    pack: {
+      bytes: 9404,
+      sha256: 'eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545',
+    },
+    media: {
+      bytes: 7553086,
+      sha256: 'e8e9c90ba2c154d0a7c23fddddb4592025b8133956d70ee6bd35443540090b2e',
+    },
+    campaignKey: 'sentinel-circuit-retro/1/e8edd91a796a9b65',
+    themeId: 'retro',
+    originals: [
+      {
+        assetId: 'sentinel-circuit-retro-poster-1',
+        presentationId: 'sentinel-circuit-retro-poster-1-presentation',
+        levelId: 'sentinel-circuit-retro-listening-court',
+        levelRevision: '1',
+        sha256: '93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf',
+        bytes: 2455383,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-retro-poster-2',
+        presentationId: 'sentinel-circuit-retro-poster-2-presentation',
+        levelId: 'sentinel-circuit-retro-switchyard-gates',
+        levelRevision: '1',
+        sha256: '0acd0b721c9d066e890970a1e6d429f4d2ccb8d94b31893e2fdae34f37a75239',
+        bytes: 2662328,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-retro-poster-3',
+        presentationId: 'sentinel-circuit-retro-poster-3-presentation',
+        levelId: 'sentinel-circuit-retro-open-circuit',
+        levelRevision: '1',
+        sha256: '03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee',
+        bytes: 2423183,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'sentinel-circuit-coupa',
+    revision: 1,
+    source: {
+      id: 'sentinel-circuit',
+      bytes: 8943,
+      sha256: 'cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40',
+    },
+    pack: {
+      bytes: 9427,
+      sha256: '0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c',
+    },
+    media: {
+      bytes: 7416321,
+      sha256: '185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16',
+    },
+    campaignKey: 'sentinel-circuit-coupa/1/8459eb3ba67608e6',
+    themeId: 'coupa',
+    originals: [
+      {
+        assetId: 'sentinel-circuit-coupa-poster-1',
+        presentationId: 'sentinel-circuit-coupa-poster-1-presentation',
+        levelId: 'sentinel-circuit-coupa-listening-court',
+        levelRevision: '1',
+        sha256: '8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d',
+        bytes: 2767187,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-coupa-poster-2',
+        presentationId: 'sentinel-circuit-coupa-poster-2-presentation',
+        levelId: 'sentinel-circuit-coupa-switchyard-gates',
+        levelRevision: '1',
+        sha256: '1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a',
+        bytes: 2187660,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'sentinel-circuit-coupa-poster-3',
+        presentationId: 'sentinel-circuit-coupa-poster-3-presentation',
+        levelId: 'sentinel-circuit-coupa-open-circuit',
+        levelRevision: '1',
+        sha256: 'c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793',
+        bytes: 2449288,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
 export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   SOURCE_EXTERNAL_CHAPTER,
   ...routeDescriptors,
   sentinelDescriptor,
+  ...sentinelThemeDescriptors,
 ]);
 const names = [
   'FPV Front · Pressure Pictures',
@@ -292,6 +460,9 @@ const names = [
   '1994 Forever · Route Choices',
   'Spend Network · Route Choices',
   'FPV Front · Sentinel Circuit',
+  'Ukraine Atlas · Sentinel Circuit',
+  '1994 Forever · Sentinel Circuit',
+  'Spend Network · Sentinel Circuit',
 ];
 export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
   SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
@@ -305,7 +476,9 @@ export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
           ? 'Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.'
           : descriptor.id === sentinelDescriptor.id
             ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
-            : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
+            : sentinelThemeDescriptors.includes(descriptor)
+              ? 'Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.'
+              : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
     }),
   ),
 );
