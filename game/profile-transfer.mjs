@@ -1,5 +1,5 @@
 import { BACKUP_FORMAT, isPreparedBackup, prepareBackup } from './backup.mjs';
-import { importLibrary } from './library.mjs';
+import { emptyLibrary, importLibrary } from './library.mjs';
 import { emptyPackLibrary, PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { browserDecodeImage } from './imports.mjs';
@@ -13,6 +13,7 @@ export const TRANSFER_LIMITS = Object.freeze({
 });
 const versionPattern = /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
 const prefix = 'revealline.library.';
+const discoveryPrefixes = [prefix, 'revealline.suspended.'];
 const suffix = '.v1';
 async function sha256(bytes) {
   required(
@@ -81,7 +82,8 @@ function sourceFor(channel, current) {
  * Frozen v0.2.0 used exactly `release`; v0.2.1 onward uses the build label in
  * `release-vN.N.N` (or `release-N.N.N`). These sources share the writer/journal
  * protocol. Dev, motion-lab, old per-campaign progress and future channels are
- * deliberately excluded. No release URLs, network requests or value writes.
+ * deliberately excluded. A saved flight can exist before the first profile
+ * write, so discover both exact namespaces. No value reads or writes.
  */
 export function discoverProfileTransfers({ storage, currentVersion } = {}) {
   const current = targetVersion(currentVersion);
@@ -95,8 +97,9 @@ export function discoverProfileTransfers({ storage, currentVersion } = {}) {
   for (let index = 0; index < length; index++) {
     const key = storage.key(index);
     required(key === null || typeof key === 'string', 'Storage key discovery failed.');
-    if (!key?.startsWith(prefix) || !key.endsWith(suffix)) continue;
-    const source = sourceFor(key.slice(prefix.length, -suffix.length), current);
+    const namespace = discoveryPrefixes.find((value) => key?.startsWith(value));
+    if (!namespace || !key.endsWith(suffix)) continue;
+    const source = sourceFor(key.slice(namespace.length, -suffix.length), current);
     if (!source) continue;
     sources.set(source.id, source);
     required(
@@ -175,8 +178,9 @@ function rawJSON(candidate, maxBytes, label) {
 /** Take a read-only, source-locked snapshot and validate it using the existing
  * complete-backup pipeline. The caller explicitly applies `prepared` through
  * its target commitBackup/Undo path after success. This never applies a backup.
- * Only successful null reads mean absent optional packs/slot; a missing profile,
- * undefined result, corrupt document or pending recovery is always an error.
+ * Only successful null reads mean absence. A never-written profile is accepted
+ * only alongside a verified saved flight; undefined, corruption, pending
+ * recovery or an entirely missing source never becomes an empty replacement.
  */
 export async function prepareProfileTransfer(
   sourceId,
@@ -187,6 +191,7 @@ export async function prepareProfileTransfer(
     currentVersion,
     campaigns = [],
     resolveCampaign,
+    expandCampaigns,
     decodeImage = browserDecodeImage,
     digest = sha256,
     signal,
@@ -233,16 +238,20 @@ export async function prepareProfileTransfer(
         op.check();
         const rawProfile = storage.getItem(source.profileKey);
         required(
-          typeof rawProfile === 'string',
+          rawProfile === null || typeof rawProfile === 'string',
           'The earlier player library is missing or unreadable; no empty replacement was created.',
         );
         // Unlike loadLibrary, importLibrary never falls back to an empty profile.
-        const library = importLibrary(rawProfile, { campaigns });
+        const library = rawProfile === null ? null : importLibrary(rawProfile, { campaigns });
         const rawPacks = await op.wait(() => readAsset(source.packsKey));
         const rawSession = storage.getItem(source.sessionKey);
         required(
           rawSession === null || typeof rawSession === 'string',
           'The earlier saved-flight slot could not be read.',
+        );
+        required(
+          library !== null || rawSession !== null,
+          'The earlier player library and saved flight are missing; no empty replacement was created.',
         );
         const packs =
           rawPacks === null
@@ -258,10 +267,11 @@ export async function prepareProfileTransfer(
         );
         const prepared = await op.wait(() =>
           prepareBackup(
-            { format: BACKUP_FORMAT, library, packs, session },
+            { format: BACKUP_FORMAT, library: library ?? emptyLibrary(), packs, session },
             {
               campaigns,
               resolveCampaign,
+              expandCampaigns,
               decodeImage: (...args) => op.wait(() => decodeImage(...args)),
               signal: op.signal,
               onProgress,
@@ -269,6 +279,10 @@ export async function prepareProfileTransfer(
           ),
         );
         op.check();
+        required(
+          library !== null || prepared.session !== null,
+          'An absent player profile requires a verified saved flight; no empty replacement was created.',
+        );
         const fingerprint = await op.wait(() => transferFingerprint(prepared, { digest }));
         op.check();
         const packIds = new Set(prepared.packs.packs.map((pack) => pack.id));
@@ -288,6 +302,7 @@ export async function prepareProfileTransfer(
           scores: prepared.library.scores.length,
           packs: prepared.packs.packs.length,
           hasSession: prepared.session !== null,
+          ...(library === null ? { profileAbsent: true } : {}),
           missingOptional: Object.freeze({
             packs: rawPacks === null,
             session: rawSession === null,
