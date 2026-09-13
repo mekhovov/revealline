@@ -1,0 +1,12 @@
+{
+  "format": "revealline-imagegen-requests.v1",
+  "calls": [
+    {
+      "id": "dawn-signal-illustration",
+      "tool": "image_gen.imagegen",
+      "arguments": {
+        "prompt": "Use case: illustration-story\nAsset type: Original scenic background plate for a short, optional game victory story; later procedural animation will add a small returning craft and restrained light/water motion.\nPrimary request: Dawn Signal: a peaceful coastal signal station at the first blue light of dawn, in the dark modern detailed pixel-art style of a premium territory-reveal game.\nScene: A weathered stone beacon and attached small timber radio cottage stand on a rocky, grass-fringed promontory at the left third. Amber lantern windows, copper aerial details, basalt rocks, winding stone steps and a compact wooden landing platform provide tactile story detail. A quiet sheltered inlet fills the middle and lower right, with fine broken golden/cyan reflections and layered distant blue coastal hills. A narrow peach dawn band meets a deep navy sky.\nComposition: Single cohesive widescreen 16:9 illustration, ideally 1792x1008. Keep the entire building and its warm lantern room visible with breathing room above. The upper-right and middle-right sky/water should have natural uncluttered space for one small craft to approach; no craft or people are baked into this background plate. Distinct foreground rocks, middle-distance station and distant headland silhouettes reward partial reveals.\nStyle: Richly composed modern pixel art with deliberate crisp pixel clusters, stepped contours and restrained dithering; no soft airbrush, no vector look, no blocky placeholder geometry. Restrained navy, desaturated teal and indigo with small warm amber and peach highlights. Strong readable silhouettes, detailed stone/wood/grass, subtle believable warm reflections. Calm and hopeful, not a combat scene.\nConstraints: Entirely original illustration, no copied game artwork, brands or recognizable licensed characters. No text, letters, digits, logos, badges, watermarks, UI, border, aircraft, people, weapons, gore or explosions. Keep the output as one complete scenic illustration, not a sheet or collage.\n"
+      }
+    }
+  ]
+}
