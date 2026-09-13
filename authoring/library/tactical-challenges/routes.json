@@ -1,0 +1,5474 @@
+{
+  "format": "revealline-tactical-challenges-proof.v1",
+  "sourcePins": {
+    "game/content/themes.json": "93582f7d9ba53753106df7b63928f086820fc0f68357d3c08f26c0b89fb84774",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84"
+  },
+  "scenariosSha256": "13d9a938d756a649fe7b44089a8c96dd06521c0454b619cc740089105658d5a0",
+  "routes": [
+    {
+      "id": "challenge-forked-approach/immediate/west-exit-clear",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 192,
+          "input": {
+            "direction": "left",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 294,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 606,
+        "time": 5.050000000000041,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 15280,
+        "coverage": 0.6631944444444444,
+        "claimedCount": 1528,
+        "totalClaimable": 2304,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "1e2349ce0a972945",
+        "sections": {
+          "identity": "b5d270c6e883e4ac",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "95b7e664c00b8e62",
+          "player": "03468c9fa22b50e5",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "15d422b5d62c11ed",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "6ef39e179584ddeb",
+          "continuation": "a9d828ced6380d30",
+          "result": "7cdd416b43f7c61f",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "909e146282d9136a"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 50,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 606,
+            "coverage": 0.6631944444444444,
+            "player": {
+              "x": 20.500000000000163,
+              "y": 34.9999999999999,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1528
+          }
+        ],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 60,
+          "committed": 240,
+          "cooldown": 282
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 4.666666666666667,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "warning",
+              "nextScanTick": 49,
+              "warningUntil": 85,
+              "commitUntil": null,
+              "cooldownUntil": null,
+              "target": {
+                "x": 36.5,
+                "y": 5.5
+              },
+              "path": [],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 606,
+          "time": 5.050000000000041,
+          "reason": "capture",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "cut.closed",
+          "tick": 606,
+          "time": 5.050000000000041,
+          "cells": 1528
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 606,
+          "time": 5.050000000000041
+        }
+      ],
+      "savedPrefix": {
+        "tick": 50,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "babc0ca11b7aab79",
+          "sections": {
+            "identity": "b5d270c6e883e4ac",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "77aab8722fc557b1",
+            "trail": "69f1d15bd4931342",
+            "enemies": "ee0b4d7eded879f8",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "9401ad831e1ff167",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "594ce09c229ab57e"
+          }
+        },
+        "sessionSha256": "be469aa6e2cda3deee4e2012eb883175c60e7dbf480bcefe6c413ebc7c2940b5"
+      }
+    },
+    {
+      "id": "challenge-forked-approach/grid-center/west-exit-clear",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 192,
+          "input": {
+            "direction": "left",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 294,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 606,
+        "time": 5.050000000000041,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 15280,
+        "coverage": 0.6631944444444444,
+        "claimedCount": 1528,
+        "totalClaimable": 2304,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "52a7755c27ae9e1d",
+        "sections": {
+          "identity": "ad219d9029712b0d",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "95b7e664c00b8e62",
+          "player": "4b2db2be356cbe73",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "15d422b5d62c11ed",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "6ef39e179584ddeb",
+          "continuation": "a9d828ced6380d30",
+          "result": "55a57fb6dda0dfee",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "909e146282d9136a"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 50,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 606,
+            "coverage": 0.6631944444444444,
+            "player": {
+              "x": 20.500000000000163,
+              "y": 34.999999999999865,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1528
+          }
+        ],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 60,
+          "committed": 240,
+          "cooldown": 282
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 4.666666666666665,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "warning",
+              "nextScanTick": 49,
+              "warningUntil": 85,
+              "commitUntil": null,
+              "cooldownUntil": null,
+              "target": {
+                "x": 36.5,
+                "y": 5.5
+              },
+              "path": [],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 606,
+          "time": 5.050000000000041,
+          "reason": "capture",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "cut.closed",
+          "tick": 606,
+          "time": 5.050000000000041,
+          "cells": 1528
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 606,
+          "time": 5.050000000000041
+        }
+      ],
+      "savedPrefix": {
+        "tick": 50,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "4a253754333fab7c",
+          "sections": {
+            "identity": "ad219d9029712b0d",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "77a4b4722fc0e537",
+            "trail": "8a50714a3cbeaf60",
+            "enemies": "ee0b4d7eded879f8",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "9401ad831e1ff167",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "594ce09c229ab57e"
+          }
+        },
+        "sessionSha256": "2e7e098f32451ad8b70ba1ff69a2813e9eeded66430329b9dddbdec2e409dfb3"
+      }
+    },
+    {
+      "id": "challenge-forked-approach/immediate/east-exit-clear",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 180,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 294,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 594,
+        "time": 4.950000000000036,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 8160,
+        "coverage": 0.3541666666666667,
+        "claimedCount": 816,
+        "totalClaimable": 2304,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "1c83a13b3cff610a",
+        "sections": {
+          "identity": "b5d270c6e883e4ac",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "b8f1ebaec938154a",
+          "player": "09a543444927a97b",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "55e31fdb6f82280c",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "484ffa4921d94738",
+          "continuation": "a9d828ced6380d30",
+          "result": "e7367669b833314e",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "6d56c6bdc9e04214"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 49,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 594,
+            "coverage": 0.3541666666666667,
+            "player": {
+              "x": 51.500000000000426,
+              "y": 34.99999999999989,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 816
+          }
+        ],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 60,
+          "committed": 240,
+          "cooldown": 270
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 39.00000000000007,
+            "y": 10.500000000000005,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "committed",
+              "nextScanTick": 49,
+              "warningUntil": null,
+              "commitUntil": 325,
+              "cooldownUntil": null,
+              "target": {
+                "x": 36.5,
+                "y": 5.5
+              },
+              "path": [
+                {
+                  "x": 36.5,
+                  "y": 5.5
+                }
+              ],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 594,
+          "time": 4.950000000000036,
+          "reason": "capture",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "cut.closed",
+          "tick": 594,
+          "time": 4.950000000000036,
+          "cells": 816
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 594,
+          "time": 4.950000000000036
+        }
+      ],
+      "savedPrefix": {
+        "tick": 150,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "dc1e7481d56d62e5",
+          "sections": {
+            "identity": "b5d270c6e883e4ac",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "6e3063ac7d09fbfc",
+            "trail": "e6809c84f6bad78b",
+            "enemies": "2258b39f8423296b",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "3a4e038e8665dfbf",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "aaffe4ff26621cd6"
+          }
+        },
+        "sessionSha256": "41eb98f4cef25f275d8c157402ea204c9252c23afc0d8c26dbabf79862871b92"
+      }
+    },
+    {
+      "id": "challenge-forked-approach/grid-center/east-exit-clear",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 180,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 294,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 594,
+        "time": 4.950000000000036,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 8160,
+        "coverage": 0.3541666666666667,
+        "claimedCount": 816,
+        "totalClaimable": 2304,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "d732d3958ea7ce4f",
+        "sections": {
+          "identity": "ad219d9029712b0d",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "b8f1ebaec938154a",
+          "player": "f2c2cbf0806c0b77",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "55e31fdb6f82280c",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "484ffa4921d94738",
+          "continuation": "a9d828ced6380d30",
+          "result": "7a4f6b1927eb3cff",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "6d56c6bdc9e04214"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 49,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 594,
+            "coverage": 0.3541666666666667,
+            "player": {
+              "x": 51.5,
+              "y": 34.99999999999985,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 816
+          }
+        ],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 60,
+          "committed": 240,
+          "cooldown": 270
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 39.000000000000014,
+            "y": 10.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "committed",
+              "nextScanTick": 49,
+              "warningUntil": null,
+              "commitUntil": 325,
+              "cooldownUntil": null,
+              "target": {
+                "x": 36.5,
+                "y": 5.5
+              },
+              "path": [
+                {
+                  "x": 36.5,
+                  "y": 5.5
+                }
+              ],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 594,
+          "time": 4.950000000000036,
+          "reason": "capture",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "cut.closed",
+          "tick": 594,
+          "time": 4.950000000000036,
+          "cells": 816
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 594,
+          "time": 4.950000000000036
+        }
+      ],
+      "savedPrefix": {
+        "tick": 150,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6d752db84ea5b08b",
+          "sections": {
+            "identity": "ad219d9029712b0d",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "5675660ab1c227a5",
+            "trail": "3153aa853742f2b6",
+            "enemies": "2258b39f8423296b",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "3a4e038e8665dfbf",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "aaffe4ff26621cd6"
+          }
+        },
+        "sessionSha256": "0a1dac4c77df964ec46827fe375291edb079f8cdc7ca3b0db6673de157b25d36"
+      }
+    },
+    {
+      "id": "challenge-forked-approach/immediate/blocked-center-failure",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 660,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 660,
+        "time": 5.493150962497429,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2304,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "428492c6dc660e0b",
+        "sections": {
+          "identity": "b5d270c6e883e4ac",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "006b9620f7c7ae73",
+          "player": "ce23f98074cd3df2",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "94e4410372c76093",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "37e21e48593af757",
+          "continuation": "a9d828ced6380d30",
+          "result": "942dd835fc7c96e6",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "38cdc6866f817274"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 13,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 95,
+          "committed": 240,
+          "cooldown": 301
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 13.82,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "cooldown",
+              "nextScanTick": 49,
+              "warningUntil": null,
+              "commitUntil": null,
+              "cooldownUntil": 625,
+              "target": null,
+              "path": [],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 625,
+          "time": 5.200000000000048,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 625,
+          "target": {
+            "x": 36.5,
+            "y": 13.82
+          },
+          "warningUntil": 685,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "lineImpact.arrived",
+          "tick": 660,
+          "time": 5.493150962497429,
+          "id": "impact-1-player",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 13.82
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 660,
+          "time": 5.493150962497429,
+          "reason": "recovery",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "player.failed",
+          "tick": 660,
+          "time": 5.493150962497429,
+          "cause": "enemy-trail",
+          "actorId": "fork-interceptor",
+          "lives": 0
+        },
+        {
+          "type": "pressure.cancelled",
+          "tick": 660,
+          "time": 5.493150962497429,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 660,
+          "target": {
+            "x": 36.5,
+            "y": 13.82
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 960,
+          "reason": "recovery"
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "b981bc3e111f5c0a",
+          "sections": {
+            "identity": "b5d270c6e883e4ac",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "cfc98036ee5b75c3",
+            "trail": "327d9665122d2d71",
+            "enemies": "60be0d4198abd7f3",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "81f288b748ae025a"
+          }
+        },
+        "sessionSha256": "730ed25ff43dccca07555a25d846861867c24fbb94c2c09a4ca26aed2011a780"
+      }
+    },
+    {
+      "id": "challenge-forked-approach/grid-center/blocked-center-failure",
+      "scenarioSha256": "c875268e1ae062846a0ba034b2713ea9272fb4223f5b0e657987907d708105ab",
+      "campaignKey": "challenge-forked-approach-practice/1/1faf13c709cb1269",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 650,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-forked-approach",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 650,
+        "time": 5.413150962497425,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2304,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "9534611f13bf76c8",
+        "sections": {
+          "identity": "ad219d9029712b0d",
+          "configuration": "084e4e4d9c6fda7d",
+          "board": "006b9620f7c7ae73",
+          "player": "699f95838827b163",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "04e48da12de5c044",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "f6b5aef539d929bb",
+          "clock": "ab406cbc69f7b515",
+          "continuation": "a9d828ced6380d30",
+          "result": "0a030d88f59be7cc",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "d577e77a8c924f58"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 13,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {
+          "patrol": 24,
+          "warning": 85,
+          "committed": 240,
+          "cooldown": 301
+        },
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 13.5,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [
+            {
+              "version": "enemy-pressure-state.v1",
+              "phase": "cooldown",
+              "nextScanTick": 49,
+              "warningUntil": null,
+              "commitUntil": null,
+              "cooldownUntil": 625,
+              "target": null,
+              "path": [],
+              "pathIndex": 0,
+              "topologyRevision": 0,
+              "baseSpeed": 3.1622776601683795,
+              "aborted": false
+            }
+          ],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 25,
+          "time": 0.19999999999999998,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 25,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": 85,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 85,
+          "time": 0.7,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 85,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": 325,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 325,
+          "time": 2.699999999999993,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 325,
+          "target": {
+            "x": 36.5,
+            "y": 5.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 625
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 419,
+          "time": 3.4911004006996285,
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 5.811797752809113,
+          "distance": 4.811797752809113,
+          "speed": 4,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 564,
+          "time": 4.6940498389019405,
+          "id": "impact-1-departure",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 1.0000000000000002,
+          "reason": "departure"
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 625,
+          "time": 5.200000000000048,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 625,
+          "target": {
+            "x": 36.5,
+            "y": 13.5
+          },
+          "warningUntil": 685,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "lineImpact.arrived",
+          "tick": 650,
+          "time": 5.413150962497425,
+          "id": "impact-1-player",
+          "actorId": "fork-interceptor",
+          "x": 36.5,
+          "y": 13.5
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 650,
+          "time": 5.413150962497425,
+          "reason": "recovery",
+          "ids": ["impact-1-player"]
+        },
+        {
+          "type": "player.failed",
+          "tick": 650,
+          "time": 5.413150962497425,
+          "cause": "enemy-trail",
+          "actorId": "fork-interceptor",
+          "lives": 0
+        },
+        {
+          "type": "pressure.cancelled",
+          "tick": 650,
+          "time": 5.413150962497425,
+          "id": "fork-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 650,
+          "target": {
+            "x": 36.5,
+            "y": 13.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 950,
+          "reason": "recovery"
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "1a8843ca5010c725",
+          "sections": {
+            "identity": "ad219d9029712b0d",
+            "configuration": "084e4e4d9c6fda7d",
+            "board": "006b9620f7c7ae73",
+            "player": "5f7a5cc83803c090",
+            "trail": "ecef03a9cafb2ada",
+            "enemies": "60be0d4198abd7f3",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "81f288b748ae025a"
+          }
+        },
+        "sessionSha256": "f7b044f59e167cb218b8417a03a7efac5c446b1365d54dea4d9517fcf9379f91"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/immediate/supply-field-clear",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": true,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 60,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 353,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "won",
+        "won": true,
+        "tick": 415,
+        "time": 3.4583333333333237,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12340,
+        "coverage": 0.512998266897747,
+        "claimedCount": 1184,
+        "totalClaimable": 2308,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "f9bb5da2814f359e",
+        "sections": {
+          "identity": "c1896ae79b841ae3",
+          "configuration": "797f2133d629d066",
+          "board": "26b63eb4e37c3b51",
+          "player": "7b6e3bccbf729c52",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5e68d37349624f19",
+          "objectives": "884ed1baae54251c",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "4b81c4351723006b",
+          "clock": "aa35810842fa8736",
+          "continuation": "b90ee8c788f6c77f",
+          "result": "3f5b27d16da959f8",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "90e6e36cb4358b4e"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 300,
+        "revealedBeforeCaptureTicks": 414,
+        "maxTrailCells": 34,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 415,
+            "coverage": 0.512998266897747,
+            "player": {
+              "x": 36.5,
+              "y": 34.9999999999999,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1184
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999993,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 1
+        }
+      },
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 1,
+          "time": 0,
+          "id": "depot-supply",
+          "ammo": 1
+        },
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "ability.used",
+          "tick": 62,
+          "time": 0.508333333333334,
+          "primitive": "stun-field",
+          "ammo": 0
+        },
+        {
+          "type": "cut.closed",
+          "tick": 415,
+          "time": 3.4583333333333237,
+          "cells": 1184
+        },
+        {
+          "type": "objective.captured",
+          "tick": 415,
+          "time": 3.4583333333333237,
+          "id": "depot-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 415,
+          "time": 3.4583333333333237
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "73b171883194c12d",
+          "sections": {
+            "identity": "c1896ae79b841ae3",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "15155090ade5c446",
+            "trail": "8f8d682cb89ffded",
+            "enemies": "08779b382d68355d",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "654a25da7eb9f09b",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "acabf9879e28276a",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "76fa696deeae34399625f9c47df86740b8707ec2f257954bc7e8210922e02759"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/grid-center/supply-field-clear",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": true,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 60,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 353,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "won",
+        "won": true,
+        "tick": 415,
+        "time": 3.4583333333333237,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12340,
+        "coverage": 0.512998266897747,
+        "claimedCount": 1184,
+        "totalClaimable": 2308,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "1a6492b45f193697",
+        "sections": {
+          "identity": "7c7c6df733c588be",
+          "configuration": "797f2133d629d066",
+          "board": "26b63eb4e37c3b51",
+          "player": "2521a2e949e24a25",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "5e68d37349624f19",
+          "objectives": "884ed1baae54251c",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "4b81c4351723006b",
+          "clock": "aa35810842fa8736",
+          "continuation": "b90ee8c788f6c77f",
+          "result": "985531f05dc1db4d",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "90e6e36cb4358b4e"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 300,
+        "revealedBeforeCaptureTicks": 414,
+        "maxTrailCells": 34,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 415,
+            "coverage": 0.512998266897747,
+            "player": {
+              "x": 36.5,
+              "y": 34.99999999999986,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1184
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999991,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 1
+        }
+      },
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 1,
+          "time": 0,
+          "id": "depot-supply",
+          "ammo": 1
+        },
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "ability.used",
+          "tick": 62,
+          "time": 0.508333333333334,
+          "primitive": "stun-field",
+          "ammo": 0
+        },
+        {
+          "type": "cut.closed",
+          "tick": 415,
+          "time": 3.4583333333333237,
+          "cells": 1184
+        },
+        {
+          "type": "objective.captured",
+          "tick": 415,
+          "time": 3.4583333333333237,
+          "id": "depot-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 415,
+          "time": 3.4583333333333237
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "078eec2f77425a70",
+          "sections": {
+            "identity": "7c7c6df733c588be",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "151c4c90adebdc28",
+            "trail": "b4b1083e77e2974f",
+            "enemies": "08779b382d68355d",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "49adcdf9a6749296",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "acabf9879e28276a",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "f86fbc1d9985f6eb2ca02cfd6e047ad4f680a2293f7f3dc0022e0749581ec9e4"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/immediate/empty-failure",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 60,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 133,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "lost",
+        "won": false,
+        "tick": 195,
+        "time": 1.6249999999999967,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2308,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "038b1812e73d52f3",
+        "sections": {
+          "identity": "c1896ae79b841ae3",
+          "configuration": "797f2133d629d066",
+          "board": "71f194133ab87e8f",
+          "player": "72705c32950fb0f8",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6074b2ce2870ecda",
+          "objectives": "09d0eb3ed1d39ad5",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "44337309d9d9c725",
+          "clock": "81f4c721518981bb",
+          "continuation": "a9d828ced6380d30",
+          "result": "8145c18d98d6b35b",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "46843c22e2cc303f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 195,
+        "maxTrailCells": 16,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999993,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "ability.rejected",
+          "tick": 62,
+          "time": 0.508333333333334,
+          "reason": "empty"
+        },
+        {
+          "type": "player.failed",
+          "tick": 195,
+          "time": 1.6249999999999967,
+          "cause": "enemy-trail",
+          "actorId": "depot-crosser",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6c00cbb763a5a001",
+          "sections": {
+            "identity": "c1896ae79b841ae3",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "15155090ade5c446",
+            "trail": "8f8d682cb89ffded",
+            "enemies": "d56916ce3eb8d7d0",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "44337309d9d9c725",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "9c7a7b8a505287a7dbf7155afefe66b3796c3d5cc25d522fae4d364baa9fc10d"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/grid-center/empty-failure",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 60,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 133,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "lost",
+        "won": false,
+        "tick": 195,
+        "time": 1.6249999999999967,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2308,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "1a720ae665fa2345",
+        "sections": {
+          "identity": "7c7c6df733c588be",
+          "configuration": "797f2133d629d066",
+          "board": "71f194133ab87e8f",
+          "player": "7c5d05f3451a67b3",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6074b2ce2870ecda",
+          "objectives": "09d0eb3ed1d39ad5",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "44337309d9d9c725",
+          "clock": "81f4c721518981bb",
+          "continuation": "a9d828ced6380d30",
+          "result": "6f549a9a4fd2afbc",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "46843c22e2cc303f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 195,
+        "maxTrailCells": 16,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999991,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "ability.rejected",
+          "tick": 62,
+          "time": 0.508333333333334,
+          "reason": "empty"
+        },
+        {
+          "type": "player.failed",
+          "tick": 195,
+          "time": 1.6249999999999967,
+          "cause": "enemy-trail",
+          "actorId": "depot-crosser",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "4d38c4c83b3cd880",
+          "sections": {
+            "identity": "7c7c6df733c588be",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "151c4c90adebdc28",
+            "trail": "b4b1083e77e2974f",
+            "enemies": "d56916ce3eb8d7d0",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "44337309d9d9c725",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "3352c91e8d1dbc225c614e16a1b2766fc8a015c21dc5df95a60078e0592db072"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/immediate/no-field-failure",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": true,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 194,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "lost",
+        "won": false,
+        "tick": 195,
+        "time": 1.6249999999999967,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2308,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "0befa64ef6147643",
+        "sections": {
+          "identity": "c1896ae79b841ae3",
+          "configuration": "797f2133d629d066",
+          "board": "71f194133ab87e8f",
+          "player": "72705c32950fb0f8",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6074b2ce2870ecda",
+          "objectives": "09d0eb3ed1d39ad5",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "93055b7b508dde23",
+          "clock": "81f4c721518981bb",
+          "continuation": "a9d828ced6380d30",
+          "result": "8145c18d98d6b35b",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "46843c22e2cc303f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 195,
+        "maxTrailCells": 16,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999993,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 1,
+          "time": 0,
+          "id": "depot-supply",
+          "ammo": 1
+        },
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "player.failed",
+          "tick": 195,
+          "time": 1.6249999999999967,
+          "cause": "enemy-trail",
+          "actorId": "depot-crosser",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "4819a499f8107b11",
+          "sections": {
+            "identity": "c1896ae79b841ae3",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "15155090ade5c446",
+            "trail": "8f8d682cb89ffded",
+            "enemies": "d56916ce3eb8d7d0",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "93055b7b508dde23",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "ecb008a3da7d44afae681d7742ef93a6713b5c96b856968c55efeaa8cf578f6d"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/grid-center/no-field-failure",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": true,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 194,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "lost",
+        "won": false,
+        "tick": 195,
+        "time": 1.6249999999999967,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2308,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "f1df5896dd4879d5",
+        "sections": {
+          "identity": "7c7c6df733c588be",
+          "configuration": "797f2133d629d066",
+          "board": "71f194133ab87e8f",
+          "player": "7c5d05f3451a67b3",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6074b2ce2870ecda",
+          "objectives": "09d0eb3ed1d39ad5",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "93055b7b508dde23",
+          "clock": "81f4c721518981bb",
+          "continuation": "a9d828ced6380d30",
+          "result": "6f549a9a4fd2afbc",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "46843c22e2cc303f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 195,
+        "maxTrailCells": 16,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.5,
+            "y": 8.749999999999991,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "pickup.collected",
+          "tick": 1,
+          "time": 0,
+          "id": "depot-supply",
+          "ammo": 1
+        },
+        {
+          "type": "cut.started",
+          "tick": 8,
+          "time": 0.05833333333333333
+        },
+        {
+          "type": "player.failed",
+          "tick": 195,
+          "time": 1.6249999999999967,
+          "cause": "enemy-trail",
+          "actorId": "depot-crosser",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 100,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "bc9680200f995fb0",
+          "sections": {
+            "identity": "7c7c6df733c588be",
+            "configuration": "797f2133d629d066",
+            "board": "71f194133ab87e8f",
+            "player": "151c4c90adebdc28",
+            "trail": "b4b1083e77e2974f",
+            "enemies": "d56916ce3eb8d7d0",
+            "objectives": "09d0eb3ed1d39ad5",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "93055b7b508dde23",
+            "clock": "ee89c0a63720a21e",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "a0c7a9057d455214"
+          }
+        },
+        "sessionSha256": "f37e478c5e8ee0c145bab0cdf7ecd00d1e0b9008437632417b235b0e9ebff181"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/immediate/western-gate-clear",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 432,
+          "input": {
+            "direction": "left",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 216,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 432,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 198,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 408,
+          "input": {
+            "direction": "up",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "won",
+        "won": true,
+        "tick": 1687,
+        "time": 14.058333333333175,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 17830,
+        "coverage": 0.7508665511265165,
+        "claimedCount": 1733,
+        "totalClaimable": 2308,
+        "medal": "silver",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "c438672fad765389",
+        "sections": {
+          "identity": "c1896ae79b841ae3",
+          "configuration": "797f2133d629d066",
+          "board": "7a9d67f62b9df191",
+          "player": "34f2eec59f169867",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "d1b754db7cf1c2f9",
+          "objectives": "884ed1baae54251c",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "44337309d9d9c725",
+          "clock": "9b54a8ab6f087ea2",
+          "continuation": "a9d828ced6380d30",
+          "result": "e5a60cfeff326a5d",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "964ef58394b4411c"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 1277,
+        "maxTrailCells": 52,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 1278,
+            "coverage": 0.2564991334488735,
+            "player": {
+              "x": 36.50000000000013,
+              "y": 34.9999999999999,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 592
+          },
+          {
+            "tick": 1687,
+            "coverage": 0.7508665511265165,
+            "player": {
+              "x": 36.50000000000013,
+              "y": 1.000000000000182,
+              "direction": "up",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1733
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.50000000000013,
+            "y": 34.9999999999999,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 655,
+          "time": 5.450000000000061
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1278,
+          "time": 10.650000000000036,
+          "cells": 592
+        },
+        {
+          "type": "objective.captured",
+          "tick": 1278,
+          "time": 10.650000000000036,
+          "id": "depot-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1278,
+          "time": 10.650000000000036
+        },
+        {
+          "type": "cut.started",
+          "tick": 1484,
+          "time": 12.358333333333272
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1687,
+          "time": 14.058333333333175,
+          "cells": 1141
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1687,
+          "time": 14.058333333333175
+        }
+      ],
+      "savedPrefix": {
+        "tick": 1278,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6a8557955c981cc6",
+          "sections": {
+            "identity": "c1896ae79b841ae3",
+            "configuration": "797f2133d629d066",
+            "board": "9dbee0a3c8d0717e",
+            "player": "ed6d00f2e4171c9a",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "e89f2759516c68ef",
+            "objectives": "884ed1baae54251c",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "44337309d9d9c725",
+            "clock": "9fd72b88367264c3",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "5e0dad9f496b7b16"
+          }
+        },
+        "sessionSha256": "4720b94fa93094d3a0919aa9ae6f5c43d11e05b46f658a2923359a57f7b21680"
+      }
+    },
+    {
+      "id": "challenge-crosswind-depot/grid-center/western-gate-clear",
+      "scenarioSha256": "2c1a249609e0e0ef8742fdcd8ace14b6c9ecbc453927f3d945457d17973564bc",
+      "campaignKey": "challenge-crosswind-depot-practice/1/82e016e22e25d003",
+      "classId": "bomber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 432,
+          "input": {
+            "direction": "left",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 216,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 432,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 198,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": null,
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 420,
+          "input": {
+            "direction": "up",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-crosswind-depot",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "bomber",
+        "activeClassId": "bomber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "bomber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-341623c5",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-341623c5",
+        "status": "won",
+        "won": true,
+        "tick": 1699,
+        "time": 14.15833333333317,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 17830,
+        "coverage": 0.7508665511265165,
+        "claimedCount": 1733,
+        "totalClaimable": 2308,
+        "medal": "silver",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "806f7d2624aea2a5",
+        "sections": {
+          "identity": "7c7c6df733c588be",
+          "configuration": "797f2133d629d066",
+          "board": "7a9d67f62b9df191",
+          "player": "6516749ecf625e54",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "ebfdcd5503df7b50",
+          "objectives": "884ed1baae54251c",
+          "supplies": "89a489c3fd4cffe8",
+          "ability": "44337309d9d9c725",
+          "clock": "015dc2fdafa94dbb",
+          "continuation": "a9d828ced6380d30",
+          "result": "51fe083b6a0aa811",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "f6f02152686f651d"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 1277,
+        "maxTrailCells": 52,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 1278,
+            "coverage": 0.2564991334488735,
+            "player": {
+              "x": 36.4999999999999,
+              "y": 34.99999999999986,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 592
+          },
+          {
+            "tick": 1699,
+            "coverage": 0.7508665511265165,
+            "player": {
+              "x": 36.4999999999999,
+              "y": 1.000000000000182,
+              "direction": "up",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1733
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 36.4999999999999,
+            "y": 34.99999999999986,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 655,
+          "time": 5.450000000000061
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1278,
+          "time": 10.650000000000036,
+          "cells": 592
+        },
+        {
+          "type": "objective.captured",
+          "tick": 1278,
+          "time": 10.650000000000036,
+          "id": "depot-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1278,
+          "time": 10.650000000000036
+        },
+        {
+          "type": "cut.started",
+          "tick": 1496,
+          "time": 12.458333333333266
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1699,
+          "time": 14.15833333333317,
+          "cells": 1141
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1699,
+          "time": 14.15833333333317
+        }
+      ],
+      "savedPrefix": {
+        "tick": 1278,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "28ca2267d66a0c67",
+          "sections": {
+            "identity": "7c7c6df733c588be",
+            "configuration": "797f2133d629d066",
+            "board": "9dbee0a3c8d0717e",
+            "player": "77d6f9bf0ca35a04",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "e89f2759516c68ef",
+            "objectives": "884ed1baae54251c",
+            "supplies": "89a489c3fd4cffe8",
+            "ability": "44337309d9d9c725",
+            "clock": "9fd72b88367264c3",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "5e0dad9f496b7b16"
+          }
+        },
+        "sessionSha256": "2a8a3ec81f1051f82148a5ba964420190def190c20302b0095058e00faf18c23"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/immediate/fiber-scan-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 288,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 557,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "won",
+        "won": true,
+        "tick": 846,
+        "time": 7.050000000000139,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12760,
+        "coverage": 0.5307359307359307,
+        "claimedCount": 1226,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "e080d7919f744cab",
+        "sections": {
+          "identity": "8229a8f65bcd546a",
+          "configuration": "12c8b448769b47ba",
+          "board": "fcabf66bc0d1cec0",
+          "player": "3d03c15f9f3c2572",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4651f1272d4e28ff",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "6ef2a12cc939ac9f",
+          "clock": "a330a8396f508489",
+          "continuation": "a9d828ced6380d30",
+          "result": "2f7c209e881bd52e",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "bd87f56c3cc5159f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 217,
+        "resistantTicks": 217,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 557,
+        "maxTrailCells": 70,
+        "scanFacts": [
+          {
+            "tick": 289,
+            "claimedCount": 0,
+            "captured": 0,
+            "revealed": 1,
+            "signal": {
+              "zoneIds": ["switchback-band"],
+              "resistant": true,
+              "speedFactor": 1,
+              "boostBlocked": false,
+              "abilityBlocked": false
+            },
+            "stunnedEnemies": 0
+          }
+        ],
+        "captures": [
+          {
+            "tick": 846,
+            "coverage": 0.5307359307359307,
+            "player": {
+              "x": 71.00000000000033,
+              "y": 18.5,
+              "direction": "right",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1226
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 33.8333333333332,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 210,
+          "time": 1.7499999999999962,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "ability.used",
+          "tick": 289,
+          "time": 2.399999999999994,
+          "primitive": "scan",
+          "ammo": 0
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "cut.closed",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "cells": 1226
+        },
+        {
+          "type": "objective.captured",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 846,
+          "time": 7.050000000000139
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "0c8cd5db91ae696b",
+          "sections": {
+            "identity": "8229a8f65bcd546a",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "649b3cec332d722d",
+            "trail": "28301b8eab546366",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "02a062e1cdbf90d5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "6314dcd5d867e00c",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "83dd2b3e09c904487b5b1ebaa072e007aaa7b4173fd8394454b643edfd4323b6"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/grid-center/fiber-scan-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 288,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 557,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "won",
+        "won": true,
+        "tick": 846,
+        "time": 7.050000000000139,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12760,
+        "coverage": 0.5307359307359307,
+        "claimedCount": 1226,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "fd6e4d34e84e9bea",
+        "sections": {
+          "identity": "ce150db671c22d6f",
+          "configuration": "12c8b448769b47ba",
+          "board": "fcabf66bc0d1cec0",
+          "player": "af83e60cc62c15fd",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4651f1272d4e28ff",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "6ef2a12cc939ac9f",
+          "clock": "a330a8396f508489",
+          "continuation": "a9d828ced6380d30",
+          "result": "ba4025b8b09868df",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "bd87f56c3cc5159f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 216,
+        "resistantTicks": 216,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 557,
+        "maxTrailCells": 70,
+        "scanFacts": [
+          {
+            "tick": 289,
+            "claimedCount": 0,
+            "captured": 0,
+            "revealed": 1,
+            "signal": {
+              "zoneIds": ["switchback-band"],
+              "resistant": true,
+              "speedFactor": 1,
+              "boostBlocked": false,
+              "abilityBlocked": false
+            },
+            "stunnedEnemies": 0
+          }
+        ],
+        "captures": [
+          {
+            "tick": 846,
+            "coverage": 0.5307359307359307,
+            "player": {
+              "x": 70.99999999999962,
+              "y": 18.5,
+              "direction": "right",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1226
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 33.83333333333316,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 211,
+          "time": 1.7583333333333295,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "ability.used",
+          "tick": 289,
+          "time": 2.399999999999994,
+          "primitive": "scan",
+          "ammo": 0
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "cut.closed",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "cells": 1226
+        },
+        {
+          "type": "objective.captured",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 846,
+          "time": 7.050000000000139
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "54ddd0ee215e7801",
+          "sections": {
+            "identity": "ce150db671c22d6f",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "3148c1e0f0130572",
+            "trail": "0b251dcc0bdfaa19",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "02a062e1cdbf90d5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "6314dcd5d867e00c",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "d37dbd57097bad96ddd2a0739ea5542c1a9ebeb72df56339eba5a585200ff847"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/immediate/fiber-no-scan-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 846,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "won",
+        "won": true,
+        "tick": 846,
+        "time": 7.050000000000139,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12760,
+        "coverage": 0.5307359307359307,
+        "claimedCount": 1226,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "82fc676a6517745f",
+        "sections": {
+          "identity": "8229a8f65bcd546a",
+          "configuration": "12c8b448769b47ba",
+          "board": "fcabf66bc0d1cec0",
+          "player": "3d03c15f9f3c2572",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4651f1272d4e28ff",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "1dcb9c09b7fd0025",
+          "clock": "a330a8396f508489",
+          "continuation": "a9d828ced6380d30",
+          "result": "2f7c209e881bd52e",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "bd87f56c3cc5159f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 217,
+        "resistantTicks": 217,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 70,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 846,
+            "coverage": 0.5307359307359307,
+            "player": {
+              "x": 71.00000000000033,
+              "y": 18.5,
+              "direction": "right",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1226
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 33.8333333333332,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 210,
+          "time": 1.7499999999999962,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "cut.closed",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "cells": 1226
+        },
+        {
+          "type": "objective.captured",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 846,
+          "time": 7.050000000000139
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6b107c8c9ece7b9e",
+          "sections": {
+            "identity": "8229a8f65bcd546a",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "649b3cec332d722d",
+            "trail": "28301b8eab546366",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "a1a82920d4d83706",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "bcaea70cde230297c6369482187a7f2c087b50825493858bd48d6c67e2e5c2e4"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/grid-center/fiber-no-scan-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 846,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "won",
+        "won": true,
+        "tick": 846,
+        "time": 7.050000000000139,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 12760,
+        "coverage": 0.5307359307359307,
+        "claimedCount": 1226,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "1bca3d65ec0895c6",
+        "sections": {
+          "identity": "ce150db671c22d6f",
+          "configuration": "12c8b448769b47ba",
+          "board": "fcabf66bc0d1cec0",
+          "player": "af83e60cc62c15fd",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4651f1272d4e28ff",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "1dcb9c09b7fd0025",
+          "clock": "a330a8396f508489",
+          "continuation": "a9d828ced6380d30",
+          "result": "ba4025b8b09868df",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "bd87f56c3cc5159f"
+        }
+      },
+      "metrics": {
+        "signalTicks": 216,
+        "resistantTicks": 216,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 70,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 846,
+            "coverage": 0.5307359307359307,
+            "player": {
+              "x": 70.99999999999962,
+              "y": 18.5,
+              "direction": "right",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1226
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 33.83333333333316,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 211,
+          "time": 1.7583333333333295,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "cut.closed",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "cells": 1226
+        },
+        {
+          "type": "objective.captured",
+          "tick": 846,
+          "time": 7.050000000000139,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 846,
+          "time": 7.050000000000139
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "e46b7de523acfc2c",
+          "sections": {
+            "identity": "ce150db671c22d6f",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "3148c1e0f0130572",
+            "trail": "0b251dcc0bdfaa19",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "a1a82920d4d83706",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "a4900639a4217c2ba2cdf7058683ac9199c5e7c3b2844ebf530de41faaf603a0"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/immediate/cable-dogleg-failure",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 576,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 223,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "cable-limit",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "lost",
+        "won": false,
+        "tick": 919,
+        "time": 7.65000000000017,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2310,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "a9a8dbfec8a9202b",
+        "sections": {
+          "identity": "8229a8f65bcd546a",
+          "configuration": "12c8b448769b47ba",
+          "board": "c0ed02bcf0df45ac",
+          "player": "1e04342ea7203cb9",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "6dd685be249c22d8",
+          "objectives": "ab30ffa49552fc16",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "1dcb9c09b7fd0025",
+          "clock": "739d604a32767fb6",
+          "continuation": "a9d828ced6380d30",
+          "result": "17d5bd3284ce05c1",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "7f9c77434d86f0f1"
+        }
+      },
+      "metrics": {
+        "signalTicks": 217,
+        "resistantTicks": 217,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 76,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 48.500000000000284,
+            "y": 24.66666666666658,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 210,
+          "time": 1.7499999999999962,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "player.failed",
+          "tick": 919,
+          "time": 7.65000000000017,
+          "cause": "cable-limit",
+          "actorId": "challenge",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 650,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "d5af125346552e2d",
+          "sections": {
+            "identity": "8229a8f65bcd546a",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "073035224ebcdc82",
+            "trail": "4313bb80b5aca5e5",
+            "enemies": "8d760c69b9f0be86",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "1dcb9c09b7fd0025",
+            "clock": "167e834bc7dfa8f4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "02f0c771b16eebc8"
+          }
+        },
+        "sessionSha256": "0c9dfa38d0d3d5f2f547d40da5899d9c503bd45f6bf3153f82c037fc47bff116"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/grid-center/cable-dogleg-failure",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "fiber",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 576,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 120,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 223,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "fiber",
+        "activeClassId": "fiber",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "fiber",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-85870cc1",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "cable-limit",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-85870cc1",
+        "status": "lost",
+        "won": false,
+        "tick": 919,
+        "time": 7.650000000000186,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2310,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "13521f5bab75d271",
+        "sections": {
+          "identity": "ce150db671c22d6f",
+          "configuration": "12c8b448769b47ba",
+          "board": "c0ed02bcf0df45ac",
+          "player": "2034fcfd29f70e5f",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4470630249476844",
+          "objectives": "ab30ffa49552fc16",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "1dcb9c09b7fd0025",
+          "clock": "840c11bcbb10c124",
+          "continuation": "a9d828ced6380d30",
+          "result": "a3807eab156fdfd1",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "1182fd026302c1fe"
+        }
+      },
+      "metrics": {
+        "signalTicks": 216,
+        "resistantTicks": 216,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 76,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 48.5,
+            "y": 24.66666666666658,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": true,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 211,
+          "time": 1.7583333333333295,
+          "zoneIds": ["switchback-band"],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "signal.changed",
+          "tick": 427,
+          "time": 3.5583333333333234,
+          "zoneIds": [],
+          "resistant": true,
+          "speedFactor": 1,
+          "boostBlocked": false,
+          "abilityBlocked": false
+        },
+        {
+          "type": "player.failed",
+          "tick": 919,
+          "time": 7.650000000000186,
+          "cause": "cable-limit",
+          "actorId": "challenge",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 650,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "2cf6032a5ebaf9bb",
+          "sections": {
+            "identity": "ce150db671c22d6f",
+            "configuration": "12c8b448769b47ba",
+            "board": "c0ed02bcf0df45ac",
+            "player": "86e291916fb13188",
+            "trail": "f251802d7035de2b",
+            "enemies": "8d760c69b9f0be86",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "1dcb9c09b7fd0025",
+            "clock": "167e834bc7dfa8f4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "02f0c771b16eebc8"
+          }
+        },
+        "sessionSha256": "aa29f3fdb14a58631bbb4f51c153696a5a59d813446a9e481d34ed829de8a8c9"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/immediate/ordinary-band-failure",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 288,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 677,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "cut-timeout",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 966,
+        "time": 8.05,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2310,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "632d06d7a4ad21eb",
+        "sections": {
+          "identity": "15c5b79c15038cf8",
+          "configuration": "d5354a66fe961294",
+          "board": "c0ed02bcf0df45ac",
+          "player": "b0be49f27ff088c4",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "e69833b575853cac",
+          "objectives": "ab30ffa49552fc16",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "8762be9b40800e21",
+          "clock": "996622dcb3275469",
+          "continuation": "a9d828ced6380d30",
+          "result": "59faa7072e31f3a9",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "d475f074ab8ab322"
+        }
+      },
+      "metrics": {
+        "signalTicks": 757,
+        "resistantTicks": 0,
+        "slowedTicks": 757,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 33,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 21.958333333333123,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 2.5,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": false,
+            "speedFactor": 0.25,
+            "boostBlocked": true,
+            "abilityBlocked": true
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 210,
+          "time": 1.7499999999999962,
+          "zoneIds": ["switchback-band"],
+          "resistant": false,
+          "speedFactor": 0.25,
+          "boostBlocked": true,
+          "abilityBlocked": true
+        },
+        {
+          "type": "ability.rejected",
+          "tick": 289,
+          "time": 2.399999999999994,
+          "reason": "signal-interference"
+        },
+        {
+          "type": "player.failed",
+          "tick": 966,
+          "time": 8.05,
+          "cause": "cut-timeout",
+          "actorId": "challenge",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "3dd67de754d1027e",
+          "sections": {
+            "identity": "15c5b79c15038cf8",
+            "configuration": "d5354a66fe961294",
+            "board": "c0ed02bcf0df45ac",
+            "player": "42524c59c086b3a8",
+            "trail": "228f62b9a7e6ef8f",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "8762be9b40800e21",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "d21db644e6adb04ffbe9d2bb3741668200457f29d87b56c32e015fba426abf7b"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/grid-center/ordinary-band-failure",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 288,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 1,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": true,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 677,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "cut-timeout",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 966,
+        "time": 8.05,
+        "lives": 0,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2310,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "061b684989abf293",
+        "sections": {
+          "identity": "947abe53c01b3161",
+          "configuration": "d5354a66fe961294",
+          "board": "c0ed02bcf0df45ac",
+          "player": "73cf67643984a7f0",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "e69833b575853cac",
+          "objectives": "ab30ffa49552fc16",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "8762be9b40800e21",
+          "clock": "996622dcb3275469",
+          "continuation": "a9d828ced6380d30",
+          "result": "0306f027485d4616",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "d475f074ab8ab322"
+        }
+      },
+      "metrics": {
+        "signalTicks": 756,
+        "resistantTicks": 0,
+        "slowedTicks": 756,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 33,
+        "scanFacts": [],
+        "captures": [],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 22.020833333333083,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 2.5,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": ["switchback-band"],
+            "resistant": false,
+            "speedFactor": 0.25,
+            "boostBlocked": true,
+            "abilityBlocked": true
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 7,
+          "time": 0.049999999999999996
+        },
+        {
+          "type": "signal.changed",
+          "tick": 211,
+          "time": 1.7583333333333295,
+          "zoneIds": ["switchback-band"],
+          "resistant": false,
+          "speedFactor": 0.25,
+          "boostBlocked": true,
+          "abilityBlocked": true
+        },
+        {
+          "type": "ability.rejected",
+          "tick": 289,
+          "time": 2.399999999999994,
+          "reason": "signal-interference"
+        },
+        {
+          "type": "player.failed",
+          "tick": 966,
+          "time": 8.05,
+          "cause": "cut-timeout",
+          "actorId": "challenge",
+          "lives": 0
+        }
+      ],
+      "savedPrefix": {
+        "tick": 400,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "a995b17fd9c157c4",
+          "sections": {
+            "identity": "947abe53c01b3161",
+            "configuration": "d5354a66fe961294",
+            "board": "c0ed02bcf0df45ac",
+            "player": "fab88e3837cf0fc7",
+            "trail": "f792fe1da5a26d9f",
+            "enemies": "c2c12ab5527728be",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "8762be9b40800e21",
+            "clock": "36e7e4abdbbdaac4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "00af7ece78a88dba"
+          }
+        },
+        "sessionSha256": "3b736bb752226a958cc7fb8919951845391c8187b3cb87d96b82562c0eb0294a"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/immediate/ordinary-rim-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "immediate",
+      "segments": [
+        {
+          "ticks": 216,
+          "input": {
+            "direction": "up",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 540,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 414,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 1170,
+        "time": 9.750000000000087,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 15280,
+        "coverage": 0.6398268398268399,
+        "claimedCount": 1478,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "75d48c5824f301cf",
+        "sections": {
+          "identity": "15c5b79c15038cf8",
+          "configuration": "d5354a66fe961294",
+          "board": "8e03aad9594b4f1f",
+          "player": "4733fb1b5525be90",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4add9e7ee77da087",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "74b8405079b571f8",
+          "clock": "749a471878b66ff3",
+          "continuation": "a9d828ced6380d30",
+          "result": "98e301bdc76cd203",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "f064ee350391ec61"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 34,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 1170,
+            "coverage": 0.6398268398268399,
+            "player": {
+              "x": 45.5000000000002,
+              "y": 34.999999999999915,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1478
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 45.5000000000002,
+            "y": 12.500000000000032,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 763,
+          "time": 6.350000000000105
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1170,
+          "time": 9.750000000000087,
+          "cells": 1478
+        },
+        {
+          "type": "objective.captured",
+          "tick": 1170,
+          "time": 9.750000000000087,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1170,
+          "time": 9.750000000000087
+        }
+      ],
+      "savedPrefix": {
+        "tick": 900,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6aa716c28013f91b",
+          "sections": {
+            "identity": "15c5b79c15038cf8",
+            "configuration": "d5354a66fe961294",
+            "board": "c0ed02bcf0df45ac",
+            "player": "e10cef116c91222f",
+            "trail": "3e8bbd227c61c4cf",
+            "enemies": "7f3028a65a6759d8",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "74b8405079b571f8",
+            "clock": "c467ddf46979f342",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "6afdff5cfed7df6e"
+          }
+        },
+        "sessionSha256": "e4cb6c3abb392f206b3d73a222205906108822427ae93de16fa46ad4bfe66af0"
+      }
+    },
+    {
+      "id": "challenge-signal-switchback/grid-center/ordinary-rim-clear",
+      "scenarioSha256": "370a909998423c99b017f9cd12ac8dd454e5ec4fa6b53c526d684bd43043fc97",
+      "campaignKey": "challenge-signal-switchback-practice/1/4fa74ebe0607b7ff",
+      "classId": "scout",
+      "seed": 1,
+      "turnPolicy": "grid-center",
+      "segments": [
+        {
+          "ticks": 216,
+          "input": {
+            "direction": "up",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 540,
+          "input": {
+            "direction": "right",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        },
+        {
+          "ticks": 414,
+          "input": {
+            "direction": "down",
+            "boost": false,
+            "action": false,
+            "pickup": false,
+            "switchClass": null
+          },
+          "releaseBefore": false
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "challenge-signal-switchback",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 1170,
+        "time": 9.750000000000087,
+        "lives": 1,
+        "livesLost": 0,
+        "score": 15280,
+        "coverage": 0.6398268398268399,
+        "claimedCount": 1478,
+        "totalClaimable": 2310,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v5",
+        "hash": "75e9a18a3d02b293",
+        "sections": {
+          "identity": "947abe53c01b3161",
+          "configuration": "d5354a66fe961294",
+          "board": "8e03aad9594b4f1f",
+          "player": "c4c62ac605ee8a2b",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "4add9e7ee77da087",
+          "objectives": "26eaf08e0fdb0402",
+          "supplies": "09612b07b5ecb5a5",
+          "ability": "74b8405079b571f8",
+          "clock": "749a471878b66ff3",
+          "continuation": "a9d828ced6380d30",
+          "result": "2e2e7e2622f81c0a",
+          "encounter": "5b9bc4ba528108e4",
+          "classic": "f064ee350391ec61"
+        }
+      },
+      "metrics": {
+        "signalTicks": 0,
+        "resistantTicks": 0,
+        "slowedTicks": 0,
+        "stunnedEnemyTicks": 0,
+        "revealedBeforeCaptureTicks": 0,
+        "maxTrailCells": 34,
+        "scanFacts": [],
+        "captures": [
+          {
+            "tick": 1170,
+            "coverage": 0.6398268398268399,
+            "player": {
+              "x": 45.5,
+              "y": 34.99999999999986,
+              "direction": "down",
+              "queuedDirection": null,
+              "speed": 0,
+              "cutting": false,
+              "graceUntil": 0
+            },
+            "claimedCount": 1478
+          }
+        ],
+        "pressurePhases": {},
+        "savedState": {
+          "status": "running",
+          "player": {
+            "x": 45.5,
+            "y": 12.5,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 10,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "pressure": [],
+          "signal": {
+            "zoneIds": [],
+            "resistant": false,
+            "speedFactor": 1,
+            "boostBlocked": false,
+            "abilityBlocked": false
+          },
+          "stunnedEnemies": 0
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 763,
+          "time": 6.350000000000105
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1170,
+          "time": 9.750000000000087,
+          "cells": 1478
+        },
+        {
+          "type": "objective.captured",
+          "tick": 1170,
+          "time": 9.750000000000087,
+          "id": "switchback-relay"
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1170,
+          "time": 9.750000000000087
+        }
+      ],
+      "savedPrefix": {
+        "tick": 900,
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6950b06a937ac945",
+          "sections": {
+            "identity": "947abe53c01b3161",
+            "configuration": "d5354a66fe961294",
+            "board": "c0ed02bcf0df45ac",
+            "player": "de653e40ab6a792e",
+            "trail": "131e5433e62611a4",
+            "enemies": "7f3028a65a6759d8",
+            "objectives": "ab30ffa49552fc16",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "74b8405079b571f8",
+            "clock": "c467ddf46979f342",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "6afdff5cfed7df6e"
+          }
+        },
+        "sessionSha256": "35485f9cf705647d50bceb046acded15ea80b608d5487b05c7c5b744133e6e86"
+      }
+    }
+  ]
+}
