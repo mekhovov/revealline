@@ -1,8 +1,8 @@
-# v0.29.2 ordinary-capture correction — in progress
+# v0.29.2 ordinary-capture correction — frozen and locally verified
 
-**P7.7 remains the active release gate.** This is a candidate preparation record, not a claim of a fixed, frozen or public release. Metadata is 0.29.2. Bounded source-browser and host regressions now pass as recorded below; historical-proof checks pass, while the exact candidate SHA/gates, frozen artifact and offline/public journeys remain pending. No later roadmap phase starts.
+Frozen source **`d611f1429272ce402db6c38dde763bd3e15498cb`** passes all six exact-source gates and **2,374 tests**. Independent artifact verification and the actual local frozen entry/migration/capture/offline journeys below pass. **P7.7 remains in Verification** until PR CI, Pages deployment and actual public-byte/browser checks pass. This committed handoff is not a public-delivery receipt; final status belongs to the [v0.29.2 GitHub Release receipt](https://github.com/mekhovov/revealline/releases/tag/v0.29.2). No later phase starts.
 
-## Observed blocker
+## Preserved v0.29.1 failure
 
 Frozen v0.29.1 source `90b974bfd733ccb11d74383e154467bd172b31d0` passed six exact-source gates and **2,364 tests**. Its independent rebuild/ZIP/offline inventory also passed. The distribution ZIP SHA-256 is `0f90b09e61cd769eaeac4c57b2a843a0f0650c3f7f74807958e4c95907af3385`; the original source, tag and artifact remain unchanged.
 
@@ -25,17 +25,39 @@ The separate immediate-pause presentation check now passes with the affected sui
 
 The final repair defers recovery until a repeated zero-time penetration in unchanged geometry, preserving historical simultaneous capture, erosion and failure processing first. It places the actor in the nearest legal domain footprint with deterministic ties and continues the complete remaining tick. It adds no saved state, changes no authored recipe and does not raise the event guard or skip simulation time. Pause also refreshes its presentation synchronously.
 
-The final three-file core change passed **116 affected tests, including seven new regressions**, and the separate 18-route Classic Lab verification. Existing R2/R3/R4 suites preserve 36 exact wins and four R3 impact demonstrations: **54 historical winning routes** in total. The prior frozen core still reproduces both expected first-cut crashes; its due-erosion control passes in historical order. Final host regressions also pass **2/2** after this timing hardening (`.cache/round39/capture-host-deferred-recovery.log`). The source-browser screenshot above predates the final timing hardening; frozen-browser confirmation remains required.
+The final three-file core change passed **116 affected tests, including seven new regressions**, and the separate 18-route Classic Lab verification. Existing R2/R3/R4 suites preserve 36 exact wins and four R3 impact demonstrations: **54 historical winning routes** in total. The prior frozen core still reproduces both expected first-cut crashes; its due-erosion control passes in historical order. Final host regressions also pass **2/2** after this timing hardening (`.cache/round39/capture-host-deferred-recovery.log`). The source-browser screenshot above predates the final timing hardening; the final frozen-browser confirmation is recorded below.
 
-These bounded passes do not close exact-source release gates, frozen first-capture/continued-play and offline checks, or public entry/migration/delivery. The earlier v0.29.1 failures above remain part of the record.
+The bounded source checks remain separate from the completed final local gates below and the still-pending public delivery. The earlier v0.29.1 failures remain part of the record.
 
-## Required correction and acceptance
+## Final frozen artifact and local browser checks
 
-1. Reproduce the ordinary first-cut failure through legal inputs; diagnose and repair the bounded event processing without skipping the guard, silently abandoning simulation time or patching the run to bypass the contact.
-2. Verify the first capture and subsequent fixed ticks, including both supported turning policies, affected collision/terrain cases and historical replay results. Record the actual regression scope and remaining limits when the core change is ready.
-3. Run all six gates against a newly committed exact source; freeze a new v0.29.2 only on success and independently verify source/artifacts/offline inventory and prior-version preservation.
-4. Repeat ordinary first capture and continued flight in the actual frozen browser online and with the server stopped. Verify console, coverage/HUD/paint, explicit pause/resume and saved continuation. Startup, restoration, capture and later play each need their own observed result.
-5. Complete fresh/previously visited public entry, normal root-worker migration, canonical offline preparation, reviewed PR/Pages and full public-byte plus actual browser checks before promotion.
+The independent audit matched **221 loose files, 217 manifest assets and 218 ZIP entries**, including exact fresh-Git/tested/frozen source identity and ZIP payload/CRC checks. Offline inventory: **211 files / 44,868,447 bytes**, build `3b992fb3bf3a698b376566ecbee0d3b6ab08b6e25213d15a7ed3d932d7ebf360`. All 35 earlier release trees and 36 prior tags remained unchanged. Evidence: `.cache/releases/verification-d611f1429272/source-gates.json` and `.cache/round39/revision-audit-d611f1429272-attempt-1/integrity.json`.
+
+- Annotated tag object: `6211817554fc82bfc65b8c15bf825beb82301859`, pointing to the exact source above.
+- Source TAR SHA-256: `bc51b40531ce011340fae8c82a193de98de4cee2cec9445c3c38f982f9e28cc9`.
+- Distribution ZIP SHA-256: `deaec14a53aa2a0730b1e3a31e555efdc29e42cbfdf23cf9dbe8197b83ee6986`.
+- Manifest SHA-256: `200666542c68b8101cda686a4adc88b7a0582c08232cc03f0ee9a8c7fc94b3ca`.
+
+Actual browser observations used the prepared frozen Pages artifact on localhost port 8889:
+
+1. Established an older v0.28 offline baseline (201 files), Large text and an R3 saved flight at 2:29. Opening the new canonical edition reached Ready while the old tab remained unchanged.
+2. After normal closure of the old root tab, mutable `/game/` entered the v0.29.2 canonical edition with query/fragment preserved. **Review/Copy earlier progress** explicitly transferred the earlier flight/preferences. R3 restored at 2:29, then explicit Resume produced a live cut and ordinary life loss to two lives. Large text transferred. Reopening v0.28 confirmed its original save remained at 2:29 and three lives.
+3. The final frozen R4 first Down capture completed online at **51.4%, 12,240 points and three lives**, with continued simulation to **2:05** and correct paused HUD. The captured console error/warning result was empty.
+4. Prepared and verified all **211** v0.29.2 offline files. The owner stopped the 8889 server and confirmed no listener. A new offline tab restored the saved capture at **51.4% / 12,240 / three lives / 2:05**. A fresh offline R4 Down attempt independently completed its first capture at **51.4% / 12,240 / three lives / 2:07**, with an empty console result.
+
+The local migration used normal lifecycle and explicit progress copying; it did not clear caches/profile data or force takeover. Browser evidence remains under `.cache/round39/browser/v0292-*`: old offline/saved baseline, root upgrade, copied/restored/resumed flight, original old save, transferred preferences, frozen first-capture and offline saved/fresh-capture snapshots, screenshots and console JSON.
+
+## Prepublication gate status
+
+| Gate                                            | Status   | Evidence / remaining work                                                                                                                 |
+| ----------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Exact source and historical/core regressions    | Complete | d611f1429272ce402db6c38dde763bd3e15498cb; six gates, 2,374 tests; historical results retained                                             |
+| Immutable freeze and independent rebuild        | Complete | Exact source/manifest/ZIP/offline identities above; prior releases/tags unchanged                                                         |
+| Local frozen entry and saved-progress migration | Complete | Actual old-worker lifecycle, explicit progress copy, original old save unchanged; Large text and explicit Resume verified                 |
+| Local frozen online and stopped-server capture  | Complete | Ordinary first Down capture, continuing simulation, HUD/pause and independent saved/fresh offline checks passed                           |
+| Public delivery                                 | Pending  | Reviewed/merged PR with passing CI, successful Pages workflow, all public bytes and actual public fresh/previously visited migration/play |
+
+The prepared main Pages output contains **1,650 files / 457,600,452 bytes**. Those local totals are not a public network result. Final CI/run identifiers, public inventory and actual live-site acceptance will be attached to the [GitHub Release receipt](https://github.com/mekhovov/revealline/releases/tag/v0.29.2); a locally frozen version alone does not establish delivery.
 
 No old release is overwritten. No cache/profile deletion, forced takeover, changed proof oracle or hidden error is an acceptable shortcut. Player controls remain authored by their edition; R4 still has no manual Scan, Supply or Boost. Root aliases must continue to select one complete immutable graph.
 
