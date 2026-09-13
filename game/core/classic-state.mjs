@@ -30,6 +30,16 @@ export function createClassicState(level, cells) {
     anchors: [],
     departure: null,
     tickClaims: [],
+    ...(level.classic.lineImpact
+      ? {
+          lineImpact: {
+            version: 'line-impact-state.v1',
+            nextId: 1,
+            seededActorIds: [],
+            fronts: [],
+          },
+        }
+      : {}),
   };
 }
 

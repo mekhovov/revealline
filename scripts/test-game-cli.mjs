@@ -705,3 +705,108 @@ test('public package has local entry, accurate storage notices and enforced prev
   assert.equal(missing.status, 404);
   assert.match(missing.headers['content-type'], /text\/plain/);
 });
+
+async function optionalPackFixture(t) {
+  const data = await fixture(t),
+    { root } = data;
+  await fs.mkdir(path.join(root, 'game/content/packs'), { recursive: true });
+  await fs.mkdir(path.join(root, 'game/offline'));
+  await fs.writeFile(path.join(root, 'game/offline.mjs'), 'export {};');
+  await fs.copyFile(
+    new URL('../game/offline/service-worker.template.js', import.meta.url),
+    path.join(root, 'game/offline/service-worker.template.js'),
+  );
+  const name = 'night-shift.json';
+  await fs.copyFile(
+    new URL(`../game/content/packs/${name}`, import.meta.url),
+    path.join(root, 'game/content/packs', name),
+  );
+  await fs.writeFile(
+    path.join(root, 'game/content/packs/index.json'),
+    JSON.stringify({ format: 'xonix-pack-index.v1', packs: [{ id: 'night-shift', path: name }] }),
+  );
+  for (const module of [
+    'packs.mjs',
+    'mastery-catalog.mjs',
+    'library.mjs',
+    'core/level.mjs',
+    'core/registry.mjs',
+    'data-json.mjs',
+  ]) {
+    const destination = path.join(root, 'game', module);
+    await fs.mkdir(path.dirname(destination), { recursive: true });
+    await fs.writeFile(
+      destination,
+      `export * from ${JSON.stringify(new URL(`../game/${module}`, import.meta.url).href)};\n`,
+    );
+  }
+  const config = {
+    version: 'optional-test',
+    entry: 'game/index.html',
+    include: ['game'],
+    optionalOffline: [`game/content/packs/${name}`],
+  };
+  const setConfig = (value) =>
+    fs.writeFile(path.join(root, 'game/build-config.json'), JSON.stringify(value));
+  await setConfig(config);
+  return { ...data, config, setConfig };
+}
+test('optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source', async (t) => {
+  const { root, out, directory } = await optionalPackFixture(t);
+  const result = await buildProject({ root, out });
+  const again = await buildProject({ root, out: path.join(directory, 'same') });
+  assert.equal(result.sha256, again.sha256);
+  const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.json'))),
+    cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json')));
+  const name = 'game/content/packs/night-shift.json',
+    original = await fs.readFile(path.join(root, name));
+  assert.deepEqual(await fs.readFile(path.join(out, name)), original);
+  assert.equal(manifest.files.find((f) => f.path === name).sha256, hash(original));
+  assert.equal(
+    cache.files.some((f) => f.path === name),
+    false,
+  );
+  assert.ok(cache.files.some((f) => f.path === 'game/content/packs/index.json'));
+  assert.deepEqual(cache.optionalPacks, [{ path: name, id: 'night-shift', name: 'Night Shift' }]);
+  const page = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
+  assert.match(page, /optionalPacks/);
+  const zip = await fs.readFile(path.join(out, 'distribution.zip'));
+  assert.ok(zip.includes(original), 'Stored ZIP entry retains exact optional pack payload.');
+  const omitted = manifest.files
+    .filter((f) => !cache.files.some((c) => c.path === f.path))
+    .map((f) => f.path);
+  assert.deepEqual(
+    omitted.sort(),
+    ['_headers', name, 'offline-cache.json', 'service-worker.js'].sort(),
+  );
+});
+test('optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources', async (t) => {
+  const { root, config, setConfig } = await optionalPackFixture(t);
+  for (const value of [
+    null,
+    'game/app.mjs',
+    ['game/app.mjs'],
+    ['game/content/packs/index.json'],
+    ['game/content/packs/missing.json'],
+    ['game/content/packs/../night-shift.json'],
+    [...config.optionalOffline, ...config.optionalOffline],
+  ]) {
+    await setConfig({ ...config, optionalOffline: value });
+    await assert.rejects(readBuildConfig(root));
+  }
+  await setConfig({
+    ...config,
+    include: ['game/index.html'],
+    optionalOffline: config.optionalOffline,
+  });
+  await assert.rejects(collectBuildFiles(root), /not shipped/);
+  await setConfig(config);
+  await fs.rm(path.join(root, config.optionalOffline[0]));
+  await assert.rejects(readBuildConfig(root));
+});
+test('declaring an optional pack does not relax the 64 MiB core cache budget', async (t) => {
+  const { root, out } = await optionalPackFixture(t);
+  await fs.writeFile(path.join(root, 'game/core-payload.bin'), Buffer.alloc(64 * 1024 * 1024));
+  await assert.rejects(buildProject({ root, out }), /64 MiB/);
+  await assert.rejects(fs.access(out));
+});

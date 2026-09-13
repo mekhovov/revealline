@@ -1,3 +1,4 @@
+import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
 // Cosmetic poses, pixel silhouettes and cut effects. No simulation objects are changed.
 const TAU = Math.PI * 2;
 const CELL = 16;
@@ -67,6 +68,7 @@ export function createActorPresentation() {
         screenScale = 1,
         canvasCSSWidth = 1152,
         scale = 1,
+        actorSkins = {},
       } = {},
     ) {
       const next = new Map(),
@@ -139,7 +141,8 @@ export function createActorPresentation() {
             y: actor.y * CELL,
             role,
             type: actor.type,
-            themeId: family(themeId, themeFamily),
+            themeId:
+              resolveEnemySkin(actor.type, actorSkins[actor.type]) ?? family(themeId, themeFamily),
             style,
             heading,
             phase,
@@ -354,14 +357,210 @@ function coupa(c, f, colors) {
   }
 }
 
+export function roleColor(type) {
+  return (
+    {
+      bouncer: '#ff6d91',
+      'border-patrol': '#ffac69',
+      'contour-patrol': '#60dedc',
+      'claimed-rover': '#b69aff',
+      eroder: '#edc15c',
+      'lane-boss': '#ff805e',
+      'relay-sentinel': '#ff70ba',
+    }[type] ?? '#ff6d91'
+  );
+}
+const BADGES = Object.freeze({
+  diamond: ['00100', '01110', '11011', '01110', '00100'],
+  frame: ['11111', '10001', '10001', '10001', '11111'],
+  corner: ['11111', '10000', '10111', '10100', '10100'],
+  feet: ['01110', '11111', '01010', '11011', '11011'],
+  bite: ['11111', '11000', '11110', '11000', '11111'],
+  lane: ['10101', '10101', '10101', '10101', '10101'],
+  lock: ['01110', '01010', '11111', '11011', '11111'],
+});
+function drawRoleBadge(c, f, colors) {
+  const badge = BADGES[enemyCatalogRecord(f.type)?.badge];
+  if (!badge) return;
+  c.save();
+  const unit = Math.max(1, f.diameter / 28);
+  c.translate(Math.round(f.diameter * 0.22), Math.round(f.diameter * 0.2));
+  c.scale(unit, unit);
+  rect(c, colors.dark, -1, -1, 7, 7);
+  badge.forEach((row, y) =>
+    [...row].forEach((v, x) => {
+      if (v === '1') rect(c, roleColor(f.type), x, y, 1, 1);
+    }),
+  );
+  c.restore();
+}
+// Role-exclusive original silhouettes. Palette changes cannot merge these outlines.
+function distinctBody(c, f, k) {
+  const phase = f.reduced ? 0 : Math.sin(f.phase * 5),
+    step = f.reduced ? 0 : Math.floor(f.travelPhase * 8) % 2;
+  if (f.role === 'contour') {
+    if (f.themeId === 'fpv') {
+      rect(c, k.dark, -4, -13, 8, 25);
+      rect(c, k.body, -3, -12, 6, 23);
+      rect(c, k.trim, -10, -2, 20, 3);
+      rotor(c, -8, 0, f.phase * 8, k, f.style === 'microtile');
+      rotor(c, 8, 0, -f.phase * 8, k, f.style === 'microtile');
+      rect(c, k.light, -2, -11, 4, 3);
+      rect(c, k.body, -6, 9, 12, 3);
+    } else if (f.themeId === 'ukraine') {
+      for (let i = 0; i < 5; i++) {
+        const x = Math.round(Math.sin(i * 1.2 + phase * 0.25) * 5);
+        rect(c, k.dark, x - 4, -12 + i * 5, 9, 7);
+        rect(c, k.body, x - 3, -11 + i * 5, 7, 5);
+      }
+      rect(c, k.light, -2, -12, 2, 2);
+      rect(c, k.trim, 2, -13, 4, 2);
+    } else if (f.themeId === 'retro') {
+      rect(c, k.dark, -11, -11, 22, 20);
+      rect(c, k.body, -10, -10, 20, 6);
+      for (const x of [-10, 5]) {
+        rect(c, k.body, x, -5, 5, 17);
+        rect(c, k.light, x + 1, 6 + step, 3, 4);
+      }
+      rect(c, k.trim, -4, -9, 8, 3);
+    } else {
+      rect(c, k.dark, -9, -12, 18, 24);
+      rect(c, k.light, -7, -10, 3, 20);
+      rect(c, k.body, -4, -10, 12, 4);
+      rect(c, k.body, -4, 6, 12, 4);
+      rect(c, k.trim, -2, -5, 3, 10);
+      rect(c, k.trim, 1, -2, 9, 3);
+      rect(c, k.body, 8, -4, 4, 7);
+    }
+  } else if (f.role === 'rover') {
+    if (f.themeId === 'fpv') {
+      for (const x of [-12, 8])
+        for (const y of [-9, 5]) {
+          rect(c, k.dark, x, y, 4, 7);
+          rect(c, k.light, x + 1, y + step, 2, 3);
+        }
+      rect(c, k.dark, -8, -12, 16, 24);
+      rect(c, k.body, -7, -11, 14, 22);
+      rect(c, k.dark, -5, -8, 10, 6);
+      rect(c, k.light, -4, -7, 8, 3);
+      rect(c, k.trim, -5, 5, 10, 3);
+    } else if (f.themeId === 'ukraine') {
+      for (const x of [-7, 3]) {
+        rect(c, k.dark, x, -14, 5, 13);
+        rect(c, k.trim, x + 1, -13, 3, 10);
+      }
+      rect(c, k.dark, -9, -3, 18, 15);
+      rect(c, k.body, -8, -2, 16, 12);
+      for (const x of [-12, 7]) rect(c, k.trim, x, 5 + (x < 0 ? step : -step), 5, 8);
+      rect(c, k.light, -5, -1, 3, 3);
+      rect(c, k.light, 2, -1, 3, 3);
+    } else if (f.themeId === 'retro') {
+      rect(c, k.dark, -8, -13, 16, 24);
+      rect(c, k.body, -7, -12, 14, 22);
+      rect(c, k.dark, -5, -9, 10, 9);
+      rect(c, k.light, -4, -8, 8, 6);
+      rect(c, k.trim, -11, -1, 4, 6);
+      rect(c, k.trim, 7, -1, 4, 6);
+      rect(c, k.body, -10, 9 + step, 6, 4);
+      rect(c, k.body, 4, 10 - step, 6, 4);
+    } else {
+      rect(c, k.dark, -11, -9, 22, 17);
+      rect(c, k.body, -10, -8, 20, 15);
+      rect(c, k.light, -7, -6, 14, 8);
+      rect(c, k.trim, -13, -12, 4, 12);
+      for (const x of [-9, 5]) {
+        rect(c, k.dark, x, 8, 5, 6);
+        rect(c, k.light, x + 1, 9 + step, 3, 2);
+      }
+    }
+  } else if (f.type === 'lane-boss') {
+    if (f.themeId === 'fpv') {
+      treads(c, k, f.travelPhase, f.style === 'microtile');
+      rect(c, k.body, -7, -2, 14, 13);
+      c.save();
+      c.rotate(f.reduced ? 0 : phase * 0.18);
+      rect(c, k.dark, -13, -12, 26, 7);
+      rect(c, k.light, -12, -11, 24, 3);
+      rect(c, k.trim, -1, -9, 2, 9);
+      c.restore();
+    } else if (f.themeId === 'ukraine') {
+      for (const x of [-12, 7]) {
+        rect(c, k.dark, x, -12, 5, 25);
+        rect(c, k.body, x + 1, -11, 3, 22);
+      }
+      rect(c, k.trim, -9, -10, 18, 4);
+      rect(c, k.light, -2, -7, 4, 14);
+      rect(c, k.trim, -6, 0, 12, 3);
+    } else if (f.themeId === 'retro') {
+      rect(c, k.dark, -6, -14, 12, 28);
+      rect(c, k.body, -5, -13, 10, 26);
+      for (const y of [-9, -1, 7]) {
+        rect(c, k.trim, -12, y, 24, 4);
+        rect(c, k.light, -3, y, 6, 3);
+      }
+    } else {
+      for (const x of [-13, 6]) {
+        rect(c, k.dark, x, -13, 7, 26);
+        rect(c, k.body, x + 1, -12, 5, 24);
+      }
+      rect(c, k.trim, -8, -3, 16, 6);
+      rect(c, k.light, -5, -1, 10, 2);
+    }
+  } else if (f.role === 'eroder') {
+    if (f.themeId === 'fpv') {
+      rect(c, k.dark, -8, -9, 16, 21);
+      rect(c, k.body, -7, -8, 14, 19);
+      for (let i = 0; i < 3; i++) {
+        const w = 12 - i * 4;
+        rect(c, i % 2 ? k.light : k.trim, -w / 2, -10 - i * 2, w, 3);
+      }
+      for (const x of [-12, 7]) rect(c, k.dark, x, -3, 5, 15);
+      rect(c, k.light, -3, -5, 6, 2);
+    } else if (f.themeId === 'ukraine') {
+      for (let i = 0; i < 6; i++) {
+        c.save();
+        c.rotate((i * Math.PI) / 3);
+        rect(c, k.dark, -3, -13, 6, 8);
+        rect(c, k.trim, -2, -12 + phase, 4, 6);
+        c.restore();
+      }
+      rect(c, k.body, -6, -6, 12, 12);
+      rect(c, k.dark, -3, -3, 6, 6);
+    } else if (f.themeId === 'retro') {
+      for (let i = 0; i < 8; i++) {
+        c.save();
+        c.rotate((i * Math.PI) / 4 + (f.reduced ? 0 : f.phase));
+        rect(c, k.dark, -3, -13, 6, 8);
+        rect(c, k.body, -2, -12, 4, 6);
+        c.restore();
+      }
+      rect(c, k.trim, -5, -5, 10, 10);
+      rect(c, k.light, -2, -2, 4, 4);
+    } else {
+      rect(c, k.dark, -12, -10, 24, 22);
+      rect(c, k.body, -11, -9, 22, 20);
+      rect(c, k.light, -8, -13, 16, 11);
+      rect(c, k.dark, -9, -3, 18, 5);
+      for (let x = -8; x < 9; x += 4) rect(c, k.trim, x, 5 + step, 2, 8);
+    }
+  } else return false;
+  return true;
+}
+
+/** Original body-only skin; caller owns placement/size and functional badges. */
+export function drawEnemySilhouette(ctx, frame, colors) {
+  if (!distinctBody(ctx, frame, colors))
+    (({ fpv, ukraine, retro, coupa })[frame.themeId] ?? retro)(ctx, frame, colors);
+}
+
 /** Image roles override only the body; collision-center cues retain their physical size. */
 export function drawPresentedActor(ctx, frame, palette, image = null) {
   if (!frame) return;
   const colors = {
     dark: '#07111c',
-    body: frame.dormant ? palette.muted : palette.danger,
+    body: frame.dormant ? palette.muted : roleColor(frame.type),
     trim: palette.accent,
-    light: palette.paper,
+    light: '#f1f7ed',
   };
   ctx.save();
   ctx.imageSmoothingEnabled = false;
@@ -380,9 +579,10 @@ export function drawPresentedActor(ctx, frame, palette, image = null) {
   if (image) ctx.drawImage(image, -d / 2, -d / 2, d, d);
   else {
     ctx.scale(d / 28, d / 28);
-    (({ fpv, ukraine, retro, coupa })[frame.themeId] ?? retro)(ctx, frame, colors);
+    drawEnemySilhouette(ctx, frame, colors);
   }
   ctx.restore();
+  drawRoleBadge(ctx, frame, colors);
   // The luminous center is the contact footprint; larger body art is cosmetic.
   ctx.globalAlpha = 0.8;
   ctx.strokeStyle = palette.danger;

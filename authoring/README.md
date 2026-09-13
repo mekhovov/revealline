@@ -167,3 +167,7 @@ The [ability definitions](motion-lab/ability-presets.json) and [ability evaluato
 - [Contract sources](../docs/research/round-04-contracts-sources.md): schema and validation rationale.
 - [New mixed-media concept](../docs/concepts/round-04-theme-system.png) and [effective prompt/review notes](../docs/concepts/round-04-theme-system-prompt.md).
 - [Earlier Xonix/XPOSED research](../docs/research/xonix-and-xposed.md), [engine comparison](../docs/research/engine-and-framework.md), [four-family direction](../docs/round-03-focused-direction.md).
+
+## Enemy workshop
+
+Open [`/authoring/enemy-catalog/`](enemy-catalog/index.html) for the seven-role catalog, four theme families, saved authoring choices and real practice studies. See [enemy catalog](../docs/enemy-catalog.md), [line impacts](library/fpv-arcade-r3/README.md) and [feature delivery](../docs/feature-delivery-workflow.md).

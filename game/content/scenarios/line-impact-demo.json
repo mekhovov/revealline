@@ -1,0 +1,111 @@
+{
+  "format": "xonix-playground.v5",
+  "level": {
+    "version": "xonix-level.v4",
+    "id": "line-impact-demo",
+    "revision": "1",
+    "name": "Race the impact",
+    "width": 72,
+    "height": 36,
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "lineImpact": {
+        "version": "line-impact.v1",
+        "speed": 24
+      }
+    },
+    "spawn": {
+      "x": 36.5,
+      "y": 0.5
+    },
+    "goal": {
+      "coverage": 0.45
+    },
+    "enemies": [
+      {
+        "id": "crossing",
+        "type": "bouncer",
+        "x": 40.5,
+        "y": 5.5,
+        "vx": -2,
+        "vy": 0
+      }
+    ],
+    "rules": {
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "lives": 1,
+      "graceSeconds": 0,
+      "respawnSeconds": 0.1,
+      "stopOnCapture": true
+    },
+    "metadata": {
+      "description": "Original mechanic demonstration. Hold Boost and choose Down: the trailing contact seeds two impact fronts, then the cut closes before the chase catches up. Down without Boost loses to the travelling front. This is not a reconstruction of reference-game timing."
+    }
+  },
+  "theme": {
+    "id": "fpv",
+    "name": "FPV Front",
+    "subtitle": "First Light R3 · Arcade",
+    "family": "fpv",
+    "player": "fpv-body",
+    "enemyShape": "tank",
+    "patrolShape": "drone",
+    "bossShape": "radar",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply pad",
+      "enemy": "Invader patrol",
+      "boss": "Signal sentinel",
+      "currency": "Score",
+      "ability": "Equipment"
+    },
+    "palette": {
+      "ink": "#e3ecee",
+      "paper": "#0b121b",
+      "muted": "#8c9cac",
+      "accent": "#f2ce62",
+      "safe": "#3d7586",
+      "danger": "#ff796e",
+      "field": "#000000",
+      "grid": "#13202b",
+      "sky": "#dfb781",
+      "land": "#687c55"
+    },
+    "classBodies": {
+      "scout": "fpv-body"
+    }
+  },
+  "classRecipes": [
+    {
+      "id": "scout",
+      "label": "FPV Scout",
+      "description": "A nimble FPV quad. Scan shows enemy direction hints for four seconds; it never captures territory or slows an enemy.",
+      "primitive": "scan",
+      "capacity": 0,
+      "cooldown": 6,
+      "duration": 4,
+      "radius": 48,
+      "revision": "1"
+    }
+  ],
+  "settings": {
+    "classId": "scout",
+    "turnPolicy": "immediate",
+    "seed": 1
+  },
+  "visualOverrides": {},
+  "masteryDefinition": null,
+  "music": {
+    "id": "first-light-orchard-window",
+    "name": "Orchard Circuit",
+    "genre": "synthwave",
+    "tempo": 108,
+    "root": 48,
+    "scale": "dorian"
+  }
+}
