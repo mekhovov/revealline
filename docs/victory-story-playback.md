@@ -153,7 +153,36 @@ the lowest gain; releasing this story's lease preserves another active lease.
 `applyGain` must target a **dedicated temporary mixer factor**. It must not call the
 existing saved music-volume setter or change song, playlist, position, mute state
 or listening intent. If the host has no such mixer, omit this optional adapter.
-The current soundtrack player has not been wired to it by this slice.
+The soundtrack player now exposes `acquireGain({ factor })`, returning a frozen
+`{ release() }` lease. It uses the lowest active factor and multiplies that with
+the player’s base volume and current transition fade; MP3 also uses the master
+volume. It reuses the existing transient Soundscape gain path, so that low-level
+effective music setting can reflect attenuation just as it already reflects
+fades. `player.snapshot().volume` and saved preferences stay at the user’s base
+value. It never calls Play/Pause, seeks, replaces a track or changes listening
+intent. Updating volume while a lease is active changes the base that will be
+restored; mute stays mute. Player disposal clears its own leases, and late release
+is a no-op. Overlapping stories must release only the lease they acquired.
+
+The host can inject this compatible adapter without the separate ducker factory:
+
+```js
+const musicDucker = {
+  acquire(factor) {
+    const lease = soundtrackPlayer.acquireGain({ factor });
+    return () => lease.release();
+  },
+};
+```
+
+Acquisition/refusal is synchronous; the story view already releases a returned
+resource if cancellation happens while allocating it. Gain failures are reported
+to that view; failed acquisition removes its tentative factor and attempts to
+restore the surviving mix. Future transport updates can retry an unavailable
+mixer. This API alone does not wire host playback or certify real audio output.
+Focused `soundtrack-gain-leases.test.mjs` cases exercise real Soundscape/player
+logic over controlled Web Audio and media elements, including mixed tracks,
+pending original reads, fades, suspension, independent owners and disposal.
 
 Cinematic volume belongs to this view and never changes the saved soundtrack
 preference. A failed gain adapter prevents starting video, or reports restoration
