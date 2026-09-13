@@ -1,0 +1,333 @@
+// Real solo app + guide + input routers + persistence. Canvas, Window messaging,
+// Gamepad, IndexedDB and HTMLMediaElement are modeled browser boundaries; this
+// does not certify layout, physical controllers or two simultaneous browsers.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
+import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { audioHarness } from './helpers/soundtrack-audio.mjs';
+import { fixture, memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
+import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+
+const profileKey = 'revealline.library.dev.v1';
+const handoffKey = 'revealline.playground.current';
+const campaign = {
+  version: 'xonix-campaign.v1',
+  id: 'field-guide-host',
+  revision: '1',
+  title: 'Guide host preservation',
+  classRecipes: JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url))),
+  levels: [retryFixture('self-contact').level],
+};
+function ticks(page, count) {
+  for (let i = 0; i < count; i++) page.frame();
+}
+async function waitFor(predicate, describe) {
+  for (let i = 0; i < 100; i++) {
+    if (predicate()) return;
+    await new Promise((resolve) => setTimeout(resolve, 5));
+  }
+  assert.ok(predicate(), describe());
+}
+function nativeKey(page, key) {
+  const target = page.doc.activeElement;
+  const event = target.emit('keydown', { key, code: key === ' ' ? 'Space' : key, repeat: false });
+  if (!event.defaultPrevented && ['Enter', ' '].includes(key) && target.tagName === 'BUTTON')
+    target.click();
+  // When native select editing leaves Escape to the browser, its default
+  // action requests modal cancellation. The actual dialog listener owns it.
+  if (!event.defaultPrevented && key === 'Escape') {
+    const dialog = page.doc.querySelector('dialog[open]');
+    if (dialog && !dialog.emit('cancel').defaultPrevented) dialog.close();
+  }
+  target.emit('keyup', { key, code: key === ' ' ? 'Space' : key });
+  return event;
+}
+async function setup(t, options = {}) {
+  // Paint is covered by the real guide/actor tests. A null Canvas2D context is
+  // an explicit optional-browser boundary here, not a replacement guide/router.
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const page = await soloPage(t, { campaign, ...options });
+  page.win.crypto = globalThis.crypto;
+  page.$('enemy-guide-frame').contentWindow = {};
+  return page;
+}
+function liveCut(page) {
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  ticks(page, 30);
+  page.key('ArrowDown', false);
+  page.key('Escape');
+  page.key('Escape', false);
+  page.frame(0);
+  assert.equal(page.rendered.run.player.cutting, true);
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.$('game-overlay').dataset.kind, 'pause');
+  return authoritativeCheckpoint(page.rendered.run);
+}
+function openGuide(page) {
+  page.$('overlay-menu').click();
+  assert.equal(page.$('shell-home').open, true);
+  page.$('shell-guide').focus();
+  nativeKey(page, 'Enter');
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('enemy-guide-dialog').open, true);
+}
+async function launch(page) {
+  page.$('enemy-guide-play').click();
+  await settle(() => !page.$('enemy-guide-frame').hidden, page.$('enemy-guide-status').textContent);
+  const frame = page.$('enemy-guide-frame');
+  assert.equal(page.doc.activeElement, frame);
+  const url = new URL(frame.src);
+  assert.equal(url.searchParams.get('practice'), '1');
+  assert.equal(url.searchParams.get('practice-return'), 'enemy-guide');
+  return { frame, token: url.searchParams.get('enemy-workshop-session') };
+}
+function childReturn(page, { frame, token }, overrides = {}) {
+  page.win.emit('message', {
+    origin: 'http://localhost',
+    source: frame.contentWindow,
+    data: { format: 'revealline.enemy-workshop-return.v1', session: token },
+    ...overrides,
+  });
+}
+function padBoundary(page, t) {
+  let now = 1000;
+  t.mock.method(performance, 'now', () => now);
+  const original = navigator.getGamepads;
+  const pad = {
+    index: 0,
+    id: 'Field guide controller',
+    mapping: 'standard',
+    connected: true,
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  navigator.getGamepads = () => {
+    original();
+    return [pad];
+  };
+  const frame = () => {
+    now += 20;
+    page.frame(20);
+  };
+  const set = (index, pressed) => (pad.buttons[index] = { pressed, value: pressed ? 1 : 0 });
+  const pulse = (index) => {
+    set(index, true);
+    frame();
+    set(index, false);
+    frame();
+  };
+  frame();
+  pulse(0); // Join through the actual shared router's neutral/Confirm protocol.
+  return { pad, frame, set, pulse };
+}
+
+for (const turnPolicy of ['immediate', 'grid-center']) {
+  test(`${turnPolicy}: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return`, async (t) => {
+    const storage = memoryStorage(),
+      preview = memoryStorage({ [handoffKey]: 'an existing authoring preview' });
+    saveLibrary(storage, profileKey, updatePreferences(emptyLibrary(), { turnPolicy }));
+    const page = await setup(t, { storage, previewStorage: preview });
+    const checkpoint = liveCut(page);
+    const pausedPlayer = structuredClone(page.rendered.run.player);
+    assert.equal(page.$('pause-label').hidden, false);
+    assert.equal(page.$('overlay-reading').hidden, true);
+    assert.equal(page.$('overlay-read').hidden, true, 'compact pause has no hidden reading action');
+    assert.equal(page.$('overlay-reading').tabIndex, -1);
+    page.$('settings-button').click();
+    page.change('text-size', 'large');
+    page.doc.querySelector('[data-close="settings-dialog"]').click();
+    page.frame(0);
+    assert.equal(page.doc.body.dataset.textSize, 'large');
+    assert.equal(loadLibrary(storage, profileKey).library.preferences.textSize, 'large');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    openGuide(page);
+    const snapshot = [...storage.map],
+      writeCount = storage.writes.length;
+    page.change('enemy-guide-topic', 'line-impact');
+    page.change('enemy-guide-theme', 'coupa');
+    assert.match(page.$('enemy-guide-risk').textContent, /costs a life/);
+    const controls = padBoundary(page, t);
+    const lesson = await launch(page);
+    const recipe = JSON.parse(preview.getItem(handoffKey));
+    assert.equal(recipe.level.id, 'line-impact-demo');
+    assert.equal(recipe.settings.turnPolicy, turnPolicy);
+    assert.equal(recipe.theme.id, 'coupa');
+    assert.equal(recipe.masteryDefinition, null);
+    const reads = page.padReads;
+    controls.set(13, true);
+    controls.set(0, true);
+    for (let i = 0; i < 60; i++) controls.frame();
+    assert.equal(page.padReads, reads, 'focused child prevents parent sampling, not just dispatch');
+    assert.equal(page.doc.activeElement, lesson.frame);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    childReturn(page, lesson, { origin: 'https://foreign.invalid' });
+    assert.equal(lesson.frame.hidden, false, 'foreign return cannot dismiss lesson');
+    childReturn(page, lesson);
+    assert.equal(lesson.frame.src, 'about:blank');
+    assert.equal(page.doc.activeElement.id, 'enemy-guide-play');
+    assert.equal(page.$('enemy-guide-dialog').open, true);
+    assert.equal(preview.getItem(handoffKey), 'an existing authoring preview');
+    for (let i = 0; i < 60; i++) controls.frame();
+    assert.equal(
+      page.doc.activeElement.id,
+      'enemy-guide-play',
+      'held pad cannot reclaim returned focus',
+    );
+    assert.equal(lesson.frame.hidden, true, 'held Confirm cannot relaunch lesson');
+    controls.set(13, false);
+    controls.set(0, false);
+    controls.frame();
+    controls.pulse(1);
+    assert.equal(page.$('enemy-guide-dialog').open, false, 'fresh controller Back closes guide');
+    assert.equal(page.doc.activeElement.id, 'start-button');
+    controls.pulse(13);
+    page.key('ArrowRight');
+    page.key('ArrowRight', false);
+    ticks(page, 20);
+    assert.equal(page.rendered.paused, true, 'direction inputs never resume the paused parent');
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual(
+      [...storage.map],
+      snapshot,
+      'practice never changes profile or suspended bytes',
+    );
+    assert.equal(storage.writes.length, writeCount, 'practice never rewrites a campaign save');
+    page.$('start-button').focus();
+    nativeKey(page, 'Enter');
+    ticks(page, 3);
+    assert.equal(page.rendered.paused, false);
+    assert.ok(page.rendered.run.player.y > pausedPlayer.y, 'explicit Resume continues saved Down');
+    assert.equal(
+      page.rendered.run.player.x,
+      pausedPlayer.x,
+      'rejected Right did not enter flight intent',
+    );
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('actual guide repeated return and canceled load preserve the parent and reject stale lesson messages', async (t) => {
+  const preview = memoryStorage({ [handoffKey]: 'previous preview' });
+  const page = await setup(t, { previewStorage: preview });
+  const checkpoint = liveCut(page);
+  openGuide(page);
+  const saved = [...page.storage.map];
+  const first = await launch(page);
+  childReturn(page, first);
+  const second = await launch(page);
+  assert.notEqual(second.token, first.token);
+  childReturn(page, first);
+  assert.equal(second.frame.hidden, false, 'old lesson return cannot dismiss current lesson');
+  page.$('enemy-guide-return').click();
+  assert.equal(second.frame.hidden, true);
+  assert.equal(page.$('enemy-guide-dialog').open, true);
+  assert.equal(preview.getItem(handoffKey), 'previous preview');
+
+  let resolve;
+  const fetch = globalThis.fetch,
+    pending = new Promise((done) => (resolve = done));
+  globalThis.fetch = (path) =>
+    path === 'content/scenarios/line-impact-demo.json' ? pending : fetch(path);
+  page.change('enemy-guide-topic', 'line-impact');
+  const operation = page.$('enemy-guide-play').onclick();
+  assert.equal(page.$('enemy-guide-play').disabled, true);
+  nativeKey(page, 'Escape');
+  assert.equal(
+    page.$('enemy-guide-dialog').open,
+    false,
+    'Back cancels rather than trapping a load',
+  );
+  resolve({
+    ok: true,
+    json: async () =>
+      JSON.parse(
+        readFileSync(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
+      ),
+  });
+  assert.equal(await operation, false);
+  assert.equal(second.frame.src, 'about:blank');
+  assert.equal(preview.getItem(handoffKey), 'previous preview');
+  ticks(page, 10);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+  assert.deepEqual([...page.storage.map], saved);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.errors, []);
+});
+
+for (const listening of [false, true]) {
+  test(`actual guide returns with streamed music ${listening ? 'continuing' : 'still explicitly paused'}, without resuming flight`, async (t) => {
+    const original = await fixture(),
+      db = memoryIndexedDB(),
+      store = createSoundtrackStore({ indexedDB: db.indexedDB });
+    const library = {
+      ...original.library,
+      playlists: [{ ...original.library.playlists[0], trackIds: [original.track.id] }],
+      selection: { playlistId: 'qa.mix' },
+    };
+    await store.commit(
+      await prepareSoundtrackLibrary(library, original.assets, { probeMedia: structuralProbe }),
+      { expectedGeneration: 0 },
+    );
+    store.close();
+    const audio = {
+      ...audioHarness(),
+      durationSeconds: original.track.asset.durationSeconds,
+      filePlayback: true,
+    };
+    const page = await setup(t, { audio, soundtrackIndexedDB: db.indexedDB });
+    await settle(() => !page.$('soundtrack-open').disabled);
+    page.$('settings-button').click();
+    page.$('soundtrack-open').click();
+    await waitFor(
+      () =>
+        /Saved library loaded|Music library ready|unsaved draft/.test(
+          page.$('soundtrack-status').textContent,
+        ),
+      () => page.$('soundtrack-status').textContent,
+    );
+    page.$('soundtrack-play').click();
+    const media = page.audioElements[0];
+    await settle(() => !media.paused);
+    if (!listening) {
+      page.$('soundtrack-pause').click();
+      await settle(() => media.paused);
+    }
+    media.currentTime = 0.01;
+    const stream = media.src;
+    page.$('soundtrack-close').click();
+    page.doc.querySelector('[data-close="settings-dialog"]').click();
+    const checkpoint = liveCut(page);
+    openGuide(page);
+    const child = await launch(page);
+    assert.equal(media.paused, true, 'parent audio suspends while the child lesson runs');
+    const playsDuringLesson = media.plays;
+    page.doc.hidden = true;
+    page.doc.emit('visibilitychange');
+    page.win.emit('blur');
+    page.doc.hidden = false;
+    page.doc.emit('visibilitychange');
+    page.win.emit('focus');
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(media.paused, true, 'returning to the tab cannot create two audible game owners');
+    assert.equal(media.plays, playsDuringLesson);
+    childReturn(page, child);
+    if (listening) await settle(() => !media.paused);
+    else {
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(media.paused, true);
+      assert.equal(media.plays, playsDuringLesson, 'music-only Pause is not undone by returning');
+    }
+    assert.equal(media.src, stream);
+    assert.equal(media.currentTime, 0.01, 'return never restarts the song');
+    page.frame(0);
+    assert.equal(page.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.deepEqual(page.errors, []);
+  });
+}

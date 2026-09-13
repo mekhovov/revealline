@@ -172,6 +172,9 @@ test('chapter reward work preserves original route and campaign identity oracles
   // routes, IDs and timestamp. Source: 315a4782a159f2274f7200e3470ec20c3859707b.
   // Ordinary tests use this fixed oracle, never archived code or Git at runtime.
   const owned = JSON.parse(exportLibrary(states(home)[3]));
+  assert.equal(Object.hasOwn(owned.preferences, 'textSize'), true);
+  assert.equal(owned.preferences.textSize, 'standard');
+  delete owned.preferences.textSize;
   assert.equal(Object.hasOwn(owned.preferences, 'campaignDifficulty'), true);
   assert.equal(owned.preferences.campaignDifficulty, 'standard');
   delete owned.preferences.campaignDifficulty;

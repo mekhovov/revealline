@@ -148,6 +148,9 @@ test('v0.7 opaque future-hash metadata remains portable and archived without bec
   assert.equal(Object.hasOwn(current.preferences, 'controllerBoostMode'), true);
   assert.equal(current.preferences.controllerBoostMode, 'hold');
   const owned = copy(current);
+  assert.equal(Object.hasOwn(owned.preferences, 'textSize'), true);
+  assert.equal(owned.preferences.textSize, 'standard');
+  delete owned.preferences.textSize;
   assert.equal(Object.hasOwn(owned.preferences, 'campaignDifficulty'), true);
   assert.equal(owned.preferences.campaignDifficulty, 'standard');
   delete owned.preferences.campaignDifficulty;

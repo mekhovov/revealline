@@ -49,11 +49,12 @@ export function attachControllerReading({
       surface.hint.textContent = active
         ? `Reading ${surface.label}. ${prompt()}`
         : 'Read without starting or resuming.';
-      if (compactOverlay && surface.id === 'overlay-reading') {
+      if (surface.id === 'overlay-reading' && (compactOverlay || surface.region.hidden)) {
         const { clientHeight, scrollHeight } = surface.region;
         const measured =
           Number.isFinite(clientHeight) && clientHeight > 0 && Number.isFinite(scrollHeight);
-        const needed = active || !measured || scrollHeight > clientHeight + 1;
+        const eligible = !surface.region.hidden && !surface.region.closest('[hidden]');
+        const needed = eligible && (active || !measured || scrollHeight > clientHeight + 1);
         surface.entry.hidden = !needed;
         surface.done.hidden = !active;
         surface.hint.hidden = !active;
@@ -62,6 +63,13 @@ export function attachControllerReading({
         if (toolbar) toolbar.hidden = !needed;
         if (!needed && [surface.entry, surface.done].includes(doc.activeElement))
           getNavigation().engage();
+      } else if (surface.id === 'overlay-reading') {
+        surface.entry.hidden = false;
+        surface.done.hidden = false;
+        surface.hint.hidden = false;
+        surface.region.tabIndex = 0;
+        const toolbar = surface.entry.closest?.('.reading-toolbar');
+        if (toolbar) toolbar.hidden = false;
       }
     }
   }

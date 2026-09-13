@@ -39,3 +39,5 @@ Link prompts, the cue/stem table, and any actual audio files; show playable audi
 ## Deliver the completed feature
 
 For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+
+For nested [Field Guide practice](../../../docs/enemy-guide.md), retain the parent player’s prior listening intent and stream position. Suspend its music while the child owns practice, including focus/visibility returns; resume only prior playback when allowed. A player’s intentional music-only Pause must survive practice and ordinary Resume. Model media tests establish sequencing, while real MP3 playback and listening still need browser/audio evidence.
