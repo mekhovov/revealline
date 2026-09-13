@@ -3,7 +3,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { soloPage, settle, SoloElement } from './helpers/solo-dom.mjs';
+import { Document } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+import { attachOptionalChaptersPanel } from '../ui/optional-chapters-panel.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
 const catalog = JSON.parse(
@@ -163,4 +166,92 @@ test('cancelled catalog refresh retains prior descriptions; accepted refreshed c
   assert.deepEqual(authoritativeCheckpoint(run), before);
   assert.deepEqual(page.storage.map, saved);
   assert.deepEqual(page.errors, []);
+});
+
+// Source capabilities below are deferred boundaries; the actual panel owns
+// status, cancellation and the stale-operation guards. No storage/codec claim.
+function sourcePanel(t, capability) {
+  const doc = new Document();
+  doc.createElement = (tag) => new SoloElement(doc, tag);
+  const panel = attachOptionalChaptersPanel({
+    document: doc,
+    getLibrary: () => ({ format: 'xonix-pack-library.v1', packs: [] }),
+    loadCatalog: async () => catalog,
+    sourceChapter: { id: 'test-source', name: 'Source fixture', ...capability },
+  });
+  t.after(() => panel.dispose());
+  return { panel, $: (id) => doc.getElementById(`optional-worlds-${id}`) };
+}
+
+test('source install reports checking immediately and late completion after Back cannot publish success', async (t) => {
+  let finish, signal, pending;
+  const h = sourcePanel(t, {
+    inspect: async ({ signal }) => {
+      if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
+      return { status: 'absent' };
+    },
+    install: async (_files, options) => {
+      signal = options.signal;
+      await new Promise((resolve) => {
+        finish = resolve;
+      });
+    },
+  });
+  t.after(async () => {
+    finish?.();
+    await pending;
+  });
+  await h.panel.open();
+  h.$('source-pack').files = [new Blob(['{}'])];
+  h.$('source-media').files = [new Blob(['originals'])];
+  pending = h.$('source-install').onclick();
+  assert.equal(h.$('source-install').disabled, true);
+  assert.equal(h.$('status').textContent, 'Checking gameplay and original pictures…');
+  h.$('top-back').click();
+  assert.equal(signal.aborted, true);
+  const cancelled = h.$('status').textContent;
+  assert.match(cancelled, /cancelled/);
+  finish();
+  await pending;
+  assert.equal(h.$('dialog').open, false);
+  assert.equal(h.$('status').textContent, cancelled);
+});
+
+test('source reopen reports checking; obsolete inspection cannot replace the current operation or its ready message', async (t) => {
+  const jobs = [],
+    pending = [];
+  let initial = true;
+  const h = sourcePanel(t, {
+    inspect: async ({ signal }) => {
+      if (initial) return { status: 'absent' };
+      return new Promise((resolve) => jobs.push({ resolve, signal }));
+    },
+  });
+  t.after(async () => {
+    for (const job of jobs) job.resolve({ status: 'absent' });
+    await Promise.all(pending);
+  });
+  await h.panel.open();
+  h.panel.close();
+  initial = false;
+  pending.push(h.panel.open());
+  await waitFor(() => jobs.length === 1);
+  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  assert.equal(h.$('source-install').disabled, true);
+  h.panel.close();
+  assert.equal(jobs[0].signal.aborted, true);
+  pending.push(h.panel.open());
+  await waitFor(() => jobs.length === 2);
+  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  jobs[0].resolve({ status: 'unavailable', message: 'Obsolete inspection' });
+  await pending[0];
+  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  assert.equal(h.$('reload').disabled, true);
+  assert.doesNotMatch(h.$('source-state').textContent, /Obsolete/);
+  jobs[1].resolve({ status: 'installed' });
+  await pending[1];
+  assert.equal(h.$('source-choose').disabled, false);
+  assert.equal(h.$('reload').disabled, false);
+  assert.match(h.$('status').textContent, /Choose a world/);
+  assert.doesNotMatch(h.$('status').textContent, /Checking|cancelled/);
 });
