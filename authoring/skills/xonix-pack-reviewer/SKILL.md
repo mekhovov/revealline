@@ -70,3 +70,7 @@ For any playable theme, asset, rule, interface or pack change, follow the shared
 For retained original stills, apply the [media storage contract](../../../docs/media-storage.md): verify exact stored owner snapshots and immutable history inside the final generation-checked transaction. A retained owner authorizes historical identity validation, not pack installation, new rules, scores or arbitrary new assignments. Models of v3 migration are distinct from browser upgrade and recovery evidence.
 
 For optional illustrated chapters, use the [shared chapter contract](../../../docs/feature-delivery-workflow.md#optional-chapter-authoring-contract) and [requests](../../prompts/optional-worlds.md). Keep original pictures, reused geometries, installed-pack storage and separately managed media explicit.
+
+## Keep live pictures and earned originals stable
+
+When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.

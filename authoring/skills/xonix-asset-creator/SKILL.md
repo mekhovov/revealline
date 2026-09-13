@@ -67,3 +67,7 @@ For any playable theme, asset, rule, interface or pack change, follow the shared
 The [opt-in still store](../../../docs/media-storage.md) retains exact historical owners and original bytes, but its presence does not mean a picture is adopted by the game or kept as an earned reward. Ordinary runtime adoption, live-session pins, Collection receipts and actual v3 migration require their own gates. Never enlarge budgets, erase history or upgrade the shared audio database implicitly from a preview.
 
 For optional illustrated chapters, use the [shared chapter contract](../../../docs/feature-delivery-workflow.md#optional-chapter-authoring-contract) and [requests](../../prompts/optional-worlds.md). Keep original pictures, reused geometries, installed-pack storage and separately managed media explicit.
+
+## Keep live pictures and earned originals stable
+
+When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
