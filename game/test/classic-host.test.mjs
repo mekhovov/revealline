@@ -37,6 +37,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     const page = await setup(t, 0, { stopOnCapture: true });
     page.change('turn-select', turnPolicy);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.key('ArrowDown');
     for (let n = 0; n < 700 && page.rendered.run.claimedCount === 0; n++) frames(page, 1);
     const run = page.rendered.run;
@@ -56,6 +60,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
     await settle(() => !page.$('continue-saved').disabled, 'stopped session restored');
     page.frame(0);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     frames(page, 8);
     assert.deepEqual([page.rendered.run.player.x, page.rendered.run.player.y], position);
     page.key('ArrowDown', false);
@@ -69,6 +77,10 @@ for (const turnPolicy of ['immediate', 'grid-center'])
 test('actual classic host explains a life pickup, retains timed effects through pause/load, and explicitly resumes saved movement', async (t) => {
   const page = await setup(t, 0);
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let n = 0; n < 100 && page.rendered.run.lives === 3; n++) frames(page, 1);
@@ -93,6 +105,10 @@ test('actual classic host explains a life pickup, retains timed effects through 
   assert.equal(page.rendered.paused, true);
   const y = page.rendered.run.player.y;
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   frames(page, 4);
   assert.ok(page.rendered.run.player.y > y);
   assert.deepEqual(page.errors, []);
@@ -101,6 +117,10 @@ test('actual classic host explains a life pickup, retains timed effects through 
 test('actual classic host exposes lethal-terrain recovery text and clears movement before redeployment', async (t) => {
   const page = await setup(t, 5);
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   for (let n = 0; n < 1200 && page.rendered.run.status === 'running'; n++) frames(page, 1);

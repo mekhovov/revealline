@@ -11,9 +11,11 @@ import {
 } from './replay.mjs';
 import { boundedJSON, exactKeys, stableId, required } from './data-json.mjs';
 import { resolveMasteryDefinition } from './mastery.mjs';
+import { snapshotPresentationPins, validatePresentationPinsForRun } from './presentation-pins.mjs';
 
 export const SESSION_FORMAT = 'xonix-session.v1';
 export const CONTINUOUS_SESSION_FORMAT = 'xonix-session.v2';
+export const PRESENTATION_SESSION_FORMAT = 'xonix-session.v3';
 export const SESSION_STORAGE_BYTES = 2 * 1024 * 1024;
 export const SESSION_IMPORT_BYTES = MAX_REPLAY_BYTES + 16384;
 const canonical = (v) =>
@@ -72,16 +74,23 @@ function envelope(candidate) {
       'runId',
       'savedAt',
       'replay',
-      ...(session.format === CONTINUOUS_SESSION_FORMAT ? ['continuation'] : []),
+      ...([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(session.format)
+        ? ['continuation']
+        : []),
+      ...(session.format === PRESENTATION_SESSION_FORMAT ? ['presentationPins'] : []),
     ],
     'saved attempt',
   );
   required(
-    [SESSION_FORMAT, CONTINUOUS_SESSION_FORMAT].includes(session.format),
+    [SESSION_FORMAT, CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(
+      session.format,
+    ),
     'Unsupported saved attempt format.',
   );
-  if (session.format === CONTINUOUS_SESSION_FORMAT)
+  if ([CONTINUOUS_SESSION_FORMAT, PRESENTATION_SESSION_FORMAT].includes(session.format))
     session.continuation = continuationValue(session.continuation);
+  if (session.format === PRESENTATION_SESSION_FORMAT)
+    session.presentationPins = snapshotPresentationPins(session.presentationPins);
   metadata(session);
   required(
     session.replay !== null && typeof session.replay === 'object' && !Array.isArray(session.replay),
@@ -108,6 +117,7 @@ export function suspendSession({
   runId,
   savedAt = new Date().toISOString(),
   continuation,
+  presentationPins,
 }) {
   if (!run || !['running', 'respawning'].includes(run.status))
     throw new Error('Only an unfinished attempt can be suspended.');
@@ -117,25 +127,42 @@ export function suspendSession({
     'This attempt has no recoverable input recording.',
   );
   const intent = continuation === undefined ? undefined : continuationValue(continuation);
+  const pictures =
+    presentationPins === undefined ? undefined : snapshotPresentationPins(presentationPins);
+  if (pictures !== undefined)
+    required(
+      intent !== undefined &&
+        pictures.executionKey === campaignKey &&
+        pictures.levelId === run.level.id &&
+        pictures.levelRevision === run.level.revision &&
+        pictures.choices.some((choice) => choice.identity.themeId === themeId),
+      'Saved pictures require matching flight identity and explicit continuation.',
+    );
   if (intent === undefined) {
     releaseInputs(run);
     recordRelease(recorder);
   }
   return {
-    format: intent === undefined ? SESSION_FORMAT : CONTINUOUS_SESSION_FORMAT,
+    format:
+      pictures !== undefined
+        ? PRESENTATION_SESSION_FORMAT
+        : intent === undefined
+          ? SESSION_FORMAT
+          : CONTINUOUS_SESSION_FORMAT,
     campaignKey,
     themeId,
     bodyId,
     runId,
     savedAt,
     ...(intent === undefined ? {} : { continuation: intent }),
+    ...(pictures === undefined ? {} : { presentationPins: pictures }),
     replay: exportReplay(recorder, run),
   };
 }
 
 export async function restoreSession(
   candidate,
-  { campaign, campaignKey, signal, onProgress, masteryDefinition } = {},
+  { campaign, campaignKey, signal, onProgress, masteryDefinition, mediaIdentityCatalog } = {},
 ) {
   // Snapshot the entire bounded envelope before the first await. Replay checks
   // alone cannot protect outer metadata or later reads from caller mutation.
@@ -180,6 +207,13 @@ export async function restoreSession(
       canonical(session.replay.options.classRecipes)
   )
     throw new Error('Saved rules differ from the installed campaign.');
+  if (session.format === PRESENTATION_SESSION_FORMAT)
+    validatePresentationPinsForRun(session.presentationPins, {
+      identityCatalog: mediaIdentityCatalog,
+      campaignKey,
+      level,
+      themeId: session.themeId,
+    });
   const recorder = createRecorder(
     session.replay.level,
     session.replay.options,

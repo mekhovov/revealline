@@ -31,6 +31,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     );
     const page = await soloPage(t, { campaign, storage });
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     page.key('ArrowDown');
     page.key('ArrowDown', false);
     ticks(page, 13);
@@ -47,7 +51,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.$('pause-button').click();
     page.frame(0);
     const saved = JSON.parse(storage.getItem(sessionKey));
-    assert.equal(saved.format, 'xonix-session.v2');
+    assert.equal(saved.format, 'xonix-session.v3');
+    assert.ok(saved.presentationPins.choices.every((choice) => choice.kind === 'legacy'));
     assert.equal(saved.continuation.direction, 'right');
     assert.deepEqual(saved.replay.checkpoint, checkpoint);
     assert.equal(verifyReplay(saved.replay).match, true);
@@ -62,6 +67,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     page.frame(0);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     page.$('start-button').click();
+    await settle(
+      () => page.doc.body.dataset.flightState === 'running',
+      'Explicit Start/Resume waits for the selected picture before movement.',
+    );
     ticks(page, 8);
     assert.equal(page.rendered.run.tick, saved.replay.ticks + 8);
     assert.ok(
@@ -77,6 +86,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 test('fresh direction before the next tick survives pause and does not rewrite the checkpoint', async (t) => {
   const page = await soloPage(t, { campaign });
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 13);
@@ -92,6 +105,10 @@ test('fresh direction before the next tick survives pause and does not rewrite t
 test('recovery inside a multi-tick frame clears intent and requires fresh post-recovery input', async (t) => {
   const page = await soloPage(t, { campaign });
   page.$('start-button').click();
+  await settle(
+    () => page.doc.body.dataset.flightState === 'running',
+    'Explicit Start/Resume waits for the selected picture before movement.',
+  );
   page.key('ArrowDown');
   page.key('ArrowDown', false);
   ticks(page, 30);

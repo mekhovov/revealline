@@ -26,6 +26,8 @@ export async function retainFlightForFirstFlight({
   bodyId,
   runId,
   continuation,
+  presentationPins,
+  mediaIdentityCatalog,
   storage,
   sessionKey,
   withStorageLock,
@@ -81,6 +83,7 @@ export async function retainFlightForFirstFlight({
     bodyId,
     runId,
     continuation,
+    presentationPins,
   });
   const checkpoint = canonicalJSON(authoritativeCheckpoint(run));
   const recording = canonicalJSON(session.replay);
@@ -89,6 +92,7 @@ export async function retainFlightForFirstFlight({
     campaignKey,
     signal,
     onProgress,
+    mediaIdentityCatalog,
   });
   current();
   if (canonicalJSON(authoritativeCheckpoint(restored.run)) !== checkpoint)

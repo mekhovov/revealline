@@ -24,7 +24,11 @@ import {
   canonicalJSON,
 } from './data-json.mjs';
 
+import { resolvePictureReceipts, mergePictureReceipts } from './picture-receipts.mjs';
+import { validatePresentationPinsForRun } from './presentation-pins.mjs';
+
 export const LIBRARY_VERSION = 'xonix-library.v2';
+export const PRESENTATION_LIBRARY_VERSION = 'xonix-library.v3';
 const LEGACY_LIBRARY_VERSION = 'xonix-library.v1';
 export const LIBRARY_LIMITS = Object.freeze({
   maxBytes: 4 * 1024 * 1024,
@@ -223,13 +227,25 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
       throw new LibraryCapacityError('bytes', null, LIBRARY_LIMITS.maxBytes);
     throw error;
   }
-  const legacy = value.format === LEGACY_LIBRARY_VERSION;
+  const legacy = value.format === LEGACY_LIBRARY_VERSION,
+    pictures = value.format === PRESENTATION_LIBRARY_VERSION;
   exactKeys(
     value,
-    ['format', 'preferences', 'campaigns', 'gallery', 'scores', ...(legacy ? [] : ['masteries'])],
+    [
+      'format',
+      'preferences',
+      'campaigns',
+      'gallery',
+      'scores',
+      ...(legacy ? [] : ['masteries']),
+      ...(pictures ? ['pictureReceipts'] : []),
+    ],
     'library',
   );
-  required(legacy || value.format === LIBRARY_VERSION, 'Unsupported player library version.');
+  required(
+    legacy || pictures || value.format === LIBRARY_VERSION,
+    'Unsupported player library version.',
+  );
   // Preserve the omitted-only preference migrations of already-saved profiles.
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'matchClassAppearance'))
     value.preferences.matchClassAppearance = false;
@@ -400,7 +416,9 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
   // Validate the complete legacy shape before adding the new metadata field.
   // A v1 document containing `masteries` was rejected by the exact-key check.
   value.masteries = legacy ? [] : resolveMasteryRecords(value.masteries);
-  value.format = LIBRARY_VERSION;
+  if (pictures)
+    value.pictureReceipts = resolvePictureReceipts(value.pictureReceipts, value.gallery);
+  value.format = pictures ? PRESENTATION_LIBRARY_VERSION : LIBRARY_VERSION;
   if (legacy) {
     // The migrated document must fit the same total library budget, including
     // newly added fields. Never silently discard old collection entries.
@@ -464,6 +482,8 @@ export function recordLibraryCompletion(
     completedAt = new Date().toISOString(),
     sourcePackId = null,
     practice = false,
+    presentationPins,
+    mediaIdentityCatalog,
   },
 ) {
   const next = checkLibrary(library),
@@ -473,6 +493,19 @@ export function recordLibraryCompletion(
   const key = campaignKey(campaign),
     level = campaign.levels.find((l) => l.id === result.levelId),
     recipe = (campaign.classRecipes ?? CLASSES).find((c) => c.id === result.classId);
+  const pictures =
+    presentationPins === undefined
+      ? null
+      : validatePresentationPinsForRun(presentationPins, {
+          identityCatalog: mediaIdentityCatalog,
+          campaignKey: key,
+          level,
+          themeId,
+        });
+  if (pictures && next.format !== PRESENTATION_LIBRARY_VERSION) {
+    next.format = PRESENTATION_LIBRARY_VERSION;
+    next.pictureReceipts = [];
+  }
   next.campaigns[key] = progress;
   const galleryKey = `gallery-v1-${dataIdentity([key, level.id, themeId])}`;
   const gallery = {
@@ -498,6 +531,16 @@ export function recordLibraryCompletion(
     (result.score === previous.score && result.time < previous.time)
   )
     next.gallery = [gallery, ...next.gallery.filter((entry) => entry.key !== galleryKey)];
+  // An existing unpinned gallery row is an earned legacy picture, never reassigned retrospectively.
+  if (pictures && !previous)
+    next.pictureReceipts.push({
+      galleryKey,
+      earnedRunId: runId,
+      earnedAt: completedAt,
+      seed: result.seed,
+      bodyId,
+      presentationPin: pictures.choices.find((choice) => choice.identity.themeId === themeId),
+    });
   const history = result.classHistory ?? [
     {
       classId: result.classId,
@@ -632,6 +675,18 @@ export function mergeLibraries(local, remote, { baseline = null } = {}) {
   next.gallery = [...gallery.values()].sort(
     (a, b) => b.completedAt.localeCompare(a.completedAt) || a.key.localeCompare(b.key),
   );
+  if (
+    left.format === PRESENTATION_LIBRARY_VERSION ||
+    right.format === PRESENTATION_LIBRARY_VERSION
+  ) {
+    next.format = PRESENTATION_LIBRARY_VERSION;
+    next.pictureReceipts = mergePictureReceipts(
+      left.pictureReceipts ?? [],
+      right.pictureReceipts ?? [],
+      right.gallery,
+      next.gallery,
+    );
+  }
   const scoreRows = new Map();
   for (const entry of [...right.scores, ...left.scores]) {
     const id = `${entry.boardId}/${entry.runId}`,

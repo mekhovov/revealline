@@ -246,6 +246,7 @@ export class BoardPainter {
       playerScale = 1,
       displayCSSWidth = null,
       actorSkins = {},
+      backdrop = null,
     } = {},
   ) {
     if (!this.theme || !state) return;
@@ -304,27 +305,30 @@ export class BoardPainter {
         effect.age += dt;
     ctx.clearRect(0, 0, W, H);
     ctx.imageSmoothingEnabled = false;
-    const backdrop = this.images.background || this.background;
-    const fit = this.overrides.background?.fit || 'cover';
+    // The host owns a fully decoded binding and its lifetime. Select its image
+    // and fit together for this frame; never reset rigs/effects or replace the
+    // authored fallback. Sampling remains nearest throughout this pixel painter.
+    const picture = backdrop?.image || this.images.background || this.background;
+    const fit = backdrop?.image ? backdrop.fit : this.overrides.background?.fit || 'cover';
     ctx.fillStyle = p.field;
     ctx.fillRect(0, 0, W, H);
     if (fit === 'contain') {
-      const r = Math.min(W / backdrop.width, H / backdrop.height);
+      const r = Math.min(W / picture.width, H / picture.height);
       ctx.drawImage(
-        backdrop,
-        (W - backdrop.width * r) / 2,
-        (H - backdrop.height * r) / 2,
-        backdrop.width * r,
-        backdrop.height * r,
+        picture,
+        (W - picture.width * r) / 2,
+        (H - picture.height * r) / 2,
+        picture.width * r,
+        picture.height * r,
       );
     } else {
-      const r = Math.max(W / backdrop.width, H / backdrop.height);
+      const r = Math.max(W / picture.width, H / picture.height);
       ctx.drawImage(
-        backdrop,
-        (W - backdrop.width * r) / 2,
-        (H - backdrop.height * r) / 2,
-        backdrop.width * r,
-        backdrop.height * r,
+        picture,
+        (W - picture.width * r) / 2,
+        (H - picture.height * r) / 2,
+        picture.width * r,
+        picture.height * r,
       );
     }
     if (!fullReveal || revealAlpha > 0) {

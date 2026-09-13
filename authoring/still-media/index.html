@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — still picture workshop</title>
+    <link rel="stylesheet" href="../../game/ui/still-media-panel.css" />
+  </head>
+  <body class="still-media-host">
+    <main>
+      <h1>Still picture workshop</h1>
+      <p>
+        Upload an original, choose an exact map and world, then save and preview its assignment.
+      </p>
+      <p>
+        This workshop reads the installed packs for this exact game edition, or the
+        <strong>dev</strong> channel when served from source. Close that game before editing. Fresh
+        flights use the assigned revision. Saved flights and earned Collection pictures keep their
+        original choice; changing an assignment does not replace them.
+      </p>
+      <p>
+        <strong>Real local storage:</strong> Open local media upgrades this address’s shared
+        image/music database to version 3. It is not a sandbox. Older game audio readers cannot
+        reopen it. Export your music in the old game first if needed, then close old tabs. Original
+        MP3 and image bytes are retained; no downgrade or automatic deletion is provided.
+      </p>
+      <div class="still-host-actions">
+        <button id="still-host-open" type="button">Open local media</button>
+        <button id="still-host-close" type="button">Close local connections</button>
+        <a href="../../game/">This edition’s game</a>
+      </div>
+      <p id="still-host-status" role="status">No media database has been opened by this page.</p>
+      <h2>Soundtrack recovery</h2>
+      <p>
+        The compatible audio adapter shares the same version 3 manager. If the saved data can be
+        verified, prepare an unchanged .rlsound backup. Still pictures are not included. Corrupt
+        metadata can require a separate recovery tool; it is never replaced with an empty library
+        here.
+      </p>
+      <button id="still-host-export-audio" type="button" disabled>Prepare soundtrack backup</button>
+      <a id="still-host-download-audio" hidden>Download soundtrack</a>
+      <p>
+        Keep original image files outside browser storage. Inside the workshop, Prepare originals
+        download creates a verified .rlmedia backup; use its separate Download originals link. To
+        restore, choose a file and assignment policy, review it, then explicitly Restore. Game
+        progress, saved flights, packs and audio-only files need their separate backups. This
+        workshop does not award pictures or play video stories.
+      </p>
+      <p>
+        Keyboard: Tab/arrows and Enter, Escape to close. Controller: join, D-pad to move, South to
+        choose, East to return. File picking and text entry use the browser/OS controls; no
+        controller virtual keyboard is supplied.
+      </p>
+      <noscript
+        >This workshop needs JavaScript and a localhost or HTTPS address. Saved data has not been
+        opened.</noscript
+      >
+    </main>
+    <script src="./launch.js"></script>
+  </body>
+</html>

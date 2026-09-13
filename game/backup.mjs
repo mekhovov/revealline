@@ -3,8 +3,15 @@ import { CONTENT_LIMITS } from './content.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { importLibrary, campaignKey, LIBRARY_LIMITS } from './library.mjs';
 import { importPackLibrary, resolvePackCampaign, PACK_LIMITS } from './packs.mjs';
-import { restoreSession, snapshotSession, SESSION_IMPORT_BYTES } from './sessions.mjs';
+import {
+  restoreSession,
+  snapshotSession,
+  SESSION_IMPORT_BYTES,
+  PRESENTATION_SESSION_FORMAT,
+} from './sessions.mjs';
 import { MAX_REPLAY_TICKS } from './replay.mjs';
+import { isMediaIdentityCatalog } from './media-library.mjs';
+import { validatePictureReceiptOwners } from './picture-receipts.mjs';
 
 export const BACKUP_FORMAT = 'xonix-backup.v1';
 // The existing limits remain authoritative for each member. This outer guard
@@ -77,6 +84,7 @@ export async function prepareBackup(
     onProgress,
     resolveCampaign,
     expandCampaigns,
+    resolveMediaIdentityCatalog,
   } = {},
 ) {
   checkAbort(signal);
@@ -92,6 +100,10 @@ export async function prepareBackup(
   required(
     expandCampaigns === undefined || typeof expandCampaigns === 'function',
     'The campaign expander must be a trusted function, not backup data.',
+  );
+  required(
+    resolveMediaIdentityCatalog === undefined || typeof resolveMediaIdentityCatalog === 'function',
+    'The picture catalog resolver must be a trusted function.',
   );
   const known = new Map(registered.map((campaign) => [campaignKey(campaign), campaign]));
   const originals = [...registered];
@@ -143,15 +155,39 @@ export async function prepareBackup(
       known.has(key),
       'The unfinished attempt requires a matching included pack or registered campaign.',
     );
+  }
+  let mediaIdentityCatalog;
+  if (
+    value.session?.format === PRESENTATION_SESSION_FORMAT ||
+    value.library.pictureReceipts?.length
+  ) {
+    required(
+      resolveMediaIdentityCatalog,
+      'This backup needs its original picture library and exact historical owners.',
+    );
+    mediaIdentityCatalog = resolveMediaIdentityCatalog(
+      freeze({ originals, packs, campaigns: [...known.values()] }),
+    );
+    required(
+      isMediaIdentityCatalog(mediaIdentityCatalog),
+      'The picture resolver must return a verified synchronous execution catalog.',
+    );
+    checkAbort(signal);
+  }
+  if (value.session !== null) {
+    const key = value.session.campaignKey;
     await restoreSession(value.session, {
       campaign: known.get(key),
       campaignKey: key,
       signal,
       onProgress,
+      mediaIdentityCatalog,
     });
   }
   checkAbort(signal);
   const library = importLibrary(value.library, { campaigns: [...known.values()] });
+  if (library.pictureReceipts?.length)
+    validatePictureReceiptOwners(library.pictureReceipts, library.gallery, mediaIdentityCatalog);
   const prepared = freeze({ library, packs, session: value.session });
   preparedBackups.add(prepared);
   return prepared;
