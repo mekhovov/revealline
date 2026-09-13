@@ -232,7 +232,7 @@ test('actual complete-backup import and Undo adopt text size while preserving th
   });
   page.$('import-save').click();
   await settle(() => !page.$('import-save').disabled);
-  assert.match(page.$('save-status').textContent, /Complete backup restored/);
+  assert.match(page.$('save-status').textContent, /Game data restored/);
   size(page, 'large');
   assert.equal(profile(page.storage).library.preferences.textSize, 'large');
   assert.deepEqual(JSON.parse(page.storage.getItem(sessionKey)), original);
