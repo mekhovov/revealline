@@ -60,7 +60,10 @@ export function prepareOptionalCatalog(source) {
       'Invalid optional chapter map count.',
     );
     required(
-      item.path === `authoring/library/four-worlds-chapters/packs/${item.id}.json`,
+      item.path ===
+        (item.id === 'fpv-route-choices'
+          ? 'authoring/library/fpv-route-choices/packs/fpv-route-choices.json'
+          : `authoring/library/four-worlds-chapters/packs/${item.id}.json`),
       'Optional chapter path must name its exact local distribution file.',
     );
     required(

@@ -553,6 +553,36 @@ try {
         }
       }),
   );
+  for (const [id, name] of [
+    ['tactical-read-clearing', 'Read the clearing · Scout'],
+    ['tactical-borrowed-seconds', 'Borrowed seconds · Light carrier'],
+    ['tactical-quiet-crossing', 'Quiet crossing · Fiber relay'],
+  ]) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'button secondary';
+    button.dataset.teachingScenario = id;
+    button.textContent = `Load ${name}`;
+    button.onclick = async () => {
+      const ticket = beginImport();
+      try {
+        const response = await fetch(
+          `../../authoring/library/tactical-teaching/scenarios/${id}.json`,
+        );
+        if (!response.ok) throw new Error('Teaching scenario is unavailable. Reload this edition.');
+        await adoptDocument(
+          await response.json(),
+          'Teaching scenario ready. Read its instructions, then Play configuration. Practice grants no campaign awards.',
+          ticket,
+        );
+      } catch (error) {
+        if (importCurrent(ticket)) status(error.message, true);
+      } finally {
+        finishImport(ticket);
+      }
+    };
+    $('teaching-examples').append(button);
+  }
   fetch('../content/packs/index.json')
     .then((r) => {
       if (!r.ok) throw new Error('Example list unavailable.');

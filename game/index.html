@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="ui/game-shell.css" />
     <link rel="stylesheet" href="ui/pixel-theme.css" />
     <link rel="stylesheet" href="ui/mission-picker.css" />
+    <link rel="stylesheet" href="ui/mission-brief.css" />
     <link rel="stylesheet" href="ui/enemy-guide.css" />
     <link rel="stylesheet" href="ui/optional-chapters-panel.css" />
     <link rel="stylesheet" href="ui/device-controls.css" />
@@ -94,7 +95,7 @@
       <button id="shell-menu" type="button" aria-label="Game menu">
         ◩ <span>REVEAL / LINE</span>
       </button>
-      <span class="shell-edition">ARCADE EDITION</span>
+      <span id="shell-edition" class="shell-edition">REVEAL / LINE</span>
       <button
         id="pause-button"
         class="icon-button shell-pause"
@@ -231,6 +232,9 @@
                   </button>
                   <button id="first-flight-enter" class="button secondary" type="button" hidden>
                     Learn by playing
+                  </button>
+                  <button id="overlay-brief" class="button secondary" type="button" hidden>
+                    Mission brief
                   </button>
                   <button id="overlay-menu" class="button secondary" type="button">
                     Main menu
@@ -766,7 +770,7 @@
         Built-in original synth playlists and your local MP3 library. The music studio manages
         custom tracks, playlists and complete audio backups.
       </p>
-      <details class="creator-tools">
+      <details id="creator-tools" class="creator-tools">
         <summary>Creator tools and original media</summary>
         <p class="micro-note">
           Assign original pictures to maps and worlds in the separate workshop. Fresh attempts use
@@ -774,6 +778,7 @@
           opens the workshop for this exact edition.
         </p>
         <a class="button secondary" href="../authoring/still-media/">Picture workshop</a>
+        <a class="button secondary" href="../authoring/video-poster/">Video poster workshop</a>
         <p class="micro-note">
           Back up original pictures with .rlmedia and music with .rlsound. Game-data JSON keeps
           progress and picture references, and does not contain these uploaded files.
@@ -1031,12 +1036,20 @@
     <dialog id="shell-missions" class="shell-missions" aria-labelledby="shell-missions-title">
       <div class="shell-dialog-heading">
         <div>
-          <p class="eyebrow">YOUR NEXT FLIGHT</p>
+          <p id="shell-missions-context" class="eyebrow">YOUR NEXT FLIGHT</p>
           <h2 id="shell-missions-title">Choose your mission</h2>
         </div>
-        <button type="button" class="button secondary" data-close="shell-missions">Back</button>
+        <button
+          id="shell-missions-back"
+          type="button"
+          class="button secondary"
+          data-close="shell-missions"
+        >
+          Back
+        </button>
       </div>
       <div id="shell-mission-content"></div>
+      <div id="shell-brief-content" hidden></div>
       <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>

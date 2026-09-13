@@ -92,50 +92,64 @@ function nativeModalBoundary(t) {
   });
 }
 
-test('real win focuses results; keyboard arrows and Tab stay within visible result actions', async (t) => {
+const resultActions = [
+  'next-button',
+  'view-picture',
+  'retry-button',
+  'choose-appearance',
+  'overlay-menu',
+  'shell-menu',
+  'shell-packs',
+  'shell-collection',
+  'shell-settings',
+];
+function resultSurface(page) {
+  for (const id of resultActions) assert.equal(page.$(id).hidden, false);
+  const unrelated = page.doc.createElement('button');
+  unrelated.id = 'unrelated-result-body-action';
+  page.doc.body.append(unrelated);
+  return (visited) => {
+    const id = page.doc.activeElement.id;
+    assert.ok(resultActions.includes(id), `${id} stays in results plus visible header actions`);
+    visited.add(id);
+  };
+}
+
+test('real win focuses results; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls', async (t) => {
   const page = await win(t),
-    checkpoint = authoritativeCheckpoint(page.rendered.run);
+    checkpoint = authoritativeCheckpoint(page.rendered.run),
+    recordFocus = resultSurface(page);
   assert.equal(page.doc.activeElement.id, 'next-button');
-  const expected = [
-    'next-button',
-    'view-picture',
-    'retry-button',
-    'choose-appearance',
-    'overlay-menu',
-  ];
-  for (const id of expected) assert.equal(page.$(id).hidden, false);
   const visited = new Set();
-  for (let i = 0; i < 12; i++) {
-    visited.add(page.doc.activeElement.id);
+  for (let i = 0; i < resultActions.length * 2; i++) {
+    recordFocus(visited);
     const event = key(page, 'ArrowDown');
     assert.equal(event.defaultPrevented, true);
-    assert.ok(page.$('game-overlay').contains(page.doc.activeElement));
+    recordFocus(visited);
   }
-  for (const id of expected) assert.ok(visited.has(id), `${id} is keyboard reachable`);
+  assert.deepEqual(visited, new Set(resultActions), 'every result/header action is reachable');
+  visited.clear();
   page.$('choose-appearance').focus();
-  key(page, 'Tab');
-  assert.ok(page.$('game-overlay').contains(page.doc.activeElement));
+  for (let i = 0; i < resultActions.length * 2; i++) {
+    key(page, 'Tab');
+    recordFocus(visited);
+  }
+  assert.deepEqual(visited, new Set(resultActions), 'Tab reaches the same complete action set');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
 });
 
-test('controller directions stay on real results and Confirm opens picture then Back restores results', async (t) => {
+test('controller reaches results plus visible headers; Confirm opens picture and Back restores the same result', async (t) => {
   const page = await win(t),
-    controls = controller(page, t);
+    controls = controller(page, t),
+    recordFocus = resultSurface(page);
   const checkpoint = authoritativeCheckpoint(page.rendered.run),
     visited = new Set();
-  for (let i = 0; i < 12; i++) {
-    visited.add(page.doc.activeElement.id);
+  for (let i = 0; i < resultActions.length * 2; i++) {
+    recordFocus(visited);
     controls.pulse(13);
-    assert.ok(page.$('game-overlay').contains(page.doc.activeElement), page.doc.activeElement.id);
+    recordFocus(visited);
   }
-  for (const id of [
-    'next-button',
-    'view-picture',
-    'retry-button',
-    'choose-appearance',
-    'overlay-menu',
-  ])
-    assert.ok(visited.has(id), `${id} is controller reachable`);
+  assert.deepEqual(visited, new Set(resultActions), 'every result/header action is reachable');
   page.$('view-picture').focus();
   controls.pulse(0);
   assert.equal(page.$('game-overlay').hidden, true);

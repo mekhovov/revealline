@@ -1,5 +1,5 @@
 {
-  "version": "0.33.0",
+  "version": "0.34.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -9,7 +9,14 @@
     "authoring/motion-lab/presets.json",
     "authoring/motion-lab/assets",
     "authoring/enemy-catalog",
-    "authoring/still-media"
+    "authoring/still-media",
+    "authoring/video-poster/index.html",
+    "authoring/video-poster/launch.js",
+    "authoring/video-poster/workshop.mjs",
+    "authoring/video-poster/workshop.css",
+    "authoring/library/tactical-teaching/scenarios/tactical-read-clearing.json",
+    "authoring/library/tactical-teaching/scenarios/tactical-borrowed-seconds.json",
+    "authoring/library/tactical-teaching/scenarios/tactical-quiet-crossing.json"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
