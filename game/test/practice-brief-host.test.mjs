@@ -327,9 +327,9 @@ test('First Flight keeps its own lesson reader and contextual label', async (t) 
   assert.equal(page.$('shell-edition').textContent, 'FIRST FLIGHT');
   assert.equal(page.$('overlay-brief').hidden, true);
 });
-test('ordinary manual missions have a neutral label without inventing a Tactical edition', async (t) => {
+test('ordinary manual missions show the Tactical edition label', async (t) => {
   const page = await soloPage(t);
-  assert.equal(page.$('shell-edition').textContent, 'REVEAL / LINE');
+  assert.equal(page.$('shell-edition').textContent, 'TACTICAL EDITION');
   assert.equal(page.$('overlay-brief').hidden, false);
 });
 

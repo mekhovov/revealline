@@ -3535,7 +3535,7 @@ try {
         ? 'PRACTICE'
         : !arcadeActionCapabilities(run?.level).manualAbility
           ? 'ARCADE EDITION'
-          : 'REVEAL / LINE';
+          : 'TACTICAL EDITION';
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
