@@ -425,6 +425,102 @@ export function createManagedMediaStore({
     domainValid(domain);
     return transact('readonly', (state) => snapshot(state, domain), signal);
   }
+  // Runtime reads deliberately avoid the full inventory/ledger path. Writes
+  // and admin recovery still use transact() and its complete consistency check.
+  async function readSelected(requests, project, signal) {
+    abort(signal);
+    const db = await open(signal);
+    abort(signal);
+    required(!closed, 'Managed media store is closed.');
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction([...new Set(requests.map(([name]) => name))], 'readonly');
+      let result,
+        failure = null,
+        remaining = requests.length;
+      const values = [];
+      const cancel = () => {
+        failure = new DOMException('Media read cancelled.', 'AbortError');
+        try {
+          tx.abort();
+        } catch {}
+      };
+      const finish = (error) => {
+        signal?.removeEventListener('abort', cancel);
+        if (error) reject(error);
+        else resolve(result);
+      };
+      tx.oncomplete = () => finish(failure);
+      tx.onerror = () => {
+        failure ??= tx.error;
+      };
+      tx.onabort = () => finish(failure || tx.error || new Error('Media read failed.'));
+      signal?.addEventListener('abort', cancel, { once: true });
+      try {
+        requests.forEach(([name, key], index) => {
+          const request = tx.objectStore(name).get(key);
+          request.onsuccess = () => {
+            values[index] = request.result;
+            if (--remaining) return;
+            try {
+              abort(signal);
+              required(!closed, 'Managed media store is closed.');
+              result = project(values);
+            } catch (error) {
+              failure = error;
+              tx.abort();
+            }
+          };
+        });
+        if (signal?.aborted) cancel();
+      } catch (error) {
+        failure = error;
+        try {
+          tx.abort();
+        } catch {
+          finish(error);
+        }
+      }
+    });
+  }
+  async function readDomainMetadata(domain, { signal } = {}) {
+    domainValid(domain);
+    return readSelected(
+      [[domain === 'audio' ? 'metadata' : 'mediaRecords', 'library']],
+      ([value]) => Object.freeze(row(value, domain, richStillMedia)),
+      signal,
+    );
+  }
+  async function readSelectedBlob(
+    hash,
+    { signal, maxBytes = MANAGED_MEDIA_LIMITS.sourceBytes } = {},
+  ) {
+    required(hashValid(hash), 'Invalid media hash.');
+    required(
+      integer(maxBytes) && maxBytes > 0 && maxBytes <= MANAGED_MEDIA_LIMITS.sourceBytes,
+      'Invalid selected media byte budget.',
+    );
+    return readSelected(
+      [
+        ['audio', hash],
+        ['mediaBlobs', hash],
+      ],
+      ([audio, media]) => {
+        required(
+          audio === undefined || media === undefined,
+          'Duplicate physical media hash; recovery required.',
+        );
+        const blob = audio !== undefined ? audio : media;
+        if (blob === undefined) return null;
+        const bytes = size(blob);
+        required(
+          integer(bytes) && bytes > 0 && bytes <= maxBytes,
+          'Selected media exceeds its byte budget; recovery required.',
+        );
+        return Blob.prototype.slice.call(blob, 0, bytes);
+      },
+      signal,
+    );
+  }
   async function usage({ signal } = {}) {
     return transact(
       'readonly',
@@ -750,6 +846,8 @@ export function createManagedMediaStore({
   return Object.freeze({
     richStillMedia,
     readDomain,
+    readDomainMetadata,
+    readSelectedBlob,
     usage,
     reserve,
     renew,
