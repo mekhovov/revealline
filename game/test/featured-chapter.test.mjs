@@ -97,44 +97,83 @@ test('featured chapter installs exact pressure chapter and keeps R4, R3, R2 and 
     fronts: [],
   });
   assert.equal(page.rendered.run.tick, 0);
-  for (const [edition, ruleset, coverage] of [
-    [r4, 'xonix-core.v5', 0.65],
-    [r3, 'xonix-core.v5', 0.65],
-    [r2, 'xonix-core.v5', 0.65],
-    [original, 'xonix-core.v4', 0.6],
-  ]) {
-    page.change('pack-select', edition.id);
+  assert.deepEqual(page.errors, []);
+});
+
+for (const [id, ruleset, coverage] of [
+  ['fpv-arcade-r4', 'xonix-core.v5', 0.65],
+  ['fpv-arcade-r3', 'xonix-core.v5', 0.65],
+  ['fpv-arcade-r2', 'xonix-core.v5', 0.65],
+  ['fpv-arcade', 'xonix-core.v4', 0.6],
+]) {
+  // Two editions fit comfortably. Test each archived switch in its own real
+  // host; installing all five image-heavy editions at once correctly exceeds
+  // the unchanged library cap (covered by the storage-boundary tests).
+  test(`switch from pressure to ${id}`, async (sub) => {
+    const read = async (name) =>
+      JSON.parse(await readFile(new URL(`../content/packs/${name}.json`, import.meta.url), 'utf8'));
+    const [pack, edition] = await Promise.all([read('fpv-arcade-r5'), read(id)]);
+    const keyFor = (source) =>
+      campaignKey({
+        ...source.campaigns[0],
+        classRecipes: source.classRecipes.filter((recipe) =>
+          source.campaigns[0].classIds.includes(recipe.id),
+        ),
+      });
+    const oldImage = globalThis.Image;
+    globalThis.Image = class {
+      set src(value) {
+        const bytes = Buffer.from(value.split(',')[1], 'base64');
+        this.naturalWidth = bytes.readUInt32BE(16);
+        this.naturalHeight = bytes.readUInt32BE(20);
+        queueMicrotask(() => this.onload());
+      }
+    };
+    sub.after(() => {
+      if (oldImage === undefined) delete globalThis.Image;
+      else globalThis.Image = oldImage;
+    });
+    const earlier = await soloPage(sub, { titleScreen: true });
+    earlier.$('shell-featured').click();
+    await settle(() => !earlier.$('shell-featured').disabled);
+    assert.equal(earlier.$('pack-select').value, pack.id);
+    earlier.change('pack-select', edition.id);
     await settle(
       () =>
-        page.$('pack-select').value === edition.id &&
-        !page.$('pack-select').disabled &&
-        page.$('campaign-select').value === keyFor(edition),
+        earlier.$('pack-select').value === edition.id &&
+        !earlier.$('pack-select').disabled &&
+        earlier.$('campaign-select').value === keyFor(edition),
       `${edition.id} selection settled`,
-    );
-    page.frame(0);
-    assert.deepEqual(page.rendered.run.level, normalizedLevel(edition.campaigns[0].levels[0]));
-    assert.equal(page.rendered.run.ruleset, ruleset);
-    assert.equal(page.rendered.run.level.goal.coverage, coverage);
+    ).catch((error) => {
+      throw new Error(
+        `${error.message}: ${earlier.$('content-select-status').textContent}; ${earlier.$('run-message').textContent}; selected=${earlier.$('campaign-select').value}`,
+        { cause: error },
+      );
+    });
+    earlier.frame(0);
+    assert.deepEqual(earlier.rendered.run.level, normalizedLevel(edition.campaigns[0].levels[0]));
+    assert.equal(earlier.rendered.run.ruleset, ruleset);
+    assert.equal(earlier.rendered.run.level.goal.coverage, coverage);
     assert.deepEqual(
-      page.rendered.run.level.classic?.arcadeActions,
-      edition === r4 ? { version: 'arcade-actions.v1' } : undefined,
+      earlier.rendered.run.level.classic?.arcadeActions,
+      id === 'fpv-arcade-r4' ? { version: 'arcade-actions.v1' } : undefined,
     );
-    if (edition === r3 || edition === r4) {
-      assert.deepEqual(page.rendered.run.level.classic.lineImpact, {
+    if (id === 'fpv-arcade-r3' || id === 'fpv-arcade-r4') {
+      assert.deepEqual(earlier.rendered.run.level.classic.lineImpact, {
         version: 'line-impact.v1',
         speed: 24,
       });
-      assert.deepEqual(page.rendered.run.classic.lineImpact, {
+      assert.deepEqual(earlier.rendered.run.classic.lineImpact, {
         version: 'line-impact-state.v1',
         nextId: 1,
         seededActorIds: [],
         fronts: [],
       });
     } else {
-      assert.equal(page.rendered.run.level.classic?.lineImpact, undefined);
-      assert.equal(page.rendered.run.classic?.lineImpact, undefined);
+      assert.equal(earlier.rendered.run.level.classic?.lineImpact, undefined);
+      assert.equal(earlier.rendered.run.classic?.lineImpact, undefined);
     }
-    assert.equal(page.rendered.run.tick, 0);
-  }
-  assert.deepEqual(page.errors, []);
-});
+    assert.equal(earlier.rendered.run.tick, 0);
+    assert.deepEqual(earlier.errors, []);
+  });
+}

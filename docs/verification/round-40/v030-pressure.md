@@ -25,6 +25,10 @@ Pre-freeze browser observations on source HTTP:
 
 Six existing reward images stay byte-identical, as do all ten older indexed pack files and historical proof inputs. Each new chapter fits its own image budgets. All eight active packs fit the existing 48 MiB installed-library cap; installing another archived image-heavy edition can require deliberate removal. Failed installation preserves the current library. Frontier is an optional offline download; the generated complete offline budget is a separate release gate.
 
+## Retained failed candidate
+
+Source `40bfeedf841f78b7bfd8a9e3fde6ae652a212348` was not frozen or published. Its immutable source gate run passed lint, native formatting, content validation and motion syntax, but failed three of 2,447 tests and formatting of the two new JSON packs. Two failures were stale map-count assertions. The featured-edition test accumulated image-heavy installations through nested hosts sharing the asset database connection; separate top-level test lifecycles now verify each old/new edition pair within the unchanged cap. The two new JSON files were formatted without changing parsed data, and the development fallback badge was updated. All 26 focused correction tests pass. The failed source-gate record remains in `.cache/releases/verification-40bfeedf841f/`; the corrected candidate must pass its own complete gates.
+
 ## Delivery gates
 
 Record the exact source SHA, six source gates, immutable artifact reproduction, original tag/ZIP preservation, actual frozen online/offline capture, PR review/CI/merge, full Pages inventory and actual public entry/play here or in the attached final release receipt. Source, modeled input, browser, listening, human enjoyment and physical-device evidence remain distinct.

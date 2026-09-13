@@ -68,9 +68,7 @@
       "title": "FPV Front · Pressure Lines",
       "themeId": "fpv",
       "musicId": "first-light-orchard-window",
-      "classIds": [
-        "scout"
-      ],
+      "classIds": ["scout"],
       "levels": [
         {
           "version": "xonix-level.v4",
@@ -156,10 +154,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              34,
-              58
-            ],
+            "timeMedals": [34, 58],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },
@@ -308,10 +303,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              44,
-              72
-            ],
+            "timeMedals": [44, 72],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },
@@ -487,10 +479,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              50,
-              82
-            ],
+            "timeMedals": [50, 82],
             "timeLimitSeconds": 180,
             "stopOnCapture": true
           },
