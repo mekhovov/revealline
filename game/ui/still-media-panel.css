@@ -1,0 +1,114 @@
+:root {
+  color-scheme: dark;
+  font-family: ui-monospace, monospace;
+  color: #eef3df;
+  background: #0a141e;
+}
+.still-media-host {
+  margin: 0;
+  padding: 20px;
+}
+.still-media-host main {
+  max-width: 960px;
+  margin: auto;
+}
+.still-media-host p,
+.still-media-panel p {
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.still-media-host a,
+.still-media-panel a {
+  color: #9addff;
+}
+.still-media-host button,
+.still-media-panel button,
+.still-media-panel input,
+.still-media-panel select,
+#still-media-download-originals {
+  font: inherit;
+  color: inherit;
+  background: #172d3e;
+  border: 2px solid #577782;
+  min-height: 44px;
+  padding: 9px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.still-media-host button:disabled,
+.still-media-panel :disabled {
+  opacity: 0.55;
+}
+.still-media-host :focus-visible,
+.still-media-panel :focus-visible,
+.controller-focus {
+  outline: 3px solid #ffe176;
+  outline-offset: 3px;
+}
+.still-media-panel {
+  color: #eef3df;
+  background: #0a141e;
+  border: 3px solid #9addff;
+  width: min(920px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.still-media-panel::backdrop {
+  background: #02070ddd;
+}
+#still-media-fields,
+#still-media-bundle-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+#still-media-fields label,
+#still-media-bundle-fields label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+#still-media-actions,
+#still-media-bundle-actions,
+.still-host-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-block: 16px;
+}
+#still-media-preview-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 48vh;
+  object-fit: contain;
+  margin-block: 16px;
+  image-rendering: pixelated;
+}
+#still-media-bundles {
+  border-top: 2px solid #577782;
+  margin-block-start: 20px;
+  padding-block-start: 8px;
+}
+#still-media-download-originals {
+  display: inline-flex;
+  align-items: center;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 560px) {
+  .still-media-host {
+    padding: 12px;
+  }
+  .still-media-panel {
+    padding: 12px;
+  }
+  #still-media-fields,
+  #still-media-bundle-fields {
+    grid-template-columns: 1fr;
+  }
+}

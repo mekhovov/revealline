@@ -219,7 +219,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   page.$('save-json').value = JSON.stringify(older);
   page.$('import-save').click();
   await settle(() => !page.$('import-save').disabled);
-  assert.match(page.$('save-status').textContent, /Complete backup restored/);
+  assert.match(page.$('save-status').textContent, /Game data restored/);
   assert.equal(page.$('screen-controls').value, 'auto');
   assert.equal(
     loadLibrary(page.storage, profileKey, { campaigns: [campaign] }).library.preferences

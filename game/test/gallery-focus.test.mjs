@@ -7,6 +7,8 @@ import { campaignKey, emptyLibrary, recordLibraryCompletion } from '../library.m
 import { createRun, CLASSES, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { earnedPictureFixture } from './helpers/earned-picture-fixture.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { STEADY_SIGNAL, masteryDefinitionIdentity } from '../mastery.mjs';
 
 // A DOM lifecycle adapter: removing cards really detaches them, and focusing a
@@ -46,7 +48,11 @@ class Element {
     this.attributes.set(name, value);
   }
   getContext() {
-    return {};
+    return {
+      drawImage: (...args) => {
+        (this.copies ??= []).push(args);
+      },
+    };
   }
   querySelectorAll(selector) {
     const names = selector.split(',');
@@ -132,9 +138,23 @@ async function setup(t, count = 30, hostOverrides = {}) {
   Object.defineProperty(globalThis, 'Image', {
     configurable: true,
     value: class {
+      width = 1;
+      height = 1;
+      naturalWidth = 1;
+      naturalHeight = 1;
+      set src(value) {
+        this.source = value;
+        if (this.onload) queueMicrotask(() => this.onload?.());
+      }
+      get src() {
+        return this.source;
+      }
+      removeAttribute(name) {
+        if (name === 'src') this.released = true;
+      }
       decode() {
         return new Promise((resolve, reject) =>
-          decodeJobs.push(Object.assign(resolve, { reject, src: this.src })),
+          decodeJobs.push(Object.assign(resolve, { reject, src: this.src, image: this })),
         );
       }
     },
@@ -603,7 +623,7 @@ test('profile replacement cancels pending writes before its Undo snapshot and re
   await h.node('import-save').onclick();
   assert.deepEqual(order, ['boundary', 'snapshot', 'apply']);
   assert.equal(h.library.preferences.musicEnabled, true);
-  assert.match(h.node('save-status').textContent, /Complete backup restored/);
+  assert.match(h.node('save-status').textContent, /Game data restored/);
   assert.equal(h.node('undo-backup').disabled, false);
   await h.node('undo-backup').onclick();
   assert.deepEqual(order, ['boundary', 'snapshot', 'apply', 'apply']);
@@ -973,3 +993,177 @@ test('a trusted Challenge picture keeps its activity label and replay has no cam
   assert.equal(h.selections[0][0], challenge);
   assert.equal(Object.hasOwn(h.selections[0][1], 'difficulty'), false);
 });
+
+const flushGallery = async (condition) => {
+  await waitFor(() => condition() === true, {
+    message: 'gallery operation must settle through the observable DOM',
+  });
+};
+
+async function managedGallery(t, { removed = false, metadataFailure = false } = {}) {
+  const f = await earnedPictureFixture();
+  t.after(() => f.manager.close());
+  const h = await setup(t, 0, {
+    pictureMedia: async () => {
+      if (metadataFailure) throw new Error('Original media storage is unavailable');
+      return { store: f.store, metadata: await f.store.readMetadata() };
+    },
+  });
+  h.setLibrary(f.profile);
+  h.setCatalog(removed ? [] : f.entries);
+  h.collection();
+  await flushGallery(() => h.cards().length === 1);
+  return { ...h, f };
+}
+
+test('Collection shows the first earned revision after reassignment, releases images and returns keyboard focus', async (t) => {
+  const h = await managedGallery(t);
+  await flushGallery(() => h.decodeJobs.length === 1);
+  h.decodeJobs[0]();
+  await flushGallery(() => h.paints.length === 1);
+  assert.equal(h.decodeJobs[0].image.released, true, 'thumbnail releases its decoded original');
+  const next = structuredClone(h.f.metadata.document.library);
+  next.presentations.push({ ...next.presentations[0], revision: 2 });
+  next.assignments[0].revision = 2;
+  const saved = await h.f.store.read();
+  await h.f.store.commit(
+    await h.f.store.prepare(next, saved.assets, {
+      previous: saved.document,
+      executionCatalog: h.f.catalog,
+    }),
+    { expectedGeneration: saved.generation },
+  );
+  const opening = h.cards()[0].onclick();
+  await flushGallery(() => h.decodeJobs.length === 2);
+  h.decodeJobs[1]();
+  await opening;
+  assert.equal(h.paints[1].image, h.decodeJobs[1].image);
+  assert.equal(h.paints[1].seed, h.f.receipt.seed);
+  assert.equal(h.node('gallery-canvas').copies.length, 1);
+  assert.equal(h.node('gallery-replay').disabled, false);
+  assert.equal(h.decodeJobs[1].image.released, undefined, 'full view owns the live drawable');
+  h.node('gallery-view-dialog').close();
+  await flushGallery(
+    () => h.node('collection-dialog').open && h.document.activeElement === h.cards()[0],
+  );
+  assert.equal(h.decodeJobs[1].image.released, true);
+  assert.equal(h.document.activeElement, h.cards()[0]);
+  await flushGallery(() => h.decodeJobs.length === 3);
+  h.decodeJobs[2]();
+  await flushGallery(() => h.decodeJobs[2].image.released === true);
+  assert.equal(h.f.profile.gallery.length, 1, 'viewing grants no extra completion');
+});
+
+test('Collection retains an earned original after its pack is removed without offering replay or invented animation', async (t) => {
+  const h = await managedGallery(t, { removed: true });
+  await flushGallery(() => h.decodeJobs.length === 1);
+  h.decodeJobs[0]();
+  await flushGallery(() => h.paints.length === 1);
+  assert.equal(h.cards()[0].disabled, false);
+  const opening = h.cards()[0].onclick();
+  await flushGallery(() => h.decodeJobs.length === 2);
+  h.decodeJobs[1]();
+  await opening;
+  assert.equal(h.node('gallery-canvas').style.visibility, '');
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-animate').disabled, true);
+  assert.equal(h.selections.length, 0);
+  h.node('gallery-view-dialog').close();
+  await flushGallery(() => h.decodeJobs.length === 3);
+  h.decodeJobs[2]();
+  await flushGallery(() => h.decodeJobs[2].image.released === true);
+});
+
+test('an unavailable original never silently falls back to current authored artwork', async (t) => {
+  const h = await managedGallery(t, { metadataFailure: true });
+  await flushGallery(() =>
+    h.cards()[0].children[2].textContent.includes('Original picture unavailable'),
+  );
+  await h.cards()[0].onclick();
+  assert.equal(h.paints.length, 0);
+  assert.match(h.node('gallery-view-meta').textContent, /Restore its originals/);
+  assert.equal(h.node('gallery-replay').disabled, true);
+  assert.equal(h.node('gallery-canvas').copies, undefined);
+  h.node('gallery-view-dialog').close();
+  await flushGallery(
+    () => h.node('collection-dialog').open && h.document.activeElement === h.cards()[0],
+  );
+  assert.equal(h.document.activeElement, h.cards()[0]);
+});
+
+test('closing while an earned original decodes prevents stale canvas replacement and releases the late drawable', async (t) => {
+  const h = await managedGallery(t);
+  await flushGallery(() => h.decodeJobs.length === 1);
+  h.decodeJobs[0]();
+  await flushGallery(() => h.paints.length === 1);
+  const opening = h.cards()[0].onclick();
+  await flushGallery(() => h.decodeJobs.length === 2);
+  h.node('gallery-view-dialog').close();
+  h.decodeJobs[1]();
+  await opening;
+  assert.equal(h.node('gallery-canvas').copies, undefined);
+  assert.equal(h.decodeJobs[1].image.released, true);
+  await flushGallery(() => h.decodeJobs.length === 3);
+  h.decodeJobs[2]();
+  await flushGallery(() => h.decodeJobs[2].image.released === true);
+  assert.equal(h.document.activeElement, h.cards()[0]);
+});
+
+for (const reopen of [false, true])
+  test(`Back keeps its scope but late metadata cannot steal focus after ${reopen ? 'a new Collection visit' : 'navigation'}`, async (t) => {
+    const f = await earnedPictureFixture();
+    t.after(() => f.manager.close());
+    let releaseRead,
+      reads = 0;
+    const mediaReads = [];
+    const delayed = new Promise((resolve) => {
+      releaseRead = resolve;
+    });
+    const h = await setup(t, 0, {
+      pictureMedia: () => {
+        const pending = (async () => {
+          if (++reads > 1) await delayed;
+          return { store: f.store, metadata: await f.store.readMetadata() };
+        })();
+        mediaReads.push(pending);
+        return pending;
+      },
+    });
+    h.setLibrary(f.profile);
+    h.setCatalog(f.entries);
+    h.collection();
+    await flushGallery(() => h.decodeJobs.length === 1);
+    h.decodeJobs[0]();
+    await flushGallery(() => h.paints.length === 1);
+    const opening = h.cards()[0].onclick();
+    await flushGallery(() => h.decodeJobs.length === 2);
+    h.decodeJobs[1]();
+    await opening;
+    h.node('gallery-view-dialog').close();
+    assert.equal(
+      h.node('collection-dialog').open,
+      true,
+      'Back keeps an immediate modal focus scope',
+    );
+    h.node('collection-dialog').close();
+    if (reopen) {
+      h.node('collection-dialog').showModal();
+      h.api.populateGallery();
+      h.node('gallery-search').focus();
+    } else h.node('library-dialog').showModal();
+    const target = h.document.activeElement;
+    releaseRead();
+    await Promise.all(mediaReads);
+    if (reopen) await flushGallery(() => h.decodeJobs.length === 3);
+    assert.equal(h.node('collection-dialog').open, reopen);
+    assert.equal(h.document.activeElement, target);
+    assert.equal(
+      h.decodeJobs.length,
+      reopen ? 3 : 2,
+      'only the new visit may render replacement thumbnails',
+    );
+    if (reopen) {
+      h.decodeJobs[2]();
+      await flushGallery(() => h.decodeJobs[2].image.released === true);
+    }
+  });

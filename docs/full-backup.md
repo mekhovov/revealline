@@ -1,14 +1,14 @@
-# Portable full backup and interrupted-import recovery
+# Portable game-data backup and interrupted-import recovery
 
-A `xonix-backup.v1` JSON archive combines the player library, all installed expansion packs and an optional suspended flight. The existing individual library, pack and attempt exports remain useful for selective transfer. A full backup contains data and embedded supported images; it cannot add scripts, executables, remote downloads or new runtime algorithms.
+A `xonix-backup.v1` JSON archive combines the player library, all installed expansion packs and an optional suspended flight. The visible control is **Export game data**: its unchanged file name/schema do not imply that separately uploaded media is included. Embedded supported pack images stay in the JSON; managed still originals need `.rlmedia`, and uploaded music needs `.rlsound`. Individual library, pack and attempt exports remain useful. No archive can add scripts, executables, remote downloads or runtime algorithms.
 
 The pure [backup module](../game/backup.mjs) and [storage coordinator](../game/backup-storage.mjs) are separate. Preparation verifies the entire candidate before it can be adopted. Persistence then uses a durable rollback journal because IndexedDB and localStorage do not share one transaction.
 
 ## Use the game controls
 
-Open **Library & saves → Saves & loads → Export complete backup**. The game downloads `revealline-complete-backup.json` and places the same JSON in the copy/paste area. It includes the current in-memory player library and installed packs. If a normal campaign flight is unfinished, it snapshots that current recording; otherwise it includes the previously suspended flight, if one exists. Practice or completed attempts do not replace that fallback. A flight whose recording is unavailable cannot be silently presented as a complete save.
+Open **Main menu → Scores & saves → Saves & loads → Export game data**. The game downloads `revealline-complete-backup.json` and places the same JSON in the copy/paste area. It includes the current in-memory player library and installed packs. If a normal campaign flight is unfinished, it snapshots that current recording; otherwise it includes the previously suspended flight, if one exists. Practice or completed attempts do not replace that fallback. A flight whose recording is unavailable cannot be silently presented as a complete save.
 
-Choose **Load a saved JSON file**, or paste the file into **Copy or paste save JSON** and choose **Load this JSON**. The game validates all members, preserves an Undo snapshot, then replaces the library, packs and suspended slot through the journal protocol below. It does not start the restored flight automatically: choose **Load suspended attempt** to continue it. **Undo complete backup import** restores the previous library, installed packs and flight together using the same validation/storage path. Undo is held in this page session; export first if both collections must remain available after a reload.
+Choose **Load a saved JSON file**, or paste the file into **Copy or paste save JSON** and choose **Load this JSON**. The game validates all members, preserves an Undo snapshot, then replaces the library, packs and suspended slot through the journal protocol below. It does not start the restored flight automatically: choose **Load suspended attempt** to continue it. **Undo game-data import** restores the previous library, installed packs and flight together using the same validation/storage path. Undo is held in this page session; export first if both collections must remain available after a reload.
 
 Complete backup import is a replacement, not a merge. The separate **Export player library**, **Export installed packs** and **Export attempt** controls remain available for selective transfer. Invalid files leave the current installation unchanged; a storage failure either restores the previous raw data or reports that recovery must finish before further writes.
 
@@ -16,7 +16,7 @@ If startup could not read the previous packs or profile, the fallback session ca
 
 The game reserves one writing tab for each player-profile channel. Another tab can play, change its own session settings and export its in-memory progress, but cannot persist changes to the owner's library or replace stored packs/flights. To make the second tab writable, close the owning game tab and reload the second; export its session changes before reloading if they should be kept. A browser without the required Web Locks support also runs with session-only progress and export. This is separate from the shorter exclusive lock held during full-backup import.
 
-The visible capacity display reports campaign count, picture count and used profile bytes. The limits are 512 campaign identities, 4,096 picture records and 4 MiB overall; existing pictures are not silently discarded to make room. Archive a complete backup before the limit and retain that file before replacing a collection. Gallery search displays 12 pictures per page; local-score search displays ten setup groups per page. Image bytes live in packs, so picture metadata counts do not represent the artwork's full memory cost.
+The visible capacity display reports campaign count, picture count and used profile bytes. The limits are 512 campaign identities, 4,096 picture records and 4 MiB overall; existing pictures are not silently discarded to make room. Archive a complete backup before the limit and retain that file before replacing a collection. Gallery search displays 12 pictures per page; local-score search displays ten setup groups per page. Image bytes live in embedded packs or the separate managed store, so picture metadata counts do not represent artwork's full memory cost.
 
 ## File and preparation contract
 
@@ -29,24 +29,26 @@ The visible capacity display reports campaign count, picture count and used prof
 }
 ```
 
-This is an illustration; real exports contain the complete existing member formats. `session` must be `null` or a complete `xonix-session.v1` attempt. The archive does not include game executable files, cached offline files, legacy motion-lab profiles, external reference archives or server accounts. The schema contains the suspended flight supplied by its host. The current UI supplies a fresh snapshot of an unfinished normal campaign flight, falling back to the existing saved slot only when there is no such current attempt.
+This is an illustration; real exports contain the complete existing member formats. `library` may use its validated v1/v2/v3 format; `session` must be `null` or a complete validated `xonix-session.v1`, `.v2` or `.v3` attempt. V3 sessions carry exact picture choices, and v3 libraries can carry first-earned receipts. Old v1/v2 files retain their original artwork semantics; imports do not attach today's managed assignments to them. The archive does not include game executable files, cached offline files, legacy motion-lab profiles, external reference archives or server accounts. The schema contains the suspended flight supplied by its host. The current UI supplies a fresh snapshot of an unfinished normal campaign flight, falling back to the existing saved slot only when there is no such current attempt.
 
-| API | Result |
-|---|---|
-| `prepareBackup(candidate, options)` | Asynchronously return frozen `{library,packs,session}` after all validation; reject on any error |
-| `validateBackup(candidate, options)` | Alias of full preparation, including image decoding and replay verification |
-| `exportBackup({library,packs,session?}, options)` | Prepare and return compact JSON; omitted session becomes `null` |
-| `isPreparedBackup(value)` | Check the in-process preparation capability required by the storage coordinator |
-| `MAX_BACKUP_BYTES` | Outer file-read and parse limit, currently 84 MiB + 32 KiB |
+| API                                               | Result                                                                                           |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `prepareBackup(candidate, options)`               | Asynchronously return frozen `{library,packs,session}` after all validation; reject on any error |
+| `validateBackup(candidate, options)`              | Alias of full preparation, including image decoding and replay verification                      |
+| `exportBackup({library,packs,session?}, options)` | Prepare and return compact JSON; omitted session becomes `null`                                  |
+| `isPreparedBackup(value)`                         | Check the in-process preparation capability required by the storage coordinator                  |
+| `MAX_BACKUP_BYTES`                                | Outer file-read and parse limit, currently 84 MiB + 32 KiB                                       |
 
-Options are `{campaigns:[], decodeImage, signal, onProgress, resolveCampaign}`. `campaigns` contains trusted built-in content. Included packs provide their own validated campaign/roster definitions. An optional synchronous `resolveCampaign(key)` may reconstruct a known dated challenge from application code; it must return that exact campaign identity or `null`. It must not return arbitrary rules supplied by the backup or fetch uninstalled content. The current UI passes only `[baseEntry.campaign]` as trusted built-in content, plus the known dated-challenge resolver. It does not trust unrelated currently installed pack campaigns: the archive must include the pack required by its flight.
+Options are `{campaigns:[], decodeImage, signal, onProgress, resolveCampaign, expandCampaigns, resolveMediaIdentityCatalog}`. `campaigns` contains trusted built-in authored content. Included packs supply their own validated campaigns/rosters. Optional synchronous `resolveCampaign(key)` may reconstruct a known dated challenge, returning that exact identity or `null`; it cannot fetch uninstalled content or trust file-supplied algorithms. `expandCampaigns(originals)` derives exact Standard/Gentle execution contexts from trusted originals plus the archive's own packs. The current UI registers `[baseEntry.campaign]` and the known dated resolver; unrelated installed packs cannot supply a missing flight's rules.
 
 The module snapshots input data and trusted campaign arrays before asynchronous work. Profile validation uses the current migration rules. Pack preparation checks all dependencies, schema/header and image budgets, then fully decodes each image. If a flight exists, the module reconstructs and verifies its replay against an included or trusted campaign and its class roster. A self-consistent recording with different installed rules is rejected. Unknown historical profile partitions remain as metadata under the existing library contract; a missing-pack flight cannot resume from metadata alone.
 
 Use the real browser decoder in the UI. The injectable decoder exists for other hosts and tests; a header-only fixture does not establish that actual media decoded. Abort is checked before work, between image operations and during asynchronous replay verification. An image decoder already running may finish before cancellation is observed.
 
+For a legacy-only file, the minimal preparation path remains:
+
 ```js
-import {prepareBackup, exportBackup, MAX_BACKUP_BYTES} from './backup.mjs';
+import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from './backup.mjs';
 
 // File size must be checked before allocating the text or parsing JSON.
 if (file.size > MAX_BACKUP_BYTES) throw new Error('Full backup exceeds its file budget.');
@@ -54,13 +56,44 @@ const ready = await prepareBackup(await file.text(), {
   campaigns: [baseCampaign],
   signal: controller.signal,
   resolveCampaign: resolveKnownDailyCampaign,
-  onProgress: ({ticks, total}) => showReplayProgress(ticks, total)
+  onProgress: ({ ticks, total }) => showReplayProgress(ticks, total),
 });
 // Do not replace live library/packs/session until coordinated storage succeeds.
-const json = await exportBackup(ready, {campaigns:[baseCampaign], resolveCampaign:resolveKnownDailyCampaign});
+const json = await exportBackup(ready, {
+  campaigns: [baseCampaign],
+  resolveCampaign: resolveKnownDailyCampaign,
+});
 ```
 
-The combined limit accommodates the existing 48 MiB pack-library, 4 MiB player-library and 32 MiB + 16 KiB session limits, plus envelope overhead. Each inner limit still applies. The parser rejects oversized strings before JSON parsing, and bounds nodes, depth, array lengths, finite numbers, fields and keys. Functions, accessors, `toJSON`, cycles and prototype-related keys fail. Keeping the complete original media plus several validated snapshots consumes memory; these are ceilings, not recommended pack sizes for a low-memory phone.
+The combined limit accommodates the existing 48 MiB pack-library, 4 MiB player-library and 32 MiB + 16 KiB session limits, plus envelope overhead. Each inner limit still applies. The parser rejects oversized strings before JSON parsing, and bounds nodes, depth, array lengths, finite numbers, fields and keys. Functions, accessors, `toJSON`, cycles and prototype-related keys fail. Keeping embedded pack images plus several validated snapshots consumes memory; these are ceilings, not recommended pack sizes for a low-memory phone.
+
+## Paired originals and exact picture ownership
+
+When a file contains a v3 session or picture receipts, preparation requires `resolveMediaIdentityCatalog({originals,packs,campaigns})`. This is a trusted **synchronous factory returning a branded catalog**, invoked only after included packs and any dynamic execution have been resolved. Capture awaited stored media metadata before constructing it. `originals` are trusted authored bases and included pack campaigns; `campaigns` includes actual execution contexts and must not be relabeled as authored owners. Themes come only from exact included pack/base ownership or verified retained owners, never matching names, suffixes or unrelated installed worlds. The implemented [factory](../game/ui/picture-identity.mjs) normalizes effective levels/rosters and validates exact Standard/Gentle identity.
+
+For a pinned file, capture the media snapshot first, then supply the synchronous resolver to both preparation and export:
+
+```js
+import { createBackupPictureIdentityResolver } from './ui/picture-identity.mjs';
+import { expandDifficultyCampaigns } from './campaign-contexts.mjs';
+
+const metadata = await stills.readMetadata({ signal });
+const options = {
+  campaigns: [baseEntry.campaign],
+  expandCampaigns: expandDifficultyCampaigns,
+  resolveMediaIdentityCatalog: createBackupPictureIdentityResolver({
+    baseEntries: [baseEntry],
+    metadata,
+  }),
+  signal,
+};
+const ready = await prepareBackup(candidate, options);
+const json = await exportBackup(ready, options);
+```
+
+The source UI tolerates unavailable unrelated media metadata for legacy-only game-data exports/imports. A pinned file still needs enough exact owner metadata to validate; missing or corrupt historical owners must fail truthfully. JSON preparation verifies pins, owners and replay, not the existence of every original. A valid saved file may be imported while its image is absent. Explicit Load then remains paused and asks for `.rlmedia` recovery without replacing the saved pin; it never substitutes the latest assignment.
+
+Restore reviewed `.rlmedia` originals before game data when possible, then restore `.rlsound` separately. The JSON journal covers profile/packs/suspended slot only; it does not write or roll back the managed-original inventory. If JSON import fails or is undone, imported originals remain intact. Assignment restore/Undo likewise preserves append-only history. Native file preparation and download are separate actions: retain actual downloaded bytes and hashes before claiming recovery. [Original bundle inventory](media-bundle.md), [soundtrack inventory](soundtrack-library.md), [live pins](flight-pictures.md).
 
 ## Durable coordinated import
 
@@ -71,9 +104,12 @@ const adapters = {
   storage: localStorage,
   readAsset: readAssetStore,
   writeAsset: writeAssetStore,
-  profileKey, packsKey, sessionKey, journalKey,
+  profileKey,
+  packsKey,
+  sessionKey,
+  journalKey,
   lockKey: `${profileKey}.backup-lock`,
-  commitProfile: (library, options) => guardedProfileCommit(library, options)
+  commitProfile: (library, options) => guardedProfileCommit(library, options),
 };
 ```
 
@@ -115,4 +151,4 @@ node --test game/test/backup.test.mjs game/test/backup-storage.test.mjs
 
 The tests exercise complete member round trips, preserved embedded image bytes, real live-cut continuation in both policies, included-pack and dated-campaign resolution, changed installed rules, async caller mutation, malformed/executable data, cancellation and size limits. Storage tests cover every apply/crash stage, missing prior entries, raw corrupt-data preservation, profile-generation handoff, journal failure, uncertain acknowledgments, failed rollback/retry, pending import refusal, orphan locks and same-page concurrency.
 
-These are injected storage and decoder tests. The current release-candidate browser check exercised **Export complete backup → import → Undo** through the visible controls using native IndexedDB and Web Locks. A second-tab check also confirmed that changing Trapper there did not replace the owning tab's Heavy carrier preference. These checks cover that browser and build; quota/recovery cases, other browsers and physical devices need their own recorded evidence. See [library/packs](library-and-packs.md), [replays](replays.md) and the [public-release gate](public-release.md).
+The original backup/storage suite uses injected storage and decoder boundaries. Its historical browser check exercised the former **Export complete backup → import → Undo** labels with native IndexedDB/Web Locks and second-tab writer isolation; that remains evidence for its original build. Current source adds strict v3 owner/factory, live saved-picture and first-earned tests, and exact 2aa passes all six gates/2,707 tests. Actual source-browser native JSON + `.rlmedia` fresh-origin recovery, Undo preserving originals, shared `.rlsound` bytes and missing-original Load refusal/recovery are recorded in [the current receipts](feature-delivery-workflow.md#current-still-integration-evidence). Frozen/public P5, cold offline paired recovery, quota/crash stress, other browsers and physical devices remain separate gates. See [library/packs](library-and-packs.md), [replays](replays.md) and [public-release gate](public-release.md).

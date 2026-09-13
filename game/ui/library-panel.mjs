@@ -15,6 +15,8 @@ import { attachProfileTransferPanel } from './profile-transfer-panel.mjs';
 import { masteryFor, pictureMasteries } from './mastery-view.mjs';
 import { expandDifficultyCampaigns } from '../campaign-contexts.mjs';
 import { createGalleryDifficultyResolver } from '../gallery-difficulty.mjs';
+import { resolveEarnedPicture } from './earned-picture.mjs';
+import { acquirePresentationImage } from './presentation-image.mjs';
 const $ = (id) => document.getElementById(id);
 const button = (label, fn) => {
   const b = document.createElement('button');
@@ -33,6 +35,12 @@ const fileText = async (file, max = 32 * 1024 * 1024) => {
 };
 
 export function attachLibraryPanel(api) {
+  let galleryPopulation = 0,
+    viewBackdrop = null;
+  const releaseViewBackdrop = () => {
+    viewBackdrop?.release();
+    viewBackdrop = null;
+  };
   let transferPanel = null;
   let attemptExport = null;
   let previousLibrary = null,
@@ -184,7 +192,7 @@ export function attachLibraryPanel(api) {
             refresh();
             status(
               'pack-status',
-              'Pack removed. Its player records are preserved; reinstall it to view its pictures.',
+              'Pack removed. Player records and earned uploaded originals are preserved. Reinstall its exact pack to play again or view pack-embedded artwork.',
             );
           }),
         ),
@@ -289,8 +297,17 @@ export function attachLibraryPanel(api) {
       if (attemptExport === operation) endAttemptExport(true);
     }
   }
-  function backupOptions() {
+  async function backupOptions() {
+    let media = null;
+    try {
+      media = api.pictureMedia ? await api.pictureMedia() : null;
+    } catch {
+      /* Game-data backup remains available without unrelated original media. */
+    }
     return {
+      ...(api.resolveMediaIdentityCatalog
+        ? { resolveMediaIdentityCatalog: api.resolveMediaIdentityCatalog(media?.metadata ?? null) }
+        : {}),
       campaigns: [api.base().campaign],
       expandCampaigns: expandDifficultyCampaigns,
       resolveCampaign: (key) => {
@@ -352,15 +369,15 @@ export function attachLibraryPanel(api) {
         throw new Error('This backup exceeds the import budget.');
       const parsed = typeof candidate === 'string' ? JSON.parse(candidate) : candidate;
       if (parsed.format === 'xonix-backup.v1') {
-        const prepared = await prepareBackup(parsed, backupOptions());
+        const prepared = await prepareBackup(parsed, await backupOptions());
         const applied = await applyPrepared(prepared);
         status(
           'save-status',
-          `Complete backup restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
+          `Game data restored. ${prepared.session ? 'Your saved flight is ready to load.' : 'This backup has no saved flight.'} ${applied.undo ? 'Undo restores the previous collection, packs and saved flight.' : 'The previous data could not form a verified backup, so Undo is unavailable.'} ${applied.warning || ''}`,
         );
         return;
       }
-      if (['xonix-session.v1', 'xonix-session.v2'].includes(parsed.format)) {
+      if (['xonix-session.v1', 'xonix-session.v2', 'xonix-session.v3'].includes(parsed.format)) {
         await api.restore(parsed);
         $('library-dialog').close();
         return;
@@ -386,7 +403,7 @@ export function attachLibraryPanel(api) {
       if (api.canSnapshotBackup())
         old = await prepareBackup(
           { format: 'xonix-backup.v1', ...backupContents() },
-          backupOptions(),
+          await backupOptions(),
         );
     } catch {}
     const applied = await api.applyBackup(prepared);
@@ -407,12 +424,12 @@ export function attachLibraryPanel(api) {
     b.onclick = () => open(b.dataset.libraryPanel);
   $('export-backup').onclick = () =>
     task('save-status', async () => {
-      const text = await exportBackup(backupContents(), backupOptions());
+      const text = await exportBackup(backupContents(), await backupOptions());
       $('save-json').value = text;
       const exported = await downloadJSON(JSON.parse(text), 'revealline-complete-backup.json');
       status(
         'save-status',
-        `Complete backup prepared: player library, packs and saved flight. ${exported.message} ${api.sessionNote?.() || ''}`,
+        `Game data prepared: player library, packs and saved flight. Uploaded pictures need a separate .rlmedia originals backup; custom music needs .rlsound. ${exported.message} ${api.sessionNote?.() || ''}`,
       );
     });
   $('undo-backup').onclick = () =>
@@ -529,26 +546,53 @@ export function attachLibraryPanel(api) {
     const size = boardPaintSizeForLevel(picture.level);
     const width = canvas === $('gallery-canvas') ? size.width : 320;
     const height = (width * size.height) / size.width;
-    if (canvas.width !== width) canvas.width = width;
-    if (canvas.height !== height) canvas.height = height;
-    canvas.style.aspectRatio = `${size.width} / ${size.height}`;
+    const stage = document.createElement('canvas');
+    stage.width = width;
+    stage.height = height;
     const args = {
       theme: picture.theme,
       level: picture.level,
       seed: picture.item.seed ?? 1,
-      width: canvas.width,
-      height: canvas.height,
+      width,
+      height,
     };
-    if (picture.visualOverrides.background) {
-      const image = new Image();
-      image.src = picture.visualOverrides.background.dataUrl;
-      await image.decode();
-      args.image = image;
-      args.fit = picture.visualOverrides.background.fit;
+    let backdrop = null,
+      retained = false;
+    try {
+      if (picture.mediaError) throw picture.mediaError;
+      if (picture.receipt?.presentationPin.kind === 'still') {
+        if (!picture.media) throw new Error('Restore the original picture media before viewing.');
+        backdrop = await acquirePresentationImage({
+          pin: picture.receipt.presentationPin,
+          metadata: picture.media.metadata,
+          store: picture.media.store,
+        });
+        args.image = backdrop.image;
+        args.fit = backdrop.fit;
+      } else if (picture.visualOverrides.background) {
+        const image = new Image();
+        image.src = picture.visualOverrides.background.dataUrl;
+        await image.decode();
+        args.image = image;
+        args.fit = picture.visualOverrides.background.fit;
+      }
+      if (!accept() || !canvas.isConnected) return false;
+      galleryPainter.drawGallery(stage.getContext('2d'), args);
+      if (!accept() || !canvas.isConnected) return false;
+      // Only a complete successful staged draw may replace the visible picture.
+      if (canvas.width !== width) canvas.width = width;
+      if (canvas.height !== height) canvas.height = height;
+      canvas.style.aspectRatio = `${size.width} / ${size.height}`;
+      canvas.getContext('2d').drawImage(stage, 0, 0);
+      if (canvas === $('gallery-canvas')) {
+        releaseViewBackdrop();
+        viewBackdrop = backdrop;
+        retained = true;
+      }
+      return true;
+    } finally {
+      if (!retained) backdrop?.release();
     }
-    if (!accept() || !canvas.isConnected) return false;
-    galleryPainter.drawGallery(canvas.getContext('2d'), args);
-    return true;
   }
   function sealsFor(item, picture, records) {
     const catalog = api.getMasteryCatalog?.();
@@ -595,13 +639,66 @@ export function attachLibraryPanel(api) {
     if (view && $('gallery-view-dialog').open) refreshPictureMasteries(view, records);
   }
   function populateGallery() {
+    const generation = ++galleryPopulation,
+      library = api.get().library;
+    if (
+      library.pictureReceipts?.some((receipt) => receipt.presentationPin.kind === 'still') &&
+      api.pictureMedia
+    ) {
+      return api.pictureMedia().then(
+        (media) => {
+          if (generation === galleryPopulation && library === api.get().library)
+            renderGallery(media);
+        },
+        (error) => {
+          if (generation === galleryPopulation && library === api.get().library)
+            renderGallery({ error });
+        },
+      );
+    }
+    renderGallery(null);
+  }
+  $('collection-dialog').addEventListener('close', () => {
+    if (!$('collection-dialog').open) galleryPopulation++;
+  });
+  function renderGallery(media) {
     galleryCards.clear();
     gallerySealSlots.clear();
     $('gallery-grid').replaceChildren();
     const resolver = difficulties();
+    const library = api.get().library;
+    const receipts = new Map(
+      (library.pictureReceipts ?? []).map((receipt) => [receipt.galleryKey, receipt]),
+    );
+    const resolve = (item) => {
+      const receipt = receipts.get(item.key),
+        installed = resolver.picture(item);
+      if (!receipt) return installed;
+      try {
+        if (media?.error && receipt.presentationPin.kind === 'still') throw media.error;
+        const picture = resolveEarnedPicture({
+          item,
+          receipt,
+          metadata: media?.metadata,
+          entries: executionEntries(),
+        });
+        return picture ? { ...picture, media } : null;
+      } catch (error) {
+        return installed ? { ...installed, receipt, mediaError: error } : null;
+      }
+    };
     const query = $('gallery-search').value.toLowerCase().trim(),
       items = resolver
-        .group(api.get().library.gallery)
+        .group(library.gallery)
+        .map((group) => ({
+          ...group,
+          variants: (group.variants.length
+            ? group.variants.map((picture) => picture.item)
+            : [group.item]
+          )
+            .map(resolve)
+            .filter(Boolean),
+        }))
         .filter((group) =>
           `${group.item.levelName} ${group.item.themeId} ${group.variants.map((picture) => `${picture.theme.name} ${resolver.label(picture.item.campaignKey)}`).join(' ')} ${group.variants.length ? '' : 'archived difficulty unavailable'}`
             .toLowerCase()
@@ -623,7 +720,9 @@ export function attachLibraryPanel(api) {
       const copy = document.createElement('span');
       copy.textContent = picture
         ? `${picture.theme.name} · ${group.variants.map((variant) => resolver.label(variant.item.campaignKey)).join(' + ')} · ${picture.label}: ${item.medal.toUpperCase()} · ${item.score.toLocaleString()} points`
-        : 'Archived picture · reinstall its exact pack to view';
+        : receipts.get(item.key)?.presentationPin.kind === 'still'
+          ? 'Original picture unavailable · restore its .rlmedia originals'
+          : 'Archived picture · reinstall its exact pack to view';
       const seal = document.createElement('span');
       seal.className = 'mastery-note';
       seal.hidden = true;
@@ -636,7 +735,10 @@ export function attachLibraryPanel(api) {
       for (const variant of group.variants) galleryCards.set(variant.item.key, card);
       if (picture)
         drawPicture(canvas, picture).catch(() => {
-          copy.textContent = 'Picture could not decode. Reinstall its pack.';
+          copy.textContent =
+            picture.receipt?.presentationPin.kind === 'still'
+              ? 'Original picture unavailable. Restore its .rlmedia originals.'
+              : 'Picture could not decode. Reinstall its pack.';
         });
     }
     if (!items.length)
@@ -653,8 +755,8 @@ export function attachLibraryPanel(api) {
     viewReady = ready;
     $('gallery-canvas').style.visibility = ready ? '' : 'hidden';
     $('gallery-canvas').setAttribute('aria-hidden', String(!ready));
-    $('gallery-animate').disabled = !ready;
-    $('gallery-replay').disabled = !ready;
+    $('gallery-animate').disabled = !ready || view?.celebratable === false;
+    $('gallery-replay').disabled = !ready || view?.replayable === false;
     $('gallery-view-dialog').setAttribute('aria-busy', String(loading));
   }
   async function openPicture(picture, { variants = [picture], switching = false } = {}) {
@@ -674,6 +776,7 @@ export function attachLibraryPanel(api) {
     const generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
     returnToCollection = true;
+    if (view !== picture) releaseViewBackdrop();
     view = picture;
     if (!switching) {
       viewVariants = variants;
@@ -711,7 +814,7 @@ export function attachLibraryPanel(api) {
       if (current()) {
         pictureReady(false);
         $('gallery-view-meta').textContent =
-          `${meta} · Picture could not load. Close this view and try again, or reinstall its pack. ${e instanceof Error ? e.message : ''}`;
+          `${meta} · Picture could not load. Restore its originals or exact pack, then reopen this view. ${e instanceof Error ? e.message : ''}`;
       }
     }
   }
@@ -743,13 +846,16 @@ export function attachLibraryPanel(api) {
     }
   };
   $('gallery-animate').onclick = async () => {
-    if (!view || !viewReady || !$('gallery-view-dialog').open) return;
+    if (!view || !viewReady || view.celebratable === false || !$('gallery-view-dialog').open)
+      return;
     const picture = view,
       generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
     try {
-      await galleryPainter.setLook(picture.theme, picture.theme.player, picture.visualOverrides);
-      if (picture.visualOverrides.background && !galleryPainter.images.background)
+      const visuals = { ...picture.visualOverrides };
+      if (viewBackdrop) delete visuals.background;
+      await galleryPainter.setLook(picture.theme, picture.theme.player, visuals);
+      if (!viewBackdrop && picture.visualOverrides.background && !galleryPainter.images.background)
         throw new Error('The picture artwork is unavailable for celebration.');
     } catch (e) {
       if (generation === viewGeneration && view === picture && $('gallery-view-dialog').open)
@@ -787,6 +893,7 @@ export function attachLibraryPanel(api) {
         fullReveal: true,
         reduced: reducedEffects(),
         celebrationPaused: document.hidden,
+        backdrop: viewBackdrop,
       });
       if (galleryPainter.celebrationStatus?.active) galleryFrame = requestAnimationFrame(frame);
     };
@@ -796,7 +903,8 @@ export function attachLibraryPanel(api) {
     // A queued close from an earlier view must not disturb a newly opened picture.
     if ($('gallery-view-dialog').open) return;
     cancelAnimationFrame(galleryFrame);
-    viewGeneration++;
+    const closingGeneration = ++viewGeneration;
+    releaseViewBackdrop();
     view = null;
     viewVariants = [];
     $('gallery-difficulty-field').hidden = true;
@@ -809,17 +917,31 @@ export function attachLibraryPanel(api) {
         galleryPage = origin.page;
         $('gallery-search').value = origin.query;
       }
-      populateGallery();
+      // Restore the scope synchronously. Late media reads may refresh this open
+      // Collection, but must never reopen it after the player navigates away.
       if (!$('collection-dialog').open) $('collection-dialog').showModal();
-      // populateGallery replaces every card. Resolve the current node by the
-      // stable picture key instead of keeping a detached originating button.
-      const target = [
-        galleryCards.get(origin?.key),
-        ...galleryCards.values(),
-        $('gallery-search'),
-        ...$('collection-dialog').querySelectorAll('button'),
-      ].find((element) => element?.isConnected && !element.disabled && !element.hidden);
-      target?.focus();
+      const pending = populateGallery(),
+        returnPopulation = galleryPopulation;
+      const finishReturn = () => {
+        if (
+          returnPopulation !== galleryPopulation ||
+          closingGeneration !== viewGeneration ||
+          $('gallery-view-dialog').open ||
+          !$('collection-dialog').open
+        )
+          return;
+        // populateGallery replaces every card. Resolve the current node by the
+        // stable picture key instead of keeping a detached originating button.
+        const target = [
+          galleryCards.get(origin?.key),
+          ...galleryCards.values(),
+          $('gallery-search'),
+          ...$('collection-dialog').querySelectorAll('button'),
+        ].find((element) => element?.isConnected && !element.disabled && !element.hidden);
+        target?.focus();
+      };
+      if (pending?.then) pending.then(finishReturn);
+      else finishReturn();
     }
   });
   return { open, refresh, populateGallery, refreshMasteries, cancelAttemptExport };

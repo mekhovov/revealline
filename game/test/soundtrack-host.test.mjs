@@ -5,6 +5,7 @@ import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { fixture, memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { createManagedMediaStore } from '../managed-media-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
@@ -403,13 +404,15 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     1,
   );
   assert.equal(audio.revoked.includes(url), false);
-  const reader = createSoundtrackStore({ indexedDB: db.indexedDB });
+  const shared = createManagedMediaStore({ indexedDB: db.indexedDB, richStillMedia: true });
+  const reader = createSoundtrackStore({ managedStore: shared });
   assert.equal(
     (await reader.read()).generation,
     1,
     'Preparing and requesting files never saves a music draft.',
   );
   reader.close();
+  shared.close();
   assert.equal(page.rendered.paused, true);
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.match(page.$('soundtrack-status').textContent, /Download requested/);

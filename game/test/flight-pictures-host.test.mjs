@@ -1,0 +1,375 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
+import {
+  pngBytes,
+  provenance,
+  libraryRecord,
+  presentationRecord,
+  deferred,
+} from './helpers/media-fixtures.mjs';
+import { createManagedMediaStore } from '../managed-media-store.mjs';
+import { createStillMediaStore } from '../media-store.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { prepareStillAsset } from '../media-still.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { campaignKey, loadLibrary } from '../library.mjs';
+import { retryFixture } from './fixtures/retry-scenarios.mjs';
+
+const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
+const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
+const sessionKey = 'revealline.suspended.dev.v1';
+const campaign = {
+  version: 'xonix-campaign.v1',
+  id: 'picture-host',
+  revision: '1',
+  title: 'Picture host journey',
+  classRecipes: classes,
+  levels: [{ ...retryFixture('self-contact').level, goal: { coverage: 0.1 }, rules: { lives: 3 } }],
+};
+const catalog = createExecutionCatalog([{ campaign, themes }]);
+const identity = {
+  baseCampaignKey: campaignKey(campaign),
+  levelId: campaign.levels[0].id,
+  levelRevision: campaign.levels[0].revision,
+  themeId: 'fpv',
+};
+class Picture {
+  constructor() {
+    this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
+  }
+  set src(value) {
+    this.url = value;
+    if (value) queueMicrotask(() => this.onload?.());
+  }
+  get src() {
+    return this.url;
+  }
+  decode() {
+    return Promise.resolve();
+  }
+  removeAttribute() {
+    this.url = '';
+  }
+}
+const ticks = (p, n) => {
+  for (let i = 0; i < n; i++) p.frame();
+};
+async function setup(t) {
+  const memory = memoryIndexedDB(),
+    manager = createManagedMediaStore({ indexedDB: memory.indexedDB, richStillMedia: true });
+  const store = createStillMediaStore({
+    managedStore: manager,
+    decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }),
+  });
+  const a = await prepareStillAsset(
+    new Blob([pngBytes()]),
+    { id: 'picture-a', provenance: provenance() },
+    { decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }) },
+  );
+  const library = libraryRecord(identity);
+  library.assets = [a.asset];
+  await store.commit(
+    await store.prepare(library, [{ sha256: a.asset.sha256, blob: a.blob }], {
+      executionCatalog: catalog,
+    }),
+    { expectedGeneration: 0 },
+  );
+  t.after(() => manager.close());
+  async function replace() {
+    const bytes = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+      'base64',
+    );
+    const b = await prepareStillAsset(
+      new Blob([bytes]),
+      { id: 'picture-b', provenance: provenance() },
+      { decodeImage: async () => ({ naturalWidth: 1, naturalHeight: 1 }) },
+    );
+    const prior = await store.read(),
+      next = structuredClone(prior.document.library);
+    next.assets.push(b.asset);
+    next.presentations.push(presentationRecord(identity, 2, 'picture-b'));
+    next.assignments[0].revision = 2;
+    await store.commit(
+      await store.prepare(next, [...prior.assets, { sha256: b.asset.sha256, blob: b.blob }], {
+        executionCatalog: catalog,
+        previous: prior.document,
+      }),
+      { expectedGeneration: prior.generation },
+    );
+    return b;
+  }
+  return { memory, manager, store, a, replace };
+}
+async function pageFor(t, f, options = {}) {
+  return soloPage(t, {
+    campaign,
+    soundtrackIndexedDB: f.memory.indexedDB,
+    pictures: { Image: Picture },
+    ...options,
+  });
+}
+
+for (const policy of ['immediate', 'grid-center'])
+  test(`${policy}: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory`, async (t) => {
+    const f = await setup(t),
+      p = await pageFor(t, f);
+    if (policy === 'grid-center') {
+      p.change('turn-select', policy);
+      await settle(() => p.doc.body.dataset.pictureState === 'ready');
+    }
+    p.$('start-button').click();
+    p.key('ArrowDown');
+    ticks(p, 13);
+    p.key('ArrowDown', false);
+    p.$('pause-button').click();
+    p.frame(0);
+    const saved = JSON.parse(p.storage.getItem(sessionKey)),
+      beforeTime = p.rendered.run.time;
+    assert.equal(saved.format, 'xonix-session.v3');
+    assert.equal(
+      saved.presentationPins.choices.find((x) => x.identity.themeId === 'fpv').assetId,
+      'picture-a',
+    );
+    assert.equal(p.rendered.backdrop.pin.sha256, f.a.asset.sha256);
+    let image = p.rendered.backdrop.image;
+    await f.replace();
+    p.$('library-button').click();
+    p.$('save-json').value = JSON.stringify(saved);
+    p.$('import-save').click();
+    await settle(() => !p.$('library-dialog').open);
+    p.frame(0);
+    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
+    assert.equal(p.doc.body.dataset.flightState, 'paused');
+    assert.equal(verifyReplay(saved.replay).match, true);
+    image = p.rendered.backdrop.image;
+    p.$('start-button').click();
+    ticks(p, 1);
+    assert.equal(p.rendered.backdrop.image, image);
+    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
+    assert.ok(p.rendered.run.time > beforeTime);
+    for (let i = 0; i < 900 && p.rendered.run.status !== 'won'; i++) p.frame();
+    assert.equal(p.rendered.run.status, 'won');
+    const profile = loadLibrary(p.storage, 'revealline.library.dev.v1', {
+      campaigns: [campaign],
+    }).library;
+    assert.equal(profile.pictureReceipts.length, 1);
+    assert.equal(profile.pictureReceipts[0].presentationPin.assetId, 'picture-a');
+    assert.equal(p.rendered.backdrop.image, image);
+    p.$('retry-button').click();
+    await settle(() => p.doc.body.dataset.pictureState === 'ready');
+    p.frame(0);
+    assert.equal(p.rendered.backdrop.pin.assetId, 'picture-b');
+    assert.deepEqual(p.errors, []);
+  });
+
+test('pending decoded original blocks every fixed tick; background return never resumes it', async (t) => {
+  const f = await setup(t),
+    gate = deferred();
+  let decoding = 0;
+  class SlowPicture extends Picture {
+    decode() {
+      decoding++;
+      return gate.promise;
+    }
+  }
+  const p = await pageFor(t, f, { pictures: { Image: SlowPicture }, waitForPictures: false });
+  await settle(() => decoding > 0);
+  const before = authoritativeCheckpoint(p.rendered.run);
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 30);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  p.doc.hidden = true;
+  p.doc.emit('visibilitychange');
+  gate.resolve();
+  await new Promise((r) => setTimeout(r, 10));
+  p.doc.hidden = false;
+  p.win.emit('focus');
+  ticks(p, 10);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), before);
+  assert.notEqual(p.doc.body.dataset.flightState, 'running');
+  p.$('start-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.frame(0);
+  assert.equal(p.rendered.backdrop.pin.assetId, 'picture-a');
+  assert.equal(p.rendered.run.tick, 0);
+  assert.deepEqual(p.errors, []);
+});
+
+test('old v2 saved flight remains legacy even when a current managed assignment exists', async (t) => {
+  const f = await setup(t),
+    p = await pageFor(t, f);
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 13);
+  p.key('ArrowDown', false);
+  p.$('pause-button').click();
+  const old = JSON.parse(p.storage.getItem(sessionKey));
+  old.format = 'xonix-session.v2';
+  delete old.presentationPins;
+  p.$('library-button').click();
+  p.$('save-json').value = JSON.stringify(old);
+  p.$('import-save').click();
+  await settle(() => !p.$('library-dialog').open);
+  p.frame(0);
+  assert.equal(p.rendered.backdrop, null);
+  assert.equal(p.doc.body.dataset.flightState, 'paused');
+  p.$('start-button').click();
+  p.frame();
+  p.$('pause-button').click();
+  assert.equal(JSON.parse(p.storage.getItem(sessionKey)).format, 'xonix-session.v2');
+  assert.equal(verifyReplay(JSON.parse(p.storage.getItem(sessionKey)).replay).match, true);
+});
+
+test('unavailable storage blocks a new flight until explicit original-art choice', async (t) => {
+  const bad = {
+    open() {
+      throw new Error('Storage refused for test');
+    },
+  };
+  const p = await soloPage(t, { campaign, soundtrackIndexedDB: bad, waitForPictures: false });
+  await settle(() => !p.$('picture-use-legacy').hidden);
+  p.$('start-button').click();
+  ticks(p, 10);
+  assert.equal(p.rendered.run.tick, 0);
+  p.$('picture-use-legacy').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.key('ArrowDown');
+  ticks(p, 12);
+  p.$('pause-button').click();
+  const saved = JSON.parse(p.storage.getItem(sessionKey));
+  assert.ok(saved.presentationPins.choices.every((pin) => pin.kind === 'legacy'));
+  assert.equal(p.rendered.backdrop, null);
+});
+
+test('a missing saved original cannot adopt a different picture or overwrite the current paused attempt', async (t) => {
+  const f = await setup(t),
+    p = await pageFor(t, f);
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 13);
+  p.key('ArrowDown', false);
+  p.$('pause-button').click();
+  const savedA = JSON.parse(p.storage.getItem(sessionKey));
+  await f.replace();
+  p.$('restart-button').click();
+  await settle(() => p.doc.body.dataset.flightState === 'running');
+  p.key('ArrowRight');
+  ticks(p, 8);
+  p.key('ArrowRight', false);
+  p.$('pause-button').click();
+  p.frame(0);
+  const current = p.rendered.run,
+    checkpoint = authoritativeCheckpoint(current),
+    raw = p.storage.getItem(sessionKey),
+    image = p.rendered.backdrop;
+  assert.equal(image.pin.assetId, 'picture-b');
+  // Model lost/corrupt user storage through the actual IDB transaction boundary.
+  const db = await new Promise((resolve, reject) => {
+    const r = f.memory.indexedDB.open('revealline-soundtrack-v1', 3);
+    r.onsuccess = () => resolve(r.result);
+    r.onerror = () => reject(r.error);
+  });
+  const tx = db.transaction(['mediaBlobs'], 'readwrite');
+  tx.objectStore('mediaBlobs').delete(f.a.asset.sha256);
+  await new Promise((resolve, reject) => {
+    tx.oncomplete = resolve;
+    tx.onabort = () => reject(tx.error);
+  });
+  db.close();
+  p.$('library-button').click();
+  const beforeImport = p.storage.getItem(sessionKey);
+  p.$('save-json').value = JSON.stringify(savedA);
+  p.$('import-save').click();
+  await settle(() => /original is missing/.test(p.$('save-status').textContent));
+  p.frame(0);
+  assert.equal(p.rendered.run, current);
+  assert.deepEqual(authoritativeCheckpoint(current), checkpoint);
+  assert.equal(p.rendered.backdrop, image);
+  assert.equal(p.storage.getItem(sessionKey), beforeImport);
+  assert.ok(raw);
+  assert.equal(p.rendered.paused, true);
+  assert.equal(p.$('library-dialog').open, true);
+});
+
+test('First Flight keeps legacy artwork and creates no managed or player progress writes', async (t) => {
+  const f = await setup(t);
+  f.memory.allPuts.length = 0;
+  const before = f.memory.openCount;
+  const p = await pageFor(t, f, { search: '?course=first-flight&lesson=close-line' });
+  const writes = p.storage.writes.length;
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 30);
+  p.key('ArrowDown', false);
+  p.$('pause-button').click();
+  p.frame(0);
+  assert.equal(p.rendered.backdrop, null);
+  assert.equal(p.storage.writes.length, writes);
+  assert.deepEqual(f.memory.allPuts, []);
+  assert.equal(f.memory.openCount, before);
+});
+
+test('managed current attempt export and First Flight handoff preserve the exact pinned saved session', async (t) => {
+  const f = await setup(t),
+    p = await pageFor(t, f);
+  let navigation = null;
+  p.win.location.assign = (url) => {
+    navigation = url;
+  };
+  p.change('turn-select', 'grid-center');
+  await settle(() => p.doc.body.dataset.pictureState === 'ready');
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 13);
+  p.key('ArrowDown', false);
+  p.key('ArrowRight');
+  ticks(p, 1);
+  p.key('ArrowRight', false);
+  p.$('pause-button').click();
+  p.frame(0);
+  const raw = JSON.parse(p.storage.getItem(sessionKey)),
+    checkpoint = authoritativeCheckpoint(p.rendered.run);
+  p.$('library-button').click();
+  p.$('export-session').click();
+  await settle(() => p.$('save-json').value.startsWith('{'));
+  const exported = JSON.parse(p.$('save-json').value);
+  assert.equal(exported.format, 'xonix-session.v3');
+  assert.deepEqual(exported.presentationPins, raw.presentationPins);
+  assert.equal(verifyReplay(exported.replay).match, true);
+  p.$('library-dialog').close();
+  p.$('help-button').click();
+  p.$('first-flight-help-enter').click();
+  await settle(() => navigation !== null);
+  const retained = JSON.parse(p.storage.getItem(sessionKey));
+  assert.equal(retained.format, 'xonix-session.v3');
+  assert.deepEqual(retained.presentationPins, raw.presentationPins);
+  assert.deepEqual(retained.continuation, raw.continuation);
+  assert.equal(verifyReplay(retained.replay).match, true);
+  assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+  assert.match(navigation, /course=first-flight/);
+});
+
+test('raw installed campaign plus retained normalized owner can export a complete pinned backup', async (t) => {
+  const f = await setup(t),
+    p = await pageFor(t, f);
+  p.$('start-button').click();
+  p.key('ArrowDown');
+  ticks(p, 13);
+  p.key('ArrowDown', false);
+  p.$('pause-button').click();
+  p.$('library-button').click();
+  p.$('export-backup').click();
+  await settle(() => p.$('save-json').value.startsWith('{'));
+  const backup = JSON.parse(p.$('save-json').value);
+  assert.equal(backup.session.format, 'xonix-session.v3');
+  assert.equal(
+    backup.session.presentationPins.choices.find((x) => x.identity.themeId === 'fpv').assetId,
+    'picture-a',
+  );
+  assert.equal(verifyReplay(backup.session.replay).match, true);
+});

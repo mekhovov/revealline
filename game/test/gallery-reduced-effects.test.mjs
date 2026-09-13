@@ -24,7 +24,11 @@ class Element {
   }
   setAttribute() {}
   getContext() {
-    return {};
+    return {
+      drawImage: (...args) => {
+        (this.copies ??= []).push(args);
+      },
+    };
   }
   querySelectorAll() {
     return [];

@@ -1,0 +1,291 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { runInNewContext } from 'node:vm';
+import { attachStillMediaHost } from '../ui/still-media-host.mjs';
+import { createManagedMediaStore } from '../managed-media-store.mjs';
+import { createStillMediaStore } from '../media-store.mjs';
+import { createSoundtrackStore } from '../soundtrack-store.mjs';
+import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
+import { Document, Events } from './helpers/couch-dom.mjs';
+import { SoloElement } from './helpers/solo-dom.mjs';
+import { memoryIndexedDB, fixture } from './helpers/soundtrack-fixtures.mjs';
+import { mediaFixture, pngBytes, deferred } from './helpers/media-fixtures.mjs';
+
+const audioFixture = await fixture();
+const decodeImage = async () => ({ naturalWidth: 1, naturalHeight: 1 });
+test('actual classic entry gives file-URL guidance before module/storage access', async () => {
+  const code = await readFile(
+    new URL('../../authoring/still-media/launch.js', import.meta.url),
+    'utf8',
+  );
+  const status = { textContent: '' },
+    open = { disabled: false };
+  runInNewContext(code, {
+    document: { getElementById: (id) => (id === 'still-host-status' ? status : open) },
+    location: { protocol: 'file:' },
+  });
+  assert.equal(open.disabled, true);
+  assert.match(status.textContent, /file URL.*no database/i);
+});
+async function setup(t, options = {}) {
+  const doc = new Document();
+  doc.createElement = (tag) => new SoloElement(doc, tag);
+  const html = await readFile(
+    new URL('../../authoring/still-media/index.html', import.meta.url),
+    'utf8',
+  );
+  for (const [, tag, id] of html.matchAll(/<(button|a|p)\b[^>]*id="([^"]+)"/g)) {
+    const item = doc.createElement(tag);
+    item.id = id;
+    doc.body.append(item);
+  }
+  doc.getElementById('still-host-download-audio').hidden = true;
+  const win = new Events(),
+    frames = new Map();
+  let frame = 0;
+  win.location = { protocol: 'http:' };
+  win.requestAnimationFrame = (fn) => {
+    frames.set(++frame, fn);
+    return frame;
+  };
+  win.cancelAnimationFrame = (id) => frames.delete(id);
+  const f = mediaFixture(true),
+    memory = options.memory ?? memoryIndexedDB(),
+    managers = [],
+    adapters = [];
+  const source = { baseEntry: { campaign: f.campaign, themes: [{ id: 'fpv' }] }, presets: {} };
+  const urls = new Map(),
+    revoked = [];
+  const host = attachStillMediaHost({
+    document: doc,
+    window: win,
+    readBase: async () => source,
+    readAsset: async () => null,
+    storage: { getItem: () => null },
+    lockManager: { request: async (_name, _options, work) => work({}) },
+    decodeImage,
+    createManager(args) {
+      assert.deepEqual(args, { richStillMedia: true });
+      const manager = createManagedMediaStore({ ...args, indexedDB: memory.indexedDB });
+      managers.push(manager);
+      return manager;
+    },
+    createStills(args) {
+      adapters.push(args.managedStore);
+      return createStillMediaStore(args);
+    },
+    createAudio(args) {
+      adapters.push(args.managedStore);
+      return createSoundtrackStore(args);
+    },
+    createPreview: ({ canvas }) => ({ canvas, show: async () => true, clear() {}, dispose() {} }),
+    URLImpl: {
+      createObjectURL(blob) {
+        const id = `blob:owned-${urls.size}`;
+        urls.set(id, blob);
+        return id;
+      },
+      revokeObjectURL(id) {
+        revoked.push(id);
+      },
+    },
+    ...options.host,
+  });
+  t.after(() => host.dispose());
+  return {
+    doc,
+    win,
+    host,
+    memory,
+    managers,
+    adapters,
+    urls,
+    revoked,
+    frames,
+    $: (id) => doc.getElementById(id),
+  };
+}
+test('actual authoring entry opens no DB until explicit activation and shares one real manager for audio and media', async (t) => {
+  const h = await setup(t);
+  assert.equal(h.memory.openCount, 0);
+  assert.equal(h.managers.length, 0);
+  h.$('still-host-open').focus();
+  assert.equal(await h.$('still-host-open').onclick(), true);
+  assert.equal(h.managers.length, 1);
+  assert.deepEqual(h.adapters, [h.managers[0], h.managers[0]]);
+  h.$('still-media-file').files = [new Blob([pngBytes()])];
+  h.$('still-media-file').onchange();
+  h.$('still-media-credit').value = 'Fixture';
+  h.$('still-media-source').value = 'Original test';
+  h.$('still-media-description').value = 'Owned one pixel';
+  h.win.emit('blur'); // A native file dialog can blur without hiding the page.
+  assert.equal(h.host.panel.snapshot().ready, true);
+  assert.equal(await h.$('still-media-preview').onclick(), true);
+  assert.equal(await h.$('still-media-save').onclick(), true);
+  h.host.panel.close();
+  assert.equal(h.doc.activeElement, h.$('still-host-open'));
+  const stills = createStillMediaStore({ managedStore: h.managers[0], decodeImage });
+  assert.equal((await stills.read()).document.library.assets.length, 1);
+  h.$('still-host-close').onclick();
+  assert.equal(h.host.panel, null);
+  await assert.rejects(h.managers[0].readDomain('audio'), /closed/);
+  await new Promise(setImmediate);
+  assert.ok(h.memory.closed > 0);
+});
+test('v1 MP3 bytes remain exact through shared v3 upgrade and explicit native backup preparation', async (t) => {
+  const memory = memoryIndexedDB(),
+    old = createSoundtrackStore({ indexedDB: memory.indexedDB });
+  await old.commit(audioFixture.prepared, { expectedGeneration: 0 });
+  old.close();
+  const before = await exportSoundtrackBundle(audioFixture.library, audioFixture.assets);
+  const h = await setup(t, { memory });
+  await h.host.open();
+  h.$('still-media-file').files = [new Blob([pngBytes()])];
+  h.$('still-media-file').onchange();
+  h.$('still-media-credit').value = 'Fixture';
+  h.$('still-media-source').value = 'Original test';
+  h.$('still-media-description').value = 'Image alongside original MP3';
+  assert.equal(await h.$('still-media-preview').onclick(), true);
+  assert.equal(await h.$('still-media-save').onclick(), true);
+  h.host.panel.close();
+  assert.equal(await h.$('still-host-export-audio').onclick(), true);
+  assert.equal(h.$('still-host-download-audio').hidden, false);
+  const blob = h.urls.get(h.$('still-host-download-audio').href);
+  assert.deepEqual(Buffer.from(await blob.arrayBuffer()), Buffer.from(await before.arrayBuffer()));
+  assert.equal(h.doc.activeElement, h.$('still-host-download-audio'));
+  assert.equal(h.$('still-host-download-audio').download, 'RevealLine-soundtrack.rlsound');
+  h.$('still-host-download-audio').click();
+  assert.match(h.$('still-host-status').textContent, /Download requested/);
+  h.$('still-host-close').onclick();
+  assert.equal(h.revoked.length, 1);
+});
+test('file URL and cancelled late source load do not open or upgrade media', async (t) => {
+  const h = await setup(t);
+  h.win.location.protocol = 'file:';
+  assert.equal(await h.host.open(), false);
+  assert.equal(h.memory.openCount, 0);
+  assert.match(h.$('still-host-status').textContent, /File URLs/);
+  const gate = deferred(),
+    j = await setup(t, { host: { readBase: () => gate.promise } });
+  const opening = j.host.open();
+  j.$('still-host-close').onclick();
+  gate.resolve({});
+  assert.equal(await opening, false);
+  assert.equal(j.memory.openCount, 0);
+});
+test('rejected shared-store access remains visible and cannot become an empty media save', async (t) => {
+  const h = await setup(t, {
+    host: {
+      createStills() {
+        return {
+          read: async () => {
+            throw new DOMException('Use the newer compatible game to export.', 'VersionError');
+          },
+          close() {},
+        };
+      },
+    },
+  });
+  assert.equal(await h.host.open(), false);
+  assert.match(h.$('still-media-status').textContent, /newer compatible/);
+  assert.equal(h.$('still-media-save').disabled, true);
+  assert.equal(h.host.panel.snapshot().generation, null);
+});
+test('persisted pagehide cancels a pending first Open before it can create or upgrade a manager', async (t) => {
+  const gate = deferred(),
+    f = mediaFixture(true);
+  let first = true;
+  const source = { baseEntry: { campaign: f.campaign, themes: [{ id: 'fpv' }] }, presets: {} };
+  const h = await setup(t, {
+    host: {
+      readBase: () => {
+        if (first) {
+          first = false;
+          return gate.promise;
+        }
+        return source;
+      },
+    },
+  });
+  const pending = h.host.open();
+  h.win.emit('pagehide', { persisted: true });
+  gate.resolve(source);
+  assert.equal(await pending, false);
+  assert.equal(h.host.panel, null);
+  assert.equal(h.managers.length, 0);
+  assert.equal(h.memory.openCount, 0);
+  h.win.emit('pageshow', { persisted: true });
+  assert.equal(h.host.panel, null);
+  assert.equal(h.memory.openCount, 0);
+  assert.equal(await h.host.open(), true);
+  assert.equal(h.managers.length, 1);
+});
+test('existing host navigation owns Back and neutralizes native handoff; hidden page cancels the edit context', async (t) => {
+  const h = await setup(t);
+  await h.host.open();
+  const close = h.$('still-media-close');
+  close.focus();
+  h.host.navigation.sync();
+  h.host.navigation.handle({ back: true });
+  assert.equal(h.host.panel.dialog.open, false);
+  await h.host.open();
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  assert.equal(h.host.panel.snapshot().ready, false);
+  assert.equal(h.$('still-media-save').disabled, true);
+  h.win.emit('pagehide', { persisted: true });
+  assert.equal(h.frames.size, 0);
+  h.doc.hidden = false;
+  h.win.emit('pageshow', { persisted: true });
+  assert.equal(h.frames.size, 1);
+  assert.equal(h.host.panel.dialog.open, false);
+});
+test('actual shared router prevents held Confirm across modal close and native pointer handoff', async (t) => {
+  const pad = {
+    index: 0,
+    id: 'Still workshop test controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const h = await setup(t, { host: { readPads: () => [pad] } });
+  const frame = (now) => {
+    const [id, callback] = h.frames.entries().next().value;
+    h.frames.delete(id);
+    callback(now);
+  };
+  const press = (id, down) => {
+    pad.buttons[id] = { pressed: down, value: down ? 1 : 0 };
+  };
+  await h.host.open();
+  frame(0);
+  press(0, true);
+  frame(1);
+  press(0, false);
+  frame(2);
+  h.$('still-media-close').focus();
+  press(0, true);
+  frame(3);
+  assert.equal(h.host.panel.dialog.open, false);
+  frame(500);
+  assert.equal(h.host.panel.dialog.open, false, 'Held Close/Confirm cannot reopen local media.');
+  press(0, false);
+  frame(501);
+  await h.host.open();
+  frame(502);
+  press(13, true);
+  frame(503);
+  h.doc.emit('pointerdown', { target: h.$('still-media-show-authored') });
+  h.$('still-media-show-authored').focus();
+  frame(1200);
+  assert.equal(h.doc.activeElement, h.$('still-media-show-authored'));
+  press(13, false);
+  frame(1201);
+  press(13, true);
+  frame(1202);
+  assert.notEqual(h.doc.activeElement, h.$('still-media-show-authored'));
+  const tab = h.doc.emit('keydown', { key: 'Tab', target: h.doc.activeElement });
+  assert.equal(tab.defaultPrevented, false, 'Native modal Tab default is left to the browser.');
+});

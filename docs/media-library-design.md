@@ -1,5 +1,42 @@
 # P5 — managed pictures and victory stories
 
+## Current source contract
+
+The still-image slice is implemented and passes exact-source and bounded source-browser checks. It is not yet a frozen/public P5 release, and video/GIF/story playback is not implemented. [Current qualification and receipt hashes](feature-delivery-workflow.md#current-still-integration-evidence) distinguish those gates; the broader [production plan](production-plan.md) retains every unfinished target.
+
+| Layer           | Implemented contract                                                                                                                                             | Remaining boundary                                                                                                                                   |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shared storage  | One explicitly adopted rich IndexedDB **v3** manager for audio and stills; 256 MiB committed-plus-staging ledger, immutable originals, validated retained owners | Real quota/blocked-tab stress, cold offline recovery and next-edition delivery; older v1/v2 readers may refuse this origin after upgrade             |
+| Still authoring | Native PNG/JPEG import, full decode/hash, preview, exact map/theme assignment, explicit `.rlmedia` review/restore/download                                       | No video, GIF, scrubber or runtime story; `revealline-media-presentation.v1` requires `story:null`                                                   |
+| Live flight     | All-theme immutable picture choices; selected decode before first tick; image/fit staged together; `xonix-session.v3` preserves A after assignment B             | Missing managed originals keep restoration paused; no implicit replacement                                                                           |
+| Collection      | `xonix-library.v3` first-earned receipt and completion in the **same guarded profile write**; later better B does not replace A                                  | Retained owner allows managed still viewing after pack removal; replay needs exact installed content; actual removed-pack browser check remains open |
+| Transfer        | Game-data JSON carries pins/receipts/packs/saved flight; `.rlmedia` carries referenced still/generic originals/history; `.rlsound` carries audio                 | These are separate reviewed files, not one atomic all-in-one backup                                                                                  |
+
+Read [still identity](media-presentation.md), [storage](media-storage.md), [live flight](flight-pictures.md), [first-earned receipts](picture-receipts.md), [Collection](earned-picture-view.md), [binary originals](media-bundle.md) and [game-data recovery](full-backup.md) for the actual APIs. Retained owners are exact normalized campaign/roster context, not installations or awards. Packaged game and workshop channels use the same exact `release-${buildInfo.version}` label, including any leading `v`. The workshop accepts HTTP 404 as source `dev`; a failed/malformed workshop build-info read does not silently select that fallback.
+
+Originals are append-only and committed before an attempt can use them. Victory does **not** write an IndexedDB receipt, acquire a pending presentation lease or reconcile a second receipt transaction. Completion and its first-earned choice use one guarded player-profile write. The shared store's import reservations are a separate storage-budget mechanism. Pruning/GC and durable cross-store receipt leases are unimplemented; do not add them from the historical proposal below.
+
+## Next video and story slice — proposed
+
+Start with one owned short clip and one exact map/theme. This is a new versioned contract and a later gate, not permissive fields added to the existing still-only v1 schema. The user examples folder is currently empty; create a labeled original test clip and retain its source/encoder recipe, without claiming a supplied video was inspected.
+
+1. **Import and probe bounded original bytes.** Validate actual container/codec support, finite dimensions/duration and chosen source limits before large allocations. Preserve the original, hash it, decode sequentially, and keep one active probe/capture per tab. Unsupported, corrupt, oversized or cancelled work preserves the prior candidate. A selected segment is not a smaller encoded file; publication limits apply to actual derivative bytes.
+2. **Select and verify the poster.** Keep the requested seek time separate from the observed decoded-frame timestamp. Seek through visible controls, await an available decoded frame, record `requestVideoFrameCallback`'s `mediaTime` when available, then capture/decode/hash and preview the resulting PNG. Save those exact PNG bytes as the poster; do not reconstruct it by seeking during later wins. A fallback may record an approximate playhead observation, but must label the missing frame-level evidence rather than copying requested time into an observed field. Handle zero/already-selected positions, timeout, abort, overlapping scrubs and late callbacks without publishing stale frames.
+3. **Choose a separate story segment.** Poster time and finite story start/end are independent. The default is the ending/key frame as the earned image, followed by playback from the story's beginning. Preserve derivatives' parent hashes, real encoding/tool facts and dimensions; publish only after a real supported decode and bounded-byte check. GIF needs a controlled decoder or recorded conversion path, not an unpausable animated image.
+4. **Keep playback outside progression.** Record the real win once, reveal the pinned still, optionally Play the story, then return to that exact still. Provide Play/Pause, Skip and replay from Collection with the same keyboard/controller/touch navigation. Hidden pages pause presentation; returning focus cannot resume flight. Failed playback, missing optional video, skip and repeated replay never grant awards or replace the earned still. Reduced-motion mode must retain a usable static reward. Story/music/effects volume and listening intent need separate ownership.
+5. **Qualify the whole selected story.** Use actual native file selection and downloads, poster preview, legal win, skip/replay and exact return image. Verify fresh-origin paired transfer and prepared cold offline playback separately. Include keyframe spacing, variable frame rate, nonzero media timelines, repeated seek, missing optional story, cancellation, autoplay denial and stale owner generations. Record browser/codec support; simulated events and successful capability probes are not actual playback evidence.
+
+Assigning `currentTime` requests a seek; it is an approximate playhead value and does not identify an arbitrary exact frame. A video-frame callback provides a presented frame's `mediaTime`, but may arrive a display refresh late. The implementation should use that observed metadata plus the saved PNG, without promising frame-number or millisecond precision it has not measured. [MDN currentTime](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/currentTime), [MDN requestVideoFrameCallback](https://developer.mozilla.org/en-US/docs/Web/API/HTMLVideoElement/requestVideoFrameCallback).
+
+Our proposed accessible story controls apply the guidelines' same-input menu access, readable controls, player-paced text, replayable narrative and independent audio settings. Static rewards and optional motion preserve access when animation is uncomfortable. The precise Play/Skip/Replay sequence above is our design, not an existing capability or a quotation from the guidelines. [Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/full-list/).
+
+## Historical design record
+
+The following is preserved from the initial P5 proposal and v0.25 handoff. Its sample schemas, v1→v2 rollout, proposed cross-store earned receipts/leases, backup inventory and unimplemented APIs are **not current instructions**. The current contracts above supersede them. Its old `currentTime` rounding rationale is also superseded by the current MDN guidance linked above. No old release or evidence has been rewritten.
+
+<details>
+<summary>Initial P5 proposal and historical v0.25 storage boundary</summary>
+
 Design status: **shared storage is prepared source, excluded from v0.25; video authoring and rewards are not implemented**. The prepared manager passes 73 affected storage/audio checks against the final R2 host helper, including 22 store cases and archived v0.24 adapter compatibility against a modeled IndexedDB. Real-browser migration/quota/recovery and the complete media journey remain open. Audited 2026-09-13 against the v0.24/P3 foundation and the active P4 working tree. This document refines P5 in [the approved roadmap](implementation-roadmap.md); it does not change the gameplay, score or replay contracts.
 
 The first deliverable is one complete journey: **import an owned short video → choose a still and story segment → assign to an exact map/theme → earn the picture through a real win → watch/skip/replay its story → export/import the original bytes**. Build shared storage first so audio and video cannot each claim a separate 256 MiB allowance.
@@ -158,8 +195,8 @@ Legacy “complete JSON backup” must display its exact scope: profile, packs a
 
 ## 7. Small implementation slices and APIs
 
-| Step     | Deliverable                                                                          | Gate                                                                                                      |
-| -------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| Step      | Deliverable                                                                          | Gate                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
 | **P5.1a** | Shared manager and P3 adapter, v1→v2 migration, reservation protocol                 | Existing MP3 tests plus real concurrent tabs, migration, quota/cancel/crash tests; no separate budgets    |
 | **P5.1b** | Video probe, poster selection, immutable presentation records; one owned short clip  | Captured PNG matches visible selected frame, source hash unchanged, actual decoded playback               |
 | **P5.2a** | Authoring dialog, exact map/theme sidecar assignment, real win and Collection player | Save/reload, genuine win, skip/replay, no duplicate awards, independently retained poster                 |
@@ -234,3 +271,5 @@ Completion of P5 requires both the automated storage/model evidence and the real
 ## Public release boundary after v0.25 feedback
 
 The P5 manager remains prepared and explicitly injectable. Ordinary `createSoundtrackStore()` now uses the retained v1 adapter in `soundtrack-store-legacy.mjs`; it does not trigger the unqualified shared-store upgrade. Supplying `managedStore` is the explicit future host integration boundary. The public usability release keeps existing MP3 bytes and archive access compatible. Migration, quota/recovery and multi-tab browser qualification remain prerequisites for making the P5 adapter the default.
+
+</details>

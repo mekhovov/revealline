@@ -49,6 +49,13 @@ import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { createManagedMediaStore } from './managed-media-store.mjs';
+import { createStillMediaStore } from './media-store.mjs';
+import { createFlightPictures } from './ui/flight-pictures.mjs';
+import {
+  createPictureIdentityCatalog,
+  createBackupPictureIdentityResolver,
+} from './ui/picture-identity.mjs';
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
@@ -188,7 +195,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.32.0',
+  let buildVersion = '0.33.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -469,6 +476,89 @@ try {
     soundtrackGeneration = -1,
     soundtrackDisposed = false;
   const soundtrackLoad = new AbortController();
+  // This edition explicitly adopts rich v3. Both adapters share its single ledger;
+  // training keeps its existing legacy presentation and never creates picture pins.
+  const pictureManager = practice ? null : createManagedMediaStore({ richStillMedia: true });
+  const pictureStore = pictureManager
+    ? createStillMediaStore({ managedStore: pictureManager })
+    : null;
+  let flightPictures = null,
+    pictureResume = null,
+    pictureThemePending = null,
+    pictureGeneration = 0;
+  const legacyPictureButton = document.createElement('button');
+  legacyPictureButton.id = 'picture-use-legacy';
+  legacyPictureButton.textContent = 'Use original pack artwork';
+  legacyPictureButton.hidden = true;
+  document.querySelector('.overlay-actions').append(legacyPictureButton);
+  async function pictureMedia({ signal } = {}) {
+    if (!pictureStore) throw new Error('Practice uses its original artwork.');
+    return { store: pictureStore, metadata: await pictureStore.readMetadata({ signal }) };
+  }
+  function pictureIdentity(metadata) {
+    return createPictureIdentityCatalog({ entries: installedEntries, metadata });
+  }
+  function newFlightPictures({
+    nextRun = run,
+    nextRunId = runId,
+    entry = activeEntry,
+    nextThemeId = theme.id,
+    pins,
+    legacy = practice || entry.activity === 'challenge',
+    explicitLegacy = false,
+  } = {}) {
+    return createFlightPictures({
+      context: {
+        runId: nextRunId,
+        executionKey: campaignKey(entry.campaign),
+        levelId: nextRun.levelId,
+        levelRevision: nextRun.level.revision,
+        themeId: nextThemeId,
+      },
+      level: nextRun.level,
+      themeIds: entry.themes.map((item) => item.id),
+      identityCatalog: legacy ? null : pictureIdentity(),
+      readMedia: pictureMedia,
+      pins,
+      legacy,
+      explicitLegacy,
+    });
+  }
+  function cancelPictureStart() {
+    pictureGeneration++;
+    if (pictureResume !== null) flightPictures?.cancel();
+    pictureThemePending?.controller.abort();
+    pictureResume = null;
+    pictureThemePending = null;
+  }
+  function pictureFailure(error) {
+    if (error?.name === 'AbortError') return;
+    warning(
+      `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`,
+    );
+    legacyPictureButton.hidden = started || practice;
+    if (!started) $('start-button').textContent = 'Retry picture →';
+  }
+  function warmPicture() {
+    const owner = flightPictures;
+    if (!owner || owner.ready(theme.id)) return;
+    void owner
+      .ensure(theme.id)
+      .then(() => {
+        if (owner === flightPictures) refreshHUD();
+      })
+      .catch((error) => {
+        if (owner === flightPictures) pictureFailure(error);
+      });
+  }
+  legacyPictureButton.onclick = () => {
+    if (started || practice || !flightPictures) return;
+    cancelPictureStart();
+    flightPictures.dispose();
+    flightPictures = newFlightPictures({ explicitLegacy: true });
+    legacyPictureButton.hidden = true;
+    resume();
+  };
   function soundtrackContext() {
     const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
     const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
@@ -518,7 +608,9 @@ try {
         throw new Error(
           'This browser does not provide file-audio playback. Built-in sound remains available.',
         );
-      soundtrackStore = createSoundtrackStore();
+      soundtrackStore = createSoundtrackStore(
+        pictureManager ? { managedStore: pictureManager } : {},
+      );
       soundtrackPlayer = createSoundtrackPlayer({
         soundscape: sound,
         audioElement,
@@ -919,6 +1011,7 @@ try {
     pause(true);
     masteryAwards.cancelAll();
     cancelRestore();
+    cancelPictureStart();
     clearInput();
     suspendAudio();
     writer.release();
@@ -932,6 +1025,9 @@ try {
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
       soundtrackStore?.close();
+      flightPictures?.dispose();
+      pictureStore?.close();
+      pictureManager?.close();
       controllerReading.destroy();
       controllerNavigation.destroy();
       gameShell?.destroy();
@@ -1175,6 +1271,8 @@ try {
           bodyId,
           runId,
           continuation: { direction: input.snapshotDirection() },
+          presentationPins: flightPictures?.pins(),
+          mediaIdentityCatalog: flightPictures?.identityCatalog,
           storage: localStorage,
           sessionKey,
           assertCurrent,
@@ -1868,6 +1966,7 @@ try {
       bodyId,
       runId,
       continuation: { direction: input.snapshotDirection() },
+      presentationPins: flightPictures?.pins(),
     });
   }
   function persistAttempt(notify = true) {
@@ -1912,26 +2011,44 @@ try {
     invalidateContentSwitch();
     sessionBusy = true;
     refreshSavedFlight();
-    pause(true);
+    cancelPictureStart();
+    if (!paused) pause(true);
+    clearInput();
     const controller = new AbortController();
     restoreController = controller;
+    let stagedPictures = null;
     try {
       const restored = await restoreSession(candidate, {
         campaign: entry.campaign,
         campaignKey: campaignKey(entry.campaign),
         signal: controller.signal,
+        mediaIdentityCatalog: candidate?.presentationPins ? pictureIdentity() : undefined,
         masteryDefinition:
           masteryFor(campaignKey(entry.campaign), candidate?.replay?.level?.id, masteryCatalog) ??
           undefined,
       });
       if (controller.signal.aborted)
         throw new Error('Loading was cancelled; your newer selection is kept.');
+      stagedPictures = newFlightPictures({
+        nextRun: restored.run,
+        nextRunId: restored.session.runId,
+        entry,
+        nextThemeId: restored.session.themeId,
+        pins: restored.session.presentationPins,
+        legacy: !restored.session.presentationPins,
+      });
+      await stagedPictures.ensure(restored.session.themeId, { signal: controller.signal });
+      if (controller.signal.aborted)
+        throw new DOMException('Picture restore cancelled.', 'AbortError');
       selectEntry(entry, {
         levelId: restored.run.levelId,
         themeId: restored.session.themeId,
         restoreAdoption: true,
         difficulty: entry.difficulty,
       });
+      flightPictures?.dispose();
+      flightPictures = stagedPictures;
+      stagedPictures = null;
       run = restored.run;
       recorder = restored.recorder;
       runId = restored.session.runId;
@@ -1957,6 +2074,7 @@ try {
       warning('Saved flight verified and restored. Press Resume to continue.');
     } finally {
       sessionBusy = false;
+      stagedPictures?.dispose();
       if (restoreController === controller) restoreController = null;
       refreshSavedFlight();
       await packCommits.reconcile();
@@ -2024,6 +2142,7 @@ try {
       return snapshotAttempt();
     },
     resolveCampaign: (key) => findCampaignEntry(key)?.campaign,
+    resolveMediaIdentityCatalog: () => pictureIdentity(),
     readStored: () => localStorage.getItem(sessionKey),
     readBackupMarker: () => localStorage.getItem(`${libraryKey}.backup-lock`),
     readJournal: () => readAssetStore(journalKey),
@@ -2034,6 +2153,12 @@ try {
   });
   const libraryPanel = attachLibraryPanel({
     focusMission,
+    pictureMedia,
+    resolveMediaIdentityCatalog: (metadata) =>
+      createBackupPictureIdentityResolver({
+        baseEntries: [baseEntry],
+        metadata,
+      }),
     getReducedEffects: () => $('reduced-effects').checked,
     profileTransfer: isRelease
       ? {
@@ -2787,6 +2912,12 @@ try {
       cancelRestore();
       applyNextDifficulty(difficulty);
     }
+    cancelPictureStart();
+    if (!restoreAdoption) {
+      flightPictures?.dispose();
+      flightPictures = null;
+    }
+    legacyPictureButton.hidden = true;
     completionWarning = '';
     appearanceRewardIds = [];
     celebrationActive = false;
@@ -2918,6 +3049,10 @@ try {
             ? 'Campaign complete. View your collection or choose a mission to replay.'
             : currentBriefing().status,
     );
+    if (!restoreAdoption) {
+      flightPictures = newFlightPictures();
+      warmPicture();
+    }
     refreshHUD();
   }
   function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
@@ -2927,6 +3062,46 @@ try {
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
+    // Enable audio on the original gesture, before any storage/decode await.
+    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
+    if (!flightPictures?.ready(theme.id)) {
+      if (pictureResume) return;
+      const owner = flightPictures,
+        ticket = ++pictureGeneration,
+        selectedRun = run,
+        selectedTheme = theme.id;
+      pictureResume = ticket;
+      paused = true;
+      clearInput();
+      warning('Preparing the chosen picture. Flight stays paused until it is ready.');
+      void owner
+        .ensure(selectedTheme)
+        .then(() => {
+          if (
+            pictureResume !== ticket ||
+            pictureGeneration !== ticket ||
+            owner !== flightPictures ||
+            run !== selectedRun ||
+            theme.id !== selectedTheme ||
+            document.hidden ||
+            !document.hasFocus() ||
+            dialogOpen() ||
+            courseBlocked()
+          )
+            return;
+          pictureResume = null;
+          resume({ alignCourseBoard, contentSwitchTicket });
+        })
+        .catch((error) => {
+          if (pictureResume === ticket) pictureFailure(error);
+        })
+        .finally(() => {
+          if (pictureResume === ticket) pictureResume = null;
+        });
+      return;
+    }
+    pictureResume = null;
+    legacyPictureButton.hidden = true;
     clearInput();
     neutralResumeTick = true;
     courseEntryHold = false;
@@ -2939,6 +3114,7 @@ try {
     $('game-canvas').focus({ preventScroll: true });
     $('pause-button').textContent = 'Ⅱ';
     refreshCourse();
+    refreshHUD();
     if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
   }
   function finishDefeatPresentation() {
@@ -2962,6 +3138,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force) {
+    cancelPictureStart();
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -2996,6 +3173,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
         ? 'picture'
@@ -3245,6 +3423,7 @@ try {
       !courseBlocked() &&
       !paused &&
       started &&
+      flightPictures?.ready(theme.id) &&
       !dialogOpen() &&
       !['won', 'lost'].includes(run.status)
     ) {
@@ -3368,6 +3547,8 @@ try {
               themeId: theme.id,
               bodyId,
               sourcePackId: activeEntry.sourcePackId,
+              presentationPins: flightPictures?.pins(),
+              mediaIdentityCatalog: flightPictures?.identityCatalog,
             });
           } catch (error) {
             completionWarning = `Your picture is open, but the collection could not be updated. ${recorder ? 'Export this replay and your library' : 'The replay recording has ended; export your library'} before continuing.`;
@@ -3451,18 +3632,42 @@ try {
   $('theme-select').value = theme.id;
   for (const c of scenario?.classRecipes || classRegistry)
     $('class-select').append(new Option(c.label, c.id));
-  $('theme-select').onchange = () => {
+  $('theme-select').onchange = async () => {
     if (courseSession || courseEntry) return;
     cancelRestore();
-    themeOverride = true;
-    theme =
+    pause(true);
+    const next =
       themesFile.themes.find((t) => t.id === $('theme-select').value) ||
       (scenario?.theme?.id === $('theme-select').value ? scenario.theme : themesFile.themes[0]);
-    bodyId = theme.player;
-    setTheme();
-    refreshMissionBrief();
-    if (!started && !campaignOverview) overlay('ready');
-    preferences({ themeId: theme.id, bodyId });
+    const owner = flightPictures,
+      controller = new AbortController(),
+      ticket = ++pictureGeneration;
+    let candidate = newFlightPictures({
+      nextThemeId: next.id,
+      pins: owner.pins(),
+      legacy: owner.legacy,
+    });
+    pictureThemePending = { ticket, controller };
+    try {
+      await candidate.ensure(next.id, { signal: controller.signal });
+      if (owner !== flightPictures || ticket !== pictureGeneration || document.hidden) return;
+      flightPictures = candidate;
+      candidate = null;
+      owner.dispose();
+      themeOverride = true;
+      theme = next;
+      bodyId = theme.player;
+      setTheme();
+      refreshMissionBrief();
+      if (!started && !campaignOverview) overlay('ready');
+      preferences({ themeId: theme.id, bodyId });
+    } catch (error) {
+      if (owner === flightPictures) pictureFailure(error);
+    } finally {
+      candidate?.dispose();
+      if (pictureThemePending?.ticket === ticket) pictureThemePending = null;
+      $('theme-select').value = theme.id;
+    }
   };
   $('body-select').onchange = () => {
     if (courseEntry) return;
@@ -3755,6 +3960,7 @@ try {
         reduced: $('reduced-effects').checked,
         fullReveal: run.status === 'won',
         showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+        backdrop: flightPictures?.current(),
         celebrationPaused: document.hidden || dialogOpen(),
         defeatEffectsRunning: defeatEffectsRunning(),
       });
