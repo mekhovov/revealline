@@ -52,7 +52,16 @@ test('installed dev catalog uses exact ownership and holds both source locks thr
   gate.resolve();
   assert.equal(await commit, 'committed');
   assert.equal(f.held.size, 0);
-  assert.deepEqual([...new Set(f.reads)].sort(), [keys.journal, keys.lock, keys.packs].sort());
+  assert.deepEqual(
+    [...new Set(f.reads)].sort(),
+    [
+      keys.journal,
+      keys.lock,
+      keys.packs,
+      'revealline.library.dev.v1.external-chapter-index.v1',
+      'revealline.library.dev.v1.external-chapter-journal.v1',
+    ].sort(),
+  );
 });
 test('changed packs, missing locks and corrupt values never become empty authority', async () => {
   const f = setup(),
