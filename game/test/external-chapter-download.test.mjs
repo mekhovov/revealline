@@ -18,13 +18,15 @@ const decodeImage = async (blob) => {
 const body = async (path) =>
   path.endsWith('/pack.json') ? world.payloads.pack : world.payloads.media;
 
-test('catalog requires all four exact code-owned descriptors; foreign metadata and accessor authority refuse', async () => {
+test('catalog requires all five exact code-owned descriptors; foreign metadata and accessor authority refuse', async () => {
   assert.equal(
     prepareExternalCatalog(
       await readFile(new URL('../content/external-worlds.json', import.meta.url), 'utf8'),
     ),
     EXTERNAL_CATALOG,
   );
+  assert.equal(EXTERNAL_CATALOG.chapters.length, 5);
+  assert.equal(EXTERNAL_CATALOG.chapters.at(-1).id, 'sentinel-circuit-fpv');
   for (const mutate of [
     (c) => c.chapters.reverse(),
     (c) => c.chapters.pop(),

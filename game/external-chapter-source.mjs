@@ -1,6 +1,6 @@
 import { validateExternalChapter, prepareExternalChapter } from './external-chapter.mjs';
 
-// Explicit source-only registry. No automatic install or public catalog entry.
+// Code-owned exact descriptors; installation and build publication remain explicit.
 export const SOURCE_EXTERNAL_CHAPTER = validateExternalChapter({
   format: 'revealline-external-chapter.v1',
   id: 'original-fpv-pressure-external',
@@ -70,14 +70,14 @@ const routeDescriptors = [
       sha256: '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
     },
     pack: {
-      bytes: 8614,
-      sha256: '9f1c9fe462d7b962b6d47bdca0faf1f18cca1066abdbce13fb161caa124c13fb',
+      bytes: 8405,
+      sha256: '911ac4781505be1b405c33994a749990aa175a457ae020cbe0d1bcadda87abc0',
     },
     media: {
-      bytes: 8825996,
-      sha256: '41f346b01ab86bf0bbcc7205563666be9c369d07734eaddac56e16f72c5cef94',
+      bytes: 8825887,
+      sha256: '39702f79ae56b12430d6f44ac201704ada77d4ae1b3db4f0235d46ed822ed0e0',
     },
-    campaignKey: 'route-worlds-ukraine/1/86e773bc0cd5d0da',
+    campaignKey: 'route-worlds-ukraine/1/6fc246baf830fe27',
     themeId: 'ukraine',
     originals: [
       {
@@ -125,14 +125,14 @@ const routeDescriptors = [
       sha256: '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
     },
     pack: {
-      bytes: 8516,
-      sha256: '4d765a182603ff8db78c0c4db446a9100146a4dabcbd0a4587a661ae506c5271',
+      bytes: 8307,
+      sha256: 'ef63420ef94edeecf56cd13f1a77c75afef9a5be6ec4c0d5d5814d002f7962b4',
     },
     media: {
-      bytes: 7589742,
-      sha256: 'f42fa22b651dd32f4627f2260625b64ca52bfb8c871341637705658b718eec5d',
+      bytes: 7589633,
+      sha256: 'e47adb1f39845cfab801ed70ebb7127815b80667c6b33bfe763cbd4c1e10fd34',
     },
-    campaignKey: 'route-worlds-retro/1/c2ebcf492cdb07a8',
+    campaignKey: 'route-worlds-retro/1/31673372d46ee993',
     themeId: 'retro',
     originals: [
       {
@@ -180,14 +180,14 @@ const routeDescriptors = [
       sha256: '589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989',
     },
     pack: {
-      bytes: 8526,
-      sha256: 'ab535097b32996805a9eb36df32f22647a6a3a3e8b0d10e9526667519afef49f',
+      bytes: 8317,
+      sha256: '96d6c0e6612197a542ec28d31132a20e0e945c1e12407109ddedad04ac0b0813',
     },
     media: {
-      bytes: 8281102,
-      sha256: '22a4201d6bff063e8c4704323e0605cc20626d949e8c265264d4f4c4f7d0bb03',
+      bytes: 8280993,
+      sha256: 'f26c91482325aaa0ea7d7484d9aa2de5f2209b1a8fcfc2ba518eb145f8ddd77f',
     },
-    campaignKey: 'route-worlds-coupa/1/57042d08e1681c86',
+    campaignKey: 'route-worlds-coupa/1/708c553521008c7d',
     themeId: 'coupa',
     originals: [
       {
@@ -226,27 +226,86 @@ const routeDescriptors = [
     ],
   },
 ].map((descriptor) => validateExternalChapter(descriptor));
+const sentinelDescriptor = validateExternalChapter({
+  format: 'revealline-external-chapter.v1',
+  id: 'sentinel-circuit-fpv',
+  revision: 1,
+  source: {
+    id: 'sentinel-circuit',
+    bytes: 8943,
+    sha256: 'cf6009eeadef504d033de0dd27f33aa3d6405caf1954a6417cbdfc09bc566b40',
+  },
+  pack: {
+    bytes: 9238,
+    sha256: 'ae2c1489c27afd2f492472d00605a57a65fd1d2c154e63b1b2c17b48bca323cb',
+  },
+  media: {
+    bytes: 8596058,
+    sha256: 'ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c',
+  },
+  campaignKey: 'sentinel-circuit-fpv/1/398c82081d2d49df',
+  themeId: 'fpv',
+  originals: [
+    {
+      assetId: 'sentinel-circuit-fpv-poster-1',
+      presentationId: 'sentinel-circuit-fpv-poster-1-presentation',
+      levelId: 'sentinel-circuit-fpv-listening-court',
+      levelRevision: '1',
+      sha256: '1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1',
+      bytes: 2948372,
+      mime: 'image/png',
+      width: 1774,
+      height: 887,
+    },
+    {
+      assetId: 'sentinel-circuit-fpv-poster-2',
+      presentationId: 'sentinel-circuit-fpv-poster-2-presentation',
+      levelId: 'sentinel-circuit-fpv-switchyard-gates',
+      levelRevision: '1',
+      sha256: 'd6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3',
+      bytes: 2933729,
+      mime: 'image/png',
+      width: 1774,
+      height: 887,
+    },
+    {
+      assetId: 'sentinel-circuit-fpv-poster-3',
+      presentationId: 'sentinel-circuit-fpv-poster-3-presentation',
+      levelId: 'sentinel-circuit-fpv-open-circuit',
+      levelRevision: '1',
+      sha256: '102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3',
+      bytes: 2701967,
+      mime: 'image/png',
+      width: 1774,
+      height: 887,
+    },
+  ],
+});
 export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   SOURCE_EXTERNAL_CHAPTER,
   ...routeDescriptors,
+  sentinelDescriptor,
 ]);
 const names = [
   'FPV Front · Pressure Pictures',
   'Ukraine Atlas · Route Choices',
   '1994 Forever · Route Choices',
   'Spend Network · Route Choices',
+  'FPV Front · Sentinel Circuit',
 ];
 export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
   SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
     Object.freeze({
       descriptor,
       name: names[index],
-      mode: index === 0 ? 'Arcade' : 'Tactical',
+      mode: descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'Arcade' : 'Tactical',
       levels: descriptor.originals.length,
       description:
-        index === 0
+        descriptor.id === SOURCE_EXTERNAL_CHAPTER.id
           ? 'Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.'
-          : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
+          : descriptor.id === sentinelDescriptor.id
+            ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
+            : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
     }),
   ),
 );

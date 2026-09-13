@@ -40,7 +40,7 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. Both producers read the selected source tree; all eight
+/** Explicit build only. All producers read the selected source tree; all ten
  * exact original bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
@@ -62,6 +62,9 @@ export async function readExternalDistributionEntries(root, option) {
     'ukraine-route-art',
     'retro-route-art',
     'spend-route-art',
+    'sentinel-circuit',
+    'sentinel-circuit-art',
+    'sentinel-circuit-external',
   ])
     await ordinaryTree(root, `authoring/library/${name}`);
   const { prepareExternalCatalog } = await import(
@@ -77,15 +80,26 @@ export async function readExternalDistributionEntries(root, option) {
   const { buildRouteWorld } = await import(
     pathToFileURL(path.join(root, 'authoring/library/route-worlds/build.mjs'))
   );
+  const { buildExternalSentinel } = await import(
+    pathToFileURL(path.join(root, 'authoring/library/sentinel-circuit-external/build.mjs'))
+  );
+  const producers = new Map([
+    ['original-fpv-pressure-external', buildExternalPilot],
+    ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
+    ['route-worlds-retro', () => buildRouteWorld('retro')],
+    ['route-worlds-coupa', () => buildRouteWorld('coupa')],
+    ['sentinel-circuit-fpv', buildExternalSentinel],
+  ]);
   required(
-    SOURCE_EXTERNAL_CHAPTERS.length === 4 && catalog.chapters.length === 4,
-    'Expected exactly four external editions.',
+    SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&
+      catalog.chapters.length === producers.size &&
+      SOURCE_EXTERNAL_CHAPTERS.every((descriptor) => producers.has(descriptor.id)),
+    'Expected exactly five registered external editions and producers.',
   );
   const entries = [],
     names = new Set();
-  for (const [index, descriptor] of SOURCE_EXTERNAL_CHAPTERS.entries()) {
-    const result =
-      index === 0 ? await buildExternalPilot() : await buildRouteWorld(descriptor.themeId);
+  for (const descriptor of SOURCE_EXTERNAL_CHAPTERS) {
+    const result = await producers.get(descriptor.id)();
     required(
       canonicalJSON(result.descriptor) === canonicalJSON(descriptor),
       `Compiled external descriptor differs: ${descriptor.id}`,

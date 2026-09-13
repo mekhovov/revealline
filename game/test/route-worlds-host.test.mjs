@@ -7,11 +7,20 @@ import { soloPage, memoryStorage } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { buildRouteWorld } from '../../authoring/library/route-worlds/build.mjs';
+import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
+import { buildExternalSentinel } from '../../authoring/library/sentinel-circuit-external/build.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { loadLibrary } from '../library.mjs';
 import { EXTERNAL_CATALOG } from '../external-chapter-catalog.mjs';
 const editions = await Promise.all(['ukraine', 'retro', 'coupa'].map(buildRouteWorld));
+const [pilot, sentinel] = await Promise.all([buildExternalPilot(), buildExternalSentinel()]);
+const allEditions = [pilot, ...editions, sentinel];
+const sentinelProof = JSON.parse(
+  await readFile(
+    new URL('../../authoring/library/sentinel-circuit-external/routes.json', import.meta.url),
+  ),
+);
 const proof = JSON.parse(
   await readFile(new URL('../../authoring/library/route-worlds/routes.json', import.meta.url)),
 );
@@ -105,7 +114,7 @@ async function page(t, f = {}, release = false) {
       return new Response(
         await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
       );
-    const e = editions.find((e) => u.includes('/' + e.descriptor.id + '/'));
+    const e = allEditions.find((e) => u.includes('/' + e.descriptor.id + '/'));
     if (e) return new Response(u.endsWith('/pack.json') ? e.payloads.pack : e.payloads.media);
     return prior(url, options);
   };
@@ -114,7 +123,8 @@ async function page(t, f = {}, release = false) {
   });
   return Object.assign(p, { fixture: f, requests });
 }
-const id = (e, kind) => `optional-worlds-source-${e.descriptor.id}-${kind}`;
+const id = (e, kind) =>
+  `optional-worlds-${e.descriptor.id === pilot.descriptor.id ? 'source' : `source-${e.descriptor.id}`}-${kind}`;
 async function open(p) {
   p.$('shell-menu').click();
   p.$('shell-worlds').click();
@@ -126,7 +136,10 @@ async function install(p, e) {
   p.$(id(e, 'pack')).files = [e.payloads.pack];
   p.$(id(e, 'media')).files = [e.payloads.media];
   p.$(id(e, 'install')).click();
-  await settle(() => !p.$('optional-worlds-reload').disabled);
+  await waitFor(() => !p.$('optional-worlds-reload').disabled, {
+    timeoutMs: 90000,
+    message: `Exact ${e.descriptor.id} install/readiness did not settle.`,
+  });
   assert.equal(p.$(id(e, 'choose')).disabled, false, p.$('optional-worlds-status').textContent);
 }
 async function choose(p, e) {
@@ -146,10 +159,10 @@ function ticks(p, n) {
   for (let i = 0; i < n; i++) p.frame();
 }
 
-test('three exact registered new worlds install together within unchanged budgets, preserve a paused cut, and separately Choose/earn their own originals', async (t) => {
+test('five exact registered editions install together within unchanged budgets, preserve a paused cut, and separately Choose/earn Route Choices and Sentinel originals', async (t) => {
   const f = {};
   let receipts;
-  await t.test('three native pairs and three real route wins', async (t) => {
+  await t.test('five native pairs, three Route Choices wins and one Sentinel win', async (t) => {
     const p = await page(t, f);
     p.$('start-button').click();
     direction(p, 'down');
@@ -159,7 +172,7 @@ test('three exact registered new worlds install together within unchanged budget
     const run = p.rendered.run,
       before = authoritativeCheckpoint(run);
     await open(p);
-    for (const e of editions) {
+    for (const e of allEditions) {
       assert.deepEqual(
         SOURCE_EXTERNAL_CHAPTERS.find((d) => d.id === e.descriptor.id),
         e.descriptor,
@@ -196,10 +209,26 @@ test('three exact registered new worlds install together within unchanged budget
       p.frame(0);
       assert.equal(p.rendered.run.status, 'won');
     }
+    await open(p);
+    await choose(p, sentinel);
+    assert.equal(p.rendered.backdrop.pin.sha256, sentinel.descriptor.originals[0].sha256);
+    assert.equal(p.rendered.run.activeClassId, 'scout');
+    p.$('start-button').click();
+    const route = sentinelProof.routes.find((r) => r.id === 'fpv/standard/immediate/court-upper');
+    for (const step of route.segments) {
+      if (step.input.direction) direction(p, step.input.direction);
+      if (step.input.action) p.key('KeyE');
+      ticks(p, step.ticks);
+      if (step.input.action) p.key('KeyE', false);
+    }
+    p.frame(0);
+    assert.equal(p.rendered.run.status, 'won');
+    assert.equal(p.rendered.run.score, route.expected.score);
+    assert.equal(p.rendered.run.lives, route.expected.lives);
     const library = loadLibrary(f.storage, 'revealline.library.dev.v1').library;
     receipts = library.pictureReceipts;
-    assert.equal(receipts.length, 3);
-    for (const e of editions)
+    assert.equal(receipts.length, 4);
+    for (const e of [...editions, sentinel])
       assert(receipts.some((r) => r.presentationPin.sha256 === e.descriptor.originals[0].sha256));
     assert(library.storyReceipts.every((r) => r.storyPin === null));
     p.$('library-button').click();
@@ -209,17 +238,17 @@ test('three exact registered new worlds install together within unchanged budget
     assert.equal(backup.format, 'xonix-backup.v2');
     assert.deepEqual(
       backup.externalChapters.chapters,
-      editions.map((e) => e.descriptor),
+      allEditions.map((e) => e.descriptor),
     );
     assert(!p.$('save-json').value.includes('data:image'));
     assert.deepEqual(p.errors, []);
   });
   await t.test(
-    'restart authenticates all three indexed editions and retains exact first-earned pictures',
+    'restart authenticates all five indexed editions and retains exact first-earned pictures',
     async (t) => {
       const p = await page(t, f);
       await open(p);
-      for (const e of editions) assert.equal(p.$(id(e, 'choose')).disabled, false);
+      for (const e of allEditions) assert.equal(p.$(id(e, 'choose')).disabled, false);
       assert.deepEqual(
         loadLibrary(f.storage, 'revealline.library.dev.v1').library.pictureReceipts,
         receipts,
