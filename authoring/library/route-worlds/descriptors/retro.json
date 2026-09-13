@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "route-worlds-retro",
+  "revision": 1,
+  "source": {
+    "id": "fpv-route-choices",
+    "bytes": 11949780,
+    "sha256": "589543f693e650355216aa702844a7726b7cd6e318900b8583702fd0650ae989"
+  },
+  "pack": {
+    "bytes": 8516,
+    "sha256": "4d765a182603ff8db78c0c4db446a9100146a4dabcbd0a4587a661ae506c5271"
+  },
+  "media": {
+    "bytes": 7589742,
+    "sha256": "f42fa22b651dd32f4627f2260625b64ca52bfb8c871341637705658b718eec5d"
+  },
+  "campaignKey": "route-worlds-retro/1/c2ebcf492cdb07a8",
+  "themeId": "retro",
+  "originals": [
+    {
+      "assetId": "route-worlds-retro-poster-1",
+      "presentationId": "route-worlds-retro-poster-1-presentation",
+      "levelId": "route-worlds-retro-foundry",
+      "levelRevision": "1",
+      "sha256": "39e0cb08e60bcdfafa93a4e57be6a2fb6751c6d72659360e2aa84534a57568a7",
+      "bytes": 2378256,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 940
+    },
+    {
+      "assetId": "route-worlds-retro-poster-2",
+      "presentationId": "route-worlds-retro-poster-2-presentation",
+      "levelId": "route-worlds-retro-depot",
+      "levelRevision": "1",
+      "sha256": "a18d10b88cbd52432436c473b45405950708df48ff115264ea47a56500cba80f",
+      "bytes": 2760396,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "assetId": "route-worlds-retro-poster-3",
+      "presentationId": "route-worlds-retro-poster-3-presentation",
+      "levelId": "route-worlds-retro-switchback",
+      "levelRevision": "1",
+      "sha256": "9e21db2d3ce3b29eef175afb6244a0bf4a1a63f3009803619b681cbb4d67b6b4",
+      "bytes": 2440128,
+      "mime": "image/png",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
