@@ -1,6 +1,6 @@
 # Content production register
 
-This authoring tool tracks selected work and missing production checks. It supplies plain JSON and a pure model for a future authoring frontend. It does not change game packs, defaults, media storage, saved attempts, earned pictures or releases.
+This authoring tool tracks selected work and missing production checks. It supplies plain JSON, a pure model and a [read-only source view](index.html). It does not change game packs, defaults, media storage, saved attempts, earned pictures or releases.
 
 The seed describes source `62a92651b1dc51fc74ca25a545dd9bde35c2574c`, before v0.36 delivery. Its [production targets](../../docs/content-production-register.md) remain incomplete.
 
@@ -71,7 +71,11 @@ Use `validateProductionRegister(next, { previous })` whenever an editor saves a 
 
 ## Quality stages and frontend seam
 
-The [pure model](model.mjs) exports `validateProductionRegister`, `summarizeProduction`, `inspectProductionSlot` and `proposeProductionBinding`. It imports neither Node nor browser services and returns frozen data. A frontend may clone the returned data for editing, then validate the candidate against its retained original.
+The [pure model](model.mjs) exports `validateProductionRegister`, `summarizeProduction`, `inspectProductionSlot`, `listProductionSlots` and `proposeProductionBinding`. It imports neither Node nor browser services and returns frozen data. `listProductionSlots` validates once for a complete bounded frontend inventory. A future editor may clone the returned data, then validate the candidate against its retained original.
+
+Serve this repository on localhost and open `/authoring/production/`. Native filters cover domain, theme, stage, search and unbound slots; twenty-row pages lead to an inline checklist, exact identities and retained history. Tab/Enter navigate and Back returns to the selected row; Escape leaves details while native input fields retain their own keys. Source reload retains the previous valid view if new JSON is unavailable or invalid. There are no approval, save, assignment or game-storage controls.
+
+Images load only after an explicit Preview action for the selected PNG original, poster or rig concept. The reader uses same-origin repository paths, refuses redirects and verifies declared bytes/SHA-256 before native decoding. Preview limits are 8 MiB, 4096 pixels per edge and 8 megapixels, within the larger metadata pin limit. Back, filters, reload and page hiding cancel pending work and revoke preview URLs. A failed or missing original stays unavailable. Preview does not verify all source metadata, establish image quality or add an assessment. Movie/audio work displays metadata here; listening and playback remain separate tasks. The reader is source-only and is not included in the v0.36 release.
 
 Stages advance only when all matching prerequisites pass: planned → produced → inspected → source-integrated → browser-verified → released. Existing original files establish the produced step for pictures/stories. Rigs and synth recipes require an explicit production assessment. Their availability alone stays planned.
 

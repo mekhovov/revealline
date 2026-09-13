@@ -12,6 +12,8 @@ The shared CLI loads all nine catalogs, including `asset-variant-*`, `animation-
 
 The [eight First Flight prompts](round-26-first-flight.md) cover the working v0.16 optional course: instructional copy, exact capture proofs, recovery, saved-flight handoff, input boundaries, layout, themed proposals and offline release checks. They are prose workflows, not additional CLI templates or completed test results.
 
+For production intake, use the [register and replacement requests](production-intake.md) to select an exact missing slot, preserve source identity and run the existing CLI. These prose requests add no prompt catalog IDs and do not imply generated or approved work.
+
 ## Choose the right workflow
 
 | Need                                                                                  | Recommended skill                                     | Start with                                                                                                                        |

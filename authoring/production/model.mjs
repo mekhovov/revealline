@@ -541,6 +541,11 @@ export function inspectProductionSlot(input, slotId) {
   if (!slot) fail('slot', 'unknown slot');
   return freeze(inspectValidated(r, slot));
 }
+/** A bounded frontend inventory; validate once rather than once per displayed slot. */
+export function listProductionSlots(input) {
+  const r = validateProductionRegister(input);
+  return freeze(slotsFor(r).map((slot) => inspectValidated(r, slot)));
+}
 export function summarizeProduction(input) {
   const r = validateProductionRegister(input),
     rows = slotsFor(r).map((s) => inspectValidated(r, s));
