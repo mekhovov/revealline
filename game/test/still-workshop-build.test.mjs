@@ -27,7 +27,30 @@ const teachingScenarios = [
   'tactical-borrowed-seconds',
   'tactical-quiet-crossing',
 ].map((id) => `authoring/library/tactical-teaching/scenarios/${id}.json`);
-const publicationEntries = [...workshopEntries, ...posterEntries, ...teachingScenarios];
+const dawnEntries = [
+  'Dawn-Signal-originals.rlmedia',
+  'Dawn-Signal-stories.rlstory',
+  'manifest.json',
+].map((name) => `authoring/still-media/examples/dawn-signal/${name}`);
+const publicationEntries = [
+  ...workshopEntries,
+  ...posterEntries,
+  ...teachingScenarios,
+  ...dawnEntries,
+];
+const storyRuntime = [
+  'game/victory-story.mjs',
+  'game/story-storage-record.mjs',
+  'game/story-media-store.mjs',
+  'game/story-bundle.mjs',
+  'game/story-bindings.mjs',
+  'game/flight-media-pins.mjs',
+  'game/story-receipts.mjs',
+  'game/ui/still-story-panel.mjs',
+  'game/ui/story-dialog.mjs',
+  'game/ui/story-dialog.css',
+  'game/ui/victory-story.mjs',
+];
 const requiredRuntime = [
   'game/ui/still-media-host.mjs',
   'game/ui/still-media-panel.mjs',
@@ -49,6 +72,7 @@ test('actual release allowlist ships the standalone still entry and exact existi
   for (const name of [
     ...publicationEntries,
     ...requiredRuntime,
+    ...storyRuntime,
     'game/video-poster.mjs',
     'game/ui/video-poster-workshop.mjs',
   ])
@@ -103,6 +127,7 @@ async function fixture(t) {
   // state is run; the unrelated game HTML below is a declared fixture entry.
   for (const name of [
     ...publicationEntries,
+    ...storyRuntime,
     'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
@@ -161,6 +186,7 @@ for (const version of ['0.32.0', 'v0.32.0'])
       zip = zipEntries(await fs.readFile(path.join(out, 'distribution.zip')));
     for (const name of [
       ...publicationEntries,
+      ...storyRuntime,
       'game/video-poster.mjs',
       'game/ui/video-poster-workshop.mjs',
       'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
@@ -278,6 +304,23 @@ test('built poster/still links and teaching requests retain their edition and wo
   const posterHTML = bodies.get('authoring/video-poster/index.html').toString();
   const stillLink = posterHTML.match(/id="video-poster-still" href="([^"]+)"/)?.[1];
   assert.ok(stillLink);
+  const stillHTML = bodies.get('authoring/still-media/index.html').toString();
+  const dawnLinks = [
+    ...stillHTML.matchAll(/href="(\.\/examples\/dawn-signal\/[^\"]+)" download/g),
+  ].map((match) => match[1]);
+  assert.equal(
+    dawnLinks.length,
+    3,
+    'The native workshop offers both exact originals and their manifest.',
+  );
+  assert.ok(stillHTML.includes('Reload saved media and installed maps'));
+  const dawnManifest = JSON.parse(bodies.get(dawnEntries[2]).toString());
+  assert.equal(dawnManifest.producer, 'CLI; not a native browser export');
+  for (const item of dawnManifest.files) {
+    const body = bodies.get(`authoring/still-media/examples/dawn-signal/${item.name}`);
+    assert.equal(body.length, item.bytes);
+    assert.equal(digest(body), item.sha256);
+  }
   const playground = await fs.readFile(
     path.join(sourceRoot, 'game/playground/playground.mjs'),
     'utf8',
@@ -356,6 +399,15 @@ test('built poster/still links and teaching requests retain their edition and wo
       [new URL('?capture=1#poster', poster), 'authoring/video-poster/index.html'],
       [new URL('?restore=1#originals', still), 'authoring/still-media/index.html'],
       ...publicationEntries.map((name) => [new URL(name, scope), name]),
+      ...storyRuntime.map((name) => [new URL(name, scope), name]),
+      ...dawnLinks.map((link) => {
+        const url = new URL(link, still);
+        assert.ok(url.href.startsWith(`${scope}authoring/still-media/examples/dawn-signal/`));
+        return [
+          url,
+          `authoring/still-media/examples/dawn-signal/${url.pathname.split('/').at(-1)}`,
+        ];
+      }),
       ...[
         'game/video-poster.mjs',
         'game/ui/video-poster-workshop.mjs',
