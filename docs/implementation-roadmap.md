@@ -5,13 +5,13 @@ Approved for implementation on 2026-09-12. This is the execution register for th
 
 ## Current priority — v0.29 device controls and game entry
 
-This feedback correction takes priority before further roadmap implementation. The v0.28 delivery is complete: PR #3 merged, Pages run34733239863 succeeded, and all974 public files/205,661,769 bytes matched the staged artifact. Its original handoff reports remain historical snapshots.
+This feedback correction takes priority before further roadmap implementation. v0.29 is frozen and independently verified:2,355 tests pass. P7.6 below separates the public delivery gate; its linked GitHub Release receipt is authoritative after deployment. The v0.28 delivery is complete: PR #3 merged, Pages run34733239863 succeeded, and all974 public files/205,661,769 bytes matched the staged artifact. Its original handoff reports remain historical snapshots.
 
 | Step | Priority | Status | Outcome / completion evidence |
 | --- | --- | --- | --- |
-| P1.8 | Critical | Verification | Contextual touch pad with fixed cardinal positions, no desktop toolbar, explicit mouse override, menu-owned utilities; [device contract](device-controls.md) and actual-host/browser checks |
-| P1.9 | Critical | Verification | Native root-to-title entry, independent loading/error screen, direct-file explanation, separate About/archive; [boot contract](boot-launch.md) |
-| P4.6 | Critical | Verification | First Light R4 ignores manual equipment at fixed-tick authority; authored pace and contact pickups;12 direction-only legal wins; all old editions retained |
+| P1.8 | Critical | Complete | Contextual touch pad with fixed cardinal positions, no desktop toolbar, explicit mouse override, menu-owned utilities; [device contract](device-controls.md) and actual-host/browser checks |
+| P1.9 | Critical | Complete | Native root-to-title entry, independent loading/error screen, direct-file explanation, separate About/archive; [boot contract](boot-launch.md) |
+| P4.6 | Critical | Complete | First Light R4 ignores manual equipment at fixed-tick authority; authored pace and contact pickups;12 direction-only legal wins; all old editions retained |
 | P7.6 | Critical | Verification | Exact source gates → immutable v0.29 → reviewed PR/merge → Pages deployment → exact public-byte audit; [delivery record](verification/round-38/v029-release.md) |
 
 **Remaining priorities for review after v0.29:**
@@ -167,7 +167,7 @@ After the v0.28 correction gate, the execution sequence is P3 MP3 binary-workflo
 | P1.10 | High     | Verification | Standard/Large text persists through the actual profile save/merge/import/Undo path. Six actual-host tests and compact browser checks pass; physical devices remain P7.                                                                                                         |
 | P1.11 | High     | Verification | Optional-chapter failures give an online/retry action while retaining installed content, selection and flight. Source and actual-host guards pass; public delivery remains tracked above.                                                                                       |
 | P2.10 | High     | Verification | Eight-topic Field Guide covers seven roles and travelling impacts across four themes. Real practice, explicit return, no awards and retained parent flight/music pass; human comprehension and physical input remain open.                                                      |
-| P7.5  | Critical | Verification | Canonical archive public audit passes 3,888 exact files; local old-scope migration and actual saved-profile public-canonical journey pass. Projected main Pages output is 205,661,769 bytes. Actual main routing cutover/public verification remains pending.                   |
+| P7.5  | Critical | Complete | Canonical archive public audit passes 3,888 exact files; local old-scope migration and actual saved-profile public-canonical journey pass. Projected main Pages output is 205,661,769 bytes. Main cutover completed through PR#3 / Pages run34733239863; all974 v0.28 public files matched.                   |
 
 ### Ranked next priorities
 

@@ -6,7 +6,7 @@ Run `npm run dev`, then open [solo play](http://127.0.0.1:8768/game/), [couch ra
 
 ## Current correction
 
-The v0.29 candidate implements [device-aware controls and Arcade R4](device-controls.md) and the [native boot/entry contract](boot-launch.md). Its [verification record](verification/round-38/v029-release.md) separates source, frozen and public gates. The v0.28 deployment has since completed through merged PR#3 and successful Pages run34733239863; its exact public artifact passed974 files.
+The frozen, independently verified v0.29 release implements [device-aware controls and Arcade R4](device-controls.md) and the [native boot/entry contract](boot-launch.md). Its [verification record](verification/round-38/v029-release.md) separates source, frozen and public gates. The v0.28 deployment has since completed through merged PR#3 and successful Pages run34733239863; its exact public artifact passed974 files.
 
 ## Verified v0.28 development milestone
 
