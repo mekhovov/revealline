@@ -33,6 +33,7 @@ function pins(r) {
   ];
 }
 async function fixture(t) {
+  await mkdir(path.join(root, '.cache'), { recursive: true });
   const dir = await mkdtemp(path.join(root, '.cache/metadata-history-fixture-'));
   t.after(() => rm(dir, { recursive: true, force: true }));
   for (const name of new Set([
