@@ -1,6 +1,6 @@
 # RevealLine delivery plan
 
-Updated 14 September 2026. This is the current priority register. The detailed history in `current-delivery-plan.md` retains earlier attempts and evidence; this page distinguishes playable releases, source work and remaining acceptance gates.
+Updated 15 September 2026. This is the current priority register. The detailed history in `current-delivery-plan.md` retains earlier attempts and evidence; this page distinguishes playable releases, source work and remaining acceptance gates.
 
 ## Current delivery
 
@@ -8,7 +8,7 @@ Updated 14 September 2026. This is the current priority register. The detailed h
 
 **Current source integration:** committed as `485903e261e696faf7042f687615efa6092d985e`, combining the Field Kit interface and asset framework through `3d399074` with the recovery, Collection, HUD and readable-text work. Its final 21-file Node 20 run passes all 186 tests; the same 186 named cases also pass in retained Node 22 runs. All 236 source pins stayed unchanged during the final run. The existing presentation registry, Asset Studio, newer touch controls and compiled default art are preserved.
 
-A source-only browser journey verifies keyboard title → Settings → Collection → Workshop/Guide → Missions → launch, Plain/Large text, a real 31.1% capture and stationary continuation after explicit Resume. Portrait and landscape iframe previews preserve the full arena and restore a saved flight paused. The [native review](research/native-source-485903/review.md) states the exact scope and remaining observations. Collection disclosure and larger Guide illustrations are a separate polish change under verification.
+A source-only browser journey verifies keyboard title → Settings → Collection → Workshop/Guide → Missions → launch, Plain/Large text, a real 31.1% capture and stationary continuation after explicit Resume. Portrait and landscape iframe previews preserve the full arena and restore a saved flight paused. The [native review](research/native-source-485903/review.md) states the exact scope and remaining observations. Collection disclosure and larger Guide illustrations are committed as `ab3c14f`; 209 targeted cases pass on both Node versions. A [follow-up native review](research/native-source-ab3c14f/review.md) verifies disclosure/reader/Back focus, larger distinct enemy illustrations, travelling-impact warning, life loss and keyboard retry. Compact landscape D-pad clearance remains a separate fix under verification.
 
 The existing v0.51 PR is a sibling of this integration and owns that release number. The integration is not another v0.51 and is not yet a packaged or public replacement. Published tags v0.44–v0.46 and the later committed interface work retain their own delivery records; a higher number does not prove its current Pages deployment. Older native receipts do not qualify this combined source.
 
@@ -87,7 +87,7 @@ For every completed logical feature:
 4. Publish the release, verify actual Pages content and retain rollback/download links.
 5. Report what changed, what passed, known limitations and the next priority.
 
-The release workflow fix in PR #28 stages its test runner independently of frozen release source. The separate publishing-controller work governs current/archive deployment. Neither workflow success nor a local screenshot is a substitute for checking the deployed game's identity and behavior.
+The [release workflow fix in PR #28](https://github.com/mekhovov/revealline/pull/28) is merged as `d9c6f917`. Its verified head passed all four CI shards, preflight and build. Each shard now uses the workflow-pinned runner independently of frozen release source. The separate publishing-controller work governs current/archive deployment. Neither workflow success nor a local screenshot is a substitute for checking the deployed game's identity and behavior.
 
 Recommendations follow [Xbox input guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107), [UI navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) and [objective clarity](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/109): keep the entire interface reachable with the gameplay input method, retain consistent Back/focus, state goals clearly and make explanations/rewards available again. These recommendations define acceptance work; they do not certify accessibility or physical-device support.
 
