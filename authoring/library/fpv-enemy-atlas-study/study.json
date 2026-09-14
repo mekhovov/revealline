@@ -1,0 +1,85 @@
+{
+  "format": "revealline-enemy-atlas-study.v1",
+  "sourceRevisionBasis": "57bee98f23a6bf5882f19065f1d70473ece7a12e",
+  "generator": "built-in image_gen",
+  "toolOutput": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09328-21d8-7e93-9403-7e6793a4fac2/exec-d0d73f10-e730-4e9f-861d-f9433e5430fc.png",
+  "file": "originals/seven-enemies-v1.png",
+  "bytes": 1086669,
+  "sha256": "e9b9f71cc9f3e223e089b381d49f933192d1147f3b7b297e7c2d0e7d11703dc0",
+  "dimensions": [1774, 887],
+  "mode": "RGBA",
+  "alphaExtrema": [0, 255],
+  "productionReady": false,
+  "limitations": [
+    "Requested2048x1024 was not delivered: actual1774x887.",
+    "Nominal4x2 cells have unequal integer widths/heights.",
+    "Low-alpha noise appears in gutters and empty cell; strict empty-alpha atlas contract failed.",
+    "Visible alpha>=128 bodies are isolated; this preview crops recorded source cells without modifying the original.",
+    "No rotor/tread/auger/radar internal animation layers or gameplay integration."
+  ],
+  "items": [
+    {
+      "type": "bouncer",
+      "label": "Field hunter",
+      "purpose": "Hidden territory; unfinished-line pressure",
+      "sourceRect": [0, 0, 443, 443],
+      "visibleAlpha128Bounds": [80, 25, 365, 402],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "border-patrol",
+      "label": "Border quad",
+      "purpose": "Original outer perimeter",
+      "sourceRect": [443, 0, 887, 443],
+      "visibleAlpha128Bounds": [52, 80, 391, 377],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "contour-patrol",
+      "label": "Frontier scout",
+      "purpose": "Changing captured contours",
+      "sourceRect": [887, 0, 1330, 443],
+      "visibleAlpha128Bounds": [39, 32, 404, 418],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "claimed-rover",
+      "label": "Ground rover",
+      "purpose": "Secured territory; warning before waking",
+      "sourceRect": [1330, 0, 1774, 443],
+      "visibleAlpha128Bounds": [82, 59, 363, 385],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "eroder",
+      "label": "Territory drill",
+      "purpose": "Reopens eligible secured ground",
+      "sourceRect": [0, 443, 443, 887],
+      "visibleAlpha128Bounds": [80, 14, 364, 412],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "lane-boss",
+      "label": "Lane emitter",
+      "purpose": "Warned lane attack and recovery",
+      "sourceRect": [443, 443, 887, 887],
+      "visibleAlpha128Bounds": [30, 39, 414, 405],
+      "north": true,
+      "status": "source-study-not-runtime"
+    },
+    {
+      "type": "relay-sentinel",
+      "label": "Relay sentinel",
+      "purpose": "Shield and authored opening phases",
+      "sourceRect": [887, 443, 1330, 887],
+      "visibleAlpha128Bounds": [49, 33, 395, 400],
+      "north": true,
+      "status": "source-study-not-runtime"
+    }
+  ]
+}

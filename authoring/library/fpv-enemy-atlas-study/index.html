@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Seven enemy silhouettes · RevealLine source study</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font-family: ui-monospace, monospace;
+        background: #080d19;
+        color: #e0e9f4;
+      }
+      body {
+        max-width: 1120px;
+        margin: auto;
+        padding: 24px;
+      }
+      h1 {
+        font-size: 24px;
+        color: #8cdef1;
+      }
+      p {
+        max-width: 80ch;
+        line-height: 1.5;
+      }
+      button {
+        font: inherit;
+        padding: 12px 18px;
+        border: 2px solid #52778b;
+        background: #122638;
+        color: #effaff;
+        min-height: 48px;
+      }
+      button:focus-visible {
+        outline: 3px solid #ffa566;
+        outline-offset: 3px;
+      }
+      .controls {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 24px 0;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+        gap: 16px;
+      }
+      article {
+        border: 1px solid #36546d;
+        padding: 16px;
+        background: #0c1625;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 0 0 8px;
+      }
+      .sizes {
+        display: flex;
+        gap: 12px;
+        align-items: end;
+      }
+      figure {
+        margin: 0;
+        text-align: center;
+      }
+      canvas {
+        display: block;
+        background: #000;
+        image-rendering: pixelated;
+        margin: auto auto 8px;
+      }
+      figcaption {
+        color: #9caebd;
+        font-size: 12px;
+      }
+      article p {
+        font-size: 12px;
+        min-height: 3em;
+        color: #b5c2d3;
+      }
+      .note {
+        border-left: 3px solid #ffc572;
+        padding-left: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Seven threats, seven silhouettes</h1>
+    <p>
+      Original FPV enemy body study. Compare the actual 16, 24, 32 and 64 CSS-pixel frames; each
+      keeps its own proportions. These are source candidates, not released gameplay assets.
+    </p>
+    <div class="controls" aria-label="Preview controls">
+      <button id="turn">Turn right · North</button>
+      <button id="background">Background · Black</button>
+    </div>
+    <p id="status" role="status">Loading source artwork…</p>
+    <main id="cards" class="cards"></main>
+    <p class="note">
+      The generated sheet has low-alpha gutter noise and differs from the requested dimensions. Its
+      original bytes are preserved. Production requires clean independent bodies and real animation
+      rigs; whole-body rotation here only previews direction.
+    </p>
+    <script type="module" src="preview.mjs"></script>
+  </body>
+</html>
