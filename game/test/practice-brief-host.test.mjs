@@ -108,7 +108,7 @@ function pad(page, t) {
     assert.equal(page.doc.activeElement.id, id);
   };
   frame();
-  pulse(0);
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   frame();
   return { frame, set, pulse, find };
 }

@@ -123,7 +123,7 @@ function padBoundary(page, t) {
     frame();
   };
   frame();
-  pulse(0); // Join through the actual shared router's neutral/Confirm protocol.
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   return { pad, frame, set, pulse };
 }
 

@@ -98,6 +98,15 @@
       </button>
       <span id="shell-edition" class="shell-edition"></span>
       <button
+        id="shell-fullscreen"
+        class="shell-fullscreen"
+        type="button"
+        aria-label="Enter fullscreen"
+        hidden
+      >
+        ⛶
+      </button>
+      <button
         id="pause-button"
         class="icon-button shell-pause"
         type="button"
@@ -120,7 +129,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.7.0</span>
+        ><span id="version" class="version">v0.42.0</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -269,6 +278,9 @@
           </div>
           <p id="appearance-unlock" class="appearance-unlock" hidden></p>
           <div class="play-controls">
+            <div id="touch-surface" role="group" aria-label="Touch steering: drag to fly and turn">
+              <span aria-hidden="true">✥</span><span id="touch-instruction">Drag to steer</span>
+            </div>
             <div class="direction-controls" aria-label="Direction controls">
               <button type="button" data-move="up" aria-label="Move up">↑</button
               ><button type="button" data-move="left" aria-label="Move left">←</button
@@ -293,6 +305,7 @@
               <span id="ability-state">Ready</span>
             </div>
           </div>
+          <div id="touch-indicator" aria-hidden="true" hidden><i></i></div>
           <section
             id="first-flight-panel"
             class="first-flight-panel"
@@ -543,8 +556,8 @@
             <span id="keyboard-help"
               >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
             >
-            Touch: tap a direction to fly. Tap another to turn. Releasing keeps you moving. Pause to
-            take a break. Boost can use Hold or Toggle independently.
+            Touch: drag the floating stick or swipe to turn. Choose a sliding D-pad, either hand,
+            size and opacity in Settings. Releasing keeps you moving. Pause to take a break.
           </p>
           <p>
             <strong>Controller:</strong>
@@ -762,8 +775,39 @@
           </select></label
         >
         <p class="micro-note">
-          Auto shows a thumb pad during touch play. Keyboard or controller use hides it. Choose
-          Always for mouse-only steering. The full arena stays clear.
+          Auto shows steering during touch play. Keyboard or controller use hides it. Choose Always
+          to steer with a mouse. Drag anywhere on the board, or use the thumb area below.
+        </p>
+        <label class="field"
+          >Touch steering<select id="touch-mode">
+            <option value="stick">Floating stick · drag from anywhere</option>
+            <option value="swipe">Swipe · flick to turn</option>
+            <option value="dpad">D-pad · tap or slide between directions</option>
+          </select></label
+        >
+        <label class="field"
+          >Steering hand<select id="touch-side">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+          </select></label
+        >
+        <label class="field"
+          >Touch control size<select id="touch-size">
+            <option value="regular">Regular</option>
+            <option value="large">Large</option>
+          </select></label
+        >
+        <label class="field"
+          >Touch control opacity<input
+            id="touch-opacity"
+            type="range"
+            min="0.2"
+            max="1"
+            step="0.05"
+        /></label>
+        <p class="micro-note">
+          A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
+          break. The stick appears under your thumb. In landscape, controls float over the board.
         </p>
         <p id="equipment-help" class="micro-note"></p>
         <label id="screen-boost-setting"
@@ -1082,5 +1126,6 @@
       <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
+    <p id="controller-connection-hint" class="controller-connection-hint" role="status" hidden></p>
   </body>
 </html>

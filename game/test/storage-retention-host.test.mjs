@@ -24,8 +24,15 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
     },
   };
   h.$('start-button').click();
-  const down = h.doc.querySelector('[data-move="down"]');
-  down.emit('pointerdown', { pointerId: 1, button: 0 });
+  const down = h.$('touch-surface');
+  down.emit('pointerdown', {
+    pointerId: 1,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 100,
+    clientY: 100,
+  });
+  down.emit('pointermove', { pointerId: 1, pointerType: 'touch', clientX: 100, clientY: 130 });
   down.emit('pointerup', { pointerId: 1, button: 0 });
   for (let i = 0; i < 30; i++) h.frame();
   assert.equal(h.rendered.run.player.cutting, true);
@@ -70,7 +77,7 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
     h.frame();
   };
   h.frame();
-  pulse(0); // Deliberately join; the joining Confirm is not an activation.
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   assert.equal(requests, 0);
   pulse(13);
   pulse(12); // Move away and back through the actual menu adapter.

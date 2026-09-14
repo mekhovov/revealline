@@ -40,8 +40,15 @@ test('Settings and arena assists synchronize, persist across app reload, and ret
   assert.equal(preferences().reducedEffects, true);
   assert.equal(preferences().tapSteering, true);
   page.$('start-button').click();
-  const down = page.doc.querySelector('[data-move="down"]');
-  down.emit('pointerdown', { pointerId: 1, button: 0 });
+  const down = page.$('touch-surface');
+  down.emit('pointerdown', {
+    pointerId: 1,
+    pointerType: 'touch',
+    button: 0,
+    clientX: 100,
+    clientY: 100,
+  });
+  down.emit('pointermove', { pointerId: 1, pointerType: 'touch', clientX: 100, clientY: 130 });
   down.emit('pointerup', { pointerId: 1, button: 0 });
   tick(page, 30);
   const run = page.rendered.run;
