@@ -2,8 +2,16 @@ import { fittedBodySize, paintCharacter } from '../../motion-lab/render-characte
 import { actorDiameter } from '../../../game/ui/actor-presentation.mjs';
 
 const CELL = 16;
-// Exact pure sizing function from game/ui/render.mjs at the pinned base.
-function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
+// Current policy is exact game/ui/render.mjs sizing at the pinned base.
+// Compact policies are isolated source comparisons, not runtime adoption.
+export function playerPaintSize(
+  body,
+  image,
+  { screenScale, canvasCSSWidth, style, scale, sizing = 'current' },
+) {
+  if (!['current', 'compact-20', 'compact-24'].includes(sizing))
+    throw new Error('Choose a known source sizing study.');
+  const compactMinimum = { current: 16, 'compact-20': 20, 'compact-24': 24 }[sizing];
   const s = Math.max(0.1, Math.min(4, screenScale)),
     fitted = fittedBodySize(body, image),
     // Keep the contained source rectangle and all attachment anchors intact.
@@ -12,9 +20,12 @@ function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scal
     extent = image
       ? Math.max(fitted.width, fitted.height)
       : Math.max(fitted.width * 0.54, fitted.height * 0.66),
-    minimum = canvasCSSWidth >= 480 ? 24 : 16,
+    minimum = canvasCSSWidth >= 480 ? 24 : compactMinimum,
     desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
-    diameter = Math.max(18, Math.min(64, 32 / s, Math.max(minimum / s, desired)));
+    // Candidate-only: the logical cap must allow the requested compact CSS
+    // minimum to exist. Original pixels, anchors and collision data are untouched.
+    logicalCap = sizing === 'current' ? 64 : Math.max(64, minimum / s),
+    diameter = Math.max(18, Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)));
   return { diameter, scale: diameter / (extent * CELL) };
 }
 
@@ -35,6 +46,7 @@ export function paintRole(
     showRotors = true,
     guides = false,
     inspectionPixels = null,
+    sizing = 'current',
   } = {},
 ) {
   const screenScale = arenaWidth / 1152;
@@ -43,6 +55,7 @@ export function paintRole(
     canvasCSSWidth: arenaWidth,
     style: 'hybrid',
     scale: 1,
+    sizing,
   });
   const factor = inspectionPixels === null ? screenScale : inspectionPixels / size.diameter;
   const diameterCSS = size.diameter * factor;
