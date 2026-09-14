@@ -11,7 +11,7 @@
     <main id="coop-app">
       <header class="masthead">
         <a href="../" class="brand">REVEAL<span>LINE</span></a>
-        <span class="mode-label">COUCH CO-OP <b>01 / FIRST CONNECTION</b></span>
+        <span class="mode-label">COUCH CO-OP <b id="coop-stage">FIRST CONNECTION</b></span>
         <a href="./">Race mode ↗</a>
       </header>
 
@@ -25,9 +25,16 @@
           </p>
           <div class="setup">
             <label
+              >Arena<select id="coop-level">
+                <option value="first-connection">First Connection · learn to join</option>
+                <option value="relay-yard">Relay Yard · take the stronghold</option>
+              </select></label
+            >
+            <label
               >Play style<select id="coop-experiment">
-                <option value="joint">Joint Cuts</option>
-                <option value="independent">Individual cuts · comparison</option>
+                <option value="full">Full teamwork</option>
+                <option value="joint">Joint Cuts + ordinary cover</option>
+                <option value="independent">Individual cuts + ordinary cover</option>
               </select></label
             >
             <label
@@ -38,11 +45,14 @@
               </select></label
             >
           </div>
+          <p id="coop-setup-note" class="setup-note">
+            Captures recharge both players’ Support and can rescue a downed partner.
+          </p>
           <button id="coop-start" class="primary" type="button" disabled>Preparing arena…</button>
           <p id="coop-boot" role="status">Loading Relay Rescue.</p>
         </div>
         <div class="briefing">
-          <p class="eyebrow">YOUR FIRST CONNECTION</p>
+          <p class="eyebrow" id="coop-briefing-title">YOUR FIRST CONNECTION</p>
           <ol>
             <li>
               <strong>Leave the edge.</strong> Draw a line through the dark field and return to a
@@ -56,8 +66,19 @@
               <strong>Watch the red shapes.</strong> Enemies can hit your craft and unfinished line.
               Split their attention and choose your moment.
             </li>
+            <li>
+              <strong>Cover each other.</strong> Tap Support to slow nearby enemies and intercept
+              sparks. Hold it beside a downed partner for one second to rescue them for free.
+            </li>
+            <li id="coop-stronghold-help" hidden>
+              <strong>Open both approaches.</strong> Capture anchors A and B to expose the core.
+              Then make a new cut that captures the core itself. The shield blocks entry. Bait the
+              Hunter’s warning and cut during recovery; banking its cell clears it.
+            </li>
           </ol>
-          <p class="objective">TEAM OBJECTIVE <strong>Reveal 65% of the field</strong></p>
+          <p class="objective">
+            TEAM OBJECTIVE <strong id="coop-menu-goal">Reveal 65% of the field</strong>
+          </p>
         </div>
       </section>
 
@@ -77,6 +98,7 @@
             ><span id="coop-state-1">Ready</span>
           </div>
         </div>
+        <p id="coop-objective" class="live-objective">Reveal 65% together</p>
         <div class="arena-wrap">
           <canvas
             id="coop-canvas"
@@ -112,8 +134,9 @@
           <h2><span class="player-number">1</span> Sunflower</h2>
           <p>
             <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer <span>·</span>
-            <kbd>Left Shift</kbd> Boost
+            <kbd>Left Shift</kbd> Boost <span>·</span> <kbd>Q</kbd> Support
           </p>
+          <p id="coop-support-0" class="support-status">Support ready</p>
           <div class="race-pad" data-player="0" aria-label="Player 1 touch controls" hidden>
             <div class="race-cross">
               <button type="button" data-direction="up" aria-label="Player 1 up">↑</button
@@ -122,14 +145,18 @@
               ><button type="button" data-direction="right" aria-label="Player 1 right">→</button>
             </div>
             <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+            <button type="button" data-action="action" aria-pressed="false">
+              Support · hold to rescue
+            </button>
           </div>
         </article>
         <article class="control-card skyline">
           <h2><span class="player-number">2</span> Skyline</h2>
           <p>
             <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> steer <span>·</span>
-            <kbd>Right Shift</kbd> Boost
+            <kbd>Right Shift</kbd> Boost <span>·</span> <kbd>Enter</kbd> Support
           </p>
+          <p id="coop-support-1" class="support-status">Support ready</p>
           <div class="race-pad" data-player="1" aria-label="Player 2 touch controls" hidden>
             <div class="race-cross">
               <button type="button" data-direction="up" aria-label="Player 2 up">↑</button
@@ -138,13 +165,18 @@
               ><button type="button" data-direction="right" aria-label="Player 2 right">→</button>
             </div>
             <button type="button" data-action="boost" aria-pressed="false">Boost</button>
+            <button type="button" data-action="action" aria-pressed="false">
+              Support · hold to rescue
+            </button>
           </div>
         </article>
       </section>
       <footer class="help-footer">
         <p>
           Tap a direction to keep moving. Banking a cut stops your craft; steer again to leave.
-          Controllers: stick / D-pad to steer, right shoulder to Boost, Menu to pause.
+          Controllers: stick / D-pad to steer, right shoulder to Boost, South button for Support,
+          Menu to pause. A new direction cancels a rescue. A downed player can crawl along safe
+          ground to meet their partner.
         </p>
         <label><input id="coop-touch" type="checkbox" /> Show touch controls</label
         ><label><input id="coop-reduced" type="checkbox" /> Reduce effects</label

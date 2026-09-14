@@ -30,6 +30,16 @@ function tileContact(body, velocity, horizon, x, y) {
   const radius = body.radius;
   const end = positionAt(body, velocity, horizon);
   const hits = [];
+  // A capture may move a boundary inside an otherwise harmless Hunter's radius.
+  // Reflect an inward launch immediately; outward motion separates naturally.
+  const closestX = Math.max(x, Math.min(x + 1, body.x));
+  const closestY = Math.max(y, Math.min(y + 1, body.y));
+  const separation = Math.hypot(body.x - closestX, body.y - closestY);
+  if (separation > EPS && separation < radius - EPS) {
+    const nx = (body.x - closestX) / separation;
+    const ny = (body.y - closestY) / separation;
+    if (velocity.x * nx + velocity.y * ny < -EPS) hits.push({ time: 0, nx, ny });
+  }
   const face = (time, nx, ny, tangent, low, high) => {
     if (time >= -EPS && time <= horizon + EPS && tangent >= low - EPS && tangent <= high + EPS)
       hits.push({ time: Math.max(0, time), nx, ny });
@@ -109,7 +119,16 @@ export function playerWallContact(run, player, velocity, horizon) {
   const highY = Math.min(run.height - 1, Math.floor(Math.max(player.y, end.y) + player.radius) + 1);
   for (let y = lowY; y <= highY; y++)
     for (let x = lowX; x <= highX; x++) {
-      if (run.cells[y * run.width + x] !== 2) continue;
+      if (
+        run.cells[y * run.width + x] !== 2 &&
+        !run.strongholds?.some(
+          (stronghold) =>
+            stronghold.shielded &&
+            Math.floor(stronghold.core.x) === x &&
+            Math.floor(stronghold.core.y) === y,
+        )
+      )
+        continue;
       const hit = tileContact(player, velocity, horizon, x, y);
       if (hit) remember(hit.time);
     }
