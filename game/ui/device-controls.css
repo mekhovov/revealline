@@ -165,17 +165,13 @@
   flex: 1;
 }
 @media (max-width: 680px) {
-  .game-shell[data-flight-state='paused'] .arena-shell {
-    margin-bottom: 158px;
-  }
   .game-shell .game-overlay[data-kind='pause'] .overlay-card {
-    width: 100%;
-    gap: 6px;
+    width: min(360px, 100%);
+    gap: 18px;
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    flex: 1 1 100%;
+    grid-template-columns: 1fr;
     min-width: 0;
     width: 100%;
   }
@@ -184,9 +180,6 @@
     max-width: 100%;
     white-space: normal;
     overflow-wrap: anywhere;
-  }
-  .game-shell .game-overlay[data-kind='pause'] #start-button {
-    grid-column: 1 / -1;
   }
   .game-shell .shell-bar > :is(#shell-packs, #shell-collection, #shell-settings, .shell-edition) {
     display: none;
@@ -205,16 +198,22 @@
 @media (orientation: landscape) and (max-height: 540px) {
   .game-shell .game-overlay[data-kind='pause'] {
     position: fixed;
-    inset: auto max(8px, var(--safe-right)) max(8px, var(--safe-bottom)) max(8px, var(--safe-left));
-    padding: 0;
+    inset: 48px 0 0;
+    padding: 10px max(16px, var(--safe-right)) max(10px, var(--safe-bottom))
+      max(16px, var(--safe-left));
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-card {
-    width: max-content;
+    width: min(680px, 100%);
+    padding: 14px 18px;
+    gap: 12px;
   }
   .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
-    display: flex;
-    flex: 0 1 auto;
-    width: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  .game-shell .game-overlay[data-kind='pause'] :is(#start-button, #overlay-menu) {
+    grid-column: 1 / -1;
   }
   .game-shell[data-screen-controls='shown'] {
     --touch-gutter: 0px;

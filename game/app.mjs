@@ -3238,6 +3238,7 @@ try {
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
+    show('overlay-restart', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
@@ -4231,13 +4232,25 @@ try {
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
   $('pause-button').onclick = () => pause();
-  $('restart-button').onclick = () => {
+  const restartMission = () => {
     if (defeatActive || campaignOverview || courseBlocked()) return;
+    if ($('restart-dialog').open) $('restart-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
     prepare();
     resume();
   };
+  $('restart-button').onclick = restartMission;
+  $('overlay-restart').onclick = () => {
+    if (defeatActive || campaignOverview || courseBlocked()) return;
+    $('restart-dialog').showModal();
+    $('restart-cancel').focus({ preventScroll: true });
+  };
+  $('restart-dialog').addEventListener('close', () => {
+    if (paused && $('game-overlay').dataset.kind === 'pause')
+      $('overlay-restart').focus({ preventScroll: true });
+  });
+  $('restart-confirm').onclick = restartMission;
   $('retry-button').onclick = () => {
     if (defeatActive || courseBlocked()) return;
     demo = false;
