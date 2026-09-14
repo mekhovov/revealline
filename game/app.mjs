@@ -1905,6 +1905,7 @@ try {
     }
     refreshDifficulty();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return saved;
   }
   function preferences(patch) {
@@ -1916,6 +1917,7 @@ try {
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return {
       ok: false,
       warning:
@@ -2895,6 +2897,33 @@ try {
     syncAssistControls();
     refreshInputPresentation();
   };
+  $('screen-steering-hand').onchange = () => {
+    const requested = $('screen-steering-hand').value,
+      saved = preferences({ screenSteeringHand: requested });
+    refreshScreenSteeringHand();
+    const status = $('screen-steering-status');
+    status.textContent = saved.ok
+      ? 'Steering hand saved.'
+      : library.preferences.screenSteeringHand === requested
+        ? `Steering hand selected for this session. ${saved.warning}`
+        : `Steering hand unchanged. ${saved.warning}`;
+    status.hidden = false;
+  };
+  function refreshScreenSteeringHand() {
+    const hand = library.preferences.screenSteeringHand;
+    $('screen-steering-hand').value = hand;
+    document.body.dataset.screenSteeringHand = hand;
+    const strip = document.querySelector('.play-controls'),
+      trailing = strip.querySelector(hand === 'right' ? '.direction-controls' : '.ability-buttons');
+    if (strip.lastElementChild !== trailing) {
+      const focused = document.activeElement;
+      // Keep native focus order aligned with the two visible groups, reusing every button.
+      strip.append(trailing);
+      if (trailing.contains(focused)) focused.focus({ preventScroll: true });
+    }
+    $('screen-steering-status').textContent = '';
+    $('screen-steering-status').hidden = true;
+  }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
   function refreshTextSize() {
     const size = library.preferences.textSize;
@@ -2903,6 +2932,7 @@ try {
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
+    refreshScreenSteeringHand();
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
