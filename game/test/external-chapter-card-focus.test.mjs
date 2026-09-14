@@ -112,7 +112,20 @@ test('public cards lead with playable context and actions; native recovery contr
   assert.equal(SOURCE_EXTERNAL_EDITIONS[0].name, 'FPV Front · Pressure Pictures');
   assert.deepEqual(
     SOURCE_EXTERNAL_EDITIONS.map((e) => e.mode),
-    ['Arcade', 'Tactical', 'Tactical', 'Tactical', 'Tactical', 'Tactical', 'Tactical', 'Tactical'],
+    [
+      'Arcade',
+      'Tactical',
+      'Tactical',
+      'Tactical',
+      'Tactical',
+      'Tactical',
+      'Tactical',
+      'Tactical',
+      'Arcade',
+      'Arcade',
+      'Arcade',
+      'Arcade',
+    ],
   );
 });
 

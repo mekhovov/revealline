@@ -40,7 +40,7 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. All producers read the selected source tree; all sixteen
+/** Explicit build only. All producers read the selected source tree; all twenty-four
  * exact paired bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
@@ -64,7 +64,13 @@ export async function readExternalDistributionEntries(root, option) {
 'sentinel-circuit-art',
 'sentinel-circuit-external',
 'sentinel-theme-art',
-'sentinel-theme-chapters'])
+'sentinel-theme-chapters',
+'fracture-lines',
+'fracture-lines-art',
+'fracture-lines-chapter',
+'fracture-ukraine-art',
+'fracture-retro-art',
+'fracture-theme-chapters'])
     await ordinaryTree(root, `authoring/library/${name}`);
   const { prepareExternalCatalog } = await import(
     pathToFileURL(path.join(root, 'game/external-chapter-catalog.mjs'))
@@ -85,17 +91,26 @@ export async function readExternalDistributionEntries(root, option) {
   const { buildSentinelTheme } = await import(
     pathToFileURL(path.join(root, 'authoring/library/sentinel-theme-chapters/build.mjs'))
   );
+  const { buildFractureChapter } = await import(
+    pathToFileURL(path.join(root, 'authoring/library/fracture-lines-chapter/build.mjs'))
+  );
+  const { buildFractureTheme } = await import(
+    pathToFileURL(path.join(root, 'authoring/library/fracture-theme-chapters/build.mjs'))
+  );
   const producers = new Map([['original-fpv-pressure-external', buildExternalPilot],
 ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
 ['route-worlds-retro', () => buildRouteWorld('retro')],
 ['sentinel-circuit-fpv', buildExternalSentinel],
 ['sentinel-circuit-ukraine', () => buildSentinelTheme('ukraine')],
-['sentinel-circuit-retro', () => buildSentinelTheme('retro')]]);
+['sentinel-circuit-retro', () => buildSentinelTheme('retro')],
+['fracture-lines-fpv', buildFractureChapter],
+['fracture-lines-ukraine', () => buildFractureTheme('ukraine')],
+['fracture-lines-retro', () => buildFractureTheme('retro')]]);
   required(
     SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&
       catalog.chapters.length === producers.size &&
       SOURCE_EXTERNAL_CHAPTERS.every((descriptor) => producers.has(descriptor.id)),
-    'Expected exactly eight registered external editions and producers.',
+    'Expected exactly twelve registered external editions and producers.',
   );
   const entries = [],
     names = new Set();
