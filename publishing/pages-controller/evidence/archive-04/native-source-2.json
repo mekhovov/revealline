@@ -1,0 +1,89 @@
+{
+  "format": "revealline-archive04-native.v1",
+  "createdAt": "2026-09-14T04:55:17.279214+00:00",
+  "canonicalBase": "https://mekhovov.github.io/revealline-archive-04/",
+  "input": "Actual visible UI and ordinary keyboard through Codex in-app browser",
+  "observations": {
+    "v0.36.0": {
+      "chapter": "FPV Front Pressure Lines / Orchard Crossing / Standard",
+      "pausedBeforeReload": {
+        "coverage": 0,
+        "score": 0,
+        "lives": 3,
+        "clock": "2:58"
+      },
+      "restored": "Explicit Continue flight restores paused values; no auto movement",
+      "afterExplicitResume": {
+        "coverage": 51.5,
+        "score": 12060,
+        "lives": 3,
+        "clock": "2:56"
+      },
+      "captureStop": "Line secured. Tap a direction to fly again."
+    },
+    "v0.37.0": {
+      "chapter": "FPV Front Pressure Lines / Orchard Crossing / Standard",
+      "pausedBeforeReload": {
+        "coverage": 0,
+        "score": 0,
+        "lives": 3,
+        "clock": "2:58"
+      },
+      "restored": "Explicit Continue flight restores paused values; no auto movement",
+      "afterExplicitResume": {
+        "coverage": 51.5,
+        "score": 12060,
+        "lives": 3,
+        "clock": "2:56"
+      },
+      "captureStop": "Line secured. Tap a direction to fly again."
+    }
+  },
+  "limits": [
+    "Direct canonical game URLs only. Main-site old-prefix forwarding will change with039 and is not checked here.",
+    "No win, Collection, offline, old-origin profile migration, controller/touch hardware or audio claim from this scope.",
+    "First Signal initial title remains unchanged in these immutable releases. Pressure Lines explicitly installs/selects before flight."
+  ],
+  "members": [
+    {
+      "path": ".cache/round47/archive04-native/01-v036-paused.txt",
+      "bytes": 915,
+      "sha256": "b890e162ea933d9a93d77bde6bedf1cae5730a0986fc2ed56693970a27ecddd0"
+    },
+    {
+      "path": ".cache/round47/archive04-native/02-v036-restored.txt",
+      "bytes": 905,
+      "sha256": "e39182b50439e6229afc95c290b4bc089b1c1479ad90a35d615daab95a24325a"
+    },
+    {
+      "path": ".cache/round47/archive04-native/03-v036-capture.png",
+      "bytes": 144581,
+      "sha256": "c2018cd17f34366b85609fedb1cf3adf215d26fb0a5814c428bc883ee4cf9a46"
+    },
+    {
+      "path": ".cache/round47/archive04-native/03-v036-capture.txt",
+      "bytes": 904,
+      "sha256": "f49cb2dcbd9a28e114bd63de5cba5fee76510ab70808a82a94f345dde062b401"
+    },
+    {
+      "path": ".cache/round47/archive04-native/04-v037-paused.txt",
+      "bytes": 915,
+      "sha256": "b890e162ea933d9a93d77bde6bedf1cae5730a0986fc2ed56693970a27ecddd0"
+    },
+    {
+      "path": ".cache/round47/archive04-native/05-v037-restored.txt",
+      "bytes": 905,
+      "sha256": "e39182b50439e6229afc95c290b4bc089b1c1479ad90a35d615daab95a24325a"
+    },
+    {
+      "path": ".cache/round47/archive04-native/06-v037-capture.png",
+      "bytes": 144572,
+      "sha256": "3d5064a9d3cb30768c949df8d046990b704c119db3be2ace2babd92e23745135"
+    },
+    {
+      "path": ".cache/round47/archive04-native/06-v037-capture.txt",
+      "bytes": 904,
+      "sha256": "f49cb2dcbd9a28e114bd63de5cba5fee76510ab70808a82a94f345dde062b401"
+    }
+  ]
+}

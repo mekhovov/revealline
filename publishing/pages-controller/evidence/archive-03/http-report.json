@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-09-14T01:03:36.847Z",
+  "finishedAt": "2026-09-14T01:05:10.949Z",
+  "base": "https://mekhovov.github.io/revealline-archive-03/",
+  "artifact": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive03-expand-035-preparation/local-attempt-1/artifact",
+  "selectedVersions": [
+    "v0.33.0",
+    "v0.34.0",
+    "v0.35.0"
+  ],
+  "sourceCommit": "c8abd4e4e48c34a9ae30255d2d4a2e9a74d593ed",
+  "expectedInventorySha256": "e68d07aa5a80d27385d481204a8762d9195d3f7c0d1f03aee17262507ee14fc0",
+  "originalCanonicalWorkerBytesIncluded": true,
+  "mainBridgeBytesIncluded": false,
+  "concurrency": 8,
+  "files": 803,
+  "expectedBytes": 469993991,
+  "verifiedBytes": 469993991,
+  "failedFiles": 0,
+  "retries": 0,
+  "skipped": [],
+  "localChanges": [],
+  "preparedInventoryPinUnchanged": true,
+  "runnerSha256": "7c48481a163cec779f1af6fb7c9f4297730154d867ea488ad393b2d660a41ba6",
+  "runnerUnchanged": true,
+  "allocationSha256": "c7d60dbfac647d8a5d3a004dbdd21fa379801adb2301281110e6f66b9fc09df6",
+  "failures": [],
+  "boundaries": "Exact decoded HTTP bodies and runtime MIME only. No browser execution, offline migration, storage, physical-device or release-readiness certification."
+}
