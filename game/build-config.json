@@ -1,5 +1,5 @@
 {
-  "version": "0.42.0",
+  "version": "0.45.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -24,6 +24,10 @@
     "authoring/library/fpv-role-presentations/originals/fiber.png",
     "authoring/library/fpv-role-presentations/originals/impact.png",
     "authoring/library/fpv-role-presentations/originals/trapper.png",
+    "authoring/design-atlas",
+    "docs/fpv-redesign-design.md",
+    "docs/fpv-typography.md",
+    "docs/verification/fpv-redesign/baseline",
     "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
     "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
     "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",

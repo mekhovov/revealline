@@ -361,3 +361,160 @@ test('invalid configuration rejects and malformed clocks never cause repeating a
   for (const value of [NaN, Infinity, '5000', -5000])
     assert.equal(f.sample('ready', value).ui.direction, null);
 });
+
+test('solo auto-join accepts the first action after neutral without consuming a join press', () => {
+  const device = pad(0, 'Xbox Wireless Controller');
+  const router = createControllerRouter({
+    readPads: () => [device],
+    autoJoin: true,
+    navigationAliases: true,
+  });
+  assert.equal(router.sample({ scope: 'menu' }).status.code, 'joined');
+  device.buttons[0].pressed = true;
+  assert.equal(router.sample({ scope: 'menu' }).ui.confirm, true);
+  assert.equal(router.sample({ scope: 'menu' }).ui.confirm, false);
+  assertNeutral(router.sample({ scope: 'flight' }));
+  device.buttons[0].pressed = false;
+  assertNeutral(router.sample({ scope: 'flight' }));
+  device.axes[0] = 0.75;
+  assert.equal(router.sample({ scope: 'flight' }).flight.direction, 'right');
+  router.destroy();
+});
+
+test('solo cannot start from held discovery input, scope changes, or a reconnected controller', () => {
+  const device = pad();
+  const router = createControllerRouter({ readPads: () => [device], autoJoin: true });
+  device.axes[0] = 0.8;
+  device.buttons[0].pressed = true;
+  assert.equal(router.sample({ scope: 'menu' }).assigned, null);
+  device.axes[0] = 0;
+  device.buttons[0].pressed = false;
+  assert.equal(router.sample({ scope: 'menu' }).status.code, 'joined');
+  device.connected = false;
+  assert.equal(router.sample({ scope: 'flight' }).disconnected, true);
+  device.connected = true;
+  device.buttons[0].pressed = true;
+  assertNeutral(router.sample({ scope: 'flight' }));
+  device.buttons[0].pressed = false;
+  assert.equal(router.sample({ scope: 'flight' }).status.code, 'joined');
+  router.destroy();
+});
+
+for (const name of [
+  'Xbox Wireless Controller',
+  'DualSense Wireless Controller',
+  'DualShock 4',
+  'Steam Deck (standard gamepad)',
+  'Generic USB Gamepad',
+]) {
+  test(`${name}: both sticks, all D-pad directions, face actions and pause use standard physical positions`, () => {
+    const device = pad(3, name);
+    const router = createControllerRouter({
+      readPads: () => [null, null, null, device],
+      autoJoin: true,
+      navigationAliases: true,
+    });
+    const sample = () => router.sample({ scope: 'flight' });
+    const release = () => {
+      device.axes.fill(0);
+      device.buttons.forEach((b) => (b.pressed = false));
+      sample();
+    };
+    assert.equal(sample().assigned.index, 3);
+    for (const offset of [0, 2]) {
+      for (const [x, y, direction] of [
+        [1, 0, 'right'],
+        [-1, 0, 'left'],
+        [0, -1, 'up'],
+        [0, 1, 'down'],
+      ]) {
+        release();
+        device.axes[offset] = x;
+        device.axes[offset + 1] = y;
+        assert.equal(sample().flight.direction, direction);
+      }
+    }
+    for (const [button, action, value] of [
+      [12, 'direction', 'up'],
+      [13, 'direction', 'down'],
+      [14, 'direction', 'left'],
+      [15, 'direction', 'right'],
+      [0, 'action', true],
+      [1, 'stop', true],
+      [2, 'pickup', true],
+      [3, 'hangar', true],
+      [5, 'boost', true],
+      [8, 'pause', true],
+      [9, 'pause', true],
+    ]) {
+      release();
+      device.buttons[button].pressed = true;
+      assert.equal(sample().flight[action], value, `button ${button}`);
+    }
+    router.destroy();
+  });
+}
+
+test('menu face aliases and shoulders/triggers work with edge detection and repeat', () => {
+  const device = pad();
+  let clock = 0;
+  const router = createControllerRouter({
+    readPads: () => [device],
+    autoJoin: true,
+    navigationAliases: true,
+  });
+  const sample = () => router.sample({ scope: 'settings', timeMs: clock++ });
+  sample();
+  for (const [button, action, value] of [
+    [0, 'confirm', true],
+    [1, 'back', true],
+    [2, 'confirm', true],
+    [3, 'back', true],
+    [4, 'direction', 'up'],
+    [5, 'direction', 'down'],
+    [6, 'direction', 'up'],
+    [7, 'direction', 'down'],
+    [8, 'back', true],
+    [9, 'menu', true],
+  ]) {
+    device.buttons[button].pressed = true;
+    assert.equal(sample().ui[action], value, `button ${button}`);
+    assertNeutral(sample());
+    device.buttons[button].pressed = false;
+    sample();
+  }
+  router.destroy();
+});
+
+test('saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority', async () => {
+  const { resolveControllerBindings } = await import('../controller-bindings.mjs');
+  const device = pad();
+  const config = resolveControllerBindings(null);
+  config.glyphFamily = 'playstation';
+  config.deadZone = { press: 0.4, release: 0.2 };
+  const router = createControllerRouter({
+    readPads: () => [device],
+    autoJoin: true,
+    navigationAliases: true,
+    bindings: config,
+  });
+  const sample = () => router.sample({ scope: 'menu' });
+  sample();
+  device.axes[2] = 0.8;
+  assert.equal(sample().ui.direction, 'right');
+  device.axes[2] = 0;
+  sample();
+  device.buttons[2].pressed = true;
+  assert.equal(sample().ui.confirm, true);
+  device.buttons[2].pressed = false;
+  sample();
+  config.menu.stick.enabled = false;
+  router.setBindings(config);
+  sample();
+  device.axes[2] = 0.8;
+  assert.equal(sample().ui.direction, null);
+  device.axes[2] = 0;
+  device.buttons[2].pressed = true;
+  assert.equal(sample().ui.confirm, false);
+  router.destroy();
+});

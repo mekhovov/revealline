@@ -22,7 +22,11 @@ const storageWith = (patch) => {
   return storage;
 };
 function touch(target, pointerType = 'touch') {
-  target.emit('pointerdown', { pointerType, pointerId: 1, button: 0 });
+  const steering = target.dataset.move || target.id === 'touch-surface';
+  if (steering) target = target.ownerDocument.getElementById('touch-surface');
+  target.emit('pointerdown', { pointerType, pointerId: 1, button: 0, clientX: 100, clientY: 100 });
+  if (steering)
+    target.emit('pointermove', { pointerType, pointerId: 1, clientX: 100, clientY: 130 });
   target.emit('pointerup', { pointerType, pointerId: 1, button: 0 });
 }
 function controls(page, expected) {
@@ -270,14 +274,21 @@ test('an already joined controller takes its first fresh turn after touch withou
     page.frame(ms);
   };
   sample([]);
-  sample([0]); // Join is consumed in the briefing; it must not start the flight.
+  // Automatic connection is neutral and must not start the flight.
   assert.equal(page.rendered.paused, true);
   assert.match(page.$('input-status').textContent, /controller|joined/i);
   sample([]);
   page.$('start-button').click();
   sample([], 1000 / 120); // The ordinary Resume neutral tick remains intact.
-  const down = page.doc.querySelector('[data-move="down"]');
-  down.emit('pointerdown', { pointerType: 'touch', pointerId: 7, button: 0 });
+  const down = page.$('touch-surface');
+  down.emit('pointerdown', {
+    pointerType: 'touch',
+    pointerId: 7,
+    button: 0,
+    clientX: 100,
+    clientY: 100,
+  });
+  down.emit('pointermove', { pointerType: 'touch', pointerId: 7, clientX: 100, clientY: 130 });
   ticks(page, 13);
   assert.equal(page.doc.body.dataset.inputMode, 'touch');
   assert.equal(down.hasPointerCapture(7), true);
@@ -316,10 +327,10 @@ function steeringHand(page, expected) {
   assert.equal(page.doc.body.dataset.screenSteeringHand, expected);
   const groups = page.doc.querySelector('.play-controls').children;
   assert.deepEqual(
-    [...groups].map((group) => group.className),
+    [...groups].map((group) => group.id || group.className),
     expected === 'right'
-      ? ['ability-buttons', 'direction-controls']
-      : ['direction-controls', 'ability-buttons'],
+      ? ['ability-buttons', 'touch-surface', 'direction-controls']
+      : ['touch-surface', 'direction-controls', 'ability-buttons'],
     'Native DOM traversal follows the visible left-to-right group order.',
   );
 }

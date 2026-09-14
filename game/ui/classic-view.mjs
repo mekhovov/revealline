@@ -550,7 +550,7 @@ export function drawClassicStatus(
     ctx.scale(0.65, 0.65);
     icon(ctx, effect.kind);
     ctx.restore();
-    ctx.font = '10px monospace';
+    ctx.font = '500 14px "Field Kit UI", "Field Kit Mono", sans-serif';
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const label = compact
@@ -615,19 +615,19 @@ export function drawEnemyPressure(
         ]);
     }
     const label = cooldown ? 'REST' : warning ? 'AIM' : 'CHASE',
-      textWidth = (label.length * 6 + 4) * unit,
+      textWidth = (label.length * 8.4 + 8) * unit,
       x = Math.max(0, Math.min(1152 - textWidth, enemy.x * SIZE - textWidth / 2)),
       y = Math.max(
-        11 * unit,
+        18 * unit,
         enemy.y * SIZE - (frames.get(enemy.id)?.diameter ?? 30) / 2 - 5 * unit,
       );
     ctx.fillStyle = PRESENTATION_PLATE;
-    ctx.fillRect(x, y - 10 * unit, textWidth, 11 * unit);
-    ctx.font = `${9 * unit}px monospace`;
+    ctx.fillRect(x, y - 16 * unit, textWidth, 19 * unit);
+    ctx.font = `500 ${14 * unit}px "Field Kit Mono", monospace`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = color;
-    ctx.fillText(label, x + 2 * unit, y - 4 * unit);
+    ctx.fillText(label, x + 4 * unit, y - 6 * unit);
     ctx.restore();
   }
 }

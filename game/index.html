@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-boot-state="loading">
+<html lang="en" data-build-version="__REVEALLINE_VERSION__" data-boot-state="loading">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -22,7 +22,10 @@
         min-height: 100vh;
         box-sizing: border-box;
         padding: 24px;
-        font: 18px/1.5 monospace;
+        font:
+          18px/1.5 'Field Kit UI',
+          system-ui,
+          sans-serif;
       }
       #boot-screen a {
         color: #68d9fa;
@@ -45,13 +48,16 @@
     <link rel="stylesheet" href="ui/story-dialog.css" />
     <link rel="stylesheet" href="ui/optional-chapters-panel.css" />
     <link rel="stylesheet" href="ui/device-controls.css" />
+    <link rel="stylesheet" href="ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="ui/field-kit-components.css" />
   </head>
-  <body>
+  <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
         <p class="launch-kicker">REVEAL / LINE</p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
-        <h1 id="boot-title">Your next flight.</h1>
+        <h1 class="field-kit-display" id="boot-title">Your next flight.</h1>
         <p id="boot-status" class="launch-status" role="status">
           Preparing your arcade. If this screen stays here, reload or open the online game.
         </p>
@@ -98,6 +104,15 @@
       </button>
       <span id="shell-edition" class="shell-edition"></span>
       <button
+        id="shell-fullscreen"
+        class="shell-fullscreen"
+        type="button"
+        aria-label="Enter fullscreen"
+        hidden
+      >
+        ⛶
+      </button>
+      <button
         id="pause-button"
         class="icon-button shell-pause"
         type="button"
@@ -120,7 +135,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.7.0</span>
+        ><span id="version" class="version">__REVEALLINE_VERSION__</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -234,6 +249,9 @@
                   <button id="first-flight-enter" class="button secondary" type="button" hidden>
                     Learn by playing
                   </button>
+                  <button id="overlay-restart" class="button secondary" type="button" hidden>
+                    Restart mission
+                  </button>
                   <button id="overlay-brief" class="button secondary" type="button" hidden>
                     Mission brief
                   </button>
@@ -269,6 +287,9 @@
           </div>
           <p id="appearance-unlock" class="appearance-unlock" hidden></p>
           <div class="play-controls">
+            <div id="touch-surface" role="group" aria-label="Touch steering: drag to fly and turn">
+              <span aria-hidden="true">✥</span><span id="touch-instruction">Drag to steer</span>
+            </div>
             <div class="direction-controls" aria-label="Direction controls">
               <button type="button" data-move="up" aria-label="Move up">↑</button
               ><button type="button" data-move="left" aria-label="Move left">←</button
@@ -293,6 +314,7 @@
               <span id="ability-state">Ready</span>
             </div>
           </div>
+          <div id="touch-indicator" aria-hidden="true" hidden><i></i></div>
           <section
             id="first-flight-panel"
             class="first-flight-panel"
@@ -543,8 +565,8 @@
             <span id="keyboard-help"
               >arrows/WASD, Shift boost, E ability, R supply, Escape/P pause.</span
             >
-            Touch: tap a direction to fly. Tap another to turn. Releasing keeps you moving. Pause to
-            take a break. Boost can use Hold or Toggle independently.
+            Touch: drag the floating stick or swipe to turn. Choose a sliding D-pad, either hand,
+            size and opacity in Settings. Releasing keeps you moving. Pause to take a break.
           </p>
           <p>
             <strong>Controller:</strong>
@@ -762,8 +784,33 @@
           </select></label
         >
         <p class="micro-note">
-          Auto shows a thumb pad during touch play. Keyboard or controller use hides it. Choose
-          Always for mouse-only steering. The full arena stays clear.
+          Auto shows steering during touch play. Keyboard or controller use hides it. Choose Always
+          to steer with a mouse. Drag anywhere on the board, or use the thumb area below.
+        </p>
+        <label class="field"
+          >Touch steering<select id="touch-mode">
+            <option value="stick">Floating stick · drag from anywhere</option>
+            <option value="swipe">Swipe · flick to turn</option>
+            <option value="dpad">D-pad · tap or slide between directions</option>
+          </select></label
+        >
+        <label class="field"
+          >Touch control size<select id="touch-size">
+            <option value="regular">Regular</option>
+            <option value="large">Large</option>
+          </select></label
+        >
+        <label class="field"
+          >Touch control opacity<input
+            id="touch-opacity"
+            type="range"
+            min="0.2"
+            max="1"
+            step="0.05"
+        /></label>
+        <p class="micro-note">
+          A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
+          break. The stick appears under your thumb. In landscape, controls float over the board.
         </p>
         <label class="field"
           >Steering hand
@@ -773,7 +820,8 @@
           </select></label
         >
         <p id="screen-steering-help" class="micro-note">
-          Move the pad to your left or right thumb. The arena stays clear.
+          Move the stick, swipe area or D-pad to your left or right thumb. Actions use the other
+          side.
         </p>
         <p id="screen-steering-status" class="micro-note" role="status" hidden></p>
         <p id="equipment-help" class="micro-note"></p>
@@ -1002,6 +1050,31 @@
         ><button class="button" data-close="replay-dialog">Close</button>
       </div>
     </dialog>
+    <dialog
+      id="restart-dialog"
+      class="restart-dialog"
+      role="alertdialog"
+      aria-labelledby="restart-dialog-title"
+      aria-describedby="restart-dialog-copy"
+    >
+      <p class="eyebrow">CURRENT ATTEMPT</p>
+      <h2 id="restart-dialog-title">Restart this mission?</h2>
+      <p id="restart-dialog-copy">
+        Your current line, score and elapsed time will be reset. Campaign progress you already
+        earned stays safe.
+      </p>
+      <div class="overlay-actions">
+        <button
+          id="restart-cancel"
+          class="button primary"
+          type="button"
+          data-close="restart-dialog"
+        >
+          Keep playing
+        </button>
+        <button id="restart-confirm" class="button secondary" type="button">Restart mission</button>
+      </div>
+    </dialog>
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
       <div class="home-art" aria-hidden="true">
         <div class="home-flight-path"></div>
@@ -1011,6 +1084,9 @@
         <p class="eyebrow">A WORLD WORTH UNCOVERING</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
+        <p id="landing-version" class="landing-version" aria-label="Game version">
+          Version __REVEALLINE_VERSION__
+        </p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-course-return" type="button" class="button primary" hidden>
             Back to lesson
@@ -1093,5 +1169,6 @@
       <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
+    <p id="controller-connection-hint" class="controller-connection-hint" role="status" hidden></p>
   </body>
 </html>

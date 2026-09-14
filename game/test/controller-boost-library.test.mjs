@@ -145,6 +145,7 @@ for (const source of fixture.sources) {
       campaignDifficulty: 'standard',
       textSize: 'standard',
       screenControls: 'auto',
+      touchControls: null,
       screenSteeringHand: 'left',
     });
     unchangedRecords(migrated, old);

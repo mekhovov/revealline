@@ -47,7 +47,7 @@ function recording(turnPolicy = 'immediate', classic = false) {
 function mount(doc) {
   const stack = [doc.body];
   for (const [token] of html
-    .split('<body>')[1]
+    .split(/<body\b[^>]*>/u)[1]
     .split('</body>')[0]
     .matchAll(/<\/?[^>]+>|[^<]+/g)) {
     if (token.startsWith('</')) {

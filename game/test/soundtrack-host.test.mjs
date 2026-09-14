@@ -343,7 +343,7 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
     page.frame(ms);
   };
   sample([]);
-  sample([0]); // Join consumes this edge rather than activating a dialog control.
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   sample([]);
   for (let i = 0; page.doc.activeElement !== page.$('soundtrack-export-bundle') && i < 100; i++) {
     sample([13]);

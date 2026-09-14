@@ -6,8 +6,11 @@
     <title>Reveal / Line — Controller practice</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="../ui/pixel-theme.css" />
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../ui/field-kit-components.css" />
   </head>
-  <body>
+  <body class="field-kit field-kit-support">
     <header>
       <a href="../">◩ REVEAL / LINE</a>
       <span>CONTROLLER PRACTICE</span>
@@ -16,7 +19,7 @@
     <main>
       <section class="intro">
         <p class="eyebrow">REAL GAME UI · SIMULATED CONTROLLER</p>
-        <h1>Try the whole journey.</h1>
+        <h1 class="field-kit-display">Try the whole journey.</h1>
         <p>
           This virtual pad controls the actual game below. Practice awards no campaign progress,
           scores or unlocks. The three First Flight choices teach the capture loop with Scout and
@@ -53,9 +56,10 @@
           </div>
           <p id="connection-status">Virtual pad disconnected.</p>
           <p class="guide">
-            Connect, then press any face button <strong>0–3</strong> or physical
-            <strong>Menu / 9</strong> to join. Release, then use your configured menu Confirm
-            button. The first press only joins; default Confirm is South / 0.
+            Connect and release all controls once. The solo game is ready immediately;
+            <strong>South / 0</strong> confirms, <strong>East / 1</strong> goes back. Both sticks
+            and the D-pad steer. Shoulders and triggers navigate menus. With a custom layout, use
+            your configured menu Confirm button.
           </p>
           <label
             >Button gesture<select id="gesture">
@@ -214,9 +218,10 @@
             game first.
           </p>
           <p class="guide default-hints">
-            <strong>Default layout only:</strong> 0 confirms / uses ability; 1 goes back; 2 picks
-            up; 3 opens Hangar; 5 boosts; 9 pauses. Remap controls in the game's Settings; this
-            panel always sends the physical positions and indices shown.
+            <strong>Default layout only:</strong> 0 confirms / uses ability (or pauses in Arcade); 1
+            goes back / pauses; 2 picks up supply (or opens the field guide); 3 opens Hangar (or
+            missions); 5 boosts when available; 8 / 9 pause. Both sticks steer. Remap controls in
+            the game's Settings; this panel sends the physical positions and indices shown.
           </p>
         </aside>
         <section class="stage" aria-label="Actual practice game">

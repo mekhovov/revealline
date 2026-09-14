@@ -9,6 +9,18 @@ import { iosHTMLPolicy, IOS_CSP } from '../../scripts/native-cli.mjs';
 
 const sourceRoot = new URL('../', import.meta.url);
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const fieldKitFiles = [
+  'game/ui/field-kit-fonts.css',
+  'game/ui/field-kit-tokens.css',
+  'game/ui/field-kit-components.css',
+  'game/ui/fonts/field-kit/handjet-display-600.woff2',
+  'game/ui/fonts/field-kit/exo2-ui-400-600.woff2',
+  'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+  'game/ui/fonts/field-kit/Handjet-OFL.txt',
+  'game/ui/fonts/field-kit/Exo2-OFL.txt',
+  'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
+  'game/ui/fonts/field-kit/provenance.json',
+];
 
 test('the actual game has a static dark guard before resources and a single caught module entry', async () => {
   const html = await fs.readFile(new URL('index.html', sourceRoot), 'utf8');
@@ -66,7 +78,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   for (const name of [
     'game/boot.mjs',
     'game/boot.css',
-    'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
+    ...fieldKitFiles,
     'game/offline.mjs',
     'game/platform.mjs',
     'game/offline/service-worker.template.js',
@@ -80,7 +92,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     await copy(name);
   const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   for (const [, relative] of html.matchAll(/<link[^>]*href="([^"]+\.css)"/g))
-    if (relative !== 'boot.css') await put(`game/${relative}`, '/* unrelated fixture style */');
+    if (relative !== 'boot.css' && !relative.startsWith('ui/field-kit-'))
+      await put(`game/${relative}`, '/* unrelated fixture style */');
   await put('game/vendor/phaser-4.2.1.min.js', 'globalThis.Phaser = {};');
   await put('game/app.mjs', 'export {};');
   await put('game/content-launch.mjs', 'export {};');
@@ -94,12 +107,23 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   assert.equal(first.sha256, second.sha256);
   const landing = await fs.readFile(path.join(out, 'index.html'), 'utf8');
   assert.match(landing, /href="\.\/game\/boot.css"/);
+  for (const part of ['fonts', 'tokens', 'components'])
+    assert.ok(landing.includes(`href="./game/ui/field-kit-${part}.css"`));
+  assert.match(landing, /<body class="field-kit field-kit-support">/);
+  const credits = await fs.readFile(path.join(out, 'credits.html'), 'utf8');
+  for (const name of ['Handjet-OFL.txt', 'Exo2-OFL.txt', 'IBMPlexMono-OFL.txt'])
+    assert.ok(credits.includes(`./game/ui/fonts/field-kit/${name}`));
+  assert.doesNotMatch(credits, /Pixelify|Tiny5/);
   assert.match(landing, /src="\.\/site\/launch.mjs"/);
   assert.match(landing, /id="launch-game"[^>]*href="\.\/game\/"/);
   assert.doesNotMatch(landing, /__REVEALLINE_VERSION__|landing-pack-select/);
   const extras = await fs.readFile(path.join(out, 'site/about.html'), 'utf8');
   assert.match(extras, /data-current-version="v0.29.0"/);
   assert.match(extras, /href="\.\.\/game\//);
+  const game = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
+  assert.match(game, /data-build-version="v0.29.0"/);
+  assert.match(game, /id="landing-version"[^>]*>[\s\S]*Version v0.29.0/);
+  assert.doesNotMatch(game, /__REVEALLINE_VERSION__/);
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
   for (const name of [
     'index.html',

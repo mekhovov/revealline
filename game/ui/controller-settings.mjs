@@ -9,7 +9,7 @@ import {
 } from '../controller-bindings.mjs';
 
 const FAMILY_LABELS = {
-  generic: 'Position labels',
+  generic: 'Automatic / position labels',
   xbox: 'Xbox labels',
   playstation: 'PlayStation labels',
 };
@@ -207,7 +207,7 @@ export function attachControllerSettings({
   editor.append(
     node(
       'p',
-      'Choose the names you prefer. Labels do not detect a device or change its physical mapping. Standard Gamepad API mappings only; system/home button 16 is reserved.',
+      'Automatic uses detected Xbox or PlayStation names, otherwise button positions. Choosing names does not change the physical mapping. Standard controllers only; system/home remains owned by your device.',
       'controller-settings-note',
     ),
   );
@@ -220,7 +220,7 @@ export function attachControllerSettings({
       const select = field(
         body,
         `${context}.buttons.${action}`,
-        `${CONTROLLER_ACTION_LABELS[context][action]} button`,
+        `${continuousSteering && context === 'flight' && action === 'stop' ? 'Pause / back' : CONTROLLER_ACTION_LABELS[context][action]} button`,
         {
           choices: Array.from({ length: 16 }, (_, index) => [
             index,
@@ -229,8 +229,6 @@ export function attachControllerSettings({
         },
       );
       buttonSelects.push(select);
-      if (continuousSteering && context === 'flight' && action === 'stop')
-        select.parentElement.hidden = true;
     }
   }
   const sticks = section(

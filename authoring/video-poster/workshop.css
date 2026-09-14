@@ -1,11 +1,6 @@
-@font-face {
-  font-family: 'Pixelify Sans';
-  src: url('../../game/ui/fonts/pixelify-sans/PixelifySans.ttf') format('truetype');
-  font-display: swap;
-}
 :root {
   color-scheme: dark;
-  font-family: 'Pixelify Sans', monospace;
+  font-family: var(--fk-font-ui, 'Field Kit UI', sans-serif);
   background: #080d18;
   color: #edf4ff;
   font-size: 20px;
