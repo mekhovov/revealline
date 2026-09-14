@@ -42,6 +42,8 @@ Resources use cache-first delivery after successful preparation. If a saved file
 
 Offline preparation does not request persistent-storage permission, install a native binary or promise permanent retention. Browsers and users can clear cached files. Keep portable save backups for progress that matters.
 
+If an earned picture's retained owner metadata is unavailable, the working source explains that its original data is missing and asks the player to re-download the chapter or restore its media backup. A resolved owner that differs from the earned receipt remains a separate rejection. Both cases preserve the receipt and refuse to substitute another picture; this message does not establish why data disappeared.
+
 ## Keep downloads on this device
 
 The working source adds a separate **Keep downloads on this device** action in Settings. Opening Settings checks the browser's actual `navigator.storage.persisted()` result; only activating the button calls `navigator.storage.persist()`, before any asynchronous wait. There is no startup permission request or automatic retry after denial. The browser may grant, deny, reject or not support the request; each outcome has a visible status. An estimate of quota or free space never establishes retention.

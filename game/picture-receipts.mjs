@@ -91,7 +91,9 @@ export function validatePictureReceiptOwners(source, gallery, identityCatalog) {
       });
     required(
       identity && canonicalJSON(identity) === canonicalJSON(record.presentationPin.identity),
-      'Earned picture owner differs from the completed execution.',
+      identity
+        ? 'Earned picture owner differs from the completed execution.'
+        : 'Original picture data is unavailable. Re-download the chapter or restore its media backup.',
     );
   }
   return records;
