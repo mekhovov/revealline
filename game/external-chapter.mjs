@@ -8,6 +8,7 @@ import { prepareStoredStillMedia } from './media-storage-record.mjs';
 
 export const EXTERNAL_CHAPTER_FORMAT = 'revealline-external-chapter.v1';
 export const EXTERNAL_CHAPTER_LIMITS = Object.freeze({
+  catalogChoices: 36,
   descriptorBytes: 16384,
   packBytes: 1024 * 1024,
   originals: 3,

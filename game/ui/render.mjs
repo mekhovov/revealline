@@ -40,18 +40,20 @@ const paintSize = ({ width, height }) => ({
 });
 export const boardPaintSizeForLevel = (level) => paintSize(geometryForLevel(level));
 export const boardPaintSizeForRun = (run) => paintSize(geometryForRun(run));
-function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
+export function playerPaintSize(body, image, { screenScale, canvasCSSWidth, style, scale }) {
   const s = Math.max(0.1, Math.min(4, screenScale)),
     fitted = fittedBodySize(body, image),
     // Keep the contained source rectangle and all attachment anchors intact.
-    // The current drone art includes transparent margins: a 24/16 CSS-pixel
-    // image box gives its visible silhouette roughly 18/12 pixels of span.
+    // Only explicitly registered compact body presets lift the small-screen
+    // image rectangle. Old bodies and unavailable-image fallbacks keep their size.
     extent = image
       ? Math.max(fitted.width, fitted.height)
       : Math.max(fitted.width * 0.54, fitted.height * 0.66),
-    minimum = canvasCSSWidth >= 480 ? 24 : 16,
+    compactMinimum = image && canvasCSSWidth < 480 && body.compactMinimumCSSPixels === 20 ? 20 : 16,
+    minimum = canvasCSSWidth >= 480 ? 24 : compactMinimum,
     desired = actorDiameter({ screenScale: s, canvasCSSWidth, style, scale }) * 1.15,
-    diameter = Math.max(18, Math.min(64, 32 / s, Math.max(minimum / s, desired)));
+    logicalCap = compactMinimum === 20 ? Math.max(64, minimum / s) : 64,
+    diameter = Math.max(18, Math.min(logicalCap, 32 / s, Math.max(minimum / s, desired)));
   return { diameter, scale: diameter / (extent * CELL) };
 }
 const makeCanvas = (w, h) => {
