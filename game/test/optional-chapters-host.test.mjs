@@ -52,6 +52,8 @@ function downloads(t, intercept = () => null) {
 }
 async function open(page) {
   page.$('shell-menu').click();
+  page.$('shell-play').click();
+  page.$('shell-mode-choice').open = true;
   page.$('shell-worlds').click();
   await settle(
     () =>
@@ -129,6 +131,8 @@ test('offline More worlds keeps a real installed chapter reachable without chang
   assert.equal(run.player.cutting, true);
   const requests = downloads(t, () => Promise.reject(new Error('Offline fixture')));
   page.$('shell-menu').click();
+  page.$('shell-play').click();
+  page.$('shell-mode-choice').open = true;
   page.$('shell-worlds').click();
   await settle(() => !page.$('optional-worlds-reload').disabled);
   assert.match(page.$('optional-worlds-status').textContent, /Online list unavailable/);
@@ -161,7 +165,10 @@ test('native More worlds installs separately, preserves an unrelated paused pack
   const page = await soloPage(t);
   const requests = downloads(t);
   page.change('pack-select', 'fpv-arcade-r5');
-  await settle(() => !page.$('pack-select').disabled);
+  await settle(
+    () => !page.$('pack-select').disabled && page.doc.body.dataset.pictureState === 'ready',
+    'Selected pack and exact picture must be ready before the preserved cut starts.',
+  );
   page.$('start-button').click();
   page.key('ArrowDown');
   page.key('ArrowDown', false);
@@ -184,6 +191,8 @@ test('native More worlds installs separately, preserves an unrelated paused pack
   assert.match(page.$('optional-worlds-status').textContent, /paused flight is kept/);
   assert.equal(requests.length, 2);
   page.$('optional-worlds-back').click();
+  page.$('shell-play').click();
+  page.$('shell-mode-choice').open = true;
   page.$('shell-worlds').click();
   assert.equal(page.$(`optional-worlds-install-${first.id}`).disabled, true);
   await settle(() => !page.$(`optional-worlds-choose-${first.id}`).disabled);
@@ -237,11 +246,13 @@ test('keyboard and standard controller reach all world install actions and Back 
     const target = page.doc.activeElement;
     const event = target.emit('keydown', { key: name, code: name, repeat: false });
     if (!event.defaultPrevented && name === 'Enter' && target.tagName === 'BUTTON') target.click();
+    if (!event.defaultPrevented && name === 'Enter' && target.tagName === 'SUMMARY')
+      target.parentElement.open = !target.parentElement.open;
     if (!event.defaultPrevented && name === 'Tab') {
-      // Model only the browser's native Tab default inside this dialog.
+      // Model only the browser's native Tab default inside the focused dialog.
       const descendants = (node) =>
         node.children.flatMap((child) => [child, ...descendants(child)]);
-      const controls = descendants(page.$('optional-worlds-dialog')).filter((node) => {
+      const controls = descendants(target.closest('dialog[open]')).filter((node) => {
         if (
           node.tabIndex < 0 ||
           node.disabled ||
@@ -261,7 +272,18 @@ test('keyboard and standard controller reach all world install actions and Back 
     }
     target.emit('keyup', { key: name, code: name });
   };
-  for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-worlds'; i++) key('ArrowDown');
+  for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-play'; i++) key('ArrowDown');
+  assert.equal(page.doc.activeElement.id, 'shell-play');
+  key('Enter');
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-missions').open, true);
+  const modeChoice = page.$('shell-mode-choice'),
+    modeSummary = modeChoice.querySelector('summary');
+  for (let i = 0; i < 80 && page.doc.activeElement !== modeSummary; i++) key('Tab');
+  assert.equal(page.doc.activeElement, modeSummary);
+  key('Enter');
+  assert.equal(modeChoice.open, true, 'Native summary activation exposes More worlds.');
+  for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-worlds'; i++) key('Tab');
   assert.equal(page.doc.activeElement.id, 'shell-worlds');
   key('Enter');
   await settle(
