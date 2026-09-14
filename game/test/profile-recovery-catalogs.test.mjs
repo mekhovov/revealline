@@ -11,7 +11,7 @@ import { createProfileChannelReader } from '../profile-channel-reader.mjs';
 const raw = new Uint8Array(
   await readFile(new URL('../content/recovery-catalogs.json', import.meta.url)),
 );
-test('reviewed source registries preserve six exact aliases and full distinct descriptor cohorts', async () => {
+test('reviewed source registries preserve eight exact aliases and full distinct descriptor cohorts', async () => {
   const rows = await parseRecoveryCatalogs(raw, 'v0.42.0');
   assert.deepEqual(
     rows.map((row) => row.channelId),
@@ -22,14 +22,19 @@ test('reviewed source registries preserve six exact aliases and full distinct de
       'release-0.40.0',
       'release-v0.41.0',
       'release-0.41.0',
+      'release-v0.42.0',
+      'release-0.42.0',
     ],
   );
   assert.deepEqual(
     rows.map((row) => row.knownDescriptors.length),
-    [12, 12, 12, 12, 16, 16],
+    [12, 12, 12, 12, 16, 16, 16, 16],
   );
   assert.deepEqual(rows[4].knownDescriptors.slice(0, 12), rows[0].knownDescriptors);
   assert.deepEqual(rows[0].registeredEntries, rows[4].registeredEntries);
+  assert.deepEqual(rows[6].registeredEntries, rows[4].registeredEntries);
+  assert.deepEqual(rows[6].knownDescriptors, rows[4].knownDescriptors);
+  assert.notEqual(rows[6].channelId, rows[4].channelId);
   assert.equal(Object.isFrozen(rows[0].registeredEntries[0].campaign), true);
   let storageCalls = 0;
   const reader = createProfileChannelReader({
@@ -58,6 +63,17 @@ test('built-version gates exclude future channels without inventing dev, earlier
     ['release-v0.39.0', 'release-0.39.0'],
   );
   assert.equal((await parseRecoveryCatalogs(raw, '0.40.0')).length, 4);
+  assert.deepEqual(
+    (await parseRecoveryCatalogs(raw, '0.41.0')).map((row) => row.channelId),
+    [
+      'release-v0.39.0',
+      'release-0.39.0',
+      'release-v0.40.0',
+      'release-0.40.0',
+      'release-v0.41.0',
+      'release-0.41.0',
+    ],
+  );
   assert.deepEqual(await parseRecoveryCatalogs(raw, '0.38.0'), []);
   await assert.rejects(parseRecoveryCatalogs(raw, 'DEV'));
 });
