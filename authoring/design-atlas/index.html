@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>RevealLine — FPV Field Kit design atlas</title>
+    <meta
+      name="description"
+      content="Source-only review atlas for the RevealLine FPV redesign: screen studies, bilingual type, visual rules and reference evidence."
+    />
+    <link rel="stylesheet" href="./atlas.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to design atlas</a>
+    <header class="atlas-header">
+      <a class="atlas-brand" href="../../game/" aria-label="Open the current RevealLine game">
+        <span class="brand-mark" aria-hidden="true">↗</span> REVEAL<span>LINE</span>
+      </a>
+      <span class="edition">DESIGN ATLAS / FIELD KIT 01</span>
+      <a href="../../docs/fpv-redesign-design.md">Design specification ↗</a>
+    </header>
+
+    <main id="main">
+      <section class="intro" aria-labelledby="atlas-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="status-dot"></span> PHASE 0 · DESIGN REVIEW</p>
+          <h1 id="atlas-title">A clear signal.<br /><span>A complete game.</span></h1>
+          <p class="intro-deck">
+            Pixel FPV field kit. One visual language, from the first launch to the last revealed
+            picture. Built around the route, the craft and the world worth uncovering.
+          </p>
+          <a class="action primary" href="#studies">Explore the screen studies <span>↓</span></a>
+        </div>
+        <div class="hero-field" aria-hidden="true">
+          <div class="hero-coordinates"><span>FIELD STUDY / 01</span><span>FPV</span></div>
+          <div class="field-horizon"></div>
+          <div class="field-route"></div>
+          <div class="hero-craft" data-drone></div>
+          <div class="hero-caption">
+            <span>ORIGINAL GEOMETRY</span><span>PROPOSED ART DIRECTION</span>
+          </div>
+        </div>
+      </section>
+
+      <nav class="atlas-nav" aria-label="Atlas sections">
+        <a href="#direction">01 / Direction</a>
+        <a href="#studies">02 / Screens</a>
+        <a href="#type">03 / Type & color</a>
+        <a href="#coverage">04 / Coverage</a>
+        <a href="#assets">05 / Asset system</a>
+        <a href="#references">06 / References</a>
+      </nav>
+
+      <section id="direction" class="atlas-section" aria-labelledby="direction-title">
+        <div class="section-heading">
+          <p class="eyebrow">01 / THE DIRECTION</p>
+          <h2 id="direction-title">Arcade clarity. FPV character.</h2>
+          <p>
+            Keep Xposed Reloaded’s focused menus, image collection and bright live route. Give
+            everything else a coherent, original field-console identity.
+          </p>
+        </div>
+        <div class="principles">
+          <article>
+            <span class="index">01</span>
+            <h3>The route comes first</h3>
+            <p>
+              Player and unfinished cable lead. Hazards and boundaries follow. Terrain, artwork and
+              atmosphere stay behind them.
+            </p>
+          </article>
+          <article>
+            <span class="index">02</span>
+            <h3>Readable at a glance</h3>
+            <p>
+              Large pixel headings, clean interface text, steady numbers. English and Ukrainian get
+              the same attention.
+            </p>
+          </article>
+          <article>
+            <span class="index">03</span>
+            <h3>One connected world</h3>
+            <p>
+              Ink, cyan and amber. Stepped frames, purposeful texture and recognizable quad
+              silhouettes. No competing decorative styles.
+            </p>
+          </article>
+        </div>
+        <div class="evidence-key" aria-label="How to read this atlas">
+          <p>
+            <span class="badge reference">Reference</span> Third-party screenshots and prior
+            observations. Inspiration, not game assets.
+          </p>
+          <p>
+            <span class="badge proposed">Proposed</span> Original layout studies and future
+            acceptance criteria. Not live gameplay.
+          </p>
+          <p>
+            <span class="badge implemented">Atlas feature</span> Working review controls, source
+            links, specimens and inventory on this page.
+          </p>
+        </div>
+      </section>
+
+      <section id="studies" class="atlas-section studies" aria-labelledby="studies-title">
+        <div class="section-heading">
+          <p class="eyebrow">02 / THE WHOLE JOURNEY</p>
+          <h2 id="studies-title">Review the game as one place.</h2>
+          <p>
+            These HTML/CSS studies demonstrate hierarchy and states. Buttons only navigate this
+            atlas; they do not launch missions or change saves.
+          </p>
+        </div>
+        <div class="review-controls">
+          <label
+            >Screen
+            <select id="screen-select" aria-controls="screen-preview"></select
+          ></label>
+          <label
+            >State
+            <select id="state-select" aria-controls="screen-preview"></select
+          ></label>
+          <div class="viewport-buttons" role="group" aria-label="Preview width">
+            <button type="button" data-viewport="desktop" aria-pressed="true">Desktop</button>
+            <button type="button" data-viewport="tablet" aria-pressed="false">Tablet</button>
+            <button type="button" data-viewport="phone" aria-pressed="false">Phone</button>
+            <button type="button" data-viewport="landscape" aria-pressed="false">
+              Short landscape
+            </button>
+          </div>
+        </div>
+        <div class="preview-surround">
+          <div class="preview-caption">
+            <span class="badge proposed">Proposed mockup</span
+            ><span id="viewport-label">Fluid desktop / up to 1120 px</span>
+          </div>
+          <div id="screen-stage" class="screen-stage" data-viewport="desktop">
+            <div id="screen-preview" class="screen-preview" aria-label="Proposed game screen">
+              <p class="loading-note">Loading original screen studies…</p>
+            </div>
+          </div>
+        </div>
+        <div class="study-notes">
+          <p id="study-purpose"></p>
+          <p id="study-rule"></p>
+        </div>
+        <p id="review-status" class="sr-only" role="status" aria-live="polite"></p>
+        <noscript
+          ><p>
+            The reference links, typography and design specification work without JavaScript. Enable
+            JavaScript for the screen studies and inventory filter.
+          </p></noscript
+        >
+      </section>
+
+      <section id="type" class="atlas-section" aria-labelledby="type-title">
+        <div class="section-heading">
+          <p class="eyebrow">03 / A READABLE SIGNAL</p>
+          <h2 id="type-title">Pixel character, without pixel strain.</h2>
+          <p>
+            Three roles, each doing one job. These specimens load the local Field Kit fonts,
+            independently from the current game’s type system.
+          </p>
+        </div>
+        <div class="language-buttons" role="group" aria-label="Typography specimen language">
+          <button type="button" data-language="en" aria-pressed="true">English</button>
+          <button type="button" data-language="uk" aria-pressed="false">Українська</button>
+        </div>
+        <div class="type-specimens">
+          <article class="type-card display-card">
+            <p class="eyebrow">HANDJET / LARGE DISPLAY</p>
+            <p class="specimen-display" id="display-specimen">Find your next route.</p>
+            <p>Square construction · large titles and reward moments · no small instructions.</p>
+          </article>
+          <article class="type-card">
+            <p class="eyebrow">EXO 2 / INTERFACE</p>
+            <p class="specimen-ui" id="ui-specimen">
+              Choose a mission. Close the line. Reveal the world.
+            </p>
+            <p>
+              Clear labels, briefings, settings and longer reading. Sentence case preserves word
+              shapes.
+            </p>
+          </article>
+          <article class="type-card">
+            <p class="eyebrow">IBM PLEX MONO / NUMBERS</p>
+            <p class="specimen-mono">64 / 80<span>02:38 · 11,450</span></p>
+            <p>
+              Stable coverage, time, score, bindings and asset dimensions. No decorative grid over
+              the glyphs.
+            </p>
+          </article>
+        </div>
+        <p class="glyph-check" lang="uk">
+          АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ · абвгґдеєжзиіїйклмнопрстуфхцчшщьюя · ’ ʼ ь ґ є і ї
+        </p>
+        <p id="font-status" class="small-note" role="status">Checking local font availability…</p>
+        <div class="palette" id="palette" aria-label="Proposed Field Kit palette"></div>
+        <p class="small-note">
+          Accent colors identify roles together with shapes and labels. Do not use cyan, amber or
+          coral as an interchangeable decoration pool. Final components still require contrast and
+          minimum-size checks.
+        </p>
+      </section>
+
+      <section id="coverage" class="atlas-section" aria-labelledby="coverage-title">
+        <div class="section-heading">
+          <p class="eyebrow">04 / NOTHING LEFT OUTSIDE</p>
+          <h2 id="coverage-title">A screen is more than its happy path.</h2>
+          <p>
+            Inventory of existing destinations and the required redesign states. “Planned” refers to
+            the new Field Kit treatment, not whether the underlying feature already exists.
+          </p>
+        </div>
+        <div class="inventory-toolbar">
+          <label
+            >Show
+            <select id="inventory-filter">
+              <option value="all">Every surface</option>
+              <option value="player">Player journey</option>
+              <option value="support">Supporting flows</option>
+              <option value="authoring">Authoring tools</option>
+              <option value="system">System states</option>
+            </select></label
+          >
+          <span id="inventory-count" class="mono"></span>
+        </div>
+        <div
+          class="matrix-wrap"
+          tabindex="0"
+          role="region"
+          aria-label="Screen and state matrix; scroll horizontally on small screens"
+        >
+          <table class="screen-matrix">
+            <caption>
+              Field Kit redesign coverage and review requirements
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Surface</th>
+                <th scope="col">States to cover</th>
+                <th scope="col">Shared treatment / placement</th>
+                <th scope="col">New design</th>
+              </tr>
+            </thead>
+            <tbody id="screen-matrix-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="assets" class="atlas-section" aria-labelledby="assets-title">
+        <div class="section-heading">
+          <p class="eyebrow">05 / A KIT THAT CAN GROW</p>
+          <h2 id="assets-title">Every slot has a brief.</h2>
+          <p>
+            A replacement should know where it belongs. The asset framework connects previews,
+            requirements, source records and generation prompts to the same semantic slot.
+          </p>
+        </div>
+        <div class="asset-layout">
+          <div class="asset-sample">
+            <div class="asset-sample-art" data-drone aria-hidden="true"></div>
+            <span class="badge proposed">Illustrative asset slot</span>
+            <h3>FPV / player / scout</h3>
+            <p>
+              Four propellers, compact frame, front camera. Amber center marks the player; the body
+              does not redefine the collision footprint.
+            </p>
+            <dl>
+              <div>
+                <dt>Preview</dt>
+                <dd>Native size + enlarged + in context</dd>
+              </div>
+              <div>
+                <dt>States</dt>
+                <dd>Idle, direction, ability, hit, respawn</dd>
+              </div>
+              <div>
+                <dt>Replacement</dt>
+                <dd>Draft → validate → preview → apply</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="asset-contract">
+            <h3>One record, useful to both artist and admin</h3>
+            <ul class="contract-list">
+              <li>
+                <span>01</span>
+                <div>
+                  <strong>Identity and requirements</strong>
+                  <p>
+                    Stable slot, theme, dimensions, pixel grid, palette roles, pivot, animation/rig
+                    contract and footprint constraints.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <strong>Review before replacement</strong>
+                  <p>
+                    Preview on light, dark and real field backgrounds. Preserve originals when
+                    cropping; validate every member before applying a collection.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <strong>A complete generation prompt</strong>
+                  <p>
+                    Include style, exact output requirements, required states, forbidden visual
+                    collisions and the current reference version. Copy one slot or a coordinated
+                    collection brief.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span>04</span>
+                <div>
+                  <strong>Theme without rule drift</strong>
+                  <p>
+                    FPV is the complete first production theme. Ukrainian, Retro and Coupa are
+                    future presentation collections; gameplay rules stay separate.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <details class="prompt-example">
+          <summary>Review an illustrative AI asset brief</summary>
+          <p class="small-note">
+            Proposed example; production prompts must derive their exact geometry and filenames from
+            the selected registry slot.
+          </p>
+          <pre id="prompt-example-text">
+Create an original top-down FPV scout sprite for the RevealLine Pixel FPV Field Kit.
+Use a compact charcoal quad frame, four separate propellers, a front camera and a small antenna. A warm amber center identifies the player. Use the selected slot’s exact dimensions, pivot, frame order and palette contract; do not invent these values.
+Keep a crisp pixel grid, restrained highlights and a clear silhouette at native size. Use a transparent background. Do not paint HUD text, glows, a collision outline, a trail, a logo or scenery into the body. Keep every required pose in the same scale and lighting direction.
+Return the sprite or coordinated sheet with all required states, an unchanged slot contract and a short description of the variation. Preserve gameplay bounds. Review on the arena before publishing.</pre
+          >
+          <button type="button" id="copy-prompt">Copy example brief</button
+          ><span id="copy-status" role="status"></span>
+        </details>
+      </section>
+
+      <section class="atlas-section" aria-labelledby="baseline-title">
+        <p class="eyebrow">COMMITTED BASELINE / FE9961E · V0.43.0</p>
+        <h2 id="baseline-title">The starting point, preserved.</h2>
+        <p class="section-deck">
+          Actual screenshots from the reviewed source, isolated from redesign edits. The redesign
+          studies above are proposals. Desktop browser resizing provides layout evidence, not
+          physical-device certification.
+        </p>
+        <div class="reference-grid">
+          <figure>
+            <a href="../../docs/verification/fpv-redesign/baseline/title-desktop.jpg"
+              ><img
+                loading="lazy"
+                src="../../docs/verification/fpv-redesign/baseline/title-desktop.jpg"
+                alt="Original title with ten menu actions and a decorative outlined arena"
+            /></a>
+            <figcaption>
+              <strong>Title: too many first decisions</strong>
+              <p>
+                Keep one primary action and move tools and supporting routes into clear
+                destinations.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a href="../../docs/verification/fpv-redesign/baseline/missions-desktop.jpg"
+              ><img
+                loading="lazy"
+                src="../../docs/verification/fpv-redesign/baseline/missions-desktop.jpg"
+                alt="Original chapter and mission browser with text-heavy lists"
+            /></a>
+            <figcaption>
+              <strong>Missions: make the artwork lead</strong>
+              <p>
+                Preserve selection and lock behavior while replacing the dense lists with a paced
+                gallery.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a href="../../docs/verification/fpv-redesign/baseline/settings-desktop.jpg"
+              ><img
+                loading="lazy"
+                src="../../docs/verification/fpv-redesign/baseline/settings-desktop.jpg"
+                alt="Original settings panel mixing audio, display and steering controls"
+            /></a>
+            <figcaption>
+              <strong>Settings: give each task a place</strong>
+              <p>
+                Group controls, audio, accessibility and game data instead of one long mixed form.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a href="../../docs/verification/fpv-redesign/baseline/pause-desktop.jpg"
+              ><img
+                loading="lazy"
+                src="../../docs/verification/fpv-redesign/baseline/pause-desktop.jpg"
+                alt="Original opaque pause cover with Resume, Restart mission, Mission brief and Main menu"
+            /></a>
+            <figcaption>
+              <strong>Pause: preserve concealment</strong>
+              <p>The new frame must retain opaque gameplay concealment and explicit Resume.</p>
+            </figcaption>
+          </figure>
+        </div>
+        <p>
+          <a href="../../docs/verification/fpv-redesign/baseline/title-phone.jpg"
+            >Title phone capture</a
+          >
+          ·
+          <a href="../../docs/verification/fpv-redesign/baseline/missions-phone.jpg"
+            >Mission phone capture</a
+          >
+          ·
+          <a href="../../docs/verification/fpv-redesign/baseline/briefing-phone.jpg"
+            >Briefing phone capture</a
+          >
+          ·
+          <a href="../../docs/verification/fpv-redesign/baseline/flight-desktop.jpg"
+            >Flight capture</a
+          >
+        </p>
+      </section>
+      <section id="references" class="atlas-section" aria-labelledby="references-title">
+        <div class="section-heading">
+          <p class="eyebrow">06 / THE REFERENCE, IN CONTEXT</p>
+          <h2 id="references-title">Borrow the clarity. Author the world.</h2>
+          <p>
+            All 64 supplied Xposed images were inspected. The examples below remain in the source
+            research folder; the atlas does not copy them into game assets or a release.
+          </p>
+        </div>
+        <p id="reference-status" class="small-note">
+          Local screenshot previews are available when reviewing the source repository on localhost.
+          Official source links remain available below.
+        </p>
+        <div class="reference-grid">
+          <figure>
+            <a
+              hidden
+              data-local-reference="../../docs/research/_xposed-reloaded_reloaded_examples/landing-page-v2.png"
+              ><img
+                loading="lazy"
+                data-local-image="../../docs/research/_xposed-reloaded_reloaded_examples/landing-page-v2.png"
+                alt="Xposed Reloaded title: large logo, Start and Settings beside a dark illustrated figure"
+            /></a>
+            <figcaption>
+              <span class="badge reference">Reference</span><strong>Focused title</strong>
+              <p>
+                Few decisions, a strong focal image, unmistakable selection. Adapt the composition;
+                create an original FPV scene.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a
+              hidden
+              data-local-reference="../../docs/research/_xposed-reloaded_reloaded_examples/level-and-pack-selection-menu1.png"
+              ><img
+                loading="lazy"
+                data-local-image="../../docs/research/_xposed-reloaded_reloaded_examples/level-and-pack-selection-menu1.png"
+                alt="Xposed level gallery with six image cards, cyan selection brackets, stars and high scores"
+            /></a>
+            <figcaption>
+              <span class="badge reference">Reference</span
+              ><strong>A collection worth exploring</strong>
+              <p>
+                Artwork, earned medals and a remembered selection make replay tangible. Six cards
+                are a viewport, not a pack limit.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a
+              hidden
+              data-local-reference="../../docs/research/_xposed-reloaded_reloaded_examples/moving-viaualization.png"
+              ><img
+                loading="lazy"
+                data-local-image="../../docs/research/_xposed-reloaded_reloaded_examples/moving-viaualization.png"
+                alt="Xposed active cyan-to-yellow route over a dark field, with revealed neon city artwork to the right"
+            /></a>
+            <figcaption>
+              <span class="badge reference">Reference</span><strong>The live route leads</strong>
+              <p>
+                Bright tip, clear unfinished cut, calm completed contour. Xposed mixes smooth
+                imagery with pixel UI; our selected direction unifies the art.
+              </p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a
+              hidden
+              data-local-reference="../../docs/research/_xposed-reloaded_reloaded_examples/level-complete.jpg"
+              ><img
+                loading="lazy"
+                data-local-image="../../docs/research/_xposed-reloaded_reloaded_examples/level-complete.jpg"
+                alt="Xposed completion screen with three stars, achievement descriptions, score and direct next/retry controls"
+            /></a>
+            <figcaption>
+              <span class="badge reference">Reference</span
+              ><strong>Reward, then the next route</strong>
+              <p>
+                Explain medals and preserve immediate Retry / Next. Keep picture appreciation
+                distinct from actual achieved coverage.
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="source-links">
+          <a href="https://store.playstation.com/en-us/product/UP2538-CUSA28099_00-XPOSEDRELOADED01"
+            >Xposed Reloaded · official listing ↗</a
+          >
+          <a href="https://www.nintendo.com/en-ca/store/products/xposed-switched-switch/"
+            >Xposed Switched · related release ↗</a
+          >
+          <a hidden data-local-reference="../../docs/research/round-07-reloaded-ui-motion.md"
+            >Prior motion and UI observations ↗</a
+          >
+          <a hidden data-local-reference="../../docs/research/round-05-reloaded-stills.md"
+            >Prior terrain and readability audit ↗</a
+          >
+        </div>
+      </section>
+    </main>
+    <footer class="atlas-footer">
+      <span>REVEALLINE / PIXEL FPV FIELD KIT</span>
+      <p>
+        Original layout studies. Review artifact. Screen treatment remains proposed until
+        implemented and verified in the actual game.
+      </p>
+      <a href="#main">Back to the signal ↑</a>
+    </footer>
+    <script type="module" src="./atlas.mjs"></script>
+  </body>
+</html>

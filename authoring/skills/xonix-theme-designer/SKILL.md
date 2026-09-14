@@ -7,6 +7,8 @@ description: 'Design or revise Xonix game themes and content packs, including Uk
 
 Turn a theme request into a concrete art direction and draft content pack. Work within the user's approved scope; do not request approval again for routine authoring changes.
 
+The active Reveal Line presentation direction is the approved [FPV Field Kit redesign](../../../docs/fpv-redesign-design.md), with [phase status](../../../docs/fpv-redesign-execution.md) and [interactive atlas](../../design-atlas/index.html). Use its ink/cyan/amber palette, readable Exo 2 interface, large Handjet accents and Plex telemetry. Future Ukrainian/Retro/Coupa collections remain separate from the first complete FPV delivery. The atlas is a review artifact; confirm which compiler/studio/runtime phase actually shipped before prescribing its interface. Existing campaign and saved-art ownership contracts remain authoritative.
+
 For a theme applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [runtime configuration guide](../../../docs/assets-and-configuration.md). Edit the actual theme record from `game/content/themes.json` or an exported `xonix-playground.v1` scenario; legacy family names and draft-pack fields are not runtime imports. The draft workflow below still applies when a draft pack is the requested deliverable.
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
