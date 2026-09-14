@@ -2,7 +2,24 @@
 
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
 
-## Current priority — scalable media, complete stories and navigation
+## Current priority — restore correct rewards, then complete native delivery
+
+**Latest verified public release: [v0.38.0](https://mekhovov.github.io/revealline/releases/v0.38.0/site/game/).** Couch, its original/installed chapter journeys and scoped public delivery are complete, including all 1,726 public files and the full ZIP stream. [Release record](https://github.com/mekhovov/revealline/releases/tag/v0.38.0) · [Native evidence](verification/round-47/v038-native.md).
+
+**v0.39 is a held frozen candidate.** Exact `23b886bbdbea` passes six gates / 3,337 tests, independent artifact reconstruction and local Pages checks. A frozen restored Fracture FPV run won with the correct picture, then Collection refused it with “Earned picture owner differs from the completed execution.” Game-data export also refused with “Current and persisted installed packs differ.” The cause remains under investigation. Keep [PR #15](https://github.com/mekhovov/revealline/pull/15) and publication held while that ownership error is diagnosed and corrected; preserve the tag, draft assets and failing native evidence. The [production plan](production-plan.md) gives the current P0–P9 status and next gates.
+
+| Order | Phases            | Required next result                                                                                                                                                                                                                                                            |
+| ----- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | P5/P7             | Correct saved-win Collection and game-data export, retain exact owner and first-earned guards, repeat the actual saved-win/reopen and export journeys, then qualify the corrected source and complete frozen/public delivery.                                                   |
+| 2     | P1/P2/P7          | Native-test More Worlds source `c40e603e` and FPV presentation source `63713050`; qualify committed stable UI candidate `57f78` and the packaged combination. More Worlds' 36-choice modeled ceiling is separate from twelve actual catalog entries and twelve installed slots. |
+| 3     | P0/P2/P3/P4/P5/P6 | Continue references and human challenge review; qualify Fracture, advance unadopted Countercurrent sources, complete albums and remaining maps/pictures/stories/reserves/player/supporting assets.                                                                              |
+| 4     | P7/P8/P9          | Complete browser/device/performance/recovery acceptance, then real native packages; private online races remain later.                                                                                                                                                          |
+
+Content targets remain **29 wide maps / 116 pictures / 12 stories / 40 reserves / 56 player presentations / 24 finished and auditioned tracks**. Public v0.38 retains **36 produced pictures over nine families**. The separate v0.39 Fracture candidate has **48/116 produced pictures over twelve proposed families, zero quality-approved maps**. Countercurrent's **twelve further source originals are unadopted** and are not added to either count. Neither the seven new FPV source bodies nor shared rigs represent 56 finished presentation sets. [All eight feedback requirements](feedback-and-next-steps.md) remain open to their stated remaining acceptance.
+
+## Historical priority checkpoint — v0.35 source handoff
+
+The following checkpoint and all subsequent historical entries retain their original evidence and statuses. Current priorities above supersede their old pending-delivery labels.
 
 The latest user instruction authorizes continued implementation. The [production plan](production-plan.md) sets current priorities while retaining stable IDs and historical evidence below. Historical sections describe their named handoff, not the latest release status; their old approval pauses and pending gates do not override this section.
 
