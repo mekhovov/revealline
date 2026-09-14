@@ -29,3 +29,8 @@ Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atl
 ## Preserve title and mission flow
 
 > Extend the implemented five-action title and mission gallery using `field-kit-flow.css`, `game-shell.mjs` and `mission-gallery.mjs`. Preserve saved continuation destination, mission selection/page, lock reasons, earned-picture privacy, medals and controller return focus. Keep one Deploy action in preparation, device-aware hints and the existing held-input protections. Use the prepared landscape/portrait scenes, real DOM text, and shared typography. Inspect desktop six-card paging, tablet two columns, narrow single column, Large text, and the short-landscape setup panel. Store source art unchanged; new scene derivatives require exact dimensions, crop/sampling metadata, source/derivative hashes and release verification.
+
+
+## Keep optional chapters independent of authoring and Couch
+
+> Review the current build's declared optional chapters without changing their original bytes or the 64 MiB core limit. Reject a required startup dependency on an unavailable optional Arcade R5 request. Verify Couch can still start and pause a base map and can read an explicitly installed chapter through its existing exact-original reader, without changing solo progress. In Asset Studio, preserve the declared generic context when optional fixture metadata is unavailable; complete exact-owner inputs should fetch no unrelated pack, and incomplete owners must report unavailable. Test rejected requests and HTTP failures, preserve online behavior, and report generated-cache verification separately from native offline play. Never rewrite a frozen release to apply this integration fix.
