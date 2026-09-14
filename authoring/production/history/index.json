@@ -5,6 +5,11 @@
       "path": "authoring/motion-lab/presets.json",
       "bytes": 19910,
       "sha256": "ea9cf4d7fce6b4b9afdbcd709819d0f5d7b35ed117a47868fea69209b037d912"
+    },
+    {
+      "path": "authoring/motion-lab/presets.json",
+      "bytes": 34518,
+      "sha256": "e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0"
     }
   ]
 }

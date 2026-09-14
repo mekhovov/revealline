@@ -23,7 +23,14 @@
     "authoring/library/fpv-role-presentations/originals/interceptor.png",
     "authoring/library/fpv-role-presentations/originals/fiber.png",
     "authoring/library/fpv-role-presentations/originals/impact.png",
-    "authoring/library/fpv-role-presentations/originals/trapper.png"
+    "authoring/library/fpv-role-presentations/originals/trapper.png",
+    "authoring/library/ukraine-role-wide-variants/originals/scout-v3.png",
+    "authoring/library/ukraine-role-presentations/originals/bomber.png",
+    "authoring/library/ukraine-role-presentations/originals/carrier.png",
+    "authoring/library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+    "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
+    "authoring/library/ukraine-role-presentations/originals/impact.png",
+    "authoring/library/ukraine-role-presentations/originals/trapper.png"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
