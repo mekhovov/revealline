@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "fracture-lines-ukraine",
+  "revision": 1,
+  "source": {
+    "id": "fracture-lines",
+    "bytes": 9533,
+    "sha256": "c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421"
+  },
+  "pack": {
+    "bytes": 9311,
+    "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+  },
+  "media": {
+    "bytes": 8734108,
+    "sha256": "d94ca5b780356b07e9c0e6ba9853eb74661cfd2a401f8c135c3eb782152a1413"
+  },
+  "campaignKey": "fracture-lines-ukraine/1/8b020a538ec5549f",
+  "themeId": "ukraine",
+  "originals": [
+    {
+      "assetId": "fracture-lines-ukraine-poster-1",
+      "presentationId": "fracture-lines-ukraine-poster-1-presentation",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "sha256": "1771010fd554d44713b7fc644f8ab8cbd42a41accfc16e6a564771dffcc59ac9",
+      "bytes": 2756776,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "fracture-lines-ukraine-poster-2",
+      "presentationId": "fracture-lines-ukraine-poster-2-presentation",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "sha256": "ad53eeeb26cd508212d5dff1893688ba0aed9cf3ce12efc236d93fb0db4b8822",
+      "bytes": 2981883,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "fracture-lines-ukraine-poster-3",
+      "presentationId": "fracture-lines-ukraine-poster-3-presentation",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "sha256": "65dc84fbb7fcd068cf4bb7ad4b13193f0f9c1393e71b85fa629c1a16b9e717ab",
+      "bytes": 2983333,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}
