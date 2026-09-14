@@ -637,3 +637,42 @@
   margin: 12px auto 0;
   width: fit-content;
 }
+
+/* Keep a shown D-pad clear of the complete board in short landscape.
+   Existing compiled width/height limits still own the vertical header reserve. */
+@media (orientation: landscape) and (max-height: 600px) {
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'] {
+    --dpad-left-edge: max(24px, calc(var(--safe-left) + 12px));
+    --dpad-right-edge: max(24px, calc(var(--safe-right) + 12px));
+    --dpad-board-left: var(--safe-left);
+    --dpad-board-right: var(--safe-right);
+  }
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left'] {
+    --dpad-board-left: calc(var(--dpad-left-edge) + var(--touch-size) + 12px);
+  }
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right'] {
+    --dpad-board-right: calc(var(--dpad-right-edge) + var(--touch-size) + 12px);
+  }
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='left']:has(
+      .play-controls .ability-buttons > button:not([hidden])
+    ) {
+    --dpad-board-right: calc(var(--dpad-right-edge) + 160px + 12px);
+  }
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad'][data-touch-side='right']:has(
+      .play-controls .ability-buttons > button:not([hidden])
+    ) {
+    --dpad-board-left: calc(var(--dpad-left-edge) + 160px + 12px);
+  }
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad']
+    .arena-panel
+    > .arena-shell,
+  .game-shell[data-flight-state='running'][data-screen-controls='shown'][data-touch-mode='dpad']
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    left: calc(
+      var(--dpad-board-left) + (100% - var(--dpad-board-left) - var(--dpad-board-right)) / 2
+    );
+    min-width: 0;
+    max-width: max(0px, calc(100% - var(--dpad-board-left) - var(--dpad-board-right)));
+  }
+}
