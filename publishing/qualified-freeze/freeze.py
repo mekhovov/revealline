@@ -51,7 +51,10 @@ def main():
     require(shutil.disk_usage(source).free >= 8 * 1024**3, 'Hosted freeze requires at least 8 GiB free')
     require(not (source / 'releases' / version).exists() , 'Existing immutable output')
     def api(path, raw=False):
-        data = subprocess.check_output(['gh', 'api', 'repos/mekhovov/revealline/' + path])
+        # Preserve exact ANSI bytes for hashing in a pipe; never render the log.
+        command = ['gh', 'api', 'repos/mekhovov/revealline/' + path]
+        if raw: command.append('--allow-escape-sequences')
+        data = subprocess.check_output(command)
         return data if raw else json.loads(data)
     run = api(f"actions/runs/{pin['runId']}")
     require(run['head_sha'] == pin['sourceRevision'] and run['event'] == 'push' and run['path'] == '.github/workflows/qualify-release-source.yml' and run['status'] == 'completed' and run['conclusion'] == 'success' and run['run_attempt'] == 1, 'Live source run differs')
