@@ -70,7 +70,7 @@ export function enemyGuidePracticeInstructions(topic, exercise = 'observe') {
       ? 'First, leave Boost off and tap Down. Watch the hit split into two sparks and the forward spark catch you. Then Retry or return here to try Escape.'
       : 'Enable Boost before tapping Down: hold your Boost button, or switch it on if Toggle is selected. Keep flying to the far safe border to clear the sparks. No ability is needed.';
   }
-  return `${enemyGuideEntry(topic).try} Move with direction taps; Pause when you want to inspect. Retry starts the same lesson.`;
+  return `${enemyGuideEntry(topic).try} Move with direction taps; Pause when you want to inspect. Closing a cut stops your craft; tap a fresh direction to fly again. Retry starts the same lesson.`;
 }
 
 /** Materializes a fresh isolated practice recipe; it never changes a pack or live run. */

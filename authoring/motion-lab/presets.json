@@ -807,6 +807,223 @@
       "availability": "starter",
       "compactMinimumCSSPixels": 20,
       "originalSha256": "13e4aec02c72bf2f4a7cd26eee43c0a5e963de6bee3af3dd62dd22498831c869"
+    },
+    "atlas-swallow-v3": {
+      "label": "Round courier swallow",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-swallow-v3-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "25f9a6034a5c20e5cbb9aaa1e225a8deccd56ddd2dbb3bebec15f712fe3fa012",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-wide-variants/originals/scout-v3.png",
+          "bytes": 736862,
+          "sha256": "25f9a6034a5c20e5cbb9aaa1e225a8deccd56ddd2dbb3bebec15f712fe3fa012",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-pottery-courier-v1": {
+      "label": "Pottery courier",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-pottery-courier-v1-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-presentations/originals/bomber.png",
+          "bytes": 871364,
+          "sha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-carved-chest-v1": {
+      "label": "Carved supply chest",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-carved-chest-v1-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-presentations/originals/carrier.png",
+          "bytes": 843442,
+          "sha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-falcon-crest-v3": {
+      "label": "Broad falcon chevron",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-falcon-crest-v3-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+          "bytes": 695081,
+          "sha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-weaver-shuttle-v3": {
+      "label": "Wide barrel bobbin",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-weaver-shuttle-v3-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-wide-variants/originals/fiber-v3.png",
+          "bytes": 887360,
+          "sha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-bell-warden-v1": {
+      "label": "Bell warden",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-bell-warden-v1-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-presentations/originals/impact.png",
+          "bytes": 776281,
+          "sha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce",
+          "width": 128,
+          "height": 128
+        }
+      }
+    },
+    "atlas-woven-basket-v1": {
+      "label": "Woven basket",
+      "sourceStatus": "Original generated RGBA body with source-reviewed wing rig; runtime source candidate, pending gameplay and device qualification.",
+      "src": "../library/runtime-sprite-candidates-v1/export/atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "atlas-woven-basket-v1-wings",
+      "rotors": [],
+      "compactMinimumCSSPixels": 20,
+      "presentationSetId": "ukraine-roles-v1",
+      "availability": "starter",
+      "originalSha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+      "derivation": {
+        "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+        "source": {
+          "src": "../library/ukraine-role-presentations/originals/trapper.png",
+          "bytes": 1062942,
+          "sha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+          "width": 1254,
+          "height": 1254
+        },
+        "output": {
+          "bytes": 65737,
+          "sha256": "3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac",
+          "width": 128,
+          "height": 128
+        }
+      }
     }
   },
   "terrainLayers": {
@@ -1400,6 +1617,146 @@
           "hubColor": "#253543"
         }
       ]
+    },
+    "atlas-swallow-v3-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.3, -0.1, -1],
+            [0.3, -0.1, 1]
+          ],
+          "span": 0.185,
+          "chord": 0.14,
+          "frequencyHz": 2.4,
+          "speedFrequencyGain": 0.6,
+          "amplitudeDegrees": 16,
+          "foldFraction": 0.1,
+          "color": "#638a99",
+          "tipColor": "#e5ba6c"
+        }
+      ]
+    },
+    "atlas-pottery-courier-v1-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.23, -0.13, -1],
+            [0.23, -0.13, 1]
+          ],
+          "span": 0.22,
+          "chord": 0.18,
+          "frequencyHz": 1.8,
+          "speedFrequencyGain": 0.45,
+          "amplitudeDegrees": 20,
+          "foldFraction": 0.25,
+          "color": "#f3ecdf",
+          "tipColor": "#d98277"
+        }
+      ]
+    },
+    "atlas-carved-chest-v1-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.22, -0.22, -1],
+            [0.22, -0.22, 1]
+          ],
+          "span": 0.23,
+          "chord": 0.22,
+          "frequencyHz": 1.2,
+          "speedFrequencyGain": 0.35,
+          "amplitudeDegrees": 13,
+          "foldFraction": 0.2,
+          "color": "#e5ba6c",
+          "tipColor": "#90b7bf"
+        }
+      ]
+    },
+    "atlas-falcon-crest-v3-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.285, -0.08, -1],
+            [0.285, -0.08, 1]
+          ],
+          "span": 0.195,
+          "chord": 0.14,
+          "frequencyHz": 2.6,
+          "speedFrequencyGain": 0.5,
+          "amplitudeDegrees": 12,
+          "foldFraction": 0.12,
+          "color": "#b48845",
+          "tipColor": "#f3ecdf"
+        }
+      ]
+    },
+    "atlas-weaver-shuttle-v3-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.235, -0.17, -1],
+            [0.235, -0.17, 1]
+          ],
+          "span": 0.22,
+          "chord": 0.16,
+          "frequencyHz": 2.2,
+          "speedFrequencyGain": 0.55,
+          "amplitudeDegrees": 18,
+          "foldFraction": 0.3,
+          "color": "#567f90",
+          "tipColor": "#d98277"
+        }
+      ]
+    },
+    "atlas-bell-warden-v1-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.162, -0.196, -1],
+            [0.162, -0.196, 1]
+          ],
+          "span": 0.28,
+          "chord": 0.2,
+          "frequencyHz": 1.6,
+          "speedFrequencyGain": 0.4,
+          "amplitudeDegrees": 15,
+          "foldFraction": 0.22,
+          "color": "#e5ba6c",
+          "tipColor": "#f3ecdf"
+        }
+      ]
+    },
+    "atlas-woven-basket-v1-wings": {
+      "components": [
+        {
+          "id": "wings",
+          "type": "wings",
+          "anchors": [
+            [-0.335, -0.105, -1],
+            [0.335, -0.105, 1]
+          ],
+          "span": 0.12,
+          "chord": 0.16,
+          "frequencyHz": 1.5,
+          "speedFrequencyGain": 0.35,
+          "amplitudeDegrees": 18,
+          "foldFraction": 0.24,
+          "color": "#f3ecdf",
+          "tipColor": "#90b7bf"
+        }
+      ]
     }
   },
   "familyLooks": {
@@ -1450,6 +1807,39 @@
           "fpv-fiber-relay-v1",
           "fpv-impact-v1",
           "fpv-trapper-v1"
+        ]
+      },
+      {
+        "id": "ukraine-roles-v1",
+        "themeId": "ukraine",
+        "themeFamily": "atlas",
+        "legacyPlayer": "ukrainian-bird",
+        "matchClassBodies": {
+          "scout": "ukrainian-bird",
+          "bomber": "ukrainian-bird",
+          "carrier": "ukrainian-bird",
+          "interceptor": "ukrainian-bird",
+          "fiber": "ukrainian-bird",
+          "impact": "ukrainian-bird",
+          "trapper": "ukrainian-bird"
+        },
+        "classBodies": {
+          "scout": "atlas-swallow-v3",
+          "bomber": "atlas-pottery-courier-v1",
+          "carrier": "atlas-carved-chest-v1",
+          "interceptor": "atlas-falcon-crest-v3",
+          "fiber": "atlas-weaver-shuttle-v3",
+          "impact": "atlas-bell-warden-v1",
+          "trapper": "atlas-woven-basket-v1"
+        },
+        "starterBodies": [
+          "atlas-swallow-v3",
+          "atlas-pottery-courier-v1",
+          "atlas-carved-chest-v1",
+          "atlas-falcon-crest-v3",
+          "atlas-weaver-shuttle-v3",
+          "atlas-bell-warden-v1",
+          "atlas-woven-basket-v1"
         ]
       }
     ]

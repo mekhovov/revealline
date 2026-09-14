@@ -1,0 +1,69 @@
+{
+  "format": "ukraine-role-wide-lineage.v1",
+  "classId": "fiber",
+  "bodyId": "atlas-weaver-shuttle-v3",
+  "parentCommit": "7611ea334ef0d60ca9abb791299b4edf74e6ce08",
+  "parentOriginal": {
+    "path": "authoring/library/ukraine-role-presentations/originals/fiber.png",
+    "bytes": 541570,
+    "sha256": "564a3c32bf941aa5e3acfaddf34e52856489e84b9d47099ec8229a5ba5d35ca2"
+  },
+  "tool": "image_gen.imagegen",
+  "attempts": [
+    {
+      "stage": "shape-edit",
+      "mode": "built-in image edit",
+      "path": "originals/fiber-v2.png",
+      "bytes": 1763130,
+      "sha256": "89e4f2897f21fbf3a884725ad2ef1619b096c9dd615caa760e774e9b047ae4cf",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-be0ff28f-87ac-4038-908f-5041e1f62b62.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 2, 0, 0, 0],
+      "inputImage": "authoring/library/ukraine-role-presentations/originals/fiber.png",
+      "inputSha256": "564a3c32bf941aa5e3acfaddf34e52856489e84b9d47099ec8229a5ba5d35ca2",
+      "prompt": "Use case: precise-object-edit.\nAsset type: independently replaceable Ukraine Atlas game BODY sprite, compact v2 silhouette edit.\nInput image 1 is the exact v1 edit target. Preserve its broad invented Ukrainian craft-inspired modern pixel-art style and palette; redesign the body's proportions and simplify the interior as requested below. This is new original artwork, not a stretched or cropped resampling of v1.\nOutput: requested square 1024 x 1024 PNG with genuine transparent alpha. One complete centered wingless body, north pointing straight UP, strict top-down view. Clear transparent margin on every side. No background, checkerboard pixels, text, logos, frame, ground shadow, montage or effects.\nCompact framing: solid central BODY must occupy roughly 65\u201372% of total canvas width and 70\u201378% of total height, excluding any detached part. The body must have a broad solid mass readable at a 20-pixel square frame, aiming at least 12 pixels wide. Short nose and short tail, no long needle silhouette. Use a few large color regions and crisp stepped pixel clusters; remove fine inner ornament and hairline details.\nKeep two small dark-edged shoulder sockets rooted directly into solid left and right upper body edges, with visible attached bases. NO extended wings, propellers, feathers spreading sideways, loose cables, detached ornaments, magic rings or moving parts. Procedural wings will attach separately.\nPalette stays warm ivory #f3ecdf, deep indigo #29343c, muted turquoise #90b7bf, amber #e5ba6c and restrained coral #d98277, with the role's specified dominant colors. Broad outlines must read on both cream and dark backgrounds. No historical-authenticity claims or copied traditional symbols.\nRequested edit: Redesign the narrow weaving shuttle as a WIDE BARREL-BOBBIN craft body, squat and almost square, with a short pointed north cap and blunt short south end. A large broad coral-and-amber bobbin fills the middle; use just two bold diagonal thread bands. Wide turquoise/ivory barrel rims frame it. One clearly attached OFFSET small turquoise spool protrudes from one side, making an obvious asymmetric step in the silhouette, but no detached piece or loose thread. Simplify all tiny ornament. Keep two shoulder sockets on solid upper body flanks. Distinct broad mechanical barrel outline, not a bird, long canoe or needle.",
+      "promptSha256": "8f63e1d670d956e33783b988f5ccbe965aa0176d7010d13591e58eb444e8d29e",
+      "status": "rejected: RGB8 baked checkerboard",
+      "transformations": []
+    },
+    {
+      "stage": "alpha-edit",
+      "mode": "built-in background extraction edit",
+      "path": "originals/fiber-v2-alpha.png",
+      "bytes": 2428365,
+      "sha256": "54310f723cdcafceec10372c251fea0d888f0cdd37c0f5eadacded8df3188234",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-83fa42cf-76d1-449b-8939-503f84b68fca.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 2, 0, 0, 0],
+      "inputImage": "authoring/library/ukraine-role-wide-variants/originals/fiber-v2.png",
+      "inputSha256": "89e4f2897f21fbf3a884725ad2ef1619b096c9dd615caa760e774e9b047ae4cf",
+      "prompt": "Use case: background-extraction.\nInput image 1 is the EDIT TARGET, a game body sprite on an unwanted opaque gray-white checkerboard background.\nRemove the entire checkerboard background, including all small checker pattern remnants and transparent-looking decoration outside the body. Return the complete centered subject as a PNG with a genuinely transparent alpha channel. Transparent means alpha=0 pixels outside the subject; do NOT draw a gray/white checkerboard, black background, white background or any other replacement pixels.\nKeep the existing broad body silhouette, north heading, original colors, crisp pixel-art subject edges, short tail or bobbin, and its two attached shoulder sockets. No wings or effects. This edit changes the background only; do not narrow, redraw, crop, stretch or decorate the body. Keep the complete square framing and transparent margins.\nOne isolated sprite; no text, no logos, no border. Actual PNG transparency is required.",
+      "promptSha256": "fafa21f772f97d7580dded4a7fb3aa7fff122e928358cd91c9c69939ed4d525f",
+      "status": "rejected: RGB8 baked checkerboard again",
+      "transformations": []
+    },
+    {
+      "stage": "fresh-original",
+      "mode": "built-in original generation without reference input",
+      "path": "originals/fiber-v3.png",
+      "bytes": 887360,
+      "sha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-574d0a5f-aa9a-490f-9e35-3cc9b43405c3.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 6, 0, 0, 0],
+      "inputImage": null,
+      "inputSha256": null,
+      "prompt": "Use case: stylized-concept.\nCreate one ORIGINAL modular game BODY sprite on a genuinely transparent alpha background; no reference image input.\nRequested output 1024 x 1024 square PNG. Real alpha=0 outside the subject, never a painted checkerboard or colored background.\nSubject: a WIDE BARREL-BOBBIN weaving craft BODY pointing UP/north, no wings. Squat barrel almost square in its main mass, with a short pointed north cap and blunt short south end. One broad coral/amber bobbin fills the middle, with just two large diagonal thread bands. Thick turquoise and ivory barrel rims frame the spool. A visibly attached OFFSET small turquoise spool makes an asymmetric step on one side; no detached part or loose thread.\nCentral body should occupy roughly 65\u201370% of full canvas width and 72\u201378% height, centered with transparent margins. Not a long needle, canoe or spindle. The wide mechanical barrel and off-center spool should make a distinct 20-pixel silhouette.\nTwo small dark-rimmed sockets are embedded directly into solid upper-left and upper-right body flanks for separately rendered wings; socket bases must be visibly attached.\nStyle: beautiful original modern pixel art with deliberate stepped outlines and broad simple color panels, invented Ukrainian craft-inspired fantasy. Ivory #f3ecdf, deep indigo #29343c, turquoise #90b7bf, amber #e5ba6c, coral #d98277. Strong dark outline that reads on light and dark. No fine thread texture or inner embroidery; two bold thread bands are sufficient. No authentic artifact claim.\nStrict north-facing top-down sprite. No text, logos, border, montage, floor, shadow, glow, extended wings, rotors, loose ornaments, detached pieces or action effects. Preserve real transparent alpha.",
+      "promptSha256": "bb4433c5d79e2b69ad09e25926643fc0cf833fac06f0ff3e6b8e3b231dbb9878",
+      "status": "candidate: RGBA8 header; full alpha and compact review pending",
+      "transformations": []
+    }
+  ],
+  "selectedStage": "fresh-original",
+  "visualObservations": [
+    "Wide coral bobbin with bold diagonal bands and a visibly attached right-side spool.",
+    "North cap is taller and a small central ornament more elaborate than the minimal brief."
+  ],
+  "qualification": "New source candidate, not an exact pixel-preserving edit or runtime binding. Original alpha and metadata remain untouched. Full compact/wing/native review pending.",
+  "runtimeBinding": null
+}

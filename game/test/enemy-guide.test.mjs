@@ -51,7 +51,13 @@ test('all four-theme/two-policy lesson variants validate without changing origin
         stepRun(run, { direction: 'down' }, FIXED_DT);
         assert.equal(run.tick, 1);
         if (id === 'line-impact') assert.deepEqual(scenario.level, impactScenario.level);
-        else assert.ok(scenario.level.enemies.some((enemy) => enemy.type === id));
+        else {
+          assert.ok(scenario.level.enemies.some((enemy) => enemy.type === id));
+          assert.match(
+            enemyGuidePracticeInstructions(id),
+            /Closing a cut stops your craft; tap a fresh direction/,
+          );
+        }
       }
   assert.deepEqual({ themes, impactScenario }, before);
   assert.throws(() => lesson('bouncer', 'fpv', 'diagonal'), /Unknown turning/);

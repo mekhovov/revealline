@@ -79,6 +79,9 @@
 .game-shell[data-screen-controls='shown'] .play-controls > * {
   pointer-events: auto;
 }
+.game-shell[data-touch-side='right'] .play-controls .direction-controls {
+  margin-left: auto;
+}
 .game-shell .play-controls .ability-buttons {
   flex: 0 1 160px;
   justify-content: end;
@@ -312,7 +315,7 @@
   --touch-size: 192px;
 }
 .game-shell[data-screen-controls='shown'] .play-controls {
-  flex-direction: row-reverse;
+  flex-direction: row;
   bottom: max(24px, calc(var(--safe-bottom) + 12px));
   left: max(24px, calc(var(--safe-left) + 12px));
   right: max(24px, calc(var(--safe-right) + 12px));

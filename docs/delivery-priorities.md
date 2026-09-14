@@ -1,0 +1,92 @@
+# RevealLine delivery plan
+
+Updated 14 September 2026. This is the current priority register. The detailed history in `current-delivery-plan.md` retains earlier attempts and evidence; this page distinguishes playable releases, source work and remaining acceptance gates.
+
+## Current delivery
+
+**Playable milestone:** [v0.42.0](https://mekhovov.github.io/revealline/releases/v0.42.0/site/game/) and its [release/download](https://github.com/mekhovov/revealline/releases/tag/v0.42.0). Exact source `e9928cd` passed all six local gates, including 3,471 tests, independent artifact checks and main workflow `34882217731`. Public verification matched all 349 manifest-listed files and the complete 310,546,556-byte downloadable ZIP. A public keyboard journey verified stopping at an internal captured boundary until a fresh direction. These checks do not certify physical phones/controllers or complete custom-media transfer.
+
+**Current source integration:** combine the committed Field Kit interface and asset framework through `3d399074` (version 0.50) with the recovery, Collection, HUD and readable-text work at `8ab6107`. Preserve the existing single presentation registry, Asset Studio, newer touch controls and compiled default art. Separate uncommitted v0.51 work is not part of this checkpoint. Published tags v0.44–v0.46 and the later committed interface work remain separate delivery records; a higher version number does not prove its canonical Pages deployment.
+
+The integration is being tested. Renderer/Guide checks pass on Node 20 and 22; menu/recovery corrections and the final combined browser journey remain in progress. Older native receipts do not qualify the new combined source.
+
+## Match the eight requested improvements
+
+| ID  | Player requirement                             | Existing implementation                                                                                                           | Current work and completion condition                                                                                                                                            |
+| --- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| F01 | Stop when a cut reaches opened territory       | Capture-stop is implemented and observed on the public internal boundary. Direction release still preserves flight while cutting. | Keep both Immediate and Grid + buffer; test fresh direction, held input, queued turns, save/load and both couch players on the integrated edition.                               |
+| F02 | Faster, more interesting enemies               | Pressure chapters and differentiated patrol/chase/territory roles exist.                                                          | Tune routes, warning time and threat combinations across Standard/Expert. Require real wins, losses and retries; a solvable route alone does not establish enjoyable difficulty. |
+| F03 | Animated, detailed, directional enemies        | Distinct role bodies and directional motion exist; Field Kit adds compiled defaults.                                              | Preserve role silhouettes, heading, motion and warning readability. Verify every selected theme at actual arena scale, including reduced effects.                                |
+| F04 | Consistent character animation and useful size | Interchangeable character presentations, rotors and class identities exist.                                                       | Finish compact/detailed state sets and compare player/enemy readability together. Keep visual size distinct from collision geometry.                                             |
+| F05 | Better cuts, capture, impact and loss feedback | Active trails, travelling line impacts, capture/reward and loss feedback are implemented.                                         | Integrate the new presentation without changing verified timing; check secured-line, resumed-flight and loss messages retire at the correct event.                               |
+| F06 | Complete keyboard/controller menus             | Focus navigation, modal Back and controller input exist.                                                                          | Close the combined Workshop/Guide/recovery/Collection focus failures, then verify all menu-to-flight journeys without a mouse. Physical controllers remain a separate gate.      |
+| F07 | Native game experience                         | Full-browser shell and device-aware controls exist.                                                                               | Adopt Field Kit title, mission gallery, categorized Settings and compact flight HUD. Keep authoring separate and touch controls conditional; qualify portrait/landscape layouts. |
+| F08 | Consistent modern pixel presentation           | Field Kit uses a coherent palette, semantic typography, sprites and menu components.                                              | Keep Theme font as default and Plain plus text-size options. Inspect all screens, body states, terrain, pickups and rewards; complete the remaining production sets.             |
+
+XPOSED remains a reference for capture rhythm, visible danger, map routing and reward presentation. Reference claims remain marked documented, observed, inferred or unresolved. A chosen RevealLine behavior is not evidence of an undocumented XPOSED rule. Production artwork and audio remain original or appropriately licensed.
+
+## Controls and equipment decisions
+
+- Tap a direction to fly; release does not stop movement. Completing a cut on secured ground stops the current Arcade craft until a fresh direction. This supersedes the earlier plan's “continue after capture” rule for the new authored campaign; frozen historical rules/replays remain intact.
+- Pause preserves direction and buffered turns. Returning focus never resumes flight. Explicit Resume restores the saved movement; respawn clears stale intent.
+- Keyboard/controller play does not need a permanent arrow-button toolbar. Touch presents the selected stick, swipe or D-pad mode with an explicit side choice and space outside the active arena. Menus retain ordinary focus navigation.
+- **Arcade:** steer, capture and collect authored automatic bonuses. Generic Scan, Supply and Boost controls are absent; level design and progression determine the available benefits.
+- **Tactical:** a level may explicitly enable the craft's class action, supply/refill at pads and speed Boost. Manual controls and help must appear only when the authored capability is available. This preserves the optional Tactical game instead of silently changing its saved rules.
+- Scan is scouting/class-specific information, Supply replenishes applicable charges at authored pads, and Boost changes movement speed under the authored mode. None is a universal requirement for an Arcade victory.
+
+## Prioritized phases
+
+| Order | Phase                                       | Deliverable and exit gate                                                                                                                                                                                                                                                                             |
+| ----- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | P1/P2/P6: playable interface integration    | Finish the eight-item matrix above in the combined source. Verify readable menus, correct focus/Back, both turning modes, saved-cut Resume, distinct threats and clean reward/result flow. Commit the logical changes, then qualify an independently playable build.                                  |
+| 2     | P5: reliable media library                  | Complete original-image recovery, deliberate storage management, image/video/GIF import, frame selection, optional story segments, pack replacement and complete binary backups. Prove authoring → pack → actual win → Collection → backup/import → offline use.                                      |
+| 3     | P3: music and playlists                     | Finish 24 built-in tracks, predominantly 80s/90s synth with chiptune/rock/metal variety. Complete MP3 upload, custom/mixed playlists, shuffle/repeat, assignment, seeking and persistent session playback. Listen to every track and verify interruption, corrupt media, backup and offline behavior. |
+| 4     | P2/P4/P6: campaign and mechanics            | Expand to 29 map families with deliberate introductions of classic enemies, terrain, four powerups, bosses and Tactical interactions. Give each advertised difficulty/mode meaningful choices and explanatory cues; verify progression, achievements, saves, local scores and couch play.             |
+| 5     | P5/P6: complete reward and asset production | Finish 116 unique map/theme images, 12 optional victory stories, 40 reserves and 56 complete player presentation sets. Complete enemies, terrain, pickups, menus, achievements and sound effects. Inspect exported assets at play scale and retain editable originals, prompts and provenance.        |
+| 6     | P7: public browser qualification            | Run the complete player and pack lifecycle across browsers, ordinary hardware, real phones and available controllers. Verify performance, memory, accessibility preferences, offline recovery, deployment and rollback. Publish only the support matrix actually tested.                              |
+| 7     | P8: native distributions                    | Qualify iPhone, macOS, Steam and Steam Deck separately: lifecycle, files, audio, controller-only operation, signing, packaging and store requirements. Browser success is not native-store readiness.                                                                                                 |
+| 8     | P9: online play                             | Add private network races with authoritative simulation, reconnect, fair results and failure handling. Online matchmaking, cloud saves and global rankings are future work; existing local Couch play remains part of browser qualification.                                                          |
+
+P0 reference research, AI skills, authoring guides, validation scripts and release documentation accompany every phase. Source production can proceed independently while another slice is tested, but content is not counted as delivered before runtime and reward verification.
+
+## Content accounting
+
+The following inventory is the retained v0.41/v0.42 content cohort plus separately inspected source artwork. New Field Kit art replaces or presents some of those same owners; it must not be added to the counts as unrelated extra levels.
+
+| Target                               | Current verified accounting                                                                        | Remaining                                                                                                              |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| 29 map families / 116 theme pictures | 15 families / 60 pictures delivered; 3 additional families / 12 pictures are source candidates.    | 14 families / 56 pictures beyond delivered content, including candidates after qualification.                          |
+| 12 victory stories                   | 1 released example.                                                                                | 11 stories plus broader upload/GIF/recovery acceptance.                                                                |
+| 40 reserve illustrations             | 4 generated and inspected source illustrations.                                                    | 36 more; a reserve image is not itself a released level or animation.                                                  |
+| 56 complete player sets              | FPV and Ukraine body cohorts are delivered; Retro and Spend body cohorts are separately committed. | Full state/rotor animation and both detail treatments remain to be completed. Body counts are not complete-set counts. |
+| 24 finished tracks                   | 24-track source album candidate.                                                                   | Full listening, in-game mix, native transfer and storage qualification.                                                |
+
+The four themes remain FPV Front, Ukraine Atlas, 1994 Forever and the fictional spend-management/Coupa-inspired theme. Each theme needs the same readable mechanical roles, even when its characters, objects and goals differ. Combat interactions are game abstractions, with non-graphic victory presentation.
+
+## Framework and storage constraints
+
+Use the existing data-driven behavior registry, presentation registry, authoring tools and versioned pack/media formats. Ordinary art, actor selection, maps, rules and playlists remain configurable; genuinely new behavior primitives require code and meaningful tests. Do not build a second asset registry around the newer Field Kit framework.
+
+The initial combined raw precache exceeded the unchanged 64 MiB core limit. Fourteen reviewed runtime body derivatives now replace 12,396,181 bytes of large originals with 920,318 bytes, while preserving original source/provenance and the compiled defaults. The measured raw core is approximately 62.2 MiB; final generated-package accounting remains pending. All fifteen focused derivative tests pass on Node 20 and 22, including actual output hashes/dimensions, source/role validation, legacy records and loader behavior.
+
+Keep the 256 MiB managed-media budget and deliberate optional downloads. Twenty-four MP3s plus the current sixty pictures exceed that budget before staging; optional-media removal/recovery and truthful space feedback are therefore required. A JSON profile export alone is not a complete soundtrack/video backup.
+
+Original recovery must not steal a writer, silently adopt another profile, overwrite earned identity, grant campaign execution authority or imply that a stored picture was earned by the current player. The richer uploaded-original/download and full media roundtrip remain open. The preview music-library incident and public v0.41 Countercurrent persistence issue remain recorded until reproduced and resolved.
+
+## Verification and release reporting
+
+Each step uses: **ID · priority · status · player outcome · evidence · playable version · remaining issue**. Statuses are Proposed, Ready, In progress, Verification and Complete; Blocked identifies a specific dependency.
+
+For every completed logical feature:
+
+1. Commit its implementation, relevant tests, documentation and AI-skill changes.
+2. Verify the exact source and immutable build; preserve older versions.
+3. Create/update the feature PR, run its required checks and merge the verified change.
+4. Publish the release, verify actual Pages content and retain rollback/download links.
+5. Report what changed, what passed, known limitations and the next priority.
+
+The release workflow fix in PR #28 stages its test runner independently of frozen release source. The separate publishing-controller work governs current/archive deployment. Neither workflow success nor a local screenshot is a substitute for checking the deployed game's identity and behavior.
+
+Recommendations follow [Xbox input guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/107), [UI navigation guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112) and [objective clarity](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/109): keep the entire interface reachable with the gameplay input method, retain consistent Back/focus, state goals clearly and make explanations/rewards available again. These recommendations define acceptance work; they do not certify accessibility or physical-device support.
+
+Apple’s [game-controls guidance](https://developer.apple.com/design/human-interface-guidelines/game-controls) also supports showing only relevant touch actions, keeping frequent controls thumb-reachable, respecting safe areas and matching controller prompts to the active device. Its 44-point primary-touch recommendation informs the device checklist; it is not a claim that CSS pixels and native points are interchangeable. On hybrid devices, [MDN’s any-pointer guidance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40media/any-pointer) describes available pointer capabilities; screen width alone does not establish the active input method.

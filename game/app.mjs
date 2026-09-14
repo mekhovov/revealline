@@ -22,7 +22,11 @@ import {
 } from './optional-chapters.mjs';
 import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
-import { nextInputModality, showScreenControls } from './input-presentation.mjs';
+import {
+  nextInputModality,
+  showScreenControls,
+  hasCompactArcadeArena,
+} from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
@@ -47,6 +51,7 @@ import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
+import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -157,7 +162,8 @@ const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 
 try {
-  let attemptFiles = null;
+  let attemptFiles = null,
+    profileRecovery = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
     await Promise.all([
       getJSON('content/campaign.json'),
@@ -167,6 +173,8 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
+  const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
@@ -544,6 +552,7 @@ try {
     recorder = null,
     recordingStopped = false,
     captionUntil = 0,
+    runMessageCue = null,
     bodyWarning = '',
     lastReplay = null,
     completionWarning = '',
@@ -990,6 +999,7 @@ try {
   // Published presentation is a separate cosmetic release. Loading it never
   // opens the local Asset Studio database or changes a flight's picture pins.
   let presentationHost = null,
+    presentationSnapshot = null,
     presentationReady = Promise.resolve(null);
   try {
     presentationHost = createPresentationHost({
@@ -1000,6 +1010,8 @@ try {
       .then((snapshot) => {
         presentationHost.apply(document.documentElement);
         painter.setPresentation(snapshot);
+        presentationSnapshot = snapshot;
+        enemyGuide?.refreshPresentation();
         document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
         return snapshot;
       })
@@ -1088,7 +1100,8 @@ try {
     sfx: library.preferences.sfxVolume,
   });
   if (scenario?.music) assignMusic(scenario.music);
-  function warning(message) {
+  function warning(message, cue = null) {
+    runMessageCue = cue;
     $('run-message').textContent = message;
     captionUntil = (run?.time || 0) + 5;
   }
@@ -1122,10 +1135,17 @@ try {
     const b = controllerLabels.menu;
     return `Stick / D-pad: navigate · ${b.confirm}: confirm · ${b.back}: back · ${b.menu}: resume.${library.preferences.controllerBindings ? '' : ' Shoulders / triggers: previous / next · West: confirm · North: back.'}`;
   }
+  function manualSupplyAvailable() {
+    return (
+      arcadeActionCapabilities(run?.level).manualPickup &&
+      !!run?.ability.capacity &&
+      !!run?.supplies?.length
+    );
+  }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
     const actions = arcadeActionCapabilities(run?.level);
-    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${b.pickup}: ${actions.manualPickup ? 'supply' : 'field guide'} · ${b.hangar}: ${actions.manualAbility && run?.hangars?.length ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
+    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${actions.manualPickup ? (manualSupplyAvailable() ? `${b.pickup}: supply · ` : '') : `${b.pickup}: field guide · `}${b.hangar}: ${actions.manualAbility && run?.hangars?.length ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
   }
   function refreshControllerPrompts() {
     controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
@@ -1230,6 +1250,10 @@ try {
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'profile-recovery-dialog') {
+        void profileRecovery.close();
+        return;
+      }
       if (dialog.id === 'enemy-guide-dialog') {
         enemyGuide.close();
         return;
@@ -1295,6 +1319,8 @@ try {
     refreshInputPresentation();
   }
   function refreshInputPresentation() {
+    const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
+    if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,
@@ -1358,7 +1384,8 @@ try {
     onReturn: () => pause(true),
   });
   enemyGuide = attachEnemyGuide({
-    themes: themesFile.themes,
+    themes: guideThemes,
+    getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
     loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
@@ -1387,7 +1414,6 @@ try {
   });
   $('shell-guide').onclick = () => {
     pause(true);
-    if ($('shell-home').open) $('shell-home').close();
     enemyGuide.open();
   };
   handlePageHide = (event) => {
@@ -1450,7 +1476,7 @@ try {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
     const actions = arcadeActionCapabilities(run?.level);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${actions.manualPickup && run?.ability.capacity ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${run?.hangars?.length ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${manualSupplyAvailable() ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${run?.hangars?.length ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -2026,6 +2052,7 @@ try {
     }
     refreshDifficulty();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return saved;
   }
   function preferences(patch) {
@@ -2037,6 +2064,7 @@ try {
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return {
       ok: false,
       warning:
@@ -2578,7 +2606,7 @@ try {
       updateLoadout();
       overlay('pause');
       refreshHUD();
-      warning('Saved flight verified and restored. Press Resume to continue.');
+      warning('Saved flight verified and restored. Press Resume to continue.', 'restored');
     } finally {
       sessionBusy = false;
       stagedPictures?.dispose();
@@ -2942,8 +2970,29 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    profileRecovery.refresh();
     void storageRetention.refresh();
   };
+  profileRecovery = attachProfileRecoveryDialog({
+    currentVersion: buildVersion,
+    packaged: isRelease,
+    resolveSourceVersion: async () => (await getJSON('build-config.json')).version,
+    onOpen: () => clearInput(),
+    unavailable: () => {
+      if (practiceSession || courseEntry || courseEntryHold)
+        return 'Stored profile recovery is available from ordinary solo Settings.';
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        return 'Finish the pending content or save operation before opening recovery.';
+      if (
+        [...document.querySelectorAll('dialog[open]')].some(
+          (dialog) =>
+            !['settings-dialog', 'shell-home', 'profile-recovery-dialog'].includes(dialog.id),
+        )
+      )
+        return 'Close the other tool before opening recovery.';
+      return '';
+    },
+  });
   let offlinePrepared = false;
   const offline = offlineAvailability();
   show('offline-button', offline.available);
@@ -3030,8 +3079,48 @@ try {
     syncAssistControls();
     refreshInputPresentation();
   };
+  $('touch-side').onchange = () => {
+    clearInput();
+    const requested = $('touch-side').value,
+      saved = preferences({
+        screenSteeringHand: requested,
+        touchControls: {
+          ...resolveTouchControls(library.preferences.touchControls),
+          side: requested,
+        },
+      });
+    syncAssistControls();
+    const status = $('screen-steering-status');
+    status.textContent = saved.ok
+      ? 'Steering hand saved.'
+      : resolveTouchControls(library.preferences.touchControls).side === requested
+        ? `Steering hand selected for this session. ${saved.warning}`
+        : `Steering hand unchanged. ${saved.warning}`;
+    status.hidden = false;
+  };
+  function refreshScreenSteeringHand() {
+    const hand = resolveTouchControls(library.preferences.touchControls).side;
+    $('touch-side').value = hand;
+    document.body.dataset.screenSteeringHand = hand;
+    document.body.dataset.touchSide = hand;
+    const strip = document.querySelector('.play-controls'),
+      steering = [
+        strip.querySelector('#touch-surface'),
+        strip.querySelector('.direction-controls'),
+      ],
+      actions = strip.querySelector('.ability-buttons'),
+      ordered = hand === 'right' ? [actions, ...steering] : [...steering, actions];
+    if (ordered.some((group, index) => strip.children[index] !== group)) {
+      const focused = document.activeElement;
+      // Match keyboard focus order to the visible side; reuse every existing control.
+      strip.append(...ordered);
+      if (ordered.some((group) => group.contains(focused))) focused.focus({ preventScroll: true });
+    }
+    $('screen-steering-status').textContent = '';
+    $('screen-steering-status').hidden = true;
+  }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
-  for (const key of ['mode', 'side', 'size', 'opacity']) {
+  for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
       preferences({
@@ -3043,13 +3132,17 @@ try {
       syncAssistControls();
     };
   }
+  $('text-face').onchange = () => preferences({ textFace: $('text-face').value });
   function refreshTextSize() {
-    const size = library.preferences.textSize;
+    const { textSize: size, textFace: face } = library.preferences;
     $('text-size').value = size;
     document.body.dataset.textSize = size;
+    $('text-face').value = face;
+    document.body.dataset.textFace = face;
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
+    refreshScreenSteeringHand();
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
@@ -3278,10 +3371,8 @@ try {
     const actions = arcadeActionCapabilities(run?.level);
     $('action-button').firstChild.textContent = `${recipe.id === 'scout' ? 'Scan' : recipe.label} `;
     show('action-button', actions.manualAbility);
-    show(
-      'pickup-button',
-      actions.manualPickup && !!run?.ability.capacity && !!run?.supplies?.length,
-    );
+    show('pickup-button', manualSupplyAvailable());
+    show('manual-equipment-help', actions.manualAbility);
     show('boost-button', actions.manualBoost);
     show('screen-boost-setting', actions.manualBoost);
     show('controller-boost-setting', actions.manualBoost);
@@ -3298,6 +3389,7 @@ try {
     $('turn-select').value = turnPolicy;
   }
   function focusMission() {
+    if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
     (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
   }
@@ -3705,6 +3797,12 @@ try {
     if (!started) rememberSelection();
     started = true;
     paused = false;
+    if (runMessageCue === 'restored')
+      warning(
+        run.player.cutting
+          ? 'Flight resumed. Your unfinished line is still exposed.'
+          : 'Flight resumed.',
+      );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
@@ -3771,6 +3869,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    profileRecovery?.refresh();
     show(
       'pause-button',
       started &&
@@ -3888,7 +3987,15 @@ try {
       if (event.type === 'cells.claimed')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+          'secured',
         );
+      if (
+        event.type === 'cut.started' &&
+        ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
+        run.status === 'running' &&
+        run.player.cutting
+      )
+        warning('Live line exposed. Reach safe ground to secure it.');
       if (event.type === 'player.failed')
         warning(
           {
@@ -3898,6 +4005,7 @@ try {
             'cable-limit': 'Your cable budget ran out. Close a shorter line.',
             'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
+          'failure',
         );
       if (event.type === 'lineImpact.seeded')
         warning('Line struck! Reach safe ground before the travelling spark catches you.');
@@ -3928,6 +4036,7 @@ try {
       if (event.type === 'capture.stopped')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+          'secured-stopped',
         );
       if (event.type === 'powerup.collected')
         warning(
@@ -4131,6 +4240,13 @@ try {
             stopCourseGuidance();
           }
         stepRun(run, command, FIXED_DT);
+        if (
+          runMessageCue === 'secured-stopped' &&
+          run.status === 'running' &&
+          command.direction &&
+          run.player.speed > 0
+        )
+          warning('Flight moving.', 'secured');
         controls = controllerBoostAfterRecovery({
           beforeStatus,
           run,
@@ -4546,9 +4662,22 @@ try {
   };
   $('collection-button').onclick = () => {
     if (courseSession || courseEntry) return;
+    const opener = document.activeElement;
     pause(true);
     prepareCollectionProgress();
     libraryPanel.populateGallery();
+    $('collection-back').textContent = $('shell-home').open
+      ? 'Back to menu →'
+      : $('shell-missions').open
+        ? 'Back to Missions →'
+        : 'Back to the field →';
+    // Pausing may focus Resume; native return belongs to this entry control.
+    if (
+      opener?.isConnected &&
+      !opener.disabled &&
+      !opener.closest('[hidden],[inert],[aria-hidden="true"]')
+    )
+      opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
   };
   $('choose-appearance').onclick = focusAppearance;
@@ -4681,6 +4810,7 @@ try {
         document.documentElement.style.setProperty('--board-aspect', String(width / height));
       }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+        textFace: library.preferences.textFace,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.game.canvas.clientWidth,
         paused,

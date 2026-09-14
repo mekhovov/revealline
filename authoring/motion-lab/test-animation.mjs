@@ -17,7 +17,7 @@ test("every supplied cosmetic has a validated recipe; FPV defaults use three bla
     assert.equal(presets.animationRecipes[presets.characters[id].animationRecipe].components[0].bladeCount,3);
     assert.equal(rotorAnchors(presets.characters[id]).length,4);
   }
-  assert.equal(Object.keys(presets.characters).length,21);
+  assert.equal(Object.keys(presets.characters).length,28);
   for (const character of collection.characters) assert.equal(presets.characters[character.id].label,character.label,"Inspect and equipped labels must agree");
 });
 

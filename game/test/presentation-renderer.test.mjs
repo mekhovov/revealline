@@ -10,6 +10,9 @@ import { canvasPresentation } from '../presentation/runtime.mjs';
 import { mediaFixture } from './helpers/media-fixtures.mjs';
 import { createActorPresentation, drawPresentedActor } from '../ui/actor-presentation.mjs';
 import { drawClassicTerrain, drawClassicPickups } from '../ui/classic-view.mjs';
+import { createEnemyPresentations } from '../enemy-presentations.mjs';
+import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
+import { canvasTextFonts } from '../text-face.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url)));
 const presets = read('../../authoring/motion-lab/presets.json');
@@ -292,4 +295,110 @@ test('classic terrain and contact pickups share pivot placement while their mate
   drawClassicPickups(legacy.ctx, view, themes[0].palette, { lifePickup: pickup });
   assert.deepEqual(draws(legacy.calls, terrain)[0].args.slice(1), [64, 96, 16, 16]);
   assert.deepEqual(draws(legacy.calls, pickup)[0].args.slice(1), [-11, -11, 22, 22]);
+});
+
+test('compiled enemy defaults own their images while explicit original skins and manual uploads keep priority', async () => {
+  const { painter, run, sprites } = fixture();
+  const model = createEnemyPresentations(read('../content/enemy-presentations.json'));
+  const loads = [],
+    released = [];
+  const originals = new Map(model.entries.map((record) => [record.type, image(record.src)]));
+  const pool = createEnemyImagePool({
+    load: async (record) => {
+      loads.push(record.type);
+      return { image: originals.get(record.type), release: () => released.push(record.type) };
+    },
+  });
+  painter.enemyBodies = createEnemyBodyAssets({ pool, catalog: async () => model });
+  for (const record of model.entries) {
+    const id = `enemy.${record.type}`;
+    sprites[id] = { ...sprites['enemy.bouncer'], image: image(id) };
+  }
+  run.enemies = model.entries.map(({ type }, index) => ({
+    id: type,
+    type,
+    x: 10 + index,
+    y: 10,
+    vx: 1,
+    vy: 0,
+    radius: 0.2,
+  }));
+  const before = authoritativeCheckpoint(run);
+  const paint = (extra = {}) => {
+    const canvas = surface();
+    painter.draw(canvas.ctx, run, 0, { paused: true, reduced: true, ...extra });
+    return canvas.calls;
+  };
+  const defaults = paint();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(loads, [], 'Compiled selected defaults must not also fetch original bodies');
+  for (const { type } of model.entries)
+    assert.equal(draws(defaults, sprites[`enemy.${type}`].image).length, 1, type);
+  const selected = model.entries[0];
+  const actorSkins = { [selected.type]: selected.skinId };
+  paint({ actorSkins });
+  await new Promise((resolve) => setImmediate(resolve));
+  const original = paint({ actorSkins });
+  assert.deepEqual(loads, [selected.type]);
+  assert.equal(draws(original, originals.get(selected.type)).length, 1);
+  assert.equal(draws(original, sprites[`enemy.${selected.type}`].image).length, 0);
+  const manual = image('manual selected original');
+  painter.images.enemy = manual;
+  painter.overrides.enemy = { dataUrl: 'existing manual upload' };
+  const uploaded = paint({ actorSkins });
+  assert.equal(draws(uploaded, manual).length, 1);
+  assert.equal(draws(uploaded, originals.get(selected.type)).length, 0);
+  assert.deepEqual(released, [selected.type]);
+  assert.equal(pool.size(), 0);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+  painter.enemyBodies.clear();
+});
+
+test('compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged', () => {
+  const { painter, run, sprites } = fixture();
+  const set = presets.characterPresentations.sets.find((entry) => entry.themeId === 'fpv');
+  const before = authoritativeCheckpoint(run);
+  for (const [role, bodyId] of Object.entries(set.classBodies)) {
+    const slot = `player.${role}.detailed`;
+    sprites[slot] = { ...sprites['player.scout.detailed'], image: image(slot) };
+    painter.bodyId = bodyId;
+    painter.body = presets.characters[bodyId];
+    painter.recipe = presets.animationRecipes[painter.body.animationRecipe];
+    const body = structuredClone(painter.body),
+      canvas = surface();
+    painter.draw(canvas.ctx, run, 0, { paused: true, reduced: true });
+    assert.equal(draws(canvas.calls, sprites[slot].image).length, 1, role);
+    assert.deepEqual(painter.body, body, `${role} preserves its original rotor recipe`);
+  }
+  painter.bodyId = 'unknown-custom-body';
+  const custom = surface();
+  painter.draw(custom.ctx, run, 0, { paused: true, reduced: true });
+  assert.equal(draws(custom.calls, painter.image).length, 1);
+  assert.deepEqual(authoritativeCheckpoint(run), before);
+});
+
+test('Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes', () => {
+  const { painter, run } = fixture();
+  run.player.queuedDirection = 'right';
+  const before = authoritativeCheckpoint(run);
+  const plain = surface();
+  painter.draw(plain.ctx, run, 0, { paused: true, reduced: true, textFace: 'plain' });
+  const fonts = canvasTextFonts('plain', painter.presentation.fonts);
+  assert.ok(
+    plain.calls.some((entry) => entry.op === 'fillText' && entry.font?.includes(fonts.numeric)),
+  );
+  assert.equal(
+    plain.calls.some(
+      (entry) => entry.op === 'fillText' && entry.font?.includes('Compiled Numeric'),
+    ),
+    false,
+  );
+  const restored = surface();
+  painter.draw(restored.ctx, run, 0, { paused: true, reduced: true });
+  assert.ok(
+    restored.calls.some(
+      (entry) => entry.op === 'fillText' && entry.font?.includes('Compiled Numeric'),
+    ),
+  );
+  assert.deepEqual(authoritativeCheckpoint(run), before);
 });
