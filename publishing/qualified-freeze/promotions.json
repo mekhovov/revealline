@@ -1,0 +1,419 @@
+{
+  "format": "revealline-frozen-promotion.v1",
+  "sourceRepository": "mekhovov/revealline",
+  "freezeRunId": 34904714317,
+  "freezeControllerRevision": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+  "sources": [
+    {
+      "version": "v0.49.0",
+      "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+      "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+      "tagObject": "7a53131435fa3e7b42991e0621584b3643699b94",
+      "qualificationSha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d",
+      "freezeRunId": 34904714317,
+      "freezeControllerRevision": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+      "artifacts": {
+        "metadata": {
+          "id": 10372671656,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjY3MTY1Ng==",
+          "name": "frozen-v0.49.0-metadata",
+          "size_in_bytes": 43455,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372671656",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372671656/zip",
+          "expired": false,
+          "digest": "sha256:674089465b76c5b956c4912bf82900521ed4fc05a707b0aff17bda137ed9dba2",
+          "created_at": "2026-09-14T22:37:33Z",
+          "updated_at": "2026-09-14T22:37:33Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "source": {
+          "id": 10371644443,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MTY0NDQ0Mw==",
+          "name": "frozen-v0.49.0-source",
+          "size_in_bytes": 590602374,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371644443",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371644443/zip",
+          "expired": false,
+          "digest": "sha256:c95f0fbf433b906762c4253155d7b1001ebe60b3592ec1b5e4945ef7f52cb7de",
+          "created_at": "2026-09-14T22:37:39Z",
+          "updated_at": "2026-09-14T22:37:39Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "distribution": {
+          "id": 10372527155,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjUyNzE1NQ==",
+          "name": "frozen-v0.49.0-distribution",
+          "size_in_bytes": 309155121,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372527155",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372527155/zip",
+          "expired": false,
+          "digest": "sha256:47dd926f9bc4ac99376577d0d6360b95d3ddea7d54dd06df04900aced28c70a9",
+          "created_at": "2026-09-14T22:37:43Z",
+          "updated_at": "2026-09-14T22:37:43Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        }
+      },
+      "expectedAssets": [
+        {
+          "name": "source.tar",
+          "bytes": 590602240,
+          "sha256": "4dd77d1aac2de9a7ab2c2f78e9eb8dace4a8c6d6c396531b1511f6701bda0255"
+        },
+        {
+          "name": "distribution.zip",
+          "bytes": 309154975,
+          "sha256": "1d28b9aa6fd2431a9a7a5cd7b4882e3f517361bf06a997d8200ca3932501e210"
+        },
+        {
+          "name": "release.json",
+          "bytes": 465,
+          "sha256": "d2f487a1069ebf4ea820dfd303416ce04669dc136166f2421bdcc8a742b6ccf0"
+        },
+        {
+          "name": "manifest.json",
+          "bytes": 106820,
+          "sha256": "1e78409bd9488acd583b323e0c9a296fadcbc0d2f54051cda792940b9797e2e6"
+        },
+        {
+          "name": "distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "277d4a4de8ff2f42bbd8ee945b9c3471723a91633841ac91e6dcc488efd60ea8"
+        },
+        {
+          "name": "source-qualification.json",
+          "bytes": 20489,
+          "sha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d"
+        },
+        {
+          "name": "frozen-integrity.json",
+          "bytes": 841,
+          "sha256": "08e3a7b76c2c74cecc4cb5be610ce0777fe92bb156443d41371ceeba7d422cf8"
+        }
+      ],
+      "independentArtifactProofSha256": "505b134ff9afc5c14cffc9fb3211840151740a56d40931b440d52e378f016ed0",
+      "independentVerification": {
+        "runId": 34906472854,
+        "runAttempt": 1,
+        "controllerRevision": "20781633a8a373f9229694101c4bd5946638e6a2",
+        "summarySha256": "03c00f90f3d280a18c4c001e4ab96aa12f791fca2308b513ad7d7ab79c5a648f",
+        "proofArtifact": {
+          "id": 10372424985,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjQyNDk4NQ==",
+          "name": "reverified-v0.49.0-proof",
+          "size_in_bytes": 52601,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372424985",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372424985/zip",
+          "expired": false,
+          "digest": "sha256:150c11d4cee0fab5b511073d2fc04beef1187ea770488f5bea4aae182c1aba05",
+          "created_at": "2026-09-14T22:56:32Z",
+          "updated_at": "2026-09-14T22:56:32Z",
+          "expires_at": "2026-12-13T22:55:54Z",
+          "workflow_run": {
+            "id": 34906472854,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/verify-qualified-freeze-artifacts",
+            "head_sha": "20781633a8a373f9229694101c4bd5946638e6a2"
+          }
+        }
+      },
+      "title": "Reveal Line v0.49.0 \u2014 Field Kit compiled assets and exact picture ownership",
+      "releaseNotes": "Field Kit compiled assets and exact picture ownership.\n\nImmutable game source: `8af0d47d73e8633c771823fe024a3456441d62c1`. All six source gates passed with 3,583 tests and no skips. The original source TAR, manifest and distribution were verified in freeze run34904714317 and independently checked against a fresh exact Git source in run34906472854.\n\nThese assets preserve the original frozen bytes. Public Pages play/offline qualification is recorded separately; this release does not itself change the current game.\n"
+    },
+    {
+      "version": "v0.50.0",
+      "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+      "sourceTree": "42a4a2326633cb824b7b99e746e03c979a7af082",
+      "tagObject": "d08e87e797005550c76c6f86ff67564427470904",
+      "qualificationSha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1",
+      "freezeRunId": 34904714317,
+      "freezeControllerRevision": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+      "artifacts": {
+        "metadata": {
+          "id": 10371953324,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MTk1MzMyNA==",
+          "name": "frozen-v0.50.0-metadata",
+          "size_in_bytes": 44243,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371953324",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371953324/zip",
+          "expired": false,
+          "digest": "sha256:5c64bfaa9439dba2b6821809ec37819dd24e2ae04bf56074ecc4326438e688b5",
+          "created_at": "2026-09-14T22:37:18Z",
+          "updated_at": "2026-09-14T22:37:18Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "source": {
+          "id": 10371629246,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MTYyOTI0Ng==",
+          "name": "frozen-v0.50.0-source",
+          "size_in_bytes": 591011974,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371629246",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10371629246/zip",
+          "expired": false,
+          "digest": "sha256:c49b1d272808bf32691d46cbf1d7e71e0c0d6f841bcbb557d3817dee62a3b8e5",
+          "created_at": "2026-09-14T22:37:22Z",
+          "updated_at": "2026-09-14T22:37:22Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "distribution": {
+          "id": 10372427368,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjQyNzM2OA==",
+          "name": "frozen-v0.50.0-distribution",
+          "size_in_bytes": 309383796,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372427368",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372427368/zip",
+          "expired": false,
+          "digest": "sha256:df7ae7838ed1935f5879797fa0f264f437c0c3df1e838f520796f9533ca5bfda",
+          "created_at": "2026-09-14T22:37:25Z",
+          "updated_at": "2026-09-14T22:37:25Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        }
+      },
+      "expectedAssets": [
+        {
+          "name": "source.tar",
+          "bytes": 591011840,
+          "sha256": "ef5c0a8fcb540d419de96cc5f64574f8faada8f0831132fd34066ceb2342c026"
+        },
+        {
+          "name": "distribution.zip",
+          "bytes": 309383650,
+          "sha256": "8e1b88027429ef2dd410e5a7de0adae5eb1cc13023f92ec953b59be1d088c6cc"
+        },
+        {
+          "name": "release.json",
+          "bytes": 465,
+          "sha256": "c1998c48972c2392c1b6012a6c8cdf22630ae1d6f9f502449cd7dd2408cbf2cf"
+        },
+        {
+          "name": "manifest.json",
+          "bytes": 109506,
+          "sha256": "6e82a02452557a4b8f18662612bb60bf1c72422b5a4d8af1a4dce87467df6a65"
+        },
+        {
+          "name": "distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "2e543b8fcc2d17b26c49b3e5e3b58f5d8d4b14d598649b513b439e4a362cd727"
+        },
+        {
+          "name": "source-qualification.json",
+          "bytes": 20578,
+          "sha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1"
+        },
+        {
+          "name": "frozen-integrity.json",
+          "bytes": 841,
+          "sha256": "34e85d6711d852720734750b783504eac5108c78d56be6fb98dd80d46c73cba8"
+        }
+      ],
+      "independentArtifactProofSha256": "5569186df410e3f983ba608de058a0358b39dc7a477e0260248115fa19886404",
+      "independentVerification": {
+        "runId": 34906472854,
+        "runAttempt": 1,
+        "controllerRevision": "20781633a8a373f9229694101c4bd5946638e6a2",
+        "summarySha256": "3ebb06cb4f8efb4697649a4140a4439bfc35502b96ddfcd0c693c3bb85cef9ee",
+        "proofArtifact": {
+          "id": 10372876570,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3Mjg3NjU3MA==",
+          "name": "reverified-v0.50.0-proof",
+          "size_in_bytes": 53375,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372876570",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372876570/zip",
+          "expired": false,
+          "digest": "sha256:eb1bf119f305a6c1b28725350fc8d4af3c01bcfbf03d2ebc45c34a9aeef9efef",
+          "created_at": "2026-09-14T22:57:24Z",
+          "updated_at": "2026-09-14T22:57:24Z",
+          "expires_at": "2026-12-13T22:55:54Z",
+          "workflow_run": {
+            "id": 34906472854,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/verify-qualified-freeze-artifacts",
+            "head_sha": "20781633a8a373f9229694101c4bd5946638e6a2"
+          }
+        }
+      },
+      "title": "Reveal Line v0.50.0 \u2014 Field Kit settings, collection and supporting screens",
+      "releaseNotes": "Field Kit settings, collection and supporting screens.\n\nImmutable game source: `d52b634a231ce0907b83ea681e1e1aaf02387485`. All six source gates passed with 3,593 tests and no skips. The original source TAR, manifest and distribution were verified in freeze run34904714317 and independently checked against a fresh exact Git source in run34906472854.\n\nThese assets preserve the original frozen bytes. Public Pages play/offline qualification is recorded separately; this release does not itself change the current game.\n"
+    },
+    {
+      "version": "v0.51.0",
+      "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+      "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+      "tagObject": "a8dad60a92cd04e7c52221f51952fe0fcffdfb82",
+      "qualificationSha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0",
+      "freezeRunId": 34904714317,
+      "freezeControllerRevision": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+      "artifacts": {
+        "metadata": {
+          "id": 10372591720,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjU5MTcyMA==",
+          "name": "frozen-v0.51.0-metadata",
+          "size_in_bytes": 45658,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372591720",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372591720/zip",
+          "expired": false,
+          "digest": "sha256:b37d5936f4ba2fea23dc3455874917c678b0c88ecf1b8730697c87387656b0f7",
+          "created_at": "2026-09-14T22:36:59Z",
+          "updated_at": "2026-09-14T22:36:59Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "source": {
+          "id": 10372482154,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjQ4MjE1NA==",
+          "name": "frozen-v0.51.0-source",
+          "size_in_bytes": 649185414,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372482154",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372482154/zip",
+          "expired": false,
+          "digest": "sha256:822e653e840dd82e7a2cf2ee2aedb131c0294d4b4cb9f0d61f03e3d042ef91eb",
+          "created_at": "2026-09-14T22:37:06Z",
+          "updated_at": "2026-09-14T22:37:06Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        },
+        "distribution": {
+          "id": 10372137971,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MjEzNzk3MQ==",
+          "name": "frozen-v0.51.0-distribution",
+          "size_in_bytes": 323123971,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372137971",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372137971/zip",
+          "expired": false,
+          "digest": "sha256:802159225a28a2938d976727ffcc4d897fdddaccc3efc3be3804b2c2738d7a33",
+          "created_at": "2026-09-14T22:37:11Z",
+          "updated_at": "2026-09-14T22:37:11Z",
+          "expires_at": "2026-12-13T22:33:42Z",
+          "workflow_run": {
+            "id": 34904714317,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/hosted-qualified-freezes",
+            "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+          }
+        }
+      },
+      "expectedAssets": [
+        {
+          "name": "source.tar",
+          "bytes": 649185280,
+          "sha256": "3d7991350ff3761e004cbd5909828f138e282a3d6bb564e7d358a3ca1fcf5cd1"
+        },
+        {
+          "name": "distribution.zip",
+          "bytes": 323123825,
+          "sha256": "f8c37a0b679d77f5343e649e1868b35a8336d1f82561b117724ecee08a0f4eb9"
+        },
+        {
+          "name": "release.json",
+          "bytes": 465,
+          "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541"
+        },
+        {
+          "name": "manifest.json",
+          "bytes": 113770,
+          "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3"
+        },
+        {
+          "name": "distribution.zip.sha256",
+          "bytes": 83,
+          "sha256": "b0ae6ba0dae3e41115f36c985c334b557a6e2273e924a2d3d856ee3aeb974a25"
+        },
+        {
+          "name": "source-qualification.json",
+          "bytes": 21221,
+          "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
+        },
+        {
+          "name": "frozen-integrity.json",
+          "bytes": 841,
+          "sha256": "4453139d9af19b0b88a537e461db32a833ca4d0bf7adf4a211f7b16f75a6d967"
+        }
+      ],
+      "independentArtifactProofSha256": "c95873218c45448004cc43dffa7b85c2984ad240ed512db6d2a532eb3c7939d8",
+      "independentVerification": {
+        "runId": 34906472854,
+        "runAttempt": 1,
+        "controllerRevision": "20781633a8a373f9229694101c4bd5946638e6a2",
+        "summarySha256": "bd3dd08c28949c9c98b501343a283774dd572371e7c4ef1b395cdb9967f8bfa1",
+        "proofArtifact": {
+          "id": 10373325089,
+          "node_id": "MDg6QXJ0aWZhY3QxMDM3MzMyNTA4OQ==",
+          "name": "reverified-v0.51.0-proof",
+          "size_in_bytes": 54791,
+          "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373325089",
+          "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373325089/zip",
+          "expired": false,
+          "digest": "sha256:114310d6bbde9bdfa60e6959ecb99866834ba1c78d5d664e814ba7362ca3bb77",
+          "created_at": "2026-09-14T22:58:31Z",
+          "updated_at": "2026-09-14T22:58:31Z",
+          "expires_at": "2026-12-13T22:55:54Z",
+          "workflow_run": {
+            "id": 34906472854,
+            "repository_id": 1367404328,
+            "head_repository_id": 1367404328,
+            "head_branch": "codex/verify-qualified-freeze-artifacts",
+            "head_sha": "20781633a8a373f9229694101c4bd5946638e6a2"
+          }
+        }
+      },
+      "title": "Reveal Line v0.51.0 \u2014 Complete FPV Field Kit redesign and asset workshop",
+      "releaseNotes": "Complete FPV Field Kit redesign and asset workshop.\n\nImmutable game source: `5d4bd98718955fa471fe71d798715864af166d18`. All six source gates passed with 3,691 tests and no skips. The original source TAR, manifest and distribution were verified in freeze run34904714317 and independently checked against a fresh exact Git source in run34906472854.\n\nThese assets preserve the original frozen bytes. Public Pages play/offline qualification is recorded separately; this release does not itself change the current game.\n"
+    }
+  ]
+}
