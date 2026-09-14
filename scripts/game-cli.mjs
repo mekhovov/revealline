@@ -1066,10 +1066,15 @@ export async function main(argv = process.argv.slice(2)) {
         for (const file of await regularFiles(PROJECT_ROOT, directory))
           if (/(?:^|\/)(?:test-[^/]+|[^/]+\.test)\.mjs$/.test(file)) files.push(file);
     if (!files.length) fail('No test files found');
-    const result = spawnSync(process.execPath, ['--test', ...files.sort()], {
-      cwd: PROJECT_ROOT,
-      stdio: 'inherit',
-    });
+    const concurrency = Math.min(4, Math.max(1, os.availableParallelism() - 1));
+    const result = spawnSync(
+      process.execPath,
+      ['--test', `--test-concurrency=${concurrency}`, ...files.sort()],
+      {
+        cwd: PROJECT_ROOT,
+        stdio: 'inherit',
+      },
+    );
     if (result.error) throw result.error;
     if (result.status !== 0) fail(`Tests failed with exit ${result.status}`);
   } else if (action === 'validate') {
