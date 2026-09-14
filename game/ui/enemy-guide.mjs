@@ -20,8 +20,8 @@ export function attachEnemyGuide({
   window: host = globalThis.window,
   themes,
   getThemeId = () => 'fpv',
-  getTurnPolicy = () => 'immediate',
   getPresentation = () => null,
+  getTurnPolicy = () => 'immediate',
   createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
@@ -332,6 +332,22 @@ export function attachEnemyGuide({
     artworkStatus.textContent = '';
     artworkStatus.hidden = true;
   }
+  function compiledPreview() {
+    if (previewPose?.themeId !== 'fpv') return null;
+    const snapshot = getPresentation();
+    const sprite = snapshot?.image?.(`enemy.${previewPose.type}`);
+    return sprite ? { ...sprite, palette: snapshot.canvas.palette } : null;
+  }
+  function updatePreviewAssets() {
+    if (compiledPreview()) bodyAssets.clear();
+    else bodyAssets.update([previewPose]);
+  }
+  // A host snapshot change selects artwork for the existing sampled pose only.
+  function refreshPresentation() {
+    if (!previewVisible() || !previewPose || topic.el.value === 'line-impact') return;
+    updatePreviewAssets();
+    paintPreview();
+  }
   // A decode completion repaints the sampled frame without advancing either clock.
   function paintPreview() {
     if (!previewVisible()) {
@@ -355,23 +371,18 @@ export function attachEnemyGuide({
       }
       return;
     }
-    const sprite = compiledPreview(),
-      body = sprite ? null : bodyAssets.current(previewPose);
+    const compiled = compiledPreview(),
+      body = compiled ?? bodyAssets.current(previewPose);
     drawPresentedActor(
       context,
       { ...previewPose, diameter: PREVIEW_BODY_DIAMETER },
-      themes.find(({ id }) => id === appearance.el.value).palette,
-      sprite?.image ?? body?.image,
-      body?.record,
-      sprite?.geometry,
+      compiled?.palette ?? themes.find(({ id }) => id === appearance.el.value).palette,
+      body?.image,
+      compiled?.geometry,
+      compiled ? null : body?.record,
     );
-    artworkStatus.textContent = sprite ? '' : bodyAssets.status();
+    artworkStatus.textContent = compiled ? '' : bodyAssets.status();
     artworkStatus.hidden = !artworkStatus.textContent;
-  }
-  function compiledPreview() {
-    return appearance.el.value === 'fpv' && previewPose
-      ? getPresentation()?.image(`enemy.${previewPose.type}`)
-      : null;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
     if (!previewVisible()) {
@@ -379,7 +390,15 @@ export function attachEnemyGuide({
       return;
     }
     previewSettings = { paused, reduced };
-    if (!paused && !reduced) time += Math.max(0, Math.min(0.1, Number.isFinite(dt) ? dt : 0));
+    const snapshot =
+      appearance.el.value === 'fpv' && topic.el.value !== 'line-impact' ? getPresentation() : null;
+    const motionScale = snapshot?.image?.(`enemy.${topic.el.value}`)
+      ? (snapshot.canvas.motionScale ?? 1)
+      : 1;
+    const motionDt = dt * motionScale;
+    reduced = reduced || motionScale === 0;
+    if (!paused && !reduced)
+      time += Math.max(0, Math.min(0.1, Number.isFinite(motionDt) ? motionDt : 0));
     if (topic.el.value === 'line-impact') {
       releasePreview();
       paintPreview();
@@ -402,7 +421,7 @@ export function attachEnemyGuide({
       .sample([actor], {
         tick: Math.floor(time * 120),
         time,
-        dt,
+        dt: motionDt,
         paused,
         reduced,
         themeId: appearance.el.value,
@@ -410,9 +429,7 @@ export function attachEnemyGuide({
         scale: 1.5,
       })
       .get(actor.id);
-    // The guide teaches the same release sprite seen in the FPV arena.
-    // Other themes and releases without this slot retain their existing art.
-    bodyAssets.update(compiledPreview() ? [] : [previewPose]);
+    updatePreviewAssets();
     paintPreview();
   }
   function open({ topic: selected } = {}) {
@@ -479,6 +496,7 @@ export function attachEnemyGuide({
     open,
     close,
     update,
+    refreshPresentation,
     get practiceActive() {
       return active;
     },

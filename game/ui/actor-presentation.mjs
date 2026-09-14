@@ -569,8 +569,8 @@ export function drawPresentedActor(
   frame,
   palette,
   image = null,
-  bodyRecord = null,
   geometry = null,
+  bodyRecord = null,
 ) {
   if (!frame) return;
   const colors = {

@@ -119,10 +119,12 @@ The combined enemy presentation changes preserve the former 25,033-byte actor re
 
 ## Preserve recipe implementation revisions
 
-The optional [source history index](history/source-index.json) preserves the exact renderer bytes referenced by earlier recipe records. It uses the separate `revealline-production-source-history.v1` format; the existing metadata-history v1/v2 index and all production registers remain unchanged. Only `authoring/motion-lab/render-character.mjs` and `game/ui/actor-presentation.mjs` are admitted by this finite reader. Each complete original path, byte count and SHA-256 identity resolves to `history/<sha256>.source`. These snapshots are read and hashed as inert bytes; they are never imported, evaluated or used by the game renderer.
+The optional [source history index](history/source-index.json) preserves the exact renderer bytes referenced by earlier recipe records. It uses the separate `revealline-production-source-history.v1` format; the metadata-history v1/v2 index and all existing production registers retain their own identities. Only `authoring/motion-lab/render-character.mjs` and `game/ui/actor-presentation.mjs` are admitted by this finite reader. Each complete original path, byte count and SHA-256 identity resolves to `history/<sha256>.source`. These snapshots are read and hashed as inert bytes; they are never imported, evaluated or used by the game renderer.
 
 Retain the prior body before revising either live renderer. Add its complete identity and exact unformatted bytes, without changing an old register or its assessments. An unmapped new pin reads the current source. An explicitly mapped old pin requires its exact ordinary snapshot file; missing, changed or symlinked history fails instead of substituting a newer implementation. A checkout without this optional index still verifies when its current source matches every declared pin. The index remains bounded to 32 KiB and 64 entries, each snapshot to 4 MiB. Authenticating historical source does not approve production quality or change gameplay, saves or media ownership.
 
 ```sh
 node --test scripts/test-production-source-history.mjs
 ```
+
+When both optional indexes declare the same complete source identity, verification authenticates every declared snapshot before using its bytes. Either missing, changed or symlinked copy refuses; the second history format cannot conceal damage to the first. The retained `.mjs` and `.source` actor snapshots stay separate and exact.

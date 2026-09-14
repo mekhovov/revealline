@@ -5,10 +5,12 @@
 The integrated settings expose one **Steering hand** selector for floating stick,
 swipe and D-pad. The same touch surface, direction buttons and ability buttons
 move in native DOM order; CSS does not reverse that order a second time. Mode,
-size and opacity remain independent. When importing a profile that has the older
-`touchControls.side` but omits `screenSteeringHand`, that explicit side becomes
-the in-memory hand preference without rewriting source bytes. An existing
-`screenSteeringHand` remains authoritative; old stored touch metadata is retained.
+size and opacity remain independent. The successor keeps an explicitly supplied
+`touchControls` object or null authoritative for the visible side. Only a legacy
+profile with `screenSteeringHand` and no touch object migrates to that saved D-pad
+side. One hand selector writes both compatible fields on an actual change; parsing
+does not rewrite source bytes, and the legacy alias does not override modern touch
+settings.
 
 The running short-landscape surface uses the baseline fullscreen board and fixed,
 independently sized HUD/warning overlays. The earlier compact-chrome reserve rules
@@ -16,8 +18,9 @@ below apply outside that running surface, avoiding two competing arena size caps
 Opaque Pause and mission restart remain intact. The historical notes below retain
 their original source and browser evidence; they do not certify this merged layout.
 
-Integration checks passed 189 focused input, migration, actor, guide, navigation and
-collection cases, plus the retained production-register/animation checks. A fresh
+The earlier v0.44 integration recorded 189 focused input, migration, actor, guide,
+navigation and collection cases, plus the retained production-register/animation
+checks. Those results do not qualify this successor composition. A fresh
 worktree needs its ignored `.cache` directory before running the metadata-history
 fixtures directly. Actual merged short-landscape layout and physical controls still
 require their separate browser/device checks.

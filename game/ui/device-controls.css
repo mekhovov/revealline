@@ -79,8 +79,8 @@
 .game-shell[data-screen-controls='shown'] .play-controls > * {
   pointer-events: auto;
 }
-.game-shell[data-screen-steering-hand='right'] .play-controls .direction-controls,
-.game-shell[data-screen-steering-hand='right'] .play-controls #touch-surface {
+.game-shell[data-touch-side='right'] .play-controls .direction-controls,
+.game-shell[data-touch-side='right'] .play-controls #touch-surface {
   margin-left: auto;
 }
 .game-shell .play-controls .ability-buttons {
