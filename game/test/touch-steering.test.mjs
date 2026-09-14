@@ -161,6 +161,7 @@ test('mouse can use the visible stick but does not capture ordinary board clicks
 test('touch preferences survive export/import; old libraries migrate without losing other preferences', () => {
   const old = JSON.parse(exportLibrary(emptyLibrary()));
   delete old.preferences.touchControls;
+  delete old.preferences.screenSteeringHand; // This fixture predates both placement fields.
   const migrated = importLibrary(JSON.stringify(old));
   assert.equal(migrated.preferences.touchControls, null);
   const touchControls = { mode: 'swipe', side: 'left', size: 'large', opacity: 0.35 };

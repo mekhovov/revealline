@@ -163,9 +163,12 @@ test('original hash and dimensions gate bitmap decode, with exact resize request
   header.setUint32(20, 1254);
   const record = {
     ...model.entries[0],
+    width: 1254,
+    height: 1254,
     bytes: bytes.length,
     sha256: createHash('sha256').update(bytes).digest('hex'),
   };
+  delete record.derivation;
   const saved = Object.getOwnPropertyDescriptors(globalThis);
   t.after(() => {
     for (const key of ['fetch', 'crypto', 'createImageBitmap'])
@@ -213,4 +216,48 @@ test('original hash and dimensions gate bitmap decode, with exact resize request
   assert.equal(value.rgbaBytes, 65536);
   value.release();
   assert.equal(closed, 1);
+});
+
+test('all seven actual runtime PNGs use their own verified transport before decoding', async (t) => {
+  const saved = Object.getOwnPropertyDescriptors(globalThis);
+  t.after(() => {
+    for (const key of ['fetch', 'crypto', 'createImageBitmap'])
+      if (saved[key]) Object.defineProperty(globalThis, key, saved[key]);
+      else delete globalThis[key];
+  });
+  Object.defineProperty(globalThis, 'crypto', { configurable: true, value: webcrypto });
+  let current,
+    decodes = 0,
+    closes = 0;
+  globalThis.fetch = async (url) => {
+    assert.equal(url.href, new URL(`../../${current.src}`, import.meta.url).href);
+    assert.ok(!url.pathname.includes('/originals/'));
+    return new Response(readFileSync(url));
+  };
+  globalThis.createImageBitmap = async (blob, options) => {
+    decodes++;
+    assert.equal(blob.size, current.bytes);
+    assert.deepEqual(options, { resizeWidth: 128, resizeHeight: 128, resizeQuality: 'pixelated' });
+    return {
+      width: 128,
+      height: 128,
+      close() {
+        closes++;
+      },
+    };
+  };
+  const signal = new AbortController().signal;
+  for (const record of model.entries) {
+    current = record;
+    const image = await loadEnemyDrawable(record, { signal });
+    assert.equal(image.rgbaBytes, 65536);
+    image.release();
+  }
+  assert.equal(decodes, 7);
+  assert.equal(closes, 7);
+  await assert.rejects(
+    loadEnemyDrawable({ ...current, sha256: '0'.repeat(64) }, { signal }),
+    /hash differs/,
+  );
+  assert.equal(decodes, 7, 'A false runtime identity must refuse before decode');
 });

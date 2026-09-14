@@ -12,7 +12,7 @@ import {
 } from '../ui/enemy-workshop-return.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { imagePresentation } from '../presentation/runtime.mjs';
+import { canvasPresentation, imagePresentation } from '../presentation/runtime.mjs';
 
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
 const impact = JSON.parse(
@@ -241,9 +241,10 @@ test('the guide paints only the selected registered image and motion, with separ
 });
 test('the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks', async (t) => {
   const art = artworkFixture(),
-    source = JSON.parse(
+    compiled = JSON.parse(
       readFileSync(new URL('../presentation/compiled/runtime.json', import.meta.url)),
-    ).resolved.assets['enemy.bouncer'],
+    ).resolved,
+    source = compiled.assets['enemy.bouncer'],
     asset = structuredClone(source),
     image = { type: 'compiled-field-hunter' };
   asset.geometry.pivot = { x: 0.25, y: 0.75 };
@@ -254,6 +255,7 @@ test('the FPV guide uses the release sprite geometry and retains other-theme and
     ...art,
     getThemeId: () => 'fpv',
     getPresentation: () => ({
+      canvas: canvasPresentation(compiled),
       image: (slot) => (available && slot === 'enemy.bouncer' ? sprite : null),
     }),
   });
@@ -624,6 +626,8 @@ test('enlarged guide artwork keeps a 56px body within its canvas without enlargi
       };
     },
   });
+  assert.equal(h.$('preview').width, 192);
+  assert.equal(h.$('preview').height, 112);
   assert.match(h.$('preview-note').textContent, /Enlarged illustration.*center dot marks contact/);
   assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
   for (const record of enemyPresentations.entries) {
@@ -699,5 +703,164 @@ test('enlargement preserves failed-art and theme vector fallbacks, while the imp
   assert.equal(
     art.calls.some(([method]) => method === 'drawImage' || method === 'arc'),
     false,
+  );
+});
+
+function compiledArtwork() {
+  const sprites = new Map(
+    enemyPresentations.entries.map(({ type }) => [
+      `enemy.${type}`,
+      {
+        image: { compiled: type },
+        geometry: {
+          frame: { x: 0, y: 0, width: 32, height: 16 },
+          pivot: { x: 0.25, y: 0.75 },
+          rotors: [
+            { x: 0.25, y: -0.25, radiusScale: 0.5, direction: 1, phaseDegrees: 0, bladeCount: 3 },
+          ],
+        },
+      },
+    ]),
+  );
+  return {
+    canvas: { palette: { muted: '#123456', accent: '#abcdef' } },
+    image: (slot) => sprites.get(slot) ?? null,
+  };
+}
+
+test('the guide uses the selected compiled enemy geometry without acquiring original images', async (t) => {
+  const art = artworkFixture(),
+    snapshot = compiledArtwork();
+  const h = setup(t, { ...art, getThemeId: () => 'fpv', getPresentation: () => snapshot });
+  for (const { type } of enemyPresentations.entries) {
+    h.$('topic').value = type;
+    h.$('topic').onchange();
+    await settleArtwork();
+    art.calls.length = 0;
+    h.guide.update(0.1, { reduced: true });
+    const images = art.calls.filter(([method]) => method === 'drawImage');
+    assert.deepEqual(images, [
+      ['drawImage', snapshot.image(`enemy.${type}`).image, -14, -21, 56, 28],
+    ]);
+    assert.ok(
+      art.calls.some(
+        ([method, x, y, radius]) => method === 'arc' && x === 0 && y === 0 && radius === 4,
+      ),
+    );
+    assert.equal(h.$('artwork-status').hidden, true);
+  }
+  assert.deepEqual(art.loads, []);
+  assert.equal(art.pool.size(), 0);
+  h.$('theme').value = 'ukraine';
+  h.$('theme').onchange();
+  art.calls.length = 0;
+  h.guide.update(0, { reduced: true });
+  assert.equal(
+    art.calls.some(([method]) => method === 'drawImage'),
+    false,
+  );
+  h.guide.open({ topic: 'line-impact' });
+  art.calls.length = 0;
+  h.guide.refreshPresentation();
+  assert.deepEqual(art.calls, [], 'Presentation readiness must not replace the impact diagram');
+  h.guide.update(0);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y, width, height]) =>
+        method === 'fillRect' && x === 20 && y === 51 && width === 152 && height === 2,
+    ),
+  );
+  assert.deepEqual(art.loads, []);
+});
+
+test('current presentation readiness releases the old guide image and repaints its held pose without disturbing practice or hidden state', async (t) => {
+  let snapshot = null;
+  const art = artworkFixture();
+  const h = setup(t, { ...art, getThemeId: () => 'fpv', getPresentation: () => snapshot });
+  await settleArtwork();
+  assert.deepEqual(art.loads, ['bouncer']);
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  const status = h.$('status').textContent;
+  const movingPosition = art.calls.find(([method]) => method === 'translate');
+  snapshot = compiledArtwork();
+  art.calls.length = 0;
+  h.guide.refreshPresentation();
+  assert.deepEqual(art.released, ['bouncer']);
+  assert.equal(art.pool.size(), 0);
+  const held = structuredClone(art.calls);
+  assert.ok(
+    held.some(([method, object]) => method === 'drawImage' && object.compiled === 'bouncer'),
+  );
+  art.calls.length = 0;
+  h.guide.refreshPresentation();
+  assert.deepEqual(
+    art.calls,
+    held,
+    'Snapshot refresh must not advance the manual pose or rotor clock',
+  );
+  assert.equal(h.$('status').textContent, status);
+  assert.deepEqual(
+    held.find(([method]) => method === 'translate'),
+    movingPosition,
+    'Changing body source preserves the current sampled position',
+  );
+  art.calls.length = 0;
+  h.guide.update(0.1, { paused: true });
+  assert.deepEqual(art.calls, held);
+  const preparing = h.$('play').onclick();
+  assert.equal(await preparing, true);
+  const practiceStatus = h.$('status').textContent;
+  art.calls.length = 0;
+  h.guide.refreshPresentation();
+  assert.deepEqual(art.calls, []);
+  assert.equal(h.$('status').textContent, practiceStatus);
+  h.$('return').click();
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  art.calls.length = 0;
+  h.guide.refreshPresentation();
+  assert.deepEqual(art.calls, []);
+  assert.deepEqual(art.loads, ['bouncer']);
+  h.guide.close();
+  h.doc.hidden = false;
+  h.guide.refreshPresentation();
+  assert.deepEqual(art.calls, []);
+});
+
+test('compiled Guide motion uses the runtime snapshot scale while impact and other themes retain their lesson timing', (t) => {
+  const guides = [0, 0.5, 1].map((motionScale) => {
+    const art = artworkFixture(),
+      snapshot = compiledArtwork();
+    snapshot.canvas.motionScale = motionScale;
+    const h = setup(t, { ...art, getThemeId: () => 'fpv', getPresentation: () => snapshot });
+    const paint = (dt) => {
+      art.calls.length = 0;
+      h.guide.update(dt);
+      return structuredClone(art.calls);
+    };
+    return { art, h, paint };
+  });
+  const zero = guides[0].paint(0.1);
+  assert.deepEqual(guides[0].paint(0.1), zero, 'Zero motion holds position, body parts and rotors');
+  const half = guides[1].paint(0.1),
+    full = guides[2].paint(0.05);
+  assert.deepEqual(half, full, 'Half motion scales both position time and sampled cosmetic dt');
+  for (const { h } of guides) h.guide.open({ topic: 'line-impact' });
+  // Opening a topic retains its existing lesson time; compare its own next frames.
+  const impactBefore = guides[0].paint(0.1),
+    impactAfter = guides[0].paint(0.1);
+  assert.notDeepEqual(
+    impactAfter,
+    impactBefore,
+    'The impact diagram remains an independent timing lesson',
+  );
+  guides[0].h.guide.open({ topic: 'bouncer' });
+  guides[0].h.$('theme').value = 'ukraine';
+  guides[0].h.$('theme').onchange();
+  assert.notDeepEqual(
+    guides[0].paint(0.1),
+    guides[0].paint(0.1),
+    'A non-FPV preview keeps its original timing',
   );
 });

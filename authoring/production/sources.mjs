@@ -105,7 +105,7 @@ async function metadataHistory(root) {
   return result;
 }
 // Source snapshots authenticate the old recipe implementation as inert bytes.
-// Keep this separate from the existing metadata-history v1/v2 contract.
+// Keep this separate from the metadata-history v1/v2 snapshot naming contract.
 const SOURCE_HISTORY_PATHS = new Set([
   'authoring/motion-lab/render-character.mjs',
   'game/ui/actor-presentation.mjs',
@@ -202,20 +202,30 @@ export async function verifyProductionSources(input, { root, files = false } = {
       ...r.deliveries.map((d) => d.evidence),
     ].map((p) => [p.path, p]),
   );
-  const history = new Map([...(await metadataHistory(root)), ...(await sourceHistory(root))]);
+  const history = new Map();
+  for (const [key, source] of [...(await metadataHistory(root)), ...(await sourceHistory(root))]) {
+    const sources = history.get(key) ?? [];
+    sources.push(source);
+    history.set(key, sources);
+  }
   const cache = new Map();
   const bytes = async (name) => {
     if (!cache.has(name)) {
       const pin = declared.get(name);
       if (!pin) throw new Error(`Undeclared or changed authority: ${name}`);
-      const source = history.get(historyKey(pin)) ?? name;
+      const sources = history.get(historyKey(pin)) ?? [name];
       cache.set(
         name,
-        boundedRead(root, source).then((b) => {
-          if (b.length !== pin.bytes || sha(b) !== pin.sha256)
-            throw new Error(`Undeclared or changed authority: ${name}`);
-          return b;
-        }),
+        (async () => {
+          let verified;
+          for (const source of sources) {
+            const b = await boundedRead(root, source);
+            if (b.length !== pin.bytes || sha(b) !== pin.sha256)
+              throw new Error(`Undeclared or changed authority: ${name}`);
+            verified ??= b;
+          }
+          return verified;
+        })(),
       );
     }
     return cache.get(name);
