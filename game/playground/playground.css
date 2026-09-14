@@ -29,7 +29,7 @@
   padding: 10px 14px;
   background: #e2e9dc;
   border-left: 3px solid #6c928c;
-  font: 11px monospace;
+  font: 11px var(--fk-font-mono, monospace);
   white-space: pre-wrap;
 }
 .editor-status.error {
@@ -120,7 +120,7 @@
 .asset-card {
   width: 86px;
   min-width: 0;
-  font: 9px monospace;
+  font: 9px var(--fk-font-mono, monospace);
   overflow-wrap: anywhere;
 }
 .asset-card img {
@@ -190,7 +190,7 @@
   overflow: auto;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font: 11px/1.5 monospace;
+  font: 11px/1.5 var(--fk-font-mono, monospace);
   background: #e8eee3;
   padding: 12px;
   border: 1px solid var(--line);
@@ -216,7 +216,7 @@ textarea {
   resize: vertical;
   border: 1px solid var(--line);
   padding: 10px;
-  font: 10px/1.5 monospace;
+  font: 10px/1.5 var(--fk-font-mono, monospace);
   background: #fcfaf4;
   color: var(--ink);
 }

@@ -50,7 +50,7 @@ export function paintEditorMap(canvas, current) {
     c.strokeRect(zone.x * s, zone.y * s, zone.w * s, zone.h * s);
     c.setLineDash([]);
     c.fillStyle = '#e4c9f4';
-    c.font = 'bold 10px monospace';
+    c.font = '500 14px "Field Kit Mono", monospace';
     c.fillText(`SIGNAL ${Math.round(zone.speedFactor * 100)}%`, zone.x * s + 3, zone.y * s + 12);
   }
   const hangars = current.level.hangars ?? [{ ...current.level.spawn, radius: 2 }];
@@ -59,7 +59,7 @@ export function paintEditorMap(canvas, current) {
     c.lineWidth = 2;
     c.strokeRect(h.x * s - 7, h.y * s - 7, 14, 14);
     c.fillStyle = '#7cdfb0';
-    c.font = 'bold 10px monospace';
+    c.font = '500 14px "Field Kit Mono", monospace';
     c.fillText('H', h.x * s - 3, h.y * s + 4);
   }
   c.fillStyle = '#849496';
