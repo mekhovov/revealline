@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>RevealLine — Asset Studio</title>
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+    <link rel="stylesheet" href="./studio.css" />
+  </head>
+  <body class="field-kit">
+    <a class="skip-link" href="#inspector">Skip inventory</a>
+    <header class="studio-header">
+      <div>
+        <a href="../../game/">REVEALLINE / WORKSHOP</a>
+        <h1>Asset Studio</h1>
+      </div>
+      <div class="workspace-actions">
+        <button type="button" id="save-workspace" class="primary">Save local revision</button
+        ><button type="button" id="export-workspace">Export .rltheme</button
+        ><label class="file-button"
+          >Import collection<input
+            id="import-workspace"
+            type="file"
+            accept=".rltheme,application/vnd.revealline.theme"
+        /></label>
+      </div>
+    </header>
+    <div class="workspace-state">
+      <p id="workspace-summary">Loading the presentation registry…</p>
+      <div>
+        <button type="button" id="undo-draft" disabled>Undo draft</button
+        ><button type="button" id="redo-draft" disabled>Redo draft</button
+        ><button type="button" id="reset-draft" disabled>Reset to saved</button
+        ><button type="button" id="reload-workspace">Reload saved</button>
+      </div>
+    </div>
+    <p id="studio-status" class="status-bar" role="status" aria-live="polite">
+      Changes stay in this studio until saved or exported. Player saves are separate.
+    </p>
+    <main class="studio-layout">
+      <aside class="inventory" aria-labelledby="inventory-title">
+        <div class="inventory-heading">
+          <h2 id="inventory-title">Asset inventory</h2>
+          <span id="slot-count"></span>
+        </div>
+        <div class="filter-grid">
+          <label class="wide"
+            >Search<input id="filter-search" type="search" placeholder="Slot, label or requirement"
+          /></label>
+          <label>Theme<select id="filter-theme"></select></label>
+          <label
+            >Screen<select id="filter-screen">
+              <option value="">All screens</option>
+            </select></label
+          >
+          <label
+            >State<select id="filter-state">
+              <option value="">All states</option>
+            </select></label
+          >
+          <label
+            >Kind<select id="filter-kind">
+              <option value="">All kinds</option>
+              <option>image</option>
+              <option>recipe</option>
+              <option>font</option>
+              <option>audio</option>
+            </select></label
+          >
+          <label class="wide"
+            >Readiness<select id="filter-quality">
+              <option value="">Every stage</option>
+              <option value="unfinished">Needs production or review</option>
+              <option value="missing">Missing binding</option>
+              <option value="source">Source recipe</option>
+              <option value="produced">Produced</option>
+              <option value="reviewed">Reviewed</option>
+            </select></label
+          >
+        </div>
+        <p id="coverage-summary" class="support-copy"></p>
+        <div id="asset-list" class="asset-list" role="list" aria-label="Presentation slots"></div>
+        <p id="empty-inventory" class="support-copy" hidden>
+          No matching slots. Clear a filter to see more.
+        </p>
+        <details class="collection-builder">
+          <summary>Build a coordinated collection</summary>
+          <p>
+            Select slots with the checkboxes in the inventory. Their current draft bindings become
+            one atomic collection.
+          </p>
+          <label
+            >Collection ID<input id="collection-id" value="my-field-kit" maxlength="80" /></label
+          ><label
+            >Name<input id="collection-name" value="My Field Kit collection" maxlength="120"
+          /></label>
+          <div class="button-row">
+            <button type="button" id="select-required">Select required</button
+            ><button type="button" id="clear-collection">Clear selection</button>
+          </div>
+          <button type="button" id="stage-collection">Stage selected collection</button>
+          <p id="collection-count" class="support-copy">0 slots selected</p>
+        </details>
+      </aside>
+
+      <section id="inspector" class="inspector" aria-labelledby="slot-title" tabindex="-1">
+        <div class="slot-heading">
+          <div>
+            <p id="slot-id" class="eyebrow"></p>
+            <h2 id="slot-title">Choose an asset</h2>
+          </div>
+          <span id="slot-quality" class="quality-tag"></span>
+        </div>
+        <p id="slot-description"></p>
+        <div class="preview-controls">
+          <label
+            >Preview<select id="preview-mode">
+              <option value="pixel">Pixel enlarged</option>
+              <option value="native">Native size</option>
+              <option value="alpha">Transparency</option>
+              <option value="context">Field context</option>
+            </select></label
+          ><label
+            >Backdrop<select id="preview-background">
+              <option value="checker">Checkerboard</option>
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+            </select></label
+          ><label
+            >State<select id="preview-state">
+              <option>default</option>
+            </select></label
+          >
+          <label
+            >Motion<select id="preview-motion">
+              <option value="paused">Paused</option>
+              <option value="playing">Play cosmetic loop</option>
+              <option value="reduced">Reduced effects</option>
+            </select></label
+          >
+          <label class="inline-check"
+            ><input id="preview-geometry" type="checkbox" checked /> Geometry overlay</label
+          >
+        </div>
+        <div class="compare-grid">
+          <figure>
+            <figcaption>Saved / current</figcaption>
+            <div class="preview-surface" id="current-preview"></div>
+          </figure>
+          <figure>
+            <figcaption>Working draft</figcaption>
+            <div class="preview-surface" id="draft-preview"></div>
+          </figure>
+        </div>
+        <p id="preview-description" class="support-copy">
+          Bounded asset preview. It does not simulate a complete game or establish production
+          readiness.
+        </p>
+        <dl id="slot-facts" class="slot-facts"></dl>
+        <details open>
+          <summary>Usage and exact requirements</summary>
+          <div id="slot-usage"></div>
+          <ul id="slot-requirements"></ul>
+          <pre id="slot-contract" class="code-block"></pre>
+        </details>
+
+        <details id="replacement-panel" open>
+          <summary>Upload, crop and geometry</summary>
+          <p class="support-copy">
+            The original bytes are retained as a separate immutable asset. Cropping creates a PNG
+            derivative at the selected slot’s exact frame size.
+          </p>
+          <label id="asset-upload-label" class="file-button"
+            >Choose replacement file<input id="asset-upload" type="file"
+          /></label>
+          <p id="upload-summary" class="support-copy">No replacement selected.</p>
+          <div id="image-preparation" hidden>
+            <div class="source-image-wrap">
+              <canvas
+                id="source-image"
+                aria-label="Original image with selected crop area"
+              ></canvas>
+            </div>
+            <div class="field-grid">
+              <label>Crop X<input id="crop-x" type="number" min="0" step="1" /></label
+              ><label>Crop Y<input id="crop-y" type="number" min="0" step="1" /></label
+              ><label>Crop width<input id="crop-width" type="number" min="1" step="1" /></label
+              ><label>Crop height<input id="crop-height" type="number" min="1" step="1" /></label>
+            </div>
+            <div class="button-row">
+              <button type="button" id="fit-crop">Center crop to slot</button
+              ><button type="button" id="prepare-crop">Prepare derivative</button
+              ><button type="button" id="download-original">Download original</button>
+            </div>
+          </div>
+          <div id="geometry-panel" hidden>
+            <div class="field-grid">
+              <label
+                >Pivot X (0–1)<input
+                  id="pivot-x"
+                  type="number"
+                  min="0"
+                  max="1"
+                  step="0.01" /></label
+              ><label
+                >Pivot Y (0–1)<input id="pivot-y" type="number" min="0" max="1" step="0.01"
+              /></label>
+            </div>
+            <label
+              >Rotor anchors (normalized JSON)<textarea
+                id="rotor-anchors"
+                rows="4"
+                spellcheck="false"
+              ></textarea></label
+            ><label
+              >Nine-slice borders (JSON or null)<textarea
+                id="nine-slice"
+                rows="2"
+                spellcheck="false"
+              ></textarea>
+            </label>
+            <p class="support-copy">
+              Occupied bounds are measured from nontransparent pixels. Required motor count and slot
+              frame remain locked. Metadata changes do not change gameplay collisions.
+            </p>
+            <button type="button" id="apply-geometry">Apply geometry to preview</button>
+          </div>
+          <div class="field-grid provenance-fields">
+            <label>Description<input id="asset-description" maxlength="2048" /></label
+            ><label
+              >Creator<input
+                id="asset-creator"
+                maxlength="2048"
+                placeholder="Your name or creator" /></label
+            ><label
+              >Source<input
+                id="asset-source"
+                maxlength="2048"
+                placeholder="Original file / source reference" /></label
+            ><label
+              >License / rights<input
+                id="asset-license"
+                maxlength="2048"
+                placeholder="Your actual rights statement"
+            /></label>
+          </div>
+          <label
+            >Effective generation/edit prompt<textarea
+              id="asset-prompt"
+              rows="3"
+              maxlength="8192"
+            ></textarea>
+          </label>
+          <div class="button-row">
+            <button type="button" id="stage-asset" class="primary" disabled>
+              Validate and stage replacement</button
+            ><button type="button" id="discard-asset" disabled>Discard slot draft</button>
+          </div>
+        </details>
+
+        <details id="sprite-panel">
+          <summary>Pixel editor · single layer, up to 128 × 128</summary>
+          <p id="sprite-description" class="support-copy">
+            Choose a supported sprite slot, then create a blank frame or edit the current raster.
+            Larger artwork uses crop and metadata controls above.
+          </p>
+          <div class="button-row">
+            <button type="button" id="new-sprite">New blank sprite</button
+            ><button type="button" id="edit-current">Edit current raster</button>
+          </div>
+          <div id="sprite-workbench" hidden>
+            <div class="sprite-toolbar">
+              <label
+                >Tool<select id="sprite-tool">
+                  <option value="pencil">Pencil</option>
+                  <option value="eraser">Eraser</option>
+                  <option value="fill">Flood fill</option>
+                  <option value="line">Line</option>
+                  <option value="rectangle">Rectangle outline</option>
+                  <option value="filled-rectangle">Filled rectangle</option>
+                  <option value="picker">Color picker</option>
+                  <option value="selection">Select / move</option>
+                </select></label
+              ><label>Color<input id="sprite-color" type="color" value="#f4bf62" /></label
+              ><label
+                >Opacity<input
+                  id="sprite-alpha"
+                  type="range"
+                  min="0"
+                  max="255"
+                  value="255" /></label
+              ><label
+                >Zoom<select id="sprite-zoom">
+                  <option value="4">4×</option>
+                  <option value="8" selected>8×</option>
+                  <option value="12">12×</option>
+                  <option value="16">16×</option>
+                </select></label
+              >
+            </div>
+            <div class="sprite-canvas-wrap">
+              <canvas
+                id="sprite-canvas"
+                tabindex="0"
+                aria-label="Pixel editor. Pointer draws; arrows move the keyboard cursor; Space applies the selected tool."
+                role="application"
+              ></canvas>
+            </div>
+            <p id="sprite-cursor" class="support-copy"></p>
+            <div id="sprite-palette" class="sprite-palette"></div>
+            <div class="button-row">
+              <button type="button" id="sprite-undo">Undo pixels</button
+              ><button type="button" id="sprite-redo">Redo pixels</button
+              ><button type="button" data-transform="flip-x">Flip horizontally</button
+              ><button type="button" data-transform="flip-y">Flip vertically</button
+              ><button type="button" data-transform="rotate">Rotate 90°</button>
+            </div>
+            <div class="field-grid">
+              <label>Replace color<input id="replace-color" type="color" value="#070b12" /></label
+              ><button type="button" id="replace-palette-color">Replace with chosen color</button
+              ><label
+                >Move selection X<input
+                  id="selection-dx"
+                  type="number"
+                  value="0"
+                  min="-128"
+                  max="128" /></label
+              ><label
+                >Move selection Y<input
+                  id="selection-dy"
+                  type="number"
+                  value="0"
+                  min="-128"
+                  max="128"
+              /></label>
+            </div>
+            <div class="button-row">
+              <button type="button" id="move-selection">Move selected pixels</button
+              ><button type="button" id="use-sprite" class="primary">Prepare edited sprite</button>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>Theme tokens</summary>
+          <p class="support-copy">
+            Tokens update this studio’s previews. Save/export is separate; player settings and
+            gameplay rules are not modified.
+          </p>
+          <form id="token-form">
+            <div id="token-fields" class="token-grid"></div>
+            <button type="submit" class="primary">Validate and stage tokens</button>
+          </form>
+        </details>
+        <details>
+          <summary>AI prompts</summary>
+          <div class="button-row">
+            <button type="button" data-prompt-action="variation">New variation</button
+            ><button type="button" data-prompt-action="edit">Edit existing</button
+            ><button type="button" data-prompt-action="collection">Replace collection</button>
+          </div>
+          <label
+            >Complete copyable brief<textarea
+              id="generated-prompt"
+              rows="12"
+              readonly
+            ></textarea></label
+          ><button type="button" id="copy-generated-prompt">Copy prompt</button>
+          <p id="prompt-status" class="support-copy" role="status"></p>
+        </details>
+        <details>
+          <summary>Asset revision history</summary>
+          <p class="support-copy">
+            Reverting binds an earlier immutable asset in a new theme revision. It never overwrites
+            the original record.
+          </p>
+          <label
+            >Review evidence (one concrete check per line)<textarea
+              id="review-evidence"
+              rows="4"
+              placeholder="Describe the actual native-size, contrast, Ukrainian glyph, anchor and affected-screen checks you performed."
+            ></textarea>
+          </label>
+          <button type="button" id="record-review">Record reviewed revision</button>
+          <p class="support-copy">
+            This records your evidence in a new immutable revision. A successful import or prompt is
+            not review evidence.
+          </p>
+          <div id="asset-history"></div>
+        </details>
+      </section>
+    </main>
+    <footer class="studio-footer">
+      <a href="../design-atlas/">Design atlas</a
+      ><a href="../../docs/asset-studio.md">Studio guide</a><a href="../../game/">Return to game</a
+      ><span>Local authoring workspace · player saves stay separate</span>
+    </footer>
+    <noscript
+      >JavaScript is required for local previews, editing and theme transfers. No assets are
+      uploaded to a server by this studio.</noscript
+    >
+    <script type="module" src="./studio.mjs"></script>
+  </body>
+</html>

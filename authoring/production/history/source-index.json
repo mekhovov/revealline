@@ -1,0 +1,10 @@
+{
+  "format": "revealline-production-source-history.v1",
+  "entries": [
+    {
+      "path": "authoring/motion-lab/render-character.mjs",
+      "bytes": 6489,
+      "sha256": "1ae56eb2b059b910cb3f1960eca0c4786f828d669b6f6c7615b5527850030e9a"
+    }
+  ]
+}
