@@ -30,8 +30,8 @@ const decodeImage = async (blob) => {
   const b = Buffer.from(await blob.arrayBuffer());
   return { naturalWidth: b.readUInt32BE(16), naturalHeight: b.readUInt32BE(20) };
 };
-test('twelve explicit producers preserve the sixteen exact earlier bodies and all five original authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
+test('sixteen explicit producers preserve the sixteen exact earlier bodies and all five original authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
   assert.equal(
     sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 5))),
     '83ba162b7fd1f7d6520081e70fa3d6abe4f0cff3f4b8e0b95ab2d0cd1206b32c',
@@ -40,8 +40,8 @@ test('twelve explicit producers preserve the sixteen exact earlier bodies and al
     sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 5))),
     'dc1ef7d0995578a9af50a134a1f20339128e133e97f54cf93d45b797708fb4c7',
   );
-  assert.equal(entries.length, 24);
-  assert.equal(bodies.size, 24);
+  assert.equal(entries.length, 32);
+  assert.equal(bodies.size, 32);
   assert.equal(
     entries.slice(0, 16).reduce((n, e) => n + e.bytes.length, 0),
     64546929,
@@ -139,16 +139,16 @@ test('cross-theme originals and interrupted second body cannot become an install
     { name: 'AbortError' },
   );
 });
-test('twelve external choices plus five embedded choices do not relax twelve installed packs or evict owners', async () => {
+test('sixteen external choices plus five embedded choices do not relax twelve installed packs or evict owners', async () => {
   const legacy = JSON.parse(
     await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
   );
   assert.equal(legacy.packs.length, 5);
-  assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 17);
+  assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 21);
   assert.equal(PACK_LIMITS.installed, 12);
   assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
   let installed = emptyPackLibrary();
-  for (const item of EXTERNAL_CATALOG.chapters)
+  for (const item of EXTERNAL_CATALOG.chapters.slice(0, 12))
     installed = installPack(
       installed,
       (await preparePack(bodies.get(item.pack.path).toString())).pack,
@@ -163,6 +163,6 @@ test('twelve external choices plus five embedded choices do not relax twelve ins
   assert.equal(exportPackLibrary(installed), before);
   assert.deepEqual(
     installed.packs.map((p) => p.id),
-    SOURCE_EXTERNAL_CHAPTERS.map((d) => d.id),
+    SOURCE_EXTERNAL_CHAPTERS.slice(0, 12).map((d) => d.id),
   );
 });

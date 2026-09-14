@@ -49,7 +49,7 @@ for (const [name, create] of [
 test('catalog parsing capacity never admits remote owners; all current source tuples stay exact', () => {
   assert.equal(EXTERNAL_CHAPTER_LIMITS.catalogChoices, 36);
   assert.deepEqual(prepareExternalCatalog(EXTERNAL_CATALOG), EXTERNAL_CATALOG);
-  assert.equal(EXTERNAL_CATALOG.chapters.length, 12);
+  assert.equal(EXTERNAL_CATALOG.chapters.length, 16);
   for (const [i, row] of EXTERNAL_CATALOG.chapters.entries()) {
     const descriptor = SOURCE_EXTERNAL_EDITIONS[i].descriptor;
     assert.equal(row.campaignKey, descriptor.campaignKey);
@@ -61,7 +61,7 @@ test('catalog parsing capacity never admits remote owners; all current source tu
   const expanded = {
     ...EXTERNAL_CATALOG,
     chapters: Array.from({ length: 36 }, (_, i) => ({
-      ...EXTERNAL_CATALOG.chapters[i % 12],
+      ...EXTERNAL_CATALOG.chapters[i % EXTERNAL_CATALOG.chapters.length],
       id: `remote-${i}`,
     })),
   };

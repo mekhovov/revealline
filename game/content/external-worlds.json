@@ -3,7 +3,7 @@
   "chapters": [
     {
       "id": "original-fpv-pressure-external",
-      "name": "FPV Front · Pressure Pictures",
+      "name": "FPV Front \u00b7 Pressure Pictures",
       "description": "Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.",
       "themeId": "fpv",
       "levels": 3,
@@ -21,7 +21,7 @@
     },
     {
       "id": "route-worlds-ukraine",
-      "name": "Ukraine Atlas · Route Choices",
+      "name": "Ukraine Atlas \u00b7 Route Choices",
       "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "ukraine",
       "levels": 3,
@@ -39,7 +39,7 @@
     },
     {
       "id": "route-worlds-retro",
-      "name": "1994 Forever · Route Choices",
+      "name": "1994 Forever \u00b7 Route Choices",
       "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "retro",
       "levels": 3,
@@ -57,7 +57,7 @@
     },
     {
       "id": "route-worlds-coupa",
-      "name": "Spend Network · Route Choices",
+      "name": "Spend Network \u00b7 Route Choices",
       "description": "Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.",
       "themeId": "coupa",
       "levels": 3,
@@ -75,7 +75,7 @@
     },
     {
       "id": "sentinel-circuit-fpv",
-      "name": "FPV Front · Sentinel Circuit",
+      "name": "FPV Front \u00b7 Sentinel Circuit",
       "description": "Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.",
       "themeId": "fpv",
       "levels": 3,
@@ -93,7 +93,7 @@
     },
     {
       "id": "sentinel-circuit-ukraine",
-      "name": "Ukraine Atlas · Sentinel Circuit",
+      "name": "Ukraine Atlas \u00b7 Sentinel Circuit",
       "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
       "themeId": "ukraine",
       "levels": 3,
@@ -111,7 +111,7 @@
     },
     {
       "id": "sentinel-circuit-retro",
-      "name": "1994 Forever · Sentinel Circuit",
+      "name": "1994 Forever \u00b7 Sentinel Circuit",
       "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
       "themeId": "retro",
       "levels": 3,
@@ -129,7 +129,7 @@
     },
     {
       "id": "sentinel-circuit-coupa",
-      "name": "Spend Network · Sentinel Circuit",
+      "name": "Spend Network \u00b7 Sentinel Circuit",
       "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
       "themeId": "coupa",
       "levels": 3,
@@ -147,7 +147,7 @@
     },
     {
       "id": "fracture-lines-fpv",
-      "name": "FPV Front · Fracture Lines",
+      "name": "FPV Front \u00b7 Fracture Lines",
       "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
       "themeId": "fpv",
       "levels": 3,
@@ -165,7 +165,7 @@
     },
     {
       "id": "fracture-lines-ukraine",
-      "name": "Ukraine Atlas · Fracture Lines",
+      "name": "Ukraine Atlas \u00b7 Fracture Lines",
       "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
       "themeId": "ukraine",
       "levels": 3,
@@ -183,7 +183,7 @@
     },
     {
       "id": "fracture-lines-retro",
-      "name": "1994 Forever · Fracture Lines",
+      "name": "1994 Forever \u00b7 Fracture Lines",
       "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
       "themeId": "retro",
       "levels": 3,
@@ -201,7 +201,7 @@
     },
     {
       "id": "fracture-lines-coupa",
-      "name": "Spend Network · Fracture Lines",
+      "name": "Spend Network \u00b7 Fracture Lines",
       "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
       "themeId": "coupa",
       "levels": 3,
@@ -215,6 +215,78 @@
         "path": "optional/external-chapters/fracture-lines-coupa/media.rlmedia",
         "bytes": 8718918,
         "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f"
+      }
+    },
+    {
+      "id": "countercurrent-fpv",
+      "name": "FPV Front \u00b7 Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "countercurrent-fpv/1/7359effa888ca945",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "bytes": 8104,
+        "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-fpv/media.rlmedia",
+        "bytes": 7070195,
+        "sha256": "768b3f9cb59112d7b3b2fb32fc15bf0c3d19e582cc2671486d243360376c11c5"
+      }
+    },
+    {
+      "id": "countercurrent-ukraine",
+      "name": "Ukraine Atlas \u00b7 Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "countercurrent-ukraine/1/7f014de96585a18e",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "bytes": 8184,
+        "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-ukraine/media.rlmedia",
+        "bytes": 8512868,
+        "sha256": "5d70852eb2b990c6c82f3ceba4494b4fb547fe05ba70b9e31da0ac08accc44d6"
+      }
+    },
+    {
+      "id": "countercurrent-retro",
+      "name": "1994 Forever \u00b7 Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-retro/pack.json",
+        "bytes": 8115,
+        "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-retro/media.rlmedia",
+        "bytes": 7625557,
+        "sha256": "0f91f4bb170cbcd64df192b2a55d84c19db8d87d3dd09e15d4e65254c3606c9b"
+      }
+    },
+    {
+      "id": "countercurrent-coupa",
+      "name": "Spend Network \u00b7 Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "coupa",
+      "levels": 3,
+      "campaignKey": "countercurrent-coupa/1/5f8155b60753cb07",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-coupa/pack.json",
+        "bytes": 8121,
+        "sha256": "625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-coupa/media.rlmedia",
+        "bytes": 8527514,
+        "sha256": "1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4"
       }
     }
   ]
