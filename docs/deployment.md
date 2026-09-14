@@ -36,6 +36,13 @@ production provenance checks, four isolated test shards, and the ordinary static
 checks use the pull request source. An already qualified immutable release is published from its
 original ZIP; publication does not rerun today's test sharder inside an older tag.
 
+Source test jobs keep the selected source in `source/` and obtain the shard utility from a separate
+`automation/` checkout pinned to `github.workflow_sha`. The utility accepts `--root .` from the
+source working directory, so discovery, imports, child processes and dependencies belong to the
+selected source. A generated `.cache` directory is initialized before those tests. The external
+runner also supports a selected source that predates the utility without patching its frozen tests;
+this capability does not change the main-only frozen-ZIP publication process below.
+
 The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
 through the existing main-only `github-pages` environment. Its reviewed
 [`publication.json`](../publishing/pages-controller/publication.json) selects one exact frozen
