@@ -576,6 +576,7 @@ try {
   }
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const menuIds = new Set([
+    'race-coop',
     'race-start',
     'race-chapter-retry',
     'race-installed-refresh',
