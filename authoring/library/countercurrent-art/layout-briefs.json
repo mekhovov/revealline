@@ -1,0 +1,90 @@
+{
+  "format": "revealline-art-layout-cues.v1",
+  "sourceSha256": "daaeb40b6260ada3632d602d42b41788fb0c36de109bcc0a1f648018112f3abc",
+  "width": 72,
+  "height": 36,
+  "scope": "Read-only composition cues, not a playable pack or diagram. Warning lanes aim dynamically and must not be painted as fixed gameplay lines.",
+  "levels": [
+    {
+      "id": "countercurrent-offset-docks",
+      "slotId": "unassigned-13",
+      "name": "Offset Docks",
+      "walls": [
+        {
+          "x": 14,
+          "y": 8,
+          "w": 18,
+          "h": 2
+        },
+        {
+          "x": 14,
+          "y": 10,
+          "w": 2,
+          "h": 5
+        },
+        {
+          "x": 40,
+          "y": 25,
+          "w": 17,
+          "h": 2
+        },
+        {
+          "x": 55,
+          "y": 19,
+          "w": 2,
+          "h": 6
+        }
+      ]
+    },
+    {
+      "id": "countercurrent-sandbar-braid",
+      "slotId": "unassigned-14",
+      "name": "Sandbar Braid",
+      "walls": [
+        {
+          "x": 13,
+          "y": 7,
+          "w": 18,
+          "h": 2
+        },
+        {
+          "x": 39,
+          "y": 13,
+          "w": 17,
+          "h": 2
+        },
+        {
+          "x": 19,
+          "y": 21,
+          "w": 16,
+          "h": 2
+        },
+        {
+          "x": 43,
+          "y": 28,
+          "w": 16,
+          "h": 2
+        }
+      ]
+    },
+    {
+      "id": "countercurrent-crossing-watch",
+      "slotId": "unassigned-15",
+      "name": "Crossing Watch",
+      "walls": [
+        {
+          "x": 20,
+          "y": 9,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "x": 43,
+          "y": 21,
+          "w": 10,
+          "h": 3
+        }
+      ]
+    }
+  ]
+}

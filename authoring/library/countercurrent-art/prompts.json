@@ -1,0 +1,178 @@
+{
+  "format": "revealline-source-art-prompts.v1",
+  "tool": "image_gen.imagegen built-in",
+  "mode": "generate",
+  "plannedCalls": 12,
+  "inputImages": [],
+  "prompts": [
+    {
+      "cellId": "countercurrent/offset-docks/fpv",
+      "themeId": "fpv",
+      "missionSlot": "offset-docks",
+      "sourceLevelId": "countercurrent-offset-docks",
+      "title": "Lanterns at the Offset Piers",
+      "path": "originals/offset-docks-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. FPV Front theme: a fictional civilian drone-service harbor before sunrise, viewed obliquely from a low elevated waterside platform. TWO large opposing hook-shaped piers face each other diagonally across open dark water: the far-left pier extends right with a short arm turning toward us; the nearer-right pier extends left with its far arm turning away. Their offset ends leave a generous S-shaped expanse of water. Weathered concrete and timber, small repair sheds, mooring ropes, a few unmarked service crates; a compact ivory reconnaissance quadcopter rests on a foreground repair cradle with four visible motor hubs, no weapon or large military insignia. Keep it subordinate to the broad pier composition. Petrol-blue water, deep navy steel and copper-orange maintenance lamps, pale apricot dawn and silver mist. A quiet feeling of crews preparing safe routes through a waking river port; no combat or wreckage.",
+      "promptSha256": "8595d567ba529031105009bfa67e4c443df7afdaddb4679b7e8b288a1355c965"
+    },
+    {
+      "cellId": "countercurrent/sandbar-braid/fpv",
+      "themeId": "fpv",
+      "missionSlot": "sandbar-braid",
+      "sourceLevelId": "countercurrent-sandbar-braid",
+      "title": "The Four Sandbar Relays",
+      "path": "originals/sandbar-braid-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. FPV Front theme: a wide fictional low-tide estuary in late afternoon, high oblique view over FOUR broad elongated sandbar/service berms staggered alternately left and right across the scene. They read as four clear horizontal bands separated by dark teal water channels, with changing open passages between their ends. A few restrained weather stations, compact communications cabinets and small unmarked maintenance shelters stand on the bars; one tiny civilian survey drone crosses the distant water, no large foreground vehicle. Dusty terracotta and pale sand against sage reeds, deep green shadows and warm ivory sky; a thin line of rain clears on the horizon. Reflected light traces natural water, never graphic arrows or a fixed path. Spacious, tactile and hopeful; keep the four bars unmistakable and different from a dense industrial city.",
+      "promptSha256": "fafbdb73b269cc5557a629360699dd46e72087838d5150044f0a3cef40f61b16"
+    },
+    {
+      "cellId": "countercurrent/crossing-watch/fpv",
+      "themeId": "fpv",
+      "missionSlot": "crossing-watch",
+      "sourceLevelId": "countercurrent-crossing-watch",
+      "title": "Two Quiet Signal Posts",
+      "path": "originals/crossing-watch-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. FPV Front theme: a fictional river-monitoring outpost at moonrise. TWO unequal inhabited landforms sit diagonally across a broad calm dark channel: a compact square rocky island at upper left with a low antenna shelter and warm observation window, and a longer flatter island at lower right with an elongated maintenance hangar and a few unmarked drone cradles. Their different shapes must remain legible at small size, with clear open space between them. Deep ink-blue water, cold slate rocks, ivory moonlight and restrained warm amber windows with just one tiny coral indicator. No searchlight beam, targeting cross or painted hazard lane; vigilance is conveyed by architecture and a small distant operator, not a literal game warning. Quiet, expansive night sky and reflections; no weapons, battle or damaged craft.",
+      "promptSha256": "fd8b2f2627bf563179f513fc2f3e4e4e885a58b3f71fa3a8d4a1572d8344a21d"
+    },
+    {
+      "cellId": "countercurrent/offset-docks/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "offset-docks",
+      "sourceLevelId": "countercurrent-offset-docks",
+      "title": "The Boatbuilders’ Morning",
+      "path": "originals/offset-docks-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Ukraine Atlas theme: an imagined Ukrainian river village of boatbuilders at dawn. TWO opposing hook-like timber landing yards extend around different sides of an open bend of water, their offset ends leaving generous water between. One yard shelters a half-finished plain wooden rowboat beneath dark oak beams; the other meets a low whitewashed workshop with a shingled roof and stacks of clean timber. Broad willows, a small orchard, worn stone steps and two tiny distant craftspeople provide humane scale, not portraits. Misty blue-green water, russet wood, cream plaster, embroidered-looking red-and-ivory cloth made of invented simple geometry over one rail, and honey dawn. Ukrainian material/craft inspiration only, no reconstruction of a named village, monument or authentic named pattern. Warm work and homecoming without a literal map.",
+      "promptSha256": "8f787376d33fa6f0721bf5c38593c86d9793103ee0a5c36f99d8fcc19d6ec2f5"
+    },
+    {
+      "cellId": "countercurrent/sandbar-braid/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "sandbar-braid",
+      "sourceLevelId": "countercurrent-sandbar-braid",
+      "title": "Four Gardens beside the River",
+      "path": "originals/sandbar-braid-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Ukraine Atlas theme: an imagined Ukrainian riverside craft-and-orchard landscape in early autumn sunlight. FOUR broad long garden terraces or low meadow islands form clearly separated, staggered horizontal bands across the middle ground, with winding dark irrigation water between their ends. Alternate small apple orchards, vegetable beds, flax drying frames and a modest whitewashed craft shed, keeping each band visually simple. A low timber footpath touches the near bank; one tiny gardener with a basket is subordinate to the scene. Amber foliage, plum and indigo shadows, muted jade water, cream walls and linen highlights. Invent all ornament; no named folk artwork or historical reconstruction. Let the rhythm of four land bands evoke Sandbar Braid without converting paths, rails or gardens into the collision blueprint.",
+      "promptSha256": "419d25bfdd43b087dc8039e9ce3b877e6ba48a4246fc5f779ddebad63d764da5"
+    },
+    {
+      "cellId": "countercurrent/crossing-watch/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "crossing-watch",
+      "sourceLevelId": "countercurrent-crossing-watch",
+      "title": "The Ferry Lights Return",
+      "path": "originals/crossing-watch-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Ukraine Atlas theme: a fictional broad Ukrainian river at late blue hour in autumn. TWO unequal willow-edged islands lie diagonally apart: an upper-left compact island with a modest timber bell shelter and a warm-lit house, and a lower-right elongated island with a long low ferry shed, stacked plain wooden oars and a small orchard. The generous empty channel and distinct square-versus-long shapes are the main composition. A tiny returning rowboat approaches the warm landing lights; no figures in the foreground. Deep cobalt, dusk plum, ivory plaster and muted gold leaves, with soft warm windows reflecting in water. Regionally inspired oak, shingle and plaster materials, all buildings invented. No real monument, sacred icon, named pattern or functional historic ferry reconstruction; no warning beams or UI lanes.",
+      "promptSha256": "759145189e9548e695c993ba86c49c0189abedec952ca11b795958da0d12b013"
+    },
+    {
+      "cellId": "countercurrent/offset-docks/retro",
+      "themeId": "retro",
+      "missionSlot": "offset-docks",
+      "sourceLevelId": "countercurrent-offset-docks",
+      "title": "Records across the Canal",
+      "path": "originals/offset-docks-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. 1994 Forever theme: a fictional waterside record-and-arcade quarter after rain. TWO opposing hook-shaped covered arcades wrap different sides of a narrow canal, their offset open ends creating a clear watery central gap. One arcade holds plain record crates and a small listening booth; the other has boxy unbranded game cabinets and a closed video-rental counter, all screens showing only abstract colored light with absolutely no letters or pseudo-text. Large roofs, water and warm shop windows should dominate over props. Petrol teal, lemon-yellow shop light, coral dusk and deep charcoal; an old bicycle and two tiny distant visitors, no large people. Original 1994-inspired electronics and architecture, no copied console, game screenshot, logo or product model; intimate, rainy and welcoming, not a generic purple skyline.",
+      "promptSha256": "e99722ac988c93e7c11172b28ab9765e04f556dd78ea6d154a217d5368e45831"
+    },
+    {
+      "cellId": "countercurrent/sandbar-braid/retro",
+      "themeId": "retro",
+      "missionSlot": "sandbar-braid",
+      "sourceLevelId": "countercurrent-sandbar-braid",
+      "title": "Last Platforms of Summer",
+      "path": "originals/sandbar-braid-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. 1994 Forever theme: a fictional low-rise transit and console hall in the last golden light of summer. FOUR long horizontal platform-like halls are staggered left and right across a broad concourse, with clear generous open spaces between their ends. Seen from an elevated balcony, the nearest hall contains a few unbranded boxy CRT terminals and cassette cases, farther halls hold small waiting benches and plain repair counters. Keep the four hall silhouettes readable and do not paint a rail-map diagram. Warm tobacco brown, golden amber fluorescent light, olive-green metal, dark aubergine shadows and a small cyan accent. Analog practical textures and broad roof shapes, no skyline crowd, no copied branded machines, no text, timetables, symbols or game screens. A sense of quiet exploration after the last train.",
+      "promptSha256": "57a5dae9781d06b6cf3d6a50e6e2ceb2e64c331c9351e1e5e91e7f8b96f51123"
+    },
+    {
+      "cellId": "countercurrent/crossing-watch/retro",
+      "themeId": "retro",
+      "missionSlot": "crossing-watch",
+      "sourceLevelId": "countercurrent-crossing-watch",
+      "title": "After-Hours Rooftop Exchange",
+      "path": "originals/crossing-watch-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. 1994 Forever theme: a fictional early-1990s neighborhood seen across a dark roof garden at sunset. TWO unequal rooftop workshop islands stand apart diagonally: upper-left a compact square game-and-radio club room with broad windows; lower-right a long low electronics-repair studio with a few silhouetted CRTs, coiled audio cables and plain cassette storage. Wide dark planted roof space separates the two masses; modest utility walkways are scenery, not exact gameplay lanes. Coral and peach sky, cool teal glass, charcoal roofs and a few creamy interior lamps; no generic purple neon city. One tiny visitor crosses the far walkway, no close-up people. Fictional equipment only, screens are blank colored glows without letters or icons, no copied game, console brand or product UI. An emotionally warm meeting of two different creative spaces.",
+      "promptSha256": "2a6832370d2ea6b930b7eea7e58ca5971c080a12d01821d736055529bcca7021"
+    },
+    {
+      "cellId": "countercurrent/offset-docks/coupa",
+      "themeId": "coupa",
+      "missionSlot": "offset-docks",
+      "sourceLevelId": "countercurrent-offset-docks",
+      "title": "The Shared Receiving Courts",
+      "path": "originals/offset-docks-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Spend Network theme inspired only by cooperative business spending and reuse: a fictional community supply-and-repair campus after a spring shower. TWO opposing hook-shaped low workshop courts frame a broad open central delivery lane diagonally, with their offset ends clearly visible. One courtyard receives plain reusable crates; the other repairs bicycles, lamps and household tools under a covered bench. A tiny electric cargo cart waits quietly, and a few small distant colleagues sort materials. Broad architecture, planted edges and wet paving lead the eye, no flow arrows or logistics diagram. Deep forest teal, warm mustard lamps, pale stone and soft rose sky; friendly, luminous and practical. No actual Coupa logo, trademarked UI, financial metric, savings claim, currency icon, brand or text. All people/equipment fictional; no warehouse photorealism.",
+      "promptSha256": "8fd1c220eb19b48d933dfbeb8e3916cf31f569ec814a9c59ac812b1fbffc8ec4"
+    },
+    {
+      "cellId": "countercurrent/sandbar-braid/coupa",
+      "themeId": "coupa",
+      "missionSlot": "sandbar-braid",
+      "sourceLevelId": "countercurrent-sandbar-braid",
+      "title": "Four Workshops, One Garden",
+      "path": "originals/sandbar-braid-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Spend Network theme inspired only by shared resources and thoughtful purchasing: a fictional civic maker campus with FOUR long low workshop-and-greenhouse bands staggered across a broad rain garden. Clear alternating left/right ends and generous planted passages make four major silhouettes easy to read. One band repairs furniture, one tends seedlings, one stores reusable containers and one hosts a quiet fabric workbench, suggested with only a few readable props. Tiny collaborating figures stay in the distance. Verdigris roofs, deep blue-green foliage, terracotta paving, warm cream interior light and muted coral dusk; large calm shadows rather than all-over sparkle. No product interface, Coupa logo, text, money, chart, performance claim or recognizable branded equipment. Scenic architecture echoes the four bars without pretending to be an exact level map.",
+      "promptSha256": "94f0d764ee7e10fb16d708d72e2e9b61479f51d1891cecfa3185bf2291ad8b7a"
+    },
+    {
+      "cellId": "countercurrent/crossing-watch/coupa",
+      "themeId": "coupa",
+      "missionSlot": "crossing-watch",
+      "sourceLevelId": "countercurrent-crossing-watch",
+      "title": "The Two Caretaker Houses",
+      "path": "originals/crossing-watch-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: ONE original static reward panorama for RevealLine / Countercurrent. Create a full-bleed 1774 by 887 pixel landscape, exact 2:1 composition from the outset, no frame or letterboxing. Modern luminous pixel-art painting: deliberate square pixel clusters, crisp stepped silhouettes, selective dithering, strong coherent shadow masses and a clear near/middle/far depth structure. Scenic detail must support three or four large readable forms at thumbnail size, not become all-over visual noise. Rich, emotionally inviting revealed reward art, original fictional composition. No writing, letters, numbers, logos, watermarks, user interface, grid, route arrows or map overlay. No copied game art, named artist imitation, identifiable real product or photographic rendering. No gore, injury or violent scene. This is reward scenery echoing the topology, never a literal collision map, fixed warning lane, working-machine blueprint or gameplay claim. Spend Network theme inspired only by collaborative stewardship and repair: a fictional urban commons after rain at blue hour. TWO unequal raised workshop plazas sit diagonally across a generous dark planted garden: a compact square material-library pavilion at upper left, and an elongated repair-and-refurbishment hall at lower right. Distinct broad footprints, open separation, slender ordinary garden footpaths and warm window reflections define the image. A few reusable crates and one repaired bicycle suggest careful reuse; tiny distant caretakers prepare to close. Ink green and midnight blue, ivory stone, amber interiors and silver rainwater, restrained luminous pixel clusters. No literal warning beams, fixed cross lanes or map markings. No actual Coupa products/logos, text, currency, dashboards, financial or sustainability-performance claims; a fictional humane scene rather than an advertisement.",
+      "promptSha256": "7d3a3410ce67fcd292e82df3fe8530250057fdd071a12c20b93a570ee10e538d"
+    }
+  ],
+  "calls": 12
+}
