@@ -19,8 +19,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  group: source-gates-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   verify:
@@ -73,14 +73,14 @@ jobs:
         run: npm run build:pages -- --archive-plan scripts/pages-archives.json --source-repository mekhovov/revealline
 
       - name: Upload Pages artifact
-        if: github.event_name != 'pull_request' && steps.publication.outputs.frozen-controller != 'true'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && steps.publication.outputs.frozen-controller != 'true'
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: dist
           include-hidden-files: true
 
   deploy:
-    if: github.event_name != 'pull_request' && needs.verify.outputs.frozen-controller != 'true'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.verify.outputs.frozen-controller != 'true'
     needs: verify
     runs-on: ubuntu-latest
     permissions:
