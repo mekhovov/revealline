@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
 
 class Element {
@@ -254,15 +255,84 @@ test('pagehide before late version response cannot bootstrap or inspect storage'
 
 test('successful built-version bootstrap only enables explicit discovery and closure stops its UI router', async (t) => {
   const f = await bootstrap(t, async (url) => {
+    if (String(url).endsWith('/game/content/recovery-catalogs.json'))
+      return new Response(
+        await readFile(new URL('../content/recovery-catalogs.json', import.meta.url)),
+      );
     assert.equal(String(url).endsWith('/game/build-info.json'), true);
     return new Response(JSON.stringify({ version: 'v0.40.0' }));
   });
+  for (let i = 0; i < 100 && f.$('find').disabled; i++)
+    await new Promise((resolve) => setTimeout(resolve, 5));
   assert.equal(f.$('find').disabled, false);
+  assert.match(
+    f.$('catalog-status').textContent,
+    /release-v0.39.0, release-0.39.0, release-v0.40.0, release-0.40.0/,
+  );
+  assert.doesNotMatch(f.$('catalog-status').textContent, /release-v0.41.0/);
   assert.equal(f.frames.size, 1);
   assert.equal(f.storageCalls(), 0);
   f.events.dispatchEvent(new Event('pagehide'));
   await new Promise((done) => setImmediate(done));
   assert.equal(f.frames.size, 0);
   assert.equal(f.$('find').disabled, true);
+  assert.equal(f.storageCalls(), 0);
+});
+
+test('unavailable packaged registry keeps raw discovery usable and original authority unavailable', async (t) => {
+  const f = await bootstrap(
+    t,
+    async (url) =>
+      new Response(
+        String(url).endsWith('build-info.json')
+          ? JSON.stringify({ version: 'v0.40.0' })
+          : 'unavailable',
+        { status: String(url).endsWith('build-info.json') ? 200 : 404 },
+      ),
+  );
+  assert.equal(f.$('find').disabled, false);
+  assert.equal(f.$('originals-review').disabled, true);
+  assert.match(f.$('catalog-status').textContent, /Raw profile diagnostics remain available/);
+  assert.equal(f.storageCalls(), 0);
+});
+
+test('catalog timeout preserves raw discovery without late registry adoption', async (t) => {
+  let finish;
+  const f = await bootstrap(t, async (url) =>
+    String(url).endsWith('build-info.json')
+      ? new Response(JSON.stringify({ version: 'v0.40.0' }))
+      : new Promise((resolve) => {
+          finish = resolve;
+        }),
+  );
+  assert.equal(f.timers.size, 1);
+  [...f.timers.values()][0]();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('find').disabled, false);
+  assert.match(f.$('catalog-status').textContent, /timed out/);
+  finish(
+    new Response(await readFile(new URL('../content/recovery-catalogs.json', import.meta.url))),
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.match(f.$('catalog-status').textContent, /timed out/);
+  assert.equal(f.storageCalls(), 0);
+});
+
+test('pagehide during catalog fetch cannot attach a late view or poll controls', async (t) => {
+  let finish;
+  const f = await bootstrap(t, async (url) =>
+    String(url).endsWith('build-info.json')
+      ? new Response(JSON.stringify({ version: 'v0.40.0' }))
+      : new Promise((resolve) => {
+          finish = resolve;
+        }),
+  );
+  f.events.dispatchEvent(new Event('pagehide'));
+  finish(
+    new Response(await readFile(new URL('../content/recovery-catalogs.json', import.meta.url))),
+  );
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.$('find').disabled, true);
+  assert.equal(f.frames.size, 0);
   assert.equal(f.storageCalls(), 0);
 });
