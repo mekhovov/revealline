@@ -190,30 +190,13 @@ test('failed original preparation leaves the real lobby Start disabled with its 
   assert.ok(seen.every((image) => image.released === 1));
 });
 
-test('terminal pagehide during the existing installed-pack read cannot publish released pictures or start a race', async (t) => {
-  const reads = [];
+test('terminal pagehide during installed authority opening cannot publish released pictures or start a race', async (t) => {
+  let transactions = 0;
   const db = {
     close() {},
-    transaction(store, mode) {
-      assert.equal(store, 'assets');
-      assert.ok(
-        mode === undefined || mode === 'readonly',
-        'couch does not write the solo asset store',
-      );
-      return {
-        objectStore: () => ({
-          get(key) {
-            reads.push(key);
-            const request = {};
-            setImmediate(() => {
-              globalThis.window.emit('pagehide', { persisted: false });
-              request.result = null;
-              request.onsuccess();
-            });
-            return request;
-          },
-        }),
-      };
+    transaction() {
+      transactions++;
+      throw new Error('No reads or writes after terminal hide.');
     },
   };
   const assetDatabase = {
@@ -221,13 +204,21 @@ test('terminal pagehide during the existing installed-pack read cannot publish r
       assert.equal(name, 'revealline-assets-v1');
       assert.equal(version, 1);
       const request = { result: db };
-      queueMicrotask(() => request.onsuccess());
+      queueMicrotask(() => {
+        globalThis.window.emit('pagehide', { persisted: false });
+        request.onsuccess();
+      });
       return request;
     },
   };
-  t.after(() => db.onversionchange?.());
-  const f = await couchPage(t, { assetDatabase, initialLevel: null, expectBootFailure: true });
-  assert.deepEqual(reads, ['revealline.packs.dev.v1']);
+  const f = await couchPage(t, {
+    assetDatabase,
+    initialLevel: null,
+    expectBootFailure: true,
+    storage: { getItem: () => null },
+    lockManager: { request: async (_key, _options, action) => action({}) },
+  });
+  assert.equal(transactions, 0);
   assert.equal(f.$('race-start').disabled, true);
   assert.equal(f.renders.length, 0);
   assert.ok(f.images.every((image) => image.released === 1));
