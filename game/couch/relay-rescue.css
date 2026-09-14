@@ -16,6 +16,42 @@
   color: var(--ink);
   background: var(--bg);
 }
+.setup-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.live-objective {
+  margin: 0 0 12px;
+  color: var(--sun);
+  font-size: 0.85rem;
+}
+.control-card .support-status {
+  color: inherit;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  min-height: 1.7em;
+  line-height: 1.5;
+}
+.controller-focus {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+}
+.playing .masthead {
+  min-height: 56px;
+}
+.playing .controls {
+  padding-top: 12px;
+}
+.playing .help-footer p {
+  display: none;
+}
+@media (min-width: 900px) {
+  .playing .arena-wrap {
+    width: min(100%, max(640px, calc((100svh - 330px) * 2)));
+    margin-inline: auto;
+  }
+}
 * {
   box-sizing: border-box;
 }
