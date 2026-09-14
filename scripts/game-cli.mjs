@@ -569,7 +569,11 @@ async function addOfflineEntries(
     description: 'A territory-capture arcade game with interchangeable worlds and characters.',
     start_url: './game/',
     scope: './',
-    display: 'standalone',
+    // Android supports an installed game without browser or system chrome.
+    // Browsers that cannot offer that (notably desktop and iPadOS) follow the
+    // standards fallback to the native-feeling standalone app window instead.
+    display: 'fullscreen',
+    display_override: ['fullscreen', 'standalone', 'minimal-ui'],
     orientation: 'any',
     background_color: '#091324',
     theme_color: '#091324',
@@ -595,8 +599,11 @@ async function addOfflineEntries(
       worker: `${relativeRoot}/service-worker.js`,
       ...(optionalPacks.length ? { optionalPacks } : {}),
     };
-    const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324"><meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     const source = entry.bytes.toString();
+    const appMode = source.includes('name="apple-mobile-web-app-capable"')
+      ? ''
+      : '<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">';
+    const head = `<link rel="manifest" href="${relativeRoot}/manifest.webmanifest"><link rel="apple-touch-icon" href="${relativeRoot}/icons/icon-180.png"><meta name="theme-color" content="#091324">${appMode}<meta name="revealline-offline" content='${html(JSON.stringify(marker))}'>`;
     entry.bytes = Buffer.from(
       source.includes('</head>') ? source.replace('</head>', `${head}</head>`) : head + source,
     );
