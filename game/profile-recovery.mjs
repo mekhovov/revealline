@@ -2,6 +2,7 @@ import { createProfileChannelReader } from './profile-channel-reader.mjs';
 import { attachProfileRecoveryView } from './ui/profile-recovery.mjs';
 import { attachControllerNavigation } from './ui/controller-navigation.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
+import { loadProfileRecoveryCatalogs } from './profile-recovery-catalogs.mjs';
 
 let cleanup = null,
   epoch = 0;
@@ -26,10 +27,36 @@ async function start() {
       throw new Error('Open recovery from a built release with its version information.');
     const info = await response.json();
     if (generation !== epoch || controller.signal.aborted) return;
-    const reader = createProfileChannelReader({ currentVersion: info.version });
+    clearTimeout(timer);
+    let recoveryCatalogs = [],
+      catalogIssue = '';
+    const catalogController = new AbortController();
+    const cancelCatalog = () => catalogController.abort();
+    controller.signal.addEventListener('abort', cancelCatalog, { once: true });
+    const catalogTimer = setTimeout(
+      () =>
+        catalogController.abort(
+          new DOMException('Packaged catalog loading timed out.', 'TimeoutError'),
+        ),
+      10000,
+    );
+    try {
+      recoveryCatalogs = await loadProfileRecoveryCatalogs(info.version, {
+        signal: catalogController.signal,
+      });
+    } catch (error) {
+      catalogIssue = error.message;
+    } finally {
+      clearTimeout(catalogTimer);
+      controller.signal.removeEventListener('abort', cancelCatalog);
+    }
+    if (generation !== epoch || controller.signal.aborted) return;
+    const reader = createProfileChannelReader({ currentVersion: info.version, recoveryCatalogs });
     const root = document.getElementById('profile-recovery-root');
     const view = attachProfileRecoveryView({
       reader,
+      supportedChannels: recoveryCatalogs.map((entry) => entry.channelId),
+      catalogIssue,
       onBack: () => location.assign('./index.html'),
     });
     const navigation = attachControllerNavigation({
