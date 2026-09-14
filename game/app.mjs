@@ -3389,6 +3389,7 @@ try {
     $('turn-select').value = turnPolicy;
   }
   function focusMission() {
+    if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
     (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
   }
@@ -4662,9 +4663,22 @@ try {
   };
   $('collection-button').onclick = () => {
     if (courseSession || courseEntry) return;
+    const opener = document.activeElement;
     pause(true);
     prepareCollectionProgress();
     libraryPanel.populateGallery();
+    $('collection-back').textContent = $('shell-home').open
+      ? 'Back to menu →'
+      : $('shell-missions').open
+        ? 'Back to Missions →'
+        : 'Back to the field →';
+    // Pausing may focus Resume; native return belongs to this entry control.
+    if (
+      opener?.isConnected &&
+      !opener.disabled &&
+      !opener.closest('[hidden],[inert],[aria-hidden="true"]')
+    )
+      opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
   };
   $('choose-appearance').onclick = focusAppearance;
