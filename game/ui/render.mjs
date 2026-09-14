@@ -1,5 +1,6 @@
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
+import { drawPresentationImage } from './presentation-draw-image.mjs';
 import { drawEncounterLane, drawEncounterCore } from './encounter-view.mjs';
 import {
   classicView,
@@ -107,6 +108,12 @@ export class BoardPainter {
     this.celebration = null;
     this._winState = null;
     this._celebrationPrepared = false;
+    this.presentation = null;
+  }
+  // A read-only compiled release snapshot is cosmetic. It never replaces the
+  // source theme, picture, body preset or any simulation-owned reference.
+  setPresentation(snapshot = null) {
+    this.presentation = snapshot;
   }
   async setLook(theme, bodyId, overrides = {}) {
     const token = ++this.loadToken;
@@ -264,6 +271,10 @@ export class BoardPainter {
     } = {},
   ) {
     if (!this.theme || !state) return;
+    const presentation =
+      this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+    reduced = reduced || presentation?.canvas.motionScale === 0;
+    const motionDt = dt * (presentation?.canvas.motionScale ?? 1);
     const { width: columns, height: rows } = geometryForRun(state);
     const W = columns * CELL,
       H = rows * CELL;
@@ -284,7 +295,7 @@ export class BoardPainter {
     }
     const finale = fullReveal ? celebrationFrame(this.celebration) : null;
     const revealAlpha = fullReveal ? 1 - finale.reveal : 1;
-    const p = this.theme.palette,
+    const p = presentation?.canvas.palette || this.theme.palette,
       t = state.time;
     const classic = fullReveal ? null : classicView(state);
     const canvasCSSWidth =
@@ -293,10 +304,67 @@ export class BoardPainter {
         : Number.isFinite(ctx.canvas?.clientWidth) && ctx.canvas.clientWidth > 0
           ? ctx.canvas.clientWidth
           : W;
+    const images = { ...this.images, presentationSprites: {} };
+    const enemySprites = {};
+    if (presentation) {
+      for (const [slot, role] of Object.entries({
+        'terrain.wall': 'wall',
+        'terrain.slow': 'slowTerrain',
+        'terrain.lethal': 'lethalTerrain',
+        'pickup.objective': 'objective',
+        'pickup.supply': 'supply',
+        'pickup.life': 'lifePickup',
+        'pickup.speed': 'speedPickup',
+        'pickup.slow': 'slowPickup',
+        'pickup.freeze': 'freezePickup',
+      })) {
+        const sprite = presentation.image(slot);
+        if (sprite && !this.overrides[role]) {
+          images[role] = sprite.image;
+          images.presentationSprites[role] = sprite.geometry;
+        }
+      }
+      for (const [type, role] of Object.entries({
+        bouncer: 'enemy',
+        'border-patrol': 'patrol',
+        'contour-patrol': 'contour',
+        'claimed-rover': 'rover',
+        eroder: 'eroder',
+        'lane-boss': 'boss',
+        'relay-sentinel': 'boss',
+      })) {
+        const sprite = presentation.image(`enemy.${type}`);
+        if (sprite && !this.overrides[role] && !actorSkins[type]) {
+          enemySprites[type] = sprite;
+          images[role] = sprite.image;
+          images.presentationSprites[role] = sprite.geometry;
+        }
+      }
+    }
+    let playerBody = this.body,
+      playerImage = this.image;
+    if (presentation && !this.overrides.player) {
+      const set = this.presets.characterPresentations?.sets.find(
+        (entry) =>
+          entry.themeId === 'fpv' && Object.values(entry.classBodies).includes(this.bodyId),
+      );
+      const role = set && Object.entries(set.classBodies).find(([, id]) => id === this.bodyId)?.[0];
+      const treatment = this.style === 'microtile' || canvasCSSWidth < 480 ? 'compact' : 'detailed';
+      const sprite = role && presentation.image(`player.${role}.${treatment}`);
+      if (sprite) {
+        playerImage = sprite.image;
+        playerBody = {
+          ...this.body,
+          sampling: 'nearest',
+          rotors: sprite.geometry.rotors,
+          presentationPivot: sprite.geometry.pivot,
+        };
+      }
+    }
     const actorFrames = this.actorPresentation.sample(fullReveal ? [] : state.enemies, {
       tick: state.tick,
       time: state.time,
-      dt,
+      dt: motionDt,
       paused: paused || state.status !== 'running',
       reduced,
       classic,
@@ -308,8 +376,11 @@ export class BoardPainter {
       scale: actorScale,
       actorSkins,
     });
-    this.enemyBodies.update(actorFrames.values(), this.overrides);
-    this.time += paused ? 0 : dt;
+    this.enemyBodies.update(
+      [...actorFrames.values()].filter((frame) => !enemySprites[frame.type]),
+      this.overrides,
+    );
+    this.time += paused ? 0 : motionDt;
     for (const effect of this.effects)
       if (
         fullReveal
@@ -363,7 +434,7 @@ export class BoardPainter {
       }
       ctx.globalAlpha = 1;
     }
-    drawClassicTerrain(ctx, classic, p, this.images);
+    drawClassicTerrain(ctx, classic, p, images);
     // Reveal decoration belongs below current hazards, actors and live cuts.
     // An old capture pulse must never wash over a newly opened live line.
     if (!fullReveal)
@@ -380,7 +451,16 @@ export class BoardPainter {
           ctx.globalAlpha = revealAlpha;
           ctx.fillStyle = colorMix(p.muted, p.ink, 0.5);
           ctx.fillRect(xx, yy, CELL, CELL);
-          if (this.images.wall) ctx.drawImage(this.images.wall, xx, yy, CELL, CELL);
+          if (images.wall)
+            drawPresentationImage(
+              ctx,
+              images.wall,
+              xx + CELL / 2,
+              yy + CELL / 2,
+              CELL,
+              CELL,
+              images.presentationSprites.wall,
+            );
           else if (this.style === 'microtile') {
             ctx.fillStyle = p.muted;
             ctx.fillRect(xx + 2, yy + 2, 4, 4);
@@ -418,7 +498,7 @@ export class BoardPainter {
           ctx.globalAlpha = 1;
         }
       }
-    if (this.style === 'props' && !fullReveal && !this.images.wall)
+    if (this.style === 'props' && !fullReveal && !images.wall)
       for (const w of state.level.walls || []) {
         const x = w.x * CELL,
           y = w.y * CELL,
@@ -530,13 +610,21 @@ export class BoardPainter {
         }
       }
       drawEncounterLane(ctx, state, p);
-      drawClassicPickups(ctx, classic, p, this.images, {
+      drawClassicPickups(ctx, classic, p, images, {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,
       });
       for (const pad of state.supplies) {
-        if (this.images.supply)
-          ctx.drawImage(this.images.supply, pad.x * CELL - 8, pad.y * CELL - 8, 16, 16);
+        if (images.supply)
+          drawPresentationImage(
+            ctx,
+            images.supply,
+            pad.x * CELL,
+            pad.y * CELL,
+            16,
+            16,
+            images.presentationSprites.supply,
+          );
         else {
           ctx.strokeStyle = p.safe;
           ctx.lineWidth = 1;
@@ -557,7 +645,16 @@ export class BoardPainter {
         ctx.lineWidth = 2;
         ctx.strokeRect(-6, -6, 12, 12);
         ctx.restore();
-        if (this.images.objective) ctx.drawImage(this.images.objective, x - 8, y - 8, 16, 16);
+        if (images.objective)
+          drawPresentationImage(
+            ctx,
+            images.objective,
+            x,
+            y,
+            16,
+            16,
+            images.presentationSprites.objective,
+          );
         else {
           ctx.fillStyle = p.accent;
           ctx.fillRect(x - 2, y - 2, 4, 4);
@@ -597,12 +694,24 @@ export class BoardPainter {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
         const stunned = (e.stunnedUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        const body = this.enemyBody(actorFrames.get(e.id));
-        drawPresentedActor(ctx, actorFrames.get(e.id), p, body?.image, body?.record);
+        const sprite = enemySprites[e.type],
+          body = sprite ? null : this.enemyBody(actorFrames.get(e.id));
+        drawPresentedActor(
+          ctx,
+          actorFrames.get(e.id),
+          p,
+          sprite?.image ?? body?.image,
+          body?.record,
+          sprite?.geometry,
+        );
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
-      drawEnemyPressure(ctx, classic, p, { screenScale: canvasCSSWidth / W, frames: actorFrames });
+      drawEnemyPressure(ctx, classic, p, {
+        screenScale: canvasCSSWidth / W,
+        frames: actorFrames,
+        fonts: presentation?.fonts,
+      });
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,
         reduced,
@@ -615,7 +724,7 @@ export class BoardPainter {
             ctx,
             classic?.enemies.find((enemy) => enemy.id === e.id),
             p,
-            this.images,
+            images,
             actorFrames.get(e.id),
             this.enemyBody(actorFrames.get(e.id)),
           )
@@ -639,8 +748,16 @@ export class BoardPainter {
         const stunned = (e.stunnedUntil || 0) > t,
           slowed = (e.slowUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        const body = this.enemyBody(actorFrames.get(e.id));
-        drawPresentedActor(ctx, actorFrames.get(e.id), p, body?.image, body?.record);
+        const sprite = enemySprites[e.type],
+          body = sprite ? null : this.enemyBody(actorFrames.get(e.id));
+        drawPresentedActor(
+          ctx,
+          actorFrames.get(e.id),
+          p,
+          sprite?.image ?? body?.image,
+          body?.record,
+          sprite?.geometry,
+        );
         ctx.globalAlpha = 1;
         if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
           ctx.strokeStyle = p.accent;
@@ -664,13 +781,16 @@ export class BoardPainter {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,
         frames: actorFrames,
+        fonts: presentation?.fonts,
       });
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
         this.heading;
       let delta = ((facing - this.heading + Math.PI * 3) % TAU) - Math.PI;
       if (!paused) {
-        this.heading += reduced ? delta : Math.sign(delta) * Math.min(Math.abs(delta), dt * 7);
+        this.heading += reduced
+          ? delta
+          : Math.sign(delta) * Math.min(Math.abs(delta), motionDt * 7);
         this.bank = reduced ? 0 : Math.max(-0.16, Math.min(0.16, delta * 0.12));
         this.speedRatio = (state.player.speed || 0) / state.rules.moveSpeed;
       }
@@ -678,10 +798,10 @@ export class BoardPainter {
         this.animation,
         this.recipe,
         { visualSpeed: state.player.speed || 0, cruiseSpeed: state.rules.moveSpeed },
-        dt,
+        motionDt,
         { paused, reducedMotion: reduced },
       );
-      const playerSize = playerPaintSize(this.body, this.image, {
+      const playerSize = playerPaintSize(playerBody, playerImage, {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,
         style: this.style,
@@ -692,8 +812,8 @@ export class BoardPainter {
       if (state.status === 'respawning')
         ctx.globalAlpha = reduced ? 0.6 : 0.35 + 0.35 * Math.sin(this.time * 15);
       paintCharacter(ctx, {
-        body: this.body,
-        image: this.image,
+        body: playerBody,
+        image: playerImage,
         recipe: this.recipe,
         animation: this.animation,
         colors: { body: p.safe, accent: p.accent },
@@ -741,7 +861,7 @@ export class BoardPainter {
       }
       if (state.player.queuedDirection) {
         ctx.fillStyle = p.accent;
-        ctx.font = '500 16px "Field Kit Mono", monospace';
+        ctx.font = `500 16px ${presentation?.fonts.numeric || '"Field Kit Mono", monospace'}`;
         ctx.fillText(
           { up: '↑', right: '→', down: '↓', left: '←' }[state.player.queuedDirection],
           state.player.x * CELL + playerSize.diameter / 2 + 3,
@@ -757,6 +877,7 @@ export class BoardPainter {
           screenScale: canvasCSSWidth / W,
           width: W,
           height: H,
+          fonts: presentation?.fonts,
         });
       if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
@@ -782,7 +903,12 @@ export class BoardPainter {
         ctx.globalAlpha = 1;
       }
     }
-    if (!fullReveal) drawRecoveryCue(ctx, state, p, { screenScale: canvasCSSWidth / W, width: W });
+    if (!fullReveal)
+      drawRecoveryCue(ctx, state, p, {
+        screenScale: canvasCSSWidth / W,
+        width: W,
+        fonts: presentation?.fonts,
+      });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);
   }

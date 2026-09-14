@@ -54,3 +54,11 @@ Unit tests in `game/test/asset-studio-helpers.test.mjs` exercise crop bounds, no
 The phase source check exercised a new 64×64 sprite, pixel undo/redo, invalid-pivot rejection and recovery, staging, draft undo/redo, atomic local save, reload, restoring the original through history, and the Export action in the in-app browser. The single-pixel QA fixture remains historical data in that local test workspace and is not a production asset. Unit coverage verifies corrupt imports, byte round trips and stale saves. Native file-dialog upload/download acceptance and physical touch/controller checks remain separate release checks.
 
 A full required-slot edit experiment retained 194 separate changes in 196 theme records and a 914,810-byte manifest. Successors inherit exact predecessors and store changed bindings/tokens. Byte and history limits still apply; an imported bundle cannot silently compact or rewrite earlier records.
+
+## Current release collection
+
+A new workspace loads the compiled release assets. Existing local drafts remain unchanged. **Load release collection** stages the current release through the same immutable, namespaced collection path as an import; save it or undo it explicitly. The compiler includes an editable `studio.json` plus every retained hash-addressed asset. Its fixed-path loader verifies the complete candidate before staging and never accesses player saves. See [production and adoption](field-kit-production.md).
+
+Copied edit prompts now include the selected asset's actual geometry and full production brief, so a custom pivot, rotor layout or prepared-scene palette is not replaced by the baseline slot defaults. Collection prompts carry those current requirements for every selected member.
+
+Complete collection round trips reuse identical immutable asset revisions already present in the workspace. New or conflicting imported revisions are namespaced, and derivative links follow the imported history. Corrupt files or a true combined-budget overflow fail before the current workspace changes.

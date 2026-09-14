@@ -5,6 +5,8 @@ description: 'Create, edit, vary, and prepare Xonix game artwork: reveal backgro
 
 # Xonix Asset Creator
 
+Current FPV production uses [the Field Kit pipeline](../../../docs/field-kit-production.md): original native sprite/glyph recipes, unchanged image-generation originals, explicit exact-frame scene derivatives, and compiled release/studio assets. Use the selected revision's actual frame, pivot, hubs and production palette in copied prompts. Record nearest-grid/palette preparation honestly; it is not proof of hand-authored native pixel art. Keep source originals and historical picture pins, and review real component/board placement before recording a reviewed revision.
+
 Create the requested art and a traceable handoff. Use the available image-generation/editing tool for imagery; follow its instructions. Do not silently replace image generation with programmatic drawing or invoke a paid API/CLI fallback without the user's authorization for that route.
 
 For the active redesign, follow the approved [Field Kit art contract](../../../docs/fpv-redesign-design.md), [atlas](../../design-atlas/index.html) and [implemented phase register](../../../docs/fpv-redesign-execution.md). Generate original pixel FPV artwork and retain the source, then prepare explicitly recorded derivatives for the required slot. Record actual dimensions, palette, alpha, occupied bounds, pivots/rotor anchors and native-size observations. The review atlas does not publish an asset; studio/compiler adoption has its own later release boundary. Never overwrite a saved or first-earned original to make a new default appear complete.

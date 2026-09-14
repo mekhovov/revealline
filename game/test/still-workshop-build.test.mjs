@@ -16,6 +16,8 @@ const fieldKitFiles = [
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
   'game/ui/field-kit-flow.css',
+  'game/ui/field-kit-compiled.css',
+  'game/presentation/page-entry.mjs',
   'game/ui/art/field-kit/prepared/title-hangar-v1.png',
   'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
   'game/ui/fonts/field-kit/handjet-display-600.woff2',
@@ -125,8 +127,11 @@ test('actual release allowlist ships the standalone still entry and exact existi
       'authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png',
       'authoring/library/ukraine-role-presentations/originals/impact.png',
       'authoring/library/ukraine-role-presentations/originals/trapper.png',
+      'authoring/library/fpv-field-kit/prepared/reveals/reveals.json',
+      'authoring/library/fpv-field-kit/prepared/reveals/review.html',
+      'authoring/library/fpv-field-kit/prepared/reveals/review.mjs',
     ].sort(),
-    'Only the three teaching documents, fourteen FPV/Ukraine player originals and seven enemy originals ship; other generated originals and proof tooling stay excluded.',
+    'Only teaching documents, explicit legacy player/enemy originals and three public reveal-review resources ship; other generated source originals stay excluded.',
   );
   assert.deepEqual(
     files.filter((name) => name.startsWith('authoring/video-poster/')).sort(),

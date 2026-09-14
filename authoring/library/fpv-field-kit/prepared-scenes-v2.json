@@ -1,0 +1,273 @@
+{
+  "format": "revealline-prepared-scenes.v2",
+  "previousManifest": {
+    "path": "authoring/library/fpv-field-kit/prepared-scenes-v1.json",
+    "sha256": "daef297ff76e85153ea8693f7caecdaf9ffc408da7aa23f1b61b8a793c66e705"
+  },
+  "recipeSource": {
+    "path": "scripts/prepare-field-kit-title-v2.mjs",
+    "sha256": "ecec9159ab2185b4b8894c6e5567959203a453b2730e344f8fa37d94cc18720a"
+  },
+  "paletteSha256": "324afc8bb95304bfc44abd6723979d30bcddf900cee25b98a37f9485bc34604c",
+  "records": [
+    {
+      "id": "title-hangar-v2",
+      "slotId": "screen.title.background",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/title-hangar.png",
+        "sha256": "cbeef16d7c8f20d1f211c61d455d8b02f1c7abff83b41348cbd711b2f7b69eac",
+        "width": 1672,
+        "height": 941,
+        "bytes": 1705416
+      },
+      "previous": {
+        "path": "game/ui/art/field-kit/prepared/title-hangar-v1.png",
+        "sha256": "57744cbfe744bd50d932b1dba963539c11dbb176dc1e3171de46c34ea74d48a0",
+        "width": 960,
+        "height": 540,
+        "bytes": 866080,
+        "pixelsSha256": "09536f131580eaf8df63f7edfc07893ce7b226aaf6394aab5e31c1d6d48f7bcf"
+      },
+      "output": {
+        "path": "authoring/library/fpv-field-kit/prepared/titles/title-hangar-v2.png",
+        "sha256": "72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052",
+        "bytes": 25969,
+        "width": 960,
+        "height": 540,
+        "pixelsSha256": "888a3adb74c2daa3255eec43b8e332e95f9ccf0bbb1cb508142836b23fb9a069"
+      },
+      "preparation": {
+        "algorithm": "field-kit-title-pixel-preparation-v2",
+        "sourceCrop": {
+          "x": 0,
+          "y": 0,
+          "width": 1672,
+          "height": 940
+        },
+        "sampling": "nearest pixel-center",
+        "logicalWidth": 320,
+        "logicalHeight": 180,
+        "integerScale": 3,
+        "clippedEdgePixels": {
+          "right": 0,
+          "bottom": 0
+        },
+        "quantization": "fixed36-color weighted RGB nearest; no dithering",
+        "palette": [
+          "#070b12",
+          "#101923",
+          "#172837",
+          "#213647",
+          "#2b4558",
+          "#3b586f",
+          "#506a82",
+          "#718397",
+          "#a5b2bb",
+          "#c5c8c0",
+          "#f3f0db",
+          "#163e47",
+          "#245966",
+          "#326a70",
+          "#457f80",
+          "#78dce8",
+          "#1c302d",
+          "#2b4036",
+          "#3c5140",
+          "#506348",
+          "#687c55",
+          "#819361",
+          "#9dbb7a",
+          "#b7c38a",
+          "#433d33",
+          "#62523e",
+          "#806445",
+          "#a27d4e",
+          "#c29b68",
+          "#d7b885",
+          "#f4bf62",
+          "#dc923f",
+          "#bb693a",
+          "#8e5740",
+          "#464d51",
+          "#647786"
+        ],
+        "usedColors": [
+          "#070b12",
+          "#101923",
+          "#172837",
+          "#213647",
+          "#2b4558",
+          "#3b586f",
+          "#506a82",
+          "#718397",
+          "#a5b2bb",
+          "#c5c8c0",
+          "#f3f0db",
+          "#163e47",
+          "#245966",
+          "#326a70",
+          "#457f80",
+          "#78dce8",
+          "#1c302d",
+          "#2b4036",
+          "#3c5140",
+          "#506348",
+          "#687c55",
+          "#819361",
+          "#9dbb7a",
+          "#b7c38a",
+          "#433d33",
+          "#62523e",
+          "#806445",
+          "#a27d4e",
+          "#c29b68",
+          "#d7b885",
+          "#f4bf62",
+          "#dc923f",
+          "#bb693a",
+          "#8e5740",
+          "#464d51",
+          "#647786"
+        ],
+        "alpha": "opaque",
+        "disclosure": "Unchanged generated source sampled to a 320×180 or 180×320 logical grid, palette-mapped and enlarged 3×. This derivative is not a hand-authored native pixel drawing."
+      },
+      "provenance": "Original built-in image-generation source retained unchanged with full prompt in the existing title source records. Separate v2 derivative; every P4/v1 file and hash preserved.",
+      "quality": {
+        "stage": "produced",
+        "evidence": [
+          "Pinned original and historical-v1 SHA-256; exact RGB PNG round trip; 3× clusters; fixed36 palette. Artistic and real menu review remain separate."
+        ]
+      }
+    },
+    {
+      "id": "title-hangar-portrait-v2",
+      "slotId": "screen.title.portrait",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/title-hangar-portrait.png",
+        "sha256": "4a7b9b79cc874264a4480db6f1c371f56e23919dfe7f9781037d3a733c649198",
+        "width": 941,
+        "height": 1672,
+        "bytes": 1605856
+      },
+      "previous": {
+        "path": "game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png",
+        "sha256": "4f56a78772cd7363a2992a8252e4dc629638dad705a9b981d4561830117f511e",
+        "width": 540,
+        "height": 960,
+        "bytes": 790579,
+        "pixelsSha256": "9efe52e1ea1db83a26d7c60a018f26d1e4b56da3a8653703a861fc27f6b42949"
+      },
+      "output": {
+        "path": "authoring/library/fpv-field-kit/prepared/titles/title-hangar-portrait-v2.png",
+        "sha256": "8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27",
+        "bytes": 23827,
+        "width": 540,
+        "height": 960,
+        "pixelsSha256": "b38c156a2a7ca099ff18570463b1fe67eb022d8145aea9b32cb553bc4189200c"
+      },
+      "preparation": {
+        "algorithm": "field-kit-title-pixel-preparation-v2",
+        "sourceCrop": {
+          "x": 0,
+          "y": 0,
+          "width": 940,
+          "height": 1672
+        },
+        "sampling": "nearest pixel-center",
+        "logicalWidth": 180,
+        "logicalHeight": 320,
+        "integerScale": 3,
+        "clippedEdgePixels": {
+          "right": 0,
+          "bottom": 0
+        },
+        "quantization": "fixed36-color weighted RGB nearest; no dithering",
+        "palette": [
+          "#070b12",
+          "#101923",
+          "#172837",
+          "#213647",
+          "#2b4558",
+          "#3b586f",
+          "#506a82",
+          "#718397",
+          "#a5b2bb",
+          "#c5c8c0",
+          "#f3f0db",
+          "#163e47",
+          "#245966",
+          "#326a70",
+          "#457f80",
+          "#78dce8",
+          "#1c302d",
+          "#2b4036",
+          "#3c5140",
+          "#506348",
+          "#687c55",
+          "#819361",
+          "#9dbb7a",
+          "#b7c38a",
+          "#433d33",
+          "#62523e",
+          "#806445",
+          "#a27d4e",
+          "#c29b68",
+          "#d7b885",
+          "#f4bf62",
+          "#dc923f",
+          "#bb693a",
+          "#8e5740",
+          "#464d51",
+          "#647786"
+        ],
+        "usedColors": [
+          "#070b12",
+          "#101923",
+          "#172837",
+          "#213647",
+          "#2b4558",
+          "#3b586f",
+          "#506a82",
+          "#718397",
+          "#a5b2bb",
+          "#c5c8c0",
+          "#f3f0db",
+          "#163e47",
+          "#245966",
+          "#326a70",
+          "#457f80",
+          "#78dce8",
+          "#1c302d",
+          "#2b4036",
+          "#3c5140",
+          "#506348",
+          "#687c55",
+          "#819361",
+          "#b7c38a",
+          "#433d33",
+          "#62523e",
+          "#806445",
+          "#a27d4e",
+          "#c29b68",
+          "#d7b885",
+          "#f4bf62",
+          "#dc923f",
+          "#bb693a",
+          "#8e5740",
+          "#464d51",
+          "#647786"
+        ],
+        "alpha": "opaque",
+        "disclosure": "Unchanged generated source sampled to a 320×180 or 180×320 logical grid, palette-mapped and enlarged 3×. This derivative is not a hand-authored native pixel drawing."
+      },
+      "provenance": "Original built-in image-generation source retained unchanged with full prompt in the existing title source records. Separate v2 derivative; every P4/v1 file and hash preserved.",
+      "quality": {
+        "stage": "produced",
+        "evidence": [
+          "Pinned original and historical-v1 SHA-256; exact RGB PNG round trip; 3× clusters; fixed36 palette. Artistic and real menu review remain separate."
+        ]
+      }
+    }
+  ]
+}

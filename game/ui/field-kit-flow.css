@@ -371,7 +371,7 @@
   justify-content: flex-start;
   gap: 14px;
 }
-.field-kit.game-shell .home-actions .button > span {
+.field-kit.game-shell .home-actions .button > span[aria-hidden] {
   margin-inline-start: auto;
 }
 .field-kit.game-shell .home-actions .button::before {
