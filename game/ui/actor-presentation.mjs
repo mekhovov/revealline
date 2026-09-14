@@ -173,13 +173,13 @@ const rect = (c, color, x, y, w, h) => {
   c.fillStyle = color;
   c.fillRect(Math.round(x), Math.round(y), w, h);
 };
-function rotor(c, x, y, phase, colors, compact) {
+function rotor(c, x, y, phase, colors, compact, blades = 3) {
   rect(c, colors.dark, x - 4, y - 4, 8, 8);
   c.save();
   c.translate(x, y);
   c.rotate(phase % TAU);
-  for (let i = 0; i < 3; i++) {
-    c.rotate(TAU / 3);
+  for (let i = 0; i < blades; i++) {
+    c.rotate(TAU / blades);
     rect(c, colors.light, -1, -5, 2, compact ? 3 : 4);
     rect(c, colors.body, -1, -5, 1, 2);
   }
@@ -563,7 +563,7 @@ export function drawEnemySilhouette(ctx, frame, colors) {
 }
 
 /** Image roles override only the body; collision-center cues retain their physical size. */
-export function drawPresentedActor(ctx, frame, palette, image = null) {
+export function drawPresentedActor(ctx, frame, palette, image = null, geometry = null) {
   if (!frame) return;
   const colors = {
     dark: PRESENTATION_PLATE,
@@ -585,7 +585,32 @@ export function drawPresentedActor(ctx, frame, palette, image = null) {
   ctx.rotate(frame.heading);
   ctx.scale(1 - frame.bank * 0.35, 1 + frame.bank * 0.2);
   const d = frame.diameter;
-  if (image) ctx.drawImage(image, -d / 2, -d / 2, d, d);
+  if (image && geometry) {
+    const size = Math.max(geometry.frame.width, geometry.frame.height),
+      width = (d * geometry.frame.width) / size,
+      height = (d * geometry.frame.height) / size;
+    // The release host already cropped the declared source frame. Pivot and
+    // motor anchors remain normalized to that entire frame, including alpha.
+    ctx.drawImage(image, -geometry.pivot.x * width, -geometry.pivot.y * height, width, height);
+    for (const anchor of geometry.rotors) {
+      ctx.save();
+      ctx.translate(anchor.x * width, anchor.y * height);
+      const scale = (0.16 * anchor.radiusScale * width) / 5;
+      ctx.scale(scale, scale);
+      rotor(
+        ctx,
+        0,
+        0,
+        frame.reduced
+          ? 0
+          : frame.phase * 7 * anchor.direction + (anchor.phaseDegrees * Math.PI) / 180,
+        colors,
+        frame.style === 'microtile',
+        anchor.bladeCount,
+      );
+      ctx.restore();
+    }
+  } else if (image) ctx.drawImage(image, -d / 2, -d / 2, d, d);
   else {
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);

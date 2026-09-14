@@ -1,0 +1,59 @@
+name: Qualify release source
+
+on:
+  push:
+    branches: ['codex/fpv-redesign-phase*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-qualification-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  qualify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+
+      - name: Record source identity
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git rev-parse HEAD 'HEAD^{tree}'
+          node --version
+          sha256sum package.json package-lock.json scripts/game-cli.mjs
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate source
+        run: npm run validate
+
+      - name: Lint source
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Check native formatting
+        run: npm run format:native:check
+
+      - name: Check motion lab syntax
+        run: node --check authoring/motion-lab/app.js
+
+      - name: Reproduce production collection
+        run: node scripts/produce-field-kit-theme.mjs --check

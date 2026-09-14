@@ -155,6 +155,32 @@ test('generated prompts carry real slot, theme, states and release limitations',
     assert.ok(prompt.includes(fragment), fragment);
 });
 
+test('edit briefs retain actual custom geometry and the production palette contract', () => {
+  const original = createDefaultThemeBundle();
+  const slot = original.slots.find((row) => row.id === 'player.scout.detailed');
+  const asset = {
+    ...structuredClone(original.assets.find((row) => row.id === slot.id + '.default')),
+    id: 'scout.approved',
+    kind: 'image',
+    recipe: null,
+    file: { sha256: 'a'.repeat(64), bytes: 600, mime: 'image/png', width: 64, height: 64 },
+    geometry: { ...structuredClone(slot.geometry), pivot: { x: 0.4, y: 0.6 } },
+  };
+  asset.provenance.prompt = 'Preserve the approved eight-color graphite and amber ramp.';
+  const document = reviseStudioTheme(original, {
+    assets: [asset],
+    bindings: { [slot.id]: ref(asset) },
+  });
+  const prompt = generateAssetPrompt(slot, resolvePresentation(document), 'edit');
+  const current = prompt
+    .split('CURRENT FILE AND LOCKED GEOMETRY')[1]
+    .split('BASELINE SLOT CONTRACT')[0];
+  assert.match(current, /"x": 0.4/);
+  assert.match(current, /"y": 0.6/);
+  assert.match(current, /approved eight-color graphite and amber ramp/);
+  assert.equal(slot.geometry.pivot.x, 0.5, 'The baseline geometry remains unchanged.');
+});
+
 test('saved lineage allows a batch of staged actions and reset, but refuses rewritten history', async () => {
   const fixture = memoryIndexedDB(),
     store = createStudioStore({ indexedDB: fixture.indexedDB });
@@ -301,17 +327,35 @@ test('imports reserve unoccupied asset and collection identities and retain deri
   const next = adoptStudioBundle(original, incoming);
   assert.equal(next.selection.collection.id, 'import-2-2');
   const added = next.assets.slice(original.assets.length);
-  assert.deepEqual(added[1].provenance.parent, ref(added[0]));
+  assert.equal(added.length, 1, 'only the changed derivative needs a new immutable identity');
+  assert.deepEqual(added[0].provenance.parent, ref(original.assets[0]));
   const selected = resolvePresentation(next);
   for (const [slot, target] of Object.entries(resolvePresentation(incoming).bindings)) {
     const index = incoming.assets.findIndex(
       (asset) => asset.id === target.id && asset.revision === target.revision,
     );
-    assert.deepEqual(selected.bindings[slot], ref(added[index]));
+    assert.deepEqual(selected.bindings[slot], index === 1 ? ref(added[0]) : target);
   }
   assert.equal(next.collections.at(-1).name.length, 120);
   assert.equal(JSON.stringify(original), before);
   assert.equal(JSON.stringify(incoming), input);
+});
+
+test('self-imports retain every revision without duplicating history; conflicting parents stay isolated', () => {
+  const original = createDefaultThemeBundle();
+  const first = adoptStudioBundle(original, original);
+  const second = adoptStudioBundle(first, first);
+  assert.deepEqual(first.assets, original.assets);
+  assert.deepEqual(second.assets, original.assets);
+  assert.deepEqual(resolvePresentation(second).assets, resolvePresentation(original).assets);
+  const incoming = structuredClone(original);
+  incoming.assets[0].description = 'Different source revision with the same identity';
+  incoming.assets[1].provenance.parent = ref(incoming.assets[0]);
+  const adopted = adoptStudioBundle(original, incoming);
+  const added = adopted.assets.slice(original.assets.length);
+  assert.equal(added.length, 2);
+  assert.deepEqual(added[1].provenance.parent, ref(added[0]));
+  assert.deepEqual(adopted.assets.slice(0, original.assets.length), original.assets);
 });
 
 test('incompatible imported slots fail atomically and replaced collections retain history', () => {

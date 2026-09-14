@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Field Kit · Prepared reveal review</title>
+    <link rel="stylesheet" href="../../../../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../../../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../../../../../game/ui/field-kit-components.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: clamp(16px, 4vw, 48px);
+        background: #070b12;
+        color: #f3f0db;
+      }
+      main {
+        max-width: 1500px;
+        margin: auto;
+      }
+      h1 {
+        font:
+          600 clamp(44px, 7vw, 76px) / 1 'Field Kit Display',
+          sans-serif;
+      }
+      p {
+        max-width: 90ch;
+        line-height: 1.6;
+      }
+      a,
+      summary {
+        color: #78dce8;
+      }
+      #inventory {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+        gap: 20px;
+      }
+      article {
+        padding: 20px;
+        border: 1px solid #425563;
+        background: #101923;
+        min-width: 0;
+      }
+      article h2 {
+        font:
+          500 15px/1.5 'Field Kit Mono',
+          monospace;
+        overflow-wrap: anywhere;
+      }
+      .preview {
+        display: grid;
+        place-items: center;
+        min-height: 184px;
+        background: #070b12;
+        overflow: auto;
+      }
+      img {
+        image-rendering: pixelated;
+      }
+      .preview img {
+        width: 240px;
+        max-width: none;
+      }
+      .native {
+        overflow: auto;
+        max-height: 640px;
+        background: #070b12;
+      }
+      .native img {
+        max-width: none;
+        display: block;
+      }
+      .meta {
+        font:
+          500 12px/1.6 'Field Kit Mono',
+          monospace;
+        color: #a5b2bb;
+        overflow-wrap: anywhere;
+      }
+      summary {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+      code {
+        font:
+          500 12px/1.6 'Field Kit Mono',
+          monospace;
+        overflow-wrap: anywhere;
+      }
+      .status {
+        color: #f4bf62;
+      }
+      textarea {
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 180px;
+      }
+    </style>
+    <script type="module" src="./review.mjs"></script>
+  </head>
+  <body class="field-kit">
+    <main>
+      <a href="../../../../../authoring/asset-studio/">← Asset Studio</a>
+      <p class="status">PRODUCED DERIVATIVES · GAMEPLAY REVIEW REMAINS SEPARATE</p>
+      <h1>New places to reveal</h1>
+      <p>
+        Each scene began with its own built-in image-generation request. Originals and full
+        effective prompts are retained. These exact game frames use separately documented crop,
+        nearest sampling, a shared 36-color palette and integer pixel clusters. This preparation is
+        not described as hand-authored native pixel drawing.
+      </p>
+      <p>
+        Every card shows a real 240-pixel-wide gallery specimen. Open Native pixels to inspect the
+        full exported frame at 1:1. Homeward has separate 4:3 and 2:1 crops; Pressure has two exact
+        2:1 export sizes. This page is read-only and never changes game saves, picture pins or
+        quality approval. Published previews use the compiled release assets; preserved source files
+        are available only from their source checkout.
+      </p>
+      <p>
+        <a href="reveals.json">Prepared manifest and exact owner mapping</a> ·
+        <a href="../../../../../docs/field-kit-reveals.md">Preparation contract</a>
+      </p>
+      <p id="status" role="status">Loading the produced inventory…</p>
+      <div id="inventory"></div>
+      <noscript>Open the manifest or individual PNGs to inspect this read-only inventory.</noscript>
+    </main>
+  </body>
+</html>
