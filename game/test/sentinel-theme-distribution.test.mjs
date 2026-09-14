@@ -7,51 +7,48 @@ import { fileURLToPath } from 'node:url';
 import { canonicalJSON } from '../data-json.mjs';
 import { SOURCE_EXTERNAL_CHAPTERS } from '../external-chapter-source.mjs';
 import { EXTERNAL_CATALOG, prepareExternalDownload } from '../external-chapter-catalog.mjs';
-import { readExternalDistributionEntries } from '../../scripts/external-distribution.mjs';
-import {
-  preparePack,
-  emptyPackLibrary,
-  installPack,
-  exportPackLibrary,
-  PACK_LIMITS,
-} from '../packs.mjs';
+import { buildSentinelTheme } from '../../authoring/library/sentinel-theme-chapters/build.mjs';
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (b) => createHash('sha256').update(b).digest('hex');
-const entries = await readExternalDistributionEntries(root, {
-  format: 'revealline-external-distribution.v1',
-  catalog: 'game/content/external-worlds.json',
-});
+const themes = ['ukraine', 'retro'];
+const entries = [];
+for (const [index, theme] of themes.entries()) {
+  const result = await buildSentinelTheme(theme);
+  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 4]);
+  const item = EXTERNAL_CATALOG.chapters[index + 4];
+  for (const kind of ['pack', 'media'])
+    entries.push({
+      name: item[kind].path,
+      bytes: Buffer.from(await result.payloads[kind].arrayBuffer()),
+    });
+}
 const bodies = new Map(entries.map((e) => [e.name, e.bytes]));
-const themes = ['ukraine',
-'retro'];
 // Native compiler decodes every actual original; repeated transport checks model
 // image dimensions from those same bytes and make no browser codec claim.
 const decodeImage = async (blob) => {
   const b = Buffer.from(await blob.arrayBuffer());
   return { naturalWidth: b.readUInt32BE(16), naturalHeight: b.readUInt32BE(20) };
 };
-test('sixteen explicit producers preserve the sixteen exact earlier bodies and all five original authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
+test('two Sentinel theme producers preserve the four retained earlier authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
   assert.equal(
-    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 5))),
-    '83ba162b7fd1f7d6520081e70fa3d6abe4f0cff3f4b8e0b95ab2d0cd1206b32c',
+    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 4))),
+    '320d3c877f3d553b61a8ea7e41a8da05bb78e1c8c79c4556ddb4f7e6b4e1358c',
   );
   assert.equal(
-    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 5))),
-    'dc1ef7d0995578a9af50a134a1f20339128e133e97f54cf93d45b797708fb4c7',
+    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 4))),
+    'ab3ea68fa4a66472b81a27891cedacb9f5e8335b560083642269f51a472204ac',
   );
-  assert.equal(entries.length, 32);
-  assert.equal(bodies.size, 32);
+  assert.equal(entries.length, 4);
+  assert.equal(bodies.size, 4);
+  // All earlier body bytes, cumulative totals and the twelve-owner capacity case
+  // share the complete real-source audit in scripts/test-external-distribution.mjs.
   assert.equal(
-    entries.slice(0, 16).reduce((n, e) => n + e.bytes.length, 0),
-    64546929,
+    entries.reduce((n, e) => n + e.bytes.length, 0),
+    15747554,
   );
-  assert.equal(
-    entries.slice(0, 10).reduce((n, e) => n + e.bytes.length, 0),
-    41373627,
-  );
-  for (const item of EXTERNAL_CATALOG.chapters)
+  for (const item of EXTERNAL_CATALOG.chapters.slice(4, 6))
     for (const kind of ['pack', 'media']) {
       const actual = bodies.get(item[kind].path);
       assert.equal(actual.length, item[kind].bytes);
@@ -141,32 +138,5 @@ test('cross-theme originals and interrupted second body cannot become an install
       },
     }),
     { name: 'AbortError' },
-  );
-});
-test('sixteen external choices plus five embedded choices do not relax twelve installed packs or evict owners', async () => {
-  const legacy = JSON.parse(
-    await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
-  );
-  assert.equal(legacy.packs.length, 5);
-  assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 21);
-  assert.equal(PACK_LIMITS.installed, 12);
-  assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
-  let installed = emptyPackLibrary();
-  for (const item of EXTERNAL_CATALOG.chapters.slice(0, 12))
-    installed = installPack(
-      installed,
-      (await preparePack(bodies.get(item.pack.path).toString())).pack,
-    );
-  const source = JSON.parse(bodies.get(EXTERNAL_CATALOG.chapters[5].pack.path));
-  const value = structuredClone(source);
-  value.id = 'capacity-control-thirteenth';
-  value.campaigns[0].id = value.id;
-  const { pack: refused } = await preparePack(value);
-  const before = exportPackLibrary(installed);
-  assert.throws(() => installPack(installed, refused), /At most 12/);
-  assert.equal(exportPackLibrary(installed), before);
-  assert.deepEqual(
-    installed.packs.map((p) => p.id),
-    SOURCE_EXTERNAL_CHAPTERS.slice(0, 12).map((d) => d.id),
   );
 });

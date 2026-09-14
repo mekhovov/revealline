@@ -18,19 +18,24 @@ import {
   prepareExternalCatalog,
   prepareExternalDownload,
 } from '../external-chapter-catalog.mjs';
-import { readExternalDistributionEntries } from '../../scripts/external-distribution.mjs';
+import { buildCountercurrentTheme } from '../../authoring/library/countercurrent-chapters/build.mjs';
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const entries = await readExternalDistributionEntries(root, {
-  format: 'revealline-external-distribution.v1',
-  catalog: 'game/content/external-worlds.json',
-});
+const themes = ['fpv', 'ukraine', 'retro'];
+const entries = [];
+for (const [index, theme] of themes.entries()) {
+  const result = await buildCountercurrentTheme(theme);
+  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 9]);
+  const item = EXTERNAL_CATALOG.chapters[index + 9];
+  for (const kind of ['pack', 'media'])
+    entries.push({
+      name: item[kind].path,
+      bytes: Buffer.from(await result.payloads[kind].arrayBuffer()),
+    });
+}
 const bodies = new Map(entries.map((entry) => [entry.name, entry.bytes]));
-const themes = ['fpv',
-'ukraine',
-'retro'];
 const levels = [
   'countercurrent-offset-docks',
   'countercurrent-sandbar-braid',
@@ -41,33 +46,26 @@ const decodeImage = async (blob) => {
   return { naturalWidth: bytes.readUInt32BE(16), naturalHeight: bytes.readUInt32BE(20) };
 };
 
-test('four Countercurrent producers append exact pairs without changing the twelve earlier authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
-  assert.equal(entries.length, 32);
-  assert.equal(bodies.size, 32);
-  // Independently extracted literal descriptors/catalog from accepted merged UI
-  // 7c6e0d684d11cb0e6894e303beb8ff4ea8e08688, before this adoption.
+test('three Countercurrent producers preserve the nine retained earlier authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
+  assert.equal(entries.length, 6);
+  assert.equal(bodies.size, 6);
+  // Exact identities of the retained descriptor and catalog subsets.
   assert.equal(
-    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 12))),
-    'ab91ff15ec5ace5dc9b4ba2d6d9b006a886cab59b2226bb9cfedfcc6e34e9bbd',
+    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 9))),
+    '784e2dad4fde23da8f263a85294309cafa4430946226b866a3ffc41164ec29e3',
   );
   assert.equal(
-    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 12))),
-    'dc168fbcb680663a94fe31becf5bea69cc723a58e25afa244ba0c83059f1156a',
+    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 9))),
+    '83e18acf383da9b71a237b8b103a7c6b0daa7cd3d538117c477c41c94cc2ac67',
   );
+  // All earlier body bytes and cumulative totals are checked once by the real-source
+  // loose/ZIP/manifest audit in scripts/test-external-distribution.mjs.
   assert.equal(
     entries.reduce((n, entry) => n + entry.bytes.length, 0),
-    130442755,
+    23233023,
   );
-  assert.equal(
-    entries.slice(0, 24).reduce((n, entry) => n + entry.bytes.length, 0),
-    98674097,
-  );
-  assert.equal(
-    entries.slice(24).reduce((n, entry) => n + entry.bytes.length, 0),
-    31768658,
-  );
-  for (const entry of EXTERNAL_CATALOG.chapters)
+  for (const entry of EXTERNAL_CATALOG.chapters.slice(9))
     for (const kind of ['pack', 'media']) {
       assert.equal(bodies.get(entry[kind].path).length, entry[kind].bytes);
       assert.equal(sha(bodies.get(entry[kind].path)), entry[kind].sha256);
