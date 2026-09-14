@@ -15,9 +15,11 @@
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
   </head>
-  <body class="field-kit field-kit-support">
+  <body class="field-kit field-kit-support" data-field-kit-page="replay">
     <header class="page-head">
       <a id="return-game" href="../">← Back to the game</a>
       <span class="eyebrow">Reveal Line / Replay Theater</span>
@@ -137,6 +139,13 @@
           <h2 id="look-heading">A different atmosphere.</h2>
           <label for="theme">Presentation theme</label>
           <select id="theme"></select>
+          <label class="field-kit-page-text"
+            ><span data-field-kit-copy="display.textSize">Text size</span
+            ><select data-field-kit-text-size>
+              <option value="standard" data-field-kit-copy="display.standard">Standard</option>
+              <option value="large" data-field-kit-copy="display.large">Large</option>
+            </select></label
+          >
           <label class="check"><input id="reduced" type="checkbox" /> Reduce effects</label>
           <label class="check"><input id="grid" type="checkbox" /> Show grid</label>
           <p class="quiet">

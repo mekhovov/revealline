@@ -6,6 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { releaseSnapshot } from './game-cli.mjs';
 import { planCurrentEntries, writeCurrentEntries } from './pages-current-entry.mjs';
+import { copyCatalogPresentation, catalogShell } from './release-catalog.mjs';
 import {
   validateArchivePlan,
   canonicalArchiveSite,
@@ -31,7 +32,13 @@ export async function copyPlayableSite(source, destination) {
   });
 }
 
-export function publishedReleaseIndex(records, repository, latest, canonicalSites = {}) {
+export function publishedReleaseIndex(
+  records,
+  repository,
+  latest,
+  canonicalSites = {},
+  options = {},
+) {
   if (!/^[\w.-]+\/[\w.-]+$/.test(repository)) throw new Error('Invalid GitHub repository.');
   const releases = records
     .map((record) => ({
@@ -44,7 +51,11 @@ export function publishedReleaseIndex(records, repository, latest, canonicalSite
     .sort((a, b) => b.version.localeCompare(a.version, undefined, { numeric: true }));
   return {
     json: { formatVersion: 1, latest, releases },
-    html: `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>RevealLine playable versions</title><style>body{color:#e4edff;background:#080e20;font:18px/1.6 system-ui;max-width:860px;margin:3rem auto;padding:1rem}a{color:#82e2ff;margin-right:1rem}li{margin:1.5rem 0}code{font-size:12px;overflow-wrap:anywhere}</style><h1>Playable versions</h1><p>Current: ${escapeHTML(latest)}. Each version retains its own gameplay and files. ZIP downloads are hosted on GitHub Releases.</p><ul>${releases.map((r) => `<li><strong>${escapeHTML(r.version)}</strong> <code>${escapeHTML(r.sourceRevision)}</code><p><a href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a><a href="${escapeHTML(r.download)}">Download ZIP</a><a href="./${escapeHTML(r.version)}/release.json">Manifest</a></p></li>`).join('')}</ul></html>\n`,
+    html: catalogShell(
+      'Reveal Line · Playable versions',
+      `<p class="field-kit-eyebrow">Reveal Line / Release archive</p><h1>Playable versions</h1><p>Current: ${escapeHTML(latest)}. Every edition keeps its original gameplay, saves and artwork.</p><ul class="release-list">${releases.map((r) => `<li class="release-card" data-current="${r.version === latest}"><h2>${escapeHTML(r.version)}${r.version === latest ? ' · Current' : ''}</h2><code>${escapeHTML(r.sourceRevision)}</code><nav aria-label="${escapeHTML(r.version)} actions"><a class="button primary" href="${escapeHTML(r.canonicalPlay || `./${r.play}`)}">Play</a><a class="button" href="${escapeHTML(r.download)}">Download ZIP</a><a class="button" href="./${escapeHTML(r.version)}/release.json">Manifest</a></nav></li>`).join('')}</ul>`,
+      options,
+    ),
   };
 }
 
@@ -117,6 +128,7 @@ export async function buildPages({
   const dist = await fs.mkdtemp(path.join(path.dirname(distTarget), '.pages-staging-'));
   try {
     if (!selected) await copyPlayableSite(path.join(releasesRoot, version, 'site'), dist);
+    const catalogPresentation = await copyCatalogPresentation(projectRoot, dist);
     await fs.writeFile(path.join(dist, '.nojekyll'), '');
     const pagesReleases = path.join(dist, 'releases');
     await fs.mkdir(pagesReleases, { recursive: true });
@@ -152,6 +164,7 @@ export async function buildPages({
       repository,
       selected ? selected.versions.at(-1) : version,
       selected ? {} : canonicalSites,
+      { presentation: Boolean(catalogPresentation) },
     );
     await fs.writeFile(
       path.join(pagesReleases, 'index.json'),
@@ -161,7 +174,11 @@ export async function buildPages({
     if (selected) {
       await fs.writeFile(
         path.join(dist, 'index.html'),
-        '<!doctype html><html lang="en"><meta charset="utf-8"><title>RevealLine archive</title><a href="./releases/">Browse archived versions</a></html>\n',
+        catalogShell(
+          'Reveal Line · Archive',
+          '<p class="field-kit-eyebrow">Reveal Line / Archive</p><h1>Return to a flight</h1><p>Play the original editions with their own artwork and progress.</p><nav aria-label="Archive"><a class="button primary" href="./releases/">Browse archived versions</a></nav>',
+          { presentation: Boolean(catalogPresentation), prefix: './' },
+        ),
       );
     } else {
       await fs.writeFile(path.join(dist, 'release.json'), JSON.stringify(latest, null, 2) + '\n');
@@ -193,6 +210,7 @@ export async function buildPages({
       sourceRevision: latest.sourceRevision,
       totalBytes,
       playableVersions: publishedRecords.length,
+      ...(catalogPresentation ? { catalogPresentation } : {}),
       ...(currentEntries
         ? {
             currentEntryMetadata: 'current-entry-routing.json',

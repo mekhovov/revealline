@@ -1,6 +1,9 @@
+import { fieldKitCopy } from './field-kit-copy.mjs';
+
 /** Artwork-first presentation of the host's existing mission buttons and locks. */
 export function attachMissionGallery({ document: doc = globalThis.document, missions } = {}) {
   if (!missions) return null;
+  const copy = (key) => fieldKitCopy(key, doc.documentElement?.lang || 'en');
   const make = (tag, className, text) => {
     const node = doc.createElement(tag);
     node.className = className;
@@ -8,10 +11,10 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
     return node;
   };
   const pager = make('nav', 'mission-gallery-pages'),
-    previous = make('button', 'button secondary', '← Previous'),
+    previous = make('button', 'button secondary', copy('navigation.previousPage')),
     status = make('span', 'field-kit-secondary'),
-    next = make('button', 'button secondary', 'Next →');
-  pager.setAttribute('aria-label', 'Mission pages');
+    next = make('button', 'button secondary', copy('navigation.nextPage'));
+  pager.setAttribute('aria-label', copy('missions.pages'));
   previous.type = next.type = 'button';
   status.setAttribute('role', 'status');
   pager.append(previous, status, next);
@@ -48,12 +51,12 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
           'span',
           'mission-gallery-state',
           button.disabled
-            ? 'Locked'
+            ? copy('missions.locked')
             : button.dataset.pictureState === 'earned'
-              ? 'Picture earned'
+              ? copy('missions.earned')
               : button.dataset.pictureState === 'unavailable'
-                ? 'Preview unavailable'
-                : 'Picture concealed',
+                ? copy('missions.unavailable')
+                : copy('missions.concealed'),
         );
       tile.setAttribute('aria-hidden', 'true');
       tile.dataset.scene = String(index % 3);

@@ -23,7 +23,8 @@ const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const reference = (asset) => ({ id: asset.id, revision: asset.revision });
 const sources = {
   ui: 'game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs',
-  screens: 'game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css',
+  screens:
+    'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
   effects: 'game/ui/classic-view.mjs; game/ui/event-feedback.mjs',
   audio: 'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs',

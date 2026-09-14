@@ -3,7 +3,11 @@ import { archivedPlayHref } from './release-links.mjs';
 
 const root = document.documentElement;
 const currentVersion = root.dataset.currentVersion;
-const currentLabel = currentVersion.startsWith('v') ? currentVersion : `v${currentVersion}`;
+const currentLabel = currentVersion.startsWith('__')
+  ? 'DEV'
+  : currentVersion.startsWith('v')
+    ? currentVersion
+    : `v${currentVersion}`;
 const picker = document.querySelector('#version-picker');
 const versionPlay = document.querySelector('#version-play');
 const status = document.querySelector('#version-status');
@@ -11,6 +15,11 @@ const packSelect = document.querySelector('#landing-pack-select');
 const levelSelect = document.querySelector('#landing-level-select');
 const packPlay = document.querySelector('#landing-pack-play');
 const packStatus = document.querySelector('#landing-pack-status');
+
+for (const label of document.querySelectorAll('[data-current-label]')) {
+  label.textContent = currentLabel;
+}
+picker.options[0].textContent = `${currentLabel} · current`;
 
 const savedClears = (campaign) => {
   try {
@@ -117,8 +126,4 @@ try {
   packSelect.disabled = true;
   levelSelect.disabled = true;
   packStatus.textContent = 'Quick selector unavailable. Use any pack card below.';
-}
-
-for (const label of document.querySelectorAll('[data-current-label]')) {
-  label.textContent = currentLabel;
 }
