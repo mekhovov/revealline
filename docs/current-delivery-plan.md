@@ -30,6 +30,12 @@ Candidate `9734030cc528` completed all six gates naturally: lint, formatting, na
 
 The compatibility/menu corrections now pass **59 + 44 focused Node22 cases**; the release-tool correction passes **30 distinct cases** across its retained runs. The separate Route Worlds/Sentinel focus revealed a missing pack-index file in its sparse test workspace, then was interrupted instead of repeating known failing readiness waits. That missing-input finding and the earlier fixture failures remain recorded. The reviewed asynchronous action/initialization test corrections will be exercised in the mandatory full Git-source run, with both complete files included and no case filtering. They change test synchronization and diagnostics, not production deadlines or gameplay.
 
+## Second complete verification checkpoint
+
+The corrected `2687b20c55f6` source completed all six gates naturally. The test run reports **3,467 passing / 3,471 total, four failures, zero skipped and zero cancelled**. All five remaining gates and all **33 required distribution cases** pass, including the actual twelve-owner installation and thirteenth-owner refusal. The four failures are two chapter-install waits, a subsequent saved-flight wait after its setup failed, and their enclosing test. They are being diagnosed before the next full run; no passing source gate or release is claimed for this candidate.
+
+The archived 2,016-file source and all 48 prior releases / 49 tags stayed unchanged. The root checkout's `game/index.html` changed outside this work while verification ran; that unrelated work was neither adopted nor reverted. Draft [PR #18](https://github.com/mekhovov/revealline/pull/18) remains subject to the final corrected source and artifact gates.
+
 ## Latest responsive-layout finding
 
 The compact-arena successor `2a42fb69d388` keeps geometry stable from the original level recipe. At 844×390, eligible Arcade fields visibly use about 490 px of arena width with Large text; left and right pads remain outside the arena. Standard text and controls Off also fit. The older Sentinel Relay 4:3 Tactical warning initially clipped; that failure remains recorded.
