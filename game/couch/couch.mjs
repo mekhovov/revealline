@@ -47,32 +47,41 @@ try {
     defaultThemeId: level.themeId || campaign.themeId,
     track: null,
   }));
-  featured = await prepareCouchChapter(await json('../content/packs/fpv-arcade-r5.json'), {
-    signal: artworkLifetime.signal,
-  });
-  const featuredCampaign = featured.resolved.campaign;
-  maps.unshift(
-    ...featuredCampaign.levels.map((level) => ({
-      key: `shipped/${featured.pack.id}/${featuredCampaign.id}/${level.id}`,
-      chapter: featuredCampaign.title,
-      level,
-      classes: featured.resolved.classRecipes,
-      themes: featured.resolved.themes,
-      defaultThemeId: level.themeId || featuredCampaign.themeId,
-      track:
-        featured.resolved.music.find(
-          (track) => track.id === (level.musicId || featuredCampaign.musicId),
-        ) || null,
-      // The one decoded original below is shared by both boards, not reloaded by each painter.
-      visualOverrides: Object.fromEntries(
-        Object.entries({
-          ...featured.resolved.visualOverrides,
-          ...featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides,
-        }).filter(([role]) => role !== 'background'),
-      ),
-      backdrop: featured.backdrop(level.id),
-    })),
-  );
+  let featuredSource,
+    featuredStatus = '';
+  try {
+    featuredSource = await json('../content/packs/fpv-arcade-r5.json');
+  } catch (error) {
+    if (artworkLifetime.signal.aborted || error.name === 'AbortError') throw error;
+    featuredStatus =
+      'Featured Pressure Lines download unavailable. Base maps and checked installed maps remain available.';
+  }
+  if (featuredSource !== undefined) {
+    featured = await prepareCouchChapter(featuredSource, { signal: artworkLifetime.signal });
+    const featuredCampaign = featured.resolved.campaign;
+    maps.unshift(
+      ...featuredCampaign.levels.map((level) => ({
+        key: `shipped/${featured.pack.id}/${featuredCampaign.id}/${level.id}`,
+        chapter: featuredCampaign.title,
+        level,
+        classes: featured.resolved.classRecipes,
+        themes: featured.resolved.themes,
+        defaultThemeId: level.themeId || featuredCampaign.themeId,
+        track:
+          featured.resolved.music.find(
+            (track) => track.id === (level.musicId || featuredCampaign.musicId),
+          ) || null,
+        // The one decoded original below is shared by both boards, not reloaded by each painter.
+        visualOverrides: Object.fromEntries(
+          Object.entries({
+            ...featured.resolved.visualOverrides,
+            ...featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides,
+          }).filter(([role]) => role !== 'background'),
+        ),
+        backdrop: featured.backdrop(level.id),
+      })),
+    );
+  }
   const shippedMaps = [...maps];
   let installedStatus = 'Installed chapters have not been checked.';
   try {
@@ -255,7 +264,9 @@ try {
     contentReady = shippedMaps.includes(entry);
     contentBusy = !contentReady;
     $('race-message').textContent = contentReady
-      ? 'Both boards use the same map, class and seed. Ready when you are.'
+      ? [featuredStatus, 'Both boards use the same map, class and seed. Ready when you are.']
+          .filter(Boolean)
+          .join(' ')
       : 'Checking this chapter and loading its original picture…';
     updateMenu();
     if (contentReady) return Promise.resolve(true);
@@ -557,7 +568,9 @@ try {
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
-    $('race-installed-status').textContent = installedStatus;
+    $('race-installed-status').textContent = [featuredStatus, installedStatus]
+      .filter(Boolean)
+      .join(' ');
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;

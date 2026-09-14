@@ -25,3 +25,12 @@ Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atl
 ## Use the local Asset Studio
 
 > Open `authoring/asset-studio/`, choose the exact slot and inspect its requirements and current original. Use New variation, Edit current asset or Replace collection to copy a complete brief. Upload or create a sprite, prepare an exact frame, validate geometry and provenance, then compare native and field previews. Stage the replacement, save a local immutable revision, and export `.rltheme`. Use Asset revision history → Bind this revision to restore an earlier asset without deleting its successors. Keep review evidence concrete and distinguish a produced candidate from a reviewed asset. Import must remain atomic, reject stale edits, and preserve every original byte; the public game changes only through a compiled GitHub release.
+
+## Preserve title and mission flow
+
+> Extend the implemented five-action title and mission gallery using `field-kit-flow.css`, `game-shell.mjs` and `mission-gallery.mjs`. Preserve saved continuation destination, mission selection/page, lock reasons, earned-picture privacy, medals and controller return focus. Keep one Deploy action in preparation, device-aware hints and the existing held-input protections. Use the prepared landscape/portrait scenes, real DOM text, and shared typography. Inspect desktop six-card paging, tablet two columns, narrow single column, Large text, and the short-landscape setup panel. Store source art unchanged; new scene derivatives require exact dimensions, crop/sampling metadata, source/derivative hashes and release verification.
+
+
+## Keep optional chapters independent of authoring and Couch
+
+> Review the current build's declared optional chapters without changing their original bytes or the 64 MiB core limit. Reject a required startup dependency on an unavailable optional Arcade R5 request. Verify Couch can still start and pause a base map and can read an explicitly installed chapter through its existing exact-original reader, without changing solo progress. In Asset Studio, preserve the declared generic context when optional fixture metadata is unavailable; complete exact-owner inputs should fetch no unrelated pack, and incomplete owners must report unavailable. Test rejected requests and HTTP failures, preserve online behavior, and report generated-cache verification separately from native offline play. Never rewrite a frozen release to apply this integration fix.
