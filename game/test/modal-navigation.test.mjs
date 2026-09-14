@@ -224,7 +224,8 @@ function controllerPad(h, t) {
     frame();
   };
   frame();
-  pulse(0);
+  // The host now adopts a neutral controller automatically. A Confirm pulse
+  // here is a deliberate action and would launch before the modal test begins.
   frame();
   return { frame, set, pulse };
 }

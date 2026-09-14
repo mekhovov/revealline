@@ -151,6 +151,9 @@ test('v0.7 opaque future-hash metadata remains portable and archived without bec
   assert.equal(Object.hasOwn(owned.preferences, 'screenControls'), true);
   assert.equal(owned.preferences.screenControls, 'auto');
   delete owned.preferences.screenControls;
+  assert.equal(Object.hasOwn(owned.preferences, 'touchControls'), true);
+  assert.equal(owned.preferences.touchControls, null);
+  delete owned.preferences.touchControls;
   assert.equal(Object.hasOwn(owned.preferences, 'textSize'), true);
   assert.equal(owned.preferences.textSize, 'standard');
   delete owned.preferences.textSize;

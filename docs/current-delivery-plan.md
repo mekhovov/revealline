@@ -2,6 +2,8 @@
 
 Updated 2026-09-14. This is the current priority register; the older roadmap and verification notes retain their historical checkpoints. Implementation is authorized and continues without routine approval questions.
 
+**Active work: complete FPV Field Kit redesign.** The approved [design contract](fpv-redesign-design.md) and [execution register](fpv-redesign-execution.md) govern the new presentation phases, starting from reviewed `fe9961e` / v0.43.0. The [interactive design atlas](../authoring/design-atlas/index.html) contains original screen studies, bilingual font specimens and the coverage matrix. Phase 0 is a reviewable design deliverable; later font integration, asset studio, original production art and whole-game adoption have separate acceptance and release boundaries. Historical status paragraphs below retain their observation dates and do not certify a later phase.
+
 ## Available now and next delivery
 
 **[Play v0.39](https://mekhovov.github.io/revealline/releases/v0.39.0/site/game/).** Fracture Lines is published after six source gates, 3,337 passing tests, independent frozen checks, merged CI, all 1,481 public files and the full public ZIP. A real public keyboard win reopened its original from Collection and retained it after reload. [Delivery receipt](https://github.com/mekhovov/revealline/releases/download/v0.39.0/v039-delivery-receipt.json).

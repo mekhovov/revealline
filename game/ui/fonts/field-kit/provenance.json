@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "https://github.com/google/fonts",
+  "sourceCommit": "809e4d8b8d7e9364a914909bb777679606c178b8",
+  "build": {
+    "fontTools": "4.65.0",
+    "brotli": "1.2.0",
+    "timestampPolicy": "Preserve source timestamp; TTFont(recalcTimestamp=False).",
+    "subsetting": "No glyph subsetting. Preserve full upstream glyph coverage; only narrow or instantiate variation axes.",
+    "command": "python scripts/verify-field-kit-fonts.py --rebuild"
+  },
+  "fonts": [
+    {
+      "role": "display",
+      "family": "Handjet",
+      "cssFamily": "Field Kit Display",
+      "file": "handjet-display-600.woff2",
+      "licenseFile": "Handjet-OFL.txt",
+      "axes": {
+        "ELSH": 2,
+        "ELGR": 1,
+        "wght": 600
+      },
+      "outputAxes": {},
+      "defaultWeight": 600,
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/handjet/Handjet%5BELGR%2CELSH%2Cwght%5D.ttf",
+      "sourceSha256": "9262749e8bb0b73ebcae0e20428689c3c59576eebeb6c4e1020300d2d41bdf4d",
+      "sourceVersion": "Version 2.003",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/handjet/OFL.txt",
+      "licenseSha256": "934a45d3b43276e1f857301e9cb07e00b829cca3d0c13e8e6f8c6790dd6c8a2c",
+      "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+      "bytes": 38120,
+      "license": "OFL-1.1"
+    },
+    {
+      "role": "ui",
+      "family": "Exo 2",
+      "cssFamily": "Field Kit UI",
+      "file": "exo2-ui-400-600.woff2",
+      "licenseFile": "Exo2-OFL.txt",
+      "axes": {
+        "wght": [400, 400, 600]
+      },
+      "outputAxes": {
+        "wght": [400, 400, 600]
+      },
+      "defaultWeight": 400,
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/exo2/Exo2%5Bwght%5D.ttf",
+      "sourceSha256": "205a448676a2586f9c57c25f3d5c58ca8db7e6cf5edf7506783a010c6fe2bfb5",
+      "sourceVersion": "Version 2.010",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/exo2/OFL.txt",
+      "licenseSha256": "7f95a8eeecc6904ffc81cd10cc8ebc7fcee72a67922924bf45f02dff03b88127",
+      "sha256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+      "bytes": 76652,
+      "license": "OFL-1.1"
+    },
+    {
+      "role": "numeric",
+      "family": "IBM Plex Mono",
+      "cssFamily": "Field Kit Mono",
+      "file": "ibm-plex-mono-500.woff2",
+      "licenseFile": "IBMPlexMono-OFL.txt",
+      "axes": {},
+      "outputAxes": {},
+      "defaultWeight": 500,
+      "sourceUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/ibmplexmono/IBMPlexMono-Medium.ttf",
+      "sourceSha256": "a9b4c49bb299e05b5f6c481e7fb5e78943d2793249a0c8874ab574a2d1ea6755",
+      "sourceVersion": "Version 2.3",
+      "licenseUrl": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/ibmplexmono/OFL.txt",
+      "licenseSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "sha256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+      "bytes": 40080,
+      "license": "OFL-1.1"
+    }
+  ]
+}
