@@ -7,6 +7,7 @@ import {
 import { ENEMY_THEMES } from '../enemy-catalog.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { createActorPresentation, drawPresentedActor } from './actor-presentation.mjs';
+import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import { attachEnemyWorkshopReturnHost } from './enemy-workshop-return.mjs';
 
 const HANDOFF = 'revealline.playground.current';
@@ -18,6 +19,7 @@ export function attachEnemyGuide({
   themes,
   getThemeId = () => 'fpv',
   getTurnPolicy = () => 'immediate',
+  createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
       new URL('../content/scenarios/line-impact-demo.json', import.meta.url),
@@ -41,7 +43,10 @@ export function attachEnemyGuide({
     parentSuspended = false,
     suspendedTicket = null,
     launchController = null,
-    time = 0;
+    time = 0,
+    pageVisible = true,
+    previewPose = null,
+    previewSettings = { paused: false, reduced: false };
   const poses = createActorPresentation();
   const node = (tag, id, text = '') => {
     const el = doc.createElement(tag);
@@ -85,6 +90,7 @@ export function attachEnemyGuide({
     ),
     choices = node('div'),
     canvas = node('canvas', 'preview'),
+    artworkStatus = node('p', 'artwork-status'),
     summary = node('div', 'summary'),
     heading = node('h3', 'heading'),
     form = node('p', 'form'),
@@ -120,7 +126,10 @@ export function attachEnemyGuide({
     actions = node('div');
   actions.className = 'enemy-guide-actions';
   actions.append(previous, next, play, back);
-  content.append(choices, canvas, read, summary, exercise.wrap, actions);
+  artworkStatus.className = 'enemy-guide-status';
+  artworkStatus.setAttribute('role', 'status');
+  artworkStatus.hidden = true;
+  content.append(choices, canvas, artworkStatus, read, summary, exercise.wrap, actions);
   const practice = node('div', 'practice'),
     practiceHint = node('p', 'practice-hint'),
     frame = node('iframe', 'frame'),
@@ -135,6 +144,7 @@ export function attachEnemyGuide({
   dialog.append(title, content, practice, status);
   doc.body.append(dialog);
   const context = canvas.getContext?.('2d'),
+    bodyAssets = createBodyAssets({ changed: () => paintPreview() }),
     bridge = attachEnemyWorkshopReturnHost({
       window: host,
       frame,
@@ -158,7 +168,7 @@ export function attachEnemyGuide({
     for (const el of [topic.el, appearance.el, exercise.el, previous, next, play])
       el.disabled = busy;
     play.textContent = busy ? 'Preparing practice…' : 'Play practice';
-    update(0);
+    update(0, previewSettings);
   }
   function changeTopic(delta) {
     if (busy || active || disposed) return;
@@ -168,14 +178,17 @@ export function attachEnemyGuide({
         (index + delta + ENEMY_GUIDE_TOPICS.length) % ENEMY_GUIDE_TOPICS.length
       ].id;
     poses.reset();
+    releasePreview();
     refresh();
   }
   topic.el.onchange = () => {
     poses.reset();
+    releasePreview();
     refresh();
   };
   appearance.el.onchange = () => {
     poses.reset();
+    releasePreview();
     refresh();
   };
   exercise.el.onchange = refresh;
@@ -280,9 +293,32 @@ export function attachEnemyGuide({
       }
     }
   }
-  function update(dt = 0, { paused = false, reduced = false } = {}) {
-    if (disposed || !dialog.open || active || !context) return;
-    if (!paused && !reduced) time += Math.max(0, Math.min(0.1, Number.isFinite(dt) ? dt : 0));
+  function previewVisible() {
+    return (
+      !disposed &&
+      dialog.open &&
+      !dialog.hidden &&
+      !content.hidden &&
+      !active &&
+      !busy &&
+      pageVisible &&
+      !doc.hidden &&
+      doc.visibilityState !== 'hidden' &&
+      !!context
+    );
+  }
+  function releasePreview() {
+    bodyAssets.clear();
+    previewPose = null;
+    artworkStatus.textContent = '';
+    artworkStatus.hidden = true;
+  }
+  // A decode completion repaints the sampled frame without advancing either clock.
+  function paintPreview() {
+    if (!previewVisible()) {
+      releasePreview();
+      return;
+    }
     context.clearRect(0, 0, 192, 112);
     context.fillStyle = '#080d19';
     context.fillRect(0, 0, 192, 112);
@@ -292,12 +328,35 @@ export function attachEnemyGuide({
       context.fillRect(18, 43, 5, 18);
       context.fillStyle = '#fff0b2';
       context.fillRect(166, 45, 12, 12);
-      const travel = reduced ? 20 : (time % 1) * 24;
+      const travel = previewSettings.reduced ? 20 : (time % 1) * 24;
       for (const x of [85 - travel, 100 + travel]) {
         context.fillStyle = '#ffbb67';
         context.fillRect(x - 3, 47, 6, 10);
         context.fillRect(x - 5, 50, 10, 4);
       }
+      return;
+    }
+    const body = bodyAssets.current(previewPose);
+    drawPresentedActor(
+      context,
+      previewPose,
+      themes.find(({ id }) => id === appearance.el.value).palette,
+      body?.image,
+      body?.record,
+    );
+    artworkStatus.textContent = bodyAssets.status();
+    artworkStatus.hidden = !artworkStatus.textContent;
+  }
+  function update(dt = 0, { paused = false, reduced = false } = {}) {
+    if (!previewVisible()) {
+      releasePreview();
+      return;
+    }
+    previewSettings = { paused, reduced };
+    if (!paused && !reduced) time += Math.max(0, Math.min(0.1, Number.isFinite(dt) ? dt : 0));
+    if (topic.el.value === 'line-impact') {
+      releasePreview();
+      paintPreview();
       return;
     }
     const actor = {
@@ -313,7 +372,7 @@ export function attachEnemyGuide({
       vy: -1,
       radius: 0.25,
     };
-    const pose = poses
+    previewPose = poses
       .sample([actor], {
         tick: Math.floor(time * 120),
         time,
@@ -325,7 +384,8 @@ export function attachEnemyGuide({
         scale: 1.5,
       })
       .get(actor.id);
-    drawPresentedActor(context, pose, themes.find(({ id }) => id === appearance.el.value).palette);
+    bodyAssets.update([previewPose]);
+    paintPreview();
   }
   function open({ topic: selected } = {}) {
     if (disposed || busy || active) return false;
@@ -335,6 +395,7 @@ export function attachEnemyGuide({
     }
     const theme = getThemeId();
     appearance.el.value = ENEMY_THEMES.includes(theme) ? theme : 'fpv';
+    releasePreview();
     if (!dialog.open) {
       origin = doc.activeElement;
       dialog.showModal();
@@ -356,6 +417,7 @@ export function attachEnemyGuide({
     launchController?.abort();
     launchController = null;
     if (parentSuspended) stopPractice();
+    releasePreview();
     dialog.close();
     if (origin?.isConnected && !origin.closest('[hidden]')) origin.focus({ preventScroll: true });
     onClose();
@@ -365,7 +427,23 @@ export function attachEnemyGuide({
     event.preventDefault();
     close();
   };
+  const visibility = () => update(0, previewSettings);
+  const pageHide = () => {
+    pageVisible = false;
+    releasePreview();
+  };
+  const pageShow = () => {
+    pageVisible = true;
+    visibility();
+  };
+  const closed = () => {
+    if (!dialog.open) releasePreview();
+  };
   dialog.addEventListener('cancel', cancel);
+  dialog.addEventListener('close', closed);
+  doc.addEventListener('visibilitychange', visibility);
+  host.addEventListener('pagehide', pageHide);
+  host.addEventListener('pageshow', pageShow);
   refresh();
   return {
     dialog,
@@ -385,8 +463,13 @@ export function attachEnemyGuide({
       launchController = null;
       stopPractice();
       disposed = true;
+      releasePreview();
       bridge.dispose();
       dialog.removeEventListener('cancel', cancel);
+      dialog.removeEventListener('close', closed);
+      doc.removeEventListener('visibilitychange', visibility);
+      host.removeEventListener('pagehide', pageHide);
+      host.removeEventListener('pageshow', pageShow);
       dialog.remove();
     },
   };
