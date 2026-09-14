@@ -138,6 +138,7 @@ function fixture(options = {}) {
     },
     onBack() {
       backs.push('back');
+      return options.onBack?.();
     },
   });
   return {
@@ -167,6 +168,52 @@ async function prepare(f) {
   await f.$('original-file').onclick();
   await f.$('original-report').onclick();
 }
+
+test('Back completion includes the asynchronous parent close and focus callback', async () => {
+  const pending = deferred();
+  const f = fixture({ onBack: () => pending.promise });
+  let settled = false;
+  const back = f
+    .$('back')
+    .onclick()
+    .then(() => {
+      settled = true;
+    });
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(f.backs, ['back']);
+  assert.equal(settled, false);
+  pending.resolve();
+  await back;
+  assert.equal(settled, true);
+});
+
+test('overlapping Back and close share reader cleanup before either caller can leave', async () => {
+  const pending = deferred();
+  let closes = 0;
+  const f = fixture({
+    reader: {
+      close: () => {
+        closes++;
+        return pending.promise;
+      },
+    },
+  });
+  await prepare(f);
+  const back = f.$('back').onclick();
+  const first = f.view.close(),
+    second = f.view.close();
+  assert.equal(first, second, 'Every close caller joins the same cleanup');
+  await Promise.resolve();
+  assert.equal(closes, 1);
+  assert.deepEqual(f.backs, []);
+  assert.equal(f.$('download').hidden, true);
+  assert.equal(f.$('original-download').hidden, true);
+  assert.equal(f.$('report-download').hidden, true);
+  assert.equal(f.revoked.length, 3);
+  pending.resolve();
+  await Promise.all([back, first, second]);
+  assert.deepEqual(f.backs, ['back']);
+});
 
 test('original review is explicit and lists unverified metadata without claiming an earned picture', async () => {
   const f = fixture({ diagnostics: [{ message: 'Another stored body is absent.' }] });

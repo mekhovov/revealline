@@ -5,13 +5,14 @@ import { freezeProfileData } from './profile-channel-json.mjs';
 
 // Reviewed immutable historical source, never a current-content or stored-owner fallback.
 export const RECOVERY_CATALOG_PIN = Object.freeze({
-  bytes: 205532,
-  sha256: '6ae7c88f7b08756813a285ab3d098ea25e2fc94059e565941a3564286b75f219',
+  bytes: 279846,
+  sha256: 'd7ee8ce41428960520907e29e7550b6f4dad8ad7a7d21686db6677f2f293e02a',
 });
 const sources = Object.freeze([
   ['v0.39.0', '23b886bbdbea717be79a54d9c0fffe5eded46bdf', 12],
   ['v0.40.0', '57bee98f23a6bf5882f19065f1d70473ece7a12e', 12],
   ['v0.41.0', '4d0357a14f9640b884a429475035f20731d94773', 16],
+  ['v0.42.0', 'e9928cdaad2f55d912aadd2ef25f635fb99e938c', 16],
 ]);
 const check = (signal) => signal?.throwIfAborted();
 function wait(signal, begin, discard = () => {}) {
