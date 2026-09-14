@@ -1,0 +1,166 @@
+{
+  "format": "revealline-source-art-provenance.v1",
+  "scope": "Three original static 1994 Forever reward-art candidates for existing Fracture Lines roles. No runtime, descriptor, registry, saved/earned binding, production-count or release adoption.",
+  "baseCommit": "3820c7a89fa586266050659c972babbdd3e0c2a2",
+  "generatedOn": "2026-09-14",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 3,
+  "editCalls": 0,
+  "referenceImages": [],
+  "rawOriginalsPreserved": true,
+  "pixelTransformations": [],
+  "rightsScope": "New AI-generated originals made for this project from independent text prompts. No reference image, existing game image or named artist style was supplied. This is fictional nostalgia, not an exact 1994 hardware/location, named album design, exclusive-rights or historical-authenticity certification.",
+  "references": [],
+  "contextPins": [
+    {
+      "path": "authoring/library/fracture-lines/README.md",
+      "bytes": 6212,
+      "sha256": "d492969d506e901a2442aa444a99d47ecbcf908644687bb24fcb78b93dc6cfc8"
+    },
+    {
+      "path": "authoring/library/fracture-lines/layouts.json",
+      "bytes": 7669,
+      "sha256": "af15577704ce673100f7c6d89ae92baffa25c5ebfdae2459ea4c720a9d7ab179"
+    },
+    {
+      "path": "authoring/library/fracture-lines/build.mjs",
+      "bytes": 8909,
+      "sha256": "56cb05d183ce0406af2949506d6c3f6da78e9e275ce7302360a3d6742d72e59d"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/README.md",
+      "bytes": 3315,
+      "sha256": "a9e9c7072be59aab3d89f1481b7b12f5782b3e9f85aed1f339df0c0bfc0bc3fd"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/verify.mjs",
+      "bytes": 8509,
+      "sha256": "d294985c6d56af02b0c93c3be45b1b08e640101a78794c461f96265e607d6eb5"
+    },
+    {
+      "path": "authoring/library/fracture-lines-chapter/README.md",
+      "bytes": 4945,
+      "sha256": "627d8bad65b3dfdfd7ddba777d1bf808e67daa73a91403aeae47d7ca6201e5f5"
+    },
+    {
+      "path": "authoring/library/fracture-lines-chapter/edition.json",
+      "bytes": 1230,
+      "sha256": "4dbb016b650803670a9f842acd83a699c61165f88cb2efa5bda3beae06c1cb23"
+    },
+    {
+      "path": "authoring/library/retro-route-art/README.md",
+      "bytes": 3410,
+      "sha256": "16c1d4374db1cbe6b73c964352f69ba69264f5e30a3ad6cdb9b007deca612b1e"
+    },
+    {
+      "path": "authoring/library/retro-route-art/provenance.json",
+      "bytes": 4104,
+      "sha256": "286114f072ac5f73f4aa1d840553d2a03eab7a40a828ef71343a89d5ef579133"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/README.md",
+      "bytes": 5504,
+      "sha256": "eadccd93624f9a497733c0f01564a0b68fba15dd1ec05b5052ce37c271529147"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/verify.mjs",
+      "bytes": 7194,
+      "sha256": "27ab5ba0eb07e25468a12fae81bcc38006603154d20e429c85af326bbc3282d2"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "path": "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+      "bytes": 2455383,
+      "sha256": "93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf"
+    },
+    {
+      "path": "authoring/library/fracture-lines-art/originals/frayed-causeway-fpv.png",
+      "bytes": 2938361,
+      "sha256": "5aae2f84912ca35b7145617c98d3c4ecac72a93d8d6cc04558d86873ca0938f1"
+    }
+  ],
+  "generation": "Three independent text-only generate calls; no retries, edit calls, reference uploads, crop, stretch, resampling, re-encoding or derivative images. Default tool files remain untouched; workspace copies are byte-identical.",
+  "review": {
+    "agent": "All three actual default/copy PNGs inspected with native image tools. Scene observations and visible prompt deviations are recorded per image.",
+    "root": "Independent root visual acceptance is a separate cache receipt; no approval is inferred from these source checks.",
+    "limits": "No partial-reveal/browser/device/offline/gameplay/animation or human-quality certification."
+  },
+  "images": [
+    {
+      "cellId": "fracture-lines/split-ring/retro",
+      "themeId": "retro",
+      "missionSlot": "split-ring",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-3efc9089-0159-4f85-88ab-68cf82be906c.png",
+      "bytes": 2818631,
+      "sha256": "8618e6f3aac280c915ae9cdd10fe53ee36afad9273e2de9e81748852a09369d9",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "64462354272c7ed50d7af03c9a725e59fb3bb53c5bee79f72753ed1e15cedad4",
+      "path": "originals/split-ring-retro.png",
+      "sourceLevelId": "fracture-lines-split-ring",
+      "title": "The Record Market before Opening",
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A golden brick rotunda encloses record stalls and arcade cabinets around a tree and circular listening bench. Foreground crates, worn parquet, plain discs and open passages suggest a shared market before opening.",
+        "topologyEcho": "The broken stall ring and center echo Split Ring. Scenic entrances and perspective do not reproduce authored gate positions.",
+        "deviations": "The near figures and caretaker are larger than requested. Some foreground detail is softer than the requested uniformly crisp pixel clusters. Plain disc banners, unlettered sleeve art and small decorative marks appear; no album identity or readable signage is used.",
+        "style": "Honey and terracotta morning light with petrol-blue and jade shadows, distinct from a purple night-city palette."
+      }
+    },
+    {
+      "cellId": "fracture-lines/fault-fan/retro",
+      "themeId": "retro",
+      "missionSlot": "fault-fan",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-4eda7c0c-c8d9-42f6-8065-80f81fa4137f.png",
+      "bytes": 2405219,
+      "sha256": "7e9e33577743b8cfdb36566034f6c7d826ddebb421de4c528d878cae5f6d10d7",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "75278a511c96aa3e860e09f42cf146a6bd3e0ab5ce862b3e9c138bb71ebe71b3",
+      "path": "originals/fault-fan-retro.png",
+      "sourceLevelId": "fracture-lines-fault-fan",
+      "title": "The Last Train through the Console Hall",
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Concrete and red-painted columns divide a rain-darkened concourse into arcade repair, listening and waiting bays, with a cream-and-red local train beyond the right windows.",
+        "topologyEcho": "Branching shared passages separate the deep bays, a narrative echo of Fault Fan rather than its collision spine.",
+        "deviations": "The central traveler and repair figure are larger than requested. Arcade screens and posters contain generated figurative/pseudo-letter marks despite the abstract/no-writing prompt; no known game, route label or usable product screen is identified or relied upon.",
+        "style": "Charcoal/navy dusk, sodium amber, restrained vermilion and green screen light; wet-floor reflections and waiting benches carry the story."
+      }
+    },
+    {
+      "cellId": "fracture-lines/frayed-causeway/retro",
+      "themeId": "retro",
+      "missionSlot": "frayed-causeway",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-609b98b0-ca72-469e-8176-ec8357a998d5.png",
+      "bytes": 2731032,
+      "sha256": "0b9ac9c6f0f936fa123672a383709014fdfa175e4d5309a5fa81422412a3df8b",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "ba6adac1879c90b88be7340afc86659b5359924d53c5b0731f13cf5f19df0e39",
+      "path": "originals/frayed-causeway-retro.png",
+      "sourceLevelId": "fracture-lines-frayed-causeway",
+      "title": "Three Studios at First Light",
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Three concrete river islands hold an open listening room, a glass rehearsal room and a modest antenna shed. Two friends carry a keyboard case across a repaired crossing; reeds, a boat and broad quiet water fill the foreground.",
+        "topologyEcho": "Three coherent landforms and broken concrete with replacement footbridges echo Frayed Causeway; painted crossings are not playable routes.",
+        "deviations": "The two crossing figures remain small as intended. Wall artwork and screen marks are invented decoration. The antenna and studio equipment are stylized rather than certified 1994 electronics; the far island is a utility shed rather than another fully visible rehearsal interior.",
+        "style": "Bottle-green foliage and celadon water under a pearly peach dawn, with cream windows and green phosphor accents."
+      }
+    }
+  ],
+  "sourceContextCommit": "c8abd4e4e48c34a9ae30255d2d4a2e9a74d593ed"
+}
