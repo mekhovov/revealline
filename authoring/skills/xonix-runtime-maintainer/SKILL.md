@@ -9,6 +9,8 @@ Locate the project from the current workspace or this source skill's project pat
 
 ## Current native edition
 
+Use the [current delivery plan](../../../docs/current-delivery-plan.md) for present status rather than historical pending notes. Countercurrent is an additive four-owner source adoption: sixteen external choices remain distinct from twelve installed slots. Preserve prior descriptor hashes, source originals, exact saved/earned ownership and explicit install/choose actions. The [Countercurrent guide](../../../docs/verification/round-47/countercurrent-chapters.md) records scoped proof/test coverage and remaining native/release gates.
+
 The approved execution register is [implementation-roadmap.md](../../../docs/implementation-roadmap.md). Read [continuous steering](../../../docs/continuous-steering.md) for remembered input and explicit Resume. Release and centered sticks do not stop flight; keep physical input gates separate from saved direction and queued turns. Never reinterpret historical `direction:null` recordings.
 
 First Light uses the isolated 72×36 `level.v3/core.v4/replay.v5` branch documented in [wide-engine.md](../../../docs/wide-engine.md). Obtain geometry from the run/level and update every consumer: capture, collision, renderer, editor, theater, gallery and couch. Preserve old 48×36 fixtures. Standard and Gentle route proofs are independent; do not regenerate old oracles to conceal a regression. [First Light](../../../docs/first-light.md) links its actual source, pictures and checks. Later classic versions are deliverable only when their own tests and registered behaviors exist.
