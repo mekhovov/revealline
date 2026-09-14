@@ -7,7 +7,7 @@ description: 'Design, configure and review Xonix player classes, equipment, acti
 
 Turn a requested play style into a small, explicit set of registered mechanics. Airframe, class, equipment, appearance, allegiance and mission role are separate dimensions. A body replacement does not grant an ability. An explicitly selected class or equipment item may change declared gameplay state; document that change and test it.
 
-For a class applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core registry contract](../../../game/core/README.md) and [runtime configuration guide](../../../docs/assets-and-configuration.md). `game/content/classes.json` currently has five recipes using four primitives; exported `xonix-playground.v1` scenarios can carry a validated `classRecipes` array, with class revision and loadout hash preserved. The ten-class/five-primitive ability lab below has a separate format; its dash, net, radio/fiber options do not automatically work in territory gameplay.
+For a class applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core registry contract](../../../game/core/README.md) and [runtime configuration guide](../../../docs/assets-and-configuration.md). `game/content/classes.json` currently has seven recipes using five primitives; exported `xonix-playground.v1` scenarios can carry a validated `classRecipes` array, with class revision and loadout hash preserved. The ten-class/five-primitive ability lab below has a separate format; its dash, net, radio/fiber options do not automatically work in territory gameplay.
 
 ## Inspect the actual capabilities
 
@@ -22,6 +22,8 @@ Collect primary public sources for names, maker/origin, public purpose, visible 
 Use a curated, expandable reference catalog rather than claiming all known systems. Distinguish a named model, a family, a nickname and a prototype. Rotor count comes from the specific model; heavy lift does not always mean six rotors. Fiber is a link option, not a unique body shape. Record source URL, access date, narrow supporting claim and caveats. Do not transfer real weapon performance tables, targeting tactics, vulnerabilities, explosive details or operating instructions into game tuning.
 
 ## Specify the player decision
+
+First resolve the actual level through `arcadeActionCapabilities` in `game/core/arcade-actions.mjs`. Authored direction-only Arcade accepts steering and pause while masking manual ability, pickup and Boost; its field bonuses activate on contact. Tactical/manual content retains its authored actions. A charge-based craft needs actual supply pads for Supply, and a sprite or progression unlock never grants equipment implicitly. Preserve the optional policy and legacy manual default instead of inferring rules from an Arcade/Tactical label or adding controls to every theme.
 
 For each class state its primary action, contextual action, resource, cooldown, legal target domain, ready/blocked feedback and reset behavior. Use fictional values in cells and seconds. Define whether an action is edge-triggered or held, and what pause, focus loss, class/equipment change and repeated input do. Resource pickup requires an actual nearby supply marker; an animation cannot silently refill ammo or award progress.
 
