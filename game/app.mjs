@@ -1,3 +1,4 @@
+import { createCharacterPresentations } from './character-presentations.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -130,7 +131,6 @@ import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
-  recommendedBody,
   MASTERY_SCENARIO_VERSION,
   ENCOUNTER_SCENARIO_VERSION,
   scenarioMasteryCampaign,
@@ -160,6 +160,7 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
     packs: [
@@ -1718,7 +1719,9 @@ try {
     );
   }
   function availableBodies() {
-    return difficultyNavigation.bodies(activeEntry, library.campaigns, progress);
+    return characterPresentations.availableBodies(
+      difficultyNavigation.bodies(activeEntry, library.campaigns, progress),
+    );
   }
   function currentAppearanceMilestones() {
     return difficultyNavigation.milestones(activeEntry, library.campaigns, progress);
@@ -2910,7 +2913,11 @@ try {
   }
   function setTheme() {
     if (library.preferences.matchClassAppearance) {
-      const candidate = recommendedBody(theme, run?.activeClassId || classId, theme.player);
+      const candidate = characterPresentations.recommendedBody(
+        theme,
+        run?.activeClassId || classId,
+        theme.player,
+      );
       bodyId =
         Object.hasOwn(presets.characters, candidate) &&
         (practice || availableBodies().has(candidate))
@@ -3397,7 +3404,12 @@ try {
       theme =
         themesFile.themes.find((t) => t.id === (authoredLevel.themeId || campaign.themeId)) ||
         themesFile.themes[0];
-      bodyId = theme.player;
+      if (
+        library.preferences.matchClassAppearance ||
+        !Object.hasOwn(presets.characters, bodyId) ||
+        (!practice && !availableBodies().has(bodyId))
+      )
+        bodyId = theme.player;
       $('theme-select').value = theme.id;
     }
     if (!scenario && !musicOverride) {

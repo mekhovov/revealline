@@ -1,6 +1,6 @@
 # Seven FPV role presentations
 
-Seven original body images and seven independently replaceable rotor recipes. These are source candidates for the seven existing FPV roles, with no runtime, unlock, registry or production-register binding. The existing game still owns all movement, abilities, collision and outcome rules.
+Seven original body images and seven independently replaceable rotor recipes. The original source batch remains recorded independently in `presentations.json`. This branch additionally proposes the seven existing FPV roles through the current presentation catalog; it does not grant production-register approval or change unlock records. The existing game still owns all movement, abilities, collision and outcome rules.
 
 | Role key      | Candidate body ID      | Distinguishing shape                     | Hubs |
 | ------------- | ---------------------- | ---------------------------------------- | ---- |
@@ -18,7 +18,7 @@ The fictional craft use broad silhouette inspiration from the user's drone refer
 
 ## Inspect and verify
 
-Serve the repository with an ordinary static HTTP server and open [the preview](index.html). It calls the existing [character renderer](../../motion-lab/render-character.mjs) and [animation clock](../../motion-lab/animation.mjs), with the exact current pure sizing formula from `game/ui/render.mjs` and two explicitly separate compact sizing studies. It shows a 128-pixel inspection image and a 1× CSS-pixel sample for 294, 390, 600 and 1152-pixel wide boards. Browser zoom and display scaling remain separate from the canvas measurement. Use light/checker backgrounds, north/east/south/west headings, rotor visibility, pivot/hub guides, pause and reduced motion. The default preview selects the proposed 20 CSS-pixel compact minimum; choose Current game for the unchanged production formula.
+Serve the repository with an ordinary static HTTP server and open [the preview](index.html). It calls the existing [character renderer](../../motion-lab/render-character.mjs) and [animation clock](../../motion-lab/animation.mjs), with the preserved pre-adoption sizing formula and two explicitly separate compact sizing studies. It shows a 128-pixel inspection image and a 1× CSS-pixel sample for 294, 390, 600 and 1152-pixel wide boards. Browser zoom and display scaling remain separate from the canvas measurement. Use light/checker backgrounds, north/east/south/west headings, rotor visibility, pivot/hub guides, pause and reduced motion. The default preview selects the proposed 20 CSS-pixel compact minimum; choose Current game for the preserved pre-adoption formula.
 
 ```sh
 node authoring/library/fpv-role-presentations/verify.mjs
@@ -39,15 +39,15 @@ The source preview offers **Current game**, **Compact 20px minimum** and **Compa
 
 At a 294-pixel arena, the CPU renderer measured the following visible body bounds. This is a north-facing fixed-frame sample with alpha ≥128 and brightness ≥80; other headings and subpixel positions still need inspection.
 
-| Role | Current | Proposed 20px | Comparison 24px |
-| --- | --- | --- | --- |
-| Scout | 13×10 | 16×14 | 18×16 |
-| Light carrier | 14×12 | 18×16 | 20×20 |
-| Heavy carrier | 12×13 | 16×16 | 18×19 |
-| Interceptor | 12×11 | 14×15 | 16×17 |
-| Fiber | 12×12 | 15×16 | 18×18 |
-| Impact | 8×13 | 12×15 | 16×19 |
-| Trapper | 14×12 | 16×17 | 20×19 |
+| Role          | Current | Proposed 20px | Comparison 24px |
+| ------------- | ------- | ------------- | --------------- |
+| Scout         | 13×10   | 16×14         | 18×16           |
+| Light carrier | 14×12   | 18×16         | 20×20           |
+| Heavy carrier | 12×13   | 16×16         | 18×19           |
+| Interceptor   | 12×11   | 14×15         | 16×17           |
+| Fiber         | 12×12   | 15×16         | 18×18           |
+| Impact        | 8×13    | 12×15         | 16×19           |
+| Trapper       | 14×12   | 16×17         | 20×19           |
 
 The 20-pixel image rectangle is the preferred next gameplay candidate: it improves all seven major body spans to 15–18 pixels while remaining smaller than the 24-pixel comparison. It is not a uniform 14–16-pixel size guarantee. Impact retains a deliberately narrow shape. Existing animation pause/reduced-motion behavior and desktop sizes stay intact. Source checks pass on Node20/22; the first added comparison assertion incorrectly compared two different viewport widths and was corrected to compare the same width.
 
@@ -57,4 +57,8 @@ The actual render script, measured samples and labelled 1×/3× contact sheet ar
 
 Keep the other six sets unchanged. Generate a new original using the [prompt contract](PROMPTS.md), preserve its default output and create a new versioned candidate rather than silently changing an adopted body identity. Record exact bytes, alpha, dimensions and full effective prompt. Inspect the actual motor centers; recompute normalized coordinates as `pixel / naturalSize - 0.5`. Review the complete rotating envelope and north-facing pivot, then inspect both moving and stationary output at actual sizes on light and dark backgrounds.
 
-For later adoption, map the existing role key to a reviewed body through `theme.classBodies` and register its recipe through the normal character catalog. Keep manual selection, earned unlocks, old pack-owned themes and saved contexts intact. This source batch does not perform that adoption. It supplies seven candidates, not 56 completed theme/role sets, and does not grant production, human readability or physical-device approval.
+For current adoption, register a new versioned body and rotor recipe in `authoring/motion-lab/presets.json`, then change only its declared `characterPresentations` set. Do not rewrite an immutable pack’s `theme.classBodies`. The adapter applies a recommendation only when the entire original theme identity and class map match; explicit appearance choices and original-file overrides retain their existing precedence. See [the source integration contract](../../../docs/fpv-role-presentations.md). It supplies seven candidates, not 56 completed theme/role sets, and does not grant production, human readability or physical-device approval.
+
+## Current runtime source candidate
+
+The separate preset mapping makes these seven starters available in solo and Couch without changing historical progress rewards. Only these registered bodies receive the compact 20 CSS-pixel image minimum; existing bodies, missing-image fallbacks and desktop sizes retain their prior policy. The seven original PNG bytes and this batch’s original provenance remain exact. Source integration, modeled checks, integrated native review and public release are separate states; the earlier authoring preview does not certify the new runtime candidate.
