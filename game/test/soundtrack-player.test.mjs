@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { setTimeout as delay } from 'node:timers/promises';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { BUILTIN_SOUNDTRACK_TRACKS, emptySoundtrackLibrary } from '../soundtrack.mjs';
 import { fixture } from './helpers/soundtrack-fixtures.mjs';
@@ -39,6 +40,14 @@ async function finishSynth(h) {
   h.player.update(false, { family: 'fpv' });
   await settleUntil(() => h.player.snapshot().status !== 'loading');
 }
+test('transport settling refuses a predicate that never becomes ready', async () => {
+  await assert.rejects(
+    settleUntil(() => false, { timeoutMs: 20 }),
+    {
+      message: 'Transport did not settle within 20 ms.',
+    },
+  );
+});
 test('transport construction/settings/selection stay silent until explicit Play', async () => {
   const h = setup();
   assert.equal(h.soundscape.context, null);
@@ -419,14 +428,19 @@ test('disposal aborts a pending storage load and its late original cannot alloca
   assert.equal(h.created.length, 0);
   assert.equal(h.player.snapshot().status, 'disposed');
 });
-test('a delayed media play promise cannot restore playing status after transport pause', async () => {
+test('a delayed media play promise cannot restore playing status after transport pause', async (t) => {
   const h = setup({
     library: {
       ...original.library,
       playlists: [{ ...original.library.playlists[0], trackIds: [original.track.id] }],
       selection: { playlistId: 'qa.mix' },
     },
+    readAsset: async () => {
+      await delay(25);
+      return original.blob;
+    },
   });
+  t.after(() => h.player.dispose());
   let release;
   h.media.play = () => {
     h.media.paused = false;
