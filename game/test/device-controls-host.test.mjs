@@ -82,11 +82,16 @@ test('featured pressure chapter hides manual actions and actual keyboard action 
   const page = await soloPage(t, { titleScreen: true });
   controls(page, 'hidden');
   page.$('shell-featured').click();
-  await settle(() => !page.$('shell-featured').disabled);
+  await settle(
+    () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+    'Featured mission must finish its exact picture preparation before Deploy.',
+  );
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
   for (const id of ['action-button', 'pickup-button', 'boost-button', 'ability-state'])
     assert.equal(page.$(id).hidden, true, id);
-  page.$('start-button').click();
+  page.$('shell-deploy').click();
+  assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
+  await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(); // Consume the explicit-start neutral tick before fresh action attempts.
   page.key('ArrowDown');
   page.key('KeyE');
@@ -122,8 +127,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     imageBoundary(t);
     const page = await soloPage(t, { titleScreen: true, storage: storageWith({ turnPolicy }) });
     page.$('shell-featured').click();
-    await settle(() => !page.$('shell-featured').disabled);
-    page.$('start-button').click();
+    await settle(
+      () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+      'Featured mission must finish its exact picture preparation before Deploy.',
+    );
+    page.$('shell-deploy').click();
+    assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
+    await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     page.key('ArrowDown');
     page.key('ArrowDown', false);
