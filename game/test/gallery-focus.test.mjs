@@ -250,6 +250,35 @@ async function setup(t, count = 30, hostOverrides = {}) {
   };
 }
 
+for (const count of [0, 12, 13])
+  test(`Collection shows pagination only when ${count} pictures need a second page`, async (t) => {
+    const h = await setup(t, count);
+    h.collection();
+    const nav = h.node('gallery-pages');
+    assert.equal(nav.hidden, count <= 12);
+    assert.equal(nav.children.length, count <= 12 ? 0 : 3);
+    if (count > 12) {
+      h.next();
+      assert.equal(h.cards().length, 1);
+      assert.match(nav.children[1].textContent, /page 2 of 2/);
+    }
+  });
+
+for (const pagerFocused of [false, true])
+  test(`Filtering to one page ${pagerFocused ? 'restores removed pager focus to search' : 'preserves unrelated focus'}`, async (t) => {
+    const h = await setup(t);
+    h.collection();
+    const target = pagerFocused
+      ? h.node('gallery-pages').children[2]
+      : h.node('collection-records');
+    target.focus();
+    h.search('Picture 00');
+    assert.equal(h.node('gallery-pages').hidden, true);
+    assert.equal(h.node('gallery-pages').children.length, 0);
+    assert.ok(h.document.activeElement === (pagerFocused ? h.node('gallery-search') : target));
+    assert.equal(h.cards().length, 1);
+  });
+
 test('wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records', async (t) => {
   const h = await setup(t, 1);
   const wideLevel = {
@@ -357,7 +386,8 @@ test('a removed picture clamps the page and focuses a remaining enabled card', a
   await h.cards()[5].onclick();
   h.library.gallery.splice(12);
   h.node('gallery-view-dialog').close();
-  assert.match(h.node('gallery-pages').children[1].textContent, /page 1 of 1/);
+  assert.equal(h.node('gallery-pages').hidden, true);
+  assert.equal(h.node('gallery-pages').children.length, 0);
   assert.equal(h.document.activeElement, h.cards()[0]);
   assert.equal(h.document.activeElement.disabled, false);
 });
