@@ -67,6 +67,15 @@ async function fixture(t) {
 
 async function buildFixture(t) {
   const owned = await fixture(t);
+  // The real builder enables offline output only when its helper is shipped.
+  for (const name of [
+    'game/offline.mjs',
+    'game/platform.mjs',
+    'game/offline/service-worker.template.js',
+  ]) {
+    await fs.mkdir(path.dirname(path.join(owned.root, name)), { recursive: true });
+    await fs.copyFile(path.join(PROJECT_ROOT, name), path.join(owned.root, name));
+  }
   await fs.writeFile(
     path.join(owned.root, 'game/index.html'),
     '<!doctype html><title>CLI fixture</title>',
