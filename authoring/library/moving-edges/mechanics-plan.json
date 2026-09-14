@@ -1,0 +1,146 @@
+{
+  "format": "revealline-moving-edges-mechanics-plan.v1",
+  "status": "bounded-scout-results-with-explicit-deferred-claims",
+  "scope": "Initial design requirements retained below; actual results and unsupported comparison are qualified by the supplement and README.",
+  "contexts": {
+    "difficulties": ["standard", "gentle"],
+    "turnPolicies": ["immediate", "grid-center"],
+    "initialClass": "scout",
+    "seed": 1
+  },
+  "authority": {
+    "inputOnly": true,
+    "stateMutationAllowed": false,
+    "maxRouteTicks": 21600,
+    "maxCommandTicks": 3600,
+    "timedIdleInOrdinaryRoutes": false
+  },
+  "cases": [
+    {
+      "id": "terrace-frontier-handoff",
+      "levelId": "moving-edges-terrace-stitch",
+      "candidateRoute": "north",
+      "decision": "Close the north stitch, then secure the opposite terrace instead of following the new frontier blindly.",
+      "requirements": [
+        "At least two distinct capture transactions.",
+        "Observe contour topology revision and its actual route/mode after each capture. An idle/rejoining patrol must be reported honestly, not called active patrol.",
+        "Save before a changed frontier, after each of the first two captures, and after the patrol starts moving again; exact suffix restoration."
+      ]
+    },
+    {
+      "id": "terrace-claimed-return",
+      "levelId": "moving-edges-terrace-stitch",
+      "candidateRoute": "south",
+      "decision": "Claim the rover cell, recognize its warning, and take the outer return while the rover becomes active.",
+      "requirements": [
+        "Actual rover.warning then rover.activated from terrace-rover.",
+        "Show movement while avoiding the claimed-ground actor; demonstrate a real actor-caused loss separately.",
+        "Save during warning and after activation; no activation state injection."
+      ]
+    },
+    {
+      "id": "terrace-life-is-not-precision",
+      "levelId": "moving-edges-terrace-stitch",
+      "candidateCommands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["down", 29.5]
+        },
+        {
+          "to": ["right", 9.5]
+        }
+      ],
+      "decision": "Use a genuine failed cut, then collect the optional life rather than pretending it erased the failure.",
+      "requirements": [
+        "Exactly one actual livesLost before collection; pickup gain is actual and at most one.",
+        "After the extra-life pickup, livesLost remains one; eventual win cannot satisfy clean-life/Precision.",
+        "Record actual loss reason. This self-contact proposal is not evidence of actor-specific contact."
+      ]
+    },
+    {
+      "id": "wheel-counterflow",
+      "levelId": "moving-edges-survey-wheel",
+      "candidateRoutes": ["north", "south"],
+      "decision": "Compare a cross-sector stitch with an outside-first circuit, watching both directions at each new frontier.",
+      "requirements": [
+        "Actual distinct capture cells/returns, not only timestamps or mirrored commands.",
+        "Both wheel-clockwise and wheel-counterclockwise move from their initial position; preserve their opposite authored directions.",
+        "Save while both patrols have moved and after a frontier handoff."
+      ]
+    },
+    {
+      "id": "wheel-warning-return",
+      "levelId": "moving-edges-survey-wheel",
+      "candidateRoute": "north",
+      "decision": "Turn toward an existing safe return during the interceptor warning rather than waiting for an arbitrary duration.",
+      "requirements": [
+        "Actual head-intercept warning then commitment and cooldown from wheel-interceptor.",
+        "Record available return distance and actual cut closing during the warning. No automatic guarantee that every warning is escapable.",
+        "Optional enemy-slow demonstration must prove collection, fixed effect interval and expiry; ordinary wins must avoid the pickup.",
+        "Separately record a real contour and interceptor loss; actor/line-impact attribution must come from events."
+      ]
+    },
+    {
+      "id": "breakwater-repair",
+      "levelId": "moving-edges-breakwater-return",
+      "candidateRoute": "north",
+      "decision": "Claim the lower bay, actively reposition along the western route, then repair a real eroded cell.",
+      "requirements": [
+        "Actual erosion.warning, cells.eroded, and later cells.claimed containing at least one of those exact indices.",
+        "Independent union of all claimed cell indices equals uniqueClaimedCount; score equals that count times pointsPerCell for these objective-free layouts.",
+        "Erosion does not change prior unique credit; re-claiming old cells cannot score them twice.",
+        "Save during warning, after erosion and after recapture; preserve target/cooldown/topology data through the real session API."
+      ]
+    },
+    {
+      "id": "breakwater-outer-race",
+      "levelId": "moving-edges-breakwater-return",
+      "candidateRoute": "south",
+      "decision": "Use the open right corridor to secure the outside before repairing the bay.",
+      "requirements": [
+        "A distinct legal win with fewer eroded cells than the repair demonstration, measured from actual events; do not enforce an invented zero-erosion result.",
+        "No stationary wait padding to obtain the comparison.",
+        "Extra-life cove is optional. Confirm erosion protection around current player/departure from observed events, without changing protection rules.",
+        "Separately record an actual eroder contact loss and terminal game-over controls."
+      ]
+    }
+  ],
+  "laterAdmission": [
+    "First24 ordinary Scout routes must pass before these unproven demonstrations are refined.",
+    "Preserve seven recipe bytes; explicitly inspect speed/radius/passive differences before selecting affected additional class contexts.",
+    "Loss/recovery/game-over and mechanic demonstrations are separate from ordinary wins.",
+    "No art, native play, campaign production approval or release adoption is established by this file."
+  ],
+  "results": {
+    "ordinaryProof": "routes.json",
+    "mechanicsProof": "mechanics-proof.json",
+    "ordinaryContexts": 24,
+    "additionalMechanicContexts": 52,
+    "replayedClasses": ["scout"],
+    "nonemptySavedSuffixes": 482,
+    "endpointRestores": 16,
+    "warningEscape": "Cancellation at tick132 before scheduled169 commitment; separate actor-loss cases observe commitment/cooldown.",
+    "extraLife": "Four actual wins after gain1 retain livesLost1 and cannot be clean Gold.",
+    "outsideErosionComparison": "Fewer eroded cells is true in Standard (north2/south1), not Gentle (north2/south2). Keep the observed equal Gentle result; no universal fewer-erosion claim.",
+    "deferred": [
+      "Additional six selectable classes and additional seeds.",
+      "Independent demonstration of every erosion protection anchor.",
+      "Native readability, art, human challenge calibration, production approval and runtime/catalog/release adoption."
+    ]
+  }
+}
