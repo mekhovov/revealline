@@ -4363,7 +4363,7 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
-    invalidateContentSwitch();
+    invalidateContentSwitch({ announce: true });
     if (courseEntry)
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
