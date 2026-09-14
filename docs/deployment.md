@@ -42,10 +42,12 @@ through the existing main-only `github-pages` environment. Its reviewed
 version and its six-gate source qualification. It must be enabled and match the highest published,
 non-draft, non-prerelease semantic version. Publishing a newer release never edits the selector or
 moves an old tag. Commit the reviewed selection after freezing the release and verifying its
-archive routes. The selector commit triggers publication; it preserves original file hashes,
-workers, manifests, and `/releases/<version>/` entries while using admitted archives for older
-payloads. See the [controller contract](../publishing/pages-controller/README.md) for byte checks,
-capacity limits, and the distinction between the controller commit and the frozen game source.
+archive routes. The selector commit triggers publication; it preserves original file hashes and
+keeps the five newest versions of each semantic major line in `/releases/<version>/`. Older
+versions remain downloadable from GitHub Releases but are intentionally omitted from the Pages
+catalog and routing overlay. See the [controller contract](../publishing/pages-controller/README.md)
+for byte checks, capacity limits, and the distinction between the controller commit and the frozen
+game source.
 
 Set the repository Pages source to **GitHub Actions** once. Both workflows use `GITHUB_TOKEN`; no
 additional secret is required. Source checks and publication have separate concurrency groups,
