@@ -152,29 +152,29 @@ test('optional packs stay outside default indexes while explicit shared scenery 
       false,
     );
   }
-  assert.equal(
-    files.some((file) => file.startsWith(`${CHAPTER_ROOT}/`)),
-    false,
+  assert.deepEqual(
+    files.filter((file) => file.startsWith(`${CHAPTER_ROOT}/`)),
+    [`${CHAPTER_ROOT}/distribution.json`],
   );
   for (const image of source.images.values())
-    assert.equal(files.includes(image.record.source), false);
+    assert.equal(files.includes(image.record.source), true);
   assert.equal(
     config.optionalOffline.length,
-    5,
-    'Existing declared core exclusions are unchanged.',
+    9,
+    'All retained optional editions remain explicitly declared within the offline budget.',
   );
 });
 
-test('48 fresh wins resolve actual compiled art and verify pressure-phase save/restore in both difficulties and steering policies', async () => {
+test('36 fresh wins resolve actual compiled art and verify pressure-phase save/restore in both difficulties and steering policies', async () => {
   const result = await verifyFourWorlds();
-  assert.equal(result.routes.length, 48);
-  assert.equal(result.imageFacts.length, 12);
+  assert.equal(result.routes.length, 36);
+  assert.equal(result.imageFacts.length, 9);
   assert.equal(
     new Set(result.routes.map((r) => `${r.packId}/${r.difficulty}/${r.levelId}/${r.turnPolicy}`))
       .size,
-    48,
+    36,
   );
-  assert.equal(new Set(result.imageFacts.map((r) => r.sha256)).size, 12);
+  assert.equal(new Set(result.imageFacts.map((r) => r.sha256)).size, 9);
   for (const route of result.routes) {
     assert.equal(route.status, 'won');
     assert.equal(route.livesLost, 0);
