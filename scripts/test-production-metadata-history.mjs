@@ -16,6 +16,7 @@ const previous = JSON.parse(
 );
 const historyRoot = 'authoring/production/history';
 const index = JSON.parse(await readFile(path.join(root, historyRoot, 'index.json')));
+const sourceIndex = JSON.parse(await readFile(path.join(root, historyRoot, 'source-index.json')));
 const old = index.entries[0];
 const snapshot = `${historyRoot}/${old.sha256}.json`;
 const current = await readFile(path.join(root, old.path));
@@ -33,11 +34,14 @@ function pins(r) {
   ];
 }
 async function fixture(t) {
+  await mkdir(path.join(root, '.cache'), { recursive: true });
   const dir = await mkdtemp(path.join(root, '.cache/metadata-history-fixture-'));
   t.after(() => rm(dir, { recursive: true, force: true }));
   for (const name of new Set([
     ...pins(register).map((p) => p.path),
     `${historyRoot}/index.json`,
+    `${historyRoot}/source-index.json`,
+    ...sourceIndex.entries.map((pin) => `${historyRoot}/${pin.sha256}.source`),
     snapshot,
   ])) {
     await mkdir(path.dirname(path.join(dir, name)), { recursive: true });
