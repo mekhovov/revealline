@@ -28,7 +28,7 @@ Use [the collection handoff](references/collection-handoff.md) when authoring re
 
 ## Current runtime presentation sets
 
-Before advancing a catalog pinned by existing production records, use [metadata revision preservation](../../production/README.md#preserve-metadata-revisions). Preserve the exact old JSON snapshot and complete identity; never update an old register's hash just to make a new appearance pass. Current and historical catalog checks are separate from visual acceptance.
+Before advancing a catalog pinned by existing production records, use [metadata revision preservation](../../production/README.md#preserve-metadata-revisions). Preserve the exact old JSON or `.mjs` source snapshot and complete identity through the versioned index; archived modules are inert bytes, never imports. Never update an old register's hash just to make a new appearance pass. Current and historical catalog checks are separate from visual acceptance.
 
 Read [the current presentation contract](../../../docs/fpv-role-presentations.md) before applying the seven FPV role bodies. `authoring/motion-lab/presets.json` owns the bounded `characterPresentations` catalog; `game/character-presentations.mjs` checks the complete original theme/class map and adds only the declared current starters at the host boundary. Use the same adapter in solo and Couch. Do not rewrite old `theme.classBodies`, pack hashes, progress reward lists, stored appearance IDs or saved originals. Manual choices and explicit original overrides remain independent. A changed custom class map keeps its authored recommendations.
 
