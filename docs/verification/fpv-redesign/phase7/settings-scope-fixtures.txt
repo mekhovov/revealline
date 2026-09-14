@@ -1,0 +1,12 @@
+✔ ordinary: Settings exposes only usable Creator links and keyboard focus respects the session scope (3153.074083ms)
+✔ practice: Settings exposes only usable Creator links and keyboard focus respects the session scope (2178.192542ms)
+✔ course: Settings exposes only usable Creator links and keyboard focus respects the session scope (1358.572083ms)
+✔ actual Settings keyboard/controller retention and Back preserve the paused flight and offline action (7897.461375ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9194.794792

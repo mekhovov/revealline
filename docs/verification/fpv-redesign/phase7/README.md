@@ -89,3 +89,15 @@ Studio player previews now read presets independently; an exact owner with compl
 ### Duplicate immutable-source fixture
 
 The e903 candidate's PR preflight found that the private v2 missing-snapshot test still had an independent valid copy in its source-history index. The verifier correctly resolved that retained copy. The corrected test removes only this duplicate from its private fixture before checking missing, changed and symlinked v2 snapshots. Both production indexes and originals remain unchanged. All nine focused cases passed; the failed hosted preflight remains in the qualification archive. This correction requires qualification of the new exact commit.
+
+### Settings category fixture correction
+
+Two inherited P6 host fixtures still reached for Game data controls while Settings displayed Audio. They now enter Game data through the real keyboard tab handler before checking Creator links or download retention. Creator coverage also verifies that expanded links leave the keyboard scope when the category changes, and remain hidden and navigation-guarded in practice and First Flight. Retention coverage preserves its controller request, pending-request, Back, saved-flight, offline-status and no-storage-write assertions; reopening Settings retains the selected category. No runtime behavior changed. All four focused cases passed, with lint and formatting checks; `settings-scope-fixtures.txt` is the local host-test receipt against the corrected fixtures on source `3146af430bca925dcaba608e0182e00ff7126aa9`. This is not native-device or exact committed-source qualification; the resulting commit still requires the hosted gates.
+
+### Featured original-image readiness fixture
+
+The inherited device host tests use the complete original Arcade R5 pack. The shared five-second wait failed three local cases and two cases in the e903 hosted shard; a scoped thirty-second allowance also failed two local cases while exact image preparation remained pending with no application errors. The original failed local outputs are retained in `device-picture-default-before.txt` and `device-picture-30s-before.txt`.
+
+Only the three featured-picture preparation predicates now use the existing 180-second bulk-original inventory allowance used by other archive hosts. They still require the exact picture-ready state before Deploy, and report pack, picture state, visible status and application errors on failure. Image-header checks, action isolation, first-cut behavior, scores and authoritative replay/save assertions remain intact. Ordinary input waits, shared deadlines and application loading behavior are unchanged. This is test-fixture readiness under concurrent local/CI load, not a game performance target.
+
+The corrected local run passed all three targeted featured-picture cases, with the twelve unrelated cases explicitly skipped by the test-name filter (`device-picture-final.txt`). The prior full local file ran fifteen cases and exposed the three preparation failures above; no passing full-file claim is made for this focused rerun. The complete suite remains required on the final committed source.
