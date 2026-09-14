@@ -1,5 +1,43 @@
 # Device-aware flight and Arcade R4
 
+## Stable flight feedback — source candidate
+
+At a fixed viewport, text size and input mode, changing an encounter from quiet
+to warning or active must not resize the arena. The current device layout owns
+one width calculation for all encounter phases, including short landscape.
+Warning text remains below the arena; it does not cover a route or move the touch
+pad. Rotation, text-size changes and deliberate input-layout changes still use
+their normal responsive rules.
+
+A stationary unfinished cut says **LINE EXPOSED / CHOOSE A TURN**. This is a
+presentation of the existing cutting and speed state, not a new collision or
+automatic turn. Pause, recovery, capture-stop and saved steering keep their
+existing behavior. Results say **Target reached**, while campaign completion
+offers a replay; neither continues to instruct the player to finish a cut.
+
+Pause actions use a full-width Resume followed by Mission brief and Main menu
+on narrow portrait screens. Short landscape uses the viewport's lower safe area
+instead of squeezing those actions into the narrow arena. Steering remains
+hidden while paused; the existing explicit Resume contract is unchanged.
+
+The source preview passed native browser checks at 1280 × 720: the live arena
+remained 980 × 490 with Standard text and 920 × 460 with Large text across actual
+eroder warning transitions. A blocked unfinished line displayed the turn prompt;
+an ordinary direction escaped it and later completed the mission. Results showed
+Target reached. At 390 × 844 and 844 × 390 with Large text, all three pause actions
+were visible and keyboard navigation reached Mission brief and Main menu. Touch
+controls were inspected using the Always preference, outside the live arena.
+These are source-preview browser and CSS viewport results, not physical touch,
+controller or frozen-release qualification. The embedded preview was session-only
+while another tab owned saving; it was not used to claim save persistence.
+
+The layout follows [Apple's touch-game guidance](https://developer.apple.com/videos/play/wwdc2026/358/)
+on keeping controls clear of play and showing relevant actions, and
+[Game Accessibility Guidelines](https://gameaccessibilityguidelines.com/avoid-placing-essential-temporary-information-outside-the-players-eye-line/)
+on keeping essential temporary information near the player's focus. These are
+design principles applied to the browser game, not adoption of Apple's native
+Touch Controller framework.
+
 ## September 13, 2026 — current chapter menu source
 
 The current source features R5, eight current packs and four older First Light

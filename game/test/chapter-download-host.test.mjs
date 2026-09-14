@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { normalizedLevel } from '../core/level.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 
 const load = async (name) =>
   JSON.parse(await readFile(new URL(`../content/packs/${name}.json`, import.meta.url), 'utf8'));
@@ -172,5 +173,69 @@ test('a late failed chapter request cannot replace the status or run from a newe
   assert.equal(page.$('shell-featured-status').textContent, titleMessage);
   assert.equal(page.$('shell-featured-status').hidden, titleHidden);
   assert.doesNotMatch(message, /Chapter download unavailable/);
+  assert.deepEqual(page.errors, []);
+});
+
+test('blur announces a deferred featured launch cancellation and its late response cannot adopt or persist the chapter', async (t) => {
+  const database = managedIndexedDB();
+  const page = await soloPage(t, { titleScreen: true, assetIndexedDB: database.indexedDB });
+  let releaseRequest;
+  chapterFetch(t, (url, request) =>
+    url === 'content/packs/fpv-arcade-r5.json'
+      ? new Promise((resolve) => {
+          releaseRequest = () => resolve(request());
+        })
+      : request(),
+  );
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run),
+    selected = page.$('pack-select').value,
+    stored = new Map(page.storage.map),
+    writes = page.storage.writes.length,
+    installed = database.contents(),
+    puts = database.allPuts.length;
+  const pending = page.$('shell-featured').onclick();
+  let message;
+  try {
+    assert.equal(typeof releaseRequest, 'function', 'The actual featured fetch is pending');
+    assert.equal(page.$('shell-featured').disabled, true);
+    assert.match(page.$('shell-featured-status').textContent, /Installing/);
+    page.win.emit('blur');
+    page.frame(0);
+    message = page.$('shell-featured-status').textContent;
+    assert.match(message, /Pending pack launch cancelled/);
+    assert.doesNotMatch(message, /Installing/);
+    assert.equal(page.$('shell-featured-status').hidden, false);
+    assert.equal(page.$('content-select-status').textContent, message);
+    assert.equal(page.$('pack-select').disabled, false);
+    assert.equal(page.$('shell-featured').disabled, true, 'The request is still settling');
+    assert.equal(page.$('shell-home').open, true);
+    assert.equal(page.rendered.run, run);
+    assert.equal(page.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.equal(page.$('pack-select').value, selected);
+    assert.deepEqual(page.storage.map, stored);
+    assert.equal(page.storage.writes.length, writes);
+    assert.deepEqual(database.contents(), installed);
+    assert.equal(database.allPuts.length, puts);
+  } finally {
+    releaseRequest?.();
+    await pending;
+  }
+  page.frame(0);
+  assert.equal(page.$('shell-featured').disabled, false);
+  assert.equal(page.$('shell-home').open, true);
+  assert.equal(page.$('shell-featured-status').textContent, message);
+  assert.equal(page.$('content-select-status').textContent, message);
+  assert.equal(page.rendered.run, run);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(page.$('pack-select').value, selected);
+  assert.deepEqual(page.storage.map, stored);
+  assert.equal(page.storage.writes.length, writes);
+  assert.deepEqual(database.contents(), installed);
+  assert.equal(database.allPuts.length, puts);
+  page.win.emit('blur');
+  assert.equal(page.$('shell-featured-status').textContent, message, 'Idle blur preserves status');
   assert.deepEqual(page.errors, []);
 });

@@ -42,6 +42,20 @@ Resources use cache-first delivery after successful preparation. If a saved file
 
 Offline preparation does not request persistent-storage permission, install a native binary or promise permanent retention. Browsers and users can clear cached files. Keep portable save backups for progress that matters.
 
+If an earned picture's retained owner metadata is unavailable, the working source explains that its original data is missing and asks the player to re-download the chapter or restore its media backup. A resolved owner that differs from the earned receipt remains a separate rejection. Both cases preserve the receipt and refuse to substitute another picture; this message does not establish why data disappeared.
+
+## Keep downloads on this device
+
+The working source adds a separate **Keep downloads on this device** action in Settings. Opening Settings checks the browser's actual `navigator.storage.persisted()` result; only activating the button calls `navigator.storage.persist()`, before any asynchronous wait. There is no startup permission request or automatic retry after denial. The browser may grant, deny, reject or not support the request; each outcome has a visible status. An estimate of quota or free space never establishes retention.
+
+A grant concerns this browser origin's stored data, including its IndexedDB and Cache storage. It does not install a chapter, prepare offline files, verify their presence, restore missing originals or change any game storage budget. **Prepare offline play** and **Verify offline files** keep their existing independent actions. Keep portable backups: users can still clear site data, and a grant is not a permanent backup. No specific browser eviction cause has been established for the observed missing-pack incident.
+
+The retention button uses ordinary Settings keyboard/controller navigation. It remains focusable while one browser request is pending; duplicate actions do not create another request. Back and play stay available. Closing Settings invalidates late display updates without claiming to cancel the browser's non-cancellable permission request. Reopening joins that pending decision, then checks `persisted()` again. Terminal page exit removes the listener; a browser-history return checks only when Settings is open. Neither result writes a profile preference, changes a flight or resumes it.
+
+Implementation: [storage-retention.mjs](../game/ui/storage-retention.mjs), attached by [app.mjs](../game/app.mjs). Focused API cases cover granted/denied/unsupported/rejected outcomes and stale checks, pending reopen and disposal; the modeled host case covers ordinary Settings navigation and unchanged paused-flight/offline state. Source tests do not establish native browser permission behavior, physical controller support or public delivery.
+
+Primary references: [MDN persist()](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persist), [MDN persisted()](https://developer.mozilla.org/en-US/docs/Web/API/StorageManager/persisted), and [web.dev persistent storage](https://web.dev/articles/persistent-storage). The APIs require an eligible secure browser context and the browser controls its permission decision.
+
 ## Shell integration
 
 `game/offline.mjs` has no automatic registration side effects:
