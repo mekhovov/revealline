@@ -8,6 +8,7 @@ import { createAnimationState, advanceAnimation } from '../motion-lab/animation.
 import { Soundscape } from '../../game/ui/audio.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentation.mjs';
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
+import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
 const text = (tag, value, className = '') => {
   const node = document.createElement(tag);
   node.textContent = value;
@@ -19,18 +20,73 @@ const read = async (url) => {
   if (!response.ok) throw new Error(`Preview fixture unavailable (${response.status}).`);
   return response.json();
 };
-let fixturePromise;
-const fixtures = () =>
-  (fixturePromise ||= Promise.all([
-    read(new URL('../motion-lab/presets.json', import.meta.url)),
-    read(new URL('../../game/content/packs/fpv-arcade-r5.json', import.meta.url)),
-    ...['classic-lab', 'sentinel-relay', 'fpv-arcade'].map((id) =>
-      read(new URL(`../../game/content/packs/${id}.json`, import.meta.url)),
+const optionalFixtureLevels = {
+  'fpv-arcade-r5': ['orchard-crossing', 'courtyard-exits', 'night-crossfire'],
+  'fpv-arcade': ['orchard-window', 'split-courtyard', 'night-signal'],
+};
+function metadataFixturePack(id) {
+  const rows = optionalFixtureLevels[id].map((levelId) =>
+    CURRENT_ART_SOURCES.find(
+      (row) =>
+        row.source.path === `game/content/packs/${id}.json` &&
+        row.owner.themeId === 'fpv' &&
+        row.level?.id === levelId,
     ),
-  ]).catch((error) => {
-    fixturePromise = null;
-    throw error;
-  }));
+  );
+  if (rows.some((row) => !row?.level || !row.theme))
+    throw new Error(`Code-owned inspection metadata is unavailable for ${id}.`);
+  // Only trusted level/theme metadata: no original picture bytes or player storage.
+  return { themes: [rows[0].theme], campaigns: [{ levels: rows.map((row) => row.level) }] };
+}
+export function createStudioFixtureLoader({ readJSON = read } = {}) {
+  let presetPromise;
+  const packs = new Map();
+  const presets = () =>
+    (presetPromise ||= readJSON(new URL('../motion-lab/presets.json', import.meta.url)).catch(
+      (error) => {
+        presetPromise = null;
+        throw error;
+      },
+    ));
+  const pack = (id) => {
+    if (!packs.has(id))
+      packs.set(
+        id,
+        readJSON(new URL(`../../game/content/packs/${id}.json`, import.meta.url)).catch((error) => {
+          if (Object.hasOwn(optionalFixtureLevels, id)) return metadataFixturePack(id);
+          packs.delete(id);
+          throw error;
+        }),
+      );
+    return packs.get(id);
+  };
+  return {
+    presets,
+    async context(slotId, pictureOwner = null) {
+      if (pictureOwner && (!pictureOwner.level || !pictureOwner.theme))
+        throw new Error(
+          'Exact picture owner metadata is unavailable; no substitute board is shown.',
+        );
+      const preset = await presets();
+      if (pictureOwner)
+        return {
+          presets: preset,
+          theme: pictureOwner.theme,
+          level: pictureOwner.level,
+          run: createRun(pictureOwner.level, { seed: pictureOwner.descriptor?.seed ?? 0 }),
+        };
+      const choices = await Promise.all(
+        ['fpv-arcade-r5', 'classic-lab', 'sentinel-relay', 'fpv-arcade'].map(pack),
+      );
+      return {
+        presets: preset,
+        theme: choices[0].themes[0],
+        ...createStudioPreviewRun(choices, slotId),
+      };
+    },
+  };
+}
+const fixtureLoader = createStudioFixtureLoader();
 const bodyIds = {
   scout: 'fpv-scout-v1',
   bomber: 'fpv-light-carrier-v1',
@@ -91,7 +147,7 @@ function loop(surface, own, draw, motion) {
   run(last);
 }
 export async function playerRecipePreview(surface, slot, resolved, blobs, options, own) {
-  const [presets] = await fixtures(),
+  const presets = await fixtureLoader.presets(),
     classId = slot.id.split('.')[1],
     bodyId = bodyIds[classId] || bodyIds.scout;
   let body = structuredClone(presets.characters[bodyId]);
@@ -151,19 +207,16 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
-  const [presets, pack, ...otherPacks] = await fixtures(),
+  const {
+      presets,
+      level,
+      run,
+      theme: fixtureTheme,
+    } = await fixtureLoader.context(slot.id, options.sourcePicture ?? null),
     classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout';
-  const { level, run } = options.sourcePicture?.level
-    ? {
-        level: options.sourcePicture.level,
-        run: createRun(options.sourcePicture.level, {
-          seed: options.sourcePicture.descriptor.seed || 0,
-        }),
-      }
-    : createStudioPreviewRun([pack, ...otherPacks], slot.id);
   const painter = new BoardPainter(presets),
     theme = {
-      ...(options.sourcePicture?.theme || pack.themes[0]),
+      ...(options.sourcePicture?.theme || fixtureTheme),
       palette: canvasPresentation(resolved).palette,
     };
   let warning = '';
