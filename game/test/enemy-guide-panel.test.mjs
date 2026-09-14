@@ -12,6 +12,7 @@ import {
 } from '../ui/enemy-workshop-return.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { imagePresentation } from '../presentation/runtime.mjs';
 
 const themes = JSON.parse(readFileSync(new URL('../content/themes.json', import.meta.url))).themes;
 const impact = JSON.parse(
@@ -237,6 +238,52 @@ test('the guide paints only the selected registered image and motion, with separ
     art.calls.some(([method]) => method === 'drawImage'),
     false,
   );
+});
+test('the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks', async (t) => {
+  const art = artworkFixture(),
+    source = JSON.parse(
+      readFileSync(new URL('../presentation/compiled/runtime.json', import.meta.url)),
+    ).resolved.assets['enemy.bouncer'],
+    asset = structuredClone(source),
+    image = { type: 'compiled-field-hunter' };
+  asset.geometry.pivot = { x: 0.25, y: 0.75 };
+  asset.geometry.rotorAnchors = [{ x: 0.75, y: 0.25, radius: 0.08, blades: 4 }];
+  const sprite = { image, geometry: imagePresentation(asset) };
+  let available = true;
+  const h = setup(t, {
+    ...art,
+    getThemeId: () => 'fpv',
+    getPresentation: () => ({
+      image: (slot) => (available && slot === 'enemy.bouncer' ? sprite : null),
+    }),
+  });
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  const drawing = art.calls.find(([method]) => method === 'drawImage');
+  assert.equal(drawing[1], image);
+  assert.deepEqual(drawing.slice(2), [-14, -42, 56, 56]);
+  assert.ok(art.calls.some(([method, x, y]) => method === 'translate' && x === 28 && y === -28));
+  assert.ok(
+    art.calls.some(([method, x, y, r]) => method === 'arc' && x === 0 && y === 0 && r === 4),
+  );
+  await settleArtwork();
+  assert.deepEqual(art.loads, [], 'a resolved release sprite needs no legacy image request');
+  h.$('theme').value = 'ukraine';
+  h.$('theme').onchange();
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  assert.equal(
+    art.calls.some(([method, value]) => method === 'drawImage' && value === image),
+    false,
+  );
+  available = false;
+  h.$('theme').value = 'fpv';
+  h.$('theme').onchange();
+  await settleArtwork();
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  assert.deepEqual(art.calls.find(([method]) => method === 'drawImage')[1], { type: 'bouncer' });
+  assert.deepEqual(art.loads, ['bouncer']);
 });
 test('artwork completion repaints the same manual-clock frame and preserves reduced effects', async (t) => {
   const art = artworkFixture();

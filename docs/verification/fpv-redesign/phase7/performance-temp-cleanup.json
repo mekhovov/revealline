@@ -1,0 +1,23 @@
+{
+  "format": "revealline-performance-temp-cleanup.v1",
+  "at": "2026-09-14T20:38:03.916637+00:00",
+  "sourceInventorySHA256": "df8ae56fb7dc17cf5c2f1dd0d502c276ad57ee68ff5de2fb0403d0349a880dec",
+  "removed": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-performance/baseline",
+      "files": 285,
+      "bytes": 111009301,
+      "verifiedAgainst": "performance-source-inputs-final.json",
+      "method": "every candidate SHA256 or committed baseline Git blob SHA1, size and exact path set before deletion"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-performance/candidate",
+      "files": 566,
+      "bytes": 135779271,
+      "verifiedAgainst": "performance-source-inputs-final.json",
+      "method": "every candidate SHA256 or committed baseline Git blob SHA1, size and exact path set before deletion"
+    }
+  ],
+  "totalBytes": 246788572,
+  "scope": "Only these task-created measurement copies were removed; Git objects, authored assets, compiled assets, authoritative release sources, browser profiles and evidence files were not removed."
+}

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: results display the exact completed attempt image and fit without resolving a new default
+ok 1 - results display the exact completed attempt image and fit without resolving a new default
+  ---
+  duration_ms: 1.111625
+  ...
+# Subtest: missing pinned pictures, failed rendering and unfinished runs never expose a replacement
+ok 2 - missing pinned pictures, failed rendering and unfinished runs never expose a replacement
+  ---
+  duration_ms: 0.115875
+  ...
+# Subtest: legacy and practice results retain their already loaded original override
+ok 3 - legacy and practice results retain their already loaded original override
+  ---
+  duration_ms: 0.083917
+  ...
+# Subtest: old-session uses the real legacy flight owner without reading or replacing its original
+ok 4 - old-session uses the real legacy flight owner without reading or replacing its original
+  ---
+  duration_ms: 9.1145
+  ...
+# Subtest: explicit-legacy uses the real legacy flight owner without reading or replacing its original
+ok 5 - explicit-legacy uses the real legacy flight owner without reading or replacing its original
+  ---
+  duration_ms: 5.358958
+  ...
+# Subtest: unmanaged-world uses the real legacy flight owner without reading or replacing its original
+ok 6 - unmanaged-world uses the real legacy flight owner without reading or replacing its original
+  ---
+  duration_ms: 4.236125
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 295.687208

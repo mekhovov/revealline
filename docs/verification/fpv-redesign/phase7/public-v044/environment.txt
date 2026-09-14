@@ -1,0 +1,1 @@
+"{\"userAgent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\",\"viewport\":{\"width\":1280,\"height\":800,\"dpr\":1},\"nativeOnlineRestored\":true,\"url\":\"https://mekhovov.github.io/revealline-archive-06/releases/v0.44.0/site/game/\",\"textSize\":\"large\"}"

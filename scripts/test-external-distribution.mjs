@@ -5,7 +5,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { buildProject } from './game-cli.mjs';
+import { buildProject, readBuildConfig } from './game-cli.mjs';
 import {
   readExternalDistributionEntries,
   validateExternalDistributionConfig,
@@ -141,7 +141,18 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     assert(offline.optionalPacks.some((f) => f.path === old.path));
     assert.equal(manifest.files.find((f) => f.path === old.path).sha256, old.sha256);
   }
-  assert.equal(offline.optionalPacks.length, 10);
+  const coreConfig = await readBuildConfig(source);
+  assert.equal(
+    offline.optionalPacks.length,
+    coreConfig.optionalOffline.length + legacy.packs.length,
+  );
+  const arcadePath = 'game/content/packs/fpv-arcade-r5.json';
+  assert(offline.optionalPacks.some((entry) => entry.path === arcadePath));
+  assert(!offline.files.some((entry) => entry.path === arcadePath));
+  assert.equal(
+    manifest.files.find((entry) => entry.path === arcadePath).sha256,
+    sha(await readFile(path.join(source, arcadePath))),
+  );
   assert(offline.files.some((f) => f.path === option.catalog));
   assert(offline.files.reduce((n, f) => n + f.bytes, 0) < 64 * 1048576);
   // The focused equipment fixture must not replace current-config inclusion coverage.

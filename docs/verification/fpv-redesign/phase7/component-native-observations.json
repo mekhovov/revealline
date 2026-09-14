@@ -1,0 +1,198 @@
+{
+  "sourceRevision": 11,
+  "scope": "Native bounded library specimens; no gameplay controls, saves or asset review metadata changed.",
+  "observations": [
+    {
+      "background": "rgb(244, 191, 98)",
+      "border": "rgb(244, 191, 98)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Deploy · Почати",
+      "outline": "none",
+      "slot": "ui.button.primary",
+      "state": "default"
+    },
+    {
+      "background": "rgb(244, 191, 98)",
+      "border": "rgb(244, 191, 98)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Deploy · Почати",
+      "outline": "solid",
+      "slot": "ui.button.primary",
+      "state": "focus"
+    },
+    {
+      "background": "rgb(120, 220, 232)",
+      "border": "rgb(120, 220, 232)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Deploy · Почати",
+      "outline": "none",
+      "slot": "ui.button.primary",
+      "state": "pressed"
+    },
+    {
+      "background": "rgb(244, 191, 98)",
+      "border": "rgb(244, 191, 98)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Deploy · Почати",
+      "outline": "none",
+      "slot": "ui.button.primary",
+      "state": "selected"
+    },
+    {
+      "background": "rgb(16, 25, 35)",
+      "border": "rgb(66, 85, 99)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(165, 178, 187)",
+      "disabled": true,
+      "label": "Deploy · Почати",
+      "outline": "none",
+      "slot": "ui.button.primary",
+      "state": "disabled"
+    },
+    {
+      "background": "rgb(244, 191, 98)",
+      "border": "rgb(244, 191, 98)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 573.453125,
+        "top": 242.5859375,
+        "width": 154.453125,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button primary",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Deploy · Почати",
+      "outline": "none",
+      "slot": "ui.button.primary",
+      "state": "error"
+    },
+    {
+      "background": "rgb(240, 120, 121)",
+      "border": "rgb(240, 120, 121)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 643.0859375,
+        "top": 242.5859375,
+        "width": 224.0859375,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button danger",
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "label": "Discard draft · Скасувати",
+      "outline": "none",
+      "role": null,
+      "slot": "ui.button.danger",
+      "state": "default"
+    },
+    {
+      "background": "rgb(24, 37, 49)",
+      "border": "rgb(100, 119, 134)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 609.8359375,
+        "top": 242.5859375,
+        "width": 190.8359375,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button tab",
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "label": "Controls · Керування",
+      "outline": "none",
+      "role": "tab",
+      "slot": "ui.button.tab",
+      "state": "default"
+    },
+    {
+      "background": "rgb(24, 37, 49)",
+      "border": "rgb(100, 119, 134)",
+      "bounds": {
+        "bottom": 286.5859375,
+        "height": 44,
+        "left": 419,
+        "right": 463,
+        "top": 242.5859375,
+        "width": 44,
+        "x": 419,
+        "y": 242.5859375
+      },
+      "classes": "button icon-button specimen-icon",
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "label": "Ⅱ",
+      "outline": "none",
+      "role": null,
+      "slot": "ui.button.icon",
+      "state": "default"
+    }
+  ]
+}

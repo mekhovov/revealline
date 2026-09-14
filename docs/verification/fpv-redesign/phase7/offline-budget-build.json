@@ -1,0 +1,83 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "4927f232685eddafc6d8049963410e0050710d0cff5a6ed274e4c696cf16de77",
+  "originalGitBlob": "5f7ffefb343ede04f459d540ba34fbd8cb533fad",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "format": "fpv-phase7-offline-budget.v1",
+    "scope": "Working-source candidate build, sourceRevision null; not frozen release qualification. Couch and Studio offline dependency fixes follow separately.",
+    "version": "0.51.0",
+    "buildId": "869b29d7b9ce351d4e9fe595f822cc6ed566728630772f5834748e1c5bedf599",
+    "offlineFiles": 568,
+    "offlineBytes": 65923013,
+    "limitBytes": 67108864,
+    "optionalPacks": [
+      {
+        "path": "game/content/packs/fpv-arcade-r2.json",
+        "id": "fpv-arcade-r2",
+        "name": "FPV Front · First Light R2"
+      },
+      {
+        "path": "game/content/packs/fpv-arcade-r3.json",
+        "id": "fpv-arcade-r3",
+        "name": "FPV Front · First Light R3"
+      },
+      {
+        "path": "game/content/packs/fpv-arcade-r4.json",
+        "id": "fpv-arcade-r4",
+        "name": "FPV Front · First Light Arcade R4"
+      },
+      {
+        "path": "game/content/packs/fpv-arcade-r5.json",
+        "id": "fpv-arcade-r5",
+        "name": "FPV Front · Pressure Lines"
+      },
+      {
+        "path": "game/content/packs/fpv-arcade.json",
+        "id": "fpv-arcade",
+        "name": "FPV Front · First Light"
+      },
+      {
+        "path": "game/content/packs/fpv-pressure-frontier.json",
+        "id": "fpv-pressure-frontier",
+        "name": "FPV Front · Frontier Lines"
+      },
+      {
+        "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+        "id": "original-fpv-pressure",
+        "name": "FPV Front · Illustrated Pressure"
+      },
+      {
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "id": "original-ukraine-atlas",
+        "name": "Ukraine Atlas · Woven Lines"
+      },
+      {
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "id": "original-retro-1994",
+        "name": "1994 Forever · After Hours"
+      },
+      {
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "id": "fpv-route-choices",
+        "name": "FPV Front · Route Choices — Tactical"
+      }
+    ],
+    "r5": {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+      "inCore": false,
+      "inManifest": {
+        "path": "game/content/packs/fpv-arcade-r5.json",
+        "bytes": 11708176,
+        "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+      },
+      "originalBytesPreserved": true
+    },
+    "manifestFiles": 614,
+    "manifestBytes": 322899778,
+    "priorFailure": "phase7-budget-check.log: Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs"
+  }
+}

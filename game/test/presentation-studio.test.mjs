@@ -155,6 +155,72 @@ test('generated prompts carry real slot, theme, states and release limitations',
     assert.ok(prompt.includes(fragment), fragment);
 });
 
+test('audio and font briefs request the actual output medium and preserve the immutable slot document', () => {
+  const bundle = createDefaultThemeBundle(),
+    before = structuredClone(bundle);
+  const resolved = resolvePresentation(bundle);
+  for (const [id, fragments] of [
+    ['audio.confirm', ['audio-confirm.wav', '48 kHz', 'one second', 'volume', 'event meaning']],
+    ['audio.music', ['audio-music.ogg', '4–16-bar', 'loop boundaries', 'Stop/mute']],
+    ['font.ui', ['font-ui.woff2', 'Ґґ Єє Іі Її', 'cmap', '200%', 'glyph coverage']],
+  ]) {
+    const slot = bundle.slots.find((row) => row.id === id);
+    const prompt = generateAssetPrompt(slot, resolved, 'edit');
+    for (const fragment of fragments) assert.ok(prompt.includes(fragment), fragment);
+    assert.ok(!prompt.includes(`${id.replaceAll('.', '-')}.png`));
+    assert.ok(!prompt.includes('Use a restrained pixel-art style'));
+    assert.ok(!prompt.includes('approved silhouette'));
+    assert.ok(!prompt.includes('PIXEL SAMPLING:'));
+    const custom = structuredClone(resolved);
+    custom.assets[id].provenance.prompt = 'Preserve this approved custom production requirement.';
+    assert.match(
+      generateAssetPrompt(slot, custom, 'edit'),
+      /approved custom production requirement/,
+    );
+  }
+  assert.deepEqual(bundle, before);
+});
+
+test('all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection', () => {
+  const bundle = createDefaultThemeBundle(),
+    resolved = resolvePresentation(bundle),
+    before = structuredClone({ bundle, resolved }),
+    slots = bundle.slots.filter((slot) => slot.kinds.length === 1 && slot.kinds[0] === 'recipe');
+  assert.equal(slots.length, 17, 'Seven rotor, three trail and seven effect slots.');
+  for (const slot of slots) {
+    const current = resolved.assets[slot.id];
+    for (const action of ['variation', 'edit', 'collection']) {
+      const prompt = generateAssetPrompt(slot, resolved, action);
+      for (const fragment of [
+        slot.id,
+        current.recipe.id,
+        `${current.id}@${current.revision}`,
+        'bounded code or metadata change',
+        'only supported theme tokens',
+        'rotor anchors on related player body assets',
+        'Recipe metadata contains only its registered id',
+        'A new recipe requires implementation and review',
+        'Do not return an uploadable PNG or executable bundle content',
+        '.rltheme bundles remain data-only and cannot install code',
+        'previous immutable source and asset revisions',
+        'pause',
+        'reduced motion',
+        'not an approved release',
+      ])
+        assert.ok(prompt.includes(fragment), `${slot.id} ${action}: ${fragment}`);
+      assert.ok(!prompt.includes(`${slot.id.replaceAll('.', '-')}.png`));
+      assert.ok(!prompt.includes('PIXEL SAMPLING:'));
+      assert.ok(!prompt.includes('Edit the attached current asset'));
+      for (const requirement of slot.requirements) assert.ok(prompt.includes(requirement));
+      const custom = structuredClone(resolved);
+      custom.assets[slot.id].provenance.prompt =
+        'Preserve the approved custom timing and separate functional contact cue.';
+      assert.match(generateAssetPrompt(slot, custom, action), /approved custom timing/);
+    }
+  }
+  assert.deepEqual({ bundle, resolved }, before);
+});
+
 test('edit briefs retain actual custom geometry and the production palette contract', () => {
   const original = createDefaultThemeBundle();
   const slot = original.slots.find((row) => row.id === 'player.scout.detailed');

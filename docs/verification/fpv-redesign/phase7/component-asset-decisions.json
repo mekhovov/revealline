@@ -1,0 +1,1405 @@
+{
+  "format": "fpv-component-asset-decisions.v1",
+  "reviewer": "root",
+  "compiledSourceAtDecision": {
+    "id": "field-kit",
+    "revision": 12
+  },
+  "meaning": "Explicit scoped agent asset-readiness decisions after final native component, responsive result and integrated navigation review. Release and physical-device qualification remain separate.",
+  "counts": {
+    "total": 61,
+    "approved": 61,
+    "pending": 0
+  },
+  "decisions": [
+    {
+      "slotId": "ui.panel",
+      "assetId": "ui.panel.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "5e35a441a28d2915fed170d9333d06de9a5c08a5a26e0635b2722f978bf1a9a7",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.dialog",
+      "assetId": "ui.dialog.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "68d32630069b6d5b6125d6d196c31b483ab9035c97ee15b9e9aa7fcc83731027",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.tooltip",
+      "assetId": "ui.tooltip.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "8523e4f2174d3acf313275493e89cc602e875feeaf4efdb63ad1c827adf39284",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.toast",
+      "assetId": "ui.toast.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "f88635d32edbab7bf2548babc2e7cc32c9ea1a5d7b0d20310252e1dcb7529d90",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.primary",
+      "assetId": "ui.button.primary.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "587882b18b1c066f24f59385193e53f715e27a9436e67fdda33639ec12a89555",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.secondary",
+      "assetId": "ui.button.secondary.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "80e4be681ea2703df798229467a7275ad2428f4d3d376cc13dccd96532b3c129",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.danger",
+      "assetId": "ui.button.danger.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "e280c08760634553c11a2df34e5fa9ada928a89f79c96cf19844dc024f127c14",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.icon",
+      "assetId": "ui.button.icon.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "b4989de9ac7c0dbf3b4b2b1f8a17799c795c81adf7c4dd3f19c01425fb7c5a1a",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.tab",
+      "assetId": "ui.button.tab.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "b3eb6dc1292cf5587e1fb559492dbc8efccebd1e0d5c8a1f051b5edc58d7e689",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.button.chip",
+      "assetId": "ui.button.chip.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "6b643162aadfec6a29d3846057f42fe119121f1c1da836df50d2dcefd4655b45",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.checkbox",
+      "assetId": "ui.input.checkbox.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "8c46a20a16cd48093316ddeca5c0c15be80093d37335d9d75c1eade78ce85076",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.radio",
+      "assetId": "ui.input.radio.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "f228b611601f76c7ca4ac590b2c2e01100293b00de6594d25c3c59a44761afc8",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.toggle",
+      "assetId": "ui.input.toggle.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "d9889c2c5a8a1ad022d25c52c425c4868eaca6958e44af87c323d2bf881596ae",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.slider",
+      "assetId": "ui.input.slider.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "0c7435c6f984322bb679e561999137738d1e5a6da703d56f773adb09e567939c",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.select",
+      "assetId": "ui.input.select.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "c0268bff043f3417edc8533cfd64334639d070c1e397d4978162b60b74e92929",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.text",
+      "assetId": "ui.input.text.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "9fe3fc18531237e2fcc520659fd300d759dabaac17144c68e67da0e6b42f20d8",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.input.scrollbar",
+      "assetId": "ui.input.scrollbar.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "57c4c4ce56e7c88dec5ffb84a4b7a23e00909fa6dee35fb4d761fdeb6150e36b",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.meter.coverage",
+      "assetId": "ui.meter.coverage.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "93b2b78cbde965cb91e1e340eb9a24482cdcd26fee0b11c04da96803b918d4fb",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.meter.progress",
+      "assetId": "ui.meter.progress.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "dc0a216b1994f4ce09dc15f367dba7cbb1501590245ccb7610c7bc89aaf49861",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.meter.time",
+      "assetId": "ui.meter.time.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "f4cc9ad3a8ff7ec43b6a7e5f034f6843350a784cc1305bef83c03110cbf75c74",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.meter.ability",
+      "assetId": "ui.meter.ability.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "a7dcf33b0c9d5e8de9f9a93911c0e5b67882be81d1b3d7dcb54e44b9e8e1b9ea",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.meter.volume",
+      "assetId": "ui.meter.volume.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "8bad3c8669c2dbaed17620ba6bccf3ef4b2b4d936f294e4b6fbd8e1e51786364",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.focus",
+      "assetId": "ui.focus.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "4bf5568a8e29bf27b1ff6c4c29fd68cc31a645bf2af69d3ffd48b0bf0af4181e",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "ui.cursor",
+      "assetId": "ui.cursor.field-kit",
+      "assetRevision": 6,
+      "assetMetadataSHA256": "6a3a5ddfb6e992898cecb8d5363eea2a4362efc140ccbf2f7dcc5d185726c21a",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394",
+      "decision": "approve",
+      "scope": "ui",
+      "reason": "Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/component-native-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
+        "docs/verification/fpv-redesign/phase7/component-primary-default.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
+        "docs/verification/fpv-redesign/phase7/component-primary-error.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.missions.background",
+      "assetId": "screen.missions.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "31db65fd21918064f833a64a839d1ec44636e043e61c78c6689b75b36e81dc5d",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.hangar.background",
+      "assetId": "screen.hangar.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "555204ab5eb6c468da319fd03629aa2ce684de279b40c13e88597f58b80b4b44",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.results.background",
+      "assetId": "screen.results.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "f457539dddf2e73db112a7104e553608678ca5a23af4c36f80990c2d66cb4a2b",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.collection.background",
+      "assetId": "screen.collection.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "4590478e9c97381bf87a275d5d9217c16c49eadecae9a61b054e9d112ebaa69a",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.settings.background",
+      "assetId": "screen.settings.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "cb6a3217e5f04b4fb0e9e6abf9e49f07c1c7cd58c424e12e4e6dd9405634563d",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.couch.background",
+      "assetId": "screen.couch.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "721bec7c7872dba9b627cd7c49242fb6e8981e3eb08dcdc92177ecbfb99e75d1",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "screen.studio.background",
+      "assetId": "screen.studio.background.field-kit",
+      "assetRevision": 7,
+      "assetMetadataSHA256": "0b475c70228f24be9a608a54d24726003c7d590a245b66949bc28fe15d7c1402",
+      "fileSHA256": null,
+      "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:2d256dbec635598e6260b96a4c39abcdb43d2121ec7466d59ee98258bcc72d33",
+      "decision": "approve",
+      "scope": "screens",
+      "reason": "Approve the shared Field Kit screen frame/backdrop treatment and responsive hierarchy. Final desktop/portrait/short-landscape result panels show their actual artwork, score, medals and reachable actions; the ultra-short reading/action regions scroll without clipping focused controls. Native picture, Guide and Workshop returns retain focus. Shared Collection/couch/title observations support the reused frame treatment.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/integrated-natural-victory.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-portrait-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-short-landscape-final.png",
+        "docs/verification/fpv-redesign/phase7/artwork-result-large-640x316-keyboard-final.json",
+        "docs/verification/fpv-redesign/phase7/integrated-workshop-guide-return.json",
+        "docs/verification/fpv-redesign/phase7/integrated-field-guide-compiled.png",
+        "docs/verification/fpv-redesign/phase7/collection-full-viewer-desktop.png",
+        "docs/verification/fpv-redesign/phase6/field-kit-phase6-couch-results-portrait-large.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-title.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "scene.reveal.legacy",
+      "assetId": "scene.reveal.legacy.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "1fed84a701cf00f97997b5a110eb7570ac3e9a34cce2eb4e5e69e67e4f6840e9",
+      "fileSHA256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+      "source": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-01-v1.png sha256:f3c95c3fa0ba287f4a783298234fcffa6b5dfd6db8fc60a84080e3cd90bd6ebf",
+      "decision": "approve",
+      "scope": "pictures",
+      "reason": "Approve this generic scene.reveal.legacy frame as an exact byte-identical reusable default of visually reviewed picture.fpv.26e53164613e83d0; it does not replace a saved or earned owner pin.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-exact-picture-31.png",
+        "docs/verification/fpv-redesign/phase7/studio-exact-picture-31.txt",
+        "docs/verification/fpv-redesign/phase7/reveals-gallery-row-08.png",
+        "docs/verification/fpv-redesign/phase7/reveal-native-review.json",
+        "docs/verification/fpv-redesign/phase7/reveal-owner-integrity.json"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "scene.reveal.wide",
+      "assetId": "scene.reveal.wide.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "67eff29cf09abba4ce7d0455f414d9f6e2683e5876d7613215569035a8781374",
+      "fileSHA256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "source": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-window-v1.png sha256:2f0556166dde922803736d066a37c151b5cd98740e50a630f47535a5acac9276",
+      "decision": "approve",
+      "scope": "pictures",
+      "reason": "Approve this generic scene.reveal.wide frame as an exact byte-identical reusable default of visually reviewed picture.fpv.0e2d32dab758d51f; it does not replace a saved or earned owner pin.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-exact-picture-00.png",
+        "docs/verification/fpv-redesign/phase7/studio-exact-picture-00.txt",
+        "docs/verification/fpv-redesign/phase7/reveals-gallery-row-01.png",
+        "docs/verification/fpv-redesign/phase7/reveal-native-review.json",
+        "docs/verification/fpv-redesign/phase7/reveal-owner-integrity.json"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.scout.rotors",
+      "assetId": "player.scout.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "c0425b8ca27ebb4b87eaf2053bc46fc42880f1719e2323805587434a764f5321",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.bomber.rotors",
+      "assetId": "player.bomber.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "18df25a823204a80cb63380efec2e7e0614b0f4a2defa0993dc88a0e322a514a",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.carrier.rotors",
+      "assetId": "player.carrier.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "ed76881d6d08056f2f25ac99e67ed52c3dc30b8d33e05556733479575df71986",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.interceptor.rotors",
+      "assetId": "player.interceptor.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "52dc1c1400c94e38f6cda7838f8ad4d0a9db6880d669aa0775badd751138677c",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.fiber.rotors",
+      "assetId": "player.fiber.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "004f9e0fa4987c6c98a98b240c4614cc37d7dd167ad0cef9d389b5bec13e3935",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.impact.rotors",
+      "assetId": "player.impact.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "0670e2747fc183aa1d78266195379e1dea279fb12a55a27c75b59edf09299784",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "player.trapper.rotors",
+      "assetId": "player.trapper.rotors.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "25a7856317f72c304f5987581fd79e92b9637ebaeed0380cfc7cc62273daf62c",
+      "fileSHA256": null,
+      "source": "authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs sha256:6044a6ad9b028f30dcb14dd54e6cfe9712689632f00a0124bd63e9820e72fa66",
+      "decision": "approve",
+      "scope": "motion",
+      "reason": "Approve the shared existing procedural rotor construction: role bodies keep their explicit hub geometry, motion remains cosmetic and reduced effects preserve silhouettes. Four held-board role samples supplement all seven role-body/anchor validations; this is not seven independent moving gameplay journeys.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/studio-player.scout.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.bomber.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.carrier.rotors.png",
+        "docs/verification/fpv-redesign/phase7/studio-player.interceptor.rotors.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "trail.active",
+      "assetId": "trail.active.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "43e0ea60217d5f53628590f6db06884d12ccd75156ffbe3c5f1e7ded6cd891ef",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "trail.secured",
+      "assetId": "trail.secured.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "d58bc58ac6dcdeccdf8c2bdf66326803f6f926119ecf1b04fe3d22de83c253d7",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "trail.head",
+      "assetId": "trail.head.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "642b5fb8d69a947acd69bd664b4e185e69d50587ed05eda0c154457add19d71b",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.capture",
+      "assetId": "effect.capture.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "938fa8905b605f536fa7fff3c3ac33ff5a70efaed82c65fbd4a042df624e9f70",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.failure",
+      "assetId": "effect.failure.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "78a09ee9a1dab6b842bf7ba8c34013107b24aab6002f2130c6d33d1ef15d1a7a",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.victory",
+      "assetId": "effect.victory.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "780f2c6e267f6f39d6fc91b9e089f97f96bdd7375a5d499830e9715aba2988f8",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.pickup",
+      "assetId": "effect.pickup.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "23b123820765805ba7a46a4d10f1dda560772b02da5cd91c2dbc1f31b73764bd",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.shield",
+      "assetId": "effect.shield.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "d86cd1746f5b3abaa5cce1f0125be70a5170eaab4e1e3ab6b366bf4f47d01c94",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.respawn",
+      "assetId": "effect.respawn.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "83e6b1f4c1090e0d199fcec2f16b56ccc8c332b8312c2d0a118c85416b35edb6",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "effect.pressure",
+      "assetId": "effect.pressure.field-kit",
+      "assetRevision": 2,
+      "assetMetadataSHA256": "e982feb146419197cd853e885fc7f24b2d6eaa533a9720090cb1e1c1b8f79151",
+      "fileSHA256": null,
+      "source": "game/ui/classic-view.mjs; game/ui/event-feedback.mjs sha256:550dd39a06c19e7df032ec764997078cac77a7d243a15560334404f750e2d015",
+      "decision": "approve",
+      "scope": "effects",
+      "reason": "Approve the registered bounded feedback recipes: amber active cut, separate secured contour/head, local failure/recovery indicators, capture/victory and pickup cues use real event data. Existing native cut/loss/recovery/victory observations and focused renderer tests support reuse, not every event on every map.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase5/flight-live-cut-desktop.png",
+        "docs/verification/fpv-redesign/phase5/flight-line-recovery.png",
+        "docs/verification/fpv-redesign/phase7/first-signal-result.png",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "font.display",
+      "assetId": "font.display.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "f55a04660ef316e574c84f632b66554562e66a51a4fbf986c51c3d5c29a27513",
+      "fileSHA256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+      "source": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/handjet/Handjet%5BELGR%2CELSH%2Cwght%5D.ttf",
+      "decision": "approve",
+      "scope": "fonts",
+      "reason": "Actual shipped WOFF2 files pass full English/Ukrainian and symbol-fallback checks. Native Standard/Large and 200% layouts support the approved display/interface/numeric roles; no translation completion is implied.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/shipped-font-verification.txt",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-flight-large-final.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "font.ui",
+      "assetId": "font.ui.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "39119fe7b2dd5878856f6874e3abc2f4f44406b21182d6895026e889db501923",
+      "fileSHA256": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+      "source": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/exo2/Exo2%5Bwght%5D.ttf",
+      "decision": "approve",
+      "scope": "fonts",
+      "reason": "Actual shipped WOFF2 files pass full English/Ukrainian and symbol-fallback checks. Native Standard/Large and 200% layouts support the approved display/interface/numeric roles; no translation completion is implied.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/shipped-font-verification.txt",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-flight-large-final.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "font.numeric",
+      "assetId": "font.numeric.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "ca64c7dc8b9ec10ecc72803119f5979e311ece03e49e882e60c763facee94750",
+      "fileSHA256": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+      "source": "https://raw.githubusercontent.com/google/fonts/809e4d8b8d7e9364a914909bb777679606c178b8/ofl/ibmplexmono/IBMPlexMono-Medium.ttf",
+      "decision": "approve",
+      "scope": "fonts",
+      "reason": "Actual shipped WOFF2 files pass full English/Ukrainian and symbol-fallback checks. Native Standard/Large and 200% layouts support the approved display/interface/numeric roles; no translation completion is implied.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/shipped-font-verification.txt",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-flight-large-final.png",
+        "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.focus",
+      "assetId": "audio.focus.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "7a0af02baedf9c51a64013f50452229a7b83f99f130a87f18b7ed423c4bb51b0",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.confirm",
+      "assetId": "audio.confirm.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "2de31289599d9258a3b122a33a48c4e125911b46ab2bdd4ad77f90f1eb96150a",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.cancel",
+      "assetId": "audio.cancel.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "42f0ff7c5a0030012c280dd3c60c3f58db6b85d435f5efd095f76d5c17fbbd6c",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.capture",
+      "assetId": "audio.capture.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "4c71f13e421772db8241faa0680ed8710b08143d49962d025dacf3c9f7cdff01",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.failure",
+      "assetId": "audio.failure.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "9b8703e6abbec67f04681133373f4408528b00dc5f305fdd6f0007edf4957e47",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.victory",
+      "assetId": "audio.victory.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "1bec87c1ed2b7439d6ef6fb0d64799cfb042689326db6c6aac3b69fb6505e36d",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.pickup",
+      "assetId": "audio.pickup.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "b88e7d30dd2c6a591a7e9146907832897490f63a987ce2c13c5c6d37c19c5ced",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    },
+    {
+      "slotId": "audio.music",
+      "assetId": "audio.music.field-kit",
+      "assetRevision": 1,
+      "assetMetadataSHA256": "a042ba84b72cfecec428b28febbb97e5e99d9e1aaf370dba14afc27da0b0d0b8",
+      "fileSHA256": null,
+      "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:277c4b6b840a096056d0ab7069a26bb6a32e06c65bcfe776ae8f1ea7f626a291",
+      "decision": "approve",
+      "scope": "audio",
+      "reason": "Retain the existing original Soundscape recipe as the functional production default. Source tests and explicit native audition/Stop UI establish binding, activation, timing controls and cancellation. This is not a subjective listening-panel judgment or a physical-speaker certification.",
+      "evidence": [
+        "docs/verification/fpv-redesign/phase7/audio-audition-observations.json",
+        "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt"
+      ],
+      "limits": [
+        "Asset readiness only; exact-source release gates, public bytes/play, offline and physical-device coverage are recorded separately."
+      ]
+    }
+  ]
+}

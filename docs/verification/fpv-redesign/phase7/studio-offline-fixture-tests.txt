@@ -1,0 +1,21 @@
+✔ Context paints asymmetric player/enemy pivots and nondefault rotor anchors through the release adapter (63.200458ms)
+✔ Context retains distinct boss slots and scopes selected player treatment to its own class (3.288ms)
+✔ every actor slot resolves to a real normalized mission containing that role (69.012833ms)
+✔ terrain and pickup context fixtures validate without changing the built-in packs (151.933625ms)
+✔ each preview owns an independent deterministic run (5.156416ms)
+✔ offline player presets load independently of every optional or mission pack (14.7215ms)
+✔ exact owner context uses its own level and theme without any pack fetch or mutation (50.387708ms)
+✔ offline optional-pack fallback retains all seven enemy roles and online fixture choices (331.054167ms)
+✔ failed core loads remain explicit and retry without poisoning player presets (5.770458ms)
+✔ registered local picture owners retain exact level, theme and fit without image downloads (7.039ms)
+✔ external context reads only its authenticated lightweight owner pack, preserving contain fit (128.501625ms)
+✔ unavailable, corrupt, oversized or mismatched owners never fall back to another board (52.046208ms)
+✔ cancelled metadata reads release their reader and do not complete a late preview (5.512834ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1714.706333

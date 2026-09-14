@@ -1,0 +1,94 @@
+{
+  "actions": [
+    {
+      "id": "next-button",
+      "label": "Next uncleared mission →",
+      "rect": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 160,
+        "right": 381.0234375,
+        "top": 498.25,
+        "width": 221.0234375,
+        "x": 160,
+        "y": 498.25
+      }
+    },
+    {
+      "id": "view-picture",
+      "label": "\n                    View picture ⤢\n                  ",
+      "rect": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 391.0234375,
+        "right": 530.109375,
+        "top": 498.25,
+        "width": 139.0859375,
+        "x": 391.0234375,
+        "y": 498.25
+      }
+    },
+    {
+      "id": "retry-button",
+      "label": "\n                    Try again\n                  ",
+      "rect": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 540.109375,
+        "right": 684.3125,
+        "top": 498.25,
+        "width": 144.203125,
+        "x": 540.109375,
+        "y": 498.25
+      }
+    },
+    {
+      "id": "choose-appearance",
+      "label": "\n                    Choose appearance\n                  ",
+      "rect": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 694.3125,
+        "right": 873.71875,
+        "top": 498.25,
+        "width": 179.40625,
+        "x": 694.3125,
+        "y": 498.25
+      }
+    },
+    {
+      "id": "overlay-menu",
+      "label": "\n                    Main menu\n                  ",
+      "rect": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 883.71875,
+        "right": 1042.921875,
+        "top": 498.25,
+        "width": 159.203125,
+        "x": 883.71875,
+        "y": 498.25
+      }
+    }
+  ],
+  "heading": "A little more light.",
+  "medals": "★★★",
+  "picture": {
+    "bottom": 498.25,
+    "height": 300,
+    "left": 160,
+    "right": 605.7109375,
+    "top": 198.25,
+    "width": 445.7109375,
+    "x": 160,
+    "y": 198.25
+  },
+  "summary": "52.2% captured · 8,160 points · 0:07. Full picture added to your collection.",
+  "textSize": "standard",
+  "url": "http://127.0.0.1:9046/game/",
+  "viewport": {
+    "dpr": 2,
+    "height": 720,
+    "width": 1280
+  }
+}

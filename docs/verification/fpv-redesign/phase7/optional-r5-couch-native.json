@@ -1,0 +1,11 @@
+{
+  "scope": "Native source-browser check with an explicit HTTP503 fixture for the optional R5 pack; not a service-worker or public offline qualification.",
+  "url": "http://127.0.0.1:9047/game/couch/",
+  "actions": [
+    "Observe unavailable notice and First Signal map",
+    "Start round",
+    "Keyboard d on player1 board",
+    "Pause"
+  ],
+  "snapshot": "- main:\n  - region \"Both boards paused.\":\n    - paragraph: REVEAL LINE / LOCAL TWO PLAYER\n    - heading \"Both boards paused.\" [level=1]\n    - status: Both players are paused. Resume when everyone is ready.\n    - paragraph: First Signal · First Signal · Tactical · FPV Front · Immediate turns · 90 seconds\n    - article:\n      - text: PLAYER 1\n      - heading \"Sunflower\" [level=2]\n      - paragraph: W A S D\n    - article:\n      - text: PLAYER 2\n      - heading \"Skyline\" [level=2]\n      - paragraph: Arrow keys\n    - button \"Resume round →\" [active]\n    - button \"New match · setup\"\n    - button \"Options\"\n    - button \"How to play\"\n    - link \"Return to solo\":\n      - /url: ../\n    - paragraph: First to two rounds. Couch races do not change your solo progress.\n  - status: Connect a controller and use it while this page is visible. Keyboard and touch remain available."
+}
