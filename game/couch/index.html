@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
   </head>
-  <body class="field-kit field-kit-support">
+  <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" role="status">Preparing both boards…</p>
     <main id="couch-app" data-boot-inert inert aria-busy="true">
       <div id="race-hud" class="race-hud" hidden>
@@ -184,7 +186,14 @@
           inert
         >
           <p class="race-kicker">MAKE YOURSELF AT HOME</p>
-          <h1 id="race-options-title">Options</h1>
+          <h1 id="race-options-title" data-field-kit-copy="settings.couchTitle">Flight settings</h1>
+          <label class="field-kit-page-text"
+            ><span data-field-kit-copy="display.textSize">Text size</span
+            ><select data-field-kit-text-size>
+              <option value="standard" data-field-kit-copy="display.standard">Standard</option>
+              <option value="large" data-field-kit-copy="display.large">Large</option>
+            </select></label
+          >
           <div class="race-fields">
             <label
               >Player 1 touch controls<select id="race-touch-0">

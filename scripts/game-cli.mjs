@@ -374,7 +374,7 @@ async function assertOutput(root, out, inputs) {
 
 function publicPage(title, body, fieldKit = false, compiled = false) {
   const styles = fieldKit
-    ? ['fonts', 'tokens', 'components']
+    ? ['fonts', 'tokens', 'components', 'surfaces']
         .map((part) => `<link rel="stylesheet" href="./game/ui/field-kit-${part}.css">`)
         .join('')
     : '';
@@ -387,7 +387,7 @@ function publicPage(title, body, fieldKit = false, compiled = false) {
 function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
   const has = (name) => entries.some((e) => e.name === name);
-  const fieldKit = ['fonts', 'tokens', 'components'].every((part) =>
+  const fieldKit = ['fonts', 'tokens', 'components', 'surfaces'].every((part) =>
     has(`game/ui/field-kit-${part}.css`),
   );
   const compiled =
