@@ -1,0 +1,274 @@
+{
+  "format": "ukraine-role-presentations.v1",
+  "baseCommit": "63713050d49f0a1d5055d9c627f4f95889ba6dc9",
+  "stage": "source-candidate",
+  "runtimeBinding": null,
+  "roles": [
+    {
+      "classId": "scout",
+      "title": "Courier swallow",
+      "provenance": "provenance/scout.json",
+      "sha256": "2b0261e7eb78d3f5818b8e537fabc148111425c2d3bad2036d2034b4f4152bf2",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/scout.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-swallow-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.205, -0.1, -1],
+              [0.205, -0.1, 1]
+            ],
+            "span": 0.255,
+            "chord": 0.16,
+            "frequencyHz": 2.4,
+            "speedFrequencyGain": 0.6,
+            "amplitudeDegrees": 16,
+            "foldFraction": 0.32,
+            "color": "#f3ecdf",
+            "tipColor": "#90b7bf"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "bomber",
+      "title": "Pottery courier",
+      "provenance": "provenance/bomber.json",
+      "sha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/bomber.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-pottery-courier-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.23, -0.13, -1],
+              [0.23, -0.13, 1]
+            ],
+            "span": 0.22,
+            "chord": 0.18,
+            "frequencyHz": 1.8,
+            "speedFrequencyGain": 0.45,
+            "amplitudeDegrees": 20,
+            "foldFraction": 0.25,
+            "color": "#f3ecdf",
+            "tipColor": "#d98277"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "carrier",
+      "title": "Carved supply chest",
+      "provenance": "provenance/carrier.json",
+      "sha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/carrier.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-carved-chest-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.22, -0.22, -1],
+              [0.22, -0.22, 1]
+            ],
+            "span": 0.23,
+            "chord": 0.22,
+            "frequencyHz": 1.2,
+            "speedFrequencyGain": 0.35,
+            "amplitudeDegrees": 13,
+            "foldFraction": 0.2,
+            "color": "#e5ba6c",
+            "tipColor": "#90b7bf"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "interceptor",
+      "title": "Falcon crest",
+      "provenance": "provenance/interceptor.json",
+      "sha256": "bd426560dc79f5c9ada759a2a0752ca667b9c5456ee07aa3cbf6541429fb06ca",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/interceptor.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-falcon-crest-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.235, -0.088, -1],
+              [0.235, -0.088, 1]
+            ],
+            "span": 0.22,
+            "chord": 0.13,
+            "frequencyHz": 2.6,
+            "speedFrequencyGain": 0.5,
+            "amplitudeDegrees": 12,
+            "foldFraction": 0.4,
+            "color": "#f3ecdf",
+            "tipColor": "#29343c"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "fiber",
+      "title": "Weaver shuttle",
+      "provenance": "provenance/fiber.json",
+      "sha256": "564a3c32bf941aa5e3acfaddf34e52856489e84b9d47099ec8229a5ba5d35ca2",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/fiber.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-weaver-shuttle-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.148, -0.078, -1],
+              [0.148, -0.078, 1]
+            ],
+            "span": 0.28,
+            "chord": 0.13,
+            "frequencyHz": 2.2,
+            "speedFrequencyGain": 0.55,
+            "amplitudeDegrees": 18,
+            "foldFraction": 0.3,
+            "color": "#90b7bf",
+            "tipColor": "#f3ecdf"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "impact",
+      "title": "Bell warden",
+      "provenance": "provenance/impact.json",
+      "sha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/impact.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-bell-warden-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.162, -0.196, -1],
+              [0.162, -0.196, 1]
+            ],
+            "span": 0.28,
+            "chord": 0.2,
+            "frequencyHz": 1.6,
+            "speedFrequencyGain": 0.4,
+            "amplitudeDegrees": 15,
+            "foldFraction": 0.22,
+            "color": "#e5ba6c",
+            "tipColor": "#f3ecdf"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "trapper",
+      "title": "Woven basket",
+      "provenance": "provenance/trapper.json",
+      "sha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/trapper.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "atlas-woven-basket-v1-wings",
+        "rotors": [],
+        "compactMinimumCSSPixels": 20
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "wings",
+            "type": "wings",
+            "anchors": [
+              [-0.335, -0.105, -1],
+              [0.335, -0.105, 1]
+            ],
+            "span": 0.12,
+            "chord": 0.16,
+            "frequencyHz": 1.5,
+            "speedFrequencyGain": 0.35,
+            "amplitudeDegrees": 18,
+            "foldFraction": 0.24,
+            "color": "#f3ecdf",
+            "tipColor": "#90b7bf"
+          }
+        ]
+      }
+    }
+  ]
+}
