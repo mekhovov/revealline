@@ -39,13 +39,13 @@ class DraftBoundary(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp:
    def forbidden(*a):self.fail('Mutation after existing draft')
    with self.assertRaisesRegex(ValueError,'already exists'):
-    m.retain_draft(lambda route:[{'tag_name':'v0.49.0','draft':True}],'v0.49.0',fixture()[0],pathlib.Path(tmp),None,pathlib.Path(tmp),forbidden,forbidden,forbidden)
+    m.retain_draft(lambda route:[{'tag_name':'v0.49.0','draft':True}],'v0.49.0',fixture()[0],pathlib.Path(tmp),None,pathlib.Path(tmp),lambda:None,forbidden,forbidden)
  def test_partial_upload_retains_draft_id_before_failure(self):
   with tempfile.TemporaryDirectory() as tmp:
    reports=pathlib.Path(tmp);state={'created':False};calls=[]
    draft={'id':42,'tag_name':'v0.49.0','draft':True,'prerelease':False,'assets':[]}
    def api(route):return [draft] if state['created'] else []
-   def create(*a):state['created']=True
+   def create(*a):state['created']=True;return copy.deepcopy(draft)
    def upload(rid,name,path):
     self.assertEqual(rid,42);self.assertTrue((reports/'draft-created.json').exists());calls.append(name)
     if len(calls)==2:raise RuntimeError('uncertain upload')
@@ -61,9 +61,48 @@ class DraftBoundary(unittest.TestCase):
     routes.append(route)
     return copy.deepcopy(draft) if route=='releases/42' else [copy.deepcopy(draft)] if state['created'] else []
    def check():state['checks']+=1
-   def create(*a):state['created']=True
+   def create(*a):state['created']=True;return copy.deepcopy(draft)
    def upload(rid,name,path):
     asset={'id':len(draft['assets'])+1,'name':name,'size':10,'digest':'sha256:'+'a'*64,'state':'uploaded'};draft['assets'].append(asset);return asset
    final=m.retain_draft(api,'v0.49.0',row,reports,None,reports,check,create,upload)
    self.assertTrue(final['draft']);self.assertEqual(state['checks'],2);self.assertIn('releases/42',routes);self.assertFalse(any('releases/tags/' in r for r in routes))
+class RecoveryBoundary(unittest.TestCase):
+ def data(self):
+  row=fixture()[0];row.update(title='Exact title',releaseNotes='Exact notes\n')
+  live={'id':42,'tag_name':'v0.49.0','draft':True,'prerelease':False,'assets':[],'name':row['title'],'body':row['releaseNotes'],'author':{'login':'github-actions[bot]'}}
+  return row,live,{'releaseId':42,'priorRunId':1}
+ def test_pinned_empty_own_draft(self):
+  row,live,pin=self.data();self.assertEqual(m.empty_recovery(lambda route:live if route=='releases/42' else [live],'v0.49.0',row,pin)['id'],42)
+ def test_nonempty_recovery_refused(self):
+  row,live,pin=self.data();live['assets']=[{'name':'source.tar'}]
+  with self.assertRaises(ValueError):m.empty_recovery(lambda route:live,'v0.49.0',row,pin)
+ def test_changed_manual_metadata_refused(self):
+  row,live,pin=self.data();live['body']='Changed by someone else'
+  with self.assertRaises(ValueError):m.empty_recovery(lambda route:live,'v0.49.0',row,pin)
+ def test_new_post_id_does_not_need_immediate_discovery(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   reports=pathlib.Path(tmp);row,live,pin=self.data();row['expectedAssets']=fixture()[0]['expectedAssets'];observed=[]
+   def api(route):
+    observed.append(route);return copy.deepcopy(live) if route=='releases/42' else []
+   def upload(rid,name,path):
+    a={'id':len(live['assets'])+1,'name':name,'size':10,'digest':'sha256:'+'a'*64,'state':'uploaded'};live['assets'].append(a);return a
+   result=m.retain_draft(api,'v0.49.0',row,reports,None,reports,lambda:None,lambda *a:copy.deepcopy(live),upload)
+   self.assertEqual(result['id'],42);self.assertEqual(observed.count('releases?per_page=100&page=1'),1)
+ def test_recovery_never_creates_another_release(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   reports=pathlib.Path(tmp);row,live,pin=self.data()
+   def api(route):return copy.deepcopy(live) if route=='releases/42' else [copy.deepcopy(live)]
+   def upload(rid,name,path):
+    a={'id':len(live['assets'])+1,'name':name,'size':10,'digest':'sha256:'+'a'*64,'state':'uploaded'};live['assets'].append(a);return a
+   result=m.retain_draft(api,'v0.49.0',row,reports,None,reports,lambda:None,lambda *args:self.fail('Recovery must not create'),upload,pin)
+   self.assertEqual(result['id'],42);saved=__import__('json').loads((reports/'draft-created.json').read_text());self.assertFalse(saved['createdInThisRun']);self.assertEqual(saved['resumedFromFailedRun'],1)
+ def test_delayed_asset_visibility_retries_reads_only(self):
+  calls=[];sleeps=[];asset={'name':'x','size':2,'digest':'sha256:'+'a'*64,'state':'uploaded'}
+  def api(route):
+   calls.append(route);return {'id':42,'tag_name':'v0.49.0','draft':True,'assets':[] if len(calls)<3 else [asset]}
+  result=m.observe_uploaded(api,42,'v0.49.0','x',{'bytes':2,'sha256':'a'*64},sleeps.append)
+  self.assertEqual(result,asset);self.assertEqual(len(calls),3);self.assertEqual(sleeps,[2,2])
+ def test_changed_uploaded_bytes_fail_without_waiting(self):
+  live={'id':42,'tag_name':'v0.49.0','draft':True,'assets':[{'name':'x','size':3,'digest':'sha256:'+'a'*64,'state':'uploaded'}]}
+  with self.assertRaises(ValueError):m.observe_uploaded(lambda route:live,42,'v0.49.0','x',{'bytes':2,'sha256':'a'*64},lambda n:self.fail('No wait on known bad bytes'))
 if __name__=='__main__':unittest.main()
