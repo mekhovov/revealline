@@ -9146,10 +9146,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.collection.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit collection backdrop for slot screen.collection.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9160,7 +9160,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.couch.background": {
         "description": "couch backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9174,10 +9174,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.couch.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit couch backdrop for slot screen.couch.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9188,7 +9188,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.hangar.background": {
         "description": "hangar backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9202,10 +9202,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.hangar.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit hangar backdrop for slot screen.hangar.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9216,7 +9216,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.missions.background": {
         "description": "missions backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9230,10 +9230,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.missions.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit missions backdrop for slot screen.missions.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9244,7 +9244,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.results.background": {
         "description": "results backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9258,10 +9258,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.results.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit results backdrop for slot screen.results.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9272,7 +9272,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.settings.background": {
         "description": "settings backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9286,10 +9286,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.settings.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit settings backdrop for slot screen.settings.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9300,7 +9300,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.studio.background": {
         "description": "studio backdrop: existing bounded component with Field Kit tokens and state styling.",
@@ -9314,10 +9314,10 @@
           "license": "Project-authored runtime recipe",
           "parent": {
             "id": "screen.studio.background.field-kit",
-            "revision": 3
+            "revision": 5
           },
           "prompt": "Create one original FPV Field Kit studio backdrop for slot screen.studio.background. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 960 by 540 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-compiled.css sha256:e53efb395d8474f7027c56567fca1dbc1fb6067faa20e591c6657119aab2b2cb"
+          "source": "game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css sha256:5e9bbcd5cea5ee8154846c7460d114416c855704cb4b85451b5836b48c54e863"
         },
         "quality": {
           "evidence": [
@@ -9328,7 +9328,7 @@
         "recipe": {
           "id": "scene.menu.v1"
         },
-        "revision": 4
+        "revision": 6
       },
       "screen.title.background": {
         "description": "title backdrop",
@@ -11231,31 +11231,31 @@
       },
       "screen.collection.background": {
         "id": "screen.collection.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.couch.background": {
         "id": "screen.couch.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.hangar.background": {
         "id": "screen.hangar.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.missions.background": {
         "id": "screen.missions.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.results.background": {
         "id": "screen.results.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.settings.background": {
         "id": "screen.settings.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.studio.background": {
         "id": "screen.studio.background.field-kit",
-        "revision": 4
+        "revision": 6
       },
       "screen.title.background": {
         "id": "screen.title.background.field-kit-scene",
@@ -11390,7 +11390,7 @@
     "theme": {
       "id": "fpv",
       "name": "FPV Field Kit",
-      "revision": 6
+      "revision": 8
     },
     "tokens": {
       "amber": "#f4bf62",
@@ -11421,7 +11421,7 @@
   },
   "source": {
     "id": "field-kit",
-    "revision": 6
+    "revision": 8
   },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
