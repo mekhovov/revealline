@@ -7,6 +7,41 @@ export const jsonBytes = (value) => Buffer.from(JSON.stringify(value, null, 2) +
 export const VERSION = /^v\d+\.\d+\.\d+$/;
 export const SHA = /^[a-f0-9]{64}$/;
 export const COMMIT = /^[a-f0-9]{40}$/;
+
+function versionParts(version) {
+  if (!VERSION.test(version)) throw new Error('Invalid release version.');
+  return version.slice(1).split('.').map(Number);
+}
+
+/** Keep a bounded recent history for every semantic major-version line. */
+export function retainRecentMetadata(metadata, retainedReleasesPerMajor) {
+  if (
+    !(metadata instanceof Map) ||
+    !Number.isSafeInteger(retainedReleasesPerMajor) ||
+    retainedReleasesPerMajor < 1 ||
+    retainedReleasesPerMajor > 100
+  )
+    throw new Error('Invalid per-major release retention count.');
+  const groups = new Map();
+  for (const [version, item] of metadata) {
+    const parts = versionParts(version),
+      major = parts[0];
+    if (!groups.has(major)) groups.set(major, []);
+    groups.get(major).push({ version, item, parts });
+  }
+  const retained = new Set();
+  for (const rows of groups.values()) {
+    rows.sort((left, right) => {
+      for (let index = 0; index < 3; index++) {
+        if (left.parts[index] !== right.parts[index]) return left.parts[index] - right.parts[index];
+      }
+      return left.version.localeCompare(right.version);
+    });
+    for (const row of rows.slice(-retainedReleasesPerMajor)) retained.add(row.version);
+  }
+  return new Map([...metadata].filter(([version]) => retained.has(version)));
+}
+
 export function exact(value, keys) {
   return (
     value &&
