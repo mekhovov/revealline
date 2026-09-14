@@ -8,6 +8,8 @@ The publishing controller commit is different from `gameSourceRevision`. For exa
 
 `catalog.json` pins the original bytes of every release record, manifest and ZIP checksum, plus each annotated tag object and peeled source commit. `metadata/` contains those exact small original files. Neither formatting nor regeneration may rewrite them. The complete semantic-version tag set must still agree before publication.
 
+The current selector separately pins its published source-qualification receipt. All six gates must have passed for that exact game commit/tree, and hosted publication verifies the identical receipt from its GitHub Release. A missing gate, changed body or mismatched source tree refuses publication. The first public native/offline check of a newly published current edition remains a post-deployment acceptance task; it cannot precede the edition's first public availability.
+
 `allocations.json` reserves archive ownership independently of the selected current version. Only admitted, existing frozen editions enter the effective overlay. The current version is always excluded from that overlay. Reserved future versions do not fabricate release entries. Archive01–05 keep their existing ownership; 06 holds v0.41/v0.44, 07 v0.45/v0.46, 08 v0.47/v0.48, 09 v0.49/v0.50, and 10 v0.42.
 
 Each admission pins its infrastructure commit, successful Pages deployment and retained evidence. Validation compares every frozen asset, original manifest, record and ZIP checksum against the archive's complete accepted HTTP inventory. The HTTP report must cover that inventory without missing or failed files. Hosted runs also confirm that each archive's main commit and successful deployment still match the admission.

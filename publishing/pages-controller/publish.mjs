@@ -24,7 +24,12 @@ async function verify({ preview = false, remote = false } = {}) {
   const { lock, metadata, catalogSha256 } = await loadCatalog(directory),
     configuration = parseJSON(await readOrdinary(directory, 'publication.json'));
   if (configuration.catalogSha256 !== catalogSha256) throw new Error('Frozen catalog changed.');
-  await validateAdmissions({ directory, configuration, metadata, requireBrowser: !preview });
+  const { qualification } = await validateAdmissions({
+    directory,
+    configuration,
+    metadata,
+    requireBrowser: !preview,
+  });
   const actualTags = run('git', ['tag', '--list', 'v*'])
     .split('\n')
     .filter((tag) => /^v\d+\.\d+\.\d+$/.test(tag))
@@ -38,6 +43,9 @@ async function verify({ preview = false, remote = false } = {}) {
     )
       throw new Error(`Frozen tag identity changed: ${row.version}`);
   }
+  const qualifiedSourceTree = run('git', ['rev-parse', `${qualification.sourceRevision}^{tree}`]);
+  if (qualifiedSourceTree !== qualification.sourceTree)
+    throw new Error('Qualified source tree does not match the immutable game commit.');
   if (
     run('git', ['status', '--porcelain', '--untracked-files=no']) ||
     run('git', ['ls-files', 'publishing/pages-controller/publication.json']) !==
@@ -54,6 +62,24 @@ async function verify({ preview = false, remote = false } = {}) {
     throw new Error('Publishing checkout does not equal its triggering commit.');
   const observations = [];
   if (remote) {
+    const response = await fetch(
+      `https://github.com/mekhovov/revealline/releases/download/${configuration.currentVersion}/source-qualification.json`,
+      { signal: AbortSignal.timeout(60_000) },
+    );
+    if (!response.ok)
+      throw new Error('The selected release does not publish its source qualification.');
+    const chunks = [];
+    let size = 0;
+    for await (const chunk of response.body) {
+      size += chunk.length;
+      if (size > 8_000_000) {
+        await response.body.cancel().catch(() => {});
+        throw new Error('Published qualification exceeds its byte budget.');
+      }
+      chunks.push(chunk);
+    }
+    if (digest(Buffer.concat(chunks)) !== configuration.currentSourceQualification.sha256)
+      throw new Error('Published source qualification does not match the reviewed pin.');
     for (const admission of configuration.admissions) {
       const repo = `mekhovov/revealline-${admission.id}`;
       const api = (suffix) => JSON.parse(run('gh', ['api', `repos/${repo}/${suffix}`]));
@@ -80,6 +106,7 @@ async function verify({ preview = false, remote = false } = {}) {
     controllerCommit,
     controllerTree,
     catalogSha256,
+    qualifiedSourceTree,
     observations,
     publishable: !preview,
   };
@@ -113,6 +140,7 @@ async function main() {
     if (
       receipt.controllerCommit !== identity.controllerCommit ||
       receipt.controllerTree !== identity.controllerTree ||
+      receipt.qualifiedSourceTree !== identity.qualifiedSourceTree ||
       receipt.currentVersion !== identity.configuration.currentVersion ||
       receipt.catalogSha256 !== identity.catalogSha256 ||
       receipt.configurationSha256 !== digest(await readOrdinary(directory, 'publication.json')) ||

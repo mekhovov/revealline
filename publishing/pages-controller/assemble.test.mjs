@@ -127,8 +127,21 @@ async function fixture(t) {
     deploymentId: 42,
     versions: ['v0.1.0'],
   });
+  const qualificationBytes = jsonBytes({
+    format: 'revealline-source-qualification.v1',
+    version: 'v0.44.0',
+    sourceRevision: 'a'.repeat(40),
+    sourceTree: 'f'.repeat(40),
+    passed: true,
+    allTrackedSourceContentsAndModesMatch: true,
+    gates: ['validate', 'lint', 'test', 'format', 'native-format', 'motion-syntax'].map((gate) => ({
+      gate,
+      exitCode: 0,
+    })),
+  });
   const configuration = {
     format: 'revealline-pages-controller.v1',
+    currentSourceQualification: { path: 'qualification.json', sha256: digest(qualificationBytes) },
     deploymentEnabled: true,
     currentVersion: 'v0.44.0',
     catalogSha256: digest(catalogBytes),
@@ -148,6 +161,7 @@ async function fixture(t) {
     ],
   };
   for (const [name, bytes] of [
+    ['qualification.json', qualificationBytes],
     ['catalog.json', catalogBytes],
     ['allocations.json', allocationBytes],
     ['publication.json', jsonBytes(configuration)],
@@ -259,4 +273,26 @@ test('accepted HTTP status cannot substitute a different original while retainin
     validateAdmissions({ directory: f.directory, metadata, configuration: config }),
     /does not preserve the pinned original/,
   );
+});
+
+test('current source admission refuses a failed gate or borrowed source even with a fresh evidence pin', async (t) => {
+  const f = await fixture(t),
+    { metadata } = await loadCatalog(f.directory);
+  const original = JSON.parse(await fs.readFile(path.join(f.directory, 'qualification.json')));
+  for (const mutate of [
+    (q) => (q.gates.find((row) => row.gate === 'test').exitCode = 1),
+    (q) => (q.sourceRevision = 'b'.repeat(40)),
+    (q) => (q.gates = q.gates.filter((row) => row.gate !== 'motion-syntax')),
+  ]) {
+    const q = structuredClone(original);
+    mutate(q);
+    const bytes = jsonBytes(q);
+    await fs.writeFile(path.join(f.directory, 'qualification.json'), bytes);
+    const configuration = structuredClone(f.configuration);
+    configuration.currentSourceQualification.sha256 = digest(bytes);
+    await assert.rejects(
+      validateAdmissions({ directory: f.directory, metadata, configuration }),
+      /Current source/,
+    );
+  }
 });

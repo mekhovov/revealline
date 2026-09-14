@@ -77,6 +77,7 @@ export async function validateAdmissions({
       'allocationSha256',
       'admissions',
       'deploymentEnabled',
+      'currentSourceQualification',
     ]) ||
     configuration.format !== 'revealline-pages-controller.v1' ||
     typeof configuration.deploymentEnabled !== 'boolean' ||
@@ -90,6 +91,35 @@ export async function validateAdmissions({
     throw new Error('Invalid Pages controller configuration.');
   if (requireBrowser && !configuration.deploymentEnabled)
     throw new Error('This reviewed controller candidate is not enabled for deployment.');
+  const qualificationPin = configuration.currentSourceQualification;
+  if (!exact(qualificationPin, ['path', 'sha256']) || !SHA.test(qualificationPin.sha256))
+    throw new Error('Current source qualification needs an exact evidence pin.');
+  const qualificationBytes = await readOrdinary(directory, qualificationPin.path);
+  if (digest(qualificationBytes) !== qualificationPin.sha256)
+    throw new Error('Current source qualification byte pin mismatch.');
+  const qualification = parseJSON(qualificationBytes);
+  if (
+    qualification.format !== 'revealline-source-qualification.v1' ||
+    qualification.version !== configuration.currentVersion ||
+    qualification.sourceRevision !==
+      metadata.get(configuration.currentVersion).record.sourceRevision ||
+    !COMMIT.test(qualification.sourceTree) ||
+    qualification.passed !== true ||
+    qualification.allTrackedSourceContentsAndModesMatch !== true ||
+    !Array.isArray(qualification.gates)
+  )
+    throw new Error('Current source qualification identity or result mismatch.');
+  for (const gate of ['validate', 'lint', 'test', 'format', 'native-format', 'motion-syntax']) {
+    const rows = qualification.gates.filter((row) => row.gate === gate);
+    if (
+      rows.length !== 1 ||
+      !(
+        rows[0].exitCode === 0 ||
+        (rows[0].step?.status === 'completed' && rows[0].step?.conclusion === 'success')
+      )
+    )
+      throw new Error(`Current source gate is not passed: ${gate}`);
+  }
   const allocationsBytes = await readOrdinary(directory, 'allocations.json');
   if (digest(allocationsBytes) !== configuration.allocationSha256)
     throw new Error('Allocation byte pin mismatch.');
@@ -253,7 +283,7 @@ export async function validateAdmissions({
   for (const version of metadata.keys())
     if (version !== configuration.currentVersion && !canonicalSites[version])
       throw new Error(`Historical edition lacks an admitted archive: ${version}`);
-  return { plan, canonicalSites };
+  return { plan, canonicalSites, qualification };
 }
 async function writeFile(directory, relative, bytes) {
   safePath(relative);
