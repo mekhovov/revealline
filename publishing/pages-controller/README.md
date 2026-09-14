@@ -29,7 +29,7 @@ The workflow requires 8 GiB free on the hosted runner. No npm installation or hi
 
 An existing output is never overwritten. Failed preparation cannot receive a verified receipt or be deployed. ZIP extraction stages its own output and removes only that newly created staging directory on failure. A failed later assembly may retain an incomplete new artifact directory for inspection; retry in a fresh workflow workspace.
 
-The new workflow deploys only `refs/heads/main` through the existing `github-pages` environment. Its concurrency waits for an earlier main deployment. The legacy workflow keeps all six source-gate commands for game changes; while this controller exists, it skips its older build/upload/deploy route. Infrastructure-only path exclusions route these changes to the focused controller checks. No environment protection policy is changed.
+The new workflow deploys only `refs/heads/main` through the existing `github-pages` environment. Its concurrency waits for an earlier frozen publication. The legacy workflow keeps all six source-gate commands for game changes in a separate non-cancelling concurrency group; it cannot cancel the frozen publisher. While this controller exists, the legacy workflow skips its older build/upload/deploy route. Its fallback upload/deploy also explicitly requires main. Infrastructure-only path exclusions route these changes to the focused controller checks. No environment protection policy is changed.
 
 ## Updating the selector
 

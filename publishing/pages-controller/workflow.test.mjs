@@ -27,7 +27,7 @@ test('source qualification retains six gates while the controller owns guarded m
   assert.match(legacy, /test -f publishing\/pages-controller\/publication.json/);
   assert.match(
     legacy,
-    /if: github.event_name != 'pull_request' && needs.verify.outputs.frozen-controller != 'true'/,
+    /if: github.event_name != 'pull_request' && github.ref == 'refs\/heads\/main' && needs.verify.outputs.frozen-controller != 'true'/,
   );
   assert.match(
     workflow,
@@ -35,6 +35,8 @@ test('source qualification retains six gates while the controller owns guarded m
   );
   assert.match(workflow, /environment:\n\s+name: github-pages/);
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
+  assert.match(legacy, /cancel-in-progress: false/);
   assert.match(workflow, /include-hidden-files: true/);
   assert.match(workflow, /publish\.mjs verify-artifact/);
   assert.ok(
