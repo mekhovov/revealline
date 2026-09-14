@@ -7,6 +7,12 @@ import { createProfileSharedMediaReader } from './profile-shared-media.mjs';
 import { createExternalRecoveryCatalog } from './external-recovery-catalog.mjs';
 import { createProfileChannelAssets } from './profile-channel-assets.mjs';
 import { ownProfileJSON, freezeProfileData } from './profile-channel-json.mjs';
+import {
+  originalRecoveryOptions,
+  reviewOriginalMetadata,
+  verifyOriginalBytes,
+  originalRecoveryComponent,
+} from './profile-original-recovery.mjs';
 
 export const PROFILE_READER_LIMITS = Object.freeze({
   keys: 4096,
@@ -61,8 +67,11 @@ export function createProfileChannelReader({
   origin = globalThis.location?.origin ?? 'unknown origin',
   timeoutMs = PROFILE_READER_LIMITS.timeoutMs,
   recoveryCatalogs = [],
+  decodeStillImage,
 } = {}) {
   targetVersion(currentVersion);
+  if (decodeStillImage !== undefined && typeof decodeStillImage !== 'function')
+    throw new TypeError('Expected a trusted still image decoder.');
   if (
     !Number.isInteger(timeoutMs) ||
     timeoutMs < 1 ||
@@ -72,7 +81,13 @@ export function createProfileChannelReader({
   const assets = createProfileChannelAssets({ indexedDB, timeoutMs: Math.min(timeoutMs, 15000) });
   const reviews = new WeakMap(),
     catalogs = new Map();
-  let recoverySnapshots = new WeakMap();
+  let recoverySnapshots = new WeakMap(),
+    originalChoices = new WeakMap(),
+    verifiedOriginals = new WeakMap();
+  function clearOriginals() {
+    originalChoices = new WeakMap();
+    verifiedOriginals = new WeakMap();
+  }
   if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
     throw new TypeError('Provide a finite trusted exact-channel recovery registry.');
   for (const entry of recoveryCatalogs) {
@@ -298,12 +313,14 @@ export function createProfileChannelReader({
       );
     return fresh;
   }
-  async function sharedSnapshot(signal) {
+  async function sharedSnapshot(signal, selected = false) {
     sharedMedia ??= createProfileSharedMediaReader({
       indexedDB,
       timeoutMs: Math.min(timeoutMs, 15000),
     });
-    const captured = await untilCancelled(signal, () => sharedMedia.snapshot({ signal }));
+    const captured = await untilCancelled(signal, () =>
+      selected ? sharedMedia.originalSnapshot({ signal }) : sharedMedia.snapshot({ signal }),
+    );
     check(signal);
     if (captured.state !== 'present')
       throw new Error('Shared media is absent; raw profile diagnostics remain available.');
@@ -316,9 +333,47 @@ export function createProfileChannelReader({
       throw new Error('Shared media changed during recovery review. Check it again.');
     check(signal);
   }
+  const generations = (captured) => ({
+    audio: captured.marker.audio.generation,
+    media: captured.marker.media.generation,
+    ...(captured.marker.story ? { story: captured.marker.story.generation } : {}),
+  });
+  async function currentOriginals(owned, signal) {
+    await unchangedReview(owned.prior, signal);
+    const captured = await sharedSnapshot(signal, true);
+    if (canonicalJSON(captured.marker) !== canonicalJSON(owned.captured.marker))
+      throw new Error('Shared media changed after original review. Check it again.');
+    await unchangedReview(owned.prior, signal);
+    check(signal);
+    return captured;
+  }
+  async function checkedOriginal(owned, signal) {
+    const captured = await currentOriginals(owned, signal);
+    const prepared = await untilCancelled(signal, () =>
+      verifyOriginalBytes(owned.choice, captured, { decodeImage: decodeStillImage, signal }),
+    );
+    await currentOriginals(owned, signal);
+    check(signal);
+    return prepared;
+  }
+  function originalIdentity(owned) {
+    return {
+      channel: owned.prior.channel,
+      asset: owned.choice.asset,
+      references: owned.choice.references,
+      profileFingerprint: owned.prior.fingerprint,
+      sharedFingerprint: owned.sharedFingerprint,
+      verified: true,
+      scope: 'selected-original',
+      fullBackup: false,
+      earnedReceiptAuthority: false,
+      restoreAuthority: false,
+    };
+  }
   return Object.freeze({
     discover({ signal } = {}) {
       return task(signal, async (inner) => {
+        clearOriginals();
         const byId = new Map(),
           diagnostics = [];
         const add = (key) => {
@@ -375,6 +430,7 @@ export function createProfileChannelReader({
     review(channel, { signal } = {}) {
       return task(signal, (inner) =>
         locked(channel, inner, async () => {
+          clearOriginals();
           const snapshot = await readStable(channel, inner);
           const result = freezeProfileData({
             channel,
@@ -445,6 +501,85 @@ export function createProfileChannelReader({
         });
       });
     },
+    async reviewOriginals(review, options = {}) {
+      const { signal } = originalRecoveryOptions(options);
+      return task(signal, (inner) => {
+        clearOriginals();
+        const prior = priorReview(review),
+          catalog = catalogs.get(prior.channel.id);
+        if (!catalog)
+          throw new Error(
+            'This exact historical channel has no registered recovery catalog. Raw diagnostics remain available.',
+          );
+        return locked(prior.channel, inner, async () => {
+          const fresh = await unchangedReview(prior, inner);
+          const captured = await sharedSnapshot(inner, true);
+          const value = (name) =>
+            fresh.raw.assets[name].state === 'absent' ? null : fresh.raw.assets[name].value;
+          const content = await untilCancelled(inner, () =>
+            catalog.catalog(value('packs'), value('index'), inner),
+          );
+          check(inner);
+          if (content.index.chapters.length)
+            catalog.closure(content, { document: captured.marker.media.library });
+          const originals = reviewOriginalMetadata(captured, content.entries);
+          const sharedFingerprint = await untilCancelled(inner, () => fingerprint(captured.marker));
+          const owned = { prior, captured, sharedFingerprint };
+          await currentOriginals(owned, inner);
+          const result = freezeProfileData({
+            channel: prior.channel,
+            profileFingerprint: fresh.fingerprint,
+            sharedFingerprint,
+            schemaVersion: captured.marker.version,
+            revision: captured.marker.ledger?.revision ?? null,
+            generations: generations(captured),
+            executionEntries: content.executions.entries.length,
+            externalChapters: content.index.chapters.length,
+            originals,
+            diagnostics: captured.diagnostics,
+            scope: 'selected-originals-metadata',
+            fullBackup: false,
+            earnedReceiptAuthority: false,
+          });
+          for (const choice of originals) originalChoices.set(choice, { ...owned, choice });
+          return result;
+        });
+      });
+    },
+    async verifyOriginal(choice, options = {}) {
+      const { signal } = originalRecoveryOptions(options);
+      return task(signal, (inner) => {
+        verifiedOriginals = new WeakMap();
+        const owned = originalChoices.get(choice);
+        if (!owned) throw new TypeError('Choose this reader’s owned original.');
+        return locked(owned.prior.channel, inner, async () => {
+          await checkedOriginal(owned, inner);
+          const result = freezeProfileData(originalIdentity(owned));
+          verifiedOriginals.set(result, owned);
+          return result;
+        });
+      });
+    },
+    async exportOriginalComponent(verified, options = {}) {
+      const { signal, component } = originalRecoveryOptions(options, true);
+      return task(signal, (inner) => {
+        const owned = verifiedOriginals.get(verified);
+        if (!owned) throw new TypeError('Use this reader’s verified original.');
+        return locked(owned.prior.channel, inner, async () => {
+          // A generation marker is not byte integrity: hash a fresh selected handle again.
+          const prepared = await checkedOriginal(owned, inner);
+          const identity = {
+            ...originalIdentity(owned),
+            origin,
+            schemaVersion: owned.captured.marker.version,
+            revision: owned.captured.marker.ledger?.revision ?? null,
+            generations: generations(owned.captured),
+          };
+          check(inner);
+          return originalRecoveryComponent(prepared, identity, component);
+        });
+      });
+    },
     exportStoredData(review, { signal } = {}) {
       return task(signal, async (inner) => {
         const prior = reviews.get(review);
@@ -485,6 +620,7 @@ export function createProfileChannelReader({
       assets.close();
       sharedMedia?.close();
       recoverySnapshots = new WeakMap();
+      clearOriginals();
       await active?.promise.catch(() => {});
     },
   });
