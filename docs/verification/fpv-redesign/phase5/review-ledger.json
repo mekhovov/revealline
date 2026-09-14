@@ -1,0 +1,5173 @@
+{
+  "format": "revealline.visual-review-evidence.v1",
+  "capturedAt": "2026-09-14T18:46:44.632Z",
+  "scope": "Bounded source-preview browser review. This does not set an asset quality stage or approve all required slots.",
+  "source": {
+    "origin": "http://127.0.0.1:9042/",
+    "checkout": "go_test_fpv_redesign",
+    "frozenRelease": false,
+    "compiledManifestSHA256AtLedgerWrite": "1d0967bab5d47ae25796939c4e00dbaa21c4d58ebf2a01c2242cf29ffd95346b",
+    "note": "Compiled assets and runtime code changed during this review. Earlier screenshots are explicitly retained as before-fix evidence; title-v2 captures are the newly selected title. Requalify frozen release."
+  },
+  "browser": {
+    "route": "agent-browser standalone Chrome emulation; in-app runtime unavailable to subagent",
+    "sessions": [
+      "field-kit-replacement",
+      "field-kit-visual"
+    ],
+    "dpr": 1,
+    "viewports": [
+      [
+        1440,
+        900
+      ],
+      [
+        768,
+        1024
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ]
+    ],
+    "nativeBrowserZoom200": "unverified: Control+Equal and Meta+Equal left width,height,DPR and visualViewport.scale unchanged",
+    "cssZoom200": {
+      "file": "settings-large-css-zoom-200.png",
+      "result": "horizontal clipping",
+      "limitation": "body.style.zoom=2 only; media-query viewport unchanged; restored after capture"
+    }
+  },
+  "inventory": {
+    "total": 293,
+    "required": 194,
+    "nativeSpriteCards": 30,
+    "nativeSemanticIconCards": 45,
+    "allRequiredApproved": false
+  },
+  "actualJourneys": [
+    {
+      "route": "Title Deploy → install FPV Pressure Lines → mission gallery → Deploy",
+      "result": "passed",
+      "evidence": [
+        "title-installing-v1.png",
+        "missions-desktop.png",
+        "flight-ready-desktop.png"
+      ]
+    },
+    {
+      "route": "Keyboard flight → close small rectangle",
+      "result": "5.1% actual reveal,1200score,3lives; no save/progress injection",
+      "evidence": [
+        "flight-partial-reveal-desktop.png"
+      ]
+    },
+    {
+      "route": "Pause → page reload → Continue → saved flight verification",
+      "result": "restored paused with retained2lives/time2:39 before later restart",
+      "evidence": [
+        "restored-flight-desktop.png"
+      ]
+    },
+    {
+      "route": "Pause → Restart mission → confirm",
+      "result": "confirmation correct; initial browser picture decode remained pending for minutes then recovered. Tiny fresh3-byte Blob read/fetch also timed out. No proven app fault; exact source regression with injected codec passed. Second restart recovered. Subtree observer performance fix subsequently landed.",
+      "evidence": [
+        "retry-confirm-desktop.png",
+        "flight-after-observer-fix.png"
+      ]
+    },
+    {
+      "route": "Collection after partial run",
+      "result": "unfinished picture remains concealed; empty state and disabled paging correct",
+      "evidence": [
+        "collection-normal-progress.png"
+      ]
+    },
+    {
+      "route": "Settings Standard/Large through actual selector",
+      "result": "all4viewports inspectable with vertical scrolling, no page horizontal overflow. Live flight portrait/narrow HUD wrapping fixed; short landscape reserves actor area.",
+      "evidence": [
+        "settings-standard-portrait.png",
+        "settings-large-portrait.png",
+        "settings-large-tablet.png",
+        "settings-large-short-landscape.png",
+        "flight-standard-portrait-fixed.png",
+        "flight-large-short-landscape.png"
+      ]
+    }
+  ],
+  "unresolved": [
+    "All194required slots are not reviewed in actual gameplay.",
+    "Natural victory/full earned-picture viewer/medal award not reached in this session.",
+    "Not every drone class, enemy, pickup, effect or motion state exercised live.",
+    "No actual hardware touch/gamepad, Firefox/Safari or native200%browserzoom qualification.",
+    "Production audio audible quality and every uploaded codec not assessed by visual screenshots.",
+    "Repeat full frozen-release journey after remaining scene production and source changes."
+  ],
+  "slots": [
+    {
+      "id": "ui.panel",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "studio-button-error.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.dialog",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "retry-confirm-desktop.png",
+          "settings-standard-portrait.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.tooltip",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "component library only",
+        "evidence": [
+          "studio-tooltip.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "ui.toast",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.primary",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "title-keyboard-focus.png",
+          "title-native-pressed.png",
+          "studio-button-focus.png",
+          "studio-button-pressed.png",
+          "studio-button-disabled.png",
+          "studio-button-error.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.secondary",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "missions-desktop.png",
+          "restored-flight-desktop.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.danger",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.icon",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "restored-flight-desktop.png",
+          "settings-standard-portrait.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.tab",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "settings-standard-desktop.png",
+          "settings-large-portrait.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.button.chip",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "component library only",
+        "evidence": [
+          "studio-chip.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "ui.input.checkbox",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "settings-standard-portrait.png",
+          "studio-checkbox-selected.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.radio",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.toggle",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.slider",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.select",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "settings-standard-desktop.png",
+          "settings-large-portrait.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.text",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "collection-normal-progress.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.input.scrollbar",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.meter.coverage",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.meter.progress",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.meter.time",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.meter.ability",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.meter.volume",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.focus",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "title-keyboard-focus.png"
+        ],
+        "notes": "Default recipe/native state inspection; uploaded frame transport is covered by separate replacement proof, not inferred here."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "ui.cursor",
+      "required": true,
+      "group": "ui",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.menu",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "044bfaa980686917e6715e3919617a516ee1585e38dd8a63154301eba23d4118",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.back",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9b6313464e6e6f26dff9b98405fba899dcd0c6a614fde6df8ed1a2d835c73f34",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.close",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "1aa1245d987000c889a47cd242c9ca976d620e48323cdde2a60358006718cc51",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.play",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "0ae5d58c1169056d086892937112a4605d56ca11b6d11e701d1e7796b18a6af7",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.pause",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "95b99a09686ab417503cd8444f6b485d1021b6ae3f8e9525a545faafd6254c9c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.retry",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "70dcff8faa588f074e529704a7d6024fe0a7590b18afa6059488fb505ce4a5f7",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.settings",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.audio",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "ff2e2defa02d62198a0be240fb16c8328d8be7c6aa9e3ec4516c7589edd83b22",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.music",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "084e63a13178e1736ac2eaa12af621d63a786eea4dc21ab5cae8c6acf96c8153",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.fullscreen",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.save",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "210d3b2ab32eaef632751e0333321b7e3e2a8571de758e9a02d1f350c483cf61",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.load",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8b557a3e23bcbf550c01b5fe77618bc6ab31cce51835e80ad807023f2fc8fa47",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.download",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9c181b9009de288e0ed3349ab0bda4908e67c92587946517115b9231d5ea65b8",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.upload",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "aa2e8583a56b36b5357e5462aee6b010b5b894626929afbc553c683462ce42cf",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.copy",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "08512d067c5f322eb059dc45733fd61534b8bc530a9ebd8b33208d941a603922",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.check",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "icon.warning",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8a652da0dfc053d85190a2a0a17a27c43144c90a1cce5ae7883cb70f73df7c50",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "icon.info",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e325a3a5b3647614bffa5432779f4ade7e865158e384888888f83b073aff033c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.lock",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "b0e9acf3605b9c5440328ef0bea6c0959efd03acdddbc4ac2cc5520e036457b6",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "icon.offline",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9f649ed85a5ff7d88996729975dfcb3b4df001474b02cd34114dcf4fc5e2b49c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.trash",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "a25dc0c7e2f24a5451f3fbb0d24e90fdce796b274d8b54f238cbee0a26e8b857",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.undo",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "78294d66d340a9cc4036814defa9a291b8573949d79318823722b6f51c71fc14",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.redo",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "43db178018db9727dc1d4f6f9231dbe2ad29fe6d75a6a84d5ed97b069e18e3a4",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "icon.keyboard",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "466b729b69035d65e5a95d5ef9c8d1c337e64a6af3b5fbdcf91cf74d3096d33b",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.controller",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2033ce4e45c2b164edc31e8680244deaa475783dca1aebc6262bfffcd3980eb2",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "icon.touch",
+      "required": true,
+      "group": "icons",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "0839e0cac64adad321fb07518b14673091bbc1a61a836ff15ebf48510480bbbc",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "hud.life",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "b65d23a488db2a276f1332680fbf394b1aee685fffc42f0b093c01506041f143",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-ready-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "hud.score",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "c3cd0a0f9997f28d1a295de1c8995ebe81bf782acb1c033036371c49fc40a08e",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-partial-reveal-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "hud.time",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9e865e30bb22014bc6cc20dd4038415f4b279164ab33c54d9682e7ffc9cf2c91",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-ready-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "hud.coverage",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "cc1bc2077c62d4cea9aeba86c00d0185b3c93f7c7dfceaede414dc105859196f",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-partial-reveal-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "hud.signal",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "27fca2383ecb60fe0019232ed3f384103f602e36fe583fbad4b018b0c20d08fe",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "component library only",
+        "evidence": [
+          "studio-signal-symbol.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "hud.connection",
+      "required": true,
+      "group": "hud",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "f7495ea7b56215ba88c7d465fa6ad9ab22121695e4c674cf183b65ef6d400ae0",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "reward.gold",
+      "required": true,
+      "group": "rewards",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "reward.silver",
+      "required": true,
+      "group": "rewards",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "reward.bronze",
+      "required": true,
+      "group": "rewards",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d9ee53a1cc344517624e80785e764da99fa8bd9b90d7f2b9b5d2ac52ff236a4b",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "reward.mastery",
+      "required": true,
+      "group": "rewards",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "reward.unlock",
+      "required": true,
+      "group": "rewards",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.up",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2ff89ae01c04bfc698892ec3a35610b7975a6f36596ddd7ddeedbecef248d5d4",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.right",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53fff7055c1021c80f93590ed4e028c85d59ea4cb2f06ac71644d29989fa2bd7",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.down",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "526656d6f29126aaec7bc7d1abf0769d247b311039c8d069c7e2afc17d112747",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.left",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8b5ebd66c72bc3a9ccc07c5dedaba2a8c556ea4e78ef1f17650cc99bc1eca666",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.boost",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "ee156b11b8102f73615260895e66be4e420bd3d7c70aec7150b556cdc9999a1c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.ability",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d5227e40b6ef6c1d722bbfb09c828789facf18b0021d6e600a456fdd37ba7e11",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "control.confirm",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "4213f1ac958d600b68f4aa1aa0171d8f5e7a10ca2422154f88cc9b58bda9c0c1",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "component library only",
+        "evidence": [
+          "studio-confirm-symbol.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "control.cancel",
+      "required": true,
+      "group": "controls",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2617aa19f98e0a455046c229a9abcb678efeaa76c07ebe5ce07cb8b00d4d65bf",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "native16/24/32 dependingrole and3× on dark/light",
+        "evidence": [
+          "icons-01-08.png",
+          "icons-09-16.png",
+          "icons-17-24.png",
+          "icons-25-32.png",
+          "icons-33-40.png",
+          "icons-41-45.png"
+        ],
+        "notes": "Labels remain required; medal rank differs by cutmarks as well as color."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "screen.title.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "title-v2-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.missions.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "missions-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.hangar.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.results.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.collection.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "collection-normal-progress.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.settings.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "settings-standard-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.couch.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "screen.studio.background",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "component library only",
+        "evidence": [
+          "studio-background-specimen.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "Reusable library symbol/component; no current live telemetry/action claimed."
+    },
+    {
+      "id": "screen.title.portrait",
+      "required": true,
+      "group": "screens",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "title-v2-portrait.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "scene.reveal.legacy",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "scene.reveal.wide",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.scout.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.scout.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "3fa6527474d2da84fed128052df7ee8ac2b34a25eaf5a162d21be849a12fd65c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.scout.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.bomber.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "33955b0fafb24b5edab1d605d6b3a8453a0073438aa87785cc2376ec36953346",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.bomber.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "de2406eaf230f4701c82249f0709f1238616cca532d2be1b02d3105503646c3c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.bomber.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.carrier.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "7258c2453b49a52aaa2ba003c4e076eb7aa2d87d21abb6df65f5f5178f9f6a59",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.carrier.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8535d7dec70f8fb64d3c0aa8ac919daa7609a477dada753b67429c9c7ae2cadb",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.carrier.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.interceptor.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2d0b8b6260f73e3fe008c5ac228021f681747183a586ed7ca9dde3906b22dcc3",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.interceptor.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "85bb90c58fb61a1fdd212316f223dad209d374386e1aad14f044df4c1ea2af7e",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.interceptor.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.fiber.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "ad53247e6be0c1c2a3080a8ebabd0ca24b1394be0caa109138926e821b08ae35",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.fiber.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "77a93635bc7d39976bbf571f056a68f75ef43e1b655b6512fd293b2b568306e3",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.fiber.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.impact.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "4c0ab153dd814ff806ff0d9a63bb1ef5ad9eac532f8f771d1288265d7327ec68",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.impact.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "f03dc7d839fef8d53cae7b29cc106dd094c976af6e3758d71110bf0d47140efa",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.impact.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.trapper.compact",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "83b8dea4de4fad710942a60c18f03c34849df904a45edb0316b6287c3770fb3c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.trapper.detailed",
+      "required": true,
+      "group": "players",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "78033ee190de99663e4b936e480562d4cc93d9e90190b529ef46d07877c43826",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Small detailed markings merge at20px; compact silhouettes are preferable there."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "player.trapper.rotors",
+      "required": true,
+      "group": "motion",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.bouncer",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e35ca174c360d5a572c72e6be448666cf3da1438cf0d91f8ea7ff8c221b8eb5e",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.border-patrol",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "5c51f6d7b29af2e8be90adc5d01257f1b5d34ac5aaf0bb533fd2088bd944b683",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.contour-patrol",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "4edc2d90b443fbc191cbd741c824732113a590cd758e32d8e098c63eba4e70a9",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.claimed-rover",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "fedb83171e9c894c8cbc446d4fb2bf460359b587068a33d0e108b14e185a0adc",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.eroder",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "05af7a73b7dadc8821cecccf0abb4f763dafae7ad21500a3293957fa88ed7d76",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.lane-boss",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "enemy.relay-sentinel",
+      "required": true,
+      "group": "enemies",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "terrain.wall",
+      "required": true,
+      "group": "terrain",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-ready-desktop.png",
+          "flight-partial-reveal-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "terrain.slow",
+      "required": true,
+      "group": "terrain",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-ready-desktop.png",
+          "flight-partial-reveal-desktop.png"
+        ],
+        "notes": null
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "terrain.lethal",
+      "required": true,
+      "group": "terrain",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.objective",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "44ebf8c1d8a028a919012f75978d025d1698aeb3d295c8813edc1a7ebae71868",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.supply",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "7954823e793dd6140528d271c12653fca559eda862ca83c4be73c6bfbdf9c26c",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.life",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "7e696d173490ae948cead01a22c5650bc6ffef16c70c514ba6d88413d460a192",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.speed",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "5cda580ceefd258918dcf6c49f0f8ad68966999c153a876fb01c2f171b659420",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.slow",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f17c3672c097ce79b63629e4dfbffe9d5a2ecacf4ac99ec67704538951d9fe",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "pickup.freeze",
+      "required": true,
+      "group": "pickups",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "02b4ab6f9e8339b921ac83fa0f72e334ab98edc82a46ae5b70499d4ea5dfb872",
+      "nativeSpecimenInspection": {
+        "status": "inspected",
+        "scope": "20,24,32CSSpixels and enlarged on dark checker/light",
+        "evidence": [
+          "sprites-native-top.png",
+          "sprites-row-2.png",
+          "sprites-native-middle.png",
+          "sprites-row-4.png",
+          "sprites-native-bottom.png",
+          "sprites-row-6.png",
+          "sprites-row-7.png",
+          "sprites-row-8.png"
+        ],
+        "notes": "Distinct silhouettes/cluster shapes; not proof of every live actor state."
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "trail.active",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "trail.secured",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "trail.head",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.capture",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.failure",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.victory",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.pickup",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.shield",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.respawn",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "effect.pressure",
+      "required": true,
+      "group": "effects",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "font.display",
+      "required": true,
+      "group": "fonts",
+      "kindAtLedgerWrite": "font",
+      "fileSHA256AtLedgerWrite": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "font.ui",
+      "required": true,
+      "group": "fonts",
+      "kindAtLedgerWrite": "font",
+      "fileSHA256AtLedgerWrite": "fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "font.numeric",
+      "required": true,
+      "group": "fonts",
+      "kindAtLedgerWrite": "font",
+      "fileSHA256AtLedgerWrite": "0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.focus",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.confirm",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.cancel",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.capture",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.failure",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.victory",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.pickup",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "audio.music",
+      "required": true,
+      "group": "audio",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.0481ceb3eba28ea9",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.05d993f4148d93fc",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.090b4ca5dc7ea7fa",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.0ff486f1577a5fc7",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.1b09bd3b6f1608be",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.1f4ed16be3f1c6cc",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.280ea068e8a16fac",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.2a75ce6ea2ef63e0",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.3d671e7498b870e7",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.3f2efe130aa97273",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.40f512bb0fb9c2b3",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.47c1d9559d9f2246",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.5686cf79f5ffe46d",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.5865540015dd327e",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.691155cfa40084bf",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.73d147ccabfbd137",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.7b47f9c3630246d4",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.918ad57613204cd4",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.92819c6b51cb991c",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.9b4302b0e015b34a",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.9c36bbfb2cf2e14d",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.a47222e499efa5eb",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.aa5451d69dc5c353",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.b2c793a221d65a11",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.b80cf770ce6cb4a4",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.c09c95e761808a54",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.c6000faa77b7d10e",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.cb4a704dd3086148",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.d89ff114a5355b44",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.d9bbb55300b07784",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.coupa.e9fe90c13e941598",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.0e2d32dab758d51f",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.0eb5ce0af7d9e254",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.0f5828ed32e61eea",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "efef00b62e24bc89315f26fe888d64658bb63cfcce3eeb047645c812903d3e3f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.11b817ad76f073e5",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.144ce9c31afe2f45",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "a07fe2df221cb042a05a7ef78716ae1809e9df5dd54d7dd550c91bd265f7f7fb",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.15ad2393da53b1f3",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d4690eb2839e8f90a4ac105502c5b22c1b1cceb643c5d2593ca3a4e61d6aa008",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.1b418d3381494d1e",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.1c01a3257b18634c",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.213f02450431334d",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "84461bcb3aca9dc91ace6a836df87a153a6c58d75b6a46b8988d9d835f68ad9f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.21af5a140bffb67a",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "5428ce32eb31d44ea4b04561d86cc65e31ce79fe50acce40beadfd1d2546b837",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.26e53164613e83d0",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.3a2d993531f58afb",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.4166a190ab3ddec3",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "8664f0283f54db86f6800fb2056045574ff79a5f490f415b3a8929112d8a7d26",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.42bce3db8b1e603a",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9bc684f5da99a255c09d7cd6aac452859d5ec370d344a092901576bdc9405911",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.4673612d986703b5",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "f3f58d09752c8e635e06145abc2460909f90ce2df664a8034a799e0bbe59c3ee",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.493d624384c36c39",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "47033ec2cd3b56345394bc13bbb7b10579419559d1e41160d02f8f3eea368672",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.4c2e50e6a5e5a496",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "0b4b6717b5a2e7c27ad765544730193d1f798f8ccbc08879947f1a8b10e71121",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.56f0db7a71aca759",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "57ee2976cb09f29863a4b3a2d8951574a93bf376eda64dbe2a171dc426d8391a",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.628455cefcf758d6",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.6a200fa6fc2c6c98",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "713991ea5d2ba3bbc0f5115c6fdc98f337da90b657b0c43c7db1625073377f90",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.6a7fe94b1cf0ab84",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "228285616ceb1d60be182f971790ee75a67c44a40a787d7d7ed275668a3005e4",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.6cd39fc2a7838c93",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "c234ea41a080121e73eeea20e3e3db5cfedcd4d4793bc31cf7cdfb2dad2a96ca",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.6ebb069a27747f79",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "0b5106ea19db098b6cf6068142510fd373731532e5052983e58bb343038404e6",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.701500506246c7fd",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "ccdfe41a2adaf920c64d99f665d19d9ca6ddc2ea5251ea24bdd63beb2dfc68bd",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.719af689f36f22ac",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.7559fb204cb162af",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.758214a2ee21bb30",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "1bd3c9c57cc8790ccbf6f0fd33517d6d1a5520de93e38a99722ed4ee915758ab",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.76d2575817214ebd",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "779f36cccce55fd90340acbad1a1cbe03639cd1f98f66d25eaac3c8b0036c31b",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.77556da2651efacd",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "bd423baa7b3b4f073251d5c8291aa78ee11c341926d27f9f211aa278bc7557f6",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.7a7abd48fa2dfc82",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "cae1523d150bbe69f65028676129ba9c51958f4561671c5d6dee1eecfb48b3b5",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.8291ed03ac5ac19e",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.87e45e757b0bb368",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.8876473e40d70804",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "df6e1a2a114dce2da1643a39d608d87ca79d1eaba70cfd62ac02892d0fadec6e",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.88a99ab27c50006d",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.899a33d8cd714962",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "2a50c451fdee7c54d8bccf7a098f12bcdbdc15905856dc100c8e0d9e99629c33",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.89f500bf737786b4",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "30957860bb1edac99c230a91a34eab8249b43497fda680707276c859f3bd5f0c",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.95c0dfa75cc8f037",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "9ef850d87a46eee28cbfa3df8f2d2945673b8bf5dc2fdcc4edf1840175e3f7a1",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.9c57dfab02314b3b",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "bounded inspection",
+        "type": "actual interface or explicitly labeled component sample",
+        "evidence": [
+          "flight-partial-reveal-desktop.png"
+        ],
+        "notes": "Only5.1%partial region; full image unreviewed."
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.9cd8a63c5dd341ef",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.a8046be4fe21bb4d",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "ee325025999edc73751f62ee92adc73c02fe06d29680da5816f4785e014ef730",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.adf5c9eea274ba7f",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.b31039b52e366575",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "97986545bbd0dd978d7c5cd2b3511b800cb082caf4a584416306b6c3f4283b54",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.b6fe74b07d509a5f",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "56fadf4288069b7f12e3e33b94c950baab873a1b576d87ad82673b0c5329dd76",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.bcff9f990784a0f3",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "398eaf8dc2f88a2b1a3bc4d2ae5c603f54fd5daa96c9c9c02637bdd4c488e697",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.c123b9065e7d1d0a",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.c2db06198f371c49",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "535cf4dc9b21c9ff7f9c26d4bc0657e8d6820626551b4d34d82e332748e4d9e3",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.c3d85f08209b7de8",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d74c2e8c5713201203f7decea8d57881b657a2aa7b24ea00d182cbe4efa51b8d",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.e0bd881f88854aa3",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "6b5afa33051459550ead8fee06fb5e14c9eecf9648906dc1abb7fe7a2c69455c",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.ee2bb3dc2c9fd05f",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.eed5c579750a6e66",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "e033d8a3118b42b870e2f6350f7ae960b6085b46beb32ae235881a53bfbdc066",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.efccb4b013c76322",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.f0b0d70327a0a4c4",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "d22b1070efad07ed1e6f9d8e42d3dc7e19922478e7abedad3f08d55e53cf065c",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.f42f426a56bf26ac",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.f52fcf25066115d4",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "1e3b7ea46131dbee8ca4601fd75862b04fda8ca4aa4b088d9811f5845e05eb7d",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.fb5413f595ab2c5b",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "3104d1433851b889c70bbf8fe4d4fecd2b99a3d57d099b402286948283711fb4",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.fpv.fd78a9a977bd419b",
+      "required": true,
+      "group": "pictures",
+      "kindAtLedgerWrite": "image",
+      "fileSHA256AtLedgerWrite": "cca9df45b2dde64684489deab8f8d2ab8d5a08dab0ec0efc8455786a231c2a04",
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.05b3a5728d91fd13",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.09c25cd49f784db8",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.1afdd5025f933caa",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.1fe699b92f4baa39",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.24fb94bb1748abf1",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.2cec45ca18fee23e",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.2e64114a83b2c60b",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.3256a277f274465d",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.4d8b59426e203af3",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.555f716d5503cbdc",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.5bad347d8755fe8c",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.75cd7ebf9b541f4f",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.77498c017c8a2b0e",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.7957561fc5d0fd35",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.875cccfdfc8a0387",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.8f27ced22ffeccda",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.971f9d9a3bfd5d28",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.971fdba734ea63b3",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.99fcd5c9685d28fe",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.a1f7c170c23ef12a",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.af956efd80dd3b8b",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.b03760ef0f3f5816",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.b059b1692f5971b5",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.b0adb2f7bec09e04",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.b62ce8f2e71e0e13",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.c3872f4a1d50b033",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.d5dffc3bfb59d2bd",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.da7d60e2f7c56546",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.e81b10a354214f55",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.f51ec5e1cad0f62d",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.f5875974ea1c7ec0",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.fa96a6d358624a69",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.fad3af198073c174",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.retro.fcfa0aad041f9bbf",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.08698f00e5b9b8fc",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.08afff682ff7f3f2",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.1b8f640c2e3b08a0",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.24c183edef7b9c1b",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.265a7bbb40fb9df0",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.303dd08dd5cf44bd",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.3185593dc5dc8226",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.337087f2621c76b0",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.4f435d1d8bf06eef",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.507f4964290a9bf1",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.5429cab6adf3671f",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.5741090bebe0c878",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.579543192e929e8c",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.59755656a503791a",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.5c3c19039710d882",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.679721fe0fc89c2d",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.6be9e3d0e7aa7dd6",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.74ca12e56a7c7dae",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.753963f00afb44c3",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.76a8045adbf8f262",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.8238e243c4898e68",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.85ac8f3c1469cdfb",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.91410bd723c41356",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.a7652c4b77edc85b",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.b405f0e15f5c9b79",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.b6122cd7d2cbe602",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.b96d4ad6c5997de9",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.be438b998f2105f7",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.c67cc02bc05cf9dd",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.c6ef3c9d52df176b",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.da1477846288dcf1",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.dafbc949746dc643",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.e719cd444c87f153",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    },
+    {
+      "id": "picture.ukraine.f397638fc836b8f4",
+      "required": false,
+      "group": "pictures",
+      "kindAtLedgerWrite": "recipe",
+      "fileSHA256AtLedgerWrite": null,
+      "nativeSpecimenInspection": {
+        "status": "not inspected in this native specimen pass"
+      },
+      "contextInspection": {
+        "status": "unverified in this pass"
+      },
+      "runtimeUse": "See runtime bindings and per-context evidence; registration alone is not use."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "format": "revealline-reveal-crop-decisions.v1",
+  "records": [
+    {
+      "exportId": "scene-homeward-03-1152x576",
+      "sourceId": "scene-homeward-03",
+      "sourceDimensions": { "width": 1448, "height": 1086 },
+      "crop": { "x": 0, "y": 96, "width": 1448, "height": 724 },
+      "reason": "Full source inspection found that a centered 2:1 crop cuts the top of the moon. Move this separate wide crop upward to preserve the entire moon, beacon tower, keeper cottage and river bend. The lower foreground is expendable; the 4:3 derivative retains the complete source frame.",
+      "status": "source composition crop chosen; prepared and in-game review separate"
+    }
+  ]
+}

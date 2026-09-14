@@ -34,7 +34,8 @@
         <button type="button" id="undo-draft" disabled>Undo draft</button
         ><button type="button" id="redo-draft" disabled>Redo draft</button
         ><button type="button" id="reset-draft" disabled>Reset to saved</button
-        ><button type="button" id="reload-workspace">Reload saved</button>
+        ><button type="button" id="reload-workspace">Reload saved</button
+        ><button type="button" id="load-release">Load release collection</button>
       </div>
     </div>
     <p id="studio-status" class="status-bar" role="status" aria-live="polite">
@@ -197,6 +198,7 @@
             </div>
           </div>
           <div id="geometry-panel" hidden>
+            <p id="geometry-usage" class="hint"></p>
             <div class="field-grid">
               <label
                 >Pivot X (0–1)<input

@@ -7,8 +7,9 @@ const polygon = (ctx, points) => {ctx.beginPath(); points.forEach(([x, y], i) =>
 export function fittedBodySize(body, image, scale = 1) {
   const width = body.widthCells * scale, height = body.heightCells * scale;
   if (!image) return {width, height};
-  const factor = Math.min(width / image.naturalWidth, height / image.naturalHeight);
-  return {width: image.naturalWidth * factor, height: image.naturalHeight * factor};
+  const sourceWidth = image.naturalWidth ?? image.width, sourceHeight = image.naturalHeight ?? image.height;
+  const factor = Math.min(width / sourceWidth, height / sourceHeight);
+  return {width: sourceWidth * factor, height: sourceHeight * factor};
 }
 
 function drawEffect(ctx, component, animation, width, height, speedRatio, reduced, pixel) {
@@ -79,7 +80,8 @@ export function paintCharacter(ctx, {body, image, recipe, animation, colors, sca
   if (image) {
     ctx.imageSmoothingEnabled = body.sampling === "linear";
     ctx.shadowColor = colors.body; ctx.shadowBlur = 1.2;
-    ctx.drawImage(image,-width/2,-height/2,width,height); ctx.shadowBlur = 0;
+    const pivot = body.presentationPivot || {x:.5,y:.5};
+    ctx.drawImage(image,-width*pivot.x,-height*pivot.y,width,height); ctx.shadowBlur = 0;
     if (body.centerMark) {
       const w = body.centerMark.widthCells*scale, h = body.centerMark.heightCells*scale;
       ctx.fillStyle = body.centerMark.topColor; ctx.fillRect(-w/2,-h/2,w,h/2);

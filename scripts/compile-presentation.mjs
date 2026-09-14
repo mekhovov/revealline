@@ -8,7 +8,10 @@ import {
   hashPresentationBytes,
   importThemeBundle,
 } from '../game/presentation/bundle.mjs';
-import { presentationCSSVariables } from '../game/presentation/runtime.mjs';
+import {
+  presentationCSSVariables,
+  presentationFontDescriptors,
+} from '../game/presentation/runtime.mjs';
 import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { campaignKey } from '../game/library.mjs';
 import { validatePack } from '../game/packs.mjs';
@@ -45,6 +48,13 @@ export async function compilePresentation(
       .filter((asset) => asset.file)
       .map((asset) => [asset.file.sha256, asset]),
   );
+  // The studio retains immutable history; runtime URLs still expose only the
+  // selected snapshot. Hash-addressed bytes are written once for both readers.
+  for (const asset of document.assets.filter((item) => item.file)) {
+    const { sha256: hash, mime } = asset.file;
+    const name = `assets/${hash}.${extensions[mime]}`;
+    if (!files.has(name)) files.set(name, new Uint8Array(await assets.get(hash).arrayBuffer()));
+  }
   for (const [hash, asset] of [...selected].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))) {
     const name = `assets/${hash}.${extensions[asset.file.mime]}`;
     required(
@@ -59,7 +69,7 @@ export async function compilePresentation(
     .filter(([, asset]) => asset.kind === 'font')
     .map(
       ([hash]) =>
-        `@font-face { font-family: 'RLAsset-${hash}'; src: url('${urls[hash]}'); font-display: swap; }`,
+        `@font-face { font-family: 'RLAsset-${hash}'; src: url('${urls[hash]}'); font-weight: ${presentationFontDescriptors(resolved, hash).weight}; font-style: normal; font-display: swap; }`,
     );
   const css = [
     ...fonts,
@@ -71,6 +81,7 @@ export async function compilePresentation(
     '',
   ].join('\n');
   files.set('theme.css', encode(css));
+  files.set('studio.json', encode(canonicalJSON(document) + '\n'));
   files.set(
     'runtime.json',
     encode(

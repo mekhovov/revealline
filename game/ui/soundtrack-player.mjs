@@ -71,7 +71,8 @@ export function createSoundtrackPlayer({
     current = null,
     pending = null,
     dirty = false;
-  let authored = null,
+  let published = null,
+    authored = null,
     lastPositionSecond = -1,
     resourceGeneration = 0,
     notice = null;
@@ -94,12 +95,24 @@ export function createSoundtrackPlayer({
     ...BUILTIN_SOUNDTRACK_TRACKS,
     ...library.tracks,
     ...(authored ? [authored] : []),
+    ...(published ? [published] : []),
   ];
   const resolve = () => {
     const selected = resolveSoundtrackSelection(
       { ...library, selection: { playlistId: override } },
       context,
     );
+    if (selected.source === 'default' && published?.allowed())
+      return {
+        source: 'published',
+        playlist: {
+          id: 'builtin.published.current',
+          title: published.title,
+          trackIds: [published.id],
+          order: 'ordered',
+          repeat: 'all',
+        },
+      };
     if (selected.source === 'default' && authored)
       return {
         source: 'authored',
@@ -120,13 +133,19 @@ export function createSoundtrackPlayer({
       const p = soundscape.musicPosition();
       return { ...p, positionSeconds: pendingSeek ?? p.positionSeconds };
     }
+    const durationSeconds =
+      current.kind === 'published'
+        ? Number.isFinite(media.duration)
+          ? Math.max(0, media.duration)
+          : 0
+        : current.asset.durationSeconds;
     return {
       positionSeconds:
         pendingSeek ??
         (Number.isFinite(media.currentTime)
-          ? Math.max(0, Math.min(media.currentTime, current.asset.durationSeconds))
+          ? Math.max(0, Math.min(media.currentTime, durationSeconds))
           : 0),
-      durationSeconds: current.asset.durationSeconds,
+      durationSeconds,
     };
   }
   function snapshot() {
@@ -295,15 +314,28 @@ export function createSoundtrackPlayer({
           status = 'playing';
         }
       } else {
-        const blob = ownSoundtrackBlob(
-          await readAsset(current.asset.sha256, { signal: controller.signal }),
-        );
+        const blob =
+          current.kind === 'published'
+            ? await current.readBlob({ signal: controller.signal })
+            : ownSoundtrackBlob(
+                await readAsset(current.asset.sha256, { signal: controller.signal }),
+              );
         throwIfSoundtrackAborted(controller.signal);
-        const actual = await inspectMP3(blob, { signal: controller.signal });
-        required(
-          canonicalJSON(actual) === canonicalJSON(current.asset),
-          'Stored audio bytes do not match this track.',
-        );
+        if (current.kind === 'published') {
+          required(
+            blob instanceof Blob &&
+              blob.size > 0 &&
+              blob.size <= 4 * 1024 * 1024 &&
+              ['audio/wav', 'audio/ogg', 'audio/mpeg'].includes(blob.type),
+            'Published audio is unavailable.',
+          );
+        } else {
+          const actual = await inspectMP3(blob, { signal: controller.signal });
+          required(
+            canonicalJSON(actual) === canonicalJSON(current.asset),
+            'Stored audio bytes do not match this track.',
+          );
+        }
         if (token !== generation || disposed) return false;
         url = URLImpl.createObjectURL(blob);
         const expectedURL = url,
@@ -338,6 +370,11 @@ export function createSoundtrackPlayer({
         gains();
         if (desired) {
           const enabled = soundscape.enable();
+          if (
+            current.kind === 'published' &&
+            (!(await enabled) || token !== generation || disposed || !desired)
+          )
+            return false;
           await media.play();
           await enabled;
           if (token !== generation || disposed || !desired) return false;
@@ -432,6 +469,41 @@ export function createSoundtrackPlayer({
     emit();
     return snapshot();
   }
+  /** Code-owned release fallback only; never enters the saved track library. */
+  function setPublishedTrack(value) {
+    if (disposed) return snapshot();
+    if (value !== null)
+      required(
+        value &&
+          /^published\.[a-f0-9]{64}$/.test(value.id) &&
+          typeof value.title === 'string' &&
+          typeof value.readBlob === 'function' &&
+          typeof value.allowed === 'function',
+        'Invalid published music adapter.',
+      );
+    if (!value && current?.kind === 'published') {
+      cancel();
+      clearMedia();
+      soundscape.pauseMusic();
+      current = null;
+      status = 'paused';
+    }
+    published = value
+      ? Object.freeze({
+          ...value,
+          title: value.title.slice(0, 160),
+          artist: 'Published game theme',
+          kind: 'published',
+        })
+      : null;
+    const selected = resolve();
+    if (selected.source === 'published' || playlist?.id === 'builtin.published.current') {
+      dirty = true;
+      pending = selected;
+    }
+    emit();
+    return snapshot();
+  }
   function setLibrary(value) {
     const next = resolveSoundtrackLibrary(value),
       previousStored = library.selection.playlistId;
@@ -500,6 +572,11 @@ export function createSoundtrackPlayer({
           soundscape.resumeMusic();
         } else {
           const enabled = soundscape.enable();
+          if (
+            current.kind === 'published' &&
+            (!(await enabled) || token !== generation || disposed || !desired)
+          )
+            return false;
           await media.play();
           await enabled;
         }
@@ -624,6 +701,7 @@ export function createSoundtrackPlayer({
     setLibrary,
     setContext,
     setAuthoredTrack,
+    setPublishedTrack,
     selectPlaylist,
     play,
     pause,

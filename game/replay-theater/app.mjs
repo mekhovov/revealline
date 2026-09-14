@@ -1,3 +1,4 @@
+import { mountPresentationPage } from '../presentation/page.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { prepareReplayPlayer } from '../replay-player.mjs';
 import { MAX_REPLAY_BYTES } from '../replay.mjs';
@@ -6,6 +7,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
 
 const $ = (id) => document.getElementById(id);
+const presentationPage = mountPresentationPage();
 const examples = {
   'fieldcraft-01': {
     file: './data/fieldcraft-01.replay.json',
@@ -49,6 +51,7 @@ try {
   $('reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let player = null,
     painter = null,
+    releasePresentationPainter = null,
     pending = false,
     epoch = 0,
     controller = null,
@@ -173,7 +176,9 @@ try {
       $('board').parentElement.style.setProperty('--board-ratio', String(size.width / size.height));
       $('board').parentElement.style.setProperty('--board-width', `${size.width}px`);
       player = nextPlayer;
+      releasePresentationPainter?.();
       painter = nextPainter;
+      releasePresentationPainter = presentationPage.bindPainter(painter);
       player.setRate(Number($('speed').value));
       lastClass = player.state.activeClassId;
       lastFrame = 0;
@@ -295,6 +300,8 @@ try {
     },
     onDispose: () => {
       disposed = true;
+      releasePresentationPainter?.();
+      presentationPage.close();
       globalThis.cancelAnimationFrame?.(frameId);
       nativeUnsubscribe?.();
     },

@@ -1,0 +1,2129 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Field Kit sprite review</title
+  ><link rel="stylesheet" href="../../../ui/field-kit-fonts.css" /><style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #070b12;
+      color: #f3f0db;
+      font:
+        18px/1.5 'Field Kit UI',
+        sans-serif;
+    }
+    header {
+      padding: 32px;
+      max-width: 1100px;
+    }
+    h1 {
+      font:
+        600 52px/1 'Field Kit Display',
+        sans-serif;
+      margin: 12px 0;
+    }
+    p {
+      color: #a5b2bb;
+    }
+    a {
+      color: #78dce8;
+    }
+    .status {
+      color: #f4bf62;
+      font:
+        14px 'Field Kit Mono',
+        monospace;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 16px;
+      padding: 16px 32px 48px;
+    }
+    .card {
+      padding: 20px;
+      background: #101923;
+      border: 1px solid #425563;
+      min-width: 0;
+    }
+    .card h2 {
+      font-size: 19px;
+      margin: 0;
+      color: #78dce8;
+    }
+    .big {
+      height: 208px;
+      display: grid;
+      place-items: center;
+      background: repeating-conic-gradient(#101923 0% 25%, #182531 0% 50%) 50%/16px 16px;
+      margin: 16px 0;
+    }
+    .big img {
+      width: 192px;
+      height: 192px;
+      image-rendering: pixelated;
+    }
+    .native {
+      display: flex;
+      gap: 20px;
+      align-items: flex-end;
+      min-height: 64px;
+    }
+    .native figure {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      justify-items: center;
+      font:
+        12px 'Field Kit Mono',
+        monospace;
+    }
+    .native img {
+      image-rendering: pixelated;
+    }
+    .light {
+      background: #f3f0db;
+      padding: 8px;
+    }
+    .card p {
+      font-size: 14px;
+    }
+    .card code {
+      font:
+        12px 'Field Kit Mono',
+        monospace;
+      overflow-wrap: anywhere;
+    }
+    summary {
+      cursor: pointer;
+      color: #78dce8;
+      font-size: 16px;
+    }
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      background: #070b12;
+      color: #f3f0db;
+      border: 1px solid #647786;
+      padding: 12px;
+      resize: vertical;
+      font:
+        14px/1.5 'Field Kit UI',
+        sans-serif;
+    }
+    button {
+      font:
+        16px 'Field Kit UI',
+        sans-serif;
+      min-height: 44px;
+      background: #182531;
+      color: #f3f0db;
+      border: 1px solid #647786;
+      padding: 8px 16px;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #78dce8;
+      outline-offset: 3px;
+    }
+    @media (max-width: 500px) {
+      header {
+        padding: 24px;
+      }
+      .grid {
+        padding: 12px;
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <header>
+    <div class="status">PRODUCED · NOT YET REVIEWED</div>
+    <h1>Field Kit sprite review</h1>
+    <p>
+      Thirty original code-authored pixel assets. No pixels were taken from the hardware concept
+      study, legacy game art, or Xposed references. North is up; player images contain static motor
+      hubs and no propellers. Compact 32 and detailed 64 are rendered directly at their native pixel
+      grids.
+    </p>
+    <p>
+      Review the 20, 24, and 32 CSS pixel samples and enlarged clusters, then check the real board.
+      This page is an asset review, not gameplay. Camera/front orientation and cosmetic geometry do
+      not change hitboxes.
+    </p>
+    <a href="./sprites.json">Complete provenance and geometry</a> ·
+    <a href="./contact-sheet.png">PNG contact sheet</a> ·
+    <a href="../../../../authoring/asset-studio/">Asset Studio</a>
+  </header>
+  <main class="grid">
+    <article class="card">
+      <h2>player.scout.compact</h2>
+      <div class="big">
+        <img
+          src="./player-scout-compact.png"
+          alt="Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps the reference scout silhouette light."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-scout-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-scout-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-scout-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-scout-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps
+        the reference scout silhouette light.
+      </p>
+      <p>32×32px · 8 colors · 325 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit scout compact body for slot player.scout.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.scout.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-scout-detailed.png"
+          alt="Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps the reference scout silhouette light."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-scout-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-scout-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-scout-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-scout-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Slim X frame with one strapped amber battery and a front camera. The narrow fuselage keeps
+        the reference scout silhouette light.
+      </p>
+      <p>64×64px · 8 colors · 600 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit scout detailed body for slot player.scout.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.bomber.compact</h2>
+      <div class="big">
+        <img
+          src="./player-bomber-compact.png"
+          alt="Wider chassis with a green payload pack and two side pods. Twin amber retention bands distinguish the carrying equipment."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-bomber-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-bomber-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-bomber-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-bomber-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Wider chassis with a green payload pack and two side pods. Twin amber retention bands
+        distinguish the carrying equipment.
+      </p>
+      <p>32×32px · 10 colors · 314 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit bomber compact body for slot player.bomber.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.bomber.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-bomber-detailed.png"
+          alt="Wider chassis with a green payload pack and two side pods. Twin amber retention bands distinguish the carrying equipment."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-bomber-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-bomber-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-bomber-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-bomber-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Wider chassis with a green payload pack and two side pods. Twin amber retention bands
+        distinguish the carrying equipment.
+      </p>
+      <p>64×64px · 10 colors · 564 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit bomber detailed body for slot player.bomber.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.carrier.compact</h2>
+      <div class="big">
+        <img
+          src="./player-carrier-compact.png"
+          alt="Six explicit motors around a tall cargo cage. Amber side rails and three cross straps retain the heavier green pack."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-carrier-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-carrier-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-carrier-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-carrier-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Six explicit motors around a tall cargo cage. Amber side rails and three cross straps retain
+        the heavier green pack.
+      </p>
+      <p>32×32px · 9 colors · 328 bytes · 6 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          six explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.3,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.2,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.8,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.3,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit carrier compact body for slot player.carrier.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.3,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.2,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.8,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.3,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep six explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.carrier.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-carrier-detailed.png"
+          alt="Six explicit motors around a tall cargo cage. Amber side rails and three cross straps retain the heavier green pack."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-carrier-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-carrier-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-carrier-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-carrier-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Six explicit motors around a tall cargo cage. Amber side rails and three cross straps retain
+        the heavier green pack.
+      </p>
+      <p>64×64px · 10 colors · 639 bytes · 6 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          six explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.3,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.2,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.8,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.3,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit carrier detailed body for slot player.carrier.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.3,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.2,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.2,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.8,&quot;y&quot;:0.5,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.3,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.7,&quot;y&quot;:0.8,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep six explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.interceptor.compact</h2>
+      <div class="big">
+        <img
+          src="./player-interceptor-compact.png"
+          alt="Swept angular center frame, narrow battery and amber rear chevron. The sharp waist distinguishes the fast class without changing its motor locations."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-interceptor-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-interceptor-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-interceptor-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-interceptor-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Swept angular center frame, narrow battery and amber rear chevron. The sharp waist
+        distinguishes the fast class without changing its motor locations.
+      </p>
+      <p>32×32px · 8 colors · 341 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit interceptor compact body for slot player.interceptor.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.interceptor.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-interceptor-detailed.png"
+          alt="Swept angular center frame, narrow battery and amber rear chevron. The sharp waist distinguishes the fast class without changing its motor locations."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-interceptor-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-interceptor-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-interceptor-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-interceptor-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Swept angular center frame, narrow battery and amber rear chevron. The sharp waist
+        distinguishes the fast class without changing its motor locations.
+      </p>
+      <p>64×64px · 8 colors · 635 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit interceptor detailed body for slot player.interceptor.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.fiber.compact</h2>
+      <div class="big">
+        <img
+          src="./player-fiber-compact.png"
+          alt="Rear cyan cable reel with dark flanges, separate from the amber battery. Compact drawings keep the reel as one readable horizontal cluster."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-fiber-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-fiber-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-fiber-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-fiber-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Rear cyan cable reel with dark flanges, separate from the amber battery. Compact drawings
+        keep the reel as one readable horizontal cluster.
+      </p>
+      <p>32×32px · 7 colors · 303 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit fiber compact body for slot player.fiber.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.fiber.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-fiber-detailed.png"
+          alt="Rear cyan cable reel with dark flanges, separate from the amber battery. Compact drawings keep the reel as one readable horizontal cluster."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-fiber-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-fiber-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-fiber-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-fiber-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Rear cyan cable reel with dark flanges, separate from the amber battery. Compact drawings
+        keep the reel as one readable horizontal cluster.
+      </p>
+      <p>64×64px · 8 colors · 567 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit fiber detailed body for slot player.fiber.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.impact.compact</h2>
+      <div class="big">
+        <img
+          src="./player-impact-compact.png"
+          alt="Pale front armor around a protected cyan camera and a short rear battery. The broad nose gives a distinct contact-oriented silhouette."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-impact-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-impact-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-impact-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-impact-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Pale front armor around a protected cyan camera and a short rear battery. The broad nose
+        gives a distinct contact-oriented silhouette.
+      </p>
+      <p>32×32px · 8 colors · 331 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit impact compact body for slot player.impact.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.impact.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-impact-detailed.png"
+          alt="Pale front armor around a protected cyan camera and a short rear battery. The broad nose gives a distinct contact-oriented silhouette."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-impact-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-impact-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-impact-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-impact-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Pale front armor around a protected cyan camera and a short rear battery. The broad nose
+        gives a distinct contact-oriented silhouette.
+      </p>
+      <p>64×64px · 8 colors · 583 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit impact detailed body for slot player.impact.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.trapper.compact</h2>
+      <div class="big">
+        <img
+          src="./player-trapper-compact.png"
+          alt="Two long side equipment rails and split amber battery clusters around a cyan middle connector. The cage remains legible without baked cables or propellers."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-trapper-compact.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-trapper-compact.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-trapper-compact.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-trapper-compact.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Two long side equipment rails and split amber battery clusters around a cyan middle
+        connector. The cage remains legible without baked cables or propellers.
+      </p>
+      <p>32×32px · 8 colors · 327 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.65625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit trapper compact body for slot player.trapper.compact. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>player.trapper.detailed</h2>
+      <div class="big">
+        <img
+          src="./player-trapper-detailed.png"
+          alt="Two long side equipment rails and split amber battery clusters around a cyan middle connector. The cage remains legible without baked cables or propellers."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./player-trapper-detailed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-trapper-detailed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./player-trapper-detailed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./player-trapper-detailed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Two long side equipment rails and split amber battery clusters around a cyan middle
+        connector. The cage remains legible without baked cables or propellers.
+      </p>
+      <p>64×64px · 8 colors · 586 bytes · 4 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing body with real alpha, center pivot and no baked propeller blades.<br />Keep
+          four explicit motor hubs; rotor anchors use the full source rectangle.<br />Review at 20,
+          24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.125,&quot;width&quot;:0.640625,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit trapper detailed body for slot player.trapper.detailed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Preserve the exact registered motor positions; draw static hubs only. Never bake propeller blades, discs, speed arcs, or rotor blur. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.125,&quot;width&quot;:0.75,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[{&quot;x&quot;:0.25,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.25,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.25,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3},{&quot;x&quot;:0.75,&quot;y&quot;:0.75,&quot;radius&quot;:0.12,&quot;blades&quot;:3}],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing body with real alpha, center pivot and no baked propeller blades.
+- Keep four explicit motor hubs; rotor anchors use the full source rectangle.
+- Review at 20, 24 and 32 CSS pixels; cosmetic size never changes the contact radius.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.bouncer</h2>
+      <div class="big">
+        <img
+          src="./enemy-bouncer.png"
+          alt="Tracked patrol vehicle with a forward barrel and coral turret sensor; twin treads distinguish it from flying player craft."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-bouncer.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-bouncer.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-bouncer.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-bouncer.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Tracked patrol vehicle with a forward barrel and coral turret sensor; twin treads
+        distinguish it from flying player craft.
+      </p>
+      <p>32×32px · 6 colors · 290 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.15625,&quot;y&quot;:0.09375,&quot;width&quot;:0.6875,&quot;height&quot;:0.78125},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit bouncer body for slot enemy.bouncer. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.border-patrol</h2>
+      <div class="big">
+        <img
+          src="./enemy-border-patrol.png"
+          alt="Coral patrol quad with broad angular center armor and four static motor hubs. The engine draws its movement and threat cues separately."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-border-patrol.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-border-patrol.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-border-patrol.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-border-patrol.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Coral patrol quad with broad angular center armor and four static motor hubs. The engine
+        draws its movement and threat cues separately.
+      </p>
+      <p>32×32px · 6 colors · 295 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.1875,&quot;y&quot;:0.15625,&quot;width&quot;:0.65625,&quot;height&quot;:0.71875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit border-patrol body for slot enemy.border-patrol. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.contour-patrol</h2>
+      <div class="big">
+        <img
+          src="./enemy-contour-patrol.png"
+          alt="Four-wheel armored patrol with paired front optics and a squared cabin."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-contour-patrol.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-contour-patrol.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-contour-patrol.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-contour-patrol.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Four-wheel armored patrol with paired front optics and a squared cabin.</p>
+      <p>32×32px · 7 colors · 269 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.15625,&quot;y&quot;:0.15625,&quot;width&quot;:0.6875,&quot;height&quot;:0.71875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit contour-patrol body for slot enemy.contour-patrol. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.claimed-rover</h2>
+      <div class="big">
+        <img
+          src="./enemy-claimed-rover.png"
+          alt="Low tracked reclaiming rover with an open front fork and green utility hull."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-claimed-rover.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-claimed-rover.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-claimed-rover.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-claimed-rover.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Low tracked reclaiming rover with an open front fork and green utility hull.</p>
+      <p>32×32px · 8 colors · 282 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.15625,&quot;y&quot;:0.15625,&quot;width&quot;:0.6875,&quot;height&quot;:0.71875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit claimed-rover body for slot enemy.claimed-rover. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.eroder</h2>
+      <div class="big">
+        <img
+          src="./enemy-eroder.png"
+          alt="Tracked erosion machine with a wide toothed front blade and a coral rear sensor. The blade is a static part of the authored silhouette."
+          width="32"
+          height="32"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-eroder.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-eroder.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-eroder.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-eroder.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Tracked erosion machine with a wide toothed front blade and a coral rear sensor. The blade
+        is a static part of the authored silhouette.
+      </p>
+      <p>32×32px · 7 colors · 275 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.125,&quot;y&quot;:0.15625,&quot;width&quot;:0.75,&quot;height&quot;:0.71875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit eroder body for slot enemy.eroder. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 32 by 32 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 32×32; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:32,&quot;height&quot;:32},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.lane-boss</h2>
+      <div class="big">
+        <img
+          src="./enemy-lane-boss.png"
+          alt="Large rectangular sensor carrier, twin mast tips, heavy side tracks and a coral emitter bank."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-lane-boss.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-lane-boss.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-lane-boss.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-lane-boss.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Large rectangular sensor carrier, twin mast tips, heavy side tracks and a coral emitter
+        bank.
+      </p>
+      <p>64×64px · 7 colors · 446 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.09375,&quot;y&quot;:0.09375,&quot;width&quot;:0.8125,&quot;height&quot;:0.8125},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit lane-boss body for slot enemy.lane-boss. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>enemy.relay-sentinel</h2>
+      <div class="big">
+        <img
+          src="./enemy-relay-sentinel.png"
+          alt="Large raised radar pedestal with an angular front dish, central sensor, and four coral stabilizer feet."
+          width="64"
+          height="64"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./enemy-relay-sentinel.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-relay-sentinel.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./enemy-relay-sentinel.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./enemy-relay-sentinel.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Large raised radar pedestal with an angular front dish, central sensor, and four coral
+        stabilizer feet.
+      </p>
+      <p>64×64px · 7 colors · 515 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          North-facing square image with real alpha.<br />Keep contact-center, threat-role and
+          direction cues separately drawn.<br />A body replacement never changes movement,
+          collision, score or difficulty.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.09375,&quot;y&quot;:0.0625,&quot;width&quot;:0.75,&quot;height&quot;:0.84375},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit relay-sentinel body for slot enemy.relay-sentinel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 64 by 64 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 64×64; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:64,&quot;height&quot;:64},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- North-facing square image with real alpha.
+- Keep contact-center, threat-role and direction cues separately drawn.
+- A body replacement never changes movement, collision, score or difficulty.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>terrain.wall</h2>
+      <div class="big">
+        <img
+          src="./terrain-wall.png"
+          alt="Opaque slate blocks use stepped mortar, top highlights and a staggered layout to preserve a solid cell footprint."
+          width="16"
+          height="16"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./terrain-wall.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-wall.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-wall.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./terrain-wall.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Opaque slate blocks use stepped mortar, top highlights and a staggered layout to preserve a
+        solid cell footprint.
+      </p>
+      <p>16×16px · 4 colors · 146 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep the entire 16×16 cell footprint visible.<br />Differentiate material by pattern and
+          shape as well as color.<br />Do not change traversability or affected actor types.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:1,&quot;height&quot;:1},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit wall terrain tile for slot terrain.wall. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 16×16; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep the entire 16×16 cell footprint visible.
+- Differentiate material by pattern and shape as well as color.
+- Do not change traversability or affected actor types.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>terrain.slow</h2>
+      <div class="big">
+        <img
+          src="./terrain-slow.png"
+          alt="Opaque olive ground and winding dark ruts distinguish slow material from a rigid wall; short cool highlights suggest wet tracks."
+          width="16"
+          height="16"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./terrain-slow.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-slow.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-slow.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./terrain-slow.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Opaque olive ground and winding dark ruts distinguish slow material from a rigid wall; short
+        cool highlights suggest wet tracks.
+      </p>
+      <p>16×16px · 5 colors · 144 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep the entire 16×16 cell footprint visible.<br />Differentiate material by pattern and
+          shape as well as color.<br />Do not change traversability or affected actor types.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:1,&quot;height&quot;:1},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit slow terrain tile for slot terrain.slow. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 16×16; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep the entire 16×16 cell footprint visible.
+- Differentiate material by pattern and shape as well as color.
+- Do not change traversability or affected actor types.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>terrain.lethal</h2>
+      <div class="big">
+        <img
+          src="./terrain-lethal.png"
+          alt="Coral diagonal hazard bands around a dark metal grate. Pattern and color distinguish the entire hazardous cell."
+          width="16"
+          height="16"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./terrain-lethal.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-lethal.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./terrain-lethal.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./terrain-lethal.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>
+        Coral diagonal hazard bands around a dark metal grate. Pattern and color distinguish the
+        entire hazardous cell.
+      </p>
+      <p>16×16px · 5 colors · 148 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep the entire 16×16 cell footprint visible.<br />Differentiate material by pattern and
+          shape as well as color.<br />Do not change traversability or affected actor types.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:1,&quot;height&quot;:1},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit lethal terrain tile for slot terrain.lethal. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 16×16; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep the entire 16×16 cell footprint visible.
+- Differentiate material by pattern and shape as well as color.
+- Do not change traversability or affected actor types.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.objective</h2>
+      <div class="big">
+        <img
+          src="./pickup-objective.png"
+          alt="Cyan relay diamond with a pale transmitter cap and an amber mast."
+          width="16"
+          height="16"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-objective.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-objective.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-objective.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-objective.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Cyan relay diamond with a pale transmitter cap and an amber mast.</p>
+      <p>16×16px · 5 colors · 156 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.0625,&quot;y&quot;:0.0625,&quot;width&quot;:0.875,&quot;height&quot;:0.875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit objective pickup for slot pickup.objective. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 16×16; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.supply</h2>
+      <div class="big">
+        <img
+          src="./pickup-supply.png"
+          alt="Strapped olive field crate with a pale cross and an amber latch band."
+          width="16"
+          height="16"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-supply.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-supply.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-supply.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-supply.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Strapped olive field crate with a pale cross and an amber latch band.</p>
+      <p>16×16px · 6 colors · 152 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.0625,&quot;y&quot;:0.1875,&quot;width&quot;:0.8125,&quot;height&quot;:0.6875},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit supply pickup for slot pickup.supply. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 16×16; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:16,&quot;height&quot;:16},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.life</h2>
+      <div class="big">
+        <img
+          src="./pickup-life.png"
+          alt="Coral heart with a broad pale highlight, drawn as a small independent pixel symbol."
+          width="24"
+          height="24"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-life.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-life.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-life.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-life.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Coral heart with a broad pale highlight, drawn as a small independent pixel symbol.</p>
+      <p>24×24px · 3 colors · 185 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.041666666666666664,&quot;y&quot;:0.20833333333333334,&quot;width&quot;:0.875,&quot;height&quot;:0.6666666666666666},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit life pickup for slot pickup.life. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 24×24; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.speed</h2>
+      <div class="big">
+        <img
+          src="./pickup-speed.png"
+          alt="Two forward cyan chevrons with a dark separating edge."
+          width="24"
+          height="24"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-speed.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-speed.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-speed.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-speed.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Two forward cyan chevrons with a dark separating edge.</p>
+      <p>24×24px · 3 colors · 137 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.041666666666666664,&quot;y&quot;:0.16666666666666666,&quot;width&quot;:0.9166666666666666,&quot;height&quot;:0.6666666666666666},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit speed pickup for slot pickup.speed. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 24×24; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.slow</h2>
+      <div class="big">
+        <img
+          src="./pickup-slow.png"
+          alt="Amber hourglass with a pale waist and metal end caps."
+          width="24"
+          height="24"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-slow.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-slow.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-slow.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-slow.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Amber hourglass with a pale waist and metal end caps.</p>
+      <p>24×24px · 4 colors · 159 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.20833333333333334,&quot;y&quot;:0.125,&quot;width&quot;:0.5416666666666666,&quot;height&quot;:0.75},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit slow pickup for slot pickup.slow. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 24×24; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+    <article class="card">
+      <h2>pickup.freeze</h2>
+      <div class="big">
+        <img
+          src="./pickup-freeze.png"
+          alt="Cyan eight-point freeze symbol with a pale central crystal and axial tips."
+          width="24"
+          height="24"
+        />
+      </div>
+      <div class="native">
+        <figure>
+          <img src="./pickup-freeze.png" alt="" style="width: 20px; height: 20px" />
+          <figcaption>20px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-freeze.png" alt="" style="width: 24px; height: 24px" />
+          <figcaption>24px</figcaption>
+        </figure>
+        <figure>
+          <img src="./pickup-freeze.png" alt="" style="width: 32px; height: 32px" />
+          <figcaption>32px</figcaption>
+        </figure>
+        <figure>
+          <span class="light"
+            ><img src="./pickup-freeze.png" alt="" style="width: 32px; height: 32px"
+          /></span>
+          <figcaption>light32</figcaption>
+        </figure>
+      </div>
+      <p>Cyan eight-point freeze symbol with a pale central crystal and axial tips.</p>
+      <p>24×24px · 3 colors · 233 bytes · 0 motor anchors</p>
+      <details>
+        <summary>Requirements and geometry</summary>
+        <p>
+          Keep functional text separate from artwork.<br />Preserve gameplay geometry and input
+          behavior.<br />Review the actual-size preview on light and dark backgrounds.
+        </p>
+        <code
+          >{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:{&quot;x&quot;:0.041666666666666664,&quot;y&quot;:0.041666666666666664,&quot;width&quot;:0.9166666666666666,&quot;height&quot;:0.9166666666666666},&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}</code
+        >
+      </details>
+      <details>
+        <summary>Copyable AI variation brief</summary>
+        <textarea readonly>
+Create one original FPV Field Kit freeze pickup for slot pickup.freeze. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.
+
+PRODUCTION FAMILY: Original Field Kit pixel sprites v1. Native frame 24×24; do not downsample an illustration. Use deliberate clusters, binary transparency, no gradients or antialiasing, and at most 12 opaque colors from #070b12, #101923, #182531, #425563, #647786, #a5b2bb, #f3f0db, #78dce8, #f4bf62, #f07879, #9dbb7a, #687c55. Camera/front points NORTH at the top of the frame. Keep text, gameplay hitboxes, selection badges and contact rings separate.
+
+SLOT GEOMETRY:
+{&quot;frame&quot;:{&quot;x&quot;:0,&quot;y&quot;:0,&quot;width&quot;:24,&quot;height&quot;:24},&quot;pivot&quot;:{&quot;x&quot;:0.5,&quot;y&quot;:0.5},&quot;occupiedBounds&quot;:null,&quot;rotorAnchors&quot;:[],&quot;nineSlice&quot;:null}
+
+REQUIREMENTS:
+- Keep functional text separate from artwork.
+- Preserve gameplay geometry and input behavior.
+- Review the actual-size preview on light and dark backgrounds.
+
+Save an untouched source, exact-size PNG, provenance and effective prompt. Review at 20, 24, and 32 CSS pixels on ink, light and actual arena backgrounds. A candidate is produced, not reviewed. Existing earned artwork and reference/game-generated sources must remain unchanged.</textarea
+        ><button type="button">Copy full prompt</button>
+        <p role="status"></p>
+      </details>
+    </article>
+  </main>
+  <script>
+    document.querySelectorAll('button').forEach(
+      (button) =>
+        (button.onclick = async () => {
+          const text = button.previousElementSibling;
+          try {
+            await navigator.clipboard.writeText(text.value);
+            button.nextElementSibling.textContent = 'Prompt copied.';
+          } catch {
+            text.focus();
+            text.select();
+            button.nextElementSibling.textContent = 'Text selected. Press Ctrl/Cmd+C.';
+          }
+        }),
+    );
+  </script>
+</html>

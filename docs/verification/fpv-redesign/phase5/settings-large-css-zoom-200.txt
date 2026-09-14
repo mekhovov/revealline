@@ -1,0 +1,1 @@
+"{\"emulation\":\"CSS body zoom only, not native browser zoom\",\"width\":1440,\"height\":900,\"dpr\":1,\"visualScale\":1,\"bodyZoom\":\"2\",\"text\":\"large\",\"overflow\":0,\"dialog\":{\"x\":0,\"y\":0,\"width\":2080,\"height\":1800,\"top\":0,\"right\":2080,\"bottom\":1800,\"left\":0}}"

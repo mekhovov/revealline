@@ -1,0 +1,482 @@
+{
+  "format": "revealline-generated-reveal-sources.v1",
+  "artContract": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.",
+  "records": [
+    {
+      "id": "scene-homeward-02",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: River railway at dusk. A modest blue-gray railway station sits on the left of a broad river bend, with a short steel rail bridge crossing toward low wooded hills. Reeds and a low platform frame the bottom corners. The river and broad muted amber evening sky remain quiet. Three distinct depth layers and a clear bridge silhouette.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Also intended for an independent 2:1 derivative: keep the entire identifying landmark and important open space inside the central two thirds of the image height, with expendable sky and ground at the outer top/bottom. Do not draw any crop guide. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-551a6161-3ab8-4c5b-bcb1-c206b01f796d.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-02-v1.png",
+        "sha256": "86b30391ab8345696c1cd5ea4be44407ea0774e6b662989136a1156b98d268f4",
+        "bytes": 1948666,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-frayed-causeway-fpv",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Broken island causeway. An elevated oblique view across deep teal water: a damaged old stone crossing links three offset islands, each with a different simple low brick utility structure. One empty gantry stands on the far island. Broad flat water channels and pale stepped stone edges; sparse foreground reeds. No vehicles or debris clutter.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-d25c698f-c540-4120-a3b9-85cb3fd1a43e.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-frayed-causeway-fpv-v1.png",
+        "sha256": "3cb5bc682f9609b10a1e66d30674b1737f94bf091c138f47e3df511bc28e0bbd",
+        "bytes": 2104183,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-open-the-circuit",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Mountain radar station. One large pale parabolic dish on a square pedestal occupies the left third above a low slate field station, its diagonal silhouette clearly readable against distant mountain ridges. A thin quiet service road crosses the lower right and broad navy evening sky leaves ample negative space. One restrained amber window.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-a381f621-eeb2-4d05-b78f-2124d208ca78.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-open-the-circuit-v1.png",
+        "sha256": "128aaebd401c27b2ddc96998351bb6f41890af2f4d531fabe87bf6e5eae75de7",
+        "bytes": 1558744,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-offset-docks-fpv",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Offset lake docks. A long simple wooden dock enters from lower left, while a shorter dock with a small blue boathouse faces it from the right bank. Their endpoints deliberately do not align. Broad calm teal lake fills the center, low island silhouettes at the horizon, muted dusk and a single warm dock lamp.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-321e4b7d-3380-469d-9dcb-6d661db3bf3b.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-offset-docks-fpv-v1.png",
+        "sha256": "4312bbce7343f8b9b8f9c617c50a2ec83d247c323fb01ca6fe3d0077d27779c1",
+        "bytes": 1446784,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-switchyard-gates",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Switchyard gates. An empty industrial rail yard seen in oblique perspective. Two tall square steel gantries on opposite sides frame converging dark rails; a compact signal cabin lies far right. Group sleepers into broad repeating pixel bands. Slate twilight, restrained amber lights, open quiet center, no vehicles.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-8dd1e0a8-34ed-4604-bb47-75f114845973.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-switchyard-gates-v1.png",
+        "sha256": "790af2f1d804b6fc57f582a6b29ce24c02d62eb7b94249eb2a0e279d0f1f5402",
+        "bytes": 1798203,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-homeward-01",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Homeward village. A winding earthen path between two whitewashed blue-shutter cottages leads toward a distant river and low hills. A small apple tree frames the upper left and a few broad sunflower silhouettes frame the lower right. Calm warm dawn, three deliberate depth planes, intimate Ukrainian village mood without insignia or lettering.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Also intended for an independent 2:1 derivative: keep the entire identifying landmark and important open space inside the central two thirds of the image height, with expendable sky and ground at the outer top/bottom. Do not draw any crop guide. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-170f23ce-0ca0-4536-86a3-21aea2f90905.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-01-v1.png",
+        "sha256": "8c8eb454996aad301b21a1d93be71e68fa284b1b8af4b1bddb91dcbf9e1942f4",
+        "bytes": 2025730,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-homeward-03",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Night beacon hill. A small pale beacon tower and low keeper cottage stand on an off-center grassy hill. A river winds around its base toward a distant low town. One pale stepped moon, sparse stars, deep navy sky and one warm window. Clear tower silhouette with quiet open water; no bright glow or tiny sparkling detail.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Also intended for an independent 2:1 derivative: keep the entire identifying landmark and important open space inside the central two thirds of the image height, with expendable sky and ground at the outer top/bottom. Do not draw any crop guide. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-b96dd69d-668f-40a0-88b9-b2c4ff06e708.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-homeward-03-v1.png",
+        "sha256": "e94144332559721f0972ecee500e9dc92acdab6e83be433ff45c7492acce3c85",
+        "bytes": 1543611,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-courtyard-exits",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Sunlit courtyard exits. Low weathered brick mill buildings frame two differently sized archway exits, one broad arch to the left and a narrower gate far right. An open stone courtyard fills the middle. One barrel and a few large grass tufts at the edge. Warm side light, cool navy shadow masses, no vehicles.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-c0832d9e-e393-4501-9586-579be63d01cb.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-courtyard-exits-v1.png",
+        "sha256": "48c4208bbea90ed96bb938ddbce553c22552dc9b07bc92b9d2d4ec4df4841622",
+        "bytes": 2168740,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-night-crossfire",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Night industrial waterway. A broad dark lock basin separates a low foreground quay from distant brick factories. A simple steel bridge crosses the upper middle. Warm rectangular factory windows repeat sparsely against muted blue masses. Open flat water and one large reflection band, no aircraft and no active effects.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-f0cbaf9c-8feb-4b7a-891c-f349a3072abb.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-night-crossfire-v1.png",
+        "sha256": "f6e322dfaba4665c301005e5b99842d5a2c9cf2c61e39c2fbfe8b2524f5f8ba5",
+        "bytes": 1553167,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-split-courtyard",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Rainy split courtyard. Two asymmetric blocky old workshop buildings face each other across a broad wet paved courtyard. A tall arch on the left and low paired gates on the right create a distinctive divided silhouette. Overcast blue-gray evening, restrained amber doorway light and only a few broad stepped puddle reflections.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-85935928-da67-42bd-9129-5539e940dd91.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-split-courtyard-v1.png",
+        "sha256": "e39905b40c42b797fc7b25e50048b2390490aad9207e93259d3462bddab6d61f",
+        "bytes": 1815551,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-listening-court",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Listening relay court. A low walled equipment courtyard contains two thin antenna masts on the left and a squat communications shed to the right. Pale birch trunks frame one edge; misty low hills sit behind the wall. Dark quiet empty foreground and a single amber service light. No van or active drone.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-9f4dbb77-d4f3-467d-a263-928455c7c73a.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-listening-court-v1.png",
+        "sha256": "0b20eb9a4816312f49131ef85de25ca04b6675462a7b37f844ee01a25b84ae4b",
+        "bytes": 1806215,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-crossing-watch-fpv",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Moonlit crossing watch. A small beacon on a left island and a timber lookout shed on the near right bank frame a broad open river crossing. Low mountain silhouettes, a restrained small moon and three wide stepped reflection bands. Strong asymmetric land masses and cool teal water, no sparkles or vehicles.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-94c294c4-9b50-4b3e-9d62-1a87c7fa1d3e.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-crossing-watch-fpv-v1.png",
+        "sha256": "127271f8d736401a2d18287ff2c15cf4269b6a0060ac009588dcc213d4beaf53",
+        "bytes": 1309256,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-orchard-crossing",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Orchard water crossing. An elevated view of orderly orchard rows running diagonally toward a short pale stone arch bridge over a narrow teal stream. Three tall poplar silhouettes mark the far field. Warm dusk, simple clustered fruit-tree crowns and a quiet open track crossing the bottom. No drone or truck.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-cde44147-2b16-410c-b641-b4b7018a4f35.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-orchard-crossing-v1.png",
+        "sha256": "5ef37756a01a64c80bb4790c5207a2a3c6ea15c77ac2019025ac5586792de96c",
+        "bytes": 1859675,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-split-ring-fpv",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Circular silo yard. A large round grain silo with a stepped conical roof stands off center between two low sheds. A broad dirt track splits around its circular base. Muted earth, slate metal and one pale sky band. The round silo is unmistakable at thumbnail size, no vehicles or equipment piles.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-e8f346f2-2ced-47c8-a0d1-31d9c02e4e46.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-split-ring-fpv-v1.png",
+        "sha256": "1f4b721c99d007ecaaec7bda1981243102bc257d07c86ac23206bce0f29f76a9",
+        "bytes": 1416684,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-fault-fan-fpv",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Forked factory yard. Three empty railway tracks fan apart from the lower foreground toward separate distant workshop doors. A low pipe bridge spans the left; a taller square factory block sits to the right. Cool cloudy twilight with sparse amber windows. The rail fan is the defining composition; no shiny micro-reflections.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-11a26f54-9a92-4b6e-b43f-f966ea0accde.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-fault-fan-fpv-v1.png",
+        "sha256": "167e6e39fd6e52e5e5b4b178c78f8fe2ea90b83185635de04965f88420177841",
+        "bytes": 1870086,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-split-signal-foundry",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Signal foundry. A tall brick foundry on the left and a much lower slate workshop on the right frame a narrow central opening. A single inactive signal mast rises in that opening. Broad empty rail apron in foreground, warm doorway accents, cool deep shadows and clear stepped roof silhouettes. No rolling stock or drones.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-1b60dd07-66f5-48f5-aa2e-70e7fa4ecc35.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-split-signal-foundry-v1.png",
+        "sha256": "612dc02d2616f6522bb470d5a406ee182b1d18c022a166cae3e532dfbba7b2bb",
+        "bytes": 1887208,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-crosswind-depot",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Crosswind field depot. Two modest farm sheds frame an open amber field. The near left shed is dark and tall, the far right shed low and pale. Wind-leaning clustered grasses and a bent small tree suggest a crosswind. A diagonal dirt approach crosses the lower foreground. Broad quiet sky, no vehicles.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-664b004a-3326-4e19-8bf0-1e838009b076.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-crosswind-depot-v1.png",
+        "sha256": "741f1a385091ad3f7f2939446023f0b976abe9bd21e6b2985cfb9199448107d5",
+        "bytes": 1893030,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-signal-switchback",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Winter signal switchback. A snow-covered hillside road bends twice between sparse dark pine clusters toward a compact village and one relay mast. Cool slate snow shadows, a pale low dawn and a few amber windows. The winding pale road and distant mast define the scene. Keep winter distinct; no vehicles or people.\nFraming: Wide 2:1 composition. Target source 1536\u00d7768. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-05e71247-b8e8-4a3b-a41c-1f8069c227dd.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-switchback-v1.png",
+        "sha256": "966dc745ade07ae0788d784275bd9b5949e06e49a6adb99ee478ae8fe1fe7da1",
+        "bytes": 1590880,
+        "width": 1774,
+        "height": 887
+      }
+    },
+    {
+      "id": "scene-signal-07",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Short river crossing with separated banks. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-2dd40f1f-483c-4ceb-8b05-7c073b7f00a1.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-07-v1.png",
+        "sha256": "b114eb487ab1bc4124489feec364028583663dba2677ee38aa28bb63674caf50",
+        "bytes": 1803960,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-02",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Distinct orchard rows with a relay at the far corner. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-a200613e-293d-499f-aa45-fd34ec7c5416.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-02-v1.png",
+        "sha256": "8fa0406d8698e5c635c45b5d934bed176554ee83464b2df314c0fe3919399073",
+        "bytes": 1823823,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-04",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Stone-walled lanes with a clear central turn. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-b3420781-c0d8-420a-97b4-9d4452271e6f.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-04-v1.png",
+        "sha256": "01bf629659533682441e23a906c3f2ee3ad61916749825e7a5c3a60ba592057f",
+        "bytes": 1629254,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-10",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Supply sheds around a service loop. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-220a5604-d2e5-4e1f-90f7-e4e659e65893.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-10-v1.png",
+        "sha256": "5bf0351601d7ca28f0da77fb9e6a0164dde672c21b00456f9c792dc73deb3c43",
+        "bytes": 1950136,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-fieldcraft-02",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Actual rail switchyard, gates and track crossings. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-7d4cbf5d-e53b-4932-a279-bbcd7ee7bd37.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-fieldcraft-02-v1.png",
+        "sha256": "00cbcffb88907a3e3b2351cad7d0dba8f74f32067c73b27f9fd3ec7317976691",
+        "bytes": 1756307,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-fieldcraft-01",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Copper-colored bridge with asymmetric abutments. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-570b0a11-e40d-4161-9068-d17bae7650b6.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-fieldcraft-01-v1.png",
+        "sha256": "5508d1527909ddecae4a82253e96386262c93dadba33fb7258feb1619a5a31ba",
+        "bytes": 1577074,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-06",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Secluded antenna behind a wooded ridge. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-600cdca9-2701-4367-bbcb-ff52dc3104b1.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v1.png",
+        "sha256": "499ab6a37034f7318185fe0e87a495d835abbf3988bb05b84659ed07ecde390a",
+        "bytes": 1772428,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-sentinel-relay-01",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Large guarded relay compound with a recognizable central dish. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-f25500a3-ccbb-4b83-baf0-de62348ba524.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-sentinel-relay-01-v1.png",
+        "sha256": "6f79310fb4221dab493ef5062f97a280c0627874736dbf6a4d619479cadd4071",
+        "bytes": 1690677,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-09",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Garden plots around a tiny weather/relay station. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-74a63286-9284-4f29-bfb7-e361a304d12e.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-09-v1.png",
+        "sha256": "e14a0682a2ac5f75745699895cf528827a518eb91db72d88ec119a5d382d137c",
+        "bytes": 1935071,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-fieldcraft-03",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Relay mast reflected in a compact still-water court. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-12e559b7-bb04-44a4-aaa5-33cdd2db9b7d.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-fieldcraft-03-v1.png",
+        "sha256": "24e6d5fd2ae30a481daa157a9c4a3be8a16434fa0c14cb6406ba0a13a5cf79ec",
+        "bytes": 1618571,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-05",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Night outpost with restrained warm windows and a low moon. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-7478b93e-129f-412b-8fa3-c69857234f02.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-05-v1.png",
+        "sha256": "5c904dc1feb9573ec7fbd3dd85ccb66a263255115092cb38b9ef00fe42e24a54",
+        "bytes": 1495178,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-08",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Last-light hill with the sun near the horizon. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-cf9e65f4-6424-4073-a75e-181a09b4e0b7.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-08-v1.png",
+        "sha256": "cc09c272bba5ebe6a345f780a0253fdc46474e8ece6c00c741a8a0b9a6484566",
+        "bytes": 1527108,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-fieldcraft-04",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Cable workshop with drying racks and broad structural silhouettes. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-39599ecc-1f8a-4aac-98e3-d0894e79ba3f.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-fieldcraft-04-v1.png",
+        "sha256": "0904b58329287b8816f0f9373edab3e53a6aa39d0ff8db94abffe76966a704af",
+        "bytes": 1887979,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-11",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Compact maintenance yard with one amber workbench accent. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-6a368387-4d5a-4112-9f20-408d5d9e4ca3.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-11-v1.png",
+        "sha256": "5f4156c14f4c5eaa7ca2a8a0c96f88a0afbaa04681fd6ee06484b20d370b9b32",
+        "bytes": 1626259,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-03",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Wind across a diagonal field, leaning grass and an off-center shelter. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-e627661a-ed49-4ac6-b367-597a6e2f44cb.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-03-v1.png",
+        "sha256": "14bccd58e96c5269854777ae36cb63760959996cb19aec6277a361c06dfd26f1",
+        "bytes": 1657477,
+        "width": 1448,
+        "height": 1086
+      }
+    },
+    {
+      "id": "scene-signal-12",
+      "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Storm clouds over a distinct twin-mast relay ridge. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536\u00d71152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
+      "tool": "image_gen.imagegen",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-84ac466b-1ec4-4eb6-bfaa-a3f4d9a48bc2.png",
+      "status": "generated candidate; preparation and in-game review pending",
+      "source": {
+        "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-12-v1.png",
+        "sha256": "43295f0246771bd20218120bcd06e82021d6429e5e74693a1c8260c23eef8796",
+        "bytes": 1667948,
+        "width": 1448,
+        "height": 1086
+      }
+    }
+  ]
+}

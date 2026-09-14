@@ -5,6 +5,8 @@ description: 'Design or revise Xonix game themes and content packs, including Uk
 
 # Xonix Theme Designer
 
+For the current FPV Field Kit implementation, use [the production/adoption contract](../../../docs/field-kit-production.md). The compiler's runtime snapshot and editable studio document share hash-addressed bytes; loading a release collection appends local history. Preserve actual selected geometry and the effective production brief in variation requests. Generated originals, explicitly prepared derivatives and reviewed assets are different evidence stages. Never certify the complete FPV theme while its 38-composition/44-frame manifest reports missing entries or its required slots remain unreviewed.
+
 Turn a theme request into a concrete art direction and draft content pack. Work within the user's approved scope; do not request approval again for routine authoring changes.
 
 The active Reveal Line presentation direction is the approved [FPV Field Kit redesign](../../../docs/fpv-redesign-design.md), with [phase status](../../../docs/fpv-redesign-execution.md) and [interactive atlas](../../design-atlas/index.html). Use its ink/cyan/amber palette, readable Exo 2 interface, large Handjet accents and Plex telemetry. Future Ukrainian/Retro/Coupa collections remain separate from the first complete FPV delivery. The atlas is a review artifact; confirm which compiler/studio/runtime phase actually shipped before prescribing its interface. Existing campaign and saved-art ownership contracts remain authoritative.

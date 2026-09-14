@@ -41,7 +41,14 @@ export function drawEventFeedback(
   ctx,
   event,
   palette,
-  { themeId = 'fpv', reduced = false, screenScale = 1, width = 1152, height = 576 } = {},
+  {
+    themeId = 'fpv',
+    reduced = false,
+    screenScale = 1,
+    width = 1152,
+    height = 576,
+    fonts = null,
+  } = {},
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
   const pickup = event.type === 'powerup.collected' && PICKUP_COLORS[event.kind],
@@ -138,7 +145,7 @@ export function drawEventFeedback(
   ctx.fillStyle = '#0c1423';
   ctx.fillRect(x, y - 15 * unit, textWidth, 22 * unit);
   ctx.fillStyle = color;
-  ctx.font = `500 ${14 * unit}px "Field Kit Mono", monospace`;
+  ctx.font = `500 ${14 * unit}px ${fonts?.numeric || '"Field Kit Mono", monospace'}`;
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'left';
   ctx.fillText(label, x + 6 * unit, y - 3 * unit);
@@ -146,13 +153,18 @@ export function drawEventFeedback(
 }
 
 /** Remaining recovery is read from the simulation; no independent countdown. */
-export function drawRecoveryCue(ctx, run, palette, { screenScale = 1, width = 1152 } = {}) {
+export function drawRecoveryCue(
+  ctx,
+  run,
+  palette,
+  { screenScale = 1, width = 1152, fonts = null } = {},
+) {
   if (run.status !== 'respawning') return;
   const seconds = Math.max(0, run.respawnAt - run.time),
     unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
   if (!Number.isFinite(seconds)) return;
   ctx.save();
-  ctx.font = `500 ${16 * unit}px "Field Kit Mono", monospace`;
+  ctx.font = `500 ${16 * unit}px ${fonts?.numeric || '"Field Kit Mono", monospace'}`;
   ctx.textBaseline = 'top';
   ctx.textAlign = 'center';
   ctx.fillStyle = '#0c1423';

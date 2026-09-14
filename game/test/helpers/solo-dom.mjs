@@ -12,6 +12,8 @@ export class SoloElement extends Element {
   constructor(document, tag, options) {
     super(document, tag, options);
     this.style.setProperty = (name, value) => (this.style[name] = value);
+    this.style.getPropertyValue = (name) => this.style[name] ?? '';
+    this.style.removeProperty = (name) => delete this.style[name];
   }
   // The existing HUD publishes one numeric <small> suffix. Parsing text here is
   // a DOM boundary, never a replacement for app source or action handlers.
@@ -153,6 +155,7 @@ export async function soloPage(
     previewStorage = memoryStorage(),
     titleScreen = false,
     fetchJSON,
+    fetchResponse,
     buildInfo,
     audio,
     soundtrackIndexedDB,
@@ -269,17 +272,18 @@ export async function soloPage(
         super(doc, 'option', { label, text: label, textContent: label, value });
       }
     },
-    fetch: async (path) => ({
-      ok: path !== 'build-info.json' || !!buildInfo,
-      json: async () => {
-        if (path === 'build-info.json' && buildInfo) return structuredClone(buildInfo);
-        const replacement = fetchJSON?.(path);
-        if (replacement !== undefined) return structuredClone(replacement);
-        return path === 'content/campaign.json' && campaign
-          ? structuredClone(campaign)
-          : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8'));
+    fetch: async (path, options) =>
+      (await fetchResponse?.(path, options)) ?? {
+        ok: path !== 'build-info.json' || !!buildInfo,
+        json: async () => {
+          if (path === 'build-info.json' && buildInfo) return structuredClone(buildInfo);
+          const replacement = fetchJSON?.(path);
+          if (replacement !== undefined) return structuredClone(replacement);
+          return path === 'content/campaign.json' && campaign
+            ? structuredClone(campaign)
+            : JSON.parse(await readFile(new URL(path, new URL('../../', import.meta.url)), 'utf8'));
+        },
       },
-    }),
     requestAnimationFrame(callback) {
       const id = ++nextFrame;
       frames.set(id, callback);

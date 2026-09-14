@@ -31,7 +31,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
       page = Math.floor(Math.max(0, selected) / 6);
     }
     page = Math.min(page, Math.max(0, Math.ceil(buttons.length / 6) - 1));
-    for (const [button, tile] of tiles)
+    for (const [button, { tile }] of tiles)
       if (!buttons.includes(button)) {
         tile.remove();
         tiles.delete(button);
@@ -39,7 +39,10 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
     buttons.forEach((button, index) => {
       button.hidden = Math.floor(index / 6) !== page;
       button.setAttribute('aria-pressed', String(button.classList.contains('selected')));
-      if (tiles.has(button)) return;
+      const signature = `${button.disabled}:${button.dataset.pictureState}:${button.dataset.missionArtwork ?? ''}`;
+      const old = tiles.get(button);
+      if (old?.signature === signature) return;
+      old?.tile.remove();
       const tile = make('span', 'mission-gallery-art'),
         label = make(
           'span',
@@ -67,7 +70,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
       }
       tile.append(label);
       button.append(tile);
-      tiles.set(button, tile);
+      tiles.set(button, { tile, signature });
     });
     pager.hidden = buttons.length <= 6;
     previous.disabled = page === 0;
@@ -110,7 +113,7 @@ export function attachMissionGallery({ document: doc = globalThis.document, miss
       destroyed = true;
       observer?.disconnect();
       missions.removeEventListener('click', chosen);
-      for (const [button, tile] of tiles) {
+      for (const [button, { tile }] of tiles) {
         button.hidden = false;
         tile.remove();
       }
