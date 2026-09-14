@@ -167,3 +167,11 @@ Eligible fields use 140 px Standard / 145 px Large. The existing safe-area deduc
 All three bounded helper cases passed on Node 22 and Node 20 (0.072 and 0.573 seconds), with unchanged source pins. Syntax, lint and CSS formatting passed. The native comparison remains pending. Native review must compare Standard/Large, Left/Right, controls hidden/shown, Pause/Resume and an actual warning-capable map. It must confirm complete HUD/warnings and separation between the arena and fixed controls. Viewport/iframe results remain distinct from physical-device and frozen-release qualification.
 
 If a future accepted enemy role gains a below-arena warning card, update this eligibility contract before reclaiming its warning space; never base the decision on the current quiet phase.
+
+## Warning and HUD width in short landscape — source correction
+
+The subsequent 844 × 390 Large-text browser preview exposed a separate problem on Sentinel Relay: the narrow 4:3 arena also constrained its HUD and warning card, wrapping the target and clipping the instruction below the iframe. The retained screenshot is `75-relay-shield-landscape-large.png` in the presentation integration native evidence. The compact Arcade eligibility was correct; this correction addresses the full-layout branch.
+
+For authored full-layout maps at the same short-landscape breakpoint, the panel now uses the whole center column between the controls, while only the inner arena receives the aspect-ratio and height limit. Its stable reserve is 205 px Standard / 225 px Large, including hidden, open and active warning phases. Training retains its prior layout. Text sizes, 46 px direction buttons, the 146 px pad, control side clearance and compact Arcade 140/145 px reserves are unchanged. With no safe insets at 844 × 390, the source formulas give a 506 px HUD/warning panel and a Large 4:3 arena height cap of 165 px. These are projections, not measured containment.
+
+The three unchanged authored-classification cases passed on Node 22 and Node 20; scoped CSS formatting and whitespace checks passed. Those tests do not render CSS. Native verification of the complete HUD, instruction, control separation and stable board across warning phases remains pending. This source correction does not claim physical-device, offline or frozen-release qualification.
