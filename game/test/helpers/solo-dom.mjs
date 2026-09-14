@@ -162,8 +162,15 @@ export async function soloPage(
     parentWindow,
     pictures,
     waitForPictures = true,
+    initialReadyTimeoutMs = 5000,
   } = {},
 ) {
+  assert.ok(
+    Number.isInteger(initialReadyTimeoutMs) &&
+      initialReadyTimeoutMs > 0 &&
+      initialReadyTimeoutMs <= 180000,
+    'Initial readiness allowance must be an integer from 1 to 180000ms.',
+  );
   const doc = new SoloDocument(),
     win = new Events(),
     db = assetDatabase(assetIndexedDB);
@@ -391,7 +398,26 @@ export async function soloPage(
     scene,
     `${$('overlay-title').textContent}: ${$('overlay-copy').textContent}\n${errors.map((e) => e.stack).join('\n')}`,
   );
-  await settle(
+  // Bulk installed-original fixtures can declare their existing bounded
+  // inventory allowance. Ordinary hosts retain the same five-second deadline.
+  async function initialReady(predicate, phase) {
+    try {
+      await waitFor(predicate, { message: phase, timeoutMs: initialReadyTimeoutMs });
+    } catch (error) {
+      error.message += `\n${JSON.stringify({
+        phase,
+        timeoutMs: initialReadyTimeoutMs,
+        pack: $('pack-select').value,
+        pictureState: doc.body.dataset.pictureState,
+        packStatus: $('pack-status').textContent,
+        runMessage: $('run-message').textContent,
+        start: $('start-button').textContent,
+        errors: errors.map((value) => String(value?.stack ?? value)),
+      })}`;
+      throw error;
+    }
+  }
+  await initialReady(
     () => $('builtin-packs').children.length > 0,
     'Bundled pack index must finish loading.',
   );
@@ -400,7 +426,7 @@ export async function soloPage(
     scene.update(now, ms);
   }
   if (waitForPictures)
-    await settle(
+    await initialReady(
       () => doc.body.dataset.pictureState === 'ready',
       'Actual host must finish its initial picture choice before synchronous input tests.',
     );

@@ -1,3 +1,4 @@
+import { createCharacterPresentations } from './character-presentations.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -114,6 +115,7 @@ import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { savedFlightPreview } from './continuation.mjs';
+import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
 import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import {
@@ -126,10 +128,10 @@ import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
+import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
-  recommendedBody,
   MASTERY_SCENARIO_VERSION,
   ENCOUNTER_SCENARIO_VERSION,
   scenarioMasteryCampaign,
@@ -159,6 +161,7 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
     packs: [
@@ -460,20 +463,56 @@ try {
     progress = progressFor(library, campaign),
     recovery = loaded.recovery;
   const difficultyNavigation = createDifficultyNavigation();
+  const selectionBookmark = createSelectionBookmark({
+    storage: localStorage,
+    key: `${libraryKey}.last-selection.v1`,
+    canWrite: () =>
+      !practiceSession &&
+      !practice &&
+      !scenario &&
+      !courseSession &&
+      !courseEntry &&
+      persistenceReady &&
+      storedStateAdopted &&
+      writer.writable &&
+      !backupBusy &&
+      localStorage.getItem(`${libraryKey}.backup-lock`) === null,
+  });
+  const rememberedSelection =
+    !practiceSession && !packLaunchRequest && !packLaunchError && storedStateAdopted
+      ? resolveSelectionBookmark(selectionBookmark.read().selection, {
+          select: (key) => executionCatalog.select(key, library.preferences.campaignDifficulty),
+          playable: (entry, index) =>
+            difficultyNavigation.playable(
+              entry,
+              library.campaigns,
+              progressFor(library, entry.campaign),
+              index,
+            ),
+        })
+      : null;
   let difficultyDetailsFor = null;
   if (!practiceSession) {
     activeEntry = executionCatalog.select(
       campaignKey(baseEntry.campaign),
       library.preferences.campaignDifficulty,
     );
+    if (rememberedSelection) activeEntry = rememberedSelection.entry;
     campaign = activeEntry.campaign;
+    classRegistry = activeEntry.classRecipes;
+    themesFile.themes = activeEntry.themes;
     progress = progressFor(library, campaign);
   }
   if (loaded.warning || packWarning) {
     $('save-warning').textContent = [loaded.warning, packWarning].filter(Boolean).join(' ');
     show('save-warning', true);
   }
-  const initialSelection = difficultyNavigation.selection(activeEntry, library.campaigns, progress);
+  const initialSelection = difficultyNavigation.selection(
+    activeEntry,
+    library.campaigns,
+    progress,
+    { levelId: rememberedSelection?.levelId },
+  );
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -506,7 +545,7 @@ try {
     defeatRemaining = 0,
     sessionBusy = false,
     restoreController = null,
-    themeOverride = false,
+    themeOverride = !!rememberedSelection?.themeId,
     musicOverride = false,
     masteryDefinition = null,
     masteryObserver = null,
@@ -537,10 +576,13 @@ try {
         $('mastery-announcement').textContent = status.message;
     },
   });
-  theme = themesFile.themes.find((t) => t.id === library.preferences.themeId) || theme;
+  theme =
+    themesFile.themes.find(
+      (t) => t.id === (rememberedSelection?.themeId || library.preferences.themeId),
+    ) || theme;
   classId = classRegistry.some((c) => c.id === library.preferences.classId)
     ? library.preferences.classId
-    : classId;
+    : classRegistry[0].id;
   turnPolicy = library.preferences.turnPolicy;
   bodyId = library.preferences.bodyId;
   if (courseRequest && !courseRequest.turnPolicy)
@@ -860,6 +902,7 @@ try {
         onClose: () => {
           clearInput();
           $('settings-dialog').showModal();
+          void storageRetention.refresh();
           $('soundtrack-open').focus();
         },
         onVolume: (value) => {
@@ -1280,6 +1323,7 @@ try {
       'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
     show('save-warning', true);
     void packCommits.reconcile();
+    if ($('settings-dialog').open) void storageRetention.refresh();
   });
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
@@ -1343,8 +1387,15 @@ try {
           };
     },
   });
+  const storageRetention = attachStorageRetention({
+    button: $('storage-retention-button'),
+    status: $('storage-retention-status'),
+    isOpen: () => $('settings-dialog').open,
+  });
   window.addEventListener('pagehide', (event) => {
+    storageRetention.close();
     if (!event.persisted) {
+      storageRetention.destroy();
       keySettings.destroy();
       controllerSettings.destroy();
       controllerBoostSettings.destroy();
@@ -1678,7 +1729,9 @@ try {
     );
   }
   function availableBodies() {
-    return difficultyNavigation.bodies(activeEntry, library.campaigns, progress);
+    return characterPresentations.availableBodies(
+      difficultyNavigation.bodies(activeEntry, library.campaigns, progress),
+    );
   }
   function currentAppearanceMilestones() {
     return difficultyNavigation.milestones(activeEntry, library.campaigns, progress);
@@ -1872,6 +1925,13 @@ try {
   function cancelRestore() {
     restoreController?.abort();
   }
+  function rememberSelection() {
+    return selectionBookmark.remember({
+      campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+      levelId: campaign.levels[levelIndex].id,
+      themeId: theme.id,
+    });
+  }
   function selectEntry(
     entry,
     {
@@ -1926,6 +1986,7 @@ try {
     } else assignMusic(DEFAULT_TRACKS.find((t) => t.genre === library.preferences.musicGenre));
     refreshCampaigns();
     prepare({ restoreAdoption, contentSwitchTicket, difficulty });
+    if (!restoreAdoption) rememberSelection();
   }
   async function replacePackLibrary(
     next,
@@ -2203,6 +2264,7 @@ try {
     campaignOverview = false;
     levelIndex = index;
     prepare();
+    rememberSelection();
     contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`);
     return true;
   }
@@ -2745,6 +2807,7 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    void storageRetention.refresh();
   };
   let offlinePrepared = false;
   const offline = offlineAvailability();
@@ -2813,6 +2876,7 @@ try {
     }
   };
   $('settings-dialog').addEventListener('close', () => {
+    if (!$('settings-dialog').open) storageRetention.close();
     sound.pause();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
@@ -2861,7 +2925,11 @@ try {
   }
   function setTheme() {
     if (library.preferences.matchClassAppearance) {
-      const candidate = recommendedBody(theme, run?.activeClassId || classId, theme.player);
+      const candidate = characterPresentations.recommendedBody(
+        theme,
+        run?.activeClassId || classId,
+        theme.player,
+      );
       bodyId =
         Object.hasOwn(presets.characters, candidate) &&
         (practice || availableBodies().has(candidate))
@@ -3018,6 +3086,7 @@ try {
         leavePractice();
         levelIndex = index;
         prepare();
+        rememberSelection();
         focusMission();
       };
       $('missions').append(b);
@@ -3347,7 +3416,12 @@ try {
       theme =
         themesFile.themes.find((t) => t.id === (authoredLevel.themeId || campaign.themeId)) ||
         themesFile.themes[0];
-      bodyId = theme.player;
+      if (
+        library.preferences.matchClassAppearance ||
+        !Object.hasOwn(presets.characters, bodyId) ||
+        (!practice && !availableBodies().has(bodyId))
+      )
+        bodyId = theme.player;
       $('theme-select').value = theme.id;
     }
     if (!scenario && !musicOverride) {
@@ -3451,6 +3525,7 @@ try {
     neutralResumeTick = true;
     courseEntryHold = false;
     courseEntryMessage = '';
+    if (!started) rememberSelection();
     started = true;
     paused = false;
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
@@ -3558,9 +3633,15 @@ try {
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
-    $('objective-state').textContent = required.length
-      ? `${theme.labels.objective}: ${done.length} / ${required.length}`
-      : 'Close a line to reveal the picture';
+    $('objective-state').textContent = campaignOverview
+      ? 'Choose a mission to replay'
+      : run.status === 'won'
+        ? 'Target reached'
+        : run.status === 'lost'
+          ? 'Retry when you are ready'
+          : required.length
+            ? `${theme.labels.objective}: ${done.length} / ${required.length}`
+            : 'Close a line to reveal the picture';
     $('flight-state').textContent = campaignOverview
       ? 'Campaign complete'
       : run.status === 'won'
@@ -3574,7 +3655,9 @@ try {
               : paused
                 ? 'Paused'
                 : run.player.cutting
-                  ? 'LIVE LINE / EXPOSED'
+                  ? run.player.speed === 0
+                    ? 'LINE EXPOSED / CHOOSE A TURN'
+                    : 'LIVE LINE / EXPOSED'
                   : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
@@ -4025,6 +4108,7 @@ try {
       refreshMissionBrief();
       if (!started && !campaignOverview) overlay('ready');
       preferences({ themeId: theme.id, bodyId });
+      rememberSelection();
     } catch (error) {
       if (owner === flightPictures) pictureFailure(error);
     } finally {
@@ -4136,6 +4220,7 @@ try {
       levelIndex = selection.levelIndex;
     }
     prepare();
+    rememberSelection();
   };
   $('demo-button').onclick = () => {
     if (courseSession || courseEntry) return;
@@ -4318,6 +4403,10 @@ try {
   refreshCampaigns();
   prepare();
   let autoplayPackLaunch = null;
+  if (rememberedSelection)
+    contentStatus(
+      `${campaign.title || campaign.name || campaign.id} · ${campaign.levels[levelIndex].name} selected. Continue a saved flight separately.`,
+    );
   if (packLaunchError) {
     contentStatus(packLaunchError, true);
     warning(packLaunchError);
@@ -4411,6 +4500,7 @@ try {
           name,
           description,
           mode,
+          themeId: descriptor.themeId,
           levels,
           sourceOnly: !isRelease,
           bytes: descriptor.pack.bytes + descriptor.media.bytes,
@@ -4447,6 +4537,20 @@ try {
       return loadOptionalCatalog(options);
     },
     install: installOptionalChapter,
+    chooseInstalled: async (pack, { signal }) => {
+      if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
+        throw new Error(
+          'Return to the normal game and resolve recovery before choosing a chapter.',
+        );
+      if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
+      if (!packs.packs.includes(pack))
+        throw new Error('Installed content changed; refresh the chapter list.');
+      // External originals always go through their descriptor/readiness card.
+      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+        throw new Error('Use this chapter’s exact original-picture card.');
+      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+      return true;
+    },
     choose: async (summary, { signal }) => {
       if (courseEntry || courseSession || practice)
         throw new Error('Return from practice before choosing a world.');
