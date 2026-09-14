@@ -240,6 +240,31 @@
           "path": "evidence/archive-07/deployment-snapshot.json",
           "sha256": "61484106fa795293322446a3960549ca42da59dfbfb70e651f0b8009a7a88d57",
           "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-07/native-source-1.json",
+          "sha256": "ee4ccd7b95bef8b5fe13efe6f808f4bf8fe2ee3de3123a5cfdf22a4470bf1523",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-07/native-source-2.md",
+          "sha256": "cb4670b74b44e0c41e43825df4aaf9cd856327f84c706402f96759d5fd5f27f9",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-07/native-source-3.json",
+          "sha256": "e20d3afa6b28fd16ae1b1ae9b1b3ccfb65294bc9a7ed1f5175ac9e148ffa95b9",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-07/native-source-4.md",
+          "sha256": "b707c33928513e5b1e610631ebb9b7ea5c384ab8cc49447dc34a304d33d0927b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-07/browser-admission.json",
+          "sha256": "279988425c79d664477248785253fdb953ac8ac8b8a1c6f4e1d3987b84297502",
+          "kind": "browser"
         }
       ]
     },
