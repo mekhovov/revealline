@@ -45,6 +45,12 @@ release, use **Actions → Build and deploy GitHub Pages → Run workflow**, sel
 the latest stable tag in `release_tag`. Running the workflow from `main` ensures the current
 deployment automation is used while its checkout remains pinned to the immutable release tag.
 
+Test jobs keep the selected source in `source/` and obtain the shard utility from a separate
+`automation/` checkout pinned to `github.workflow_sha`. The utility accepts `--root .` from the
+source working directory, so discovery, imports, child processes and dependencies still belong to
+the immutable release. This also works for tags created before the utility existed. A generated
+`.cache` directory is initialized before those historical tests; no frozen test file is patched.
+
 Pages assembly is intentionally release-only because it requires the package version to have a
 matching immutable tag. Pull requests instead build the current static artifact, so release
 candidates no longer fail merely because their future tag has not yet been created.
