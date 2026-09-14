@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "fracture-lines-retro",
+  "revision": 1,
+  "source": {
+    "id": "fracture-lines",
+    "bytes": 9533,
+    "sha256": "c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421"
+  },
+  "pack": {
+    "bytes": 9393,
+    "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+  },
+  "media": {
+    "bytes": 7967075,
+    "sha256": "f40bec0376f3f70e973c6ef9d7783b7d0712252cac46eca9716d11a60baa0964"
+  },
+  "campaignKey": "fracture-lines-retro/1/c03c1bf508a14755",
+  "themeId": "retro",
+  "originals": [
+    {
+      "assetId": "fracture-lines-retro-poster-1",
+      "presentationId": "fracture-lines-retro-poster-1-presentation",
+      "levelId": "fracture-lines-split-ring",
+      "levelRevision": "1",
+      "sha256": "8618e6f3aac280c915ae9cdd10fe53ee36afad9273e2de9e81748852a09369d9",
+      "bytes": 2818631,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "fracture-lines-retro-poster-2",
+      "presentationId": "fracture-lines-retro-poster-2-presentation",
+      "levelId": "fracture-lines-fault-fan",
+      "levelRevision": "1",
+      "sha256": "7e9e33577743b8cfdb36566034f6c7d826ddebb421de4c528d878cae5f6d10d7",
+      "bytes": 2405219,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "fracture-lines-retro-poster-3",
+      "presentationId": "fracture-lines-retro-poster-3-presentation",
+      "levelId": "fracture-lines-frayed-causeway",
+      "levelRevision": "1",
+      "sha256": "0b9ac9c6f0f936fa123672a383709014fdfa175e4d5309a5fa81422412a3df8b",
+      "bytes": 2731032,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}
