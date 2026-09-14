@@ -59,6 +59,32 @@ test('transport construction/settings/selection stay silent until explicit Play'
   assert.equal(h.player.snapshot().playing, true);
   h.player.dispose();
 });
+test('preparing a local MP3 keeps playback silent, then a gesture wake starts it before context resume settles', async () => {
+  const h = setup({
+    library: {
+      ...original.library,
+      playlists: [{ ...original.library.playlists[0], trackIds: [original.track.id] }],
+      selection: { playlistId: 'qa.mix' },
+    },
+  });
+  assert.equal(await h.player.prepare(), false);
+  assert.equal(h.player.snapshot().track.id, original.track.id);
+  assert.equal(h.media.plays, 0);
+  assert.equal(h.soundscape.context, null);
+
+  let finish;
+  const enabled = new Promise((resolve) => {
+    finish = () => resolve(true);
+  });
+  h.soundscape.enable = () => enabled;
+  const waking = h.player.wake();
+  const playing = h.player.play();
+  assert.equal(h.media.plays, 1);
+  finish();
+  assert.equal(await waking, true);
+  assert.equal(await playing, true);
+  h.player.dispose();
+});
 test('synth song boundary signals once at actual audio deadline and does not schedule the next song early', async () => {
   const h = audioHarness();
   await h.soundscape.enable();
