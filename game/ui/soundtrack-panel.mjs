@@ -114,7 +114,7 @@ export function attachSoundtrackPanel({
     'Custom music stays in this browser. Export a .rlsound file to keep its original bytes.',
     { class: 'micro-note' },
   );
-  const closeButton = button('close', 'Back to game', () => close());
+  const closeButton = button('close', 'Close studio', () => close());
   const cancelButton = button('cancel', 'Cancel operation', () => {
     controller?.abort();
     status.textContent = 'Cancellation requested…';
