@@ -1,19 +1,22 @@
 name: Build and deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'publishing/pages-controller/**'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
+  release:
+    types: [published]
   pull_request:
     branches: [main]
     paths-ignore:
       - 'publishing/pages-controller/**'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
+      - '.cursor/skills/deploy-release-pages/**'
+      - 'docs/deployment.md'
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Latest stable release tag to deploy (for example, v0.46.0)
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -23,15 +26,47 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  verify:
+  release_gate:
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-    outputs:
-      frozen-controller: ${{ steps.publication.outputs.frozen-controller }}
+    permissions:
+      contents: read
+      actions: write
     steps:
-      - name: Check out complete history and tags
+      - name: Read publication ownership from main, not the historical tag
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: main
+          fetch-depth: 1
+
+      - name: Set up publishing policy runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Match latest stable release to the reviewed frozen selector
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+        run: node publishing/pages-controller/release-policy.mjs route
+
+      - name: Dispatch the sole Pages publisher on main
+        if: steps.gate.outputs.should_dispatch == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+        run: gh workflow run publish-frozen-pages.yml --repo mekhovov/revealline --ref main -f "release_tag=$REQUESTED_RELEASE"
+
+  preflight:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -42,54 +77,70 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate source
-        run: npm run validate
-
-      - name: Lint source
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
-
-      - name: Check formatting
-        run: npm run format:check
-
-      - name: Check native formatting and motion lab syntax
+      - name: Validate, lint, and format source
         run: |
+          npm run validate
+          npm run lint
+          npm run format:check
           npm run format:native:check
           node --check authoring/motion-lab/app.js
 
-      - name: Select publication owner
-        id: publication
+      - name: Verify immutable production sources first
         run: |
-          if test -f publishing/pages-controller/publication.json; then
-            echo "frozen-controller=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "frozen-controller=false" >> "$GITHUB_OUTPUT"
-          fi
+          # Production tests use .cache for temporary fixtures.
+          mkdir -p .cache
+          node --test scripts/test-production-*.mjs
 
-      - name: Build current game and tagged releases
-        if: steps.publication.outputs.frozen-controller != 'true'
-        run: npm run build:pages -- --archive-plan scripts/pages-archives.json --source-repository mekhovov/revealline
-
-      - name: Upload Pages artifact
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && steps.publication.outputs.frozen-controller != 'true'
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        with:
-          path: dist
-          include-hidden-files: true
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.verify.outputs.frozen-controller != 'true'
-    needs: verify
+  test:
+    if: github.event_name == 'pull_request'
+    needs: preflight
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test shard ${{ matrix.shard }}/4
+        run: |
+          mkdir -p .cache
+          node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+
+  build:
+    if: github.event_name == 'pull_request'
+    needs: [preflight, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out complete history and tags
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build pull-request artifact
+        if: github.event_name == 'pull_request'
+        run: npm run build

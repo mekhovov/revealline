@@ -31,17 +31,39 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 ## GitHub Pages
 
-This repository includes `.github/workflows/deploy-pages.yml`. Every push to `main` runs the
-source gates, builds the current package as the default `/game/` target, snapshots every stable
-`vMAJOR.MINOR.PATCH` Git tag into `/releases/<version>/site/game/`, and deploys the complete
-static artifact with the GitHub Pages deployment actions. The root landing page reads the generated
-release index so players can launch the newest build immediately or switch to an older playable
-version. The workflow checks out full history because immutable version paths are built from tags;
-it intentionally omits the local `source.tar` archives from the public Pages artifact.
+Source pull requests use `.github/workflows/deploy-pages.yml`: validation, lint, formatting,
+production provenance checks, four isolated test shards, and the ordinary static build. These
+checks use the pull request source. An already qualified immutable release is published from its
+original ZIP; publication does not rerun today's test sharder inside an older tag.
 
-Set the repository Pages source to **GitHub Actions** once, then pushes to `main` are the update
-mechanism. The workflow uses only the repository’s `GITHUB_TOKEN`; no game runtime service or
-secret is required.
+The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
+through the existing main-only `github-pages` environment. Its reviewed
+[`publication.json`](../publishing/pages-controller/publication.json) selects one exact frozen
+version and its six-gate source qualification. It must be enabled and match the highest published,
+non-draft, non-prerelease semantic version. Publishing a newer release never edits the selector or
+moves an old tag. Commit the reviewed selection after freezing the release and verifying its
+archive routes. The selector commit triggers publication; it preserves original file hashes,
+workers, manifests, and `/releases/<version>/` entries while using admitted archives for older
+payloads. See the [controller contract](../publishing/pages-controller/README.md) for byte checks,
+capacity limits, and the distinction between the controller commit and the frozen game source.
+
+Set the repository Pages source to **GitHub Actions** once. Both workflows use `GITHUB_TOKEN`; no
+additional secret is required. Source checks and publication have separate concurrency groups,
+and neither cancels a healthy deployment. The publisher rechecks the latest stable release before
+assembly, artifact admission, and deployment, so an older request cannot roll Pages backward.
+
+For a retry, select **Actions → Publish selected frozen game → Run workflow**, choose `main`, and
+provide the exact selected tag as `release_tag`. The legacy **Build and deploy GitHub Pages** manual
+entry on `main` accepts the same tag and dispatches that publisher after reading the current main
+selector. Future release tags containing this routing workflow can request publication on the
+`release.published` event. Historical tags keep their original workflow files: use the main dispatch
+for them, rather than assuming a new controller exists inside an old release. GitHub resolves event
+workflows from their associated commit or ref. [GitHub workflow events](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)
+
+Pull requests that change only the controller or its deployment instructions run focused controller
+checks and build a non-publishable preview. They cannot upload a Pages artifact or enter deployment.
+A successful build is not public acceptance: after deployment, verify the published bytes and test
+play, saved-run ownership, historical entries, and offline coexistence in the actual browser.
 
 ## Browser installation and offline use
 
