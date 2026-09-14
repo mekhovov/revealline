@@ -1,0 +1,23 @@
+{
+  "base": "3d39907498cabd7491cdf643a5a7de64318f990f",
+  "versionFields": ["0.50.0", "0.50.0", "0.50.0", "0.50.0"],
+  "changedTrackedFiles": [
+    ".github/workflows/qualify-release-source.yml",
+    "game/test/creator-tools-scope-host.test.mjs",
+    "game/test/device-controls-host.test.mjs",
+    "game/test/sentinel-theme-host.test.mjs",
+    "game/test/storage-retention-host.test.mjs"
+  ],
+  "unchangedPinnedFiles": {
+    "authoring/library/fpv-field-kit/production.rltheme": "ce316ed3ee794016602f17a52cf2ad5c0b643c22590705b2b50232a79b14ceaf",
+    "game/presentation/compiled/runtime.json": "6b146e6db8edf8d0388c8786b2d9a7cb4ae13dd1fbed4946ddbfed3f1b1f1ef0",
+    "package.json": "9e67d6fe2c63d3e24573c7f2d61389ff71fa1429d9e09fb76949a57241e5ea96",
+    "package-lock.json": "ac7b666ad341c20338e6c0758241ab94fdaabf5ff6116a3dd2513f161f0b3cb9",
+    "game/build-config.json": "29c33ee4d7c83d1465dc2189fcc2d611863320506d6267b73f440a5554421ac7"
+  },
+  "testFiles": 318,
+  "shardCounts": [80, 80, 79, 79],
+  "duplicates": 0,
+  "omissions": 0,
+  "node": "v24.19.0"
+}
