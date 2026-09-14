@@ -1,0 +1,53 @@
+{
+  "format": "ukraine-enemy-original.v1",
+  "at": "2026-09-14T18:49:17.064453+00:00",
+  "role": "contour-patrol",
+  "proposedName": "Frontier Serpent",
+  "narrativePurpose": "Follows the changing captured frontier and visibly rejoins a changed route.",
+  "implementedMechanics": false,
+  "historicalAuthenticityClaim": false,
+  "tool": "image_gen.imagegen",
+  "generation": "One fresh text-only call; no image inputs",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-bdf222fa-bea9-4efd-a4a8-7374acff5e76.png",
+  "original": {
+    "path": "originals/contour-patrol.png",
+    "bytes": 652641,
+    "sha256": "0392e8c1f887edc17aad971ee6d6bdaa48830cc5276ab7a8ec3fa5f6bf00f5ef",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/contour-patrol.txt",
+    "sha256": "b16225cba9a1b837e0f7d4a6bfcbcc3f5a82119f5dfef39e9134129919fc8fb5",
+    "formatting": "Exact request plus one final LF"
+  },
+  "copy": {
+    "method": "Exclusive APFS fclonefileat, no fallback",
+    "originalInode": 76132438,
+    "cloneInode": 76138598
+  },
+  "transformations": [],
+  "runtimeBinding": null,
+  "inspection": "Full-image, alpha and native CSS checks follow in separate retained records",
+  "freshFreeBeforeClone": 3636760576,
+  "conservativeOriginalAndRawGitPlus2MiBReserveBytes": 6879248
+}
