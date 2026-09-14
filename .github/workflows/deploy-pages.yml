@@ -76,11 +76,11 @@ jobs:
           npm run format:native:check
           node --check authoring/motion-lab/app.js
 
-      - name: Initialize generated test cache
-        run: mkdir -p .cache
-
       - name: Verify immutable production sources first
-        run: node --test scripts/test-production-*.mjs
+        run: |
+          # Older immutable release tags use .cache for temporary test fixtures.
+          mkdir -p .cache
+          node --test scripts/test-production-*.mjs
 
   test:
     if: needs.release_gate.outputs.should_deploy == 'true'
@@ -120,13 +120,11 @@ jobs:
         working-directory: source
         run: npm ci
 
-      - name: Initialize generated test cache
-        working-directory: source
-        run: mkdir -p .cache
-
       - name: Run test shard ${{ matrix.shard }}/4
         working-directory: source
-        run: node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .
+        run: |
+          mkdir -p .cache
+          node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .
 
   build:
     if: needs.release_gate.outputs.should_deploy == 'true'
