@@ -15,16 +15,16 @@ The user approved the complete redesign plan on 2026-09-14. This register tracks
 
 ## Phase status
 
-| Phase | Deliverable                                                                               | State                                   | Release/evidence                                                                       |
-| ----- | ----------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------- |
-| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | Committed; qualification running        | v0.44.0 candidate; atlas and eight baseline captures                                   |
-| 1     | Fonts, semantic tokens and shared components throughout the game                          | Implemented; release qualification next | v0.45.0 candidate; 60 focused tests and source phone checks passed                     |
-| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | Implemented source; release pending     | v0.46.0 candidate; 293 slots, exact current-art adapter, compiler and strict transfers |
-| 3     | Local asset studio, sprite editor, previews, prompts and bundle exchange                  | Implemented source; release pending     | v0.47.0 candidate; edit/validation/undo/save/reload/restore/export UI checked          |
-| 4     | Original title scene and illustrated mission/briefing navigation                          | Implemented source                      | Responsive title/gallery/preparation source checked; final art adoption pending        |
-| 5     | Complete current FPV flight art, HUD, controls and feedback                               | Planned                                 | —                                                                                      |
-| 6     | Collection, settings/data, learning, couch, replay, workshops and supporting screens      | Planned                                 | —                                                                                      |
-| 7     | Full coverage, compatibility, accessibility, performance/offline and public qualification | Planned                                 | —                                                                                      |
+| Phase | Deliverable                                                                               | State                                   | Release/evidence                                                                             |
+| ----- | ----------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | Committed; qualification running        | v0.44.0 candidate; atlas and eight baseline captures                                         |
+| 1     | Fonts, semantic tokens and shared components throughout the game                          | Implemented; release qualification next | v0.45.0 candidate; 60 focused tests and source phone checks passed                           |
+| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | Implemented source; release pending     | v0.46.0 candidate; 293 slots, exact current-art adapter, compiler and strict transfers       |
+| 3     | Local asset studio, sprite editor, previews, prompts and bundle exchange                  | Implemented source; release pending     | v0.47.0 candidate; edit/validation/undo/save/reload/restore/export UI checked                |
+| 4     | Original title scene and illustrated mission/briefing navigation                          | Implemented source                      | v0.48.0 candidate; exact landscape/portrait scenes, five-action title and responsive gallery |
+| 5     | Complete current FPV flight art, HUD, controls and feedback                               | Planned                                 | —                                                                                            |
+| 6     | Collection, settings/data, learning, couch, replay, workshops and supporting screens      | Planned                                 | —                                                                                            |
+| 7     | Full coverage, compatibility, accessibility, performance/offline and public qualification | Planned                                 | —                                                                                            |
 
 ## Acceptance and release protocol
 
