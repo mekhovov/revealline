@@ -1,4 +1,11 @@
 /** Presentation only: never changes a command, saved heading, or simulation tick. */
+export const SCREEN_STEERING_HANDS = Object.freeze(['left', 'right']);
+export const DEFAULT_SCREEN_STEERING_HAND = 'left';
+export function resolveScreenSteeringHand(value) {
+  if (!SCREEN_STEERING_HANDS.includes(value))
+    throw new TypeError('On-screen steering hand must be left or right.');
+  return value;
+}
 export function resolveScreenControls(value) {
   if (!['auto', 'always', 'off'].includes(value))
     throw new TypeError('On-screen steering must be auto, always or off.');

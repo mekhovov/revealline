@@ -1,5 +1,49 @@
 # Device-aware flight and Arcade R4
 
+## Steering hand — source candidate
+
+**Settings → Steering hand → Left / Right** places the existing on-screen pad
+under either thumb, outside the arena. Left is the default. Right moves the
+same direction controls and, when an older map supplies equipment, places that
+existing group on the other side. The arrows keep their meaning and the top
+Game menu and Pause stay in place. The same two groups follow visual order in
+the DOM, retaining focus and the original buttons. Arcade still shows directions
+and Pause without manual equipment or Stop.
+
+Hand placement is independent of **On-screen steering**. Auto still appears
+only for touch during flight; keyboard or controller use hides it. Always also
+allows a mouse. Off stays Off. Menus, pause, recovery and results do not show
+active steering controls. This change keeps the existing 46px targets, compact
+portrait 56px targets, safe insets and arena reserves; it adds no size preset.
+
+The preference uses an omitted-only Left default when reading old profiles,
+without rewriting their stored bytes. Save, reload, merge, import and Undo use
+the actual adopted value. A refused save or practice change remains visibly
+session-only. Other preferences, earned pictures and the saved flight retain
+their own identities. Opening Settings keeps its existing pause/autosave; the
+hand change itself does not resave the attempt, add a tick or resume flight.
+
+Exports containing the new preference are forward transfers: strict frozen
+readers may reject it. Keep native previews in a distinct profile channel;
+never write the new field into a frozen edition's existing profile. Couch has
+its separate two-player layout.
+
+The [Playdigious mobile-port account](https://www.gamedeveloper.com/design/porting-i-dead-cells-i-to-mobile-an-in-depth-breakdown)
+describes positioning choices and explicit menu access after playtesting.
+[Playdigious also documents configurable mobile controls](https://playdigious.com/news/sharpen-your-thumbs-dead-cells-is-now-slaying-foes-on-android).
+[Microsoft's navigation guidance](https://learn.microsoft.com/en-us/gaming/accessibility/xbox-accessibility-guidelines/112)
+supports consistent entry/exit controls and matching navigation to the changed
+layout. These inform the option; comfort still needs actual playtesting.
+The complete focused pair passed all23 cases on Node22 and again on Node20:
+eight new preference cases, seven new actual-host cases and eight unchanged
+host regressions. Source bytes stayed fixed across both runs. The host cases
+use modeled DOM/input boundaries and preserve the paused checkpoint, original
+controls, accepted direction and exact saved attempt (apart from the existing
+Undo snapshot timestamp). They do not measure native focus or layout.
+Actual target fit, warning stability and visible-input checks in both hands,
+including Large text and short landscape, remain pending. Viewport or iframe
+results must be labeled separately from physical touch/controller evidence.
+
 ## Stable flight feedback — source candidate
 
 At a fixed viewport, text size and input mode, changing an encounter from quiet
