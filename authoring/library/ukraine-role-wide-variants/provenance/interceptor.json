@@ -1,0 +1,69 @@
+{
+  "format": "ukraine-role-wide-lineage.v1",
+  "classId": "interceptor",
+  "bodyId": "atlas-falcon-crest-v3",
+  "parentCommit": "7611ea334ef0d60ca9abb791299b4edf74e6ce08",
+  "parentOriginal": {
+    "path": "authoring/library/ukraine-role-presentations/originals/interceptor.png",
+    "bytes": 598045,
+    "sha256": "bd426560dc79f5c9ada759a2a0752ca667b9c5456ee07aa3cbf6541429fb06ca"
+  },
+  "tool": "image_gen.imagegen",
+  "attempts": [
+    {
+      "stage": "shape-edit",
+      "mode": "built-in image edit",
+      "path": "originals/interceptor-v2.png",
+      "bytes": 1706135,
+      "sha256": "29b675f99fb463227b322c58575587660a826638ff32bb965b8c3def15760e92",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-2984a695-0323-4146-a77d-7453e6e594cc.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 2, 0, 0, 0],
+      "inputImage": "authoring/library/ukraine-role-presentations/originals/interceptor.png",
+      "inputSha256": "bd426560dc79f5c9ada759a2a0752ca667b9c5456ee07aa3cbf6541429fb06ca",
+      "prompt": "Use case: precise-object-edit.\nAsset type: independently replaceable Ukraine Atlas game BODY sprite, compact v2 silhouette edit.\nInput image 1 is the exact v1 edit target. Preserve its broad invented Ukrainian craft-inspired modern pixel-art style and palette; redesign the body's proportions and simplify the interior as requested below. This is new original artwork, not a stretched or cropped resampling of v1.\nOutput: requested square 1024 x 1024 PNG with genuine transparent alpha. One complete centered wingless body, north pointing straight UP, strict top-down view. Clear transparent margin on every side. No background, checkerboard pixels, text, logos, frame, ground shadow, montage or effects.\nCompact framing: solid central BODY must occupy roughly 65\u201372% of total canvas width and 70\u201378% of total height, excluding any detached part. The body must have a broad solid mass readable at a 20-pixel square frame, aiming at least 12 pixels wide. Short nose and short tail, no long needle silhouette. Use a few large color regions and crisp stepped pixel clusters; remove fine inner ornament and hairline details.\nKeep two small dark-edged shoulder sockets rooted directly into solid left and right upper body edges, with visible attached bases. NO extended wings, propellers, feathers spreading sideways, loose cables, detached ornaments, magic rings or moving parts. Procedural wings will attach separately.\nPalette stays warm ivory #f3ecdf, deep indigo #29343c, muted turquoise #90b7bf, amber #e5ba6c and restrained coral #d98277, with the role's specified dominant colors. Broad outlines must read on both cream and dark backgrounds. No historical-authenticity claims or copied traditional symbols.\nRequested edit: Replace the long slender falcon torso with a BROAD COBALT-INDIGO TRIANGULAR CHEVRON body. Wide angular shoulders and a short north-pointing chevron nose create a squat kite/arrowhead silhouette. Stubbier compact tail, no long hanging feathers. Dominant deep cobalt/indigo with ONE broad ivory V accent and restrained amber beak/eye marks. The blue triangular body must remain a solid continuous wide torso, not extended wings. No dense embroidery. Keep shoulder sockets directly rooted into the two solid upper flanks. Distinct from a round ivory swallow and a barrel-shaped spool.",
+      "promptSha256": "658563cb69a85fadb239a3a3e1f7d57a57c205b4fe965099bdd2c68abcb42360",
+      "status": "rejected: RGB8 baked checkerboard",
+      "transformations": []
+    },
+    {
+      "stage": "alpha-edit",
+      "mode": "built-in background extraction edit",
+      "path": "originals/interceptor-v2-alpha.png",
+      "bytes": 1646633,
+      "sha256": "51e539167100d1b14309ef5bfc5e84b14cf3bdc6af4ed02e1fe5928a8f4408b3",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-7e7cacc3-f191-4c50-a3ee-1e1a1122577d.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 2, 0, 0, 0],
+      "inputImage": "authoring/library/ukraine-role-wide-variants/originals/interceptor-v2.png",
+      "inputSha256": "29b675f99fb463227b322c58575587660a826638ff32bb965b8c3def15760e92",
+      "prompt": "Use case: background-extraction.\nInput image 1 is the EDIT TARGET, a game body sprite on an unwanted opaque gray-white checkerboard background.\nRemove the entire checkerboard background, including all small checker pattern remnants and transparent-looking decoration outside the body. Return the complete centered subject as a PNG with a genuinely transparent alpha channel. Transparent means alpha=0 pixels outside the subject; do NOT draw a gray/white checkerboard, black background, white background or any other replacement pixels.\nKeep the existing broad body silhouette, north heading, original colors, crisp pixel-art subject edges, short tail or bobbin, and its two attached shoulder sockets. No wings or effects. This edit changes the background only; do not narrow, redraw, crop, stretch or decorate the body. Keep the complete square framing and transparent margins.\nOne isolated sprite; no text, no logos, no border. Actual PNG transparency is required.",
+      "promptSha256": "fafa21f772f97d7580dded4a7fb3aa7fff122e928358cd91c9c69939ed4d525f",
+      "status": "rejected: RGB8 baked checkerboard again",
+      "transformations": []
+    },
+    {
+      "stage": "fresh-original",
+      "mode": "built-in original generation without reference input",
+      "path": "originals/interceptor-v3.png",
+      "bytes": 695081,
+      "sha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+      "defaultToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-568dc8bb-8066-4166-a98f-2acb010e01ac.png",
+      "requestedDimensions": [1024, 1024],
+      "actualIHDR": [1254, 1254, 8, 6, 0, 0, 0],
+      "inputImage": null,
+      "inputSha256": null,
+      "prompt": "Use case: stylized-concept.\nCreate one ORIGINAL modular game BODY sprite on a genuinely transparent alpha background; no reference image input.\nRequested output 1024 x 1024 square PNG. Real alpha=0 outside the subject, never a painted checkerboard or colored background.\nSubject: a broad cobalt-indigo falcon-crest BODY pointing UP/north, no extended wings. Squat TRIANGULAR CHEVRON silhouette with wide solid upper shoulders, short amber north beak/nose, stubby squared or notched dark tail. Central body should be roughly 65\u201370% of full canvas width and 72\u201378% of height, centered with transparent margins. Solid shoulder mass, not spread wing feathers. Distinct broad arrowhead outline rather than a long narrow bird.\nTwo small dark-rimmed sockets are embedded directly into the upper-left and upper-right body flanks, for separately rendered wings. No protruding wing structures. Clearly attached socket bases.\nStyle: beautiful original modern pixel art, deliberately stepped edges, broad clear color planes. Dominant cobalt/deep indigo, one thick ivory V accent across the breast and small amber eye/beak marks. Muted turquoise bevel accents, tiny restrained coral patch. Invented Ukrainian craft-inspired fantasy, no exact traditional pattern or historical authenticity claim.\nReadable at a 20-pixel square frame: strong contiguous dark-blue mass, short nose and tail, no fine embroidery or hairline details. Strict north-facing top-down sprite, not side profile.\nNo text, logos, border, montage, floor, shadow, glow, effects, propellers, extended wings, loose ornaments or detached pieces. Preserve real transparent alpha.",
+      "promptSha256": "1f407dccb6a949b6ae27c76af233d15294e91fb58184344b27e1ae626d0eddee",
+      "status": "candidate: RGBA8 header; full alpha and compact review pending",
+      "transformations": []
+    }
+  ],
+  "selectedStage": "fresh-original",
+  "visualObservations": [
+    "Broad saturated cobalt chevron, ivory V, short tail and attached dark sockets.",
+    "Cobalt is brighter than the older Atlas indigo; additional turquoise stripe details remain."
+  ],
+  "qualification": "New source candidate, not an exact pixel-preserving edit or runtime binding. Original alpha and metadata remain untouched. Full compact/wing/native review pending.",
+  "runtimeBinding": null
+}

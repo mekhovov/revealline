@@ -1,4 +1,5 @@
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
+import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
 // Cosmetic poses, pixel silhouettes and cut effects. No simulation objects are changed.
 const TAU = Math.PI * 2;
 const CELL = 16;
@@ -533,7 +534,14 @@ retro})[frame.themeId] ?? retro)(ctx, frame, colors);
 }
 
 /** Image roles override only the body; collision-center cues retain their physical size. */
-export function drawPresentedActor(ctx, frame, palette, image = null, geometry = null) {
+export function drawPresentedActor(
+  ctx,
+  frame,
+  palette,
+  image = null,
+  geometry = null,
+  bodyRecord = null,
+) {
   if (!frame) return;
   const colors = {
     dark: PRESENTATION_PLATE,
@@ -585,6 +593,7 @@ export function drawPresentedActor(ctx, frame, palette, image = null, geometry =
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);
   }
+  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, d);
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.

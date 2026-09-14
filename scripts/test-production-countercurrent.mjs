@@ -44,12 +44,15 @@ async function forgedSources(t, edit) {
   // Historical metadata remains part of the source fixture, not original media.
   const historyRoot = 'authoring/production/history';
   await mkdir(path.join(fixture, historyRoot), { recursive: true });
-  for (const [indexName, extension] of [
-    ['index.json', 'json'],
-    ['source-index.json', 'source'],
-  ]) {
+  for (const indexName of ['index.json', 'source-index.json']) {
     const history = JSON.parse(await readFile(path.join(root, historyRoot, indexName), 'utf8'));
-    for (const name of [indexName, ...history.entries.map((p) => `${p.sha256}.${extension}`)])
+    for (const name of [
+      indexName,
+      ...history.entries.map(
+        (pin) =>
+          `${pin.sha256}${indexName === 'source-index.json' ? '.source' : path.posix.extname(pin.path)}`,
+      ),
+    ])
       await writeFile(
         path.join(fixture, historyRoot, name),
         await readFile(path.join(root, historyRoot, name)),

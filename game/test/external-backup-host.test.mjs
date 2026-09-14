@@ -20,6 +20,89 @@ const profile = 'revealline.library.dev.v1',
   packsKey = 'revealline.packs.dev.v1';
 const settle = (predicate, message = 'Native source host should finish its bounded operation.') =>
   waitFor(predicate, { timeoutMs: 30000, message });
+// Retained-original verification is bulk work; join the actual action before checking readiness.
+// This test allowance does not change any runtime deadline or storage lease.
+const INVENTORY_TIMEOUT_MS = 180000;
+const CANCEL_JOIN_TIMEOUT_MS = 15000;
+function sourceDiagnostic(p, phase) {
+  return JSON.stringify({
+    phase,
+    status: p.$('optional-worlds-status')?.textContent,
+    reloadDisabled: p.$('optional-worlds-reload')?.disabled,
+    sourceState: p.$('optional-worlds-source-state')?.textContent,
+    chooseDisabled: p.$('optional-worlds-source-choose')?.disabled,
+    errors: p.errors.map((error) => String(error?.stack ?? error)),
+  });
+}
+function clickOperation(p, control) {
+  const button = p.$(control),
+    original = button.onclick;
+  assert.equal(button.disabled, false, `${control} must be enabled`);
+  let operation;
+  button.onclick = function (...args) {
+    operation = original.apply(this, args);
+    return operation;
+  };
+  try {
+    button.click();
+  } finally {
+    button.onclick = original;
+  }
+  assert.equal(typeof operation?.then, 'function', `${control} must expose its action promise`);
+  return operation;
+}
+async function waitSource(
+  p,
+  phase,
+  {
+    operation,
+    ready = () => !p.$('optional-worlds-reload').disabled,
+    timeoutMs = INVENTORY_TIMEOUT_MS,
+    cancelJoinTimeoutMs = CANCEL_JOIN_TIMEOUT_MS,
+  } = {},
+) {
+  let completed = !operation,
+    rejected = false,
+    failure;
+  operation?.then(
+    () => {
+      completed = true;
+    },
+    (error) => {
+      completed = rejected = true;
+      failure = error;
+    },
+  );
+  try {
+    await waitFor(() => completed && (operation || ready()), { timeoutMs, message: phase });
+    if (rejected) throw failure;
+    // A fulfilled panel handler can still report a refused installation.
+    assert.ok(ready(), `Completed action is not ready: ${sourceDiagnostic(p, phase)}`);
+  } catch (error) {
+    const beforeCancel = sourceDiagnostic(p, phase);
+    let cleanup = 'No pending action to cancel.';
+    if (!completed || (!operation && p.$('optional-worlds-reload')?.disabled)) {
+      const cancel = p.$('optional-worlds-cancel');
+      if (p.$('optional-worlds-dialog')?.open && cancel && !cancel.hidden) {
+        cancel.click();
+        cleanup = 'Actual panel Cancel requested.';
+      }
+      if (operation) {
+        try {
+          await waitFor(() => completed, { timeoutMs: cancelJoinTimeoutMs });
+          cleanup += ' Action promise settled after cancellation.';
+        } catch {
+          cleanup += ' Action promise did not settle within the cleanup allowance.';
+        }
+      } else {
+        // The shell's open callback exposes no promise. Its native Cancel path
+        // still aborts the panel; this cannot claim all async unwind has joined.
+        cleanup += ' Shell open exposes no promise to join.';
+      }
+    }
+    assert.fail(`${phase}: ${error?.message ?? error}\n${beforeCancel}\n${cleanup}`);
+  }
+}
 class Locks {
   held = new Set();
   async request(name, options, callback) {
@@ -76,16 +159,19 @@ async function page(t, f = {}) {
 async function worlds(p) {
   p.$('shell-menu').click();
   p.$('shell-worlds').click();
-  await settle(
-    () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
-  );
+  await waitSource(p, 'Open More worlds and authenticate installed originals', {
+    ready: () => !!p.$('optional-worlds-source-install') && !p.$('optional-worlds-reload').disabled,
+  });
 }
 async function install(p) {
   await worlds(p);
   p.$('optional-worlds-source-pack').files = [pilot.payloads.pack];
   p.$('optional-worlds-source-media').files = [pilot.payloads.media];
-  p.$('optional-worlds-source-install').click();
-  await settle(() => !p.$('optional-worlds-reload').disabled);
+  await waitSource(p, `Install and authenticate exact ${pilot.descriptor.id}`, {
+    operation: clickOperation(p, 'optional-worlds-source-install'),
+    ready: () =>
+      !p.$('optional-worlds-reload').disabled && !p.$('optional-worlds-source-choose').disabled,
+  });
   assert.equal(
     p.$('optional-worlds-source-choose').disabled,
     false,
@@ -93,10 +179,19 @@ async function install(p) {
   );
 }
 async function choose(p) {
-  p.$('optional-worlds-source-choose').click();
-  await settle(
-    () => !p.$('optional-worlds-dialog').open && p.doc.body.dataset.pictureState === 'ready',
-  );
+  const phase = `Choose and authenticate exact ${pilot.descriptor.id}`;
+  await waitSource(p, phase, {
+    operation: clickOperation(p, 'optional-worlds-source-choose'),
+    ready: () => !p.$('optional-worlds-dialog').open,
+  });
+  // Selection starts its own picture read; a fulfilled Choose is not image readiness.
+  try {
+    await settle(() => p.doc.body.dataset.pictureState === 'ready');
+  } catch (error) {
+    assert.fail(
+      `${phase}: picture did not become ready: ${error.message}\n${sourceDiagnostic(p, phase)}\n${JSON.stringify({ pack: p.$('pack-select').value, pictureState: p.doc.body.dataset.pictureState })}`,
+    );
+  }
   p.frame(0);
   assert.equal(p.$('pack-select').value, pilot.descriptor.id);
 }

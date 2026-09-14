@@ -8,6 +8,8 @@ This project’s current authorization is to commit each completed feature or ph
 
 Before freezing a successor, project the main and archive Pages sizes from immutable manifests and the proposed allocation. The main site carries a mutable current graph in addition to every unarchived version. Passing game-source tests does not establish hosting capacity. A changed allocation requires a new source candidate; deploy and verify the archive before enabling main-site forwarding. Preserve the held candidate's successful evidence rather than relabelling it as a game failure.
 
+**Current status checkpoint:** v040 is published/publicly verified with 17 assets; frozen041 source 4d has passing gates and artifacts but still requires native, PR #17/main and public closure. Source-only UI/roles/recovery/audio companions are listed separately in the [current delivery plan](current-delivery-plan.md). Keep count units explicit: published works, frozen candidates, source originals, distinct geometry and fully approved presentation/story/music sets are different evidence. The current docs branch does not change a frozen source, release tag or save channel.
+
 ## One completion path
 
 1. Implement the player-visible result and update the relevant roadmap step, source documentation and AI authoring guidance. Keep future phase code out of the candidate by staging explicit related paths. Preserve supplied references and unrelated working changes.

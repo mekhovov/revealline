@@ -44,7 +44,7 @@ async function fixture(t) {
   for (const name of new Set([
     ...pins(register).map((pin) => pin.path),
     `${historyRoot}/index.json`,
-    ...metadata.entries.map((pin) => `${historyRoot}/${pin.sha256}.json`),
+    ...metadata.entries.map((pin) => `${historyRoot}/${pin.sha256}${path.posix.extname(pin.path)}`),
     indexPath,
     ...index.entries.map(snapshot),
   ])) {
@@ -141,4 +141,38 @@ test('archived source bytes are authenticated but never imported or executed', a
     JSON.stringify({ ...index, entries: [...index.entries, pin] }),
   );
   assert.equal((await verifyProductionSources(next, { root: dir })).metadata, 'verified');
+});
+
+test('overlapping history identities require both exact snapshots without fallback to the other copy or live source', async (t) => {
+  const dir = await fixture(t);
+  const metadata = JSON.parse(await readFile(path.join(dir, historyRoot, 'index.json')));
+  const pin = index.entries.find((entry) => entry.path === 'game/ui/actor-presentation.mjs');
+  assert.deepEqual(
+    metadata.entries.find((entry) => entry.path === pin.path),
+    pin,
+  );
+  const names = [`${historyRoot}/${pin.sha256}.mjs`, snapshot(pin)];
+  const original = await readFile(path.join(dir, names[0]));
+  assert.equal(original.length, pin.bytes);
+  assert.equal(hash(original), pin.sha256);
+  assert.deepEqual(await readFile(path.join(dir, names[1])), original);
+  await writeFile(path.join(dir, pin.path), original);
+  const unchangedRegister = JSON.stringify(register);
+  assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
+  for (const name of names) {
+    const target = path.join(dir, name);
+    await rm(target);
+    await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);
+    const changed = Buffer.from(original);
+    changed[0] ^= 1;
+    await writeFile(target, changed);
+    await assert.rejects(verifyProductionSources(register, { root: dir }), /changed authority/);
+    await rm(target);
+    await symlink(path.join(root, name), target);
+    await assert.rejects(verifyProductionSources(register, { root: dir }), /Symlink/);
+    await rm(target);
+    await writeFile(target, original);
+    assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
+  }
+  assert.equal(JSON.stringify(register), unchangedRegister);
 });

@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, plainObject, required, stableId } from './data-json.mjs';
 import { recommendedBody as authoredRecommendedBody } from './content.mjs';
 import { validateAnimationRecipes } from '../authoring/motion-lab/animation.mjs';
+import { validateBodyDerivative } from './body-derivative.mjs';
 
 const fields = (value, names, label) => {
   exactKeys(value, names, label);
@@ -140,6 +141,7 @@ export function createCharacterPresentations(presets) {
           'availability',
           'compactMinimumCSSPixels',
           'originalSha256',
+          ...(Object.hasOwn(body, 'derivation') ? ['derivation'] : []),
         ],
         'Current presentation body',
       );
@@ -155,10 +157,11 @@ export function createCharacterPresentations(presets) {
           body.sourceStatus.length <= 512,
         'Bounded character copy required.',
       );
+      const sourceSrc = Object.hasOwn(body, 'derivation') ? body.derivation?.source?.src : body.src;
       required(
-        typeof body.src === 'string' &&
+        typeof sourceSrc === 'string' &&
           /^(?:assets\/[a-zA-Z0-9._-]+|\.\.\/library\/[a-z0-9-]+\/originals\/[a-z0-9-]+)\.png$/.test(
-            body.src,
+            sourceSrc,
           ),
         'Portable original PNG path required.',
       );
@@ -166,6 +169,26 @@ export function createCharacterPresentations(presets) {
         typeof body.originalSha256 === 'string' && /^[0-9a-f]{64}$/.test(body.originalSha256),
         'Original hash required.',
       );
+      if (Object.hasOwn(body, 'derivation')) {
+        required(
+          typeof body.src === 'string' && body.src.startsWith('../library/'),
+          'Portable runtime PNG path required.',
+        );
+        const role = Object.keys(set.classBodies).find((key) => set.classBodies[key] === id);
+        required(set.id === 'ukraine-roles-v1', 'Unregistered derivative presentation set.');
+        const originalSrc = ['scout', 'interceptor', 'fiber'].includes(role)
+          ? `../library/ukraine-role-wide-variants/originals/${role}-v3.png`
+          : `../library/ukraine-role-presentations/originals/${role}.png`;
+        validateBodyDerivative(body.derivation, {
+          id,
+          src: `authoring/${body.src.slice(3)}`,
+          sourceSrc: originalSrc,
+        });
+        required(
+          body.originalSha256 === body.derivation.source.sha256,
+          'Character source original hash differs.',
+        );
+      }
       required(
         body.widthCells === 1.25 &&
           body.heightCells === 1.25 &&
@@ -180,41 +203,93 @@ export function createCharacterPresentations(presets) {
           Object.hasOwn(owned.animationRecipes, body.animationRecipe),
         'Registered animation required.',
       );
-      required(Array.isArray(body.rotors) && body.rotors.length > 0, 'Rotor hubs required.');
-      for (const anchor of body.rotors)
-        fields(anchor, ['x', 'y', 'radiusScale', 'direction', 'phaseDegrees'], 'Rotor hub');
       const recipe = owned.animationRecipes[body.animationRecipe];
-      fields(recipe, ['components'], 'Rotor recipe');
+      fields(recipe, ['components'], 'Presentation recipe');
       required(
         Array.isArray(recipe.components) && recipe.components.length === 1,
-        'One supported rotor component required.',
+        'One supported presentation component required.',
       );
       const component = recipe.components[0];
-      fields(
-        component,
-        [
-          'id',
-          'type',
-          'bladeCount',
-          'bladeShape',
-          'radius',
-          'bladeWidth',
-          'idleRps',
-          'travelRps',
-          'maxVisualRps',
-          'blurOpacity',
-          'phaseDegrees',
-          'direction',
-          'fillColor',
-          'tipColor',
-          'hubColor',
-        ],
-        'Rotor component',
-      );
-      required(
-        component.type === 'rotors' && component.bladeCount === 3,
-        'Current presentation uses three-blade rotors.',
-      );
+      required(plainObject(component), 'Presentation component must be an object.');
+      if (component.type === 'wings') {
+        fields(
+          component,
+          [
+            'id',
+            'type',
+            'anchors',
+            'span',
+            'chord',
+            'frequencyHz',
+            'speedFrequencyGain',
+            'amplitudeDegrees',
+            'foldFraction',
+            'color',
+            'tipColor',
+          ],
+          'Wing component',
+        );
+        required(component.id === 'wings', 'Registered wing component ID required.');
+        required(
+          Array.isArray(body.rotors) && body.rotors.length === 0,
+          'Wing bodies have no rotor hubs.',
+        );
+        required(
+          Array.isArray(component.anchors) && component.anchors.length === 2,
+          'Two wing roots required.',
+        );
+        required(
+          Number.isFinite(component.span) && Number.isFinite(component.chord),
+          'Finite wing envelope required.',
+        );
+        // Conservative radius contains every rotated wing corner in the existing body frame.
+        const radius = Math.hypot(component.span, component.chord * 0.5);
+        for (const [index, anchor] of component.anchors.entries()) {
+          required(
+            Array.isArray(anchor) &&
+              anchor.length === 3 &&
+              anchor.every(Number.isFinite) &&
+              Math.abs(anchor[0]) <= 0.4 &&
+              Math.abs(anchor[1]) <= 0.4 &&
+              anchor[2] === (index === 0 ? -1 : 1) &&
+              (index === 0 ? anchor[0] < 0 : anchor[0] > 0),
+            'Ordered finite left and right wing roots required.',
+          );
+          required(
+            Math.abs(anchor[0]) + radius <= 0.5 && Math.abs(anchor[1]) + radius <= 0.5,
+            'Wing envelope must fit the body frame.',
+          );
+        }
+      } else {
+        required(Array.isArray(body.rotors) && body.rotors.length > 0, 'Rotor hubs required.');
+        for (const anchor of body.rotors)
+          fields(anchor, ['x', 'y', 'radiusScale', 'direction', 'phaseDegrees'], 'Rotor hub');
+        fields(
+          component,
+          [
+            'id',
+            'type',
+            'bladeCount',
+            'bladeShape',
+            'radius',
+            'bladeWidth',
+            'idleRps',
+            'travelRps',
+            'maxVisualRps',
+            'blurOpacity',
+            'phaseDegrees',
+            'direction',
+            'fillColor',
+            'tipColor',
+            'hubColor',
+          ],
+          'Rotor component',
+        );
+        required(
+          component.type === 'rotors' && component.bladeCount === 3,
+          'Current presentation uses three-blade rotors.',
+        );
+      }
       characters[id] = body;
       recipes[body.animationRecipe] = recipe;
       starters.add(id);

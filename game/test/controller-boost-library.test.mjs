@@ -144,8 +144,10 @@ for (const source of fixture.sources) {
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
       textSize: 'standard',
+      textFace: 'pixel',
       screenControls: 'auto',
       touchControls: null,
+      screenSteeringHand: 'left',
     });
     unchangedRecords(migrated, old);
     assert.equal(JSON.stringify(old), bytes);

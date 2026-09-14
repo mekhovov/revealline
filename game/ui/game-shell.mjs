@@ -101,9 +101,11 @@ export function attachGameShell({
         : $('shell-featured') || $('shell-play')
     ).focus();
   };
-  const forward = (source, target) => {
+  const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
-      closeHome();
+      // Child screens retain their actual entry screen and opener. Explicit
+      // selection actions leave those parents when choosing a flight.
+      if (!keepHome) closeHome();
       $(target).click();
     };
   };
@@ -223,18 +225,15 @@ export function attachGameShell({
     if (!$('continue-saved').hidden) $('continue-saved').click();
     else focusGame();
   };
-  forward('shell-collection', 'collection-button');
-  forward('shell-gallery', 'collection-button');
-  forward('shell-settings', 'settings-button');
+  forward('shell-collection', 'collection-button', { keepHome: true });
+  forward('shell-gallery', 'collection-button', { keepHome: true });
+  forward('shell-settings', 'settings-button', { keepHome: true });
   forward('shell-library', 'library-button');
-  forward('shell-options', 'settings-button');
+  forward('shell-options', 'settings-button', { keepHome: true });
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
   forward('shell-help', 'help-button');
-  const leaveWorkshop = () => {
-    if (workshop?.open) workshop.close();
-  };
-  $('shell-guide')?.addEventListener('click', leaveWorkshop, true);
+  // Guide is a child of Workshop; native Back retains its visible opener.
   const courseReturn = $('shell-course-return');
   if (courseReturn) {
     courseReturn.hidden = !training;
@@ -301,7 +300,6 @@ export function attachGameShell({
       modalNavigation?.destroy();
       surfaces.destroy();
       preparationObserver?.disconnect();
-      $('shell-guide')?.removeEventListener('click', leaveWorkshop, true);
     },
   };
 }

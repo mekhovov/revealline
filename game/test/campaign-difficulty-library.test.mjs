@@ -194,8 +194,10 @@ for (const source of oldProfiles)
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
       textSize: 'standard',
+      textFace: 'pixel',
       screenControls: 'auto',
       touchControls: null,
+      screenSteeringHand: 'left',
     });
     for (const name of ['campaigns', 'gallery', 'scores', 'masteries'])
       assert.deepEqual(migrated[name], old[name] ?? []);
