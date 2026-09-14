@@ -6,11 +6,11 @@ on:
   pull_request:
     branches: [main]
     paths-ignore:
-      - 'publishing/pages-controller/**'
-      - '.github/workflows/publish-frozen-pages.yml'
-      - '.github/workflows/deploy-pages.yml'
-      - '.cursor/skills/deploy-release-pages/**'
-      - 'docs/deployment.md'
+      - "publishing/pages-controller/**"
+      - ".github/workflows/publish-frozen-pages.yml"
+      - ".github/workflows/deploy-pages.yml"
+      - ".cursor/skills/deploy-release-pages/**"
+      - "docs/deployment.md"
   workflow_dispatch:
     inputs:
       release_tag:
