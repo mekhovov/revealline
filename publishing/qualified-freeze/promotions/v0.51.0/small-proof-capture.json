@@ -1,0 +1,43 @@
+{
+  "format": "revealline-local-independent-hosted-proof-capture.v1",
+  "passed": true,
+  "version": "v0.51.0",
+  "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+  "independentVerifierRunId": 34906472854,
+  "independentVerifierControllerRevision": "20781633a8a373f9229694101c4bd5946638e6a2",
+  "proofArtifact": {
+    "id": 10373325089,
+    "node_id": "MDg6QXJ0aWZhY3QxMDM3MzMyNTA4OQ==",
+    "name": "reverified-v0.51.0-proof",
+    "size_in_bytes": 54791,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373325089",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373325089/zip",
+    "expired": false,
+    "digest": "sha256:114310d6bbde9bdfa60e6959ecb99866834ba1c78d5d664e814ba7362ca3bb77",
+    "created_at": "2026-09-14T22:58:31Z",
+    "updated_at": "2026-09-14T22:58:31Z",
+    "expires_at": "2026-12-13T22:55:54Z",
+    "workflow_run": {
+      "id": 34906472854,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/verify-qualified-freeze-artifacts",
+      "head_sha": "20781633a8a373f9229694101c4bd5946638e6a2"
+    }
+  },
+  "proofArtifactTransportVerifiedLocally": true,
+  "allProofAndOriginalMetadataBytesVerifiedLocally": true,
+  "sourceAndDistributionBodiesVerifiedBySeparateHostedRunner": true,
+  "sourceAndDistributionBodiesVerifiedLocally": false,
+  "summarySha256": "bd3dd08c28949c9c98b501343a283774dd572371e7c4ef1b395cdb9967f8bfa1",
+  "independentArtifactProofSha256": "c95873218c45448004cc43dffa7b85c2984ad240ed512db6d2a532eb3c7939d8",
+  "firstFreezeRunId": 34904714317,
+  "originalHostedLooseProofSha256": "4453139d9af19b0b88a537e461db32a833ca4d0bf7adf4a211f7b16f75a6d967",
+  "actualCheckoutCommits": [
+    "5d4bd98718955fa471fe71d798715864af166d18",
+    "20781633a8a373f9229694101c4bd5946638e6a2"
+  ],
+  "jobLogSha256": "1b9e57c948417d5b8497b52e4b5b814c48d02cb1327a2d7cf333e57063e8e83a",
+  "at": "2026-09-14T23:00:51.914630+00:00"
+}

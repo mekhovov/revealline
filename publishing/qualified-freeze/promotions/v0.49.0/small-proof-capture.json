@@ -1,0 +1,43 @@
+{
+  "format": "revealline-local-independent-hosted-proof-capture.v1",
+  "passed": true,
+  "version": "v0.49.0",
+  "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+  "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+  "independentVerifierRunId": 34906472854,
+  "independentVerifierControllerRevision": "20781633a8a373f9229694101c4bd5946638e6a2",
+  "proofArtifact": {
+    "id": 10372424985,
+    "node_id": "MDg6QXJ0aWZhY3QxMDM3MjQyNDk4NQ==",
+    "name": "reverified-v0.49.0-proof",
+    "size_in_bytes": 52601,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372424985",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372424985/zip",
+    "expired": false,
+    "digest": "sha256:150c11d4cee0fab5b511073d2fc04beef1187ea770488f5bea4aae182c1aba05",
+    "created_at": "2026-09-14T22:56:32Z",
+    "updated_at": "2026-09-14T22:56:32Z",
+    "expires_at": "2026-12-13T22:55:54Z",
+    "workflow_run": {
+      "id": 34906472854,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/verify-qualified-freeze-artifacts",
+      "head_sha": "20781633a8a373f9229694101c4bd5946638e6a2"
+    }
+  },
+  "proofArtifactTransportVerifiedLocally": true,
+  "allProofAndOriginalMetadataBytesVerifiedLocally": true,
+  "sourceAndDistributionBodiesVerifiedBySeparateHostedRunner": true,
+  "sourceAndDistributionBodiesVerifiedLocally": false,
+  "summarySha256": "03c00f90f3d280a18c4c001e4ab96aa12f791fca2308b513ad7d7ab79c5a648f",
+  "independentArtifactProofSha256": "505b134ff9afc5c14cffc9fb3211840151740a56d40931b440d52e378f016ed0",
+  "firstFreezeRunId": 34904714317,
+  "originalHostedLooseProofSha256": "08e3a7b76c2c74cecc4cb5be610ce0777fe92bb156443d41371ceeba7d422cf8",
+  "actualCheckoutCommits": [
+    "8af0d47d73e8633c771823fe024a3456441d62c1",
+    "20781633a8a373f9229694101c4bd5946638e6a2"
+  ],
+  "jobLogSha256": "0e0d281223a2872a59683f2f843bbf3e8311c46305d251724eef6c7991f53b3f",
+  "at": "2026-09-14T23:00:24.523962+00:00"
+}

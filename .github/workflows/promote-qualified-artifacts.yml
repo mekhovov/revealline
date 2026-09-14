@@ -1,0 +1,45 @@
+name: Retain verified frozen artifacts in draft releases
+
+on:
+  push:
+    branches: ['codex/promote-qualified-freezes']
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: verified-draft-retention-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  retain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        version: [v0.49.0, v0.50.0, v0.51.0]
+    steps:
+      - name: Check out reviewed promotion controller
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+          sparse-checkout: publishing/qualified-freeze
+          persist-credentials: false
+      - name: Test immutable draft-retention guards
+        run: python3 publishing/qualified-freeze/test-promote.py
+      - name: Copy exact verified artifacts into new draft releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 publishing/qualified-freeze/promote.py '${{ matrix.version }}'
+      - name: Retain draft upload receipts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: draft-retention-${{ matrix.version }}
+          path: promotion-receipts/${{ matrix.version }}/
+          if-no-files-found: error
+          retention-days: 90
