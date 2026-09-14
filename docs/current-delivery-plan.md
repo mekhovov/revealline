@@ -1,5 +1,7 @@
 # RevealLine: current delivery plan
 
+For the concise current order and remaining outcomes, read [Delivery priorities](delivery-priorities.md). The detailed historical register follows unchanged.
+
 Updated 2026-09-14. This is the current priority register; the older roadmap and verification notes retain their historical checkpoints. Implementation is authorized and continues without routine approval questions.
 
 ## Available now and next delivery
