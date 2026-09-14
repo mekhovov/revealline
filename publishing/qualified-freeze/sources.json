@@ -1,0 +1,39 @@
+{
+  "format": "revealline-hosted-freeze-sources.v1",
+  "repository": "mekhovov/revealline",
+  "sources": [
+    {
+      "version": "v0.49.0",
+      "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+      "sourceTree": "ae3ae1d2911d93ca154ec04968eb34c3002648ae",
+      "node": "v20.19.6",
+      "qualificationSha256": "590a2198a599c43937d00ae4f0fc49abf436e6fd0c175ebf445f4d7263ce7d1d",
+      "receiptSha256": "5174ca44c35af63ca75b21a0440051a5d638be63275f07deaed878361ce36e5c",
+      "runId": 34899424481,
+      "workflowBlob": "2b7ce6a33f0731bc56c173012a271a5ddc318f6d",
+      "tests": 3583
+    },
+    {
+      "version": "v0.50.0",
+      "sourceRevision": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+      "sourceTree": "42a4a2326633cb824b7b99e746e03c979a7af082",
+      "node": "v20.19.6",
+      "qualificationSha256": "65f3f238438cd33ccb4b7e33084054064550acafba4efc8ecd6408e7ebe37ad1",
+      "receiptSha256": "6ba0e7e3f40034a0cfac27a27e4a0ed1e957cb6cc2f2727685cccd60dae4aec3",
+      "runId": 34899353190,
+      "workflowBlob": "a819b0c6e0f2c18fe852984f15475e53884c5650",
+      "tests": 3593
+    },
+    {
+      "version": "v0.51.0",
+      "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+      "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+      "node": "v20.19.6",
+      "qualificationSha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0",
+      "receiptSha256": "5dc89f02dde6b83c657715081312cb85f435856d1d8e29aef6733e308cc20a03",
+      "runId": 34898406470,
+      "workflowBlob": "7923078412bc24f83accf02c0b0e057abaec9bf7",
+      "tests": 3691
+    }
+  ]
+}

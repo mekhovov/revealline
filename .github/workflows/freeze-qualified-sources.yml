@@ -1,0 +1,77 @@
+name: Freeze qualified sources without publishing
+
+on:
+  push:
+    branches: ['codex/hosted-qualified-freezes']
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: qualified-artifact-freeze-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - version: v0.49.0
+            source: 8af0d47d73e8633c771823fe024a3456441d62c1
+          - version: v0.50.0
+            source: d52b634a231ce0907b83ea681e1e1aaf02387485
+          - version: v0.51.0
+            source: 5d4bd98718955fa471fe71d798715864af166d18
+    steps:
+      - name: Check out immutable qualified source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.source }}
+          fetch-depth: 1
+          path: source
+          persist-credentials: false
+      - name: Check out separate artifact controller
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: controller
+          sparse-checkout: publishing/qualified-freeze
+          persist-credentials: false
+      - name: Set up the qualified Node version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.6
+      - name: Verify qualification and freeze exact source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 controller/publishing/qualified-freeze/freeze.py '${{ matrix.version }}' source export
+      - name: Retain metadata and diagnostic proof
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: frozen-${{ matrix.version }}-metadata
+          path: export/metadata/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+      - name: Retain original source TAR
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: frozen-${{ matrix.version }}-source
+          path: source/releases/${{ matrix.version }}/source.tar
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 90
+      - name: Retain original distribution ZIP
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: frozen-${{ matrix.version }}-distribution
+          path: source/releases/${{ matrix.version }}/site/distribution.zip
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 90
