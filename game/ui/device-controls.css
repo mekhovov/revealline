@@ -113,8 +113,10 @@
   max-width: none;
   margin: 0;
 }
+/* A warning changes the message, never the arena's scale or touch clearance. */
 .game-shell .arena-panel,
-.game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']) {
+.game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+.game-shell .arena-panel:has(> .encounter-status:not([hidden])) {
   width: 100%;
   margin: 0 auto;
   max-width: min(
@@ -152,6 +154,10 @@
 .game-shell .arena-shell {
   max-height: none;
 }
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+  min-width: 0;
+  max-width: 100%;
+}
 .game-shell #controller-ui-hint {
   display: none;
 }
@@ -159,6 +165,29 @@
   flex: 1;
 }
 @media (max-width: 680px) {
+  .game-shell[data-flight-state='paused'] .arena-shell {
+    margin-bottom: 158px;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    width: 100%;
+    gap: 6px;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    flex: 1 1 100%;
+    min-width: 0;
+    width: 100%;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions .button {
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .game-shell .game-overlay[data-kind='pause'] #start-button {
+    grid-column: 1 / -1;
+  }
   .game-shell .shell-bar > :is(#shell-packs, #shell-collection, #shell-settings, .shell-edition) {
     display: none;
   }
@@ -174,6 +203,19 @@
   }
 }
 @media (orientation: landscape) and (max-height: 540px) {
+  .game-shell .game-overlay[data-kind='pause'] {
+    position: fixed;
+    inset: auto max(8px, var(--safe-right)) max(8px, var(--safe-bottom)) max(8px, var(--safe-left));
+    padding: 0;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    width: max-content;
+  }
+  .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+    display: flex;
+    flex: 0 1 auto;
+    width: auto;
+  }
   .game-shell[data-screen-controls='shown'] {
     --touch-gutter: 0px;
     --side-gutter: 314px;
@@ -194,7 +236,8 @@
     font-size: 13px;
   }
   .game-shell .arena-panel,
-  .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']) {
+  .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell .arena-panel:has(> .encounter-status:not([hidden])) {
     max-width: min(
       calc(100% - var(--side-gutter)),
       calc(
