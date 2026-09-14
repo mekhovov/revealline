@@ -13,7 +13,9 @@ let sequence = 0;
 // handlers and real input/router/navigation/duel code. No game-action factories.
 export function mountCouch(document, html) {
   const stack = [document.body];
-  const body = html.split(/<body\b[^>]*>/u)[1].split('</body>')[0];
+  const match = html.match(/<body(?=[\s>])(?:[^>"']|"[^"]*"|'[^']*')*>([\s\S]*?)<\/body\s*>/i);
+  assert.ok(match, 'Couch test markup requires a complete <body> element.');
+  const body = match[1];
   for (const token of body.matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
     const text = token[0];
     if (text.startsWith('<!--')) continue;
