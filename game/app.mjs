@@ -3987,10 +3987,11 @@ try {
       if (event.type === 'cells.claimed')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+          'secured',
         );
       if (
         event.type === 'cut.started' &&
-        runMessageCue === 'failure' &&
+        ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
         run.status === 'running' &&
         run.player.cutting
       )
@@ -4035,6 +4036,7 @@ try {
       if (event.type === 'capture.stopped')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+          'secured-stopped',
         );
       if (event.type === 'powerup.collected')
         warning(
@@ -4238,6 +4240,13 @@ try {
             stopCourseGuidance();
           }
         stepRun(run, command, FIXED_DT);
+        if (
+          runMessageCue === 'secured-stopped' &&
+          run.status === 'running' &&
+          command.direction &&
+          run.player.speed > 0
+        )
+          warning('Flight moving.', 'secured');
         controls = controllerBoostAfterRecovery({
           beforeStatus,
           run,

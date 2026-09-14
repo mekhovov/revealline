@@ -87,3 +87,7 @@ The HUD follow-up qualifies nine focused cases per runtime: five unchanged conti
 ## Empty shared-original lists
 
 The selected-original screen explains an empty shared list: built-in pictures come from game files and are not listed alongside uploaded or restored shared originals. A positive earned-picture count and zero shared originals can coexist; the empty list alone does not indicate lost pictures. Existing media diagnostics remain visible, original verification/export stays unavailable without a selection, and the prepared raw snapshot remains usable. This copy-only follow-up does not change storage, catalogs, first-earned receipts or the immutable v0.43 candidate used for the earlier native checks.
+
+## Secured-cut cue follow-up
+
+A successful capture now owns its own temporary HUD cue. When stop-on-capture is active, a real running step that accepts a direction and produces movement replaces only that cue's “Tap a direction” instruction. A fresh `cut.started` retires the prior secured cue in both capture modes and announces the exposed line. Any newer warning or notice keeps priority. These transitions affect presentation only; capture events, geometry, stopped-input handling, saved checkpoints and replay formats are unchanged. Earlier packaged v0.43 native observations remain bound to their original source.
