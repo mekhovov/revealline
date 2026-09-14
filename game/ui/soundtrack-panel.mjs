@@ -151,7 +151,7 @@ export function attachSoundtrackPanel({
       });
       const committed = await commitDraft(signal);
       await stopAudition(false);
-      await beforeAudio();
+      wakeAudio();
       await player.selectPlaylist(draft.selection.playlistId);
       await notifyPlayback();
       status.textContent =
@@ -261,7 +261,7 @@ export function attachSoundtrackPanel({
       const token = auditionToken;
       if (!audition.paused) audition.pause();
       else {
-        await beforeAudio();
+        wakeAudio();
         if (disposed || token !== auditionToken || !auditionURL) return;
         try {
           await audition.play();
@@ -944,8 +944,8 @@ export function attachSoundtrackPanel({
       throw new Error('This MP3 is missing locally. Restore its complete soundtrack backup.');
     const state = player.snapshot();
     const previous = restoreMusic || (state.desired ?? state.playing);
-    await stopAudition(false);
-    await beforeAudio();
+    const stopping = stopAudition(false);
+    wakeAudio();
     restoreMusic = previous;
     player.pause();
     const token = ++auditionToken;
@@ -955,6 +955,7 @@ export function attachSoundtrackPanel({
       audition.hidden = false;
       audition.load();
       await audition.play();
+      await stopping;
       if (token === auditionToken) {
         await onAudioEnabled();
         status.textContent = `Auditioning ${track.title}. Finish audition returns to the previous music state.`;
@@ -975,11 +976,24 @@ export function attachSoundtrackPanel({
   }
   async function controlMusic(work, enable = false) {
     return playback(async () => {
-      await stopAudition(false);
-      if (enable) await beforeAudio();
-      await work();
+      // Invoke play in the same task as the button activation. In particular,
+      // iOS Safari can reject media.play() after an await, even when the await
+      // was only a local pause or audio-context resume.
+      const stopping = stopAudition(false);
+      if (enable) wakeAudio();
+      const playing = work();
+      await stopping;
+      await playing;
       await notifyPlayback();
     });
+  }
+  function wakeAudio() {
+    try {
+      const pending = beforeAudio();
+      if (pending?.catch) void pending.catch(report);
+    } catch (error) {
+      report(error);
+    }
   }
   async function notifyPlayback() {
     const state = player.snapshot();
