@@ -342,6 +342,24 @@ body.race-focus #couch-app {
     padding-top: 6px;
   }
 }
+/* Stacked tablet seats have room for a side pad. Keeping its three rows
+   beside the arena gives the picture back the height used by a bottom pad. */
+@media (min-width: 720px) and (max-aspect-ratio: 3/2) {
+  .racer:has(.race-pad:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) 144px;
+    grid-template-rows: auto minmax(48px, 1fr) auto auto auto;
+    column-gap: 12px;
+  }
+  .racer:has(.race-pad:not([hidden])) > :not(.race-pad) {
+    grid-column: 1;
+  }
+  .racer:has(.race-pad:not([hidden])) .race-pad {
+    grid-column: 2;
+    grid-row: 2 / 5;
+    flex-direction: column;
+    margin-top: 0;
+  }
+}
 @media (max-width: 700px) {
   .race-score > span {
     display: none;
