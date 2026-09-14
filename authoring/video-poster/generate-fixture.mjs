@@ -48,7 +48,7 @@ const ffmpeg = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' });
 let command, engine, generator;
 if (ffmpeg.status === 0) {
   const font = path
-    .join(root, 'game/ui/fonts/pixelify-sans/PixelifySans.ttf')
+    .join(root, 'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2')
     .replace(/([\\':])/g, '\\$1');
   command = [
     'ffmpeg',

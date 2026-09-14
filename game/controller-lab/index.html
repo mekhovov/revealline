@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../presentation/page-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
+    <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
   </head>
-  <body class="field-kit field-kit-support">
+  <body class="field-kit field-kit-support" data-field-kit-page="controller">
     <header>
       <a href="../">◩ REVEAL / LINE</a>
       <span>CONTROLLER PRACTICE</span>
@@ -30,6 +32,13 @@
         </p>
       </section>
       <section class="setup" aria-label="Practice setup">
+        <label class="field-kit-page-text"
+          ><span data-field-kit-copy="display.textSize">Text size</span
+          ><select data-field-kit-text-size>
+            <option value="standard" data-field-kit-copy="display.standard">Standard</option>
+            <option value="large" data-field-kit-copy="display.large">Large</option>
+          </select></label
+        >
         <label>Mission<select id="mission" disabled></select></label>
         <label>Starting class<select id="craft" disabled></select></label>
         <label

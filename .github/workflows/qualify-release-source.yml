@@ -61,7 +61,7 @@ jobs:
           if [ -f scripts/check-field-kit-readiness.mjs ]; then
             node scripts/check-field-kit-readiness.mjs
           else
-            echo 'Not applicable: this v0.49 source predates the P7 reviewed-ledger gate.'
+            echo 'Not applicable: this v0.50 source predates the P7 reviewed-ledger gate.'
           fi
 
   test:

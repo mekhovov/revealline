@@ -235,6 +235,8 @@ For external chapter tests, compile each transport fixture only from the owners 
 
 For the implemented Field Kit navigation, retain the five-action title, exact saved destination and `mission-gallery.mjs` pagination/selection around the existing mission buttons. Decoration and earned-picture thumbnails are presentation metadata only. Preserve optional preparation, locked/unavailable reasons, neutral/held input gates and return focus. Scene originals stay in the authoring library; player assets are separately pinned960×540/540×960 derivatives. Test actual chapter selection→preparation→Deploy→pause→Continue on narrow/short displays whenever changing this flow.
 
+For the current Field Kit presentation, read [screen/navigation contract](../../../docs/field-kit-surfaces.md) and [production adoption](../../../docs/field-kit-production.md). Preserve original dialog/input/save handlers when styling screens, use the English copy keys for new labels, keep Ukrainian-capable fonts, and update the compiled collection through its immutable ledger. Local Studio imports reuse identical revisions and never alter player storage.
+
 When changing a render recipe referenced by an immutable production register, preserve the exact previous module bytes in the separate hash-addressed `authoring/production/history/source-index.json` contract. Its code-owned path allowlist covers the character and actor renderers; snapshots are inert `.source` files and are never imported. Keep the original JSON metadata history and historical registers unchanged. Verify both old and new source pins and malformed/missing snapshot rejection before release.
 
 ## Optional chapters in combined Field Kit integrations

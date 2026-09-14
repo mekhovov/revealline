@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: ordinary: Settings exposes only usable Creator links and keyboard focus respects the session scope
+ok 1 - ordinary: Settings exposes only usable Creator links and keyboard focus respects the session scope
+  ---
+  duration_ms: 4929.481709
+  ...
+# Subtest: practice: Settings exposes only usable Creator links and keyboard focus respects the session scope
+ok 2 - practice: Settings exposes only usable Creator links and keyboard focus respects the session scope
+  ---
+  duration_ms: 2857.362209
+  ...
+# Subtest: course: Settings exposes only usable Creator links and keyboard focus respects the session scope
+ok 3 - course: Settings exposes only usable Creator links and keyboard focus respects the session scope
+  ---
+  duration_ms: 2522.309083
+  ...
+# Subtest: actual Settings keyboard/controller retention and Back preserve the paused flight and offline action
+ok 4 - actual Settings keyboard/controller retention and Back preserve the paused flight and offline action
+  ---
+  duration_ms: 13525.791875
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14166.862583

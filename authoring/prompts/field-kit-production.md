@@ -13,3 +13,9 @@ Choose the next missing composition from `authoring/design-atlas/reveal-producti
 ## Adopt a reviewed collection into a release
 
 Import the complete `.rltheme` into a local studio workspace. Check every selected member and all affected screens, including Standard/Large text, focus/disabled/error states and return navigation. Compile into a fresh review directory with `node scripts/compile-presentation.mjs --bundle candidate.rltheme --out .cache/new-field-kit-review`. Validate byte-preserving transfer, current/history previews and runtime bindings. Adopt only the reviewed artifact files into the next version, update the related skills/prompts and run the exact-source release workflow. Keep failed evidence and immutable previous releases.
+
+## Extend a game screen
+
+Update the named game screen using the existing Field Kit component and navigation contracts. Keep the existing dialog, input, pause, save and recovery handlers. Use a translation key for each new label; use Exo 2 interface text, Plex numbers and Handjet only for large display accents. Resolve icons, frames and artwork through registered slots. Review default/focus/pressed/selected/disabled/error states, Standard/Large layouts and the actual return-focus path. Update the per-screen asset evidence and reproduce the immutable production ledger before the release gates.
+
+For release/archive catalogs, change the controller's `release-catalog.mjs` and shared catalog stylesheet. Preserve canonical Play, ZIP and manifest URLs. Copy only the verified presentation graph and notices into `catalog-ui/`; never rewrite a frozen game's HTML, worker, manifest or artwork. Verify total Pages bytes and the historical-controller fallback.

@@ -10,12 +10,15 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-compiled.css" />
     <script type="module" src="../../game/presentation/page-entry.mjs"></script>
+    <link rel="stylesheet" href="../../game/ui/field-kit-surfaces.css">
+    <script type="module" src="../../game/ui/field-kit-surfaces.mjs"></script>
 </head>
-<body class="field-kit field-kit-support">
+<body class="field-kit field-kit-support" data-field-kit-page="motion-lab">
   <main class="workspace">
     <header class="page-header">
       <div><p class="eyebrow">Field notes / motion & ability study</p><h1 class="field-kit-display">Small craft. More character.</h1></div>
       <p class="scope-note"><span class="status-dot"></span>Design sandbox<span>Fixed arena · toy abilities</span></p>
+      <label class="field-kit-page-text"><span data-field-kit-copy="display.textSize">Text size</span><select data-field-kit-text-size><option value="standard" data-field-kit-copy="display.standard">Standard</option><option value="large" data-field-kit-copy="display.large">Large</option></select></label>
     </header>
 
     <div id="load-error" class="load-error" hidden role="alert"></div>
@@ -101,7 +104,7 @@
         </section>
       </aside>
     </section>
-    <footer class="page-footer"><span>Motion & ability study · territory gameplay planned.</span><span><a href="../../docs/concepts/round-09-reference-atlas.html">World reference atlas</a> · <a href="presets.json">Visual presets</a> · <a href="ability-presets.json">Ability presets</a></span></footer>
+    <footer class="page-footer"><span>Motion & ability study · independent preview</span><span><a href="../../game/">Return to game</a> · <a href="../design-atlas/">Design atlas</a> · <a href="presets.json">Visual presets</a> · <a href="ability-presets.json">Ability presets</a></span></footer>
   </main>
   <script type="module" src="app.js"></script>
 </body>

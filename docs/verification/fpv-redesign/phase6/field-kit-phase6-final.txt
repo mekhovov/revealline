@@ -1,0 +1,115 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 5.69075
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 6.421084
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 452.629042
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 4 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 636.72925
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 5 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 458.504291
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 6 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 482.953416
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 7 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 582.669708
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 8 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.443166
+  ...
+# Subtest: surface copy has stable English fallback keys and preserves native controls
+ok 9 - surface copy has stable English fallback keys and preserves native controls
+  ---
+  duration_ms: 0.174708
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 10 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 3.0955
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 11 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 0.283375
+  ...
+# Subtest: actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+ok 12 - actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 1108.004542
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 13 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 700.061375
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 14 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 1222.76
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 15 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 1157.137125
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 16 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 1701.227583
+  ...
+# Subtest: actual release allowlist ships the standalone still entry and exact existing runtime/content dependencies
+ok 17 - actual release allowlist ships the standalone still entry and exact existing runtime/content dependencies
+  ---
+  duration_ms: 257.451
+  ...
+# Subtest: built workshop 0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel
+ok 18 - built workshop 0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel
+  ---
+  duration_ms: 613.426542
+  ...
+# Subtest: built workshop v0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel
+ok 19 - built workshop v0.32.0 retains exact entry bytes in loose/ZIP/offline data and opens its generated channel
+  ---
+  duration_ms: 579.303666
+  ...
+# Subtest: Pages automatically gives the shipped workshop an immutable same-edition HTML route, preserving query and fragment
+ok 20 - Pages automatically gives the shipped workshop an immutable same-edition HTML route, preserving query and fragment
+  ---
+  duration_ms: 428.29875
+  ...
+# Subtest: built poster/still links and teaching requests retain their edition and work from a prepared cache without a network
+ok 21 - built poster/still links and teaching requests retain their edition and work from a prepared cache without a network
+  ---
+  duration_ms: 602.227875
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6023.91575
