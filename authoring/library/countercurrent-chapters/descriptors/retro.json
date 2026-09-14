@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "countercurrent-retro",
+  "revision": 1,
+  "source": {
+    "id": "countercurrent",
+    "bytes": 8560,
+    "sha256": "fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb"
+  },
+  "pack": {
+    "bytes": 8115,
+    "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+  },
+  "media": {
+    "bytes": 7625557,
+    "sha256": "0f91f4bb170cbcd64df192b2a55d84c19db8d87d3dd09e15d4e65254c3606c9b"
+  },
+  "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+  "themeId": "retro",
+  "originals": [
+    {
+      "assetId": "countercurrent-retro-poster-1",
+      "presentationId": "countercurrent-retro-poster-1-presentation",
+      "levelId": "countercurrent-offset-docks",
+      "levelRevision": "1",
+      "sha256": "26fa92a40658fe2499655e7c4aa9ea29cd03060c9967d93945960d8f1c12c16e",
+      "bytes": 2698820,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "countercurrent-retro-poster-2",
+      "presentationId": "countercurrent-retro-poster-2-presentation",
+      "levelId": "countercurrent-sandbar-braid",
+      "levelRevision": "1",
+      "sha256": "1ebdd0087fa096feff52c568587c55a1c8a41aca95b7b3ccfa143d1aa7d1e3bf",
+      "bytes": 2489771,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "countercurrent-retro-poster-3",
+      "presentationId": "countercurrent-retro-poster-3-presentation",
+      "levelId": "countercurrent-crossing-watch",
+      "levelRevision": "1",
+      "sha256": "498dca62d17a4e59c486bbea7a023b9e8aa11cf69cba169092a4671d0fde8e99",
+      "bytes": 2426061,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}
