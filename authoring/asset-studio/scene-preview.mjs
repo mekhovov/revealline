@@ -153,17 +153,18 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
   const [presets, pack, ...otherPacks] = await fixtures(),
     classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout';
-  const { level, run } = options.sourcePicture?.level
+  const pictureOwner = options.pictureOwner || options.sourcePicture;
+  const { level, run } = pictureOwner?.level
     ? {
-        level: options.sourcePicture.level,
-        run: createRun(options.sourcePicture.level, {
-          seed: options.sourcePicture.descriptor.seed || 0,
+        level: pictureOwner.level,
+        run: createRun(pictureOwner.level, {
+          seed: pictureOwner.descriptor.seed || 0,
         }),
       }
     : createStudioPreviewRun([pack, ...otherPacks], slot.id);
   const painter = new BoardPainter(presets),
     theme = {
-      ...(options.sourcePicture?.theme || pack.themes[0]),
+      ...(pictureOwner?.theme || pack.themes[0]),
       palette: canvasPresentation(resolved).palette,
     };
   let warning = '';
@@ -171,7 +172,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     warning = message;
   };
   await painter.setLook(theme, bodyIds[classId] || bodyIds.scout);
-  painter.setLevel(level, { seed: 42 });
+  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
   if (slot.id.startsWith('effect.')) {
     const type = {
       failure: 'player.failed',
@@ -221,7 +222,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     frame,
     text(
       'small',
-      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${options.sourcePicture?.level ? 'exact source level' : 'isolated fixture'}${options.sourcePicture && !options.sourcePicture.level ? ' (original picture shown on a different inspection board)' : ''}${warning ? ` · ${warning}` : ''}`,
+      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${pictureOwner?.level ? 'exact source level' : 'isolated fixture'}${pictureOwner && !pictureOwner.level ? ' (picture shown on a different inspection board)' : ''}${warning ? ` · ${warning}` : ''}`,
       'bounded-label',
     ),
   );
@@ -233,7 +234,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         theme,
         level,
         image,
-        fit: options.sourcePicture?.fit || 'cover',
+        fit: pictureOwner?.fit || 'cover',
       });
     else
       painter.draw(canvas.getContext('2d'), run, dt, {
@@ -241,12 +242,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         reduced,
         showGrid: true,
         displayCSSWidth: Math.max(200, canvas.clientWidth),
-        ...(options.sourcePicture
+        ...(pictureOwner
           ? {
               backdrop: {
-                image: options.sourcePicture.image,
-                fit: options.sourcePicture.fit,
-                sampling: options.sourcePicture.sampling,
+                image: painter.images.background,
+                fit: pictureOwner.fit,
+                sampling: pictureOwner.sampling,
               },
             }
           : {}),

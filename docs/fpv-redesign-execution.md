@@ -17,14 +17,14 @@ The user approved the complete redesign plan on 2026-09-14. This register tracks
 
 | Phase | Deliverable                                                                               | State                                   | Release/evidence                                                                             |
 | ----- | ----------------------------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
-| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | Qualified, frozen and released; Pages pending        | v0.44.0 / fc789c71; all six gates, 3,433 tests and 357 frozen bodies verified                                         |
-| 1     | Fonts, semantic tokens and shared components throughout the game                          | Exact source qualified; freeze in progress | v0.45.0 / adacdfbe; all six gates and 3,433 tests passed                           |
-| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | Exact source qualified; freeze in progress | v0.46.0 / 0b0d2d79; all six gates and 3,463 tests passed       |
+| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | Qualified, frozen and released; canonical archive verified | v0.44.0 / fc789c71; all six gates, 3,433 tests; 700-file archive audit and public saved-flight/play/Collection/offline checks passed                                         |
+| 1     | Fonts, semantic tokens and shared components throughout the game                          | Qualified, frozen and released; Pages pending | v0.45.0 / adacdfbe; all six gates and 3,433 tests passed                           |
+| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | Qualified, frozen and released; Pages pending | v0.46.0 / 0b0d2d79; all six gates and 3,463 tests passed       |
 | 3     | Local asset studio, sprite editor, previews, prompts and bundle exchange                  | Implemented source; release pending     | v0.47.0 candidate; edit/validation/undo/save/reload/restore/export UI checked                |
 | 4     | Original title scene and illustrated mission/briefing navigation                          | Implemented source                      | v0.48.0 candidate; exact landscape/portrait scenes, five-action title and responsive gallery |
 | 5 | Complete current FPV flight art, HUD, controls and feedback | Implemented; qualification in progress | v0.49.0 candidate; 30 native sprites, 45 glyphs, 44 reveal frames for 56 owners, title v2 and compiled runtime |
 | 6 | Collection, settings/data, learning, couch, replay, workshops and supporting screens | Implemented; qualification in progress | v0.50.0 candidate; categorized settings, Collection/records, complete Workshop navigation and shared release/archive pages |
-| 7     | Full coverage, compatibility, accessibility, performance/offline and public qualification | Planned                                 | —                                                                                            |
+| 7 | Full coverage, compatibility, accessibility, performance/offline and public qualification | Working source; release qualification pending | v0.51.0 candidate; native 200%/responsive fixes, exact-owner previews, Signal 06 v2, artwork-led results, role-aware specimens and prompts |
 
 ## Acceptance and release protocol
 
@@ -40,4 +40,12 @@ Pre-release qualification found six outdated baseline test expectations (control
 
 Candidate source qualification also runs on pushes to the phase branches through `qualify-release-source.yml`. It records the actual commit/tree and Node version, runs the same six gates and reproduces the production collection. This job does not publish or deploy; Pages continues through its existing workflow after release preparation and integration. Full tests use the same bounded file concurrency now adopted by the parallel main-branch work.
 
-Archive08 reserves v0.47.0/v0.48.0 before the v0.49.0 public cutover. Its allocation must be available in the Pages controller independently of the frozen game source; never mutate a frozen game to update hosting locations. Actual archive creation, every-file public verification and canonical URL handoff remain required before using that allocation.
+Archive 08 reserves v0.47.0/v0.48.0 before the v0.49.0 public cutover. Its allocation must be available in the Pages controller independently of the frozen game source; never mutate a frozen game to update hosting locations. Actual archive creation, every-file public verification and canonical URL handoff remain required before using that allocation.
+
+## Final qualification corrections
+
+Phase 7 records native English/Ukrainian font checks, 200% browser zoom, exact-owner previews for all 44 prepared exports and metadata integrity for 56 picture owners, corrected primary/danger/tab specimens, and per-slot asset review evidence. Signal 06 v2 removes sky stippling while retaining its original/derivative history. Results now show this completed attempt's image before its details; saved/earned pins and explicit legacy originals remain authoritative. Resume replaces its stale paused instruction after the run resumes.
+
+Cold-source measurements found the first title frame still requested the 866 KB v1 illustration before the compiled v2 replacement. Boot, flow and compiled fallbacks now reference the existing 26 KB v2 asset. This changes the startup presentation without dropping historical v1 originals. Draw-cost measurements and final payload figures are recorded separately from public compressed transfer and physical devices.
+
+Archive 09 reserves v0.49 / v0.50; dedicated Archive 10 retains the concurrent v0.42 release. A Pages publishing controller can omit its current version from a shard plan while serving those frozen bytes at the main root/version path. It can archive already-tagged later editions once their public copies pass verification. Keep the full allocation registry, per-publication overlay, exact frozen game identity and public byte receipts separate; do not change a frozen source or raise the 950/800 MB budgets to repair hosting capacity.

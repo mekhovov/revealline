@@ -31,3 +31,9 @@ Geometry editing follows actual renderer support. Actors, terrain and pickups ca
 Runtime picture adoption is described in [the presentation host contract](presentation-runtime.md). New defaults become durable exact still-media revisions only for eligible new attempts. Existing saved/earned pins, explicit legacy choices and manual artwork remain authoritative. Collection and mission thumbnails must follow the earned picture receipt rather than assume the current source background.
 
 Every public release still needs its exact-source gates, immutable source/artifact identity, Pages byte verification and actual play. Source previews and desktop emulation do not certify physical touch/controller devices or public offline delivery.
+
+## Final source review
+
+The Phase 7 evidence records exact asset revisions and source-code/file hashes, agent visual decisions, observed native state/return-focus checks, glyph results and bounded renderer measurements. Reviewed successors are appended only after their corresponding explicit decisions; structural compilation is not a visual approval. The 194 required FPV slots are distinct from 99 optional historical source-adapter slots. Old originals and immutable metadata remain retained. Public delivery, offline journeys and physical-device limits have their own receipts.
+
+Sequential reveal corrections are recorded in `reveal-source-revisions.json`. The preparer verifies every source in the chain, rejects stale or forked predecessors and writes a distinct versioned derivative. Signal 06v2 is selected for new eligible attempts; its v1 original and export remain in history. Font/audio briefs request actual files in their medium while retaining current custom production requirements.
