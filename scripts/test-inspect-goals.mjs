@@ -65,6 +65,23 @@ async function fixture(t) {
   return { root, setIndex };
 }
 
+async function buildFixture(t) {
+  const owned = await fixture(t);
+  await fs.writeFile(
+    path.join(owned.root, 'game/index.html'),
+    '<!doctype html><title>CLI fixture</title>',
+  );
+  await fs.writeFile(
+    path.join(owned.root, 'game/build-config.json'),
+    JSON.stringify({
+      version: 'goal-test',
+      entry: 'game/index.html',
+      include: ['game'],
+    }),
+  );
+  return owned;
+}
+
 test('inspect-goals accepts only explicit bounded command options', async () => {
   assert.deepEqual(
     parseArguments(['inspect-goals', '--pack', 'my pack.json', '--out', 'report.json']),
@@ -216,9 +233,11 @@ test('index validation rejects traversal, duplicate IDs, mismatches and bad loca
   await assert.rejects(validatePacks(root), /Invalid pack/);
 });
 
-test('current build includes the compact pack and its index in inventory and offline cache', async (t) => {
-  const out = path.join(await temporary(t), 'site');
-  await buildProject({ out, version: 'equipment-workshop-test' });
+test('owned fixture build preserves the exact pack and includes its index in offline cache', async (t) => {
+  // Full current-source distribution is covered in test-external-distribution.mjs.
+  const { root } = await buildFixture(t);
+  const out = path.join(root, 'site');
+  await buildProject({ root, out, version: 'equipment-workshop-test' });
   assert.deepEqual(
     await fs.readFile(path.join(out, 'game/content/packs/equipment-workshop.json')),
     originalBytes,
@@ -231,19 +250,7 @@ test('current build includes the compact pack and its index in inventory and off
 });
 
 test('base campaign conflict fails indexed build before replacing its previously valid output', async (t) => {
-  const { root } = await fixture(t);
-  await fs.writeFile(
-    path.join(root, 'game/index.html'),
-    '<!doctype html><title>CLI fixture</title>',
-  );
-  await fs.writeFile(
-    path.join(root, 'game/build-config.json'),
-    JSON.stringify({
-      version: 'goal-test',
-      entry: 'game/index.html',
-      include: ['game'],
-    }),
-  );
+  const { root } = await buildFixture(t);
   const out = path.join(root, 'output');
   await buildProject({ root, out });
   const marker = await fs.readFile(path.join(out, '.xonix-build.json'), 'utf8');
