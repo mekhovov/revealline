@@ -6,12 +6,26 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
-import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
+import {
+  emptyLibrary,
+  updatePreferences,
+  saveLibrary,
+  loadLibrary,
+  campaignKey,
+} from '../library.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { fixture, memoryIndexedDB, structuralProbe } from './helpers/soundtrack-fixtures.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { prepareSoundtrackLibrary } from '../soundtrack-bundle.mjs';
+import {
+  preparePack,
+  emptyPackLibrary,
+  installPack,
+  exportPackLibrary,
+  resolvePackCampaign,
+} from '../packs.mjs';
+import { createSelectionBookmark } from '../selection-bookmark.mjs';
 
 const profileKey = 'revealline.library.dev.v1';
 const handoffKey = 'revealline.playground.current';
@@ -23,6 +37,157 @@ const campaign = {
   classRecipes: JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url))),
   levels: [retryFixture('self-contact').level],
 };
+
+test('a restored FPV-only pack keeps all four canonical Guide appearances and practices', async (t) => {
+  const themes = JSON.parse(
+    readFileSync(new URL('../content/themes.json', import.meta.url)),
+  ).themes;
+  const level = { ...retryFixture('self-contact').level, id: 'guide-fpv-board' };
+  const { pack } = await preparePack({
+    format: 'xonix-pack.v1',
+    id: 'guide-fpv-only',
+    version: '1.0.0',
+    name: 'FPV-only guide fixture',
+    description: 'One real validated board with only the FPV theme; no optional image payloads.',
+    engine: 'xonix-core.v2',
+    dependencies: [],
+    themes: themes.filter(({ id }) => id === 'fpv'),
+    classRecipes: campaign.classRecipes,
+    campaigns: [
+      {
+        version: campaign.version,
+        id: 'guide-fpv-campaign',
+        revision: '1',
+        title: 'Saved FPV-only selection',
+        themeId: 'fpv',
+        levels: [level],
+      },
+    ],
+    visualOverrides: {},
+    levelVisuals: [],
+    music: [],
+  });
+  const installed = exportPackLibrary(installPack(emptyPackLibrary(), pack));
+  const assets = memoryIndexedDB();
+  // Seed the modeled browser through its real IDB transaction boundary, before
+  // importing the app. Startup still imports and validates the stored pack.
+  await new Promise((resolve, reject) => {
+    const request = assets.indexedDB.open('revealline-assets-v1', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('assets');
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => {
+      const db = request.result,
+        transaction = db.transaction('assets', 'readwrite');
+      transaction.objectStore('assets').put(installed, 'revealline.packs.dev.v1');
+      transaction.onerror = transaction.onabort = () => {
+        db.close();
+        reject(transaction.error);
+      };
+      transaction.oncomplete = () => {
+        db.close();
+        resolve();
+      };
+    };
+  });
+  const storage = memoryStorage(),
+    previewStorage = memoryStorage();
+  const selectionKey = `${profileKey}.last-selection.v1`;
+  const selected = campaignKey(resolvePackCampaign(pack, pack.campaigns[0].id).campaign);
+  assert.equal(
+    createSelectionBookmark({ storage, key: selectionKey, canWrite: () => true }).remember({
+      campaignKey: selected,
+      levelId: level.id,
+      themeId: 'fpv',
+    }),
+    true,
+  );
+  const bookmark = storage.getItem(selectionKey);
+  const paint = [];
+  const context = new Proxy(
+    {},
+    {
+      get: (target, key) => target[key] ?? ((...args) => paint.push([key, ...args])),
+      set: (target, key, value) => {
+        target[key] = value;
+        paint.push(['set', key, value]);
+        return true;
+      },
+    },
+  );
+  // Record actual Guide painter calls; other optional Canvas surfaces stay null.
+  // This checks palette use, not native pixels or browser layout.
+  t.mock.method(SoloElement.prototype, 'getContext', function () {
+    return this.id === 'enemy-guide-preview' ? context : null;
+  });
+  const page = await soloPage(t, {
+    campaign,
+    storage,
+    previewStorage,
+    titleScreen: true,
+    assetIndexedDB: assets.indexedDB,
+  });
+  page.win.crypto = globalThis.crypto;
+  page.$('enemy-guide-frame').contentWindow = {};
+  assert.equal(page.$('pack-select').value, pack.id, 'stored pack was selected during bootstrap');
+  assert.equal(page.$('campaign-select').value, selected);
+  assert.deepEqual(
+    page.$('theme-select').children.map(({ value }) => value),
+    ['fpv'],
+  );
+  page.frame(0);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  const savedProfile = storage.getItem(profileKey),
+    writes = storage.writes.length;
+  const assetWrites = assets.allPuts.length;
+  page.$('shell-guide').focus();
+  page.$('shell-guide').click();
+  const appearance = page.$('enemy-guide-theme');
+  assert.deepEqual(
+    appearance.children.map(({ value, textContent }) => [value, textContent]),
+    themes.map(({ id, name }) => [id, name]),
+  );
+  for (const theme of themes) {
+    paint.length = 0;
+    appearance.value = theme.id;
+    appearance.emit('change');
+    assert.ok(
+      paint.some(
+        ([op, key, value]) => op === 'set' && key === 'fillStyle' && value === theme.palette.accent,
+      ),
+      `${theme.id} preview paints with its canonical palette`,
+    );
+    await launch(page);
+    const lesson = JSON.parse(previewStorage.getItem(handoffKey));
+    assert.deepEqual(lesson.theme, theme, `${theme.id} practice uses the complete canonical theme`);
+    assert.match(page.$('enemy-guide-status').textContent, /Practice only/);
+    page.$('enemy-guide-return').click();
+    assert.equal(previewStorage.getItem(handoffKey), null);
+    assert.equal(page.$('enemy-guide-frame').hidden, true);
+    page.frame(0);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(storage.getItem(profileKey), savedProfile);
+    assert.equal(storage.getItem(selectionKey), bookmark);
+    assert.deepEqual(
+      page.$('theme-select').children.map(({ value }) => value),
+      ['fpv'],
+    );
+    assert.equal(page.$('theme-select').value, 'fpv');
+  }
+  nativeKey(page, 'Escape');
+  assert.equal(page.$('shell-home').open, true);
+  assert.equal(
+    page.doc.activeElement === page.$('shell-guide'),
+    true,
+    'focus returns to the Guide opener',
+  );
+  assert.equal(
+    storage.writes.length,
+    writes,
+    'Guide preview and practice never rewrite the parent profile or selection',
+  );
+  assert.equal(assets.allPuts.length, assetWrites, 'the installed pack remains unchanged');
+  assert.deepEqual(page.errors, []);
+});
 function ticks(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
