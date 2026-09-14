@@ -12,11 +12,7 @@
   box-shadow:
     0 0 0 4px #080d19,
     0 0 64px #000b;
-  font:
-    14px/1.5 ui-monospace,
-    SFMono-Regular,
-    Consolas,
-    monospace;
+  font: 14px/1.5 var(--fk-font-mono, monospace);
   overflow: auto;
   overscroll-behavior: contain;
 }

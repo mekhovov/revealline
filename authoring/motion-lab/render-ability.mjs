@@ -2,7 +2,7 @@ import {abilityReadout} from "./ability.mjs";
 const TAU=Math.PI*2;
 const circle=(ctx,x,y,r)=>{ctx.beginPath();ctx.arc(x,y,r,0,TAU);};
 const label=(ctx,text,x,y,pixels,color)=>{
-  ctx.font=`${Math.max(.43,7/pixels)}px monospace`;ctx.textAlign="center";ctx.fillStyle=color;
+  ctx.font=`500 ${Math.max(.43,14/pixels)}px "Field Kit UI", "Field Kit Mono", sans-serif`;ctx.textAlign="center";ctx.fillStyle=color;
   const half=ctx.measureText(text).width/2;ctx.fillText(text,Math.max(half+.2,Math.min(48-half-.2,x)),y);
 };
 

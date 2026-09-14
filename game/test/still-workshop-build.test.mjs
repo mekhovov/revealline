@@ -11,6 +11,18 @@ import { planCurrentEntries } from '../../scripts/pages-current-entry.mjs';
 
 const sourceRoot = fileURLToPath(new URL('../../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const fieldKitFiles = [
+  'game/ui/field-kit-fonts.css',
+  'game/ui/field-kit-tokens.css',
+  'game/ui/field-kit-components.css',
+  'game/ui/fonts/field-kit/handjet-display-600.woff2',
+  'game/ui/fonts/field-kit/exo2-ui-400-600.woff2',
+  'game/ui/fonts/field-kit/ibm-plex-mono-500.woff2',
+  'game/ui/fonts/field-kit/Handjet-OFL.txt',
+  'game/ui/fonts/field-kit/Exo2-OFL.txt',
+  'game/ui/fonts/field-kit/IBMPlexMono-OFL.txt',
+  'game/ui/fonts/field-kit/provenance.json',
+];
 const workshopEntries = [
   'authoring/still-media/index.html',
   'authoring/still-media/launch.js',
@@ -52,6 +64,7 @@ const storyRuntime = [
   'game/ui/victory-story.mjs',
 ];
 const requiredRuntime = [
+  ...fieldKitFiles,
   'game/ui/still-media-host.mjs',
   'game/ui/still-media-panel.mjs',
   'game/ui/still-media-panel.css',
@@ -137,7 +150,7 @@ async function fixture(t) {
   for (const name of [
     ...publicationEntries,
     ...storyRuntime,
-    'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
+    ...fieldKitFiles,
     'game/ui/still-media-panel.css',
     'game/offline.mjs',
     'game/offline/service-worker.template.js',
@@ -198,7 +211,7 @@ for (const version of ['0.32.0', 'v0.32.0'])
       ...storyRuntime,
       'game/video-poster.mjs',
       'game/ui/video-poster-workshop.mjs',
-      'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
+      ...fieldKitFiles,
       'game/ui/still-media-host.mjs',
       'game/ui/still-media-panel.css',
       'game/media-bundle.mjs',
@@ -421,7 +434,7 @@ test('built poster/still links and teaching requests retain their edition and wo
         'game/video-poster.mjs',
         'game/ui/video-poster-workshop.mjs',
         'game/build-info.json',
-        'game/ui/fonts/pixelify-sans/PixelifySans.ttf',
+        ...fieldKitFiles,
       ].map((name) => [new URL(name, scope), name]),
       ...teachingScenarios.map((name) => [
         new URL(`../../${name}`, new URL('game/playground/', scope)),
