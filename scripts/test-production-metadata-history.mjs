@@ -184,6 +184,20 @@ test('v2 preserves the exact prior renderer as inert source bytes and v1 still a
 test('v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer', async (t) => {
   const dir = await fixture(t),
     retained = index.entries[2];
+  // Isolate this v2 metadata contract from the separate exact source-history adapter.
+  // A matching source snapshot legitimately takes precedence when both indexes retain it.
+  await writeFile(
+    path.join(dir, historyRoot, 'source-index.json'),
+    JSON.stringify({
+      ...sourceIndex,
+      entries: sourceIndex.entries.filter(
+        (pin) =>
+          pin.path !== retained.path ||
+          pin.bytes !== retained.bytes ||
+          pin.sha256 !== retained.sha256,
+      ),
+    }),
+  );
   const target = path.join(dir, `${historyRoot}/${retained.sha256}.mjs`);
   await rm(target);
   await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);

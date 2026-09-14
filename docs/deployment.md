@@ -31,17 +31,23 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 ## GitHub Pages
 
-This repository includes `.github/workflows/deploy-pages.yml`. Every push to `main` runs the
-source gates, builds the current package as the default `/game/` target, snapshots every stable
-`vMAJOR.MINOR.PATCH` Git tag into `/releases/<version>/site/game/`, and deploys the complete
-static artifact with the GitHub Pages deployment actions. The root landing page reads the generated
-release index so players can launch the newest build immediately or switch to an older playable
-version. The workflow checks out full history because immutable version paths are built from tags;
-it intentionally omits the local `source.tar` archives from the public Pages artifact.
+This repository includes `.github/workflows/deploy-pages.yml`. Pull requests run fast source gates
+and four isolated test shards; publishing a GitHub Release deploys the highest stable semantic
+version. The release workflow builds that tag as the default `/game/` target, snapshots every stable
+`vMAJOR.MINOR.PATCH` Git tag into `/releases/<version>/site/game/`, and deploys the complete static
+artifact with the GitHub Pages deployment actions. The root landing page reads the generated release
+index so players can launch the newest build immediately or switch to an older playable version.
 
-Set the repository Pages source to **GitHub Actions** once, then pushes to `main` are the update
-mechanism. The workflow uses only the repository’s `GITHUB_TOKEN`; no game runtime service or
-secret is required.
+Set the repository Pages source to **GitHub Actions** once. The workflow uses the repository's
+`GITHUB_TOKEN`; no additional secret is required. It cancels an older production deployment when a
+newer one starts, and an older stable release cannot roll Pages backward. To retry the latest
+release, use **Actions → Build and deploy GitHub Pages → Run workflow**, select `main`, and enter
+the latest stable tag in `release_tag`. Running the workflow from `main` ensures the current
+deployment automation is used while its checkout remains pinned to the immutable release tag.
+
+Pages assembly is intentionally release-only because it requires the package version to have a
+matching immutable tag. Pull requests instead build the current static artifact, so release
+candidates no longer fail merely because their future tag has not yet been created.
 
 ## Browser installation and offline use
 
