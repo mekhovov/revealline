@@ -1,0 +1,15 @@
+{
+  "guideBack": {
+    "active": "shell-guide",
+    "open": [
+      "shell-home",
+      "shell-workshop-dialog"
+    ]
+  },
+  "workshopBack": {
+    "active": "shell-workshop",
+    "open": [
+      "shell-home"
+    ]
+  }
+}

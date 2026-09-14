@@ -1,0 +1,109 @@
+{
+  "actions": [
+    {
+      "bounds": {
+        "bottom": 582.5,
+        "height": 44,
+        "left": 320,
+        "right": 541.0234375,
+        "top": 538.5,
+        "width": 221.0234375,
+        "x": 320,
+        "y": 538.5
+      },
+      "text": "Next uncleared mission →"
+    },
+    {
+      "bounds": {
+        "bottom": 582.5,
+        "height": 44,
+        "left": 551.0234375,
+        "right": 690.109375,
+        "top": 538.5,
+        "width": 139.0859375,
+        "x": 551.0234375,
+        "y": 538.5
+      },
+      "text": "\n                    View picture ⤢\n                  "
+    },
+    {
+      "bounds": {
+        "bottom": 582.5,
+        "height": 44,
+        "left": 700.109375,
+        "right": 844.3125,
+        "top": 538.5,
+        "width": 144.203125,
+        "x": 700.109375,
+        "y": 538.5
+      },
+      "text": "\n                    Try again\n                  "
+    },
+    {
+      "bounds": {
+        "bottom": 636.5,
+        "height": 44,
+        "left": 320,
+        "right": 499.40625,
+        "top": 592.5,
+        "width": 179.40625,
+        "x": 320,
+        "y": 592.5
+      },
+      "text": "\n                    Choose appearance\n                  "
+    },
+    {
+      "bounds": {
+        "bottom": 636.5,
+        "height": 44,
+        "left": 509.40625,
+        "right": 668.609375,
+        "top": 592.5,
+        "width": 159.203125,
+        "x": 509.40625,
+        "y": 592.5
+      },
+      "text": "\n                    Main menu\n                  "
+    }
+  ],
+  "canvas": {
+    "bounds": {
+      "bottom": 320,
+      "height": 216,
+      "left": 320,
+      "right": 960,
+      "top": 104,
+      "width": 640,
+      "x": 320,
+      "y": 104
+    },
+    "height": 480,
+    "hidden": false,
+    "width": 640
+  },
+  "card": {
+    "bottom": 688,
+    "height": 604,
+    "left": 300,
+    "right": 980,
+    "top": 84,
+    "width": 680,
+    "x": 300,
+    "y": 84
+  },
+  "reading": {
+    "bottom": 428.203125,
+    "height": 324.203125,
+    "left": 320,
+    "right": 960,
+    "top": 104,
+    "width": 640,
+    "x": 320,
+    "y": 104
+  },
+  "viewport": {
+    "dpr": 2,
+    "height": 720,
+    "width": 1280
+  }
+}

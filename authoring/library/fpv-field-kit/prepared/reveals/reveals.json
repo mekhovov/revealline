@@ -3,7 +3,7 @@
   "preparationVersion": 1,
   "recipeSource": {
     "path": "scripts/prepare-field-kit-reveals.mjs",
-    "sha256": "eb3c89272bab23731b6c7ce50c361ec11a573fb29b42310b198f5aa8057bbe9d"
+    "sha256": "433c3cbe75a8722400dfc911631891537201b5c482bb5fc653b9fa1890685f10"
   },
   "planned": {
     "compositions": 38,
@@ -14,7 +14,7 @@
     "compositions": 38,
     "exports": 44,
     "owners": 56,
-    "totalPNGBytes": 2087270
+    "totalPNGBytes": 2083975
   },
   "missingCompositions": [],
   "assets": [
@@ -5160,19 +5160,19 @@
       }
     },
     {
-      "id": "scene-signal-06-768x576-v1",
+      "id": "scene-signal-06-768x576-v2",
       "compositionId": "scene-signal-06",
       "slotIds": [
         "picture.fpv.493d624384c36c39"
       ],
       "file": {
-        "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-06-768x576-v1.png",
-        "sha256": "47033ec2cd3b56345394bc13bbb7b10579419559d1e41160d02f8f3eea368672",
-        "bytes": 46277,
+        "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-06-768x576-v2.png",
+        "sha256": "2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da",
+        "bytes": 42982,
         "mime": "image/png",
         "width": 768,
         "height": 576,
-        "pixelsSha256": "39c8c65c3b0592290977cc51e461a1618f98629805876a1cd344ceb7cc021a49"
+        "pixelsSha256": "1f7d9acb766d9af68728140e36cfa40cede0d1b23bbd9f149bb3cf5d07f9b271"
       },
       "geometry": {
         "frame": {
@@ -5197,17 +5197,24 @@
       "provenance": {
         "creator": "Original scene generated with OpenAI image_gen; explicit deterministic Field Kit derivative preparation.",
         "source": {
+          "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v2.png",
+          "sha256": "b456d1e0fad467f5cf1b18cdf721c7bb181d4073142a3d76b3c079079aab5ca4",
+          "bytes": 1753604,
+          "width": 1448,
+          "height": 1086
+        },
+        "license": "Project-generated original artwork; no third-party source pixels copied.",
+        "prompt": "Edit this original Reveal Line pixel-art scene as a careful visual cleanup. Keep the exact 4:3 landscape composition: foreground rocks and fir trees framing the mountain valley, low setting sun at the left horizon, the distant lakes, and the large radio telescope dish and slim mast on the right ridge. Preserve every identifying silhouette, position, crop, and the subdued navy/charcoal/olive palette with small warm amber sunset accents. The specific defect to fix is the scattered tiny speckles and dither-like grain in the upper blue-grey sky and clouds. Replace that sky grain with calm flat connected color regions and a few broad, deliberate, stepped cloud clusters. The sky must have ZERO noise, isolated pixel dots, dithering, soft airbrush gradients or stars. Keep fir trees and the radio equipment crisp and readable; use grouped pixel texture, never photorealism. Do not add anything. No text, logos, UI, border, glow, bloom or blur. Render a complete opaque 4:3 PNG, ideally 1536x1152. This is a source artwork revision for subsequent deterministic 768x576, 36-color pixel-grid preparation. Maintain clean stepped pixel edges and quiet contrast so cyan game boundaries and amber active cuts remain legible over the picture.\n",
+        "tool": "image_gen.imagegen",
+        "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0be-e184-7c03-ba2b-59dc179a9800/exec-330c8bcf-136e-4798-93f3-ae0cb8b0914f.png",
+        "parent": null,
+        "supersedesSource": {
           "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v1.png",
           "sha256": "499ab6a37034f7318185fe0e87a495d835abbf3988bb05b84659ed07ecde390a",
           "bytes": 1772428,
           "width": 1448,
           "height": 1086
-        },
-        "license": "Project-generated original artwork; no third-party source pixels copied.",
-        "prompt": "Use case: stylized-concept. Create ONE original production reward background for Reveal Line, a pixel-art FPV territory-capture game. Genuine deliberately chunky 16-bit pixel art: square clusters, crisp stepped edges, flat color ramps, recognizable silhouettes, modest detail, approximately 384-pixel logical horizontal resolution displayed large. Restrained field-kit palette: deep ink/navy #070b12, charcoal #101923, slate blue #425563, muted teal/green #687c55, off-white #f3f0db, warm amber #f4bf62 used sparingly; extend with a few controlled earth and sky ramps. Beautiful atmospheric composition that rewards revealing it, but no bloom, blur, texture noise, smooth painting, gradients, tiny speckles or photorealism. Quiet midground separates live gameplay from scenery. No text, logos, HUD, borders, icons, people, flying drones, propellers, active actors, capture lines, military insignia, weapons or UI. Art fills the full opaque rectangular canvas. One scene only, no panels or montage. This is a new original composition from the written brief, not a copy of another game. Keep important landmarks and open spaces legible as a small 240px gallery thumbnail.\nScene: Secluded antenna behind a wooded ridge. Deliberately compose this mission-specific subject, using a simple off-center landmark, three broad depth layers and a quiet central reveal area; no generic repeated village template.\nFraming: Classic 4:3 composition. Target source 1536×1152. Preserve the generated original even when actual output dimensions differ. Exact registered exports will be separately prepared with recorded operations.",
-        "tool": "image_gen.imagegen",
-        "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a0a0bf-238f-7c73-8eb6-f3f57153e701/exec-600cdca9-2701-4367-bbcb-ff52dc3104b1.png",
-        "parent": null
+        }
       },
       "preparation": {
         "algorithm": "field-kit-reveal-pixel-preparation-v1",
@@ -5278,6 +5285,7 @@
           "#f3f0db",
           "#163e47",
           "#245966",
+          "#326a70",
           "#1c302d",
           "#2b4036",
           "#3c5140",

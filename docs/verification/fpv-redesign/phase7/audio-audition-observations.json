@@ -1,0 +1,40 @@
+{
+  "method": "Native Studio button actions; observed UI playback acknowledgements and explicit Stop. This is functional browser evidence, not a listening-panel judgment or physical-speaker test.",
+  "url": "http://127.0.0.1:9045/authoring/asset-studio/",
+  "collectionRevision": 9,
+  "observations": [
+    {
+      "slot": "audio.focus",
+      "result": "Saved / current\n            focus audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.confirm",
+      "result": "Saved / current\n            confirm audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.cancel",
+      "result": "Saved / current\n            cancel audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.capture",
+      "result": "Saved / current\n            capture audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.failure",
+      "result": "Saved / current\n            failure audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.victory",
+      "result": "Saved / current\n            victory audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.pickup",
+      "result": "Saved / current\n            pickup audio cueAudition cueStopPlaying the registered Soundscape recipe."
+    },
+    {
+      "slot": "audio.music",
+      "result": "Saved / current\n            Theme musicAudition 4 secondsStopPlaying the registered Soundscape recipe."
+    }
+  ],
+  "stopped": "Saved / current\n            Theme musicAudition 4 secondsStopAudition stopped."
+}

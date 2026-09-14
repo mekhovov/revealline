@@ -1,0 +1,1 @@
+"{\"slot\":\"picture.fpv.fb5413f595ab2c5b\",\"context\":\"FLIGHT / STUDIOIII  00:00  0%BoardPainter · Signal Switchback · 72 × 36 cells · exact source levelShow concealed field\",\"width\":1440,\"height\":900,\"dpr\":1,\"canvas\":{\"x\":921,\"y\":174.765625,\"width\":460,\"height\":230,\"top\":174.765625,\"right\":1381,\"bottom\":404.765625,\"left\":921}}"

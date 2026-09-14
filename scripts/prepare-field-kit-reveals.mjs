@@ -7,6 +7,7 @@ import { resolve, dirname } from 'node:path';
 import { decodeRGB, encodeScenePNG } from './prepare-field-kit-scenes.mjs';
 import { centerCrop } from '../authoring/asset-studio/helpers.mjs';
 import { ASSET_SLOTS } from '../game/presentation/catalog.mjs';
+import { canonicalJSON } from '../game/data-json.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 export const REVEAL_PREPARATION_VERSION = 1;
@@ -178,19 +179,65 @@ async function optionalJSON(relative) {
     throw error;
   }
 }
+export function resolveRevealSources(originals, revisions = []) {
+  check(
+    Array.isArray(originals) && Array.isArray(revisions) && revisions.length <= 128,
+    'Invalid reveal source revisions.',
+  );
+  const sources = new Map();
+  for (const source of originals) {
+    check(!sources.has(source.id), `Duplicate reveal source ${source.id}`);
+    sources.set(source.id, source);
+  }
+  for (const revision of revisions) {
+    const before = sources.get(revision.id);
+    check(
+      before &&
+        Number.isSafeInteger(revision.revision) &&
+        revision.revision === (before.revision ?? 1) + 1,
+      'Reveal source revision must follow its existing parent.',
+    );
+    check(
+      canonicalJSON(revision.supersedes) === canonicalJSON(before.source),
+      'Reveal source revision has a stale parent.',
+    );
+    check(
+      /^[a-z0-9-]+$/.test(revision.id) &&
+        revision.source?.path ===
+          `authoring/library/fpv-field-kit/originals/reveals/${revision.id}-v${revision.revision}.png`,
+      'Reveal revision requires a new versioned source path.',
+    );
+    check(
+      typeof revision.prompt === 'string' && revision.prompt.length >= 100,
+      'Reveal source revision needs its full edit prompt.',
+    );
+    sources.set(revision.id, revision);
+  }
+  return sources;
+}
+
 export async function prepareFieldKitReveals({ checkOnly = false } = {}) {
-  const [plan, proof, generated, crops] = await Promise.all([
+  const [plan, proof, generated, crops, revisions] = await Promise.all([
     optionalJSON('authoring/design-atlas/reveal-production-plan.json'),
     optionalJSON('authoring/library/fpv-field-kit/reveal-proof-sources.json'),
     optionalJSON('authoring/library/fpv-field-kit/reveal-generated-sources.json'),
     optionalJSON('authoring/library/fpv-field-kit/reveal-crop-decisions.json'),
+    optionalJSON('authoring/library/fpv-field-kit/reveal-source-revisions.json'),
   ]);
+  check(
+    !revisions.format || revisions.format === 'revealline-reveal-source-revisions.v1',
+    'Invalid reveal revision format.',
+  );
   const all = [...proof.records, ...generated.records],
-    sources = new Map(),
+    sources = resolveRevealSources(all, revisions.records),
     assets = [];
-  for (const source of all) {
-    check(!sources.has(source.id), `Duplicate reveal source ${source.id}`);
-    sources.set(source.id, source);
+  // Earlier originals remain immutable even when a later source is selected.
+  for (const record of [...all, ...revisions.records]) {
+    const bytes = await readFile(resolve(root, record.source.path));
+    check(
+      hash(bytes) === record.source.sha256 && bytes.length === record.source.bytes,
+      `Original reveal source changed: ${record.id}`,
+    );
   }
   const decoded = new Map(),
     slots = new Map(ASSET_SLOTS.map((slot) => [slot.id, slot]));
@@ -234,10 +281,11 @@ export async function prepareFieldKitReveals({ checkOnly = false } = {}) {
       );
       check(bytes.length <= s.budget.maxBytes, `Reveal exceeds slot byte budget: ${id}`);
     }
-    const path = `${REVEAL_OUTPUT_DIRECTORY}/${entry.id}-v1.png`;
+    const version = record.revision ?? 1;
+    const path = `${REVEAL_OUTPUT_DIRECTORY}/${entry.id}-v${version}.png`;
     await preserve(resolve(root, path), bytes, checkOnly);
     assets.push({
-      id: `${entry.id}-v1`,
+      id: `${entry.id}-v${version}`,
       compositionId: entry.compositionId,
       slotIds: entry.owners,
       file: {
@@ -262,6 +310,7 @@ export async function prepareFieldKitReveals({ checkOnly = false } = {}) {
         tool: record.tool,
         toolPath: record.toolPath,
         parent: null,
+        ...(record.supersedes ? { supersedesSource: record.supersedes } : {}),
       },
       preparation: { ...output.preparation, cropDecision: cropDecision ?? null },
       quality: {

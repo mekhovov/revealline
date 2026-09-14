@@ -1,0 +1,30 @@
+TAP version 13
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 1 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 1498.172
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 2 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 1693.185792
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 3 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 1072.7925
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 4 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 34097.285625
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38567.551042

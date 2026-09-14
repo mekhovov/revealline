@@ -1,0 +1,1 @@
+"{\"body\":{\"touchMode\":\"stick\",\"touchSide\":\"right\",\"touchSize\":\"regular\",\"textSize\":\"large\",\"inputMode\":\"pointer\",\"pictureState\":\"ready\",\"flightState\":\"paused\",\"screenControls\":\"hidden\"},\"coverage\":\"0.0%\",\"message\":\"Saved flight verified and restored. Press Resume to continue.\"}"

@@ -57,12 +57,7 @@ jobs:
         run: node scripts/produce-field-kit-theme.mjs --check
 
       - name: Require reviewed production slots in the committed ledger
-        run: |
-          if [ -f scripts/check-field-kit-readiness.mjs ]; then
-            node scripts/check-field-kit-readiness.mjs
-          else
-            echo 'Not applicable: this v0.50 source predates the P7 reviewed-ledger gate.'
-          fi
+        run: node scripts/check-field-kit-readiness.mjs
 
   test:
     needs: qualify

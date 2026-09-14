@@ -1,0 +1,1 @@
+"{\"slot\":\"picture.fpv.89f500bf737786b4\",\"context\":\"FLIGHT / STUDIOIII  00:00  0%BoardPainter · Night Patrol · 48 × 36 cells · exact source levelShow concealed field\",\"width\":1440,\"height\":900,\"dpr\":1,\"canvas\":{\"x\":921,\"y\":174.578125,\"width\":460,\"height\":345,\"top\":174.578125,\"right\":1381,\"bottom\":519.578125,\"left\":921}}"

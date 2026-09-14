@@ -1,0 +1,1 @@
+"{\"flight\":\"paused\",\"picture\":\"ready\",\"message\":\"Saved flight verified and restored. Press Resume to continue.\",\"overlay\":\"pause\"}"

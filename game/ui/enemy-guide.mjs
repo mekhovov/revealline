@@ -21,6 +21,7 @@ export function attachEnemyGuide({
   themes,
   getThemeId = () => 'fpv',
   getTurnPolicy = () => 'immediate',
+  getPresentation = () => null,
   createBodyAssets = createEnemyBodyAssets,
   loadImpactScenario = async () => {
     const response = await fetch(
@@ -354,16 +355,23 @@ export function attachEnemyGuide({
       }
       return;
     }
-    const body = bodyAssets.current(previewPose);
+    const sprite = compiledPreview(),
+      body = sprite ? null : bodyAssets.current(previewPose);
     drawPresentedActor(
       context,
       { ...previewPose, diameter: PREVIEW_BODY_DIAMETER },
       themes.find(({ id }) => id === appearance.el.value).palette,
-      body?.image,
+      sprite?.image ?? body?.image,
       body?.record,
+      sprite?.geometry,
     );
-    artworkStatus.textContent = bodyAssets.status();
+    artworkStatus.textContent = sprite ? '' : bodyAssets.status();
     artworkStatus.hidden = !artworkStatus.textContent;
+  }
+  function compiledPreview() {
+    return appearance.el.value === 'fpv' && previewPose
+      ? getPresentation()?.image(`enemy.${previewPose.type}`)
+      : null;
   }
   function update(dt = 0, { paused = false, reduced = false } = {}) {
     if (!previewVisible()) {
@@ -402,7 +410,9 @@ export function attachEnemyGuide({
         scale: 1.5,
       })
       .get(actor.id);
-    bodyAssets.update([previewPose]);
+    // The guide teaches the same release sprite seen in the FPV arena.
+    // Other themes and releases without this slot retain their existing art.
+    bodyAssets.update(compiledPreview() ? [] : [previewPose]);
     paintPreview();
   }
   function open({ topic: selected } = {}) {

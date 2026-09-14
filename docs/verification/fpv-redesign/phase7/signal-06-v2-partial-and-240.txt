@@ -1,0 +1,1 @@
+"{\"width\":1200,\"height\":900,\"dpr\":1,\"status\":\"Hidden Frequency · 48 × 36 cells · 980 deterministic ticks · 28.3% · running · source 2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da\"}"
