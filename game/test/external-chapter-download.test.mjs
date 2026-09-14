@@ -18,15 +18,16 @@ const decodeImage = async (blob) => {
 const body = async (path) =>
   path.endsWith('/pack.json') ? world.payloads.pack : world.payloads.media;
 
-test('catalog requires all twelve exact code-owned descriptors; foreign metadata and accessor authority refuse', async () => {
+test('catalog requires all sixteen exact code-owned descriptors; foreign metadata and accessor authority refuse', async () => {
   assert.equal(
     prepareExternalCatalog(
       await readFile(new URL('../content/external-worlds.json', import.meta.url), 'utf8'),
     ),
     EXTERNAL_CATALOG,
   );
-  assert.equal(EXTERNAL_CATALOG.chapters.length, 12);
-  assert.equal(EXTERNAL_CATALOG.chapters.at(-1).id, 'fracture-lines-coupa');
+  assert.equal(EXTERNAL_CATALOG.chapters.length, 16);
+  assert.equal(EXTERNAL_CATALOG.chapters[11].id, 'fracture-lines-coupa');
+  assert.equal(EXTERNAL_CATALOG.chapters.at(-1).id, 'countercurrent-coupa');
   for (const mutate of [
     (c) => c.chapters.reverse(),
     (c) => c.chapters.pop(),
