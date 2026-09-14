@@ -46,6 +46,7 @@ import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
+import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -155,7 +156,8 @@ const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 
 try {
-  let attemptFiles = null;
+  let attemptFiles = null,
+    profileRecovery = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
     await Promise.all([
       getJSON('content/campaign.json'),
@@ -1119,6 +1121,10 @@ try {
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'profile-recovery-dialog') {
+        void profileRecovery.close();
+        return;
+      }
       if (dialog.id === 'enemy-guide-dialog') {
         enemyGuide.close();
         return;
@@ -2816,8 +2822,28 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    profileRecovery.refresh();
     void storageRetention.refresh();
   };
+  profileRecovery = attachProfileRecoveryDialog({
+    currentVersion: buildVersion,
+    packaged: isRelease,
+    onOpen: () => clearInput(),
+    unavailable: () => {
+      if (practiceSession || courseEntry || courseEntryHold)
+        return 'Stored profile recovery is available from ordinary solo Settings.';
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        return 'Finish the pending content or save operation before opening recovery.';
+      if (
+        [...document.querySelectorAll('dialog[open]')].some(
+          (dialog) =>
+            !['settings-dialog', 'shell-home', 'profile-recovery-dialog'].includes(dialog.id),
+        )
+      )
+        return 'Close the other tool before opening recovery.';
+      return '';
+    },
+  });
   let offlinePrepared = false;
   const offline = offlineAvailability();
   show('offline-button', offline.available);
@@ -3631,6 +3657,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    profileRecovery?.refresh();
     show(
       'pause-button',
       started &&

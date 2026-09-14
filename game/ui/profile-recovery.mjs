@@ -14,6 +14,7 @@ export function attachProfileRecoveryView({
     active = null,
     serial = 0,
     closed = false,
+    closing = null,
     url = null,
     originals = [],
     verified = null;
@@ -274,20 +275,21 @@ export function attachProfileRecoveryView({
   $('cancel').onclick = cancel;
   const view = {
     cancel,
-    async close() {
-      if (closed) return;
+    close() {
+      if (closing) return closing;
       closed = true;
       serial++;
       cancel();
       clearDownload();
       clearOriginals();
       refresh();
-      await reader.close();
+      closing = (async () => reader.close())();
+      return closing;
     },
   };
   $('back').onclick = async () => {
     await view.close();
-    onBack();
+    await onBack();
   };
   status('Choose Find profiles to inspect stored channel names.');
   $('catalog-status').textContent = catalogIssue
