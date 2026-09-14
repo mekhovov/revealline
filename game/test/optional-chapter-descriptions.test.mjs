@@ -116,6 +116,9 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     ...['fpv', 'ukraine', 'retro', 'coupa'].map(
       (theme) => `optional-worlds-source-sentinel-circuit-${theme}-recovery-summary`,
     ),
+    ...['fpv', 'ukraine', 'retro', 'coupa'].map(
+      (theme) => `optional-worlds-source-fracture-lines-${theme}-recovery-summary`,
+    ),
     'optional-worlds-read',
     'optional-worlds-reload',
     'optional-worlds-manage',

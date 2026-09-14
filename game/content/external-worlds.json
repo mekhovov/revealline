@@ -144,6 +144,78 @@
         "bytes": 7416321,
         "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16"
       }
+    },
+    {
+      "id": "fracture-lines-fpv",
+      "name": "FPV Front · Fracture Lines",
+      "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "fracture-lines-fpv/1/8f79476cc9cf6221",
+      "pack": {
+        "path": "optional/external-chapters/fracture-lines-fpv/pack.json",
+        "bytes": 9708,
+        "sha256": "7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b"
+      },
+      "media": {
+        "path": "optional/external-chapters/fracture-lines-fpv/media.rlmedia",
+        "bytes": 8669310,
+        "sha256": "495b6e39a480524308bd0e129e83fbe2c3ffeacb508d0b434ee85a86e226fd62"
+      }
+    },
+    {
+      "id": "fracture-lines-ukraine",
+      "name": "Ukraine Atlas · Fracture Lines",
+      "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "fracture-lines-ukraine/1/8b020a538ec5549f",
+      "pack": {
+        "path": "optional/external-chapters/fracture-lines-ukraine/pack.json",
+        "bytes": 9311,
+        "sha256": "41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505"
+      },
+      "media": {
+        "path": "optional/external-chapters/fracture-lines-ukraine/media.rlmedia",
+        "bytes": 8734108,
+        "sha256": "d94ca5b780356b07e9c0e6ba9853eb74661cfd2a401f8c135c3eb782152a1413"
+      }
+    },
+    {
+      "id": "fracture-lines-retro",
+      "name": "1994 Forever · Fracture Lines",
+      "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "fracture-lines-retro/1/c03c1bf508a14755",
+      "pack": {
+        "path": "optional/external-chapters/fracture-lines-retro/pack.json",
+        "bytes": 9393,
+        "sha256": "61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0"
+      },
+      "media": {
+        "path": "optional/external-chapters/fracture-lines-retro/media.rlmedia",
+        "bytes": 7967075,
+        "sha256": "f40bec0376f3f70e973c6ef9d7783b7d0712252cac46eca9716d11a60baa0964"
+      }
+    },
+    {
+      "id": "fracture-lines-coupa",
+      "name": "Spend Network · Fracture Lines",
+      "description": "Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "coupa",
+      "levels": 3,
+      "campaignKey": "fracture-lines-coupa/1/7366cdb1e5e3ed7e",
+      "pack": {
+        "path": "optional/external-chapters/fracture-lines-coupa/pack.json",
+        "bytes": 9345,
+        "sha256": "d9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9"
+      },
+      "media": {
+        "path": "optional/external-chapters/fracture-lines-coupa/media.rlmedia",
+        "bytes": 8718918,
+        "sha256": "974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f"
+      }
     }
   ]
 }

@@ -448,11 +448,234 @@ const sentinelThemeDescriptors = [
     ],
   },
 ].map((descriptor) => validateExternalChapter(descriptor));
+const fractureDescriptors = [
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'fracture-lines-fpv',
+    revision: 1,
+    source: {
+      id: 'fracture-lines',
+      bytes: 9533,
+      sha256: 'c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421',
+    },
+    pack: {
+      bytes: 9708,
+      sha256: '7ccdba1465b1f5e2f2df25cdb574a8d93eb53974b14adf3599bb6f1bf23f5a8b',
+    },
+    media: {
+      bytes: 8669310,
+      sha256: '495b6e39a480524308bd0e129e83fbe2c3ffeacb508d0b434ee85a86e226fd62',
+    },
+    campaignKey: 'fracture-lines-fpv/1/8f79476cc9cf6221',
+    themeId: 'fpv',
+    originals: [
+      {
+        assetId: 'fracture-lines-split-ring-fpv',
+        presentationId: 'fracture-lines-split-ring-fpv-presentation',
+        levelId: 'fracture-lines-split-ring',
+        levelRevision: '1',
+        sha256: 'db9bf4302c55608657f63f1660c4e5859669511942416586d1a6e1fb5394f0b2',
+        bytes: 2922125,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-fault-fan-fpv',
+        presentationId: 'fracture-lines-fault-fan-fpv-presentation',
+        levelId: 'fracture-lines-fault-fan',
+        levelRevision: '1',
+        sha256: '15474a7d695861364fc6a9a131c1849c7a5e72c65b011450b589eacde7635ec8',
+        bytes: 2796382,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-frayed-causeway-fpv',
+        presentationId: 'fracture-lines-frayed-causeway-fpv-presentation',
+        levelId: 'fracture-lines-frayed-causeway',
+        levelRevision: '1',
+        sha256: '5aae2f84912ca35b7145617c98d3c4ecac72a93d8d6cc04558d86873ca0938f1',
+        bytes: 2938361,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'fracture-lines-ukraine',
+    revision: 1,
+    source: {
+      id: 'fracture-lines',
+      bytes: 9533,
+      sha256: 'c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421',
+    },
+    pack: {
+      bytes: 9311,
+      sha256: '41603c33807ef931552d1993f0dc6254055abae392c7b2fd61ccfe5618344505',
+    },
+    media: {
+      bytes: 8734108,
+      sha256: 'd94ca5b780356b07e9c0e6ba9853eb74661cfd2a401f8c135c3eb782152a1413',
+    },
+    campaignKey: 'fracture-lines-ukraine/1/8b020a538ec5549f',
+    themeId: 'ukraine',
+    originals: [
+      {
+        assetId: 'fracture-lines-ukraine-poster-1',
+        presentationId: 'fracture-lines-ukraine-poster-1-presentation',
+        levelId: 'fracture-lines-split-ring',
+        levelRevision: '1',
+        sha256: '1771010fd554d44713b7fc644f8ab8cbd42a41accfc16e6a564771dffcc59ac9',
+        bytes: 2756776,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-ukraine-poster-2',
+        presentationId: 'fracture-lines-ukraine-poster-2-presentation',
+        levelId: 'fracture-lines-fault-fan',
+        levelRevision: '1',
+        sha256: 'ad53eeeb26cd508212d5dff1893688ba0aed9cf3ce12efc236d93fb0db4b8822',
+        bytes: 2981883,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-ukraine-poster-3',
+        presentationId: 'fracture-lines-ukraine-poster-3-presentation',
+        levelId: 'fracture-lines-frayed-causeway',
+        levelRevision: '1',
+        sha256: '65dc84fbb7fcd068cf4bb7ad4b13193f0f9c1393e71b85fa629c1a16b9e717ab',
+        bytes: 2983333,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'fracture-lines-retro',
+    revision: 1,
+    source: {
+      id: 'fracture-lines',
+      bytes: 9533,
+      sha256: 'c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421',
+    },
+    pack: {
+      bytes: 9393,
+      sha256: '61a6f6714d531466c34ca0f69004f5a3b1819caa046ad62eade1938ec0eb77b0',
+    },
+    media: {
+      bytes: 7967075,
+      sha256: 'f40bec0376f3f70e973c6ef9d7783b7d0712252cac46eca9716d11a60baa0964',
+    },
+    campaignKey: 'fracture-lines-retro/1/c03c1bf508a14755',
+    themeId: 'retro',
+    originals: [
+      {
+        assetId: 'fracture-lines-retro-poster-1',
+        presentationId: 'fracture-lines-retro-poster-1-presentation',
+        levelId: 'fracture-lines-split-ring',
+        levelRevision: '1',
+        sha256: '8618e6f3aac280c915ae9cdd10fe53ee36afad9273e2de9e81748852a09369d9',
+        bytes: 2818631,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-retro-poster-2',
+        presentationId: 'fracture-lines-retro-poster-2-presentation',
+        levelId: 'fracture-lines-fault-fan',
+        levelRevision: '1',
+        sha256: '7e9e33577743b8cfdb36566034f6c7d826ddebb421de4c528d878cae5f6d10d7',
+        bytes: 2405219,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-retro-poster-3',
+        presentationId: 'fracture-lines-retro-poster-3-presentation',
+        levelId: 'fracture-lines-frayed-causeway',
+        levelRevision: '1',
+        sha256: '0b9ac9c6f0f936fa123672a383709014fdfa175e4d5309a5fa81422412a3df8b',
+        bytes: 2731032,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'fracture-lines-coupa',
+    revision: 1,
+    source: {
+      id: 'fracture-lines',
+      bytes: 9533,
+      sha256: 'c52a0f2996ea57229b9686f6ba65edb6de8a1628f5fc7609418c706fbfd39421',
+    },
+    pack: {
+      bytes: 9345,
+      sha256: 'd9e4ba55eddc55c15e690b590d7c7dbb34934227faa7fcff471fc82929c8dcd9',
+    },
+    media: {
+      bytes: 8718918,
+      sha256: '974993c218a9b87dae250348905ea712a28b719db4b28336e665179fc4528b1f',
+    },
+    campaignKey: 'fracture-lines-coupa/1/7366cdb1e5e3ed7e',
+    themeId: 'coupa',
+    originals: [
+      {
+        assetId: 'fracture-lines-coupa-poster-1',
+        presentationId: 'fracture-lines-coupa-poster-1-presentation',
+        levelId: 'fracture-lines-split-ring',
+        levelRevision: '1',
+        sha256: 'd914da1caf4b59d1892603154514fc865db460595ce8929d43841f1fd94d4362',
+        bytes: 3057159,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-coupa-poster-2',
+        presentationId: 'fracture-lines-coupa-poster-2-presentation',
+        levelId: 'fracture-lines-fault-fan',
+        levelRevision: '1',
+        sha256: 'e857e9fe8f6876c1bdf628e39606dde1b9c6efa987d913cec2064b86bc530d70',
+        bytes: 2950816,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'fracture-lines-coupa-poster-3',
+        presentationId: 'fracture-lines-coupa-poster-3-presentation',
+        levelId: 'fracture-lines-frayed-causeway',
+        levelRevision: '1',
+        sha256: 'b4b5d78c29a5bfa1345297baf28d8851fb81a51acbc86bd1926e428e4b9d23cb',
+        bytes: 2698848,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
 export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   SOURCE_EXTERNAL_CHAPTER,
   ...routeDescriptors,
   sentinelDescriptor,
   ...sentinelThemeDescriptors,
+  ...fractureDescriptors,
 ]);
 const names = [
   'FPV Front · Pressure Pictures',
@@ -463,22 +686,31 @@ const names = [
   'Ukraine Atlas · Sentinel Circuit',
   '1994 Forever · Sentinel Circuit',
   'Spend Network · Sentinel Circuit',
+  'FPV Front · Fracture Lines',
+  'Ukraine Atlas · Fracture Lines',
+  '1994 Forever · Fracture Lines',
+  'Spend Network · Fracture Lines',
 ];
 export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
   SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
     Object.freeze({
       descriptor,
       name: names[index],
-      mode: descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'Arcade' : 'Tactical',
+      mode:
+        descriptor.id === SOURCE_EXTERNAL_CHAPTER.id || fractureDescriptors.includes(descriptor)
+          ? 'Arcade'
+          : 'Tactical',
       levels: descriptor.originals.length,
       description:
         descriptor.id === SOURCE_EXTERNAL_CHAPTER.id
           ? 'Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.'
-          : descriptor.id === sentinelDescriptor.id
-            ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
-            : sentinelThemeDescriptors.includes(descriptor)
-              ? 'Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.'
-              : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
+          : fractureDescriptors.includes(descriptor)
+            ? 'Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.'
+            : descriptor.id === sentinelDescriptor.id
+              ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
+              : sentinelThemeDescriptors.includes(descriptor)
+                ? 'Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.'
+                : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
     }),
   ),
 );

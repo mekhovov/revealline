@@ -18,10 +18,14 @@ const PATHS = Object.freeze({
   world: 'authoring/library/route-worlds/editions.json',
   sentinel: 'authoring/library/sentinel-circuit-external/descriptor.json',
   'sentinel-world': 'authoring/library/sentinel-theme-chapters/editions.json',
+  fracture: 'authoring/library/fracture-lines-chapter/edition.json',
+  'fracture-world': 'authoring/library/fracture-theme-chapters/editions.json',
   body: 'game/content/themes.json',
   dawn: 'authoring/still-media/examples/dawn-signal/manifest.json',
   synth: 'game/ui/music.mjs',
 });
+const FRACTURE_LAYOUTS = 'authoring/library/fracture-lines/layouts.json';
+const FRACTURE_MISSIONS = ['split-ring', 'fault-fan', 'frayed-causeway'];
 export async function ordinaryPath(root, name) {
   validateSourcePath(name);
   const resolved = await realpath(root);
@@ -152,6 +156,105 @@ export async function verifyProductionSources(input, { root, files = false } = {
     if (!actual || actual.bytes !== f.bytes || actual.sha256 !== f.sha256)
       throw new Error(`Original mismatch: ${w.id}`);
   };
+  // These two finite cohorts are data authorities, not executable compiler adapters.
+  const fractureCache = new Map();
+  const fractureEdition = async (theme) => {
+    if (fractureCache.has(theme)) return fractureCache.get(theme);
+    if (!r.basis.themes.includes(theme)) throw new Error('Unknown Fracture theme');
+    const fpv = theme === 'fpv';
+    const cohort = await json(PATHS[fpv ? 'fracture' : 'fracture-world']);
+    if (
+      cohort.format !==
+      (fpv ? 'revealline-fracture-chapter-edition.v1' : 'revealline-fracture-theme-editions.v1')
+    )
+      throw new Error('Unknown Fracture cohort');
+    const edition = fpv ? cohort : cohort.editions.find((e) => e.themeId === theme);
+    const artRoot = `authoring/library/${fpv ? 'fracture-lines' : `fracture-${theme}`}-art`;
+    if (
+      edition?.id !== `fracture-lines-${theme}` ||
+      edition.themeId !== theme ||
+      edition.images?.length !== 3 ||
+      (!fpv && edition.artRoot !== artRoot)
+    )
+      throw new Error('Unknown Fracture edition');
+    const descriptor = await descriptorRows(
+      fpv
+        ? 'authoring/library/fracture-lines-chapter/descriptor.json'
+        : `authoring/library/fracture-theme-chapters/descriptors/${theme}.json`,
+    );
+    if (
+      descriptor.id !== edition.id ||
+      descriptor.themeId !== theme ||
+      descriptor.source.id !== 'fracture-lines' ||
+      descriptor.originals.length !== 3 ||
+      !new RegExp(`^${edition.id}/${descriptor.revision}/[a-f0-9]{16}$`).test(
+        descriptor.campaignKey,
+      )
+    )
+      throw new Error('Fracture descriptor owner differs');
+    let provenance;
+    if (!fpv) {
+      const name = `${artRoot}/provenance.json`;
+      provenance = await json(name);
+      if (
+        edition.provenanceSha256 !== declared.get(name)?.sha256 ||
+        provenance.format !== 'revealline-source-art-provenance.v1' ||
+        provenance.images?.length !== 3
+      )
+        throw new Error('Fracture provenance differs');
+    }
+    const originals = [];
+    for (const [index, mission] of FRACTURE_MISSIONS.entries()) {
+      const source = edition.images[index],
+        original = descriptor.originals[index];
+      const levelId = `fracture-lines-${mission}`;
+      const assetId = fpv ? `${levelId}-fpv` : `${edition.id}-poster-${index + 1}`;
+      const relative = `originals/${mission}-${theme}.png`;
+      const filename = `${artRoot}/${relative}`;
+      if (
+        source.sourceLevelId !== levelId ||
+        original.levelId !== levelId ||
+        original.levelRevision !== '1' ||
+        original.assetId !== assetId ||
+        original.presentationId !== `${assetId}-presentation` ||
+        original.mime !== 'image/png' ||
+        original.sha256 !== source.sha256 ||
+        source.path !== (fpv ? filename : relative)
+      )
+        throw new Error('Fracture source/owner differs');
+      let image;
+      if (fpv) {
+        const metadataPath = `${artRoot}/${mission}-fpv.json`;
+        if (source.assetId !== assetId || source.metadataPath !== metadataPath)
+          throw new Error('Fracture source metadata differs');
+        image = await json(metadataPath);
+        if (
+          image.format !== 'revealline-generated-source-art.v1' ||
+          image.assetId !== assetId ||
+          image.workspacePath !== relative
+        )
+          throw new Error('Fracture original metadata differs');
+      } else {
+        const cellId = `fracture-lines/${mission}/${theme}`;
+        image = provenance.images.find((p) => p.cellId === cellId);
+        if (
+          source.sourceCellId !== cellId ||
+          !image ||
+          image.themeId !== theme ||
+          image.sourceLevelId !== levelId ||
+          image.missionSlot !== mission ||
+          image.path !== relative
+        )
+          throw new Error('Fracture original provenance differs');
+      }
+      for (const k of ['bytes', 'sha256', 'width', 'height'])
+        if (image[k] !== original[k]) throw new Error(`Fracture original ${k} differs`);
+      originals.push({ ...original, path: filename });
+    }
+    const result = { descriptor, originals };
+    fractureCache.set(theme, result);
+    return result;
+  };
   for (const w of r.works) {
     await verifyPin(w.source);
     for (const dep of w.dependencies) await verifyPin(dep);
@@ -268,6 +371,21 @@ export async function verifyProductionSources(input, { root, files = false } = {
       )
         throw new Error('Sentinel theme original path/dimensions differ');
       owners = [own(d, original)];
+    } else if (w.adapter === 'fracture' || w.adapter === 'fracture-world') {
+      if ((w.adapter === 'fracture') !== (w.themeId === 'fpv'))
+        throw new Error('Wrong Fracture adapter theme');
+      const { descriptor, originals } = await fractureEdition(w.themeId);
+      const original = originals.find((o) => o.assetId === w.sourceId);
+      if (!original) throw new Error('Unknown Fracture original');
+      matchesFile(w, original);
+      if (
+        w.files[0].file.path !== original.path ||
+        w.files[0].width !== original.width ||
+        w.files[0].height !== original.height ||
+        w.files[0].durationSeconds !== null
+      )
+        throw new Error('Fracture original path/dimensions differ');
+      owners = [own(descriptor, original)];
     } else if (w.adapter === 'dawn') {
       const d = await json(PATHS.dawn);
       if (w.sourceId !== d.story.id || w.revision !== d.story.revision)
@@ -359,7 +477,27 @@ export async function verifyProductionSources(input, { root, files = false } = {
       throw new Error(`Authored owners changed: ${w.id}`);
   }
   for (const p of r.authorities) await verifyPin(p);
-  for (const l of r.layouts) await verifyPin(l.source);
+  for (const l of r.layouts) {
+    await verifyPin(l.source);
+    if (!l.id.startsWith('fracture-') && l.source.path !== FRACTURE_LAYOUTS) continue;
+    const mission = l.id.slice('fracture-'.length),
+      index = FRACTURE_MISSIONS.indexOf(mission);
+    const layouts = await json(FRACTURE_LAYOUTS);
+    if (
+      index < 0 ||
+      l.source.path !== FRACTURE_LAYOUTS ||
+      l.variantOf !== null ||
+      layouts.format !== 'revealline-fracture-layouts.v1' ||
+      layouts.levels[index]?.id !== `fracture-lines-${mission}`
+    )
+      throw new Error('Fracture layout source differs');
+    const owners = [];
+    for (const theme of r.basis.themes) {
+      const { descriptor, originals } = await fractureEdition(theme);
+      owners.push(own(descriptor, originals[index]));
+    }
+    if (!equal(l.owners, owners)) throw new Error('Fracture layout owners differ');
+  }
   for (const e of r.enemies) await verifyPin(e.source);
   for (const a of r.assessments) for (const p of a.evidence) await verifyPin(p);
   for (const d of r.deliveries) await verifyPin(d.evidence);
