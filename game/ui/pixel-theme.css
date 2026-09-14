@@ -791,48 +791,98 @@ body.game-shell:not(.first-flight-session) {
   display: none;
 }
 
-/* Pause is a small control dock on the board, not another briefing screen. */
+/* Pause becomes a private, controller-first command screen. The opaque field
+   deliberately conceals the live board and HUD instead of preserving tactical
+   information through blur or translucency. */
 .game-shell .game-overlay[data-kind='pause'] {
-  position: absolute;
-  inset: auto 0 10px;
+  position: fixed;
+  inset: 52px 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 8px;
-  background: transparent;
-  pointer-events: none;
+  padding: clamp(20px, 6vw, 72px);
+  background-color: #02040a;
+  background-image:
+    linear-gradient(#08101ce6 1px, transparent 1px),
+    linear-gradient(90deg, #08101ce6 1px, transparent 1px),
+    radial-gradient(circle at 50% 42%, #10223c 0, #050913 34%, #02040a 72%);
+  background-size:
+    32px 32px,
+    32px 32px,
+    auto;
+  pointer-events: auto;
 }
 .game-shell .game-overlay[data-kind='pause'] .overlay-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  width: max-content;
-  max-width: 100%;
+  gap: 24px;
+  width: min(380px, 100%);
+  max-width: 380px;
   max-height: none;
-  padding: 8px 10px;
+  padding: 32px clamp(16px, 4vw, 36px);
   overflow: visible;
-  pointer-events: auto;
-  background: #080e20;
+  background: #050a14f2;
+  border-color: #263b5b;
+  box-shadow:
+    0 0 0 1px #02040a,
+    0 20px 60px #000c;
 }
 .game-shell .game-overlay[data-kind='pause'] .pause-label {
   margin: 0;
-  color: #9ee9ff;
-  font-size: 18px;
+  color: #f3c84b;
+  font-size: clamp(28px, 5vw, 44px);
   line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
   margin: 0;
+  width: 100%;
 }
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions .button {
-  flex: 0 1 auto;
-  min-height: 44px;
-  padding: 7px 10px;
-  font-size: 16px;
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  padding: 10px 16px;
+  font-size: 18px;
+  text-align: left;
+}
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions .button::before {
+  content: '◆';
+  display: inline-block;
+  width: 1.4em;
+  color: #4f7197;
+}
+.game-shell
+  .game-overlay[data-kind='pause']
+  .overlay-actions
+  .button:is(:hover, :focus-visible)::before,
+.game-shell .game-overlay[data-kind='pause'] .overlay-actions .button.primary::before {
+  color: #f675bc;
+}
+.game-shell dialog#restart-dialog.restart-dialog {
+  width: min(460px, calc(100vw - 32px));
+  height: fit-content;
+  max-width: 460px;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: clamp(24px, 5vw, 40px);
+  border: 2px solid #466493;
+  box-shadow: 0 24px 80px #000e;
+}
+.game-shell dialog#restart-dialog.restart-dialog .overlay-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 24px;
+}
+.game-shell dialog#restart-dialog.restart-dialog .button {
+  width: 100%;
+  min-height: 50px;
 }
 .game-shell .home-status {
   max-width: 52ch;
@@ -908,7 +958,7 @@ body.game-shell:not(.first-flight-session) {
   }
 }
 
-/* Small screens keep the entire paused arena visible; flight controls yield to Resume. */
+/* Small screens keep the same private pause surface and yield flight controls. */
 @media (max-width: 680px) {
   .game-shell .shell-bar {
     gap: 0;
@@ -919,16 +969,8 @@ body.game-shell:not(.first-flight-session) {
   .game-shell[data-flight-state='paused'] .play-controls {
     display: none;
   }
-  .game-shell[data-flight-state='paused'] .arena-shell {
-    margin-bottom: 82px;
-  }
   .game-shell .game-overlay[data-kind='pause'] {
-    inset: calc(100% + 10px) 0 auto;
-    padding: 0;
-  }
-}
-@media (max-width: 360px) {
-  .game-shell[data-flight-state='paused'] .arena-shell {
-    margin-bottom: 116px;
+    inset: 48px 0 0;
+    padding: 16px;
   }
 }
