@@ -1,27 +1,63 @@
 name: Build and deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Latest stable release tag to deploy (for example, v0.46.0)
+        required: true
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
   cancel-in-progress: true
 
 jobs:
-  verify:
+  release_gate:
+    runs-on: ubuntu-latest
+    outputs:
+      should_deploy: ${{ steps.gate.outputs.should_deploy }}
+    steps:
+      - name: Deploy only the latest stable release
+        id: gate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          TARGET_REF: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          should_deploy=true
+          if [ "$EVENT_NAME" = release ] || [ "$EVENT_NAME" = workflow_dispatch ]; then
+            latest_tag="$(gh api --paginate --slurp "repos/$REPOSITORY/releases?per_page=100" | jq -r 'add | [.[] | select(.draft == false and .prerelease == false and (.tag_name | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$"))) | .tag_name] | sort_by(ltrimstr("v") | split(".") | map(tonumber)) | last')"
+            if [ "$latest_tag" = null ]; then
+              echo "No published stable release was found."
+              exit 1
+            fi
+            if [ "$TARGET_REF" != "$latest_tag" ]; then
+              echo "Skipping $TARGET_REF because $latest_tag is the latest stable release."
+              should_deploy=false
+            fi
+          fi
+          echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
+
+  preflight:
+    if: needs.release_gate.outputs.should_deploy == 'true'
+    needs: release_gate
     runs-on: ubuntu-latest
     steps:
-      - name: Check out complete history and tags
+      - name: Check out source
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -32,24 +68,71 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Validate source
-        run: npm run validate
-
-      - name: Lint source
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
-
-      - name: Check formatting
-        run: npm run format:check
-
-      - name: Check native formatting and motion lab syntax
+      - name: Validate, lint, and format source
         run: |
+          npm run validate
+          npm run lint
+          npm run format:check
           npm run format:native:check
           node --check authoring/motion-lab/app.js
 
+      - name: Verify immutable production sources first
+        run: node --test scripts/test-production-*.mjs
+
+  test:
+    if: needs.release_gate.outputs.should_deploy == 'true'
+    needs: [release_gate, preflight]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [1, 2, 3, 4]
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test shard ${{ matrix.shard }}/4
+        run: node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+
+  build:
+    if: needs.release_gate.outputs.should_deploy == 'true'
+    needs: [release_gate, preflight, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out complete history and tags
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build pull-request artifact
+        if: github.event_name == 'pull_request'
+        run: npm run build
+
       - name: Build current game and tagged releases
+        if: github.event_name != 'pull_request'
         run: npm run build:pages -- --archive-plan scripts/pages-archives.json --source-repository mekhovov/revealline
 
       - name: Upload Pages artifact
@@ -60,8 +143,8 @@ jobs:
           include-hidden-files: true
 
   deploy:
-    if: github.event_name != 'pull_request'
-    needs: verify
+    if: github.event_name != 'pull_request' && needs.build.result == 'success'
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
