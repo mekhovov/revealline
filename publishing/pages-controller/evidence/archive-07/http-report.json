@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-09-14T20:01:39.773Z",
+  "finishedAt": "2026-09-14T20:04:33.367Z",
+  "base": "https://mekhovov.github.io/revealline-archive-07/",
+  "authority": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/archive-publication/archive07-preparation/repository",
+  "selectedVersions": [
+    "v0.45.0",
+    "v0.46.0"
+  ],
+  "sourceCommit": "fc789c71aa21a240c9966d874dd76e9daeb9f44b",
+  "expectedInventorySha256": "76df09fa28452f18e290033b3818ff8c996085603eafafad823b41028f2616be",
+  "localArtifactBuild": false,
+  "authorityMode": "Independently verified frozen canonical rows and five exact generated globals; hosted reproduction checked separately.",
+  "originalCanonicalWorkerBytesIncluded": true,
+  "mainBridgeBytesIncluded": false,
+  "concurrency": 8,
+  "files": 737,
+  "expectedBytes": 598250205,
+  "verifiedBytes": 598250205,
+  "failedFiles": 0,
+  "retries": 0,
+  "skipped": [],
+  "localAuthorityChanges": [],
+  "preparedInventoryPinUnchanged": true,
+  "runnerSha256": "693dcf60665cc3e93f0256693255cd6d0e4edd1e4eccfb9fdd5854239acc5b4b",
+  "runnerUnchanged": true,
+  "allocationSha256": "fd1bc7a4be1df4aa9a9ec9c08f2f1617176940c1ba12d8d509a5da5c0f06cdc7",
+  "failures": [],
+  "boundaries": "Exact decoded HTTP bodies and runtime MIME only. No browser execution, offline migration, storage, physical-device or release-readiness certification."
+}

@@ -1,0 +1,30 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-06",
+  "infrastructureCommit": "fcf3cbd02c6a80d1df3a90c97a337f8d14ca0b9b",
+  "deploymentId": 6444985593,
+  "versions": [
+    "v0.41.0",
+    "v0.44.0"
+  ],
+  "scope": "Routing admission only. Every frozen file equals the fully audited archive. Native evidence is the cited prior accepted unchanged-source or scoped canonical journey; not an all-edition replay, new offline guarantee, or repair of historical defects. The exact original limitations and failures remain in native-source references.",
+  "evidence": [
+    {
+      "path": "evidence/archive-06/native-source-1.json",
+      "sha256": "6e31cbbd554898ed353852b1418266b661c9b761af6c8bc1d63463da24c2a76d",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-06/native-source-2.md",
+      "sha256": "77d57df3f0e7136d7300175084d2f14f059a897992976012c3c643d39eb3fa4f",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-06/native-source-3.json",
+      "sha256": "700e14544105409043c6be5ff6a8e1d514adf108a891530c30aacf17c6c9d583",
+      "kind": "reference"
+    }
+  ],
+  "basis": "New v0.44 canonical play/restore/Large/Collection and offline, plus prior unchanged v0.41 scope."
+}

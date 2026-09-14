@@ -1,0 +1,71 @@
+{
+  "format": "revealline-native-verification.v1",
+  "status": "SCOPED_PASS",
+  "at": "2026-09-14T12:29:43.380006+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-05/releases/v0.39.0/site/game/",
+  "originalSource": "23b886bbdbea717be79a54d9c0fffe5eded46bdf",
+  "archiveMerge": "509fcef691a109475736f34ee634d978fb3ffff6",
+  "checks": [
+    "Canonical archived launch retained Fracture Lines/Split Ring.",
+    "Initially another completed root-ownedv039testtab held save ownership. Navigating only that ownedtab367 to about:blank and reloading archive correctly cleared session-only warning. No profile reset or hidden browser access.",
+    "Collection reopened the original prior publicv039Gold13820/12.20s reward. Full original inspected.",
+    "Replay mission and Start via Enter; tap/release Down and explicitPause worked. Wall stopped traversal while an unfinished line remained visible. Up/Right steering routed around it and completed a real archived win62.9/13990/3lives."
+  ],
+  "limits": [
+    "Actual desktop in-app browser using visible native controls; some role.press calls focus targets directly.",
+    "No public archive offline/couch or physical-device qualification repeated. Existing immutablev039qualification and full321bodyHTTP are separate.",
+    "Main-site forwarding not yet deployed; canonical archive directly verified."
+  ],
+  "evidence": [
+    {
+      "path": ".cache/round47/archive05-native/01-retained-collection.txt",
+      "bytes": 3865,
+      "sha256": "cc839d7d771e09e42530df7ad28a2b38836d79328281f5818028af04f2344f05"
+    },
+    {
+      "path": ".cache/round47/archive05-native/02-original.png",
+      "bytes": 154725,
+      "sha256": "27a568d5b303636c3a1964b532fc884b5d85859ef3746e1f82547b8d172e11f8"
+    },
+    {
+      "path": ".cache/round47/archive05-native/02-original.txt",
+      "bytes": 1725,
+      "sha256": "42ecf59028e478ff030613fa6d1710afffb4ae43eaab5655da59fb78e2c20c85"
+    },
+    {
+      "path": ".cache/round47/archive05-native/03-paused.png",
+      "bytes": 61131,
+      "sha256": "4e341d4c78e019469d6edcf80d527828dc8441bd71dd843c56db1068ceba8823"
+    },
+    {
+      "path": ".cache/round47/archive05-native/04-cut-position.png",
+      "bytes": 61023,
+      "sha256": "e0ec4aa2206f8b44e9498ce42557926fc89f9e85f402ee2f44e1fada0dbebeb9"
+    },
+    {
+      "path": ".cache/round47/archive05-native/05-route.png",
+      "bytes": 61995,
+      "sha256": "b0f14e294ac96dfc4322b15f618322eaeb1f7c619e8c0b49ca9339ac0f1c169a"
+    },
+    {
+      "path": ".cache/round47/archive05-native/05-route.txt",
+      "bytes": 915,
+      "sha256": "43dc5eaed23ea9778ebc9641333cf095068ce0abfc917fda19c44cc0a23971d4"
+    },
+    {
+      "path": ".cache/round47/archive05-native/06-cut.png",
+      "bytes": 174784,
+      "sha256": "d9342885229ffd9de00006bb6923cac68977ddcdb3f02ad55895e7bb0e9e65af"
+    },
+    {
+      "path": ".cache/round47/archive05-native/06-cut.txt",
+      "bytes": 834,
+      "sha256": "b2d18256e5bcb5f6c674f4885b4685d39c59d4ddc083c19a1ce13faaa81b7480"
+    },
+    {
+      "path": ".cache/round47/archive05-native/07-results.txt",
+      "bytes": 1270,
+      "sha256": "4121f1600f7df5c83a45a32484f06bed631fe9b00e58c9b00ef5f359e2281e2e"
+    }
+  ]
+}
