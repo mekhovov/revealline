@@ -36,6 +36,8 @@ The corrected `2687b20c55f6` source completed all six gates naturally. The test 
 
 The archived 2,016-file source and all 48 prior releases / 49 tags stayed unchanged. The root checkout's `game/index.html` changed outside this work while verification ran; that unrelated work was neither adopted nor reverted. Draft [PR #18](https://github.com/mekhovov/revealline/pull/18) remains subject to the final corrected source and artifact gates.
 
+The successor joins the actual import/Choose action Promise before asserting ready controls, then waits separately for picture readiness. Its complete two-file check first passed 25 of 26 cases; the remaining case exposed an omitted MP4 in the sparse fixture. After restoring the exact Git video, that entire case passed, giving **26 distinct focused passes** across the retained runs. This does not constitute a new full two-file run or a Node20 result. The full CLI now limits file workers to `min(4, max(1, availableParallelism() - 1))`, preserving all discovered tests and smaller-host defaults. The final combined source still needs all six gates; no timeout cause or speedup is inferred from the worker limit.
+
 ## Latest responsive-layout finding
 
 The compact-arena successor `2a42fb69d388` keeps geometry stable from the original level recipe. At 844×390, eligible Arcade fields visibly use about 490 px of arena width with Large text; left and right pads remain outside the arena. Standard text and controls Off also fit. The older Sentinel Relay 4:3 Tactical warning initially clipped; that failure remains recorded.
