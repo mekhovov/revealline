@@ -66,10 +66,13 @@ a:focus-visible,
 .note {
   color: #becfd7;
 }
-#profile-recovery-summary {
+#profile-recovery-summary,
+#profile-recovery-original-summary {
   white-space: pre-line;
 }
-#profile-recovery-download {
+#profile-recovery-download,
+#profile-recovery-original-download,
+#profile-recovery-report-download {
   display: inline-flex;
   align-items: center;
 }
