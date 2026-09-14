@@ -568,3 +568,168 @@
   margin: 12px auto 0;
   width: fit-content;
 }
+
+/* Direct browser fullscreen and installed game displays use the whole viewport.
+   The board is always fitted by aspect ratio, so no pixels are stretched or
+   cropped, and removing the attribute restores the ordinary page layout. */
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused']) {
+  --touch-gutter: 0px;
+  --side-gutter: 0px;
+  overflow: hidden;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  main {
+  position: fixed;
+  inset: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  height: 100dvh;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .arena-panel,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .arena-panel:has(> .encounter-status:not([hidden])) {
+  position: absolute;
+  inset: 0;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .arena-panel
+  > .arena-shell,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .arena-panel:has(> .encounter-status:not([hidden]))
+  > .arena-shell {
+  position: absolute;
+  left: calc(var(--safe-left) + (100% - var(--safe-left) - var(--safe-right)) / 2);
+  top: calc(var(--safe-top) + (100% - var(--safe-top) - var(--safe-bottom)) / 2);
+  transform: translate(-50%, -50%);
+  width: min(
+    calc(100% - var(--safe-left) - var(--safe-right)),
+    calc((100dvh - var(--safe-top) - var(--safe-bottom)) * var(--board-aspect, 1.333333))
+  );
+  max-width: none;
+  margin: 0;
+  border: 0;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .shell-bar {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .shell-bar
+  > button {
+  pointer-events: auto;
+  background: #07101ea8;
+  border-radius: 8px;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  #shell-menu {
+  width: 44px;
+  padding: 4px;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  #shell-menu
+  :not(.brand-mark),
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  #shell-menu::after {
+  display: none;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry {
+  position: fixed;
+  z-index: 6;
+  top: var(--safe-top);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(48vw, 400px);
+  height: auto;
+  min-height: 0;
+  gap: 8px;
+  padding: 3px 8px;
+  background: #07101eb3;
+  border-radius: 0 0 8px 8px;
+  pointer-events: none;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry
+  > div {
+  padding-left: 6px;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry
+  span,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry
+  em {
+  font-size: 10px;
+  line-height: 1;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry
+  strong {
+  font-size: 20px;
+  margin-top: 1px;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .telemetry
+  .meter,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .flight-status,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .controller-connection-hint,
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .first-flight-panel {
+  display: none;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .encounter-status:not([hidden]) {
+  position: fixed;
+  z-index: 6;
+  bottom: max(4px, var(--safe-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(42vw, 480px);
+  margin: 0;
+  padding: 4px 8px;
+  background: #07101eb3;
+  font-size: 13px;
+  pointer-events: none;
+}
+:root[data-game-fullscreen='true']
+  .game-shell:is([data-flight-state='running'], [data-flight-state='paused'])
+  .encounter-status[data-phase='open'] {
+  display: none;
+}
