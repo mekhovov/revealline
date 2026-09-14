@@ -161,6 +161,8 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
+  const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
@@ -1239,7 +1241,7 @@ try {
     onReturn: () => pause(true),
   });
   enemyGuide = attachEnemyGuide({
-    themes: themesFile.themes,
+    themes: guideThemes,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
     loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
