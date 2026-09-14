@@ -2,7 +2,9 @@ import { importLibrary, LIBRARY_LIMITS } from './library.mjs';
 import { PACK_LIMITS } from './packs.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { canonicalJSON } from './data-json.mjs';
-import { channelFromStorageKey, targetVersion } from './profile-channel.mjs';
+import { channelFromStorageKey, targetVersion, recoveryChannel } from './profile-channel.mjs';
+import { createProfileSharedMediaReader } from './profile-shared-media.mjs';
+import { createExternalRecoveryCatalog } from './external-recovery-catalog.mjs';
 import { createProfileChannelAssets } from './profile-channel-assets.mjs';
 import { ownProfileJSON, freezeProfileData } from './profile-channel-json.mjs';
 
@@ -58,6 +60,7 @@ export function createProfileChannelReader({
   currentVersion,
   origin = globalThis.location?.origin ?? 'unknown origin',
   timeoutMs = PROFILE_READER_LIMITS.timeoutMs,
+  recoveryCatalogs = [],
 } = {}) {
   targetVersion(currentVersion);
   if (
@@ -67,7 +70,29 @@ export function createProfileChannelReader({
   )
     throw new TypeError('Invalid profile review deadline.');
   const assets = createProfileChannelAssets({ indexedDB, timeoutMs: Math.min(timeoutMs, 15000) });
-  const reviews = new WeakMap();
+  const reviews = new WeakMap(),
+    catalogs = new Map();
+  let recoverySnapshots = new WeakMap();
+  if (!Array.isArray(recoveryCatalogs) || recoveryCatalogs.length > PROFILE_READER_LIMITS.channels)
+    throw new TypeError('Provide a finite trusted exact-channel recovery registry.');
+  for (const entry of recoveryCatalogs) {
+    const channel = recoveryChannel(entry?.channelId, currentVersion);
+    if (!channel || channel.support === 'protected-unknown' || catalogs.has(channel.id))
+      throw new TypeError('Unsupported or duplicate recovery registry channel.');
+    if (!Array.isArray(entry.registeredEntries) || !Array.isArray(entry.knownDescriptors))
+      throw new TypeError(
+        'Register historical campaigns and trusted external descriptors explicitly.',
+      );
+    catalogs.set(
+      channel.id,
+      createExternalRecoveryCatalog({
+        registeredEntries: entry.registeredEntries,
+        knownDescriptors: entry.knownDescriptors,
+        decodeImage: entry.decodeImage,
+      }),
+    );
+  }
+  let sharedMedia = null;
   let known = new WeakSet(),
     closed = false,
     active = null;
@@ -258,6 +283,39 @@ export function createProfileChannelReader({
       throw new Error('The stored profile changed during review. Check it again.');
     return { raw: before, overview, fingerprint: digest };
   }
+  function priorReview(review) {
+    const prior = reviews.get(review);
+    if (!prior) throw new TypeError('Review this exact profile before checking recovery files.');
+    return prior;
+  }
+  async function unchangedReview(prior, signal) {
+    const fresh = await readStable(prior.channel, signal);
+    if (fresh.fingerprint !== prior.fingerprint)
+      throw new Error('The stored profile changed after review. Check it again.');
+    if (!fresh.overview.completeStoredSnapshot || fresh.overview.recoveryPending)
+      throw new Error(
+        'Pending or unreadable recovery records prevent a media snapshot; raw diagnostics remain available.',
+      );
+    return fresh;
+  }
+  async function sharedSnapshot(signal) {
+    sharedMedia ??= createProfileSharedMediaReader({
+      indexedDB,
+      timeoutMs: Math.min(timeoutMs, 15000),
+    });
+    const captured = await untilCancelled(signal, () => sharedMedia.snapshot({ signal }));
+    check(signal);
+    if (captured.state !== 'present')
+      throw new Error('Shared media is absent; raw profile diagnostics remain available.');
+    return captured.value;
+  }
+  async function revalidateShared(prior, captured, signal) {
+    const current = await sharedSnapshot(signal);
+    await unchangedReview(prior, signal);
+    if (canonicalJSON(current.marker) !== canonicalJSON(captured.marker))
+      throw new Error('Shared media changed during recovery review. Check it again.');
+    check(signal);
+  }
   return Object.freeze({
     discover({ signal } = {}) {
       return task(signal, async (inner) => {
@@ -329,6 +387,64 @@ export function createProfileChannelReader({
         }),
       );
     },
+    captureRecoverySnapshot(review, { signal } = {}) {
+      return task(signal, (inner) => {
+        const prior = priorReview(review),
+          catalog = catalogs.get(prior.channel.id);
+        if (!catalog)
+          throw new Error(
+            'This exact historical channel has no registered recovery catalog. Raw diagnostics remain available.',
+          );
+        return locked(prior.channel, inner, async () => {
+          const fresh = await unchangedReview(prior, inner);
+          const captured = await sharedSnapshot(inner);
+          const value = (name) =>
+            fresh.raw.assets[name].state === 'absent' ? null : fresh.raw.assets[name].value;
+          const content = await untilCancelled(inner, () =>
+            catalog.catalog(value('packs'), value('index'), inner),
+          );
+          check(inner);
+          if (content.index.chapters.length)
+            catalog.closure(content, { document: captured.marker.media.library });
+          const sharedFingerprint = await untilCancelled(inner, () => fingerprint(captured.marker));
+          await revalidateShared(prior, captured, inner);
+          const result = freezeProfileData({
+            channel: prior.channel,
+            profileFingerprint: fresh.fingerprint,
+            sharedFingerprint,
+            schemaVersion: captured.marker.version,
+            revision: captured.marker.ledger?.revision ?? null,
+            generations: {
+              audio: captured.marker.audio.generation,
+              media: captured.marker.media.generation,
+              ...(captured.marker.story ? { story: captured.marker.story.generation } : {}),
+            },
+            executionEntries: content.executions.entries.length,
+            externalChapters: content.index.chapters.length,
+            originals: {
+              files: captured.files.length,
+              bytes: captured.files.reduce((n, file) => n + file.bytes, 0),
+              verified: false,
+            },
+            scope: 'snapshot-metadata-only',
+            savedFlightInspection: 'unavailable',
+            fullBackup: false,
+          });
+          recoverySnapshots.set(result, { prior, captured, content });
+          return result;
+        });
+      });
+    },
+    revalidateRecoverySnapshot(snapshot, { signal } = {}) {
+      return task(signal, (inner) => {
+        const owned = recoverySnapshots.get(snapshot);
+        if (!owned) throw new TypeError('Use this reader’s owned recovery snapshot.');
+        return locked(owned.prior.channel, inner, async () => {
+          await revalidateShared(owned.prior, owned.captured, inner);
+          return snapshot;
+        });
+      });
+    },
     exportStoredData(review, { signal } = {}) {
       return task(signal, async (inner) => {
         const prior = reviews.get(review);
@@ -367,6 +483,8 @@ export function createProfileChannelReader({
       closed = true;
       active?.controller.abort(new DOMException('Profile recovery closed.', 'AbortError'));
       assets.close();
+      sharedMedia?.close();
+      recoverySnapshots = new WeakMap();
       await active?.promise.catch(() => {});
     },
   });
