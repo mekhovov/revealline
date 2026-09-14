@@ -318,3 +318,33 @@
     --compact-chrome: 145px;
   }
 }
+
+/* Narrow boards must not force the HUD or warning into that same narrow column.
+   Reserve warning space from the authored map, including while its card is hidden. */
+@media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) {
+    --compact-chrome: 205px;
+  }
+  .game-shell[data-arena-chrome='full'][data-text-size='large']:not(.first-flight-session) {
+    --compact-chrome: 225px;
+  }
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) .arena-panel,
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: calc(100% - var(--side-gutter));
+  }
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) .arena-panel > .arena-shell,
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    max-width: min(
+      100%,
+      calc(
+        (100dvh - var(--compact-chrome) - var(--safe-top) - var(--safe-bottom)) *
+          var(--board-aspect, 1.333333)
+      )
+    );
+  }
+}
