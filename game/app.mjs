@@ -218,7 +218,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.39.0',
+  let buildVersion = '0.40.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
