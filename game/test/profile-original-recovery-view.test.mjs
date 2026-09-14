@@ -238,6 +238,32 @@ test('original review is explicit and lists unverified metadata without claiming
   await f.view.close();
 });
 
+test('an empty shared-original list explains built-in pictures and retains raw recovery', async () => {
+  const f = fixture({
+    originals: [],
+    diagnostics: [{ message: 'A separate media issue remains.' }],
+  });
+  await review(f);
+  await f.$('export').onclick();
+  const rawURL = f.$('download').href;
+  await f.$('originals-review').onclick();
+  assert.match(f.$('status').textContent, /0 shared originals listed/);
+  assert.match(f.$('status').textContent, /Built-in pictures come from game files/);
+  assert.match(f.$('status').textContent, /Only uploaded or restored shared originals appear/);
+  assert.match(f.$('status').textContent, /does not mean your earned pictures were lost/);
+  assert.match(f.$('status').textContent, /1 stored media availability issues remain/);
+  assert.equal(f.$('original').children.length, 0);
+  assert.equal(f.$('original').disabled, true);
+  assert.equal(f.$('original-verify').disabled, true);
+  assert.equal(f.$('original-file').disabled, true);
+  assert.equal(f.$('original-report').disabled, true);
+  assert.equal(f.$('download').href, rawURL);
+  assert.equal(f.$('download').hidden, false);
+  assert.equal(f.calls.verify.length, 0);
+  assert.equal(f.calls.export.length, 0);
+  await f.view.close();
+});
+
 test('an unsupported exact alias cannot borrow another channel catalog but retains raw export', async () => {
   const f = fixture({ channels: [alias] });
   await review(f);
