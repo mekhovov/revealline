@@ -1,0 +1,120 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.48.0",
+  "sourceRevision": "028ead24cfb31963d2b9bb733667c22993139ff4",
+  "sourceTree": "e319c19ceabc1abf288292b664aacd492de26263",
+  "node": "v20.19.6",
+  "qualifiedAt": "2026-09-14T20:57:34.775161+00:00",
+  "passed": true,
+  "allTrackedSourceContentsAndModesMatch": true,
+  "identityMethod": "Actual hosted checkout equals exact candidate commit; tree, workflow and source file hashes are independently verified.",
+  "actualCheckoutCommit": "028ead24cfb31963d2b9bb733667c22993139ff4",
+  "actualCheckoutTree": "e319c19ceabc1abf288292b664aacd492de26263",
+  "workflowPath": ".github/workflows/qualify-release-source.yml",
+  "workflowBlob": "f21acf51be4f91911c13311a14585729bd60de3a",
+  "hostedRun": "https://github.com/mekhovov/revealline/actions/runs/34888894551",
+  "tests": {
+    "tests": 3501,
+    "suites": 0,
+    "pass": 3501,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 4161893.792133
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "command": "npm run validate",
+      "step": {
+        "name": "Validate source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-09-14T19:46:38Z",
+        "completed_at": "2026-09-14T19:46:51Z"
+      }
+    },
+    {
+      "gate": "lint",
+      "command": "npm run lint",
+      "step": {
+        "name": "Lint source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-14T19:46:51Z",
+        "completed_at": "2026-09-14T19:46:57Z"
+      }
+    },
+    {
+      "gate": "test",
+      "command": "npm test",
+      "step": {
+        "name": "Run tests",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-09-14T19:46:57Z",
+        "completed_at": "2026-09-14T20:56:19Z"
+      }
+    },
+    {
+      "gate": "format",
+      "command": "npm run format:check",
+      "step": {
+        "name": "Check formatting",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-09-14T20:56:19Z",
+        "completed_at": "2026-09-14T20:56:32Z"
+      }
+    },
+    {
+      "gate": "native-format",
+      "command": "npm run format:native:check",
+      "step": {
+        "name": "Check native formatting",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-09-14T20:56:32Z",
+        "completed_at": "2026-09-14T20:56:33Z"
+      }
+    },
+    {
+      "gate": "motion-syntax",
+      "command": "node --check authoring/motion-lab/app.js",
+      "step": {
+        "name": "Check motion lab syntax",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-09-14T20:56:33Z",
+        "completed_at": "2026-09-14T20:56:33Z"
+      }
+    }
+  ],
+  "qualificationReceiptSha256": "2ee26ae443c71ed5872b5c19f1e3a537ee587db2262a6e04cacb06840133dda2",
+  "retainedEvidence": {
+    "receipt-qualified.json": {
+      "bytes": 4607,
+      "sha256": "2ee26ae443c71ed5872b5c19f1e3a537ee587db2262a6e04cacb06840133dda2"
+    },
+    "qualify.log": {
+      "bytes": 1358758,
+      "sha256": "2f14d738aa3362bf3bf05184666a55884731895d0ad029fdaf9a92f55c13a679"
+    },
+    "actual-checkout-commit.json": {
+      "bytes": 1351,
+      "sha256": "a7da211691dad3ce3d7b93c32de9425d9d2dc420c8bfe5474d4cf2d9ceb94e0f"
+    },
+    "actual-workflow-blob.json": {
+      "bytes": 2957,
+      "sha256": "d15aba85beeabab88b9d41b478c6ed478a314ee1ec66d5be0c2f9964dacff837"
+    }
+  },
+  "pagesBuildSeparate": "The qualification workflow does not deploy Pages; archive bytes and browser acceptance are separate requirements."
+}

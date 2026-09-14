@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { assemble, loadCatalog, validateAdmissions } from './assemble.mjs';
-import { digest, jsonBytes } from './metadata.mjs';
+import { digest, jsonBytes, retainRecentMetadata } from './metadata.mjs';
 
 async function fixture(t) {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'pages-assemble-'));
@@ -143,6 +143,7 @@ async function fixture(t) {
     format: 'revealline-pages-controller.v1',
     currentSourceQualification: { path: 'qualification.json', sha256: digest(qualificationBytes) },
     deploymentEnabled: true,
+    retainedReleasesPerMajor: 5,
     currentVersion: 'v0.44.0',
     catalogSha256: digest(catalogBytes),
     allocationSha256: digest(allocationBytes),
@@ -217,6 +218,22 @@ test('complete artifact retains original graph and creates only authenticated hi
     ),
     'game v0.44.0',
   );
+});
+
+test('retention keeps only the latest releases in each semantic major line', async (t) => {
+  const f = await fixture(t);
+  f.configuration.retainedReleasesPerMajor = 1;
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  const receipt = await assemble(f);
+  assert.equal(receipt.historicalBridges, 0);
+  await assert.rejects(fs.access(path.join(f.outputDirectory, 'releases/v0.1.0/release.json')));
+  const index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json')));
+  assert.deepEqual(
+    index.releases.map((release) => release.version),
+    ['v0.44.0'],
+  );
+  const { metadata } = await loadCatalog(f.directory);
+  assert.deepEqual([...retainRecentMetadata(metadata, 1).keys()], ['v0.44.0']);
 });
 
 test('wrong and extra current bodies fail before any artifact is created', async (t) => {
