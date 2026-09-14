@@ -1,0 +1,119 @@
+{
+  "sourceCommit": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "compilerCommit": "386a851716363693c2bdeda903cd4160d58b1c50",
+  "entries": [
+    {
+      "id": "fpv-compact-hunter-v1",
+      "kind": "enemy",
+      "role": "bouncer",
+      "skinId": "bouncer.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-border-patrol-v1",
+      "kind": "enemy",
+      "role": "border-patrol",
+      "skinId": "border-patrol.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-contour-patrol-v1",
+      "kind": "enemy",
+      "role": "contour-patrol",
+      "skinId": "contour-patrol.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-claimed-rover-v1",
+      "kind": "enemy",
+      "role": "claimed-rover",
+      "skinId": "claimed-rover.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-eroder-v1",
+      "kind": "enemy",
+      "role": "eroder",
+      "skinId": "eroder.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-lane-boss-v1",
+      "kind": "enemy",
+      "role": "lane-boss",
+      "skinId": "lane-boss.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "fpv-compact-relay-sentinel-v1",
+      "kind": "enemy",
+      "role": "relay-sentinel",
+      "skinId": "relay-sentinel.fpv.v1",
+      "authority": "game/content/enemy-presentations.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-swallow-v3",
+      "kind": "player",
+      "role": "scout",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-pottery-courier-v1",
+      "kind": "player",
+      "role": "bomber",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-carved-chest-v1",
+      "kind": "player",
+      "role": "carrier",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-falcon-crest-v3",
+      "kind": "player",
+      "role": "interceptor",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-weaver-shuttle-v3",
+      "kind": "player",
+      "role": "fiber",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-bell-warden-v1",
+      "kind": "player",
+      "role": "impact",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "atlas-woven-basket-v1",
+      "kind": "player",
+      "role": "trapper",
+      "themeId": "ukraine",
+      "authority": "authoring/motion-lab/presets.json",
+      "runtimeAdopted": false
+    }
+  ],
+  "note": "Source review identities only; no runtime descriptors or collision changes."
+}
