@@ -106,31 +106,34 @@ jobs:
         with:
           fetch-depth: 1
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+          path: source
 
-      - name: Check out the current test sharding helper
-        if: github.event_name != 'pull_request'
+      - name: Check out the workflow's test runner
         uses: actions/checkout@v4
         with:
-          ref: main
-          path: .ci-tools
+          ref: ${{ github.workflow_sha }}
+          path: automation
+          fetch-depth: 1
+          persist-credentials: false
           sparse-checkout: scripts/run-test-shard.mjs
+          sparse-checkout-cone-mode: false
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20.19.x
           cache: npm
+          cache-dependency-path: source/package-lock.json
 
       - name: Install dependencies
+        working-directory: source
         run: npm ci
 
       - name: Run test shard ${{ matrix.shard }}/4
+        working-directory: source
         run: |
           mkdir -p .cache
-          if [ ! -f scripts/run-test-shard.mjs ]; then
-            cp .ci-tools/scripts/run-test-shard.mjs scripts/run-test-shard.mjs
-          fi
-          node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+          node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .
 
   build:
     if: github.event_name == 'pull_request'
