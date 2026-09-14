@@ -38,7 +38,7 @@ async function fixture(t) {
   for (const name of new Set([
     ...pins(register).map((p) => p.path),
     `${historyRoot}/index.json`,
-    snapshot,
+    ...index.entries.map((entry) => `${historyRoot}/${entry.sha256}.json`),
   ])) {
     await mkdir(path.dirname(path.join(dir, name)), { recursive: true });
     await writeFile(path.join(dir, name), await readFile(path.join(root, name)));
@@ -98,11 +98,37 @@ test('history admits only finite complete JSON identities, with no arbitrary sna
     await assert.rejects(verifyProductionSources(register, { root: dir }), /history|path|Unsafe/i);
   }
 });
-test('a newly declared preset revision reads the current file and still refuses changed current bytes', async (t) => {
+test('the preserved FPV preset revision remains exact after a later runtime change', async (t) => {
+  const retained = index.entries[1];
+  assert.equal(index.entries.length, 2);
+  assert.deepEqual(retained, {
+    path: old.path,
+    bytes: 36911,
+    sha256: 'e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb',
+  });
+  const name = `${historyRoot}/${retained.sha256}.json`;
+  const bytes = await readFile(path.join(root, name));
+  assert.equal(bytes.length, retained.bytes);
+  assert.equal(hash(bytes), retained.sha256);
   const dir = await fixture(t),
     next = clone(register);
+  for (const pin of pins(next)) if (pin.path === old.path) Object.assign(pin, retained);
+  // A private fixture declaration proves exact history lookup, not a new approval.
+  await writeFile(path.join(dir, old.path), '{}');
+  const result = await verifyProductionSources(next, { root: dir });
+  assert.equal(result.metadata, 'verified');
+  assert.equal(result.originalBytesVerified, false);
+  await writeFile(path.join(dir, name), '{}');
+  await assert.rejects(verifyProductionSources(next, { root: dir }), /changed authority/);
+});
+test('a newly declared unarchived preset revision reads the current file and still refuses changed current bytes', async (t) => {
+  const dir = await fixture(t),
+    next = clone(register),
+    future = Buffer.concat([current, Buffer.from('\n')]);
+  assert.ok(!index.entries.some((entry) => entry.sha256 === hash(future)));
+  await writeFile(path.join(dir, old.path), future);
   for (const pin of pins(next))
-    if (pin.path === old.path) Object.assign(pin, { bytes: current.length, sha256: hash(current) });
+    if (pin.path === old.path) Object.assign(pin, { bytes: future.length, sha256: hash(future) });
   assert.equal((await verifyProductionSources(next, { root: dir })).metadata, 'verified');
   // This test candidate is not a successor approval and is never published.
   await writeFile(path.join(dir, old.path), '{}');

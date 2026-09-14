@@ -63,7 +63,9 @@ test('only the complete canonical FPV map receives current recommendations; call
   ])
     assert.equal(adapter.recommendedBody(changed, 'scout'), recommendedBody(changed, 'scout'));
   assert.equal(adapter.recommendedBody(fpv, 'unknown-class'), fpv.player);
-  for (const theme of themes.filter((theme) => theme !== fpv))
+  for (const theme of themes.filter(
+    (theme) => !presets.characterPresentations.sets.some((entry) => entry.themeId === theme.id),
+  ))
     for (const role of source.roles)
       assert.equal(
         adapter.recommendedBody(theme, role.classId),
@@ -82,7 +84,10 @@ test('current starter availability neither mutates nor grants historical progres
   const available = current().availableBodies(earned);
   assert.deepEqual([...earned], saved);
   assert.deepEqual(progress, before);
-  assert.deepEqual([...available], [...saved, ...set.starterBodies]);
+  assert.deepEqual(
+    [...available],
+    [...saved, ...presets.characterPresentations.sets.flatMap((entry) => entry.starterBodies)],
+  );
   for (const id of ['fpv-racer', 'fixedwing-body', 'fpv-night', 'delta-interceptor'])
     assert.equal(available.has(id), false);
   assert.deepEqual(newAppearanceBodies(progress, before, campaign), []);
