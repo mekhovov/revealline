@@ -1,0 +1,531 @@
+{
+  "format": "revealline-source-art-provenance.v1",
+  "scope": "Twelve original Moving Edges reward still candidates for three existing authored layout designs across four themes. No runtime, catalog, saved/earned binding, production-count or release adoption.",
+  "baseCommit": "bd2b0533e8a6384e20b10b98b780cf815b3388c9",
+  "generatedOn": "2026-09-14",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 12,
+  "editCalls": 0,
+  "referenceImages": [],
+  "rawOriginalsPreserved": true,
+  "pixelTransformations": [],
+  "generation": "Twelve independent text-only calls in concurrent batches of three, three and six. No generation retry, edit, original crop, stretch, resampling or re-encoding. Eleven outputs are 1774×887; Survey Wheel Ukraine is 1773×887 despite the same 1774×887 request. Review derivatives use a proportional full-frame fit.",
+  "rightsScope": "Original fictional AI-generated project illustrations. No reference images were supplied to generation, no copied game assets or named artist imitation. FPV includes recognizable Ukrainian drone/military context without graphic violence or operational claims. Ukraine uses broad craft/material inspiration; Retro equipment and Coupa-themed cooperative spaces are invented. No historical/product accuracy, exclusive-rights or human-quality certification.",
+  "layoutAuthority": {
+    "path": "authoring/library/moving-edges/layouts.json",
+    "sha256": "f9f15bd2d88d23d88922d90b41b4639c62347b8f26e46b99c66c6328b4bbc82c",
+    "source": "Separately owned Moving Edges geometry; fixed cues supplied by its author before generation.",
+    "limits": "Narrative composition cues only; perspective scenes are not collision maps or gameplay/native evidence."
+  },
+  "contextPins": [
+    {
+      "path": ".gitattributes",
+      "bytes": 485,
+      "sha256": "367c1353565ebf4b355e01413a282349d799716976daf32147c20d5de858038f"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 124,
+      "sha256": "38812e650ec5d06647adbf4a940526cb422f1b50ae44a73181ef35860c25b8d2"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "bytes": 1610,
+      "sha256": "418e718b4c0d2eff5092693fddebf57b553bfc45c1b40d9b5bfb144ea9447873"
+    },
+    {
+      "path": "game/campaign-contexts.mjs",
+      "bytes": 4403,
+      "sha256": "3243fc2fc9d0db9fb6cf913609a86105d87bf80270a24fde10ec3b46d5eb92b8"
+    },
+    {
+      "path": "game/campaign-difficulty.mjs",
+      "bytes": 7336,
+      "sha256": "7890880e30df503b69fef0e44e8d58bfa919243aa535ed33c6a1afaa83367b97"
+    },
+    {
+      "path": "game/content-launch.mjs",
+      "bytes": 9259,
+      "sha256": "cec26626541e3a7bb89ff07d7b787040668ff308c7833fd8e6636098d60c80a2"
+    },
+    {
+      "path": "game/content.mjs",
+      "bytes": 23214,
+      "sha256": "305dfa4d5fb4c4c27856b59abd0e71779d431f68221ac592989be8f828d75b38"
+    },
+    {
+      "path": "game/core/abilities.mjs",
+      "bytes": 3855,
+      "sha256": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde"
+    },
+    {
+      "path": "game/core/arcade-actions.mjs",
+      "bytes": 848,
+      "sha256": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726"
+    },
+    {
+      "path": "game/core/capture.mjs",
+      "bytes": 8038,
+      "sha256": "960ebb9ecf19a656fd4fb0877cc5a1d967d1e83617b0262ba62dad4c2189aaef"
+    },
+    {
+      "path": "game/core/classic-contour.mjs",
+      "bytes": 7465,
+      "sha256": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8"
+    },
+    {
+      "path": "game/core/classic-definition.mjs",
+      "bytes": 7266,
+      "sha256": "fa49c1e2442a393b2be8e3d3b34a0eef188bbe158243f7c13cb824d18d1d3638"
+    },
+    {
+      "path": "game/core/classic-motion.mjs",
+      "bytes": 12271,
+      "sha256": "d593680e715467fd4ebfd50bf68bfdd2c3690e79ebbc579a64cdbab093c0a020"
+    },
+    {
+      "path": "game/core/classic-state.mjs",
+      "bytes": 2306,
+      "sha256": "1964712c73cbb2c793881ccf74a2899ef173eff6cc48251274cb738aa0473377"
+    },
+    {
+      "path": "game/core/classic-step.mjs",
+      "bytes": 16343,
+      "sha256": "c6078d7ce18dc8d5b4ecf3414bbf943bcb68dd80951d68e2cc7b8f1bf5b29fca"
+    },
+    {
+      "path": "game/core/classic-topology.mjs",
+      "bytes": 6357,
+      "sha256": "aae16753e999d4829dab13503f3ef603e42b73f4b44e782180881160651db3ff"
+    },
+    {
+      "path": "game/core/contacts.mjs",
+      "bytes": 5168,
+      "sha256": "aadd6aceee0380ff8e9389f305fe96b6642d553ee255ebfb7bcc1251c2c7c67b"
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "bytes": 8716,
+      "sha256": "7b98eb4ec29998ce902a62388b089a0a26b41675199bb9601e4b2a55f0df44ba"
+    },
+    {
+      "path": "game/core/enemy-pressure.mjs",
+      "bytes": 11725,
+      "sha256": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb"
+    },
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 3989,
+      "sha256": "8ca7877a89ea203f072fbf3b85f304844f3a3abcf992e8ba1a54f39957e6f331"
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 17291,
+      "sha256": "787d7cdc759b04ae2a475e8d5ac49e0618dd26f153336ea71b5920232532e1a2"
+    },
+    {
+      "path": "game/core/level.mjs",
+      "bytes": 14178,
+      "sha256": "0a9fa39cdfa6bb6ed4c9b07a231491529777ab099f2cd6528c54fde84d5e41b8"
+    },
+    {
+      "path": "game/core/line-impact.mjs",
+      "bytes": 9000,
+      "sha256": "cf6e1b509d6789f3bd922f1374ba4ba7a80933bb8a117058dfe579bb95b547e6"
+    },
+    {
+      "path": "game/core/movement.mjs",
+      "bytes": 10912,
+      "sha256": "3f9ee5115eb94c001fe38595f39763b188ea276114ca21d1bc7a426be6e6922a"
+    },
+    {
+      "path": "game/core/registry.mjs",
+      "bytes": 6661,
+      "sha256": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c"
+    },
+    {
+      "path": "game/core/systems.mjs",
+      "bytes": 4621,
+      "sha256": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6"
+    },
+    {
+      "path": "game/core/versions.mjs",
+      "bytes": 3074,
+      "sha256": "9bc39659dde70e76c63c9f9bfaa267b3cdfa07966d9096cc079383c71478eec3"
+    },
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4640,
+      "sha256": "e765ace4b34cc64d8948b73d896e5f8d4666ba5984385f6b2de81c1babefba0c"
+    },
+    {
+      "path": "game/mastery-catalog.mjs",
+      "bytes": 13632,
+      "sha256": "2d7d7679b084ff1dcf6c15579605a00dd71cf611f822b79e198703fc4ac045be"
+    },
+    {
+      "path": "game/mastery-equipment.mjs",
+      "bytes": 29233,
+      "sha256": "5d45dfb343754c728277ea83a6a32ff46547adf747da65eee5ec0aa30bd09d1a"
+    },
+    {
+      "path": "game/mastery.mjs",
+      "bytes": 16941,
+      "sha256": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "path": "game/ui/music.mjs",
+      "bytes": 7050,
+      "sha256": "a1ecafd319417d075ec584d8b2f54008a8b877e49848e364bd91603896c44fda"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "fc95490babde1090db3de255b114fd4e4282eae162d77fbb55e5ce3f5a117500"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 58005,
+      "sha256": "93805cedc9abe70298df782504eacf352c68f258bcfe74157bc58b1736365b2e"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    }
+  ],
+  "review": {
+    "agent": "All twelve actual generated originals inspected visually; concrete deviations are recorded per image. Review-thumbnail readability is checked separately.",
+    "root": "Root review is separately attributed; no runtime or human-fun approval is inferred from source verification.",
+    "limits": "Source artwork only; no browser, partial-reveal, device, gameplay, animation or full-quality certification."
+  },
+  "images": [
+    {
+      "cellId": "moving-edges/terrace-stitch/fpv",
+      "themeId": "fpv",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Hillside Flight Workshop",
+      "path": "originals/terrace-stitch-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-5e7f02f7-cf30-4f43-9f2c-d1306da3a589.png",
+      "bytes": 2949957,
+      "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "96c343df0ec31b416ab19e0de2f2d4242f9ee98d2a5e20ffbee7bde18c393e1d",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Ukrainian drone crew and a quadcopter work beneath camouflage nets above a sunrise mountain valley.",
+        "topologyEcho": "Unequal hillside workshops and broad valley returns echo the terraces.",
+        "deviations": "The foreground craft and two crew figures are larger than requested; screen marks are illustrative, not technical instructions."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/fpv",
+      "themeId": "fpv",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "Signals around the Old Depot",
+      "path": "originals/survey-wheel-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-d48b615a-b6ec-4baf-a74b-92534a79f1b7.png",
+      "bytes": 2642402,
+      "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "a500e12dc509307a0b206aefb928534981178673761e2d52d8522ffe7e300bca",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A Ukrainian-marked dusk depot has radial service bays, drone crew, antennas and warm work lights.",
+        "topologyEcho": "A curved depot and outward service paths echo the wheel sectors.",
+        "deviations": "The bays form a continuous semicircle rather than four separated spokes. Unrequested bay numerals and a trident-like emblem appear; the foreground observer is large."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/fpv",
+      "themeId": "fpv",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Coastal Watch Returns",
+      "path": "originals/breakwater-return-fpv.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-8a4eab19-fd34-4b49-ae81-dbc47d76af4c.png",
+      "bytes": 2822472,
+      "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "20962a6a78194af85be35a759cb7ec8ad30c8b69ccadc808741e1373ab8761cf",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A coastal military and rescue drone crew returns to a lit van beside rough teal water and offset piers.",
+        "topologyEcho": "Offset harbor edges and open water echo the return corridor.",
+        "deviations": "Foreground people and equipment are larger than requested. The cliff station is invented and does not depict a real unit or operation."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Threads above the Mountain River",
+      "path": "originals/terrace-stitch-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-a2651f1d-d807-4078-8bd7-d80f51b80f19.png",
+      "bytes": 3116991,
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "f07c4595368f53f8b10416051d749b6866ec1942260fccc37269c41da4d8e840",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Timber weaving workshops and red textiles overlook an autumn mountain river.",
+        "topologyEcho": "Stepped buildings and connecting paths echo the unequal terraces.",
+        "deviations": "Four visible building volumes replace an exact three-terrace count; invented carving and craft traditions are mixed, and some workers are not very small."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Potter's Spring Courtyard",
+      "path": "originals/survey-wheel-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-c5ef19b8-bdc0-492f-a356-88ce2ccfcd7a.png",
+      "bytes": 3373654,
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+      "width": 1773,
+      "height": 887,
+      "promptSha256": "769c9196733af126820501cc75c6b356a13bea2c18d5dede9284bfe88546301f",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Pottery workshops gather around a spring courtyard and round kiln, with turquoise glazing and blossom.",
+        "topologyEcho": "A kiln hub and surrounding craft spaces echo the wheel.",
+        "deviations": "The kiln is near the center rather than clearly off-center; plaster, tiles and the distant tower mix broad regional cues. The untouched output is 1773×887, one column narrower than requested."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Boats beneath the Stone Lanterns",
+      "path": "originals/breakwater-return-ukraine.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-1748f128-8b9b-4b5a-837a-be8833893f96.png",
+      "bytes": 2766348,
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "89314a434e7acb01ab147a8987185bf84bfdd1214b41053386c0b7e628bdb2dc",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Boatbuilders work by limestone piers and warm lanterns at blue hour.",
+        "topologyEcho": "Sheltered water and offset harbor structures echo the breakwaters and cove.",
+        "deviations": "Trident-like banners were not requested. Idealized coastal architecture mixes broad influences and is not an exact Ukrainian historical reconstruction."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/retro",
+      "themeId": "retro",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Mixtapes on the Upper Walkways",
+      "path": "originals/terrace-stitch-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-8331c582-cd43-4904-9273-d3c02624392f.png",
+      "bytes": 2883767,
+      "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "3f23e44999e4438200c644bcf6adc4ef05a40d22917c78a993093d72d6371568",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Stepped CRT repair rooms, record stalls and a games room glow over autumn walkways.",
+        "topologyEcho": "Unequal platforms and linked stairs echo the terrace stitch.",
+        "deviations": "CRT screens and record covers contain incidental marks rather than blank faces; people are moderately large. Equipment is fictional, not an exact 1994 product."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/retro",
+      "themeId": "retro",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Last Saturday at the Rotunda",
+      "path": "originals/survey-wheel-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-3b4ee875-bce4-4906-afa6-c6fbe3f71299.png",
+      "bytes": 2696356,
+      "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "976c74da03789cc062a44c4b1b68658f12dfeea13d086f1b55bf82b5bfe72cc8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A late-night roller rink links arcade, music and cassette spaces under mint and coral light.",
+        "topologyEcho": "A rotunda and outward rooms echo the wheel sectors.",
+        "deviations": "Neon skate, burger, lightning and cassette icons and populated screens exceed the blank-screen prompt. The layout is nearly radial and includes incidental sign marks."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/retro",
+      "themeId": "retro",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Summer's Last Lake Ferry",
+      "path": "originals/breakwater-return-retro.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-79bce732-b1f8-4c33-ad81-52251f048066.png",
+      "bytes": 2642886,
+      "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "7f38337d929d10ccfd783f91b39ec5d0a3af5a913f7f9747709949abca2006df",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A yellow camera and tape kiosk overlooks offset ferry piers beneath a rose-gold lake sky.",
+        "topologyEcho": "Offset piers and broad return water echo the harbor route.",
+        "deviations": "Kiosk and ferry surfaces contain label-like marks. Buildings are rectangular rather than rounded, and the scene depicts no named venue."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/coupa",
+      "themeId": "coupa",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Shared Goods Terraces",
+      "path": "originals/terrace-stitch-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-6746a2e4-e5a9-4123-9bab-ddd3dfac7b31.png",
+      "bytes": 2844215,
+      "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "2ce4db9ff2a53f2d895def86797819aa787e0576f8a2ff79607d8152196da0c8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "Shared tools, parcels and workshop terraces rise toward a greenhouse above an idyllic coast.",
+        "topologyEcho": "Three working levels and connecting paths echo the stepped terraces.",
+        "deviations": "Some people are larger than requested. This is an invented cooperative scene, with no actual Coupa, financial or environmental outcome asserted."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/coupa",
+      "themeId": "coupa",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Repair Exchange Rotunda",
+      "path": "originals/survey-wheel-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-5fce3dcc-4683-4a75-8db9-a361020d6a6a.png",
+      "bytes": 3151700,
+      "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "d830f9b7eebed06318303d626097047e7235aad569ec4d2a00890c4a4a340ff8",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A snowy parts-exchange rotunda links warm timber repair workshops at night.",
+        "topologyEcho": "A central depot and surrounding workrooms echo the hub and sectors.",
+        "deviations": "Timber replaces the requested rose brick; the courtyard is close to symmetric and a distant castle is invented. No product or quantified benefit is represented."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/coupa",
+      "themeId": "coupa",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Harbor Maintenance Round",
+      "path": "originals/breakwater-return-coupa.png",
+      "originalToolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-4d89079e-9281-408d-985a-f27d829ca4ed.png",
+      "bytes": 2635887,
+      "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
+      "width": 1774,
+      "height": 887,
+      "promptSha256": "92e3a0abe7e7c7cc39b62698238acca9bbd393170344575615ccf6fc4a460e61",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "runtimeBinding": null,
+      "sourceBytesEqual": true,
+      "observations": {
+        "scene": "A harbor maintenance crew shares lit repair workshops and boats beside deep blue night water.",
+        "topologyEcho": "Projecting piers and sheltered return water echo the breakwaters.",
+        "deviations": "Three projecting pier volumes replace a literal two-bar arrangement. Incidental marks are decorative; no product, financial or physical-route claim is made."
+      },
+      "style": "Modern generated pixel-art illustration with luminous practical light and stepped silhouettes; not a certified hand-pixel grid."
+    }
+  ]
+}

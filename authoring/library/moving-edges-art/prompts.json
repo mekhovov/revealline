@@ -1,0 +1,176 @@
+{
+  "format": "revealline-source-art-prompts.v1",
+  "tool": "image_gen.imagegen built-in",
+  "calls": 12,
+  "inputImages": [],
+  "prompts": [
+    {
+      "cellId": "moving-edges/terrace-stitch/fpv",
+      "themeId": "fpv",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Hillside Flight Workshop",
+      "path": "originals/terrace-stitch-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a Ukrainian military drone support crew on three unequal stepped earth-and-stone terraces overlooking a broad Carpathian-edge agricultural valley after rain. Central diagonal footpath stitches the terraces. A clearly recognizable compact four-rotor FPV drone on a foreground workbench, a second small reconnaissance quad in the open sky, field batteries and a laptop under a camouflage-net shelter; two small helmeted crew silhouettes in practical olive clothing with subtle blue-and-yellow Ukrainian cloth patches. No target, firing, attack or victim. Strong foreground drone silhouette, layered terraces and long clear valley are the visual story, not weapon construction detail.\nLighting/palette: brisk early morning, warm pale-gold sunrise on wet olive canvas and ochre earth, misty cool blue valley, tiny cyan equipment lights. Emotion: resilient concentration and comradeship. Wide elevated oblique composition, readable open sky and uneven terraces.",
+      "promptSha256": "96c343df0ec31b416ab19e0de2f2d4242f9ee98d2a5e20ffbee7bde18c393e1d"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/fpv",
+      "themeId": "fpv",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "Signals around the Old Depot",
+      "path": "originals/survey-wheel-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: an original Ukrainian military drone observation and repair outpost at a disused circular rail depot. An off-center squat observation building with four separated radial service bays and broad open sectors; warm repair lights, parked utilitarian field vans and antenna masts. In the middle foreground a recognizable quadcopter with four arms rests beside a crew member wearing a helmet and modest blue-yellow Ukrainian patch; a separate tiny drone crosses the dusk sky. Do not draw tactical target lines or a literal geometry diagram. No violence, injured people, enemy symbols or technical weapon plans.\nLighting/palette: deep teal and petrol-blue twilight, orange window squares, copper rails, restrained red signal lamps and pale moon haze. View from an upper gantry, bold radial rhythm with asymmetrical spacing; a feeling of watchfulness and patient technical teamwork.",
+      "promptSha256": "a500e12dc509307a0b206aefb928534981178673761e2d52d8522ffe7e300bca"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/fpv",
+      "themeId": "fpv",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Coastal Watch Returns",
+      "path": "originals/breakwater-return-fpv.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a fictional Ukrainian coastal defense and rescue drone station after a storm. Two long offset concrete breakwaters shelter a wide turbulent bay, a small working cove left and an unmistakable open sea-return corridor right. A camouflaged support van and small Ukrainian blue-yellow pennant near the pier shelter; foreground recognizable compact FPV quad on a wet crate with protected battery cases, two small navy/olive-clad crew watching a distant returning drone. Military context is clear but non-graphic: no firing, target, smoke from attacks, casualties or real unit insignia. Keep equipment schematic details indistinct.\nLighting/palette: storm-cleared late afternoon, cold turquoise waves and slate cliffs, slanted warm apricot sun, amber pier lamps. Long open water shapes carry the composition; weather, return and quiet vigilance give emotional weight.",
+      "promptSha256": "20962a6a78194af85be35a759cb7ec8ad30c8b69ccadc808741e1373ab8761cf"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Threads above the Mountain River",
+      "path": "originals/terrace-stitch-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a Ukrainian craft-inspired hillside village with three unequal terraces of wooden weaving workshops, gardens and carved verandas. A central winding stone stair stitches the levels above a mountain river; colorful handwoven rugs hang under eaves, tiny craftworkers tend looms and an apple tree. Original invented architecture with Hutsul-inspired timber carving and restrained geometric textile ornament, not an exact historical site or identifiable sacred object. A few warmly lit windows are the focal points; no readable inscriptions.\nLighting/palette: golden autumn late afternoon, rust-red textiles, honey timber, deep spruce greens and cobalt mountain shadow. Wide elevated perspective with a broad breathing valley, distinct staggered terraces rather than a single stacked wall.",
+      "promptSha256": "f07c4595368f53f8b10416051d749b6866ec1942260fccc37269c41da4d8e840"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Potter's Spring Courtyard",
+      "path": "originals/survey-wheel-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: an original Ukrainian pottery and folk-craft courtyard organized around an off-center round kiln pavilion. Four separated workshop lanes extend through blossoming fruit trees into unequal open courtyards; ceramic bowls, simple hand-painted tiles and wood shutters, small people carrying fired pots. A modest distant bell-tower-like silhouette is invented atmosphere, not a named monument or historical reconstruction. No readable signs or diagram lines. The round warm kiln and separated radial workshop silhouettes should be clear at thumbnail size.\nLighting/palette: clear spring morning, creamy plaster, turquoise painted wood, terracotta and warm rose blossoms, cool blue-green shadows. Lyrical spacious scene with strong circular center and open asymmetric sectors.",
+      "promptSha256": "769c9196733af126820501cc75c6b356a13bea2c18d5dede9284bfe88546301f"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/ukraine",
+      "themeId": "ukraine",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Boats beneath the Stone Lanterns",
+      "path": "originals/breakwater-return-ukraine.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a Ukrainian maritime-craft-inspired harbor with two offset stone piers sheltering a generous bay and a small western boatbuilders' cove. Traditional-looking wooden fishing boats under repair, woven awnings, small workers and warm lanterns; an open water corridor leads out to a distant low coast. Invention inspired by coastal craft and memory, no exact place, named historic event or authenticity claim. The two long separate pier forms and clear return through water are prominent; figures stay small.\nLighting/palette: blue hour turning to night, deep indigo water, pale limestone, brass lantern glow and faint magenta last light. Calm reflections and wind-touched reeds, emotionally rich sense of people waiting for a boat to return.",
+      "promptSha256": "89314a434e7acb01ab147a8987185bf84bfdd1214b41053386c0b7e628bdb2dc"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/retro",
+      "themeId": "retro",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "Mixtapes on the Upper Walkways",
+      "path": "originals/terrace-stitch-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a nostalgic fictional 1994 neighborhood of three unequal stepped pedestrian terraces with a small record kiosk, a CRT repair shop and a rooftop games room. Open stairs and narrow walkways stitch them together above a rain-washed street. Cassettes, blank record sleeves and small boxy monitors are recognizable shapes; a couple of small friends in period jackets carry a tape deck. No logos, readable labels, product replicas or modern smartphones. Avoid a generic cyberpunk skyscraper city.\nLighting/palette: chilly autumn afternoon after rain, tobacco brick, faded mustard awnings, electric cyan CRT windows and warm peach sky. Oblique wide composition, modest lived-in buildings and distinct stair-stepped silhouette, hopeful everyday nostalgia.",
+      "promptSha256": "3f23e44999e4438200c644bcf6adc4ef05a40d22917c78a993093d72d6371568"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/retro",
+      "themeId": "retro",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Last Saturday at the Rotunda",
+      "path": "originals/survey-wheel-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: an original 1994 roller-rink and arcade rotunda after sunset, with an off-center round glass entrance and four separate radial low wings containing blank-screen arcade cabinets, a cassette stall, snack bar and practice room. Open wedges of paving and small groups of teenagers between wings. Equipment is fictional, no brands, readable text, numbers or interface closeups. The glowing round building and uneven radial gaps, not a giant skyline, organize the picture.\nLighting/palette: midnight teal, mint fluorescent glass, tangerine kiosk light and restrained hot-coral neon accents; wet paving catches a few clean reflections. Warm social nostalgia, varied structured clusters of light, broad negative-space sectors.",
+      "promptSha256": "976c74da03789cc062a44c4b1b68658f12dfeea13d086f1b55bf82b5bfe72cc8"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/retro",
+      "themeId": "retro",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "Summer's Last Lake Ferry",
+      "path": "originals/breakwater-return-retro.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a fictional 1994 lakeside leisure harbor, two offset long low piers sheltering a quiet bay, a cassette-and-camera repair kiosk tucked in a little cove and open water to the right. Boxy ferry, bicycles, a tiny couple with a portable radio and distant rounded apartment blocks. No modern devices, brands, readable signage or fabricated UI. The open return corridor and low horizontal pier rhythm are readable; do not crowd the water.\nLighting/palette: pale lavender mist, washed denim-blue lake, sun-faded butter-yellow paint and warm sunset windows, gentle rose-orange sky. End-of-summer stillness rather than dark purple cyberpunk.",
+      "promptSha256": "7f38337d929d10ccfd783f91b39ec5d0a3af5a913f7f9747709949abca2006df"
+    },
+    {
+      "cellId": "moving-edges/terrace-stitch/coupa",
+      "themeId": "coupa",
+      "missionSlot": "terrace-stitch",
+      "sourceLevelId": "moving-edges-terrace-stitch",
+      "title": "The Shared Goods Terraces",
+      "path": "originals/terrace-stitch-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a fictional cooperative receiving and repair district with three unequal stepped brick courtyards linked by a central ramp-and-stair route. One terrace has a small tool-sharing workshop, another careful parcel sorting with simple unbranded crates, and the upper terrace a sunlit community greenhouse. Small workers pass an object hand-to-hand near a clear worktable. Spend Network / Coupa theme as human cooperation and stewardship, not an actual Coupa product, interface, financial claim or measured sustainability result. No logos, text, charts or readable ledgers.\nLighting/palette: clear spring late afternoon, terracotta brick, fresh sage plants, warm cream walls and cool teal shade. Strong unequal terrace volumes and welcoming pools of light; useful daily work, not a fantasy luxury market.",
+      "promptSha256": "2ce4db9ff2a53f2d895def86797819aa787e0576f8a2ff79607d8152196da0c8"
+    },
+    {
+      "cellId": "moving-edges/survey-wheel/coupa",
+      "themeId": "coupa",
+      "missionSlot": "survey-wheel",
+      "sourceLevelId": "moving-edges-survey-wheel",
+      "title": "The Repair Exchange Rotunda",
+      "path": "originals/survey-wheel-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a fictional circular neighborhood repair exchange with an off-center common parts depot and four separated radial workshop wings. Broad uneven paved sectors allow people to move between bicycle repair, textile mending, shared tools and a small reuse-materials yard. Clearly original unbranded objects and small collaborative human figures; no screens, logos, accounting graphics, readable labels or claims about a real company's software. A warm central work lamp gathers the scene while each wing has a distinct silhouette.\nLighting/palette: crisp winter dusk, muted warm rose brick, ivory snow edges, dark evergreen and petrol-blue shadows, amber and soft aqua workshop light. Calm ordered activity, asymmetrical radial composition, emotional sense of a community keeping things useful.",
+      "promptSha256": "d830f9b7eebed06318303d626097047e7235aad569ec4d2a00890c4a4a340ff8"
+    },
+    {
+      "cellId": "moving-edges/breakwater-return/coupa",
+      "themeId": "coupa",
+      "missionSlot": "breakwater-return",
+      "sourceLevelId": "moving-edges-breakwater-return",
+      "title": "The Harbor Maintenance Round",
+      "path": "originals/breakwater-return-coupa.png",
+      "requestedDimensions": {
+        "width": 1774,
+        "height": 887
+      },
+      "prompt": "Use case: stylized-concept. Asset type: an original still reward panorama for a territory-capture game, not a map or interface.\nGenerate ONE complete landscape image at exactly 1774 x 887 pixels, 2:1 aspect. Full-frame opaque RGB PNG. Modern luminous pixel-art: deliberate crisp pixel clusters, readable large silhouettes, detailed but ordered surfaces, cinematic depth, natural atmosphere, richly colored light and shadow. Match the series' restrained navy/teal shadows and warm light, with the distinct palette specified below. A beautiful meaningful scene must remain understandable as a 384 x 192 thumbnail. No artificial stretching, panels, collage, text, UI, arrows, borders, watermarks, game screenshots or copied assets. Small people only as scale/story cues, never dominant portraits. All structures and equipment are original fictional designs; do not claim exact real architecture or product reconstruction.\nScene: a fictional working harbor cooperative at night: two offset long low service piers shelter a spacious bay, a small cove contains a boat-repair hall, and a clear open return lane leads toward distant lights. A few small people carry unbranded replacement parts to a moored service boat; neatly stored tools, warm windows and one modest planted courtyard. Spend-management theme expressed through thoughtful coordination, never a real product, financial interface or quantified environmental benefit. No logos, text or diagrams. Keep broad open water and long offset forms easy to read.\nLighting/palette: deep marine-blue water, soft sea-green reflections, honey-gold work lights and a faint cool peach horizon. Detailed pixel surfaces but restrained lighting; a feeling of reliable work and safe return.",
+      "promptSha256": "92e3a0abe7e7c7cc39b62698238acca9bbd393170344575615ccf6fc4a460e61"
+    }
+  ]
+}
