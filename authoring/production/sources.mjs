@@ -52,6 +52,48 @@ async function boundedRead(root, name, max = 4 * 1024 * 1024) {
     await f.close();
   }
 }
+// Archived metadata is explicit data authority, not a fallback for changed bodies.
+const HISTORY_ROOT = 'authoring/production/history';
+const historyKey = (p) => canonical([p.path, p.bytes, p.sha256]);
+async function metadataHistory(root) {
+  let raw;
+  try {
+    raw = await boundedRead(root, `${HISTORY_ROOT}/index.json`, 32768);
+  } catch (error) {
+    if (error.code === 'ENOENT') return new Map();
+    throw error;
+  }
+  const index = JSON.parse(raw.toString('utf8'));
+  if (
+    !index ||
+    Object.keys(index).sort().join(',') !== 'entries,format' ||
+    index.format !== 'revealline-production-metadata-history.v1' ||
+    !Array.isArray(index.entries) ||
+    index.entries.length > 64
+  )
+    throw new Error('Invalid production metadata history index');
+  const result = new Map();
+  for (const pin of index.entries) {
+    if (
+      !pin ||
+      Object.keys(pin).sort().join(',') !== 'bytes,path,sha256' ||
+      typeof pin.path !== 'string' ||
+      !pin.path.endsWith('.json') ||
+      pin.path.startsWith(`${HISTORY_ROOT}/`) ||
+      !Number.isSafeInteger(pin.bytes) ||
+      pin.bytes < 1 ||
+      pin.bytes > 4 * 1024 * 1024 ||
+      typeof pin.sha256 !== 'string' ||
+      !/^[a-f0-9]{64}$/.test(pin.sha256)
+    )
+      throw new Error('Invalid production metadata history entry');
+    validateSourcePath(pin.path);
+    const key = historyKey(pin);
+    if (result.has(key)) throw new Error('Duplicate production metadata history entry');
+    result.set(key, `${HISTORY_ROOT}/${pin.sha256}.json`);
+  }
+  return result;
+}
 function literal(node) {
   if (node.type === 'Literal') return node.value;
   if (node.type === 'ArrayExpression') return node.elements.map(literal);
@@ -108,18 +150,22 @@ export async function verifyProductionSources(input, { root, files = false } = {
       ...r.deliveries.map((d) => d.evidence),
     ].map((p) => [p.path, p]),
   );
+  const history = await metadataHistory(root);
   const cache = new Map();
   const bytes = async (name) => {
-    if (!cache.has(name))
+    if (!cache.has(name)) {
+      const pin = declared.get(name);
+      if (!pin) throw new Error(`Undeclared or changed authority: ${name}`);
+      const source = history.get(historyKey(pin)) ?? name;
       cache.set(
         name,
-        boundedRead(root, name).then((b) => {
-          const p = declared.get(name);
-          if (!p || b.length !== p.bytes || sha(b) !== p.sha256)
+        boundedRead(root, source).then((b) => {
+          if (b.length !== pin.bytes || sha(b) !== pin.sha256)
             throw new Error(`Undeclared or changed authority: ${name}`);
           return b;
         }),
       );
+    }
     return cache.get(name);
   };
   const json = async (name) => JSON.parse((await bytes(name)).toString('utf8'));
