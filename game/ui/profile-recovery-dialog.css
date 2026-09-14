@@ -1,0 +1,73 @@
+#profile-recovery-dialog {
+  box-sizing: border-box;
+  width: min(48rem, calc(100vw - 2rem));
+  max-height: calc(
+    100dvh - max(1rem, env(safe-area-inset-top)) - max(1rem, env(safe-area-inset-bottom))
+  );
+  overflow: auto;
+  padding: 1rem;
+  font:
+    1rem/1.5 system-ui,
+    sans-serif;
+  color: #edf5f5;
+  background: #0d1822;
+}
+.game-shell[data-text-size='large'] #profile-recovery-dialog {
+  font-size: 22px;
+}
+#profile-recovery-root :is(button, select, a, label, h2) {
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+}
+#profile-recovery-root h2 {
+  font-weight: 700;
+}
+#profile-recovery-root :is(p, a, label) {
+  overflow-wrap: anywhere;
+}
+#profile-recovery-root label {
+  display: block;
+  margin: 1rem 0 0.4rem;
+}
+#profile-recovery-root :is(button, select, a) {
+  box-sizing: border-box;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid #587282;
+  border-radius: 0.5rem;
+  color: inherit;
+  background: #1b3341;
+}
+#profile-recovery-root select {
+  width: 100%;
+  min-width: 0;
+}
+#profile-recovery-root :is(button, select):disabled {
+  opacity: 0.55;
+}
+#profile-recovery-root :is(button, select, a):focus-visible,
+#profile-recovery-root .controller-focus {
+  outline: 3px solid #8ce4c9;
+  outline-offset: 3px;
+}
+#profile-recovery-root .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+#profile-recovery-root .note {
+  color: #becfd7;
+}
+#profile-recovery-root :is(#profile-recovery-summary, #profile-recovery-original-summary) {
+  white-space: pre-line;
+}
+#profile-recovery-root a {
+  display: inline-flex;
+  align-items: center;
+}
+#profile-recovery-root [hidden] {
+  display: none !important;
+}

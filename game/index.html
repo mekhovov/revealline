@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="ui/field-kit-flow.css" />
     <link rel="stylesheet" href="ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="ui/field-kit-compiled.css" />
+    <link rel="stylesheet" href="ui/profile-recovery-dialog.css" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
@@ -1033,6 +1034,15 @@
         <p class="micro-note" data-field-kit-copy="settings.libraryDescription">
           Manage saved flights, game-data backups and installed chapters in your flight library.
         </p>
+        <section aria-label="Stored profile recovery">
+          <button id="profile-recovery-open" class="button secondary" type="button">
+            Stored profile recovery
+          </button>
+          <p class="micro-note">
+            Inspect stored profiles and download one verified image. This does not restore a flight.
+          </p>
+          <p id="profile-recovery-entry-status" class="micro-note" role="status"></p>
+        </section>
         <section aria-label="Download retention">
           <button
             id="storage-retention-button"
@@ -1075,6 +1085,43 @@
             progress and picture references, and does not contain these uploaded files.
           </p>
         </details>
+      </section>
+    </dialog>
+    <dialog id="profile-recovery-dialog" aria-labelledby="profile-recovery-title">
+      <section id="profile-recovery-root">
+        <button id="profile-recovery-back" type="button">Back to Settings</button>
+        <h2 id="profile-recovery-title">Stored profile recovery</h2>
+        <p>Review stored profiles from this site without changing them. Exact release channels stay separate.</p>
+        <p class="note">Read stored values or verify one selected original image. Flight recovery and storage migration are unavailable.</p>
+        <div class="actions">
+          <button id="profile-recovery-find" type="button" disabled>Find profiles</button>
+          <button id="profile-recovery-cancel" type="button" hidden>Cancel check</button>
+        </div>
+        <label for="profile-recovery-channel">Stored profile</label>
+        <select id="profile-recovery-channel" disabled></select>
+        <div class="actions">
+          <button id="profile-recovery-review" type="button" disabled>Review</button>
+          <button id="profile-recovery-export" type="button" disabled>Prepare stored-data export</button>
+        </div>
+        <p id="profile-recovery-status" role="status" aria-live="polite">Open recovery from Settings to inspect stored profiles.</p>
+        <p id="profile-recovery-summary"></p>
+        <a id="profile-recovery-download" hidden>Download stored profile snapshot</a>
+        <h2>Selected original images</h2>
+        <p id="profile-recovery-catalog-status" class="note"></p>
+        <p class="note">Original files are shared by profiles on this site. Listing or verifying an image does not prove that this profile earned it.</p>
+        <button id="profile-recovery-originals-review" type="button" disabled>Review originals</button>
+        <label for="profile-recovery-original">Shared original</label>
+        <select id="profile-recovery-original" disabled></select>
+        <p id="profile-recovery-original-summary"></p>
+        <div class="actions">
+          <button id="profile-recovery-original-verify" type="button" disabled>Verify image</button>
+          <button id="profile-recovery-original-file" type="button" disabled>Prepare original file</button>
+          <button id="profile-recovery-original-report" type="button" disabled>Prepare identity report</button>
+        </div>
+        <div class="actions">
+          <a id="profile-recovery-original-download" hidden>Download original image</a>
+          <a id="profile-recovery-report-download" hidden>Download identity report</a>
+        </div>
       </section>
     </dialog>
     <dialog id="library-dialog" aria-labelledby="library-title" class="wide-dialog">
