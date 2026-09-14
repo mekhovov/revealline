@@ -20,7 +20,7 @@ const scenes = [
     '4a7b9b79cc874264a4480db6f1c371f56e23919dfe7f9781037d3a733c649198',
   ],
 ];
-function decodeRGB(bytes) {
+export function decodeRGB(bytes) {
   // Full existing bounded validator checks headers, dimensions, CRCs and filters.
   const facts = decodeOriginalPNG('data:image/png;base64,' + bytes.toString('base64'));
   const width = facts.naturalWidth,

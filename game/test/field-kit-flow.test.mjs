@@ -100,3 +100,16 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
   assert.equal(page.rendered.paused, true, 'Continuing keeps the explicit resume protection');
   assert.deepEqual([...page.storage.map], snapshot);
 });
+
+test('an accepted world change rebuilds mission thumbnails without starting the existing flight', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  const previous = page.$('missions').children[0];
+  previous.dataset.missionArtwork = 'data:image/png;base64,stale-fixture';
+  page.$('theme-select').value = 'ukraine';
+  page.$('theme-select').emit('change');
+  await settle(() => page.$('missions').children[0] !== previous);
+  assert.equal(page.$('missions').children[0].dataset.missionArtwork, undefined);
+  assert.equal(page.$('theme-select').value, 'ukraine');
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, 0);
+});

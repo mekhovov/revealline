@@ -1,5 +1,6 @@
 import { CELL, FIXED_DT } from '../core/registry.mjs';
 import { drawPresentedActor, PRESENTATION_INK, PRESENTATION_PLATE } from './actor-presentation.mjs';
+import { drawPresentationImage } from './presentation-draw-image.mjs';
 
 const SIZE = 16;
 const KINDS = ['extra-life', 'player-speed', 'enemy-slow', 'enemy-freeze'];
@@ -311,8 +312,18 @@ export function drawClassicTerrain(ctx, view, palette, images = {}) {
   for (const cell of view.terrain) {
     const x = cell.x * SIZE,
       y = cell.y * SIZE;
-    const image = images[cell.kind === 'slow' ? 'slowTerrain' : 'lethalTerrain'];
-    if (image) ctx.drawImage(image, x, y, SIZE, SIZE);
+    const role = cell.kind === 'slow' ? 'slowTerrain' : 'lethalTerrain',
+      image = images[role];
+    if (image)
+      drawPresentationImage(
+        ctx,
+        image,
+        x + SIZE / 2,
+        y + SIZE / 2,
+        SIZE,
+        SIZE,
+        images.presentationSprites?.[role],
+      );
     ctx.strokeStyle = cell.kind === 'slow' ? palette.safe : palette.danger;
     if (cell.kind === 'slow')
       lines(ctx, [
@@ -362,7 +373,7 @@ export function drawClassicPickups(ctx, view, palette, images = {}, options = {}
       'enemy-freeze': 'freezePickup',
     }[item.kind];
     if (images[role]) {
-      ctx.drawImage(images[role], -11, -11, 22, 22);
+      drawPresentationImage(ctx, images[role], 0, 0, 22, 22, images.presentationSprites?.[role]);
       ctx.translate(8, 8);
       ctx.scale(0.65, 0.65);
       ctx.fillRect(-10, -10, 20, 20);
@@ -399,7 +410,13 @@ export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation 
     const role = { 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[
       enemy.type
     ];
-    drawPresentedActor(ctx, presentation, palette, images[role]);
+    drawPresentedActor(
+      ctx,
+      presentation,
+      palette,
+      images[role],
+      images.presentationSprites?.[role],
+    );
     ctx.save();
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
     ctx.strokeStyle = PRESENTATION_INK;
@@ -501,7 +518,7 @@ export function drawClassicStatus(
   ctx,
   view,
   palette,
-  { screenScale = 1, canvasCSSWidth = 1152, frames = new Map() } = {},
+  { screenScale = 1, canvasCSSWidth = 1152, frames = new Map(), fonts = null } = {},
 ) {
   if (!view) return;
   for (const enemy of view.enemies) {
@@ -543,7 +560,7 @@ export function drawClassicStatus(
     ctx.scale(0.65, 0.65);
     icon(ctx, effect.kind);
     ctx.restore();
-    ctx.font = '500 14px "Field Kit UI", "Field Kit Mono", sans-serif';
+    ctx.font = `500 14px ${fonts?.ui || '"Field Kit UI", "Field Kit Mono", sans-serif'}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
     const label = compact
@@ -563,7 +580,7 @@ export function drawEnemyPressure(
   ctx,
   view,
   palette,
-  { screenScale = 1, frames = new Map() } = {},
+  { screenScale = 1, frames = new Map(), fonts = null } = {},
 ) {
   if (!view) return;
   const unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
@@ -616,7 +633,7 @@ export function drawEnemyPressure(
       );
     ctx.fillStyle = PRESENTATION_PLATE;
     ctx.fillRect(x, y - 16 * unit, textWidth, 19 * unit);
-    ctx.font = `500 ${14 * unit}px "Field Kit Mono", monospace`;
+    ctx.font = `500 ${14 * unit}px ${fonts?.numeric || '"Field Kit Mono", monospace'}`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = color;

@@ -24,6 +24,25 @@ const colorNames = {
   hazard: 'hazard',
   success: 'success',
 };
+/** Match the role weights to the shipped WOFF2 faces instead of synthesizing
+ * bold text. A file shared by roles declares their combined CSS weight range. */
+export function presentationFontDescriptors(resolved, hash) {
+  const weights = [];
+  for (const [slot, range] of [
+    ['font.display', [600]],
+    ['font.ui', [400, 600]],
+    ['font.numeric', [500]],
+  ])
+    if (resolved.assets?.[slot]?.file?.sha256 === hash) weights.push(...range);
+  required(weights.length > 0, 'Font is not bound to a presentation role.');
+  const min = Math.min(...weights),
+    max = Math.max(...weights);
+  return Object.freeze({
+    weight: min === max ? String(min) : `${min} ${max}`,
+    style: 'normal',
+    display: 'swap',
+  });
+}
 /** Consumes only a resolver output. Tokens are revalidated via the same closed
  * token schema by callers using resolvePresentation; this adapter checks values
  * again before touching DOM style APIs. No arbitrary CSS strings are accepted. */
@@ -49,9 +68,18 @@ export function presentationCSSVariables(resolved) {
       font?.kind === 'font' && /^[a-f0-9]{64}$/.test(font.file.sha256)
         ? `RLAsset-${font.file.sha256}`
         : (fontAliases[tokens[name]] ?? tokens[name] ?? family);
+    const numeric = resolved.assets?.['font.numeric'];
+    const symbolFamily =
+      numeric?.kind === 'font' && /^[a-f0-9]{64}$/.test(numeric.file.sha256)
+        ? `RLAsset-${numeric.file.sha256}`
+        : 'Field Kit Mono';
+    const families = [
+      ...new Set([selected, ...(name === 'fontUI' ? [symbolFamily, 'Field Kit Mono'] : [])]),
+    ];
     variables[
       `--fk-font-${name === 'fontDisplay' ? 'display' : name === 'fontUI' ? 'ui' : 'mono'}`
-    ] = `'${selected}', ${name === 'fontUI' ? 'sans-serif' : 'monospace'}`;
+    ] =
+      `${families.map((value) => `'${value}'`).join(', ')}, ${name === 'fontUI' ? 'sans-serif' : 'monospace'}`;
   }
   for (const [name, min, max] of [
     ['textSize', 16, 32],

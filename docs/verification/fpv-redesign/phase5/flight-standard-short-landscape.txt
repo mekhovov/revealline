@@ -1,0 +1,1 @@
+"{\"w\":844,\"h\":390,\"dpr\":1,\"body\":{\"touchMode\":\"stick\",\"touchSide\":\"right\",\"touchSize\":\"regular\",\"textSize\":\"standard\",\"inputMode\":\"keyboard\",\"pictureState\":\"ready\",\"flightState\":\"running\",\"screenControls\":\"hidden\"},\"overflow\":0,\"canvas\":{\"x\":32,\"y\":0,\"width\":780,\"height\":390,\"top\":0,\"right\":812,\"bottom\":390,\"left\":32}}"

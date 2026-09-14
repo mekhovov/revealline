@@ -7,7 +7,11 @@ import {
   componentPreview,
   pickupKinds,
 } from './scene-preview.mjs';
-import { applyPresentation, canvasPresentation } from '../../game/presentation/runtime.mjs';
+import {
+  applyPresentation,
+  canvasPresentation,
+  presentationFontDescriptors,
+} from '../../game/presentation/runtime.mjs';
 import { createActorPresentation, drawPresentedActor } from '../../game/ui/actor-presentation.mjs';
 import { drawClassicTerrain, drawPickupIcon } from '../../game/ui/classic-view.mjs';
 const fonts = new Map();
@@ -53,10 +57,16 @@ export async function drawAssetPreview(
     if (!fonts.has(family))
       fonts.set(
         family,
-        new FontFace(family, await fontBlob.arrayBuffer()).load().then((font) => {
-          document.fonts.add(font);
-          return font;
-        }),
+        new FontFace(
+          family,
+          await fontBlob.arrayBuffer(),
+          presentationFontDescriptors(resolved, fontAsset.file.sha256),
+        )
+          .load()
+          .then((font) => {
+            document.fonts.add(font);
+            return font;
+          }),
       );
     await fonts.get(family);
     if (surface.previewMarker !== marker) return;
@@ -81,10 +91,16 @@ export async function drawAssetPreview(
     if (!fonts.has(family))
       fonts.set(
         family,
-        new FontFace(family, await blob.arrayBuffer()).load().then((font) => {
-          document.fonts.add(font);
-          return font;
-        }),
+        new FontFace(
+          family,
+          await blob.arrayBuffer(),
+          presentationFontDescriptors(resolved, asset.file.sha256),
+        )
+          .load()
+          .then((font) => {
+            document.fonts.add(font);
+            return font;
+          }),
       );
     await fonts.get(family);
     if (surface.previewMarker !== marker) return;
@@ -198,7 +214,7 @@ export async function drawAssetPreview(
   }
   if (
     mode === 'context' &&
-    (slot.group === 'screens' || slot.group === 'ui' || slot.group === 'icons')
+    (['screens', 'ui', 'icons'].includes(slot.group) || /^(hud|reward|control)\./.test(slot.id))
   ) {
     let url = null;
     if (blob) {
@@ -224,7 +240,12 @@ export async function drawAssetPreview(
       url = canvas.toDataURL('image/png');
       if (surface.previewMarker !== marker) return;
     }
-    componentPreview(surface, slot, { ...options, assetGeometry: asset.geometry }, url);
+    componentPreview(
+      surface,
+      slot,
+      { ...options, assetGeometry: asset.geometry, tokens: resolved.tokens },
+      url,
+    );
     return;
   }
   if (asset.kind === 'image') {

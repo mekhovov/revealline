@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Field Kit — FPV reveal source audit</title>
+    <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: clamp(16px, 4vw, 56px);
+        background: #070b12;
+        color: #f3f0db;
+      }
+      main {
+        max-width: 1440px;
+        margin: auto;
+      }
+      h1 {
+        font:
+          600 clamp(44px, 7vw, 80px) / 1 'Field Kit Display',
+          sans-serif;
+        margin: 0.3em 0;
+      }
+      h2 {
+        margin-top: 40px;
+      }
+      p {
+        max-width: 85ch;
+        line-height: 1.6;
+      }
+      a {
+        color: #78dce8;
+      }
+      .eyebrow,
+      .meta {
+        color: #a5b2bb;
+        font:
+          500 13px/1.6 'Field Kit Mono',
+          monospace;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+        gap: 24px;
+      }
+      article {
+        min-width: 0;
+        padding: 16px;
+        border: 1px solid #425563;
+        background: #101923;
+      }
+      article h3 {
+        margin: 12px 0;
+      }
+      .image {
+        width: 100%;
+        aspect-ratio: 2;
+        display: flex;
+        align-items: center;
+        background: #070b12;
+      }
+      .image img,
+      .image canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: pixelated;
+      }
+      .procedure .image {
+        aspect-ratio: 4/3;
+      }
+      .tag {
+        display: inline-block;
+        color: #f4bf62;
+        font:
+          500 13px 'Field Kit Mono',
+          monospace;
+      }
+      summary {
+        cursor: pointer;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        color: #78dce8;
+      }
+      .owners {
+        padding-left: 18px;
+      }
+      .owners li {
+        margin: 16px 0;
+        overflow-wrap: anywhere;
+        font-size: 14px;
+      }
+      code {
+        font-family: 'Field Kit Mono', monospace;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+      button {
+        cursor: pointer;
+      }
+      #status[data-error='true'] {
+        color: #f07879;
+      }
+      .preview-note {
+        border-left: 3px solid #f4bf62;
+        padding-left: 16px;
+      }
+    </style>
+    <script type="module" src="./reveal-audit.mjs"></script>
+  </head>
+  <body class="field-kit">
+    <main>
+      <a href="index.html">← Design atlas</a>
+      <p class="eyebrow">SOURCE AUDIT · 56 EXACT OWNERS · NO PRODUCTION APPROVAL</p>
+      <h1>The pictures behind the field</h1>
+      <p>
+        Twenty-one unique raster originals and seventeen existing procedural scenes. This review
+        keeps the exact source artwork intact and records which subjects the new Field Kit
+        compositions must preserve.
+      </p>
+      <p class="preview-note">
+        Source checkout review only. Original PNGs load from their existing authoring paths as you
+        scroll; they are not copied into this page or a release. Procedural previews use the real
+        scene renderer at seed 0. Missing originals stay explicitly unavailable.
+      </p>
+      <p>
+        <a href="../../docs/fpv-reveal-art-audit.md">Read the complete audit and production plan</a>
+        · <a href="reveal-audit.json">Inspect owner, hash and frame records</a>
+      </p>
+      <p id="status" role="status">Loading the audit…</p>
+      <h2>Raster originals</h2>
+      <p>
+        These rich pixel-painted illustrations supply valuable compositions. New presentation work
+        should preserve their distinctive subjects while using restrained square clusters, quieter
+        lighting and clear gameplay priority. Historical originals remain pinned.
+      </p>
+      <div id="rasters" class="grid"></div>
+      <h2>Current procedural scenes</h2>
+      <p>
+        Every source uses the same dawn village template. Native 384 × 288 previews below show why
+        new mission-specific compositions are needed.
+      </p>
+      <div id="procedures" class="grid"></div>
+      <noscript
+        >This source review requires JavaScript. The linked audit document contains all findings and
+        exact owners.</noscript
+      >
+    </main>
+  </body>
+</html>

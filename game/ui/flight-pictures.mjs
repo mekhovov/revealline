@@ -23,6 +23,7 @@ export function createFlightPictures({
   explicitLegacy = false,
   acquire,
   selectPins,
+  prepareSelection,
 }) {
   const ownContext = Object.freeze({ ...context });
   const worlds = Object.freeze([...themeIds]);
@@ -87,7 +88,7 @@ export function createFlightPictures({
       if (!pins) {
         media = await readMedia({ signal: controller.signal });
         check();
-        const selection = {
+        let selection = {
           library: media.metadata.document.library,
           identityCatalog,
           executionKey: context.executionKey,
@@ -95,6 +96,12 @@ export function createFlightPictures({
           levelRevision: level.revision,
           themeIds: worlds,
         };
+        if (prepareSelection && !explicitLegacy) {
+          const prepared = await prepareSelection({ media, selection, signal: controller.signal });
+          check();
+          media = prepared.media;
+          selection = { ...selection, library: prepared.library };
+        }
         const selected = selectPins
           ? await selectPins({ media, selection, explicitLegacy, signal: controller.signal })
           : media.story

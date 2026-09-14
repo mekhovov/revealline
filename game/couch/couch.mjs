@@ -1,3 +1,4 @@
+import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
@@ -11,14 +12,20 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
+import { attachPublishedAudio } from '../ui/published-audio.mjs';
+import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 const $ = (id) => document.getElementById(id);
 const artworkLifetime = new AbortController();
-let featured, installed;
+const presentationPage = mountPresentationPage();
+let featured, installed, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   artworkLifetime.abort();
+  publishedAudio?.close();
+  publishedPlayer?.dispose();
+  presentationPage.close();
   featured?.dispose();
   installed?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
@@ -114,7 +121,26 @@ try {
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
+  for (const painter of painters) presentationPage.bindPainter(painter);
   const sound = new Soundscape({ persistentMusic: true });
+  const musicElement = document.createElement('audio');
+  if (typeof musicElement.play === 'function') {
+    publishedPlayer = createSoundtrackPlayer({
+      soundscape: sound,
+      audioElement: musicElement,
+      readAsset: async () => {
+        throw new Error('Couch does not read custom music storage.');
+      },
+    });
+  }
+  publishedAudio = attachPublishedAudio({
+    sound,
+    ready: presentationPage.ready,
+    getHost: () => presentationPage,
+    allowMusic: () =>
+      (theme?.id === 'fpv' || theme?.family === 'fpv') && !selectedMapKey?.startsWith('installed/'),
+  });
+  publishedAudio.setPlayer(publishedPlayer);
   let neutralResumeTick = false;
   const freeBodies = characterPresentations.availableBodies(
     unlockedBodies(emptyProgress(campaign), campaign),
@@ -245,6 +271,8 @@ try {
     }
     sound.reset();
     sound.setTrack(entry.track || DEFAULT_TRACKS[0], { atBoundary: true });
+    publishedPlayer?.setAuthoredTrack(entry.track || DEFAULT_TRACKS[0]);
+    publishedPlayer?.setContext({ themeId: theme.id });
     painters.forEach((p) => {
       p.setLook(theme, bodyFor(theme, $('race-class').value), entry.visualOverrides);
       p.setLevel?.(level, { seed: 2026 });
@@ -363,7 +391,8 @@ try {
     clear();
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
-    sound.resume().catch(() => {});
+    if (publishedPlayer && sound.enabled) publishedPlayer.resume().catch(() => {});
+    else sound.resume().catch(() => {});
     $('race-message').textContent = 'Make your line count. First clear wins.';
     updateMenu();
     input.focus();
@@ -452,7 +481,16 @@ try {
   };
   $('race-audio').onclick = async () => {
     try {
-      const on = await sound.toggle();
+      let on;
+      if (publishedPlayer) {
+        if (sound.enabled) {
+          publishedPlayer.pause();
+          on = sound.disable();
+        } else {
+          await publishedPlayer.play();
+          on = sound.enabled;
+        }
+      } else on = await sound.toggle();
       if (disposed) return;
       $('race-audio').textContent = on ? 'Mute music ♫' : 'Enable music ♫';
     } catch (e) {
@@ -681,6 +719,7 @@ try {
     if (disposed) return;
     pause();
     sound.suspend();
+    publishedPlayer?.suspend();
     clear();
     framePads = [];
     frameReadError = null;
@@ -845,7 +884,7 @@ try {
         backdrop,
       });
     }
-    sound.update(
+    (publishedPlayer || sound).update(
       match.status === 'running',
       theme,
       match.runs.find((r) => !['won', 'lost'].includes(r.status)) || match.runs[0],
