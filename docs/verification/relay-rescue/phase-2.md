@@ -1,6 +1,6 @@
 # Relay Rescue — shared arena prototype
 
-Target version: **0.45.0**. This checkpoint implements the two-player cutting experiment. Phase 3 replaces its temporary 0.65-second reserve recovery with the full helping loop. No human enjoyment or device qualification is inferred from automated checks.
+Target version: **0.45.1**. This checkpoint implements the two-player cutting experiment. Phase 3 replaces its temporary 0.65-second reserve recovery with the full helping loop. No human enjoyment or device qualification is inferred from automated checks.
 
 ## Decisions and independent review
 
@@ -38,3 +38,9 @@ Independent core and experiment suites: 26 passing tests, covering common-origin
 Phase 1 source commit: `7690139d25511a2b6187a16e9c83d6cd8be0cef1` / **0.44.3**. Its pre-freeze baseline completed with 69/69 passing tests in 692.105 seconds; the after-fix parser/input/encounter subset passed 37/37. The initial Phase 1 report was committed while that baseline was running. Exact-commit clean-source validation, tests and build are recorded separately in `.cache/relay-rescue-artifacts/0.44.3/qualification.json` when complete.
 
 Each immutable artifact is built from its committed tree in a clean temporary source directory. Package, lockfile root/package entry and build config versions advance together. Only these phase-owned files and hunks are staged. Original staged/unstaged/untracked workspace inventories were preserved under `.cache/relay-rescue/baseline` in the original checkout; all implementation commits live on `codex/relay-rescue`.
+
+## Qualification correction
+
+The original 0.45.0 commit, `3afcf43425fa818d2866b640f4ff864db996d392`, passed 105 of 106 exact-source tests. The remaining shell test still expected the first lobby Tab to reach Start race. The intended new Relay Rescue entry appears first in both DOM and controller menu order, so this expectation was stale. The corrected test verifies the co-op link and its destination, then the Race start control, while retaining setup, child and Back-focus checks. No gameplay code changes in this correction.
+
+The failed qualification and logs remain preserved under `.cache/relay-rescue-artifacts/0.45.0/`. Version 0.45.1 synchronizes package, lockfile and build configuration for the corrected checkpoint. Its exact-source qualification record under `.cache/relay-rescue-artifacts/0.45.1/qualification.json` determines whether the technical gate is complete; an old failed run is not treated as a pass.
