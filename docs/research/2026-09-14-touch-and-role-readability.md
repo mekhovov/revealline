@@ -58,3 +58,19 @@ do not establish either by themselves.
 
 These experiments are proposed work. None is an undocumented XPOSED behavior or
 a completed browser/device acceptance claim.
+
+## Text and redundant cues follow-up
+
+The [Microsoft text-display guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/101)
+supports a clear font alternative, scalable text and layouts that remain usable
+at larger sizes. Retain the pixel treatment by default; evaluate an optional plain
+sans-serif face for longer explanations. Measure rendered letter height on the
+target device instead of treating CSS font-size as a device certification. The
+current Standard/Large choices do not establish complete 200-percent coverage.
+
+[Microsoft's additional-cue guidance](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/103)
+supports combining color with shapes, labels and audio. Keep AIM/CHASE/REST
+warnings and role-specific silhouettes readable when sound is muted. The Guide
+must use the same body as the real actor and show its contact cue separately from
+the enlarged illustration. These are P7 acceptance criteria and further design
+work, not a claim that every effect or menu already meets the guidelines.
