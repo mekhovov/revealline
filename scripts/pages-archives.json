@@ -76,6 +76,11 @@
       "id": "archive-07",
       "repository": "mekhovov/revealline-archive-07",
       "versions": ["v0.45.0", "v0.46.0"]
+    },
+    {
+      "id": "archive-08",
+      "repository": "mekhovov/revealline-archive-08",
+      "versions": ["v0.47.0", "v0.48.0"]
     }
   ]
 }

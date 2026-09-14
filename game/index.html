@@ -52,6 +52,7 @@
     <link rel="stylesheet" href="ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="ui/field-kit-components.css" />
     <link rel="stylesheet" href="ui/field-kit-flow.css" />
+    <link rel="stylesheet" href="ui/field-kit-surfaces.css" />
     <link rel="stylesheet" href="ui/field-kit-compiled.css" />
   </head>
   <body class="field-kit">
@@ -123,9 +124,20 @@
         Ⅱ
       </button>
 
-      <button id="shell-packs" type="button">Missions</button>
-      <button id="shell-collection" type="button">Collection</button>
-      <button id="shell-settings" type="button" aria-label="Game settings">Settings</button>
+      <button id="shell-packs" type="button" data-field-kit-copy="navigation.missions">
+        Missions
+      </button>
+      <button id="shell-collection" type="button" data-field-kit-copy="navigation.collection">
+        Collection
+      </button>
+      <button
+        id="shell-settings"
+        type="button"
+        aria-label="Game settings"
+        data-field-kit-copy="navigation.settings"
+      >
+        Settings
+      </button>
     </div>
     <header class="masthead" data-boot-inert inert>
       <a class="wordmark" href="./"
@@ -498,9 +510,8 @@
       <footer class="page-footer">
         <span id="footer-note">Original game study · configurable worlds</span>
         <nav>
-          <a data-source-only href="../authoring/motion-lab/">Motion lab</a
-          ><a data-source-only href="../docs/concepts/round-09-reference-atlas.html"
-            >Reference atlas</a
+          <a href="../authoring/motion-lab/">Motion lab</a
+          ><a href="../authoring/design-atlas/">Reference atlas</a
           ><a data-source-only href="../releases/">Versions</a
           ><a href="replay-theater/">Replay Theater</a
           ><a href="controller-lab/">Controller practice</a
@@ -508,10 +519,10 @@
         </nav>
       </footer>
     </main>
-    <dialog id="help-dialog">
+    <dialog id="help-dialog" aria-labelledby="help-title">
       <button class="dialog-close" data-close="help-dialog" aria-label="Close help">×</button>
       <p class="eyebrow">THE SHORT VERSION</p>
-      <h2>Make the next cut count.</h2>
+      <h2 id="help-title">Make the next cut count.</h2>
       <div id="help-reading-unit">
         <div class="reading-toolbar">
           <div class="reading-actions">
@@ -615,7 +626,7 @@
         ×
       </button>
       <p class="eyebrow">YOUR FLIGHT LOG</p>
-      <h2 id="collection-title">Every line leaves a mark.</h2>
+      <h2 id="collection-title" data-field-kit-copy="collection.title">Your collection.</h2>
       <p>
         Completed pictures stay here. Open one to enjoy it again, or replay its mission for a new
         best.
@@ -682,12 +693,20 @@
           <p id="collection-note"></p>
         </div>
       </div>
+      <button
+        id="collection-records"
+        data-field-kit-copy="collection.records"
+        class="button secondary"
+        type="button"
+      >
+        Flight records
+      </button>
       <button id="collection-choose-appearance" class="button secondary" type="button">
         Choose appearance for current flight
       </button>
       <button class="button primary" data-close="collection-dialog">Back to the field →</button>
     </dialog>
-    <dialog id="gallery-view-dialog" class="wide-dialog">
+    <dialog id="gallery-view-dialog" aria-labelledby="gallery-view-title" class="wide-dialog">
       <button class="dialog-close" data-close="gallery-view-dialog" aria-label="Close picture">
         ×
       </button>
@@ -719,10 +738,10 @@
         </button>
       </div>
     </dialog>
-    <dialog id="hangar-dialog">
+    <dialog id="hangar-dialog" aria-labelledby="hangar-title">
       <button class="dialog-close" data-close="hangar-dialog" aria-label="Close hangar">×</button>
       <p class="eyebrow">YOUR NEXT FLIGHT</p>
-      <h2>Different tools. New routes.</h2>
+      <h2 id="hangar-title">Different tools. New routes.</h2>
       <p>
         Return to a marked hangar on safe ground with no live line. Charges and cooldowns stay with
         each craft; changing craft never refills them.
@@ -737,199 +756,324 @@
         ×
       </button>
       <p class="eyebrow">TUNE YOUR ARCADE</p>
-      <h2 id="settings-title">Your pace. Your soundtrack.</h2>
-      <label class="field"
-        >Music<select id="music-select">
-          <option value="synthwave">Sunset synth</option>
-          <option value="chiptune">Cartridge chiptune</option>
-          <option value="rock">Arcade rock</option>
-          <option value="metal">Pixel metal</option>
-          <option value="ambient">Quiet skies</option>
-        </select></label
+      <h2 id="settings-title" data-field-kit-copy="settings.title">Flight settings.</h2>
+      <div
+        class="field-kit-settings-tabs"
+        role="tablist"
+        aria-label="Settings categories"
+        data-field-kit-copy-aria-label="settings.categories"
       >
-      <label class="slider-field"
-        >Master <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
-      /></label>
-      <label class="slider-field"
-        >Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
-      /></label>
-      <label class="slider-field"
-        >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
-      /></label>
-      <button id="music-preview" class="button secondary">Play music ♫</button>
-      <button id="soundtrack-open" class="button secondary" disabled>
-        Music library & playlists
-      </button>
-      <p id="soundtrack-summary" class="micro-note" role="status">Loading music library…</p>
-      <label class="field"
-        >Text size<select id="text-size">
-          <option value="standard">Standard</option>
-          <option value="large">Large</option>
-        </select></label
-      >
-      <label class="field"
-        >Terrain detail<select id="terrain-select">
-          <option value="hybrid">Balanced detail</option>
-          <option value="microtile">Small pixel tiles</option>
-          <option value="props">Larger landmarks</option>
-        </select></label
-      >
-      <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
-      <div class="settings-assists">
-        <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
-        <label class="field"
-          >On-screen steering
-          <select id="screen-controls">
-            <option value="auto">Auto · touch only</option>
-            <option value="always">Always · touch or mouse</option>
-            <option value="off">Off · keyboard or controller</option>
-          </select></label
+        <button
+          id="settings-tab-controls"
+          data-field-kit-copy="settings.controls"
+          type="button"
+          role="tab"
+          aria-controls="settings-panel-controls"
+          aria-selected="false"
+          tabindex="-1"
         >
-        <p class="micro-note">
-          Auto shows steering during touch play. Keyboard or controller use hides it. Choose Always
-          to steer with a mouse. Drag anywhere on the board, or use the thumb area below.
+          Controls
+        </button>
+        <button
+          id="settings-tab-audio"
+          data-field-kit-copy="settings.audio"
+          type="button"
+          role="tab"
+          aria-controls="settings-panel-audio"
+          aria-selected="true"
+          tabindex="0"
+        >
+          Audio
+        </button>
+        <button
+          id="settings-tab-display"
+          data-field-kit-copy="settings.display"
+          type="button"
+          role="tab"
+          aria-controls="settings-panel-display"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Display & accessibility
+        </button>
+        <button
+          id="settings-tab-data"
+          data-field-kit-copy="settings.data"
+          type="button"
+          role="tab"
+          aria-controls="settings-panel-data"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Game data
+        </button>
+      </div>
+      <section
+        id="settings-panel-controls"
+        class="field-kit-settings-panel"
+        role="tabpanel"
+        aria-labelledby="settings-tab-controls"
+        hidden
+      >
+        <h3 data-field-kit-copy="settings.controls">Controls</h3>
+        <p class="micro-note" data-field-kit-copy="settings.controlsDescription">
+          Keyboard, controller and touch.
+        </p>
+        <details id="keyboard-settings">
+          <summary>Keyboard controls</summary>
+          <p class="micro-note">
+            Choose a preset or change any action. Keys use physical positions, so W means the W
+            position on a US keyboard. Escape always pauses; Escape or Tab cancels key capture.
+            Keyboard changes affect solo play and its practice preview. Couch players keep their
+            separate controls.
+          </p>
+          <label class="field"
+            >Keyboard preset<select id="key-preset">
+              <option value="default">Arrows + WASD</option>
+              <option value="left-hand">Left hand</option>
+              <option value="right-hand">Right hand</option>
+              <option value="custom" disabled>Custom</option>
+            </select></label
+          >
+          <div id="key-binding-list" class="key-binding-list"></div>
+          <button id="cancel-key-capture" class="button secondary" type="button" hidden>
+            Cancel key capture
+          </button>
+          <button id="reset-key-bindings" class="button secondary" type="button">
+            Restore default keys
+          </button>
+          <p id="key-capture-status" class="micro-note" role="status" aria-live="polite">
+            Select an action to change its key.
+          </p>
+        </details>
+        <section id="controller-settings-root" aria-label="Controller controls"></section>
+        <section
+          id="controller-boost-setting"
+          class="controller-boost-settings"
+          aria-label="Solo controller Boost behavior"
+        >
+          <label for="controller-boost-mode">Solo controller Boost</label>
+          <select id="controller-boost-mode" aria-describedby="controller-boost-help">
+            <option value="hold">Hold</option>
+            <option value="toggle">Toggle</option>
+          </select>
+          <p id="controller-boost-help" class="micro-note">
+            Toggle: press Boost once for on/off. Pause and recovery turn it off. Tap a direction to
+            keep flying. Couch keeps its separate Hold controls for Boost.
+          </p>
+          <p class="micro-note">
+            This setting is separate from the button-map draft. Select Hold to reset it.
+          </p>
+          <p id="controller-boost-status" class="micro-note" role="status"></p>
+        </section>
+        <h4 data-field-kit-copy="settings.touchHeading">Touch & on-screen steering</h4>
+        <div class="settings-assists">
+          <label class="field"
+            >On-screen steering
+            <select id="screen-controls">
+              <option value="auto">Auto · touch only</option>
+              <option value="always">Always · touch or mouse</option>
+              <option value="off">Off · keyboard or controller</option>
+            </select></label
+          >
+          <p class="micro-note">
+            Auto shows steering during touch play. Keyboard or controller use hides it. Choose
+            Always to steer with a mouse. Drag anywhere on the board, or use the thumb area below.
+          </p>
+          <label class="field"
+            >Touch steering<select id="touch-mode">
+              <option value="stick">Floating stick · drag from anywhere</option>
+              <option value="swipe">Swipe · flick to turn</option>
+              <option value="dpad">D-pad · tap or slide between directions</option>
+            </select></label
+          >
+          <label class="field"
+            >Steering hand<select id="touch-side">
+              <option value="right">Right</option>
+              <option value="left">Left</option>
+            </select></label
+          >
+          <label class="field"
+            >Touch control size<select id="touch-size">
+              <option value="regular">Regular</option>
+              <option value="large">Large</option>
+            </select></label
+          >
+          <label class="field"
+            >Touch control opacity<input
+              id="touch-opacity"
+              type="range"
+              min="0.2"
+              max="1"
+              step="0.05"
+          /></label>
+          <p class="micro-note">
+            A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
+            break. The stick appears under your thumb. In landscape, controls float over the board.
+          </p>
+          <p id="equipment-help" class="micro-note"></p>
+          <label id="screen-boost-setting"
+            ><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label
+          >
+        </div>
+      </section>
+      <section
+        id="settings-panel-audio"
+        class="field-kit-settings-panel"
+        role="tabpanel"
+        aria-labelledby="settings-tab-audio"
+      >
+        <h3 data-field-kit-copy="settings.audio">Audio</h3>
+        <p class="micro-note" data-field-kit-copy="settings.audioDescription">
+          Music, effects and your soundtrack library.
         </p>
         <label class="field"
-          >Touch steering<select id="touch-mode">
-            <option value="stick">Floating stick · drag from anywhere</option>
-            <option value="swipe">Swipe · flick to turn</option>
-            <option value="dpad">D-pad · tap or slide between directions</option>
+          >Music<select id="music-select">
+            <option value="synthwave">Sunset synth</option>
+            <option value="chiptune">Cartridge chiptune</option>
+            <option value="rock">Arcade rock</option>
+            <option value="metal">Pixel metal</option>
+            <option value="ambient">Quiet skies</option>
           </select></label
         >
+        <label class="slider-field"
+          >Master <input id="master-volume" type="range" min="0" max="1" step="0.05" value="0.8"
+        /></label>
+        <label class="slider-field"
+          >Music <input id="music-volume" type="range" min="0" max="1" step="0.05" value="0.45"
+        /></label>
+        <label class="slider-field"
+          >Effects <input id="sfx-volume" type="range" min="0" max="1" step="0.05" value="0.6"
+        /></label>
+        <button id="music-preview" class="button secondary">Play music ♫</button>
+        <button id="soundtrack-open" class="button secondary" disabled>
+          Music library & playlists
+        </button>
+        <p id="soundtrack-summary" class="micro-note" role="status">Loading music library…</p>
+        <p class="micro-note">
+          Built-in original synth playlists and your local MP3 library. The music studio manages
+          custom tracks, playlists and complete audio backups.
+        </p>
+      </section>
+      <section
+        id="settings-panel-display"
+        class="field-kit-settings-panel"
+        role="tabpanel"
+        aria-labelledby="settings-tab-display"
+        hidden
+      >
+        <h3 data-field-kit-copy="settings.display">Display & accessibility</h3>
+        <p class="micro-note" data-field-kit-copy="settings.displayDescription">
+          Readable text, terrain and comfortable motion.
+        </p>
         <label class="field"
-          >Steering hand<select id="touch-side">
-            <option value="right">Right</option>
-            <option value="left">Left</option>
-          </select></label
-        >
-        <label class="field"
-          >Touch control size<select id="touch-size">
-            <option value="regular">Regular</option>
+          >Text size<select id="text-size">
+            <option value="standard">Standard</option>
             <option value="large">Large</option>
           </select></label
         >
         <label class="field"
-          >Touch control opacity<input
-            id="touch-opacity"
-            type="range"
-            min="0.2"
-            max="1"
-            step="0.05"
-        /></label>
-        <p class="micro-note">
-          A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
-          break. The stick appears under your thumb. In landscape, controls float over the board.
-        </p>
-        <p id="equipment-help" class="micro-note"></p>
-        <label id="screen-boost-setting"
-          ><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label
-        >
-      </div>
-      <p class="micro-note">
-        Reduced effects softens movement and celebration effects. Every direction tap keeps you
-        moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate
-        controls.
-      </p>
-      <p class="micro-note">
-        Built-in original synth playlists and your local MP3 library. The music studio manages
-        custom tracks, playlists and complete audio backups.
-      </p>
-      <details id="creator-tools" class="creator-tools">
-        <summary>Creator tools and original media</summary>
-        <p class="micro-note">
-          Assign original pictures to maps and worlds in the separate workshop. Fresh attempts use
-          the selected revision; saved flights and earned pictures keep their original choice. This
-          opens the workshop for this exact edition.
-        </p>
-        <a class="button secondary" href="../authoring/still-media/">Picture workshop</a>
-        <a class="button secondary" href="../authoring/video-poster/">Video poster workshop</a>
-        <p class="micro-note">
-          Back up original pictures with .rlmedia and music with .rlsound. Game-data JSON keeps
-          progress and picture references, and does not contain these uploaded files.
-        </p>
-      </details>
-      <details id="keyboard-settings">
-        <summary>Keyboard controls</summary>
-        <p class="micro-note">
-          Choose a preset or change any action. Keys use physical positions, so W means the W
-          position on a US keyboard. Escape always pauses; Escape or Tab cancels key capture.
-          Keyboard changes affect solo play and its practice preview. Couch players keep their
-          separate controls.
-        </p>
-        <label class="field"
-          >Keyboard preset<select id="key-preset">
-            <option value="default">Arrows + WASD</option>
-            <option value="left-hand">Left hand</option>
-            <option value="right-hand">Right hand</option>
-            <option value="custom" disabled>Custom</option>
+          >Terrain detail<select id="terrain-select">
+            <option value="hybrid">Balanced detail</option>
+            <option value="microtile">Small pixel tiles</option>
+            <option value="props">Larger landmarks</option>
           </select></label
         >
-        <div id="key-binding-list" class="key-binding-list"></div>
-        <button id="cancel-key-capture" class="button secondary" type="button" hidden>
-          Cancel key capture
-        </button>
-        <button id="reset-key-bindings" class="button secondary" type="button">
-          Restore default keys
-        </button>
-        <p id="key-capture-status" class="micro-note" role="status" aria-live="polite">
-          Select an action to change its key.
-        </p>
-      </details>
-      <section id="controller-settings-root" aria-label="Controller controls"></section>
-      <section
-        id="controller-boost-setting"
-        class="controller-boost-settings"
-        aria-label="Solo controller Boost behavior"
-      >
-        <label for="controller-boost-mode">Solo controller Boost</label>
-        <select id="controller-boost-mode" aria-describedby="controller-boost-help">
-          <option value="hold">Hold</option>
-          <option value="toggle">Toggle</option>
-        </select>
-        <p id="controller-boost-help" class="micro-note">
-          Toggle: press Boost once for on/off. Pause and recovery turn it off. Tap a direction to
-          keep flying. Couch keeps its separate Hold controls for Boost.
-        </p>
+        <label><input id="settings-grid" type="checkbox" /> Show grid guides</label>
+        <label><input id="settings-reduced-effects" type="checkbox" /> Reduced effects</label>
         <p class="micro-note">
-          This setting is separate from the button-map draft. Select Hold to reset it.
-        </p>
-        <p id="controller-boost-status" class="micro-note" role="status"></p>
-      </section>
-      <section aria-label="Download retention">
-        <button
-          id="storage-retention-button"
-          class="button secondary"
-          type="button"
-          aria-describedby="storage-retention-help storage-retention-status"
-        >
-          Keep downloads on this device
-        </button>
-        <p id="storage-retention-help" class="micro-note">
-          Ask this browser to protect this site's saved data from automatic removal. This does not
-          download files or replace backups.
-        </p>
-        <p id="storage-retention-status" class="micro-note" role="status" aria-live="polite">
-          Retention has not been checked.
+          Reduced effects softens movement and celebration effects. Every direction tap keeps you
+          moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate
+          controls.
         </p>
       </section>
-      <p id="offline-status" class="micro-note">
-        Offline installation is available in packaged releases.
-      </p>
-      <a id="native-diagnostics" class="micro-note" href="../diagnostics/" hidden
-        >iPhone runtime checks</a
+      <section
+        id="settings-panel-data"
+        class="field-kit-settings-panel"
+        role="tabpanel"
+        aria-labelledby="settings-tab-data"
+        hidden
       >
-      <button id="offline-button" class="button secondary" hidden>Prepare offline play</button>
-      <details>
-        <summary>Offline verification details</summary>
-        <pre id="offline-details">No offline check yet.</pre>
-      </details>
+        <h3 data-field-kit-copy="settings.data">Game data</h3>
+        <p class="micro-note" data-field-kit-copy="settings.dataDescription">
+          Saves, recovery, installed chapters and offline play.
+        </p>
+        <div class="field-kit-data-actions">
+          <button
+            id="settings-saves"
+            data-field-kit-copy="settings.saves"
+            class="button secondary"
+            type="button"
+          >
+            Saves & recovery
+          </button>
+          <button
+            id="settings-packs"
+            data-field-kit-copy="settings.packs"
+            class="button secondary"
+            type="button"
+          >
+            Installed chapters
+          </button>
+        </div>
+        <p class="micro-note" data-field-kit-copy="settings.libraryDescription">
+          Manage saved flights, game-data backups and installed chapters in your flight library.
+        </p>
+        <section aria-label="Download retention">
+          <button
+            id="storage-retention-button"
+            class="button secondary"
+            type="button"
+            aria-describedby="storage-retention-help storage-retention-status"
+          >
+            Keep downloads on this device
+          </button>
+          <p id="storage-retention-help" class="micro-note">
+            Ask this browser to protect this site's saved data from automatic removal. This does not
+            download files or replace backups.
+          </p>
+          <p id="storage-retention-status" class="micro-note" role="status" aria-live="polite">
+            Retention has not been checked.
+          </p>
+        </section>
+        <p id="offline-status" class="micro-note">
+          Offline installation is available in packaged releases.
+        </p>
+        <a id="native-diagnostics" class="micro-note" href="../diagnostics/" hidden
+          >iPhone runtime checks</a
+        >
+        <button id="offline-button" class="button secondary" hidden>Prepare offline play</button>
+        <details>
+          <summary>Offline verification details</summary>
+          <pre id="offline-details">No offline check yet.</pre>
+        </details>
+        <details id="creator-tools" class="creator-tools">
+          <summary>Creator tools and original media</summary>
+          <p class="micro-note">
+            Assign original pictures to maps and worlds in the separate workshop. Fresh attempts use
+            the selected revision; saved flights and earned pictures keep their original choice.
+            This opens the workshop for this exact edition.
+          </p>
+          <a class="button secondary" href="../authoring/still-media/">Picture workshop</a>
+          <a class="button secondary" href="../authoring/video-poster/">Video poster workshop</a>
+          <p class="micro-note">
+            Back up original pictures with .rlmedia and music with .rlsound. Game-data JSON keeps
+            progress and picture references, and does not contain these uploaded files.
+          </p>
+        </details>
+      </section>
     </dialog>
-    <dialog id="library-dialog" class="wide-dialog">
+    <dialog id="library-dialog" aria-labelledby="library-title" class="wide-dialog">
       <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
       <p class="eyebrow">THE THINGS YOU KEEP</p>
-      <h2>Your arcade library.</h2>
+      <h2 id="library-title" data-field-kit-copy="library.title">Flight library.</h2>
       <div class="library-tabs" role="group" aria-label="Library sections">
-        <button data-library-panel="scores" class="button secondary">Local scores</button
+        <button
+          data-library-panel="scores"
+          data-field-kit-copy="library.records"
+          class="button secondary"
+        >
+          Local scores</button
         ><button data-library-panel="saves" class="button secondary">Saves & loads</button
         ><button data-library-panel="packs" class="button secondary">Expansion packs</button
         ><button data-library-panel="challenges" class="button secondary">Challenges</button>
@@ -1027,10 +1171,10 @@
         <p id="challenge-status" role="status"></p>
       </section>
     </dialog>
-    <dialog id="replay-dialog">
+    <dialog id="replay-dialog" aria-labelledby="replay-title">
       <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay">×</button>
       <p class="eyebrow">REPRODUCE THIS ATTEMPT</p>
-      <h2>Your recorded route.</h2>
+      <h2 id="replay-title">Your recorded route.</h2>
       <p>
         The file contains the exact level, class recipe, inputs and final state. Paste its JSON into
         the Playground to verify it.
@@ -1082,15 +1226,45 @@
             Back to lesson
           </button>
           <button id="shell-featured" type="button" class="button primary">
-            Deploy <span aria-hidden="true">→</span>
+            <span data-field-kit-copy="navigation.deploy">Deploy</span>
+            <span aria-hidden="true">→</span>
           </button>
           <button id="shell-continue" type="button" class="button primary" hidden>
-            Continue <span aria-hidden="true">→</span>
+            <span data-field-kit-copy="navigation.continue">Continue</span>
+            <span aria-hidden="true">→</span>
           </button>
-          <button id="shell-play" type="button" class="button secondary">Missions</button>
-          <button id="shell-gallery" type="button" class="button secondary">Collection</button>
-          <button id="shell-options" type="button" class="button secondary">Settings</button>
-          <button id="shell-workshop" type="button" class="button secondary">Workshop</button>
+          <button
+            id="shell-play"
+            type="button"
+            class="button secondary"
+            data-field-kit-copy="navigation.missions"
+          >
+            Missions
+          </button>
+          <button
+            id="shell-gallery"
+            type="button"
+            class="button secondary"
+            data-field-kit-copy="navigation.collection"
+          >
+            Collection
+          </button>
+          <button
+            id="shell-options"
+            type="button"
+            class="button secondary"
+            data-field-kit-copy="navigation.settings"
+          >
+            Settings
+          </button>
+          <button
+            id="shell-workshop"
+            type="button"
+            class="button secondary"
+            data-field-kit-copy="navigation.workshop"
+          >
+            Workshop
+          </button>
         </nav>
         <p id="shell-destination" class="home-destination" aria-live="polite"></p>
         <p id="shell-featured-status" class="home-status" role="status" hidden></p>
@@ -1125,6 +1299,30 @@
         >
         <a href="../authoring/enemy-catalog/" class="button secondary"
           >Enemy workshop <span>Characters &amp; behaviors</span></a
+        >
+        <a
+          href="../authoring/motion-lab/"
+          class="button secondary"
+          data-field-kit-copy="workshop.motion"
+          >Motion lab</a
+        >
+        <a
+          href="../authoring/still-media/"
+          class="button secondary"
+          data-field-kit-copy="workshop.pictures"
+          >Pictures &amp; stories</a
+        >
+        <a
+          href="../authoring/video-poster/"
+          class="button secondary"
+          data-field-kit-copy="workshop.poster"
+          >Video poster workshop</a
+        >
+        <a
+          href="../authoring/design-atlas/"
+          class="button secondary"
+          data-field-kit-copy="workshop.atlas"
+          >Design atlas</a
         >
         <a href="replay-theater/" class="button secondary"
           >Replay Theater <span>Review a recorded flight</span></a
@@ -1178,6 +1376,7 @@
           type="button"
           class="button secondary"
           data-close="shell-missions"
+          data-field-kit-copy="navigation.back"
         >
           Back
         </button>
