@@ -1,0 +1,34 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-07",
+  "infrastructureCommit": "2e5d22461def760f9521d08bbfd5a0fbc0ca2795",
+  "deploymentId": 6445209075,
+  "versions": [
+    "v0.45.0",
+    "v0.46.0"
+  ],
+  "scope": "Each exact canonical version passed native saved reload, Gold completion and offline verified-file play. v0.46 also passed full picture viewing and two-way scoped coexistence with v0.45. Both first offline preparations exceeded the60second UI timeout; normal retry succeeded. This does not claim all-game or physical-device qualification. Original evidence and limits are retained unchanged.",
+  "evidence": [
+    {
+      "path": "evidence/archive-07/native-source-1.json",
+      "sha256": "ee4ccd7b95bef8b5fe13efe6f808f4bf8fe2ee3de3123a5cfdf22a4470bf1523",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-07/native-source-2.md",
+      "sha256": "cb4670b74b44e0c41e43825df4aaf9cd856327f84c706402f96759d5fd5f27f9",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-07/native-source-3.json",
+      "sha256": "e20d3afa6b28fd16ae1b1ae9b1b3ccfb65294bc9a7ed1f5175ac9e148ffa95b9",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-07/native-source-4.md",
+      "sha256": "b707c33928513e5b1e610631ebb9b7ea5c384ab8cc49447dc34a304d33d0927b",
+      "kind": "reference"
+    }
+  ]
+}
