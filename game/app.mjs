@@ -3621,9 +3621,15 @@ try {
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
-    $('objective-state').textContent = required.length
-      ? `${theme.labels.objective}: ${done.length} / ${required.length}`
-      : 'Close a line to reveal the picture';
+    $('objective-state').textContent = campaignOverview
+      ? 'Choose a mission to replay'
+      : run.status === 'won'
+        ? 'Target reached'
+        : run.status === 'lost'
+          ? 'Retry when you are ready'
+          : required.length
+            ? `${theme.labels.objective}: ${done.length} / ${required.length}`
+            : 'Close a line to reveal the picture';
     $('flight-state').textContent = campaignOverview
       ? 'Campaign complete'
       : run.status === 'won'
@@ -3637,7 +3643,9 @@ try {
               : paused
                 ? 'Paused'
                 : run.player.cutting
-                  ? 'LIVE LINE / EXPOSED'
+                  ? run.player.speed === 0
+                    ? 'LINE EXPOSED / CHOOSE A TURN'
+                    : 'LIVE LINE / EXPOSED'
                   : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
