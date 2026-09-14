@@ -4468,6 +4468,7 @@ try {
           name,
           description,
           mode,
+          themeId: descriptor.themeId,
           levels,
           sourceOnly: !isRelease,
           bytes: descriptor.pack.bytes + descriptor.media.bytes,
@@ -4504,6 +4505,20 @@ try {
       return loadOptionalCatalog(options);
     },
     install: installOptionalChapter,
+    chooseInstalled: async (pack, { signal }) => {
+      if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
+        throw new Error(
+          'Return to the normal game and resolve recovery before choosing a chapter.',
+        );
+      if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
+      if (!packs.packs.includes(pack))
+        throw new Error('Installed content changed; refresh the chapter list.');
+      // External originals always go through their descriptor/readiness card.
+      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+        throw new Error('Use this chapter’s exact original-picture card.');
+      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+      return true;
+    },
     choose: async (summary, { signal }) => {
       if (courseEntry || courseSession || practice)
         throw new Error('Return from practice before choosing a world.');

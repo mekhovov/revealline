@@ -1,6 +1,6 @@
 import { boundedJSON, canonicalJSON, required } from './data-json.mjs';
 import { SOURCE_EXTERNAL_EDITIONS, sourceExternalChapter } from './external-chapter-source.mjs';
-import { prepareExternalChapter } from './external-chapter.mjs';
+import { EXTERNAL_CHAPTER_LIMITS, prepareExternalChapter } from './external-chapter.mjs';
 
 export const EXTERNAL_CATALOG_FORMAT = 'revealline-external-chapters.v1';
 export const EXTERNAL_CATALOG_PATH = 'game/content/external-worlds.json';
@@ -37,7 +37,7 @@ export function prepareExternalCatalog(source) {
   const candidate = boundedJSON(source, {
     maxBytes: 65536,
     maxNodes: 2048,
-    maxArray: 12,
+    maxArray: EXTERNAL_CHAPTER_LIMITS.catalogChoices,
     maxString: 1024,
   });
   required(

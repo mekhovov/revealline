@@ -45,6 +45,8 @@ A separate source-browser supplement, `.cache/round43/picture-browser/missing-or
 
 ## Optional chapter authoring contract
 
+The working [More worlds browser](more-worlds-browser.md) separates up to 36 trusted external choices from the unchanged 12-installed-pack limit. Preserve native filtering/paging, visible active/failure cards, exact offline installed access and independent flight state. Raising choice capacity does not add content or change optional-body caching, producer membership, ownership or media budgets.
+
 All project skills use this shared contract when the requested change creates or publishes a chapter. Read [optional worlds](optional-worlds.md), the [source compiler and proof guide](../authoring/library/four-worlds-chapters/README.md) and [reusable requests](../authoring/prompts/optional-worlds.md) for that work; unrelated sprite or music tasks need not load the complete chapter workflow.
 
 Preserve original image bytes and provenance. Separate the picture count from unique geometry, enemy behavior and finished soundtrack counts. New campaign/map identities need actual legal route and saved-continuation verification across advertised modes; never copy a predecessor's pass verdict into a new identity. Generated imagery still needs inspection under partial reveal and at play scale.
