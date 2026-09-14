@@ -81,12 +81,20 @@
   <h1>Seven FPV role presentations</h1>
   <p>
     Original bodies with the existing procedural rotor renderer. These are independently replaceable
-    authoring candidates. The right image in each card uses the current wide-board player sizing in
-    CSS pixels; the left is enlarged for inspection. No gameplay, collision, unlock or runtime
-    binding changes.
+    authoring candidates. Compare current sizing with two proposed compact-size policies. The right
+    image is at 1× CSS size; the left is enlarged for inspection. No gameplay, collision, unlock or
+    runtime binding changes.
   </p>
   <div class="controls">
     <button id="pause" type="button">Pause</button>
+    <label
+      >Sizing study
+      <select id="sizing">
+        <option value="current">Current game</option>
+        <option value="compact-20" selected>Compact 20px minimum</option>
+        <option value="compact-24">Compact 24px minimum</option>
+      </select></label
+    >
     <label
       >Arena width
       <select id="width">
@@ -197,6 +205,7 @@
               }
           const options = {
             arenaWidth: Number(byId('width').value),
+            sizing: byId('sizing').value,
             heading: (Number(byId('heading').value) * Math.PI) / 180,
             speedRatio,
             reducedMotion,

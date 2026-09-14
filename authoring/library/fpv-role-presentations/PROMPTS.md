@@ -11,3 +11,7 @@ Requested canvas size and hub coordinates are instructions, not evidence. Read t
 The supported implementation is a static original body plus the existing procedural `rotors` recipe. `body.rotors` has independent source-relative `x`, `y`, `radiusScale`, `direction` and `phaseDegrees`; the recipe sets `bladeCount`, `bladeShape`, `radius`, `bladeWidth`, `idleRps`, `travelRps`, `maxVisualRps`, `blurOpacity` and colors. Follow [the existing animation contract](../../motion-lab/animation.mjs). Do not invent atlas frames or map an ability trigger to a cosmetic component without a separate runtime design.
 
 The small authoring preview and verification are acceptance inputs. Review actual-size silhouette separation, source-center pivot, hub alignment, forward motion, four headings, pause and reduced motion. Keep author/source review distinct from runtime integration, browser gameplay and production approval.
+
+## Compare compact readability before adoption
+
+“Compare this unchanged original under Current game, Compact 20px and Compact 24px at294/390/600/1152 arena widths. Measure actual visible body and rotor bounds at1× and inspect four headings on light/dark scenes. Keep the source rectangle, aspect ratio, rotor anchors and collision rules unchanged. Prefer the smallest readable presentation; desktop output must retain the existing policy. Record this as an authoring comparison until an integrated gameplay candidate passes its own checks.”

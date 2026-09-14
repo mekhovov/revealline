@@ -6,6 +6,7 @@ import { crc32 } from '../../../scripts/game-cli.mjs';
 import { createAnimationState, advanceAnimation } from '../../motion-lab/animation.mjs';
 import { decodeRGBA } from './png.mjs';
 import { validatePresentations } from './model.mjs';
+import { playerPaintSize } from './preview.mjs';
 
 const chunk = (type, data) => {
   const bytes = Buffer.alloc(data.length + 12);
@@ -76,6 +77,40 @@ test('damaged CRC, truncation, excess inflation and forbidden formats refuse', (
     assert.throws(() => decodeRGBA(bytes));
 });
 const text = readFileSync(new URL('./presentations.json', import.meta.url), 'utf8');
+test('compact sizing studies lift the actual CSS minimum while leaving desktop and source rigs unchanged', () => {
+  const data = validatePresentations(text),
+    before = JSON.stringify(data);
+  for (const role of data.roles) {
+    const image = { naturalWidth: role.width, naturalHeight: role.height };
+    const size = (width, sizing) =>
+      playerPaintSize(role.body, image, {
+        screenScale: width / 1152,
+        canvasCSSWidth: width,
+        style: 'hybrid',
+        scale: 1,
+        sizing,
+      });
+    const current = size(294, 'current');
+    assert.equal(current.diameter, 64);
+    for (const [policy, minimum] of [
+      ['compact-20', 20],
+      ['compact-24', 24],
+    ]) {
+      for (const width of [294, 390]) {
+        const candidate = size(width, policy),
+          css = (candidate.diameter * width) / 1152;
+        assert.ok(css >= minimum - 1e-9 && css <= 32);
+        assert.ok(
+          Number.isFinite(candidate.scale) && candidate.scale > size(width, 'current').scale,
+        );
+      }
+      for (const width of [600, 1152])
+        assert.deepEqual(size(width, policy), size(width, 'current'));
+    }
+    assert.throws(() => size(294, 'unknown'), /known source sizing/);
+  }
+  assert.equal(JSON.stringify(data), before);
+});
 test('identity arrays cannot pass by regular-expression string coercion', () => {
   for (const field of ['baseCommit', 'sha256']) {
     const data = JSON.parse(text);
