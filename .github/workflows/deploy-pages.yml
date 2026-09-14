@@ -77,7 +77,10 @@ jobs:
           node --check authoring/motion-lab/app.js
 
       - name: Verify immutable production sources first
-        run: node --test scripts/test-production-*.mjs
+        run: |
+          # Older immutable release tags use .cache for temporary test fixtures.
+          mkdir -p .cache
+          node --test scripts/test-production-*.mjs
 
   test:
     if: needs.release_gate.outputs.should_deploy == 'true'
@@ -105,7 +108,9 @@ jobs:
         run: npm ci
 
       - name: Run test shard ${{ matrix.shard }}/4
-        run: node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+        run: |
+          mkdir -p .cache
+          node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
 
   build:
     if: needs.release_gate.outputs.should_deploy == 'true'
