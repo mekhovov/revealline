@@ -1,5 +1,7 @@
 # FPV redesign execution register
 
+This register records the implementation and source-freeze history. Current publication authority and its final delivery record are linked from [deployment documentation](deployment.md); a qualified source or integration commit alone does not mark a public release complete.
+
 The user approved the complete redesign plan on 2026-09-14. This register tracks implementation and actual delivery, separately from the historical production backlog. Baseline: `fe9961e` (v0.43.0). Working branch: `codex/fpv-redesign-isolated` in the dedicated `go_test_fpv_redesign` checkout. The original checkout remains available to parallel audio/fullscreen tasks.
 
 ## Fixed product decisions
