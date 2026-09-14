@@ -215,6 +215,9 @@ export function attachProfileRecoveryView({
         showOriginal();
         status(
           `${originals.length} shared originals listed. These are not proof of pictures earned by this profile.` +
+            (originals.length === 0
+              ? ' Built-in pictures come from game files and are not listed here. Only uploaded or restored shared originals appear. An empty list does not mean your earned pictures were lost.'
+              : '') +
             (result.diagnostics.length
               ? ` ${result.diagnostics.length} stored media availability issues remain.`
               : ''),
