@@ -1,5 +1,5 @@
 {
-  "format": "revealline-production-metadata-history.v1",
+  "format": "revealline-production-metadata-history.v2",
   "entries": [
     {
       "path": "authoring/motion-lab/presets.json",
@@ -10,6 +10,11 @@
       "path": "authoring/motion-lab/presets.json",
       "bytes": 34518,
       "sha256": "e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0"
+    },
+    {
+      "path": "game/ui/actor-presentation.mjs",
+      "bytes": 23588,
+      "sha256": "6b4e4c20da271cd105deee017883558ea715eab6d9e034b66053f4da2f17af00"
     }
   ]
 }
