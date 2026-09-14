@@ -184,6 +184,15 @@ test('chapter reward work preserves original route and campaign identity oracles
   delete owned.preferences.controllerBoostMode;
   assert.equal(Object.hasOwn(owned.preferences, 'screenControls'), true);
   assert.equal(owned.preferences.screenControls, 'auto');
+  assert.equal(Object.hasOwn(owned.preferences, 'screenSteeringHand'), true);
+  assert.equal(owned.preferences.screenSteeringHand, 'left');
+  const withSteeringHand = JSON.stringify(owned);
+  delete owned.preferences.screenSteeringHand;
+  assert.equal(
+    Buffer.byteLength(withSteeringHand) - Buffer.byteLength(JSON.stringify(owned)),
+    28,
+    'Only the explicit steering-hand default may extend this old portable oracle.',
+  );
   const withScreenControls = JSON.stringify(owned);
   const addedPreferenceBytes = Buffer.byteLength(',"screenControls":"auto"');
   assert.equal(addedPreferenceBytes, 24);

@@ -170,7 +170,17 @@ for (const modes of [['standard'], ['gentle'], ['standard', 'gentle']])
     for (const mode of ['Standard', 'Gentle'])
       assert.equal(text.split(mode).length - 1, Number(modes.includes(mode.toLowerCase())), text);
     const selected = modes.includes('standard') ? 'Standard' : 'Gentle';
-    assert.match(text, new RegExp(`${selected}: GOLD .* points`));
+    const entry = entries.find((item) => item.difficulty === selected.toLowerCase());
+    const item = page.library.gallery.find((picture) => picture.campaignKey === entry.executionKey);
+    assert.ok(item, 'The selected difficulty supplies its own earned picture.');
+    assert.equal(page.library.campaigns[item.campaignKey].clears[item.levelId].medals, 3);
+    assert.ok(
+      text.endsWith(
+        `${selected} · Picture best ${item.score.toLocaleString()} points · Level best GOLD` +
+          (modes.length === 2 ? ' · Also earned: Gentle' : ''),
+      ),
+      text,
+    );
     if (modes.length === 2) assert.match(text, /Also earned: Gentle$/);
   });
 
