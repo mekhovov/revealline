@@ -12,6 +12,7 @@ function experimentRun(experiment) {
     difficulty: 'standard',
     jointCuts: experiment.jointCuts,
     assistCaptures: experiment.assistCaptures,
+    advancedCooperation: experiment.advancedCooperation,
   });
   startCoop(run);
   return run;
