@@ -1,4 +1,5 @@
 import { FORMATS, validateThemeBundle, resolvePresentation } from './model.mjs';
+import { canonicalJSON } from '../data-json.mjs';
 
 const reference = (record) => ({ id: record.id, revision: record.revision });
 const same = (a, b) => a.id === b.id && a.revision === b.revision;
@@ -64,7 +65,8 @@ export function replaceStudioCollection(
   next.revision++;
   return validateThemeBundle(next, { previous, expectedRevision: previous.revision });
 }
-/** Imported IDs are namespaced; neither imported nor current history is rewritten.
+/** Identical immutable revisions are shared; conflicting/new IDs are namespaced.
+ * Neither imported nor current history is rewritten.
  * The caller retains the old byte table and merges the verified imported bytes. */
 export function adoptStudioBundle(source, incomingSource) {
   const previous = validateThemeBundle(source);
@@ -80,24 +82,30 @@ export function adoptStudioBundle(source, incomingSource) {
     suffix++
   )
     namespace = `${prefix}-${suffix}`;
-  const imports = new Map(
-    incoming.assets.map((asset, index) => [
-      `${asset.id}@${asset.revision}`,
-      { id: `${namespace}-${index}`, revision: 1 },
-    ]),
-  );
-  for (const asset of incoming.assets) {
-    next.assets.push({
-      ...structuredClone(asset),
-      ...imports.get(`${asset.id}@${asset.revision}`),
-      provenance: {
-        ...structuredClone(asset.provenance),
-        parent: asset.provenance.parent
-          ? imports.get(`${asset.provenance.parent.id}@${asset.provenance.parent.revision}`)
-          : null,
-      },
-    });
-  }
+  const key = (asset) => `${asset.id}@${asset.revision}`;
+  const imports = new Map();
+  const local = new Map(previous.assets.map((asset) => [key(asset), asset]));
+  const foreign = new Map(incoming.assets.map((asset, index) => [key(asset), { asset, index }]));
+  const adopt = (target) => {
+    const identity = key(target);
+    if (imports.has(identity)) return imports.get(identity);
+    const { asset, index } = foreign.get(identity);
+    const candidate = structuredClone(asset);
+    // Resolve parents first: an otherwise identical child cannot retain a local
+    // parent when the imported revision of that parent has different content.
+    candidate.provenance.parent = asset.provenance.parent ? adopt(asset.provenance.parent) : null;
+    const existing = local.get(identity);
+    let result;
+    if (existing && canonicalJSON(existing) === canonicalJSON(candidate)) {
+      result = reference(existing);
+    } else {
+      result = { id: `${namespace}-${index}`, revision: 1 };
+      next.assets.push({ ...candidate, ...result });
+    }
+    imports.set(identity, result);
+    return result;
+  };
+  for (const asset of incoming.assets) adopt(asset);
   const current = next.themes.find((theme) => same(theme, next.selection.theme));
   const theme = {
     ...structuredClone(current),
@@ -136,5 +144,5 @@ export function generateAssetPrompt(slot, resolved, action = 'variation') {
       : action === 'collection'
         ? 'Replace this asset as part of one coherent collection. Match all related slots; do not alter their identities or mechanics.'
         : 'Create a new original variation of this asset.';
-  return `${intent}\n\n${slot.prompt}\n\nTHEME: ${resolved.theme.name}\nSLOT: ${slot.id}\nUSED ON: ${slot.screens.join(', ')}\nSTATES: ${slot.states.join(', ')}\nDIMENSIONS: ${slot.dimensions ? `${slot.dimensions.width}×${slot.dimensions.height}` : 'Registered scalable/procedural recipe'}\nTRANSPARENCY: ${slot.alpha}\nPIXEL SAMPLING: ${slot.sampling}\nRESOLVED TOKENS:\n${JSON.stringify(resolved.tokens, null, 2)}\n\nREQUIREMENTS:\n${slot.requirements.map((line) => `- ${line}`).join('\n')}\n\nCURRENT REVISION: ${asset.id}@${asset.revision}\nGEOMETRY AND SLOT CONTRACT:\n${JSON.stringify(slot, null, 2)}\n\nReturn the unmodified source and a separate prepared ${slot.id.replaceAll('.', '-')}.png (or the declared font/audio format), complete prompt, creator/license, and validation evidence. Do not bake words, telemetry, collision geometry, propeller motion or reference-game artwork into the image. Verify dimensions, alpha, occupied bounds, anchors, byte budget, native-size readability and every affected screen. A candidate is not an approved release.`;
+  return `${intent}\n\n${slot.prompt}\n\nTHEME: ${resolved.theme.name}\nSLOT: ${slot.id}\nUSED ON: ${slot.screens.join(', ')}\nSTATES: ${slot.states.join(', ')}\nDIMENSIONS: ${slot.dimensions ? `${slot.dimensions.width}×${slot.dimensions.height}` : 'Registered scalable/procedural recipe'}\nTRANSPARENCY: ${slot.alpha}\nPIXEL SAMPLING: ${slot.sampling}\nRESOLVED TOKENS:\n${JSON.stringify(resolved.tokens, null, 2)}\n\nREQUIREMENTS:\n${slot.requirements.map((line) => `- ${line}`).join('\n')}\n\nCURRENT REVISION: ${asset.id}@${asset.revision}\nCURRENT FILE AND LOCKED GEOMETRY (takes precedence over baseline geometry for edits):\n${JSON.stringify({ file: asset.file, geometry: asset.geometry }, null, 2)}\n\nCURRENT PRODUCTION BRIEF (reference context, subject to the slot requirements above):\n${asset.provenance.prompt}\n\nBASELINE SLOT CONTRACT:\n${JSON.stringify(slot, null, 2)}\n\nReturn the unmodified source and a separate prepared ${slot.id.replaceAll('.', '-')}.png (or the declared font/audio format), complete prompt, creator/license, and validation evidence. Do not bake words, telemetry, collision geometry, propeller motion or reference-game artwork into the image. Verify dimensions, alpha, occupied bounds, anchors, byte budget, native-size readability and every affected screen. A candidate is not an approved release.`;
 }

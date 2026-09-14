@@ -1,4 +1,7 @@
 import { createCharacterPresentations } from './character-presentations.mjs';
+import { createPresentationHost } from './presentation/host.mjs';
+import { createReleasePictureDefaults } from './presentation/release-pictures.mjs';
+import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -68,6 +71,7 @@ import { controllerBindingLabels, controllerStickLabel } from './controller-bind
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
+import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
 import { createStillMediaStore } from './media-store.mjs';
@@ -732,6 +736,18 @@ try {
       pins,
       legacy,
       explicitLegacy,
+      prepareSelection:
+        !legacy && writer.writable
+          ? (options) =>
+              releasePictures.prepareSelection({
+                ...options,
+                authoredBackground:
+                  entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)
+                    ?.visualOverrides?.background ??
+                  entry.visualOverrides?.background ??
+                  null,
+              })
+          : undefined,
       selectPins:
         !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
           ? async ({ media, selection, explicitLegacy, signal }) => {
@@ -882,6 +898,9 @@ try {
         },
         onChange: (state) => {
           soundtrackPanel?.update(state);
+          $('music-preview').textContent = state.playing
+            ? 'Soundtrack playing ♫'
+            : 'Play selected playlist ♫';
           soundtrackStatus(
             state.error ||
               state.notice ||
@@ -893,6 +912,7 @@ try {
       });
       soundtrackPlayer.setAuthoredTrack(authoredMusic);
       soundtrackPlayer.setContext(soundtrackContext());
+      publishedAudio.setPlayer(soundtrackPlayer);
       if (soundtrackSuspended) soundtrackPlayer.suspend();
       soundtrackPanel = attachSoundtrackPanel({
         document,
@@ -952,6 +972,7 @@ try {
       soundtrackPlayer?.dispose();
       soundtrackStore?.close();
       soundtrackPlayer = null;
+      publishedAudio.setPlayer(null);
       soundtrackPanel = null;
       sound.resumeMusic();
       $('soundtrack-open').disabled = true;
@@ -959,15 +980,99 @@ try {
       if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
     }
   }
+  let compiledPresentationWarning = '';
   const painter = new BoardPainter(presets, {
     onAsset: (message) => {
       const rig = visuals()?.player
         ? 'Custom player artwork keeps the selected body’s rotor anchors. Check alignment.'
         : '';
-      const copy = [message, rig, bodyWarning].filter(Boolean).join(' ');
+      const copy = [message, rig, bodyWarning, compiledPresentationWarning]
+        .filter(Boolean)
+        .join(' ');
       $('asset-warning').textContent = copy;
       show('asset-warning', !!copy);
     },
+  });
+  // Published presentation is a separate cosmetic release. Loading it never
+  // opens the local Asset Studio database or changes a flight's picture pins.
+  let presentationHost = null,
+    presentationReady = Promise.resolve(null);
+  try {
+    presentationHost = createPresentationHost({
+      baseURL: new URL('presentation/compiled/', location.href),
+    });
+    presentationReady = presentationHost
+      .load()
+      .then((snapshot) => {
+        presentationHost.apply(document.documentElement);
+        painter.setPresentation(snapshot);
+        document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
+        return snapshot;
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') return null;
+        compiledPresentationWarning = 'Release artwork is unavailable; source artwork is shown.';
+        painter.onAsset('');
+        return null;
+      });
+  } catch {
+    compiledPresentationWarning = 'Release artwork is unavailable; source artwork is shown.';
+  }
+  const publishedAudio = attachPublishedAudio({
+    sound,
+    ready: presentationReady,
+    getHost: () => presentationHost,
+    allowMusic: () =>
+      (theme.id === 'fpv' || theme.family === 'fpv') && !scenario?.music && !musicOverride,
+  });
+  const releasePictures = createReleasePictureDefaults({
+    getHost: () => presentationHost,
+    ready: () => presentationReady,
+    executionCatalog: () => executionCatalog,
+    readMedia: pictureMedia,
+    async commit(store, prepared, options) {
+      if (!writer.writable) throw new Error('The profile writer no longer owns picture storage.');
+      const snapshot = await checkedChapters({ signal: options.signal });
+      const write = () => {
+        if (!writer.writable) throw new Error('The profile writer no longer owns picture storage.');
+        return store.commit(prepared, options);
+      };
+      return externalChapters
+        ? externalChapters.withCurrent(snapshot, write, { signal: options.signal })
+        : write();
+    },
+  });
+  const missionThumbnails = createMissionPictureThumbnails({
+    readMedia: pictureMedia,
+    onUpdate: () => missionPicker?.sync(),
+    render(picture, backdrop) {
+      if (!backdrop && picture.visualOverrides?.background?.dataUrl)
+        return picture.visualOverrides.background.dataUrl;
+      const original = boardPaintSizeForLevel(picture.level),
+        scale = Math.min(320 / original.width, 180 / original.height),
+        canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(original.width * scale));
+      canvas.height = Math.max(1, Math.round(original.height * scale));
+      try {
+        painter.drawGallery(canvas.getContext('2d'), {
+          theme: picture.theme,
+          level: picture.level,
+          seed: picture.item.seed ?? 1,
+          width: canvas.width,
+          height: canvas.height,
+          ...(backdrop ? { image: backdrop.image, fit: backdrop.fit } : {}),
+        });
+        return canvas.toDataURL('image/png');
+      } finally {
+        canvas.width = canvas.height = 0;
+      }
+    },
+  });
+  window.addEventListener('pagehide', (event) => {
+    if (event.persisted) return;
+    painter.setPresentation(null);
+    publishedAudio.close();
+    presentationHost?.close();
   });
   const mediaReduce = matchMedia('(prefers-reduced-motion: reduce)');
   $('reduced-effects').checked = mediaReduce.matches || library.preferences.reducedEffects;
@@ -1302,6 +1407,7 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     cancelPictureStart();
+    missionThumbnails.cancel();
     clearInput();
     suspendAudio();
     writer.release();
@@ -1316,6 +1422,7 @@ try {
       soundtrackPanel?.dispose();
       soundtrackStore?.close();
       flightPictures?.dispose();
+      missionThumbnails.close();
       pictureStore?.close();
       storyStore?.close();
       externalChapters?.close();
@@ -2148,10 +2255,9 @@ try {
         throw new Error(
           'Backup and mixed recovery must be resolved before this chapter can install.',
         );
-      await externalChapters[snapshot.reason === 'external-recovery' ? 'recover' : 'install'](
-        prepared,
-        { signal },
-      );
+      const installed = await externalChapters[
+        snapshot.reason === 'external-recovery' ? 'recover' : 'install'
+      ](prepared, { signal });
       committed = true;
       const next = await checkedChapters({ signal });
       await externalChapters.readiness(next, descriptor.id, { signal });
@@ -2159,6 +2265,21 @@ try {
       adoptContentCatalog(contentFromChapters(next));
       packLaunchGuard.advance(operation, before, packs);
       packCommits.acceptCurrent();
+      if (snapshot.reason !== 'external-recovery') {
+        try {
+          await releasePictures.assignFreshChapter({
+            descriptor: installed.descriptor,
+            mediaGeneration: installed.mediaGeneration,
+            identityCatalog: pictureIdentity(),
+            signal,
+          });
+        } catch (error) {
+          if (error.name !== 'AbortError')
+            warning(
+              `Chapter installed with its source originals. Field Kit defaults could not be saved: ${error.message}`,
+            );
+        }
+      }
       // Recovery never silently re-enables profile writes from an unreadable baseline.
       // A clean reload adopts the preserved profile and saved flight together.
       refreshCampaigns();
@@ -3134,12 +3255,14 @@ try {
     setTheme();
   }
   function paintMissions() {
+    missionThumbnails.cancel();
     $('missions').replaceChildren();
     if (courseSession) {
       $('campaign-progress').textContent =
         `${Object.values(courseVisit).filter((value) => value === 'complete').length} / ${FIRST_FLIGHT_LESSONS.length} lessons this visit`;
       return;
     }
+    const thumbnailTargets = [];
     campaign.levels.forEach((level, index) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -3151,17 +3274,8 @@ try {
       const earnedPicture =
         !!progress.clears[level.id] ||
         !!difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed;
-      const missionVisual = activeEntry.levelVisuals?.find(
-        (v) => v.levelId === level.id,
-      )?.visualOverrides;
-      const picture = missionVisual?.background || activeEntry.visualOverrides?.background;
-      b.dataset.pictureState = earnedPicture
-        ? picture?.dataUrl
-          ? 'earned'
-          : 'unavailable'
-        : 'concealed';
-      if (earnedPicture && /^data:image\/(?:png|jpeg|webp);base64,/u.test(picture?.dataUrl || ''))
-        b.dataset.missionArtwork = picture.dataUrl;
+      b.dataset.pictureState = earnedPicture ? 'unavailable' : 'concealed';
+      thumbnailTargets.push({ button: b, level, earned: earnedPicture });
       b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
       const number = document.createElement('span');
       number.className = 'number';
@@ -3171,6 +3285,8 @@ try {
       name.textContent = level.name;
       const medal = document.createElement('span');
       medal.className = 'medal';
+      const reward = { 1: 'bronze', 2: 'silver', 3: 'gold' }[progress.clears[level.id]?.medals];
+      if (reward) medal.dataset.presentationReward = reward;
       medal.textContent = progress.clears[level.id]
         ? '★'.repeat(progress.clears[level.id].medals)
         : difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed
@@ -3189,6 +3305,17 @@ try {
       };
       $('missions').append(b);
     });
+    void missionThumbnails
+      .refresh({
+        library,
+        entries: executionCatalog.entries,
+        entry: activeEntry,
+        themeId: theme.id,
+        targets: thumbnailTargets,
+      })
+      .catch(() => {
+        /* Preserve honest unavailable thumbnails. */
+      });
     $('campaign-progress').textContent =
       `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? ` · ${difficultyLabel(activeEntry)} medals` : ''}`;
     refreshContentSelectors();
@@ -4237,6 +4364,7 @@ try {
       theme = next;
       bodyId = theme.player;
       setTheme();
+      paintMissions();
       refreshMissionBrief();
       if (!started && !campaignOverview) overlay('ready');
       preferences({ themeId: theme.id, bodyId });

@@ -13,7 +13,66 @@ import { createStillMediaStore } from '../media-store.mjs';
 import { createStillAuthoringCatalog } from '../ui/still-media-catalog.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { emptyPackLibrary, exportPackLibrary } from '../packs.mjs';
+import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
+import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
+import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
 const pilot = await buildExternalPilot();
+function releasePictureManifest() {
+  const assets = {},
+    bindings = {},
+    urls = {};
+  pilot.descriptor.originals.forEach((original, index) => {
+    const source = pilot.descriptor.originals[(index + 1) % pilot.descriptor.originals.length],
+      slot = CURRENT_PICTURES.find(
+        (row) =>
+          row.owner.baseCampaignKey === pilot.descriptor.campaignKey &&
+          row.owner.levelId === original.levelId &&
+          row.owner.themeId === 'fpv',
+      );
+    assert.ok(slot);
+    const asset = {
+      format: FORMATS.asset,
+      id: `fixture.release.poster-${index}`,
+      revision: 1,
+      kind: 'image',
+      description: 'Distinct authenticated source PNG used only as a new-release adapter fixture.',
+      provenance: {
+        creator: 'Test fixture',
+        source: 'Swapped fixture poster; no production art claim.',
+        license: 'Test only',
+        prompt: '',
+        parent: null,
+      },
+      file: Object.fromEntries(
+        ['sha256', 'bytes', 'mime', 'width', 'height'].map((key) => [key, source[key]]),
+      ),
+      geometry: {
+        frame: { x: 0, y: 0, width: source.width, height: source.height },
+        pivot: { x: 0.5, y: 0.5 },
+        occupiedBounds: null,
+        rotorAnchors: [],
+        nineSlice: null,
+      },
+      recipe: null,
+      quality: { stage: 'produced', evidence: [] },
+    };
+    assets[slot.id] = asset;
+    bindings[slot.id] = { id: asset.id, revision: 1 };
+    urls[source.sha256] = `./assets/${source.sha256}.png`;
+  });
+  return {
+    format: COMPILED_PRESENTATION_FORMAT,
+    source: { id: 'test.release', revision: 1 },
+    resolved: {
+      theme: { id: 'fpv-field-kit', revision: 1, name: 'Field Kit fixture' },
+      collection: null,
+      tokens: TOKEN_DEFAULTS,
+      bindings,
+      assets,
+    },
+    urls,
+  };
+}
 const profile = 'revealline.library.dev.v1',
   packsKey = 'revealline.packs.dev.v1';
 const routes = JSON.parse(
@@ -234,6 +293,55 @@ function direction(p, value) {
     p.key('Arrow' + value[0].toUpperCase() + value.slice(1), false);
   }
 }
+
+test('fresh native source installation assigns release pictures after durable install and retains every authored original', async (t) => {
+  const requests = [],
+    manifest = releasePictureManifest();
+  const p = await page(t, {
+    options: {
+      fetchResponse: async (url) => {
+        if (!String(url).includes('/presentation/compiled/')) return undefined;
+        requests.push(String(url));
+        if (String(url).endsWith('/runtime.json')) return new Response(JSON.stringify(manifest));
+        assert.fail('Existing authenticated fixture bytes must be reused rather than downloaded.');
+      },
+    },
+  });
+  await install(p);
+  const manager = createManagedMediaStore({
+      indexedDB: p.fixture.media.indexedDB,
+      storyMedia: true,
+    }),
+    still = createStillMediaStore({ managedStore: manager });
+  t.after(() => {
+    still.close();
+    manager.close();
+  });
+  const saved = await still.readMetadata();
+  for (const [index, original] of pilot.descriptor.originals.entries()) {
+    const assignment = saved.document.library.assignments.find(
+      (row) => row.identity.levelId === original.levelId,
+    );
+    assert.match(assignment.presentationId, /^fk-picture-/);
+    const chosen = saved.document.library.presentations.find(
+        (row) => row.id === assignment.presentationId,
+      ),
+      asset = saved.document.library.assets.find((row) => row.id === chosen.poster.assetId);
+    assert.equal(asset.sha256, pilot.descriptor.originals[(index + 1) % 3].sha256);
+    assert.ok(
+      saved.document.library.presentations.some((row) => row.id === original.presentationId),
+    );
+    assert.ok(
+      saved.document.library.assets.some(
+        (row) => row.id === original.assetId && row.sha256 === original.sha256,
+      ),
+    );
+  }
+  await choose(p);
+  assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[1].sha256);
+  assert.match(p.rendered.backdrop.pin.presentationId, /^fk-picture-/);
+  assert.deepEqual(requests, ['http://localhost/game/presentation/compiled/runtime.json']);
+});
 
 test('source registry is exact compiled authority; public catalog remains five unchanged embedded entries', async () => {
   assert.deepEqual(SOURCE_EXTERNAL_CHAPTER, pilot.descriptor);
@@ -733,6 +841,62 @@ test('native exact-pair recovery completes a retained published journal once; re
       assert.equal(p.rendered.run.tick, 0);
       assert.equal(p.rendered.backdrop.pin.sha256, pilot.descriptor.originals[0].sha256);
       assert.equal((await still.readMetadata()).generation, generation);
+    },
+  );
+});
+
+test('published external pictures survive saved Continue and confirmed Restart with overlapping preparation', async (t) => {
+  const manifest = releasePictureManifest(),
+    f = {
+      options: {
+        fetchResponse: async (url) => {
+          if (!String(url).includes('/presentation/compiled/')) return undefined;
+          if (String(url).endsWith('/runtime.json')) return new Response(JSON.stringify(manifest));
+          assert.fail('Retained original bytes are already installed.');
+        },
+      },
+    };
+  let pin;
+  await t.test('install, play, pause and retain new release original', async (t) => {
+    const p = await page(t, f);
+    await install(p);
+    await choose(p);
+    p.$('start-button').click();
+    await settle(() => p.doc.body.dataset.flightState === 'running');
+    direction(p, 'down');
+    ticks(p, 30);
+    p.$('pause-button').click();
+    p.frame(0);
+    pin = p.rendered.backdrop.pin;
+    assert.match(pin.presentationId, /^fk-picture-/);
+    assert(f.storage.getItem('revealline.suspended.dev.v1'));
+  });
+  await t.test(
+    'restored attempt resumes and the confirmed replacement attempt becomes ready',
+    async (t) => {
+      const p = await page(t, f);
+      await p.$('continue-saved').onclick();
+      await settle(() => p.doc.body.dataset.pictureState === 'ready');
+      p.frame(0);
+      assert.deepEqual(p.rendered.backdrop.pin, pin);
+      assert.equal(p.rendered.paused, true);
+      p.$('start-button').click();
+      await settle(() => p.doc.body.dataset.flightState === 'running');
+      p.$('pause-button').click();
+      p.$('overlay-restart').click();
+      assert.equal(p.$('restart-dialog').open, true);
+      p.$('restart-confirm').click();
+      assert.equal(p.$('restart-dialog').open, false);
+      await settle(
+        () =>
+          p.doc.body.dataset.pictureState === 'ready' &&
+          p.doc.body.dataset.flightState === 'running',
+        p.$('run-message').textContent,
+      );
+      p.frame(0);
+      assert.equal(p.rendered.run.tick, 0);
+      assert.deepEqual(p.rendered.backdrop.pin, pin);
+      assert.deepEqual(p.errors, []);
     },
   );
 });

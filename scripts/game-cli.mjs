@@ -372,14 +372,17 @@ async function assertOutput(root, out, inputs) {
   }
 }
 
-function publicPage(title, body, fieldKit = false) {
+function publicPage(title, body, fieldKit = false, compiled = false) {
   const styles = fieldKit
     ? ['fonts', 'tokens', 'components']
         .map((part) => `<link rel="stylesheet" href="./game/ui/field-kit-${part}.css">`)
         .join('')
     : '';
+  const presentation = compiled
+    ? '<link rel="stylesheet" href="./game/ui/field-kit-compiled.css"><script type="module" src="./game/presentation/page-entry.mjs"></script>'
+    : '';
   const content = fieldKit ? body.replaceAll('<h1>', '<h1 class="field-kit-display">') : body;
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${styles}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${content}</main></body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style>${styles}${presentation}</head><body${fieldKit ? ' class="field-kit field-kit-support"' : ''}><main>${content}</main></body></html>\n`;
 }
 function addPublicEntries(entries, info) {
   const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
@@ -387,6 +390,8 @@ function addPublicEntries(entries, info) {
   const fieldKit = ['fonts', 'tokens', 'components'].every((part) =>
     has(`game/ui/field-kit-${part}.css`),
   );
+  const compiled =
+    fieldKit && has('game/ui/field-kit-compiled.css') && has('game/presentation/page-entry.mjs');
   const links = [
     `<a href="./${html(info.entry)}">Play solo</a>`,
     ...(has('game/couch/index.html') ? ['<a href="./game/couch/">Couch duel</a>'] : []),
@@ -421,6 +426,7 @@ function addPublicEntries(entries, info) {
           'Play',
           `<small>REVEAL LINE · ${html(info.version)}</small><h1>Clear a path.<br>Reveal a world.</h1><p>Close a line through changing worlds, collect the pictures you uncover and try a new route. Play with keys, touch or a compatible controller.</p><nav>${links.join('')}</nav><p><a href="./privacy.html">Privacy and local storage</a> · <a href="./credits.html">Credits and notices</a></p><small>${info.sourceRevision ? `Saved source <code>${html(info.sourceRevision)}</code>` : 'Development distribution — source revision not recorded.'}</small>`,
           fieldKit,
+          compiled,
         ),
       ),
     });
@@ -436,6 +442,7 @@ function addPublicEntries(entries, info) {
         'Privacy and local storage',
         '<p><a href="./">← Game home</a></p><h1>Your game stays here.</h1><p>This build has no account system, analytics SDK, advertising tracker, cloud scoreboard or multiplayer server. The game code does not upload your pictures, imported packs, replay files or player library.</p><p>The browser stores preferences, achievements, local scores and a suspended flight locally. Imported image packs and uploaded MP3 libraries use IndexedDB. Custom soundtrack backups contain the original audio bytes; the player-library JSON alone is not a complete media backup. The playground uses session storage to pass its configuration to the preview. If you explicitly prepare offline play, the service worker saves this version’s shipped files in the browser cache.</p><p>Export the player library, packs and suspended flight when you want a portable backup. Clearing site data removes local data; private browsing, storage limits or browser cleanup can also remove it. There is no server backup or cross-device sync.</p><p>A public hosting provider receives ordinary page and asset requests and may keep access logs. This game cannot promise the host keeps no logs. The publisher is responsible for disclosing any hosting-specific collection or additional services it adds.</p><p>Imported content is treated as bounded data and media. Installed packs cannot provide executable game scripts or contacts with remote services. Local scores are editable local records, not authenticated competitive results.</p>',
         fieldKit,
+        compiled,
       ),
     ),
   });
@@ -449,6 +456,7 @@ function addPublicEntries(entries, info) {
             ? '<p>Display type: Handjet by the Handjet Project Authors (<a href="./game/ui/fonts/field-kit/Handjet-OFL.txt">OFL 1.1</a>), instantiated at weight 600, element shape 2 and element grid 1. Interface type: Exo 2 by the Exo 2 Project Authors (<a href="./game/ui/fonts/field-kit/Exo2-OFL.txt">OFL 1.1</a>), retaining weights 400–600. Numeric type: IBM Plex Mono by IBM Corp. (<a href="./game/ui/fonts/field-kit/IBMPlexMono-OFL.txt">OFL 1.1</a>), weight 500. All are self-hosted WOFF2 with full English and Ukrainian letter coverage. <a href="./game/ui/fonts/field-kit/provenance.json">Source versions, build recipe and file checksums</a>.</p>'
             : ''),
         fieldKit,
+        compiled,
       ),
     ),
   });

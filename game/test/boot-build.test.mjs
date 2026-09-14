@@ -14,6 +14,8 @@ const fieldKitFiles = [
   'game/ui/field-kit-tokens.css',
   'game/ui/field-kit-components.css',
   'game/ui/field-kit-flow.css',
+  'game/ui/field-kit-compiled.css',
+  'game/presentation/page-entry.mjs',
   'game/ui/art/field-kit/prepared/title-hangar-v1.png',
   'game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png',
   'game/ui/fonts/field-kit/handjet-display-600.woff2',
@@ -73,7 +75,22 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     await fs.mkdir(path.dirname(path.join(root, name)), { recursive: true });
     await fs.writeFile(path.join(root, name), bytes);
   };
-  const copy = async (name) => put(name, await fs.readFile(new URL(`../${name}`, sourceRoot)));
+  const copied = new Set();
+  const copy = async (name) => {
+    if (copied.has(name)) return;
+    copied.add(name);
+    const bytes = await fs.readFile(new URL(`../${name}`, sourceRoot));
+    await put(name, bytes);
+    if (!/\.m?js$/.test(name)) return;
+    for (const match of bytes
+      .toString()
+      .matchAll(
+        /(?:^|[;\r\n])\s*(?:import\b\s*(?:[^;"']*?\bfrom\s*)?|export\b[^;"']*?\bfrom\s*)["']([^"']+)["']/g,
+      )) {
+      assert.ok(match[1].startsWith('.'), `Unexpected boot dependency: ${match[1]}`);
+      await copy(path.posix.normalize(path.posix.join(path.posix.dirname(name), match[1])));
+    }
+  };
   // The HTML, boot code, landing and offline generator inputs are actual source.
   // Unrelated gameplay dependencies are inert fixture resources, not a claim
   // that this small build runs the simulation or a native device.
@@ -114,6 +131,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     assert.ok(landing.includes(`href="./game/ui/field-kit-${part}.css"`));
   assert.match(landing, /<body class="field-kit field-kit-support">/);
   const credits = await fs.readFile(path.join(out, 'credits.html'), 'utf8');
+  assert.match(credits, /src="\.\/game\/presentation\/page-entry.mjs"/);
+  assert.match(credits, /href="\.\/game\/ui\/field-kit-compiled.css"/);
   for (const name of ['Handjet-OFL.txt', 'Exo2-OFL.txt', 'IBMPlexMono-OFL.txt'])
     assert.ok(credits.includes(`./game/ui/fonts/field-kit/${name}`));
   assert.doesNotMatch(credits, /Pixelify|Tiny5/);
@@ -135,6 +154,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'game/boot.css',
     'site/launch.mjs',
     'site/about.html',
+    'game/presentation/page-entry.mjs',
+    'game/presentation/page.mjs',
   ]) {
     const record = cache.files.find(({ path }) => path === name);
     assert.ok(record, `${name} must remain available offline`);

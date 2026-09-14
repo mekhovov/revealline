@@ -9,7 +9,9 @@ export const FORMATS = Object.freeze({
   draft: 'revealline-presentation-draft.v1',
 });
 export const LIMITS = Object.freeze({
-  manifestBytes: 2 * 1024 * 1024,
+  // A complete produced collection and its immutable review successors must fit
+  // together. This is separate from the existing player-media metadata quota.
+  manifestBytes: 4 * 1024 * 1024,
   bundleBytes: 32 * 1024 * 1024,
   assetBytes: 4 * 1024 * 1024,
   slots: 512,
@@ -407,6 +409,13 @@ function tables(value) {
     collections: new Map(value.collections.map((c) => [key(c), c])),
   };
 }
+export function presentationGeometryControls(slot) {
+  return Object.freeze({
+    pivot: ['players', 'enemies', 'terrain', 'pickups'].includes(slot.group),
+    rotors: ['players', 'enemies'].includes(slot.group),
+    nineSlice: !!slot.geometry?.nineSlice,
+  });
+}
 function checkBindings(rows, index) {
   for (const [id, target] of Object.entries(rows)) {
     const slot = index.slots.get(id),
@@ -421,6 +430,19 @@ function checkBindings(rows, index) {
         `Asset exceeds the slot byte budget: ${id}.`,
       );
     if (asset.kind === 'image') {
+      const controls = presentationGeometryControls(slot);
+      required(
+        controls.pivot || (asset.geometry.pivot.x === 0.5 && asset.geometry.pivot.y === 0.5),
+        `This slot uses a fixed centered pivot: ${id}.`,
+      );
+      required(
+        controls.rotors || asset.geometry.rotorAnchors.length === 0,
+        `Rotor anchors are not supported by this slot: ${id}.`,
+      );
+      required(
+        controls.nineSlice || asset.geometry.nineSlice === null,
+        `Nine-slice geometry is not supported by this slot: ${id}.`,
+      );
       required(
         slot.alpha !== 'required' || asset.file.mime !== 'image/jpeg',
         `Transparent slot cannot use JPEG: ${id}.`,

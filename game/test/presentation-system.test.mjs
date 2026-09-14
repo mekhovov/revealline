@@ -307,7 +307,7 @@ test('runtime tokens map to shared Field Kit styles and preserve gameplay palett
   assert.equal(css['--fk-control-line'], '#647786');
   assert.equal(css['--safe'], css['--fk-cyan']);
   assert.equal(canvas.palette.safe, css['--fk-cyan']);
-  assert.equal(css['--fk-font-ui'], "'Field Kit UI', sans-serif");
+  assert.equal(css['--fk-font-ui'], "'Field Kit UI', 'Field Kit Mono', sans-serif");
   assert.equal('rules' in canvas, false);
   const values = new Map([['--fk-bg', 'old']]);
   const element = {
@@ -335,6 +335,7 @@ test('compiler emits deterministic allowlisted local assets without source paths
     `assets/${fixture.sha256}.png`,
     'manifest.json',
     'runtime.json',
+    'studio.json',
     'theme.css',
   ]);
   const runtime = JSON.parse(new TextDecoder().decode(a.files.get('runtime.json')));
@@ -404,6 +405,38 @@ test('frame-local rig conversion preserves pivot and leaves source and physics u
   assert.equal('radius' in result, false);
 });
 
+test('bindings reject geometry controls that their renderer cannot apply', async () => {
+  const fixture = await imageFixture();
+  for (const [mutate, message] of [
+    [
+      (asset) => {
+        asset.geometry.pivot.x = 0.25;
+      },
+      /fixed centered pivot/,
+    ],
+    [
+      (asset) => {
+        asset.geometry.rotorAnchors = [{ x: 0.5, y: 0.5, radius: 0.1, blades: 3 }];
+      },
+      /Rotor anchors are not supported/,
+    ],
+    [
+      (asset) => {
+        asset.geometry.nineSlice = { left: 0, top: 0, right: 0, bottom: 0 };
+      },
+      /Nine-slice geometry is not supported/,
+    ],
+  ]) {
+    const candidate = clone(fixture.document);
+    mutate(candidate.assets.at(-1));
+    assert.throws(() => validateThemeBundle(candidate), message);
+  }
+  const terrain = clone(fixture.document);
+  terrain.slots.at(-1).group = 'terrain';
+  terrain.assets.at(-1).geometry.pivot.x = 0.25;
+  assert.equal(validateThemeBundle(terrain).assets.at(-1).geometry.pivot.x, 0.25);
+});
+
 test('rotor geometry permits only blade counts supported by the registered renderer', async () => {
   const fixture = await imageFixture();
   for (const blades of [1, 2, 3, 4, 5, 6, 7, 8]) {
@@ -443,7 +476,7 @@ test('portable bundles compile through the CLI without rewriting their asset byt
   const output = path.join(workspace, 'compiled');
   const cli = path.join(root, 'scripts/compile-presentation.mjs');
   const result = await execute(process.execPath, [cli, '--bundle', input, '--out', output]);
-  assert.equal(JSON.parse(result.stdout).files, 4);
+  assert.equal(JSON.parse(result.stdout).files, 5);
   assert.deepEqual(
     new Uint8Array(await fs.readFile(path.join(output, 'assets', fixture.sha256 + '.png'))),
     new Uint8Array(fixture.bytes),

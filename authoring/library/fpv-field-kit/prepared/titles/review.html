@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Field Kit title — v1 / v2 source comparison</title>
+  <link rel="stylesheet" href="../../../../../game/ui/field-kit-fonts.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 24px;
+      color: #f3f0db;
+      background: #070b12;
+      font:
+        18px/1.5 'Field Kit UI',
+        sans-serif;
+    }
+    main {
+      max-width: 1440px;
+      margin: auto;
+    }
+    h1 {
+      font:
+        600 48px/1 'Field Kit Display',
+        sans-serif;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    a {
+      color: #78dce8;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    figure {
+      margin: 0;
+      padding: 16px;
+      border: 2px solid #213647;
+      background: #101923;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: pixelated;
+    }
+    .portrait img {
+      max-width: 360px;
+    }
+    figcaption {
+      margin-top: 12px;
+    }
+    .status {
+      color: #f4bf62;
+    }
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <body>
+    <main>
+      <a href="../reveals/review.html">Reveal family comparison</a>
+      <h1>One workshop, two preparations</h1>
+      <p class="status">
+        Source-checkout comparison. Both candidates are produced; actual-menu review and release
+        adoption are separate. This page does not change the game.
+      </p>
+      <p>
+        V1 preserves finer generated texture. V2 uses the reveal family's fixed 36 colors and a
+        320×180 or 180×320 grid enlarged 3×. Both retain their original composition and dark menu
+        space. Original source files and all v1 files stay unchanged.
+      </p>
+      <div class="grid">
+        <figure>
+          <h2>Landscape v1 · 960×540</h2>
+          <img
+            src="../../../../../game/ui/art/field-kit/prepared/title-hangar-v1.png"
+            width="960"
+            height="540"
+            alt="Earlier landscape workshop with finer hardware and orchard texture"
+          />
+          <figcaption>Historical nearest-sampled source preparation.</figcaption>
+        </figure>
+        <figure>
+          <h2>Landscape v2 · 960×540</h2>
+          <img
+            src="title-hangar-v2.png"
+            width="960"
+            height="540"
+            alt="New landscape workshop using the shared palette and larger integer pixel clusters"
+          />
+          <figcaption>320×180 sampled grid, 3× clusters, 25,969 bytes.</figcaption>
+        </figure>
+        <figure class="portrait">
+          <h2>Portrait v1 · 540×960</h2>
+          <img
+            src="../../../../../game/ui/art/field-kit/prepared/title-hangar-portrait-v1.png"
+            width="540"
+            height="960"
+            alt="Earlier portrait workshop with a dark upper menu region"
+          />
+          <figcaption>Independently composed portrait original.</figcaption>
+        </figure>
+        <figure class="portrait">
+          <h2>Portrait v2 · 540×960</h2>
+          <img
+            src="title-hangar-portrait-v2.png"
+            width="540"
+            height="960"
+            alt="New portrait workshop with clearer large pixel clusters and the same quiet menu region"
+          />
+          <figcaption>180×320 sampled grid, 3× clusters, 23,827 bytes.</figcaption>
+        </figure>
+      </div>
+      <p>
+        <a href="../../prepared-scenes-v2.json">V2 exact hashes, crops and previous output pins</a>.
+        Runtime compilation selects the approved revision independently; this page is a local
+        authoring comparison.
+      </p>
+    </main>
+  </body>
+</html>
