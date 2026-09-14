@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachCouchInput } from '../couch/couch-input.mjs';
-import { createCoopCommandBatch } from '../coop/input-policy.mjs';
+import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
@@ -27,9 +27,9 @@ function arena(t, pads = []) {
     controls.dataset.player = String(player);
     doc.body.append(controls);
     return Object.fromEntries(
-      ['up', 'right', 'down', 'left', 'boost'].map((kind) => {
+      ['up', 'right', 'down', 'left', 'boost', 'action'].map((kind) => {
         const button = doc.createElement('button');
-        if (kind === 'boost') button.dataset.action = kind;
+        if (kind === 'boost' || kind === 'action') button.dataset.action = kind;
         else button.dataset.direction = kind;
         controls.append(button);
         return [kind, button];
@@ -60,6 +60,7 @@ function arena(t, pads = []) {
     batch.release();
   }
   input = attachCouchInput({
+    ...COOP_INPUT_CAPABILITIES,
     window: win,
     document: doc,
     arena: canvas,
@@ -102,6 +103,130 @@ function arena(t, pads = []) {
   }
   return { run, input, batch, tick, key, pointer, pause, resume };
 }
+
+test('co-op keyboard Support stays held through fixed ticks and releases independently', (t) => {
+  const a = arena(t);
+  a.key('KeyQ');
+  a.key('Enter');
+  for (let i = 0; i < 30; i++)
+    assert.deepEqual(
+      a.tick().map((command) => command.support),
+      [true, true],
+    );
+  a.key('KeyQ', false);
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, true],
+  );
+  a.key('Enter', false);
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, false],
+  );
+});
+
+test('simultaneous touch Support remains held until each pointer ends', (t) => {
+  const a = arena(t);
+  a.pointer(0, 'action', 17);
+  a.pointer(1, 'action', 29);
+  for (let i = 0; i < 30; i++)
+    assert.deepEqual(
+      a.tick().map((command) => command.support),
+      [true, true],
+    );
+  a.pointer(0, 'action', 17, false);
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, true],
+  );
+  a.pointer(1, 'action', 29, false);
+  assert.deepEqual(
+    a.tick().map((command) => command.support),
+    [false, false],
+  );
+});
+
+test('controller Support uses the same held command semantics as keyboard and touch', (t) => {
+  const p = pad(0),
+    a = arena(t, [p]);
+  a.tick();
+  p.buttons[0].pressed = true;
+  for (let i = 0; i < 30; i++) assert.equal(a.tick()[0].support, true);
+  p.buttons[0].pressed = false;
+  assert.equal(a.tick()[0].support, false);
+});
+
+test('adding a touch hold to held keyboard Support never interrupts an ongoing rescue', (t) => {
+  const a = arena(t);
+  const target = a.run.players[1];
+  Object.assign(target, {
+    x: 6.5,
+    y: 0.5,
+    cellIndex: 6,
+    safeAnchor: { x: 6.5, y: 0.5 },
+    status: 'downed',
+    downedUntil: 12,
+    downedClaimedAt: 0,
+  });
+  a.key('KeyQ');
+  for (let i = 0; i < 60; i++) assert.equal(a.tick()[0].support, true);
+  const startedAt = a.run.players[0].rescue.startedAt;
+  a.pointer(0, 'action', 17);
+  assert.equal(a.tick()[0].support, true);
+  assert.equal(a.run.players[0].rescue.startedAt, startedAt);
+  a.key('KeyQ', false);
+  for (let i = 0; i < 61; i++) assert.equal(a.tick()[0].support, true);
+  assert.equal(target.status, 'active');
+  assert.equal(a.run.team.rescues, 1);
+  assert.equal(a.run.team.reserves, 3);
+  assert.equal(a.run.players[0].support.uses, 0);
+  a.pointer(0, 'action', 17, false);
+  assert.equal(a.tick()[0].support, false);
+});
+
+test('a quick fresh Support tap is preserved across one forced neutral tick without repeating', () => {
+  const batch = createCoopCommandBatch();
+  const none = { direction: null, boost: false, action: false };
+  batch.release(0);
+  assert.equal(batch.consume([{ ...none, action: true }, none])[0].support, false);
+  assert.equal(batch.consume([none, none])[0].support, true);
+  assert.equal(batch.consume([none, none])[0].support, false);
+});
+
+test('Support held across pause is not replayed on resume', (t) => {
+  const a = arena(t);
+  a.key('KeyQ');
+  assert.equal(a.tick()[0].support, true);
+  a.pause();
+  a.resume();
+  for (let i = 0; i < 3; i++) assert.equal(a.tick()[0].support, false);
+  a.key('KeyQ', true, { repeat: true });
+  assert.equal(a.tick()[0].support, false);
+  a.key('KeyQ', false);
+  a.key('KeyQ');
+  assert.equal(a.tick()[0].support, true);
+});
+
+test('a fresh same-direction gesture emits one steering edge for rescue cancellation', (t) => {
+  const a = arena(t);
+  a.key('KeyD');
+  assert.equal(a.tick()[0].steer, true);
+  assert.equal(a.tick()[0].steer, false);
+  a.key('KeyD', false);
+  a.key('KeyD');
+  assert.equal(a.tick()[0].steer, true);
+  assert.equal(a.tick()[0].steer, false);
+});
+
+test('a fresh steering edge survives the forced neutral handoff exactly once', (t) => {
+  const a = arena(t);
+  a.pause();
+  a.resume();
+  a.key('KeyD');
+  assert.notEqual(a.tick()[0].steer, true);
+  assert.equal(a.tick()[0].steer, true);
+  assert.equal(a.tick()[0].steer, false);
+});
 
 test('a fresh keyboard gesture before the first resumed tick is deferred once, then moves', (t) => {
   const page = arena(t);

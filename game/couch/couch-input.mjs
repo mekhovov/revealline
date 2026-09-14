@@ -34,6 +34,8 @@ export function attachCouchInput({
   active = () => true,
   tapMode = () => false,
   continuousSteering = () => false,
+  heldActions = [],
+  steeringEdges = false,
   onPause = () => {},
   onStop = () => {},
   onPads = () => {},
@@ -41,6 +43,13 @@ export function attachCouchInput({
 } = {}) {
   if (typeof continuousSteering !== 'function')
     throw new TypeError('continuousSteering must be a function.');
+  if (
+    !Array.isArray(heldActions) ||
+    heldActions.some((kind) => !['action', 'pickup'].includes(kind))
+  )
+    throw new TypeError('Held actions must name supported equipment actions.');
+  const heldEquipment = new Set(heldActions);
+  if (typeof steeringEdges !== 'boolean') throw new TypeError('Steering edges must be boolean.');
   if (typeof onAcceptedInput !== 'function')
     throw new TypeError('onAcceptedInput must be a function.');
   const accepted = (player, source) => {
@@ -66,6 +75,7 @@ export function attachCouchInput({
     slot: null,
     lastPadDirection: null,
     localDirectionPending: false,
+    pendingSteer: false,
   }));
   const buttons = [...doc.querySelectorAll('.race-pad')].flatMap((pad) =>
     [...pad.querySelectorAll('button')].map((element) => ({
@@ -122,8 +132,15 @@ export function attachCouchInput({
         ? state.direction
         : direction || state.direction || state.pad.direction,
       boost: state.boost || state.pad.boost || values.some((v) => v.kind === 'boost'),
-      action: state.pending.action || state.pad.action,
-      pickup: state.pending.pickup || state.pad.pickup,
+      action:
+        state.pending.action ||
+        state.pad.action ||
+        (heldEquipment.has('action') && values.some((v) => v.kind === 'action')),
+      pickup:
+        state.pending.pickup ||
+        state.pad.pickup ||
+        (heldEquipment.has('pickup') && values.some((v) => v.kind === 'pickup')),
+      ...(steeringEdges ? { steer: state.pendingSteer } : {}),
     };
   };
   const sync = () => {
@@ -167,6 +184,7 @@ export function attachCouchInput({
     state.blocked = true;
     state.lastPadDirection = null;
     state.localDirectionPending = false;
+    state.pendingSteer = false;
     for (const [id, capture] of [...captures]) if (capture.player === player) releaseCapture(id);
     for (const button of buttons)
       if (button.player === player) {
@@ -228,12 +246,21 @@ export function attachCouchInput({
       return;
     }
     const state = players[player];
+    if (steeringEdges && directions.includes(kind)) state.pendingSteer = true;
     if (continuous() && directions.includes(kind)) {
       state.direction = kind;
       state.localDirectionPending = true;
       held.set(key, { player, kind, element, code, order: ++order });
-    } else if (kind === 'action' || kind === 'pickup') state.pending[kind] = true;
-    else if (toggle) {
+    } else if (kind === 'action' || kind === 'pickup') {
+      state.pending[kind] = true;
+      if (heldEquipment.has(kind)) {
+        const actionKey = key === 'assist' ? `assist:${player}:${kind}` : key;
+        if (key === 'assist' && held.has(actionKey)) {
+          held.delete(actionKey);
+          state.pending[kind] = false;
+        } else held.set(actionKey, { player, kind, element, code, order: ++order });
+      }
+    } else if (toggle) {
       if (kind === 'boost') state.boost = !state.boost;
       else state.direction = state.direction === kind ? null : kind;
     } else {
@@ -407,6 +434,7 @@ export function attachCouchInput({
         ) {
           player.direction = player.pad.direction;
           freshDirections[i] = true;
+          if (steeringEdges) player.pendingSteer = true;
         }
         player.lastPadDirection = player.pad.direction;
         player.localDirectionPending = false;
@@ -429,10 +457,15 @@ export function attachCouchInput({
       const command = commandFor(i);
       for (const kind of ['action', 'pickup']) {
         // Two quick distinct clicks still get a release tick between their pulses.
-        if (player.pending[kind] && player.last[kind] && !player.pad[kind]) command[kind] = false;
+        const continuouslyHeld =
+          heldEquipment.has(kind) &&
+          [...held.values()].some((entry) => entry.player === i && entry.kind === kind);
+        if (player.pending[kind] && player.last[kind] && !player.pad[kind] && !continuouslyHeld)
+          command[kind] = false;
         else player.pending[kind] = false;
       }
       player.last = { ...command };
+      player.pendingSteer = false;
       return command;
     });
     sync();

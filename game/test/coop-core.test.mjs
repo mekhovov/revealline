@@ -556,13 +556,14 @@ test('both-down recovery spends one team reserve and held inputs cannot immediat
   const run = knockdownFixture();
   const reserves = run.team.reserves;
   const first = ticks(run, pair('down', 'up'), 1);
-  assert.ok(run.players.every((player) => player.status === 'downed'));
+  assert.ok(run.players.every((player) => player.status === 'active'));
   assert.equal(first.filter((event) => event.type === 'player.downed').length, 2);
+  assert.equal(first.filter((event) => event.type === 'player.revived').length, 2);
   assert.equal(run.team.reserves, reserves - 1);
   const events = ticks(run, pair('down', 'up'), 100);
   assert.equal(run.status, 'running');
   assert.equal(run.team.reserves, reserves - 1);
-  assert.equal(events.filter((event) => event.type === 'player.revived').length, 2);
+  assert.equal(events.filter((event) => event.type === 'player.revived').length, 0);
   assert.ok(run.players.every((player) => player.status === 'active' && !player.cutting));
   assert.deepEqual(
     run.players.map(({ x, y }) => ({ x, y })),
