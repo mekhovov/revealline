@@ -1,0 +1,152 @@
+{
+  "scope": "Native field-guide illustration selection, not seven separate playthroughs.",
+  "observations": [
+    {
+      "appearance": "fpv",
+      "heading": "Field hunter",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "bouncer",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Border guard",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "border-patrol",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Contour crawler",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "contour-patrol",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Ground rover",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "claimed-rover",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Territory eroder",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "eroder",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Lane emitter",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "lane-boss",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    },
+    {
+      "appearance": "fpv",
+      "heading": "Relay sentinel",
+      "preview": {
+        "bottom": 283.59375,
+        "height": 84,
+        "left": 607.5,
+        "right": 751.5,
+        "top": 199.59375,
+        "width": 144,
+        "x": 607.5,
+        "y": 199.59375
+      },
+      "selected": "relay-sentinel",
+      "status": "",
+      "viewport": {
+        "dpr": 2,
+        "height": 1064,
+        "width": 1359
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: Workshop destinations ship their actual authoring runtime and return paths
+ok 1 - Workshop destinations ship their actual authoring runtime and return paths
+  ---
+  duration_ms: 942.399833
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 2 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 740.769875
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 3 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 679.337375
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 4 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 633.726834
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 5 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 916.59575
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 6 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.48275
+  ...
+# Subtest: surface copy has stable English fallback keys and preserves native controls
+ok 7 - surface copy has stable English fallback keys and preserves native controls
+  ---
+  duration_ms: 0.165042
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4339.98025

@@ -71,11 +71,16 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     await settle(() => !page.$('continue-saved').disabled, 'saved flight verified');
     page.frame(0);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.match(page.$('run-message').textContent, /Saved flight verified.*Press Resume/);
+    const restoredBytes = storage.getItem(sessionKey);
     page.$('start-button').click();
     await settle(
       () => page.doc.body.dataset.flightState === 'running',
       'Explicit Start/Resume waits for the selected picture before movement.',
     );
+    assert.equal(page.$('run-message').textContent, 'Flight resumed.');
+    assert.equal(storage.getItem(sessionKey), restoredBytes, 'Resume copy does not rewrite save');
     ticks(page, 8);
     assert.equal(page.rendered.run.tick, saved.replay.ticks + 8);
     assert.ok(

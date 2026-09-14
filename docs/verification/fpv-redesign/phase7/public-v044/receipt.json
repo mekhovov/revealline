@@ -1,0 +1,164 @@
+{
+  "format": "revealline-public-browser-acceptance.v1",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-06/releases/v0.44.0/site/game/",
+  "sourceRevision": "fc789c71aa21a240c9966d874dd76e9daeb9f44b",
+  "result": "pass-with-recorded-first-preparation-timeout",
+  "offline": {
+    "version": "v0.44.0",
+    "buildId": "ccd077d67de9f2a7ab386879d2b7420abdeebdba741841cafa7d20f230fad5ff",
+    "count": 312,
+    "verified": 312,
+    "bytes": 53535086,
+    "missing": [],
+    "corrupt": [],
+    "emulation": true,
+    "networkRestored": true
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4161,
+      "sha256": "77d57df3f0e7136d7300175084d2f14f059a897992976012c3c643d39eb3fa4f"
+    },
+    {
+      "path": "browser-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "capture-state.txt",
+      "bytes": 336,
+      "sha256": "3ae8b2f828424f03d71847a0ccdc4303795583e259429e492d441e700668fb25"
+    },
+    {
+      "path": "capture.png",
+      "bytes": 50452,
+      "sha256": "d3ea0f033fdcc26b99bc83ff0896b4d24305923fee2da56cc40a0b3ef97b2069"
+    },
+    {
+      "path": "continue-state.txt",
+      "bytes": 337,
+      "sha256": "c52833e8d0543dd03a63e88f192f2efd95c9b00bd0c67ab312f690636b1802b6"
+    },
+    {
+      "path": "environment.txt",
+      "bytes": 345,
+      "sha256": "3997c38ae9178915ba5ee5192061600a6ace6c0c26a81f62850b7e44abb70a6b"
+    },
+    {
+      "path": "large-preference-before.txt",
+      "bytes": 191,
+      "sha256": "ac5a3532f8be811e2f2a8b99502d15524a2ff3703dbba31ba1672fdf38c0b21c"
+    },
+    {
+      "path": "network-restored.txt",
+      "bytes": 132,
+      "sha256": "50390ceb0fd7ef73cb1aada2eeceada171e32a9a5a2551c09fe632230cfb494f"
+    },
+    {
+      "path": "offline-capture-state.txt",
+      "bytes": 473,
+      "sha256": "65d3085f4149189b7e745a50971a024ef06264be4a0949990f274039d5b71721"
+    },
+    {
+      "path": "offline-capture.png",
+      "bytes": 33754,
+      "sha256": "e7e104b09790979210c078a6bda006bb20ce0671d65d91f7f1fb8046e66c37ee"
+    },
+    {
+      "path": "offline-collection.png",
+      "bytes": 35444,
+      "sha256": "e6b367c0897a26fb280d58138735b0cdb49cdbc907a4f13790f078bda03dfd8e"
+    },
+    {
+      "path": "offline-first-timeout.png",
+      "bytes": 55853,
+      "sha256": "abec657c18604c097ea02020966a73988a6eb0e0d13e880f554d6b09548233ee"
+    },
+    {
+      "path": "offline-first-timeout.txt",
+      "bytes": 545,
+      "sha256": "0e5b2d3b1a26150f4f666785ca7329f4d8b4a6af4d732311e2e0fba152bb0644"
+    },
+    {
+      "path": "offline-flight-paused-before.txt",
+      "bytes": 326,
+      "sha256": "4659a73fa8eeea3b2f739d300f33eababd05e5032b6ddd3dbd9c5f08a7f6c68b"
+    },
+    {
+      "path": "offline-picture-before-successful-click.png",
+      "bytes": 35444,
+      "sha256": "e6b367c0897a26fb280d58138735b0cdb49cdbc907a4f13790f078bda03dfd8e"
+    },
+    {
+      "path": "offline-picture-before-successful-click.txt",
+      "bytes": 716,
+      "sha256": "af3e8f0531051b2b144d26c245d6e6354cb13c8ad806666411abf44aec988c41"
+    },
+    {
+      "path": "offline-picture-state.txt",
+      "bytes": 401,
+      "sha256": "e6cacdab06173681d867c248c01d5cee136178b7f0ffe812a247193db2246cfd"
+    },
+    {
+      "path": "offline-picture.png",
+      "bytes": 27278,
+      "sha256": "b7b76e7c185a69001c0f4f8527b85f28120d91b3b38738796bdc29b7c789cba7"
+    },
+    {
+      "path": "offline-prepare-retry-state.txt",
+      "bytes": 1532,
+      "sha256": "f2151cba16ae4108d5fef2bc7d532e44af1860455cdd6181d5fc5f84ea07755b"
+    },
+    {
+      "path": "offline-preparing-observation.txt",
+      "bytes": 141,
+      "sha256": "31bf8b95dad16ef7e1ca4e50b6fe6885c42615924db4fba40ed86628901bf2b0"
+    },
+    {
+      "path": "offline-ready.png",
+      "bytes": 54331,
+      "sha256": "0861807c3946c86f4fee91f060054af2f9ef06631fdcf072346988a0d0dc57c6"
+    },
+    {
+      "path": "offline-reopened-state.txt",
+      "bytes": 598,
+      "sha256": "ec83512b947df3be69d8ed5af465efd66b8fd2455402179be614208aa1f3ef6c"
+    },
+    {
+      "path": "offline-verified-details.txt",
+      "bytes": 749,
+      "sha256": "569da1d1f1f376bd1255faace07f2b7ce46d8d1cc6aeb25fd72c437038711459"
+    },
+    {
+      "path": "paused-state.txt",
+      "bytes": 593,
+      "sha256": "276dae3df2d47f2cc1c621a7b591ebdf73a296af38c3c8d6da269c284dea5a9c"
+    },
+    {
+      "path": "paused.png",
+      "bytes": 277054,
+      "sha256": "f690408d319b59a5ae7ed23ce098ef6db411e88ac492e52fb9ae3699c3efb12e"
+    },
+    {
+      "path": "resume-before-successful-click.png",
+      "bytes": 281034,
+      "sha256": "b84e206e082b598c0c9bc05cb71232885a09be0bf5254ff9d6fac56229968564"
+    },
+    {
+      "path": "resume-before-successful-click.txt",
+      "bytes": 322,
+      "sha256": "a9779a970432e055f95a1609ec72664cdccdedc4dd5cf5040faea907c649ff28"
+    },
+    {
+      "path": "resume-state.txt",
+      "bytes": 324,
+      "sha256": "0e8cef6cd5cc2e2eca6242e87841466184a518ba41f7f840379760a8f0754229"
+    },
+    {
+      "path": "title.png",
+      "bytes": 45547,
+      "sha256": "52d6520bcf15d0fae03584d1fc72fb8137f720e826afcf8ec83e211c0bcea4de"
+    }
+  ]
+}

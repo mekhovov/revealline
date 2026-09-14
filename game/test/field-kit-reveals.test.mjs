@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import {
   prepareRevealPixels,
   prepareFieldKitReveals,
+  resolveRevealSources,
   REVEAL_PALETTE,
 } from '../../scripts/prepare-field-kit-reveals.mjs';
 import { decodeRGB, encodeScenePNG } from '../../scripts/prepare-field-kit-scenes.mjs';
@@ -86,7 +87,9 @@ test('prepared reveal manifest preserves exact source pins, full prompts, every 
   );
   for (const asset of manifest.assets) {
     assert.equal(asset.quality.stage, 'produced');
-    assert.ok(asset.provenance.prompt.startsWith('Use case: stylized-concept.'));
+    assert.ok(
+      asset.provenance.prompt.length >= 100 && asset.provenance.prompt.includes('Reveal Line'),
+    );
     const source = await readFile(new URL(asset.provenance.source.path, root));
     assert.equal(hash(source), asset.provenance.source.sha256);
     assert.equal(source.length, asset.provenance.source.bytes);
@@ -104,6 +107,35 @@ test('prepared reveal manifest preserves exact source pins, full prompts, every 
     }
   }
   assert.equal(seen.size, manifest.produced.owners);
+});
+
+test('edited reveal sources retain exact parent pins and cannot overwrite originals or fork stale revisions', () => {
+  const original = {
+    id: 'scene-example',
+    source: { path: 'original.png', sha256: 'a'.repeat(64), bytes: 10, width: 4, height: 3 },
+  };
+  const edit = {
+    id: original.id,
+    revision: 2,
+    supersedes: structuredClone(original.source),
+    source: {
+      ...original.source,
+      path: 'authoring/library/fpv-field-kit/originals/reveals/scene-example-v2.png',
+      sha256: 'b'.repeat(64),
+    },
+    prompt: 'Create an original Reveal Line pixel-art refinement. '.repeat(3),
+  };
+  const before = structuredClone(original);
+  assert.deepEqual(resolveRevealSources([original], [edit]).get(original.id), edit);
+  assert.deepEqual(original, before);
+  for (const wrong of [
+    { ...edit, revision: 3 },
+    { ...edit, id: 'missing' },
+    { ...edit, source: original.source },
+    { ...edit, supersedes: { ...original.source, sha256: 'c'.repeat(64) } },
+  ])
+    assert.throws(() => resolveRevealSources([original], [wrong]), /Reveal/);
+  assert.throws(() => resolveRevealSources([original], [edit, edit]), /parent/);
 });
 
 test('public review uses compiled hashes below a project prefix, while source access stays local and explicit', () => {

@@ -138,11 +138,48 @@ export function adoptStudioBundle(source, incomingSource) {
 }
 export function generateAssetPrompt(slot, resolved, action = 'variation') {
   const asset = resolved.assets[slot.id];
+  const audio = slot.group === 'audio',
+    font = slot.group === 'fonts',
+    recipeOnly = slot.kinds.length === 1 && slot.kinds[0] === 'recipe',
+    music = slot.id === 'audio.music',
+    name = slot.id.replaceAll('.', '-');
+  const mediumBrief = audio
+    ? `Create original ${music ? 'instrumental Field Kit music: a restrained synth/chiptune loop with clear loop boundaries, no vocals and room for game cues' : 'short Field Kit interface/game feedback: restrained electronic oscillator tones, a clean envelope and a distinct contour appropriate to ' + slot.label}. Keep the existing mute, volume and user-activation behavior. ${music ? 'Return a seamless 4–16-bar loop in Ogg Vorbis or MP3 and retain a lossless WAV source.' : 'Return a mono 48 kHz, 16-bit PCM WAV cue no longer than one second, without leading silence or clicks.'} Keep peaks below clipping, state the measured duration and loudness, and stay within ${slot.budget.maxBytes} bytes. Sound must never be the only indication of a game event. Visual palette tokens below identify this collection; they are not audio parameters.`
+    : font
+      ? `Prepare a readable licensed font for ${slot.label}, retaining its source and license notices. Return a real WOFF2 font, not lettering in an image. Verify the actual shipped binary covers English and Ukrainian, including Ґґ Єє Іі Її, punctuation, digits and ʼ ’. Preserve the role's approved weights/axes and fit; test the Standard/Large interface, 200% browser zoom, І l 1, О O 0, 01:24 and 85%. Numeric roles require equal-width digits. Report cmap coverage, metrics and file size within ${slot.budget.maxBytes} bytes.`
+      : recipeOnly
+        ? `Prepare a bounded code or metadata change for the existing registered recipe ${asset.recipe.id} used by ${slot.label}. Preserve the FPV Field Kit palette and deliberate square pixel clusters. This slot accepts recipe metadata only and has no image upload. Use only supported theme tokens, or the locked rotor anchors on related player body assets where applicable. Recipe metadata contains only its registered id; do not invent parameters or claim that metadata alone changes renderer behavior. Changes to procedural behavior belong in the registered source implementation. A new recipe requires implementation and review before registration or adoption. Preserve event meaning, collision geometry, input behavior, pause and reduced-motion behavior.`
+        : slot.prompt;
+  const output = audio
+    ? `Return the retained source and prepared ${name}.${music ? 'ogg (or mp3)' : 'wav'}, full prompt, creator/license and measured codec, channel, sample-rate, duration, peak and byte-budget validation. Audition the cue alongside existing music and verify the explicit Stop/mute paths.`
+    : font
+      ? `Return the retained font source, license and prepared ${name}.woff2 with full prompt and actual glyph/axis/metric/byte-budget validation. Keep all UI copy as real text.`
+      : recipeOnly
+        ? 'Return a reviewable code or metadata patch identifying the registered source files and supported token or related body-anchor changes, full prompt, creator/license and before/after validation evidence for each affected screen. Retain the previous immutable source and asset revisions. Do not return an uploadable PNG or executable bundle content; .rltheme bundles remain data-only and cannot install code. Verify native-size readability, actual runtime bindings, pause, reduced motion and unchanged gameplay before release.'
+        : `Return the unmodified source and a separate prepared ${name}.png, complete prompt, creator/license, and validation evidence. Do not bake words, telemetry, collision geometry, propeller motion or reference-game artwork into the image. Verify dimensions, alpha, occupied bounds, anchors, byte budget, native-size readability and every affected screen.`;
   const intent =
     action === 'edit'
-      ? 'Edit the attached current asset. Preserve its approved silhouette and locked geometry.'
+      ? audio
+        ? 'Edit the attached current audio. Preserve its event meaning, timing and approved musical character.'
+        : font
+          ? 'Edit or replace the attached current font. Preserve readable glyph coverage, role metrics and licensed-source requirements.'
+          : recipeOnly
+            ? 'Edit the existing registered recipe through a bounded code or metadata change. Preserve its identity, purpose and locked geometry.'
+            : 'Edit the attached current asset. Preserve its approved silhouette and locked geometry.'
       : action === 'collection'
         ? 'Replace this asset as part of one coherent collection. Match all related slots; do not alter their identities or mechanics.'
         : 'Create a new original variation of this asset.';
-  return `${intent}\n\n${slot.prompt}\n\nTHEME: ${resolved.theme.name}\nSLOT: ${slot.id}\nUSED ON: ${slot.screens.join(', ')}\nSTATES: ${slot.states.join(', ')}\nDIMENSIONS: ${slot.dimensions ? `${slot.dimensions.width}×${slot.dimensions.height}` : 'Registered scalable/procedural recipe'}\nTRANSPARENCY: ${slot.alpha}\nPIXEL SAMPLING: ${slot.sampling}\nRESOLVED TOKENS:\n${JSON.stringify(resolved.tokens, null, 2)}\n\nREQUIREMENTS:\n${slot.requirements.map((line) => `- ${line}`).join('\n')}\n\nCURRENT REVISION: ${asset.id}@${asset.revision}\nCURRENT FILE AND LOCKED GEOMETRY (takes precedence over baseline geometry for edits):\n${JSON.stringify({ file: asset.file, geometry: asset.geometry }, null, 2)}\n\nCURRENT PRODUCTION BRIEF (reference context, subject to the slot requirements above):\n${asset.provenance.prompt}\n\nBASELINE SLOT CONTRACT:\n${JSON.stringify(slot, null, 2)}\n\nReturn the unmodified source and a separate prepared ${slot.id.replaceAll('.', '-')}.png (or the declared font/audio format), complete prompt, creator/license, and validation evidence. Do not bake words, telemetry, collision geometry, propeller motion or reference-game artwork into the image. Verify dimensions, alpha, occupied bounds, anchors, byte budget, native-size readability and every affected screen. A candidate is not an approved release.`;
+  const mediumSpecific = audio || font || recipeOnly;
+  const contract = mediumSpecific ? { ...slot, prompt: mediumBrief } : slot;
+  const currentBrief =
+    mediumSpecific && asset.provenance.prompt === slot.prompt
+      ? mediumBrief
+      : asset.provenance.prompt;
+  const sampling = mediumSpecific
+    ? ''
+    : `\nTRANSPARENCY: ${slot.alpha}\nPIXEL SAMPLING: ${slot.sampling}`;
+  const currentRecipe = recipeOnly
+    ? `\n\nCURRENT REGISTERED RECIPE:\n${JSON.stringify(asset.recipe, null, 2)}`
+    : '';
+  return `${intent}\n\n${mediumBrief}\n\nTHEME: ${resolved.theme.name}\nSLOT: ${slot.id}\nUSED ON: ${slot.screens.join(', ')}\nSTATES: ${slot.states.join(', ')}\nDIMENSIONS: ${slot.dimensions ? `${slot.dimensions.width}×${slot.dimensions.height}` : audio ? 'Audio duration and encoded byte budget; no pixel dimensions' : font ? 'Font glyph metrics; no pixel canvas' : 'Registered scalable/procedural recipe'}${sampling}\nRESOLVED TOKENS:\n${JSON.stringify(resolved.tokens, null, 2)}\n\nREQUIREMENTS:\n${slot.requirements.map((line) => `- ${line}`).join('\n')}\n\nCURRENT REVISION: ${asset.id}@${asset.revision}\nCURRENT FILE AND LOCKED GEOMETRY (takes precedence over baseline geometry for edits):\n${JSON.stringify({ file: asset.file, geometry: asset.geometry }, null, 2)}${currentRecipe}\n\nCURRENT PRODUCTION BRIEF (reference context, subject to the slot requirements above):\n${currentBrief}\n\nBASELINE SLOT CONTRACT (identity retained; medium-specific generation brief):\n${JSON.stringify(contract, null, 2)}\n\n${output} A candidate is not an approved release.`;
 }

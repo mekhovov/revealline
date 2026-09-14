@@ -1,0 +1,81 @@
+{
+  "format": "fpv-phase7-offline-budget.v1",
+  "scope": "Working-source candidate build, sourceRevision null; not frozen release qualification. Couch and Studio offline dependency fixes follow separately.",
+  "version": "0.51.0",
+  "buildId": "869b29d7b9ce351d4e9fe595f822cc6ed566728630772f5834748e1c5bedf599",
+  "offlineFiles": 568,
+  "offlineBytes": 65923013,
+  "limitBytes": 67108864,
+  "optionalPacks": [
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "id": "fpv-arcade-r2",
+      "name": "FPV Front \u00b7 First Light R2"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "id": "fpv-arcade-r3",
+      "name": "FPV Front \u00b7 First Light R3"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "id": "fpv-arcade-r4",
+      "name": "FPV Front \u00b7 First Light Arcade R4"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "id": "fpv-arcade-r5",
+      "name": "FPV Front \u00b7 Pressure Lines"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "id": "fpv-arcade",
+      "name": "FPV Front \u00b7 First Light"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "id": "fpv-pressure-frontier",
+      "name": "FPV Front \u00b7 Frontier Lines"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+      "id": "original-fpv-pressure",
+      "name": "FPV Front \u00b7 Illustrated Pressure"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+      "id": "original-ukraine-atlas",
+      "name": "Ukraine Atlas \u00b7 Woven Lines"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+      "id": "original-retro-1994",
+      "name": "1994 Forever \u00b7 After Hours"
+    },
+    {
+      "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+      "id": "original-spend-network",
+      "name": "Spend Network \u00b7 Shared Routes"
+    },
+    {
+      "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "id": "fpv-route-choices",
+      "name": "FPV Front \u00b7 Route Choices \u2014 Tactical"
+    }
+  ],
+  "r5": {
+    "path": "game/content/packs/fpv-arcade-r5.json",
+    "bytes": 11708176,
+    "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+    "inCore": false,
+    "inManifest": {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+    },
+    "originalBytesPreserved": true
+  },
+  "manifestFiles": 614,
+  "manifestBytes": 322899778,
+  "priorFailure": "phase7-budget-check.log: Offline distribution exceeds 2000 files or 64 MiB; split optional content into packs"
+}

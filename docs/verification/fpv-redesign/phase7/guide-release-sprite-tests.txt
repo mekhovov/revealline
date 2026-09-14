@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: a restored FPV-only pack keeps all four canonical Guide appearances and practices
+ok 1 - a restored FPV-only pack keeps all four canonical Guide appearances and practices
+  ---
+  duration_ms: 1076.660458
+  ...
+# Subtest: immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 2 - immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 5639.083167
+  ...
+# Subtest: grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 3 - grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 5735.533292
+  ...
+# Subtest: actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+ok 4 - actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+  ---
+  duration_ms: 2267.284709
+  ...
+# Subtest: actual guide returns with streamed music still explicitly paused, without resuming flight
+ok 5 - actual guide returns with streamed music still explicitly paused, without resuming flight
+  ---
+  duration_ms: 3758.925125
+  ...
+# Subtest: actual guide returns with streamed music continuing, without resuming flight
+ok 6 - actual guide returns with streamed music continuing, without resuming flight
+  ---
+  duration_ms: 2900.9695
+  ...
+# Subtest: guide has concise theme-aware copy and native controls reachable through shared navigation
+ok 7 - guide has concise theme-aware copy and native controls reachable through shared navigation
+  ---
+  duration_ms: 51.862083
+  ...
+# Subtest: original role previews move but Pause and reduced effects hold their cosmetic frames
+ok 8 - original role previews move but Pause and reduced effects hold their cosmetic frames
+  ---
+  duration_ms: 5.825167
+  ...
+# Subtest: the guide paints only the selected registered image and motion, with separate boss bodies
+ok 9 - the guide paints only the selected registered image and motion, with separate boss bodies
+  ---
+  duration_ms: 24.468875
+  ...
+# Subtest: the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+ok 10 - the FPV guide uses the release sprite geometry and retains other-theme and legacy fallbacks
+  ---
+  duration_ms: 10.974959
+  ...
+# Subtest: artwork completion repaints the same manual-clock frame and preserves reduced effects
+ok 11 - artwork completion repaints the same manual-clock frame and preserves reduced effects
+  ---
+  duration_ms: 6.67425
+  ...
+# Subtest: retired guide catalogs cannot request images after a topic change, hidden page or disposal
+ok 12 - retired guide catalogs cannot request images after a topic change, hidden page or disposal
+  ---
+  duration_ms: 2.379708
+  ...
+# Subtest: returning to a visible or reopened guide reacquires only its selected body
+ok 13 - returning to a visible or reopened guide reacquires only its selected body
+  ---
+  duration_ms: 8.88125
+  ...
+# Subtest: hidden, closed, page-hidden and disposed previews release pending decodes without late painting
+ok 14 - hidden, closed, page-hidden and disposed previews release pending decodes without late painting
+  ---
+  duration_ms: 7.741375
+  ...
+# Subtest: practice releases artwork immediately and its return errors survive independent artwork failures
+ok 15 - practice releases artwork immediately and its return errors survive independent artwork failures
+  ---
+  duration_ms: 15.272541
+  ...
+# Subtest: practice uses a version-relative same-origin URL and restores only its own temporary handoff
+ok 16 - practice uses a version-relative same-origin URL and restores only its own temporary handoff
+  ---
+  duration_ms: 6.008167
+  ...
+# Subtest: Cancel or disposal during preparation cannot launch late or replace preview/save data
+ok 17 - Cancel or disposal during preparation cannot launch late or replace preview/save data
+  ---
+  duration_ms: 6.999292
+  ...
+# Subtest: storage failure is visible and returns the suspended parent without launching a child
+ok 18 - storage failure is visible and returns the suspended parent without launching a child
+  ---
+  duration_ms: 3.269334
+  ...
+# Subtest: a denied preview restoration stays visible after practice returns to the guide
+ok 19 - a denied preview restoration stays visible after practice returns to the guide
+  ---
+  duration_ms: 6.5195
+  ...
+# Subtest: a cancelled asynchronous pause callback cannot close a newer lesson
+ok 20 - a cancelled asynchronous pause callback cannot close a newer lesson
+  ---
+  duration_ms: 9.742333
+  ...
+# Subtest: bridge accepts only finite return destinations and never a foreign game URL
+ok 21 - bridge accepts only finite return destinations and never a foreign game URL
+  ---
+  duration_ms: 1.15875
+  ...
+# Subtest: actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards
+ok 22 - actual child practice can lose, Retry the same impact lesson and return to the unchanged guide without rewards
+  ---
+  duration_ms: 12553.177417
+  ...
+# Subtest: enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses
+ok 23 - enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses
+  ---
+  duration_ms: 37.575333
+  ...
+# Subtest: enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate
+ok 24 - enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate
+  ---
+  duration_ms: 4.16875
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21538.425791

@@ -15,6 +15,7 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     state = options.state,
     selected = ['selected', 'pressed'].includes(state),
     inputKind = slot.id.startsWith('ui.input.') ? slot.id.slice(9) : null,
+    buttonKind = slot.id.startsWith('ui.button.') ? slot.id.slice(10) : null,
     semantic = FIELD_KIT_ICON_IDS.includes(slot.id);
   box.dataset.state = state;
   box.dataset.specimenSlot = slot.id;
@@ -69,22 +70,87 @@ export function componentPreview(surface, slot, options, backgroundImage = null)
     target = node('p', `${slot.label} · symbol specimen only`, 'specimen-semantic');
     box.append(target);
   } else {
+    const labels = {
+      primary: 'Deploy · Почати',
+      secondary: 'Back · Назад',
+      danger: 'Discard draft · Скасувати',
+      icon: '',
+      tab: 'Controls · Керування',
+      chip: 'Filter chip specimen',
+    };
     target = node(
       'button',
       state === 'loading'
         ? 'Loading specimen…'
         : semantic
           ? `${slot.label} specimen`
-          : slot.id === 'ui.button.chip'
-            ? 'Filter chip specimen'
-            : 'Deploy · Почати',
+          : (labels[buttonKind] ?? 'Component action specimen'),
+      `button ${buttonKind === 'icon' ? 'icon-button specimen-icon' : buttonKind || 'secondary'}`,
     );
     target.type = 'button';
     target.disabled = state === 'disabled';
-    target.setAttribute('aria-pressed', String(selected));
-    if (slot.id === 'ui.button.chip') target.classList.add('chip');
-    box.append(target);
+    if (state === 'loading') target.setAttribute('aria-busy', 'true');
+    if (buttonKind === 'icon') {
+      target.setAttribute('aria-label', 'Pause specimen');
+      const glyph = node('span', 'Ⅱ');
+      glyph.setAttribute('aria-hidden', 'true');
+      target.append(glyph);
+    }
+    if (buttonKind === 'chip') {
+      target.setAttribute('aria-pressed', String(selected));
+      target.onclick = () =>
+        target.setAttribute('aria-pressed', String(target.getAttribute('aria-pressed') !== 'true'));
+    }
+    if (buttonKind === 'tab') {
+      const tabs = node('div', '', 'specimen-tabs'),
+        other = node('button', 'Audio · Звук', 'button tab'),
+        controls = [target, other],
+        panels = controls.map((control, index) => {
+          control.id = `component-tab-${++specimenId}`;
+          control.type = 'button';
+          control.setAttribute('role', 'tab');
+          const panel = node('div', `${index ? 'Audio' : 'Controls'} panel specimen.`);
+          panel.id = `${control.id}-panel`;
+          panel.setAttribute('role', 'tabpanel');
+          panel.setAttribute('aria-labelledby', control.id);
+          control.setAttribute('aria-controls', panel.id);
+          return panel;
+        }),
+        choose = (control, focus = false) => {
+          if (control.disabled) return;
+          for (const [index, button] of controls.entries()) {
+            const active = control === button;
+            button.setAttribute('aria-selected', String(active));
+            button.tabIndex = active ? 0 : -1;
+            panels[index].hidden = !active;
+          }
+          if (focus) control.focus();
+        };
+      tabs.setAttribute('role', 'tablist');
+      tabs.setAttribute('aria-label', 'Component category specimen');
+      for (const control of controls) {
+        control.onclick = () => choose(control);
+        control.onkeydown = (event) => {
+          if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+          event.preventDefault();
+          const enabled = controls.filter((button) => !button.disabled),
+            index = enabled.indexOf(control),
+            next =
+              event.key === 'Home'
+                ? 0
+                : event.key === 'End'
+                  ? enabled.length - 1
+                  : (index + (event.key === 'ArrowRight' ? 1 : -1) + enabled.length) %
+                    enabled.length;
+          choose(enabled[next], true);
+        };
+      }
+      choose(selected ? target : other);
+      tabs.append(...controls);
+      box.append(tabs, ...panels);
+    } else box.append(target);
   }
+  target.dataset.specimenControl = 'true';
   if (semantic && !backgroundImage) {
     const art = iconForSlot(slot.id, { tokens: options.tokens }),
       canvas = node('canvas');

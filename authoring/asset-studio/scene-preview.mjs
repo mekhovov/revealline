@@ -2,12 +2,17 @@ import { createRun } from '../../game/core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../../game/ui/render.mjs';
 import { createStudioPreviewRun, pickupKinds } from './preview-fixture.mjs';
 export { pickupKinds } from './preview-fixture.mjs';
-import { canvasPresentation, imagePresentation } from '../../game/presentation/runtime.mjs';
+import {
+  canvasPresentation,
+  imagePresentation,
+  presentationCSSVariables,
+} from '../../game/presentation/runtime.mjs';
 import { paintCharacter } from '../motion-lab/render-character.mjs';
 import { createAnimationState, advanceAnimation } from '../motion-lab/animation.mjs';
 import { Soundscape } from '../../game/ui/audio.mjs';
 import { drawActiveTrail, drawCapturePulse } from '../../game/ui/actor-presentation.mjs';
 import { drawEventFeedback } from '../../game/ui/event-feedback.mjs';
+import { CURRENT_ART_SOURCES } from '../../game/presentation/current-art-sources.mjs';
 const text = (tag, value, className = '') => {
   const node = document.createElement(tag);
   node.textContent = value;
@@ -19,18 +24,73 @@ const read = async (url) => {
   if (!response.ok) throw new Error(`Preview fixture unavailable (${response.status}).`);
   return response.json();
 };
-let fixturePromise;
-const fixtures = () =>
-  (fixturePromise ||= Promise.all([
-    read(new URL('../motion-lab/presets.json', import.meta.url)),
-    read(new URL('../../game/content/packs/fpv-arcade-r5.json', import.meta.url)),
-    ...['classic-lab', 'sentinel-relay', 'fpv-arcade'].map((id) =>
-      read(new URL(`../../game/content/packs/${id}.json`, import.meta.url)),
+const optionalFixtureLevels = {
+  'fpv-arcade-r5': ['orchard-crossing', 'courtyard-exits', 'night-crossfire'],
+  'fpv-arcade': ['orchard-window', 'split-courtyard', 'night-signal'],
+};
+function metadataFixturePack(id) {
+  const rows = optionalFixtureLevels[id].map((levelId) =>
+    CURRENT_ART_SOURCES.find(
+      (row) =>
+        row.source.path === `game/content/packs/${id}.json` &&
+        row.owner.themeId === 'fpv' &&
+        row.level?.id === levelId,
     ),
-  ]).catch((error) => {
-    fixturePromise = null;
-    throw error;
-  }));
+  );
+  if (rows.some((row) => !row?.level || !row.theme))
+    throw new Error(`Code-owned inspection metadata is unavailable for ${id}.`);
+  // Only trusted level/theme metadata: no original picture bytes or player storage.
+  return { themes: [rows[0].theme], campaigns: [{ levels: rows.map((row) => row.level) }] };
+}
+export function createStudioFixtureLoader({ readJSON = read } = {}) {
+  let presetPromise;
+  const packs = new Map();
+  const presets = () =>
+    (presetPromise ||= readJSON(new URL('../motion-lab/presets.json', import.meta.url)).catch(
+      (error) => {
+        presetPromise = null;
+        throw error;
+      },
+    ));
+  const pack = (id) => {
+    if (!packs.has(id))
+      packs.set(
+        id,
+        readJSON(new URL(`../../game/content/packs/${id}.json`, import.meta.url)).catch((error) => {
+          if (Object.hasOwn(optionalFixtureLevels, id)) return metadataFixturePack(id);
+          packs.delete(id);
+          throw error;
+        }),
+      );
+    return packs.get(id);
+  };
+  return {
+    presets,
+    async context(slotId, pictureOwner = null) {
+      if (pictureOwner && (!pictureOwner.level || !pictureOwner.theme))
+        throw new Error(
+          'Exact picture owner metadata is unavailable; no substitute board is shown.',
+        );
+      const preset = await presets();
+      if (pictureOwner)
+        return {
+          presets: preset,
+          theme: pictureOwner.theme,
+          level: pictureOwner.level,
+          run: createRun(pictureOwner.level, { seed: pictureOwner.descriptor?.seed ?? 0 }),
+        };
+      const choices = await Promise.all(
+        ['fpv-arcade-r5', 'classic-lab', 'sentinel-relay', 'fpv-arcade'].map(pack),
+      );
+      return {
+        presets: preset,
+        theme: choices[0].themes[0],
+        ...createStudioPreviewRun(choices, slotId),
+      };
+    },
+  };
+}
+const fixtureLoader = createStudioFixtureLoader();
 const bodyIds = {
   scout: 'fpv-scout-v1',
   bomber: 'fpv-light-carrier-v1',
@@ -58,6 +118,27 @@ const imageRoles = {
   'pickup.slow': 'slowPickup',
   'pickup.freeze': 'freezePickup',
 };
+/** Same frame-local geometry adapter as the release host. Decoded images are
+ * owned by this inspection only; this snapshot never reads or writes player state. */
+export function createStudioContextPresentation(resolved, decoded, selectedPlayerSlot = null) {
+  const images = new Map();
+  for (const [id, { asset, image }] of decoded)
+    images.set(id, Object.freeze({ image, asset, geometry: imagePresentation(asset) }));
+  const selected = images.get(selectedPlayerSlot),
+    selectedClass = /^player\.([^.]+)\.(compact|detailed)$/.exec(selectedPlayerSlot || '')?.[1],
+    css = presentationCSSVariables(resolved);
+  return Object.freeze({
+    resolved,
+    canvas: canvasPresentation(resolved),
+    fonts: Object.freeze({ ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] }),
+    image: (id) =>
+      selected &&
+      (id === `player.${selectedClass}.compact` || id === `player.${selectedClass}.detailed`)
+        ? selected
+        : (images.get(id) ?? null),
+  });
+}
+
 async function croppedImage(asset, blobs) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error('Preview media is missing.');
@@ -91,7 +172,7 @@ function loop(surface, own, draw, motion) {
   run(last);
 }
 export async function playerRecipePreview(surface, slot, resolved, blobs, options, own) {
-  const [presets] = await fixtures(),
+  const presets = await fixtureLoader.presets(),
     classId = slot.id.split('.')[1],
     bodyId = bodyIds[classId] || bodyIds.scout;
   let body = structuredClone(presets.characters[bodyId]);
@@ -101,7 +182,9 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   let image;
   if (imageAsset?.kind === 'image') {
     image = await croppedImage(imageAsset, blobs);
-    body.rotors = imagePresentation(imageAsset).rotors;
+    const geometry = imagePresentation(imageAsset);
+    body.rotors = geometry.rotors;
+    body.presentationPivot = geometry.pivot;
   } else {
     image = new Image();
     image.src = new URL(`../motion-lab/${body.src}`, import.meta.url).href;
@@ -151,19 +234,17 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
-  const [presets, pack, ...otherPacks] = await fixtures(),
-    classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout';
-  const { level, run } = options.sourcePicture?.level
-    ? {
-        level: options.sourcePicture.level,
-        run: createRun(options.sourcePicture.level, {
-          seed: options.sourcePicture.descriptor.seed || 0,
-        }),
-      }
-    : createStudioPreviewRun([pack, ...otherPacks], slot.id);
+  const classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout',
+    pictureOwner = options.pictureOwner || options.sourcePicture,
+    {
+      presets,
+      level,
+      run,
+      theme: fixtureTheme,
+    } = await fixtureLoader.context(slot.id, pictureOwner);
   const painter = new BoardPainter(presets),
     theme = {
-      ...(options.sourcePicture?.theme || pack.themes[0]),
+      ...fixtureTheme,
       palette: canvasPresentation(resolved).palette,
     };
   let warning = '';
@@ -171,7 +252,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     warning = message;
   };
   await painter.setLook(theme, bodyIds[classId] || bodyIds.scout);
-  painter.setLevel(level, { seed: 42 });
+  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
   if (slot.id.startsWith('effect.')) {
     const type = {
       failure: 'player.failed',
@@ -187,25 +268,27 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       run,
     );
   }
-  const scoped = { ...resolved.assets, [slot.id]: asset };
+  const scoped = { ...resolved.assets, [slot.id]: asset },
+    decoded = new Map();
   for (const [id, candidate] of Object.entries(scoped)) {
     if (candidate?.kind !== 'image') continue;
     let role = imageRoles[id];
-    if (id === `player.${classId}.compact` || (id === slot.id && id.startsWith('player.')))
-      role = 'player';
+    if (id === `player.${classId}.compact` || id === `player.${classId}.detailed`) role = 'player';
     if (id === slot.id && (slot.group === 'pictures' || slot.group === 'screens'))
       role = 'background';
     if (!role) continue;
     const image = await croppedImage(candidate, blobs);
-    painter.images[role] = image;
-    if (role === 'player') {
-      painter.image = image;
-      painter.body = {
-        ...structuredClone(painter.body),
-        rotors: imagePresentation(candidate).rotors,
-      };
-    }
+    if (role === 'background') painter.images.background = image;
+    else decoded.set(id, { asset: candidate, image });
   }
+  painter.setPresentation(
+    createStudioContextPresentation(
+      { ...resolved, assets: scoped },
+      decoded,
+      slot.id.startsWith('player.') ? slot.id : null,
+    ),
+  );
+  own(() => painter.enemyBodies.clear());
   if (options.sourcePicture) painter.images.background = options.sourcePicture.image;
   if (!options.isCurrent()) return;
   const size = boardPaintSizeForRun(run),
@@ -221,7 +304,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     frame,
     text(
       'small',
-      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${options.sourcePicture?.level ? 'exact source level' : 'isolated fixture'}${options.sourcePicture && !options.sourcePicture.level ? ' (original picture shown on a different inspection board)' : ''}${warning ? ` · ${warning}` : ''}`,
+      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${pictureOwner ? 'exact source level' : 'isolated fixture'}${/^player\.[^.]+\.(compact|detailed)$/.test(slot.id) ? ` · selected ${slot.id.split('.')[2]} body at every preview width` : ''}${warning ? ` · ${warning}` : ''}`,
       'bounded-label',
     ),
   );
@@ -233,7 +316,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         theme,
         level,
         image,
-        fit: options.sourcePicture?.fit || 'cover',
+        fit: pictureOwner?.fit || 'cover',
       });
     else
       painter.draw(canvas.getContext('2d'), run, dt, {
@@ -241,12 +324,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         reduced,
         showGrid: true,
         displayCSSWidth: Math.max(200, canvas.clientWidth),
-        ...(options.sourcePicture
+        ...(pictureOwner
           ? {
               backdrop: {
-                image: options.sourcePicture.image,
-                fit: options.sourcePicture.fit,
-                sampling: options.sourcePicture.sampling,
+                image: painter.images.background,
+                fit: pictureOwner.fit,
+                sampling: pictureOwner.sampling,
               },
             }
           : {}),

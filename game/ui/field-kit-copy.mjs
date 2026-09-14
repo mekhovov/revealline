@@ -44,6 +44,7 @@ export const FIELD_KIT_ENGLISH = Object.freeze({
   'settings.packs': 'Installed chapters',
   'settings.libraryDescription':
     'Manage saved flights, game-data backups and installed chapters in your flight library.',
+  'results.picture': 'The picture revealed in this flight',
   'collection.title': 'Your collection.',
   'collection.records': 'Flight records',
   'library.title': 'Flight library.',

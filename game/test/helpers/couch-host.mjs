@@ -58,6 +58,7 @@ export async function couchPage(
     assetDatabase,
     storage,
     lockManager,
+    fetchResponse,
     URLImpl = globalThis.URL,
     expectBootFailure = false,
   } = {},
@@ -121,15 +122,16 @@ export async function couchPage(
         super(doc, 'option', { label, text: label, textContent: label, value });
       }
     },
-    fetch: async (path) => ({
-      ok: true,
-      json: async () =>
-        path === '../content/campaign.json'
-          ? structuredClone(campaign)
-          : JSON.parse(
-              await readFile(new URL(path, new URL('../../couch/', import.meta.url)), 'utf8'),
-            ),
-    }),
+    fetch: async (path, options) =>
+      (await fetchResponse?.(path, options)) ?? {
+        ok: true,
+        json: async () =>
+          path === '../content/campaign.json'
+            ? structuredClone(campaign)
+            : JSON.parse(
+                await readFile(new URL(path, new URL('../../couch/', import.meta.url)), 'utf8'),
+              ),
+      },
     requestAnimationFrame(callback) {
       const id = ++nextFrame;
       rafs.set(id, callback);

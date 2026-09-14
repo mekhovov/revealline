@@ -1,0 +1,313 @@
+{
+  "format": "fpv-phase7-final-source-files.v1",
+  "scope": "Final scoped source/asset changes relative to the reviewed integration parent, before commit. Historical handoff and performance snapshots retain their own identities. Verification documents excluded to avoid circular hashes.",
+  "parentCommit": "6ef663b9d24f37ffc15269333b10ed212592eb42",
+  "runtimeSHA256": "2fc487be53e5c14e51fa63778b8c8a953e58917dcceca430b7698c03fef20c68",
+  "files": [
+    {
+      "path": ".github/workflows/qualify-release-source.yml",
+      "bytes": 2572,
+      "sha256": "d230002b6f860d260ac3644b5f4825807a6f8c4f22b05ddefb7eaf82e132f9cd"
+    },
+    {
+      "path": "authoring/asset-studio/component-specimens.mjs",
+      "bytes": 8982,
+      "sha256": "99f23bf84c7b20862055ad40e28c9537196672ea16cd4bb7a4e95f85a29bb3b6"
+    },
+    {
+      "path": "authoring/asset-studio/picture-context.mjs",
+      "bytes": 4456,
+      "sha256": "05ac9d677385b00072bb88ab3a6ad8443bbc618f4995916c4c5f4d8624230e2c"
+    },
+    {
+      "path": "authoring/asset-studio/preview.mjs",
+      "bytes": 13550,
+      "sha256": "c4c60a0954113bb6360b99b64d1e55bc9e83be9b699b12315e348b88db0d5694"
+    },
+    {
+      "path": "authoring/asset-studio/scene-preview.mjs",
+      "bytes": 16271,
+      "sha256": "5eb54b120b453f76bccaa814520d6a926e0473ae9b61d20a3732f7b6a91922db"
+    },
+    {
+      "path": "authoring/asset-studio/studio.css",
+      "bytes": 15333,
+      "sha256": "ed9c590d01ab1bd15394a718eb288878139a115a942403d9773e456e31042d57"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/originals/reveals/scene-signal-06-v2.png",
+      "bytes": 1753604,
+      "sha256": "b456d1e0fad467f5cf1b18cdf721c7bb181d4073142a3d76b3c079079aab5ca4"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/reveals.json",
+      "bytes": 266665,
+      "sha256": "fc25cf8c335518bdfd2259e26cb08e99184a9cfcf0c01018063d1b928103f92b"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-06-768x576-v2.png",
+      "bytes": 42982,
+      "sha256": "2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 6534494,
+      "sha256": "9bf459cbbde311413887feae897d1905f9cab4645c8a3a5444441eec4e79ce99"
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/reveal-source-revisions.json",
+      "bytes": 2449,
+      "sha256": "3ae2624fd39b108bb9c2d4fb5835c38204395025ce426850638b93020ed81fd5"
+    },
+    {
+      "path": "authoring/prompts/field-kit-production.md",
+      "bytes": 6807,
+      "sha256": "81e21da8554f47c823c09a98284debb23636aede572d35e79257df283f0cc70b"
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "bytes": 19707,
+      "sha256": "10d1b34da5973c41e4a4b3f91384a174e8357001ac59a8acf79252e29b3cb425"
+    },
+    {
+      "path": "authoring/skills/xonix-audio-director/SKILL.md",
+      "bytes": 9568,
+      "sha256": "a62272e3f24316e1958234a50edd5fbd8f05d34800cc805620d27f13fcc8e2ec"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 74127,
+      "sha256": "35d4f97cd81c71e276cef77f42046738d00c0b93bc0b0e68dc77658ded34f2d1"
+    },
+    {
+      "path": "docs/asset-studio.md",
+      "bytes": 14208,
+      "sha256": "78c7a93b1d1d618fac3232ae3a7ca33420f6786f4ae0052d0ebe7bff57911845"
+    },
+    {
+      "path": "docs/field-kit-production.md",
+      "bytes": 8912,
+      "sha256": "7dcc6cb0807a11852eacfd524bdbdb31a02302fd2a2b9e5e6499e418954cddd3"
+    },
+    {
+      "path": "docs/field-kit-surfaces.md",
+      "bytes": 4820,
+      "sha256": "2b1d9ccbd5583a0d32459e2938b08b3ff3c1f15b7525b6c9b3bc93e4fbb6ef42"
+    },
+    {
+      "path": "docs/fpv-redesign-execution.md",
+      "bytes": 10664,
+      "sha256": "25eaee27e356d1c1d99c508cad3cc36dd8a951c1fbd56652e699607cea0b7da0"
+    },
+    {
+      "path": "docs/presentation-system.md",
+      "bytes": 14003,
+      "sha256": "c31ba61022d63a585bb4e409cb8e3c0ef8cb78166b55a3e757340d32d63bd1f4"
+    },
+    {
+      "path": "game/app.mjs",
+      "bytes": 196771,
+      "sha256": "edb378c628f6c6ce56b91dbe97a283e08a0f087e8aaaeb9d9e6edc90150fea9c"
+    },
+    {
+      "path": "game/boot.css",
+      "bytes": 4734,
+      "sha256": "f458a234db449adcb1f08c126a3c2fec55264247952e901ec2eac5d13d6e2504"
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 4066,
+      "sha256": "3768a6844e7981839bf988cb8f9de5bee2b6428558e3784bcfa689781e86caa3"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 34492,
+      "sha256": "389ace3153b0368774b8889726e9566f87dc70c24256663fe6be08a3de436f8b"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 60393,
+      "sha256": "0a9951f79168c84e5cc04521cde3a33582a1f160ed28b4361134484dc825dd2b"
+    },
+    {
+      "path": "game/presentation/compiled/assets/2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da.png",
+      "bytes": 42982,
+      "sha256": "2444795bb19516949a98519f0e23f9cdf64b454f01a0bb297521d17b5af376da"
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 27214,
+      "sha256": "1e5b80e25f3c640ddfbbf2d6fc32a23f73812899c8a607dc8e2b17ec4586c906"
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 974568,
+      "sha256": "2fc487be53e5c14e51fa63778b8c8a953e58917dcceca430b7698c03fef20c68"
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 2905748,
+      "sha256": "16dfd5cceb0b8283c4bce2c3f1792bde9615fc178ad06b32174f47948aa209ef"
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "bytes": 26831,
+      "sha256": "921c85a5d4cbabf5384ebd0ad43f62dffc8ff7ff03f97abffcc69634a46c211d"
+    },
+    {
+      "path": "game/presentation/studio-session.mjs",
+      "bytes": 11783,
+      "sha256": "b1646b0da0fbb4c9279d87104993260a4540a3ef62867b101524b68db160da53"
+    },
+    {
+      "path": "game/test/asset-studio-context-geometry.test.mjs",
+      "bytes": 6188,
+      "sha256": "be25084d5e9406688639b7f425fc685f16dd07a16cc3b31cadfa269a527a88fd"
+    },
+    {
+      "path": "game/test/asset-studio-offline-fixtures.test.mjs",
+      "bytes": 5164,
+      "sha256": "8b5bc4f72593f0bc18d47ac0330d21890b3c952474344a6857c3fea772926ce9"
+    },
+    {
+      "path": "game/test/asset-studio-picture-context.test.mjs",
+      "bytes": 4454,
+      "sha256": "f3f573956e0dcde22e2e413ce496bc3893ef99e88c18826343e041bde39e6587"
+    },
+    {
+      "path": "game/test/boot-build.test.mjs",
+      "bytes": 7951,
+      "sha256": "8c522ed512d0d0aba2be802eb27b11a3a339ba9e2e5bb0dee5785976c759fe7a"
+    },
+    {
+      "path": "game/test/continuous-host.test.mjs",
+      "bytes": 6529,
+      "sha256": "5e72c293153913759f723b80fdd832d018a4d54935b8f00ccd5d68b54cc46a46"
+    },
+    {
+      "path": "game/test/couch-chapter.test.mjs",
+      "bytes": 10222,
+      "sha256": "880924c9a3e6dcfdc3e90b9f1504791ac3707ce909d8643080fd5e5e2fd77332"
+    },
+    {
+      "path": "game/test/couch-installed-chapters.test.mjs",
+      "bytes": 27924,
+      "sha256": "7474c86ad6f2336f0297341e347a345c58e39ca1c5932f5c73d24ca251d6b9ca"
+    },
+    {
+      "path": "game/test/enemy-guide-panel.test.mjs",
+      "bytes": 25423,
+      "sha256": "f682b75958b27eda95f871af6b15d0192ca78c4fd858ffbc1270c754dc96a900"
+    },
+    {
+      "path": "game/test/field-kit-reveals.test.mjs",
+      "bytes": 7839,
+      "sha256": "24cb6553b5bb4e85d513b6c02be8c0784f48b1786660757cc3aaf9db3393b4d9"
+    },
+    {
+      "path": "game/test/four-worlds-chapters.test.mjs",
+      "bytes": 10452,
+      "sha256": "b3cb6a8ee85f9fb6c715adfa3e338ee67a8897a9b0164a4e041daf5beb1380d9"
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "bytes": 7500,
+      "sha256": "5e1d18a16f3cc2f5bbb612cca1ff040701ce559cd28e88b64d6b46ecad346959"
+    },
+    {
+      "path": "game/test/presentation-component-specimens.test.mjs",
+      "bytes": 6943,
+      "sha256": "818fedab7781101e7f090c3775805db37cb6db576ad048a5a766ad61b9e8b5a7"
+    },
+    {
+      "path": "game/test/presentation-production-history.test.mjs",
+      "bytes": 6594,
+      "sha256": "78a12da807a2a5ef7b99aa85ae62ff027e457119e49c162d239ce76369e08a9b"
+    },
+    {
+      "path": "game/test/presentation-readiness.test.mjs",
+      "bytes": 6277,
+      "sha256": "cba2a9cd198c572205f40a8dd1aaa8ef8368a153b26771e1b937afc3a1c0f813"
+    },
+    {
+      "path": "game/test/presentation-studio.test.mjs",
+      "bytes": 22129,
+      "sha256": "d8ac81e4fa6a3c7461d726bf02132abd331c07881a64e21250036e64f08174bd"
+    },
+    {
+      "path": "game/test/result-picture.test.mjs",
+      "bytes": 4675,
+      "sha256": "20471aa102188827c09e1d7fe1bbc82ab511cee5f43c973dc8616828a13a66f3"
+    },
+    {
+      "path": "game/test/still-workshop-build.test.mjs",
+      "bytes": 19094,
+      "sha256": "8ac637b5a5779bbe055441110a49ad3950583d52fcdd2a426475da4f4483545c"
+    },
+    {
+      "path": "game/ui/enemy-guide.mjs",
+      "bytes": 16416,
+      "sha256": "112bfda6831adb67122d41ff24a7b3eabe2f5e4005be77af685ba76da03ff671"
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "bytes": 22607,
+      "sha256": "9550b98a7bb3a7866716c0a16c06a2b9b32cd3a5542da32489b0f5dd4a652f01"
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "bytes": 10003,
+      "sha256": "52f2a5b524f5473b601d313bb4d0b5eaab49231fd9814e4075c494dae74fead8"
+    },
+    {
+      "path": "game/ui/field-kit-copy.mjs",
+      "bytes": 3717,
+      "sha256": "98352e6fc8b0c3712ceba1ff6349a5be800ca15b2760f0ca6ee202ca28114545"
+    },
+    {
+      "path": "game/ui/field-kit-flow.css",
+      "bytes": 10864,
+      "sha256": "6e93dead8339ab39002eb28ae2b41a36b1704211276815d4a4d92cb86a6fabe0"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "bytes": 18121,
+      "sha256": "e806666e6cf408c352e8deb1cb7a557941f12af452266611af6e66c35356ffa8"
+    },
+    {
+      "path": "game/ui/result-picture.mjs",
+      "bytes": 1693,
+      "sha256": "2e533ecca4b64ae98aaca6819cdd628784d07e53100deecf36d073d8c90cdd79"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "3e560de3ca0a460835a892eb40a2ec724beff315fcc68765a98a314a830ae05e"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "b6146ec7777a9dab6ffc20ac610b10b85771fb720da66cbad3cee5404e84ba7f"
+    },
+    {
+      "path": "scripts/check-field-kit-readiness.mjs",
+      "bytes": 3726,
+      "sha256": "c8ee0f35ca9ece3f4461586ec2e92d5a0253441e753d31cef64e6a6a693ef831"
+    },
+    {
+      "path": "scripts/pages-archives.json",
+      "bytes": 2094,
+      "sha256": "1504c0f1bb8386c0798e7e93263405eee82596232d7e30a8bcb6c584458e2e56"
+    },
+    {
+      "path": "scripts/prepare-field-kit-reveals.mjs",
+      "bytes": 13807,
+      "sha256": "433c3cbe75a8722400dfc911631891537201b5c482bb5fc653b9fa1890685f10"
+    },
+    {
+      "path": "scripts/test-external-distribution.mjs",
+      "bytes": 9084,
+      "sha256": "9f666ffd39c61e78acc2f6a59bdf93683c8422f8c8b0b1658a6b6e6e9ae0faa5"
+    }
+  ]
+}

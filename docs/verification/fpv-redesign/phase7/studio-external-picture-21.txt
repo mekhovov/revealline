@@ -1,0 +1,1 @@
+"{\"slot\":\"picture.fpv.8876473e40d70804\",\"context\":\"FLIGHT / STUDIOIII  00:00  0%BoardPainter · Split Ring · 72 × 36 cells · exact source levelShow concealed field\",\"width\":1440,\"height\":900,\"dpr\":1,\"canvas\":{\"x\":921,\"y\":174.765625,\"width\":460,\"height\":230,\"top\":174.765625,\"right\":1381,\"bottom\":404.765625,\"left\":921}}"

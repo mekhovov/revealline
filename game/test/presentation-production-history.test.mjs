@@ -107,7 +107,31 @@ test('the whole production collection has capacity for immutable review successo
       next.assets.find((entry) => entry.id === old.id && entry.revision === old.revision),
       old,
     );
+  // An administrator must also be able to replace the complete reviewed set.
+  const variation = structuredClone(next),
+    variationResolved = resolvePresentation(next);
+  for (const slot of variation.slots.filter((entry) => entry.required)) {
+    const current = variationResolved.assets[slot.id];
+    variation.assets.find(
+      (entry) => entry.id === current.id && entry.revision === current.revision,
+    ).description += ' / coordinated replacement capacity fixture';
+  }
+  const replaced = retainProductionHistory(variation, next);
+  validateThemeBundle(replaced, { previous: next });
+  assert.equal(
+    replaced.assets.length,
+    next.assets.length + proposed.slots.filter((s) => s.required).length,
+  );
+  for (const old of next.assets)
+    assert.deepEqual(
+      replaced.assets.find((entry) => entry.id === old.id && entry.revision === old.revision),
+      old,
+    );
   const bytes = new Map([...prior.assets, ...production.assets]);
+  const replacementExport = await exportThemeBundle(replaced, bytes);
+  const replacementImport = await importThemeBundle(replacementExport, { decodeImage: null });
+  assert.deepEqual(replacementImport.document, replaced);
+
   const portable = await exportThemeBundle(next, bytes);
   const restored = await importThemeBundle(portable, { decodeImage: null });
   assert.deepEqual(restored.document, next);

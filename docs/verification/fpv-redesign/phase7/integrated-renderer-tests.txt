@@ -1,0 +1,16 @@
+✔ compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority (80.501792ms)
+✔ phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority (83.470458ms)
+✔ compiled enemy bodies skip legacy image loads while explicit skins retain the original body path (67.470625ms)
+✔ current non-FPV worlds retain their original canvas art while the interface can use Field Kit (55.580209ms)
+✔ published motion settings scale cosmetic clocks and zero motion keeps functional effect timing (180.881334ms)
+✔ enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker (1.408542ms)
+✔ terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates (58.70025ms)
+✔ classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed (0.477208ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 708.922875
