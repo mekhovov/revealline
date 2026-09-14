@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RevealLine — production register</title>
+    <link rel="stylesheet" href="../../game/ui/pixel-theme.css" />
+    <link rel="stylesheet" href="./panel.css" />
+  </head>
+  <body>
+    <header>
+      <a href="../">Authoring library</a>
+      <h1>Content production</h1>
+      <p>Find the next missing picture, presentation, story or track.</p>
+      <p class="muted">
+        Read-only source register. Viewing a file does not approve it or change the game.
+      </p>
+      <nav aria-label="Production snapshots">
+        <a id="snapshot-baseline" href="./">Baseline · revision 1</a>
+        <span aria-hidden="true"> · </span>
+        <a id="snapshot-sentinel" href="./?snapshot=sentinel-themes"
+          >Sentinel themes · revision 2</a
+        >
+      </nav>
+    </header>
+    <main id="production-panel" aria-label="Production register">
+      <p role="status">Loading the register…</p>
+    </main>
+    <footer>
+      <a href="./README.md">Register and CLI guide</a>
+      <a href="../prompts/production-intake.md">Asset intake workflow</a>
+    </footer>
+    <noscript
+      >Serve this repository on localhost and enable JavaScript to inspect the register.</noscript
+    >
+    <script type="module" src="./browser.mjs"></script>
+  </body>
+</html>

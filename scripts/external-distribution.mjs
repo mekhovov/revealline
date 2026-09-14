@@ -40,8 +40,8 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. All producers read the selected source tree; all ten
- * exact original bodies join loose/ZIP inventories, never legacy pack metadata. */
+/** Explicit build only. All producers read the selected source tree; all sixteen
+ * exact paired bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
   validateExternalDistributionConfig(option);
@@ -65,6 +65,8 @@ export async function readExternalDistributionEntries(root, option) {
     'sentinel-circuit',
     'sentinel-circuit-art',
     'sentinel-circuit-external',
+    'sentinel-theme-art',
+    'sentinel-theme-chapters',
   ])
     await ordinaryTree(root, `authoring/library/${name}`);
   const { prepareExternalCatalog } = await import(
@@ -83,18 +85,24 @@ export async function readExternalDistributionEntries(root, option) {
   const { buildExternalSentinel } = await import(
     pathToFileURL(path.join(root, 'authoring/library/sentinel-circuit-external/build.mjs'))
   );
+  const { buildSentinelTheme } = await import(
+    pathToFileURL(path.join(root, 'authoring/library/sentinel-theme-chapters/build.mjs'))
+  );
   const producers = new Map([
     ['original-fpv-pressure-external', buildExternalPilot],
     ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
     ['route-worlds-retro', () => buildRouteWorld('retro')],
     ['route-worlds-coupa', () => buildRouteWorld('coupa')],
     ['sentinel-circuit-fpv', buildExternalSentinel],
+    ['sentinel-circuit-ukraine', () => buildSentinelTheme('ukraine')],
+    ['sentinel-circuit-retro', () => buildSentinelTheme('retro')],
+    ['sentinel-circuit-coupa', () => buildSentinelTheme('coupa')],
   ]);
   required(
     SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&
       catalog.chapters.length === producers.size &&
       SOURCE_EXTERNAL_CHAPTERS.every((descriptor) => producers.has(descriptor.id)),
-    'Expected exactly five registered external editions and producers.',
+    'Expected exactly eight registered external editions and producers.',
   );
   const entries = [],
     names = new Set();

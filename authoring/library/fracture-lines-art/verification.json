@@ -1,0 +1,95 @@
+{
+  "format": "revealline-source-art-verification.v1",
+  "baseCommit": "5826719744a530a4d89d8c11f5150d9acbe7f7b8",
+  "sourceCandidates": 3,
+  "totalOriginalBytes": 8656868,
+  "method": "Exact PNG and full-prompt pins; all chunk CRCs, bounded full RGB8 scanline decompression and filters through the unchanged decoder; no image encoding or transformations.",
+  "originalCopyEvidence": "Recording requires --tool-originals and exact byte equality with all three default tool files. Portable verification checks the recorded workspace/source pins; --tool-originals repeats the local copy comparison.",
+  "limits": "Source-art qualification only. No campaign completion, runtime binding, partial-reveal/browser readability, storage/offline/device, rotor animation or historical-location claim.",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3315,
+      "sha256": "a9e9c7072be59aab3d89f1481b7b12f5782b3e9f85aed1f339df0c0bfc0bc3fd"
+    },
+    {
+      "path": "verify.mjs",
+      "bytes": 8509,
+      "sha256": "d294985c6d56af02b0c93c3be45b1b08e640101a78794c461f96265e607d6eb5"
+    },
+    {
+      "path": "split-ring-fpv.json",
+      "bytes": 4118,
+      "sha256": "0783f15583901347b39070c6a30890b502d1a5cae7a1aec23c6eb559717e9ba9"
+    },
+    {
+      "path": "originals/split-ring-fpv.png",
+      "bytes": 2922125,
+      "sha256": "db9bf4302c55608657f63f1660c4e5859669511942416586d1a6e1fb5394f0b2"
+    },
+    {
+      "path": "fault-fan-fpv.json",
+      "bytes": 4033,
+      "sha256": "3af3532a160f27cc37796bd36b480d71f0409974732aeea02346bf6454e7e898"
+    },
+    {
+      "path": "originals/fault-fan-fpv.png",
+      "bytes": 2796382,
+      "sha256": "15474a7d695861364fc6a9a131c1849c7a5e72c65b011450b589eacde7635ec8"
+    },
+    {
+      "path": "frayed-causeway-fpv.json",
+      "bytes": 4194,
+      "sha256": "ac48d1abe7269c13e73f158fe4d0125a17be1499e9f884eb4666f4f68a0c7e21"
+    },
+    {
+      "path": "originals/frayed-causeway-fpv.png",
+      "bytes": 2938361,
+      "sha256": "5aae2f84912ca35b7145617c98d3c4ecac72a93d8d6cc04558d86873ca0938f1"
+    }
+  ],
+  "decoded": [
+    {
+      "assetId": "fracture-lines-split-ring-fpv",
+      "bytes": 2922125,
+      "sha256": "db9bf4302c55608657f63f1660c4e5859669511942416586d1a6e1fb5394f0b2",
+      "promptSha256": "eede3bf96a60e177d5d8ba2600690e29e91b175623dccb87f1b9a530e635f07d",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "03c4d89e92f923d80afe74b18397df4f0ed0be253361030db5dee040279127d2"
+    },
+    {
+      "assetId": "fracture-lines-fault-fan-fpv",
+      "bytes": 2796382,
+      "sha256": "15474a7d695861364fc6a9a131c1849c7a5e72c65b011450b589eacde7635ec8",
+      "promptSha256": "1a8ae33a2eb2265bd94a584579d495f08d697a30fd04a25c9f3b7f9c2caf4f82",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "365efaca20f3a0fc22604db3036f071fc29007739450d68f158bb1892a5b6b0b"
+    },
+    {
+      "assetId": "fracture-lines-frayed-causeway-fpv",
+      "bytes": 2938361,
+      "sha256": "5aae2f84912ca35b7145617c98d3c4ecac72a93d8d6cc04558d86873ca0938f1",
+      "promptSha256": "8d59a7e0b1ad4b5347317af6477def590b73d3fa3ce60f2b3c49743dc963e7d9",
+      "naturalWidth": 1774,
+      "naturalHeight": 887,
+      "pixelBytes": 4720614,
+      "pixelsSha256": "4565eb84b32d94178e0e55938a88d46f23052c20bf7328348d4ea3c3aa910b22"
+    }
+  ],
+  "protectedContext": [
+    {
+      "path": "authoring/library/four-worlds-chapters/verify-images.mjs",
+      "bytes": 3838,
+      "sha256": "100995d31bb65ed7797b0941988624cab76a2c37b297c81ec98ab8e16febcc34"
+    },
+    {
+      "path": "game/media-library.mjs",
+      "bytes": 12188,
+      "sha256": "ed1f1abe0b95b9889741ec8929522f0fcaba29a5438b09df18016d3ffffc6eb4"
+    }
+  ]
+}

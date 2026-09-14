@@ -215,7 +215,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.36.0',
+  let buildVersion = '0.37.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -2922,11 +2922,16 @@ try {
         : 'All chapter appearances are available in this campaign. Cosmetics do not change abilities.';
   }
   const bodyLabels = (ids) => ids.map((id) => presets.characters[id]?.label || id);
-  function paintAppearanceRewards() {
-    const name = campaign.title || campaign.name || campaign.id;
+  function paintAppearanceRewards(entry) {
+    const selected = entry.campaign;
+    const name = selected.title || selected.name || selected.id;
     $('appearance-campaign').textContent = `Campaign appearances · ${name}`;
     $('appearance-rewards').replaceChildren();
-    for (const tier of currentAppearanceMilestones()) {
+    for (const tier of difficultyNavigation.milestones(
+      entry,
+      library.campaigns,
+      progressFor(library, selected),
+    )) {
       const row = document.createElement('article');
       row.className = `appearance-reward${tier.earned ? ' earned' : ''}`;
       const thumbnail = document.createElement('img');
@@ -2955,7 +2960,7 @@ try {
     }
     $('collection-note').textContent = practice
       ? 'Practice previews every appearance without earning rewards. These rows show existing campaign progress. Cosmetics do not change abilities.'
-      : `Appearances belong to this campaign.${difficultyLabel(activeEntry) ? ' Standard and Gentle share mission and appearance unlocks.' : ''} Cosmetics do not change abilities.`;
+      : `Appearances belong to this campaign.${difficultyLabel(entry) ? ' Standard and Gentle share mission and appearance unlocks.' : ''} Cosmetics do not change abilities.`;
   }
   function focusAppearance() {
     if ($('collection-dialog').open) $('collection-dialog').close();
@@ -3530,7 +3535,7 @@ try {
         ? 'PRACTICE'
         : !arcadeActionCapabilities(run?.level).manualAbility
           ? 'ARCADE EDITION'
-          : 'REVEAL / LINE';
+          : 'TACTICAL EDITION';
     document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
     document.body.dataset.flightState =
       defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
@@ -4169,23 +4174,72 @@ try {
     pause(true);
     $('help-dialog').showModal();
   };
-  $('collection-button').onclick = () => {
-    if (courseSession || courseEntry) return;
-    pause(true);
+  let collectionContextKey = null,
+    collectionContexts = new Map();
+  const collectionContextLabel = (entry) =>
+    `${entry.campaign.title || entry.campaign.name || entry.campaign.id} · ${difficultyLabel(entry) || 'Challenge'}`;
+  function paintCollectionProgress(entry) {
     $('achievement-campaign').textContent =
-      `Campaign achievements · ${campaign.title || campaign.name || campaign.id}`;
+      `Campaign achievements · ${collectionContextLabel(entry)}`;
     $('achievements').replaceChildren();
-    for (const a of difficultyNavigation.achievements(activeEntry, library.campaigns, progress)) {
+    for (const a of difficultyNavigation.achievements(
+      entry,
+      library.campaigns,
+      progressFor(library, entry.campaign),
+    )) {
       const row = document.createElement('div');
       row.className = `achievement${a.earned ? ' earned' : ''}`;
       const title = document.createElement('strong');
       title.textContent = `${a.earned ? '◆' : '◇'} ${a.name}`;
       const copy = document.createElement('span');
-      copy.textContent = `${a.description}${a.scope === 'shared' ? ' Standard or Gentle.' : a.scope ? ` ${difficultyLabel(activeEntry)} results.` : ''}`;
+      copy.textContent = `${a.description}${a.scope === 'shared' ? ' Standard or Gentle.' : a.scope ? ` ${difficultyLabel(entry)} results.` : ''}`;
       row.append(title, copy);
       $('achievements').append(row);
     }
-    paintAppearanceRewards();
+    paintAppearanceRewards(entry);
+  }
+  function prepareCollectionProgress() {
+    const currentKey = campaignKey(campaign);
+    const keys = new Set([
+      currentKey,
+      ...Object.keys(library.campaigns),
+      ...library.gallery.map((item) => item.campaignKey),
+    ]);
+    collectionContexts = new Map(
+      [...executionEntries(), activeEntry]
+        .map((entry) => [campaignKey(entry.campaign), entry])
+        .filter(([key]) => keys.has(key)),
+    );
+    // This is a view choice only. Unknown historical contexts stay archived;
+    // names and theme IDs never authorize a replacement campaign.
+    if (!collectionContexts.has(collectionContextKey)) {
+      collectionContextKey =
+        [...library.gallery]
+          .sort((a, b) => b.completedAt.localeCompare(a.completedAt))
+          .find((item) => collectionContexts.has(item.campaignKey))?.campaignKey ?? currentKey;
+    }
+    $('collection-context').replaceChildren(
+      ...[...collectionContexts].map(
+        ([key, entry]) => new Option(collectionContextLabel(entry), key),
+      ),
+    );
+    $('collection-context').value = collectionContextKey;
+    paintCollectionProgress(collectionContexts.get(collectionContextKey));
+  }
+  $('collection-context').onchange = () => {
+    if (!$('collection-dialog').open) return;
+    const entry = collectionContexts.get($('collection-context').value);
+    if (!entry) {
+      $('collection-context').value = collectionContextKey;
+      return;
+    }
+    collectionContextKey = $('collection-context').value;
+    paintCollectionProgress(entry);
+  };
+  $('collection-button').onclick = () => {
+    if (courseSession || courseEntry) return;
+    pause(true);
+    prepareCollectionProgress();
     libraryPanel.populateGallery();
     $('collection-dialog').showModal();
   };

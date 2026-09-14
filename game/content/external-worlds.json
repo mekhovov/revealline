@@ -90,6 +90,60 @@
         "bytes": 8596058,
         "sha256": "ca68ec6d1c7b1ade630227f810416136bd862f956b9e26dc0a0233e7d28c2e3c"
       }
+    },
+    {
+      "id": "sentinel-circuit-ukraine",
+      "name": "Ukraine Atlas · Sentinel Circuit",
+      "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "sentinel-circuit-ukraine/1/2c5a77757c64c4d1",
+      "pack": {
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "bytes": 9440,
+        "sha256": "b567d8901dcec9b4964ce5ada8f64276f7754f8dc537c9002703d746fcbcdd85"
+      },
+      "media": {
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+        "bytes": 8175624,
+        "sha256": "dc95ace9a12923999c2a740cccfffaa073542344e190c49b5d3b2310ea459afd"
+      }
+    },
+    {
+      "id": "sentinel-circuit-retro",
+      "name": "1994 Forever · Sentinel Circuit",
+      "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "sentinel-circuit-retro/1/e8edd91a796a9b65",
+      "pack": {
+        "path": "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "bytes": 9404,
+        "sha256": "eab41d563f717170dc0c0077aa18b1656d2845e102b76e719a9daca6e5886545"
+      },
+      "media": {
+        "path": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+        "bytes": 7553086,
+        "sha256": "e8e9c90ba2c154d0a7c23fddddb4592025b8133956d70ee6bd35443540090b2e"
+      }
+    },
+    {
+      "id": "sentinel-circuit-coupa",
+      "name": "Spend Network · Sentinel Circuit",
+      "description": "Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.",
+      "themeId": "coupa",
+      "levels": 3,
+      "campaignKey": "sentinel-circuit-coupa/1/8459eb3ba67608e6",
+      "pack": {
+        "path": "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "bytes": 9427,
+        "sha256": "0fc200adfd509d7a993f24c73432195e314b4450b2ef45fd601b523f62464c6c"
+      },
+      "media": {
+        "path": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+        "bytes": 7416321,
+        "sha256": "185e104975706717deb11ad6e4dc91b1cedc6680755fa9174583ceec0660da16"
+      }
     }
   ]
 }
