@@ -196,6 +196,7 @@ for (const source of oldProfiles)
       textSize: 'standard',
       screenControls: 'auto',
       touchControls: null,
+      screenSteeringHand: 'left',
     });
     for (const name of ['campaigns', 'gallery', 'scores', 'masteries'])
       assert.deepEqual(migrated[name], old[name] ?? []);

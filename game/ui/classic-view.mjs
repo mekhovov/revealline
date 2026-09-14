@@ -393,13 +393,20 @@ export function drawClassicPickups(ctx, view, palette, images = {}, options = {}
 }
 
 /** The new role silhouette remains stable across themes and reduced effects. */
-export function drawClassicEnemy(ctx, enemy, palette, images = {}, presentation = null) {
+export function drawClassicEnemy(
+  ctx,
+  enemy,
+  palette,
+  images = {},
+  presentation = null,
+  body = null,
+) {
   if (!enemy || !['contour-patrol', 'claimed-rover', 'eroder'].includes(enemy.type)) return false;
   if (presentation) {
     const role = { 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[
       enemy.type
     ];
-    drawPresentedActor(ctx, presentation, palette, images[role]);
+    drawPresentedActor(ctx, presentation, palette, body?.image ?? images[role], body?.record);
     ctx.save();
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);
     ctx.strokeStyle = PRESENTATION_INK;

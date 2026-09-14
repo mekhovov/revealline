@@ -105,12 +105,14 @@ It exercises real cohort/owner adapters and original bytes, unavailable original
 
 ## Preserve metadata revisions
 
-Current appearance/catalog metadata may advance while a production register still describes an earlier immutable source. Keep that register's path, byte count, hash and approval history unchanged. Do not reformat historical snapshot bytes. The optional [metadata history index](history/index.json) lists complete prior JSON identities; each snapshot lives at `history/<sha256>.json` and must match that exact byte count and hash. The first entry preserves the v0.39 motion presets before the seven FPV presentations were added.
+Current appearance/catalog metadata may advance while a production register still describes an earlier immutable source. Keep that register's path, byte count, hash and approval history unchanged. Do not reformat historical snapshot bytes. The optional [metadata history index](history/index.json) lists complete prior text identities. Version 1 accepts JSON only; version 2 accepts JSON and ES-module source (`.mjs`) as inert bytes. Each snapshot lives at `history/<sha256><original-extension>` and must match that exact byte count and hash. The first entry preserves the v0.39 motion presets before the seven FPV presentations were added.
 
-To revise another JSON authority, retain its exact prior bytes under that content-addressed name and append one explicit original-path/bytes/SHA entry before changing the live file. The reader selects history only when the register declares that complete identity. New pins read the live authority; a missing, changed or symlinked snapshot refuses. An index cannot name an arbitrary snapshot destination. Its 32 KiB/64-entry bound and the existing 4 MiB metadata cap are separate from original media budgets. This preserves metadata lineage; it is not binary asset history, runtime storage recovery or production approval.
+To revise another JSON or ES-module source authority, retain its exact prior bytes under that content-addressed name and append one explicit original-path/bytes/SHA entry before changing the live file. The reader selects history only when the register declares that complete identity. New pins read the live authority; a missing, changed or symlinked snapshot refuses. An index cannot name an arbitrary snapshot destination. Its 32 KiB/64-entry bound and the existing 4 MiB metadata cap are separate from original media budgets. This preserves metadata lineage; it is not binary asset history, runtime storage recovery or production approval.
 
 Source-only metadata checks can run without hashing original pictures:
 
 ```sh
 node --test scripts/test-production-metadata-history.mjs
 ```
+
+The combined enemy presentation changes preserve the former 25,033-byte actor renderer as an exact `.mjs` snapshot. Verification reads and hashes source text; it never imports or executes archived modules. Older v1 authoring readers refuse the v2 index. Frozen releases and runtime storage schemas are unchanged; historical register pins and approvals stay exact.

@@ -27,7 +27,21 @@
     "authoring/design-atlas",
     "docs/fpv-redesign-design.md",
     "docs/fpv-typography.md",
-    "docs/verification/fpv-redesign/baseline"
+    "docs/verification/fpv-redesign/baseline",
+    "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
+    "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
+    "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
+    "authoring/library/fpv-enemy-presentations/originals/claimed-rover.png",
+    "authoring/library/fpv-enemy-presentations/originals/eroder.png",
+    "authoring/library/fpv-enemy-presentations/originals/lane-boss.png",
+    "authoring/library/fpv-enemy-presentations/originals/relay-sentinel.png",
+    "authoring/library/ukraine-role-wide-variants/originals/scout-v3.png",
+    "authoring/library/ukraine-role-presentations/originals/bomber.png",
+    "authoring/library/ukraine-role-presentations/originals/carrier.png",
+    "authoring/library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+    "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
+    "authoring/library/ukraine-role-presentations/originals/impact.png",
+    "authoring/library/ukraine-role-presentations/originals/trapper.png"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",

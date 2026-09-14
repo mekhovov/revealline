@@ -146,6 +146,7 @@ for (const source of fixture.sources) {
       textSize: 'standard',
       screenControls: 'auto',
       touchControls: null,
+      screenSteeringHand: 'left',
     });
     unchangedRecords(migrated, old);
     assert.equal(JSON.stringify(old), bytes);

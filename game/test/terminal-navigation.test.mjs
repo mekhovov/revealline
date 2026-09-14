@@ -410,13 +410,13 @@ for (const mode of ['keyboard', 'controller']) {
     );
     assert.equal(page.$('settings-dialog').open, false);
     assert.equal(page.doc.body.dataset.flightState, 'paused');
+    assert.equal(page.$('shell-home').open, true);
     assert.equal(
       page.doc.activeElement.id,
-      'start-button',
-      'Settings returns to the paused primary action',
+      'shell-options',
+      'Settings returns to its title-menu opener while the live cut stays paused',
     );
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
-    activate(page.$('overlay-menu'), page.$('game-overlay'));
     activate(page.$('shell-play'), page.$('shell-home'));
     assert.equal(page.$('shell-missions').open, true);
     activate(page.$('shell-briefing'), page.$('shell-missions'));
