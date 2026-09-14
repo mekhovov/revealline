@@ -1,0 +1,64 @@
+{
+  "format": "retro-player-body-source-preparation.v1",
+  "at": "2026-09-14T17:30:34.790995+00:00",
+  "base": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "scope": "authoring/library/retro-role-presentations only; seven new source body originals and prompts/provenance/inspection. No runtime/presets/registry/buildconfig/abilities/colliders.",
+  "roles": [
+    "scout",
+    "bomber",
+    "carrier",
+    "interceptor",
+    "fiber",
+    "impact",
+    "trapper"
+  ],
+  "conventions": "Complete original frame; north is up; proposed center pivot only. Body-only sprites, no baked effects, all appendages inside transparent margin. No runtime anchor schema emitted.",
+  "referenceTextGit": [
+    {
+      "path": "authoring/skills/xonix-character-collection/SKILL.md",
+      "gitBlob": "df9cd7906843add6a6fa23beda614fd469a7b53d"
+    },
+    {
+      "path": "authoring/skills/xonix-asset-creator/SKILL.md",
+      "gitBlob": "f446c231732949fe541228ab01c98a5112af1fb2"
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/README.md",
+      "gitBlob": "0488ed10e9b92f6ec70178e0e7ff5100ee0f82fb"
+    },
+    {
+      "path": "authoring/library/fpv-role-presentations/provenance/scout.json",
+      "gitBlob": "b929a414ba7b892265c25ad5c6a9ee430f36369a"
+    },
+    {
+      "path": "authoring/library/ukraine-role-presentations/README.md",
+      "gitBlob": "a86ec6e3f21fc5aa90b58092d99410120f4b7e0e"
+    },
+    {
+      "path": "authoring/library/ukraine-role-wide-variants/README.md",
+      "gitBlob": "452f003b439d977fec33ff4bb769589ed3b1971e"
+    },
+    {
+      "path": "authoring/library/ukraine-role-wide-variants/provenance/scout.json",
+      "gitBlob": "624b6a1a6b9cb566fdc48df292eea8accd3431ee"
+    }
+  ],
+  "viewedExistingSources": [
+    {
+      "role": "fpv-scout-v1",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-2ba28a17-d24a-45ac-98d1-a20c0e5900bd.png",
+      "use": "Viewed full original; no image inputs or pixel copying."
+    },
+    {
+      "role": "atlas-swallow-v3",
+      "toolPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-2b0aaca9-4292-4f6c-ab0c-6fe4d438cdf3.png",
+      "use": "Viewed full original; broad body span informs compact framing only."
+    }
+  ],
+  "budgetBytes": 33554432,
+  "budgetAccounting": "New returned tool-original lengths plus conservatively raw same-byte futureGit allowance, with2MiB inspection/text reserve. APFS workspace clones share original data at creation; logical lengths not claimed exclusive allocation. Before each additional generation require at least8MiB remaining allowance for one possible4MiB output+Git. Measure each result; stop if additional cohort cannot fit.",
+  "freshFreeBeforeBodyGeneration": 1237708800,
+  "tool": "built-in image_gen.imagegen only, fresh separate prompt per role",
+  "expectedOutput": "Requested1024square actual dimensions/alpha measured after each return; no edits or resampling of returned originals.",
+  "skills": "System imagegen read earlier in this same task history; current project Asset Creator and Character Collection read via exactGit. This is source-only portable collection brief; playable adoption workflow does not apply."
+}

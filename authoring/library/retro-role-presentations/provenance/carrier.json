@@ -1,0 +1,49 @@
+{
+  "format": "retro-player-body-original.v1",
+  "role": "carrier",
+  "proposedSourceId": "retro-carrier-v1",
+  "tool": "image_gen.imagegen",
+  "generationMode": "Fresh text-only built-in original, no image reference input",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-2851de6e-fb91-4010-9ae3-eb9e3179b972.png",
+  "original": {
+    "path": "originals/carrier.png",
+    "bytes": 847580,
+    "sha256": "e3237109a637663770e3f8411a33186de307775cf2ccff9b895ff76e46d230ca",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/carrier.txt",
+    "sha256": "ae6ab1c231bfa2b1bae6a8a2f170e9c3022bbaad33cf7d8ee384c07d200e710e"
+  },
+  "copy": {
+    "mode": "APFS fclonefileat, exclusive destination, no fallback or transformation",
+    "toolInode": 76061448,
+    "worktreeInode": 76071260
+  },
+  "transforms": [],
+  "runtimeBinding": null,
+  "inspection": "Full source and alpha checks recorded in full-image-inspection.json and alpha-inspection.json; completed native CSS compositing and its limits are in ../inspection/game-scale-receipt.json."
+}

@@ -1,0 +1,253 @@
+{
+  "format": "retro-role-alpha-inspection.v1",
+  "method": "Pillow read-only full decode, RGBA alpha histogram and pixel bounds; no image save, resizing, cropping, palette conversion or editing.",
+  "rows": [
+    {
+      "role": "scout",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 861737,
+      "sha256": "0a5ac02d8653bcc67c07c03691ff7ce40b476860b15a02b1dedd93eda7370607",
+      "alpha0Pixels": 849805,
+      "alpha255Pixels": 1620,
+      "intermediateAlphaPixels": 721091,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        35,
+        1234,
+        1230
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        85,
+        68,
+        1169,
+        1167
+      ],
+      "substantialWidthFraction": 0.8644338118022329,
+      "substantialHeightFraction": 0.8763955342902712,
+      "substantialMarginsPixels": [
+        85,
+        68,
+        85,
+        87
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 104353,
+      "distinctRGBAAtAlpha128": 101265,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "bomber",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 925255,
+      "sha256": "5e553cfe6578e5acd3b0bdd6dce761f1db41225d976356d61f82cdfdb5d6c96c",
+      "alpha0Pixels": 874758,
+      "alpha255Pixels": 742,
+      "intermediateAlphaPixels": 697016,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        13,
+        1240,
+        1254
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        20,
+        118,
+        1234,
+        1120
+      ],
+      "substantialWidthFraction": 0.9681020733652312,
+      "substantialHeightFraction": 0.7990430622009569,
+      "substantialMarginsPixels": [
+        20,
+        118,
+        20,
+        134
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 144591,
+      "distinctRGBAAtAlpha128": 141185,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "carrier",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 847580,
+      "sha256": "e3237109a637663770e3f8411a33186de307775cf2ccff9b895ff76e46d230ca",
+      "alpha0Pixels": 851542,
+      "alpha255Pixels": 1744,
+      "intermediateAlphaPixels": 719230,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        35,
+        1238,
+        1238
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        169,
+        135,
+        1085,
+        1116
+      ],
+      "substantialWidthFraction": 0.7304625199362041,
+      "substantialHeightFraction": 0.7822966507177034,
+      "substantialMarginsPixels": [
+        169,
+        135,
+        169,
+        138
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 119657,
+      "distinctRGBAAtAlpha128": 116008,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "interceptor",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 706515,
+      "sha256": "99f2cdad4a060541f029e00dd180fb40add7386978a55d5de35426fb438ca1f2",
+      "alpha0Pixels": 1026700,
+      "alpha255Pixels": 1545,
+      "intermediateAlphaPixels": 544271,
+      "allNonzeroAlphaBoundsExclusive": [
+        49,
+        33,
+        1240,
+        1228
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        60,
+        36,
+        1194,
+        1166
+      ],
+      "substantialWidthFraction": 0.9043062200956937,
+      "substantialHeightFraction": 0.9011164274322169,
+      "substantialMarginsPixels": [
+        60,
+        36,
+        60,
+        88
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 87046,
+      "distinctRGBAAtAlpha128": 83533,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "fiber",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 830708,
+      "sha256": "ccb734c4ec02f13113e68d47d8b6091244fe9895ba7651dd9caa0f41a14b27df",
+      "alpha0Pixels": 882333,
+      "alpha255Pixels": 2217,
+      "intermediateAlphaPixels": 687966,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        21,
+        1230,
+        1254
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        55,
+        96,
+        1204,
+        1121
+      ],
+      "substantialWidthFraction": 0.916267942583732,
+      "substantialHeightFraction": 0.817384370015949,
+      "substantialMarginsPixels": [
+        55,
+        96,
+        50,
+        133
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 141556,
+      "distinctRGBAAtAlpha128": 137827,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "impact",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 831788,
+      "sha256": "1e9a410fdf3e82cf35ad7731ca06a12bb8971762f09c9697bc7a647a1183c5e3",
+      "alpha0Pixels": 871623,
+      "alpha255Pixels": 1181,
+      "intermediateAlphaPixels": 699712,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        21,
+        1234,
+        1254
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        140,
+        159,
+        1115,
+        1095
+      ],
+      "substantialWidthFraction": 0.777511961722488,
+      "substantialHeightFraction": 0.7464114832535885,
+      "substantialMarginsPixels": [
+        140,
+        159,
+        139,
+        159
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 117378,
+      "distinctRGBAAtAlpha128": 114565,
+      "requested16ColorPaletteAchieved": false
+    },
+    {
+      "role": "trapper",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "bytes": 733320,
+      "sha256": "dfcfc5b571a175b27ba95708bbe5ee4793ab73a2e9a1b0c12843acf1bdd4da0b",
+      "alpha0Pixels": 995328,
+      "alpha255Pixels": 1922,
+      "intermediateAlphaPixels": 575266,
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        59,
+        1240,
+        1254
+      ],
+      "alphaAtLeast128BoundsExclusive": [
+        166,
+        89,
+        1088,
+        1145
+      ],
+      "substantialWidthFraction": 0.7352472089314195,
+      "substantialHeightFraction": 0.8421052631578947,
+      "substantialMarginsPixels": [
+        166,
+        89,
+        166,
+        109
+      ],
+      "substantialTouchesFrame": false,
+      "distinctRGBAColors": 120627,
+      "distinctRGBAAtAlpha128": 115557,
+      "requested16ColorPaletteAchieved": false
+    }
+  ],
+  "originalBytes": 5736903,
+  "qualification": "Alpha threshold measurements are not perceptual readability, collider bounds, pivots or rig validation. Low-alpha edge fringes remain in exact originals."
+}
