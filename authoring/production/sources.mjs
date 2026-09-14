@@ -104,6 +104,48 @@ async function metadataHistory(root) {
   }
   return result;
 }
+// Source snapshots authenticate the old recipe implementation as inert bytes.
+// Keep this separate from the existing metadata-history v1/v2 contract.
+const SOURCE_HISTORY_PATHS = new Set([
+  'authoring/motion-lab/render-character.mjs',
+  'game/ui/actor-presentation.mjs',
+]);
+async function sourceHistory(root) {
+  let raw;
+  try {
+    raw = await boundedRead(root, `${HISTORY_ROOT}/source-index.json`, 32768);
+  } catch (error) {
+    if (error.code === 'ENOENT') return new Map();
+    throw error;
+  }
+  const index = JSON.parse(raw.toString('utf8'));
+  if (
+    !index ||
+    Object.keys(index).sort().join(',') !== 'entries,format' ||
+    index.format !== 'revealline-production-source-history.v1' ||
+    !Array.isArray(index.entries) ||
+    index.entries.length > 64
+  )
+    throw new Error('Invalid production source history index');
+  const result = new Map();
+  for (const pin of index.entries) {
+    if (
+      !pin ||
+      Object.keys(pin).sort().join(',') !== 'bytes,path,sha256' ||
+      !SOURCE_HISTORY_PATHS.has(pin.path) ||
+      !Number.isSafeInteger(pin.bytes) ||
+      pin.bytes < 1 ||
+      pin.bytes > 4 * 1024 * 1024 ||
+      typeof pin.sha256 !== 'string' ||
+      !/^[a-f0-9]{64}$/.test(pin.sha256)
+    )
+      throw new Error('Invalid production source history entry');
+    const key = historyKey(pin);
+    if (result.has(key)) throw new Error('Duplicate production source history entry');
+    result.set(key, `${HISTORY_ROOT}/${pin.sha256}.source`);
+  }
+  return result;
+}
 function literal(node) {
   if (node.type === 'Literal') return node.value;
   if (node.type === 'ArrayExpression') return node.elements.map(literal);
@@ -160,7 +202,7 @@ export async function verifyProductionSources(input, { root, files = false } = {
       ...r.deliveries.map((d) => d.evidence),
     ].map((p) => [p.path, p]),
   );
-  const history = await metadataHistory(root);
+  const history = new Map([...(await metadataHistory(root)), ...(await sourceHistory(root))]);
   const cache = new Map();
   const bytes = async (name) => {
     if (!cache.has(name)) {
