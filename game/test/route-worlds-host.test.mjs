@@ -229,10 +229,19 @@ async function install(p, e) {
   assert.equal(p.$(id(e, 'choose')).disabled, false, p.$('optional-worlds-status').textContent);
 }
 async function choose(p, e) {
-  p.$(id(e, 'choose')).click();
-  await settle(
-    () => !p.$('optional-worlds-dialog').open && p.doc.body.dataset.pictureState === 'ready',
-  );
+  const phase = `Choose and authenticate exact ${e.descriptor.id}`;
+  await waitInventory(p, phase, {
+    operation: clickOperation(p, id(e, 'choose')),
+    ready: () => !p.$('optional-worlds-dialog').open,
+  });
+  // Selection starts its own picture read; a fulfilled Choose is not image readiness.
+  try {
+    await settle(() => p.doc.body.dataset.pictureState === 'ready');
+  } catch (error) {
+    assert.fail(
+      `${phase}: picture did not become ready: ${error.message}\n${inventoryDiagnostic(p, phase)}\n${JSON.stringify({ pack: p.$('pack-select').value, pictureState: p.doc.body.dataset.pictureState })}`,
+    );
+  }
   p.frame(0);
   assert.equal(p.$('pack-select').value, e.descriptor.id);
 }
@@ -377,8 +386,11 @@ test('released host reads the exact small catalog then explicitly downloads only
       p.requests.filter((r) => r.url.includes('/optional/external-chapters/')).length,
       0,
     );
-    p.$(id(editions[0], 'download')).click();
-    await settle(() => !p.$('optional-worlds-reload').disabled);
+    await waitInventory(p, `Download and authenticate exact ${editions[0].descriptor.id}`, {
+      operation: clickOperation(p, id(editions[0], 'download')),
+      ready: () =>
+        !p.$('optional-worlds-reload').disabled && !p.$(id(editions[0], 'choose')).disabled,
+    });
     assert.equal(
       p.$(id(editions[0], 'choose')).disabled,
       false,
