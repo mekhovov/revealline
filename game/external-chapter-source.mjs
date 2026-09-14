@@ -670,12 +670,235 @@ const fractureDescriptors = [
     ],
   },
 ].map((descriptor) => validateExternalChapter(descriptor));
+const countercurrentDescriptors = [
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'countercurrent-fpv',
+    revision: 1,
+    source: {
+      id: 'countercurrent',
+      bytes: 8560,
+      sha256: 'fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb',
+    },
+    pack: {
+      bytes: 8104,
+      sha256: '9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38',
+    },
+    media: {
+      bytes: 7070195,
+      sha256: '768b3f9cb59112d7b3b2fb32fc15bf0c3d19e582cc2671486d243360376c11c5',
+    },
+    campaignKey: 'countercurrent-fpv/1/7359effa888ca945',
+    themeId: 'fpv',
+    originals: [
+      {
+        assetId: 'countercurrent-fpv-poster-1',
+        presentationId: 'countercurrent-fpv-poster-1-presentation',
+        levelId: 'countercurrent-offset-docks',
+        levelRevision: '1',
+        sha256: '93a52b10713a088729964e86c14c2999325885f28825455f335ea1e6edff7842',
+        bytes: 2571756,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-fpv-poster-2',
+        presentationId: 'countercurrent-fpv-poster-2-presentation',
+        levelId: 'countercurrent-sandbar-braid',
+        levelRevision: '1',
+        sha256: '71c6ec5acd362215811107b783ea1e8942c8c45bee20f43002b00dfb3ed2e5b0',
+        bytes: 2534483,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-fpv-poster-3',
+        presentationId: 'countercurrent-fpv-poster-3-presentation',
+        levelId: 'countercurrent-crossing-watch',
+        levelRevision: '1',
+        sha256: '6a191c14e5de093a69e5845af2e39c3246feac3f9eae1ed8e19341214a7a2811',
+        bytes: 1953105,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'countercurrent-ukraine',
+    revision: 1,
+    source: {
+      id: 'countercurrent',
+      bytes: 8560,
+      sha256: 'fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb',
+    },
+    pack: {
+      bytes: 8184,
+      sha256: '7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d',
+    },
+    media: {
+      bytes: 8512868,
+      sha256: '5d70852eb2b990c6c82f3ceba4494b4fb547fe05ba70b9e31da0ac08accc44d6',
+    },
+    campaignKey: 'countercurrent-ukraine/1/7f014de96585a18e',
+    themeId: 'ukraine',
+    originals: [
+      {
+        assetId: 'countercurrent-ukraine-poster-1',
+        presentationId: 'countercurrent-ukraine-poster-1-presentation',
+        levelId: 'countercurrent-offset-docks',
+        levelRevision: '1',
+        sha256: '697a6980465d20d93c6b5e51a38eb05855910d019b6d4a1ab8ce88081b5ba195',
+        bytes: 3047188,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-ukraine-poster-2',
+        presentationId: 'countercurrent-ukraine-poster-2-presentation',
+        levelId: 'countercurrent-sandbar-braid',
+        levelRevision: '1',
+        sha256: '6ffd72d30d946af28111434e666a86cf5977d81de2beb33d8d0c547a33c02a24',
+        bytes: 3007068,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-ukraine-poster-3',
+        presentationId: 'countercurrent-ukraine-poster-3-presentation',
+        levelId: 'countercurrent-crossing-watch',
+        levelRevision: '1',
+        sha256: '2ac1edcab88ec92348e7c3118503b109724bb551f7a2a290532f2a0355ae29d4',
+        bytes: 2447624,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'countercurrent-retro',
+    revision: 1,
+    source: {
+      id: 'countercurrent',
+      bytes: 8560,
+      sha256: 'fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb',
+    },
+    pack: {
+      bytes: 8115,
+      sha256: '1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe',
+    },
+    media: {
+      bytes: 7625557,
+      sha256: '0f91f4bb170cbcd64df192b2a55d84c19db8d87d3dd09e15d4e65254c3606c9b',
+    },
+    campaignKey: 'countercurrent-retro/1/84d11a16c0585605',
+    themeId: 'retro',
+    originals: [
+      {
+        assetId: 'countercurrent-retro-poster-1',
+        presentationId: 'countercurrent-retro-poster-1-presentation',
+        levelId: 'countercurrent-offset-docks',
+        levelRevision: '1',
+        sha256: '26fa92a40658fe2499655e7c4aa9ea29cd03060c9967d93945960d8f1c12c16e',
+        bytes: 2698820,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-retro-poster-2',
+        presentationId: 'countercurrent-retro-poster-2-presentation',
+        levelId: 'countercurrent-sandbar-braid',
+        levelRevision: '1',
+        sha256: '1ebdd0087fa096feff52c568587c55a1c8a41aca95b7b3ccfa143d1aa7d1e3bf',
+        bytes: 2489771,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-retro-poster-3',
+        presentationId: 'countercurrent-retro-poster-3-presentation',
+        levelId: 'countercurrent-crossing-watch',
+        levelRevision: '1',
+        sha256: '498dca62d17a4e59c486bbea7a023b9e8aa11cf69cba169092a4671d0fde8e99',
+        bytes: 2426061,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+  {
+    format: 'revealline-external-chapter.v1',
+    id: 'countercurrent-coupa',
+    revision: 1,
+    source: {
+      id: 'countercurrent',
+      bytes: 8560,
+      sha256: 'fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb',
+    },
+    pack: {
+      bytes: 8121,
+      sha256: '625879853cfd4e7b26deb252ba0505565efda8fe27891e68c167893149310ff5',
+    },
+    media: {
+      bytes: 8527514,
+      sha256: '1edc1f00c0c27f0bab6c90a0dce4edee2cda3106a832b519db09bb63d2d940f4',
+    },
+    campaignKey: 'countercurrent-coupa/1/5f8155b60753cb07',
+    themeId: 'coupa',
+    originals: [
+      {
+        assetId: 'countercurrent-coupa-poster-1',
+        presentationId: 'countercurrent-coupa-poster-1-presentation',
+        levelId: 'countercurrent-offset-docks',
+        levelRevision: '1',
+        sha256: '87b28d2fec477a7572f10c83e9ec6e2ed7ef3386818f21d651e1d1897df30997',
+        bytes: 2735312,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-coupa-poster-2',
+        presentationId: 'countercurrent-coupa-poster-2-presentation',
+        levelId: 'countercurrent-sandbar-braid',
+        levelRevision: '1',
+        sha256: 'ea643aa1735edba5f5ba8c6ca0cb3ee3d671cb37534a06966e505f42d938fe14',
+        bytes: 2884014,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+      {
+        assetId: 'countercurrent-coupa-poster-3',
+        presentationId: 'countercurrent-coupa-poster-3-presentation',
+        levelId: 'countercurrent-crossing-watch',
+        levelRevision: '1',
+        sha256: '1615b543d0fd311343d586fb70c877b22f9399c12dae7342101a491f6ae6f5e5',
+        bytes: 2897299,
+        mime: 'image/png',
+        width: 1774,
+        height: 887,
+      },
+    ],
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
 export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   SOURCE_EXTERNAL_CHAPTER,
   ...routeDescriptors,
   sentinelDescriptor,
   ...sentinelThemeDescriptors,
   ...fractureDescriptors,
+  ...countercurrentDescriptors,
 ]);
 const names = [
   'FPV Front · Pressure Pictures',
@@ -690,6 +913,10 @@ const names = [
   'Ukraine Atlas · Fracture Lines',
   '1994 Forever · Fracture Lines',
   'Spend Network · Fracture Lines',
+  'FPV Front · Countercurrent',
+  'Ukraine Atlas · Countercurrent',
+  '1994 Forever · Countercurrent',
+  'Spend Network · Countercurrent',
 ];
 export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
   SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
@@ -697,20 +924,24 @@ export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
       descriptor,
       name: names[index],
       mode:
-        descriptor.id === SOURCE_EXTERNAL_CHAPTER.id || fractureDescriptors.includes(descriptor)
+        descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ||
+        fractureDescriptors.includes(descriptor) ||
+        countercurrentDescriptors.includes(descriptor)
           ? 'Arcade'
           : 'Tactical',
       levels: descriptor.originals.length,
       description:
         descriptor.id === SOURCE_EXTERNAL_CHAPTER.id
           ? 'Steer through three Pressure Pictures maps. Reconnect each cut to stop safely and reveal the scene.'
-          : fractureDescriptors.includes(descriptor)
-            ? 'Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.'
-            : descriptor.id === sentinelDescriptor.id
-              ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
-              : sentinelThemeDescriptors.includes(descriptor)
-                ? 'Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.'
-                : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
+          : countercurrentDescriptors.includes(descriptor)
+            ? 'Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.'
+            : fractureDescriptors.includes(descriptor)
+              ? 'Choose a gate, clear the branching bays, then keep a return through island lanes. Three Arcade missions with original scenic rewards.'
+              : descriptor.id === sentinelDescriptor.id
+                ? 'Read the courtyard routes, control a crossing, then expose the signal sentinel. Three Tactical missions with original reward panoramas.'
+                : sentinelThemeDescriptors.includes(descriptor)
+                  ? 'Read the courtyard routes, control a crossing, then time a two-stage encounter. Three Tactical missions with original reward panoramas.'
+                  : 'Choose an exit, time a carrier field or take the equipment-free gate, then compare a signal-safe shortcut with the safe rim.',
     }),
   ),
 );

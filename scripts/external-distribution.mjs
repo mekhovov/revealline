@@ -40,7 +40,7 @@ async function ordinaryTree(root, relative) {
   }
 }
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
-/** Explicit build only. All producers read the selected source tree; all twenty-four
+/** Explicit build only. All producers read the selected source tree; all thirty-two
  * exact paired bodies join loose/ZIP inventories, never legacy pack metadata. */
 export async function readExternalDistributionEntries(root, option) {
   if (option === undefined) return [];
@@ -74,6 +74,9 @@ export async function readExternalDistributionEntries(root, option) {
     'fracture-retro-art',
     'fracture-coupa-art',
     'fracture-theme-chapters',
+    'countercurrent',
+    'countercurrent-art',
+    'countercurrent-chapters',
   ])
     await ordinaryTree(root, `authoring/library/${name}`);
   const { prepareExternalCatalog } = await import(
@@ -101,6 +104,9 @@ export async function readExternalDistributionEntries(root, option) {
   const { buildFractureTheme } = await import(
     pathToFileURL(path.join(root, 'authoring/library/fracture-theme-chapters/build.mjs'))
   );
+  const { buildCountercurrentTheme } = await import(
+    pathToFileURL(path.join(root, 'authoring/library/countercurrent-chapters/build.mjs'))
+  );
   const producers = new Map([
     ['original-fpv-pressure-external', buildExternalPilot],
     ['route-worlds-ukraine', () => buildRouteWorld('ukraine')],
@@ -114,12 +120,16 @@ export async function readExternalDistributionEntries(root, option) {
     ['fracture-lines-ukraine', () => buildFractureTheme('ukraine')],
     ['fracture-lines-retro', () => buildFractureTheme('retro')],
     ['fracture-lines-coupa', () => buildFractureTheme('coupa')],
+    ['countercurrent-fpv', () => buildCountercurrentTheme('fpv')],
+    ['countercurrent-ukraine', () => buildCountercurrentTheme('ukraine')],
+    ['countercurrent-retro', () => buildCountercurrentTheme('retro')],
+    ['countercurrent-coupa', () => buildCountercurrentTheme('coupa')],
   ]);
   required(
     SOURCE_EXTERNAL_CHAPTERS.length === producers.size &&
       catalog.chapters.length === producers.size &&
       SOURCE_EXTERNAL_CHAPTERS.every((descriptor) => producers.has(descriptor.id)),
-    'Expected exactly twelve registered external editions and producers.',
+    'Expected the exact registered external editions and producers.',
   );
   const entries = [],
     names = new Set();

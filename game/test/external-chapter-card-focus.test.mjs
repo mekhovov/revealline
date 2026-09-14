@@ -125,6 +125,10 @@ test('public cards lead with playable context and actions; native recovery contr
       'Arcade',
       'Arcade',
       'Arcade',
+      'Arcade',
+      'Arcade',
+      'Arcade',
+      'Arcade',
     ],
   );
 });

@@ -34,9 +34,9 @@ const decodeImage = async (blob) => {
 };
 
 test('four Fracture producers append exact pairs without changing the eight earlier authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
-  assert.equal(entries.length, 24);
-  assert.equal(bodies.size, 24);
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
+  assert.equal(entries.length, 32);
+  assert.equal(bodies.size, 32);
   // Independently extracted literal descriptors/catalog from accepted Couch
   // 513caf1ca140804ae978903825f909288babeb3f, before this adoption.
   assert.equal(
@@ -49,14 +49,14 @@ test('four Fracture producers append exact pairs without changing the eight earl
   );
   assert.equal(
     entries.reduce((n, entry) => n + entry.bytes.length, 0),
-    98674097,
+    130442755,
   );
   assert.equal(
     entries.slice(0, 16).reduce((n, entry) => n + entry.bytes.length, 0),
     64546929,
   );
   assert.equal(
-    entries.slice(16).reduce((n, entry) => n + entry.bytes.length, 0),
+    entries.slice(16, 24).reduce((n, entry) => n + entry.bytes.length, 0),
     34127168,
   );
   for (const entry of EXTERNAL_CATALOG.chapters)
