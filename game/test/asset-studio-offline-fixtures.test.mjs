@@ -1,7 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
-import { createStudioFixtureLoader } from '../../authoring/asset-studio/scene-preview.mjs';
+import {
+  createStudioFixtureLoader,
+  boardContextPreview,
+} from '../../authoring/asset-studio/scene-preview.mjs';
 import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
 import { createRun } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
@@ -71,6 +74,45 @@ test('exact owner context uses its own level and theme without any pack fetch or
     /Exact picture owner metadata is unavailable/,
   );
   assert.deepEqual(missing.requests, []);
+});
+
+test('board preview rejects an incomplete explicit owner before fetching or creating a canvas', async (t) => {
+  const descriptor = CURRENT_ART_SOURCES.find(
+    (row) => row.owner.themeId === 'fpv' && row.level?.id === 'orchard-crossing',
+  );
+  const requests = [];
+  t.mock.method(globalThis, 'fetch', async () => {
+    requests.push('fetch');
+    throw new Error('No fixture fetch is permitted for an incomplete explicit owner.');
+  });
+  const previousDocument = globalThis.document;
+  globalThis.document = {
+    createElement() {
+      requests.push('createElement');
+      assert.fail('An incomplete owner cannot create a canvas.');
+    },
+  };
+  t.after(() => {
+    if (previousDocument === undefined) delete globalThis.document;
+    else globalThis.document = previousDocument;
+  });
+  for (const sourcePicture of [
+    { descriptor, level: null, theme: descriptor.theme },
+    { descriptor, level: descriptor.level, theme: null },
+  ])
+    await assert.rejects(
+      boardContextPreview(
+        { append: () => assert.fail('No preview may be appended.') },
+        { id: descriptor.id },
+        null,
+        { assets: {} },
+        new Map(),
+        { sourcePicture },
+        () => assert.fail('No preview resource may be acquired.'),
+      ),
+      /Exact picture owner metadata is unavailable; no substitute board/,
+    );
+  assert.deepEqual(requests, []);
 });
 
 test('offline optional-pack fallback retains all seven enemy roles and online fixture choices', async () => {
