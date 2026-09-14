@@ -1,5 +1,5 @@
 {
-  "version": "0.46.0",
+  "version": "0.47.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -42,7 +42,9 @@
     "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
     "authoring/library/ukraine-role-presentations/originals/impact.png",
     "authoring/library/ukraine-role-presentations/originals/trapper.png",
-    "docs/presentation-system.md"
+    "docs/presentation-system.md",
+    "authoring/asset-studio",
+    "docs/asset-studio.md"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",

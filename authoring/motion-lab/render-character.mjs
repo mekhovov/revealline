@@ -52,7 +52,7 @@ function drawRotors(ctx, body, component, animation, width, height, reduced, pix
     ctx.strokeStyle = component.fillColor; ctx.globalAlpha = .24; ctx.lineWidth = Math.max(pixel*.7, width*.006);
     ctx.beginPath(); ctx.arc(0,0,radius,0,TAU); ctx.stroke(); ctx.globalAlpha = 1;
     const thickness = radius * component.bladeWidth;
-    for (const angle of bladeAngles(component.bladeCount, phase * component.direction * anchor.direction + offset)) {
+    for (const angle of bladeAngles(anchor.bladeCount ?? component.bladeCount, phase * component.direction * anchor.direction + offset)) {
       ctx.save(); ctx.rotate(angle); ctx.fillStyle = component.fillColor;
       const points = component.bladeShape === "paddle"
         ? [[0,-thickness*.25],[radius*.38,-thickness*.25],[radius*.42,-thickness*.7],[radius,-thickness*.7],[radius,thickness*.55],[radius*.42,thickness*.55],[radius*.35,thickness*.2],[0,thickness*.2]]
