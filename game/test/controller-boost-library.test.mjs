@@ -145,6 +145,7 @@ for (const source of fixture.sources) {
       campaignDifficulty: 'standard',
       textSize: 'standard',
       screenControls: 'auto',
+      screenSteeringHand: 'left',
     });
     unchangedRecords(migrated, old);
     assert.equal(JSON.stringify(old), bytes);
