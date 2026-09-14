@@ -432,7 +432,10 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.equal(canvas.attributes.get('aria-hidden'), 'true');
   assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'true');
   assert.equal(h.node('gallery-view-meta').attributes.get('role'), 'status');
-  assert.match(h.node('gallery-view-meta').textContent, /FPV Front \/ GOLD.*Loading/);
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /FPV Front · Standard · Best picture score: 100 points · GOLD.*Loading/,
+  );
   assert.equal(h.node('gallery-replay').disabled, true);
   assert.equal(h.node('gallery-animate').disabled, true);
   h.node('gallery-replay').onclick();
@@ -446,7 +449,10 @@ test('a new picture hides the previous artwork and blocks actions until its own 
   assert.equal(canvas.style.visibility, '');
   assert.equal(canvas.attributes.get('aria-hidden'), 'false');
   assert.equal(h.node('gallery-view-dialog').attributes.get('aria-busy'), 'false');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
+  assert.equal(
+    h.node('gallery-view-meta').textContent,
+    'FPV Front · Standard · Best picture score: 100 points · GOLD',
+  );
   assert.equal(h.node('gallery-replay').disabled, false);
   assert.equal(h.node('gallery-animate').disabled, false);
   assert.deepEqual(h.library, previous);
@@ -492,7 +498,10 @@ test('an older rejected decode cannot replace the selected ready picture with an
   failFirst(new Error('Stale first decode failed'));
   await first;
   assert.equal(h.node('gallery-view-title').textContent, 'Picture 01');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
+  assert.equal(
+    h.node('gallery-view-meta').textContent,
+    'FPV Front · Standard · Best picture score: 100 points · GOLD',
+  );
   assert.equal(h.node('gallery-canvas').style.visibility, '');
   assert.equal(h.node('gallery-animate').disabled, false);
   assert.equal(h.node('gallery-replay').disabled, false);
@@ -517,7 +526,10 @@ test('a failed selected decode keeps stale pixels hidden and can be closed and r
   const retry = h.cards()[1].onclick();
   h.decodeJobs.at(-1)();
   await retry;
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
+  assert.equal(
+    h.node('gallery-view-meta').textContent,
+    'FPV Front · Standard · Best picture score: 100 points · GOLD',
+  );
   assert.equal(h.node('gallery-canvas').style.visibility, '');
   assert.equal(h.node('gallery-replay').disabled, false);
 });
@@ -544,7 +556,10 @@ test('a rejected celebration preparation preserves the ready picture and reports
   await h.node('gallery-animate').onclick();
   assert.equal(attempts, 2);
   assert.equal(h.frames.length, 1, 'A successful retry can start the celebration.');
-  assert.equal(h.node('gallery-view-meta').textContent, 'FPV Front / GOLD · Standard · 100 points');
+  assert.equal(
+    h.node('gallery-view-meta').textContent,
+    'FPV Front · Standard · Best picture score: 100 points · GOLD',
+  );
   h.node('gallery-replay').onclick();
   assert.equal(h.selections[0][1].levelId, 'picture-0');
 });
@@ -838,14 +853,20 @@ test('both difficulty records share a card while mode changes preserve focus and
     option = selector.children[0];
   assert.equal(selector.value, 'standard');
   assert.equal(h.node('gallery-difficulty-field').hidden, false);
-  assert.match(h.node('gallery-view-meta').textContent, /Standard · 100 points · 3.00s/);
-  assert.match(card.children[2].textContent, /Standard: GOLD · 100 points/);
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Standard · Best picture score: 100 points · GOLD · 3\.00s/,
+  );
+  assert.match(card.children[2].textContent, /Standard · Picture best 100 points · Score run GOLD/);
   selector.focus();
   selector.value = 'gentle';
   await selector.onchange();
   assert.equal(selector.children[0], option);
   assert.equal(h.document.activeElement, selector);
-  assert.match(h.node('gallery-view-meta').textContent, /Gentle · 200 points · 5.00s/);
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Gentle · Best picture score: 200 points · GOLD · 5\.00s/,
+  );
   assert.equal(h.node('gallery-view-dialog').open, true);
   h.node('gallery-view-dialog').close();
   assert.equal(h.cards().length, 6);
@@ -901,7 +922,10 @@ test('rapid difficulty switches retain the latest image generation and keep stal
   assert.equal(h.node('gallery-canvas').style.visibility, '');
   h.decodeJobs[1].reject(new Error('old Standard decode'));
   await standard;
-  assert.match(h.node('gallery-view-meta').textContent, /Standard · 100 points · 3.00s$/);
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Standard · Best picture score: 100 points · GOLD · 3\.00s$/,
+  );
   assert.doesNotMatch(h.node('gallery-view-meta').textContent, /old Standard/);
   assert.equal(h.document.activeElement, selector);
 });
@@ -987,7 +1011,10 @@ test('a trusted Challenge picture keeps its activity label and replay has no cam
   h.library.preferences.campaignDifficulty = 'gentle';
   h.collection();
   await h.cards()[0].onclick();
-  assert.match(h.node('gallery-view-meta').textContent, /Challenge · 100 points$/);
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /Challenge · Best picture score: 100 points · GOLD$/,
+  );
   assert.equal(h.node('gallery-difficulty-field').hidden, true);
   h.node('gallery-replay').onclick();
   assert.equal(h.selections[0][0], challenge);
@@ -1167,3 +1194,29 @@ for (const reopen of [false, true])
       await flushGallery(() => h.decodeJobs[2].image.released === true);
     }
   });
+
+test('Collection labels the retained score run separately from a later best medal without rewriting either record', async (t) => {
+  const h = await setup(t, 1);
+  const item = { ...h.library.gallery[0], score: 14410, medal: 'silver', time: 55.77 };
+  h.setLibrary({
+    ...h.library,
+    gallery: [item],
+    campaigns: {
+      [item.campaignKey]: {
+        clears: {
+          [item.levelId]: { score: 14410, time: 12, medals: 3, clean: true, variants: {} },
+        },
+      },
+    },
+  });
+  const before = structuredClone(h.library);
+  h.collection();
+  assert.match(h.cards()[0].children[2].textContent, /Level best GOLD/);
+  assert.ok(h.cards()[0].children[2].textContent.includes(item.score.toLocaleString()));
+  await h.cards()[0].onclick();
+  assert.match(
+    h.node('gallery-view-meta').textContent,
+    /SILVER · 55\.77s · Level best medal: GOLD/,
+  );
+  assert.deepEqual(h.library, before);
+});
