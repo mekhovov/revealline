@@ -1,0 +1,6495 @@
+{
+  "format": "revealline-countercurrent-mechanics.v1",
+  "source": {
+    "packSha256": "fa1ad192dbb09efe1ea97ec2689064cf84dc086e9a293e2c1a482d5e97cac6bb",
+    "routesSha256": "e729ead2a1014b7edf2809d2d32dfd2958f66441194468d36b9e9f7b534ba856",
+    "verifierSha256": "d9e1166c2efdf2ea2a48ae0093929a456ab416a0c02a44cf1d4b9014cc5b0e30"
+  },
+  "probes": [
+    {
+      "id": "wall-return",
+      "levelId": "countercurrent-offset-docks",
+      "sandbox": false,
+      "commands": [
+        {
+          "to": [
+            "right",
+            20.5
+          ]
+        },
+        {
+          "to": [
+            "up",
+            12.5
+          ]
+        },
+        {
+          "ticks": 120,
+          "direction": "up"
+        },
+        {
+          "ticks": 120,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-offset-docks",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 448,
+        "time": 3.7333333333333227,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2288,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 448,
+          "player": {
+            "x": 20.5,
+            "y": 10.18,
+            "direction": "up",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "trailCells": 28,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "docks-upper",
+              "x": 31.860000000000127,
+              "y": 15.74000000000035
+            },
+            {
+              "id": "docks-lower",
+              "x": 43.51333333333287,
+              "y": 24.386666666667452
+            },
+            {
+              "id": "docks-border",
+              "x": 65.72666666666191,
+              "y": 0.5
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-offset-docks",
+          "revision": "1",
+          "name": "Offset Docks",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.64
+          },
+          "walls": [
+            {
+              "x": 14,
+              "y": 8,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 14,
+              "y": 10,
+              "w": 2,
+              "h": 5
+            },
+            {
+              "x": 40,
+              "y": 25,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 55,
+              "y": 19,
+              "w": 2,
+              "h": 6
+            }
+          ],
+          "enemies": [
+            {
+              "id": "docks-upper",
+              "type": "bouncer",
+              "x": 28.5,
+              "y": 13.5,
+              "vx": 0.9,
+              "vy": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-lower",
+              "type": "bouncer",
+              "x": 46.5,
+              "y": 22.5,
+              "vx": -0.8,
+              "vy": 0.7,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-border",
+              "type": "border-patrol",
+              "x": 60.5,
+              "y": 0.5,
+              "speed": 1.4,
+              "clockwise": true,
+              "radius": 0.23
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "docks-slow",
+                "kind": "enemy-slow",
+                "x": 9.5,
+                "y": 28.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Offset Docks",
+            "description": "Reveal 64%. Two offset hooked piers face opposite ways. Build a northern or southern return around them; a wall cannot reconnect a cut. Two field enemies retain their pockets, and the outer patrol also threatens the border. The enemy-slow pickup is an optional detour. Tap a direction to move. Closing a cut stops the craft; choose a fresh direction to continue.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 160,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 168,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 120,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 448,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-offset-docks",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 448,
+          "time": 3.7333333333333227,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2288,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "0d764332efaaf2ec",
+          "sections": {
+            "identity": "b6a690385992181e",
+            "configuration": "8d02b7476f6356c3",
+            "board": "ce189dcc61602d9a",
+            "player": "dbec0e4d05fa2eed",
+            "trail": "c800a733d368af7a",
+            "enemies": "5c9d0984d3a4ee46",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "1a7d4b85bb4b97e4",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "2568ea3b54b4debe"
+          }
+        }
+      }
+    },
+    {
+      "id": "slow-bonus",
+      "levelId": "countercurrent-offset-docks",
+      "sandbox": false,
+      "commands": [
+        {
+          "to": [
+            "right",
+            9.5
+          ]
+        },
+        {
+          "to": [
+            "down",
+            28.5
+          ]
+        },
+        {
+          "to": [
+            "left",
+            0.5
+          ]
+        },
+        {
+          "ticks": 900,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-offset-docks",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 1125,
+        "time": 9.375000000000108,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 990,
+        "coverage": 0.04326923076923077,
+        "claimedCount": 99,
+        "totalClaimable": 2288,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {
+          "enemy-slow": 720
+        },
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 1435,
+        "last": {
+          "tick": 1125,
+          "player": {
+            "x": 0.5,
+            "y": 28.5,
+            "direction": "left",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 148,
+              "until": 868
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "docks-upper",
+              "x": 34.23749999999993,
+              "y": 17.324999999999523
+            },
+            {
+              "id": "docks-lower",
+              "x": 41.40000000000176,
+              "y": 22.537500000000062
+            },
+            {
+              "id": "docks-border",
+              "x": 69.42499999999188,
+              "y": 0.5
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "powerup.collected",
+          "tick": 147,
+          "time": 1.2246666666666648,
+          "id": "docks-slow",
+          "kind": "enemy-slow",
+          "gain": null,
+          "activationTick": 148,
+          "untilTick": 868
+        },
+        {
+          "type": "cut.closed",
+          "tick": 220,
+          "time": 1.8333333333333293,
+          "cells": 99
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 220,
+          "time": 1.8333333333333293
+        }
+      ],
+      "captures": [
+        {
+          "tick": 220,
+          "count": 99,
+          "cellsSha256": "3bcea1806dbaeb55517ef377064781d86e2a7634c4a9abc66f1c0474d0729041",
+          "player": {
+            "x": 1,
+            "y": 28.5
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-offset-docks",
+          "revision": "1",
+          "name": "Offset Docks",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.64
+          },
+          "walls": [
+            {
+              "x": 14,
+              "y": 8,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 14,
+              "y": 10,
+              "w": 2,
+              "h": 5
+            },
+            {
+              "x": 40,
+              "y": 25,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 55,
+              "y": 19,
+              "w": 2,
+              "h": 6
+            }
+          ],
+          "enemies": [
+            {
+              "id": "docks-upper",
+              "type": "bouncer",
+              "x": 28.5,
+              "y": 13.5,
+              "vx": 0.9,
+              "vy": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-lower",
+              "type": "bouncer",
+              "x": 46.5,
+              "y": 22.5,
+              "vx": -0.8,
+              "vy": 0.7,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-border",
+              "type": "border-patrol",
+              "x": 60.5,
+              "y": 0.5,
+              "speed": 1.4,
+              "clockwise": true,
+              "radius": 0.23
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "docks-slow",
+                "kind": "enemy-slow",
+                "x": 9.5,
+                "y": 28.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Offset Docks",
+            "description": "Reveal 64%. Two offset hooked piers face opposite ways. Build a northern or southern return around them; a wall cannot reconnect a cut. Two field enemies retain their pockets, and the outer patrol also threatens the border. The enemy-slow pickup is an optional detour. Tap a direction to move. Closing a cut stops the craft; choose a fresh direction to continue.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 72,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 80,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 68,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 900,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 1125,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-offset-docks",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 1125,
+          "time": 9.375000000000108,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 990,
+          "coverage": 0.04326923076923077,
+          "claimedCount": 99,
+          "totalClaimable": 2288,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "b90a947c4cafc2b7",
+          "sections": {
+            "identity": "b6a690385992181e",
+            "configuration": "8d02b7476f6356c3",
+            "board": "b703f1e3e386c19b",
+            "player": "499af7fdf5181313",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "d2d187412eb89400",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "b8db90f57f5c5de0",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "eb06b48758eee7a4"
+          }
+        }
+      }
+    },
+    {
+      "id": "speed-bonus",
+      "levelId": "countercurrent-sandbar-braid",
+      "sandbox": false,
+      "commands": [
+        {
+          "to": [
+            "left",
+            8.5
+          ]
+        },
+        {
+          "to": [
+            "up",
+            5.5
+          ]
+        },
+        {
+          "to": [
+            "left",
+            0.5
+          ]
+        },
+        {
+          "ticks": 900,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-sandbar-braid",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 1416,
+        "time": 11.79999999999997,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 2400,
+        "coverage": 0.10685663401602849,
+        "claimedCount": 240,
+        "totalClaimable": 2246,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {
+          "player-speed": 600
+        },
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 18.75,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 1416,
+          "player": {
+            "x": 0.5,
+            "y": 5.5,
+            "direction": "left",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 460,
+              "until": 1060
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "braid-west",
+              "x": 33.940000000001476,
+              "y": 8.419999999998893
+            },
+            {
+              "id": "braid-interceptor",
+              "x": 44.520000000001744,
+              "y": 27.399999999999665
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 229,
+          "time": 1.8999999999999957
+        },
+        {
+          "type": "powerup.collected",
+          "tick": 459,
+          "time": 3.824666666666656,
+          "id": "braid-speed",
+          "kind": "player-speed",
+          "gain": null,
+          "activationTick": 460,
+          "untilTick": 1060
+        },
+        {
+          "type": "cut.closed",
+          "tick": 511,
+          "time": 4.258333333333335,
+          "cells": 240
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 511,
+          "time": 4.258333333333335
+        }
+      ],
+      "captures": [
+        {
+          "tick": 511,
+          "count": 240,
+          "cellsSha256": "d76287fe7dbdd438ec7d8ec4c5e7c01b77444a31a0d0807ff7535772c32dbd74",
+          "player": {
+            "x": 1,
+            "y": 5.5
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "name": "Sandbar Braid",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.66
+          },
+          "walls": [
+            {
+              "x": 13,
+              "y": 7,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 13,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 19,
+              "y": 21,
+              "w": 16,
+              "h": 2
+            },
+            {
+              "x": 43,
+              "y": 28,
+              "w": 16,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "braid-west",
+              "type": "bouncer",
+              "x": 24.5,
+              "y": 15.5,
+              "vx": 0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "braid-interceptor",
+              "type": "bouncer",
+              "x": 57.5,
+              "y": 21.5,
+              "vx": -1.1,
+              "vy": 0.5,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "braid-slow",
+                "kind": "slow",
+                "x": 33,
+                "y": 24,
+                "w": 4,
+                "h": 3
+              }
+            ],
+            "powerups": [
+              {
+                "id": "braid-speed",
+                "kind": "player-speed",
+                "x": 8.5,
+                "y": 5.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            },
+            "enemyPressure": {
+              "version": "enemy-pressure.v1",
+              "actors": [
+                {
+                  "id": "braid-interceptor",
+                  "mode": "head-intercept",
+                  "senseRadius": 18,
+                  "scanTicks": 48,
+                  "warningTicks": 120,
+                  "commitTicks": 160,
+                  "cooldownTicks": 300,
+                  "leadTicks": 30
+                }
+              ]
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Sandbar Braid",
+            "description": "Reveal 66%. Four staggered sandbars leave an open center and unequal outer detours. Choose which crossings to secure first. A warned interceptor commits to its marked route; use the warning to change your approach. The middle patch slows your craft; the remote speed pickup is optional. A closed cut stops the craft. A fresh direction starts the next leg.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 224,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 239,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 48,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 900,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 1416,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 1416,
+          "time": 11.79999999999997,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 2400,
+          "coverage": 0.10685663401602849,
+          "claimedCount": 240,
+          "totalClaimable": 2246,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "e4b8b9e6784e8c9d",
+          "sections": {
+            "identity": "eeaf8cb59cfb822a",
+            "configuration": "3320a0b0c67895d9",
+            "board": "a3bb33e0a58b84df",
+            "player": "d676f035304ea84e",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "136566a2d4b1810c",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "ea2acd36de809586",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "ea8a78197d986e21"
+          }
+        }
+      }
+    },
+    {
+      "id": "freeze-bonus",
+      "levelId": "countercurrent-crossing-watch",
+      "sandbox": false,
+      "commands": [
+        {
+          "to": [
+            "right",
+            8.5
+          ]
+        },
+        {
+          "to": [
+            "down",
+            27.5
+          ]
+        },
+        {
+          "to": [
+            "left",
+            0.5
+          ]
+        },
+        {
+          "ticks": 600,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-crossing-watch",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 801,
+        "time": 6.6750000000001215,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 800,
+        "coverage": 0.03457216940363008,
+        "claimedCount": 80,
+        "totalClaimable": 2314,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {
+          "enemy-freeze": 360
+        },
+        "overlapTicks": 0,
+        "firstActive": {
+          "watch-horizontal": {
+            "tick": 781,
+            "lane": 27.5
+          }
+        },
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": null,
+        "freezeUnchanged": 358,
+        "freezeMoved": 0,
+        "postFreezeMoves": 309,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 801,
+          "player": {
+            "x": 0.5,
+            "y": 27.5,
+            "direction": "left",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 132,
+              "until": 492
+            }
+          },
+          "actors": [
+            {
+              "id": "watch-horizontal",
+              "x": 58.5,
+              "y": 12.5
+            },
+            {
+              "id": "watch-vertical",
+              "x": 35.5,
+              "y": 27.5
+            },
+            {
+              "id": "watch-field",
+              "x": 57.55999999999954,
+              "y": 26.29500000000044
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "powerup.collected",
+          "tick": 131,
+          "time": 1.091333333333332,
+          "id": "watch-freeze",
+          "kind": "enemy-freeze",
+          "gain": null,
+          "activationTick": 132,
+          "untilTick": 492
+        },
+        {
+          "type": "cut.closed",
+          "tick": 196,
+          "time": 1.63333333333333,
+          "cells": 80
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 196,
+          "time": 1.63333333333333
+        },
+        {
+          "type": "boss.warning",
+          "tick": 601,
+          "time": 5.000000000000038,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 27.5,
+          "activeAt": 3.4999999999999956
+        },
+        {
+          "type": "boss.warning",
+          "tick": 601,
+          "time": 5.000000000000038,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 1.5,
+          "activeAt": 3.7999999999999954
+        }
+      ],
+      "captures": [
+        {
+          "tick": 196,
+          "count": 80,
+          "cellsSha256": "fb77e8d20cfe497846e5c038643b0319595fb4d9d2b71cdc39c515ad2484b0bc",
+          "player": {
+            "x": 1,
+            "y": 27.5
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-crossing-watch",
+          "revision": "1",
+          "name": "Crossing Watch",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.68
+          },
+          "walls": [
+            {
+              "x": 20,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "x": 43,
+              "y": 21,
+              "w": 10,
+              "h": 3
+            }
+          ],
+          "enemies": [
+            {
+              "id": "watch-horizontal",
+              "type": "lane-boss",
+              "x": 58.5,
+              "y": 12.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.5,
+              "activeSeconds": 0.65,
+              "period": 6.2,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-vertical",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 27.5,
+              "axis": "vertical",
+              "warningSeconds": 1.8,
+              "activeSeconds": 0.7,
+              "period": 8.1,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-field",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 28.5,
+              "vx": -0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "watch-freeze",
+                "kind": "enemy-freeze",
+                "x": 8.5,
+                "y": 27.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Crossing Watch",
+            "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 64,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 72,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 60,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 600,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 801,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-crossing-watch",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 801,
+          "time": 6.6750000000001215,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 800,
+          "coverage": 0.03457216940363008,
+          "claimedCount": 80,
+          "totalClaimable": 2314,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "12cc87774ac519fb",
+          "sections": {
+            "identity": "92b49bf7db02356a",
+            "configuration": "5bd8fb8e1caa936f",
+            "board": "2ac9cfa62a1e7707",
+            "player": "a3e4060623b789a8",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "64e030333f11d627",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "75516e1a71633dd6",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "2577281502446e6b"
+          }
+        }
+      }
+    },
+    {
+      "id": "inward-idle-countercurrent-offset-docks",
+      "levelId": "countercurrent-offset-docks",
+      "sandbox": false,
+      "commands": [
+        {
+          "ticks": 32,
+          "direction": "right"
+        },
+        {
+          "ticks": 2400,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-offset-docks",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 2432,
+        "time": 20.266666666666158,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2288,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": {
+          "player": {
+            "x": 4.5,
+            "y": 18.5
+          },
+          "events": [],
+          "pressure": null
+        },
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 2432,
+          "player": {
+            "x": 4.5,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": true,
+            "graceUntil": 0
+          },
+          "trailCells": 4,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "docks-upper",
+              "x": 46.74000000000069,
+              "y": 23.84000000000153
+            },
+            {
+              "id": "docks-lower",
+              "x": 30.286666666664132,
+              "y": 12.813333333336624
+            },
+            {
+              "id": "docks-border",
+              "x": 71.5,
+              "y": 17.873333333307528
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-offset-docks",
+          "revision": "1",
+          "name": "Offset Docks",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.64
+          },
+          "walls": [
+            {
+              "x": 14,
+              "y": 8,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 14,
+              "y": 10,
+              "w": 2,
+              "h": 5
+            },
+            {
+              "x": 40,
+              "y": 25,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 55,
+              "y": 19,
+              "w": 2,
+              "h": 6
+            }
+          ],
+          "enemies": [
+            {
+              "id": "docks-upper",
+              "type": "bouncer",
+              "x": 28.5,
+              "y": 13.5,
+              "vx": 0.9,
+              "vy": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-lower",
+              "type": "bouncer",
+              "x": 46.5,
+              "y": 22.5,
+              "vx": -0.8,
+              "vy": 0.7,
+              "radius": 0.25
+            },
+            {
+              "id": "docks-border",
+              "type": "border-patrol",
+              "x": 60.5,
+              "y": 0.5,
+              "speed": 1.4,
+              "clockwise": true,
+              "radius": 0.23
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "docks-slow",
+                "kind": "enemy-slow",
+                "x": 9.5,
+                "y": 28.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Offset Docks",
+            "description": "Reveal 64%. Two offset hooked piers face opposite ways. Build a northern or southern return around them; a wall cannot reconnect a cut. Two field enemies retain their pockets, and the outer patrol also threatens the border. The enemy-slow pickup is an optional detour. Tap a direction to move. Closing a cut stops the craft; choose a fresh direction to continue.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 32,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 2400,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 2432,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-offset-docks",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 2432,
+          "time": 20.266666666666158,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2288,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "896074b2fd13e223",
+          "sections": {
+            "identity": "b6a690385992181e",
+            "configuration": "8d02b7476f6356c3",
+            "board": "ce189dcc61602d9a",
+            "player": "69782cbc714e95fc",
+            "trail": "fd6a3d6133d5fc16",
+            "enemies": "4a0829f35d6bd283",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "9f93981c7d3aad64",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "c549d6dde008a320"
+          }
+        }
+      }
+    },
+    {
+      "id": "inward-idle-countercurrent-sandbar-braid",
+      "levelId": "countercurrent-sandbar-braid",
+      "sandbox": false,
+      "commands": [
+        {
+          "ticks": 32,
+          "direction": "up"
+        },
+        {
+          "ticks": 2400,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-sandbar-braid",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 2432,
+        "time": 20.266666666666158,
+        "lives": 2,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2246,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": {
+          "player": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "events": [],
+          "pressure": {
+            "version": "enemy-pressure-state.v1",
+            "phase": "warning",
+            "nextScanTick": 1585,
+            "warningUntil": 1657,
+            "commitUntil": null,
+            "cooldownUntil": null,
+            "target": {
+              "x": 36.5,
+              "y": 31.5
+            },
+            "path": [],
+            "pathIndex": 0,
+            "topologyRevision": 0,
+            "baseSpeed": 1.2083045973594573,
+            "aborted": false
+          }
+        },
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 2432,
+          "player": {
+            "x": 36.5,
+            "y": 35.5,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 19.71666666666619
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "braid-west",
+              "x": 40.71333333333587,
+              "y": 3.339999999998928
+            },
+            {
+              "id": "braid-interceptor",
+              "x": 36.087075528447514,
+              "y": 31.812176576431682
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 1537,
+          "time": 12.799999999999914,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1537,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": 1657,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 1657,
+          "time": 13.799999999999857,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1657,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": null,
+          "commitUntil": 1817,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.cooldown",
+          "tick": 1817,
+          "time": 15.133333333333114,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1817,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 2117
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 2117,
+          "time": 17.633333333332974,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 2117,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": 2237,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 2237,
+          "time": 18.633333333332917,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 2237,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": null,
+          "commitUntil": 2397,
+          "cooldownUntil": null
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 2288,
+          "time": 19.060131122979655,
+          "actorId": "braid-interceptor",
+          "x": 36.5,
+          "y": 31.5,
+          "distance": 3.5,
+          "speed": 24,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.arrived",
+          "tick": 2288,
+          "time": 19.060131122979655,
+          "id": "impact-1-player",
+          "actorId": "braid-interceptor",
+          "x": 36.5,
+          "y": 31.5
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 2288,
+          "time": 19.060131122979655,
+          "reason": "recovery",
+          "ids": [
+            "impact-1-departure",
+            "impact-1-player"
+          ]
+        },
+        {
+          "type": "player.failed",
+          "tick": 2288,
+          "time": 19.060131122979655,
+          "cause": "enemy-trail",
+          "actorId": "braid-interceptor",
+          "lives": 2
+        },
+        {
+          "type": "pressure.cancelled",
+          "tick": 2288,
+          "time": 19.060131122979655,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 2288,
+          "target": {
+            "x": 36.5,
+            "y": 31.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 2588,
+          "reason": "recovery"
+        },
+        {
+          "type": "player.respawned",
+          "tick": 2366,
+          "time": 19.71666666666619
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "name": "Sandbar Braid",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.66
+          },
+          "walls": [
+            {
+              "x": 13,
+              "y": 7,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 13,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 19,
+              "y": 21,
+              "w": 16,
+              "h": 2
+            },
+            {
+              "x": 43,
+              "y": 28,
+              "w": 16,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "braid-west",
+              "type": "bouncer",
+              "x": 24.5,
+              "y": 15.5,
+              "vx": 0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "braid-interceptor",
+              "type": "bouncer",
+              "x": 57.5,
+              "y": 21.5,
+              "vx": -1.1,
+              "vy": 0.5,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "braid-slow",
+                "kind": "slow",
+                "x": 33,
+                "y": 24,
+                "w": 4,
+                "h": 3
+              }
+            ],
+            "powerups": [
+              {
+                "id": "braid-speed",
+                "kind": "player-speed",
+                "x": 8.5,
+                "y": 5.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            },
+            "enemyPressure": {
+              "version": "enemy-pressure.v1",
+              "actors": [
+                {
+                  "id": "braid-interceptor",
+                  "mode": "head-intercept",
+                  "senseRadius": 18,
+                  "scanTicks": 48,
+                  "warningTicks": 120,
+                  "commitTicks": 160,
+                  "cooldownTicks": 300,
+                  "leadTicks": 30
+                }
+              ]
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Sandbar Braid",
+            "description": "Reveal 66%. Four staggered sandbars leave an open center and unequal outer detours. Choose which crossings to secure first. A warned interceptor commits to its marked route; use the warning to change your approach. The middle patch slows your craft; the remote speed pickup is optional. A closed cut stops the craft. A fresh direction starts the next leg.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 32,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 2400,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 2432,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 2432,
+          "time": 20.266666666666158,
+          "lives": 2,
+          "livesLost": 1,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2246,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "b74a22be4f91fa4e",
+          "sections": {
+            "identity": "eeaf8cb59cfb822a",
+            "configuration": "3320a0b0c67895d9",
+            "board": "e39e5bf13dd62014",
+            "player": "2aef73797858737d",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "c52cf4ee037ec9a4",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "0add6d6b12820b80",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "e26d53b6609f5353"
+          }
+        }
+      }
+    },
+    {
+      "id": "inward-idle-countercurrent-crossing-watch",
+      "levelId": "countercurrent-crossing-watch",
+      "sandbox": false,
+      "commands": [
+        {
+          "ticks": 32,
+          "direction": "right"
+        },
+        {
+          "ticks": 2400,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-crossing-watch",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "boss-lane",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 2432,
+        "time": 20.266666666666158,
+        "lives": 2,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2314,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 42,
+        "firstActive": {
+          "watch-horizontal": {
+            "tick": 421,
+            "lane": 18.5
+          },
+          "watch-vertical": {
+            "tick": 457,
+            "lane": 4.5
+          }
+        },
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": {
+          "player": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "events": [],
+          "pressure": null
+        },
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 2432,
+          "player": {
+            "x": 0.5,
+            "y": 18.5,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 4.149999999999996
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "watch-horizontal",
+              "x": 58.5,
+              "y": 12.5
+            },
+            {
+              "id": "watch-vertical",
+              "x": 35.5,
+              "y": 27.5
+            },
+            {
+              "id": "watch-field",
+              "x": 62.21333333333587,
+              "y": 16.34000000000242
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 18.5,
+          "activeAt": 3.4999999999999956
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 4.5,
+          "activeAt": 3.7999999999999954
+        },
+        {
+          "type": "player.failed",
+          "tick": 421,
+          "time": 3.4999999999999902,
+          "cause": "boss-lane",
+          "actorId": "watch-horizontal",
+          "lives": 2
+        },
+        {
+          "type": "player.respawned",
+          "tick": 498,
+          "time": 4.149999999999996
+        },
+        {
+          "type": "boss.warning",
+          "tick": 985,
+          "time": 8.200000000000175,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 18.5,
+          "activeAt": 9.700000000000175
+        },
+        {
+          "type": "boss.warning",
+          "tick": 1213,
+          "time": 10.100000000000067,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 1.5,
+          "activeAt": 11.90000000000007
+        },
+        {
+          "type": "boss.warning",
+          "tick": 1729,
+          "time": 14.399999999999823,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 18.5,
+          "activeAt": 15.899999999999824
+        },
+        {
+          "type": "boss.warning",
+          "tick": 2185,
+          "time": 18.19999999999961,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 1.5,
+          "activeAt": 19.99999999999961
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-crossing-watch",
+          "revision": "1",
+          "name": "Crossing Watch",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.68
+          },
+          "walls": [
+            {
+              "x": 20,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "x": 43,
+              "y": 21,
+              "w": 10,
+              "h": 3
+            }
+          ],
+          "enemies": [
+            {
+              "id": "watch-horizontal",
+              "type": "lane-boss",
+              "x": 58.5,
+              "y": 12.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.5,
+              "activeSeconds": 0.65,
+              "period": 6.2,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-vertical",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 27.5,
+              "axis": "vertical",
+              "warningSeconds": 1.8,
+              "activeSeconds": 0.7,
+              "period": 8.1,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-field",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 28.5,
+              "vx": -0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "watch-freeze",
+                "kind": "enemy-freeze",
+                "x": 8.5,
+                "y": 27.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Crossing Watch",
+            "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 32,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 2400,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 2432,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-crossing-watch",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "boss-lane",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 2432,
+          "time": 20.266666666666158,
+          "lives": 2,
+          "livesLost": 1,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2314,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "976b23269fc7039f",
+          "sections": {
+            "identity": "92b49bf7db02356a",
+            "configuration": "5bd8fb8e1caa936f",
+            "board": "7aee4e155a24f0c8",
+            "player": "3a4458c8b28c70cc",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "2ace24dee02f87e6",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "0a5cbcd70ff763a3",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "b254b84ef8da51c3"
+          }
+        }
+      }
+    },
+    {
+      "id": "warning-return",
+      "levelId": "countercurrent-sandbar-braid",
+      "sandbox": false,
+      "commands": [
+        {
+          "ticks": 300,
+          "direction": "up"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "up"
+        },
+        {
+          "ticks": 288,
+          "direction": "left"
+        },
+        {
+          "ticks": 144,
+          "direction": "down"
+        },
+        {
+          "ticks": 284,
+          "direction": "right"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 280,
+          "direction": "right"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "right"
+        },
+        {
+          "ticks": 136,
+          "direction": "down"
+        },
+        {
+          "ticks": 72,
+          "direction": "left"
+        },
+        {
+          "ticks": 87,
+          "direction": "up"
+        },
+        {
+          "to": [
+            "right",
+            71.5
+          ]
+        },
+        {
+          "ticks": 240,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-sandbar-braid",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 1915,
+        "time": 15.958333333333067,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 12740,
+        "coverage": 0.5672306322350846,
+        "claimedCount": 1274,
+        "totalClaimable": 2246,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": {
+          "player": {
+            "x": 62.5,
+            "y": 24.625
+          },
+          "events": [
+            {
+              "type": "pressure.warning",
+              "tick": 1602,
+              "time": 13.34166666666655,
+              "id": "braid-interceptor",
+              "mode": "head-intercept",
+              "actorTick": 1602,
+              "target": {
+                "x": 62.5,
+                "y": 21
+              },
+              "warningUntil": 1722,
+              "commitUntil": null,
+              "cooldownUntil": null
+            }
+          ],
+          "pressure": {
+            "version": "enemy-pressure-state.v1",
+            "phase": "warning",
+            "nextScanTick": 1650,
+            "warningUntil": 1722,
+            "commitUntil": null,
+            "cooldownUntil": null,
+            "target": {
+              "x": 62.5,
+              "y": 21
+            },
+            "path": [],
+            "pathIndex": 0,
+            "topologyRevision": 3,
+            "baseSpeed": 1.2083045973594573,
+            "aborted": false
+          }
+        },
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 1915,
+          "player": {
+            "x": 71.5,
+            "y": 24.625,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "braid-west",
+              "x": 34.23333333333134,
+              "y": 5.924999999998872
+            },
+            {
+              "id": "braid-interceptor",
+              "x": 44.29755077902117,
+              "y": 19.364209983189305
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "cut.closed",
+          "tick": 300,
+          "time": 2.499999999999994,
+          "cells": 34
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 300,
+          "time": 2.499999999999994
+        },
+        {
+          "type": "cut.started",
+          "tick": 742,
+          "time": 6.175000000000097
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1021,
+          "time": 8.508333333333491,
+          "cells": 563
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1021,
+          "time": 8.508333333333491
+        },
+        {
+          "type": "cut.started",
+          "tick": 1031,
+          "time": 8.583333333333487
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 1057,
+          "time": 8.800000000000141,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1057,
+          "target": {
+            "x": 44,
+            "y": 18.5
+          },
+          "warningUntil": 1177,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "pressure.committed",
+          "tick": 1177,
+          "time": 9.800000000000084,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1177,
+          "target": {
+            "x": 44,
+            "y": 18.5
+          },
+          "warningUntil": null,
+          "commitUntil": 1337,
+          "cooldownUntil": null
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1302,
+          "time": 10.850000000000025,
+          "cells": 578
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1302,
+          "time": 10.850000000000025
+        },
+        {
+          "type": "pressure.cancelled",
+          "tick": 1302,
+          "time": 10.850000000000025,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1302,
+          "target": {
+            "x": 44,
+            "y": 18.5
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 1602,
+          "reason": "trail-closed"
+        },
+        {
+          "type": "cut.started",
+          "tick": 1520,
+          "time": 12.658333333333255
+        },
+        {
+          "type": "pressure.warning",
+          "tick": 1602,
+          "time": 13.34166666666655,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1602,
+          "target": {
+            "x": 62.5,
+            "y": 21
+          },
+          "warningUntil": 1722,
+          "commitUntil": null,
+          "cooldownUntil": null
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1670,
+          "time": 13.916666666666517,
+          "cells": 99
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1670,
+          "time": 13.916666666666517
+        },
+        {
+          "type": "pressure.cancelled",
+          "tick": 1670,
+          "time": 13.916666666666517,
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "actorTick": 1670,
+          "target": {
+            "x": 62.5,
+            "y": 21
+          },
+          "warningUntil": null,
+          "commitUntil": null,
+          "cooldownUntil": 1970,
+          "reason": "trail-closed"
+        }
+      ],
+      "captures": [
+        {
+          "tick": 300,
+          "count": 34,
+          "cellsSha256": "8a7ca6b47cdd846e0a3054a56b187dcb74048110b6fb86de6ceac632b820abd5",
+          "player": {
+            "x": 36.5,
+            "y": 1
+          }
+        },
+        {
+          "tick": 1021,
+          "count": 563,
+          "cellsSha256": "82e2204e3fb1f07586a94fdc9efec4065403cbd2dc287e107511556363e0ffe4",
+          "player": {
+            "x": 36,
+            "y": 18.5
+          }
+        },
+        {
+          "tick": 1302,
+          "count": 578,
+          "cellsSha256": "c7e061265f5c8b9474cce587d378cd7e9dbb57c233201ebab5c3a6b1b6d76638",
+          "player": {
+            "x": 71,
+            "y": 18.5
+          }
+        },
+        {
+          "tick": 1670,
+          "count": 99,
+          "cellsSha256": "c62a6398b30e6fd5e9778a8864cb0e1dda42bc67048fd0ddcc0f464da37950b5",
+          "player": {
+            "x": 71,
+            "y": 24.625
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "name": "Sandbar Braid",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.66
+          },
+          "walls": [
+            {
+              "x": 13,
+              "y": 7,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 13,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 19,
+              "y": 21,
+              "w": 16,
+              "h": 2
+            },
+            {
+              "x": 43,
+              "y": 28,
+              "w": 16,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "braid-west",
+              "type": "bouncer",
+              "x": 24.5,
+              "y": 15.5,
+              "vx": 0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "braid-interceptor",
+              "type": "bouncer",
+              "x": 57.5,
+              "y": 21.5,
+              "vx": -1.1,
+              "vy": 0.5,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "braid-slow",
+                "kind": "slow",
+                "x": 33,
+                "y": 24,
+                "w": 4,
+                "h": 3
+              }
+            ],
+            "powerups": [
+              {
+                "id": "braid-speed",
+                "kind": "player-speed",
+                "x": 8.5,
+                "y": 5.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            },
+            "enemyPressure": {
+              "version": "enemy-pressure.v1",
+              "actors": [
+                {
+                  "id": "braid-interceptor",
+                  "mode": "head-intercept",
+                  "senseRadius": 18,
+                  "scanTicks": 48,
+                  "warningTicks": 120,
+                  "commitTicks": 160,
+                  "cooldownTicks": 300,
+                  "leadTicks": 30
+                }
+              ]
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Sandbar Braid",
+            "description": "Reveal 66%. Four staggered sandbars leave an open center and unequal outer detours. Choose which crossings to secure first. A warned interceptor commits to its marked route; use the warning to change your approach. The middle patch slows your craft; the remote speed pickup is optional. A closed cut stops the craft. A fresh direction starts the next leg.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 300,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 288,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 144,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 284,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 280,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 136,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 72,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 87,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 68,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 240,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 1915,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-sandbar-braid",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 1915,
+          "time": 15.958333333333067,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 12740,
+          "coverage": 0.5672306322350846,
+          "claimedCount": 1274,
+          "totalClaimable": 2246,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "47675819eaf627fc",
+          "sections": {
+            "identity": "eeaf8cb59cfb822a",
+            "configuration": "3320a0b0c67895d9",
+            "board": "0695d101ca8c850e",
+            "player": "c33b8939cb49d926",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "0dfc665705eadf52",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "165c91f790a48f28",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "f673f5eefc4faae2"
+          }
+        }
+      }
+    },
+    {
+      "id": "pressure-off-contrast",
+      "levelId": "countercurrent-sandbar-braid-pressure-off",
+      "sandbox": true,
+      "commands": [
+        {
+          "ticks": 300,
+          "direction": "up"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "up"
+        },
+        {
+          "ticks": 288,
+          "direction": "left"
+        },
+        {
+          "ticks": 144,
+          "direction": "down"
+        },
+        {
+          "ticks": 284,
+          "direction": "right"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 280,
+          "direction": "right"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "right"
+        },
+        {
+          "ticks": 136,
+          "direction": "down"
+        },
+        {
+          "ticks": 72,
+          "direction": "left"
+        },
+        {
+          "ticks": 87,
+          "direction": "up"
+        },
+        {
+          "to": [
+            "right",
+            71.5
+          ]
+        },
+        {
+          "ticks": 240,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-sandbar-braid-pressure-off",
+        "revision": "sandbox1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 1915,
+        "time": 15.958333333333067,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 12740,
+        "coverage": 0.5672306322350846,
+        "claimedCount": 1274,
+        "totalClaimable": 2246,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {},
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": {
+          "player": {
+            "x": 62.5,
+            "y": 24.625
+          },
+          "events": [],
+          "pressure": null
+        },
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 1915,
+          "player": {
+            "x": 71.5,
+            "y": 24.625,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "braid-west",
+              "x": 34.23333333333134,
+              "y": 5.924999999998872
+            },
+            {
+              "id": "braid-interceptor",
+              "x": 39.94583333333569,
+              "y": 26.020833333333787
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "cut.closed",
+          "tick": 300,
+          "time": 2.499999999999994,
+          "cells": 34
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 300,
+          "time": 2.499999999999994
+        },
+        {
+          "type": "cut.started",
+          "tick": 742,
+          "time": 6.175000000000097
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1021,
+          "time": 8.508333333333491,
+          "cells": 563
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1021,
+          "time": 8.508333333333491
+        },
+        {
+          "type": "cut.started",
+          "tick": 1031,
+          "time": 8.583333333333487
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1302,
+          "time": 10.850000000000025,
+          "cells": 578
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1302,
+          "time": 10.850000000000025
+        },
+        {
+          "type": "cut.started",
+          "tick": 1520,
+          "time": 12.658333333333255
+        },
+        {
+          "type": "cut.closed",
+          "tick": 1670,
+          "time": 13.916666666666517,
+          "cells": 99
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 1670,
+          "time": 13.916666666666517
+        }
+      ],
+      "captures": [
+        {
+          "tick": 300,
+          "count": 34,
+          "cellsSha256": "8a7ca6b47cdd846e0a3054a56b187dcb74048110b6fb86de6ceac632b820abd5",
+          "player": {
+            "x": 36.5,
+            "y": 1
+          }
+        },
+        {
+          "tick": 1021,
+          "count": 563,
+          "cellsSha256": "82e2204e3fb1f07586a94fdc9efec4065403cbd2dc287e107511556363e0ffe4",
+          "player": {
+            "x": 36,
+            "y": 18.5
+          }
+        },
+        {
+          "tick": 1302,
+          "count": 578,
+          "cellsSha256": "c7e061265f5c8b9474cce587d378cd7e9dbb57c233201ebab5c3a6b1b6d76638",
+          "player": {
+            "x": 71,
+            "y": 18.5
+          }
+        },
+        {
+          "tick": 1670,
+          "count": 99,
+          "cellsSha256": "c62a6398b30e6fd5e9778a8864cb0e1dda42bc67048fd0ddcc0f464da37950b5",
+          "player": {
+            "x": 71,
+            "y": 24.625
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-sandbar-braid-pressure-off",
+          "revision": "sandbox1",
+          "name": "Sandbar Braid",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 36.5,
+            "y": 35.5
+          },
+          "goal": {
+            "coverage": 0.66
+          },
+          "walls": [
+            {
+              "x": 13,
+              "y": 7,
+              "w": 18,
+              "h": 2
+            },
+            {
+              "x": 39,
+              "y": 13,
+              "w": 17,
+              "h": 2
+            },
+            {
+              "x": 19,
+              "y": 21,
+              "w": 16,
+              "h": 2
+            },
+            {
+              "x": 43,
+              "y": 28,
+              "w": 16,
+              "h": 2
+            }
+          ],
+          "enemies": [
+            {
+              "id": "braid-west",
+              "type": "bouncer",
+              "x": 24.5,
+              "y": 15.5,
+              "vx": 0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "braid-interceptor",
+              "type": "bouncer",
+              "x": 57.5,
+              "y": 21.5,
+              "vx": -1.1,
+              "vy": 0.5,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [
+              {
+                "id": "braid-slow",
+                "kind": "slow",
+                "x": 33,
+                "y": 24,
+                "w": 4,
+                "h": 3
+              }
+            ],
+            "powerups": [
+              {
+                "id": "braid-speed",
+                "kind": "player-speed",
+                "x": 8.5,
+                "y": 5.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Sandbar Braid",
+            "description": "Reveal 66%. Four staggered sandbars leave an open center and unequal outer detours. Choose which crossings to secure first. A warned interceptor commits to its marked route; use the warning to change your approach. The middle patch slows your craft; the remote speed pickup is optional. A closed cut stops the craft. A fresh direction starts the next leg.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 300,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 288,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 144,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 284,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 280,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 136,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 72,
+            "input": {
+              "direction": "left",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 87,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 68,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 240,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 1915,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-sandbar-braid-pressure-off",
+          "revision": "sandbox1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 1915,
+          "time": 15.958333333333067,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 12740,
+          "coverage": 0.5672306322350846,
+          "claimedCount": 1274,
+          "totalClaimable": 2246,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "2d6a764fc0fb9c52",
+          "sections": {
+            "identity": "dca75569c1bf2ec7",
+            "configuration": "3320a0b0c67895d9",
+            "board": "0695d101ca8c850e",
+            "player": "c33b8939cb49d926",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "48b4d46176be74ab",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "165c91f790a48f28",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "94593b4a690d8c18"
+          }
+        }
+      }
+    },
+    {
+      "id": "lane-overlap",
+      "levelId": "countercurrent-crossing-watch",
+      "sandbox": false,
+      "commands": [
+        {
+          "ticks": 600,
+          "direction": null
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-crossing-watch",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "running",
+        "won": false,
+        "tick": 600,
+        "time": 5.000000000000038,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2314,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 42,
+        "firstActive": {
+          "watch-horizontal": {
+            "tick": 421,
+            "lane": 18.5
+          },
+          "watch-vertical": {
+            "tick": 457,
+            "lane": 1.5
+          }
+        },
+        "maxPlayerSpeed": 0,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 600,
+          "player": {
+            "x": 0.5,
+            "y": 18.5,
+            "direction": "down",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "watch-horizontal",
+              "x": 58.5,
+              "y": 12.5
+            },
+            {
+              "id": "watch-vertical",
+              "x": 35.5,
+              "y": 27.5
+            },
+            {
+              "id": "watch-field",
+              "x": 56.499999999999375,
+              "y": 25.500000000000597
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 18.5,
+          "activeAt": 3.4999999999999956
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 1.5,
+          "activeAt": 3.7999999999999954
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-crossing-watch",
+          "revision": "1",
+          "name": "Crossing Watch",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.68
+          },
+          "walls": [
+            {
+              "x": 20,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "x": 43,
+              "y": 21,
+              "w": 10,
+              "h": 3
+            }
+          ],
+          "enemies": [
+            {
+              "id": "watch-horizontal",
+              "type": "lane-boss",
+              "x": 58.5,
+              "y": 12.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.5,
+              "activeSeconds": 0.65,
+              "period": 6.2,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-vertical",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 27.5,
+              "axis": "vertical",
+              "warningSeconds": 1.8,
+              "activeSeconds": 0.7,
+              "period": 8.1,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-field",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 28.5,
+              "vx": -0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "watch-freeze",
+                "kind": "enemy-freeze",
+                "x": 8.5,
+                "y": 27.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Crossing Watch",
+            "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 600,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 600,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-crossing-watch",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": null,
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "running",
+          "won": false,
+          "tick": 600,
+          "time": 5.000000000000038,
+          "lives": 3,
+          "livesLost": 0,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2314,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "52eb75fab8b0feaf",
+          "sections": {
+            "identity": "92b49bf7db02356a",
+            "configuration": "5bd8fb8e1caa936f",
+            "board": "7aee4e155a24f0c8",
+            "player": "8b205b3de2f4c939",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "7bc6c7969f083b12",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "73ec571c3628c730",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "f1412fad13cb4d33"
+          }
+        }
+      }
+    },
+    {
+      "id": "horizontal-contact",
+      "levelId": "countercurrent-crossing-watch",
+      "sandbox": false,
+      "commands": [
+        {
+          "untilLoss": true,
+          "direction": "right"
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-crossing-watch",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "boss-lane",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "respawning",
+        "won": false,
+        "tick": 421,
+        "time": 3.5083333333333235,
+        "lives": 2,
+        "livesLost": 1,
+        "score": 0,
+        "coverage": 0,
+        "claimedCount": 0,
+        "totalClaimable": 2314,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 0,
+        "firstActive": {
+          "watch-horizontal": {
+            "tick": 421,
+            "lane": 18.5
+          }
+        },
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 421,
+          "player": {
+            "x": 53,
+            "y": 18.5,
+            "direction": "right",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "watch-horizontal",
+              "x": 58.5,
+              "y": 12.5
+            },
+            {
+              "id": "watch-vertical",
+              "x": 35.5,
+              "y": 27.5
+            },
+            {
+              "id": "watch-field",
+              "x": 57.693333333332895,
+              "y": 26.39500000000042
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 18.5,
+          "activeAt": 3.4999999999999956
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 30.5,
+          "activeAt": 3.7999999999999954
+        },
+        {
+          "type": "player.failed",
+          "tick": 421,
+          "time": 3.4999999999999902,
+          "cause": "boss-lane",
+          "actorId": "watch-horizontal",
+          "lives": 2
+        }
+      ],
+      "captures": [],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-crossing-watch",
+          "revision": "1",
+          "name": "Crossing Watch",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.68
+          },
+          "walls": [
+            {
+              "x": 20,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "x": 43,
+              "y": 21,
+              "w": 10,
+              "h": 3
+            }
+          ],
+          "enemies": [
+            {
+              "id": "watch-horizontal",
+              "type": "lane-boss",
+              "x": 58.5,
+              "y": 12.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.5,
+              "activeSeconds": 0.65,
+              "period": 6.2,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-vertical",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 27.5,
+              "axis": "vertical",
+              "warningSeconds": 1.8,
+              "activeSeconds": 0.7,
+              "period": 8.1,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-field",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 28.5,
+              "vx": -0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "watch-freeze",
+                "kind": "enemy-freeze",
+                "x": 8.5,
+                "y": 27.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Crossing Watch",
+            "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 421,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 421,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-crossing-watch",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "boss-lane",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "respawning",
+          "won": false,
+          "tick": 421,
+          "time": 3.5083333333333235,
+          "lives": 2,
+          "livesLost": 1,
+          "score": 0,
+          "coverage": 0,
+          "claimedCount": 0,
+          "totalClaimable": 2314,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "6627bbb4ebc5b47b",
+          "sections": {
+            "identity": "92b49bf7db02356a",
+            "configuration": "5bd8fb8e1caa936f",
+            "board": "7aee4e155a24f0c8",
+            "player": "63c2e48347f6445a",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "487f71c5081b6a4d",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "75700c60594278c2",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "d1c3df89e1f51f9d"
+          }
+        }
+      }
+    },
+    {
+      "id": "vertical-contact",
+      "levelId": "countercurrent-crossing-watch",
+      "sandbox": false,
+      "commands": [
+        {
+          "to": [
+            "right",
+            12.5
+          ]
+        },
+        {
+          "to": [
+            "down",
+            35.5
+          ]
+        },
+        {
+          "to": [
+            "right",
+            13.5
+          ]
+        },
+        {
+          "ticks": 264,
+          "direction": null
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        }
+      ],
+      "expected": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "countercurrent-crossing-watch",
+        "revision": "1",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-trail",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "respawning",
+        "won": false,
+        "tick": 510,
+        "time": 4.250000000000001,
+        "lives": 2,
+        "livesLost": 1,
+        "score": 2040,
+        "coverage": 0.0881590319792567,
+        "claimedCount": 204,
+        "totalClaimable": 2314,
+        "medal": null,
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "observed": {
+        "effectTicks": {},
+        "overlapTicks": 42,
+        "firstActive": {
+          "watch-horizontal": {
+            "tick": 421,
+            "lane": 34.5
+          },
+          "watch-vertical": {
+            "tick": 457,
+            "lane": 13.5
+          }
+        },
+        "maxPlayerSpeed": 15,
+        "warningReturnCue": null,
+        "freezeUnchanged": 0,
+        "freezeMoved": 0,
+        "postFreezeMoves": 0,
+        "halfSpeedComparisons": 0,
+        "last": {
+          "tick": 510,
+          "player": {
+            "x": 13.5,
+            "y": 35,
+            "direction": "up",
+            "queuedDirection": null,
+            "speed": 0,
+            "cutting": false,
+            "graceUntil": 0
+          },
+          "trailCells": 0,
+          "effects": {
+            "player-speed": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-slow": {
+              "from": 0,
+              "until": 0
+            },
+            "enemy-freeze": {
+              "from": 0,
+              "until": 0
+            }
+          },
+          "actors": [
+            {
+              "id": "watch-horizontal",
+              "x": 58.5,
+              "y": 12.5
+            },
+            {
+              "id": "watch-vertical",
+              "x": 35.5,
+              "y": 27.5
+            },
+            {
+              "id": "watch-field",
+              "x": 57.09999999999947,
+              "y": 25.950000000000507
+            }
+          ]
+        }
+      },
+      "events": [
+        {
+          "type": "cut.started",
+          "tick": 5,
+          "time": 0.03333333333333333
+        },
+        {
+          "type": "cut.closed",
+          "tick": 228,
+          "time": 1.8999999999999957,
+          "cells": 204
+        },
+        {
+          "type": "capture.stopped",
+          "tick": 228,
+          "time": 1.8999999999999957
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-horizontal",
+          "axis": "horizontal",
+          "lane": 34.5,
+          "activeAt": 3.4999999999999956
+        },
+        {
+          "type": "boss.warning",
+          "tick": 241,
+          "time": 1.9999999999999953,
+          "id": "watch-vertical",
+          "axis": "vertical",
+          "lane": 13.5,
+          "activeAt": 3.7999999999999954
+        },
+        {
+          "type": "cut.started",
+          "tick": 510,
+          "time": 4.241666666666667
+        },
+        {
+          "type": "lineImpact.seeded",
+          "tick": 510,
+          "time": 4.241666666666667,
+          "actorId": "watch-vertical",
+          "x": 13.5,
+          "y": 35,
+          "distance": 0,
+          "speed": 24,
+          "fronts": [
+            {
+              "id": "impact-1-departure",
+              "direction": -1
+            },
+            {
+              "id": "impact-1-player",
+              "direction": 1
+            }
+          ]
+        },
+        {
+          "type": "lineImpact.ended",
+          "tick": 510,
+          "time": 4.241666666666667,
+          "id": "impact-1-departure",
+          "actorId": "watch-vertical",
+          "x": 13.5,
+          "y": 35,
+          "reason": "departure"
+        },
+        {
+          "type": "lineImpact.arrived",
+          "tick": 510,
+          "time": 4.241666666666667,
+          "id": "impact-1-player",
+          "actorId": "watch-vertical",
+          "x": 13.5,
+          "y": 35
+        },
+        {
+          "type": "lineImpact.cleared",
+          "tick": 510,
+          "time": 4.241666666666667,
+          "reason": "recovery",
+          "ids": [
+            "impact-1-player"
+          ]
+        },
+        {
+          "type": "player.failed",
+          "tick": 510,
+          "time": 4.241666666666667,
+          "cause": "enemy-trail",
+          "actorId": "watch-vertical",
+          "lives": 2
+        }
+      ],
+      "captures": [
+        {
+          "tick": 228,
+          "count": 204,
+          "cellsSha256": "cfee81c3aba19a9f3187fa2612c411e230669f67fcb0a1711efd3eb34ae27660",
+          "player": {
+            "x": 12.5,
+            "y": 35
+          }
+        }
+      ],
+      "replay": {
+        "version": "xonix-replay.v6",
+        "build": "countercurrent-proof",
+        "ruleset": "xonix-core.v5",
+        "level": {
+          "version": "xonix-level.v4",
+          "id": "countercurrent-crossing-watch",
+          "revision": "1",
+          "name": "Crossing Watch",
+          "width": 72,
+          "height": 36,
+          "themeId": "fpv",
+          "spawn": {
+            "x": 0.5,
+            "y": 18.5
+          },
+          "goal": {
+            "coverage": 0.68
+          },
+          "walls": [
+            {
+              "x": 20,
+              "y": 9,
+              "w": 6,
+              "h": 6
+            },
+            {
+              "x": 43,
+              "y": 21,
+              "w": 10,
+              "h": 3
+            }
+          ],
+          "enemies": [
+            {
+              "id": "watch-horizontal",
+              "type": "lane-boss",
+              "x": 58.5,
+              "y": 12.5,
+              "axis": "horizontal",
+              "warningSeconds": 1.5,
+              "activeSeconds": 0.65,
+              "period": 6.2,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-vertical",
+              "type": "lane-boss",
+              "x": 35.5,
+              "y": 27.5,
+              "axis": "vertical",
+              "warningSeconds": 1.8,
+              "activeSeconds": 0.7,
+              "period": 8.1,
+              "laneWidth": 0.6,
+              "radius": 0.25
+            },
+            {
+              "id": "watch-field",
+              "type": "bouncer",
+              "x": 60.5,
+              "y": 28.5,
+              "vx": -0.8,
+              "vy": -0.6,
+              "radius": 0.25
+            }
+          ],
+          "objectives": [],
+          "supplies": [],
+          "signalZones": [],
+          "hangars": [],
+          "encounter": null,
+          "classic": {
+            "version": "classic.v1",
+            "terrain": [],
+            "powerups": [
+              {
+                "id": "watch-freeze",
+                "kind": "enemy-freeze",
+                "x": 8.5,
+                "y": 27.5
+              }
+            ],
+            "lineImpact": {
+              "version": "line-impact.v1",
+              "speed": 24
+            },
+            "arcadeActions": {
+              "version": "arcade-actions.v1"
+            }
+          },
+          "rules": {
+            "lives": 3,
+            "moveSpeed": 15,
+            "boostMultiplier": 1.5,
+            "respawnSeconds": 0.65,
+            "graceSeconds": 0,
+            "playerRadius": 0.18,
+            "pointsPerCell": 10,
+            "objectivePoints": 500,
+            "timeMedals": [
+              60,
+              120
+            ],
+            "switchCooldownSeconds": 2,
+            "timeLimitSeconds": 0,
+            "cutTimeLimitSeconds": 0,
+            "maxTrailCells": 0,
+            "stopOnCapture": true
+          },
+          "metadata": {
+            "title": "Crossing Watch",
+            "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction.",
+            "author": "RevealLine",
+            "license": "Original project content",
+            "rightsStatus": "Original abstract source geometry. Existing procedural preview presentation; no new artwork, stories or music."
+          }
+        },
+        "options": {
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "classRecipes": [
+            {
+              "id": "scout",
+              "label": "Scout",
+              "description": "Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 6,
+              "duration": 4,
+              "radius": 48,
+              "revision": "1"
+            },
+            {
+              "id": "bomber",
+              "label": "Light carrier",
+              "description": "Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.",
+              "primitive": "stun-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "carrier",
+              "label": "Heavy carrier",
+              "description": "Carry two charges; each creates the same temporary stun field.",
+              "primitive": "stun-field",
+              "capacity": 2,
+              "cooldown": 2,
+              "duration": 2.5,
+              "radius": 3,
+              "revision": "1"
+            },
+            {
+              "id": "interceptor",
+              "label": "Interceptor",
+              "description": "Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.",
+              "primitive": "shield",
+              "capacity": 0,
+              "cooldown": 9,
+              "duration": 1.5,
+              "radius": 0,
+              "revision": "1"
+            },
+            {
+              "id": "fiber",
+              "label": "Fiber relay",
+              "description": "Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.",
+              "primitive": "scan",
+              "capacity": 0,
+              "cooldown": 7,
+              "duration": 3,
+              "radius": 30,
+              "signalResistance": true,
+              "moveSpeedMultiplier": 1,
+              "revision": "1"
+            },
+            {
+              "id": "impact",
+              "label": "Impact craft",
+              "description": "Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.",
+              "primitive": "impact-pulse",
+              "capacity": 0,
+              "cooldown": 10,
+              "duration": 3,
+              "radius": 5,
+              "revision": "1"
+            },
+            {
+              "id": "trapper",
+              "label": "Trapper",
+              "description": "Pick up one charge and place a four-second field that slows field enemies to one quarter speed.",
+              "primitive": "slow-field",
+              "capacity": 1,
+              "cooldown": 2,
+              "duration": 4,
+              "radius": 4,
+              "slowFactor": 0.25,
+              "revision": "1"
+            }
+          ]
+        },
+        "segments": [
+          {
+            "ticks": 96,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 132,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 1,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 4,
+            "input": {
+              "direction": "down",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 8,
+            "input": {
+              "direction": "right",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 264,
+            "input": {
+              "direction": null,
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          },
+          {
+            "ticks": 5,
+            "input": {
+              "direction": "up",
+              "boost": false,
+              "action": false,
+              "pickup": false,
+              "switchClass": null
+            },
+            "releaseBefore": false
+          }
+        ],
+        "releaseAfter": false,
+        "ticks": 510,
+        "summary": {
+          "ruleset": "xonix-core.v5",
+          "levelId": "countercurrent-crossing-watch",
+          "revision": "1",
+          "seed": 1,
+          "turnPolicy": "immediate",
+          "classId": "scout",
+          "activeClassId": "scout",
+          "rosterHash": "roster-v1-e159e435",
+          "classHistory": [
+            {
+              "classId": "scout",
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "tick": 0
+            }
+          ],
+          "switches": 0,
+          "failureCause": "enemy-trail",
+          "classRevision": "1",
+          "loadoutHash": "loadout-v1-aaa4aadd",
+          "status": "respawning",
+          "won": false,
+          "tick": 510,
+          "time": 4.250000000000001,
+          "lives": 2,
+          "livesLost": 1,
+          "score": 2040,
+          "coverage": 0.0881590319792567,
+          "claimedCount": 204,
+          "totalClaimable": 2314,
+          "medal": null,
+          "objectives": {
+            "captured": 0,
+            "total": 0,
+            "required": 0
+          }
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v5",
+          "hash": "52f0ca8b11b99816",
+          "sections": {
+            "identity": "92b49bf7db02356a",
+            "configuration": "5bd8fb8e1caa936f",
+            "board": "ca1721760814ccee",
+            "player": "15c054cb8c7a6af0",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "30ad0354d46fe15e",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "09612b07b5ecb5a5",
+            "ability": "f6b5aef539d929bb",
+            "clock": "ea3ea3d75a32c5be",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4",
+            "encounter": "5b9bc4ba528108e4",
+            "classic": "81d8be6fe0fdae28"
+          }
+        }
+      }
+    }
+  ],
+  "limits": "Twelve Standard/immediate/Scout source probes, including one distinct pressure-off sandbox. No native play, balance, artwork, production approval or other difficulty/roster mechanic claim."
+}
