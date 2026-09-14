@@ -173,6 +173,7 @@ async function page(t, f = {}, release = false) {
     }
   }
   const p = await soloPage(t, {
+    initialReadyTimeoutMs: INVENTORY_TIMEOUT_MS,
     storage: f.storage,
     assetIndexedDB: f.assets.indexedDB,
     soundtrackIndexedDB: f.media.indexedDB,
