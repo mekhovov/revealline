@@ -62,3 +62,9 @@ A new workspace loads the compiled release assets. Existing local drafts remain 
 Copied edit prompts now include the selected asset's actual geometry and full production brief, so a custom pivot, rotor layout or prepared-scene palette is not replaced by the baseline slot defaults. Collection prompts carry those current requirements for every selected member.
 
 Complete collection round trips reuse identical immutable asset revisions already present in the workspace. New or conflicting imported revisions are namespaced, and derivative links follow the imported history. Corrupt files or a true combined-budget overflow fail before the current workspace changes.
+
+## Medium-specific generation briefs
+
+Copied briefs distinguish images, fonts and audio. Image requests retain exact frames, transparency, pivots and rotor anchors. Fonts request real licensed WOFF2 bytes and actual English/Ukrainian cmap, axis and metric checks, including Ґґ Єє Іі Її and 200% browser zoom. Short audio cues request mono 48 kHz / 16-bit PCM WAV, at most one second, with clean envelopes; music requests a seamless 4–16-bar OGG/MP3 loop with a retained lossless source. Record measured duration, peaks, encoded bytes and an actual audition alongside existing music. Those are candidate requirements, not a claim that the existing procedural soundtrack consists of uploaded recordings.
+
+The generated effective contract replaces the legacy generic pixel-art brief for font/audio slots while retaining their immutable IDs and original records. A custom current production brief is preserved. Palette tokens identify the collection without pretending that colors are audio parameters. Sound remains supplementary, with explicit activation, mute, volume and Stop behavior.

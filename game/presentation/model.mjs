@@ -15,7 +15,9 @@ export const LIMITS = Object.freeze({
   bundleBytes: 32 * 1024 * 1024,
   assetBytes: 4 * 1024 * 1024,
   slots: 512,
-  assets: 1024,
+  // Retained production + reviews + one complete replacement must coexist.
+  // The 4 MiB manifest and 32 MiB transfer ceilings remain authoritative.
+  assets: 2048,
   themes: 1024,
   collections: 128,
   imageSide: 1920,

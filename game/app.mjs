@@ -2,6 +2,7 @@ import { createCharacterPresentations } from './character-presentations.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import { createReleasePictureDefaults } from './presentation/release-pictures.mjs';
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
+import { drawResultPicture } from './ui/result-picture.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -633,6 +634,8 @@ try {
     pictureGeneration = 0;
   const picturePreparingMessage =
     'Preparing the chosen picture. Flight stays paused until it is ready.';
+  const savedFlightRestoredMessage =
+    'Saved flight verified and restored. Press Resume to continue.';
   const storyDialog = createStoryDialog({
     readMedia: pictureMedia,
     settings: () => ({
@@ -2578,7 +2581,7 @@ try {
       updateLoadout();
       overlay('pause');
       refreshHUD();
-      warning('Saved flight verified and restored. Press Resume to continue.');
+      warning(savedFlightRestoredMessage);
     } finally {
       sessionBusy = false;
       stagedPictures?.dispose();
@@ -3357,6 +3360,7 @@ try {
       `Optional seal · ${masteryDefinition.name}. ${masteryDefinition.description} Your picture and next mission never depend on this goal.`;
   }
   function overlay(kind) {
+    drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
     show('pause-label', kind === 'pause');
     show('overlay-reading', kind !== 'pause');
@@ -3706,6 +3710,7 @@ try {
     started = true;
     paused = false;
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
+    if ($('run-message').textContent === savedFlightRestoredMessage) warning('Flight resumed.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);

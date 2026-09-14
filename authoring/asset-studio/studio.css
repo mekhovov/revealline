@@ -678,19 +678,26 @@ body.field-kit {
   display: block;
   width: 100%;
 }
-.component-specimen[data-state='focus'] button {
-  outline: 3px solid var(--fk-cyan);
+.field-kit .component-specimen[data-state='focus'] [data-specimen-control] {
+  outline: 3px solid var(--fk-focus);
   outline-offset: 4px;
+  box-shadow: 0 0 0 7px var(--fk-bg);
 }
-.component-specimen[data-state='hover'] button {
+.field-kit .component-specimen[data-state='hover'] button[data-specimen-control] {
   background: var(--fk-panel-raised);
-  border-color: var(--fk-amber);
+  border-color: var(--fk-cyan);
+  color: var(--fk-text);
 }
-.component-specimen[data-state='pressed'] button,
-.component-specimen[data-state='selected'] button {
-  background: var(--fk-amber);
-  color: var(--fk-bg);
-  box-shadow: inset 3px 3px #0005;
+.field-kit
+  .component-specimen[data-state='hover']
+  :is(.button.primary, .button.danger)[data-specimen-control],
+.field-kit .component-specimen[data-state='pressed'] button[data-specimen-control] {
+  background: var(--fk-cyan);
+  border-color: var(--fk-cyan);
+  color: var(--fk-on-accent);
+}
+.field-kit .component-specimen[data-state='pressed'] button[data-specimen-control] {
+  box-shadow: inset 0 3px 0 rgb(7 11 18 / 30%);
 }
 .component-specimen[data-state='error'] {
   border-color: var(--fk-hazard);
@@ -713,6 +720,17 @@ body.field-kit {
   flex: 0 0 auto;
   image-rendering: pixelated;
 }
+.component-specimen .specimen-icon {
+  inline-size: var(--fk-target-size);
+  block-size: var(--fk-target-size);
+  justify-content: center;
+  padding: 0;
+}
+.specimen-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 .component-specimen label {
   display: flex;
   flex-wrap: wrap;
@@ -733,10 +751,6 @@ body.field-kit {
   background: var(--fk-cyan);
   box-shadow: inset 0 0 0 5px var(--fk-bg);
   outline: 2px solid var(--fk-cyan);
-}
-.component-specimen[data-state='focus'] :is(input, select, progress) {
-  outline: 3px solid var(--fk-cyan);
-  outline-offset: 4px;
 }
 .component-specimen [aria-invalid='true'] {
   border-color: var(--fk-hazard);

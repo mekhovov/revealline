@@ -51,3 +51,7 @@ For any playable theme, asset, rule, interface or pack change, follow the shared
 ## Keep live pictures and earned originals stable
 
 When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
+
+## Field Kit Asset Studio audio
+
+Use the selected slot's medium-specific copyable brief and [Field Kit requests](../../prompts/field-kit-production.md#replace-an-audio-cue-or-loop). Short cue candidates are mono 48 kHz / 16-bit PCM WAV up to one second; music candidates are seamless 4–16-bar OGG/MP3 loops with retained lossless source, within the actual slot budget. Preserve custom production requirements, event timing and explicit activation/Stop/mute/volume. The installed defaults remain original procedural Soundscape recipes. Report native playback observations separately from subjective listening; never call a successful button click a listening review.

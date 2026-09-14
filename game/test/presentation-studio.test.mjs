@@ -155,6 +155,32 @@ test('generated prompts carry real slot, theme, states and release limitations',
     assert.ok(prompt.includes(fragment), fragment);
 });
 
+test('audio and font briefs request the actual output medium and preserve the immutable slot document', () => {
+  const bundle = createDefaultThemeBundle(),
+    before = structuredClone(bundle);
+  const resolved = resolvePresentation(bundle);
+  for (const [id, fragments] of [
+    ['audio.confirm', ['audio-confirm.wav', '48 kHz', 'one second', 'volume', 'event meaning']],
+    ['audio.music', ['audio-music.ogg', '4–16-bar', 'loop boundaries', 'Stop/mute']],
+    ['font.ui', ['font-ui.woff2', 'Ґґ Єє Іі Її', 'cmap', '200%', 'glyph coverage']],
+  ]) {
+    const slot = bundle.slots.find((row) => row.id === id);
+    const prompt = generateAssetPrompt(slot, resolved, 'edit');
+    for (const fragment of fragments) assert.ok(prompt.includes(fragment), fragment);
+    assert.ok(!prompt.includes(`${id.replaceAll('.', '-')}.png`));
+    assert.ok(!prompt.includes('Use a restrained pixel-art style'));
+    assert.ok(!prompt.includes('approved silhouette'));
+    assert.ok(!prompt.includes('PIXEL SAMPLING:'));
+    const custom = structuredClone(resolved);
+    custom.assets[id].provenance.prompt = 'Preserve this approved custom production requirement.';
+    assert.match(
+      generateAssetPrompt(slot, custom, 'edit'),
+      /approved custom production requirement/,
+    );
+  }
+  assert.deepEqual(bundle, before);
+});
+
 test('edit briefs retain actual custom geometry and the production palette contract', () => {
   const original = createDefaultThemeBundle();
   const slot = original.slots.find((row) => row.id === 'player.scout.detailed');

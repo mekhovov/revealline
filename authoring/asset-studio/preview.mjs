@@ -1,4 +1,5 @@
 import { createCurrentArtPreview } from '../../game/presentation/current-art.mjs';
+import { pictureOwnerContext } from './picture-context.mjs';
 import {
   playerRecipePreview,
   boardContextPreview,
@@ -193,6 +194,17 @@ export async function drawAssetPreview(
       slot.group,
     )
   ) {
+    if (slot.group === 'pictures') {
+      const controller = new AbortController();
+      own(() => controller.abort());
+      try {
+        options.pictureOwner = await pictureOwnerContext(slot.id, { signal: controller.signal });
+      } catch (error) {
+        if (surface.previewMarker === marker) surface.replaceChildren(text('p', error.message));
+        return;
+      }
+      if (surface.previewMarker !== marker) return;
+    }
     await boardContextPreview(surface, slot, asset, resolved, blobs, options, own);
     return;
   }

@@ -12,7 +12,8 @@
   opacity: 1;
   background:
     linear-gradient(90deg, rgb(7 11 18 / 60%), transparent 65%),
-    url('./art/field-kit/prepared/title-hangar-v1.png') center / cover no-repeat;
+    url('../presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png')
+      center / cover no-repeat;
   image-rendering: pixelated;
 }
 .field-kit .home-art::before {
@@ -317,8 +318,8 @@
     align-items: start;
   }
   .field-kit .home-art {
-    background: url('./art/field-kit/prepared/title-hangar-portrait-v1.png') center bottom / cover
-      no-repeat;
+    background: url('../presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png')
+      center bottom / cover no-repeat;
   }
   .field-kit .home-art::after {
     content: '';
