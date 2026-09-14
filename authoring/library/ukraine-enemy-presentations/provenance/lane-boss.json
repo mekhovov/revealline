@@ -1,0 +1,57 @@
+{
+  "format": "ukraine-enemy-original.v1",
+  "at": "2026-09-14T18:56:29.613218+00:00",
+  "role": "lane-boss",
+  "proposedName": "Storm Gate",
+  "narrativePurpose": "Stationary emitter with authored lane timing and warning/opening states.",
+  "implementedMechanics": false,
+  "historicalAuthenticityClaim": false,
+  "tool": "image_gen.imagegen",
+  "generation": "One fresh text-only call; no image inputs",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-6c2cc30e-bfae-4f05-9120-f193847024c9.png",
+  "original": {
+    "path": "originals/lane-boss.png",
+    "bytes": 905224,
+    "sha256": "63fea24742eaa12662d5d14f093e21971e89867396e085032d6eb0678d39aeb2",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/lane-boss.txt",
+    "sha256": "f3e7f6f8674b945518f9c3328b57ff7a4aa490772a6fec200bb5422b4d56fa9b",
+    "formatting": "Exact request plus one final LF"
+  },
+  "copy": {
+    "method": "Exclusive APFS fclonefileat, no fallback",
+    "originalInode": 76150144,
+    "cloneInode": 76152006
+  },
+  "transformations": [],
+  "runtimeBinding": null,
+  "inspection": "Full-image, alpha and native CSS checks follow in separate retained records",
+  "freshFreeBeforeClone": 1796186112,
+  "conservativeOriginalAndRawGitPlus2MiBReserveBytes": 13004006
+}

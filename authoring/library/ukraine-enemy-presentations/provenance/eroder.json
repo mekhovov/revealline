@@ -1,0 +1,61 @@
+{
+  "format": "ukraine-enemy-original.v1",
+  "at": "2026-09-14T18:54:24.894974+00:00",
+  "role": "eroder",
+  "proposedName": "Thorn Wheel",
+  "narrativePurpose": "Warns before reopening eligible captured cells while protected anchors remain intact.",
+  "implementedMechanics": false,
+  "historicalAuthenticityClaim": false,
+  "tool": "image_gen.imagegen",
+  "generation": "One fresh text-only call; no image inputs",
+  "toolModel": "Not exposed; not inferred",
+  "toolOriginalPath": "/Users/oleksandr.mekhovov/.codex/generated_images/01a09357-2b06-77f1-b001-1afd50d8bc73/exec-609e39cf-c640-4eea-88d6-b8f6992f79f6.png",
+  "original": {
+    "path": "originals/eroder.png",
+    "bytes": 1153312,
+    "sha256": "48466f942d5cca7fe6be8c40e4ff5b43ec9cfb6ae271405ab3ec4860301941df",
+    "width": 1254,
+    "height": 1254,
+    "bitDepth": 8,
+    "pngColorType": 6,
+    "pngChunks": [
+      "IHDR",
+      "caBX",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IDAT",
+      "IEND"
+    ],
+    "allChunkCRCsValid": true
+  },
+  "prompt": {
+    "path": "prompts/eroder.txt",
+    "sha256": "c4e383488fd29a19047ba6d2e7816025256eb7da0ed4f2757765ed740811d903",
+    "formatting": "Exact request plus one final LF"
+  },
+  "copy": {
+    "method": "Exclusive APFS fclonefileat, no fallback",
+    "originalInode": 76142573,
+    "cloneInode": 76146659
+  },
+  "transformations": [],
+  "runtimeBinding": null,
+  "inspection": "Full-image, alpha and native CSS checks follow in separate retained records",
+  "freshFreeBeforeClone": 2406174720,
+  "conservativeOriginalAndRawGitPlus2MiBReserveBytes": 11193558
+}

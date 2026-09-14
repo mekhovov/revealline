@@ -1,0 +1,49 @@
+{
+  "status": "SOURCE_ART_NATIVE_CSS_INSPECTED",
+  "at": "2026-09-14T19:20:30.867346+00:00",
+  "rows": [
+    {
+      "source": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v042-plan-review/ukraine-enemies-north-auto.jpg",
+        "bytes": 174130,
+        "sha256": "339d8af3b22db0b9ca8c5d74687e530718b0f26eff705aadc0521bdd407c9c2b"
+      },
+      "copy": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/authoring/library/ukraine-enemy-presentations/inspection/north-auto.jpg",
+        "bytes": 174130,
+        "sha256": "339d8af3b22db0b9ca8c5d74687e530718b0f26eff705aadc0521bdd407c9c2b"
+      },
+      "state": "North / Auto",
+      "method": "Independent APFS clone, exact JPEG bytes, no transformation",
+      "viewedBy": [
+        "root native operator",
+        "Lagrange via view_image original detail"
+      ]
+    },
+    {
+      "source": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v042-plan-review/ukraine-enemies-east-pixelated.jpg",
+        "bytes": 175791,
+        "sha256": "36d4e8897baf41cdc61feb648c3f0c4a6efffa2c0d71924e373aded88a583450"
+      },
+      "copy": {
+        "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/ukraine-enemy-presentations/authoring/library/ukraine-enemy-presentations/inspection/east-pixelated.jpg",
+        "bytes": 175791,
+        "sha256": "36d4e8897baf41cdc61feb648c3f0c4a6efffa2c0d71924e373aded88a583450"
+      },
+      "state": "East / Pixelated",
+      "method": "Independent APFS clone, exact JPEG bytes, no transformation",
+      "viewedBy": [
+        "root native operator",
+        "Lagrange via view_image original detail"
+      ]
+    }
+  ],
+  "observed": "All7 complete rows at24/32/56 CSS px on black/courtyard; source widths/heights are image frame display sizes, not contact geometry. North/Auto and East/Pixelated labels visible in respective captures.",
+  "parentObservation": "Seven broad forms distinct. Asymmetric forms provide heading; wheel/flower symmetry needs future runtime telegraphs.24/32 detail blends with busy floral courtyard. Source-art acceptance only.",
+  "authorObservation": "Beetle oval, moth wings, S-serpent, two-ear hare, root wheel, open U and diamond-flower remain recognizable on black. Serpent and thin gate components occupy less area than filled hare/relay. On courtyard the bodies at24/32 lose interior contrast;56 improves shape/detail but remains static art. East rotates all image frames; ornate pixels get noisier with Pixelated sampling.",
+  "limits": [
+    "No collision, animation, strict palette, live enemy timing or physical-device claim. Runtime outline/tint separation and suitable display sizes require later integration/native checks.",
+    "Source screenshots retain the former inaccurate footer phrase served without copying. The board caption was corrected afterward; screenshots remain unchanged historical evidence. Scene was an exact retained APFS clone, never edited."
+  ]
+}
