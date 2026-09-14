@@ -127,6 +127,7 @@ import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
+import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
@@ -900,6 +901,7 @@ try {
         onClose: () => {
           clearInput();
           $('settings-dialog').showModal();
+          void storageRetention.refresh();
           $('soundtrack-open').focus();
         },
         onVolume: (value) => {
@@ -1320,6 +1322,7 @@ try {
       'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
     show('save-warning', true);
     void packCommits.reconcile();
+    if ($('settings-dialog').open) void storageRetention.refresh();
   });
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
@@ -1383,8 +1386,15 @@ try {
           };
     },
   });
+  const storageRetention = attachStorageRetention({
+    button: $('storage-retention-button'),
+    status: $('storage-retention-status'),
+    isOpen: () => $('settings-dialog').open,
+  });
   window.addEventListener('pagehide', (event) => {
+    storageRetention.close();
     if (!event.persisted) {
+      storageRetention.destroy();
       keySettings.destroy();
       controllerSettings.destroy();
       controllerBoostSettings.destroy();
@@ -2794,6 +2804,7 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    void storageRetention.refresh();
   };
   let offlinePrepared = false;
   const offline = offlineAvailability();
@@ -2862,6 +2873,7 @@ try {
     }
   };
   $('settings-dialog').addEventListener('close', () => {
+    if (!$('settings-dialog').open) storageRetention.close();
     sound.pause();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();

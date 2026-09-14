@@ -53,6 +53,10 @@ The actual source-browser receipt is `.cache/round43/picture-browser/receipt.jso
 
 A separate source-browser supplement, `.cache/round43/picture-browser/missing-original-recovery.json`, SHA-256 `cd981b12c5e88dc4b6b0e64acb0628c92c6fcd0f5286926c9784442c4de359e3`, adds five pinned artifacts. At source origin 8922, native game-data import retains a saved flight without its original; explicit Load refuses with `.rlmedia` guidance, then native originals review/restore makes Continue recover **0% / zero points / two lives / 0:28, paused**. This closes that bounded missing-original source-browser journey; it does not amend the original 38-artifact receipt or certify offline/frozen/public recovery.
 
+## Explicit browser storage retention
+
+The working [Settings retention control](offline-release.md#keep-downloads-on-this-device) requests `navigator.storage.persist()` only from the visible **Keep downloads on this device** action. Opening Settings reads `persisted()`; quota estimates, successful installs and offline verification never imply a grant. Preserve distinct granted, denied, unsupported and failed statuses, one pending request, late-result invalidation and ordinary keyboard/controller Back without resuming flight. Do not trigger a startup permission prompt, change databases/receipts/budgets or describe retention as a backup or missing-data repair. A browser decision applies to its origin, while explicit offline preparation and portable backups remain separate. Qualify actual browser behavior separately from source tests; the observed missing-pack cause remains unproven.
+
 ## Optional chapter authoring contract
 
 The working [More worlds browser](more-worlds-browser.md) separates up to 36 trusted external choices from the unchanged 12-installed-pack limit. Preserve native filtering/paging, visible active/failure cards, exact offline installed access and independent flight state. Raising choice capacity does not add content or change optional-body caching, producer membership, ownership or media budgets.
