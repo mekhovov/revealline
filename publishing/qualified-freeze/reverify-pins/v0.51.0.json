@@ -1,0 +1,69 @@
+{
+  "format": "revealline-hosted-freeze-artifacts.v1",
+  "version": "v0.51.0",
+  "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "freezeControllerRevision": "7c227dc92954a9d8ce654a2e235ce805934b8847",
+  "freezeRunId": 34904714317,
+  "artifacts": {
+    "metadata": {
+      "id": 10372591720,
+      "node_id": "MDg6QXJ0aWZhY3QxMDM3MjU5MTcyMA==",
+      "name": "frozen-v0.51.0-metadata",
+      "size_in_bytes": 45658,
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372591720",
+      "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372591720/zip",
+      "expired": false,
+      "digest": "sha256:b37d5936f4ba2fea23dc3455874917c678b0c88ecf1b8730697c87387656b0f7",
+      "created_at": "2026-09-14T22:36:59Z",
+      "updated_at": "2026-09-14T22:36:59Z",
+      "expires_at": "2026-12-13T22:33:42Z",
+      "workflow_run": {
+        "id": 34904714317,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/hosted-qualified-freezes",
+        "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+      }
+    },
+    "source": {
+      "id": 10372482154,
+      "node_id": "MDg6QXJ0aWZhY3QxMDM3MjQ4MjE1NA==",
+      "name": "frozen-v0.51.0-source",
+      "size_in_bytes": 649185414,
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372482154",
+      "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372482154/zip",
+      "expired": false,
+      "digest": "sha256:822e653e840dd82e7a2cf2ee2aedb131c0294d4b4cb9f0d61f03e3d042ef91eb",
+      "created_at": "2026-09-14T22:37:06Z",
+      "updated_at": "2026-09-14T22:37:06Z",
+      "expires_at": "2026-12-13T22:33:42Z",
+      "workflow_run": {
+        "id": 34904714317,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/hosted-qualified-freezes",
+        "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+      }
+    },
+    "distribution": {
+      "id": 10372137971,
+      "node_id": "MDg6QXJ0aWZhY3QxMDM3MjEzNzk3MQ==",
+      "name": "frozen-v0.51.0-distribution",
+      "size_in_bytes": 323123971,
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372137971",
+      "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10372137971/zip",
+      "expired": false,
+      "digest": "sha256:802159225a28a2938d976727ffcc4d897fdddaccc3efc3be3804b2c2738d7a33",
+      "created_at": "2026-09-14T22:37:11Z",
+      "updated_at": "2026-09-14T22:37:11Z",
+      "expires_at": "2026-12-13T22:33:42Z",
+      "workflow_run": {
+        "id": 34904714317,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/hosted-qualified-freezes",
+        "head_sha": "7c227dc92954a9d8ce654a2e235ce805934b8847"
+      }
+    }
+  }
+}
