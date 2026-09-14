@@ -1,0 +1,44 @@
+{
+  "format": "revealline-archive-browser-handoff.v1",
+  "completedAt": "2026-09-14T22:11:49.408651+00:00",
+  "archive": "revealline-archive-08",
+  "fullHTTPAudit": "PASS:773/773 exact bodies and MIME,600,887,156 bytes;760 retained successes plus13 transport recoveries.",
+  "session": "field-kit-public08",
+  "finalState": "Online v047 Relay paused at0:07; both workers active; root tabs untouched.",
+  "versions": [
+    {
+      "version": "v0.47.0",
+      "sourceRevision": "f4672a915e9495ed069e5e98a71e390f7b9ea7b0",
+      "result": "exercised-online-studio-offline-and-coexistence-paths-pass",
+      "receipt": ".cache/fpv-redesign/public-qualification/v047/receipt.json",
+      "receiptSha256": "be566d3d37a580fa715394faa80e336a92a58b7f45ef529237c78f8e8825b375",
+      "boundFiles": 67,
+      "offline": {
+        "buildId": "0ab8955e194cc1cd83067ab03172df15a464db7247b87a63e174bec1905859cd",
+        "count": 333,
+        "verified": 333,
+        "bytes": 54352031,
+        "missing": [],
+        "corrupt": []
+      }
+    },
+    {
+      "version": "v0.48.0",
+      "sourceRevision": "028ead24cfb31963d2b9bb733667c22993139ff4",
+      "result": "exercised-online-offline-and-coexistence-paths-pass",
+      "receipt": ".cache/fpv-redesign/public-qualification/v048/receipt.json",
+      "receiptSha256": "c1bc927a6f25e208af86ef53366900a3e2e5cc3e9f49190fc051852cf35aeed4",
+      "boundFiles": 62,
+      "offline": {
+        "buildId": "fe647a0caa0efa375874f8a56aa022d297ae8668d3add7cd351a7dd56941bedf",
+        "count": 337,
+        "verified": 337,
+        "bytes": 56030758,
+        "missing": [],
+        "corrupt": []
+      }
+    }
+  ],
+  "allEvidenceHashesVerified": true,
+  "verifiedFileReferences": 132
+}

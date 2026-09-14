@@ -5,6 +5,12 @@ on:
     types: [published]
   pull_request:
     branches: [main]
+    paths-ignore:
+      - "publishing/pages-controller/**"
+      - ".github/workflows/publish-frozen-pages.yml"
+      - ".github/workflows/deploy-pages.yml"
+      - ".cursor/skills/deploy-release-pages/**"
+      - "docs/deployment.md"
   workflow_dispatch:
     inputs:
       release_tag:
@@ -16,41 +22,44 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
-  cancel-in-progress: true
+  group: source-gates-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   release_gate:
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
-    outputs:
-      should_deploy: ${{ steps.gate.outputs.should_deploy }}
+    permissions:
+      contents: read
+      actions: write
     steps:
-      - name: Deploy only the latest stable release
+      - name: Read publication ownership from main, not the historical tag
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Set up publishing policy runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Match latest stable release to the reviewed frozen selector
         id: gate
         env:
           GH_TOKEN: ${{ github.token }}
-          EVENT_NAME: ${{ github.event_name }}
-          TARGET_REF: ${{ github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-          should_deploy=true
-          if [ "$EVENT_NAME" = release ] || [ "$EVENT_NAME" = workflow_dispatch ]; then
-            latest_tag="$(gh api --paginate --slurp "repos/$REPOSITORY/releases?per_page=100" | jq -r 'add | [.[] | select(.draft == false and .prerelease == false and (.tag_name | test("^v[0-9]+\\.[0-9]+\\.[0-9]+$"))) | .tag_name] | sort_by(ltrimstr("v") | split(".") | map(tonumber)) | last')"
-            if [ "$latest_tag" = null ]; then
-              echo "No published stable release was found."
-              exit 1
-            fi
-            if [ "$TARGET_REF" != "$latest_tag" ]; then
-              echo "Skipping $TARGET_REF because $latest_tag is the latest stable release."
-              should_deploy=false
-            fi
-          fi
-          echo "should_deploy=$should_deploy" >> "$GITHUB_OUTPUT"
+          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+        run: node publishing/pages-controller/release-policy.mjs route
+
+      - name: Dispatch the sole Pages publisher on main
+        if: steps.gate.outputs.should_dispatch == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_RELEASE: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.release_tag }}
+        run: gh workflow run publish-frozen-pages.yml --repo mekhovov/revealline --ref main -f "release_tag=$REQUESTED_RELEASE"
 
   preflight:
-    if: needs.release_gate.outputs.should_deploy == 'true'
-    needs: release_gate
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Check out source
@@ -78,13 +87,13 @@ jobs:
 
       - name: Verify immutable production sources first
         run: |
-          # Older immutable release tags use .cache for temporary test fixtures.
+          # Production tests use .cache for temporary fixtures.
           mkdir -p .cache
           node --test scripts/test-production-*.mjs
 
   test:
-    if: needs.release_gate.outputs.should_deploy == 'true'
-    needs: [release_gate, preflight]
+    if: github.event_name == 'pull_request'
+    needs: preflight
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -127,8 +136,8 @@ jobs:
           node ../automation/scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4 --root .
 
   build:
-    if: needs.release_gate.outputs.should_deploy == 'true'
-    needs: [release_gate, preflight, test]
+    if: github.event_name == 'pull_request'
+    needs: [preflight, test]
     runs-on: ubuntu-latest
     steps:
       - name: Check out complete history and tags
@@ -149,29 +158,3 @@ jobs:
       - name: Build pull-request artifact
         if: github.event_name == 'pull_request'
         run: npm run build
-
-      - name: Build current game and tagged releases
-        if: github.event_name != 'pull_request'
-        run: npm run build:pages -- --archive-plan scripts/pages-archives.json --source-repository mekhovov/revealline
-
-      - name: Upload Pages artifact
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        with:
-          path: dist
-          include-hidden-files: true
-
-  deploy:
-    if: github.event_name != 'pull_request' && needs.build.result == 'success'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

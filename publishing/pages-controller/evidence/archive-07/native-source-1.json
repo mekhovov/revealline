@@ -1,0 +1,124 @@
+{
+  "format": "revealline-public-browser-acceptance.v1",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-07/releases/v0.45.0/site/game/",
+  "sourceRevision": "adacdfbe15359bfd73e96ce03695b369b5097bc8",
+  "result": "pass-with-recorded-first-preparation-timeout",
+  "offline": {
+    "version": "v0.45.0",
+    "buildId": "df1079b01d45d81a01b66115c02862681e6019cd76a7433d51b99e9083fabc6d",
+    "count": 313,
+    "verified": 313,
+    "bytes": 53550063,
+    "missing": [],
+    "corrupt": [],
+    "emulation": true,
+    "networkRestored": true
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3006,
+      "sha256": "cb4670b74b44e0c41e43825df4aaf9cd856327f84c706402f96759d5fd5f27f9"
+    },
+    {
+      "path": "capture-state.txt",
+      "bytes": 425,
+      "sha256": "b7af25cdd136d39c133e1fc7bc453a101c202d3e835c7fc7f68a191da1bc92e1"
+    },
+    {
+      "path": "capture.png",
+      "bytes": 77811,
+      "sha256": "77fab2cee5b68283d9b081899b6f8812b91a27ca4024b8e7d374be1b73d8a55b"
+    },
+    {
+      "path": "continue-state.txt",
+      "bytes": 412,
+      "sha256": "67bc4cf69128cfab0676567452ae3950d75b2fbadc9e1026dfc51c9ebe73a3de"
+    },
+    {
+      "path": "network-restored.txt",
+      "bytes": 262,
+      "sha256": "d91fb0c371548f4cb6f0f858d3828a516ada59d933838ef980a5eb8b050ea2be"
+    },
+    {
+      "path": "offline-before.txt",
+      "bytes": 421,
+      "sha256": "a5eee6651ec1c7d451f6c6b33b8fd20c76472829200242a369da44e9ada94da4"
+    },
+    {
+      "path": "offline-collection.png",
+      "bytes": 57966,
+      "sha256": "13927f5a09d0b27a42c4f06fc22892b9d422c95232ff89e78d3f80a45bb801db"
+    },
+    {
+      "path": "offline-collection.txt",
+      "bytes": 1846,
+      "sha256": "bf2ba4d99450c54f2f6d91c07af7a2c4ea4ea238e4f56b0024f21fe0e02be391"
+    },
+    {
+      "path": "offline-first-timeout.png",
+      "bytes": 93604,
+      "sha256": "4ff4b8ebebe5390200d9f1b0584def6b1271371f819d92c12119584c93d21ace"
+    },
+    {
+      "path": "offline-first-timeout.txt",
+      "bytes": 271,
+      "sha256": "e8353f0630ce316141981e7f7069c8dc03d326623b20c3e5b5c2b05b86e702ca"
+    },
+    {
+      "path": "offline-flight-paused.txt",
+      "bytes": 611,
+      "sha256": "3e227af5449e5077e947e438079cc9d2ad924ded6d7c2e5f9a1e9dff9eb5ef8d"
+    },
+    {
+      "path": "offline-flight-start.txt",
+      "bytes": 336,
+      "sha256": "32c80cb2efa663ba4deb5b7bdc88b79f888b1d8a6ce9c19a2dec11e2e11be572"
+    },
+    {
+      "path": "offline-flight.png",
+      "bytes": 284349,
+      "sha256": "e5c3348f85f25c7ce979ca15e6e058b55903f031166fa23750568e91b66f6af9"
+    },
+    {
+      "path": "offline-progress.txt",
+      "bytes": 716,
+      "sha256": "059fd37432cbfcf6a1a8db00cfd591056ec1b1303b09a9e6cb393a4c6279f215"
+    },
+    {
+      "path": "offline-ready.png",
+      "bytes": 91486,
+      "sha256": "fce01297f031686e261d9932b336fbf5a61ca3f825b03026b988d71d14371de2"
+    },
+    {
+      "path": "offline-ready.txt",
+      "bytes": 941,
+      "sha256": "5c26f1fe678f239aafcdc81ab1689c3ebf97eaeb2506a6450140db4b2b5ab945"
+    },
+    {
+      "path": "offline-reload.txt",
+      "bytes": 1511,
+      "sha256": "c3fc282c9fd9c3743ada26442aca52dc0adb6546c41cfe93dfe4974ca2c5079a"
+    },
+    {
+      "path": "offline-started.txt",
+      "bytes": 786,
+      "sha256": "ab3908804775bd30fa353f2d5321cbedcaaffc330966d0529fd818aa9bc63f29"
+    },
+    {
+      "path": "page-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "paused-state.txt",
+      "bytes": 423,
+      "sha256": "21370b86fb79697eafd96f3de834a3888445c34cf7775183e585db2585031701"
+    },
+    {
+      "path": "title.png",
+      "bytes": 54383,
+      "sha256": "666fc962a0144e6b85f77507376115496793436044f6333dfaf12c651e40c28b"
+    }
+  ]
+}

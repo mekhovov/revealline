@@ -1,0 +1,121 @@
+{
+  "format": "revealline-final-controller-metadata-preparation.v1",
+  "at": "2026-09-14T22:40:50.833310+00:00",
+  "currentVersion": "v0.44.0",
+  "currentSourceRevision": "fc789c71aa21a240c9966d874dd76e9daeb9f44b",
+  "catalogSha256": "53e316a82e1ca1ec68204aa2885546485d468f4176596597f3a0ab018c14d215",
+  "retainedEarlierMetadataCount": 52,
+  "releaseCount": 54,
+  "newFrozenAuthorities": [
+    {
+      "version": "v0.47.0",
+      "sourceRevision": "f4672a915e9495ed069e5e98a71e390f7b9ea7b0",
+      "qualificationSha256": "635a6209fb63ed4fbabcb7f1c75d583faa9acb04231db4aa02477bea799c09ee",
+      "frozenIntegritySha256": "fe670d57e12ab6bda20ac3790cf7d51b39883a5ee3fc4026940271247ecf4aec",
+      "publicationCompleteSha256": "c0776e88030f8e99b113cf8f441f72b98120be627fe976ffe3907710fe825cc7"
+    },
+    {
+      "version": "v0.48.0",
+      "sourceRevision": "028ead24cfb31963d2b9bb733667c22993139ff4",
+      "qualificationSha256": "faa4e072c43cc6b867589fb2f2a2312730f90b42fd612ed3ac9dea22c50fb4c4",
+      "frozenIntegritySha256": "27e0ecb603af9f2911cfbebe7b96b5434674965008fcb87177e255919c20b348",
+      "publicationCompleteSha256": "01f7ed15d843f7010fbf43aafc5f68f16f3b5492f68f46e12aee0bd3797c6af2"
+    }
+  ],
+  "files": [
+    {
+      "path": "catalog.json",
+      "bytes": 24129,
+      "sha256": "53e316a82e1ca1ec68204aa2885546485d468f4176596597f3a0ab018c14d215"
+    },
+    {
+      "path": "metadata/v0.47.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "2a1a5be6759e8bd74848f5d53c2db12a9becbf7e60468ab45d0b3849286e2a32"
+    },
+    {
+      "path": "metadata/v0.47.0/manifest.json",
+      "bytes": 64130,
+      "sha256": "a0a583e5bf1da3742e2f12b3a29822be54931b260744c0d6b02ce029ced6ac13"
+    },
+    {
+      "path": "metadata/v0.47.0/release.json",
+      "bytes": 465,
+      "sha256": "ccc46be460907100eaf811dbfb6b32682d2fd68198eb4f29ed18427c2f10f97d"
+    },
+    {
+      "path": "metadata/v0.48.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "b704f973ec68dcbd4453ec6736568f63460c07cfcaaa99a30d481236f0b18343"
+    },
+    {
+      "path": "metadata/v0.48.0/manifest.json",
+      "bytes": 64839,
+      "sha256": "6e51e164290188b2fc1553abbb0d4ec7690aec8d590b3a04f654728faa08343b"
+    },
+    {
+      "path": "metadata/v0.48.0/release.json",
+      "bytes": 465,
+      "sha256": "068eebe4fb9c33b4e07d776fb61650f86561f0cad26376cca18bff94e9445079"
+    }
+  ],
+  "remoteSemanticTagObjects": {
+    "v0.1.0": "c5e4c5a6fa141c1cb106b769712666e1726980d0",
+    "v0.1.1": "76687c2decf409d845f698ad7fefa92167178011",
+    "v0.1.2": "5f539f6f722c49f36a31701454a683ee60122d81",
+    "v0.10.0": "78d91a364e83c463c65513755c9e84aaccbc56f3",
+    "v0.11.0": "15edf83529e289a967289820bbc43ecd344c8779",
+    "v0.12.0": "57ef1b15ed8f887d8c905df499d85ca302df2fc6",
+    "v0.13.0": "8f769643d246211d3ae3d451eb74eeb5ed448ab0",
+    "v0.14.0": "b61d48560efd0423f163557c46ef81b5bafbecbd",
+    "v0.15.0": "8aca496c217199fbca442bd04a8ca0a231429c7a",
+    "v0.16.0": "39f071ae3ad38d648f8bd2fa82a79bccce33fc84",
+    "v0.17.0": "4f14195f94f17efee4915264c740f0c6e9afefd0",
+    "v0.17.1": "299375ec717442f7967543f991c994643c6e2bd3",
+    "v0.18.0": "8a51ef1da7d69786a5c60e2125234e907e32a4be",
+    "v0.19.0": "b12479e46307dbc6178ee4189cba6940a6baba73",
+    "v0.2.0": "eec303cc67914fa6a90db6bd209d41f2e7195ecb",
+    "v0.2.1": "147616ff1ac6f272193eb15ca9df9d1c158e8d29",
+    "v0.20.0": "3adac423d22a47598997098145001f1ee3e3ea41",
+    "v0.21.0": "6eb25743751f8e55078c0bbc32efaf6c197baf89",
+    "v0.22.0": "d299ff0c3f3d232e9066cff8fd0d40ab93edeaf2",
+    "v0.23.0": "46be19b49016eebb0d05fefa12ed23df3982d0e6",
+    "v0.24.0": "7a84f22481a6ac5f835cbde6777ad08260260bcf",
+    "v0.25.0": "e51019404f4798c75e0efeacafc54360e67d6750",
+    "v0.26.0": "1427b8c737a4541be23f086de7f48bfc70ee6309",
+    "v0.27.0": "7c03c06a0f4d15af31b0bbd2a6fa4e3a44c5ab18",
+    "v0.28.0": "e87d4ad077b6057c2c65efed99310087d39c8318",
+    "v0.29.0": "fe04904513825e8b63a37ef14beaac2311ce0449",
+    "v0.29.1": "abbc18111d445360e4666fe7193adfd191197b2b",
+    "v0.29.2": "6211817554fc82bfc65b8c15bf825beb82301859",
+    "v0.3.0": "7cd2046405a7d4daf6663c01c1478101bd0a632a",
+    "v0.30.0": "1e2a3f3d5b731f27aa4ed36670b9fd803fb4c300",
+    "v0.31.0": "f948b00e90b974b521fd9d215c4eaa8af118195f",
+    "v0.32.0": "be78ff4adfa5be834ccee7cfaf150300ef604232",
+    "v0.33.0": "ef957d2573cc07a5aef366f8eab2a24dbaa08965",
+    "v0.34.0": "dc0afc51bf6290555eb1b37287b7374040062b68",
+    "v0.35.0": "dc612f49b844c65895b75f8ddcd47543077a715f",
+    "v0.36.0": "7fd492d653e1763a0f98d63d8d3fe746a84f0ded",
+    "v0.37.0": "2c61fb61e510a8a8941b77eb7843aabdce1e26df",
+    "v0.38.0": "6e18ea11d87c3d54e11405a938dd7551e63f8976",
+    "v0.39.0": "c2beab7ee071dd42a3b8dbf049264d0425d72fe2",
+    "v0.4.0": "378e7902efdc5f9f585efee5946fb4661d9cfec7",
+    "v0.4.1": "42dc21f65f666036706d57c6f1054a37967f367b",
+    "v0.40.0": "3ee73d59903c94d1838c481a727f7c57f4918406",
+    "v0.41.0": "469638432d73ea6f74e02f1e552b3157c047c4ff",
+    "v0.42.0": "c0fcc9a37d453671de6c1ce127df5fe06e853e8f",
+    "v0.44.0": "4148e33b818326f065c0a8057646231b3d6b43cd",
+    "v0.45.0": "0794241d17ebc1660338feac57a374518bd8722c",
+    "v0.46.0": "ba3c1ffb67fc5bb9db261b621a27e1282905a6f5",
+    "v0.47.0": "b454e8199df054ad38ff9383b28a66433fa7b3ad",
+    "v0.48.0": "34a25b9088f89f71b28006d9c9dbe97fc1f30858",
+    "v0.5.0": "8ce113979ab250bbd4ce294786dfddbaf9efe154",
+    "v0.6.0": "eff751d470acef2ca2e56f5d346f94ced2f2af71",
+    "v0.7.0": "bd22efa264ee35cf1695768fff15436b8083d47b",
+    "v0.8.0": "7aaa39e0b2ae10d6438b026cebacae5268c4b058",
+    "v0.9.0": "8a791ab186af446ef884dc0184c6fedcc726e563"
+  },
+  "deploymentEnabled": false,
+  "publisherFilesModified": false,
+  "remaining": "Independently validate metadata through the committed controller, attach admitted archive08/09 HTTP and native evidence, pin source qualification, review final selector and only then enable main publication."
+}
