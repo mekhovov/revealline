@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-09-13T02:01:03.598Z",
+  "finishedAt": "2026-09-13T02:03:46.230Z",
+  "base": "https://mekhovov.github.io/revealline-archive-01/",
+  "artifact": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round37/archive-hosting/archive",
+  "concurrency": 8,
+  "files": 3888,
+  "expectedBytes": 754925608,
+  "verifiedBytes": 754925608,
+  "failedFiles": 0,
+  "retries": 0,
+  "skipped": [],
+  "localChanges": [],
+  "failures": [],
+  "boundaries": "Exact decoded HTTP bodies and runtime MIME only. No browser execution, offline migration, storage, physical-device or release-readiness certification."
+}

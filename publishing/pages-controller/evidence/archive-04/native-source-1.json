@@ -1,0 +1,51 @@
+{
+  "status": "SCOPED_CANONICAL_NATIVE_PASS",
+  "at": "2026-09-14T08:37:38.540060+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-04/releases/v0.38.0/site/game/",
+  "archiveCommit": "20f10015b0ce585103de8a1562d2451af14adebb",
+  "runtimeSource": "b0a7ded10a816876c0e6bdac75b205948acf61da",
+  "journey": [
+    "Initial Continue refused because the matching campaign pack was unavailable. Preserve01; no cause or profile migration inferred.",
+    "Explicit Pressure Lines install from title completed. Load saved flight restored51.5%/12060/3lives/2:56 paused.",
+    "Explicit Resume and one fresh Right command completed a real new cut52.9%/12400/3lives/2:50; Line secured asked for a fresh direction. Pause retained it.",
+    "Cold page reload and explicit Continue completed verification at the same52.9%/12400/3lives/2:50 paused. Intermediate Verifying saved flight remains in04."
+  ],
+  "limits": [
+    "No new solo victory, Collection-picture reward, server-stopped test or physical-device qualification in this archive scope.",
+    "No claim that a saved profile migrated between origins/versions or a storage-loss cause was established.",
+    "Old main038 forwarding awaits the successor source allocation and its actual deployment; canonical URL is what was played.",
+    "Actual browser UI actions only; no hidden storage/app-state access or injection."
+  ],
+  "evidence": [
+    {
+      "path": ".cache/round47/archive038-native/01-missing-pack.txt",
+      "bytes": 1359,
+      "sha256": "52846703e2cebf786b6849b06a690bdcd68bb3cc5cd7d1f1b016da2b677f8c5a"
+    },
+    {
+      "path": ".cache/round47/archive038-native/02-after-exact-install.txt",
+      "bytes": 906,
+      "sha256": "1011d19c8fee35f95c3e27994d0ad1b01f78cf96a44fee25cc75d37d46477be3"
+    },
+    {
+      "path": ".cache/round47/archive038-native/03-new-cut.png",
+      "bytes": 145644,
+      "sha256": "756fa8b9cf6e919365d5b779067d1b9c5a7a48de0ea386ba06dd9fd8d464fdbf"
+    },
+    {
+      "path": ".cache/round47/archive038-native/03-new-cut.txt",
+      "bytes": 904,
+      "sha256": "bf066158a420defeee952b1c924fccff15d4cf1009a2b511e94eb12dd47bdfa9"
+    },
+    {
+      "path": ".cache/round47/archive038-native/04-reload-continue.txt",
+      "bytes": 1355,
+      "sha256": "c1922718087251a518f1f573edef1d5b15d731a20665f4aac82f5e65f98b5121"
+    },
+    {
+      "path": ".cache/round47/archive038-native/05-reload-verified.txt",
+      "bytes": 906,
+      "sha256": "9b2ade91cc06f324d98434a5df62b867490a03f200c10d8b05cec0c2f4ad11f9"
+    }
+  ]
+}

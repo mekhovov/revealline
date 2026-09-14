@@ -1,0 +1,26 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-03",
+  "infrastructureCommit": "1137dfc59cf2dc52bd93483cc4ebeb052824e403",
+  "deploymentId": 6428535084,
+  "versions": [
+    "v0.33.0",
+    "v0.34.0",
+    "v0.35.0"
+  ],
+  "scope": "Routing admission only. Every frozen file equals the fully audited archive. Native evidence is the cited prior accepted unchanged-source or scoped canonical journey; not an all-edition replay, new offline guarantee, or repair of historical defects. The exact original limitations and failures remain in native-source references.",
+  "evidence": [
+    {
+      "path": "evidence/archive-03/native-source-1.md",
+      "sha256": "77f5cdaba0f744d8c2e44172d6e913efe80a0c2e5a8108a6fe598cebaa0f1473",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-03/native-source-2.md",
+      "sha256": "e9cd30cf88f9e5c15429506fcc363a5f988058d3f7516bc77b65f703bccc00b2",
+      "kind": "reference"
+    }
+  ],
+  "basis": "Prior scoped browser acceptance of unchanged exact frozen source; source/manifest authority checked against archive inventory."
+}

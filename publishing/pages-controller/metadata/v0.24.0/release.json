@@ -1,0 +1,10 @@
+{
+  "formatVersion": 1,
+  "version": "v0.24.0",
+  "sourceRevision": "45a0241e75cd6fe6cddf71671fd9fd3735a9032c",
+  "sourceArchiveSha256": "dec1f1d7e8329ded36e7aa33bd68f544eea1a50a1b647911e0f8e19c2f1f956c",
+  "distributionSha256": "da50ce929ad5c0c6dc4ecfbe6330c0b27d1d00cabd51b7a2fbaf408e472ac49c",
+  "manifestSha256": "f2a9cc88ade68c0ac83f2ae82082e13c8b2dd4416539667ea68bfadf238c2fa1",
+  "play": "v0.24.0/site/game/",
+  "download": "v0.24.0/site/distribution.zip"
+}
