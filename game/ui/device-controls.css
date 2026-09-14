@@ -81,6 +81,9 @@
 .game-shell[data-screen-controls='shown'] .play-controls > * {
   pointer-events: auto;
 }
+.game-shell[data-screen-steering-hand='right'] .play-controls .direction-controls {
+  margin-left: auto;
+}
 .game-shell .play-controls .ability-buttons {
   flex: 0 1 160px;
   justify-content: end;
@@ -302,5 +305,54 @@
     content: ' MENU';
     font-size: 17px;
     letter-spacing: 1px;
+  }
+}
+
+/* Only authored Arcade fields without a warning card reclaim the hidden status rows.
+   Warning-capable maps, training and narrow landscape keep their existing reserve. */
+@media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
+  .game-shell[data-arena-chrome='compact']:not(.first-flight-session) {
+    --compact-chrome: 140px;
+  }
+  .game-shell[data-arena-chrome='compact'][data-text-size='large']:not(.first-flight-session) {
+    --compact-chrome: 145px;
+  }
+}
+
+/* Narrow boards must not force the HUD or warning into that same narrow column.
+   Reserve warning space from the authored map, including while its card is hidden. */
+@media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) {
+    --compact-chrome: 205px;
+  }
+  .game-shell[data-arena-chrome='full'][data-text-size='large']:not(.first-flight-session) {
+    --compact-chrome: 225px;
+  }
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) .arena-panel,
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: calc(100% - var(--side-gutter));
+  }
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel,
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: calc(100% - var(--side-gutter) - 16px);
+  }
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session) .arena-panel > .arena-shell,
+  .game-shell[data-arena-chrome='full']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden]))
+    > .arena-shell {
+    max-width: min(
+      100%,
+      calc(
+        (100dvh - var(--compact-chrome) - var(--safe-top) - var(--safe-bottom)) *
+          var(--board-aspect, 1.333333)
+      )
+    );
   }
 }

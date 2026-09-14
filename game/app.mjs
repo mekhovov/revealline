@@ -19,7 +19,11 @@ import {
 } from './optional-chapters.mjs';
 import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
-import { nextInputModality, showScreenControls } from './input-presentation.mjs';
+import {
+  nextInputModality,
+  showScreenControls,
+  hasCompactArcadeArena,
+} from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
@@ -161,6 +165,8 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
+  const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
@@ -218,7 +224,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.41.0',
+  let buildVersion = '0.42.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -1176,6 +1182,8 @@ try {
     refreshInputPresentation();
   }
   function refreshInputPresentation() {
+    const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
+    if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,
@@ -1239,7 +1247,7 @@ try {
     onReturn: () => pause(true),
   });
   enemyGuide = attachEnemyGuide({
-    themes: themesFile.themes,
+    themes: guideThemes,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
     loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
@@ -1268,7 +1276,6 @@ try {
   });
   $('shell-guide').onclick = () => {
     pause(true);
-    if ($('shell-home').open) $('shell-home').close();
     enemyGuide.open();
   };
   handlePageHide = (event) => {
@@ -1905,6 +1912,7 @@ try {
     }
     refreshDifficulty();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return saved;
   }
   function preferences(patch) {
@@ -1916,6 +1924,7 @@ try {
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return {
       ok: false,
       warning:
@@ -2895,6 +2904,33 @@ try {
     syncAssistControls();
     refreshInputPresentation();
   };
+  $('screen-steering-hand').onchange = () => {
+    const requested = $('screen-steering-hand').value,
+      saved = preferences({ screenSteeringHand: requested });
+    refreshScreenSteeringHand();
+    const status = $('screen-steering-status');
+    status.textContent = saved.ok
+      ? 'Steering hand saved.'
+      : library.preferences.screenSteeringHand === requested
+        ? `Steering hand selected for this session. ${saved.warning}`
+        : `Steering hand unchanged. ${saved.warning}`;
+    status.hidden = false;
+  };
+  function refreshScreenSteeringHand() {
+    const hand = library.preferences.screenSteeringHand;
+    $('screen-steering-hand').value = hand;
+    document.body.dataset.screenSteeringHand = hand;
+    const strip = document.querySelector('.play-controls'),
+      trailing = strip.querySelector(hand === 'right' ? '.direction-controls' : '.ability-buttons');
+    if (strip.lastElementChild !== trailing) {
+      const focused = document.activeElement;
+      // Keep native focus order aligned with the two visible groups, reusing every button.
+      strip.append(trailing);
+      if (trailing.contains(focused)) focused.focus({ preventScroll: true });
+    }
+    $('screen-steering-status').textContent = '';
+    $('screen-steering-status').hidden = true;
+  }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
   function refreshTextSize() {
     const size = library.preferences.textSize;
@@ -2903,6 +2939,7 @@ try {
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
+    refreshScreenSteeringHand();
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;

@@ -45,7 +45,10 @@ async function forgedSources(t, edit) {
   const historyRoot = 'authoring/production/history';
   const history = JSON.parse(await readFile(path.join(root, historyRoot, 'index.json'), 'utf8'));
   await mkdir(path.join(fixture, historyRoot), { recursive: true });
-  for (const name of ['index.json', ...history.entries.map((p) => `${p.sha256}.json`)])
+  for (const name of [
+    'index.json',
+    ...history.entries.map((p) => `${p.sha256}${path.posix.extname(p.path)}`),
+  ])
     await writeFile(
       path.join(fixture, historyRoot, name),
       await readFile(path.join(root, historyRoot, name)),
