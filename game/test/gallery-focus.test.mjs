@@ -382,6 +382,21 @@ test('a missing pack or empty filtered collection falls back to the enabled sear
   assert.equal(h.document.activeElement, h.node('gallery-search'));
 });
 
+test('the underlying Collection cannot replace its open child picture', async (t) => {
+  const h = await setup(t, 2);
+  h.collection();
+  await h.cards()[0].onclick();
+  const title = h.node('gallery-view-title').textContent,
+    paints = h.paints.length;
+  h.closeButton.focus();
+  await h.cards()[1].onclick();
+  assert.equal(h.node('gallery-view-title').textContent, title);
+  assert.equal(h.node('gallery-view-dialog').open, true);
+  assert.equal(h.node('collection-dialog').open, true);
+  assert.equal(h.document.activeElement, h.closeButton);
+  assert.equal(h.paints.length, paints);
+});
+
 test('Replay leaves the collection closed and preserves the host mission focus', async (t) => {
   const h = await setup(t);
   h.collection();
@@ -405,7 +420,7 @@ test('late decoding and a queued old close cannot steal focus from a new picture
   const second = h.cards()[1].onclick();
   h.closeButton.focus();
   h.node('gallery-view-dialog').emit('close');
-  assert.equal(h.node('collection-dialog').open, false);
+  assert.equal(h.node('collection-dialog').open, true);
   for (const resolve of h.decodeJobs) resolve();
   await Promise.all([first, second]);
   assert.equal(h.document.activeElement, h.closeButton);
@@ -790,7 +805,7 @@ test('an already open picture receives friendly seal details without disturbing 
   assert.equal(h.node('gallery-canvas'), canvas);
   assert.equal(h.cards()[0], card);
   assert.equal(h.node('gallery-view-dialog').open, true);
-  assert.equal(h.node('collection-dialog').open, false);
+  assert.equal(h.node('collection-dialog').open, true);
   assert.equal(h.paints.length, paints);
 });
 

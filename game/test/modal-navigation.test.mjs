@@ -1,9 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { Document } from './helpers/couch-dom.mjs';
-import { soloPage, SoloElement, settle } from './helpers/solo-dom.mjs';
+import { soloPage, SoloElement, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { createRun, stepRun, getSummary, FIXED_DT } from '../core/index.mjs';
+import { emptyLibrary, recordLibraryCompletion, saveLibrary } from '../library.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
+import { BoardPainter } from '../ui/render.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 
@@ -174,6 +179,7 @@ test('actual title → Missions → Collection controller Back closes only the f
   h.frame();
   h.frame();
   assert.ok(h.$('collection-dialog').contains(h.doc.activeElement));
+  assert.equal(collectionBack(h).textContent, 'Back to Missions →');
   const close = h.$('collection-dialog').querySelector('button');
   close.focus();
   close.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown' });
@@ -477,5 +483,231 @@ test('Main menu Field Guide returns to Main menu over an unchanged paused-flight
   assert.equal(h.$('shell-home').open, false);
   assert.equal(h.$('flight-state').textContent, 'Paused');
   assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
+  assert.deepEqual(h.errors, []);
+});
+
+// A legal completion supplies a real Collection card; only canvas painting and
+// native dialog focus/events are modeled, as in the existing modal host cases.
+async function earnedTitleCollection(t) {
+  nativeDialogs(t);
+  t.mock.method(SoloElement.prototype, 'getContext', () => ({ drawImage() {} }));
+  t.mock.method(BoardPainter.prototype, 'drawGallery', () => {});
+  const classRecipes = JSON.parse(
+    await readFile(new URL('../content/classes.json', import.meta.url)),
+  );
+  const campaign = {
+    version: 'xonix-campaign.v1',
+    id: 'title-collection-return',
+    revision: '1',
+    title: 'Title Collection return',
+    classRecipes,
+    levels: [
+      {
+        version: 'xonix-level.v1',
+        id: 'return-picture',
+        revision: '1',
+        name: 'Return picture',
+        width: 48,
+        height: 36,
+        spawn: { x: 24.5, y: 0.5 },
+        walls: [],
+        enemies: [],
+        objectives: [],
+        supplies: [],
+        goal: { coverage: 0.5 },
+      },
+    ],
+  };
+  const run = createRun(campaign.levels[0], { classRecipes, classId: 'scout', seed: 7 });
+  for (let i = 0; i < 1000 && run.status === 'running'; i++)
+    stepRun(run, { direction: 'down' }, FIXED_DT);
+  assert.equal(run.status, 'won', 'The stored picture originates in a legal core completion.');
+  const library = recordLibraryCompletion(emptyLibrary(), {
+    campaign,
+    result: getSummary(run),
+    runId: 'collection-return-completion',
+    themeId: 'fpv',
+    bodyId: 'fpv-body',
+    completedAt: '2026-09-14T12:00:00.000Z',
+  });
+  const storage = memoryStorage();
+  assert.equal(saveLibrary(storage, 'revealline.library.dev.v1', library).ok, true);
+  const page = await soloPage(t, { titleScreen: true, campaign, storage });
+  return { page, library };
+}
+function collectionBack(h) {
+  return h.$('collection-back');
+}
+function openTitleCollection(h) {
+  h.$('shell-gallery').focus();
+  h.$('shell-gallery').click();
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.$('collection-dialog').open, true);
+  assert.equal(collectionBack(h).textContent, 'Back to menu →');
+}
+async function openFirstPicture(h) {
+  const card = h.$('gallery-grid').querySelector('button');
+  assert.ok(card && !card.disabled, 'The actual earned picture must be available.');
+  card.focus();
+  await card.onclick();
+  assert.equal(h.$('gallery-view-dialog').open, true);
+  assert.equal(h.$('collection-dialog').open, true, 'Collection retains its original opener.');
+  assert.equal(h.$('gallery-replay').disabled, false);
+  return card;
+}
+function nativeEscape(dialog) {
+  const event = dialog.emit('cancel');
+  if (!event.defaultPrevented) dialog.close();
+}
+for (const exit of ['controller', 'escape', 'close button'])
+  test(`title picture ${exit} returns through Collection to its exact title opener`, async (t) => {
+    const { page: h } = await earnedTitleCollection(t),
+      pad = controllerPad(h, t);
+    const checkpoint = authoritativeCheckpoint(h.rendered.run),
+      before = [...h.storage.map],
+      writes = h.storage.writes.length;
+    openTitleCollection(h);
+    const oldCard = await openFirstPicture(h);
+    pad.frame();
+    pad.frame();
+    if (exit === 'controller') pad.pulse(1);
+    else if (exit === 'escape') nativeEscape(h.$('gallery-view-dialog'));
+    else h.$('gallery-view-dialog').querySelector('[data-close]').click();
+    await settle(
+      () => !h.$('gallery-view-dialog').open && h.$('gallery-grid').contains(h.doc.activeElement),
+    );
+    const currentCard = h.$('gallery-grid').querySelector('button');
+    assert.notEqual(currentCard, oldCard, 'Back resolves the recreated card by picture identity.');
+    assert.equal(h.doc.activeElement, currentCard);
+    assert.equal(currentCard.children[1].textContent, oldCard.children[1].textContent);
+    assert.equal(h.$('shell-home').open, true);
+    nativeEscape(h.$('collection-dialog'));
+    await Promise.resolve();
+    pad.frame();
+    assert.equal(h.$('collection-dialog').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement, h.$('shell-gallery'));
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], before);
+    assert.equal(h.storage.writes.length, writes);
+    assert.deepEqual(h.errors, []);
+  });
+
+test('picture Replay deliberately leaves title and Collection for the selected ready briefing', async (t) => {
+  const { page: h, library } = await earnedTitleCollection(t);
+  openTitleCollection(h);
+  await openFirstPicture(h);
+  h.$('gallery-replay').click();
+  await settle(() => h.doc.body.dataset.pictureState === 'ready');
+  await Promise.resolve();
+  h.frame(0);
+  for (const id of ['gallery-view-dialog', 'collection-dialog', 'shell-home', 'shell-missions'])
+    assert.equal(h.$(id).open, false, `${id} must not cover the chosen briefing`);
+  assert.equal(h.doc.activeElement, h.$('start-button'));
+  assert.equal(h.rendered.run.level.id, 'return-picture');
+  assert.equal(h.rendered.run.seed, 7);
+  assert.equal(h.rendered.run.tick, 0);
+  assert.equal(h.$('flight-state').textContent, 'Ready for launch');
+  const after = JSON.parse(h.storage.getItem('revealline.library.dev.v1')).library;
+  assert.deepEqual(after.gallery, JSON.parse(JSON.stringify(library.gallery)));
+  assert.deepEqual(after.campaigns, JSON.parse(JSON.stringify(library.campaigns)));
+  assert.deepEqual(h.errors, []);
+});
+
+test('Collection Choose appearance deliberately leaves title for Missions setup', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true }),
+    checkpoint = authoritativeCheckpoint(h.rendered.run);
+  openTitleCollection(h);
+  h.$('collection-choose-appearance').click();
+  await Promise.resolve();
+  h.frame(0);
+  assert.equal(h.$('collection-dialog').open, false);
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(h.$('shell-missions').open, true);
+  assert.equal(h.doc.activeElement, h.$('body-select'));
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+  assert.deepEqual(h.errors, []);
+});
+
+test('Collection resets its return label from title to a direct paused-flight visit', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true });
+  openTitleCollection(h);
+  collectionBack(h).click();
+  await Promise.resolve();
+  assert.equal(h.$('shell-home').open, true);
+  h.$('shell-play').click();
+  h.$('shell-briefing').click();
+  h.$('start-button').click();
+  h.key('ArrowDown');
+  h.key('ArrowDown', false);
+  for (let i = 0; i < 20; i++) h.frame();
+  assert.equal(h.rendered.run.player.cutting, true);
+  h.$('shell-collection').focus();
+  h.$('shell-collection').click();
+  h.frame(0);
+  const checkpoint = authoritativeCheckpoint(h.rendered.run);
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(collectionBack(h).textContent, 'Back to the field →');
+  collectionBack(h).click();
+  await Promise.resolve();
+  for (let i = 0; i < 10; i++) h.frame();
+  assert.equal(h.$('collection-dialog').open, false);
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.ok(
+    h.doc.activeElement === h.$('shell-collection'),
+    `Expected shell-collection; actual focus: ${h.doc.activeElement?.id || h.doc.activeElement?.tagName}`,
+  );
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+  assert.deepEqual(h.errors, []);
+});
+
+test('programmatic Collection after a real win does not refocus a hidden opener', async (t) => {
+  const { page: h } = await earnedTitleCollection(t);
+  openTitleCollection(h);
+  await openFirstPicture(h);
+  h.$('gallery-replay').click();
+  await settle(() => h.doc.body.dataset.pictureState === 'ready');
+  h.$('start-button').click();
+  h.key('ArrowDown');
+  for (let i = 0; i < 1000 && h.rendered.run.status === 'running'; i++) h.frame();
+  h.key('ArrowDown', false);
+  assert.equal(
+    h.rendered.run.status,
+    'won',
+    JSON.stringify({
+      level: h.rendered.run.level.id,
+      tick: h.rendered.run.tick,
+      time: h.rendered.run.time,
+      paused: h.rendered.paused,
+      x: h.rendered.run.player.x,
+      y: h.rendered.run.player.y,
+      cutting: h.rendered.run.player.cutting,
+      coverage: h.rendered.run.coverage,
+      classId: h.rendered.run.classId,
+      message: h.$('run-message').textContent,
+      dialogs: [...h.doc.querySelectorAll('dialog[open]')].map((x) => x.id),
+    }),
+  );
+  h.$('show-result').click();
+  const hiddenOpener = h.$('start-button');
+  assert.equal(hiddenOpener.hidden, true);
+  // Older/embedded DOMs can retain a hidden active element. The Collection
+  // handler must not deliberately refocus it during a programmatic open.
+  hiddenOpener.focus();
+  const focus = hiddenOpener.focus.bind(hiddenOpener);
+  let refocuses = 0;
+  t.mock.method(hiddenOpener, 'focus', (...args) => {
+    refocuses++;
+    focus(...args);
+  });
+  h.$('collection-button').click();
+  assert.equal(refocuses, 0);
+  assert.equal(h.$('collection-dialog').open, true);
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(collectionBack(h).textContent, 'Back to the field →');
+  assert.equal(h.rendered.run.status, 'won');
   assert.deepEqual(h.errors, []);
 });
