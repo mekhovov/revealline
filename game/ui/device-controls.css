@@ -527,6 +527,8 @@
     height: 100dvh;
   }
   .game-shell[data-flight-state='running'] .arena-panel,
+  .game-shell[data-flight-state='running']
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
   .game-shell[data-flight-state='running'] .arena-panel:has(> .encounter-status:not([hidden])) {
     position: absolute;
     inset: 0;
