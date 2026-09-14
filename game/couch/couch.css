@@ -401,6 +401,29 @@ body.race-focus #couch-app {
   .racer-input {
     display: none;
   }
+  .racer:has(.race-pad:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) 144px;
+    grid-template-rows: auto minmax(48px, 1fr) auto auto auto;
+    column-gap: 8px;
+  }
+  .racer:has(.race-pad:not([hidden])) > :not(.race-pad) {
+    grid-column: 1;
+  }
+  .racer:has(.race-pad:not([hidden])) .race-pad {
+    grid-column: 2;
+    grid-row: 2 / 5;
+    flex-direction: column;
+    margin-top: 0;
+  }
+  .racer[data-player='0']:has(.race-pad:not([hidden])) {
+    grid-template-columns: 144px minmax(0, 1fr);
+  }
+  .racer[data-player='0']:has(.race-pad:not([hidden])) > :not(.race-pad) {
+    grid-column: 2;
+  }
+  .racer[data-player='0']:has(.race-pad:not([hidden])) .race-pad {
+    grid-column: 1;
+  }
 }
 
 #race-help-reading {
