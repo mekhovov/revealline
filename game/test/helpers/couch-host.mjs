@@ -45,7 +45,19 @@ export function mountCouch(document, html) {
 
 export async function couchPage(
   t,
-  { campaign = base, turnPolicy = 'immediate', pads = [], seconds = '30', coarse = false } = {},
+  {
+    campaign = base,
+    turnPolicy = 'immediate',
+    pads = [],
+    seconds = '30',
+    coarse = false,
+    // Existing input/navigation fixtures explicitly keep their authored geometry.
+    // null exercises the real shipped default instead.
+    initialLevel = campaign.levels[0].id,
+    ImageClass,
+    assetDatabase,
+    expectBootFailure = false,
+  } = {},
 ) {
   const doc = new Document(),
     win = new Events();
@@ -57,6 +69,8 @@ export async function couchPage(
   const original = new Map(),
     methods = new Map(),
     renders = [],
+    drawOptions = [],
+    images = [],
     observedEvents = [],
     rafs = new Map();
   let now = 1000,
@@ -73,7 +87,27 @@ export async function couchPage(
         return pads;
       },
     },
-    indexedDB: undefined,
+    indexedDB: assetDatabase,
+    Image:
+      ImageClass ||
+      class {
+        constructor() {
+          images.push(this);
+        }
+        set src(source) {
+          this.source = source;
+          const bytes = Buffer.from(source.split(',')[1], 'base64');
+          assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
+          this.width = this.naturalWidth = bytes.readUInt32BE(16);
+          this.height = this.naturalHeight = bytes.readUInt32BE(20);
+          queueMicrotask(() => this.onload?.());
+        }
+        async decode() {}
+        removeAttribute(name) {
+          assert.equal(name, 'src');
+          this.released = (this.released || 0) + 1;
+        }
+      },
     location: { href: 'http://localhost/game/couch/', search: '' },
     matchMedia: (query) => ({ matches: query === '(pointer: coarse)' && coarse }),
     Option: class extends Element {
@@ -114,8 +148,9 @@ export async function couchPage(
     methods.set(key, BoardPainter.prototype[key]);
     BoardPainter.prototype[key] =
       key === 'draw'
-        ? (context, run) => {
+        ? (context, run, dt, options) => {
             renders[Number(context.id.slice(-1))] = run;
+            drawOptions[Number(context.id.slice(-1))] = options;
           }
         : key === 'effectsFor'
           ? (events) => observedEvents.push(...events.map((event) => ({ ...event })))
@@ -128,7 +163,14 @@ export async function couchPage(
     for (const [key, value] of methods) BoardPainter.prototype[key] = value;
   });
   await import(`../../couch/couch.mjs?navigation=${++sequence}`);
-  assert.ok(rafs.size, $('race-message').textContent);
+  if (expectBootFailure) assert.equal(rafs.size, 0);
+  else {
+    assert.ok(rafs.size, $('race-message').textContent);
+    if (initialLevel !== null) {
+      $('race-level').value = initialLevel;
+      $('race-level').emit('change');
+    }
+  }
   function frame(ms = 1000 / 120) {
     now += ms;
     const first = rafs.entries().next().value;
@@ -169,6 +211,8 @@ export async function couchPage(
     doc,
     win,
     renders,
+    drawOptions,
+    images,
     observedEvents,
     frame,
     button,
