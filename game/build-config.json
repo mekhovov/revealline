@@ -39,5 +39,9 @@
   "externalChapters": {
     "format": "revealline-external-distribution.v1",
     "catalog": "game/content/external-worlds.json"
+  },
+  "soundtrackAlbums": {
+    "format": "revealline-soundtrack-distribution.v1",
+    "catalog": "game/content/optional-soundtracks.json"
   }
 }

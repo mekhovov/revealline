@@ -1,0 +1,122 @@
+{
+  "format": "revealline-audio-candidate-browser.v1",
+  "date": "2026-09-13T14:27:57.298102+00:00",
+  "source": "ef1cc41553b7f8c4b1de0156b7921569b0d71f60",
+  "origin": "http://127.0.0.1:8933/game/",
+  "servedAppSha256": "5eafbc54092d18207ed42e34744ed5498f8d21b6f41024b188c11a8e2c5ece5e",
+  "method": "Native file chooser, soundtrack replacement draft, atomic Save and Play/Next controls. No page-state injection. Two optional libraries tested separately.",
+  "results": {
+    "volume1": "Seven MP3s verified as replacement draft, saved generation2, all7observed playing in order.",
+    "volume2": "Six MP3s verified as replacement draft, saved generation3. Saving preserved Fires Uptown/current stream until Next; six subsequent Next entries each observed playing.",
+    "errorsAndWarnings": []
+  },
+  "exports": [
+    {
+      "volume": 1,
+      "filename": "holizna-retro-wave-1.rlsound",
+      "bytes": 52541133,
+      "sha256": "0e97b6c5330f197e3427313db3100c5cb941b11f66553927cec7c1344b74fc8e",
+      "tracks": 7
+    },
+    {
+      "volume": 2,
+      "filename": "holizna-retro-wave-2.rlsound",
+      "bytes": 41485046,
+      "sha256": "b5c78ec7b8e19389090e68b18670ab05378e5646fac025308158058a5767c08e",
+      "tracks": 6
+    }
+  ],
+  "limitations": [
+    "Short playback and native codec/import verification are not full listening, loudness, loop quality or subjective musical approval.",
+    "The two .rlsound files are replacement libraries, not additive installations. Use one or explicitly author a combined library; this test does not merge them.",
+    "Source browser only; not frozen/offline/public qualification, not v0.34 release assets.",
+    "Third-party Holizna CC0 songs, not original RevealLine compositions. Kenney SFX remain unintegrated."
+  ],
+  "raw": [
+    {
+      "path": ".cache/round44/audio-candidates/browser/logs.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-1.txt",
+      "bytes": 7312,
+      "sha256": "b097672ce2ca4d9d22fc694d0ca7ecc0ba6f1ec8d05765496706c466b21dfa72"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-2.txt",
+      "bytes": 7308,
+      "sha256": "f76abd116eacd5c953bba6150bc282871fe747c93c02e8f416c1fd35decb1e70"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-3.txt",
+      "bytes": 7313,
+      "sha256": "1feefb30119f4333846b54d0835a5dac67c0018663101f9eaf0903855a3e808c"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-4.txt",
+      "bytes": 7305,
+      "sha256": "3ca5c185ca62f7168fce2d23ee90788aad63e8239741121658a8b489ce40016e"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-5.txt",
+      "bytes": 7305,
+      "sha256": "0d4a4c00d75d3d2d1fac30c0945b62b6681ec9b19d563a70c286478e809bca37"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-next-6.txt",
+      "bytes": 7307,
+      "sha256": "696aba1e731d4731deef5d24ae4d3c61404e231120475132727f3b2d2592f50f"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-playing.txt",
+      "bytes": 7300,
+      "sha256": "3f5555bc53e2d7feb7dd0afac2149ede5456e45274cc8293ac5586490402d8b6"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume1-reviewed.txt",
+      "bytes": 7315,
+      "sha256": "9a7514a02330d5aef32f482ab02c0c188740704ef05d67239bbb2c018066ef25"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-1.txt",
+      "bytes": 7318,
+      "sha256": "19f5b44e4e0c7509880d2fcdcc3726579c631614e0feedd722771a2189821c1e"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-2.txt",
+      "bytes": 7323,
+      "sha256": "52569eb4f0db3de14b8c2d7f3ec1c2623b53163847f510705a5a26023cb193ce"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-3.txt",
+      "bytes": 7329,
+      "sha256": "3dd564fd2f4e650cde9f0650fbe247789493794c5a0326e70c2edd5599b2bd0c"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-4.txt",
+      "bytes": 7319,
+      "sha256": "81f4e579492e481f806acda3d6b11768dfe6569f144b7de846c70a92dfedd8a2"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-5.txt",
+      "bytes": 7330,
+      "sha256": "65868d674551d6f8611e8220bfc00766e9d8eff5263118ebd139f86e6cfb3f89"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-next-6.txt",
+      "bytes": 7329,
+      "sha256": "d31cd416df9e4626e65f58aa74b4795d5eefbdaf001e66531af29c7e9f8ce797"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-playing.txt",
+      "bytes": 7346,
+      "sha256": "f1682731f33a0c63e0f68157130ceb5367196eee111684de275a92bf541c9682"
+    },
+    {
+      "path": ".cache/round44/audio-candidates/browser/volume2-reviewed.txt",
+      "bytes": 7300,
+      "sha256": "2601efb131f92159f141e8253e4ebfcd82773f96646ae9e0dcc18329418f8179"
+    }
+  ]
+}

@@ -11,6 +11,11 @@ import {
   importSoundtrackBundle,
   prepareSoundtrackLibrary,
 } from '../soundtrack-bundle.mjs';
+import { mergeSoundtrackAlbum } from '../soundtrack-albums.mjs';
+import {
+  fetchSoundtrackAlbum,
+  fetchSoundtrackAlbumCatalog,
+} from '../soundtrack-album-download.mjs';
 
 const copy = (value) => structuredClone(value);
 const message = (error) => error?.message || String(error);
@@ -37,6 +42,7 @@ export function attachSoundtrackPanel({
   onPlayback = () => {},
   onAudioEnabled = () => {},
   beforeAudio = async () => {},
+  albumDownload = {},
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
     throw new Error('Soundtrack panel requires a document, store and player.');
@@ -53,6 +59,9 @@ export function attachSoundtrackPanel({
   let auditionURL = null,
     auditionToken = 0,
     restoreMusic = false;
+  let albumCatalog = null,
+    albumEditors = null,
+    albumGeneration = 0;
   const node = (tag, id, text, attrs = {}) => {
     const element = doc.createElement(tag);
     if (id) {
@@ -577,8 +586,29 @@ export function attachSoundtrackPanel({
     bundleInput.field,
     bundleImport,
   );
+  const albumList = node('div', 'album-list');
+  const albumBrowse = button('browse-albums', 'Browse optional albums', () =>
+    albumTask(albumBrowse, 'Loading album descriptions…', async (signal) => {
+      const catalog = await fetchSoundtrackAlbumCatalog({ ...albumDownload, signal });
+      throwIfSoundtrackAborted(signal);
+      albumCatalog = catalog;
+      renderAlbums();
+      status.textContent = `${catalog.albums.length} optional albums. Review an addition before saving; your current song and draft are kept.`;
+    }),
+  );
+  const albumSection = section(
+    'Community soundtracks',
+    node(
+      'p',
+      null,
+      'Browse albums and credits, then Add to draft to download and preview individual tracks. Save all changes keeps the album alongside your existing music. Your current playlist stays selected.',
+      { class: 'micro-note' },
+    ),
+    albumBrowse,
+    albumList,
+  );
   const columns = node('div', null, null, { class: 'soundtrack-columns' });
-  columns.append(tracksSection, playlistSection, assignmentSection, transferSection);
+  columns.append(tracksSection, playlistSection, assignmentSection, transferSection, albumSection);
   dialog.append(
     row(heading, closeButton),
     availability,
@@ -599,6 +629,128 @@ export function attachSoundtrackPanel({
 
   function tracks() {
     return [...BUILTIN_SOUNDTRACK_TRACKS, ...draft.tracks];
+  }
+  function renderAlbums() {
+    if (!albumCatalog) return;
+    albumList.replaceChildren(
+      ...albumCatalog.albums.map((album) => {
+        const add = button(`album-add-${album.id}`, 'Add to draft', () =>
+          albumTask(
+            add,
+            `Downloading and checking ${album.title}…`,
+            async (signal) => {
+              // Applied draft edits and its generation are captured before download.
+              const currentDraft = draft,
+                currentAssets = [...assets],
+                generation = saved.generation;
+              const imported = await fetchSoundtrackAlbum(album, {
+                ...albumDownload,
+                signal,
+                probeMedia,
+              });
+              throwIfSoundtrackAborted(signal);
+              const merged = mergeSoundtrackAlbum(currentDraft, currentAssets, imported, album);
+              const prepared = await prepareSoundtrackLibrary(merged.library, merged.assets, {
+                signal,
+                probeMedia,
+              });
+              throwIfSoundtrackAborted(signal);
+              if (
+                disposed ||
+                !dialog.open ||
+                saved.generation !== generation ||
+                draft !== currentDraft
+              )
+                throw new Error(
+                  'The music draft changed while checking this album. Review it again.',
+                );
+              invalidateBackup();
+              draft = prepared.library;
+              assets = [...prepared.assets];
+              dirty = true;
+              status.textContent = `${album.title} verified: ${merged.addedTracks} new tracks, ${merged.addedPlaylists} new playlist. Save all changes adds this album; Undo keeps the saved library. Playback is unchanged.`;
+            },
+            () => saveButton,
+          ),
+        );
+        const list = node('ol');
+        for (const track of album.library.tracks)
+          list.append(
+            node(
+              'li',
+              null,
+              `${track.title} · ${track.artist} · ${seconds(track.asset.durationSeconds)}`,
+            ),
+          );
+        const source = node('a', null, 'Creator and license source', {
+          href: album.source,
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        });
+        return section(
+          album.title,
+          node(
+            'p',
+            null,
+            `${album.genre} · ${album.library.tracks.length} tracks · ${bytes(album.bytes)}`,
+          ),
+          node('p', null, album.description),
+          node('p', null, album.credit),
+          source,
+          list,
+          add,
+        );
+      }),
+    );
+  }
+  async function albumTask(opener, label, work, destination = () => opener) {
+    if (busy || !saved || disposed || !dialog.open) return false;
+    const token = ++albumGeneration,
+      focused = doc.activeElement === opener;
+    let moved = false;
+    const followFocus = (event) => {
+      if (![opener, cancelButton, doc.body].includes(event.target)) moved = true;
+    };
+    // Preserve unapplied editor values too: task's full render normally refreshes them.
+    const controls = [
+      tracksSelect,
+      trackTitle,
+      trackArtist,
+      rightsKind,
+      rightsCredit,
+      rightsLicense,
+      rightsSource,
+      playlistsSelect,
+      playlistTitle,
+      order,
+      repeat,
+      entries,
+      addTrack,
+      scope,
+      assignments,
+      selection,
+    ];
+    albumEditors = controls.map(({ element }) => [element, element.value]);
+    doc.addEventListener('focusin', followFocus);
+    let complete = false;
+    try {
+      complete = await task(label, work);
+      return complete;
+    } finally {
+      doc.removeEventListener('focusin', followFocus);
+      albumEditors = null;
+      if (
+        !disposed &&
+        dialog.open &&
+        albumGeneration === token &&
+        focused &&
+        !moved &&
+        [opener, cancelButton, doc.body].includes(doc.activeElement)
+      ) {
+        const target = complete ? destination() : opener;
+        if (target?.isConnected && !target.disabled) target.focus();
+      }
+    }
   }
   function playlists() {
     return [...BUILTIN_SOUNDTRACK_PLAYLISTS, ...draft.playlists];
@@ -793,6 +945,7 @@ export function attachSoundtrackPanel({
     renderBackup();
     dirtyState();
     update();
+    if (albumEditors) for (const [element, value] of albumEditors) element.value = value;
   }
   async function task(label, work) {
     if (busy || disposed) return false;

@@ -1,8 +1,8 @@
 # Xonix authoring prompt library
 
-For applied changes to the playable `game/`, pair these briefs with [Runtime Maintainer](../skills/xonix-runtime-maintainer/SKILL.md), [Expansion Author](../skills/xonix-expansion-author/SKILL.md) and the [actual configuration formats](../../docs/assets-and-configuration.md). The shared CLI has 148 templates. Separate prose guides provide [10 reference-import examples](../skills/xonix-reference-importer/references/import-and-style.md), [10 library/expansion workflow prompts](../../docs/library-and-packs.md) and [four audio/reward prompts](../../docs/audio-and-rewards.md); these are not extra CLI IDs. Legacy drafts, media libraries, motion-lab fixtures, runtime expansions and playable scenarios have different formats; select the target first.
+For applied changes to the playable `game/`, pair these briefs with [Runtime Maintainer](../skills/xonix-runtime-maintainer/SKILL.md), [Expansion Author](../skills/xonix-expansion-author/SKILL.md) and the [actual configuration formats](../../docs/assets-and-configuration.md). The shared CLI has 150 templates. Separate prose guides provide [10 reference-import examples](../skills/xonix-reference-importer/references/import-and-style.md), [10 library/expansion workflow prompts](../../docs/library-and-packs.md) and [four audio/reward prompts](../../docs/audio-and-rewards.md); these are not extra CLI IDs. Legacy drafts, media libraries, motion-lab fixtures, runtime expansions and playable scenarios have different formats; select the target first.
 
-Updated 13 September 2026 · 148 reusable CLI examples across nine catalogs: 56 base, 16 source/asset, 16 animation, 16 character collection, 20 ability/world, 9 native-edition/audio, 6 classic, 3 presentation and 6 enemy workflows. Templates are not executed runs; prose requests are counted separately.
+Updated 14 September 2026 · 150 reusable CLI examples across nine catalogs: 56 base, 16 source/asset, 16 animation, 16 character collection, 20 ability/world, 11 native-edition/audio, 6 classic, 3 presentation and 6 enemy workflows. Templates are not executed runs; prose requests are counted separately.
 
 The catalog supports four themed families (its NAVI NETWORK draft direction maps to the playable Spend Network world): **FPV FRONT** (main Ukrainian military theme), **UKRAINE ATLAS**, **1994 FOREVER**, and **NAVI NETWORK**. The same gameplay overlay can sit above pixel-art, flat illustration, painterly or photographic reveal images. Background art never defines collision geometry or actual enemy positions.
 
@@ -29,6 +29,7 @@ For production intake, use the [register and replacement requests](production-in
 | Gameplay classes, equipment, ability tuning and sourced world-role proposals          | `xonix-ability-designer`                              | `ability-02`, `ability-03`, `ability-04`, then `ability-15`, `ability-18` and `ability-19`                                        |
 | New challenges or seeded generation recipe                                            | `xonix-level-designer`                                | `shared-15`, `shared-16`, `shared-17`                                                                                             |
 | Music direction and actual audio handoff                                              | `xonix-audio-director`                                | Family `07-soundtrack`, then `shared-21`                                                                                          |
+| Optional licensed albums, additive drafts and exact source lineage                    | `xonix-audio-director`                                | `soundtrack-06-optional-licensed-albums`, then `soundtrack-07-album-draft-continuity`                                             |
 | Complete pack/readability/device review                                               | `xonix-pack-reviewer`                                 | `shared-10`, `shared-12`, `shared-19`, `shared-22`                                                                                |
 
 The kit contains 13 repository-local skills. The game runtime, procedural audio, imported expansion campaigns and viewport fixtures exist; an individual template is still not evidence that its requested output was produced. Inspect the actual target and inputs before execution. Aseprite source projects, complete production sprite atlases, native store packages and network multiplayer must not be assumed.
@@ -203,3 +204,16 @@ See [the researched asset workflow](../../docs/research/round-04-asset-workflow.
 ## Applied live-picture recovery
 
 Use [the seven still-picture requests](media-presentation.md) for saved A after assignment B, first-earned A, removed-pack viewing, missing-original recovery, real native downloads into a fresh origin, shared-v3 ownership and later story design. These are prose workflows, not extra registered CLI IDs. JSON, `.rlmedia` and `.rlsound` carry separate inventories; source implementations and modeled tests do not establish browser/public completion.
+
+## Optional album intake and draft continuity
+
+Use the two registered audio templates with the [current album source contract](../library/licensed-audio/README.md). They cover exact creator/derivative lineage and the separate additive versus replacement journeys. They are reusable instructions, not two completed audio batches or listening approvals.
+
+```sh
+python3 authoring/prompt.py render soundtrack-06-optional-licensed-albums --set 'ALBUM_BRIEF=Review the four retained community albums and original-byte lineage'
+python3 authoring/prompt.py render soundtrack-07-album-draft-continuity --set 'DRAFT_CASE=Add a second album while personal edits and current playback are active, then cancel and retry'
+mkdir -p .cache
+node authoring/library/licensed-audio/build.mjs --output .cache/community-albums-new-check
+```
+
+Prompt rendering only substitutes text. The explicit compiler verifies existing source bodies and writes a new catalog plus four optional `.rlsound` files; it never generates, encodes, installs or plays music. Keep each album under 64 MiB and its binaries outside automatic core precache. The shared 256 MiB budget still includes pictures, stories and staging. **Add to draft** retains earlier edits and selection; ordinary file-based complete backup restore remains replacement. See [the Studio guide](../../docs/soundtrack-studio.md#optional-community-albums) for preview, Save, cancellation and native evidence limits.

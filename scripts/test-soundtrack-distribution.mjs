@@ -1,0 +1,164 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, readFile, writeFile, rm, symlink, realpath } from 'node:fs/promises';
+import path from 'node:path';
+import os from 'node:os';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import { buildProject } from './game-cli.mjs';
+import {
+  readSoundtrackDistributionEntries,
+  validateSoundtrackDistributionConfig,
+} from './soundtrack-distribution.mjs';
+import { albumFixture, albumCatalog } from '../game/test/helpers/soundtrack-albums.mjs';
+import {
+  buildSoundtrackAlbums,
+  writeSoundtrackAlbums,
+} from '../authoring/library/licensed-audio/build.mjs';
+
+const source = fileURLToPath(new URL('../', import.meta.url));
+const option = {
+  format: 'revealline-soundtrack-distribution.v1',
+  catalog: 'game/content/optional-soundtracks.json',
+};
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+async function fixture(t) {
+  const dir = await realpath(await mkdtemp(path.join(os.tmpdir(), 'soundtrack-build-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const root = path.join(dir, 'source'),
+    out = path.join(dir, 'out'),
+    album = await albumFixture();
+  const put = async (name, bytes) => {
+    const target = path.join(root, name);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(target, bytes);
+  };
+  await put('game/index.html', '<html><head></head><body>Audio fixture</body></html>');
+  await put('game/offline.mjs', 'export const offline = true;');
+  for (const name of [
+    'game/offline/service-worker.template.js',
+    'game/soundtrack-albums.mjs',
+    'game/soundtrack-bundle.mjs',
+    'game/soundtrack.mjs',
+    'game/mp3.mjs',
+    'game/data-json.mjs',
+    'game/ui/music.mjs',
+  ])
+    await put(name, await readFile(path.join(source, name)));
+  await put(option.catalog, JSON.stringify(albumCatalog(album.album)));
+  await put(
+    'authoring/library/licensed-audio/source.json',
+    JSON.stringify({
+      catalog: albumCatalog(album.album),
+      name: album.album.path,
+      body: album.bytes.toString('base64'),
+    }),
+  );
+  await put(
+    'authoring/library/licensed-audio/build.mjs',
+    `import {readFile} from 'node:fs/promises'; export async function buildSoundtrackAlbums() { const x=JSON.parse(await readFile(new URL('./source.json',import.meta.url))); return {catalog:x.catalog,bundles:[{name:x.name,bytes:Buffer.from(x.body,'base64')}]}; }`,
+  );
+  const config = { version: 'audio-fixture', entry: 'game/index.html', include: ['game'] };
+  const save = () => put('game/build-config.json', JSON.stringify(config));
+  await save();
+  return { root, out, put, save, config, album };
+}
+test('absent album opt-in preserves output bytes and does not read the audio producer', async (t) => {
+  const f = await fixture(t);
+  await buildProject(f);
+  const before = await readFile(path.join(f.out, 'distribution.zip'));
+  await f.put('authoring/library/licensed-audio/build.mjs', 'not a module');
+  await buildProject(f);
+  assert.deepEqual(await readFile(path.join(f.out, 'distribution.zip')), before);
+  assert.deepEqual(await readSoundtrackDistributionEntries('/missing'), []);
+  assert.throws(() =>
+    validateSoundtrackDistributionConfig({ ...option, catalog: '../borrowed.json' }),
+  );
+});
+test('opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata', async (t) => {
+  const f = await fixture(t);
+  f.config.soundtrackAlbums = option;
+  await f.save();
+  await buildProject(f);
+  const manifest = JSON.parse(await readFile(path.join(f.out, 'manifest.json'))),
+    offline = JSON.parse(await readFile(path.join(f.out, 'offline-cache.json')));
+  const entries = manifest.files.filter((entry) => entry.path === f.album.album.path);
+  assert.equal(entries.length, 1);
+  assert.equal(entries[0].sha256, f.album.album.sha256);
+  assert.deepEqual(await readFile(path.join(f.out, f.album.album.path)), f.album.bytes);
+  assert(offline.files.some((entry) => entry.path === option.catalog));
+  assert(!offline.files.some((entry) => entry.path.endsWith('.rlsound')));
+  assert(!(offline.optionalPacks ?? []).some((entry) => entry.path.endsWith('.rlsound')));
+  const zip = await readFile(path.join(f.out, 'distribution.zip'));
+  let offset = 0,
+    matches = 0;
+  while (zip.readUInt32LE(offset) === 0x04034b50) {
+    const length = zip.readUInt32LE(offset + 18),
+      nameLength = zip.readUInt16LE(offset + 26),
+      extraLength = zip.readUInt16LE(offset + 28),
+      start = offset + 30 + nameLength + extraLength;
+    const name = zip.subarray(offset + 30, offset + 30 + nameLength).toString();
+    if (name === f.album.album.path) {
+      matches++;
+      assert.equal(sha(zip.subarray(start, start + length)), f.album.album.sha256);
+    }
+    offset = start + length;
+  }
+  assert.equal(matches, 1);
+  assert(
+    !manifest.files.some((entry) => entry.path.startsWith('authoring/library/licensed-audio/')),
+  );
+});
+test('incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output', async (t) => {
+  const f = await fixture(t);
+  await buildProject(f);
+  const before = await readFile(path.join(f.out, 'distribution.zip'));
+  f.config.soundtrackAlbums = option;
+  await f.save();
+  const input = 'authoring/library/licensed-audio/source.json';
+  const old = await readFile(path.join(f.root, input));
+  const wrong = JSON.parse(old);
+  wrong.body = Buffer.from('wrong bytes').toString('base64');
+  await f.put(input, JSON.stringify(wrong));
+  await assert.rejects(buildProject(f), /Compiled soundtrack body differs/);
+  await f.put(input, old);
+  await symlink(
+    path.join(source, option.catalog),
+    path.join(f.root, 'authoring/library/licensed-audio/borrowed.json'),
+  );
+  await assert.rejects(buildProject(f), /symbolic links/);
+  await rm(path.join(f.root, 'authoring/library/licensed-audio/borrowed.json'));
+  await f.put(f.album.album.path, f.album.bytes);
+  f.config.include.push(f.album.album.path);
+  await f.save();
+  await assert.rejects(buildProject(f), /outside automatic includes/);
+  assert.deepEqual(await readFile(path.join(f.out, 'distribution.zip')), before);
+});
+test('actual producer binds all24 originals and seven derivatives into four exact bounded libraries', async (t) => {
+  const result = await buildSoundtrackAlbums();
+  const catalog = JSON.parse(await readFile(path.join(source, option.catalog)));
+  assert.deepEqual(result.catalog, catalog);
+  assert.deepEqual(
+    catalog.albums.map((a) => a.library.tracks.length),
+    [7, 6, 4, 7],
+  );
+  assert.equal(new Set(catalog.albums.flatMap((a) => a.library.tracks.map((t) => t.id))).size, 24);
+  assert.equal(result.bundles[0].bytes.length, 52541133);
+  assert.equal(
+    sha(result.bundles[0].bytes),
+    '0e97b6c5330f197e3427313db3100c5cb941b11f66553927cec7c1344b74fc8e',
+  );
+  assert.equal(
+    sha(result.bundles[1].bytes),
+    'b5c78ec7b8e19389090e68b18670ab05378e5646fac025308158058a5767c08e',
+  );
+  assert(result.bundles.every((body) => body.bytes.length <= 64 * 1024 * 1024));
+  await assert.rejects(writeSoundtrackAlbums(path.join(source, 'game')), /fresh source cache/);
+  await assert.rejects(writeSoundtrackAlbums(path.join(source, '.cache')), /fresh source cache/);
+  await mkdir(path.join(source, '.cache'), { recursive: true });
+  const held = await mkdtemp(path.join(source, '.cache', 'album-output-held-'));
+  t.after(() => rm(held, { recursive: true, force: true }));
+  await writeFile(path.join(held, 'preserve.txt'), 'existing output');
+  await assert.rejects(writeSoundtrackAlbums(held), /already exists/);
+  assert.equal(await readFile(path.join(held, 'preserve.txt'), 'utf8'), 'existing output');
+});
