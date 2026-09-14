@@ -1,0 +1,25 @@
+{
+  "format": "fpv-integration-draft-adoption.v1",
+  "at": "2026-09-14T20:16:28.270Z",
+  "integration": {
+    "commit": "055599d47365a4eb8a919de2ae7d651ce4c080cc",
+    "ledgerSHA256": "157da294134536351d2a1720ba35256f13b254e548d620aed4c3e0bc990d546f",
+    "revision": 10
+  },
+  "draft": {
+    "ledgerSHA256": "f6b647e64d4f4329347d2a345f22520bcd59bccbd259f8869e8e9a6159bf6455",
+    "revision": 11,
+    "authority": "Unpublished P7 draft, preserved as a separate portable bundle; conflicting revisions are imported through the existing namespace adapter."
+  },
+  "adopted": {
+    "ledgerSHA256": "e61aeb10b792f14f60ba901f6fe3de2af8df15dc431588302248fe0270b81bb8",
+    "revision": 11,
+    "assetRecords": 709,
+    "manifestBytes": 1766033,
+    "bundleBytes": 5773861
+  },
+  "priorAuthoritativeRecordsPreserved": true,
+  "selectedFilesAndGeometryMatchDraft": true,
+  "bytePreservingRoundTrip": true,
+  "next": "Reproduce against integrated P7 source before explicit asset-readiness decisions."
+}

@@ -1,0 +1,108 @@
+{
+  "actions": [
+    {
+      "bounds": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 160,
+        "right": 381.0234375,
+        "top": 498.25,
+        "width": 221.0234375,
+        "x": 160,
+        "y": 498.25
+      },
+      "text": "Next uncleared mission →"
+    },
+    {
+      "bounds": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 391.0234375,
+        "right": 530.109375,
+        "top": 498.25,
+        "width": 139.0859375,
+        "x": 391.0234375,
+        "y": 498.25
+      },
+      "text": "\n                    View picture ⤢\n                  "
+    },
+    {
+      "bounds": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 540.109375,
+        "right": 684.3125,
+        "top": 498.25,
+        "width": 144.203125,
+        "x": 540.109375,
+        "y": 498.25
+      },
+      "text": "\n                    Try again\n                  "
+    },
+    {
+      "bounds": {
+        "bottom": 542.25,
+        "height": 44,
+        "left": 694.3125,
+        "right": 853.515625,
+        "top": 498.25,
+        "width": 159.203125,
+        "x": 694.3125,
+        "y": 498.25
+      },
+      "text": "\n                    Main menu\n                  "
+    }
+  ],
+  "copy": "52.2% captured · 8,160 points · 0:03. Full picture added to your collection.",
+  "kind": "won",
+  "medalBounds": {
+    "bottom": 448.9375,
+    "height": 39,
+    "left": 629.7109375,
+    "right": 1120,
+    "top": 409.9375,
+    "width": 490.2890625,
+    "x": 629.7109375,
+    "y": 409.9375
+  },
+  "medals": "★★★",
+  "picture": {
+    "bottom": 498.25,
+    "height": 300,
+    "left": 160,
+    "right": 605.7109375,
+    "top": 198.25,
+    "width": 445.7109375,
+    "x": 160,
+    "y": 198.25
+  },
+  "reading": {
+    "bounds": {
+      "bottom": 498.25,
+      "height": 300,
+      "left": 160,
+      "right": 1120,
+      "top": 198.25,
+      "width": 960,
+      "x": 160,
+      "y": 198.25
+    },
+    "clientHeight": 300,
+    "scrollHeight": 300
+  },
+  "score": {
+    "bottom": 359.84375,
+    "height": 51.296875,
+    "left": 629.7109375,
+    "right": 1120,
+    "top": 308.546875,
+    "width": 490.2890625,
+    "x": 629.7109375,
+    "y": 308.546875
+  },
+  "viewport": {
+    "dpr": 2,
+    "height": 720,
+    "width": 1280
+  }
+}

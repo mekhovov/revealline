@@ -1,0 +1,1 @@
+"{\"at\":\"2026-09-14T20:13:59.180Z\",\"text\":\"◩ REVEAL / LINE\\n⛶\\nⅡ\\nREVEALED\\n0.0%\\nTARGET 58%\\nLIVES\\n◆ ◆ ◆\\nTIME\\n0:00\\nSCORE\\n00000\\nLIVE LINE / EXPOSED\\nRelay: 0 / 1\\n\\nSaved flight verified and restored. Press Resume to continue.\",\"online\":false,\"viewport\":[1280,800,1],\"textSize\":\"large\"}"

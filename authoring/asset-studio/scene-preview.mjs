@@ -2,7 +2,11 @@ import { createRun } from '../../game/core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../../game/ui/render.mjs';
 import { createStudioPreviewRun, pickupKinds } from './preview-fixture.mjs';
 export { pickupKinds } from './preview-fixture.mjs';
-import { canvasPresentation, imagePresentation } from '../../game/presentation/runtime.mjs';
+import {
+  canvasPresentation,
+  imagePresentation,
+  presentationCSSVariables,
+} from '../../game/presentation/runtime.mjs';
 import { paintCharacter } from '../motion-lab/render-character.mjs';
 import { createAnimationState, advanceAnimation } from '../motion-lab/animation.mjs';
 import { Soundscape } from '../../game/ui/audio.mjs';
@@ -114,6 +118,27 @@ const imageRoles = {
   'pickup.slow': 'slowPickup',
   'pickup.freeze': 'freezePickup',
 };
+/** Same frame-local geometry adapter as the release host. Decoded images are
+ * owned by this inspection only; this snapshot never reads or writes player state. */
+export function createStudioContextPresentation(resolved, decoded, selectedPlayerSlot = null) {
+  const images = new Map();
+  for (const [id, { asset, image }] of decoded)
+    images.set(id, Object.freeze({ image, asset, geometry: imagePresentation(asset) }));
+  const selected = images.get(selectedPlayerSlot),
+    selectedClass = /^player\.([^.]+)\.(compact|detailed)$/.exec(selectedPlayerSlot || '')?.[1],
+    css = presentationCSSVariables(resolved);
+  return Object.freeze({
+    resolved,
+    canvas: canvasPresentation(resolved),
+    fonts: Object.freeze({ ui: css['--fk-font-ui'], numeric: css['--fk-font-mono'] }),
+    image: (id) =>
+      selected &&
+      (id === `player.${selectedClass}.compact` || id === `player.${selectedClass}.detailed`)
+        ? selected
+        : (images.get(id) ?? null),
+  });
+}
+
 async function croppedImage(asset, blobs) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error('Preview media is missing.');
@@ -157,7 +182,9 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   let image;
   if (imageAsset?.kind === 'image') {
     image = await croppedImage(imageAsset, blobs);
-    body.rotors = imagePresentation(imageAsset).rotors;
+    const geometry = imagePresentation(imageAsset);
+    body.rotors = geometry.rotors;
+    body.presentationPivot = geometry.pivot;
   } else {
     image = new Image();
     image.src = new URL(`../motion-lab/${body.src}`, import.meta.url).href;
@@ -207,16 +234,17 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
-  const {
+  const classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout',
+    pictureOwner = options.pictureOwner || options.sourcePicture,
+    {
       presets,
       level,
       run,
       theme: fixtureTheme,
-    } = await fixtureLoader.context(slot.id, options.sourcePicture ?? null),
-    classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout';
+    } = await fixtureLoader.context(slot.id, pictureOwner);
   const painter = new BoardPainter(presets),
     theme = {
-      ...(options.sourcePicture?.theme || fixtureTheme),
+      ...fixtureTheme,
       palette: canvasPresentation(resolved).palette,
     };
   let warning = '';
@@ -224,7 +252,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     warning = message;
   };
   await painter.setLook(theme, bodyIds[classId] || bodyIds.scout);
-  painter.setLevel(level, { seed: 42 });
+  painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
   if (slot.id.startsWith('effect.')) {
     const type = {
       failure: 'player.failed',
@@ -240,25 +268,27 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       run,
     );
   }
-  const scoped = { ...resolved.assets, [slot.id]: asset };
+  const scoped = { ...resolved.assets, [slot.id]: asset },
+    decoded = new Map();
   for (const [id, candidate] of Object.entries(scoped)) {
     if (candidate?.kind !== 'image') continue;
     let role = imageRoles[id];
-    if (id === `player.${classId}.compact` || (id === slot.id && id.startsWith('player.')))
-      role = 'player';
+    if (id === `player.${classId}.compact` || id === `player.${classId}.detailed`) role = 'player';
     if (id === slot.id && (slot.group === 'pictures' || slot.group === 'screens'))
       role = 'background';
     if (!role) continue;
     const image = await croppedImage(candidate, blobs);
-    painter.images[role] = image;
-    if (role === 'player') {
-      painter.image = image;
-      painter.body = {
-        ...structuredClone(painter.body),
-        rotors: imagePresentation(candidate).rotors,
-      };
-    }
+    if (role === 'background') painter.images.background = image;
+    else decoded.set(id, { asset: candidate, image });
   }
+  painter.setPresentation(
+    createStudioContextPresentation(
+      { ...resolved, assets: scoped },
+      decoded,
+      slot.id.startsWith('player.') ? slot.id : null,
+    ),
+  );
+  own(() => painter.enemyBodies.clear());
   if (options.sourcePicture) painter.images.background = options.sourcePicture.image;
   if (!options.isCurrent()) return;
   const size = boardPaintSizeForRun(run),
@@ -274,7 +304,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     frame,
     text(
       'small',
-      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${options.sourcePicture?.level ? 'exact source level' : 'isolated fixture'}${options.sourcePicture && !options.sourcePicture.level ? ' (original picture shown on a different inspection board)' : ''}${warning ? ` · ${warning}` : ''}`,
+      `BoardPainter · ${level.name} · ${run.width} × ${run.height} cells · ${pictureOwner ? 'exact source level' : 'isolated fixture'}${/^player\.[^.]+\.(compact|detailed)$/.test(slot.id) ? ` · selected ${slot.id.split('.')[2]} body at every preview width` : ''}${warning ? ` · ${warning}` : ''}`,
       'bounded-label',
     ),
   );
@@ -286,7 +316,7 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         theme,
         level,
         image,
-        fit: options.sourcePicture?.fit || 'cover',
+        fit: pictureOwner?.fit || 'cover',
       });
     else
       painter.draw(canvas.getContext('2d'), run, dt, {
@@ -294,12 +324,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
         reduced,
         showGrid: true,
         displayCSSWidth: Math.max(200, canvas.clientWidth),
-        ...(options.sourcePicture
+        ...(pictureOwner
           ? {
               backdrop: {
-                image: options.sourcePicture.image,
-                fit: options.sourcePicture.fit,
-                sampling: options.sourcePicture.sampling,
+                image: painter.images.background,
+                fit: pictureOwner.fit,
+                sampling: pictureOwner.sampling,
               },
             }
           : {}),

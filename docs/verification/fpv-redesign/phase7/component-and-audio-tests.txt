@@ -1,0 +1,510 @@
+TAP version 13
+# Subtest: facing uses newly observed tick positions instead of a stale velocity field
+ok 1 - facing uses newly observed tick positions instead of a stale velocity field
+  ---
+  duration_ms: 0.914916
+  ...
+# Subtest: contour and outer patrols face their measured path without velocity fields
+ok 2 - contour and outer patrols face their measured path without velocity fields
+  ---
+  duration_ms: 0.138875
+  ...
+# Subtest: pause and classic freeze retain heading, banking and animation clocks
+ok 3 - pause and classic freeze retain heading, banking and animation clocks
+  ---
+  duration_ms: 0.630208
+  ...
+# Subtest: stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+ok 4 - stun and dormancy stop active motion; reduced effects keep direction but no moving accents
+  ---
+  duration_ms: 0.130334
+  ...
+# Subtest: stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+ok 5 - stationary tread/walking phase stays still while idle rotor/antenna clock can continue
+  ---
+  duration_ms: 0.080625
+  ...
+# Subtest: cosmetic size targets desktop/phone readability without altering contact radius
+ok 6 - cosmetic size targets desktop/phone readability without altering contact radius
+  ---
+  duration_ms: 0.087792
+  ...
+# Subtest: four themes have distinct geometric silhouettes even with identical colors
+ok 7 - four themes have distinct geometric silhouettes even with identical colors
+  ---
+  duration_ms: 0.847791
+  ...
+# Subtest: compact and detailed recipes differ; custom families resolve to the matching visual theme
+ok 8 - compact and detailed recipes differ; custom families resolve to the matching visual theme
+  ---
+  duration_ms: 0.149834
+  ...
+# Subtest: every actor override keeps its own body slot, facing and unscaled collision cue
+ok 9 - every actor override keeps its own body slot, facing and unscaled collision cue
+  ---
+  duration_ms: 0.393708
+  ...
+# Subtest: history is bounded and reset removes old headings; published frames cannot mutate history
+ok 10 - history is bounded and reset removes old headings; published frames cannot mutate history
+  ---
+  duration_ms: 1.173667
+  ...
+# Subtest: trail core and head remain visible with reduced effects; animated packet stays on the cut
+ok 11 - trail core and head remain visible with reduced effects; animated packet stays on the cut
+  ---
+  duration_ms: 0.322458
+  ...
+# Subtest: capture pulse touches only newly secured cells and is absent for reduced motion
+ok 12 - capture pulse touches only newly secured cells and is absent for reduced motion
+  ---
+  duration_ms: 0.180833
+  ...
+# Subtest: integrated renderer animates observed actors and capture effects without changing replay authority
+ok 13 - integrated renderer animates observed actors and capture effects without changing replay authority
+  ---
+  duration_ms: 11.616209
+  ...
+# Subtest: legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 14 - legacy: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 27.619
+  ...
+# Subtest: wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+ok 15 - wide: all four player rigs keep a readable bounded size across phone and desktop canvases
+  ---
+  duration_ms: 29.343833
+  ...
+# Subtest: custom player art retains its aspect ratio and rotor anchor coordinates independently of enemy slots
+ok 16 - custom player art retains its aspect ratio and rotor anchor coordinates independently of enemy slots
+  ---
+  duration_ms: 1.097625
+  ...
+# Subtest: player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+ok 17 - player scale is cosmetic, independent of actor scale, and bounded even on very small canvases
+  ---
+  duration_ms: 2.897167
+  ...
+# Subtest: the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+ok 18 - the larger player keeps direction response and animated rotors while pause and reduced effects freeze their clocks
+  ---
+  duration_ms: 3.997125
+  ...
+# Subtest: explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+ok 19 - explicit display width supports detached textures while invalid widths preserve direct-canvas and logical fallbacks
+  ---
+  duration_ms: 8.536
+  ...
+# Subtest: classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+ok 20 - classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music
+  ---
+  duration_ms: 2.681375
+  ...
+# Subtest: no context or sound is created before an explicit user audio action
+ok 21 - no context or sound is created before an explicit user audio action
+  ---
+  duration_ms: 0.966584
+  ...
+# Subtest: all five styles have deterministic distinct original orchestration with bounded notes
+ok 22 - all five styles have deterministic distinct original orchestration with bounded notes
+  ---
+  duration_ms: 3.480583
+  ...
+# Subtest: scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+ok 23 - scheduler preserves musical deadlines under frequent calls and avoids backlog bursts
+  ---
+  duration_ms: 0.313375
+  ...
+# Subtest: master/music/sfx buses are independently controlled and invalid changes are atomic
+ok 24 - master/music/sfx buses are independently controlled and invalid changes are atomic
+  ---
+  duration_ms: 0.344416
+  ...
+# Subtest: track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+ok 25 - track descriptors are copied, styles switch cleanly, and unsupported media are rejected
+  ---
+  duration_ms: 0.349709
+  ...
+# Subtest: pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+ok 26 - pause cancels scheduled notes, freezes scheduling and resumes only through explicit method
+  ---
+  duration_ms: 0.280292
+  ...
+# Subtest: adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+ok 27 - adopting mute disables active preview immediately and ordinary resume cannot re-enable it
+  ---
+  duration_ms: 0.452625
+  ...
+# Subtest: mute needs no context and wins an in-flight preview enable
+ok 28 - mute needs no context and wins an in-flight preview enable
+  ---
+  duration_ms: 0.298625
+  ...
+# Subtest: terminal events distinguish victory and failure, stop backing music, and survive inactive update
+ok 29 - terminal events distinguish victory and failure, stop backing music, and survive inactive update
+  ---
+  duration_ms: 0.406875
+  ...
+# Subtest: polyphony is capped and event bursts deduplicate instead of allocating forever
+ok 30 - polyphony is capped and event bursts deduplicate instead of allocating forever
+  ---
+  duration_ms: 1.6925
+  ...
+# Subtest: failed autoplay resume reports disabled and disposal wins pending enable race
+ok 31 - failed autoplay resume reports disabled and disposal wins pending enable race
+  ---
+  duration_ms: 0.463459
+  ...
+# Subtest: tension is derived read-only and does not change the musical tempo or game state
+ok 32 - tension is derived read-only and does not change the musical tempo or game state
+  ---
+  duration_ms: 0.164959
+  ...
+# Subtest: gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+ok 33 - gesture preview plays from an inactive terminal screen and stops at its bounded deadline
+  ---
+  duration_ms: 0.452333
+  ...
+# Subtest: pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+ok 34 - pause, reset, mute and disposal cancel preview without restarting after a delayed gesture
+  ---
+  duration_ms: 0.786833
+  ...
+# Subtest: persistent soundtrack opt-in remains silent until an allowed audio action
+ok 35 - persistent soundtrack opt-in remains silent until an allowed audio action
+  ---
+  duration_ms: 0.6495
+  ...
+# Subtest: persistent music survives menu, gameplay pause, terminal cues and attempt reset
+ok 36 - persistent music survives menu, gameplay pause, terminal cues and attempt reset
+  ---
+  duration_ms: 0.424
+  ...
+# Subtest: automatic authored tracks wait for a real song boundary and adopt the new tempo there
+ok 37 - automatic authored tracks wait for a real song boundary and adopt the new tempo there
+  ---
+  duration_ms: 26.023792
+  ...
+# Subtest: same authored context cancels a queued change without restart; explicit selection replaces it
+ok 38 - same authored context cancels a queued change without restart; explicit selection replaces it
+  ---
+  duration_ms: 0.39175
+  ...
+# Subtest: persistent lifecycle suspension and mute silence sources but retain the musical position
+ok 39 - persistent lifecycle suspension and mute silence sources but retain the musical position
+  ---
+  duration_ms: 0.378875
+  ...
+# Subtest: persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+ok 40 - persistent lifecycle cancellation wins delayed audio enable and cannot publish late notes
+  ---
+  duration_ms: 0.383292
+  ...
+# Subtest: persistent audition returns to the ongoing soundtrack without a cursor reset
+ok 41 - persistent audition returns to the ongoing soundtrack without a cursor reset
+  ---
+  duration_ms: 0.2355
+  ...
+# Subtest: persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+ok 42 - persistent scheduler remains bounded after a stall and only explicit music reset restarts it
+  ---
+  duration_ms: 0.2075
+  ...
+# Subtest: Workshop destinations ship their actual authoring runtime and return paths
+ok 43 - Workshop destinations ship their actual authoring runtime and return paths
+  ---
+  duration_ms: 345.221375
+  ...
+# Subtest: settings categories keep the real controls and preferences without starting the flight
+ok 44 - settings categories keep the real controls and preferences without starting the flight
+  ---
+  duration_ms: 407.752625
+  ...
+# Subtest: leaving Controls cancels a pending physical-key capture through its native cancel action
+ok 45 - leaving Controls cancels a pending physical-key capture through its native cancel action
+  ---
+  duration_ms: 305.941083
+  ...
+# Subtest: settings tabs support arrow and end navigation without leaking the key to the game
+ok 46 - settings tabs support arrow and end navigation without leaking the key to the game
+  ---
+  duration_ms: 337.307709
+  ...
+# Subtest: data and collection shortcuts reuse the existing nested Library sections without changing saved data
+ok 47 - data and collection shortcuts reuse the existing nested Library sections without changing saved data
+  ---
+  duration_ms: 383.039
+  ...
+# Subtest: supporting page text size remains presentation only and listeners are released
+ok 48 - supporting page text size remains presentation only and listeners are released
+  ---
+  duration_ms: 0.204958
+  ...
+# Subtest: surface copy has stable English fallback keys and preserves native controls
+ok 49 - surface copy has stable English fallback keys and preserves native controls
+  ---
+  duration_ms: 0.100541
+  ...
+# Subtest: legacy fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 50 - legacy fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 16.027958
+  ...
+# Subtest: legacy fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 51 - legacy fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 6.704583
+  ...
+# Subtest: legacy ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 52 - legacy ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 5.518167
+  ...
+# Subtest: legacy ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 53 - legacy ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 5.67825
+  ...
+# Subtest: legacy retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 54 - legacy retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 3.984125
+  ...
+# Subtest: legacy retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 55 - legacy retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 4.34525
+  ...
+# Subtest: legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 56 - legacy coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 3.672209
+  ...
+# Subtest: legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 57 - legacy coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 4.580375
+  ...
+# Subtest: Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 58 - Classic wide fpv contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 12.100334
+  ...
+# Subtest: Classic wide fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 59 - Classic wide fpv cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 11.83125
+  ...
+# Subtest: Classic wide ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 60 - Classic wide ukraine contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 10.875625
+  ...
+# Subtest: Classic wide ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 61 - Classic wide ukraine cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 12.193291
+  ...
+# Subtest: Classic wide retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 62 - Classic wide retro contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 7.740708
+  ...
+# Subtest: Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 63 - Classic wide retro cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 8.535125
+  ...
+# Subtest: Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 64 - Classic wide coupa contain: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 7.613209
+  ...
+# Subtest: Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+ok 65 - Classic wide coupa cover: a decoded backdrop preserves opaque concealment, cues, separate actor art and authority
+  ---
+  duration_ms: 7.518833
+  ...
+# Subtest: absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
+ok 66 - absent/null bindings exactly retain old drawing; clearing a temporary binding restores the same authored image and fit
+  ---
+  duration_ms: 7.805166
+  ...
+# Subtest: immediate: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+ok 67 - immediate: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+  ---
+  duration_ms: 29.225
+  ...
+# Subtest: grid-center: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+ok 68 - grid-center: a legal win and Collection gallery use the same image/fit without awarding or advancing simulation
+  ---
+  duration_ms: 21.225708
+  ...
+# Subtest: component input specimens use native kinds, preserve selected state, and label errors
+ok 69 - component input specimens use native kinds, preserve selected state, and label errors
+  ---
+  duration_ms: 2.016125
+  ...
+# Subtest: tooltip and chip library specimens have real associations and no fake telemetry
+ok 70 - tooltip and chip library specimens have real associations and no fake telemetry
+  ---
+  duration_ms: 0.403625
+  ...
+# Subtest: opaque button frames preserve the state background and authored border geometry
+ok 71 - opaque button frames preserve the state background and authored border geometry
+  ---
+  duration_ms: 0.474959
+  ...
+# Subtest: the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs
+ok 72 - the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs
+  ---
+  duration_ms: 231.080375
+  ...
+# Subtest: loading is lazy, hash-pinned, and owns decoded assets until close without storage access
+ok 73 - loading is lazy, hash-pinned, and owns decoded assets until close without storage access
+  ---
+  duration_ms: 25.843167
+  ...
+# Subtest: registered native origins retain the same closed hash-derived path boundary
+ok 74 - registered native origins retain the same closed hash-derived path boundary
+  ---
+  duration_ms: 26.382291
+  ...
+# Subtest: CSS cleanup restores only owned values and preserves later user or screen changes
+ok 75 - CSS cleanup restores only owned values and preserves later user or screen changes
+  ---
+  duration_ms: 12.776
+  ...
+# Subtest: a failed replacement leaves the previous accepted snapshot and its assets alive atomically
+ok 76 - a failed replacement leaves the previous accepted snapshot and its assets alive atomically
+  ---
+  duration_ms: 24.673625
+  ...
+# Subtest: bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted
+ok 77 - bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted
+  ---
+  duration_ms: 64.193375
+  ...
+# Subtest: a small compressed manifest cannot allocate an unbounded decoded image set
+ok 78 - a small compressed manifest cannot allocate an unbounded decoded image set
+  ---
+  duration_ms: 15.741208
+  ...
+# Subtest: superseded late image decoding is disposed and cannot release the newer accepted snapshot
+ok 79 - superseded late image decoding is disposed and cannot release the newer accepted snapshot
+  ---
+  duration_ms: 35.196833
+  ...
+# Subtest: close cancels a stalled byte stream; a previous external signal cannot abort a later load
+ok 80 - close cancels a stalled byte stream; a previous external signal cannot abort a later load
+  ---
+  duration_ms: 29.36075
+  ...
+# Subtest: atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes
+ok 81 - atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes
+  ---
+  duration_ms: 14.872125
+  ...
+# Subtest: font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal
+ok 82 - font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal
+  ---
+  duration_ms: 41.963542
+  ...
+# Subtest: picture originals remain lazy exact bytes and host close cancels a late original response
+ok 83 - picture originals remain lazy exact bytes and host close cancels a late original response
+  ---
+  duration_ms: 28.839084
+  ...
+# Subtest: two Couch painters and repeated page mounts share one load, while leases retain independent cleanup
+ok 84 - two Couch painters and repeated page mounts share one load, while leases retain independent cleanup
+  ---
+  duration_ms: 1.171292
+  ...
+# Subtest: Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot
+ok 85 - Replay replacement restores only its previous painter and never overwrites an independently pinned snapshot
+  ---
+  duration_ms: 0.103666
+  ...
+# Subtest: a late compiled load cannot replace a painter chosen while loading, or publish after page disposal
+ok 86 - a late compiled load cannot replace a painter chosen while loading, or publish after page disposal
+  ---
+  duration_ms: 0.177958
+  ...
+# Subtest: BFCache suspension retains the host and boards until actual disposal, then a new mount can reload
+ok 87 - BFCache suspension retains the host and boards until actual disposal, then a new mount can reload
+  ---
+  duration_ms: 0.103792
+  ...
+# Subtest: missing or rejected release resources preserve source look and notify without rejecting page readiness
+ok 88 - missing or rejected release resources preserve source look and notify without rejecting page readiness
+  ---
+  duration_ms: 0.213959
+  ...
+# Subtest: compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+ok 89 - compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+  ---
+  duration_ms: 76.379041
+  ...
+# Subtest: phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+ok 90 - phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+  ---
+  duration_ms: 52.713416
+  ...
+# Subtest: current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+ok 91 - current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+  ---
+  duration_ms: 64.43275
+  ...
+# Subtest: published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+ok 92 - published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+  ---
+  duration_ms: 137.3365
+  ...
+# Subtest: enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+ok 93 - enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+  ---
+  duration_ms: 0.5975
+  ...
+# Subtest: terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+ok 94 - terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+  ---
+  duration_ms: 45.173875
+  ...
+# Subtest: classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+ok 95 - classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+  ---
+  duration_ms: 0.295041
+  ...
+# Subtest: published theme music is lazy and wins over automatic FPV recipes without overriding manual assignments
+ok 96 - published theme music is lazy and wins over automatic FPV recipes without overriding manual assignments
+  ---
+  duration_ms: 4.326708
+  ...
+# Subtest: Pause and disposal reject a late published download without URLs or media playback
+ok 97 - Pause and disposal reject a late published download without URLs or media playback
+  ---
+  duration_ms: 0.833542
+  ...
+# Subtest: published cue loading never enables audio, replays a stale cue, or survives a muted decode
+ok 98 - published cue loading never enables audio, replays a stale cue, or survives a muted decode
+  ---
+  duration_ms: 6.488875
+  ...
+# Subtest: page cue listeners use native actions only and cleanup leaves no active audio adapter
+ok 99 - page cue listeners use native actions only and cleanup leaves no active audio adapter
+  ---
+  duration_ms: 0.71025
+  ...
+# Subtest: release audio is fetched only on demand and rejects bad bytes and cancellation
+ok 100 - release audio is fetched only on demand and rejects bad bytes and cancellation
+  ---
+  duration_ms: 150.475
+  ...
+1..100
+# tests 100
+# suites 0
+# pass 100
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1951.7785

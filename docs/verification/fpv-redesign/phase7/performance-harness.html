@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BoardPainter cost measurement</title>
+  <style>
+    body {
+      background: #070b12;
+      color: #f3f0db;
+      font: 16px/1.5 system-ui;
+      margin: 16px;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+    pre {
+      white-space: pre-wrap;
+    }
+    button {
+      font: inherit;
+      padding: 12px;
+    }
+  </style>
+  <h1>BoardPainter cost measurement</h1>
+  <p>
+    Isolated same-input rendering measurement. Does not read or write player profiles. Draw-call CPU
+    submission timing excludes setup, core stepping and canvas readback; it is not GPU completion or
+    physical-device frame-rate certification.
+  </p>
+  <button id="start">Run measurement</button>
+  <p id="status" role="status">Ready</p>
+  <canvas></canvas>
+  <pre id="result"></pre>
+  <script type="module">
+    import { BoardPainter } from '/game/ui/render.mjs';
+    import { createRun, stepRun, FIXED_DT } from '/game/core/index.mjs';
+    const status = document.querySelector('#status');
+    const canvas = document.querySelector('canvas');
+    const context = canvas.getContext('2d');
+    const nextFrame = () => new Promise(requestAnimationFrame);
+    const percentile = (values, p) =>
+      [...values].sort((a, b) => a - b)[Math.min(values.length - 1, Math.floor(values.length * p))];
+    const summarize = (values) => ({
+      count: values.length,
+      min: Math.min(...values),
+      median: percentile(values, 0.5),
+      p95: percentile(values, 0.95),
+      max: Math.max(...values),
+      mean: values.reduce((a, b) => a + b, 0) / values.length,
+    });
+    const fetchJSON = async (url) => {
+      const response = await fetch(url);
+      if (!response.ok) throw Error(url + ' ' + response.status);
+      return response.json();
+    };
+    document.querySelector('#start').addEventListener('click', async () => {
+      document.querySelector('#start').disabled = true;
+      let host;
+      try {
+        status.textContent = 'Loading exact source inputs';
+        const [campaign, themes, presets, pack] = await Promise.all([
+          fetchJSON('/game/content/campaign.json'),
+          fetchJSON('/game/content/themes.json'),
+          fetchJSON('/authoring/motion-lab/presets.json'),
+          fetchJSON('/game/content/packs/fpv-arcade-r4.json'),
+        ]);
+        const useCompiled = location.port === '9061';
+        if (useCompiled) {
+          const module = await import('/game/presentation/host.mjs');
+          host = module.createPresentationHost({
+            baseURL: new URL('/game/presentation/compiled/', location.href),
+          });
+          await host.load();
+        }
+        const snapshot = host?.current();
+        const painter = new BoardPainter(presets);
+        const cases = [
+          {
+            name: 'legacy-48x36',
+            level: campaign.levels[2],
+            theme: themes.themes.find((t) => t.id === 'fpv'),
+          },
+          { name: 'arcade-72x36', level: pack.campaigns[0].levels[0], theme: pack.themes[0] },
+        ];
+        const results = [];
+        for (const item of cases) {
+          await painter.setLook(item.theme, 'fpv-scout-v1');
+          painter.setLevel(item.level, { seed: 42 });
+          if (useCompiled) {
+            painter.setPresentation(snapshot);
+            if (!snapshot) throw Error('No compiled snapshot');
+          }
+          const run = createRun(item.level, { seed: 42 });
+          for (let i = 0; i < 120 && run.status === 'running'; i++)
+            stepRun(run, { direction: 'down' }, FIXED_DT);
+          for (const cssWidth of [384, 1152]) {
+            canvas.width = run.width * 16;
+            canvas.height = run.height * 16;
+            canvas.style.width = cssWidth + 'px';
+            const draw = () =>
+              painter.draw(context, run, FIXED_DT, {
+                paused: false,
+                reduced: false,
+                showGrid: true,
+                displayCSSWidth: cssWidth,
+              });
+            status.textContent = item.name + ' / ' + cssWidth + ' CSS px / warmup';
+            for (let i = 0; i < 120; i++) {
+              await nextFrame();
+              draw();
+            }
+            const samples = [],
+              intervals = [],
+              batches = [];
+            let previous;
+            for (let batch = 0; batch < 5; batch++) {
+              status.textContent =
+                item.name + ' / ' + cssWidth + ' CSS px / batch ' + (batch + 1) + ' of 5';
+              const times = [];
+              for (let i = 0; i < 120; i++) {
+                const frame = await nextFrame();
+                if (previous !== undefined) intervals.push(frame - previous);
+                previous = frame;
+                const start = performance.now();
+                draw();
+                const elapsed = performance.now() - start;
+                samples.push(elapsed);
+                times.push(elapsed);
+              }
+              batches.push(summarize(times));
+            }
+            results.push({
+              name: item.name,
+              levelId: item.level.id,
+              geometry: [run.width, run.height],
+              cssWidth,
+              canvasPixels: [canvas.width, canvas.height],
+              tick: run.tick,
+              coverage: run.coverage,
+              status: run.status,
+              drawCpuMs: summarize(samples),
+              rafIntervalsMs: summarize(intervals),
+              batches,
+              rawDrawCpuMs: samples,
+            });
+          }
+        }
+        window.performanceReport = {
+          capturedAt: new Date().toISOString(),
+          source: useCompiled ? 'candidate' : 'baseline',
+          compiledSource: snapshot?.source || null,
+          viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
+          userAgent: navigator.userAgent,
+          hardwareConcurrency: navigator.hardwareConcurrency,
+          deviceMemory: navigator.deviceMemory,
+          clockResolutionCaveat:
+            'Browser timer quantization; 0 ms means below measured resolution, not zero work.',
+          method: {
+            warmupFrames: 120,
+            batches: 5,
+            framesPerBatch: 120,
+            seed: 42,
+            coreTicks: 120,
+            drawDt: FIXED_DT,
+            fullReveal: false,
+            backdrop:
+              'Each source own procedural scene; authored selected reveal file decode excluded from this like-for-like draw measurement.',
+            claim:
+              'CPU command submission around real BoardPainter.draw only, rAF-paced; does not include GPU completion/readback, app HUD/DOM, input latency, startup or core stepping.',
+          },
+          results,
+        };
+        document.querySelector('#result').textContent = JSON.stringify(
+          window.performanceReport,
+          null,
+          2,
+        );
+        status.textContent = 'Complete';
+      } catch (error) {
+        status.textContent = 'Failed: ' + error.stack;
+        window.performanceError = String(error.stack);
+      } finally {
+        host?.close();
+        document.querySelector('#start').disabled = false;
+      }
+    });
+  </script>
+</html>

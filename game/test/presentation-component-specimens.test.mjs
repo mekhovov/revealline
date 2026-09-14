@@ -84,3 +84,78 @@ test('opaque button frames preserve the state background and authored border geo
     }
   }
 });
+
+test('action specimens retain their runtime variants without pretending to be toggle buttons', () => {
+  const labels = new Set();
+  for (const variant of ['primary', 'secondary', 'danger']) {
+    const button = draw(`ui.button.${variant}`, 'default').querySelector('button');
+    assert.equal(button.classList.contains('button'), true);
+    assert.equal(button.classList.contains(variant), true);
+    assert.equal(button.type, 'button');
+    assert.equal(button.getAttribute('aria-pressed'), null);
+    assert.equal(button.dataset.specimenControl, 'true');
+    labels.add(button.textContent);
+    assert.equal(draw(`ui.button.${variant}`, 'disabled').querySelector('button').disabled, true);
+    assert.equal(
+      draw(`ui.button.${variant}`, 'loading').querySelector('button').getAttribute('aria-busy'),
+      'true',
+    );
+  }
+  assert.equal(labels.size, 3, 'Deploy, Back and Discard convey different actions.');
+  const icon = draw('ui.button.icon', 'default').querySelector('button');
+  assert.equal(icon.classList.contains('icon-button'), true);
+  assert.equal(icon.getAttribute('aria-label'), 'Pause specimen');
+  assert.equal(icon.querySelector('span').getAttribute('aria-hidden'), 'true');
+  assert.equal(icon.getAttribute('aria-pressed'), null);
+});
+
+test('tab specimens expose matched panels and real keyboard selection while skipping disabled tabs', () => {
+  const surface = draw('ui.button.tab', 'selected'),
+    list = surface.querySelector('[role="tablist"]'),
+    tabs = list.querySelectorAll('[role="tab"]'),
+    panels = surface.querySelectorAll('[role="tabpanel"]');
+  assert.equal(tabs.length, 2);
+  assert.ok(list.getAttribute('aria-label'));
+  for (const [index, tab] of tabs.entries()) {
+    assert.equal(tab.getAttribute('aria-controls'), panels[index].id);
+    assert.equal(panels[index].getAttribute('aria-labelledby'), tab.id);
+    assert.equal(tab.getAttribute('aria-pressed'), null);
+  }
+  const selected = (index) => {
+    for (const [i, tab] of tabs.entries()) {
+      assert.equal(tab.getAttribute('aria-selected'), String(i === index));
+      assert.equal(tab.tabIndex, i === index ? 0 : -1);
+      assert.equal(panels[i].hidden, i !== index);
+    }
+  };
+  selected(0);
+  assert.equal(tabs[0].emit('keydown', { key: 'ArrowRight' }).defaultPrevented, true);
+  selected(1);
+  assert.equal(surface.ownerDocument.activeElement, tabs[1]);
+  tabs[1].emit('keydown', { key: 'Home' });
+  selected(0);
+  tabs[0].emit('keydown', { key: 'End' });
+  selected(1);
+  tabs[0].click();
+  selected(0);
+
+  const disabled = draw('ui.button.tab', 'disabled'),
+    disabledTabs = disabled.querySelectorAll('[role="tab"]');
+  assert.equal(disabledTabs[0].disabled, true);
+  disabledTabs[0].click();
+  disabledTabs[1].emit('keydown', { key: 'ArrowLeft' });
+  assert.equal(disabledTabs[0].getAttribute('aria-selected'), 'false');
+  assert.equal(disabledTabs[1].getAttribute('aria-selected'), 'true');
+  assert.equal(disabled.ownerDocument.activeElement, disabledTabs[1]);
+});
+
+test('chip specimens toggle locally and a disabled chip preserves its native state', () => {
+  const chip = draw('ui.button.chip', 'selected').querySelector('button');
+  chip.click();
+  assert.equal(chip.getAttribute('aria-pressed'), 'false');
+  chip.click();
+  assert.equal(chip.getAttribute('aria-pressed'), 'true');
+  const disabled = draw('ui.button.chip', 'disabled').querySelector('button');
+  disabled.click();
+  assert.equal(disabled.getAttribute('aria-pressed'), 'false');
+});

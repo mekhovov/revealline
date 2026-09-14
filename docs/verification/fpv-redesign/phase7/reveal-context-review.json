@@ -1,0 +1,1805 @@
+{
+  "format": "fpv-reveal-context-review.v1",
+  "scope": "44 prepared exports, one exact owner preview per export. Twelve additional bound owner variants were audited separately for metadata integrity, not all visually traversed here.",
+  "counts": {
+    "exports": 44,
+    "compositions": 38,
+    "boundOwners": 56,
+    "localExactContexts": 32,
+    "externalExactContexts": 12,
+    "qualityPromotions": 0
+  },
+  "methods": [
+    "All 44 exported files visually inspected at 240 CSS pixels in the real review gallery.",
+    "All 44 selected exports inspected with exact-owner concealed BoardPainter and selected replacement full viewer through normal Studio controls.",
+    "44 native files inspected independently by reference_audit; see reveal-native-review.json.",
+    "Signal 06 isolated core input sample: down 420, left 140, up 420 deterministic ticks; 48 \u00d7 36 cells; 28.3%; running status. No progress profile, unlocks or saves used."
+  ],
+  "limits": [
+    "Source qualification is not a frozen-release receipt.",
+    "Full viewer and concealed board do not prove all actor/terrain contrast states during active play.",
+    "No automatic readiness promotion. Signal06 remains a cohesion concern."
+  ],
+  "assets": [
+    {
+      "index": 0,
+      "assetId": "scene-orchard-window-1152x576-v1",
+      "slotInspected": "picture.fpv.0e2d32dab758d51f",
+      "allBoundSlots": [
+        "picture.fpv.0e2d32dab758d51f",
+        "picture.fpv.1b418d3381494d1e",
+        "picture.fpv.1c01a3257b18634c",
+        "picture.fpv.9c57dfab02314b3b",
+        "picture.fpv.ee2bb3dc2c9fd05f"
+      ],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-window-1152x576-v1.png",
+      "preparedSHA256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-00.png",
+        "studio-exact-picture-00.txt",
+        "reveals-gallery-row-01.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.0e2d32dab758d51f",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Orchard Window \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 1,
+      "assetId": "scene-homeward-02-768x576-v1",
+      "slotInspected": "picture.fpv.0eb5ce0af7d9e254",
+      "allBoundSlots": ["picture.fpv.0eb5ce0af7d9e254"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-768x576-v1.png",
+      "preparedSHA256": "40a08a5524dbe269f6eddb019c55beebde3129ba270d97a5fa4d22015a07e0cc",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-01.png",
+        "studio-exact-picture-01.txt",
+        "reveals-gallery-row-01.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.0eb5ce0af7d9e254",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 River Switchyard \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 345,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 519.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 2,
+      "assetId": "scene-homeward-02-1152x576-v1",
+      "slotInspected": "picture.fpv.76d2575817214ebd",
+      "allBoundSlots": ["picture.fpv.76d2575817214ebd"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-02-1152x576-v1.png",
+      "preparedSHA256": "779f36cccce55fd90340acbad1a1cbe03639cd1f98f66d25eaac3c8b0036c31b",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-02.png",
+        "studio-exact-picture-02.txt",
+        "reveals-gallery-row-01.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.76d2575817214ebd",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 River Frontiers \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 3,
+      "assetId": "scene-frayed-causeway-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.144ce9c31afe2f45",
+      "allBoundSlots": ["picture.fpv.144ce9c31afe2f45"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-frayed-causeway-fpv-1774x887-v1.png",
+      "preparedSHA256": "a07fe2df221cb042a05a7ef78716ae1809e9df5dd54d7dd550c91bd265f7f7fb",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-03.png",
+        "studio-external-picture-03.txt",
+        "reveals-gallery-row-01.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.144ce9c31afe2f45",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Frayed Causeway \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 4,
+      "assetId": "scene-open-the-circuit-1774x887-v1",
+      "slotInspected": "picture.fpv.213f02450431334d",
+      "allBoundSlots": ["picture.fpv.213f02450431334d"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-open-the-circuit-1774x887-v1.png",
+      "preparedSHA256": "84461bcb3aca9dc91ace6a836df87a153a6c58d75b6a46b8988d9d835f68ad9f",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-04.png",
+        "studio-external-picture-04.txt",
+        "reveals-gallery-row-02.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.213f02450431334d",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Open the Circuit \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 5,
+      "assetId": "scene-night-signal-1152x576-v1",
+      "slotInspected": "picture.fpv.3a2d993531f58afb",
+      "allBoundSlots": [
+        "picture.fpv.3a2d993531f58afb",
+        "picture.fpv.87e45e757b0bb368",
+        "picture.fpv.88a99ab27c50006d",
+        "picture.fpv.efccb4b013c76322",
+        "picture.fpv.f42f426a56bf26ac"
+      ],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-signal-1152x576-v1.png",
+      "preparedSHA256": "dda5900559255b1bad906b80a1b9a3cee914ba732f6dcb4fdb8b3c9bce50633f",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-05.png",
+        "studio-exact-picture-05.txt",
+        "reveals-gallery-row-02.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.3a2d993531f58afb",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Night Signal \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 6,
+      "assetId": "scene-offset-docks-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.4673612d986703b5",
+      "allBoundSlots": ["picture.fpv.4673612d986703b5"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-offset-docks-fpv-1774x887-v1.png",
+      "preparedSHA256": "f3f58d09752c8e635e06145abc2460909f90ce2df664a8034a799e0bbe59c3ee",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-06.png",
+        "studio-external-picture-06.txt",
+        "reveals-gallery-row-02.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.4673612d986703b5",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Lanterns at the Offset Piers \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 7,
+      "assetId": "scene-switchyard-gates-1774x887-v1",
+      "slotInspected": "picture.fpv.4c2e50e6a5e5a496",
+      "allBoundSlots": ["picture.fpv.4c2e50e6a5e5a496"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-switchyard-gates-1774x887-v1.png",
+      "preparedSHA256": "0b4b6717b5a2e7c27ad765544730193d1f798f8ccbc08879947f1a8b10e71121",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-07.png",
+        "studio-external-picture-07.txt",
+        "reveals-gallery-row-02.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.4c2e50e6a5e5a496",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Switchyard Gates \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 8,
+      "assetId": "scene-homeward-01-768x576-v1",
+      "slotInspected": "picture.fpv.56f0db7a71aca759",
+      "allBoundSlots": ["picture.fpv.56f0db7a71aca759"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-768x576-v1.png",
+      "preparedSHA256": "57ee2976cb09f29863a4b3a2d8951574a93bf376eda64dbe2a171dc426d8391a",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-08.png",
+        "studio-exact-picture-08.txt",
+        "reveals-gallery-row-03.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.56f0db7a71aca759",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Copper Orchard \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 9,
+      "assetId": "scene-homeward-01-1152x576-v1",
+      "slotInspected": "picture.fpv.f52fcf25066115d4",
+      "allBoundSlots": ["picture.fpv.f52fcf25066115d4"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-01-1152x576-v1.png",
+      "preparedSHA256": "1e3b7ea46131dbee8ca4601fd75862b04fda8ca4aa4b088d9811f5845e05eb7d",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-09.png",
+        "studio-exact-picture-09.txt",
+        "reveals-gallery-row-03.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.f52fcf25066115d4",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Copper Switchyard \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 10,
+      "assetId": "scene-homeward-03-768x576-v1",
+      "slotInspected": "picture.fpv.6cd39fc2a7838c93",
+      "allBoundSlots": ["picture.fpv.6cd39fc2a7838c93"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-768x576-v1.png",
+      "preparedSHA256": "c234ea41a080121e73eeea20e3e3db5cfedcd4d4793bc31cf7cdfb2dad2a96ca",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-10.png",
+        "studio-exact-picture-10.txt",
+        "reveals-gallery-row-03.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.6cd39fc2a7838c93",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Home Beacon \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 11,
+      "assetId": "scene-homeward-03-1152x576-v1",
+      "slotInspected": "picture.fpv.e0bd881f88854aa3",
+      "allBoundSlots": ["picture.fpv.e0bd881f88854aa3"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-homeward-03-1152x576-v1.png",
+      "preparedSHA256": "6b5afa33051459550ead8fee06fb5e14c9eecf9648906dc1abb7fe7a2c69455c",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-11.png",
+        "studio-exact-picture-11.txt",
+        "reveals-gallery-row-03.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.e0bd881f88854aa3",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Last Beacon \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 12,
+      "assetId": "scene-courtyard-exits-1152x576-v1",
+      "slotInspected": "picture.fpv.6ebb069a27747f79",
+      "allBoundSlots": ["picture.fpv.6ebb069a27747f79"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-courtyard-exits-1152x576-v1.png",
+      "preparedSHA256": "0b5106ea19db098b6cf6068142510fd373731532e5052983e58bb343038404e6",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-12.png",
+        "studio-exact-picture-12.txt",
+        "reveals-gallery-row-04.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.6ebb069a27747f79",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Courtyard Exits \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 13,
+      "assetId": "scene-courtyard-exits-1774x887-v1",
+      "slotInspected": "picture.fpv.b6fe74b07d509a5f",
+      "allBoundSlots": ["picture.fpv.b6fe74b07d509a5f"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-courtyard-exits-1774x887-v1.png",
+      "preparedSHA256": "56fadf4288069b7f12e3e33b94c950baab873a1b576d87ad82673b0c5329dd76",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-13.png",
+        "studio-external-picture-13.txt",
+        "reveals-gallery-row-04.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.b6fe74b07d509a5f",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Courtyard Exits \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 14,
+      "assetId": "scene-night-crossfire-1152x576-v1",
+      "slotInspected": "picture.fpv.701500506246c7fd",
+      "allBoundSlots": ["picture.fpv.701500506246c7fd"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1152x576-v1.png",
+      "preparedSHA256": "ccdfe41a2adaf920c64d99f665d19d9ca6ddc2ea5251ea24bdd63beb2dfc68bd",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-14.png",
+        "studio-exact-picture-14.txt",
+        "reveals-gallery-row-04.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.701500506246c7fd",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Night Crossfire \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 15,
+      "assetId": "scene-night-crossfire-1774x887-v1",
+      "slotInspected": "picture.fpv.bcff9f990784a0f3",
+      "allBoundSlots": ["picture.fpv.bcff9f990784a0f3"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-night-crossfire-1774x887-v1.png",
+      "preparedSHA256": "398eaf8dc2f88a2b1a3bc4d2ae5c603f54fd5daa96c9c9c02637bdd4c488e697",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-15.png",
+        "studio-external-picture-15.txt",
+        "reveals-gallery-row-04.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.bcff9f990784a0f3",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Night Crossfire \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 16,
+      "assetId": "scene-split-courtyard-1152x576-v1",
+      "slotInspected": "picture.fpv.719af689f36f22ac",
+      "allBoundSlots": [
+        "picture.fpv.719af689f36f22ac",
+        "picture.fpv.7559fb204cb162af",
+        "picture.fpv.8291ed03ac5ac19e",
+        "picture.fpv.9cd8a63c5dd341ef",
+        "picture.fpv.c123b9065e7d1d0a"
+      ],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-split-courtyard-1152x576-v1.png",
+      "preparedSHA256": "e85e9aa8f56ba214bcdc9184feb99f526f1a89f66627ac0bf278bffa123dc7c9",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-16.png",
+        "studio-exact-picture-16.txt",
+        "reveals-gallery-row-05.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.719af689f36f22ac",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Split Courtyard \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 17,
+      "assetId": "scene-listening-court-1774x887-v1",
+      "slotInspected": "picture.fpv.758214a2ee21bb30",
+      "allBoundSlots": ["picture.fpv.758214a2ee21bb30"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-listening-court-1774x887-v1.png",
+      "preparedSHA256": "1bd3c9c57cc8790ccbf6f0fd33517d6d1a5520de93e38a99722ed4ee915758ab",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-17.png",
+        "studio-external-picture-17.txt",
+        "reveals-gallery-row-05.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.758214a2ee21bb30",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Listening Court \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 18,
+      "assetId": "scene-crossing-watch-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.77556da2651efacd",
+      "allBoundSlots": ["picture.fpv.77556da2651efacd"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-crossing-watch-fpv-1774x887-v1.png",
+      "preparedSHA256": "bd423baa7b3b4f073251d5c8291aa78ee11c341926d27f9f211aa278bc7557f6",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-18.png",
+        "studio-external-picture-18.txt",
+        "reveals-gallery-row-05.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.77556da2651efacd",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Two Quiet Signal Posts \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 19,
+      "assetId": "scene-orchard-crossing-1152x576-v1",
+      "slotInspected": "picture.fpv.7a7abd48fa2dfc82",
+      "allBoundSlots": ["picture.fpv.7a7abd48fa2dfc82"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1152x576-v1.png",
+      "preparedSHA256": "cae1523d150bbe69f65028676129ba9c51958f4561671c5d6dee1eecfb48b3b5",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-19.png",
+        "studio-exact-picture-19.txt",
+        "reveals-gallery-row-05.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.7a7abd48fa2dfc82",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Orchard Crossing \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 20,
+      "assetId": "scene-orchard-crossing-1774x887-v1",
+      "slotInspected": "picture.fpv.899a33d8cd714962",
+      "allBoundSlots": ["picture.fpv.899a33d8cd714962"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-orchard-crossing-1774x887-v1.png",
+      "preparedSHA256": "2a50c451fdee7c54d8bccf7a098f12bcdbdc15905856dc100c8e0d9e99629c33",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-20.png",
+        "studio-external-picture-20.txt",
+        "reveals-gallery-row-06.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.899a33d8cd714962",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Orchard Crossing \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 21,
+      "assetId": "scene-split-ring-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.8876473e40d70804",
+      "allBoundSlots": ["picture.fpv.8876473e40d70804"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-split-ring-fpv-1774x887-v1.png",
+      "preparedSHA256": "df6e1a2a114dce2da1643a39d608d87ca79d1eaba70cfd62ac02892d0fadec6e",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-21.png",
+        "studio-external-picture-21.txt",
+        "reveals-gallery-row-06.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.8876473e40d70804",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Split Ring \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 22,
+      "assetId": "scene-fault-fan-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.a8046be4fe21bb4d",
+      "allBoundSlots": ["picture.fpv.a8046be4fe21bb4d"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-fault-fan-fpv-1774x887-v1.png",
+      "preparedSHA256": "ee325025999edc73751f62ee92adc73c02fe06d29680da5816f4785e014ef730",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-22.png",
+        "studio-external-picture-22.txt",
+        "reveals-gallery-row-06.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.a8046be4fe21bb4d",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Fault Fan \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 23,
+      "assetId": "scene-split-signal-foundry-1152x576-v1",
+      "slotInspected": "picture.fpv.adf5c9eea274ba7f",
+      "allBoundSlots": ["picture.fpv.adf5c9eea274ba7f"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-split-signal-foundry-1152x576-v1.png",
+      "preparedSHA256": "d76f309d8385cd5d20fc2fff72b7f3abc19299cccdde767d76dd9f4a4960929d",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-23.png",
+        "studio-exact-picture-23.txt",
+        "reveals-gallery-row-06.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.adf5c9eea274ba7f",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Split Signal Foundry \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 24,
+      "assetId": "scene-crosswind-depot-1152x576-v1",
+      "slotInspected": "picture.fpv.c3d85f08209b7de8",
+      "allBoundSlots": ["picture.fpv.c3d85f08209b7de8"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-crosswind-depot-1152x576-v1.png",
+      "preparedSHA256": "d74c2e8c5713201203f7decea8d57881b657a2aa7b24ea00d182cbe4efa51b8d",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-24.png",
+        "studio-exact-picture-24.txt",
+        "reveals-gallery-row-07.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.c3d85f08209b7de8",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Crosswind Depot \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 25,
+      "assetId": "scene-signal-switchback-1152x576-v1",
+      "slotInspected": "picture.fpv.fb5413f595ab2c5b",
+      "allBoundSlots": ["picture.fpv.fb5413f595ab2c5b"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-switchback-1152x576-v1.png",
+      "preparedSHA256": "3104d1433851b889c70bbf8fe4d4fecd2b99a3d57d099b402286948283711fb4",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1152,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-25.png",
+        "studio-exact-picture-25.txt",
+        "reveals-gallery-row-07.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.fb5413f595ab2c5b",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Signal Switchback \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 26,
+      "assetId": "scene-sandbar-braid-fpv-1774x887-v1",
+      "slotInspected": "picture.fpv.fd78a9a977bd419b",
+      "allBoundSlots": ["picture.fpv.fd78a9a977bd419b"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-sandbar-braid-fpv-1774x887-v1.png",
+      "preparedSHA256": "cca9df45b2dde64684489deab8f8d2ab8d5a08dab0ec0efc8455786a231c2a04",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 1774,
+        "height": 887
+      },
+      "evidence": [
+        "studio-external-picture-26.png",
+        "studio-external-picture-26.txt",
+        "reveals-gallery-row-07.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.fd78a9a977bd419b",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 The Four Sandbar Relays \u00b7 72 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.765625,
+          "width": 460,
+          "height": 230,
+          "top": 174.765625,
+          "right": 1381,
+          "bottom": 404.765625,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9045",
+      "qualification": "Current source with only immutable authenticated owner pack metadata fallback",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 27,
+      "assetId": "scene-signal-07-768x576-v1",
+      "slotInspected": "picture.fpv.0f5828ed32e61eea",
+      "allBoundSlots": ["picture.fpv.0f5828ed32e61eea"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-07-768x576-v1.png",
+      "preparedSHA256": "efef00b62e24bc89315f26fe888d64658bb63cfcce3eeb047645c812903d3e3f",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-27.png",
+        "studio-exact-picture-27.txt",
+        "reveals-gallery-row-07.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.0f5828ed32e61eea",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 The Crossing \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 28,
+      "assetId": "scene-signal-02-768x576-v1",
+      "slotInspected": "picture.fpv.11b817ad76f073e5",
+      "allBoundSlots": ["picture.fpv.11b817ad76f073e5"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-02-768x576-v1.png",
+      "preparedSHA256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-28.png",
+        "studio-exact-picture-28.txt",
+        "reveals-gallery-row-08.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.11b817ad76f073e5",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Relay Orchard \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 29,
+      "assetId": "scene-signal-04-768x576-v1",
+      "slotInspected": "picture.fpv.15ad2393da53b1f3",
+      "allBoundSlots": ["picture.fpv.15ad2393da53b1f3"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-04-768x576-v1.png",
+      "preparedSHA256": "d4690eb2839e8f90a4ac105502c5b22c1b1cceb643c5d2593ca3a4e61d6aa008",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-29.png",
+        "studio-exact-picture-29.txt",
+        "reveals-gallery-row-08.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.15ad2393da53b1f3",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Stone Lanes \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 30,
+      "assetId": "scene-signal-10-768x576-v1",
+      "slotInspected": "picture.fpv.21af5a140bffb67a",
+      "allBoundSlots": ["picture.fpv.21af5a140bffb67a"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-10-768x576-v1.png",
+      "preparedSHA256": "5428ce32eb31d44ea4b04561d86cc65e31ce79fe50acce40beadfd1d2546b837",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-30.png",
+        "studio-exact-picture-30.txt",
+        "reveals-gallery-row-08.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.21af5a140bffb67a",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Supply Circuit \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 31,
+      "assetId": "scene-signal-01-768x576-v1",
+      "slotInspected": "picture.fpv.26e53164613e83d0",
+      "allBoundSlots": ["picture.fpv.26e53164613e83d0"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-01-768x576-v1.png",
+      "preparedSHA256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-31.png",
+        "studio-exact-picture-31.txt",
+        "reveals-gallery-row-08.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.26e53164613e83d0",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 First Signal \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 32,
+      "assetId": "scene-fieldcraft-02-768x576-v1",
+      "slotInspected": "picture.fpv.4166a190ab3ddec3",
+      "allBoundSlots": ["picture.fpv.4166a190ab3ddec3"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-02-768x576-v1.png",
+      "preparedSHA256": "8664f0283f54db86f6800fb2056045574ff79a5f490f415b3a8929112d8a7d26",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-32.png",
+        "studio-exact-picture-32.txt",
+        "reveals-gallery-row-09.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.4166a190ab3ddec3",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Switchyard Circuit \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 33,
+      "assetId": "scene-fieldcraft-01-768x576-v1",
+      "slotInspected": "picture.fpv.42bce3db8b1e603a",
+      "allBoundSlots": ["picture.fpv.42bce3db8b1e603a"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-01-768x576-v1.png",
+      "preparedSHA256": "9bc684f5da99a255c09d7cd6aac452859d5ec370d344a092901576bdc9405911",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-33.png",
+        "studio-exact-picture-33.txt",
+        "reveals-gallery-row-09.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.42bce3db8b1e603a",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Copper Crossing \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 34,
+      "assetId": "scene-signal-06-768x576-v1",
+      "slotInspected": "picture.fpv.493d624384c36c39",
+      "allBoundSlots": ["picture.fpv.493d624384c36c39"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-06-768x576-v1.png",
+      "preparedSHA256": "47033ec2cd3b56345394bc13bbb7b10579419559d1e41160d02f8f3eea368672",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-34.png",
+        "studio-exact-picture-34.txt",
+        "reveals-gallery-row-09.png",
+        "signal-06-partial-and-240.png",
+        "signal-06-context.html"
+      ],
+      "preview": {
+        "slot": "picture.fpv.493d624384c36c39",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Hidden Frequency \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Upper-sky fine speckles remain visible at 240 CSS px and native reveal. Recommend broad-cluster sky refinement before art acceptance; no actor visibility failure established in held partial-run sample.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 35,
+      "assetId": "scene-sentinel-relay-01-768x576-v1",
+      "slotInspected": "picture.fpv.628455cefcf758d6",
+      "allBoundSlots": ["picture.fpv.628455cefcf758d6"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-sentinel-relay-01-768x576-v1.png",
+      "preparedSHA256": "94353c17fbc74e21655a3c556075885a144900b6c620ba7b37ab79beb31f246f",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-35.png",
+        "studio-exact-picture-35.txt",
+        "reveals-gallery-row-09.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.628455cefcf758d6",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Sentinel Relay \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 36,
+      "assetId": "scene-signal-09-768x576-v1",
+      "slotInspected": "picture.fpv.6a200fa6fc2c6c98",
+      "allBoundSlots": ["picture.fpv.6a200fa6fc2c6c98"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-09-768x576-v1.png",
+      "preparedSHA256": "713991ea5d2ba3bbc0f5115c6fdc98f337da90b657b0c43c7db1625073377f90",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-36.png",
+        "studio-exact-picture-36.txt",
+        "reveals-gallery-row-10.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.6a200fa6fc2c6c98",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Signal Garden \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 37,
+      "assetId": "scene-fieldcraft-03-768x576-v1",
+      "slotInspected": "picture.fpv.6a7fe94b1cf0ab84",
+      "allBoundSlots": ["picture.fpv.6a7fe94b1cf0ab84"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-03-768x576-v1.png",
+      "preparedSHA256": "228285616ceb1d60be182f971790ee75a67c44a40a787d7d7ed275668a3005e4",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-37.png",
+        "studio-exact-picture-37.txt",
+        "reveals-gallery-row-10.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.6a7fe94b1cf0ab84",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Pulse Recall \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 38,
+      "assetId": "scene-signal-05-768x576-v1",
+      "slotInspected": "picture.fpv.89f500bf737786b4",
+      "allBoundSlots": ["picture.fpv.89f500bf737786b4"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-05-768x576-v1.png",
+      "preparedSHA256": "30957860bb1edac99c230a91a34eab8249b43497fda680707276c859f3bd5f0c",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-38.png",
+        "studio-exact-picture-38.txt",
+        "reveals-gallery-row-10.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.89f500bf737786b4",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Night Patrol \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 39,
+      "assetId": "scene-signal-08-768x576-v1",
+      "slotInspected": "picture.fpv.95c0dfa75cc8f037",
+      "allBoundSlots": ["picture.fpv.95c0dfa75cc8f037"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-08-768x576-v1.png",
+      "preparedSHA256": "9ef850d87a46eee28cbfa3df8f2d2945673b8bf5dc2fdcc4edf1840175e3f7a1",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-39.png",
+        "studio-exact-picture-39.txt",
+        "reveals-gallery-row-10.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.95c0dfa75cc8f037",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Last Light \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 40,
+      "assetId": "scene-fieldcraft-04-768x576-v1",
+      "slotInspected": "picture.fpv.b31039b52e366575",
+      "allBoundSlots": ["picture.fpv.b31039b52e366575"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-fieldcraft-04-768x576-v1.png",
+      "preparedSHA256": "97986545bbd0dd978d7c5cd2b3511b800cb082caf4a584416306b6c3f4283b54",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-40.png",
+        "studio-exact-picture-40.txt",
+        "reveals-gallery-row-11.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.b31039b52e366575",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Net Loom \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 41,
+      "assetId": "scene-signal-11-768x576-v1",
+      "slotInspected": "picture.fpv.c2db06198f371c49",
+      "allBoundSlots": ["picture.fpv.c2db06198f371c49"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-11-768x576-v1.png",
+      "preparedSHA256": "535cf4dc9b21c9ff7f9c26d4bc0657e8d6820626551b4d34d82e332748e4d9e3",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-41.png",
+        "studio-exact-picture-41.txt",
+        "reveals-gallery-row-11.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.c2db06198f371c49",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Short Fuse \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 42,
+      "assetId": "scene-signal-03-768x576-v1",
+      "slotInspected": "picture.fpv.eed5c579750a6e66",
+      "allBoundSlots": ["picture.fpv.eed5c579750a6e66"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-03-768x576-v1.png",
+      "preparedSHA256": "e033d8a3118b42b870e2f6350f7ae960b6085b46beb32ae235881a53bfbdc066",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-42.png",
+        "studio-exact-picture-42.txt",
+        "reveals-gallery-row-11.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.eed5c579750a6e66",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Crosswind \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    },
+    {
+      "index": 43,
+      "assetId": "scene-signal-12-768x576-v1",
+      "slotInspected": "picture.fpv.f0b0d70327a0a4c4",
+      "allBoundSlots": ["picture.fpv.f0b0d70327a0a4c4"],
+      "preparedPath": "authoring/library/fpv-field-kit/prepared/reveals/scene-signal-12-768x576-v1.png",
+      "preparedSHA256": "d22b1070efad07ed1e6f9d8e42d3dc7e19922478e7abedad3f08d55e53cf065c",
+      "nativeFrame": {
+        "x": 0,
+        "y": 0,
+        "width": 768,
+        "height": 576
+      },
+      "evidence": [
+        "studio-exact-picture-43.png",
+        "studio-exact-picture-43.txt",
+        "reveals-gallery-row-11.png"
+      ],
+      "preview": {
+        "slot": "picture.fpv.f0b0d70327a0a4c4",
+        "context": "FLIGHT / STUDIOIII  00:00  0%BoardPainter \u00b7 Relay Storm \u00b7 48 \u00d7 36 cells \u00b7 exact source levelShow concealed field",
+        "width": 1440,
+        "height": 900,
+        "dpr": 1,
+        "canvas": {
+          "x": 921,
+          "y": 174.578125,
+          "width": 460,
+          "height": 345,
+          "top": 174.578125,
+          "right": 1381,
+          "bottom": 519.578125,
+          "left": 921
+        }
+      },
+      "origin": "http://127.0.0.1:9042",
+      "qualification": "Working source; local code-owned mission metadata",
+      "observation": "Exact owner board and selected replacement both visible; landmarks remain within frame. This compares placement and composition, not active-play victory or all owner variants.",
+      "decision": "inspection recorded; production review status unchanged"
+    }
+  ]
+}

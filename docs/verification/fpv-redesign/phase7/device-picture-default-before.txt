@@ -1,0 +1,127 @@
+TAP version 13
+# Subtest: pause updates flight presentation before another animation frame can run
+ok 1 - pause updates flight presentation before another animation frame can run
+  ---
+  duration_ms: 3411.506708
+  ...
+# Subtest: featured pressure chapter hides manual actions and actual keyboard action attempts cannot change its flight
+not ok 2 - featured pressure chapter hides manual actions and actual keyboard action attempts cannot change its flight
+  ---
+  duration_ms: 21759.516417
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:80:1'
+  failureType: 'testCodeFailure'
+  error: 'Featured mission must finish its exact picture preparation before Deploy.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/wait-for.mjs:13:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/solo-dom.mjs:146:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:85:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: immediate: first Arcade Down cut keeps rendering and saves after a batched capture
+not ok 3 - immediate: first Arcade Down cut keeps rendering and saves after a batched capture
+  ---
+  duration_ms: 21691.679542
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:126:3'
+  failureType: 'testCodeFailure'
+  error: 'Featured mission must finish its exact picture preparation before Deploy.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/wait-for.mjs:13:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/solo-dom.mjs:146:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:130:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: immediate: Auto appears for actual touch flight, hides after keyboard use and preserves the logical heading
+ok 4 - immediate: Auto appears for actual touch flight, hides after keyboard use and preserves the logical heading
+  ---
+  duration_ms: 8536.112
+  ...
+# Subtest: grid-center: first Arcade Down cut keeps rendering and saves after a batched capture
+not ok 5 - grid-center: first Arcade Down cut keeps rendering and saves after a batched capture
+  ---
+  duration_ms: 22413.675458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:126:3'
+  failureType: 'testCodeFailure'
+  error: 'Featured mission must finish its exact picture preparation before Deploy.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/wait-for.mjs:13:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/helpers/solo-dom.mjs:146:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/game/test/device-controls-host.test.mjs:130:5)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: grid-center: Auto appears for actual touch flight, hides after keyboard use and preserves the logical heading
+ok 6 - grid-center: Auto appears for actual touch flight, hides after keyboard use and preserves the logical heading
+  ---
+  duration_ms: 4249.302542
+  ...
+# Subtest: Always enables actual mouse steering and survives a complete backup; omitted old preference restores Auto
+ok 7 - Always enables actual mouse steering and survives a complete backup; omitted old preference restores Auto
+  ---
+  duration_ms: 11481.420333
+  ...
+# Subtest: an already joined controller takes its first fresh turn after touch without cancelling that sampled command
+ok 8 - an already joined controller takes its first fresh turn after touch without cancelling that sampled command
+  ---
+  duration_ms: 5201.804416
+  ...
+# Subtest: immediate: changing steering hand retains the original pad, paused cut and exact continuation
+ok 9 - immediate: changing steering hand retains the original pad, paused cut and exact continuation
+  ---
+  duration_ms: 6790.540959
+  ...
+# Subtest: grid-center: changing steering hand retains the original pad, paused cut and exact continuation
+ok 10 - grid-center: changing steering hand retains the original pad, paused cut and exact continuation
+  ---
+  duration_ms: 4671.718791
+  ...
+# Subtest: Right hand survives actual app reload while Auto still hides keyboard controls
+ok 11 - Right hand survives actual app reload while Auto still hides keyboard controls
+  ---
+  duration_ms: 3069.56625
+  ...
+# Subtest: unrelated saves apply the actual merged hand, and a deliberate Left remains explicit
+ok 12 - unrelated saves apply the actual merged hand, and a deliberate Left remains explicit
+  ---
+  duration_ms: 3585.920791
+  ...
+# Subtest: quota refusal keeps the session hand and exact stored bytes with visible feedback
+ok 13 - quota refusal keeps the session hand and exact stored bytes with visible feedback
+  ---
+  duration_ms: 4232.119125
+  ...
+# Subtest: practice hand placement stays session-only without changing profile or saved flight
+ok 14 - practice hand placement stays session-only without changing profile or saved flight
+  ---
+  duration_ms: 3299.303666
+  ...
+# Subtest: complete-backup import and Undo adopt hand placement without rewriting the saved attempt
+ok 15 - complete-backup import and Undo adopt hand placement without rewriting the saved attempt
+  ---
+  duration_ms: 15552.208958
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 12
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 150541.636416

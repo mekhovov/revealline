@@ -205,10 +205,22 @@ body.field-kit.game-shell,
   font-weight: 600;
 }
 
+.field-kit :is(.button.danger, .button-danger, .field-kit-danger) {
+  color: var(--fk-on-accent);
+  background: var(--fk-hazard);
+  border-color: var(--fk-hazard);
+  font-weight: 600;
+}
+
 .field-kit
-  :is(.button.primary, .button-primary, .field-kit-primary):not(:disabled):not(
-    [aria-disabled='true']
-  ):hover {
+  :is(
+    .button.primary,
+    .button-primary,
+    .field-kit-primary,
+    .button.danger,
+    .button-danger,
+    .field-kit-danger
+  ):not(:disabled):not([aria-disabled='true']):hover {
   color: var(--fk-on-accent);
   background: var(--fk-cyan);
   border-color: var(--fk-cyan);
