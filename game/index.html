@@ -640,60 +640,66 @@
           autocomplete="off"
       /></label>
       <div id="gallery-grid" class="gallery-grid"></div>
-      <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
-      <label class="field" for="collection-context"
-        >Chapter progress
-        <select id="collection-context" aria-describedby="collection-context-note"></select>
-      </label>
-      <p id="collection-context-note">
-        View achievements and appearances without changing your flight. Pictures above include every
-        chapter.
-      </p>
-      <div id="collection-reading-unit">
-        <div class="reading-toolbar">
-          <div class="reading-actions">
-            <button
-              id="collection-read"
-              type="button"
-              aria-controls="collection-reading"
-              aria-pressed="false"
+      <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages" hidden></nav>
+      <details id="collection-progress">
+        <summary>Achievements and appearances</summary>
+        <label class="field" for="collection-context"
+          >Chapter progress
+          <select id="collection-context" aria-describedby="collection-context-note"></select>
+        </label>
+        <p id="collection-context-note">
+          View achievements and appearances without changing your flight. Pictures above include
+          every chapter.
+        </p>
+        <div id="collection-reading-unit">
+          <div class="reading-toolbar">
+            <div class="reading-actions">
+              <button
+                id="collection-read"
+                type="button"
+                aria-controls="collection-reading"
+                aria-pressed="false"
+              >
+                Read achievements
+              </button>
+              <button
+                id="collection-reading-done"
+                type="button"
+                aria-controls="collection-reading"
+                disabled
+              >
+                Done reading
+              </button>
+            </div>
+            <p
+              id="collection-reading-hint"
+              class="reading-hint"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
             >
-              Read achievements
-            </button>
-            <button
-              id="collection-reading-done"
-              type="button"
-              aria-controls="collection-reading"
-              disabled
-            >
-              Done reading
-            </button>
+              Read without starting or resuming.
+            </p>
           </div>
-          <p
-            id="collection-reading-hint"
-            class="reading-hint"
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
+          <div
+            id="collection-reading"
+            role="region"
+            aria-label="Achievements and appearances"
+            tabindex="0"
+            data-game-reading
+            data-menu-reading
           >
-            Read without starting or resuming.
-          </p>
+            <h3 id="achievement-campaign">Campaign achievements</h3>
+            <div id="achievements"></div>
+            <h3 id="appearance-campaign">Campaign appearances</h3>
+            <div id="appearance-rewards" class="appearance-rewards"></div>
+            <p id="collection-note"></p>
+          </div>
         </div>
-        <div
-          id="collection-reading"
-          role="region"
-          aria-label="Achievements and appearances"
-          tabindex="0"
-          data-game-reading
-          data-menu-reading
-        >
-          <h3 id="achievement-campaign">Campaign achievements</h3>
-          <div id="achievements"></div>
-          <h3 id="appearance-campaign">Campaign appearances</h3>
-          <div id="appearance-rewards" class="appearance-rewards"></div>
-          <p id="collection-note"></p>
-        </div>
-      </div>
+        <button id="collection-choose-appearance" class="button secondary" type="button">
+          Choose appearance for current flight
+        </button>
+      </details>
       <button
         id="collection-records"
         data-field-kit-copy="collection.records"
@@ -701,9 +707,6 @@
         type="button"
       >
         Flight records
-      </button>
-      <button id="collection-choose-appearance" class="button secondary" type="button">
-        Choose appearance for current flight
       </button>
       <button id="collection-back" class="button primary" data-close="collection-dialog">
         Back to the field →
