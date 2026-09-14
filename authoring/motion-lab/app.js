@@ -492,7 +492,7 @@ function drawInspection(colors) {
     colors,speedRatio:state.visualSpeed/motion.cruiseSpeed,reducedMotion,showRotors,pixel:1/155,inspectionSlow:$("inspection-slow").checked});
   inspectionCtx.setTransform(1,0,0,1,0,0);
   if (image.state !== "loaded") {
-    inspectionCtx.fillStyle = colors.body; inspectionCtx.font = "15px monospace"; inspectionCtx.textAlign = "center";
+    inspectionCtx.fillStyle = colors.body; inspectionCtx.font = '500 16px "Field Kit Mono", monospace'; inspectionCtx.textAlign = "center";
     inspectionCtx.fillText(body.src ? "Body unavailable · neutral marker" : "Neutral fallback marker",200,300);
   }
 }

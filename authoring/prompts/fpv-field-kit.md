@@ -1,6 +1,6 @@
 # FPV Field Kit authoring requests
 
-Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atlas](../design-atlas/index.html) and [phase register](../../docs/fpv-redesign-execution.md). These examples evolve with the implemented release. The first atlas release supplies review studies and fonts; it does not yet expose a live asset studio.
+Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atlas](../design-atlas/index.html) and [phase register](../../docs/fpv-redesign-execution.md). These examples evolve with the implemented release. Phase 1 integrates the shared fonts and component states across existing pages and canvas labels. The asset studio has its own subsequent release boundary.
 
 ## Review one screen
 
@@ -13,3 +13,7 @@ Use the [approved contract](../../docs/fpv-redesign-design.md), [interactive atl
 ## Review bilingual typography
 
 > Check the actual shipped Handjet, Exo 2 and IBM Plex Mono WOFF2 files against English and Ukrainian text, including Ґґ Єє Іі Її and ʼ ’. Use Handjet only for large display accents. Inspect Continue flight / Продовжити політ, Mission complete / Місію завершено, І l 1, О O 0, 01:24 and 85% in Standard/Large text and at 200% zoom. Report structural glyph coverage separately from visual reading and clipping. Do not claim Ukrainian translation has shipped.
+
+## Extend the shared interface
+
+> Add this screen to the Field Kit interface using the three shared CSS files, in fonts/tokens/components order after legacy styles, and body.field-kit. Keep the existing game-shell class and modal/input ownership. Use Exo 2 for controls and instructions, Handjet for static display titles at least 40px, and Plex Mono for aligned counters. Cover focus, pressed, selected, disabled and error states. Preserve 44px targets, Large text and readable canvas plates. Test the real nested return route and confirm that closing a menu does not resume a flight.

@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--fk-font-ui, sans-serif);
   color: #e7edf7;
   background: #080e19;
   --muted: #a5b3ca;
@@ -77,8 +77,7 @@ select {
   color: var(--accent);
   text-transform: uppercase;
   font:
-    700 12px/1.4 ui-monospace,
-    monospace;
+    700 12px/1.4 var(--fk-font-mono, monospace);
   letter-spacing: 0.12em;
 }
 h1 {
@@ -148,7 +147,7 @@ label {
   padding: 0 10px;
 }
 output {
-  font-family: ui-monospace, monospace;
+  font-family: var(--fk-font-mono, monospace);
   font-size: 14px;
   white-space: nowrap;
   color: var(--accent);
@@ -209,8 +208,7 @@ output {
   border: 2px solid #586d8d;
   color: var(--accent);
   font:
-    32px/44px ui-monospace,
-    monospace;
+    32px/44px var(--fk-font-mono, monospace);
   box-shadow: 6px 6px 0 #202c40;
 }
 .notes {

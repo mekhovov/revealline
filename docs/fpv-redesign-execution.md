@@ -1,6 +1,6 @@
 # FPV redesign execution register
 
-The user approved the complete redesign plan on 2026-09-14. This register tracks implementation and actual delivery, separately from the historical production backlog. Baseline: `fe9961e` (v0.43.0). Working branch: `codex/fpv-redesign`.
+The user approved the complete redesign plan on 2026-09-14. This register tracks implementation and actual delivery, separately from the historical production backlog. Baseline: `fe9961e` (v0.43.0). Working branch: `codex/fpv-redesign-isolated` in the dedicated `go_test_fpv_redesign` checkout. The original checkout remains available to parallel audio/fullscreen tasks.
 
 ## Fixed product decisions
 
@@ -15,16 +15,16 @@ The user approved the complete redesign plan on 2026-09-14. This register tracks
 
 ## Phase status
 
-| Phase | Deliverable                                                                               | State       | Release/evidence |
-| ----- | ----------------------------------------------------------------------------------------- | ----------- | ---------------- |
-| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | In progress | No release yet   |
-| 1     | Fonts, semantic tokens and shared components throughout the game                          | In progress | No release yet   |
-| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | In progress | No release yet   |
-| 3     | Local asset studio, sprite editor, previews, prompts and bundle exchange                  | Planned     | —                |
-| 4     | Original title scene and illustrated mission/briefing navigation                          | Planned     | —                |
-| 5     | Complete current FPV flight art, HUD, controls and feedback                               | Planned     | —                |
-| 6     | Collection, settings/data, learning, couch, replay, workshops and supporting screens      | Planned     | —                |
-| 7     | Full coverage, compatibility, accessibility, performance/offline and public qualification | Planned     | —                |
+| Phase | Deliverable                                                                               | State                                   | Release/evidence                                                    |
+| ----- | ----------------------------------------------------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------- |
+| 0     | Baseline, reference/design atlas, font specimens, screen/state inventory                  | Committed; qualification running        | v0.44.0 candidate; atlas and eight baseline captures |
+| 1     | Fonts, semantic tokens and shared components throughout the game                          | Implemented; release qualification next | v0.45.0 candidate; 60 focused tests and source phone checks passed  |
+| 2     | Asset registry, theme resolution, compatibility adapters and compiler                     | Implemented source; release pending     | 293 slots, 19 focused tests; recipes retain source-stage status     |
+| 3     | Local asset studio, sprite editor, previews, prompts and bundle exchange                  | In progress                             | Isolated storage and sprite core tests pass; UI being built         |
+| 4     | Original title scene and illustrated mission/briefing navigation                          | Planned                                 | Original hangar source generated; production adoption pending       |
+| 5     | Complete current FPV flight art, HUD, controls and feedback                               | Planned                                 | —                                                                   |
+| 6     | Collection, settings/data, learning, couch, replay, workshops and supporting screens      | Planned                                 | —                                                                   |
+| 7     | Full coverage, compatibility, accessibility, performance/offline and public qualification | Planned                                 | —                                                                   |
 
 ## Acceptance and release protocol
 

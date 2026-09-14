@@ -68,7 +68,7 @@ class SoloDocument extends Document {
 function mount(document, html) {
   const stack = [document.body];
   for (const token of html
-    .split('<body>')[1]
+    .split(/<body\b[^>]*>/u)[1]
     .split('</body>')[0]
     .matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
     const text = token[0];

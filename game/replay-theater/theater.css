@@ -1,8 +1,6 @@
 :root {
   color-scheme: light;
-  font:
-    16px/1.5 system-ui,
-    sans-serif;
+  font: 16px/1.5 var(--fk-font-ui, sans-serif);
   color: #112d35;
   background: #ece8df;
   --line: #bac9c7;
@@ -282,9 +280,7 @@ textarea {
   width: 100%;
   resize: vertical;
   padding: 10px;
-  font:
-    0.8125rem/1.4 ui-monospace,
-    monospace;
+  font: 0.8125rem/1.4 var(--fk-font-mono, monospace);
 }
 .load-status p {
   font-size: 0.8125rem;
@@ -304,9 +300,7 @@ textarea {
   accent-color: var(--accent);
 }
 .event-list {
-  font:
-    0.75rem/1.6 ui-monospace,
-    monospace;
+  font: 0.75rem/1.6 var(--fk-font-mono, monospace);
   padding-left: 26px;
   overflow-wrap: anywhere;
 }
