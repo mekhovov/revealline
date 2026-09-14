@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, required } from './data-json.mjs';
 import {
+  EXTERNAL_CHAPTER_LIMITS,
   abortExternalChapter,
   emptyExternalChapterIndex,
   externalChapterHash,
@@ -63,7 +64,8 @@ export function createExternalChapterHost({
     (entry) => entry.difficulty === 'standard',
   );
   required(
-    Array.isArray(knownDescriptors) && knownDescriptors.length <= PACK_LIMITS.installed,
+    Array.isArray(knownDescriptors) &&
+      knownDescriptors.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
     'Expected bounded trusted descriptors.',
   );
   const known = new Map();

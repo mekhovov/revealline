@@ -108,6 +108,10 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
   const expected = new Set([
     'optional-worlds-top-back',
     'optional-worlds-summary',
+    'optional-worlds-theme',
+    'optional-worlds-mode',
+    'optional-worlds-previous',
+    'optional-worlds-next',
     ...catalog.packs.map((item) => `optional-worlds-install-${item.id}`),
     'optional-worlds-source-recovery-summary',
     ...['ukraine', 'retro', 'coupa'].map(
@@ -125,10 +129,15 @@ test('More worlds shows all authored layout/equipment descriptions before downlo
     'optional-worlds-back',
   ]);
   const visited = new Set();
-  for (let i = 0; i < expected.size * 2; i++) {
-    const target = page.doc.activeElement;
-    visited.add(target.id);
-    tab(page);
+  while (true) {
+    page.$('optional-worlds-top-back').focus();
+    for (let i = 0; i < expected.size * 2; i++) {
+      const target = page.doc.activeElement;
+      visited.add(target.id);
+      tab(page);
+    }
+    if (page.$('optional-worlds-next').disabled) break;
+    page.$('optional-worlds-next').click();
   }
   assert.deepEqual(visited, expected);
   page.frame(0);
