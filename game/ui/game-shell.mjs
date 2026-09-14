@@ -1,4 +1,6 @@
 import { attachModalNavigation } from './modal-navigation.mjs';
+import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
+import { fieldKitCopy } from './field-kit-copy.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -15,6 +17,7 @@ export function attachGameShell({
   focusGame = () => doc.getElementById('start-button')?.focus(),
 } = {}) {
   const $ = (id) => doc.getElementById(id);
+  const copy = (key, values) => fieldKitCopy(key, doc.documentElement?.lang || 'en', values);
   const home = $('shell-home'),
     missions = $('shell-missions'),
     workshop = $('shell-workshop-dialog');
@@ -23,6 +26,7 @@ export function attachGameShell({
     returnToHome = false;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
+  const surfaces = attachFieldKitSurfaces({ document: doc });
   const deck = doc.querySelector('.flight-deck');
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
@@ -38,7 +42,7 @@ export function attachGameShell({
       $('shell-deploy').disabled = !available || start.hidden || start.disabled;
     if ($('shell-prepared-mission'))
       $('shell-prepared-mission').textContent =
-        selected?.querySelector('.name')?.textContent || 'Choose an available mission';
+        selected?.querySelector('.name')?.textContent || copy('missions.chooseAvailable');
   };
   let briefing = null;
   const restoreMissionView = () => {
@@ -81,10 +85,14 @@ export function attachGameShell({
     if ($('shell-featured')) $('shell-featured').hidden = training || continued;
     if ($('shell-destination'))
       $('shell-destination').textContent = training
-        ? 'Training · Your current lesson'
+        ? copy('title.trainingDestination')
         : continued
-          ? `Continue · ${!$('continue-saved').hidden ? $('continue-saved').title : $('mission-brief-title').textContent}`
-          : 'Deploy · Pressure Lines / Arcade';
+          ? copy('title.continueDestination', {
+              destination: !$('continue-saved').hidden
+                ? $('continue-saved').title
+                : $('mission-brief-title').textContent,
+            })
+          : copy('title.deployDestination');
     if (!home.open) home.showModal();
     (training
       ? $('shell-course-return')
@@ -158,10 +166,11 @@ export function attachGameShell({
         if ($('shell-mode-choice')) $('shell-mode-choice').hidden = true;
         missions.dataset.view = 'brief';
         $('shell-missions-title').textContent =
-          $('mission-brief-title').textContent || 'Mission brief';
+          $('mission-brief-title').textContent || copy('missions.brief');
         if ($('shell-missions-context'))
-          $('shell-missions-context').textContent =
-            `${$('shell-edition')?.textContent || 'CURRENT FLIGHT'} · MISSION BRIEF`;
+          $('shell-missions-context').textContent = copy('missions.briefContext', {
+            edition: $('shell-edition')?.textContent || copy('missions.currentFlight'),
+          });
         missions.scrollTop = 0;
         $('mission-brief-reading').scrollTop = 0;
       }
@@ -290,6 +299,7 @@ export function attachGameShell({
       home.removeEventListener('cancel', cancelHome);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
+      surfaces.destroy();
       preparationObserver?.disconnect();
     },
   };

@@ -14325,11 +14325,11 @@
   "collections": [],
   "format": "revealline-theme-bundle.v1",
   "id": "field-kit",
-  "revision": 9,
+  "revision": 10,
   "selection": {
     "base": { "id": "base", "revision": 1 },
     "collection": null,
-    "theme": { "id": "fpv", "revision": 9 }
+    "theme": { "id": "fpv", "revision": 10 }
   },
   "slots": [
     {
@@ -29804,6 +29804,32 @@
       "name": "FPV Field Kit",
       "parent": { "id": "fpv", "revision": 8 },
       "revision": 9,
+      "tokens": {}
+    },
+    {
+      "bindings": {
+        "screen.collection.background": {
+          "id": "screen.collection.background.field-kit",
+          "revision": 6
+        },
+        "screen.couch.background": { "id": "screen.couch.background.field-kit", "revision": 6 },
+        "screen.hangar.background": { "id": "screen.hangar.background.field-kit", "revision": 6 },
+        "screen.missions.background": {
+          "id": "screen.missions.background.field-kit",
+          "revision": 6
+        },
+        "screen.results.background": { "id": "screen.results.background.field-kit", "revision": 6 },
+        "screen.settings.background": {
+          "id": "screen.settings.background.field-kit",
+          "revision": 6
+        },
+        "screen.studio.background": { "id": "screen.studio.background.field-kit", "revision": 6 }
+      },
+      "format": "revealline-presentation-theme.v1",
+      "id": "fpv",
+      "name": "FPV Field Kit",
+      "parent": { "id": "fpv", "revision": 9 },
+      "revision": 10,
       "tokens": {}
     }
   ]
