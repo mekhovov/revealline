@@ -3133,10 +3133,13 @@ try {
       syncAssistControls();
     };
   }
+  $('text-face').onchange = () => preferences({ textFace: $('text-face').value });
   function refreshTextSize() {
-    const size = library.preferences.textSize;
+    const { textSize: size, textFace: face } = library.preferences;
     $('text-size').value = size;
     document.body.dataset.textSize = size;
+    $('text-face').value = face;
+    document.body.dataset.textFace = face;
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
