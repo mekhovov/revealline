@@ -1,0 +1,238 @@
+{
+  "format": "revealline-countercurrent-layouts.v1",
+  "levels": [
+    {
+      "id": "countercurrent-offset-docks",
+      "slotId": "unassigned-13",
+      "name": "Offset Docks",
+      "coverage": 0.64,
+      "spawn": {
+        "x": 0.5,
+        "y": 18.5
+      },
+      "walls": [
+        {
+          "x": 14,
+          "y": 8,
+          "w": 18,
+          "h": 2
+        },
+        {
+          "x": 14,
+          "y": 10,
+          "w": 2,
+          "h": 5
+        },
+        {
+          "x": 40,
+          "y": 25,
+          "w": 17,
+          "h": 2
+        },
+        {
+          "x": 55,
+          "y": 19,
+          "w": 2,
+          "h": 6
+        }
+      ],
+      "enemies": [
+        {
+          "id": "docks-upper",
+          "type": "bouncer",
+          "x": 28.5,
+          "y": 13.5,
+          "vx": 0.9,
+          "vy": 0.6,
+          "radius": 0.25
+        },
+        {
+          "id": "docks-lower",
+          "type": "bouncer",
+          "x": 46.5,
+          "y": 22.5,
+          "vx": -0.8,
+          "vy": 0.7,
+          "radius": 0.25
+        },
+        {
+          "id": "docks-border",
+          "type": "border-patrol",
+          "x": 60.5,
+          "y": 0.5,
+          "speed": 1.4,
+          "clockwise": true,
+          "radius": 0.23
+        }
+      ],
+      "terrain": [],
+      "powerups": [
+        {
+          "id": "docks-slow",
+          "kind": "enemy-slow",
+          "x": 9.5,
+          "y": 28.5
+        }
+      ],
+      "pressures": [],
+      "description": "Reveal 64%. Two offset hooked piers face opposite ways. Build a northern or southern return around them; a wall cannot reconnect a cut. Two field enemies retain their pockets, and the outer patrol also threatens the border. The enemy-slow pickup is an optional detour. Tap a direction to move. Closing a cut stops the craft; choose a fresh direction to continue."
+    },
+    {
+      "id": "countercurrent-sandbar-braid",
+      "slotId": "unassigned-14",
+      "name": "Sandbar Braid",
+      "coverage": 0.66,
+      "spawn": {
+        "x": 36.5,
+        "y": 35.5
+      },
+      "walls": [
+        {
+          "x": 13,
+          "y": 7,
+          "w": 18,
+          "h": 2
+        },
+        {
+          "x": 39,
+          "y": 13,
+          "w": 17,
+          "h": 2
+        },
+        {
+          "x": 19,
+          "y": 21,
+          "w": 16,
+          "h": 2
+        },
+        {
+          "x": 43,
+          "y": 28,
+          "w": 16,
+          "h": 2
+        }
+      ],
+      "enemies": [
+        {
+          "id": "braid-west",
+          "type": "bouncer",
+          "x": 24.5,
+          "y": 15.5,
+          "vx": 0.8,
+          "vy": -0.6,
+          "radius": 0.25
+        },
+        {
+          "id": "braid-interceptor",
+          "type": "bouncer",
+          "x": 57.5,
+          "y": 21.5,
+          "vx": -1.1,
+          "vy": 0.5,
+          "radius": 0.25
+        }
+      ],
+      "terrain": [
+        {
+          "id": "braid-slow",
+          "kind": "slow",
+          "x": 33,
+          "y": 24,
+          "w": 4,
+          "h": 3
+        }
+      ],
+      "powerups": [
+        {
+          "id": "braid-speed",
+          "kind": "player-speed",
+          "x": 8.5,
+          "y": 5.5
+        }
+      ],
+      "pressures": [
+        {
+          "id": "braid-interceptor",
+          "mode": "head-intercept",
+          "senseRadius": 18,
+          "scanTicks": 48,
+          "warningTicks": 120,
+          "commitTicks": 160,
+          "cooldownTicks": 300,
+          "leadTicks": 30
+        }
+      ],
+      "description": "Reveal 66%. Four staggered sandbars leave an open center and unequal outer detours. Choose which crossings to secure first. A warned interceptor commits to its marked route; use the warning to change your approach. The middle patch slows your craft; the remote speed pickup is optional. A closed cut stops the craft. A fresh direction starts the next leg."
+    },
+    {
+      "id": "countercurrent-crossing-watch",
+      "slotId": "unassigned-15",
+      "name": "Crossing Watch",
+      "coverage": 0.68,
+      "spawn": {
+        "x": 0.5,
+        "y": 18.5
+      },
+      "walls": [
+        {
+          "x": 20,
+          "y": 9,
+          "w": 6,
+          "h": 6
+        },
+        {
+          "x": 43,
+          "y": 21,
+          "w": 10,
+          "h": 3
+        }
+      ],
+      "enemies": [
+        {
+          "id": "watch-horizontal",
+          "type": "lane-boss",
+          "x": 58.5,
+          "y": 12.5,
+          "axis": "horizontal",
+          "warningSeconds": 1.5,
+          "activeSeconds": 0.65,
+          "period": 6.2,
+          "laneWidth": 0.6,
+          "radius": 0.25
+        },
+        {
+          "id": "watch-vertical",
+          "type": "lane-boss",
+          "x": 35.5,
+          "y": 27.5,
+          "axis": "vertical",
+          "warningSeconds": 1.8,
+          "activeSeconds": 0.7,
+          "period": 8.1,
+          "laneWidth": 0.6,
+          "radius": 0.25
+        },
+        {
+          "id": "watch-field",
+          "type": "bouncer",
+          "x": 60.5,
+          "y": 28.5,
+          "vx": -0.8,
+          "vy": -0.6,
+          "radius": 0.25
+        }
+      ],
+      "terrain": [],
+      "powerups": [
+        {
+          "id": "watch-freeze",
+          "kind": "enemy-freeze",
+          "x": 8.5,
+          "y": 27.5
+        }
+      ],
+      "pressures": [],
+      "description": "Reveal 68%. Two stationary sentries warn along one horizontal and one vertical lane. Their different schedules create crossing and waiting choices around two unequal islands. Watch both warnings before extending a cut; a wall is not a safe cut endpoint. An outer freeze pickup is optional. Each closure stops your craft until you choose a fresh direction."
+    }
+  ]
+}
