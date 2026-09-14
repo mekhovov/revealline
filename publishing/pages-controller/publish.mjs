@@ -12,6 +12,7 @@ import {
   validateAdmissions,
 } from './assemble.mjs';
 import { digest, jsonBytes, parseJSON } from './metadata.mjs';
+import { publishedReleasePages, releaseDecision } from './release-policy.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const directory = path.join(root, 'publishing/pages-controller');
@@ -61,7 +62,17 @@ async function verify({ preview = false, remote = false } = {}) {
   )
     throw new Error('Publishing checkout does not equal its triggering commit.');
   const observations = [];
+  let releasePolicy = null;
   if (remote) {
+    if (!preview) {
+      if (process.env.GITHUB_REF !== 'refs/heads/main')
+        throw new Error('Frozen publication must run from main.');
+      releasePolicy = releaseDecision({
+        configuration,
+        pages: publishedReleasePages(),
+        requested: process.env.REQUESTED_RELEASE || '',
+      });
+    }
     const response = await fetch(
       `https://github.com/mekhovov/revealline/releases/download/${configuration.currentVersion}/source-qualification.json`,
       { signal: AbortSignal.timeout(60_000) },
@@ -108,6 +119,7 @@ async function verify({ preview = false, remote = false } = {}) {
     catalogSha256,
     qualifiedSourceTree,
     observations,
+    releasePolicy,
     publishable: !preview,
   };
 }

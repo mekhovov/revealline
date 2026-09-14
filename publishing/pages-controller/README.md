@@ -29,7 +29,19 @@ The workflow requires 8 GiB free on the hosted runner. No npm installation or hi
 
 An existing output is never overwritten. Failed preparation cannot receive a verified receipt or be deployed. ZIP extraction stages its own output and removes only that newly created staging directory on failure. A failed later assembly may retain an incomplete new artifact directory for inspection; retry in a fresh workflow workspace.
 
-The new workflow deploys only `refs/heads/main` through the existing `github-pages` environment. Its concurrency waits for an earlier frozen publication. The legacy workflow keeps all six source-gate commands for game changes in a separate non-cancelling concurrency group; it cannot cancel the frozen publisher. While this controller exists, the legacy workflow skips its older build/upload/deploy route. Its fallback upload/deploy also explicitly requires main. Infrastructure-only path exclusions route these changes to the focused controller checks. No environment protection policy is changed.
+The publisher deploys only `refs/heads/main` through the existing `github-pages` environment.
+Its concurrency waits for an earlier frozen publication. Source pull requests retain main's
+preflight, provenance checks, all four test shards and ordinary build in a separate non-cancelling
+group. The legacy workflow has no Pages upload/deploy route. Its release/manual entry reads the
+selector from `main` and dispatches the sole publisher there; it never invokes a current-only test
+runner from a historical release. Historical tags retain their own workflow files, so retry those
+through a main dispatch. No environment protection policy is changed.
+
+Actual publication must select the highest published stable semantic version, ignoring drafts and
+prereleases. The policy runs during each hosted artifact check and again after any protected
+deployment wait. Older release events are skipped; a newer event whose tag lacks a matching enabled
+selector fails without changing configuration. An optional dispatch `release_tag` must match exactly.
+PR previews may retain the disabled v0.44 fixture and are explicitly non-publishable.
 
 ## Updating the selector
 

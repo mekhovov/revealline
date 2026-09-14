@@ -7,24 +7,37 @@ on:
       - 'publishing/pages-controller/**'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
+      - '.cursor/skills/deploy-release-pages/**'
+      - 'docs/deployment.md'
   pull_request:
     branches: [main]
     paths:
       - 'publishing/pages-controller/**'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
+      - '.cursor/skills/deploy-release-pages/**'
+      - 'docs/deployment.md'
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Exact latest stable tag already selected by the reviewed controller
+        required: false
+        type: string
 
 permissions:
   contents: read
 
 # Wait for any previous main publication. No healthy deployment is cancelled.
 concurrency:
-  group: pages-${{ github.ref }}
+  group: frozen-pages-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'production' }}
   cancel-in-progress: false
+
+env:
+  REQUESTED_RELEASE: ${{ inputs.release_tag || '' }}
 
 jobs:
   assemble:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Check out publishing controller and immutable tags
@@ -88,12 +101,29 @@ jobs:
     needs: assemble
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Check out the same publishing selector before deployment
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Set up publishing policy runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+
+      - name: Recheck latest stable selection after any deployment wait
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node publishing/pages-controller/release-policy.mjs verify
+
       - name: Deploy verified frozen edition to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

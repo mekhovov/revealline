@@ -11,30 +11,37 @@ test('source qualification retains six gates while the controller owns guarded m
     new URL('../../.github/workflows/publish-frozen-pages.yml', import.meta.url),
     'utf8',
   );
-  let previous = -1;
   for (const command of [
     'npm run validate',
     'npm run lint',
-    'npm test',
     'npm run format:check',
     'npm run format:native:check',
     'node --check authoring/motion-lab/app.js',
-  ]) {
-    const offset = legacy.indexOf(command);
-    assert.ok(offset > previous, `Missing or reordered source gate: ${command}`);
-    previous = offset;
-  }
-  assert.match(legacy, /test -f publishing\/pages-controller\/publication.json/);
-  assert.match(
-    legacy,
-    /if: github.event_name != 'pull_request' && github.ref == 'refs\/heads\/main' && needs.verify.outputs.frozen-controller != 'true'/,
-  );
+    'node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4',
+  ])
+    assert.ok(legacy.includes(command), `Missing source gate: ${command}`);
+  assert.match(legacy, /shard: \[1, 2, 3, 4\]/);
+  assert.match(legacy, /fail-fast: false/);
+  assert.match(legacy, /mkdir -p \.cache/);
+  assert.match(legacy, /node --test scripts\/test-production-\*\.mjs/);
+  assert.match(legacy, /run: npm run build/);
+  // Release routing reads controller infrastructure from main, never today's runner in an old tag.
+  const gate = legacy.slice(legacy.indexOf('  release_gate:'), legacy.indexOf('  preflight:'));
+  assert.match(gate, /ref: main/);
+  assert.match(gate, /release-policy\.mjs route/);
+  assert.match(gate, /workflow run publish-frozen-pages.yml .* --ref main/);
+  for (const job of ['preflight', 'test', 'build'])
+    assert.ok(legacy.includes(`  ${job}:\n    if: github.event_name == 'pull_request'`));
+  assert.doesNotMatch(legacy, /build:pages|upload-pages-artifact|deploy-pages@/);
   assert.match(
     workflow,
     /if: github.event_name != 'pull_request' && github.ref == 'refs\/heads\/main'/,
   );
+  assert.match(workflow, /REQUESTED_RELEASE: \$\{\{ inputs.release_tag/);
+  assert.match(workflow, /release-policy\.mjs verify/);
   assert.match(workflow, /environment:\n\s+name: github-pages/);
   assert.match(workflow, /cancel-in-progress: false/);
+  assert.match(workflow, /group: frozen-pages-/);
   assert.match(legacy, /group: source-gates-\$\{\{ github.ref \}\}/);
   assert.match(legacy, /cancel-in-progress: false/);
   assert.match(workflow, /include-hidden-files: true/);
