@@ -2,6 +2,12 @@
 
 **Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
 
+**Current checkpoint — v0.40 published and verified.** Its 17 release assets include the [final delivery receipt](https://github.com/mekhovov/revealline/releases/download/v0.40.0/v040-delivery-receipt.json): 3,381 exact-source tests, all 1,526 public files and the full public ZIP pass. Frozen041 source 4d passes 3,404 tests and independent artifacts; native, PR #17 CI and public delivery remain pending. Public picture candidates remain 48 / twelve families; frozen041 reaches 60/fifteen. The [current phase table](current-delivery-plan.md#prioritized-remaining-phases) separates source-only UI, roles, recovery and albums from delivery. No new human-quality approval is inferred.
+
+## Retained checkpoint before v0.39 public delivery
+
+The following paragraphs preserve their original observations and pending wording; they are superseded by the current checkpoint above.
+
 **Play verified [v0.38.0](https://mekhovov.github.io/revealline/releases/v0.38.0/site/game/).** Updated 2026-09-14. The Couch milestone is delivered: source, frozen/native, main deployment, all 1,726 public files / 883,150,912 bytes, scoped public play and the complete public ZIP stream pass. [Release record](https://github.com/mekhovov/revealline/releases/tag/v0.38.0) · [Native evidence and limits](verification/round-47/v038-native.md). Physical-device and human quality qualification remain open.
 
 **v0.39 frozen native recovery and replacement PR CI pass; main deployment and public delivery remain pending.** Exact `23b886bbdbea` retains six passing source gates / 3,337 tests, independent frozen reconstruction and local Pages checks for 1,481 files / 748,543,835 bytes. The first Fracture win's earned receipt was valid: later visible exports showed that durable installed packs and media had disappeared. Downloading the same exact chapter restored Collection and complete game-data export with an unchanged player library. Browser storage-pressure eviction is plausible, but its cause is unproven. Keep owner and first-earned validators strict; no ownership-validator correction is warranted by this evidence.
