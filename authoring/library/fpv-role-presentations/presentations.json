@@ -1,0 +1,491 @@
+{
+  "format": "fpv-role-presentations.v1",
+  "baseCommit": "297cceb696fb75cc5e3a94426a3bed12e60c606a",
+  "stage": "source-candidate",
+  "runtimeBinding": null,
+  "roles": [
+    {
+      "classId": "scout",
+      "title": "Scout camera quad",
+      "provenance": "provenance/scout.json",
+      "sha256": "5d0b29fc773e08e8fdbed1e6a03726c7a16e2c5c06e89e163ab211d032cac957",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/scout.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-scout-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.316586922,
+            "y": -0.261562998,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.31738437,
+            "y": -0.261562998,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.316586922,
+            "y": 0.240031898,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.31738437,
+            "y": 0.240031898,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.16,
+            "bladeWidth": 0.4,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "bomber",
+      "title": "Light support carrier",
+      "provenance": "provenance/bomber.json",
+      "sha256": "88d9a0fac33a45e8cac2dd752df042735deebb21ff172ae0ecf86d81e47826ca",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/bomber.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-light-carrier-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.341307815,
+            "y": -0.337320574,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.33891547,
+            "y": -0.337320574,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.341307815,
+            "y": 0.323763955,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.33891547,
+            "y": 0.323763955,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.15869218499999999,
+            "bladeWidth": 0.4,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "carrier",
+      "title": "Heavy six-hub carrier",
+      "provenance": "provenance/carrier.json",
+      "sha256": "01ed2610a94fa9675d26a618647b8128d3443e111c941199012c72510ad40ad7",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/carrier.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-heavy-carrier-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.23046252,
+            "y": -0.294258373,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.229665072,
+            "y": -0.294258373,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.350079745,
+            "y": -0.003189793,
+            "radiusScale": 0.9,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.351674641,
+            "y": -0.003189793,
+            "radiusScale": 0.9,
+            "direction": -1,
+            "phaseDegrees": 69
+          },
+          {
+            "x": -0.23046252,
+            "y": 0.297448166,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 92
+          },
+          {
+            "x": 0.229665072,
+            "y": 0.297448166,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 115
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.16,
+            "bladeWidth": 0.4,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "interceptor",
+      "title": "Compact interceptor",
+      "provenance": "provenance/interceptor.json",
+      "sha256": "548431d87442a009fdc81b7561927eaaece164fbc2ade0c834ebd6d5f51f1a5b",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/interceptor.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-interceptor-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.163476874,
+            "y": -0.138755981,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.163476874,
+            "y": -0.138755981,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.163476874,
+            "y": 0.199362041,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.163476874,
+            "y": 0.199362041,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.105,
+            "bladeWidth": 0.3,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "fiber",
+      "title": "Fiber relay quad",
+      "provenance": "provenance/fiber.json",
+      "sha256": "6dd3f61124d17a262ee3cef747ea250e6828d5b69a244a13883d575cc97ddce8",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/fiber.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-fiber-relay-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.27830941,
+            "y": -0.303030303,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.277511962,
+            "y": -0.303030303,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.27830941,
+            "y": 0.29585327,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.277511962,
+            "y": 0.29585327,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.16,
+            "bladeWidth": 0.4,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "impact",
+      "title": "Blunt pulse craft",
+      "provenance": "provenance/impact.json",
+      "sha256": "0999ede773d3cc70176347f39a19a96f05fc0dd96ac12b7fbd0d51304636d7ed",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/impact.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-impact-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.169059011,
+            "y": -0.178628389,
+            "radiusScale": 0.8,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.169059011,
+            "y": -0.178628389,
+            "radiusScale": 0.8,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.249601276,
+            "y": 0.216108453,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.248803828,
+            "y": 0.216108453,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.12,
+            "bladeWidth": 0.3,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    },
+    {
+      "classId": "trapper",
+      "title": "Lattice support craft",
+      "provenance": "provenance/trapper.json",
+      "sha256": "13e4aec02c72bf2f4a7cd26eee43c0a5e963de6bee3af3dd62dd22498831c869",
+      "width": 1254,
+      "height": 1254,
+      "body": {
+        "src": "originals/trapper.png",
+        "widthCells": 1.25,
+        "heightCells": 1.25,
+        "sampling": "nearest",
+        "headingOffsetDegrees": 0,
+        "animationRecipe": "fpv-trapper-v1-rotors",
+        "rotors": [
+          {
+            "x": -0.307017544,
+            "y": -0.303030303,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 0
+          },
+          {
+            "x": 0.307017544,
+            "y": -0.303030303,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 23
+          },
+          {
+            "x": -0.307017544,
+            "y": 0.299043062,
+            "radiusScale": 1,
+            "direction": 1,
+            "phaseDegrees": 46
+          },
+          {
+            "x": 0.307017544,
+            "y": 0.299043062,
+            "radiusScale": 1,
+            "direction": -1,
+            "phaseDegrees": 69
+          }
+        ]
+      },
+      "recipe": {
+        "components": [
+          {
+            "id": "main-rotors",
+            "type": "rotors",
+            "bladeCount": 3,
+            "bladeShape": "tapered",
+            "radius": 0.125,
+            "bladeWidth": 0.3,
+            "idleRps": 2,
+            "travelRps": 10,
+            "maxVisualRps": 2.6,
+            "blurOpacity": 0.08,
+            "phaseDegrees": 0,
+            "direction": 1,
+            "fillColor": "#bfd1d6",
+            "tipColor": "#f3c94f",
+            "hubColor": "#253543"
+          }
+        ]
+      }
+    }
+  ]
+}
