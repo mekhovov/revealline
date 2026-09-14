@@ -624,6 +624,8 @@ test('enlarged guide artwork keeps a 56px body within its canvas without enlargi
       };
     },
   });
+  assert.equal(h.$('preview').width, 192);
+  assert.equal(h.$('preview').height, 112);
   assert.match(h.$('preview-note').textContent, /Enlarged illustration.*center dot marks contact/);
   assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
   for (const record of enemyPresentations.entries) {

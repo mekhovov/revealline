@@ -125,6 +125,15 @@ function nativeDialogs(t) {
   const originalOpen = SoloElement.prototype.showModal,
     originalClose = SoloElement.prototype.close;
   const origins = new WeakMap();
+  const nativeClick = SoloElement.prototype.click;
+  t.mock.method(SoloElement.prototype, 'click', function () {
+    nativeClick.call(this);
+    if (this.tagName === 'SUMMARY') {
+      const details = this.parentElement;
+      details.open = !details.open;
+      details.emit('toggle');
+    }
+  });
   const originalAttribute = SoloElement.prototype.setAttribute;
   SoloElement.prototype.setAttribute = function (key, value) {
     originalAttribute.call(this, key, value);
@@ -273,6 +282,12 @@ for (const [dialog, opener, prefix] of [
     h.$(opener).click();
     pad.frame();
     pad.frame();
+    if (prefix === 'collection') {
+      const summary = h.$('collection-progress').querySelector('summary');
+      summary.focus();
+      pad.pulse(0);
+      assert.equal(h.$('collection-progress').open, true);
+    }
     const region = h.$(`${prefix}-reading`);
     region.clientHeight = 100;
     region.scrollHeight = 480;
@@ -295,6 +310,46 @@ for (const [dialog, opener, prefix] of [
     pad.frame(); // Escape handed control back to the keyboard; acknowledge neutral first.
     pad.pulse(1);
     assert.equal(h.$(dialog).open, false);
+  });
+
+for (const lateFocus of [false, true])
+  test(`Collection disclosure ends reading on collapse without ${lateFocus ? 'stealing later focus' : 'leaving hidden focus or resuming'}`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false }),
+      pad = controllerPad(h, t);
+    h.$('collection-button').click();
+    pad.frame();
+    pad.frame();
+    const details = h.$('collection-progress'),
+      summary = details.querySelector('summary');
+    summary.focus();
+    pad.pulse(0);
+    h.$('collection-read').focus();
+    pad.pulse(0);
+    assert.equal(h.doc.activeElement.id, 'collection-reading');
+    const checkpoint = authoritativeCheckpoint(h.rendered.run),
+      storage = [...h.storage.map],
+      writes = h.storage.writes.length;
+    // Native toggle is queued after open changes; it may arrive after focus moves.
+    details.open = false;
+    if (lateFocus) h.$('gallery-search').focus();
+    details.emit('toggle');
+    const expected = lateFocus ? h.$('gallery-search') : summary;
+    assert.ok(h.doc.activeElement === expected, h.doc.activeElement?.id);
+    assert.equal(h.$('collection-reading-done').disabled, true);
+    assert.equal(h.$('collection-read').getAttribute('aria-pressed'), 'false');
+    pad.frame();
+    assert.equal(h.$('collection-dialog').open, true);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual([...h.storage.map], storage);
+    assert.equal(h.storage.writes.length, writes);
+    assert.equal(h.rendered.paused, true);
+    // A delayed toggle after dialog closure must also preserve its restored opener.
+    h.$('collection-dialog').close();
+    const opener = h.doc.activeElement;
+    details.emit('toggle');
+    assert.ok(h.doc.activeElement === opener, h.doc.activeElement?.id);
+    assert.deepEqual(h.errors, []);
   });
 
 test('actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns', async (t) => {
@@ -645,6 +700,8 @@ test('Collection Choose appearance deliberately leaves title for Missions setup'
   const h = await soloPage(t, { titleScreen: true }),
     checkpoint = authoritativeCheckpoint(h.rendered.run);
   openTitleCollection(h);
+  h.$('collection-progress').querySelector('summary').click();
+  assert.equal(h.$('collection-progress').open, true);
   h.$('collection-choose-appearance').click();
   await Promise.resolve();
   h.frame(0);
