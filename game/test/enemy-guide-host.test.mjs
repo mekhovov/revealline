@@ -41,7 +41,7 @@ function nativeKey(page, key) {
   // When native select editing leaves Escape to the browser, its default
   // action requests modal cancellation. The actual dialog listener owns it.
   if (!event.defaultPrevented && key === 'Escape') {
-    const dialog = page.doc.querySelector('dialog[open]');
+    const dialog = target.closest('dialog[open]') ?? page.doc.querySelector('dialog[open]');
     if (dialog && !dialog.emit('cancel').defaultPrevented) dialog.close();
   }
   target.emit('keyup', { key, code: key === ' ' ? 'Space' : key });
@@ -74,7 +74,7 @@ function openGuide(page) {
   assert.equal(page.$('shell-home').open, true);
   page.$('shell-guide').focus();
   nativeKey(page, 'Enter');
-  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-home').open, true, 'Main menu stays beneath its guide');
   assert.equal(page.$('enemy-guide-dialog').open, true);
 }
 async function launch(page) {
@@ -185,6 +185,11 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     controls.frame();
     controls.pulse(1);
     assert.equal(page.$('enemy-guide-dialog').open, false, 'fresh controller Back closes guide');
+    assert.equal(page.$('shell-home').open, true);
+    assert.equal(page.doc.activeElement.id, 'shell-guide');
+    controls.pulse(1);
+    await Promise.resolve();
+    assert.equal(page.$('shell-home').open, false, 'a separate Back leaves Main menu');
     assert.equal(page.doc.activeElement.id, 'start-button');
     controls.pulse(13);
     page.key('ArrowRight');

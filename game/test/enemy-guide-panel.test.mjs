@@ -559,3 +559,98 @@ test('actual child practice can lose, Retry the same impact lesson and return to
   assert.deepEqual(authoritativeCheckpoint(lost), checkpoint);
   assert.deepEqual(page.errors, []);
 });
+
+test('enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses', async (t) => {
+  const art = artworkFixture(),
+    sampled = [];
+  const h = setup(t, {
+    ...art,
+    getThemeId: () => 'fpv',
+    createBodyAssets(options) {
+      const assets = art.createBodyAssets(options);
+      return {
+        ...assets,
+        update(frames, ...args) {
+          sampled.push(...frames);
+          return assets.update(frames, ...args);
+        },
+      };
+    },
+  });
+  assert.match(h.$('preview-note').textContent, /Enlarged illustration.*center dot marks contact/);
+  assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
+  for (const record of enemyPresentations.entries) {
+    h.$('topic').value = record.type;
+    h.$('topic').onchange();
+    await settleArtwork();
+    // 6.4 seconds traverses more than two complete cosmetic orbits.
+    for (let tick = 0; tick < 64; tick++) {
+      art.calls.length = 0;
+      h.guide.update(0.1);
+      const image = art.calls.find(([method]) => method === 'drawImage');
+      assert.deepEqual(image.slice(2), [-28, -28, 56, 56]);
+      const [, x, y] = art.calls.find(([method]) => method === 'translate');
+      const [, heading] = art.calls.find(([method]) => method === 'rotate');
+      const [, sx, sy] = art.calls.find(([method]) => method === 'scale');
+      for (const px of [-28, 28])
+        for (const py of [-28, 28]) {
+          const u = x + Math.cos(heading) * sx * px - Math.sin(heading) * sy * py;
+          const v = y + Math.sin(heading) * sx * px + Math.cos(heading) * sy * py;
+          assert.ok(u >= 4 && u <= 188 && v >= 4 && v <= 108, `${record.type}: ${u},${v}`);
+        }
+      assert.ok(
+        art.calls.some(
+          ([method, cx, cy, radius]) => method === 'arc' && cx === 0 && cy === 0 && radius === 4,
+        ),
+      );
+    }
+  }
+  assert.ok(
+    sampled.every((frame) => Object.isFrozen(frame) && frame.diameter <= 40 && frame.radius === 4),
+  );
+});
+test('enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate', async (t) => {
+  const art = artworkFixture({
+    load: async () => {
+      throw new Error('No artwork');
+    },
+  });
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  await settleArtwork();
+  for (const theme of ['fpv', 'ukraine']) {
+    h.$('theme').value = theme;
+    h.$('theme').onchange();
+    await settleArtwork();
+    art.calls.length = 0;
+    h.guide.update(0.1, { reduced: true });
+    assert.equal(
+      art.calls.some(([method]) => method === 'drawImage'),
+      false,
+    );
+    assert.deepEqual(art.calls.filter(([method]) => method === 'scale')[1], ['scale', 2, 2]);
+    assert.ok(
+      art.calls.some(
+        ([method, x, y, radius]) => method === 'arc' && x === 0 && y === 0 && radius === 4,
+      ),
+    );
+    const held = structuredClone(art.calls);
+    art.calls.length = 0;
+    art.notify();
+    assert.deepEqual(art.calls, held);
+  }
+  h.guide.open({ topic: 'line-impact' });
+  art.calls.length = 0;
+  h.guide.update(0.1, { reduced: true });
+  assert.match(h.$('preview-note').textContent, /^Line-impact diagram/);
+  assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y, w, height]) =>
+        method === 'fillRect' && x === 20 && y === 51 && w === 152 && height === 2,
+    ),
+  );
+  assert.equal(
+    art.calls.some(([method]) => method === 'drawImage' || method === 'arc'),
+    false,
+  );
+});
