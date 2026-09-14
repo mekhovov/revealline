@@ -62,7 +62,7 @@ function domain(entry, kind, version, still) {
   return { generation: value.generation, library };
 }
 
-function ownedSnapshot({ version, rows }) {
+function ownedSnapshot({ version, rows }, allowUnavailable = false) {
   const audio = domain(rows.metadata, 'audio', version);
   const media = domain(rows.mediaRecords, 'media', version);
   const story = version === 4 ? domain(rows.storyRecords, 'story', version, media.library) : null;
@@ -131,11 +131,27 @@ function ownedSnapshot({ version, rows }) {
           .filter((item) => story.library.originals.includes(item.sha256))
       : []),
   ];
-  for (const asset of declaredAssets)
-    required(
-      sizes.get(asset.sha256) === asset.bytes,
-      'A referenced original is absent or its byte length differs.',
-    );
+  const diagnostics = [],
+    declaredSizes = new Map();
+  for (const asset of declaredAssets) {
+    if (allowUnavailable) {
+      required(
+        !declaredSizes.has(asset.sha256) || declaredSizes.get(asset.sha256) === asset.bytes,
+        'Referenced metadata disagrees about an original byte length.',
+      );
+      declaredSizes.set(asset.sha256, asset.bytes);
+    }
+    if (sizes.get(asset.sha256) !== asset.bytes) {
+      required(allowUnavailable, 'A referenced original is absent or its byte length differs.');
+      if (sizes.has(asset.sha256))
+        diagnostics.push({
+          sha256: asset.sha256,
+          availability: 'length-mismatch',
+          expectedBytes: asset.bytes,
+          actualBytes: sizes.get(asset.sha256),
+        });
+    }
+  }
   const requiredHashes = new Set([
     ...audio.library.tracks.map((track) => track.asset.sha256),
     ...(isStoredStillMedia(media.library)
@@ -144,10 +160,13 @@ function ownedSnapshot({ version, rows }) {
     ...(story ? storedStoryHashes(story.library) : []),
   ]);
   for (const sha256 of requiredHashes)
-    required(
-      seen.has(sha256),
-      'A referenced original is absent; raw profile diagnostics remain available.',
-    );
+    if (!seen.has(sha256)) {
+      required(
+        allowUnavailable,
+        'A referenced original is absent; raw profile diagnostics remain available.',
+      );
+      diagnostics.push({ sha256, availability: 'missing' });
+    }
   const usedBytes =
     blobBytes + encoded(audio) + encoded(media) + (story ? encoded(story) : 0) + 4096;
   required(
@@ -168,7 +187,12 @@ function ownedSnapshot({ version, rows }) {
     files: files.map(({ store, sha256, bytes }) => ({ store, sha256, bytes })),
     usedBytes,
   });
-  return Object.freeze({ marker, files: Object.freeze(files), originalBytesVerified: false });
+  return Object.freeze({
+    marker,
+    files: Object.freeze(files),
+    originalBytesVerified: false,
+    ...(allowUnavailable ? { diagnostics: freezeProfileData(diagnostics) } : {}),
+  });
 }
 
 const abort = (signal) => {
@@ -314,101 +338,110 @@ export function createProfileSharedMediaReader({
       db?.close();
     }
   }
+  async function capture(signal, allowUnavailable) {
+    const captured = await read(signal, (tx, version, done, fail) => {
+      const values = {},
+        work = [];
+      for (const name of [
+        'metadata',
+        'mediaRecords',
+        'managedState',
+        ...(version === 4 ? ['storyRecords'] : []),
+      ]) {
+        work.push([name, 'row']);
+      }
+      for (const name of ['audio', 'mediaBlobs']) work.push([name, 'files']);
+      work.push(['reservations', 'reservations']);
+      let pending = work.length;
+      const ready = () => {
+        if (--pending === 0) done(values);
+      };
+      for (const [name, kind] of work) {
+        const store = tx.objectStore(name);
+        if (kind === 'row') {
+          const keys = store.getAllKeys(undefined, 2),
+            value = store.get(name === 'managedState' ? 'ledger' : 'library');
+          let remaining = 2,
+            found,
+            data;
+          const finish = () => {
+            if (--remaining) return;
+            values[name] = { present: found.length === 1, value: data };
+            ready();
+          };
+          keys.onsuccess = () => {
+            found = keys.result;
+            if (
+              !Array.isArray(found) ||
+              found.length > 1 ||
+              (found.length === 1 && found[0] !== (name === 'managedState' ? 'ledger' : 'library'))
+            ) {
+              fail(new Error('Unknown recovery metadata keys.'));
+              return;
+            }
+            finish();
+          };
+          value.onsuccess = () => {
+            data = value.result;
+            finish();
+          };
+        } else if (kind === 'files') {
+          const keys = store.getAllKeys(undefined, MANAGED_MEDIA_LIMITS.assets + 1),
+            blobs = store.getAll(undefined, MANAGED_MEDIA_LIMITS.assets + 1);
+          let remaining = 2,
+            names,
+            data;
+          const finish = () => {
+            if (--remaining) return;
+            values[name] = { keys: names, blobs: data };
+            ready();
+          };
+          keys.onsuccess = () => {
+            names = keys.result;
+            if (!Array.isArray(names) || names.length > MANAGED_MEDIA_LIMITS.assets) {
+              fail(new Error('Too many recovery media keys.'));
+              return;
+            }
+            finish();
+          };
+          blobs.onsuccess = () => {
+            data = blobs.result;
+            if (!Array.isArray(data) || data.length > MANAGED_MEDIA_LIMITS.assets) {
+              fail(new Error('Too many recovery media bodies.'));
+              return;
+            }
+            finish();
+          };
+        } else {
+          const request = store.getAll(undefined, MANAGED_MEDIA_LIMITS.reservations + 1);
+          request.onsuccess = () => {
+            values[name] = request.result;
+            if (
+              !Array.isArray(request.result) ||
+              request.result.length > MANAGED_MEDIA_LIMITS.reservations
+            ) {
+              fail(new Error('Invalid recovery reservations.'));
+              return;
+            }
+            ready();
+          };
+        }
+      }
+    });
+    check(signal);
+    if (captured.state === 'absent') return captured;
+    return Object.freeze({
+      state: 'present',
+      value: ownedSnapshot(captured.value, allowUnavailable),
+    });
+  }
   return Object.freeze({
-    async snapshot({ signal } = {}) {
-      const captured = await read(signal, (tx, version, done, fail) => {
-        const values = {},
-          work = [];
-        for (const name of [
-          'metadata',
-          'mediaRecords',
-          'managedState',
-          ...(version === 4 ? ['storyRecords'] : []),
-        ]) {
-          work.push([name, 'row']);
-        }
-        for (const name of ['audio', 'mediaBlobs']) work.push([name, 'files']);
-        work.push(['reservations', 'reservations']);
-        let pending = work.length;
-        const ready = () => {
-          if (--pending === 0) done(values);
-        };
-        for (const [name, kind] of work) {
-          const store = tx.objectStore(name);
-          if (kind === 'row') {
-            const keys = store.getAllKeys(undefined, 2),
-              value = store.get(name === 'managedState' ? 'ledger' : 'library');
-            let remaining = 2,
-              found,
-              data;
-            const finish = () => {
-              if (--remaining) return;
-              values[name] = { present: found.length === 1, value: data };
-              ready();
-            };
-            keys.onsuccess = () => {
-              found = keys.result;
-              if (
-                !Array.isArray(found) ||
-                found.length > 1 ||
-                (found.length === 1 &&
-                  found[0] !== (name === 'managedState' ? 'ledger' : 'library'))
-              ) {
-                fail(new Error('Unknown recovery metadata keys.'));
-                return;
-              }
-              finish();
-            };
-            value.onsuccess = () => {
-              data = value.result;
-              finish();
-            };
-          } else if (kind === 'files') {
-            const keys = store.getAllKeys(undefined, MANAGED_MEDIA_LIMITS.assets + 1),
-              blobs = store.getAll(undefined, MANAGED_MEDIA_LIMITS.assets + 1);
-            let remaining = 2,
-              names,
-              data;
-            const finish = () => {
-              if (--remaining) return;
-              values[name] = { keys: names, blobs: data };
-              ready();
-            };
-            keys.onsuccess = () => {
-              names = keys.result;
-              if (!Array.isArray(names) || names.length > MANAGED_MEDIA_LIMITS.assets) {
-                fail(new Error('Too many recovery media keys.'));
-                return;
-              }
-              finish();
-            };
-            blobs.onsuccess = () => {
-              data = blobs.result;
-              if (!Array.isArray(data) || data.length > MANAGED_MEDIA_LIMITS.assets) {
-                fail(new Error('Too many recovery media bodies.'));
-                return;
-              }
-              finish();
-            };
-          } else {
-            const request = store.getAll(undefined, MANAGED_MEDIA_LIMITS.reservations + 1);
-            request.onsuccess = () => {
-              values[name] = request.result;
-              if (
-                !Array.isArray(request.result) ||
-                request.result.length > MANAGED_MEDIA_LIMITS.reservations
-              ) {
-                fail(new Error('Invalid recovery reservations.'));
-                return;
-              }
-              ready();
-            };
-          }
-        }
-      });
-      check(signal);
-      if (captured.state === 'absent') return captured;
-      return Object.freeze({ state: 'present', value: ownedSnapshot(captured.value) });
+    snapshot({ signal } = {}) {
+      return capture(signal, false);
+    },
+    // Metadata remains strict; only referenced body availability becomes diagnostic.
+    originalSnapshot({ signal } = {}) {
+      return capture(signal, true);
     },
     close() {
       closed = true;
