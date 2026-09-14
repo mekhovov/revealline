@@ -135,7 +135,10 @@ test('retention publishes only the requested newest immutable releases', async (
   assert.equal(report.playableVersions, 1);
   const index = JSON.parse(await fs.readFile(path.join(f.root, 'dist/releases/index.json')));
   assert.equal(index.latest, 'v0.2.0');
-  assert.deepEqual(index.releases.map((entry) => entry.version), ['v0.2.0']);
+  assert.deepEqual(
+    index.releases.map((entry) => entry.version),
+    ['v0.2.0'],
+  );
   await assert.rejects(fs.access(path.join(f.root, 'dist/releases/v0.1.0')));
 });
 
