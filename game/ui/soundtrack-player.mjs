@@ -523,6 +523,27 @@ export function createSoundtrackPlayer({
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
     return startAt(Math.max(0, index));
   }
+  /**
+   * Prepare the selected track without playing it. Hosts use this after local
+   * storage is ready so a later tap can call HTMLMediaElement.play() directly
+   * instead of waiting for IndexedDB, validation, or an object URL first.
+   */
+  async function prepare() {
+    if (disposed || suspended || desired || status === 'playing' || status === 'loading')
+      return false;
+    if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());
+    return startAt(Math.max(0, index));
+  }
+  /**
+   * Clear a lifecycle suspension in the same event turn as a user gesture.
+   * Do not await this before play(): iOS Safari associates media permission
+   * with the synchronous call stack that contains the gesture.
+   */
+  function wake() {
+    if (disposed) return false;
+    suspended = false;
+    return soundscape.enable();
+  }
   function setIntent(value) {
     required(typeof value === 'boolean', 'Listening intent must be a boolean.');
     if (disposed) return snapshot();
@@ -594,13 +615,15 @@ export function createSoundtrackPlayer({
   }
   async function resume() {
     if (disposed) return false;
-    suspended = false;
+    const enabled = wake();
     if (!desired) {
       status = 'paused';
       emit();
       return false;
     }
-    return play();
+    const playing = play();
+    await enabled;
+    return playing;
   }
   function dispose() {
     if (disposed) return;
@@ -625,6 +648,8 @@ export function createSoundtrackPlayer({
     setContext,
     setAuthoredTrack,
     selectPlaylist,
+    prepare,
+    wake,
     play,
     pause,
     setIntent,
