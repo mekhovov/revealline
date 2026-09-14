@@ -129,6 +129,16 @@ test('read-only capacity matches the immutable-entry default build and cannot ce
     await assert.rejects(inspectPagesCapacity({ ...f.options, nextPlayableBytes: invalid }));
 });
 
+test('retention publishes only the requested newest immutable releases', async (t) => {
+  const f = await fixture(t);
+  const report = await buildPages({ ...f.options, retainedReleases: 1 });
+  assert.equal(report.playableVersions, 1);
+  const index = JSON.parse(await fs.readFile(path.join(f.root, 'dist/releases/index.json')));
+  assert.equal(index.latest, 'v0.2.0');
+  assert.deepEqual(index.releases.map((entry) => entry.version), ['v0.2.0']);
+  await assert.rejects(fs.access(path.join(f.root, 'dist/releases/v0.1.0')));
+});
+
 test('main routing declares every current override and preserves latest versioned bytes, old bridges and Release downloads', async (t) => {
   const f = await fixture(t),
     before = await files(path.join(f.root, 'releases')),
