@@ -144,6 +144,7 @@ for (const source of fixture.sources) {
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
       textSize: 'standard',
+      textFace: 'pixel',
       screenControls: 'auto',
       screenSteeringHand: 'left',
     });

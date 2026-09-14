@@ -86,6 +86,9 @@ test('v0.10 profile export, chapter continuation, rewards and campaign identity 
     exportLibrary(importLibrary(fixture.library, { campaigns: [campaign] })),
   ]) {
     const owned = JSON.parse(exported);
+    assert.equal(Object.hasOwn(owned.preferences, 'textFace'), true);
+    assert.equal(owned.preferences.textFace, 'pixel');
+    delete owned.preferences.textFace;
     assert.equal(Object.hasOwn(owned.preferences, 'screenSteeringHand'), true);
     assert.equal(owned.preferences.screenSteeringHand, 'left');
     delete owned.preferences.screenSteeringHand;
