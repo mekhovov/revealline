@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seven compact FPV enemies · source study</title>
+<style>
+:root{font:14px system-ui;color:#edf3fc;background:#152134;color-scheme:dark}body{max-width:1320px;margin:20px auto;padding:0 18px}h1{font-size:24px;margin:0 0 8px}p{line-height:1.45;max-width:100ch}label{display:inline-flex;align-items:center;gap:8px;margin:6px 24px 12px 0}select{font:inherit;padding:5px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:16px}article{background:#223147;border:1px solid #45607c;border-radius:8px;padding:12px}h2{font-size:16px;margin:0 0 3px}small{color:#bbcadb}.samples{display:flex;gap:20px;align-items:flex-end;justify-content:center;padding:14px 10px;margin:10px 0;border-radius:5px}.dark{background:#0c2436;color:#eef4ff}.light{background:#e8e1cf;color:#142138}.sample{display:grid;gap:8px;justify-items:center;font-size:12px}.frame{width:var(--size);height:var(--size);position:relative}.frame img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;transform:rotate(var(--heading,0deg))}.pivots .frame:before,.pivots .frame:after{content:"";position:absolute;background:#ff3988;z-index:2;pointer-events:none}.pivots .frame:before{left:50%;top:0;width:1px;height:100%}.pivots .frame:after{top:50%;left:0;height:1px;width:100%}.metric{font-size:12px;margin:8px 0 0;color:#c9d5e4}.note{font-size:13px;color:#c2d0e1}.large{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:12px 0}.large .frame{--size:128px;background:#0c2436}a{color:#a5d5ff}
+</style>
+<h1>Seven compact FPV enemies</h1>
+<p>Original source bodies at labeled CSS sizes. Broad silhouettes and pale metal edges follow the accepted hunter direction. These are static images with baked fittings; no animated rigs, runtime adoption or combat qualification.</p>
+<label>Heading <select id="heading"><option value="0">North</option><option value="90">East</option><option value="180">South</option><option value="270">West</option></select></label>
+<label><input id="pivots" type="checkbox"> Show image-frame pivot</label>
+<label>Enlarged body <select id="role"></select></label>
+<div class="large"><div class="frame"><img id="large" alt="Selected enemy original"></div><p class="note">128 CSS px · same original, proportional contain fit.<br>The center cross is an image-frame pivot, not a calibrated collider or optical center.<br><a href="README.md">Source qualifications</a> · <a href="inspection.json">Actual alpha and palette measurements</a></p></div>
+<p id="status" role="status">Loading seven originals…</p>
+<main class="grid" id="grid"></main>
+<p class="note">All originals are1254×1254 RGBA8, totaling6,522,849 B. Real transparent backgrounds; most paint alpha253/254. Actual visible RGB colors36,614–63,141: the12–16-color brief was not achieved. No source PNG was edited, normalized or resized. CSS pixel labels are not physical device certification.</p>
+<script>
+const roles=[['bouncer','Tracked hunter'],['border-patrol','Border quad'],['contour-patrol','Frontier twin rotor'],['claimed-rover','Six-wheel rover'],['eroder','Territory drill'],['lane-boss','Tripod lane emitter'],['relay-sentinel','Relay sentinel']];
+const sizes=[16,24,32,64];
+const large=document.querySelector('#large');
+for(const [type,name] of roles){const option=document.createElement('option');option.value=type;option.textContent=name;document.querySelector('#role').append(option);const card=document.createElement('article');const h=document.createElement('h2');h.textContent=name;const subtitle=document.createElement('small');subtitle.textContent=type;card.append(h,subtitle);for(const tone of ['dark','light']){const strip=document.createElement('div');strip.className='samples '+tone;strip.setAttribute('aria-label',name+' on '+tone);for(const size of sizes){const sample=document.createElement('div');sample.className='sample';const frame=document.createElement('div');frame.className='frame';frame.style.setProperty('--size',size+'px');const img=document.createElement('img');img.src='originals/'+type+'.png';img.alt=name;frame.append(img);const text=document.createElement('span');text.textContent=size+' px';sample.append(frame,text);strip.append(sample)}card.append(strip)}const metric=document.createElement('p');metric.className='metric';metric.dataset.type=type;card.append(metric);document.querySelector('#grid').append(card)}
+large.src='originals/bouncer.png';
+document.querySelector('#heading').addEventListener('change',event=>document.documentElement.style.setProperty('--heading',event.target.value+'deg'));
+document.querySelector('#pivots').addEventListener('change',event=>document.body.classList.toggle('pivots',event.target.checked));
+document.querySelector('#role').addEventListener('change',event=>{large.src='originals/'+event.target.value+'.png';large.alt=roles.find(row=>row[0]===event.target.value)[1]});
+Promise.all([...document.images].map(img=>img.decode())).then(()=>{document.querySelector('#status').textContent='All seven originals loaded ·57 frames · device pixel ratio '+devicePixelRatio}).catch(error=>{document.querySelector('#status').textContent='Original load failed: '+error.message});
+fetch('inspection.json').then(response=>{if(!response.ok)throw Error('Measurement file unavailable');return response.json()}).then(report=>{for(const row of report.images){const metric=document.querySelector('[data-type="'+row.type+'"]');metric.textContent='Visible width '+(row.substantialWidthFraction*100).toFixed(1)+'% · '+row.actualVisibleRGBColorsAlpha128.toLocaleString()+' actual RGB colors · '+row.alpha.zero.toLocaleString()+' transparent pixels'}}).catch(error=>{document.querySelector('#status').textContent+=' · '+error.message});
+</script>
+</html>
