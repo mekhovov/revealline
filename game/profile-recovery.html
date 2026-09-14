@@ -15,7 +15,8 @@
         separate.
       </p>
       <p class="note">
-        Original media is not inspected here. Flight recovery and storage migration are unavailable.
+        Read stored values or verify one selected original image. Flight recovery and storage
+        migration are unavailable.
       </p>
       <div class="actions">
         <button id="profile-recovery-find" type="button" disabled>Find profiles</button>
@@ -34,8 +35,34 @@
       </p>
       <p id="profile-recovery-summary"></p>
       <a id="profile-recovery-download" hidden>Download stored profile snapshot</a>
+      <h2>Selected original images</h2>
+      <p id="profile-recovery-catalog-status" class="note"></p>
       <p class="note">
-        Exports from this screen contain no original images, audio or verified replay. Keep existing
+        Original files are shared by profiles on this site. Listing or verifying an image does not
+        prove that this profile earned it. These separate files are not a complete backup.
+      </p>
+      <button id="profile-recovery-originals-review" type="button" disabled>
+        Review originals
+      </button>
+      <label for="profile-recovery-original">Shared original</label>
+      <select id="profile-recovery-original" disabled></select>
+      <p id="profile-recovery-original-summary"></p>
+      <div class="actions">
+        <button id="profile-recovery-original-verify" type="button" disabled>Verify image</button>
+        <button id="profile-recovery-original-file" type="button" disabled>
+          Prepare original file
+        </button>
+        <button id="profile-recovery-original-report" type="button" disabled>
+          Prepare identity report
+        </button>
+      </div>
+      <div class="actions">
+        <a id="profile-recovery-original-download" hidden>Download original image</a>
+        <a id="profile-recovery-report-download" hidden>Download identity report</a>
+      </div>
+      <p class="note">
+        Stored-data exports exclude original files. Selected image downloads exclude other images,
+        audio and saved flights. Identity reports are diagnostics, not import files. Keep existing
         complete backups.
       </p>
     </main>
