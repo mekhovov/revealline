@@ -1,0 +1,11 @@
+{
+  "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/archive-publication/archive08-preparation/public-attempt-1",
+  "reportSha256": "cd59441c3cbbca0ebb854b501eb6fbd4b2e06eaf5a45761945db452e12adac35",
+  "resultsSha256": "beba1c49eff626b1a4a8acc9809cd91b6589afcb3cf53bb2844f574015521acf",
+  "attemptsSha256": "21fc9e45dffd90f2025b29d912ae7f97ef4e64ec94a22b79d1cdaaed38745dab",
+  "priorStatus": "FAIL",
+  "retainedPassingBodies": 760,
+  "retriedTransportFailures": 13,
+  "timeoutMs": 300000,
+  "concurrency": 2
+}
