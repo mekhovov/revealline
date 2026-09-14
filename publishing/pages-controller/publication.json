@@ -1,7 +1,7 @@
 {
   "format": "revealline-pages-controller.v1",
   "currentVersion": "v0.44.0",
-  "catalogSha256": "4d5fb300a3cc16f87ea16c79e5624e42aa60e9f0190b746cdda79bc6c1b955ec",
+  "catalogSha256": "53e316a82e1ca1ec68204aa2885546485d468f4176596597f3a0ab018c14d215",
   "allocationSha256": "9ff568faadcf7189841386dc3b935d1e7dae7be45e35dfbc156ecebc5fd0b3e6",
   "admissions": [
     {
@@ -264,6 +264,88 @@
         {
           "path": "evidence/archive-07/browser-admission.json",
           "sha256": "279988425c79d664477248785253fdb953ac8ac8b8a1c6f4e1d3987b84297502",
+          "kind": "browser"
+        }
+      ]
+    },
+    {
+      "id": "archive-08",
+      "infrastructureCommit": "caf88b909eea7ddb9e7109291aee0089befbc488",
+      "deploymentId": 6446745339,
+      "evidence": [
+        {
+          "path": "evidence/archive-08/http-report.json",
+          "sha256": "6069b57188ad5bfb2f667eea8603cc76e19ff97f24d0dbe7887429484acade7d",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-08/expected-inventory.json",
+          "sha256": "e2f9c78ca63258f605faf3826b70e0c7ac60c85d689e687696f6fd02187ce7cb",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-08/first-http-failure-report.json",
+          "sha256": "cd59441c3cbbca0ebb854b501eb6fbd4b2e06eaf5a45761945db452e12adac35",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/first-http-results.jsonl",
+          "sha256": "beba1c49eff626b1a4a8acc9809cd91b6589afcb3cf53bb2844f574015521acf",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/first-http-attempts.jsonl",
+          "sha256": "21fc9e45dffd90f2025b29d912ae7f97ef4e64ec94a22b79d1cdaaed38745dab",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/http-results.jsonl",
+          "sha256": "9c8a0b9fd844fc0f27e8a076ce89d33a6bf5a9423391081940142dc60bd3cf2e",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/http-transport-retries.jsonl",
+          "sha256": "abf5456d0a28e48ccb95aefadc082470de08057d7a8a927df0a87f2fb410c78f",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/http-prior-proof.json",
+          "sha256": "62c305c6f05cf024ec4100d670ef1b4a0bbc58d97885084a30670a764b4d8150",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/public-byte-admission.json",
+          "sha256": "b09b4c2dbc8527e6c1f440c1c4f40e6bafd9526622692b44618cf81e5e716bff",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/hosted-frozen-reproduction.json",
+          "sha256": "f15d2d699d84114fddd2127a0f0d7a60a0d99c2822ea6105008f9974d7ee10de",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/native-handoff.json",
+          "sha256": "302e84b391212a6df3c20a474ef2db087218ad92ec787af736e5f4d296041021",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/native-v047.json",
+          "sha256": "be566d3d37a580fa715394faa80e336a92a58b7f45ef529237c78f8e8825b375",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/native-v048.json",
+          "sha256": "c1bc927a6f25e208af86ef53366900a3e2e5cc3e9f49190fc051852cf35aeed4",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/deployment-snapshot.json",
+          "sha256": "053c1c3ef41f7ab8e1d2936aedfc9ee65871a4454f2302d7d64ca8ab013149e6",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-08/browser-admission.json",
+          "sha256": "c5e6209afbff5ce79de39b5ba3401eeeda910ef06b9545d9c3b9607575cbf7ec",
           "kind": "browser"
         }
       ]
