@@ -21,6 +21,7 @@ import {
   VERSION,
   COMMIT,
   SHA,
+  retainRecentMetadata,
 } from './metadata.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -78,6 +79,7 @@ export async function validateAdmissions({
       'admissions',
       'deploymentEnabled',
       'currentSourceQualification',
+      'retainedReleasesPerMajor',
     ]) ||
     configuration.format !== 'revealline-pages-controller.v1' ||
     typeof configuration.deploymentEnabled !== 'boolean' ||
@@ -86,7 +88,10 @@ export async function validateAdmissions({
     !SHA.test(configuration.catalogSha256) ||
     !SHA.test(configuration.allocationSha256) ||
     !Array.isArray(configuration.admissions) ||
-    configuration.admissions.length > 64
+    configuration.admissions.length > 64 ||
+    !Number.isSafeInteger(configuration.retainedReleasesPerMajor) ||
+    configuration.retainedReleasesPerMajor < 1 ||
+    configuration.retainedReleasesPerMajor > 100
   )
     throw new Error('Invalid Pages controller configuration.');
   if (requireBrowser && !configuration.deploymentEnabled)
@@ -125,7 +130,8 @@ export async function validateAdmissions({
     throw new Error('Allocation byte pin mismatch.');
   const allocation = parseJSON(allocationsBytes),
     records = [...metadata.values()].map((m) => m.record),
-    admitted = new Map();
+    admitted = new Map(),
+    relevantAdmissions = [];
   if (!exact(allocation, ['formatVersion', 'shards']) || !Array.isArray(allocation.shards))
     throw new Error('Invalid allocation registry.');
   // Unknown future reservations remain in the registry, never in the effective routing overlay.
@@ -144,6 +150,9 @@ export async function validateAdmissions({
       throw new Error('Invalid archive admission.');
     const shard = allocation.shards.find((s) => s.id === admission.id);
     if (!shard) throw new Error('Admission has no allocation.');
+    // Retired versions remain in the immutable catalog, but are intentionally not
+    // routed or validated by a bounded public Pages deployment.
+    if (!shard.versions.some((version) => metadata.has(version))) continue;
     let http = null,
       inventory = null,
       inventoryPin = null,
@@ -259,6 +268,7 @@ export async function validateAdmissions({
         throw new Error('Archive release record does not match the pinned original.');
     }
     admitted.set(admission.id, shard);
+    relevantAdmissions.push(admission);
   }
   const plan = {
     formatVersion: 1,
@@ -283,7 +293,7 @@ export async function validateAdmissions({
   for (const version of metadata.keys())
     if (version !== configuration.currentVersion && !canonicalSites[version])
       throw new Error(`Historical edition lacks an admitted archive: ${version}`);
-  return { plan, canonicalSites, qualification };
+  return { plan, canonicalSites, qualification, admissions: relevantAdmissions };
 }
 async function writeFile(directory, relative, bytes) {
   safePath(relative);
@@ -312,10 +322,11 @@ export async function assemble({
   outputDirectory,
   requireBrowser = true,
 }) {
-  const { lock, metadata, catalogSha256 } = await loadCatalog(directory),
+  const { lock, metadata: catalogMetadata, catalogSha256 } = await loadCatalog(directory),
     configuration = parseJSON(await readOrdinary(directory, 'publication.json'));
   if (catalogSha256 !== configuration.catalogSha256) throw new Error('Catalog byte pin mismatch.');
-  const { canonicalSites } = await validateAdmissions({
+  const metadata = retainRecentMetadata(catalogMetadata, configuration.retainedReleasesPerMajor),
+    { canonicalSites } = await validateAdmissions({
       directory,
       configuration,
       metadata,

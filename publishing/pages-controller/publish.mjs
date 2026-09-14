@@ -11,7 +11,7 @@ import {
   readOrdinary,
   validateAdmissions,
 } from './assemble.mjs';
-import { digest, jsonBytes, parseJSON } from './metadata.mjs';
+import { digest, jsonBytes, parseJSON, retainRecentMetadata } from './metadata.mjs';
 import { publishedReleasePages, releaseDecision } from './release-policy.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
@@ -22,21 +22,23 @@ const run = (command, args) => {
   return result.stdout.trim();
 };
 async function verify({ preview = false, remote = false } = {}) {
-  const { lock, metadata, catalogSha256 } = await loadCatalog(directory),
+  const { lock, metadata: catalogMetadata, catalogSha256 } = await loadCatalog(directory),
     configuration = parseJSON(await readOrdinary(directory, 'publication.json'));
   if (configuration.catalogSha256 !== catalogSha256) throw new Error('Frozen catalog changed.');
-  const { qualification } = await validateAdmissions({
-    directory,
-    configuration,
-    metadata,
-    requireBrowser: !preview,
-  });
-  const actualTags = run('git', ['tag', '--list', 'v*'])
-    .split('\n')
-    .filter((tag) => /^v\d+\.\d+\.\d+$/.test(tag))
-    .sort();
-  if (JSON.stringify(actualTags) !== JSON.stringify(lock.releases.map((r) => r.version).sort()))
-    throw new Error('Frozen tag set changed; review the catalog before publication.');
+  const metadata = retainRecentMetadata(catalogMetadata, configuration.retainedReleasesPerMajor),
+    { qualification, admissions } = await validateAdmissions({
+      directory,
+      configuration,
+      metadata,
+      requireBrowser: !preview,
+    });
+  const actualTags = new Set(
+    run('git', ['tag', '--list', 'v*'])
+      .split('\n')
+      .filter((tag) => /^v\d+\.\d+\.\d+$/.test(tag)),
+  );
+  if (lock.releases.some((row) => !actualTags.has(row.version)))
+    throw new Error('A frozen catalog tag is missing from the repository.');
   for (const row of lock.releases) {
     if (
       run('git', ['rev-parse', row.version]) !== row.tagObject ||
@@ -91,7 +93,7 @@ async function verify({ preview = false, remote = false } = {}) {
     }
     if (digest(Buffer.concat(chunks)) !== configuration.currentSourceQualification.sha256)
       throw new Error('Published source qualification does not match the reviewed pin.');
-    for (const admission of configuration.admissions) {
+    for (const admission of admissions) {
       const repo = `mekhovov/revealline-${admission.id}`;
       const api = (suffix) => JSON.parse(run('gh', ['api', `repos/${repo}/${suffix}`]));
       const commit = api('commits/main'),
@@ -118,6 +120,7 @@ async function verify({ preview = false, remote = false } = {}) {
     controllerTree,
     catalogSha256,
     qualifiedSourceTree,
+    admittedArchives: admissions.length,
     observations,
     releasePolicy,
     publishable: !preview,
@@ -139,7 +142,6 @@ async function main() {
       JSON.stringify({
         ...binding,
         currentVersion: configuration.currentVersion,
-        admittedArchives: configuration.admissions.length,
       }),
     );
     return;
