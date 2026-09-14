@@ -63,3 +63,9 @@ For any playable theme, asset, rule, interface or pack change, follow the shared
 ## Keep live pictures and earned originals stable
 
 When a task touches reveal artwork, a saved flight, Collection or media export, follow the shared [live-picture and paired-recovery contract](../../../docs/feature-delivery-workflow.md#live-pictures-earned-originals-and-paired-recovery) and [concrete prompts](../../prompts/media-presentation.md). Preserve saved A after assignment B, first-earned A and exact owner identity. Keep JSON game data, `.rlmedia` originals and `.rlsound` audio distinct; missing saved originals remain paused without a replacement. Shared-v3 source adoption does not certify old readers, browser recovery or a public release. Unrelated art/behavior work need not open or migrate media storage.
+
+## Implemented presentation registry and transfer contract
+
+Use [the versioned framework](../../../docs/presentation-system.md) for semantic slots and immutable image/font/audio/recipe revisions. Resolve base → theme → collection → draft through the shared validator; never add executable recipes, fetch URLs or arbitrary CSS to imported data. The `.rltheme` compiler checks the manifest and exact payload hashes and emits deterministic runtime files; it does not publish an upload. Match frame dimensions, alpha, bounded geometry, motor count and slot budget. Palette and artistic-readability claims still require actual inspection.
+
+Keep source, produced and reviewed stages distinct. Preserve all prior revisions and required collection members atomically. Current picture previews resolve code-owned exact owners through `current-art.mjs`; do not substitute a new picture for missing saved or first-earned originals. `node scripts/compile-presentation.mjs --bundle candidate.rltheme --out .cache/new-presentation-review` prepares a review artifact. Record native-browser decoding, fonts, sound and gameplay separately from structural compilation.
