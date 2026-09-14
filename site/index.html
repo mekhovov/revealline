@@ -23,7 +23,10 @@
         min-height: 100vh;
         box-sizing: border-box;
         padding: 24px;
-        font: 18px/1.5 monospace;
+        font:
+          18px/1.5 'Field Kit UI',
+          system-ui,
+          sans-serif;
       }
       #boot-screen a {
         color: #68d9fa;
@@ -34,13 +37,16 @@
     </style>
     <link rel="stylesheet" href="../game/boot.css" />
     <script src="./launch.mjs" defer></script>
+    <link rel="stylesheet" href="../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../game/ui/field-kit-components.css" />
   </head>
-  <body>
+  <body class="field-kit field-kit-support">
     <main id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
         <p class="launch-kicker">REVEAL / LINE</p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
-        <h1 id="boot-title">Your next flight.</h1>
+        <h1 class="field-kit-display" id="boot-title">Your next flight.</h1>
         <p id="boot-status" class="launch-status" role="status">
           Opening the game. Choose Enter game if this screen stays here.
         </p>

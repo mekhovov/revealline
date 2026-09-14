@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  font-family: ui-monospace, monospace;
+  font-family: var(--fk-font-mono, monospace);
   color: #eef3df;
   background: #0a141e;
 }

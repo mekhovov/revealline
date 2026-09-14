@@ -10,7 +10,7 @@
 }
 body {
   background: #080c15;
-  font-family: 'SFMono-Regular', Consolas, monospace;
+  font-family: var(--fk-font-mono, monospace);
 }
 body.game-shell {
   --paper: #080c15;
@@ -301,10 +301,7 @@ dialog textarea {
 #shell-title {
   margin: 20px 0;
   color: #f0f9ff;
-  font:
-    900 clamp(44px, 7vw, 94px) / 0.93 'SFMono-Regular',
-    Consolas,
-    monospace;
+  font: 900 clamp(44px, 7vw, 94px) / 0.93 var(--fk-font-mono, monospace);
   letter-spacing: -5px;
 }
 #shell-title span {
