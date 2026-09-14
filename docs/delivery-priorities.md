@@ -12,6 +12,8 @@ A source-only browser journey verifies keyboard title → Settings → Collectio
 
 The existing v0.51 PR is a sibling of this integration and owns that release number. The integration is not another v0.51 and is not yet a packaged or public replacement. Published tags v0.44–v0.46 and the later committed interface work retain their own delivery records; a higher number does not prove its current Pages deployment. A fresh v0.48 download exists, but its Pages game path returned 404 during this review; publication remains under separate verification. Older native receipts do not qualify this combined source.
 
+The successor is now reconciled through `04424872`, with observed main `5189ceb5` and phase-seven `eaae937e` in its ancestry. It retains the corrected D-pad, recovery and Collection work. A [combined native review](research/native-source-044248/review.md) verifies landscape focus clearance and a real keyboard disclosure/Back sequence; repeated mission-dialog accessibility and session-only warning placement remain open. Reserve artwork wave three is independently committed as `91b2f077`; these twelve source illustrations are not extra delivered campaign levels.
+
 ## Match the eight requested improvements
 
 | ID  | Player requirement                             | Existing implementation                                                                                                           | Current work and completion condition                                                                                                                                            |
@@ -59,7 +61,7 @@ The following inventory is the retained v0.41/v0.42 content cohort plus separate
 | ------------------------------------ | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | 29 map families / 116 theme pictures | 15 families / 60 pictures delivered; 3 additional families / 12 pictures are source candidates.    | 14 families / 56 pictures beyond delivered content, including candidates after qualification.                          |
 | 12 victory stories                   | 1 released example.                                                                                | 11 stories plus broader upload/GIF/recovery acceptance.                                                                |
-| 40 reserve illustrations             | 8 generated and inspected source illustrations across two committed waves.                         | 32 more; a reserve image is not itself a released level or animation.                                                  |
+| 40 reserve illustrations             | 12 generated and inspected source illustrations across three committed waves.                      | 28 more; a reserve image is not itself a released level or animation.                                                  |
 | 56 complete player sets              | FPV and Ukraine body cohorts are delivered; Retro and Spend body cohorts are separately committed. | Full state/rotor animation and both detail treatments remain to be completed. Body counts are not complete-set counts. |
 | 24 finished tracks                   | 24-track source album candidate.                                                                   | Full listening, in-game mix, native transfer and storage qualification.                                                |
 

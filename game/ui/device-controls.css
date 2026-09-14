@@ -514,6 +514,10 @@
    or distorted cells. dvh follows Safari's expanding/collapsing browser bars. */
 @media (orientation: landscape) and (max-height: 600px),
   (orientation: landscape) and (any-pointer: coarse) {
+  /* Reserve room for the canvas focus paint beyond its fitted layout box. */
+  body.field-kit.game-shell[data-flight-state='running'] {
+    --fk-flight-bottom: 8px;
+  }
   .game-shell[data-flight-state='running'] {
     --touch-gutter: 0px;
     --side-gutter: 0px;
