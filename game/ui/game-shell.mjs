@@ -70,9 +70,8 @@ export function attachGameShell({
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
-      // Settings is a child of its actual entry screen. Keeping the title
-      // underneath lets native modal navigation restore both it and its opener.
-      // Destinations that can start/load a flight still leave the title.
+      // Child screens retain their actual entry screen and opener. Explicit
+      // selection actions leave those parents when choosing a flight.
       if (!keepHome) closeHome();
       $(target).click();
     };
@@ -153,8 +152,8 @@ export function attachGameShell({
     if (!$('continue-saved').hidden) $('continue-saved').click();
     else focusGame();
   };
-  forward('shell-collection', 'collection-button');
-  forward('shell-gallery', 'collection-button');
+  forward('shell-collection', 'collection-button', { keepHome: true });
+  forward('shell-gallery', 'collection-button', { keepHome: true });
   forward('shell-settings', 'settings-button', { keepHome: true });
   forward('shell-library', 'library-button');
   forward('shell-options', 'settings-button', { keepHome: true });

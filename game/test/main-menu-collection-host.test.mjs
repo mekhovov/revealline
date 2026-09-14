@@ -10,7 +10,7 @@ function key(page, value) {
   const event = target.emit('keydown', { key: value, code: value, repeat: false });
   if (!event.defaultPrevented && value === 'Enter' && target.tagName === 'BUTTON') target.click();
   if (!event.defaultPrevented && value === 'Escape') {
-    const dialog = page.doc.querySelector('dialog[open]');
+    const dialog = page.doc.activeElement?.closest('dialog[open]');
     if (dialog && !dialog.emit('cancel').defaultPrevented) dialog.close();
   }
   target.emit('keyup', { key: value, code: value });
@@ -108,7 +108,7 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.$('shell-gallery').textContent.trim(), 'Picture collection');
     assert.ok(home.contains(page.$('shell-guide')), 'Field guide remains in the title menu');
     activate(page, input, page.$('shell-gallery'), home);
-    assert.equal(home.open, false);
+    assert.equal(home.open, true);
     assert.equal(page.$('collection-dialog').open, true);
     assert.equal(page.$('library-dialog').open, false);
     assert.ok(page.$('collection-dialog').contains(page.doc.activeElement));
@@ -120,8 +120,8 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.$('collection-dialog').open, false);
     assert.equal(page.$('collection-dialog').contains(page.doc.activeElement), false);
     assert.equal(page.rendered.paused, true);
-    activate(page, input, page.$('overlay-menu'), nonmodalOverlay(page));
     assert.equal(home.open, true);
+    assert.equal(page.doc.activeElement, page.$('shell-gallery'));
     activate(page, input, page.$('shell-library'), home);
     assert.equal(home.open, false);
     assert.equal(page.$('library-dialog').open, true);
@@ -146,6 +146,8 @@ for (const mode of ['keyboard', 'controller']) {
     input.back();
     for (let i = 0; i < 10; i++) page.frame();
     assert.equal(page.$('collection-dialog').open, false);
+    assert.equal(home.open, true);
+    assert.equal(page.doc.activeElement, page.$('shell-gallery'));
     assert.equal(page.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
     assert.equal(page.$('collection-dialog').contains(page.doc.activeElement), false);
