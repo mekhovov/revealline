@@ -4,6 +4,8 @@
 
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
 
+Before freezing a successor, project the main and archive Pages sizes from immutable manifests and the proposed allocation. The main site carries a mutable current graph in addition to every unarchived version. Passing game-source tests does not establish hosting capacity. A changed allocation requires a new source candidate; deploy and verify the archive before enabling main-site forwarding. Preserve the held candidate's successful evidence rather than relabelling it as a game failure.
+
 ## One completion path
 
 1. Implement the player-visible result and update the relevant roadmap step, source documentation and AI authoring guidance. Keep future phase code out of the candidate by staging explicit related paths. Preserve supplied references and unrelated working changes.
