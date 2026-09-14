@@ -93,8 +93,17 @@ test('actual release allowlist ships the standalone still entry and exact existi
       'authoring/library/fpv-role-presentations/originals/fiber.png',
       'authoring/library/fpv-role-presentations/originals/impact.png',
       'authoring/library/fpv-role-presentations/originals/trapper.png',
+      ...[
+        'bouncer',
+        'border-patrol',
+        'contour-patrol',
+        'claimed-rover',
+        'eroder',
+        'lane-boss',
+        'relay-sentinel',
+      ].map((type) => `authoring/library/fpv-enemy-presentations/originals/${type}.png`),
     ].sort(),
-    'Only the three teaching documents and seven explicit FPV role originals ship; other generated originals and proof tooling stay excluded.',
+    'Only the three teaching documents, seven FPV player originals and seven enemy originals ship; other generated originals and proof tooling stay excluded.',
   );
   assert.deepEqual(
     files.filter((name) => name.startsWith('authoring/video-poster/')).sort(),
