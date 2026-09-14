@@ -561,6 +561,15 @@ h1 {
   color: #9cb3b3;
   margin: 20px 0 0;
 }
+.landing-version {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font: 8px/1 monospace;
+  letter-spacing: 1px;
+  opacity: 0.72;
+  text-align: right;
+  text-transform: uppercase;
+}
 .result-medals {
   font-size: 26px;
   letter-spacing: 5px;

@@ -220,15 +220,18 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.42.0',
-    isRelease = false;
+  let buildVersion = document.documentElement.dataset.buildVersion;
+  if (!buildVersion || buildVersion === '__REVEALLINE_VERSION__') buildVersion = 'dev';
+  let isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
     isRelease = true;
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
-  $('version').textContent =
-    `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}${isRelease ? '' : ' / DEV'}`;
+  const versionLabel =
+    buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
+  $('version').textContent = versionLabel;
+  $('landing-version').textContent = `Version ${versionLabel}`;
   const params = new URLSearchParams(location.search);
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
