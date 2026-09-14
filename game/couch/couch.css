@@ -334,13 +334,15 @@ body.race-focus #couch-app {
   color: #06101e;
   background: var(--seat-color);
 }
-@media (max-width: 700px) {
+@media (max-width: 700px), (max-aspect-ratio: 3/2) {
   .race-boards {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: repeat(2, minmax(0, 1fr));
     gap: 10px;
     padding-top: 6px;
   }
+}
+@media (max-width: 700px) {
   .race-score > span {
     display: none;
   }
