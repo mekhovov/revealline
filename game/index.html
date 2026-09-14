@@ -51,13 +51,14 @@
     <link rel="stylesheet" href="ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="ui/field-kit-components.css" />
+    <link rel="stylesheet" href="ui/field-kit-flow.css" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
       <div class="launch-card">
         <p class="launch-kicker">REVEAL / LINE</p>
         <div class="launch-signal" aria-hidden="true"><i></i><i></i><i></i></div>
-        <h1 class="field-kit-display" id="boot-title">Your next flight.</h1>
+        <h1 class="field-kit-display" id="boot-title">Find your line.</h1>
         <p id="boot-status" class="launch-status" role="status">
           Preparing your arcade. If this screen stays here, reload or open the online game.
         </p>
@@ -1070,78 +1071,100 @@
       </div>
     </dialog>
     <dialog id="shell-home" class="shell-home" aria-labelledby="shell-title">
-      <div class="home-art" aria-hidden="true">
-        <div class="home-flight-path"></div>
-        <span class="home-craft">✣</span>
-      </div>
+      <div class="home-art" aria-hidden="true"></div>
       <div class="home-content">
-        <p class="eyebrow">A WORLD WORTH UNCOVERING</p>
+        <p class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
-        <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
-        <p id="landing-version" class="landing-version" aria-label="Game version">
-          Version __REVEALLINE_VERSION__
-        </p>
+        <p class="home-copy">Find your line.<br />Bring the picture home.</p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-course-return" type="button" class="button primary" hidden>
             Back to lesson
           </button>
           <button id="shell-featured" type="button" class="button primary">
-            Pressure Lines · Arcade <span>→</span>
+            Deploy <span aria-hidden="true">→</span>
           </button>
-          <button id="shell-play" type="button" class="button secondary">
-            All missions <span>→</span>
+          <button id="shell-continue" type="button" class="button primary" hidden>
+            Continue <span aria-hidden="true">→</span>
           </button>
-          <button id="shell-worlds" type="button" class="button secondary">More worlds</button>
-          <button id="shell-continue" type="button" class="button secondary">
-            Continue flight
-          </button>
-          <button id="shell-library" type="button" class="button secondary">Scores & saves</button>
-          <button id="shell-gallery" type="button" class="button secondary">
-            Picture collection
-          </button>
-          <a href="couch/" class="button secondary">Couch race · 2 players</a>
-          <button id="shell-options" type="button" class="button secondary">
-            Settings & sound
-          </button>
-
+          <button id="shell-play" type="button" class="button secondary">Missions</button>
+          <button id="shell-gallery" type="button" class="button secondary">Collection</button>
+          <button id="shell-options" type="button" class="button secondary">Settings</button>
+          <button id="shell-workshop" type="button" class="button secondary">Workshop</button>
+        </nav>
+        <p id="shell-destination" class="home-destination" aria-live="polite"></p>
+        <p id="shell-featured-status" class="home-status" role="status" hidden></p>
+        <p class="home-hint">Choose a flight. Trace a path. Close the line.</p>
+        <p id="landing-version" class="landing-version" aria-label="Game version">
+          Version __REVEALLINE_VERSION__
+        </p>
+      </div>
+      <p class="home-art-caption" aria-hidden="true">HANGAR 01 <span>FIRST LIGHT</span></p>
+    </dialog>
+    <dialog
+      id="shell-workshop-dialog"
+      class="shell-workshop-dialog"
+      aria-labelledby="shell-workshop-title"
+    >
+      <div class="shell-dialog-heading">
+        <div>
+          <p class="eyebrow">FIELD KIT / WORKSHOP</p>
+          <h2 id="shell-workshop-title">Make it yours</h2>
+        </div>
+        <button type="button" class="button secondary" data-close="shell-workshop-dialog">
+          Back
+        </button>
+      </div>
+      <p class="field-kit-copy">Build a world, tune your kit, or practice the next move.</p>
+      <nav class="workshop-destinations" aria-label="Workshop destinations">
+        <a href="../authoring/asset-studio/" class="button primary"
+          >Asset Studio <span>Art, themes &amp; generation prompts</span></a
+        >
+        <a href="playground/" class="button secondary"
+          >Mission playground <span>Build and test a flight</span></a
+        >
+        <a href="../authoring/enemy-catalog/" class="button secondary"
+          >Enemy workshop <span>Characters &amp; behaviors</span></a
+        >
+        <a href="replay-theater/" class="button secondary"
+          >Replay Theater <span>Review a recorded flight</span></a
+        >
+        <a href="controller-lab/" class="button secondary"
+          >Controller practice <span>Check your controls</span></a
+        >
+        <button id="shell-guide" type="button" class="button secondary">
+          Field guide &amp; practice
+        </button>
+        <button id="shell-library" type="button" class="button secondary">
+          Scores &amp; saves
+        </button>
+        <button id="shell-help" type="button" class="button secondary">How to play</button>
+      </nav>
+      <details class="shell-tools">
+        <summary>Sound &amp; game extras</summary>
+        <nav>
+          <button id="shell-music" type="button" class="button secondary">Music on / off</button>
           <button
             id="restart-button"
             class="button secondary"
             type="button"
             aria-label="Restart mission"
           >
-            Restart mission</button
-          ><button
-            id="sound-button"
-            hidden
-            class="icon-button"
-            type="button"
-            aria-label="Enable sound"
-            aria-pressed="false"
-          >
-            Toggle sound
+            Restart mission
           </button>
-
-          <button id="shell-music" type="button" class="button secondary">Music on / off</button>
-          <button id="shell-help" type="button" class="button secondary">How to play</button>
-          <button id="shell-guide" type="button" class="button secondary">
-            Field guide & practice
-          </button>
+          <a href="../site/about.html">About &amp; build archive</a>
+          <a data-source-only href="../releases/">Playable versions</a>
         </nav>
-        <p id="shell-featured-status" class="home-status" role="status" hidden></p>
-        <p class="home-hint">Tap a direction to fly. Tap another to turn.</p>
-        <details class="shell-tools">
-          <summary>Studio & extras</summary>
-          <nav>
-            <a href="../site/about.html">About & build archive</a>
-            <a href="playground/">Playground</a
-            ><a href="../authoring/enemy-catalog/">Enemy workshop</a
-            ><a href="replay-theater/">Replay Theater</a
-            ><a href="controller-lab/">Controller practice</a
-            ><a data-source-only href="../releases/">Playable versions</a>
-          </nav>
-        </details>
-      </div>
+      </details>
+      <button
+        id="sound-button"
+        hidden
+        class="icon-button"
+        type="button"
+        aria-label="Enable sound"
+        aria-pressed="false"
+      >
+        Toggle sound
+      </button>
     </dialog>
     <dialog id="shell-missions" class="shell-missions" aria-labelledby="shell-missions-title">
       <div class="shell-dialog-heading">
@@ -1158,9 +1181,26 @@
           Back
         </button>
       </div>
+      <details id="shell-mode-choice" class="shell-mode-choice">
+        <summary>Mode · Solo flight</summary>
+        <nav aria-label="Game mode">
+          <span class="field-kit-secondary">Solo flight selected</span>
+          <a href="couch/" class="button secondary">Couch race · 2 players</a>
+          <button id="shell-worlds" type="button" class="button secondary">More worlds</button>
+        </nav>
+      </details>
       <div id="shell-mission-content"></div>
       <div id="shell-brief-content" hidden></div>
-      <button id="shell-briefing" type="button" class="button primary">Return to briefing →</button>
+      <div id="shell-deploy-bar" class="shell-deploy-bar">
+        <div class="shell-prepared-context">
+          <p id="shell-prepared-mission" class="field-kit-secondary" aria-live="polite"></p>
+          <button id="shell-prepare" type="button" class="button secondary">Flight setup</button>
+        </div>
+        <div>
+          <button id="shell-briefing" type="button" class="button secondary">Back to flight</button>
+          <button id="shell-deploy" type="button" class="button primary">Deploy →</button>
+        </div>
+      </div>
     </dialog>
     <script id="boot-phaser" src="vendor/phaser-4.2.1.min.js"></script>
     <p id="controller-connection-hint" class="controller-connection-hint" role="status" hidden></p>

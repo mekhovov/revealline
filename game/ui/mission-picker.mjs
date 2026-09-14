@@ -1,3 +1,5 @@
+import { attachMissionGallery } from './mission-gallery.mjs';
+
 const attached = new WeakMap();
 
 /** Reorganize the existing mission controls. Native selects remain the host boundary. */
@@ -63,6 +65,7 @@ export function attachMissionPicker({
   for (const child of original) if (!keep.has(child)) fields.append(child);
   deck.append(...[heading, continued, stage, brief, setup].filter(Boolean));
   deck.classList.add('mission-picker');
+  const gallery = attachMissionGallery({ document: doc, missions });
 
   const rows = new Map(),
     removers = [];
@@ -109,6 +112,7 @@ export function attachMissionPicker({
   }
   function sync() {
     if (destroyed) return;
+    gallery?.sync();
     const disabled = pack.disabled || pack.hidden;
     if (!disabled) requested = null;
     setAttribute(chapters, 'aria-busy', String(pack.disabled && !pack.hidden));
@@ -228,6 +232,7 @@ export function attachMissionPicker({
       observer?.disconnect();
       for (const remove of removers) remove();
       for (const row of rows.values()) row.remove();
+      gallery?.destroy();
       deck.append(...original);
       stage.remove();
       setup.remove();

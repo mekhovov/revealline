@@ -149,3 +149,23 @@ html:not([data-boot-state='ready']) body {
     width: 100%;
   }
 }
+/* The launch surface shares the title hangar; text remains live and readable. */
+#boot-screen.launch-screen {
+  background-image:
+    linear-gradient(rgb(7 11 18 / 65%), rgb(7 11 18 / 88%)),
+    url('./ui/art/field-kit/prepared/title-hangar-v1.png');
+  background-position: center;
+  background-size: cover;
+  image-rendering: pixelated;
+}
+#boot-screen .launch-card {
+  background: rgb(16 25 35 / 96%);
+}
+
+@media (max-width: 680px) {
+  #boot-screen.launch-screen {
+    background-image:
+      linear-gradient(rgb(7 11 18 / 45%), rgb(7 11 18 / 75%)),
+      url('./ui/art/field-kit/prepared/title-hangar-portrait-v1.png');
+  }
+}
