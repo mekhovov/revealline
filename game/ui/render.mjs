@@ -13,6 +13,7 @@ import {
 import { createAnimationState, advanceAnimation } from '../../authoring/motion-lab/animation.mjs';
 import { fittedBodySize, paintCharacter } from '../../authoring/motion-lab/render-character.mjs';
 import { createSceneArt } from './scene-art.mjs';
+import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import {
   createActorPresentation,
   actorDiameter,
@@ -90,6 +91,8 @@ export class BoardPainter {
   constructor(presets, { onAsset = () => {} } = {}) {
     this.presets = presets;
     this.onAsset = onAsset;
+    this.lookWarning = '';
+    this.enemyBodies = createEnemyBodyAssets({ changed: () => this.reportAssets() });
     this.animation = createAnimationState();
     this.actorPresentation = createActorPresentation();
     this.heading = 0;
@@ -107,6 +110,8 @@ export class BoardPainter {
   }
   async setLook(theme, bodyId, overrides = {}) {
     const token = ++this.loadToken;
+    this.enemyBodies.clear();
+    this.lookWarning = '';
     this.theme = theme;
     this.bodyId = bodyId;
     this.overrides = overrides;
@@ -146,16 +151,23 @@ export class BoardPainter {
         this.images[role] = img;
         if (role === 'player') this.image = img;
       }
-    this.onAsset(
-      [
-        !knownBody ? 'The requested body is not registered; a neutral fallback rig is shown.' : '',
-        settled.some((x) => x.status === 'rejected')
-          ? 'Some artwork is unavailable; a clear fallback is shown.'
-          : '',
-      ]
-        .filter(Boolean)
-        .join(' '),
-    );
+    this.lookWarning = [
+      !knownBody ? 'The requested body is not registered; a neutral fallback rig is shown.' : '',
+      settled.some((x) => x.status === 'rejected')
+        ? 'Some artwork is unavailable; a clear fallback is shown.'
+        : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    this.reportAssets();
+  }
+  reportAssets() {
+    this.onAsset([this.lookWarning, this.enemyBodies.status()].filter(Boolean).join(' '));
+  }
+  enemyBody(frame) {
+    if (!frame) return null;
+    const image = this.images[frame.role];
+    return image ? { image, record: null } : this.enemyBodies.current(frame);
   }
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
@@ -296,6 +308,7 @@ export class BoardPainter {
       scale: actorScale,
       actorSkins,
     });
+    this.enemyBodies.update(actorFrames.values(), this.overrides);
     this.time += paused ? 0 : dt;
     for (const effect of this.effects)
       if (
@@ -584,7 +597,8 @@ export class BoardPainter {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
         const stunned = (e.stunnedUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        drawPresentedActor(ctx, actorFrames.get(e.id), p, this.images.boss);
+        const body = this.enemyBody(actorFrames.get(e.id));
+        drawPresentedActor(ctx, actorFrames.get(e.id), p, body?.image, body?.record);
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
       }
@@ -603,6 +617,7 @@ export class BoardPainter {
             p,
             this.images,
             actorFrames.get(e.id),
+            this.enemyBody(actorFrames.get(e.id)),
           )
         )
           continue;
@@ -621,12 +636,11 @@ export class BoardPainter {
           }
           continue;
         }
-        const role =
-          e.type === 'lane-boss' ? 'boss' : e.type === 'border-patrol' ? 'patrol' : 'enemy';
         const stunned = (e.stunnedUntil || 0) > t,
           slowed = (e.slowUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        drawPresentedActor(ctx, actorFrames.get(e.id), p, this.images[role]);
+        const body = this.enemyBody(actorFrames.get(e.id));
+        drawPresentedActor(ctx, actorFrames.get(e.id), p, body?.image, body?.record);
         ctx.globalAlpha = 1;
         if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
           ctx.strokeStyle = p.accent;
