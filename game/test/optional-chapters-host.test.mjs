@@ -75,6 +75,8 @@ test('native More worlds discovers Tactical separately and keeps the default run
   await open(page);
   assert.match(page.$('optional-worlds-summary').textContent, /Arcade.*Tactical/);
   const stored = new Map(page.storage.map);
+  page.change('optional-worlds-mode', 'Tactical');
+  assert.equal(page.$(`optional-worlds-install-${chapter.id}`).closest('[hidden]'), null);
   page.$(`optional-worlds-install-${chapter.id}`).click();
   await settle(
     () =>
@@ -107,6 +109,51 @@ test('native More worlds discovers Tactical separately and keeps the default run
   assert.equal(page.rendered.paused, true);
   assert.match(page.$('mission-brief-copy').textContent, /Tactical challenge/);
   assert.equal(page.doc.activeElement, page.$('start-button'));
+  assert.deepEqual(page.errors, []);
+});
+test('offline More worlds keeps a real installed chapter reachable without changing a paused cut until explicit Choose', async (t) => {
+  images(t);
+  const page = await soloPage(t);
+  page.$('pack-select').focus();
+  page.$('pack-select').value = 'fpv-arcade-r5';
+  await page.$('pack-select').onchange();
+  await settle(
+    () => !page.$('pack-select').disabled && page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.$('start-button').click();
+  page.key('ArrowDown');
+  page.key('ArrowDown', false);
+  for (let i = 0; i < 13; i++) page.frame();
+  const run = page.rendered.run,
+    checkpoint = authoritativeCheckpoint(run);
+  assert.equal(run.player.cutting, true);
+  const requests = downloads(t, () => Promise.reject(new Error('Offline fixture')));
+  page.$('shell-menu').click();
+  page.$('shell-worlds').click();
+  await settle(() => !page.$('optional-worlds-reload').disabled);
+  assert.match(page.$('optional-worlds-status').textContent, /Online list unavailable/);
+  const stored = new Map(page.storage.map);
+  page.change('optional-worlds-theme', 'fpv');
+  page.change('optional-worlds-mode', 'Arcade');
+  const choose = page.$('optional-worlds-installed-choose-fpv-arcade-r5');
+  assert.ok(choose);
+  assert.equal(choose.disabled, false);
+  assert.equal(choose.closest('[hidden]'), null);
+  page.frame(0);
+  assert.equal(page.rendered.run, run);
+  assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+  assert.equal(page.rendered.paused, true);
+  assert.deepEqual(page.storage.map, stored);
+  assert.equal(requests.length, 1);
+  await choose.onclick();
+  await settle(
+    () => !page.$('optional-worlds-dialog').open && page.doc.body.dataset.pictureState === 'ready',
+  );
+  page.frame(0);
+  assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
+  assert.notEqual(page.rendered.run, run);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, true);
   assert.deepEqual(page.errors, []);
 });
 test('native More worlds installs separately, preserves an unrelated paused pack run and chooses only on explicit action', async (t) => {
@@ -190,17 +237,58 @@ test('keyboard and standard controller reach all world install actions and Back 
     const target = page.doc.activeElement;
     const event = target.emit('keydown', { key: name, code: name, repeat: false });
     if (!event.defaultPrevented && name === 'Enter' && target.tagName === 'BUTTON') target.click();
+    if (!event.defaultPrevented && name === 'Tab') {
+      // Model only the browser's native Tab default inside this dialog.
+      const descendants = (node) =>
+        node.children.flatMap((child) => [child, ...descendants(child)]);
+      const controls = descendants(page.$('optional-worlds-dialog')).filter((node) => {
+        if (
+          node.tabIndex < 0 ||
+          node.disabled ||
+          node.closest('[hidden],[inert],[aria-hidden="true"]')
+        )
+          return false;
+        for (let parent = node.parentElement; parent; parent = parent.parentElement)
+          if (
+            parent.tagName === 'DETAILS' &&
+            !parent.open &&
+            parent.querySelector('summary') !== node
+          )
+            return false;
+        return true;
+      });
+      controls[(controls.indexOf(target) + 1) % controls.length].focus();
+    }
     target.emit('keyup', { key: name, code: name });
   };
   for (let i = 0; i < 30 && page.doc.activeElement.id !== 'shell-worlds'; i++) key('ArrowDown');
   assert.equal(page.doc.activeElement.id, 'shell-worlds');
   key('Enter');
-  await settle(() => !!page.$(`optional-worlds-install-${first.id}`));
+  await settle(
+    () =>
+      !!page.$(`optional-worlds-install-${first.id}`) && !page.$('optional-worlds-reload').disabled,
+  );
   const visited = new Set();
-  for (let i = 0; i < 25; i++) {
-    visited.add(page.doc.activeElement.id);
-    key('ArrowDown');
-  }
+  const seek = (id, step) => {
+    for (let i = 0; i < 80 && page.doc.activeElement.id !== id; i++) step();
+    assert.equal(page.doc.activeElement.id, id);
+  };
+  const traversePages = (step, confirm) => {
+    for (let count = 0; count < 40; count++) {
+      for (let i = 0; i < 80; i++) {
+        visited.add(page.doc.activeElement.id);
+        step();
+      }
+      if (page.$('optional-worlds-next').disabled) return;
+      seek('optional-worlds-next', step);
+      confirm();
+    }
+    assert.fail('Every bounded page must terminate at Next disabled.');
+  };
+  traversePages(
+    () => key('Tab'),
+    () => key('Enter'),
+  );
   for (const item of catalog.packs) assert.ok(visited.has(`optional-worlds-install-${item.id}`));
   let now = 1000;
   const oldNow = Object.getOwnPropertyDescriptor(performance, 'now');
@@ -228,13 +316,16 @@ test('keyboard and standard controller reach all world install actions and Back 
     frame();
   };
   frame();
-  press(0);
-  frame();
-  visited.clear();
-  for (let i = 0; i < 25; i++) {
-    visited.add(page.doc.activeElement.id);
-    press(13);
+  press(13);
+  while (!page.$('optional-worlds-previous').disabled) {
+    seek('optional-worlds-previous', () => press(13));
+    press(0);
   }
+  visited.clear();
+  traversePages(
+    () => press(13),
+    () => press(0),
+  );
   for (const item of catalog.packs) assert.ok(visited.has(`optional-worlds-install-${item.id}`));
   press(1);
   assert.equal(page.$('optional-worlds-dialog').open, false);

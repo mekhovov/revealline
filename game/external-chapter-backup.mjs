@@ -1,5 +1,6 @@
 import { boundedJSON, canonicalJSON, exactKeys, required } from './data-json.mjs';
 import {
+  EXTERNAL_CHAPTER_LIMITS,
   abortExternalChapter,
   emptyExternalChapterIndex,
   externalChapterHash,
@@ -59,7 +60,8 @@ export function createExternalChapterBackup({
     (e) => e.difficulty === 'standard',
   );
   required(
-    Array.isArray(knownDescriptors) && knownDescriptors.length <= PACK_LIMITS.installed,
+    Array.isArray(knownDescriptors) &&
+      knownDescriptors.length <= EXTERNAL_CHAPTER_LIMITS.catalogChoices,
     'Provide a bounded trusted external descriptor registry.',
   );
   const known = new Map();
