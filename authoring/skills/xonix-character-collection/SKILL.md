@@ -34,6 +34,14 @@ Read [the current presentation contract](../../../docs/fpv-role-presentations.md
 
 For a replacement, retain the original media/provenance and register a new versioned body/recipe with a matching hash and explicit build path. Check availability, preference/load behavior and the actual painter, not only the option label. Compact 20px is an opt-in preset policy for this set; it may not change colliders or silently resize older bodies. Historical readers may display their existing fallback for an unknown new appearance ID. Report that compatibility limit rather than claiming an asset migration.
 
+## Compact enemy source collections
+
+Use [the seven compact FPV enemy originals](../../library/fpv-enemy-presentations/README.md) as independently replaceable source candidates for `bouncer`, `border-patrol`, `contour-patrol`, `claimed-rover`, `eroder`, `lane-boss` and `relay-sentinel`. Keep boss and relay slots separate, preserve explicit uploaded-image precedence and bind any future defaults only within the intended theme. Their source IDs and image-frame pivots do not establish collision geometry or calibrated motion anchors.
+
+Preserve the exact generated PNG, effective prompt, actual dimensions and measured alpha/palette evidence for every replacement. These originals have real transparent backgrounds and mostly near-opaque body pixels; the requested12–16-color palette was not achieved. The source review found clearer24–64px shapes, with the twin-rotor silhouette still thin at16px. Keep that qualification separate from gameplay readability or finished animations.
+
+The source bodies contain baked blades, wheels and other fittings. Adding procedural moving blades over them can double the visual parts; do not claim that an image swap supplies an animation rig. Before runtime adoption, inspect actual renderer hooks, current clocks, warning overlays, decoded-image memory and the complete core-byte budget. Any new configurable anchors and cosmetic motion layers need their own bounded format and pose review while preserving gameplay rules.
+
 ## Review and hand off
 
 Apply and switch the actual supplied assets in the available preview, then inspect normal size, small viewport, bright/dark artwork, pause/resume and relevant earned/context fixtures. Compare identical geometry and motion across compact/microtile, detailed-object and hybrid terrain. Test the declared fallback and distinguish reviewed scenarios from missing ones. Browser viewport inspection is not native iPhone or controller verification.
