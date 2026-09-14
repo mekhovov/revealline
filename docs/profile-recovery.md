@@ -1,6 +1,6 @@
 # Read-only profile recovery
 
-This first source slice adds `game/profile-recovery.html`, a separate recovery screen for the current compatible reader. It does not change ordinary game startup, select a different save slot in `app.mjs`, or wire a migration action into Settings. Release packaging and actual browser qualification remain separate work.
+This first source slice adds `game/profile-recovery.html`, a separate recovery screen for the current compatible reader. It does not change ordinary game startup, select a different save slot in `app.mjs`, or wire a migration action into Settings. Release packaging and historical-profile qualification remain separate work. A [scoped native check](verification/round-47/profile-reader-native.md) verified one current-version profile export and return to its own paused game.
 
 The screen reads the built release's `game/build-info.json` to identify its current version. An unbuilt source page without that information refuses to begin profile discovery and keeps Back available. The page does not import the ordinary game host. It reuses native controls and the existing controller navigation adapter; the controller animation loop only routes UI focus.
 

@@ -205,3 +205,10 @@ See [the researched asset workflow](../../docs/research/round-04-asset-workflow.
 ## Applied live-picture recovery
 
 Use [the seven still-picture requests](media-presentation.md) for saved A after assignment B, first-earned A, removed-pack viewing, missing-original recovery, real native downloads into a fresh origin, shared-v3 ownership and later story design. These are prose workflows, not extra registered CLI IDs. JSON, `.rlmedia` and `.rlsound` carry separate inventories; source implementations and modeled tests do not establish browser/public completion.
+
+## Review stored profiles without changing them
+
+Use the existing [Runtime Maintainer](../skills/xonix-runtime-maintainer/SKILL.md) and [separate profile reader](../../docs/profile-recovery.md). These examples use the implemented first slice; they add no CLI command or ordinary-app recovery action.
+
+- “Review the exact `release-v0.40.0` channel in the separate reader. Report profile counts and each unavailable component, prepare its raw stored-data export, and activate the visible native download link. Preserve all storage and record the actual filename and size; this is not a complete media backup.”
+- “Check Cancel and Back while an exact-channel review is pending. Return to that channel's own game, choose Continue, and confirm its previously paused flight and Collection remain available. Keep this native observation separate from historical replay verification, migration and offload.”
