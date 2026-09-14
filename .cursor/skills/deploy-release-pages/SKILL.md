@@ -8,13 +8,16 @@ disable-model-invocation: true
 
 ## Procedure
 
-1. Confirm the requested immutable tag and GitHub Release exist. Do not infer a release from an unreleased package version.
-2. Publish a non-draft, non-prerelease GitHub Release to trigger deployment. For a retry, dispatch `deploy-pages.yml` from `main` and provide the exact tag as `release_tag`, so the current automation builds the immutable release source.
-3. Verify the release gate, test shards, Pages build, artifact upload, and deployment all pass.
-4. Confirm `https://mekhovov.github.io/revealline/release.json` reports the requested version.
+1. Confirm the requested immutable tag and published stable GitHub Release exist. Do not infer a release from an unreleased package version or move an existing tag.
+2. Read `publishing/pages-controller/publication.json` on `main`. The enabled reviewed selector must name the requested version, its exact six-gate source qualification, and admitted archive routes. Pages follows the highest published stable semantic version; publishing a release does not automatically change this selection.
+3. Prepare and review all original metadata, qualification, archive byte/browser evidence, and selector changes before committing the publishing controller. The selection commit triggers `publish-frozen-pages.yml` on `main`. Keep controller identity separate from the immutable game source and use its original ZIP; do not rebuild or amend historical releases.
+4. For a retry, dispatch `publish-frozen-pages.yml` from `main` with the exact `release_tag`. The legacy `deploy-pages.yml` manual entry on `main` routes to the same publisher. Historical tags retain historical workflow files, so do not assume their release event can execute the current controller or test sharder.
+5. Verify the focused controller checks, bounded ZIP extraction, complete artifact byte reread, latest-stable guard, Pages upload, and protected deployment all pass. New game source still requires the six source gates; source pull requests retain preflight and four test shards.
+6. Confirm `https://mekhovov.github.io/revealline/release.json` reports the selected version and exact frozen source revision. Audit all public bytes and actual play/offline/old-entry behavior before claiming completion.
 
 ## Safety rules
 
-- Pages follows the highest published stable semantic version, never an untagged branch.
-- Preserve historical `/releases/<version>/` routes.
-- A queued or in-progress run is not a completed deployment.
+- Only `publish-frozen-pages.yml` on `main` deploys; preserve the main-only Pages environment policy and non-cancelling publication concurrency.
+- Preserve immutable source archives, ZIPs, manifests, tags, and historical `/releases/<version>/` routes. Keep the existing 950 MB main and 800 MB archive budgets.
+- Never execute a current-only source helper from a historical tag. Use the release's accepted exact-source qualification and original bytes.
+- A queued or in-progress run, PR preview, or uploaded artifact is not a completed public deployment.
