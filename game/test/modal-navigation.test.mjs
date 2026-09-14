@@ -413,7 +413,7 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.deepEqual(h.errors, []);
 });
 
-test('title Field Guide returns to its opener after Back, Escape and isolated practice', async (t) => {
+test('title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice', async (t) => {
   nativeDialogs(t);
   // Paint is exercised in the guide panel file; this host uses its supported null Canvas boundary.
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
@@ -421,6 +421,10 @@ test('title Field Guide returns to its opener after Back, Escape and isolated pr
     pad = controllerPad(h, t);
   h.win.crypto = globalThis.crypto;
   for (const exit of ['controller', 'escape', 'practice']) {
+    h.$('shell-workshop').focus();
+    h.$('shell-workshop').click();
+    assert.equal(h.$('shell-workshop-dialog').open, true);
+    assert.ok(h.$('shell-guide').getClientRects().length);
     h.$('shell-guide').focus();
     h.$('shell-guide').click();
     pad.frame();
@@ -442,14 +446,24 @@ test('title Field Guide returns to its opener after Back, Escape and isolated pr
     await Promise.resolve();
     assert.equal(h.$('enemy-guide-dialog').open, false);
     assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.$('shell-workshop-dialog').open, true);
     assert.equal(h.doc.activeElement.id, 'shell-guide');
     assert.equal(h.rendered.run.tick, 0, 'Closing a lesson never starts the campaign');
+    // Escape/practice close outside the controller sample. Adopt the returned
+    // Workshop scope with neutral controls before a separate Back press.
+    pad.frame();
+    pad.pulse(1);
+    await Promise.resolve();
+    assert.equal(h.$('shell-workshop-dialog').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-workshop');
+    assert.equal(h.rendered.run.tick, 0, 'Leaving Workshop never starts the campaign');
     pad.frame();
   }
   assert.deepEqual(h.errors, []);
 });
 
-test('Main menu Field Guide returns to Main menu over an unchanged paused-flight checkpoint', async (t) => {
+test('Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint', async (t) => {
   nativeDialogs(t);
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
   const h = await soloPage(t, { titleScreen: false }),
@@ -459,6 +473,10 @@ test('Main menu Field Guide returns to Main menu over an unchanged paused-flight
   pad.frame();
   h.$('overlay-menu').click();
   assert.equal(h.$('shell-home').open, true);
+  h.$('shell-workshop').focus();
+  h.$('shell-workshop').click();
+  assert.equal(h.$('shell-workshop-dialog').open, true);
+  assert.ok(h.$('shell-guide').getClientRects().length);
   h.$('shell-guide').focus();
   h.$('shell-guide').click();
   pad.frame();
@@ -472,7 +490,14 @@ test('Main menu Field Guide returns to Main menu over an unchanged paused-flight
   pad.frame();
   assert.equal(h.$('enemy-guide-dialog').open, false);
   assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.$('shell-workshop-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'shell-guide');
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('shell-workshop-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-workshop');
+  assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
   pad.pulse(1);
   await Promise.resolve();
   assert.equal(h.$('shell-home').open, false);

@@ -157,8 +157,8 @@ test('optional pack files and raw originals stay outside every default build and
     assert.equal(files.includes(image.record.source), false);
   assert.equal(
     config.optionalOffline.length,
-    5,
-    'Existing declared core exclusions are unchanged.',
+    6,
+    'Arcade R5 joins the existing optional editions within the unchanged offline budget.',
   );
 });
 

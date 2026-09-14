@@ -27,6 +27,29 @@ import {
 } from '../packs.mjs';
 import { createSelectionBookmark } from '../selection-bookmark.mjs';
 
+// Model native dialog opening/return focus; real app modal navigation and handlers stay active.
+function nativeDialogs(t) {
+  const showModal = SoloElement.prototype.showModal,
+    close = SoloElement.prototype.close,
+    origins = new WeakMap();
+  t.mock.method(SoloElement.prototype, 'showModal', function () {
+    if (this.open) return;
+    origins.set(this, this.ownerDocument.activeElement);
+    this.emit('beforetoggle', { oldState: 'closed', newState: 'open' });
+    showModal.call(this);
+    this.querySelector('button:not(:disabled),select:not(:disabled),input:not(:disabled)')?.focus();
+  });
+  t.mock.method(SoloElement.prototype, 'close', function () {
+    if (!this.open) return;
+    close.call(this);
+    const origin = origins.get(this),
+      dialog = origin?.closest('dialog');
+    if (origin?.isConnected && !origin.closest('[hidden]') && (!dialog || dialog.open))
+      origin.focus();
+    else this.ownerDocument.activeElement = this.ownerDocument.body;
+  });
+}
+
 const profileKey = 'revealline.library.dev.v1';
 const handoffKey = 'revealline.playground.current';
 const campaign = {
@@ -39,6 +62,7 @@ const campaign = {
 };
 
 test('a restored FPV-only pack keeps all four canonical Guide appearances and practices', async (t) => {
+  nativeDialogs(t);
   const themes = JSON.parse(
     readFileSync(new URL('../content/themes.json', import.meta.url)),
   ).themes;
@@ -139,8 +163,7 @@ test('a restored FPV-only pack keeps all four canonical Guide appearances and pr
   const savedProfile = storage.getItem(profileKey),
     writes = storage.writes.length;
   const assetWrites = assets.allPuts.length;
-  page.$('shell-guide').focus();
-  page.$('shell-guide').click();
+  openGuide(page);
   const appearance = page.$('enemy-guide-theme');
   assert.deepEqual(
     appearance.children.map(({ value, textContent }) => [value, textContent]),
@@ -213,6 +236,7 @@ function nativeKey(page, key) {
   return event;
 }
 async function setup(t, options = {}) {
+  nativeDialogs(t);
   // Paint is covered by the real guide/actor tests. A null Canvas2D context is
   // an explicit optional-browser boundary here, not a replacement guide/router.
   t.mock.method(SoloElement.prototype, 'getContext', () => null);
@@ -237,9 +261,13 @@ function liveCut(page) {
 function openGuide(page) {
   page.$('overlay-menu').click();
   assert.equal(page.$('shell-home').open, true);
+  page.$('shell-workshop').focus();
+  nativeKey(page, 'Enter');
+  assert.equal(page.$('shell-workshop-dialog').open, true);
   page.$('shell-guide').focus();
   nativeKey(page, 'Enter');
-  assert.equal(page.$('shell-home').open, true, 'Main menu stays beneath its guide');
+  assert.equal(page.$('shell-home').open, true, 'Main menu stays beneath Workshop and its guide');
+  assert.equal(page.$('shell-workshop-dialog').open, true, 'Workshop retains its Guide opener');
   assert.equal(page.$('enemy-guide-dialog').open, true);
 }
 async function launch(page) {
@@ -352,6 +380,12 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.equal(page.$('enemy-guide-dialog').open, false, 'fresh controller Back closes guide');
     assert.equal(page.$('shell-home').open, true);
     assert.equal(page.doc.activeElement.id, 'shell-guide');
+    assert.equal(page.$('shell-workshop-dialog').open, true);
+    controls.pulse(1);
+    await Promise.resolve();
+    assert.equal(page.$('shell-workshop-dialog').open, false, 'a separate Back leaves Workshop');
+    assert.equal(page.$('shell-home').open, true);
+    assert.equal(page.doc.activeElement.id, 'shell-workshop');
     controls.pulse(1);
     await Promise.resolve();
     assert.equal(page.$('shell-home').open, false, 'a separate Back leaves Main menu');

@@ -3146,6 +3146,22 @@ try {
       b.className = `mission${index === levelIndex && !practice && !campaignOverview ? ' selected' : ''}`;
       b.disabled = !missionAvailable(index);
       b.dataset.level = String(index);
+      // A gallery preview is earned with the picture. Unfinished missions use
+      // a decorative concealed tile rather than publishing the hidden original.
+      const earnedPicture =
+        !!progress.clears[level.id] ||
+        !!difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed;
+      const missionVisual = activeEntry.levelVisuals?.find(
+        (v) => v.levelId === level.id,
+      )?.visualOverrides;
+      const picture = missionVisual?.background || activeEntry.visualOverrides?.background;
+      b.dataset.pictureState = earnedPicture
+        ? picture?.dataUrl
+          ? 'earned'
+          : 'unavailable'
+        : 'concealed';
+      if (earnedPicture && /^data:image\/(?:png|jpeg|webp);base64,/u.test(picture?.dataUrl || ''))
+        b.dataset.missionArtwork = picture.dataUrl;
       b.setAttribute('aria-label', `${index + 1}. ${level.name}${b.disabled ? ' — locked' : ''}`);
       const number = document.createElement('span');
       number.className = 'number';
