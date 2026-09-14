@@ -1,3 +1,5 @@
+import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
+
 /** Presentation only: never changes a command, saved heading, or simulation tick. */
 export const SCREEN_STEERING_HANDS = Object.freeze(['left', 'right']);
 export const DEFAULT_SCREEN_STEERING_HAND = 'left';
@@ -32,5 +34,17 @@ export function showScreenControls({ preference = 'auto', modality, scope, runni
     scope === 'flight' &&
     running &&
     (preference === 'always' || (preference === 'auto' && modality === 'touch'))
+  );
+}
+
+/** Validated authored level only: current phase or surviving actors cannot resize the board. */
+export function hasCompactArcadeArena(level) {
+  return (
+    !arcadeActionCapabilities(level).manualAbility &&
+    level?.encounter === null &&
+    Array.isArray(level.enemies) &&
+    level.enemies.every((enemy) =>
+      ['bouncer', 'border-patrol', 'contour-patrol'].includes(enemy.type),
+    )
   );
 }
