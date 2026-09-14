@@ -1,5 +1,7 @@
 # Feature delivery and public verification
 
+**Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
+
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
 
 ## One completion path
@@ -15,7 +17,7 @@ This project’s current authorization is to commit each completed feature or ph
 
 ## Current release boundary
 
-All project skills use the current [production priorities](production-plan.md) and [UI/storage research](research/round-47-native-ui-followup.md). Exact build allowlists must advance with intentional runtime asset adoption: include the explicitly shipped files in packaging tests while continuing to exclude other source originals and authoring proofs. Keep a failed inventory check and qualify its successor normally; never change frozen bytes to make the old expectation pass.
+All project skills use the [current delivery plan](current-delivery-plan.md), with [production history](production-plan.md) and [UI/storage research](research/round-47-native-ui-followup.md) as supporting evidence. Exact build allowlists must advance with intentional runtime asset adoption: include the explicitly shipped files in packaging tests while continuing to exclude other source originals and authoring proofs. Keep a failed inventory check and qualify its successor normally; never change frozen bytes to make the old expectation pass.
 
 The large-library follow-up is explicit offload and exact restoration of downloaded chapters, with earned records and saves preserved. This is not implemented by the storage-retention button. Do not describe current external packs or still originals as removable, raise budgets silently, or claim that all production art and audio can be resident together. Add offload prompts and interface examples only when their versioned implementation exists.
 
