@@ -44,6 +44,12 @@ Actual target fit, warning stability and visible-input checks in both hands,
 including Large text and short landscape, remain pending. Viewport or iframe
 results must be labeled separately from physical touch/controller evidence.
 
+## Return from Settings — source candidate
+
+Opening Settings & sound from the title keeps the title beneath the settings dialog. Close, Escape and controller Back return to that same title action. Music Studio remains a child of Settings: Back returns to Settings first, then to the title. Settings entered from a paused flight returns to that paused flight; it never resumes automatically. Mission selection and saved-flight destinations still leave the title through their existing handlers.
+
+This follows the same-input and consistent-navigation guidance linked above. Source and native verification are recorded separately; this change does not certify physical controllers.
+
 ## Stable flight feedback — source candidate
 
 At a fixed viewport, text size and input mode, changing an encounter from quiet
