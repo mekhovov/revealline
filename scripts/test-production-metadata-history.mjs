@@ -38,7 +38,9 @@ async function fixture(t) {
   for (const name of new Set([
     ...pins(register).map((p) => p.path),
     `${historyRoot}/index.json`,
-    ...index.entries.map((entry) => `${historyRoot}/${entry.sha256}.json`),
+    ...index.entries.map(
+      (entry) => `${historyRoot}/${entry.sha256}${path.posix.extname(entry.path)}`,
+    ),
   ])) {
     await mkdir(path.dirname(path.join(dir, name)), { recursive: true });
     await writeFile(path.join(dir, name), await readFile(path.join(root, name)));
@@ -66,7 +68,19 @@ test('an old checkout without history uses exact current metadata; missing snaps
   await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);
   await rm(path.join(dir, historyRoot, 'index.json'));
   await assert.rejects(verifyProductionSources(register, { root: dir }), /changed authority/);
-  await writeFile(path.join(dir, old.path), await readFile(path.join(root, snapshot)));
+  for (const pin of pins(register)) {
+    const retained = index.entries.find(
+      (entry) =>
+        entry.path === pin.path && entry.sha256 === pin.sha256 && entry.bytes === pin.bytes,
+    );
+    if (retained)
+      await writeFile(
+        path.join(dir, pin.path),
+        await readFile(
+          path.join(root, `${historyRoot}/${retained.sha256}${path.posix.extname(retained.path)}`),
+        ),
+      );
+  }
   assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
 });
 test('changed or symlinked historical snapshots reject; an unrelated mapping cannot redirect a declared pin', async (t) => {
@@ -100,7 +114,7 @@ test('history admits only finite complete JSON identities, with no arbitrary sna
 });
 test('the preserved FPV preset revision remains exact after a later runtime change', async (t) => {
   const retained = index.entries[1];
-  assert.equal(index.entries.length, 2);
+  assert.equal(index.entries.length, 3);
   assert.deepEqual(retained, {
     path: old.path,
     bytes: 36911,
@@ -133,4 +147,73 @@ test('a newly declared unarchived preset revision reads the current file and sti
   // This test candidate is not a successor approval and is never published.
   await writeFile(path.join(dir, old.path), '{}');
   await assert.rejects(verifyProductionSources(next, { root: dir }), /changed authority/);
+});
+
+test('v2 preserves the exact prior renderer as inert source bytes and v1 still accepts JSON-only history', async (t) => {
+  const retained = index.entries[2];
+  assert.equal(index.format, 'revealline-production-metadata-history.v2');
+  assert.deepEqual(retained, {
+    path: 'game/ui/actor-presentation.mjs',
+    bytes: 25033,
+    sha256: '4676dbca131440742815a3ed7a5e1e2ec89c121f813e5d8c0ff45f01360dde4a',
+  });
+  const bytes = await readFile(path.join(root, `${historyRoot}/${retained.sha256}.mjs`));
+  assert.equal(bytes.length, retained.bytes);
+  assert.equal(hash(bytes), retained.sha256);
+  const dir = await fixture(t);
+  await writeFile(path.join(dir, retained.path), bytes);
+  await writeFile(
+    path.join(dir, historyRoot, 'index.json'),
+    JSON.stringify({
+      format: 'revealline-production-metadata-history.v1',
+      entries: index.entries.slice(0, 2),
+    }),
+  );
+  assert.equal((await verifyProductionSources(register, { root: dir })).metadata, 'verified');
+  await writeFile(
+    path.join(dir, historyRoot, 'index.json'),
+    JSON.stringify({ ...index, format: 'revealline-production-metadata-history.v1' }),
+  );
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /history entry/);
+});
+test('v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer', async (t) => {
+  const dir = await fixture(t),
+    retained = index.entries[2];
+  const target = path.join(dir, `${historyRoot}/${retained.sha256}.mjs`);
+  await rm(target);
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);
+  await writeFile(target, 'changed');
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /changed authority/);
+  await rm(target);
+  await symlink(path.join(root, retained.path), target);
+  await assert.rejects(verifyProductionSources(register, { root: dir }), /Symlink/);
+  for (const document of [
+    { ...index, format: 'revealline-production-metadata-history.v3' },
+    {
+      ...index,
+      entries: [
+        ...index.entries.slice(0, 2),
+        { ...retained, path: 'game/ui/actor-presentation.js' },
+      ],
+    },
+  ]) {
+    await writeFile(path.join(dir, historyRoot, 'index.json'), JSON.stringify(document));
+    await assert.rejects(verifyProductionSources(register, { root: dir }), /history/);
+  }
+});
+test('a private exact module snapshot is authenticated as bytes and never executed', async (t) => {
+  const dir = await fixture(t),
+    candidate = clone(register),
+    retained = index.entries[2];
+  const bytes = Buffer.from('throw new Error("A history snapshot must never execute");\n');
+  const pin = { path: retained.path, bytes: bytes.length, sha256: hash(bytes) };
+  for (const item of pins(candidate)) if (item.path === pin.path) Object.assign(item, pin);
+  await writeFile(path.join(dir, `${historyRoot}/${pin.sha256}.mjs`), bytes);
+  await writeFile(
+    path.join(dir, historyRoot, 'index.json'),
+    JSON.stringify({ ...index, entries: [...index.entries, pin] }),
+  );
+  const result = await verifyProductionSources(candidate, { root: dir });
+  assert.equal(result.metadata, 'verified');
+  assert.equal(result.originalBytesVerified, false);
 });
