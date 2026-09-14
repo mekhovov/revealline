@@ -1,0 +1,159 @@
+{
+  "format": "retro-player-body-full-inspection.v1",
+  "at": "2026-09-14T17:49:43.114005+00:00",
+  "reviewer": "Lagrange",
+  "method": "All seven saved workspace originals individually viewed through view_image with detail=original after generation; existing FPV and Ukraine scout originals viewed before generation. Read-only Pillow measurements are separately preserved.",
+  "sourceBase": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "rows": [
+    {
+      "role": "scout",
+      "path": "originals/scout.png",
+      "bytes": 861737,
+      "sha256": "0a5ac02d8653bcc67c07c03691ff7ce40b476860b15a02b1dedd93eda7370607",
+      "fullImageFinding": "Round cream saucer, attached cyan north nose/canopy, two magenta stern sockets. Broad continuous mass; all visible appendages fit.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        85,
+        68,
+        1169,
+        1167
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        35,
+        1234,
+        1230
+      ]
+    },
+    {
+      "role": "bomber",
+      "path": "originals/bomber.png",
+      "bytes": 925255,
+      "sha256": "5e553cfe6578e5acd3b0bdd6dce761f1db41225d976356d61f82cdfdb5d6c96c",
+      "fullImageFinding": "Broad manta/pentagon with cream shoulder wings and a closed magenta payload bay, cyan north nose. All visible tips fit, but substantial side margins are only 20 pixels (1.6% of canvas), below the requested margin.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        20,
+        118,
+        1234,
+        1120
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        13,
+        1240,
+        1254
+      ]
+    },
+    {
+      "role": "carrier",
+      "path": "originals/carrier.png",
+      "bytes": 847580,
+      "sha256": "e3237109a637663770e3f8411a33186de307775cf2ccff9b895ff76e46d230ca",
+      "fullImageFinding": "Blocky H-shaped cargo barge: six cream cargo blocks in two rails and a central cyan bridge/nose. Rear magenta sockets and connected rails are complete.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        169,
+        135,
+        1085,
+        1116
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        35,
+        1238,
+        1238
+      ]
+    },
+    {
+      "role": "interceptor",
+      "path": "originals/interceptor.png",
+      "bytes": 706515,
+      "sha256": "99f2cdad4a060541f029e00dd180fb40add7386978a55d5de35426fb438ca1f2",
+      "fullImageFinding": "Pointed delta/arrow, long cyan north canopy, swept cream fins with magenta tips, deeply notched forked stern. Complete silhouette; 36-pixel nose margin (2.9%) is below requested margin.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        60,
+        36,
+        1194,
+        1166
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        49,
+        33,
+        1240,
+        1228
+      ]
+    },
+    {
+      "role": "fiber",
+      "path": "originals/fiber.png",
+      "bytes": 830708,
+      "sha256": "ccb734c4ec02f13113e68d47d8b6091244fe9895ba7651dd9caa0f41a14b27df",
+      "fullImageFinding": "Asymmetric large right magenta annular spool, left cream square counterweight and a connected central cyan north nose. No trailing cable; spool is baked static artwork.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        55,
+        96,
+        1204,
+        1121
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        21,
+        1230,
+        1254
+      ]
+    },
+    {
+      "role": "impact",
+      "path": "originals/impact.png",
+      "bytes": 831788,
+      "sha256": "1e9a410fdf3e82cf35ad7731ca06a12bb8971762f09c9697bc7a647a1183c5e3",
+      "fullImageFinding": "Blunt cream north armor bar, broad cyan visor, solid magenta center, two chunky rear outriggers with cyan sockets. Readable toy-robot/ram vocabulary, no impact effect.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        140,
+        159,
+        1115,
+        1095
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        21,
+        1234,
+        1254
+      ]
+    },
+    {
+      "role": "trapper",
+      "path": "originals/trapper.png",
+      "bytes": 733320,
+      "sha256": "dfcfc5b571a175b27ba95708bbe5ee4793ab73a2e9a1b0c12843acf1bdd4da0b",
+      "fullImageFinding": "Open square cage/frame with cyan structural cross, four large interior windows, magenta corner pads, cyan north canopy and two magenta stern sockets. No deployed trap or separate effect.",
+      "visibleBodyComplete": true,
+      "alphaAtLeast128BoundsExclusive": [
+        166,
+        89,
+        1088,
+        1145
+      ],
+      "allNonzeroAlphaBoundsExclusive": [
+        0,
+        59,
+        1240,
+        1254
+      ]
+    }
+  ],
+  "qualifications": [
+    "No text, logos, copied game characters, baked speed trails or detached impact effects observed. This is a visual statement, not an exhaustive third-party similarity search.",
+    "North heading is visually proposed. Center pivot, stern sockets, spool/payload articulation and bank are future design proposals, not validated anchors or animation rigs.",
+    "Actual transparency includes many intermediate-alpha pixels. Low-alpha fringes reach an image edge in six originals; only substantial alpha>=128 bounds are inset for all seven. Do not describe the entire alpha support as cleanly padded.",
+    "Requested 16-color palette was not achieved; exact distinct RGBA counts are preserved in alpha-inspection.json. No palette reduction, resampling, background removal, cropping or image editing was performed.",
+    "No runtime registry, collision, ability, simulation, manifest or production build changes. Native CSS-size compositing is a separate follow-up record."
+  ],
+  "parentFullReview": {
+    "scout": "Parent independently viewed exact 0a5ac02d original and accepted the source direction; remaining parent review not yet recorded."
+  }
+}
