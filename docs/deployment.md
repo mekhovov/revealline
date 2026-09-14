@@ -33,7 +33,7 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 This repository includes `.github/workflows/deploy-pages.yml`. Pull requests run fast source gates
 and four isolated test shards; publishing a GitHub Release deploys the highest stable semantic
-version. The release workflow builds that tag as the default `/game/` target and retains the 10 most
+version. The release workflow builds that tag as the default `/game/` target and retains the 5 most
 recent stable tags under `/releases/<version>/site/game/`; older ZIPs remain on GitHub Releases.
 This avoids exceeding the GitHub Pages artifact limit. The root landing page reads the generated
 release index so players can launch the newest build or a recent comparable version.

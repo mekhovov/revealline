@@ -15,7 +15,7 @@ import {
 } from './pages-archive.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const DEFAULT_RETAINED_RELEASES = 10;
+export const DEFAULT_RETAINED_RELEASES = 5;
 const readJSON = async (file) => JSON.parse(await fs.readFile(file, 'utf8'));
 const escapeHTML = (text) =>
   String(text).replace(
