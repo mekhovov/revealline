@@ -65,6 +65,13 @@ checks and build a non-publishable preview. They cannot upload a Pages artifact 
 A successful build is not public acceptance: after deployment, verify the published bytes and test
 play, saved-run ownership, historical entries, and offline coexistence in the actual browser.
 
+Source test jobs keep the selected checkout in `source/` and obtain the shard utility from a
+separate `automation/` checkout pinned to `github.workflow_sha`. The utility accepts `--root .`
+from the source working directory, so discovery, imports, child processes and dependencies belong
+to that selected source. Generated `.cache` state is initialized before tests; no immutable test
+file is patched or replaced. Frozen publication continues to use accepted qualification and
+original distribution bytes rather than scheduling historical source checks.
+
 ## Browser installation and offline use
 
 Serving a static game does not by itself verify offline behavior or installation. Browser installation criteria vary; manifest metadata and HTTPS or loopback are relevant, while a service worker provides separately testable caching behavior. Browser and platform installation flows also differ. [MDN installability guidance](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable)

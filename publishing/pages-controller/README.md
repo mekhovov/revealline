@@ -16,6 +16,8 @@ Each admission pins its infrastructure commit, successful Pages deployment and r
 
 Browser admission is a review record tied to pinned native evidence. It does not turn an HTTP hash audit into a playthrough. Older unchanged editions retain their earlier scoped acceptance and known limitations. New redesign editions each need actual public play/offline acceptance. The original receipts retain timeouts, writer contention, unavailable legacy pictures and other limits. Archive07 now retains both v0.45/v0.46 canonical browser and offline admissions, including their first preparation timeouts and successful normal retries. Evidence files are copied unchanged; links inside historical notes describe their original evidence locations.
 
+Archive08 now admits the exact v0.47/v0.48 freezes and their native play, Studio and offline checks. Its HTTP evidence retains the first 760 successful bodies and 13 transport failures, then independently reconciles the 13 successful retries against the same 773-file inventory. The original failure and retry receipts remain attached. Browser evidence retains all ordinary offline preparation timeouts and successful offered retries. This addition keeps the selector disabled at v0.44; it does not publish a current edition.
+
 ## Build and publication
 
 The workflow requires 8 GiB free on the hosted runner. No npm installation or historical source rebuild is needed.

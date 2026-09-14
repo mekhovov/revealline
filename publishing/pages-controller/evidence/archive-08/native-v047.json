@@ -1,0 +1,667 @@
+{
+  "format": "revealline-public-browser-acceptance.v2",
+  "planningOnly": false,
+  "result": "exercised-online-studio-offline-and-coexistence-paths-pass",
+  "version": "v0.47.0",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-08/releases/v0.47.0/site/game/",
+  "sourceRevision": "f4672a915e9495ed069e5e98a71e390f7b9ea7b0",
+  "publication": {
+    "archiveRepository": "revealline-archive-08",
+    "infrastructureRevision": "caf88b909eea7ddb9e7109291aee0089befbc488",
+    "actionsRunId": 34897900531,
+    "deploymentId": 6446745339,
+    "gate": "full-exact-http-bodies-and-MIME-pass",
+    "everyByteAuditComplete": true,
+    "sourceEvidence": [
+      ".cache/fpv-redesign/archive-publication/archive08-preparation/public-attempt-1/results.jsonl",
+      ".cache/fpv-redesign/archive-publication/archive08-preparation/hosted-publication/independent-reproduction-binding.json"
+    ],
+    "pendingAtHandoff": "Initial scoped handoff was provisional; later full receipt closed all bodies before offline testing.",
+    "receivedAt": "2026-09-14T21:55:48.435797+00:00",
+    "status": "PASS",
+    "reportPath": ".cache/fpv-redesign/archive-publication/archive08-preparation/public-transport-recovery-1/report.json",
+    "reportSha256": "6069b57188ad5bfb2f667eea8603cc76e19ff97f24d0dbe7887429484acade7d",
+    "files": 773,
+    "verifiedBytes": 600887156,
+    "failedFiles": 0,
+    "retainedPassingBodies": 760,
+    "retriedTransportFailures": 13,
+    "priorStatus": "FAIL",
+    "originalCanonicalWorkerBytesIncluded": true,
+    "proofMode": "Composite complete canonical inventory: retained exact successful HTTP bodies plus fresh transport-only retries; original failed run preserved.",
+    "sourceIdentityNote": "Report authority sourceCommit names the archive publishing controller; each frozen game source identity remains the per-version identity.json value."
+  },
+  "startedAt": "2026-09-14T21:40:17.153637+00:00",
+  "completedOnlineAt": "2026-09-14T21:50:50.257Z",
+  "environment": {
+    "session": "field-kit-public08",
+    "toolRoute": "authorized standalone agent-browser fallback; in-app browser unavailable to this subagent",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "screenshotPixels": [
+      1280,
+      800
+    ],
+    "visibility": "visible",
+    "focused": true,
+    "physicalDevice": false,
+    "networkChanged": true,
+    "online": true,
+    "networkEmulation": true
+  },
+  "steps": [
+    {
+      "id": "fresh_title",
+      "status": "pass",
+      "observed": "Canonical V0.47.0 title loaded in a fresh isolated browser session; pre-Phase4 title layout is expected.",
+      "evidence": [
+        "title-state.txt",
+        "title.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "normal_missions",
+      "status": "pass",
+      "observed": "All missions opened; Base First Signal current, subsequent locks retained; returned through Mission brief.",
+      "evidence": [
+        "missions-state.txt",
+        "briefing-state.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "saved_paused_restore",
+      "status": "pass",
+      "observed": "Actual running First Signal paused; Large preference selected; reload Continue verified paused 0.0%/three lives/score0.",
+      "evidence": [
+        "first-running.txt",
+        "first-paused.txt",
+        "continued-paused.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "explicit_resume",
+      "status": "pass",
+      "observed": "Resume removed pause overlay and showed running safe-ground HUD.",
+      "evidence": [
+        "resumed-running.txt"
+      ],
+      "limitation": "Frozen v047 retains stale Press Resume caption until a game event. Later v051 fixes this; no frozen source modified."
+    },
+    {
+      "id": "natural_result",
+      "status": "pass",
+      "observed": "ArrowDown from actual running state naturally reached52.2%,8160points,Gold,three lives; result0:04 and viewer4.37s.",
+      "evidence": [
+        "natural-win.txt",
+        "natural-win.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "earned_viewer",
+      "status": "pass",
+      "observed": "View picture opened board; Collection showed earned First Signal Gold and gallery full viewer.",
+      "evidence": [
+        "won-picture.txt",
+        "collection.txt",
+        "collection-fullviewer.txt",
+        "collection-fullviewer.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "studio_upload_edit",
+      "status": "pass",
+      "observed": "Native file control accepted24\u00d724 owned QA PNG; creator/source/rights/description/prompt fields filled; validated staging added immutable original and derivative.",
+      "evidence": [
+        "upload-input.json",
+        "studio-staged.txt",
+        "studio-replacement.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "studio_undo_redo",
+      "status": "pass",
+      "observed": "Undo returned documentr1/source specimen; Redo returned documentr2 staged raster.",
+      "evidence": [
+        "studio-undo.txt",
+        "studio-redo.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "studio_save_reload",
+      "status": "pass",
+      "observed": "Save local revision1/documentr2; full reload reported Saved studio workspace loaded, same revision and replacement description.",
+      "evidence": [
+        "studio-saved.txt",
+        "studio-reloaded.txt",
+        "studio-replacement.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "studio_export_bytes",
+      "status": "pass",
+      "observed": "Native Export download873688bytes; locally parsed valid container/table lengths and all SHA256;148byte input survives exactly plus313byte prepared derivative.",
+      "evidence": [
+        "qa-settings-v047.rltheme",
+        "studio-exported.txt",
+        "studio-export-inspection.json"
+      ],
+      "limitation": "Bundle import, pixel brush editing, and runtime application were not exercised in this v047 public pass."
+    },
+    {
+      "id": "studio_player_save_isolation",
+      "status": "pass",
+      "observed": "BeforeStudio actual RelayOrchard running then paused0.0%/58%target/score0/relay0of1; afterStudio gameContinue verified same paused HUD withLarge preference.",
+      "evidence": [
+        "before-studio-paused.txt",
+        "after-studio-title.txt",
+        "after-studio-continued.txt",
+        "after-studio-continued.png"
+      ],
+      "limitation": "Observed actual resume checkpoint/selection and preference continuity, not an exhaustive byte comparison of every player-store record."
+    },
+    {
+      "id": "page_errors",
+      "status": "pass",
+      "observed": "Agent-browser page-error reports empty for game and Studio.",
+      "evidence": [
+        "game-errors.txt",
+        "studio-errors.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_prepare",
+      "status": "pass",
+      "observed": "One interface timeout retained while the worker continued installing and then activated normally. Offered retry succeeded.",
+      "evidence": [
+        "offline-attempt-1-result.txt",
+        "offline-worker-installed.txt",
+        "offline-attempt-2-result.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_verify",
+      "status": "pass",
+      "observed": "Explicit Verify:333 files,54,352,031 bytes; correct build; no missing/corrupt files.",
+      "evidence": [
+        "offline-verify-complete.txt",
+        "offline-verified.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_document_reload",
+      "status": "pass",
+      "observed": "Full offline document reload booted V047 with Large text and Relay Orchard selected.",
+      "evidence": [
+        "offline-reload.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_saved_flight",
+      "status": "pass",
+      "observed": "Continue verified paused Relay; Resume plus normal ArrowDown cut captured52.2%,8660 points,relay1of1. Pause recorded0:07.",
+      "evidence": [
+        "offline-continued-paused.txt",
+        "offline-relay-running-cut.txt",
+        "offline-relay-paused.txt",
+        "offline-relay-paused.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_earned_content",
+      "status": "pass",
+      "observed": "Earned First Signal full viewer opened with networking disabled.",
+      "evidence": [
+        "offline-earned-viewer.txt",
+        "offline-earned-viewer.png"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "release_scope_coexistence",
+      "status": "pass",
+      "observed": "After both offline installs, v048 restored its0:27 checkpoint and v047 restored its0:07 checkpoint, each using its own active worker.",
+      "evidence": [
+        "return-after-offline-studio-and-v048.txt",
+        "../v048/return-after-v047-offline.txt"
+      ],
+      "limitation": null
+    },
+    {
+      "id": "offline_studio_saved_preview",
+      "status": "pass",
+      "observed": "Studio fully reopened offline and loaded saved documentr2/localrevision1 plus the uploaded native-size icon preview.",
+      "evidence": [
+        "offline-studio-reloaded.txt",
+        "offline-studio-replacement.png"
+      ],
+      "limitation": "Local revision and preview continuity; no offline export/import performed."
+    },
+    {
+      "id": "network_restored",
+      "status": "pass",
+      "observed": "Networking restored online before cross-release return.",
+      "evidence": [
+        "network-restored.txt",
+        "return-after-offline-studio-and-v048.txt"
+      ],
+      "limitation": null
+    }
+  ],
+  "finalState": "Online v047 Relay Orchard paused52.2%/8660/relay1of1/0:07, Large text; both v047/v048 workers active; local Studio revision1 retained.",
+  "limitations": [
+    "Headless Chromium on desktop; no physical phone, controller, WebKit/Firefox or physical network-disconnect testing.",
+    "This is actual public DOM/control/file-download evidence, not a source fixture or a claim about later phase layouts."
+  ],
+  "files": [
+    {
+      "path": "README-online-provisional.md",
+      "bytes": 2013,
+      "sha256": "1c95e2855c938d798a27a0d1147fe7ea3867a07b409c2660dea16c883a0ed5fe"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3099,
+      "sha256": "88634c711e9afdba0edaac853409c706f63cecefec5f3a035869dd08c947c59a"
+    },
+    {
+      "path": "after-studio-continued.png",
+      "bytes": 284349,
+      "sha256": "e5c3348f85f25c7ce979ca15e6e058b55903f031166fa23750568e91b66f6af9",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "after-studio-continued.txt",
+      "bytes": 559,
+      "sha256": "20b454969b764e3e674b93ee1549848278f60674221c744198df0b4e856d593f"
+    },
+    {
+      "path": "after-studio-title.txt",
+      "bytes": 1171,
+      "sha256": "6012bcb5bc4e8e88a96c7d04ea56b3b5d0ede177c471035c0ef33dc80cc2b8ab"
+    },
+    {
+      "path": "before-studio-paused.txt",
+      "bytes": 402,
+      "sha256": "2f7de229aaf3cc9aa04f00799713940c7971ce3145b68d82a72d80d314a01e07"
+    },
+    {
+      "path": "briefing-state.txt",
+      "bytes": 772,
+      "sha256": "949e0c62c1c159e87378369dfa69a847af4a8731a89b2d2be4f4a3ae80005a85"
+    },
+    {
+      "path": "browser-initialization.txt",
+      "bytes": 306,
+      "sha256": "127bf6a9203cfef2b3e3163adcc99e27a2866b73933c91ac64c0fb7ad7b7b1e1"
+    },
+    {
+      "path": "collection-fullviewer.png",
+      "bytes": 33745,
+      "sha256": "0eb52c22a5b11a0fc22b801fd3747b1e63ef6d9a226b477d58625d024e1be07c",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "collection-fullviewer.txt",
+      "bytes": 969,
+      "sha256": "7960433d6489fea3862956c5dc0ac45eb7459bf88cb2fcbe6f78a001aa66bf41"
+    },
+    {
+      "path": "collection.txt",
+      "bytes": 3883,
+      "sha256": "c3256696eeb9ff80001a967bbe37a1fcb407b9b8aece3832d8c972c70ab68c66"
+    },
+    {
+      "path": "continued-paused.txt",
+      "bytes": 429,
+      "sha256": "86cd727cfbd45ca804050e726c38cd9810dd6152010c6637f8948a7e91da356d"
+    },
+    {
+      "path": "final-browser-state.txt",
+      "bytes": 431,
+      "sha256": "9f61d1f96b889cb89f88d969c74c19b6411fdb7ee4056bb1a2ee42b963236892"
+    },
+    {
+      "path": "first-paused.txt",
+      "bytes": 412,
+      "sha256": "24bfc8e187cb547ecd7612d7e7ddb9bc5f1bff1a50e559b8bb29e9de2cfb6881"
+    },
+    {
+      "path": "first-running.txt",
+      "bytes": 369,
+      "sha256": "9ffd8d288b0b1f2bc86645747e162353b8b6d5fb0426e31d5d3e94068fab5138"
+    },
+    {
+      "path": "full-publication-gate.json",
+      "bytes": 875,
+      "sha256": "7563ad02649699611eb543878ec33d6cbc4414628428b0b13bac3d9f25b2003a"
+    },
+    {
+      "path": "game-errors-final.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "game-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "identity.json",
+      "bytes": 998,
+      "sha256": "f8c8d32e9fb90c5f9b8791d08ec8956876ca2c13cef9797c05a683f137df9e2c"
+    },
+    {
+      "path": "missions-state.txt",
+      "bytes": 1774,
+      "sha256": "93ff031b623e4551c0d0a35a0e2d8eea4862701152b83b02a000270537489eee"
+    },
+    {
+      "path": "natural-win.png",
+      "bytes": 76906,
+      "sha256": "dd701a47aff33b47ed0918ebdab979d9ca6c5c4fa0e88989c16ff43c8d9b5d22",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "natural-win.txt",
+      "bytes": 789,
+      "sha256": "224bb4847940a59169d43e52a696078407530c7d2a9d3c0750eb0029700f6212"
+    },
+    {
+      "path": "network-restored.txt",
+      "bytes": 338,
+      "sha256": "ce571cbdb82996dfcb6ca89859b094d7f075beb148b149e477ca5a9d2d36563f"
+    },
+    {
+      "path": "offline-attempt-1-progress.txt",
+      "bytes": 874,
+      "sha256": "9191347d1235d0f0dfaae8bd4ad2b4f756dc20af191b10b94497a6a73cc301e9"
+    },
+    {
+      "path": "offline-attempt-1-result.txt",
+      "bytes": 392,
+      "sha256": "398df317d553c5d8cacfb0202706d30b28f469670a47614cc844108b45c8d2be"
+    },
+    {
+      "path": "offline-attempt-1-start.txt",
+      "bytes": 585,
+      "sha256": "7659d49b61cb194492cb7306ca0b680b9f99a6df12d71bbf3879aa25608427a4"
+    },
+    {
+      "path": "offline-attempt-2-result.txt",
+      "bytes": 1587,
+      "sha256": "9539d79816b0f35349aeef98f15752cb218a28912a6db428454aaf2b9de9a141"
+    },
+    {
+      "path": "offline-attempt-2-start.txt",
+      "bytes": 659,
+      "sha256": "c919fd33790de24387ac7c5199ed883282b68ddfae11ea73654118856e07dec9"
+    },
+    {
+      "path": "offline-continued-paused.txt",
+      "bytes": 396,
+      "sha256": "c2c789fbf23279a3b04b2df641b88bbe4e2d4bfe2c3ccfeeb4a2229ae9a5548d"
+    },
+    {
+      "path": "offline-earned-viewer.png",
+      "bytes": 34523,
+      "sha256": "6b17529f43cf90ac2c1289b382c31d8bab32675f65e124367c9e6b90a54d3a0b",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "offline-earned-viewer.txt",
+      "bytes": 258,
+      "sha256": "3e9cefaf6d97c4a63cb12c9270a52c9a8e9978fb6f4343ee66557ef16767c04c"
+    },
+    {
+      "path": "offline-relay-paused.png",
+      "bytes": 284349,
+      "sha256": "e5c3348f85f25c7ce979ca15e6e058b55903f031166fa23750568e91b66f6af9",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "offline-relay-paused.txt",
+      "bytes": 365,
+      "sha256": "6d4f0c61b0cfa3c16b10ccf643f2a1cea35d2f4b5150ef65a28fa511d45c2fd3"
+    },
+    {
+      "path": "offline-relay-running-cut.txt",
+      "bytes": 248,
+      "sha256": "85c569a2b3fe12af8d86e7b51117820174fd6dff8ff1f43fbb969bbf9fefb941"
+    },
+    {
+      "path": "offline-reload.txt",
+      "bytes": 1299,
+      "sha256": "7d3a896af2698e5ce4e1bd009a6198f06a97bdf63036840bbc6891a709e59456"
+    },
+    {
+      "path": "offline-studio-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "offline-studio-reloaded.txt",
+      "bytes": 5545,
+      "sha256": "f411718fe34cb8288d52d39ab9834a6ba4a3f0ef4854095e8f895df332cc6afd"
+    },
+    {
+      "path": "offline-studio-replacement.png",
+      "bytes": 91865,
+      "sha256": "258d87e20914c4019f19d94013da956464665dde535308cb200aff8e9efb7315",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "offline-verified.png",
+      "bytes": 125243,
+      "sha256": "54289d63a1f5f74eafec8cfa801073be6d6394551f84436b716bbd63f2ab1f17",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "offline-verified.txt",
+      "bytes": 1153,
+      "sha256": "e12a631314a25e42af3a7f4193ca639c352f6d68a5be527aaa29ff68a6714d31"
+    },
+    {
+      "path": "offline-verify-complete.txt",
+      "bytes": 1541,
+      "sha256": "413eb264d1ceecaa4bb953ed75c7c07ea571876dd69d7d91544ee8e2af82a2d3"
+    },
+    {
+      "path": "offline-worker-installed.txt",
+      "bytes": 476,
+      "sha256": "c033b3dd469e8213f4e53b318e0f688cf86711a61248a5397faeb9e7f99ac48a"
+    },
+    {
+      "path": "offline-worker-wait-2206.txt",
+      "bytes": 585,
+      "sha256": "0789f8a6dbb42e34a98bbad5dc66f40ca1f04826ce082654b840d4b76b26e849"
+    },
+    {
+      "path": "offline-worker-wait-2206b.txt",
+      "bytes": 566,
+      "sha256": "c850977899a216aa70b46763719d2a960a63c785d1ddb2da0521e15a7c99a056"
+    },
+    {
+      "path": "offline-worker-wait-2207.txt",
+      "bytes": 566,
+      "sha256": "1a2cff1d743ac240f04c94368116f68ab15313aa2558e9258d79fae9053ff2d7"
+    },
+    {
+      "path": "offline-worker-wait-2208.txt",
+      "bytes": 742,
+      "sha256": "9a642de98acdf9d96d3e6391a1df95143bb3d68db799c2d9d1e4ac8aeb877547"
+    },
+    {
+      "path": "qa-settings-24x24.png",
+      "bytes": 148,
+      "sha256": "40172d186e595959d100dd0e7e52a78906e904300d93c8c0958d82b6f3b91ff0",
+      "pixels": [
+        24,
+        24
+      ]
+    },
+    {
+      "path": "qa-settings-v047.rltheme",
+      "bytes": 873688,
+      "sha256": "b019102162f07e04b7d7f784d70021376f53e1b8683e1f9affc58a013b64fca2"
+    },
+    {
+      "path": "receipt-online-provisional.json",
+      "bytes": 13678,
+      "sha256": "589db37f7f7e051d3280f19089964a91813147d761f2f08be4e6fb6bbf4ac0f4"
+    },
+    {
+      "path": "resumed-running.txt",
+      "bytes": 284,
+      "sha256": "b99c2f6572aff6c05577c653c8f0925d40f5887b66dcaf0bbceae478b0fa49e9"
+    },
+    {
+      "path": "return-after-offline-studio-and-v048.txt",
+      "bytes": 862,
+      "sha256": "41dc6302603ccdf84a2757ab8780838179b07c724b163a61a5f3715ad0cc33a0"
+    },
+    {
+      "path": "return-from-v048-continued.txt",
+      "bytes": 491,
+      "sha256": "94992704bb9d36ddd79a5ab0b51bb1ffa4f21f6d48a77a9230660e65dfe169f7"
+    },
+    {
+      "path": "return-from-v048-title.txt",
+      "bytes": 622,
+      "sha256": "58fa05f3e8b56be14abbe5744e02897a492745bfcb009d4df8165e64a6b1f199"
+    },
+    {
+      "path": "studio-errors.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "studio-export-inspection.json",
+      "bytes": 3629,
+      "sha256": "b23bea38d0d049ced49ad212f715b0f9fb030aa524d24a716aa0ccc8460817c9"
+    },
+    {
+      "path": "studio-exported.txt",
+      "bytes": 184,
+      "sha256": "1bf05e8ee725e5d52ad8ae11b341fdd01400a37c835f10df16e961ac56b4d6b6"
+    },
+    {
+      "path": "studio-initial.txt",
+      "bytes": 356,
+      "sha256": "9e8e1c82748b2484c04a0271631fb98471218011b96062b8a2d1a373bc96631e"
+    },
+    {
+      "path": "studio-redo.txt",
+      "bytes": 213,
+      "sha256": "a6633377d689735e793f02932d9f32221f5dd80b334e9ba4967b9d459169f99c"
+    },
+    {
+      "path": "studio-reloaded.txt",
+      "bytes": 260,
+      "sha256": "77da1c467618f3cfe30f7445eb0640577beb31cdb4f0a1e13e012cd71e8e8aab"
+    },
+    {
+      "path": "studio-replacement.png",
+      "bytes": 91865,
+      "sha256": "0b32ff8326e731ef3b508e03e6735adc251bad9c488652b99cb5bf9ee7e40547",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "studio-saved.txt",
+      "bytes": 183,
+      "sha256": "ef1159352845e7dbb2598eafbf3575a63104c936d69686c8e803957adc26d4c0"
+    },
+    {
+      "path": "studio-staged.txt",
+      "bytes": 288,
+      "sha256": "3ca6f96e7273708f50fc37d89a7d45419bf9a475380bb913bf242bdd18b0620f"
+    },
+    {
+      "path": "studio-undo.txt",
+      "bytes": 334,
+      "sha256": "b7cc405d608403a12f7250bdb6f55d59b9fd365be49a262e23deb2bad34b690a"
+    },
+    {
+      "path": "title-state.txt",
+      "bytes": 1205,
+      "sha256": "0085c7738b9bbd5f06cccc17b91b3af9a6f3643bd3de1b531b0bf4de853f5122"
+    },
+    {
+      "path": "title.png",
+      "bytes": 54321,
+      "sha256": "8608f3b0f1fb357cdbe66bf7f0e4134a4e1f9b37dd88e9160ffce68a2d657060",
+      "pixels": [
+        1280,
+        800
+      ]
+    },
+    {
+      "path": "upload-input.json",
+      "bytes": 768,
+      "sha256": "e2bd5e6d47ac3802e0c11d9e530c61ee09a7cc17f4978aea0902ad74b712e2ca"
+    },
+    {
+      "path": "won-picture.txt",
+      "bytes": 324,
+      "sha256": "e270cb875325164dc141af6c85a44f6d4f769da502c62332861ffd2af75e50f1"
+    }
+  ],
+  "completedAt": "2026-09-14T22:11:49.408651+00:00",
+  "offline": {
+    "status": "ready",
+    "version": "v0.47.0",
+    "buildId": "0ab8955e194cc1cd83067ab03172df15a464db7247b87a63e174bec1905859cd",
+    "count": 333,
+    "verified": 333,
+    "bytes": 54352031,
+    "missing": [],
+    "corrupt": [],
+    "message": "Core offline files verified. FPV Front \u00b7 First Light R2, FPV Front \u00b7 First Light R3, FPV Front \u00b7 First Light Arcade R4, FPV Front \u00b7 First Light, FPV Front \u00b7 Frontier Lines, FPV Front \u00b7 Illustrated Pressure, Ukraine Atlas \u00b7 Woven Lines, 1994 Forever \u00b7 After Hours, Spend Network \u00b7 Shared Routes, FPV Front \u00b7 Route Choices \u2014 Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup."
+  },
+  "externalEvidence": [
+    {
+      "path": "../v048/return-after-v047-offline.txt",
+      "sha256": "81d5f296b2412ac9e0d29be1adf1471b9f8d78dbb63ca14ff80c0b1634876d84"
+    }
+  ]
+}
