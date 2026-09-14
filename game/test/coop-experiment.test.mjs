@@ -12,7 +12,7 @@ function experimentRun(experiment) {
     difficulty: 'standard',
     jointCuts: experiment.jointCuts,
     assistCaptures: experiment.assistCaptures,
-    advancedCooperation: experiment.advancedCooperation,
+    advancedCooperation: false,
   });
   startCoop(run);
   return run;
@@ -57,6 +57,7 @@ for (const experiment of COOP_EXPERIMENTS)
     const original = structuredClone(FIRST_CONNECTION);
     const result = clearFirstConnection(experiment);
     const { run, events } = result;
+    assert.equal(run.config.advancedCooperation, false);
     assert.equal(run.status, 'won');
     assert.equal(run.claimedCount, 1580);
     assert.ok(run.coverage >= FIRST_CONNECTION.goal.coverage);
