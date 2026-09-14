@@ -1,6 +1,6 @@
 ---
 name: xonix-audio-director
-description: 'Design audio direction, music prompts, adaptive stems, event sound effects, menus, and audio asset plans for Xonix theme packs. Use for Ukrainian instrumentation, 1980s–1990s chip and synth moods, FPV arcade feedback, Coupa business themes, or audio variation and production review.'
+description: 'Design audio direction, music prompts, licensed soundtrack intake, optional album drafts, adaptive stems, event sound effects, menus, and audio asset plans for Xonix theme packs. Use for Ukrainian instrumentation, 1980s–1990s chip and synth moods, FPV arcade feedback, Coupa business themes, or audio variation and production review.'
 ---
 
 # Xonix Audio Director
@@ -10,6 +10,8 @@ Translate gameplay events and a theme into an original, practical audio system. 
 For current game work, read [soundtrack libraries](references/soundtrack-libraries.md). The runtime now has preserved MP3 libraries, binary backups, mixed playlists and a session transport; the game studio integrates those separately from legacy pack JSON. Existing synthesized recipes remain supported. `xonix-playground.v1` still has no imported soundtrack/stem fields: never insert a file path or invented music property into an old pack. For event cues, consult [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), `game/ui/audio.mjs` and the [core events](../../../game/core/README.md).
 
 For full audio transfer, preserve **Prepare saved-library backup → Download prepared backup → verify the resulting file** as separate steps. Preparation is read-only and includes saved original MP3 bytes; it must not click a hidden link after asynchronous work. Keep one bounded prepared copy, invalidate it on adopted library changes/disposal, and report preparation or a download request without claiming a disk write. See the [studio transfer contract](../../../docs/soundtrack-studio.md#complete-audio-transfer) for retry, cancellation, adapter and device boundaries. An unexplained browser timeout is not evidence of a proven activation-policy cause.
+
+For optional licensed albums, use **Browse optional albums → Add to draft → optional Audition MP3 → Save all changes**. Add preserves the existing library draft, unapplied editor fields, selection and current song; ordinary `.rlsound` file import remains replacement. Read [the album source contract](../../library/licensed-audio/README.md) and use `soundtrack-06-optional-licensed-albums` or `soundtrack-07-album-draft-continuity` from the shared prompt CLI. Preserve exact masters and every derivative's parent/hash/codec recipe, including conflicting archived license wording and a creator's dated correction. Count a song once across encodings. The explicit producer emits at most 64 MiB per album outside core precache; the existing 256 MiB shared storage and staging budget still decides Save. File/frame/probe checks never approve listening, loop seams or composition quality, and source support is not a public-release claim.
 
 For gameplay roles, progression, gameplay imagery or event feedback, consult [the reference lessons](../../REFERENCE-LESSONS.md). They distinguish observed reference behavior from proposed extensions; check the current primitive catalog before emitting pack data.
 

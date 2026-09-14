@@ -12,9 +12,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "LIBRARY_BRIEF"
-      ],
+      "variables": ["LIBRARY_BRIEF"],
       "prompt": "Prepare {{LIBRARY_BRIEF}} using the current soundtrack library and studio. Preserve each MP3 original, probe actual decoding, record title/artist/source declaration, and stage edits before one atomic save. Respect current total and staging limits. Deliver an exact .rlsound backup and distinguish structural tests, real browser playback and offline evidence. Do not place audio bytes into legacy game JSON.",
       "example_request": "Apply soundtrack-01-local-library to the current RevealLine edition."
     },
@@ -28,9 +26,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "PLAYLIST_BRIEF"
-      ],
+      "variables": ["PLAYLIST_BRIEF"],
       "prompt": "Create {{PLAYLIST_BRIEF}} from validated built-in and imported track IDs. Define ordered or shuffle playback and repeat all/one/off. Save the explicit choice or an exact map/campaign/theme/global assignment. Verify automatic boundary changes, immediate explicit selection, current-song continuity during edits, and each-entry traversal before repeats. Keep random ordering outside the simulation RNG.",
       "example_request": "Apply soundtrack-02-mixed-playlist to the current RevealLine edition."
     },
@@ -44,9 +40,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "MUSIC_BRIEF"
-      ],
+      "variables": ["MUSIC_BRIEF"],
       "prompt": "Produce {{MUSIC_BRIEF}} with original motifs and an authored beginning, development and ending. Prefer 80s/90s synth texture where requested, while preserving the selected theme. Deliver an actual MP3 and source master only if an audio production tool is available; otherwise label a production brief. Audition clipping, warning audibility, transition seams and dynamics. Register finished files separately from procedural recipes and do not count a prompt as a finished track.",
       "example_request": "Apply soundtrack-03-audio-production to the current RevealLine edition."
     },
@@ -60,9 +54,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "JOURNEY"
-      ],
+      "variables": ["JOURNEY"],
       "prompt": "Verify {{JOURNEY}} in the actual host: title, settings, flight, ordinary Pause, Retry, picture, results and collection preserve the song. Music-only Pause retains SFX. Autoplay denial stays visible; file-picker/visibility/native interruptions retain intent without resuming flight. Use actual browser media for playback claims and distinguish simulated controllers from real hardware.",
       "example_request": "Apply soundtrack-04-continuity-check to the current RevealLine edition."
     },
@@ -76,11 +68,45 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "TRANSFER_CASE"
-      ],
+      "variables": ["TRANSFER_CASE"],
       "prompt": "Exercise {{TRANSFER_CASE}} with original MP3 bytes, the .rlsound container and transactional store. Compare hashes after import, handle missing media and corrupt containers, keep the current edition on quota or generation conflicts, and verify server-stopped playback separately. An ordinary JSON profile backup must not be described as including audio.",
       "example_request": "Apply soundtrack-05-backup-recovery to the current RevealLine edition."
+    },
+    {
+      "id": "soundtrack-06-optional-licensed-albums",
+      "family": "cross-family",
+      "asset_type": "audio_library",
+      "mode": "asset_execution",
+      "intent": "Prepare optional licensed albums with exact original and derivative lineage",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "authoring/skills/xonix-audio-director/references/soundtrack-libraries.md",
+        "authoring/library/licensed-audio/README.md",
+        "authoring/library/licensed-audio/sources.json",
+        "game/content/optional-soundtracks.json",
+        "scripts/soundtrack-distribution.mjs"
+      ],
+      "variables": ["ALBUM_BRIEF"],
+      "prompt": "Apply {{ALBUM_BRIEF}} to the existing finite community-album source contract. Inspect actual creator/license pages, preserve conflicting archived terms and any dated correction, and retain original hashes, credits and exact derivative parent/codec/encoder records. Count each composition once across formats and distinguish licensed works from original RevealLine compositions. Do not rename OGG to MP3 or silently transcode a rejected upload; use an explicitly recorded authoring derivative only when authorized and available. Run the existing source compiler into a new cache directory, compare the complete four-album catalog and body pins, and enforce 64 MiB per album. Keep originals/encoder tools outside automatic game includes and binary albums outside core precache and legacy pack metadata. In Studio use Browse, Add to draft, optional audition and explicit Save; a complete .rlsound file restore remains replacement. Preserve all earlier drafts, selection and playback. Report source/codec checks separately from native playback, offline evidence and human listening/loop/mix approval; do not invent a finished-track or release claim.",
+      "example_request": "Apply soundtrack-06-optional-licensed-albums with ALBUM_BRIEF=Review the four retained community albums and original-byte lineage."
+    },
+    {
+      "id": "soundtrack-07-album-draft-continuity",
+      "family": "cross-family",
+      "asset_type": "audio_library",
+      "mode": "review",
+      "intent": "Verify additive album continuity, cancellation and shared storage admission",
+      "status": "template_not_executed",
+      "reference_requirements": [
+        "docs/soundtrack-studio.md",
+        "game/soundtrack-albums.mjs",
+        "game/soundtrack-album-download.mjs",
+        "game/ui/soundtrack-panel.mjs",
+        "game/test/soundtrack-albums.test.mjs"
+      ],
+      "variables": ["DRAFT_CASE"],
+      "prompt": "Verify {{DRAFT_CASE}} against the actual optional-album flow. Begin with saved music, an applied draft edit, unapplied text and a merely selected playlist. Browse metadata without audio, then Add one album while preserving the draft/assets/saved generation captured before await. Require direct HTTP 200, bounded exact body bytes/hash/library identity and complete native preparation before publishing the union. Exercise cancellation before a deferred response and during body cleanup, finite incomplete cleanup, disposal, stable-ID conflicts and re-adding identical records. Preserve current song, position, selection and assignments; no Add action may save or play. Verify keyboard focus returns only when the same dialog/operation still owns it and deliberate navigation is respected. Hold a real picture/story reservation and prove shared 256 MiB admission refuses Save without releasing another domain or replacing existing audio; a stale generation must not silently rebase. Explicit Save may commit the union, while file-based .rlsound restore retains replacement behavior. Keep structural/model tests, actual native media/file actions, offline recovery and listening quality separately evidenced.",
+      "example_request": "Apply soundtrack-07-album-draft-continuity with DRAFT_CASE=Add a second album while personal edits and current playback are active, then cancel and retry."
     },
     {
       "id": "wide-01-chapter-design",
@@ -92,9 +118,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "CHAPTER_BRIEF"
-      ],
+      "variables": ["CHAPTER_BRIEF"],
       "prompt": "Author {{CHAPTER_BRIEF}} from the current First Light wide contract. Keep full72x36 routing, opaque hidden artwork, persistent steering and separate Immediate/Grid+buffer play. Introduce threats deliberately, preserve room for expert fast routes, and deliver legal winning and failure traces with original reward art. Reference observations and inferred values must be labelled. Do not advertise unregistered classic or Tactical primitives.",
       "example_request": "Apply wide-01-chapter-design to the current RevealLine edition."
     },
@@ -108,9 +132,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "THEME_BRIEF"
-      ],
+      "variables": ["THEME_BRIEF"],
       "prompt": "Create {{THEME_BRIEF}} as a2:1 original picture suited to incremental reveal. Preserve the approved map/character collision identity and black concealment. Produce a distinct readable focal story and inspect the real pixels before registration. Keep masters/provenance, theme/map association and optional future ending-video timestamps separate. Use current registered art fields, and do not count a repeated recolor as a new scene.",
       "example_request": "Apply wide-02-theme-variation to the current RevealLine edition."
     },
@@ -124,9 +146,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "CHARACTER_BRIEF"
-      ],
+      "variables": ["CHARACTER_BRIEF"],
       "prompt": "Adapt {{CHARACTER_BRIEF}} into independently replaceable compact and detailed rigs using registered rotor/blade anchors and speed/direction responses. Preserve a small readable hit silhouette, clear active trail head, banking/boost/recovery states and reduced-effects mode. Inspect real reference images and distinguish model appearance from fictional gameplay ability. Never change collision rules through cosmetic artwork.",
       "example_request": "Apply wide-03-motion-variation to the current RevealLine edition."
     },
@@ -140,9 +160,7 @@
       "reference_requirements": [
         "Current runtime schema, approved roadmap and relevant authoring skill."
       ],
-      "variables": [
-        "MILESTONE"
-      ],
+      "variables": ["MILESTONE"],
       "prompt": "Qualify {{MILESTONE}} from an exact committed archive. Preserve legacy simulation/save/replay fixtures and separate new wide Standard/Gentle proofs. Check real host menu-to-win/loss/retry/load, current images, keyboard/touch/controller adapter behavior and complete arena layouts. Record actual physical devices separately from resized windows, and keep unfinished parallel changes out of the frozen artifact.",
       "example_request": "Apply wide-04-release-regression to the current RevealLine edition."
     }
