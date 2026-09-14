@@ -56,6 +56,9 @@ export async function couchPage(
     initialLevel = campaign.levels[0].id,
     ImageClass,
     assetDatabase,
+    storage,
+    lockManager,
+    URLImpl = globalThis.URL,
     expectBootFailure = false,
   } = {},
 ) {
@@ -81,6 +84,7 @@ export async function couchPage(
     document: doc,
     window: win,
     navigator: {
+      locks: lockManager,
       getGamepads() {
         reads++;
         if (readError) throw readError;
@@ -88,6 +92,8 @@ export async function couchPage(
       },
     },
     indexedDB: assetDatabase,
+    localStorage: storage,
+    URL: URLImpl,
     Image:
       ImageClass ||
       class {

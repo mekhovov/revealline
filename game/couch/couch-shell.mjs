@@ -56,6 +56,10 @@ export function createCouchShell({
     removers.push(() => element.removeEventListener(type, fn));
   };
   function primary() {
+    if (screen === 'main' && $('race-start').disabled) {
+      const retry = $('race-chapter-retry');
+      return retry && !retry.hidden && !retry.disabled ? retry : $('race-focus');
+    }
     return screen === 'review' ? $('race-pause') : $(SCREENS[screen][1]);
   }
   function root() {
@@ -118,14 +122,17 @@ export function createCouchShell({
     if (destroyed || status === 'running' || (!Object.hasOwn(SCREENS, next) && next !== 'review'))
       return;
     if (remember) opener = remember === true ? doc.activeElement : remember;
-    onTransition();
+    onTransition({ from: screen, to: next });
     screen = next;
     renderScreens();
     renderPads();
     focus(restore || primary());
   }
   function back() {
-    if (screen === 'main') return focus();
+    if (screen === 'main') {
+      onTransition({ from: screen, to: screen, back: true });
+      return focus();
+    }
     const target = opener;
     opener = null;
     show('main', { restore: target });
@@ -189,7 +196,7 @@ export function createCouchShell({
     const seat = arena?.closest('.racer');
     if (seat) observe(Number(seat.dataset.player), 'touch');
   });
-  function update({ match, summary, won }) {
+  function update({ match, summary, won, contentBusy = false }) {
     if (destroyed) return;
     const previous = status;
     status = match.status;
@@ -203,13 +210,15 @@ export function createCouchShell({
     setText('race-summary', summary);
     setText(
       'race-title',
-      status === 'paused'
-        ? 'Both boards paused.'
-        : status === 'finished'
-          ? won.some((n) => n >= 2)
-            ? 'Match complete.'
-            : 'Round complete.'
-          : 'Two boards. One race.',
+      contentBusy
+        ? 'Loading the shared picture…'
+        : status === 'paused'
+          ? 'Both boards paused.'
+          : status === 'finished'
+            ? won.some((n) => n >= 2)
+              ? 'Match complete.'
+              : 'Round complete.'
+            : 'Two boards. One race.',
     );
     $('race-review').hidden = status !== 'finished';
     $('race-pause').disabled = status !== 'running' && screen !== 'review';

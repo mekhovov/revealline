@@ -1,5 +1,6 @@
 import { createCouchShell } from './couch-shell.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
+import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
@@ -9,18 +10,17 @@ import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
-import { readAssetStore } from '../storage.mjs';
-import { importPackLibrary, resolvePackCampaign } from '../packs.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { recommendedBody } from '../content.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 const $ = (id) => document.getElementById(id);
 const artworkLifetime = new AbortController();
-let featured;
+let featured, installed;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   artworkLifetime.abort();
   featured?.dispose();
+  installed?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
 window.addEventListener('pagehide', releaseArtwork);
@@ -72,41 +72,43 @@ try {
       backdrop: featured.backdrop(level.id),
     })),
   );
+  const shippedMaps = [...maps];
+  let installedStatus = 'Installed chapters have not been checked.';
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
       ? `release-${(await json('../build-info.json')).version}`
       : 'dev';
-    const saved = await readAssetStore(`revealline.packs.${channel}.v1`);
-    if (saved) {
-      const installed = await importPackLibrary(saved);
-      for (const pack of installed.packs)
-        for (const c of pack.campaigns) {
-          const resolved = resolvePackCampaign(pack, c.id);
-          for (const level of c.levels)
-            maps.push({
-              key: `${pack.id}/${c.id}/${level.id}`,
-              chapter: `${c.title} · Installed`,
-              level,
-              defaultThemeId: level.themeId || c.themeId,
-              track:
-                resolved.music.find((track) => track.id === (level.musicId || c.musicId)) || null,
-              classes: resolved.classRecipes,
-              themes: resolved.themes,
-              visualOverrides: {
-                ...resolved.visualOverrides,
-                ...resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides,
-              },
-            });
-        }
-    }
-  } catch (e) {
-    $('race-message').textContent = `Pack loading: ${e.message}`;
+    installed = createCouchInstalledChapters({
+      channel,
+      registeredEntries: [
+        {
+          campaign: { ...campaign, classRecipes: registry },
+          classRecipes: registry,
+          themes: themes.themes,
+          visualOverrides: {},
+          levelVisuals: [],
+          music: [],
+          sourcePackId: null,
+        },
+      ],
+    });
+    const rows = await installed.refresh({ signal: artworkLifetime.signal });
+    maps.push(...rows);
+    installedStatus = rows.length
+      ? `${rows.length} installed maps available. Choose a map to check its original.`
+      : 'No installed chapters in this profile. Install chapters in solo More worlds, then refresh.';
+  } catch (error) {
+    installedStatus = `Installed chapters unavailable: ${error.message}`;
   }
   if (artworkLifetime.signal.aborted)
     throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
   const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
-  for (const m of maps)
-    $('race-level').append(new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key));
+  function showMaps() {
+    $('race-level').replaceChildren(
+      ...maps.map((m) => new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key)),
+    );
+  }
+  showMaps();
   $('race-level').value = maps[0].key;
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
@@ -127,6 +129,11 @@ try {
   let match,
     theme,
     backdrop = null,
+    contentReady = true,
+    contentBusy = false,
+    contentError = null,
+    contentController = null,
+    contentScope = null,
     accumulator = 0,
     last = 0,
     won = [0, 0],
@@ -160,7 +167,49 @@ try {
     if (match?.status === 'running') menuScope = 'flight';
     menuHint = '';
   }
+  function actionFocus(origin) {
+    const startedHere = document.activeElement === origin,
+      scope = shell.scope();
+    let moved = false;
+    const observe = (event) => {
+      if (![origin, document.body, document.documentElement].includes(event.target)) moved = true;
+    };
+    document.addEventListener('focusin', observe);
+    return (target, current) => {
+      document.removeEventListener('focusin', observe);
+      if (
+        current &&
+        !disposed &&
+        startedHere &&
+        !moved &&
+        shell.scope() === scope &&
+        !target.disabled &&
+        !target.closest('[hidden],[inert]')
+      )
+        target.focus({ preventScroll: true });
+    };
+  }
+  function cancelContent() {
+    if (!contentBusy) return;
+    contentController?.abort();
+    installed?.clear();
+    backdrop = null;
+    contentBusy = false;
+    contentReady = false;
+    contentError = 'Picture loading cancelled. Retry when you are ready.';
+    if (installedStatus === 'Checking installed chapters…')
+      installedStatus = 'Installed chapter check cancelled. Refresh when ready.';
+    $('race-message').textContent = contentError;
+    updateMenu();
+  }
   function prepare() {
+    contentController?.abort();
+    installed?.clear();
+    contentController = new AbortController();
+    contentScope = shell?.scope() || 'main';
+    contentError = null;
+    contentBusy = false;
+    contentReady = false;
     clear({ resetDirection: true });
     const entry = maps.find((m) => m.key === $('race-level').value),
       level = entry.level;
@@ -200,9 +249,43 @@ try {
     });
     finished = false;
     $('race-start').textContent = 'Start round ↗';
-    $('race-message').textContent =
-      'Both boards use the same map, class and seed. Ready when you are.';
+    contentReady = shippedMaps.includes(entry);
+    contentBusy = !contentReady;
+    $('race-message').textContent = contentReady
+      ? 'Both boards use the same map, class and seed. Ready when you are.'
+      : 'Checking this chapter and loading its original picture…';
     updateMenu();
+    if (contentReady) return Promise.resolve(true);
+    const selectedRun = match,
+      ticket = generation,
+      controller = contentController;
+    return (async () => {
+      try {
+        const image = await installed.select(entry, {
+          themeId: theme.id,
+          raceId: ticket,
+          signal: controller.signal,
+        });
+        if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
+          return false;
+        backdrop = image;
+        contentReady = true;
+        $('race-message').textContent =
+          'Original picture ready for both boards. Start when you are ready.';
+        return true;
+      } catch (error) {
+        if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
+          return false;
+        contentError = `This chapter could not load: ${error.message}`;
+        $('race-message').textContent = contentError;
+        return false;
+      } finally {
+        if (!disposed && controller === contentController && !controller.signal.aborted) {
+          contentBusy = false;
+          updateMenu();
+        }
+      }
+    })();
   }
   function pause() {
     sound.pause();
@@ -215,12 +298,65 @@ try {
     }
     updateMenu();
   }
-  $('race-start').onclick = () => {
-    if (disposed || match.status === 'running' || shell.scope() !== 'main') return;
+  $('race-start').onclick = async () => {
+    if (
+      disposed ||
+      contentBusy ||
+      !contentReady ||
+      match.status === 'running' ||
+      shell.scope() !== 'main'
+    )
+      return;
     if (match.status === 'finished') {
       if (won.some((n) => n >= 2)) won = [0, 0];
-      prepare();
+      // A fresh installed round first loads its original, then awaits a new Start.
+      const ready = prepare();
+      if (contentBusy) {
+        await ready;
+        return;
+      }
     }
+    const entry = maps.find((row) => row.key === selectedMapKey),
+      selectedRun = match,
+      ticket = generation;
+    if (match.status === 'ready' && !shippedMaps.includes(entry)) {
+      const restoreFocus = actionFocus($('race-start'));
+      contentBusy = true;
+      updateMenu();
+      try {
+        await installed.confirm(entry, { raceId: ticket, signal: contentController.signal });
+        if (
+          disposed ||
+          contentController.signal.aborted ||
+          match !== selectedRun ||
+          ticket !== generation ||
+          shell.scope() !== 'main'
+        )
+          return;
+      } catch (error) {
+        if (
+          !disposed &&
+          match === selectedRun &&
+          ticket === generation &&
+          !contentController.signal.aborted
+        ) {
+          contentReady = false;
+          contentError = `Refresh installed chapters in Race setup before starting: ${error.message}`;
+          $('race-message').textContent = contentError;
+        }
+        return;
+      } finally {
+        if (!disposed && match === selectedRun && ticket === generation) {
+          contentBusy = false;
+          updateMenu();
+        }
+        restoreFocus(
+          $('race-chapter-retry'),
+          contentError && match === selectedRun && ticket === generation,
+        );
+      }
+    }
+    if (!contentReady || disposed) return;
     clear();
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
@@ -228,6 +364,65 @@ try {
     $('race-message').textContent = 'Make your line count. First clear wins.';
     updateMenu();
     input.focus();
+  };
+  $('race-chapter-retry').onclick = async () => {
+    if (disposed || contentBusy || match.status !== 'ready') return;
+    const restoreFocus = actionFocus($('race-chapter-retry'));
+    const ready = prepare(),
+      controller = contentController;
+    try {
+      return await ready;
+    } finally {
+      restoreFocus(
+        contentReady ? $('race-start') : $('race-chapter-retry'),
+        controller === contentController && !controller.signal.aborted,
+      );
+    }
+  };
+  $('race-installed-refresh').onclick = async () => {
+    if (disposed || contentBusy || match.status !== 'ready' || !installed) return;
+    const restoreFocus = actionFocus($('race-installed-refresh'));
+    contentController?.abort();
+    contentController = new AbortController();
+    let focusController = contentController;
+    const controller = contentController,
+      oldKey = selectedMapKey,
+      oldEntry = maps.find((row) => row.key === oldKey);
+    contentBusy = true;
+    contentReady = false;
+    contentScope = shell.scope();
+    if (!shippedMaps.includes(oldEntry)) backdrop = null;
+    installedStatus = 'Checking installed chapters…';
+    updateMenu();
+    try {
+      const rows = await installed.refresh({ signal: controller.signal });
+      if (disposed || controller.signal.aborted || controller !== contentController) return;
+      maps.splice(0, maps.length, ...shippedMaps, ...rows);
+      // Preserve a missing selection as unavailable; never silently switch its owner.
+      if (!maps.some((row) => row.key === oldKey)) maps.push(oldEntry);
+      showMaps();
+      $('race-level').value = oldKey;
+      installedStatus = rows.length
+        ? `${rows.length} installed maps available.`
+        : 'No installed chapters. Install them in solo More worlds, then refresh.';
+      const ready = prepare();
+      focusController = contentController;
+      await ready;
+    } catch (error) {
+      if (disposed || controller.signal.aborted || controller !== contentController) return;
+      contentError = `Installed chapters unavailable: ${error.message}`;
+      installedStatus = contentError;
+      $('race-message').textContent = contentError;
+    } finally {
+      if (!disposed && controller === contentController && !controller.signal.aborted) {
+        contentBusy = false;
+        updateMenu();
+      }
+      restoreFocus(
+        $('race-installed-refresh'),
+        focusController === contentController && !focusController.signal.aborted,
+      );
+    }
   };
   $('race-pause').onclick = () => {
     if (shell.scope() === 'review') shell.back();
@@ -250,11 +445,7 @@ try {
     };
   $('race-theme').onchange = () => {
     if (match?.status !== 'ready' || disposed) return;
-    const entry = maps.find((m) => m.key === $('race-level').value);
-    theme = entry.themes.find((t) => t.id === $('race-theme').value);
-    painters.forEach((p) =>
-      p.setLook(theme, bodyFor(theme, $('race-class').value), entry.visualOverrides),
-    );
+    prepare();
   };
   $('race-audio').onclick = async () => {
     try {
@@ -285,11 +476,15 @@ try {
   });
   shell = createCouchShell({
     coarse: matchMedia('(pointer: coarse)').matches,
-    onTransition: () => clear(),
+    onTransition: ({ to, back = false } = {}) => {
+      clear();
+      if (back || to !== contentScope) cancelContent();
+    },
     onNewMatch: () => {
       if (match?.status === 'running' || disposed) return;
       won = [0, 0];
       prepare();
+      contentScope = 'setup';
     },
   });
   function couchScope() {
@@ -355,7 +550,11 @@ try {
   function updateMenu() {
     if (!match || disposed) return;
     const running = match.status === 'running';
-    $('race-start').disabled = running;
+    $('race-start').disabled = running || contentBusy || !contentReady;
+    $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
+    $('race-chapter-retry').disabled = contentBusy;
+    $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
+    $('race-installed-status').textContent = installedStatus;
     $('race-pause').disabled = !running;
     $('race-menu-release').hidden = running || !menuOwner;
     $('race-menu-release').disabled = running || !menuOwner;
@@ -363,6 +562,7 @@ try {
     shell?.update({
       match,
       won,
+      contentBusy,
       summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
     });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
@@ -374,6 +574,8 @@ try {
   menuRouter = createControllerRouter({ readPads: readAssignedMenuPads });
   const menuIds = new Set([
     'race-start',
+    'race-chapter-retry',
+    'race-installed-refresh',
     'race-focus',
     'race-options',
     'race-help',
@@ -503,6 +705,7 @@ try {
   const pagehide = (event) => {
     suspend();
     if (event.persisted) return;
+    contentController?.abort();
     disposed = true;
     input.destroy();
     menuRouter.destroy();
