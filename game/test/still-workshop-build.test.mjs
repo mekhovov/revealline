@@ -84,8 +84,17 @@ test('actual release allowlist ships the standalone still entry and exact existi
   );
   assert.deepEqual(
     files.filter((name) => name.startsWith('authoring/library/')).sort(),
-    [...teachingScenarios].sort(),
-    'Only the three explicit teaching documents ship; generated originals and proof tooling stay excluded.',
+    [
+      ...teachingScenarios,
+      'authoring/library/fpv-role-presentations/originals/scout.png',
+      'authoring/library/fpv-role-presentations/originals/bomber.png',
+      'authoring/library/fpv-role-presentations/originals/carrier.png',
+      'authoring/library/fpv-role-presentations/originals/interceptor.png',
+      'authoring/library/fpv-role-presentations/originals/fiber.png',
+      'authoring/library/fpv-role-presentations/originals/impact.png',
+      'authoring/library/fpv-role-presentations/originals/trapper.png',
+    ].sort(),
+    'Only the three teaching documents and seven explicit FPV role originals ship; other generated originals and proof tooling stay excluded.',
   );
   assert.deepEqual(
     files.filter((name) => name.startsWith('authoring/video-poster/')).sort(),

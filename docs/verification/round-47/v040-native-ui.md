@@ -1,6 +1,6 @@
 # v0.40 native interface candidate
 
-This is a source and browser-preview checkpoint. Full v0.40 source gates, frozen release, PR and public deployment are still pending at this checkpoint. Public v0.38 remains the verified release. v0.39 PR #15 passed its replacement CI and merged as `4d6154e8`; its main deployment checks are running.
+This is a source and browser-preview checkpoint. The initial v0.40 source gate found one outdated test expectation; the corrected successor still requires full qualification, a frozen release, PR and public deployment. Public v0.38 remains the verified release. v0.39 PR #15 passed its replacement CI and merged as `4d6154e8`; its main deployment checks are running.
 
 ## Player-visible changes
 
@@ -27,6 +27,14 @@ Local evidence: `native-ui-retention-browser/role-followup/receipt.json`, 7,429 
 The wide Orchard Crossing preview also retained its complete arena and four external direction controls at 844×390 with Large text. Manual Scout camera quad selection remained independent of the authored Arcade class and was visible during a short flight. At 390×844, the compact three-action pause panel fit. The portrait pad was present in the live DOM, but the scrollable outer lab clipped its lower section in the screenshots; full portrait control comfort is not claimed. Entering the iframe after changing the outer viewport required a pointer action in this test, so this is not a complete keyboard-only journey. No additional win or physical-device qualification was recorded. Scoped evidence: `.cache/round47/fpv-role-viewport/receipt.json`, 5,876 bytes, SHA-256 `5ed2656cf15e22060377613817aae0f0ff1a2cddd6d02044240c09a030aad6a0`.
 
 A stale “Installing…” message prompted a source regression: focus loss invalidates the pending chapter launch, but previously left its progress caption unchanged. Commit `b59e11e2` now announces cancellation immediately while preserving late-response and storage guards. The old source fails the new deferred-response case; all four chapter-download host tests pass on Node 20 and 22. The earlier native iframe symptom is consistent with this path, but its actual blur event was not recorded. The frozen and public gate must still qualify the combined source.
+
+## Initial full-source gate and targeted correction
+
+The first complete attempt at `1d5f9f906a0685b8a43161570cd52b2a3ffc84fd` passed 3,380 of 3,381 tests with no skips; the other five source gates passed. The single failure was the still-workshop publication test's old expectation that only three teaching documents ship under `authoring/library/`. The build configuration and live appearance catalog already intentionally include the seven FPV role originals. The correction lists those exact seven paths alongside the three documents and retains every other exclusion and dependency assertion. No runtime or build configuration changed.
+
+The first targeted run in the sparse worktree failed all five cases on absent checkout fixtures (`site/` or `authoring/still-media/index.html`); those errors remain recorded. The corrected file then passed all five cases on Node 22 and Node 20, with no skips, using a hash-bound loader that substitutes only this exact test URL in the complete, unchanged `1d5f9f906a06` source snapshot. All other imports and fixture paths use that snapshot normally. This is targeted corrected-test evidence, not successor source qualification. The next full source gate uses an ordinary fresh archive without this loader.
+
+Retained evidence: `.cache/releases/verification-1d5f9f906a06/source-gates.json` (SHA-256 `32c67f83dffac89626734b9b4b66c62f94327b72c27236e85dfe80ad153b8ba2`) and its original `test.log`; the UI worktree's `.cache/v040-workshop-allowlist/` holds the sparse failure, exact loader/admission, both corrected test outputs and scoped static checks.
 
 ## Release checks still required
 
