@@ -68,9 +68,12 @@ export function attachGameShell({
         : $('shell-play')
     ).focus();
   };
-  const forward = (source, target) => {
+  const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
-      closeHome();
+      // Settings is a child of its actual entry screen. Keeping the title
+      // underneath lets native modal navigation restore both it and its opener.
+      // Destinations that can start/load a flight still leave the title.
+      if (!keepHome) closeHome();
       $(target).click();
     };
   };
@@ -152,9 +155,9 @@ export function attachGameShell({
   };
   forward('shell-collection', 'collection-button');
   forward('shell-gallery', 'collection-button');
-  forward('shell-settings', 'settings-button');
+  forward('shell-settings', 'settings-button', { keepHome: true });
   forward('shell-library', 'library-button');
-  forward('shell-options', 'settings-button');
+  forward('shell-options', 'settings-button', { keepHome: true });
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
   forward('shell-help', 'help-button');

@@ -293,12 +293,14 @@ for (const [dialog, opener, prefix] of [
 test('actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns', async (t) => {
   nativeDialogs(t);
   const h = await soloPage(t, {
+      titleScreen: true,
       audio: audioHarness(),
       soundtrackIndexedDB: memoryIndexedDB().indexedDB,
     }),
     pad = controllerPad(h, t);
   await settle(() => !h.$('soundtrack-open').disabled);
-  h.$('settings-button').click();
+  h.$('shell-options').focus();
+  h.$('shell-options').click();
   pad.frame();
   pad.frame();
   h.$('soundtrack-open').focus();
@@ -350,6 +352,62 @@ test('actual Settings → Studio listbox/range edits preview, cancel and apply t
   assert.equal(h.$('soundtrack-dialog').open, false);
   assert.equal(h.$('settings-dialog').open, true);
   assert.equal(h.doc.activeElement.id, 'soundtrack-open');
+  assert.equal(h.$('shell-home').open, true);
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('settings-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-options');
   assert.equal(h.rendered.run.tick, 0);
+  assert.deepEqual(h.errors, []);
+});
+
+test('title Settings returns to its title opener after controller Back or native Escape', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: true }),
+    pad = controllerPad(h, t);
+  for (const exit of ['controller', 'escape']) {
+    h.$('shell-options').focus();
+    h.$('shell-options').click();
+    pad.frame();
+    pad.frame();
+    assert.equal(h.$('shell-home').open, true, 'The title remains underneath its settings');
+    assert.equal(h.$('settings-dialog').open, true);
+    if (exit === 'controller') pad.pulse(1);
+    else {
+      // Browser Escape cancels the front native dialog; model its default close.
+      const dialog = h.$('settings-dialog');
+      const event = dialog.emit('cancel');
+      if (!event.defaultPrevented) dialog.close();
+    }
+    await Promise.resolve();
+    assert.equal(h.$('settings-dialog').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-options');
+    assert.equal(h.rendered.run.tick, 0, 'Returning never starts flight');
+    pad.frame();
+  }
+  assert.deepEqual(h.errors, []);
+});
+
+test('opening Settings during a flight keeps its paused-flight return instead of opening the title', async (t) => {
+  nativeDialogs(t);
+  const h = await soloPage(t, { titleScreen: false }),
+    pad = controllerPad(h, t);
+  h.$('start-button').click();
+  pad.frame();
+  h.$('shell-settings').click();
+  pad.frame();
+  pad.frame();
+  const tick = h.rendered.run.tick;
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$('shell-home').open, false);
+  pad.pulse(1);
+  await Promise.resolve();
+  pad.frame();
+  assert.equal(h.$('settings-dialog').open, false);
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.equal(h.rendered.run.tick, tick);
   assert.deepEqual(h.errors, []);
 });
