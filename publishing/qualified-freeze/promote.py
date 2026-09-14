@@ -1,6 +1,6 @@
 """Copy independently verified immutable artifacts to a new draft release; never publish it."""
 from pathlib import Path
-import datetime,hashlib,json,os,re,shutil,subprocess,sys,zipfile
+import datetime,hashlib,json,os,re,shutil,subprocess,sys,time,zipfile
 BASE=Path(__file__).resolve().parent
 NAMES={'source.tar','distribution.zip','distribution.zip.sha256','manifest.json','release.json','source-qualification.json','frozen-integrity.json'}
 def require(value,message):
@@ -46,11 +46,28 @@ def release_by_tag(api,version):
     else:raise ValueError('Release enumeration exceeded bounded page count')
     require(len(matches)<=1,'Duplicate release tag records')
     return matches[0] if matches else None
-def retain_draft(api,version,row,assets,notes,reports,check_tag,create,upload):
-    require(release_by_tag(api,version) is None,'A published release or draft already exists')
-    check_tag();create(version,notes)
-    draft=release_by_tag(api,version);require(draft and draft['draft'] and not draft['prerelease'],'Created draft identity missing')
-    release_id=draft['id'];write_receipt(reports/'draft-created.json',{'releaseId':release_id,'tag':version,'draft':True,'uploadComplete':False})
+def empty_recovery(api,version,row,recovery):
+    live=api('releases/'+str(recovery['releaseId']))
+    require(live['id']==recovery['releaseId'] and live['tag_name']==version and live['draft'] is True and live['prerelease'] is False and live['assets']==[],'Pinned draft is not still empty and private')
+    require(live['name']==row['title'] and live['body']==row['releaseNotes'] and live['author']['login']=='github-actions[bot]','Pinned owned draft metadata differs')
+    selected=release_by_tag(api,version);require(selected is None or selected['id']==live['id'],'Another release owns this version')
+    return live
+def observe_uploaded(api,release_id,version,name,expected,pause=time.sleep):
+    for attempt in range(12):
+        live=api('releases/'+str(release_id));require(live['id']==release_id and live['tag_name']==version and live['draft'] is True,'Saved draft identity changed after upload')
+        matches=[a for a in live['assets'] if a['name']==name];require(len(matches)<=1,'Uploaded asset duplicated')
+        if matches and matches[0]['state']=='uploaded':
+            actual=matches[0];require(actual['size']==expected['bytes'] and actual['digest']=='sha256:'+expected['sha256'],'Uploaded asset differs');return actual
+        if attempt<11:pause(2)
+    raise ValueError('Uploaded asset has not appeared; retain draft and do not retry the write')
+def retain_draft(api,version,row,assets,notes,reports,check_tag,create,upload,recovery=None):
+    check_tag()
+    if recovery is None:
+        require(release_by_tag(api,version) is None,'A published release or draft already exists')
+        draft=create(version,notes)
+    else:draft=empty_recovery(api,version,row,recovery)
+    require(draft and draft['tag_name']==version and draft['draft'] and not draft['prerelease'],'Created or resumed draft identity missing')
+    release_id=draft['id'];write_receipt(reports/'draft-created.json',{'releaseId':release_id,'tag':version,'draft':True,'uploadComplete':False,'createdInThisRun':recovery is None,'resumedFromFailedRun':recovery['priorRunId'] if recovery else None})
     require(not draft['assets'],'New draft already contains assets')
     for name in sorted(NAMES):
         result=upload(release_id,name,assets/name)
@@ -79,7 +96,14 @@ def main():
     def check_tag():
         ref=api('git/ref/tags/'+version);require(ref['object']['type']=='tag' and ref['object']['sha']==row['tagObject'],'Tag object changed')
         tag=api('git/tags/'+row['tagObject']);require(tag['object']['type']=='commit' and tag['object']['sha']==row['sourceRevision'],'Tag source changed')
-    check_tag();require(release_by_tag(api,version) is None,'A published release or draft already exists')
+    recovery_config=json.loads((BASE/'recoveries.json').read_text())
+    require(recovery_config['format']=='revealline-owned-empty-draft-recovery.v1' and recovery_config['sourceRepository']=='mekhovov/revealline' and recovery_config['promotionsSha256']==hashfile(BASE/'promotions.json'),'Recovery manifest differs')
+    recoveries=[r for r in recovery_config['sources'] if r['version']==version];require(len(recoveries)==1,'Exact owned draft recovery required');recovery=recoveries[0]
+    require(recovery['expectedAssetsBefore']==0,'Only empty own drafts may resume')
+    failed_path=BASE/'recoveries'/version/'failure.json';require(hashfile(failed_path)==recovery['failureSha256'],'Prior failure proof differs')
+    failed=json.loads(failed_path.read_text());require(failed['passed'] is False and failed['publicationPerformed'] is False and failed['retainedRelease']['id']==recovery['releaseId'] and failed['retainedRelease']['assets']==[],'Prior empty-draft proof differs')
+    prior=api('actions/runs/'+str(recovery['priorRunId']));require(prior['conclusion']=='failure' and prior['status']=='completed' and prior['head_sha']==recovery['priorControllerRevision'] and prior['path']=='.github/workflows/promote-qualified-artifacts.yml','Prior failed run differs')
+    check_tag();empty_recovery(api,version,row,recovery)
     run=api('actions/runs/'+str(manifest['freezeRunId']));require(run['status']=='completed' and run['conclusion']=='success' and run['head_sha']==manifest['freezeControllerRevision'] and run['path']=='.github/workflows/freeze-qualified-sources.yml','Freeze run is not the accepted immutable pass')
     independent=row['independentVerification'];second=api('actions/runs/'+str(independent['runId']))
     require(second['status']=='completed' and second['conclusion']=='success' and second['head_sha']==independent['controllerRevision'] and second['run_attempt']==independent['runAttempt']==1 and second['event']=='push' and second['head_branch']=='codex/verify-qualified-freeze-artifacts' and second['path']=='.github/workflows/reverify-qualified-artifacts.yml' and second['repository']['full_name']==second['head_repository']['full_name']=='mekhovov/revealline','Independent run is not the accepted immutable pass')
@@ -88,6 +112,14 @@ def main():
     require(live['workflow_run']['id']==independent['runId'] and live['workflow_run']['head_sha']==independent['controllerRevision'],'Independent proof artifact run differs')
     artifactlist=api('actions/runs/'+str(manifest['freezeRunId'])+'/artifacts?per_page=100');byid={a['id']:a for a in artifactlist['artifacts']}
     work=Path('promotion-work')/version;require(not work.exists(),'Existing draft staging');work.mkdir(parents=True);assets=work/'assets';assets.mkdir()
+    prior_pin=recovery['failureArtifact'];prior_live=api('actions/artifacts/'+str(prior_pin['id']))
+    require(not prior_live['expired'] and all(prior_live[k]==prior_pin[k] for k in ['id','name','size_in_bytes','digest']) and prior_live['workflow_run']['id']==recovery['priorRunId'] and prior_live['workflow_run']['head_sha']==recovery['priorControllerRevision'],'Prior failure artifact differs')
+    prior_wrapper=work/'prior-failure.zip'
+    with prior_wrapper.open('xb') as out:subprocess.run(['gh','api','--allow-escape-sequences','repos/mekhovov/revealline/actions/artifacts/'+str(prior_pin['id'])+'/zip'],stdout=out,check=True,timeout=120)
+    require(prior_wrapper.stat().st_size==prior_pin['size_in_bytes'] and hashfile(prior_wrapper)==prior_pin['digest'][7:],'Prior failure transport differs')
+    with zipfile.ZipFile(prior_wrapper) as archive:
+        require(set(archive.namelist())=={'request.json','failure.json'} and len(archive.namelist())==2 and archive.getinfo('failure.json').file_size==failed_path.stat().st_size<100_000,'Prior failure members differ')
+        require(archive.read('failure.json')==failed_path.read_bytes(),'Prior failure body differs')
     proofwrapper=work/'independent-proof.zip'
     with proofwrapper.open('xb') as out:subprocess.run(['gh','api','--allow-escape-sequences','repos/mekhovov/revealline/actions/artifacts/'+str(independent['proofArtifact']['id'])+'/zip'],stdout=out,check=True,timeout=120)
     require(proofwrapper.stat().st_size==independent['proofArtifact']['size_in_bytes'] and hashfile(proofwrapper)==independent['proofArtifact']['digest'][7:],'Independent proof transport differs')
@@ -116,19 +148,17 @@ def main():
     require(expected['source-qualification.json']['sha256']==pin['qualificationSha256'],'Qualification upload changed')
     notes=work/'release-notes.md';notes.write_text(row['releaseNotes'])
     def create(tag,notes):
-        subprocess.run(['gh','release','create',tag,'--repo','mekhovov/revealline','--verify-tag','--draft','--latest=false','--title',row['title'],'--notes-file',str(notes)],check=True,timeout=120)
+        request=work/'create-draft.json';write_receipt(request,{'tag_name':tag,'target_commitish':row['sourceRevision'],'draft':True,'prerelease':False,'make_latest':'false','name':row['title'],'body':notes.read_text()})
+        # The POST response is the ID authority; a listing can lag immediately after creation.
+        return json.loads(subprocess.check_output(['gh','api','--method','POST','repos/mekhovov/revealline/releases','--input',str(request)],timeout=120))
     def upload(release_id,name,path):
         selected=release_by_tag(api,version);before=api('releases/'+str(release_id))
         require(selected and selected['id']==release_id and before['id']==release_id and before['tag_name']==version and before['draft'] is True,'Saved draft identity changed before upload')
         require(not any(a['name']==name for a in before['assets']),'Asset already exists; never overwrite')
         subprocess.run(['gh','release','upload',version,str(path),'--repo','mekhovov/revealline'],check=True,timeout=1800)
-        selected=release_by_tag(api,version);after=api('releases/'+str(release_id))
-        require(selected and selected['id']==release_id and after['id']==release_id and after['tag_name']==version and after['draft'] is True,'Saved draft identity changed after upload')
-        matches=[a for a in after['assets'] if a['name']==name];require(len(matches)==1,'Uploaded asset missing or duplicated')
-        expected=next(a for a in row['expectedAssets'] if a['name']==name);actual=matches[0]
-        require(actual['state']=='uploaded' and actual['size']==expected['bytes'] and actual['digest']=='sha256:'+expected['sha256'],'Uploaded asset differs')
-        return actual
-    release=retain_draft(api,version,row,assets,notes,reports,check_tag,create,upload)
+        expected=next(a for a in row['expectedAssets'] if a['name']==name)
+        return observe_uploaded(api,release_id,version,name,expected)
+    release=retain_draft(api,version,row,assets,notes,reports,check_tag,create,upload,recovery)
     receipt={'format':'revealline-hosted-draft-promotion.v1','at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'passed':True,'version':version,'sourceRevision':row['sourceRevision'],'tagObject':row['tagObject'],'controllerRevision':os.environ['GITHUB_SHA'],'runId':int(os.environ['GITHUB_RUN_ID']),'freezeRunId':manifest['freezeRunId'],'independentArtifactProofSha256':row['independentArtifactProofSha256'],'independentVerificationRunId':independent['runId'],'independentVerificationControllerRevision':independent['controllerRevision'],'releaseId':release['id'],'draft':True,'assets':[{k:a[k] for k in ['id','name','size','digest','state']} for a in release['assets']],'published':False,'pagesDeployed':False}
     (reports/'draft-promotion.json').write_text(json.dumps(receipt,indent=2)+'\n');print(json.dumps(receipt))
 

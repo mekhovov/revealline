@@ -1,0 +1,94 @@
+{
+  "format": "revealline-owned-empty-draft-recovery.v1",
+  "sourceRepository": "mekhovov/revealline",
+  "promotionsSha256": "89c621605d893d27fddb113292b7ecd44d41b5ac07b519cfddd68371c199929b",
+  "sources": [
+    {
+      "version": "v0.49.0",
+      "releaseId": 388769674,
+      "priorRunId": 34908462115,
+      "priorControllerRevision": "018643c0ed2a5f5929ae44407201f7f34bf9aeff",
+      "failureSha256": "ff5f9a8006791b7825ea4b67a969f5424ef4589e7df6fb500642b2d33bea1fdc",
+      "failureArtifact": {
+        "id": 10373501830,
+        "node_id": "MDg6QXJ0aWZhY3QxMDM3MzUwMTgzMA==",
+        "name": "draft-retention-v0.49.0",
+        "size_in_bytes": 1468,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373501830",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373501830/zip",
+        "expired": false,
+        "digest": "sha256:6ac998b935ad6b63181d23be9c7f2e729cf7fca8b89dad16378e3b77a0012809",
+        "created_at": "2026-09-14T23:22:09Z",
+        "updated_at": "2026-09-14T23:22:09Z",
+        "expires_at": "2026-12-13T23:21:12Z",
+        "workflow_run": {
+          "id": 34908462115,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/promote-qualified-freezes",
+          "head_sha": "018643c0ed2a5f5929ae44407201f7f34bf9aeff"
+        }
+      },
+      "liveEmptyDraftSha256": "517a4e64e19abb4ce16c390440ec501afedd16d0fbabe50fd7b084b102e44d93",
+      "expectedAssetsBefore": 0
+    },
+    {
+      "version": "v0.50.0",
+      "releaseId": 388769454,
+      "priorRunId": 34908462115,
+      "priorControllerRevision": "018643c0ed2a5f5929ae44407201f7f34bf9aeff",
+      "failureSha256": "cac6e7453dcdfcabd0b2a01ac5b196e1e4464447d667ed04300aa1033b5cbd26",
+      "failureArtifact": {
+        "id": 10373013861,
+        "node_id": "MDg6QXJ0aWZhY3QxMDM3MzAxMzg2MQ==",
+        "name": "draft-retention-v0.50.0",
+        "size_in_bytes": 1471,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373013861",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373013861/zip",
+        "expired": false,
+        "digest": "sha256:158906fd3b5c6d06b1772abfcdb407917e05261ca7953722dde9546d0afa649c",
+        "created_at": "2026-09-14T23:21:34Z",
+        "updated_at": "2026-09-14T23:21:34Z",
+        "expires_at": "2026-12-13T23:21:12Z",
+        "workflow_run": {
+          "id": 34908462115,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/promote-qualified-freezes",
+          "head_sha": "018643c0ed2a5f5929ae44407201f7f34bf9aeff"
+        }
+      },
+      "liveEmptyDraftSha256": "b6b35e9ab17cf46bb66850344e517564d94f81bb277ba8ef1b6fbc869e440ad1",
+      "expectedAssetsBefore": 0
+    },
+    {
+      "version": "v0.51.0",
+      "releaseId": 388769473,
+      "priorRunId": 34908462115,
+      "priorControllerRevision": "018643c0ed2a5f5929ae44407201f7f34bf9aeff",
+      "failureSha256": "98715405118926c59276cd8f856a217b2052db62c33a6bd3796a53046d9eb9ca",
+      "failureArtifact": {
+        "id": 10373905535,
+        "node_id": "MDg6QXJ0aWZhY3QxMDM3MzkwNTUzNQ==",
+        "name": "draft-retention-v0.51.0",
+        "size_in_bytes": 1473,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373905535",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/10373905535/zip",
+        "expired": false,
+        "digest": "sha256:85a2c88c4c534db1509f210d90c1a0a3fdf043ade2ad16468f02bfaefefbe314",
+        "created_at": "2026-09-14T23:21:36Z",
+        "updated_at": "2026-09-14T23:21:36Z",
+        "expires_at": "2026-12-13T23:21:12Z",
+        "workflow_run": {
+          "id": 34908462115,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/promote-qualified-freezes",
+          "head_sha": "018643c0ed2a5f5929ae44407201f7f34bf9aeff"
+        }
+      },
+      "liveEmptyDraftSha256": "6f26c65d5d8ddf067343a2250c7bd93b87c8643468c37a0847660ea2d093f8e1",
+      "expectedAssetsBefore": 0
+    }
+  ]
+}
