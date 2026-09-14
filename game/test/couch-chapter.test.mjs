@@ -92,6 +92,44 @@ test('fresh couch uses exact wide Pressure Lines originals, authored Arcade cont
   assert.equal(f.drawOptions[1].backdrop, backdrop);
 });
 
+test('an offline optional featured download leaves base Couch maps playable and solo storage untouched', async (t) => {
+  let attempts = 0;
+  const f = await couchPage(t, {
+    initialLevel: null,
+    storage: {
+      getItem: () => null,
+      setItem() {
+        assert.fail('Couch must not write solo state.');
+      },
+    },
+    fetchResponse(path) {
+      if (path === '../content/packs/fpv-arcade-r5.json') {
+        attempts++;
+        throw new TypeError('Offline optional download');
+      }
+    },
+  });
+  assert.equal(attempts, 1);
+  assert.equal(f.renders[0].level.id, 'signal-01');
+  assert.equal(f.$('race-start').disabled, false);
+  assert.match(f.$('race-message').textContent, /Featured Pressure Lines.*unavailable/);
+  assert.match(f.$('race-installed-status').textContent, /Featured Pressure Lines.*unavailable/);
+  assert.ok(f.$('race-level').options.every((option) => !option.value.startsWith('shipped/')));
+  assert.equal(f.drawOptions[0].backdrop, null);
+  f.$('race-start').click();
+  f.frame();
+  f.key('KeyD');
+  f.frames(8);
+  f.key('KeyD', false);
+  assert.ok(f.renders[0].player.x > f.renders[0].level.spawn.x);
+  assert.equal(f.renders[1].player.x, f.renders[1].level.spawn.x);
+  f.$('race-pause').click();
+  f.frame();
+  const held = f.checkpoint();
+  f.frames(4, 100);
+  assert.deepEqual(f.checkpoint(), held);
+});
+
 test('all three exact map pictures change together; explicit Tactical legacy choice clears the original binding', async (t) => {
   const f = await couchPage(t, { initialLevel: null });
   for (const level of pack.campaigns[0].levels) {

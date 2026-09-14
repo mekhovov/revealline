@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
 import { createCouchInstalledChapters } from '../couch/couch-installed-chapters.mjs';
 import { createExternalChapterHost } from '../external-chapter-host.mjs';
 import { createExternalChapterPointerStore } from '../external-chapter-pointer.mjs';
 import { createManagedMediaStore, MANAGED_MEDIA_DATABASE } from '../managed-media-store.mjs';
 import { createStillMediaStore } from '../media-store.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
-import { installPack } from '../packs.mjs';
+import { installPack, preparePack } from '../packs.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
 import { buildCountercurrentTheme } from '../../authoring/library/countercurrent-chapters/build.mjs';
@@ -355,6 +356,63 @@ test('pending journals, missing descriptors and absent original bytes refuse ins
   await assert.rejects(f.reader.select(rows[0], { raceId: 1 }), /missing|unavailable|original/i);
   assert.equal(f.reader.current(), null);
   assert.deepEqual(f.writes(), before);
+});
+
+test('Couch recovers installed R5 originals when its optional shipped URL is unavailable', async (t) => {
+  const pack = JSON.parse(
+    await readFile(new URL('../content/packs/fpv-arcade-r5.json', import.meta.url), 'utf8'),
+  );
+  const { pack: prepared } = await preparePack(pack, { decodeImage });
+  const f = await fixture(t, { embedded: true, chapter: { ...pilot, prior: prepared } }),
+    before = f.writes();
+  f.reader.dispose();
+  let attempts = 0;
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+    fetchResponse(path) {
+      if (path === '../content/packs/fpv-arcade-r5.json') {
+        attempts++;
+        return { ok: false, status: 404 };
+      }
+    },
+  });
+  assert.equal(attempts, 1);
+  assert.equal(page.renders[0].level.id, 'signal-01');
+  const choices = page
+    .$('race-level')
+    .options.filter((option) => option.value.startsWith('installed/'));
+  assert.equal(choices.length, 3);
+  assert.match(page.$('race-installed-status').textContent, /Featured Pressure Lines.*unavailable/);
+  assert.match(page.$('race-installed-status').textContent, /3 installed maps available/);
+  page.$('race-focus').click();
+  page.$('race-level').value = choices[0].value;
+  await action(page.$('race-level'), 'change');
+  await settle(() => !page.$('race-start').disabled, page.$('race-message').textContent);
+  page.$('race-setup-back').click();
+  page.frame();
+  const binding = page.drawOptions[0].backdrop,
+    original = pack.levelVisuals.find((item) => item.levelId === 'orchard-crossing').visualOverrides
+      .background;
+  assert.equal(page.renders[0].level.id, 'orchard-crossing');
+  assert.equal(binding, page.drawOptions[1].backdrop);
+  assert.equal(
+    sha(binding.image.bytes),
+    sha(Buffer.from(original.dataUrl.split(',')[1], 'base64')),
+  );
+  assert.equal(page.renders[0].tick, 0, 'checking an installed map does not start either player');
+  await action(page.$('race-start'));
+  page.frame();
+  page.key('KeyD');
+  page.frames(8);
+  page.key('KeyD', false);
+  assert.ok(page.renders[0].player.x > page.renders[0].level.spawn.x);
+  assert.equal(page.renders[1].player.x, page.renders[1].level.spawn.x);
+  assert.deepEqual(f.writes(), before, 'Couch reuses installed bytes without mutating solo data');
 });
 
 test('actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus', async (t) => {
