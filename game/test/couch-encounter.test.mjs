@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { BoardPainter } from '../ui/render.mjs';
+import { couchPage } from './helpers/couch-host.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 
 const read = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
@@ -9,158 +9,31 @@ const pack = await read('../content/packs/sentinel-relay.json');
 const proofs = await read('../replays/sentinel-routes.json');
 const html = await readFile(new URL('../couch/index.html', import.meta.url), 'utf8');
 
-class Element {
-  constructor(id = '') {
-    this.id = id;
-    this.value = '';
-    this.textContent = '';
-    this.hidden = false;
-    this.checked = false;
-    this.dataset = {};
-    this.style = {
-      setProperty(name, value) {
-        this[name] = value;
-      },
-    };
-    this.children = [];
-    this.listeners = new Map();
-    this.captureListeners = new Map();
-    this.classes = new Set();
-    this.classList = {
-      contains: (name) => this.classes.has(name),
-      toggle: (name, enabled) => (enabled ? this.classes.add(name) : this.classes.delete(name)),
-    };
-  }
-  append(option) {
-    this.children.push(option);
-    if (!this.value) this.value = option.value;
-  }
-  replaceChildren(...children) {
-    this.children = children;
-    this.value = children[0]?.value ?? '';
-  }
-  addEventListener(type, callback, options) {
-    const listeners = options === true || options?.capture ? this.captureListeners : this.listeners;
-    listeners.set(type, [...(listeners.get(type) ?? []), callback]);
-  }
-  removeEventListener(type, callback, options) {
-    const listeners = options === true || options?.capture ? this.captureListeners : this.listeners;
-    listeners.set(
-      type,
-      (listeners.get(type) ?? []).filter((fn) => fn !== callback),
-    );
-  }
-  emit(type, event = {}) {
-    for (const callback of this.captureListeners.get(type) ?? []) callback(event);
-    for (const callback of this.listeners.get(type) ?? []) callback(event);
-  }
-  removeAttribute() {}
-  closest() {
-    return null;
-  }
-  focus() {}
-  getContext() {
-    return { id: this.id };
-  }
-}
-
 async function page(t, { campaign = pack.campaigns[0], turnPolicy = 'immediate' } = {}) {
+  const f = await couchPage(t, { campaign, turnPolicy, seconds: '90' });
   const elements = Object.fromEntries(
-    [...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, new Element(id)]),
+    [...html.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => [id, f.$(id)]),
   );
-  const doc = new Element();
-  doc.getElementById = (id) => elements[id];
-  doc.querySelector = () => null;
-  doc.querySelectorAll = () => [];
-  doc.body = new Element();
-  doc.hidden = false;
-  doc.hasFocus = () => true;
-  const win = new Element();
-  const renders = [];
-  const originals = new Map();
-  let paint;
-  let now = 1000;
-  elements['race-turn'].value = turnPolicy;
-  elements['race-time'].value = '90';
-  const globals = {
-    document: doc,
-    window: win,
-    navigator: { getGamepads: () => [] },
-    indexedDB: undefined,
-    location: { href: 'http://localhost/game/couch/', search: '' },
-    matchMedia: () => ({ matches: false }),
-    Option: class {
-      constructor(label, value) {
-        this.textContent = label;
-        this.value = value;
-      }
+  return {
+    elements,
+    renders: f.renders,
+    frame: f.frame,
+    key(type, direction) {
+      if (!direction) return;
+      f.key(
+        { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' }[direction],
+        type === 'keydown',
+      );
     },
-    fetch: async (path) => ({
-      ok: true,
-      json: async () =>
-        path === '../content/campaign.json'
-          ? structuredClone(campaign)
-          : JSON.parse(
-              await readFile(new URL(path, new URL('../couch/', import.meta.url)), 'utf8'),
-            ),
-    }),
-    requestAnimationFrame: (callback) => {
-      paint = callback;
+    cue(player) {
+      return {
+        hidden: f.$(`racer-encounter-${player}`).hidden,
+        phase: f.$(`racer-encounter-${player}`).dataset.phase,
+        title: f.$(`racer-encounter-title-${player}`).textContent,
+        instruction: f.$(`racer-encounter-instruction-${player}`).textContent,
+      };
     },
   };
-  for (const [key, value] of Object.entries(globals)) {
-    originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
-    Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
-  }
-  // The actual page, input, two simulations and cue renderer run. Raster/audio audition is outside this test.
-  const methods = new Map();
-  for (const key of [
-    'setLook',
-    'setLevel',
-    'skipCelebration',
-    'startCelebration',
-    'effectsFor',
-    'draw',
-  ]) {
-    methods.set(key, BoardPainter.prototype[key]);
-    BoardPainter.prototype[key] =
-      key === 'draw'
-        ? (context, run) => {
-            renders[Number(context.id.slice(-1))] = run;
-          }
-        : () => {};
-  }
-  t.after(() => {
-    for (const [key, descriptor] of originals) {
-      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
-      else delete globalThis[key];
-    }
-    for (const [key, value] of methods) BoardPainter.prototype[key] = value;
-  });
-  await import(`../couch/couch.mjs?encounter-test=${campaign.id}-${turnPolicy}`);
-  assert.equal(typeof paint, 'function', elements['race-message'].textContent);
-  paint(now);
-  const frame = (ms = 1000 / 120) => {
-    now += ms;
-    paint(now);
-  };
-  const key = (type, direction) => {
-    if (!direction) return;
-    const code = { up: 'KeyW', down: 'KeyS', left: 'KeyA', right: 'KeyD' }[direction];
-    win.emit(type, {
-      code,
-      key: code.slice(-1).toLowerCase(),
-      target: elements['race-canvas-0'],
-      preventDefault() {},
-    });
-  };
-  const cue = (player) => ({
-    hidden: elements[`racer-encounter-${player}`].hidden,
-    phase: elements[`racer-encounter-${player}`].dataset.phase,
-    title: elements[`racer-encounter-title-${player}`].textContent,
-    instruction: elements[`racer-encounter-instruction-${player}`].textContent,
-  });
-  return { elements, renders, frame, key, cue };
 }
 
 for (const turnPolicy of ['immediate', 'grid-center']) {

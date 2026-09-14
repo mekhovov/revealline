@@ -1,4 +1,5 @@
 import { Soundscape } from '../../ui/audio.mjs';
+import { setTimeout as delay } from 'node:timers/promises';
 export function audioHarness() {
   const sources = [],
     param = () => ({
@@ -108,10 +109,13 @@ export function audioHarness() {
   };
   return { soundscape, context, media, URLImpl, revoked, created, sources, listeners };
 }
-export async function settleUntil(predicate) {
-  for (let i = 0; i < 100; i++) {
+export async function settleUntil(predicate, { timeoutMs = 2000 } = {}) {
+  const deadline = performance.now() + timeoutMs;
+  for (;;) {
     if (predicate()) return;
-    await new Promise((r) => setImmediate(r));
+    if (performance.now() >= deadline)
+      throw new Error(`Transport did not settle within ${timeoutMs} ms.`);
+    // Turn counts can expire before real storage timers or MP3 hashing complete.
+    await delay(1);
   }
-  throw new Error('Transport did not settle.');
 }
