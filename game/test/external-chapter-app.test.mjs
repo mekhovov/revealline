@@ -208,7 +208,7 @@ test('stored external run reloads with exact saved pin and remains paused until 
   });
   await t.test('fresh app import restores the saved flight', async (t) => {
     const p = await page(t, f);
-    p.$('continue-saved').click();
+    await p.$('continue-saved').onclick();
     await settle(
       () =>
         p.$('pack-select').value === pilot.descriptor.id &&

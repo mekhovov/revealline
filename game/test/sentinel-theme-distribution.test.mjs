@@ -30,8 +30,8 @@ const decodeImage = async (blob) => {
   const b = Buffer.from(await blob.arrayBuffer());
   return { naturalWidth: b.readUInt32BE(16), naturalHeight: b.readUInt32BE(20) };
 };
-test('eight explicit producers emit sixteen exact bodies while preserving all five earlier authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 8);
+test('twelve explicit producers preserve the sixteen exact earlier bodies and all five original authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
   assert.equal(
     sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 5))),
     '83ba162b7fd1f7d6520081e70fa3d6abe4f0cff3f4b8e0b95ab2d0cd1206b32c',
@@ -40,10 +40,10 @@ test('eight explicit producers emit sixteen exact bodies while preserving all fi
     sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 5))),
     'dc1ef7d0995578a9af50a134a1f20339128e133e97f54cf93d45b797708fb4c7',
   );
-  assert.equal(entries.length, 16);
-  assert.equal(bodies.size, 16);
+  assert.equal(entries.length, 24);
+  assert.equal(bodies.size, 24);
   assert.equal(
-    entries.reduce((n, e) => n + e.bytes.length, 0),
+    entries.slice(0, 16).reduce((n, e) => n + e.bytes.length, 0),
     64546929,
   );
   assert.equal(
@@ -139,12 +139,12 @@ test('cross-theme originals and interrupted second body cannot become an install
     { name: 'AbortError' },
   );
 });
-test('eight external choices plus five embedded choices do not relax twelve installed packs or evict owners', async () => {
+test('twelve external choices plus five embedded choices do not relax twelve installed packs or evict owners', async () => {
   const legacy = JSON.parse(
     await readFile(new URL('../content/optional-worlds.json', import.meta.url)),
   );
   assert.equal(legacy.packs.length, 5);
-  assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 13);
+  assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 17);
   assert.equal(PACK_LIMITS.installed, 12);
   assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
   let installed = emptyPackLibrary();
@@ -154,20 +154,15 @@ test('eight external choices plus five embedded choices do not relax twelve inst
       (await preparePack(bodies.get(item.pack.path).toString())).pack,
     );
   const source = JSON.parse(bodies.get(EXTERNAL_CATALOG.chapters[5].pack.path));
-  let refused;
-  for (let i = 0; i < 5; i++) {
-    const value = structuredClone(source);
-    value.id = `capacity-control-${i}`;
-    value.campaigns[0].id = value.id;
-    const { pack } = await preparePack(value);
-    if (i < 4) installed = installPack(installed, pack);
-    else refused = pack;
-  }
+  const value = structuredClone(source);
+  value.id = 'capacity-control-thirteenth';
+  value.campaigns[0].id = value.id;
+  const { pack: refused } = await preparePack(value);
   const before = exportPackLibrary(installed);
   assert.throws(() => installPack(installed, refused), /At most 12/);
   assert.equal(exportPackLibrary(installed), before);
   assert.deepEqual(
-    installed.packs.slice(0, 8).map((p) => p.id),
+    installed.packs.map((p) => p.id),
     SOURCE_EXTERNAL_CHAPTERS.map((d) => d.id),
   );
 });

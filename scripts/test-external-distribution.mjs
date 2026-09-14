@@ -62,7 +62,7 @@ test('catalog symlink and missing catalog refuse before source compiler import o
   await assert.rejects(readExternalDistributionEntries(root, option), /symbolic links/);
 });
 
-test('explicit real-source build ships sixteen exact generated bodies once in loose/ZIP/manifest and excludes them from all core metadata', async (t) => {
+test('explicit real-source build ships twenty-four exact generated bodies once in loose/ZIP/manifest and excludes them from all core metadata', async (t) => {
   const dir = await directory(t),
     out = path.join(dir, 'out');
   await buildProject({
@@ -77,7 +77,7 @@ test('explicit real-source build ships sixteen exact generated bodies once in lo
   const wanted = new Map(
     EXTERNAL_CATALOG.chapters.flatMap((c) => ['pack', 'media'].map((k) => [c[k].path, c[k]])),
   );
-  assert.equal(wanted.size, 16);
+  assert.equal(wanted.size, 24);
   for (const [name, pin] of wanted) {
     const records = manifest.files.filter((f) => f.path === name);
     assert.equal(records.length, 1);
@@ -105,7 +105,7 @@ test('explicit real-source build ships sixteen exact generated bodies once in lo
     offset = start + bytes;
   }
   assert.equal(zip.readUInt32LE(offset), 0x02014b50);
-  assert.equal(counts.size, 16);
+  assert.equal(counts.size, 24);
   assert([...counts.values()].every((n) => n === 1));
   const legacy = JSON.parse(await readFile(path.join(source, 'game/content/optional-worlds.json')));
   for (const old of legacy.packs) {
@@ -117,7 +117,7 @@ test('explicit real-source build ships sixteen exact generated bodies once in lo
   assert(offline.files.reduce((n, f) => n + f.bytes, 0) < 64 * 1048576);
   assert(
     !manifest.files.some((f) =>
-      /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|spend-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters)\//.test(
+      /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|spend-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-coupa-art|fracture-theme-chapters)\//.test(
         f.path,
       ),
     ),

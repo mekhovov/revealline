@@ -19,4 +19,4 @@ Resizing a desktop browser does not emulate a physical touchscreen, controller, 
 
 For a browser review, inspect only the parent page to confirm the iframe element remains identical across size changes, its `src` stays unchanged, and its content box has the chosen width and height. Selecting another game must leave `src` unchanged until Load. Inspect the actual game visually and interact through its normal UI; report the viewport and input used, rather than claiming physical-device qualification.
 
-See [the authoring kit](../README.md), [flight controls](../../docs/flight-controls.md) and [the Couch shell source evidence](../../docs/verification/round-47/couch-native-shell.md). The current Couch shell’s external original-picture chapter support remains a separate integration task.
+See [the authoring kit](../README.md), [flight controls](../../docs/flight-controls.md) and [the Couch shell source evidence](../../docs/verification/round-47/couch-native-shell.md). Installed chapters use the [read-only Couch original-picture contract](../../docs/couch-installed-chapters.md); select and start them through the game’s ordinary menus.

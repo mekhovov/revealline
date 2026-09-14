@@ -114,6 +114,7 @@ import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { savedFlightPreview } from './continuation.mjs';
+import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
 import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import {
@@ -215,7 +216,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.38.0',
+  let buildVersion = '0.39.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -460,20 +461,56 @@ try {
     progress = progressFor(library, campaign),
     recovery = loaded.recovery;
   const difficultyNavigation = createDifficultyNavigation();
+  const selectionBookmark = createSelectionBookmark({
+    storage: localStorage,
+    key: `${libraryKey}.last-selection.v1`,
+    canWrite: () =>
+      !practiceSession &&
+      !practice &&
+      !scenario &&
+      !courseSession &&
+      !courseEntry &&
+      persistenceReady &&
+      storedStateAdopted &&
+      writer.writable &&
+      !backupBusy &&
+      localStorage.getItem(`${libraryKey}.backup-lock`) === null,
+  });
+  const rememberedSelection =
+    !practiceSession && !packLaunchRequest && !packLaunchError && storedStateAdopted
+      ? resolveSelectionBookmark(selectionBookmark.read().selection, {
+          select: (key) => executionCatalog.select(key, library.preferences.campaignDifficulty),
+          playable: (entry, index) =>
+            difficultyNavigation.playable(
+              entry,
+              library.campaigns,
+              progressFor(library, entry.campaign),
+              index,
+            ),
+        })
+      : null;
   let difficultyDetailsFor = null;
   if (!practiceSession) {
     activeEntry = executionCatalog.select(
       campaignKey(baseEntry.campaign),
       library.preferences.campaignDifficulty,
     );
+    if (rememberedSelection) activeEntry = rememberedSelection.entry;
     campaign = activeEntry.campaign;
+    classRegistry = activeEntry.classRecipes;
+    themesFile.themes = activeEntry.themes;
     progress = progressFor(library, campaign);
   }
   if (loaded.warning || packWarning) {
     $('save-warning').textContent = [loaded.warning, packWarning].filter(Boolean).join(' ');
     show('save-warning', true);
   }
-  const initialSelection = difficultyNavigation.selection(activeEntry, library.campaigns, progress);
+  const initialSelection = difficultyNavigation.selection(
+    activeEntry,
+    library.campaigns,
+    progress,
+    { levelId: rememberedSelection?.levelId },
+  );
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -506,7 +543,7 @@ try {
     defeatRemaining = 0,
     sessionBusy = false,
     restoreController = null,
-    themeOverride = false,
+    themeOverride = !!rememberedSelection?.themeId,
     musicOverride = false,
     masteryDefinition = null,
     masteryObserver = null,
@@ -537,10 +574,13 @@ try {
         $('mastery-announcement').textContent = status.message;
     },
   });
-  theme = themesFile.themes.find((t) => t.id === library.preferences.themeId) || theme;
+  theme =
+    themesFile.themes.find(
+      (t) => t.id === (rememberedSelection?.themeId || library.preferences.themeId),
+    ) || theme;
   classId = classRegistry.some((c) => c.id === library.preferences.classId)
     ? library.preferences.classId
-    : classId;
+    : classRegistry[0].id;
   turnPolicy = library.preferences.turnPolicy;
   bodyId = library.preferences.bodyId;
   if (courseRequest && !courseRequest.turnPolicy)
@@ -1872,6 +1912,13 @@ try {
   function cancelRestore() {
     restoreController?.abort();
   }
+  function rememberSelection() {
+    return selectionBookmark.remember({
+      campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+      levelId: campaign.levels[levelIndex].id,
+      themeId: theme.id,
+    });
+  }
   function selectEntry(
     entry,
     {
@@ -1926,6 +1973,7 @@ try {
     } else assignMusic(DEFAULT_TRACKS.find((t) => t.genre === library.preferences.musicGenre));
     refreshCampaigns();
     prepare({ restoreAdoption, contentSwitchTicket, difficulty });
+    if (!restoreAdoption) rememberSelection();
   }
   async function replacePackLibrary(
     next,
@@ -2203,6 +2251,7 @@ try {
     campaignOverview = false;
     levelIndex = index;
     prepare();
+    rememberSelection();
     contentStatus(`${campaign.levels[levelIndex].name} selected and ready.`);
     return true;
   }
@@ -3018,6 +3067,7 @@ try {
         leavePractice();
         levelIndex = index;
         prepare();
+        rememberSelection();
         focusMission();
       };
       $('missions').append(b);
@@ -3451,6 +3501,7 @@ try {
     neutralResumeTick = true;
     courseEntryHold = false;
     courseEntryMessage = '';
+    if (!started) rememberSelection();
     started = true;
     paused = false;
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
@@ -4025,6 +4076,7 @@ try {
       refreshMissionBrief();
       if (!started && !campaignOverview) overlay('ready');
       preferences({ themeId: theme.id, bodyId });
+      rememberSelection();
     } catch (error) {
       if (owner === flightPictures) pictureFailure(error);
     } finally {
@@ -4136,6 +4188,7 @@ try {
       levelIndex = selection.levelIndex;
     }
     prepare();
+    rememberSelection();
   };
   $('demo-button').onclick = () => {
     if (courseSession || courseEntry) return;
@@ -4318,6 +4371,10 @@ try {
   refreshCampaigns();
   prepare();
   let autoplayPackLaunch = null;
+  if (rememberedSelection)
+    contentStatus(
+      `${campaign.title || campaign.name || campaign.id} · ${campaign.levels[levelIndex].name} selected. Continue a saved flight separately.`,
+    );
   if (packLaunchError) {
     contentStatus(packLaunchError, true);
     warning(packLaunchError);
