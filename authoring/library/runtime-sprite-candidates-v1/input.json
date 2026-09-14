@@ -1,0 +1,117 @@
+{
+  "size": 128,
+  "sources": [
+    {
+      "id": "fpv-compact-hunter-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
+      "bytes": 865212,
+      "sha256": "35bab23818b3ab80e79a76bc54e7a0b2402ecfdeb922a6d417963c824c6a2282",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-border-patrol-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
+      "bytes": 1051393,
+      "sha256": "4da8036ae2e48aa53b80cb05c3ae9808d9dd762385cadc1c5a2148d9428058d9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-contour-patrol-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
+      "bytes": 769992,
+      "sha256": "cf46a28c2573c9e486a17bb558dec51bb4e0882493360cf6a84bc3c452b404b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-claimed-rover-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/claimed-rover.png",
+      "bytes": 1138185,
+      "sha256": "88253efdf09af23d5d562e240adc1f3f7ba1db45dbfd88c721f053105cb02593",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-eroder-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/eroder.png",
+      "bytes": 644575,
+      "sha256": "94d40bc13f6ad8e62443c945e205903d6e75bc9f0f04d6fbc4ddcaf56b1f4d0b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-lane-boss-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/lane-boss.png",
+      "bytes": 846564,
+      "sha256": "7b9e6a5a7cf112ca88c7a35a051b1efab2da8175d2038ee9bd619ac4e8dd7a33",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-relay-sentinel-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/relay-sentinel.png",
+      "bytes": 1206928,
+      "sha256": "fac474fa78d26d143c249f22a623c0f01267a71e08911e282ebb47dea859e489",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-swallow-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/scout-v3.png",
+      "bytes": 736862,
+      "sha256": "25f9a6034a5c20e5cbb9aaa1e225a8deccd56ddd2dbb3bebec15f712fe3fa012",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-pottery-courier-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/bomber.png",
+      "bytes": 871364,
+      "sha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-carved-chest-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/carrier.png",
+      "bytes": 843442,
+      "sha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-falcon-crest-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+      "bytes": 695081,
+      "sha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-weaver-shuttle-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
+      "bytes": 887360,
+      "sha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-bell-warden-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/impact.png",
+      "bytes": 776281,
+      "sha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-woven-basket-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/trapper.png",
+      "bytes": 1062942,
+      "sha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+      "width": 1254,
+      "height": 1254
+    }
+  ]
+}

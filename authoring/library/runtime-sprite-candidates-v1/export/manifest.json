@@ -1,0 +1,505 @@
+{
+  "format": "revealline.sprite-derivatives.v1",
+  "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+  "generator": {
+    "cli.mjs": "c453cb76550cbe8ec7408b0a9071675f83c287dc350aaa8d9a18860f2b675658",
+    "derivative.mjs": "97cb79e1161b42102845981c57e467b47163e4113122e304ee76a8ca7e60394a",
+    "../library/fpv-role-presentations/png.mjs": "24ad565c7eef83c4db124b599a1948119fac91aaf5c3e63f85a7d8c80f0a4ac9",
+    "../../scripts/game-cli.mjs": "5153b1be871202f0573a1c7af8c20bf4a116c3b885f93a531e7ee85b50c4078d"
+  },
+  "sources": [
+    {
+      "id": "fpv-compact-hunter-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
+      "bytes": 865212,
+      "sha256": "35bab23818b3ab80e79a76bc54e7a0b2402ecfdeb922a6d417963c824c6a2282",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-border-patrol-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
+      "bytes": 1051393,
+      "sha256": "4da8036ae2e48aa53b80cb05c3ae9808d9dd762385cadc1c5a2148d9428058d9",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-contour-patrol-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
+      "bytes": 769992,
+      "sha256": "cf46a28c2573c9e486a17bb558dec51bb4e0882493360cf6a84bc3c452b404b8",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-claimed-rover-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/claimed-rover.png",
+      "bytes": 1138185,
+      "sha256": "88253efdf09af23d5d562e240adc1f3f7ba1db45dbfd88c721f053105cb02593",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-eroder-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/eroder.png",
+      "bytes": 644575,
+      "sha256": "94d40bc13f6ad8e62443c945e205903d6e75bc9f0f04d6fbc4ddcaf56b1f4d0b",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-lane-boss-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/lane-boss.png",
+      "bytes": 846564,
+      "sha256": "7b9e6a5a7cf112ca88c7a35a051b1efab2da8175d2038ee9bd619ac4e8dd7a33",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "fpv-compact-relay-sentinel-v1",
+      "path": "authoring/library/fpv-enemy-presentations/originals/relay-sentinel.png",
+      "bytes": 1206928,
+      "sha256": "fac474fa78d26d143c249f22a623c0f01267a71e08911e282ebb47dea859e489",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-swallow-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/scout-v3.png",
+      "bytes": 736862,
+      "sha256": "25f9a6034a5c20e5cbb9aaa1e225a8deccd56ddd2dbb3bebec15f712fe3fa012",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-pottery-courier-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/bomber.png",
+      "bytes": 871364,
+      "sha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-carved-chest-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/carrier.png",
+      "bytes": 843442,
+      "sha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-falcon-crest-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+      "bytes": 695081,
+      "sha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-weaver-shuttle-v3",
+      "path": "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
+      "bytes": 887360,
+      "sha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-bell-warden-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/impact.png",
+      "bytes": 776281,
+      "sha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+      "width": 1254,
+      "height": 1254
+    },
+    {
+      "id": "atlas-woven-basket-v1",
+      "path": "authoring/library/ukraine-role-presentations/originals/trapper.png",
+      "bytes": 1062942,
+      "sha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+      "width": 1254,
+      "height": 1254
+    }
+  ],
+  "size": 128,
+  "entries": [
+    {
+      "file": "fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-hunter-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/bouncer.png",
+        "bytes": 865212,
+        "sha256": "35bab23818b3ab80e79a76bc54e7a0b2402ecfdeb922a6d417963c824c6a2282",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "1c84b4b575a5bea28cb95fde0228df02cdb670c56a7c67a0fd53ee077a3a8db5"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-border-patrol-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/border-patrol.png",
+        "bytes": 1051393,
+        "sha256": "4da8036ae2e48aa53b80cb05c3ae9808d9dd762385cadc1c5a2148d9428058d9",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "9ebe1bcf3ba896654b6256a44f1c7dfc31d14ca7ca2df8bd10f5ec9c198c0f03"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-contour-patrol-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/contour-patrol.png",
+        "bytes": 769992,
+        "sha256": "cf46a28c2573c9e486a17bb558dec51bb4e0882493360cf6a84bc3c452b404b8",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "00ff5507b0f4c9049647038ac8b7be2647a2d3982650f86d7f6396dab1818a88"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-claimed-rover-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/claimed-rover.png",
+        "bytes": 1138185,
+        "sha256": "88253efdf09af23d5d562e240adc1f3f7ba1db45dbfd88c721f053105cb02593",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "ededdbee393e8324570bbd893a1a3da3659284e63aab0a6ff63104740532184a"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-eroder-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/eroder.png",
+        "bytes": 644575,
+        "sha256": "94d40bc13f6ad8e62443c945e205903d6e75bc9f0f04d6fbc4ddcaf56b1f4d0b",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "03d6caca0715ebd03811279f149bdfc5de4dfd10ba88f051b46175b2e1d12093"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-lane-boss-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/lane-boss.png",
+        "bytes": 846564,
+        "sha256": "7b9e6a5a7cf112ca88c7a35a051b1efab2da8175d2038ee9bd619ac4e8dd7a33",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "bf60a3cb334b3bdbb663ba8b8d3cf108cfadbe563ff2b86da1c1c7499bd1dc5b"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "fpv-compact-relay-sentinel-v1",
+        "path": "authoring/library/fpv-enemy-presentations/originals/relay-sentinel.png",
+        "bytes": 1206928,
+        "sha256": "fac474fa78d26d143c249f22a623c0f01267a71e08911e282ebb47dea859e489",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "f67eb17252477a9a6a7e1cbf6e80702a4246c640d6bad37fd6cdb1817d42c5db"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-swallow-v3",
+        "path": "authoring/library/ukraine-role-wide-variants/originals/scout-v3.png",
+        "bytes": 736862,
+        "sha256": "25f9a6034a5c20e5cbb9aaa1e225a8deccd56ddd2dbb3bebec15f712fe3fa012",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "73b456f7e2e5533be26513db2bc316608b7e6f4a48444c26080f802c3c0f443e"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-pottery-courier-v1",
+        "path": "authoring/library/ukraine-role-presentations/originals/bomber.png",
+        "bytes": 871364,
+        "sha256": "b6bde2c3e46a26f941e4abf61e03105d3b51c58633eaad979574ec1fbc70f698",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "26676424febe99bbb0198ed335faa2ac5b85e7f2d676e62c20ff83b4df900503"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-carved-chest-v1",
+        "path": "authoring/library/ukraine-role-presentations/originals/carrier.png",
+        "bytes": 843442,
+        "sha256": "e6b7e8f95aecd9adcadb3c550510d47368797d80b25dbeee78fae787c1461298",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "b1f653e00eb0f3cbe99a7fbf42e461d7983ee7b1723a9b5f395d31c64f95d090"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-falcon-crest-v3",
+        "path": "authoring/library/ukraine-role-wide-variants/originals/interceptor-v3.png",
+        "bytes": 695081,
+        "sha256": "ffee4552c573b9fdc7e041ed94f5827183fc2622ed494a3a105eabbae08670a1",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "0b640c9bcd9496e2660cb5d7a66b61a3fb81f8b94242a29d95a5218916dc9574"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-weaver-shuttle-v3",
+        "path": "authoring/library/ukraine-role-wide-variants/originals/fiber-v3.png",
+        "bytes": 887360,
+        "sha256": "50bbcd47f7c4ac2140c54a4c8aebc50a1de7fdf24fe7fb5caccbeb4fbcd2e2ea",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "2c5ab1b19d9251daa50bf063413deb73f2d81886ed5740eff1ce27b23ed09093"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-bell-warden-v1",
+        "path": "authoring/library/ukraine-role-presentations/originals/impact.png",
+        "bytes": 776281,
+        "sha256": "f95bfe4337782a1ed459effa90c6785ae642e57e6525796b7e3fb8be3f3b284f",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "eae95761a8c76d86baabe1a9d4ba3e92253265c6225aba9e6cfc826b41b092ef"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    },
+    {
+      "file": "atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
+      "recipe": "rgba8-full-frame-nearest-center-stored-deflate.v1",
+      "original": {
+        "id": "atlas-woven-basket-v1",
+        "path": "authoring/library/ukraine-role-presentations/originals/trapper.png",
+        "bytes": 1062942,
+        "sha256": "b1b233045b71f277a0afea06650c173e358c3b0a05921ea2cc24fd3bab4e5b25",
+        "width": 1254,
+        "height": 1254
+      },
+      "output": {
+        "bytes": 65737,
+        "sha256": "3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac",
+        "width": 128,
+        "height": 128,
+        "pixelsSha256": "009db60403f95f5b59b980e1ef677f896be9520f496e2d6730837c7b53d6122e"
+      },
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      }
+    }
+  ]
+}
