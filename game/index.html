@@ -96,7 +96,7 @@
       <button id="shell-menu" type="button" aria-label="Game menu">
         ◩ <span>REVEAL / LINE</span>
       </button>
-      <span id="shell-edition" class="shell-edition">REVEAL / LINE</span>
+      <span id="shell-edition" class="shell-edition"></span>
       <button
         id="pause-button"
         class="icon-button shell-pause"
@@ -605,6 +605,14 @@
       /></label>
       <div id="gallery-grid" class="gallery-grid"></div>
       <nav id="gallery-pages" class="overlay-actions" aria-label="Picture pages"></nav>
+      <label class="field" for="collection-context"
+        >Chapter progress
+        <select id="collection-context" aria-describedby="collection-context-note"></select>
+      </label>
+      <p id="collection-context-note">
+        View achievements and appearances without changing your flight. Pictures above include every
+        chapter.
+      </p>
       <div id="collection-reading-unit">
         <div class="reading-toolbar">
           <div class="reading-actions">
@@ -651,7 +659,7 @@
         </div>
       </div>
       <button id="collection-choose-appearance" class="button secondary" type="button">
-        Choose appearance
+        Choose appearance for current flight
       </button>
       <button class="button primary" data-close="collection-dialog">Back to the field →</button>
     </dialog>
