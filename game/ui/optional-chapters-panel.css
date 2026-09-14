@@ -56,8 +56,13 @@
 }
 .optional-worlds-pager > p {
   flex: 1;
+  min-width: 0;
   text-align: center;
   margin: 0;
+}
+.optional-worlds-pager button {
+  flex-shrink: 0;
+  padding-inline: 10px;
 }
 .optional-worlds-task {
   display: flex;
