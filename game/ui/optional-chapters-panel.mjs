@@ -129,8 +129,10 @@ export function attachOptionalChaptersPanel({
       ['Tactical', 'Tactical'],
       ['Other', 'Other / mixed'],
     ]),
-    previous = action('previous', 'Previous page', () => movePage(-1)),
-    nextPage = action('next', 'Next page', () => movePage(1));
+    previous = action('previous', 'Previous', () => movePage(-1)),
+    nextPage = action('next', 'Next', () => movePage(1));
+  previous.setAttribute('aria-label', 'Previous page');
+  nextPage.setAttribute('aria-label', 'Next page');
   pageStatus.setAttribute('role', 'status');
   pageStatus.setAttribute('aria-live', 'polite');
   pager.append(previous, pageStatus, nextPage);
