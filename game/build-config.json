@@ -1,5 +1,5 @@
 {
-  "version": "0.43.0",
+  "version": "0.44.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -23,7 +23,11 @@
     "authoring/library/fpv-role-presentations/originals/interceptor.png",
     "authoring/library/fpv-role-presentations/originals/fiber.png",
     "authoring/library/fpv-role-presentations/originals/impact.png",
-    "authoring/library/fpv-role-presentations/originals/trapper.png"
+    "authoring/library/fpv-role-presentations/originals/trapper.png",
+    "authoring/design-atlas",
+    "docs/fpv-redesign-design.md",
+    "docs/fpv-typography.md",
+    "docs/verification/fpv-redesign/baseline"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
