@@ -307,3 +307,14 @@
     letter-spacing: 1px;
   }
 }
+
+/* Only authored Arcade fields without a warning card reclaim the hidden status rows.
+   Warning-capable maps, training and narrow landscape keep their existing reserve. */
+@media (min-width: 681px) and (orientation: landscape) and (max-height: 540px) {
+  .game-shell[data-arena-chrome='compact']:not(.first-flight-session) {
+    --compact-chrome: 140px;
+  }
+  .game-shell[data-arena-chrome='compact'][data-text-size='large']:not(.first-flight-session) {
+    --compact-chrome: 145px;
+  }
+}

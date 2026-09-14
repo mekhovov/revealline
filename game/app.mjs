@@ -19,7 +19,11 @@ import {
 } from './optional-chapters.mjs';
 import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
-import { nextInputModality, showScreenControls } from './input-presentation.mjs';
+import {
+  nextInputModality,
+  showScreenControls,
+  hasCompactArcadeArena,
+} from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
@@ -1178,6 +1182,8 @@ try {
     refreshInputPresentation();
   }
   function refreshInputPresentation() {
+    const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
+    if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,
