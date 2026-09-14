@@ -37,10 +37,17 @@ for (const mode of ['ordinary', 'practice', 'course']) {
     // Model the native details-open state; hidden sessions must still exclude
     // its summary and links even if an earlier control state left it expanded.
     creator.open = true;
+    assert.equal(page.$('settings-panel-data').hidden, true);
+    for (const link of links) assert.equal(link.getClientRects().length, 0);
+    page.$('settings-tab-audio').focus();
+    arrow(page, 'End');
+    assert.equal(page.doc.activeElement, page.$('settings-tab-data'));
+    assert.equal(page.$('settings-tab-data').getAttribute('aria-selected'), 'true');
+    assert.equal(page.$('settings-panel-data').hidden, false);
     for (const link of links) assert.equal(link.getClientRects().length > 0, !isolated);
-    page.$('keyboard-settings').querySelector('summary').focus();
-    arrow(page, 'ArrowUp');
     if (isolated) {
+      page.$('offline-details').parentElement.querySelector('summary').focus();
+      arrow(page, 'ArrowDown');
       assert.equal(creator.contains(page.doc.activeElement), false);
       assert.equal(page.doc.activeElement.closest('[hidden]'), null);
       assert.ok(page.$('settings-dialog').contains(page.doc.activeElement));
@@ -48,12 +55,27 @@ for (const mode of ['ordinary', 'practice', 'course']) {
       // navigation guard. Hiding these links does not grant an escape route.
       assert.equal(links[0].emit('click').defaultPrevented, true);
     } else {
+      creator.querySelector('summary').focus();
+      arrow(page, 'ArrowDown');
+      assert.equal(page.doc.activeElement, links[0]);
+      arrow(page, 'ArrowDown');
       assert.equal(page.doc.activeElement, links[1]);
       arrow(page, 'ArrowUp');
       assert.equal(page.doc.activeElement, links[0]);
       assert.equal(links[0].emit('click').defaultPrevented, false);
       // Native navigation itself belongs to the actual browser, not this DOM.
     }
+    // Leaving Game data removes even an expanded Creator section from the
+    // keyboard scope; navigation must not cross into a hidden category.
+    page.$('settings-tab-data').focus();
+    arrow(page, 'Home');
+    assert.equal(page.$('settings-panel-controls').hidden, false);
+    assert.equal(page.$('settings-panel-data').hidden, true);
+    for (const link of links) assert.equal(link.getClientRects().length, 0);
+    page.$('keyboard-settings').querySelector('summary').focus();
+    arrow(page, 'ArrowUp');
+    assert.equal(creator.contains(page.doc.activeElement), false);
+    assert.equal(page.doc.activeElement.closest('[hidden]'), null);
     page.$('settings-dialog').close();
     page.frame(0);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);

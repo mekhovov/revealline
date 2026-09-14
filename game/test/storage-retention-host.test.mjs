@@ -50,6 +50,14 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
 
   // Keyboard arrows use the normal Settings dialog scope. Native Tab/Enter
   // and physical controllers remain separate browser/device qualification.
+  assert.equal(h.$('settings-panel-data').hidden, true);
+  assert.equal(h.$('storage-retention-button').getClientRects().length, 0);
+  h.$('settings-tab-audio').focus();
+  h.$('settings-tab-audio').emit('keydown', { key: 'End', code: 'End' });
+  assert.equal(h.doc.activeElement, h.$('settings-tab-data'));
+  assert.equal(h.$('settings-tab-data').getAttribute('aria-selected'), 'true');
+  assert.equal(h.$('settings-panel-data').hidden, false);
+  assert.ok(h.$('storage-retention-button').getClientRects().length);
   const summary = h.$('offline-details').parentElement.querySelector('summary');
   summary.focus();
   summary.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
@@ -108,7 +116,11 @@ test('actual Settings keyboard/controller retention and Back preserve the paused
     { ...JSON.parse(reopenedSave), savedAt: originalSession.savedAt },
     originalSession,
   );
-  h.$('storage-retention-button').focus();
+  assert.equal(h.$('settings-tab-data').getAttribute('aria-selected'), 'true');
+  assert.equal(h.$('settings-panel-data').hidden, false);
+  summary.focus();
+  summary.emit('keydown', { key: 'ArrowUp', code: 'ArrowUp' });
+  assert.equal(h.doc.activeElement, h.$('storage-retention-button'));
   h.frame();
   pulse(0);
   assert.equal(requests, 2);

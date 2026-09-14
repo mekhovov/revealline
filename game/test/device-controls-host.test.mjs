@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 
@@ -56,6 +57,33 @@ function imageBoundary(t) {
   });
 }
 
+const FEATURED_ORIGINALS_TIMEOUT_MS = 180000;
+
+async function featuredPictureReady(page) {
+  // This action imports and authenticates the complete original-image pack.
+  // Keep the same bounded allowance as other bulk-original hosts; input waits
+  // retain their shared deadline and no application timeout is changed.
+  try {
+    await waitFor(
+      () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
+      {
+        timeoutMs: FEATURED_ORIGINALS_TIMEOUT_MS,
+        message: 'Featured mission must finish its exact picture preparation before Deploy.',
+      },
+    );
+  } catch (error) {
+    error.message += `\n${JSON.stringify({
+      timeoutMs: FEATURED_ORIGINALS_TIMEOUT_MS,
+      pack: page.$('pack-select').value,
+      pictureState: page.doc.body.dataset.pictureState,
+      packStatus: page.$('pack-status').textContent,
+      runMessage: page.$('run-message').textContent,
+      errors: page.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
+  }
+}
+
 // Actual app/input/core/recorder/storage handlers. Modeled events and DOM expose
 // presentation state, not CSS geometry, native focus defaults or physical devices.
 test('pause updates flight presentation before another animation frame can run', async (t) => {
@@ -80,10 +108,7 @@ test('featured pressure chapter hides manual actions and actual keyboard action 
   const page = await soloPage(t, { titleScreen: true });
   controls(page, 'hidden');
   page.$('shell-featured').click();
-  await settle(
-    () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
-    'Featured mission must finish its exact picture preparation before Deploy.',
-  );
+  await featuredPictureReady(page);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
   for (const id of ['action-button', 'pickup-button', 'boost-button', 'ability-state'])
     assert.equal(page.$(id).hidden, true, id);
@@ -125,10 +150,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     imageBoundary(t);
     const page = await soloPage(t, { titleScreen: true, storage: storageWith({ turnPolicy }) });
     page.$('shell-featured').click();
-    await settle(
-      () => !page.$('shell-featured').disabled && page.doc.body.dataset.pictureState === 'ready',
-      'Featured mission must finish its exact picture preparation before Deploy.',
-    );
+    await featuredPictureReady(page);
     page.$('shell-deploy').click();
     assert.equal(page.$('shell-missions').open, false, 'Deploy leaves the mission browser.');
     await settle(() => page.doc.body.dataset.flightState === 'running');
