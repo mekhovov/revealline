@@ -2,7 +2,28 @@
 
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
 
-## Current priority — scalable media, complete stories and navigation
+## Current priority — complete v0.39 delivery, then qualify the integrated UI
+
+**Latest verified public release: [v0.38.0](https://mekhovov.github.io/revealline/releases/v0.38.0/site/game/).** Source/frozen/native delivery, all 1, 726 public files and the full ZIP stream pass. [Release record](https://github.com/mekhovov/revealline/releases/tag/v0.38.0) · [Native evidence](verification/round-47/v038-native.md).
+
+**v0.39 has scoped frozen native recovery acceptance; replacement CI and public delivery are pending.** Exact `23b886bbdbea` passed six gates / 3, 337 tests, independent artifact reconstruction and local Pages checks. Its earned receipt remained valid when durable installed packs/media disappeared. Exact re-download restored Collection and game-data export without changing the player library. No ownership-validator change was required; storage-pressure eviction remains an unproven cause. With its server stopped, Split Ring won 62.1%/13, 820/three lives/Gold/29s; Collection retained the earlier 12.33s best. A 30s Grid-center Couch round gave P2 a timed 59.0%/13, 120 victory while P1 stayed zero, with solo 1/3 progress unchanged. [Full scope and retained failures](verification/round-47/v039-native.md).
+
+[PR #15](https://github.com/mekhovov/revealline/pull/15) failed at two test bootstrap deadlines. Test-only `316a50fac9ae` was pushed; replacement CI remains pending at this checkpoint. Frozen runtime/tag/artifacts stay exact. Source tests and successful native recovery do not substitute for merged CI, deployment, public inventory and real public play.
+
+| Order | Phases            | Required next result                                                                                                                                                                                                                    |
+| ----- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | P5/P7             | Finish replacement CI and v0.39 hosted/public delivery while retaining strict owner guards and the complete recovery/failure history.                                                                                                   |
+| 2     | P1/P2/P7          | Qualify merged UI candidate `ea59eb24`: More worlds, stable flight/Pause, seven FPV presentations and explicit browser retention. Scoped keyboard/viewport and manual-appearance native checks pass; retention was denied, not granted. |
+| 3     | P0/P2/P3/P4/P5/P6 | Adopt exact Countercurrent owners separately, continue Moving Edges/native challenge review, albums, stories and remaining production work.                                                                                             |
+| 4     | P7/P8/P9          | Complete browser/device/performance/recovery acceptance, then real native packages; private online races remain later.                                                                                                                  |
+
+More worlds exposed 17 actual choices in the observed profile with native filters and four/two-card pages. That does not expand its twelve external catalog entries or twelve installed slots; the 36-external-choice ceiling is separately modeled. Stable-source arena/warning and compact Pause checks, plus Light appearance surviving Heavy class/reload and Match-on Heavy selection, remain scoped native evidence. Seven FPV bodies do not complete 56 player presentations.
+
+Targets remain **29 wide maps / 116 pictures / 12 stories / 40 reserves / 56 player presentations / 24 finished and auditioned tracks**. Public v0.38 retains 36 pictures over nine families; v0.39 has 48/116 produced pictures over twelve proposed families and zero quality-approved maps. Countercurrent `7f1f77df` has twelve further unadopted source originals across three shared families. Moving Edges `1dc861d6` adds three unadopted source layouts: 24 ordinary Scout wins plus 52 mechanic controls, 498 saved checks (482 nonempty/16 endpoint), 11/11 focused tests on Node 22 and 20. Other classes, native/human quality, artwork and production approval remain separate. [Production plan](production-plan.md) and [feedback requirements](feedback-and-next-steps.md) retain all remaining targets.
+
+## Historical priority checkpoint — v0.35 source handoff
+
+The following checkpoint and all subsequent historical entries retain their original evidence and statuses. Current priorities above supersede their old pending-delivery labels.
 
 The latest user instruction authorizes continued implementation. The [production plan](production-plan.md) sets current priorities while retaining stable IDs and historical evidence below. Historical sections describe their named handoff, not the latest release status; their old approval pauses and pending gates do not override this section.
 

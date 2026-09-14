@@ -1,5 +1,5 @@
 {
-  "version": "0.39.0",
+  "version": "0.40.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -16,7 +16,14 @@
     "authoring/video-poster/workshop.css",
     "authoring/library/tactical-teaching/scenarios/tactical-read-clearing.json",
     "authoring/library/tactical-teaching/scenarios/tactical-borrowed-seconds.json",
-    "authoring/library/tactical-teaching/scenarios/tactical-quiet-crossing.json"
+    "authoring/library/tactical-teaching/scenarios/tactical-quiet-crossing.json",
+    "authoring/library/fpv-role-presentations/originals/scout.png",
+    "authoring/library/fpv-role-presentations/originals/bomber.png",
+    "authoring/library/fpv-role-presentations/originals/carrier.png",
+    "authoring/library/fpv-role-presentations/originals/interceptor.png",
+    "authoring/library/fpv-role-presentations/originals/fiber.png",
+    "authoring/library/fpv-role-presentations/originals/impact.png",
+    "authoring/library/fpv-role-presentations/originals/trapper.png"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",

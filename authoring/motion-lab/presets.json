@@ -485,11 +485,333 @@
       "sampling": "nearest",
       "animationRecipe": "delta-wake",
       "rotors": []
+    },
+    "fpv-scout-v1": {
+      "label": "Scout camera quad",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/scout.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-scout-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.316586922,
+          "y": -0.261562998,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.31738437,
+          "y": -0.261562998,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.316586922,
+          "y": 0.240031898,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.31738437,
+          "y": 0.240031898,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "5d0b29fc773e08e8fdbed1e6a03726c7a16e2c5c06e89e163ab211d032cac957"
+    },
+    "fpv-light-carrier-v1": {
+      "label": "Light support carrier",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/bomber.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-light-carrier-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.341307815,
+          "y": -0.337320574,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.33891547,
+          "y": -0.337320574,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.341307815,
+          "y": 0.323763955,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.33891547,
+          "y": 0.323763955,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "88d9a0fac33a45e8cac2dd752df042735deebb21ff172ae0ecf86d81e47826ca"
+    },
+    "fpv-heavy-carrier-v1": {
+      "label": "Heavy six-hub carrier",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/carrier.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-heavy-carrier-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.23046252,
+          "y": -0.294258373,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.229665072,
+          "y": -0.294258373,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.350079745,
+          "y": -0.003189793,
+          "radiusScale": 0.9,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.351674641,
+          "y": -0.003189793,
+          "radiusScale": 0.9,
+          "direction": -1,
+          "phaseDegrees": 69
+        },
+        {
+          "x": -0.23046252,
+          "y": 0.297448166,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 92
+        },
+        {
+          "x": 0.229665072,
+          "y": 0.297448166,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 115
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "01ed2610a94fa9675d26a618647b8128d3443e111c941199012c72510ad40ad7"
+    },
+    "fpv-interceptor-v1": {
+      "label": "Compact interceptor",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/interceptor.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-interceptor-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.163476874,
+          "y": -0.138755981,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.163476874,
+          "y": -0.138755981,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.163476874,
+          "y": 0.199362041,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.163476874,
+          "y": 0.199362041,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "548431d87442a009fdc81b7561927eaaece164fbc2ade0c834ebd6d5f51f1a5b"
+    },
+    "fpv-fiber-relay-v1": {
+      "label": "Fiber relay quad",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/fiber.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-fiber-relay-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.27830941,
+          "y": -0.303030303,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.277511962,
+          "y": -0.303030303,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.27830941,
+          "y": 0.29585327,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.277511962,
+          "y": 0.29585327,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "6dd3f61124d17a262ee3cef747ea250e6828d5b69a244a13883d575cc97ddce8"
+    },
+    "fpv-impact-v1": {
+      "label": "Blunt pulse craft",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/impact.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-impact-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.169059011,
+          "y": -0.178628389,
+          "radiusScale": 0.8,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.169059011,
+          "y": -0.178628389,
+          "radiusScale": 0.8,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.249601276,
+          "y": 0.216108453,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.248803828,
+          "y": 0.216108453,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "0999ede773d3cc70176347f39a19a96f05fc0dd96ac12b7fbd0d51304636d7ed"
+    },
+    "fpv-trapper-v1": {
+      "label": "Lattice support craft",
+      "sourceStatus": "Original generated RGBA body with reviewed three-blade rotor rig; integrated source candidate, not device or complete-character approval.",
+      "src": "../library/fpv-role-presentations/originals/trapper.png",
+      "widthCells": 1.25,
+      "heightCells": 1.25,
+      "sampling": "nearest",
+      "headingOffsetDegrees": 0,
+      "animationRecipe": "fpv-trapper-v1-rotors",
+      "rotors": [
+        {
+          "x": -0.307017544,
+          "y": -0.303030303,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 0
+        },
+        {
+          "x": 0.307017544,
+          "y": -0.303030303,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 23
+        },
+        {
+          "x": -0.307017544,
+          "y": 0.299043062,
+          "radiusScale": 1,
+          "direction": 1,
+          "phaseDegrees": 46
+        },
+        {
+          "x": 0.307017544,
+          "y": 0.299043062,
+          "radiusScale": 1,
+          "direction": -1,
+          "phaseDegrees": 69
+        }
+      ],
+      "presentationSetId": "fpv-roles-v1",
+      "availability": "starter",
+      "compactMinimumCSSPixels": 20,
+      "originalSha256": "13e4aec02c72bf2f4a7cd26eee43c0a5e963de6bee3af3dd62dd22498831c869"
     }
   },
   "terrainLayers": {
     "fpv-materials": {
-      "label": "FPV \u00b7 concrete / mud / wire",
+      "label": "FPV · concrete / mud / wire",
       "roles": {
         "wall": {
           "kind": "concrete",
@@ -509,7 +831,7 @@
       }
     },
     "ukraine-materials": {
-      "label": "Ukraine \u00b7 stone / reeds / thorns",
+      "label": "Ukraine · stone / reeds / thorns",
       "roles": {
         "wall": {
           "kind": "stone",
@@ -529,7 +851,7 @@
       }
     },
     "retro-materials": {
-      "label": "1994 \u00b7 circuit / static / plasma",
+      "label": "1994 · circuit / static / plasma",
       "roles": {
         "wall": {
           "kind": "circuit",
@@ -549,7 +871,7 @@
       }
     },
     "navi-materials": {
-      "label": "Navi \u00b7 archive / queue / alerts",
+      "label": "Navi · archive / queue / alerts",
       "roles": {
         "wall": {
           "kind": "archive",
@@ -719,16 +1041,8 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [
-              -0.13,
-              -0.08,
-              -1
-            ],
-            [
-              0.13,
-              -0.08,
-              1
-            ]
+            [-0.13, -0.08, -1],
+            [0.13, -0.08, 1]
           ],
           "span": 0.43,
           "chord": 0.2,
@@ -748,16 +1062,8 @@
           "id": "wings",
           "type": "wings",
           "anchors": [
-            [
-              -0.13,
-              -0.08,
-              -1
-            ],
-            [
-              0.13,
-              -0.08,
-              1
-            ]
+            [-0.13, -0.08, -1],
+            [0.13, -0.08, 1]
           ],
           "span": 0.43,
           "chord": 0.2,
@@ -777,14 +1083,8 @@
           "id": "exhaust",
           "type": "thruster",
           "anchors": [
-            [
-              -0.08,
-              0.355
-            ],
-            [
-              0.08,
-              0.355
-            ]
+            [-0.08, 0.355],
+            [0.08, 0.355]
           ],
           "length": 0.23,
           "width": 0.08,
@@ -802,14 +1102,8 @@
           "id": "exhaust",
           "type": "thruster",
           "anchors": [
-            [
-              -0.08,
-              0.355
-            ],
-            [
-              0.08,
-              0.355
-            ]
+            [-0.08, 0.355],
+            [0.08, 0.355]
           ],
           "length": 0.23,
           "width": 0.08,
@@ -826,12 +1120,7 @@
         {
           "id": "guidance",
           "type": "pulse",
-          "anchors": [
-            [
-              0,
-              0.14
-            ]
-          ],
+          "anchors": [[0, 0.14]],
           "radius": 0.38,
           "amplitude": 0.05,
           "frequencyHz": 0.8,
@@ -842,14 +1131,8 @@
           "id": "eyes",
           "type": "blink",
           "anchors": [
-            [
-              -0.085,
-              -0.005
-            ],
-            [
-              0.085,
-              -0.005
-            ]
+            [-0.085, -0.005],
+            [0.085, -0.005]
           ],
           "frequencyHz": 0.8,
           "dutyCycle": 0.18,
@@ -864,12 +1147,7 @@
         {
           "id": "guidance",
           "type": "pulse",
-          "anchors": [
-            [
-              0,
-              0.14
-            ]
-          ],
+          "anchors": [[0, 0.14]],
           "radius": 0.38,
           "amplitude": 0.05,
           "frequencyHz": 0.8,
@@ -880,14 +1158,8 @@
           "id": "eyes",
           "type": "blink",
           "anchors": [
-            [
-              -0.085,
-              -0.005
-            ],
-            [
-              0.085,
-              -0.005
-            ]
+            [-0.085, -0.005],
+            [0.085, -0.005]
           ],
           "frequencyHz": 0.8,
           "dutyCycle": 0.18,
@@ -972,18 +1244,160 @@
         {
           "id": "exhaust",
           "type": "thruster",
-          "anchors": [
-            [
-              -0.01,
-              0.34
-            ]
-          ],
+          "anchors": [[-0.01, 0.34]],
           "length": 0.18,
           "width": 0.1,
           "speedGain": 0.8,
           "flickerHz": 7,
           "color": "#e68169",
           "innerColor": "#fff0bc"
+        }
+      ]
+    },
+    "fpv-scout-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.16,
+          "bladeWidth": 0.4,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-light-carrier-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.15869218499999999,
+          "bladeWidth": 0.4,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-heavy-carrier-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.16,
+          "bladeWidth": 0.4,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-interceptor-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.105,
+          "bladeWidth": 0.3,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-fiber-relay-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.16,
+          "bladeWidth": 0.4,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-impact-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.12,
+          "bladeWidth": 0.3,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
+        }
+      ]
+    },
+    "fpv-trapper-v1-rotors": {
+      "components": [
+        {
+          "id": "main-rotors",
+          "type": "rotors",
+          "bladeCount": 3,
+          "bladeShape": "tapered",
+          "radius": 0.125,
+          "bladeWidth": 0.3,
+          "idleRps": 2,
+          "travelRps": 10,
+          "maxVisualRps": 2.6,
+          "blurOpacity": 0.08,
+          "phaseDegrees": 0,
+          "direction": 1,
+          "fillColor": "#bfd1d6",
+          "tipColor": "#f3c94f",
+          "hubColor": "#253543"
         }
       ]
     }
@@ -1001,5 +1415,43 @@
     "navi-network": {
       "terrainLayer": "navi-materials"
     }
+  },
+  "characterPresentations": {
+    "format": "revealline-character-presentations.v1",
+    "sets": [
+      {
+        "id": "fpv-roles-v1",
+        "themeId": "fpv",
+        "themeFamily": "fpv",
+        "legacyPlayer": "fpv-body",
+        "matchClassBodies": {
+          "scout": "scout-quad",
+          "bomber": "fpv-body",
+          "carrier": "heavy-lift",
+          "interceptor": "scout-quad",
+          "fiber": "fpv-body",
+          "impact": "fpv-body",
+          "trapper": "fpv-body"
+        },
+        "classBodies": {
+          "scout": "fpv-scout-v1",
+          "bomber": "fpv-light-carrier-v1",
+          "carrier": "fpv-heavy-carrier-v1",
+          "interceptor": "fpv-interceptor-v1",
+          "fiber": "fpv-fiber-relay-v1",
+          "impact": "fpv-impact-v1",
+          "trapper": "fpv-trapper-v1"
+        },
+        "starterBodies": [
+          "fpv-scout-v1",
+          "fpv-light-carrier-v1",
+          "fpv-heavy-carrier-v1",
+          "fpv-interceptor-v1",
+          "fpv-fiber-relay-v1",
+          "fpv-impact-v1",
+          "fpv-trapper-v1"
+        ]
+      }
+    ]
   }
 }

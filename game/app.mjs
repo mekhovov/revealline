@@ -1,3 +1,4 @@
+import { createCharacterPresentations } from './character-presentations.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
 import { createExternalChapterHost } from './external-chapter-host.mjs';
 import { createExternalChapterBackup } from './external-chapter-backup.mjs';
@@ -127,10 +128,10 @@ import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
 import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
+import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
-  recommendedBody,
   MASTERY_SCENARIO_VERSION,
   ENCOUNTER_SCENARIO_VERSION,
   scenarioMasteryCampaign,
@@ -160,6 +161,7 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
     packs: [
@@ -216,7 +218,7 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.39.0',
+  let buildVersion = '0.40.0',
     isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
@@ -900,6 +902,7 @@ try {
         onClose: () => {
           clearInput();
           $('settings-dialog').showModal();
+          void storageRetention.refresh();
           $('soundtrack-open').focus();
         },
         onVolume: (value) => {
@@ -1320,6 +1323,7 @@ try {
       'This tab returned from browser history in session-only mode. Export a complete backup to keep its current progress, then reload to open the latest saved profile.';
     show('save-warning', true);
     void packCommits.reconcile();
+    if ($('settings-dialog').open) void storageRetention.refresh();
   });
   function refreshKeyPrompts() {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
@@ -1383,8 +1387,15 @@ try {
           };
     },
   });
+  const storageRetention = attachStorageRetention({
+    button: $('storage-retention-button'),
+    status: $('storage-retention-status'),
+    isOpen: () => $('settings-dialog').open,
+  });
   window.addEventListener('pagehide', (event) => {
+    storageRetention.close();
     if (!event.persisted) {
+      storageRetention.destroy();
       keySettings.destroy();
       controllerSettings.destroy();
       controllerBoostSettings.destroy();
@@ -1718,7 +1729,9 @@ try {
     );
   }
   function availableBodies() {
-    return difficultyNavigation.bodies(activeEntry, library.campaigns, progress);
+    return characterPresentations.availableBodies(
+      difficultyNavigation.bodies(activeEntry, library.campaigns, progress),
+    );
   }
   function currentAppearanceMilestones() {
     return difficultyNavigation.milestones(activeEntry, library.campaigns, progress);
@@ -2794,6 +2807,7 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    void storageRetention.refresh();
   };
   let offlinePrepared = false;
   const offline = offlineAvailability();
@@ -2862,6 +2876,7 @@ try {
     }
   };
   $('settings-dialog').addEventListener('close', () => {
+    if (!$('settings-dialog').open) storageRetention.close();
     sound.pause();
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
@@ -2910,7 +2925,11 @@ try {
   }
   function setTheme() {
     if (library.preferences.matchClassAppearance) {
-      const candidate = recommendedBody(theme, run?.activeClassId || classId, theme.player);
+      const candidate = characterPresentations.recommendedBody(
+        theme,
+        run?.activeClassId || classId,
+        theme.player,
+      );
       bodyId =
         Object.hasOwn(presets.characters, candidate) &&
         (practice || availableBodies().has(candidate))
@@ -3397,7 +3416,12 @@ try {
       theme =
         themesFile.themes.find((t) => t.id === (authoredLevel.themeId || campaign.themeId)) ||
         themesFile.themes[0];
-      bodyId = theme.player;
+      if (
+        library.preferences.matchClassAppearance ||
+        !Object.hasOwn(presets.characters, bodyId) ||
+        (!practice && !availableBodies().has(bodyId))
+      )
+        bodyId = theme.player;
       $('theme-select').value = theme.id;
     }
     if (!scenario && !musicOverride) {
@@ -3609,9 +3633,15 @@ try {
     $('score').textContent = String(run.score).padStart(5, '0');
     const required = run.objectives.filter((o) => o.required),
       done = required.filter((o) => o.captured);
-    $('objective-state').textContent = required.length
-      ? `${theme.labels.objective}: ${done.length} / ${required.length}`
-      : 'Close a line to reveal the picture';
+    $('objective-state').textContent = campaignOverview
+      ? 'Choose a mission to replay'
+      : run.status === 'won'
+        ? 'Target reached'
+        : run.status === 'lost'
+          ? 'Retry when you are ready'
+          : required.length
+            ? `${theme.labels.objective}: ${done.length} / ${required.length}`
+            : 'Close a line to reveal the picture';
     $('flight-state').textContent = campaignOverview
       ? 'Campaign complete'
       : run.status === 'won'
@@ -3625,7 +3655,9 @@ try {
               : paused
                 ? 'Paused'
                 : run.player.cutting
-                  ? 'LIVE LINE / EXPOSED'
+                  ? run.player.speed === 0
+                    ? 'LINE EXPOSED / CHOOSE A TURN'
+                    : 'LIVE LINE / EXPOSED'
                   : 'Safe ground';
     $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
@@ -4333,7 +4365,7 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
-    invalidateContentSwitch();
+    invalidateContentSwitch({ announce: true });
     if (courseEntry)
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');
     clearInput();
@@ -4468,6 +4500,7 @@ try {
           name,
           description,
           mode,
+          themeId: descriptor.themeId,
           levels,
           sourceOnly: !isRelease,
           bytes: descriptor.pack.bytes + descriptor.media.bytes,
@@ -4504,6 +4537,20 @@ try {
       return loadOptionalCatalog(options);
     },
     install: installOptionalChapter,
+    chooseInstalled: async (pack, { signal }) => {
+      if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
+        throw new Error(
+          'Return to the normal game and resolve recovery before choosing a chapter.',
+        );
+      if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
+      if (!packs.packs.includes(pack))
+        throw new Error('Installed content changed; refresh the chapter list.');
+      // External originals always go through their descriptor/readiness card.
+      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+        throw new Error('Use this chapter’s exact original-picture card.');
+      selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
+      return true;
+    },
     choose: async (summary, { signal }) => {
       if (courseEntry || courseSession || practice)
         throw new Error('Return from practice before choosing a world.');

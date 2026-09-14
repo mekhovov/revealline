@@ -26,6 +26,14 @@ Use [the collection handoff](references/collection-handoff.md) when authoring re
 - Keep body, propellers/wing/thruster/pulse, trail and UI portrait independently replaceable where supported. Read the current recipe before applying blade count or other fields. Do not invent accepted properties. Changes to rotor count, phase, visual rate or scale remain cosmetic. Cancel old parts and cues when switching characters or resetting.
 - Preserve the authored turn-mode choice when inspecting, equipping or exchanging characters. Immediate and grid-center buffered movement are configurable policies, not character cosmetics. Test swaps within both supported modes against their own movement baselines; use the current preview's documentation for exact behavior and do not add a turn-mode field to collection data that does not accept it.
 
+## Current runtime presentation sets
+
+Before advancing a catalog pinned by existing production records, use [metadata revision preservation](../../production/README.md#preserve-metadata-revisions). Preserve the exact old JSON snapshot and complete identity; never update an old register's hash just to make a new appearance pass. Current and historical catalog checks are separate from visual acceptance.
+
+Read [the current presentation contract](../../../docs/fpv-role-presentations.md) before applying the seven FPV role bodies. `authoring/motion-lab/presets.json` owns the bounded `characterPresentations` catalog; `game/character-presentations.mjs` checks the complete original theme/class map and adds only the declared current starters at the host boundary. Use the same adapter in solo and Couch. Do not rewrite old `theme.classBodies`, pack hashes, progress reward lists, stored appearance IDs or saved originals. Manual choices and explicit original overrides remain independent. A changed custom class map keeps its authored recommendations.
+
+For a replacement, retain the original media/provenance and register a new versioned body/recipe with a matching hash and explicit build path. Check availability, preference/load behavior and the actual painter, not only the option label. Compact 20px is an opt-in preset policy for this set; it may not change colliders or silently resize older bodies. Historical readers may display their existing fallback for an unknown new appearance ID. Report that compatibility limit rather than claiming an asset migration.
+
 ## Review and hand off
 
 Apply and switch the actual supplied assets in the available preview, then inspect normal size, small viewport, bright/dark artwork, pause/resume and relevant earned/context fixtures. Compare identical geometry and motion across compact/microtile, detailed-object and hybrid terrain. Test the declared fallback and distinguish reviewed scenarios from missing ones. Browser viewport inspection is not native iPhone or controller verification.

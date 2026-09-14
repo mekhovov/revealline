@@ -11,7 +11,7 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
-import { recommendedBody } from '../content.mjs';
+import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 const $ = (id) => document.getElementById(id);
 const artworkLifetime = new AbortController();
@@ -36,6 +36,7 @@ try {
     json('../content/themes.json'),
     json('../../authoring/motion-lab/presets.json'),
   ]);
+  const characterPresentations = createCharacterPresentations(presets);
   const maps = campaign.levels.map((level) => ({
     key: level.id,
     chapter: campaign.title,
@@ -115,9 +116,11 @@ try {
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   const sound = new Soundscape({ persistentMusic: true });
   let neutralResumeTick = false;
-  const freeBodies = unlockedBodies(emptyProgress(campaign), campaign);
+  const freeBodies = characterPresentations.availableBodies(
+    unlockedBodies(emptyProgress(campaign), campaign),
+  );
   function bodyFor(theme, classId) {
-    const candidate = recommendedBody(theme, classId);
+    const candidate = characterPresentations.recommendedBody(theme, classId);
     return Object.hasOwn(presets.characters, candidate) && freeBodies.has(candidate)
       ? candidate
       : freeBodies.has(theme.player)
