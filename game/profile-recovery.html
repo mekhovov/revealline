@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Earlier profiles · RevealLine</title>
+    <link rel="stylesheet" href="./ui/profile-recovery.css" />
+  </head>
+  <body>
+    <main id="profile-recovery-root">
+      <button id="profile-recovery-back" type="button">Back to game</button>
+      <h1>Earlier profiles</h1>
+      <p>
+        Review stored profiles from this site without changing them. Exact release channels stay
+        separate.
+      </p>
+      <p class="note">
+        Original media is not inspected here. Flight recovery and storage migration are unavailable.
+      </p>
+      <div class="actions">
+        <button id="profile-recovery-find" type="button" disabled>Find profiles</button>
+        <button id="profile-recovery-cancel" type="button" hidden>Cancel check</button>
+      </div>
+      <label for="profile-recovery-channel">Stored profile</label>
+      <select id="profile-recovery-channel" disabled></select>
+      <div class="actions">
+        <button id="profile-recovery-review" type="button" disabled>Review</button>
+        <button id="profile-recovery-export" type="button" disabled>
+          Prepare stored-data export
+        </button>
+      </div>
+      <p id="profile-recovery-status" role="status" aria-live="polite">
+        Loading release information…
+      </p>
+      <p id="profile-recovery-summary"></p>
+      <a id="profile-recovery-download" hidden>Download stored profile snapshot</a>
+      <p class="note">
+        Exports from this screen contain no original images, audio or verified replay. Keep existing
+        complete backups.
+      </p>
+    </main>
+    <script type="module" src="./profile-recovery.mjs"></script>
+  </body>
+</html>
