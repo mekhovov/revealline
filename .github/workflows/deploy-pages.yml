@@ -152,7 +152,7 @@ jobs:
 
       - name: Build current game and tagged releases
         if: github.event_name != 'pull_request'
-        run: npm run build:pages -- --archive-plan scripts/pages-archives.json --source-repository mekhovov/revealline
+        run: npm run build:pages -- --retain 10 --source-repository mekhovov/revealline
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'

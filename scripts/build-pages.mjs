@@ -15,6 +15,7 @@ import {
 } from './pages-archive.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const DEFAULT_RETAINED_RELEASES = 10;
 const readJSON = async (file) => JSON.parse(await fs.readFile(file, 'utf8'));
 const escapeHTML = (text) =>
   String(text).replace(
@@ -65,8 +66,11 @@ export async function buildPages({
   repository = process.env.GITHUB_REPOSITORY || 'mekhovov/revealline',
   archivePlan,
   archiveId,
+  retainedReleases = DEFAULT_RETAINED_RELEASES,
   outputDirectory = path.join(projectRoot, 'dist'),
 } = {}) {
+  if (!Number.isSafeInteger(retainedReleases) || retainedReleases < 1)
+    throw new Error('Retained release count must be a positive integer.');
   const relativeOutput = path.relative(path.resolve(projectRoot), path.resolve(outputDirectory));
   if (relativeOutput !== 'dist' && !relativeOutput.startsWith(`.cache${path.sep}`))
     throw new Error('Pages output must be dist or a directory inside the project .cache.');
@@ -122,7 +126,7 @@ export async function buildPages({
     await fs.mkdir(pagesReleases, { recursive: true });
     const publishedRecords = selected
       ? records.filter((record) => selected.versions.includes(record.version))
-      : records;
+      : records.slice(-retainedReleases);
     let redirectedHTMLFiles = 0;
     for (const record of publishedRecords) {
       const source = path.join(releasesRoot, record.version),
@@ -245,10 +249,11 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
       value = args.shift();
     if (!value || !['--archive-plan', '--archive', '--source-repository'].includes(key))
       throw new Error(
-        'Usage: build-pages.mjs [--archive-plan file] [--archive id] [--source-repository owner/repo]',
+        'Usage: build-pages.mjs [--archive-plan file] [--archive id] [--retain count] [--source-repository owner/repo]',
       );
     if (key === '--archive-plan') options.archivePlan = await readJSON(path.resolve(value));
     if (key === '--archive') options.archiveId = value;
+    if (key === '--retain') options.retainedReleases = Number(value);
     if (key === '--source-repository') options.repository = value;
   }
   await buildPages(options);
