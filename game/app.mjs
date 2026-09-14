@@ -543,6 +543,7 @@ try {
     recorder = null,
     recordingStopped = false,
     captionUntil = 0,
+    runMessageCue = null,
     bodyWarning = '',
     lastReplay = null,
     completionWarning = '',
@@ -986,7 +987,8 @@ try {
     sfx: library.preferences.sfxVolume,
   });
   if (scenario?.music) assignMusic(scenario.music);
-  function warning(message) {
+  function warning(message, cue = null) {
+    runMessageCue = cue;
     $('run-message').textContent = message;
     captionUntil = (run?.time || 0) + 5;
   }
@@ -2458,7 +2460,7 @@ try {
       updateLoadout();
       overlay('pause');
       refreshHUD();
-      warning('Saved flight verified and restored. Press Resume to continue.');
+      warning('Saved flight verified and restored. Press Resume to continue.', 'restored');
     } finally {
       sessionBusy = false;
       stagedPictures?.dispose();
@@ -3591,6 +3593,12 @@ try {
     if (!started) rememberSelection();
     started = true;
     paused = false;
+    if (runMessageCue === 'restored')
+      warning(
+        run.player.cutting
+          ? 'Flight resumed. Your unfinished line is still exposed.'
+          : 'Flight resumed.',
+      );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
     (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
     show('game-overlay', false);
@@ -3776,6 +3784,13 @@ try {
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
         );
+      if (
+        event.type === 'cut.started' &&
+        runMessageCue === 'failure' &&
+        run.status === 'running' &&
+        run.player.cutting
+      )
+        warning('Live line exposed. Reach safe ground to secure it.');
       if (event.type === 'player.failed')
         warning(
           {
@@ -3785,6 +3800,7 @@ try {
             'cable-limit': 'Your cable budget ran out. Close a shorter line.',
             'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
+          'failure',
         );
       if (event.type === 'lineImpact.seeded')
         warning('Line struck! Reach safe ground before the travelling spark catches you.');
