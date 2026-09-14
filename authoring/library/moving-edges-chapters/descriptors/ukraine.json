@@ -1,0 +1,55 @@
+{
+  "format": "revealline-external-chapter.v1",
+  "id": "moving-edges-ukraine",
+  "revision": 1,
+  "source": {
+    "id": "moving-edges",
+    "bytes": 9227,
+    "sha256": "048100f48c2406949639b86b540d17e26e5660e59879707dc913f52ac74fc33c"
+  },
+  "pack": {
+    "bytes": 8688,
+    "sha256": "5bc2d273d7aaae97213d9129f94ef1f3bc25ddb87e9960e96838429474407ae8"
+  },
+  "media": {
+    "bytes": 9268434,
+    "sha256": "7269013e1c7c65904fdb70484b60c2599225f9409892463a6c40cd0b234bf48f"
+  },
+  "campaignKey": "moving-edges-ukraine/1/3434c9dec5583363",
+  "themeId": "ukraine",
+  "originals": [
+    {
+      "assetId": "moving-edges-ukraine-poster-1",
+      "presentationId": "moving-edges-ukraine-poster-1-presentation",
+      "levelId": "moving-edges-terrace-stitch",
+      "levelRevision": "1",
+      "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+      "bytes": 3116991,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-ukraine-poster-2",
+      "presentationId": "moving-edges-ukraine-poster-2-presentation",
+      "levelId": "moving-edges-survey-wheel",
+      "levelRevision": "1",
+      "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+      "bytes": 3373654,
+      "mime": "image/png",
+      "width": 1773,
+      "height": 887
+    },
+    {
+      "assetId": "moving-edges-ukraine-poster-3",
+      "presentationId": "moving-edges-ukraine-poster-3-presentation",
+      "levelId": "moving-edges-breakwater-return",
+      "levelRevision": "1",
+      "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+      "bytes": 2766348,
+      "mime": "image/png",
+      "width": 1774,
+      "height": 887
+    }
+  ]
+}

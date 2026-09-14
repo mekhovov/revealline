@@ -1,0 +1,133 @@
+{
+  "format": "revealline-moving-edges-editions.v1",
+  "editions": [
+    {
+      "themeId": "fpv",
+      "id": "moving-edges-fpv",
+      "artRoot": "authoring/library/moving-edges-art",
+      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "images": [
+        {
+          "sourceCellId": "moving-edges/terrace-stitch/fpv",
+          "sourceLevelId": "moving-edges-terrace-stitch",
+          "path": "originals/terrace-stitch-fpv.png",
+          "sha256": "3574e0abdc8beb4d89739524582f2588c4d59e74caf6a9c8b9e4a6ce9975ea68",
+          "title": "The Hillside Flight Workshop",
+          "description": "Ukrainian drone crew and a quadcopter work beneath camouflage nets above a sunrise mountain valley. Unequal hillside workshops and broad valley returns echo the terraces. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/survey-wheel/fpv",
+          "sourceLevelId": "moving-edges-survey-wheel",
+          "path": "originals/survey-wheel-fpv.png",
+          "sha256": "1673efbcdff9bdab97576d94b0da18ec87492dc7e48340f1ce6b26ef3706a78a",
+          "title": "Signals around the Old Depot",
+          "description": "A Ukrainian-marked dusk depot has radial service bays, drone crew, antennas and warm work lights. A curved depot and outward service paths echo the wheel sectors. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/breakwater-return/fpv",
+          "sourceLevelId": "moving-edges-breakwater-return",
+          "path": "originals/breakwater-return-fpv.png",
+          "sha256": "592b96cf8aa0165fa1ea01bef7085e3f6ecee3ffdc553382432c7869871cd5aa",
+          "title": "The Coastal Watch Returns",
+          "description": "A coastal military and rescue drone crew returns to a lit van beside rough teal water and offset piers. Offset harbor edges and open water echo the return corridor. This reward scene is not collision geometry."
+        }
+      ]
+    },
+    {
+      "themeId": "ukraine",
+      "id": "moving-edges-ukraine",
+      "artRoot": "authoring/library/moving-edges-art",
+      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "images": [
+        {
+          "sourceCellId": "moving-edges/terrace-stitch/ukraine",
+          "sourceLevelId": "moving-edges-terrace-stitch",
+          "path": "originals/terrace-stitch-ukraine.png",
+          "sha256": "2891cf3ec46f5f751b1779e7568bf1920f8c6903779879eb265ca8a9252c1897",
+          "title": "Threads above the Mountain River",
+          "description": "Timber weaving workshops and red textiles overlook an autumn mountain river. Stepped buildings and connecting paths echo the unequal terraces. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/survey-wheel/ukraine",
+          "sourceLevelId": "moving-edges-survey-wheel",
+          "path": "originals/survey-wheel-ukraine.png",
+          "sha256": "403df334ca1db88b8536aedca8d056fc4f6b663184f8c02d5a8c19c0baa366d2",
+          "title": "The Potter's Spring Courtyard",
+          "description": "Pottery workshops gather around a spring courtyard and round kiln, with turquoise glazing and blossom. A kiln hub and surrounding craft spaces echo the wheel. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/breakwater-return/ukraine",
+          "sourceLevelId": "moving-edges-breakwater-return",
+          "path": "originals/breakwater-return-ukraine.png",
+          "sha256": "9f6b3b8cdb68648efbe4d58614b70a6976d76eeffff0225fd25d6a668fa94ef3",
+          "title": "Boats beneath the Stone Lanterns",
+          "description": "Boatbuilders work by limestone piers and warm lanterns at blue hour. Sheltered water and offset harbor structures echo the breakwaters and cove. This reward scene is not collision geometry."
+        }
+      ]
+    },
+    {
+      "themeId": "retro",
+      "id": "moving-edges-retro",
+      "artRoot": "authoring/library/moving-edges-art",
+      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "images": [
+        {
+          "sourceCellId": "moving-edges/terrace-stitch/retro",
+          "sourceLevelId": "moving-edges-terrace-stitch",
+          "path": "originals/terrace-stitch-retro.png",
+          "sha256": "209f3c08bb7df5d3fd3d450dd38a5854923083033150772265896c0f60552bdb",
+          "title": "Mixtapes on the Upper Walkways",
+          "description": "Stepped CRT repair rooms, record stalls and a games room glow over autumn walkways. Unequal platforms and linked stairs echo the terrace stitch. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/survey-wheel/retro",
+          "sourceLevelId": "moving-edges-survey-wheel",
+          "path": "originals/survey-wheel-retro.png",
+          "sha256": "8f479806a4bb953f592d6c2eec6a601bce429584ea132e99bcab09290144a2bc",
+          "title": "The Last Saturday at the Rotunda",
+          "description": "A late-night roller rink links arcade, music and cassette spaces under mint and coral light. A rotunda and outward rooms echo the wheel sectors. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/breakwater-return/retro",
+          "sourceLevelId": "moving-edges-breakwater-return",
+          "path": "originals/breakwater-return-retro.png",
+          "sha256": "1a6cf10c89c674a52093390f798ab981a51023a5af772036ffd88c3ba6b99d96",
+          "title": "Summer's Last Lake Ferry",
+          "description": "A yellow camera and tape kiosk overlooks offset ferry piers beneath a rose-gold lake sky. Offset piers and broad return water echo the harbor route. This reward scene is not collision geometry."
+        }
+      ]
+    },
+    {
+      "themeId": "coupa",
+      "id": "moving-edges-coupa",
+      "artRoot": "authoring/library/moving-edges-art",
+      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "images": [
+        {
+          "sourceCellId": "moving-edges/terrace-stitch/coupa",
+          "sourceLevelId": "moving-edges-terrace-stitch",
+          "path": "originals/terrace-stitch-coupa.png",
+          "sha256": "24d887954886059a5eacfe133e94caf59011fdef79cd98324581038c55b1c65f",
+          "title": "The Shared Goods Terraces",
+          "description": "Shared tools, parcels and workshop terraces rise toward a greenhouse above an idyllic coast. Three working levels and connecting paths echo the stepped terraces. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/survey-wheel/coupa",
+          "sourceLevelId": "moving-edges-survey-wheel",
+          "path": "originals/survey-wheel-coupa.png",
+          "sha256": "d2e32f910fe3831f81be3a5f0a4985ab95f0b13f9f83bae098123dd344f5b753",
+          "title": "The Repair Exchange Rotunda",
+          "description": "A snowy parts-exchange rotunda links warm timber repair workshops at night. A central depot and surrounding workrooms echo the hub and sectors. This reward scene is not collision geometry."
+        },
+        {
+          "sourceCellId": "moving-edges/breakwater-return/coupa",
+          "sourceLevelId": "moving-edges-breakwater-return",
+          "path": "originals/breakwater-return-coupa.png",
+          "sha256": "e2eb3e89295a695f85d27d034457abd398749e7c1dc27ec07a9bdf7ed86cf56f",
+          "title": "The Harbor Maintenance Round",
+          "description": "A harbor maintenance crew shares lit repair workshops and boats beside deep blue night water. Projecting piers and sheltered return water echo the breakwaters. This reward scene is not collision geometry."
+        }
+      ]
+    }
+  ]
+}
