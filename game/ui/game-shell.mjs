@@ -16,16 +16,29 @@ export function attachGameShell({
 } = {}) {
   const $ = (id) => doc.getElementById(id);
   const home = $('shell-home'),
-    missions = $('shell-missions');
+    missions = $('shell-missions'),
+    workshop = $('shell-workshop-dialog');
   if (!home || !missions) return null;
-  let destroyed = false;
+  let destroyed = false,
+    returnToHome = false;
   const modalNavigation = getTopDialog ? null : attachModalNavigation({ document: doc });
   const topDialog = getTopDialog ?? modalNavigation.topDialog;
   const deck = doc.querySelector('.flight-deck');
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
   const closeHome = () => {
+    if (workshop?.open) workshop.close();
     if (home.open) home.close();
+  };
+  const syncPreparation = () => {
+    const selected = $('missions')?.querySelector('.selected');
+    const available = !!selected && !selected.disabled && !$('pack-select')?.disabled;
+    const start = $('start-button');
+    if ($('shell-deploy'))
+      $('shell-deploy').disabled = !available || start.hidden || start.disabled;
+    if ($('shell-prepared-mission'))
+      $('shell-prepared-mission').textContent =
+        selected?.querySelector('.name')?.textContent || 'Choose an available mission';
   };
   let briefing = null;
   const restoreMissionView = () => {
@@ -38,6 +51,8 @@ export function attachGameShell({
     $('shell-brief-content').hidden = true;
     $('shell-mission-content').hidden = false;
     $('shell-briefing').hidden = false;
+    if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = false;
+    if ($('shell-mode-choice')) $('shell-mode-choice').hidden = training;
     $('shell-missions-title').textContent = title;
     if ($('shell-missions-context')) $('shell-missions-context').textContent = context;
     delete missions.dataset.view;
@@ -49,23 +64,33 @@ export function attachGameShell({
   };
   missions.addEventListener('close', closedMissions);
   const openMissions = () => {
+    returnToHome = home.open;
     pause(true);
     restoreMissionView();
     closeHome();
     if (!missions.open) missions.showModal();
+    syncPreparation();
     if (!focusMissions?.()) $('pack-select').focus();
   };
   const openHome = () => {
     pause(true);
     if (missions.open) missions.close();
     restoreMissionView();
-    $('shell-continue').hidden = training || !canContinue();
+    const continued = !training && canContinue();
+    $('shell-continue').hidden = !continued;
+    if ($('shell-featured')) $('shell-featured').hidden = training || continued;
+    if ($('shell-destination'))
+      $('shell-destination').textContent = training
+        ? 'Training · Your current lesson'
+        : continued
+          ? `Continue · ${!$('continue-saved').hidden ? $('continue-saved').title : $('mission-brief-title').textContent}`
+          : 'Deploy · Pressure Lines / Arcade';
     if (!home.open) home.showModal();
     (training
       ? $('shell-course-return')
       : canContinue()
         ? $('shell-continue')
-        : $('shell-play')
+        : $('shell-featured') || $('shell-play')
     ).focus();
   };
   const forward = (source, target) => {
@@ -75,6 +100,20 @@ export function attachGameShell({
     };
   };
   $('shell-menu').onclick = openHome;
+  if ($('shell-workshop'))
+    $('shell-workshop').onclick = () => {
+      pause(true);
+      workshop?.showModal();
+      workshop?.querySelector('button,a')?.focus();
+    };
+  if ($('shell-missions-back'))
+    $('shell-missions-back').onclick = () => {
+      if (!briefing && returnToHome) openHome();
+      else {
+        missions.close();
+        focusGame();
+      }
+    };
   const overlayMenu = $('overlay-menu');
   if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
   const worlds = $('shell-worlds');
@@ -83,12 +122,14 @@ export function attachGameShell({
     worlds.onclick = () => {
       pause(true);
       closeHome();
+      if (missions.open) missions.close();
       onWorlds?.();
     };
   }
   const overlayBrief = $('overlay-brief');
   if (overlayBrief)
     overlayBrief.onclick = () => {
+      returnToHome = false;
       pause(true);
       closeHome();
       const brief = $('mission-brief'),
@@ -110,6 +151,8 @@ export function attachGameShell({
         slot.hidden = false;
         $('shell-mission-content').hidden = true;
         $('shell-briefing').hidden = true;
+        if ($('shell-deploy-bar')) $('shell-deploy-bar').hidden = true;
+        if ($('shell-mode-choice')) $('shell-mode-choice').hidden = true;
         missions.dataset.view = 'brief';
         $('shell-missions-title').textContent =
           $('mission-brief-title').textContent || 'Mission brief';
@@ -132,8 +175,7 @@ export function attachGameShell({
       featured.disabled = true;
       try {
         if (await onFeatured()) {
-          closeHome();
-          focusGame();
+          openMissions();
         }
       } finally {
         featured.disabled = false;
@@ -143,6 +185,28 @@ export function attachGameShell({
     missions.close();
     focusGame();
   };
+  if ($('shell-prepare'))
+    $('shell-prepare').onclick = () => {
+      const setup = $('mission-picker-setup');
+      if (!setup) return;
+      setup.open = true;
+      setup.scrollIntoView({ block: 'start', behavior: 'instant' });
+      (setup.querySelector('select:not(:disabled)') || setup.querySelector('summary'))?.focus({
+        preventScroll: true,
+      });
+    };
+  if ($('shell-deploy'))
+    $('shell-deploy').onclick = () => {
+      syncPreparation();
+      if ($('shell-deploy').disabled) return;
+      missions.close();
+      $('start-button').click();
+      focusGame();
+    };
+  const Observer = doc.defaultView?.MutationObserver ?? globalThis.MutationObserver;
+  const preparationObserver = typeof Observer === 'function' ? new Observer(syncPreparation) : null;
+  for (const source of [$('missions'), $('pack-select'), $('start-button')])
+    if (source) preparationObserver?.observe(source, { childList: true, attributes: true });
   $('shell-continue').onclick = () => {
     closeHome();
     // Loading is explicit and verified by the existing host. An in-memory
@@ -158,6 +222,10 @@ export function attachGameShell({
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
   forward('shell-help', 'help-button');
+  const leaveWorkshop = () => {
+    if (workshop?.open) workshop.close();
+  };
+  $('shell-guide')?.addEventListener('click', leaveWorkshop, true);
   const courseReturn = $('shell-course-return');
   if (courseReturn) {
     courseReturn.hidden = !training;
@@ -167,6 +235,8 @@ export function attachGameShell({
     };
   }
   if (training) {
+    // Course sessions keep their usable sound/help shortcuts in the lesson menu.
+    home.querySelector('.home-actions')?.append($('shell-music'), $('shell-help'));
     // These destinations cannot operate on the course's isolated, non-awarding
     // session. Show only usable settings and the explicit lesson return.
     for (const id of [
@@ -175,6 +245,7 @@ export function attachGameShell({
       'shell-library',
       'shell-gallery',
       'shell-guide',
+      'shell-workshop',
     ])
       $(id).hidden = true;
     for (const element of doc.querySelectorAll('.home-actions a, .shell-tools'))
@@ -219,6 +290,8 @@ export function attachGameShell({
       home.removeEventListener('cancel', cancelHome);
       doc.removeEventListener('keydown', keydown);
       modalNavigation?.destroy();
+      preparationObserver?.disconnect();
+      $('shell-guide')?.removeEventListener('click', leaveWorkshop, true);
     },
   };
 }

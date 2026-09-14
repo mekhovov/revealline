@@ -73,7 +73,7 @@ function nonmodalOverlay(page) {
 }
 
 for (const mode of ['keyboard', 'controller']) {
-  test(`${mode}: native Main menu reaches Picture collection and Scores & saves without winning or leaving a paused cut`, async (t) => {
+  test(`${mode}: native Main menu reaches Collection and Workshop records without winning or leaving a paused cut`, async (t) => {
     const showModal = SoloElement.prototype.showModal,
       close = SoloElement.prototype.close,
       origins = new WeakMap();
@@ -104,9 +104,15 @@ for (const mode of ['keyboard', 'controller']) {
       initialStorage = [...page.storage.map],
       initialWrites = page.storage.writes.length;
     assert.equal(home.open, true);
-    assert.equal(page.$('shell-library').textContent.trim(), 'Scores & saves');
-    assert.equal(page.$('shell-gallery').textContent.trim(), 'Picture collection');
-    assert.ok(home.contains(page.$('shell-guide')), 'Field guide remains in the title menu');
+    assert.equal(
+      page.$('shell-library').textContent.trim().replaceAll('&amp;', '&'),
+      'Scores & saves',
+    );
+    assert.equal(page.$('shell-gallery').textContent.trim(), 'Collection');
+    assert.ok(
+      page.$('shell-workshop-dialog').contains(page.$('shell-guide')),
+      'Field guide stays available through Workshop',
+    );
     activate(page, input, page.$('shell-gallery'), home);
     assert.equal(home.open, false);
     assert.equal(page.$('collection-dialog').open, true);
@@ -122,7 +128,11 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.rendered.paused, true);
     activate(page, input, page.$('overlay-menu'), nonmodalOverlay(page));
     assert.equal(home.open, true);
-    activate(page, input, page.$('shell-library'), home);
+    activate(page, input, page.$('shell-workshop'), home);
+    const workshop = page.$('shell-workshop-dialog');
+    assert.equal(workshop.open, true);
+    activate(page, input, page.$('shell-library'), workshop);
+    assert.equal(workshop.open, false);
     assert.equal(home.open, false);
     assert.equal(page.$('library-dialog').open, true);
     assert.equal(page.$('collection-dialog').open, false);
