@@ -1,5 +1,7 @@
 # RevealLine implementation roadmap
 
+**Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
+
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
 
 ## Current priority — complete v0.39 delivery, then qualify the integrated UI

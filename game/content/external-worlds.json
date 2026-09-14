@@ -162,6 +162,60 @@
         "bytes": 7967075,
         "sha256": "f40bec0376f3f70e973c6ef9d7783b7d0712252cac46eca9716d11a60baa0964"
       }
+    },
+    {
+      "id": "countercurrent-fpv",
+      "name": "FPV Front · Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "fpv",
+      "levels": 3,
+      "campaignKey": "countercurrent-fpv/1/7359effa888ca945",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-fpv/pack.json",
+        "bytes": 8104,
+        "sha256": "9756b1e4afa71e11d231b4a07a88c0fd53de4e63c862f7c7191b260f12c36b38"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-fpv/media.rlmedia",
+        "bytes": 7070195,
+        "sha256": "768b3f9cb59112d7b3b2fb32fc15bf0c3d19e582cc2671486d243360376c11c5"
+      }
+    },
+    {
+      "id": "countercurrent-ukraine",
+      "name": "Ukraine Atlas · Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "ukraine",
+      "levels": 3,
+      "campaignKey": "countercurrent-ukraine/1/7f014de96585a18e",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-ukraine/pack.json",
+        "bytes": 8184,
+        "sha256": "7a369c639fbfa5a414cfa377e37990d0e8cf8dff226830b00be697cc3b85f13d"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-ukraine/media.rlmedia",
+        "bytes": 8512868,
+        "sha256": "5d70852eb2b990c6c82f3ceba4494b4fb547fe05ba70b9e31da0ac08accc44d6"
+      }
+    },
+    {
+      "id": "countercurrent-retro",
+      "name": "1994 Forever · Countercurrent",
+      "description": "Choose opposing dock returns, thread staggered sandbars, then cross two watched lanes. Three Arcade missions with original scenic rewards.",
+      "themeId": "retro",
+      "levels": 3,
+      "campaignKey": "countercurrent-retro/1/84d11a16c0585605",
+      "pack": {
+        "path": "optional/external-chapters/countercurrent-retro/pack.json",
+        "bytes": 8115,
+        "sha256": "1c782ed22679e1c3a0822bc7d31849a44c2e07efdd3bb85006be9682d51fcfbe"
+      },
+      "media": {
+        "path": "optional/external-chapters/countercurrent-retro/media.rlmedia",
+        "bytes": 7625557,
+        "sha256": "0f91f4bb170cbcd64df192b2a55d84c19db8d87d3dd09e15d4e65254c3606c9b"
+      }
     }
   ]
 }
