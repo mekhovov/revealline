@@ -367,10 +367,25 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       original = JSON.parse(before.slot),
       library = currentProfile(page.storage).library;
     assert.equal(verifyReplay(original.replay).match, true);
-    for (const hand of ['right', 'left', 'right']) {
+    const strip = page.doc.querySelector('.play-controls'),
+      append = strip.append;
+    let groupMoves = 0,
+      previousHand = 'left';
+    t.mock.method(strip, 'append', function (...nodes) {
+      groupMoves++;
+      return append.apply(this, nodes);
+    });
+    for (const hand of ['right', 'right', 'left', 'left', 'right']) {
+      const previousMoves = groupMoves;
       const padReads = page.padReads;
       page.$('screen-steering-hand').focus();
       page.change('screen-steering-hand', hand);
+      assert.equal(
+        groupMoves - previousMoves,
+        Number(hand !== previousHand),
+        'Move groups once when changing hand; repeated synchronization leaves their native order intact.',
+      );
+      previousHand = hand;
       steeringHand(page, hand);
       assert.strictEqual(page.doc.activeElement, page.$('screen-steering-hand'));
       assert.equal(page.padReads, padReads, 'Placement never polls hardware.');

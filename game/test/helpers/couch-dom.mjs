@@ -109,6 +109,9 @@ export class Element extends Events {
     this._rect = { x: 0, y: 0, width: 100, height: 44 };
     Object.assign(this, options);
   }
+  get lastElementChild() {
+    return this.children.at(-1) ?? null;
+  }
   get parentElement() {
     return this.parentNode?.nodeType === 1 ? this.parentNode : null;
   }
