@@ -6,11 +6,9 @@
   );
   overflow: auto;
   padding: 1rem;
-  font:
-    1rem/1.5 system-ui,
-    sans-serif;
-  color: #edf5f5;
-  background: #0d1822;
+  font: inherit;
+  color: var(--ink, #edf2ff);
+  background: var(--paper, #070914);
 }
 .game-shell[data-text-size='large'] #profile-recovery-dialog {
   font-size: 22px;
@@ -35,10 +33,10 @@
   min-height: 44px;
   max-width: 100%;
   padding: 0.65rem 0.9rem;
-  border: 1px solid #587282;
-  border-radius: 0.5rem;
+  border: 1px solid var(--line, #293f66);
+  border-radius: 0;
   color: inherit;
-  background: #1b3341;
+  background: #14223a;
 }
 #profile-recovery-root select {
   width: 100%;
@@ -49,7 +47,7 @@
 }
 #profile-recovery-root :is(button, select, a):focus-visible,
 #profile-recovery-root .controller-focus {
-  outline: 3px solid #8ce4c9;
+  outline: 3px solid var(--accent, #68d9fa);
   outline-offset: 3px;
 }
 #profile-recovery-root .actions {
@@ -59,7 +57,7 @@
   margin: 1rem 0;
 }
 #profile-recovery-root .note {
-  color: #becfd7;
+  color: var(--muted, #98acc8);
 }
 #profile-recovery-root :is(#profile-recovery-summary, #profile-recovery-original-summary) {
   white-space: pre-line;
