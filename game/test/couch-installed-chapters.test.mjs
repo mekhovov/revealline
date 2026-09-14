@@ -10,6 +10,7 @@ import { claimProfileWriter } from '../profile-writer.mjs';
 import { installPack } from '../packs.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
 import { buildExternalPilot } from '../../authoring/library/external-chapter-pilot/build.mjs';
+import { buildCountercurrentTheme } from '../../authoring/library/countercurrent-chapters/build.mjs';
 import { buildFractureTheme } from '../../authoring/library/fracture-theme-chapters/build.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
@@ -601,78 +602,86 @@ test('main-lobby Back cancels an explicitly pending Retry and never enables Star
   assert.deepEqual(f.writes(), before);
 });
 
-test('new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes', async (t) => {
-  const chapter = await buildFractureTheme('ukraine');
-  const f = await fixture(t, { chapter }),
-    before = f.writes();
-  const rows = await f.reader.refresh();
-  assert.equal(rows.length, 3);
-  assert.deepEqual(
-    rows.map((row) => row.level.id),
-    chapter.descriptor.originals.map((original) => original.levelId),
-  );
-  for (const [index, row] of rows.entries()) {
-    const binding = await f.reader.select(row, { raceId: index });
-    const original = chapter.descriptor.originals[index];
+for (const [name, build] of [
+  ['Fracture', () => buildFractureTheme('ukraine')],
+  ['Countercurrent', () => buildCountercurrentTheme('coupa')],
+])
+  test(`new ${name} owner keeps exact installed originals through the reader and shared Couch boards without solo writes`, async (t) => {
+    const chapter = await build();
+    const f = await fixture(t, { chapter }),
+      before = f.writes();
+    const rows = await f.reader.refresh();
+    assert.equal(rows.length, 3);
+    assert.deepEqual(
+      rows.map((row) => row.level.id),
+      chapter.descriptor.originals.map((original) => original.levelId),
+    );
+    for (const [index, row] of rows.entries()) {
+      const binding = await f.reader.select(row, { raceId: index });
+      const original = chapter.descriptor.originals[index];
+      assert.equal(binding.pin.identity.baseCampaignKey, chapter.descriptor.campaignKey);
+      assert.notEqual(binding.pin.identity.baseCampaignKey, pilot.descriptor.campaignKey);
+      assert.equal(binding.pin.identity.themeId, chapter.descriptor.themeId);
+      assert.equal(binding.pin.identity.levelId, original.levelId);
+      assert.equal(binding.pin.sha256, original.sha256);
+      assert.equal(sha(binding.image.bytes), original.sha256);
+      assert.equal(binding.image.bytes.length, original.bytes);
+      assert.equal(await f.reader.confirm(row, { raceId: index }), binding);
+    }
+    f.reader.dispose();
+    assert.equal(f.model.urls.size, 0);
+    const page = await couchPage(t, {
+      initialLevel: null,
+      ImageClass: f.model.ImageClass,
+      assetDatabase: f.indexedDB,
+      storage: f.storage,
+      lockManager: f.locks,
+      URLImpl: f.model.URLImpl,
+    });
+    assert.equal(
+      page.renders[0].level.id,
+      'orchard-crossing',
+      'fresh shipped default is preserved',
+    );
+    const installed = page
+      .$('race-level')
+      .options.filter((option) => option.value.startsWith('installed/'));
+    assert.equal(installed.length, 3);
+    page.$('race-focus').click();
+    page.$('race-level').value = installed[0].value;
+    await action(page.$('race-level'), 'change');
+    await settle(() => !page.$('race-start').disabled, `${name} original did not become ready`);
+    page.$('race-setup-back').click();
+    page.frame();
+    const binding = page.drawOptions[0].backdrop;
+    assert.equal(binding, page.drawOptions[1].backdrop);
     assert.equal(binding.pin.identity.baseCampaignKey, chapter.descriptor.campaignKey);
-    assert.notEqual(binding.pin.identity.baseCampaignKey, pilot.descriptor.campaignKey);
-    assert.equal(binding.pin.identity.themeId, 'ukraine');
-    assert.equal(binding.pin.identity.levelId, original.levelId);
-    assert.equal(binding.pin.sha256, original.sha256);
-    assert.equal(sha(binding.image.bytes), original.sha256);
-    assert.equal(binding.image.bytes.length, original.bytes);
-    assert.equal(await f.reader.confirm(row, { raceId: index }), binding);
-  }
-  f.reader.dispose();
-  assert.equal(f.model.urls.size, 0);
-  const page = await couchPage(t, {
-    initialLevel: null,
-    ImageClass: f.model.ImageClass,
-    assetDatabase: f.indexedDB,
-    storage: f.storage,
-    lockManager: f.locks,
-    URLImpl: f.model.URLImpl,
+    assert.equal(binding.pin.identity.themeId, chapter.descriptor.themeId);
+    assert.equal(sha(binding.image.bytes), chapter.descriptor.originals[0].sha256);
+    for (const run of page.renders) {
+      assert.equal(run.level.id, chapter.descriptor.originals[0].levelId);
+      assert.equal(run.width, 72);
+      assert.equal(run.height, 36);
+      assert.equal(run.tick, 0, 'selection never starts a race');
+    }
+    const firstPosition = { x: page.renders[0].player.x, y: page.renders[0].player.y };
+    await action(page.$('race-start'));
+    page.frame();
+    page.key('ArrowDown');
+    page.frames(8);
+    page.key('ArrowDown', false);
+    assert.deepEqual({ x: page.renders[0].player.x, y: page.renders[0].player.y }, firstPosition);
+    assert.ok(page.renders[1].player.y > page.renders[1].level.spawn.y);
+    assert.equal(page.drawOptions[0].backdrop, binding);
+    assert.equal(page.drawOptions[1].backdrop, binding);
+    page.$('race-pause').click();
+    page.frame();
+    const paused = page.checkpoint();
+    page.frames(3);
+    assert.deepEqual(page.checkpoint(), paused);
+    assert.deepEqual(f.writes(), before);
+    assert.equal(f.locks.held.size, 0);
+    page.win.emit('pagehide', { persisted: false });
+    assert.equal(f.model.urls.size, 0);
+    assert.deepEqual(f.writes(), before);
   });
-  assert.equal(page.renders[0].level.id, 'orchard-crossing', 'fresh shipped default is preserved');
-  const installed = page
-    .$('race-level')
-    .options.filter((option) => option.value.startsWith('installed/'));
-  assert.equal(installed.length, 3);
-  page.$('race-focus').click();
-  page.$('race-level').value = installed[0].value;
-  await action(page.$('race-level'), 'change');
-  await settle(() => !page.$('race-start').disabled, 'Fracture original did not become ready');
-  page.$('race-setup-back').click();
-  page.frame();
-  const binding = page.drawOptions[0].backdrop;
-  assert.equal(binding, page.drawOptions[1].backdrop);
-  assert.equal(binding.pin.identity.baseCampaignKey, chapter.descriptor.campaignKey);
-  assert.equal(binding.pin.identity.themeId, 'ukraine');
-  assert.equal(sha(binding.image.bytes), chapter.descriptor.originals[0].sha256);
-  for (const run of page.renders) {
-    assert.equal(run.level.id, chapter.descriptor.originals[0].levelId);
-    assert.equal(run.width, 72);
-    assert.equal(run.height, 36);
-    assert.equal(run.tick, 0, 'selection never starts a race');
-  }
-  const firstPosition = { x: page.renders[0].player.x, y: page.renders[0].player.y };
-  await action(page.$('race-start'));
-  page.frame();
-  page.key('ArrowDown');
-  page.frames(8);
-  page.key('ArrowDown', false);
-  assert.deepEqual({ x: page.renders[0].player.x, y: page.renders[0].player.y }, firstPosition);
-  assert.ok(page.renders[1].player.y > page.renders[1].level.spawn.y);
-  assert.equal(page.drawOptions[0].backdrop, binding);
-  assert.equal(page.drawOptions[1].backdrop, binding);
-  page.$('race-pause').click();
-  page.frame();
-  const paused = page.checkpoint();
-  page.frames(3);
-  assert.deepEqual(page.checkpoint(), paused);
-  assert.deepEqual(f.writes(), before);
-  assert.equal(f.locks.held.size, 0);
-  page.win.emit('pagehide', { persisted: false });
-  assert.equal(f.model.urls.size, 0);
-  assert.deepEqual(f.writes(), before);
-});

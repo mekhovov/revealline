@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { SoloElement } from './helpers/solo-dom.mjs';
 import { attachOptionalChaptersPanel } from '../ui/optional-chapters-panel.mjs';
+import { SOURCE_EXTERNAL_EDITIONS } from '../external-chapter-source.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
-function fixture(t, chapters) {
+function fixture(t, chapters, options = {}) {
   const doc = new Document();
   doc.createElement = (tag) => new SoloElement(doc, tag);
   const panel = attachOptionalChaptersPanel({
@@ -12,6 +13,7 @@ function fixture(t, chapters) {
     getLibrary: () => ({ packs: [] }),
     sourceChapters: chapters,
     loadCatalog: async () => ({ format: 'revealline-optional-chapters.v1', packs: [] }),
+    ...options,
   });
   t.after(() => panel.dispose());
   return { panel, $: (id) => doc.getElementById(`optional-worlds-${id}`) };
@@ -119,4 +121,81 @@ test('late inspection from an old multi-card open cannot clear the new card read
   jobs[1].resolve({ status: 'installed' });
   await fresh;
   assert.equal(f.$('source-b-choose').disabled, false);
+});
+
+test('sixteen real choices stay reachable offline and an active Countercurrent owner survives filtering and retry', async (t) => {
+  let rejectDownload,
+    attempts = 0,
+    selected = 0,
+    ready = false;
+  const editions = SOURCE_EXTERNAL_EDITIONS.map((edition) => ({
+    ...edition,
+    id: edition.descriptor.id,
+    themeId: edition.descriptor.themeId,
+  }));
+  const target = editions.find((e) => e.id === 'countercurrent-coupa');
+  assert.ok(target);
+  const f = fixture(
+    t,
+    editions.map((edition) =>
+      chapter(edition.id, {
+        ...edition,
+        inspect: async () => ({
+          status: edition.id === target.id && ready ? 'installed' : 'absent',
+        }),
+        download: async () => {
+          assert.equal(edition.id, target.id, 'only the explicitly chosen owner is downloaded');
+          attempts++;
+          if (attempts === 1)
+            await new Promise((_, reject) => {
+              rejectDownload = reject;
+            });
+          ready = true;
+        },
+        choose: async () => {
+          assert.equal(edition.id, target.id);
+          selected++;
+        },
+      }),
+    ),
+    {
+      loadCatalog: async () => {
+        throw new Error('Remote catalog unavailable');
+      },
+    },
+  );
+  await f.panel.open();
+  const visible = () => editions.filter((e) => !f.$(`source-${e.id}-card`).hidden).map((e) => e.id);
+  assert.match(f.$('page').textContent, /Page 1 of 4 · 16 chapters/);
+  const visited = [];
+  for (let page = 0; page < 4; page++) {
+    assert.equal(visible().length, 4);
+    visited.push(...visible());
+    if (page < 3) f.$('next').click();
+  }
+  assert.deepEqual(
+    visited,
+    editions.map((e) => e.id),
+  );
+  assert.equal(attempts, 0);
+  const action = f.$(`source-${target.id}-download`).onclick();
+  await waitFor(() => rejectDownload);
+  f.$('theme').value = 'ukraine';
+  f.$('theme').onchange();
+  assert(visible().includes(target.id), 'the in-flight exact card remains visible across filters');
+  assert.match(f.$('operation').textContent, /Spend Network.*Countercurrent/);
+  assert.equal(attempts, 1);
+  assert.equal(selected, 0);
+  rejectDownload(new Error('The exact originals response was interrupted.'));
+  await action;
+  assert(visible().includes(target.id));
+  assert.equal(f.$(`source-${target.id}-download`).disabled, false);
+  assert.equal(f.$(`source-${target.id}-choose`).disabled, true);
+  await f.$(`source-${target.id}-download`).onclick();
+  assert.equal(attempts, 2);
+  assert.equal(selected, 0, 'retry neither auto-selects nor starts a game');
+  assert.equal(f.$(`source-${target.id}-choose`).disabled, false);
+  await f.$(`source-${target.id}-choose`).onclick();
+  assert.equal(selected, 1);
+  assert.equal(f.$('dialog').open, false);
 });

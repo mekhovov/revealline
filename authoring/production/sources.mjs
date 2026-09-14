@@ -20,12 +20,16 @@ const PATHS = Object.freeze({
   'sentinel-world': 'authoring/library/sentinel-theme-chapters/editions.json',
   fracture: 'authoring/library/fracture-lines-chapter/edition.json',
   'fracture-world': 'authoring/library/fracture-theme-chapters/editions.json',
+  countercurrent: 'authoring/library/countercurrent-chapters/editions.json',
   body: 'game/content/themes.json',
   dawn: 'authoring/still-media/examples/dawn-signal/manifest.json',
   synth: 'game/ui/music.mjs',
 });
 const FRACTURE_LAYOUTS = 'authoring/library/fracture-lines/layouts.json';
 const FRACTURE_MISSIONS = ['split-ring', 'fault-fan', 'frayed-causeway'];
+const COUNTERCURRENT_LAYOUTS = 'authoring/library/countercurrent/layouts.json';
+const COUNTERCURRENT_ART = 'authoring/library/countercurrent-art';
+const COUNTERCURRENT_MISSIONS = ['offset-docks', 'sandbar-braid', 'crossing-watch'];
 export async function ordinaryPath(root, name) {
   validateSourcePath(name);
   const resolved = await realpath(root);
@@ -301,6 +305,103 @@ export async function verifyProductionSources(input, { root, files = false } = {
     fractureCache.set(theme, result);
     return result;
   };
+  // All four Countercurrent themes use one finite, uniform source-art cohort.
+  // Authenticate metadata relationships here without importing its compiler.
+  const countercurrentCache = new Map();
+  const countercurrentEdition = async (theme) => {
+    if (countercurrentCache.has(theme)) return countercurrentCache.get(theme);
+    const cohort = await json(PATHS.countercurrent);
+    if (
+      !r.basis.themes.includes(theme) ||
+      cohort.format !== 'revealline-countercurrent-editions.v1' ||
+      !equal(
+        cohort.editions?.map((e) => e.themeId),
+        r.basis.themes,
+      )
+    )
+      throw new Error('Unknown Countercurrent cohort');
+    const edition = cohort.editions.find((e) => e.themeId === theme);
+    if (
+      edition.id !== `countercurrent-${theme}` ||
+      edition.artRoot !== COUNTERCURRENT_ART ||
+      edition.images?.length !== 3
+    )
+      throw new Error('Unknown Countercurrent edition');
+    const descriptor = await descriptorRows(
+      `authoring/library/countercurrent-chapters/descriptors/${theme}.json`,
+    );
+    if (
+      descriptor.id !== edition.id ||
+      descriptor.revision !== 1 ||
+      descriptor.themeId !== theme ||
+      descriptor.source.id !== 'countercurrent' ||
+      descriptor.originals.length !== 3 ||
+      typeof descriptor.campaignKey !== 'string' ||
+      !new RegExp(`^${edition.id}/1/[a-f0-9]{16}$`).test(descriptor.campaignKey)
+    )
+      throw new Error('Countercurrent descriptor owner differs');
+    const provenancePath = `${COUNTERCURRENT_ART}/provenance.json`;
+    const provenance = await json(provenancePath);
+    const manifest = await json(`${COUNTERCURRENT_ART}/manifest.json`);
+    const cells = r.basis.themes.flatMap((t) =>
+      COUNTERCURRENT_MISSIONS.map((mission) => `countercurrent/${mission}/${t}`),
+    );
+    if (
+      edition.provenanceSha256 !== declared.get(provenancePath)?.sha256 ||
+      provenance.format !== 'revealline-source-art-provenance.v1' ||
+      manifest.format !== 'revealline-source-art-manifest.v1' ||
+      !equal(
+        provenance.images?.map((image) => image.cellId),
+        cells,
+      ) ||
+      !equal(
+        manifest.images?.map((image) => image.cellId),
+        cells,
+      )
+    )
+      throw new Error('Countercurrent provenance differs');
+    const originals = [];
+    for (const [index, mission] of COUNTERCURRENT_MISSIONS.entries()) {
+      const source = edition.images[index],
+        original = descriptor.originals[index];
+      const levelId = `countercurrent-${mission}`;
+      const cellId = `countercurrent/${mission}/${theme}`;
+      const assetId = `${edition.id}-poster-${index + 1}`;
+      const relative = `originals/${mission}-${theme}.png`;
+      const image = provenance.images.find((p) => p.cellId === cellId);
+      const listed = manifest.images.find((p) => p.cellId === cellId);
+      if (
+        source.sourceCellId !== cellId ||
+        source.sourceLevelId !== levelId ||
+        source.path !== relative ||
+        original.levelId !== levelId ||
+        original.levelRevision !== '1' ||
+        original.assetId !== assetId ||
+        original.presentationId !== `${assetId}-presentation` ||
+        original.mime !== 'image/png' ||
+        original.sha256 !== source.sha256 ||
+        image.themeId !== theme ||
+        image.sourceLevelId !== levelId ||
+        image.missionSlot !== mission ||
+        image.path !== relative ||
+        image.runtimeBinding !== null ||
+        image.sourceBytesEqual !== true ||
+        image.width !== 1774 ||
+        image.height !== 887 ||
+        !Number.isSafeInteger(image.bytes) ||
+        image.bytes < 1 ||
+        image.bytes > 4 * 1024 * 1024 ||
+        !Object.entries(listed).every(([key, value]) => equal(image[key], value))
+      )
+        throw new Error('Countercurrent source/owner differs');
+      for (const key of ['bytes', 'sha256', 'width', 'height'])
+        if (image[key] !== original[key]) throw new Error(`Countercurrent original ${key} differs`);
+      originals.push({ ...original, path: `${COUNTERCURRENT_ART}/${relative}` });
+    }
+    const result = { descriptor, originals };
+    countercurrentCache.set(theme, result);
+    return result;
+  };
   for (const w of r.works) {
     await verifyPin(w.source);
     for (const dep of w.dependencies) await verifyPin(dep);
@@ -432,6 +533,19 @@ export async function verifyProductionSources(input, { root, files = false } = {
       )
         throw new Error('Fracture original path/dimensions differ');
       owners = [own(descriptor, original)];
+    } else if (w.adapter === 'countercurrent') {
+      const { descriptor, originals } = await countercurrentEdition(w.themeId);
+      const original = originals.find((o) => o.assetId === w.sourceId);
+      if (!original) throw new Error('Unknown Countercurrent original');
+      matchesFile(w, original);
+      if (
+        w.files[0].file.path !== original.path ||
+        w.files[0].width !== original.width ||
+        w.files[0].height !== original.height ||
+        w.files[0].durationSeconds !== null
+      )
+        throw new Error('Countercurrent original path/dimensions differ');
+      owners = [own(descriptor, original)];
     } else if (w.adapter === 'dawn') {
       const d = await json(PATHS.dawn);
       if (w.sourceId !== d.story.id || w.revision !== d.story.revision)
@@ -525,6 +639,25 @@ export async function verifyProductionSources(input, { root, files = false } = {
   for (const p of r.authorities) await verifyPin(p);
   for (const l of r.layouts) {
     await verifyPin(l.source);
+    if (l.id.startsWith('countercurrent-') || l.source.path === COUNTERCURRENT_LAYOUTS) {
+      const index = COUNTERCURRENT_MISSIONS.indexOf(l.id.slice('countercurrent-'.length));
+      const layouts = await json(COUNTERCURRENT_LAYOUTS);
+      if (
+        index < 0 ||
+        l.source.path !== COUNTERCURRENT_LAYOUTS ||
+        l.variantOf !== null ||
+        layouts.format !== 'revealline-countercurrent-layouts.v1' ||
+        layouts.levels[index]?.id !== l.id
+      )
+        throw new Error('Countercurrent layout source differs');
+      const owners = [];
+      for (const theme of r.basis.themes) {
+        const { descriptor, originals } = await countercurrentEdition(theme);
+        owners.push(own(descriptor, originals[index]));
+      }
+      if (!equal(l.owners, owners)) throw new Error('Countercurrent layout owners differ');
+      continue;
+    }
     if (!l.id.startsWith('fracture-') && l.source.path !== FRACTURE_LAYOUTS) continue;
     const mission = l.id.slice('fracture-'.length),
       index = FRACTURE_MISSIONS.indexOf(mission);
