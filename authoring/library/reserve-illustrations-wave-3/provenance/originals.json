@@ -1,0 +1,706 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "requestedDimensions": [1792, 896],
+  "returnedPixelsPreserved": true,
+  "selection": "All four new tool outputs selected; no edits or discarded variants.",
+  "fullInspectionAt": "2026-09-14T23:01:39.064847+00:00",
+  "pillowVersion": "12.3.0",
+  "entries": [
+    {
+      "id": "fpv-basalt-beacon",
+      "file": "originals/fpv-basalt-beacon.png",
+      "bytes": 2235880,
+      "sha256": "f47a9bc806289eb2203922569ca88cfd5c8230a3ccead0c589b633d29b8715d6",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "bitDepth": 8,
+      "uniqueColors": 367273,
+      "alphaExtrema": null,
+      "format": "PNG",
+      "pillowVerifyAndFullLoad": "PASS",
+      "allChunkCRCs": "PASS",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21783
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 50944
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "originalAspectRatio": "2:1",
+      "fullView": "Author inspected local original through view_image(detail=original).",
+      "observations": "Complete four-rotor quadcopter/camera and dome remain readable; orange windsock accessory extends through the left image edge. Distant lake and mountain layers are invented. No technical geometry or real-location claim."
+    },
+    {
+      "id": "ukraine-apricot-glasshouse",
+      "file": "originals/ukraine-apricot-glasshouse.png",
+      "bytes": 2704541,
+      "sha256": "710af7d1315ddb8615bcb8f4c12f5544e70a0df8863929bc295688e1d53ac93c",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "bitDepth": 8,
+      "uniqueColors": 795721,
+      "alphaExtrema": null,
+      "format": "PNG",
+      "pillowVerifyAndFullLoad": "PASS",
+      "allChunkCRCs": "PASS",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 23556
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 58996
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "originalAspectRatio": "2:1",
+      "fullView": "Author inspected local original through view_image(detail=original).",
+      "observations": "Three tulips, complete blue jug and apricot basket form the foreground; dense seedlings, orchard blossoms and distant roof details need small-scale review. Textile is an invented decorative zigzag; architecture is imaginative, not historical evidence."
+    },
+    {
+      "id": "retro-poolside-mixtape",
+      "file": "originals/retro-poolside-mixtape.png",
+      "bytes": 2243333,
+      "sha256": "c56fb59e923ca7bd531f1abaa22d96a2e11a88c38f7e9bf7e9438403995c0948",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "bitDepth": 8,
+      "uniqueColors": 647813,
+      "alphaExtrema": null,
+      "format": "PNG",
+      "pillowVerifyAndFullLoad": "PASS",
+      "allChunkCRCs": "PASS",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21783
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 58397
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "originalAspectRatio": "2:1",
+      "fullView": "Author inspected local original through view_image(detail=original).",
+      "observations": "Large roller skates and purple cassette player dominate; loose cassette and blank label fields have no legible text. Laces and small sunglasses/accessories approach or cross image edges. Generic period evocation, not a certified hardware design."
+    },
+    {
+      "id": "spend-copper-kettle-bazaar",
+      "file": "originals/spend-copper-kettle-bazaar.png",
+      "bytes": 2175587,
+      "sha256": "6114aefe292f9c5410ad27cfd4c959fb0054a0374cfb8794eb6144a6ba6f9edb",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "bitDepth": 8,
+      "uniqueColors": 498773,
+      "alphaExtrema": null,
+      "format": "PNG",
+      "pillowVerifyAndFullLoad": "PASS",
+      "allChunkCRCs": "PASS",
+      "chunks": [
+        {
+          "type": "IHDR",
+          "bytes": 13
+        },
+        {
+          "type": "caBX",
+          "bytes": 21783
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 65536
+        },
+        {
+          "type": "IDAT",
+          "bytes": 56199
+        },
+        {
+          "type": "IEND",
+          "bytes": 0
+        }
+      ],
+      "originalAspectRatio": "2:1",
+      "fullView": "Author inspected local original through view_image(detail=original).",
+      "observations": "Complete kettle handle/spout and two cobalt mugs dominate. Brass fittings and folded cloth suggest useful repair materials; individual repair marks are not a guaranteed readable detail. Decorative background architecture is fictional, with no corporate/product identity."
+    }
+  ]
+}
