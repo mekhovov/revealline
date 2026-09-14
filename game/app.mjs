@@ -1268,7 +1268,6 @@ try {
   });
   $('shell-guide').onclick = () => {
     pause(true);
-    if ($('shell-home').open) $('shell-home').close();
     enemyGuide.open();
   };
   handlePageHide = (event) => {

@@ -411,3 +411,71 @@ test('opening Settings during a flight keeps its paused-flight return instead of
   assert.equal(h.rendered.run.tick, tick);
   assert.deepEqual(h.errors, []);
 });
+
+test('title Field Guide returns to its opener after Back, Escape and isolated practice', async (t) => {
+  nativeDialogs(t);
+  // Paint is exercised in the guide panel file; this host uses its supported null Canvas boundary.
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const h = await soloPage(t, { titleScreen: true }),
+    pad = controllerPad(h, t);
+  h.win.crypto = globalThis.crypto;
+  for (const exit of ['controller', 'escape', 'practice']) {
+    h.$('shell-guide').focus();
+    h.$('shell-guide').click();
+    pad.frame();
+    pad.frame();
+    assert.equal(h.$('shell-home').open, true, 'The title remains underneath its guide');
+    assert.equal(h.$('enemy-guide-dialog').open, true);
+    if (exit === 'practice') {
+      assert.equal(await h.$('enemy-guide-play').onclick(), true);
+      assert.equal(h.$('enemy-guide-frame').hidden, false);
+      assert.equal(new URL(h.$('enemy-guide-frame').src).searchParams.get('practice'), '1');
+      assert.equal(h.$('shell-home').open, true);
+      h.$('enemy-guide-return').click();
+      assert.equal(h.$('enemy-guide-frame').src, 'about:blank');
+      assert.equal(h.$('enemy-guide-dialog').open, true);
+      assert.equal(h.doc.activeElement.id, 'enemy-guide-play');
+      h.$('enemy-guide-back').click();
+    } else if (exit === 'controller') pad.pulse(1);
+    else h.$('enemy-guide-dialog').emit('cancel');
+    await Promise.resolve();
+    assert.equal(h.$('enemy-guide-dialog').open, false);
+    assert.equal(h.$('shell-home').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-guide');
+    assert.equal(h.rendered.run.tick, 0, 'Closing a lesson never starts the campaign');
+    pad.frame();
+  }
+  assert.deepEqual(h.errors, []);
+});
+
+test('Main menu Field Guide returns to Main menu over an unchanged paused-flight checkpoint', async (t) => {
+  nativeDialogs(t);
+  t.mock.method(SoloElement.prototype, 'getContext', () => null);
+  const h = await soloPage(t, { titleScreen: false }),
+    pad = controllerPad(h, t);
+  h.win.crypto = globalThis.crypto;
+  h.$('start-button').click();
+  pad.frame();
+  h.$('overlay-menu').click();
+  assert.equal(h.$('shell-home').open, true);
+  h.$('shell-guide').focus();
+  h.$('shell-guide').click();
+  pad.frame();
+  pad.frame();
+  const checkpoint = structuredClone(h.rendered.run);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(await h.$('enemy-guide-play').onclick(), true);
+  h.$('enemy-guide-return').click();
+  h.$('enemy-guide-back').click();
+  await Promise.resolve();
+  pad.frame();
+  assert.equal(h.$('enemy-guide-dialog').open, false);
+  assert.equal(h.$('shell-home').open, true);
+  assert.equal(h.doc.activeElement.id, 'shell-guide');
+  pad.pulse(1);
+  await Promise.resolve();
+  assert.equal(h.$('shell-home').open, false);
+  assert.equal(h.$('flight-state').textContent, 'Paused');
+  assert.deepEqual(structuredClone(h.rendered.run), checkpoint);
+  assert.deepEqual(h.errors, []);
+});

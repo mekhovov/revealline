@@ -11,6 +11,8 @@ import { createEnemyBodyAssets } from './enemy-body-assets.mjs';
 import { attachEnemyWorkshopReturnHost } from './enemy-workshop-return.mjs';
 
 const HANDOFF = 'revealline.playground.current';
+// Illustration size only; the sampled pose and its contact radius remain unchanged.
+const PREVIEW_BODY_DIAMETER = 56;
 
 /** Player-only guide. The caller owns flight pausing, music and the shared navigation router. */
 export function attachEnemyGuide({
@@ -90,6 +92,7 @@ export function attachEnemyGuide({
     ),
     choices = node('div'),
     canvas = node('canvas', 'preview'),
+    previewNote = node('p', 'preview-note'),
     artworkStatus = node('p', 'artwork-status'),
     summary = node('div', 'summary'),
     heading = node('h3', 'heading'),
@@ -122,14 +125,24 @@ export function attachEnemyGuide({
   const previous = button('previous', '← Previous', () => changeTopic(-1)),
     next = button('next', 'Next →', () => changeTopic(1)),
     play = button('play', 'Play practice', launch),
-    back = button('back', 'Back to game', close),
+    back = button('back', 'Close guide', close),
     actions = node('div');
   actions.className = 'enemy-guide-actions';
   actions.append(previous, next, play, back);
   artworkStatus.className = 'enemy-guide-status';
   artworkStatus.setAttribute('role', 'status');
   artworkStatus.hidden = true;
-  content.append(choices, canvas, artworkStatus, read, summary, exercise.wrap, actions);
+  previewNote.className = 'enemy-guide-status';
+  content.append(
+    choices,
+    canvas,
+    previewNote,
+    artworkStatus,
+    read,
+    summary,
+    exercise.wrap,
+    actions,
+  );
   const practice = node('div', 'practice'),
     practiceHint = node('p', 'practice-hint'),
     frame = node('iframe', 'frame'),
@@ -157,6 +170,11 @@ export function attachEnemyGuide({
   }
   function refresh() {
     const record = entry();
+    previewNote.textContent =
+      record.id === 'line-impact'
+        ? 'Line-impact diagram · practice uses actual timing.'
+        : 'Enlarged illustration · center dot marks contact.';
+    canvas.setAttribute('aria-label', previewNote.textContent);
     heading.textContent = record.label;
     form.textContent = record.form;
     spot.textContent = `Spot: ${record.spot}`;
@@ -339,7 +357,7 @@ export function attachEnemyGuide({
     const body = bodyAssets.current(previewPose);
     drawPresentedActor(
       context,
-      previewPose,
+      { ...previewPose, diameter: PREVIEW_BODY_DIAMETER },
       themes.find(({ id }) => id === appearance.el.value).palette,
       body?.image,
       body?.record,
