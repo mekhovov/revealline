@@ -1,4 +1,6 @@
 import { createCouchShell } from './couch-shell.mjs';
+import { prepareCouchChapter } from './couch-chapter.mjs';
+import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
 import { FIXED_DT, releaseInputs } from '../core/index.mjs';
@@ -13,8 +15,17 @@ import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { recommendedBody } from '../content.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 const $ = (id) => document.getElementById(id);
+const artworkLifetime = new AbortController();
+let featured;
+const releaseArtwork = (event) => {
+  if (event.persisted) return;
+  artworkLifetime.abort();
+  featured?.dispose();
+  window.removeEventListener('pagehide', releaseArtwork);
+};
+window.addEventListener('pagehide', releaseArtwork);
 const json = async (url) => {
-  const r = await fetch(url);
+  const r = await fetch(url, { signal: artworkLifetime.signal });
   if (!r.ok) throw new Error(`Could not load ${url}`);
   return r.json();
 };
@@ -27,6 +38,7 @@ try {
   ]);
   const maps = campaign.levels.map((level) => ({
     key: level.id,
+    chapter: campaign.title,
     level,
     classes: registry,
     themes: themes.themes,
@@ -34,6 +46,32 @@ try {
     defaultThemeId: level.themeId || campaign.themeId,
     track: null,
   }));
+  featured = await prepareCouchChapter(await json('../content/packs/fpv-arcade-r5.json'), {
+    signal: artworkLifetime.signal,
+  });
+  const featuredCampaign = featured.resolved.campaign;
+  maps.unshift(
+    ...featuredCampaign.levels.map((level) => ({
+      key: `shipped/${featured.pack.id}/${featuredCampaign.id}/${level.id}`,
+      chapter: featuredCampaign.title,
+      level,
+      classes: featured.resolved.classRecipes,
+      themes: featured.resolved.themes,
+      defaultThemeId: level.themeId || featuredCampaign.themeId,
+      track:
+        featured.resolved.music.find(
+          (track) => track.id === (level.musicId || featuredCampaign.musicId),
+        ) || null,
+      // The one decoded original below is shared by both boards, not reloaded by each painter.
+      visualOverrides: Object.fromEntries(
+        Object.entries({
+          ...featured.resolved.visualOverrides,
+          ...featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides,
+        }).filter(([role]) => role !== 'background'),
+      ),
+      backdrop: featured.backdrop(level.id),
+    })),
+  );
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
       ? `release-${(await json('../build-info.json')).version}`
@@ -47,6 +85,7 @@ try {
           for (const level of c.levels)
             maps.push({
               key: `${pack.id}/${c.id}/${level.id}`,
+              chapter: `${c.title} · Installed`,
               level,
               defaultThemeId: level.themeId || c.themeId,
               track:
@@ -63,7 +102,12 @@ try {
   } catch (e) {
     $('race-message').textContent = `Pack loading: ${e.message}`;
   }
-  for (const m of maps) $('race-level').append(new Option(m.level.name, m.key));
+  if (artworkLifetime.signal.aborted)
+    throw new DOMException('Couch artwork loading cancelled.', 'AbortError');
+  const mode = (level) => (arcadeActionCapabilities(level).manualAbility ? 'Tactical' : 'Arcade');
+  for (const m of maps)
+    $('race-level').append(new Option(`${m.chapter} · ${m.level.name} · ${mode(m.level)}`, m.key));
+  $('race-level').value = maps[0].key;
   for (const t of themes.themes) $('race-theme').append(new Option(t.name, t.id));
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
@@ -82,6 +126,7 @@ try {
   const contexts = [0, 1].map((i) => $(`race-canvas-${i}`).getContext('2d'));
   let match,
     theme,
+    backdrop = null,
     accumulator = 0,
     last = 0,
     won = [0, 0],
@@ -129,6 +174,7 @@ try {
         ? entry.defaultThemeId
         : $('race-theme').value;
     selectedMapKey = entry.key;
+    backdrop = entry.backdrop || null;
     theme = entry.themes.find((t) => t.id === themeId) || entry.themes[0];
     $('race-theme').replaceChildren(...entry.themes.map((t) => new Option(t.name, t.id)));
     $('race-theme').value = theme.id;
@@ -317,7 +363,7 @@ try {
     shell?.update({
       match,
       won,
-      summary: `${entry.level.name} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
+      summary: `${entry.chapter} · ${entry.level.name} · ${mode(entry.level)} · ${theme.name} · ${$('race-turn').value === 'grid-center' ? 'Grid-center turns' : 'Immediate turns'} · ${Number($('race-time').value)} seconds`,
     });
     const owner = menuOwner ? slots.indexOf(menuOwner.index) : -1;
     const text = running
@@ -590,6 +636,7 @@ try {
         reduced: $('race-reduced').checked,
         fullReveal: run.status === 'won',
         celebrationPaused: document.hidden,
+        backdrop,
       });
     }
     sound.update(
@@ -603,6 +650,8 @@ try {
   prepare();
   frameId = requestAnimationFrame(frame);
 } catch (error) {
+  releaseArtwork({ persisted: false });
+  $('race-start').disabled = true;
   $('race-message').textContent = `The race could not load: ${error.message}`;
 } finally {
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
