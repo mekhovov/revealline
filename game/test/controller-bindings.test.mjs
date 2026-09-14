@@ -484,3 +484,17 @@ test('missing and nonfinite axes yield neutral input; magnitude normalization ne
   assert.throws(() => controllerStickLabel(null, 'other'), /Unknown controller context/);
   assert.throws(() => controllerActionForButton(null, 'other', 0), /Unknown controller context/);
 });
+
+test('standard device IDs choose familiar glyphs while an explicit player family wins', async () => {
+  const { controllerBindingLabels, resolveControllerBindings } = await import(
+    '../controller-bindings.mjs'
+  );
+  for (const id of ['DualSense', 'DualShock', '054c-0ce6'])
+    assert.equal(controllerBindingLabels(null, id).menu.confirm, 'Cross (×)');
+  for (const id of ['Xbox', 'Steam Deck', 'Valve', '045e-028e'])
+    assert.equal(controllerBindingLabels(null, id).menu.confirm, 'A');
+  assert.equal(controllerBindingLabels(null, 'Unrecognized').menu.confirm, 'South');
+  const explicit = resolveControllerBindings();
+  explicit.glyphFamily = 'playstation';
+  assert.equal(controllerBindingLabels(explicit, 'Xbox').menu.confirm, 'Cross (×)');
+});

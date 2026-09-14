@@ -266,15 +266,22 @@ export function controllerButtonLabel(index, family = 'generic') {
   if (!Number.isInteger(index) || index < 0 || index > 16) return 'Unknown button';
   return BUTTON_LABELS[CONTROLLER_GLYPH_FAMILIES.includes(family) ? family : 'generic'][index];
 }
-export function controllerBindingLabels(source = null) {
+export function controllerGlyphFamily(id = '') {
+  if (/dualsense|dualshock|playstation|054c|sony/i.test(id)) return 'playstation';
+  if (/x[- ]?box|xinput|steam|valve|045e|28de/i.test(id)) return 'xbox';
+  return 'generic';
+}
+export function controllerBindingLabels(source = null, deviceId = '') {
   const config = resolveControllerBindings(source);
+  const family =
+    config.glyphFamily === 'generic' ? controllerGlyphFamily(deviceId) : config.glyphFamily;
   return Object.fromEntries(
     CONTEXTS.map((context) => [
       context,
       Object.fromEntries(
         CONTROLLER_BINDING_ACTIONS[context].map((action) => [
           action,
-          controllerButtonLabel(config[context].buttons[action], config.glyphFamily),
+          controllerButtonLabel(config[context].buttons[action], family),
         ]),
       ),
     ]),

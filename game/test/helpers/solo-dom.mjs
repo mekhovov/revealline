@@ -163,6 +163,7 @@ export async function soloPage(
     pictures,
     waitForPictures = true,
     initialReadyTimeoutMs = 5000,
+    readPads = () => [],
   } = {},
 ) {
   assert.ok(
@@ -254,7 +255,7 @@ export async function soloPage(
     navigator: {
       getGamepads() {
         padReads++;
-        return [];
+        return readPads();
       },
       locks: lockManager ?? {
         request(name, options, callback) {

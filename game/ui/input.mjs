@@ -1,4 +1,5 @@
 import { actionForKey, keyCodeForEvent, resolveKeyBindings } from '../key-bindings.mjs';
+import { attachTouchSteering } from './touch-steering.mjs';
 const neutral = () => ({ direction: null, boost: false, action: false, pickup: false });
 export function gamepadCommand(pad) {
   if (!pad?.connected) return { ...neutral(), pause: false };
@@ -21,6 +22,8 @@ export function attachInput({
   onGamepad = () => {},
   getBindings = () => null,
   readControllerCommand = null,
+  getTouchSettings = null,
+  touchEnabled = () => true,
 }) {
   if (readControllerCommand !== null && typeof readControllerCommand !== 'function')
     throw new TypeError('readControllerCommand must be a function.');
@@ -36,6 +39,7 @@ export function attachInput({
     listeners = [];
   const padButtons = [...document.querySelectorAll('[data-move]')],
     boostButton = document.querySelector('#boost-button');
+  let touchSteering = null;
   let order = 0,
     latched = null,
     boostLatched = false,
@@ -125,6 +129,7 @@ export function attachInput({
   // A sampled controller gesture may take ownership without being neutralized
   // by cleanup of the local pointer/keyboard controls it replaces.
   const releaseLocalControls = () => {
+    touchSteering?.clear();
     const captured = [...captures];
     held.clear();
     buttons.clear();
@@ -249,6 +254,7 @@ export function attachInput({
     });
   for (const b of padButtons) {
     listen(b, 'pointerdown', (e) => {
+      if (touchSteering) return;
       if (!active() || (e.button !== undefined && e.button !== 0)) return;
       if (continuous() && !freshGestures.has(e)) return;
       e.preventDefault();
@@ -270,6 +276,9 @@ export function attachInput({
     listen(b, 'pointerup', release);
     listen(b, 'pointercancel', lifecycleClear);
     listen(b, 'lostpointercapture', release);
+    listen(b, 'click', (e) => {
+      if (e.detail === 0 && active()) startDirection(b.dataset.move, 'assistive', b);
+    });
     listen(b, 'keydown', (e) => {
       if (!activation(e) || shortcut(e) || !active()) return;
       e.preventDefault();
@@ -367,6 +376,22 @@ export function attachInput({
     listen(b, 'keyup', (e) => {
       if (activation(e)) e.preventDefault();
     });
+  }
+  if (getTouchSettings) {
+    touchSteering = attachTouchSteering({
+      arena,
+      pad: document.querySelector('.direction-controls'),
+      surface: document.querySelector('#touch-surface'),
+      indicator: document.querySelector('#touch-indicator'),
+      getSettings: getTouchSettings,
+      active: () => active() && touchEnabled(),
+      onDirection: (direction, id) => startDirection(direction, id, null, true),
+      onRelease: (id) => {
+        buttons.delete(id);
+        syncPressed();
+      },
+    });
+    listen(window, 'resize', () => touchSteering.clear());
   }
   const poll = () => {
     if (destroyed) return neutral();
@@ -492,6 +517,7 @@ export function attachInput({
       clear();
       destroyed = true;
       clearTimeout(boostClickTimer);
+      touchSteering?.destroy();
       for (const remove of listeners) remove();
     },
   };

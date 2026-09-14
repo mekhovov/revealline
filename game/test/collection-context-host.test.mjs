@@ -156,7 +156,7 @@ function padFor(page, t) {
     frame();
   };
   frame();
-  pulse(0);
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   return pulse;
 }
 
