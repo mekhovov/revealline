@@ -1,5 +1,5 @@
 {
-  "version": "0.45.0",
+  "version": "0.46.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -27,7 +27,8 @@
     "authoring/design-atlas",
     "docs/fpv-redesign-design.md",
     "docs/fpv-typography.md",
-    "docs/verification/fpv-redesign/baseline"
+    "docs/verification/fpv-redesign/baseline",
+    "docs/presentation-system.md"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",
