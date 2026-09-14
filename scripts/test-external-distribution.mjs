@@ -11,6 +11,14 @@ import {
   validateExternalDistributionConfig,
 } from './external-distribution.mjs';
 import { EXTERNAL_CATALOG } from '../game/external-chapter-catalog.mjs';
+import { SOURCE_EXTERNAL_CHAPTERS } from '../game/external-chapter-source.mjs';
+import {
+  preparePack,
+  emptyPackLibrary,
+  installPack,
+  exportPackLibrary,
+  PACK_LIMITS,
+} from '../game/packs.mjs';
 const source = fileURLToPath(new URL('../', import.meta.url));
 const option = {
   format: 'revealline-external-distribution.v1',
@@ -75,8 +83,11 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     offline = JSON.parse(await readFile(path.join(out, 'offline-cache.json'))),
     zip = await readFile(path.join(out, 'distribution.zip'));
   const wanted = new Map(
-    EXTERNAL_CATALOG.chapters.flatMap((c) => ['pack', 'media'].map((k) => [c[k].path, c[k]])),
-  );
+      EXTERNAL_CATALOG.chapters.flatMap((c) => ['pack', 'media'].map((k) => [c[k].path, c[k]])),
+    ),
+    bodies = new Map(),
+    bodySizes = [];
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
   assert.equal(wanted.size, 32);
   for (const [name, pin] of wanted) {
     const records = manifest.files.filter((f) => f.path === name);
@@ -84,11 +95,29 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
     assert.equal(records[0].bytes, pin.bytes);
     assert.equal(records[0].sha256, pin.sha256);
     const bytes = await readFile(path.join(out, name));
+    bodySizes.push(bytes.length);
+    if (name.endsWith('/pack.json')) bodies.set(name, bytes);
     assert.equal(bytes.length, pin.bytes);
     assert.equal(sha(bytes), pin.sha256);
     assert(!offline.files.some((f) => f.path === name));
     assert(!offline.optionalPacks.some((f) => f.path === name));
   }
+  assert.equal(bodySizes.length, 32);
+  assert.equal(bodies.size, 16);
+  // Preserve the exact historical cohorts formerly recompiled by each chapter test.
+  // These are actual loose bytes already authenticated above, in catalog order.
+  for (const [start, end, expected] of [
+    [0, 32, 130442755],
+    [0, 24, 98674097],
+    [24, 32, 31768658],
+    [0, 16, 64546929],
+    [16, 24, 34127168],
+    [0, 10, 41373627],
+  ])
+    assert.equal(
+      bodySizes.slice(start, end).reduce((total, bytes) => total + bytes, 0),
+      expected,
+    );
   const counts = new Map();
   let offset = 0;
   while (zip.readUInt32LE(offset) === 0x04034b50) {
@@ -115,6 +144,14 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
   assert.equal(offline.optionalPacks.length, 10);
   assert(offline.files.some((f) => f.path === option.catalog));
   assert(offline.files.reduce((n, f) => n + f.bytes, 0) < 64 * 1048576);
+  // The focused equipment fixture must not replace current-config inclusion coverage.
+  const equipmentPath = 'game/content/packs/equipment-workshop.json';
+  assert.deepEqual(
+    await readFile(path.join(out, equipmentPath)),
+    await readFile(path.join(source, equipmentPath)),
+  );
+  assert(offline.files.some((entry) => entry.path === equipmentPath));
+  assert(offline.files.some((entry) => entry.path === 'game/content/packs/index.json'));
   assert(
     !manifest.files.some((f) =>
       /authoring\/library\/(route-worlds|external-chapter-pilot|ukraine-route-art|retro-route-art|spend-route-art|sentinel-circuit|sentinel-circuit-art|sentinel-circuit-external|sentinel-theme-art|sentinel-theme-chapters|fracture-lines|fracture-lines-art|fracture-lines-chapter|fracture-ukraine-art|fracture-retro-art|fracture-coupa-art|fracture-theme-chapters|countercurrent-chapters|countercurrent-art)\//.test(
@@ -128,4 +165,31 @@ test('explicit real-source build ships thirty-two exact generated bodies once in
       !worker.includes(name),
       'No external body URL is registered in core or legacy worker metadata',
     );
+  await t.test(
+    'sixteen external choices plus five embedded choices do not relax twelve installed packs or evict owners',
+    async () => {
+      assert.equal(legacy.packs.length, 5);
+      assert.equal(EXTERNAL_CATALOG.chapters.length + legacy.packs.length, 21);
+      assert.equal(PACK_LIMITS.installed, 12);
+      assert.equal(PACK_LIMITS.libraryBytes, 48 * 1024 * 1024);
+      let installed = emptyPackLibrary();
+      for (const item of EXTERNAL_CATALOG.chapters.slice(0, 12))
+        installed = installPack(
+          installed,
+          (await preparePack(bodies.get(item.pack.path).toString())).pack,
+        );
+      const source = JSON.parse(bodies.get(EXTERNAL_CATALOG.chapters[5].pack.path));
+      const value = structuredClone(source);
+      value.id = 'capacity-control-thirteenth';
+      value.campaigns[0].id = value.id;
+      const { pack: refused } = await preparePack(value);
+      const before = exportPackLibrary(installed);
+      assert.throws(() => installPack(installed, refused), /At most 12/);
+      assert.equal(exportPackLibrary(installed), before);
+      assert.deepEqual(
+        installed.packs.map((p) => p.id),
+        SOURCE_EXTERNAL_CHAPTERS.slice(0, 12).map((d) => d.id),
+      );
+    },
+  );
 });
