@@ -6,7 +6,11 @@
 <style>
 :root{font:14px system-ui;color:#edf3fc;background:#152134;color-scheme:dark}body{max-width:1320px;margin:20px auto;padding:0 18px}h1{font-size:24px;margin:0 0 8px}p{line-height:1.45;max-width:100ch}label{display:inline-flex;align-items:center;gap:8px;margin:6px 24px 12px 0}select{font:inherit;padding:5px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:16px}article{background:#223147;border:1px solid #45607c;border-radius:8px;padding:12px}h2{font-size:16px;margin:0 0 3px}small{color:#bbcadb}.samples{display:flex;gap:20px;align-items:flex-end;justify-content:center;padding:14px 10px;margin:10px 0;border-radius:5px}.dark{background:#0c2436;color:#eef4ff}.light{background:#e8e1cf;color:#142138}.sample{display:grid;gap:8px;justify-items:center;font-size:12px}.frame{width:var(--size);height:var(--size);position:relative}.frame img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;transform:rotate(var(--heading,0deg))}.pivots .frame:before,.pivots .frame:after{content:"";position:absolute;background:#ff3988;z-index:2;pointer-events:none}.pivots .frame:before{left:50%;top:0;width:1px;height:100%}.pivots .frame:after{top:50%;left:0;height:1px;width:100%}.metric{font-size:12px;margin:8px 0 0;color:#c9d5e4}.note{font-size:13px;color:#c2d0e1}.large{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:12px 0}.large .frame{--size:128px;background:#0c2436}a{color:#a5d5ff}
 </style>
-<h1>Seven compact FPV enemies</h1>
+    <link rel="stylesheet" href="../../../game/ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../../../game/ui/field-kit-tokens.css" />
+    <link rel="stylesheet" href="../../../game/ui/field-kit-components.css" />
+<body class="field-kit field-kit-support">
+  <h1 class="field-kit-display">Seven compact FPV enemies</h1>
 <p>Original source bodies at labeled CSS sizes. Broad silhouettes and pale metal edges follow the accepted hunter direction. These are static images with baked fittings; no animated rigs, runtime adoption or combat qualification.</p>
 <label>Heading <select id="heading"><option value="0">North</option><option value="90">East</option><option value="180">South</option><option value="270">West</option></select></label>
 <label><input id="pivots" type="checkbox"> Show image-frame pivot</label>

@@ -68,7 +68,7 @@ class SoloDocument extends Document {
 function mount(document, html) {
   const stack = [document.body];
   for (const token of html
-    .split('<body>')[1]
+    .split(/<body\b[^>]*>/u)[1]
     .split('</body>')[0]
     .matchAll(/<!--[\s\S]*?-->|<\/?[^>]+>|[^<]+/g)) {
     const text = token[0];
@@ -163,6 +163,7 @@ export async function soloPage(
     pictures,
     waitForPictures = true,
     initialReadyTimeoutMs = 5000,
+    readPads = () => [],
   } = {},
 ) {
   assert.ok(
@@ -254,7 +255,7 @@ export async function soloPage(
     navigator: {
       getGamepads() {
         padReads++;
-        return [];
+        return readPads();
       },
       locks: lockManager ?? {
         request(name, options, callback) {

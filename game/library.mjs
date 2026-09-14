@@ -1,3 +1,4 @@
+import { resolveTouchControls } from './touch-controls.mjs';
 import {
   DEFAULT_SCREEN_STEERING_HAND,
   resolveScreenControls,
@@ -76,6 +77,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   turnPolicy: 'immediate',
   tapSteering: null,
   screenControls: 'auto',
+  touchControls: null,
   screenSteeringHand: DEFAULT_SCREEN_STEERING_HAND,
   keyboardBindings: null,
   controllerBindings: null,
@@ -146,6 +148,8 @@ function preferencesValid(preferences) {
   preferences.campaignDifficulty = resolveCampaignDifficulty(preferences.campaignDifficulty);
   preferences.textSize = resolveTextSize(preferences.textSize);
   preferences.screenControls = resolveScreenControls(preferences.screenControls);
+  if (preferences.touchControls !== null)
+    preferences.touchControls = resolveTouchControls(preferences.touchControls);
   preferences.screenSteeringHand = resolveScreenSteeringHand(preferences.screenSteeringHand);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
@@ -285,8 +289,11 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.textSize = DEFAULT_PREFERENCES.textSize;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenControls'))
     value.preferences.screenControls = DEFAULT_PREFERENCES.screenControls;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'touchControls'))
+    value.preferences.touchControls = DEFAULT_PREFERENCES.touchControls;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenSteeringHand'))
-    value.preferences.screenSteeringHand = DEFAULT_PREFERENCES.screenSteeringHand;
+    value.preferences.screenSteeringHand =
+      value.preferences.touchControls?.side ?? DEFAULT_PREFERENCES.screenSteeringHand;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);

@@ -42,6 +42,8 @@ import { attachFirstFlightView } from './ui/first-flight-view.mjs';
 import { retainFlightForFirstFlight } from './ui/first-flight-entry.mjs';
 import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
+import { resolveTouchControls } from './touch-controls.mjs';
+import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
@@ -224,15 +226,18 @@ try {
     executionCatalog = content.executions;
     masteryCatalog = content.registrations;
   }
-  let buildVersion = '0.42.0',
-    isRelease = false;
+  let buildVersion = document.documentElement.dataset.buildVersion;
+  if (!buildVersion || buildVersion === '__REVEALLINE_VERSION__') buildVersion = 'dev';
+  let isRelease = false;
   try {
     buildVersion = (await getJSON('build-info.json')).version;
     isRelease = true;
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
-  $('version').textContent =
-    `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}${isRelease ? '' : ' / DEV'}`;
+  const versionLabel =
+    buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
+  $('version').textContent = versionLabel;
+  $('landing-version').textContent = `Version ${versionLabel}`;
   const params = new URLSearchParams(location.search);
   let courseRequest = resolveCourseRequest(params);
   const courseSession = !!courseRequest;
@@ -992,11 +997,14 @@ try {
     return !!document.querySelector('dialog[open]');
   }
   const controller = createControllerRouter({
+    autoJoin: true,
+    navigationAliases: true,
     bindings: library.preferences.controllerBindings,
     boostMode: library.preferences.controllerBoostMode,
     ...(controllerPreview ? { readPads: controllerPreview.readPads } : {}),
   });
-  let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
+  let controllerLabels = controllerBindingLabels(library.preferences.controllerBindings),
+    controllerDeviceId = '';
   let controllerFrame = null,
     controllerNavigation = null,
     controllerReading = null,
@@ -1013,19 +1021,23 @@ try {
   const controllerDialog = modalNavigation.topDialog;
   function controllerMenuHint() {
     const b = controllerLabels.menu;
-    return `Controller: direction controls move focus · ${b.confirm} confirms · ${b.back} goes back · ${b.menu} resumes a paused flight.`;
+    return `Stick / D-pad: navigate · ${b.confirm}: confirm · ${b.back}: back · ${b.menu}: resume.${library.preferences.controllerBindings ? '' : ' Shoulders / triggers: previous / next · West: confirm · North: back.'}`;
   }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
     const actions = arcadeActionCapabilities(run?.level);
-    return `Tap a direction to fly. ${actions.manualAbility ? `${b.ability} ability · ` : ''}${actions.manualPickup && run?.ability.capacity ? `${b.pickup} supply · ` : ''}${actions.manualBoost ? `${b.boost} boost · ` : ''}${run?.hangars?.length ? `${b.hangar} hangar · ` : ''}${b.pause} pause.${actions.manualAbility ? '' : ' Collect bonuses by contact.'}`;
+    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${b.pickup}: ${actions.manualPickup ? 'supply' : 'field guide'} · ${b.hangar}: ${actions.manualAbility && run?.hangars?.length ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
   }
   function refreshControllerPrompts() {
-    controllerLabels = controllerBindingLabels(library.preferences.controllerBindings);
+    controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
+    controllerLabels = controllerBindingLabels(
+      library.preferences.controllerBindings,
+      controllerDeviceId,
+    );
     const b = controllerLabels.flight;
     const directions = `Up ${b.up}, down ${b.down}, left ${b.left}, right ${b.right}; ${controllerStickLabel(library.preferences.controllerBindings, 'flight')}.`;
     $('controller-help').textContent =
-      `Release all controls, then press a physical face button or Menu to join. Joining never starts a mission. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls.`;
+      `Connect a controller and release its controls once. Both sticks work with the default layout. ${directions} ${controllerFlightHint()} ${controllerMenuHint()} Confirm a select or slider to edit; confirm again to apply or go back to cancel. Change your layout in Settings → Controller controls. Steam Deck: use a Gamepad layout for your browser in Steam Input. The system/Home button belongs to your device.`;
     $('controller-ui-hint').textContent =
       controllerScope() === 'flight' ? controllerFlightHint() : controllerMenuHint();
     controllerReading?.refresh();
@@ -1158,6 +1170,8 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     continuousSteering: () => true,
+    getTouchSettings: currentTouchControls,
+    touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
       started &&
@@ -2905,6 +2919,7 @@ try {
     refreshInputPresentation();
   };
   $('screen-steering-hand').onchange = () => {
+    clearInput();
     const requested = $('screen-steering-hand').value,
       saved = preferences({ screenSteeringHand: requested });
     refreshScreenSteeringHand();
@@ -2920,18 +2935,41 @@ try {
     const hand = library.preferences.screenSteeringHand;
     $('screen-steering-hand').value = hand;
     document.body.dataset.screenSteeringHand = hand;
+    document.body.dataset.touchSide = hand;
     const strip = document.querySelector('.play-controls'),
       trailing = strip.querySelector(hand === 'right' ? '.direction-controls' : '.ability-buttons');
     if (strip.lastElementChild !== trailing) {
       const focused = document.activeElement;
-      // Keep native focus order aligned with the two visible groups, reusing every button.
-      strip.append(trailing);
-      if (trailing.contains(focused)) focused.focus({ preventScroll: true });
+      const surface = $('touch-surface');
+      // The stick and D-pad alternate in the same position. Move both with one
+      // append so native focus order matches either mode without CSS reversal.
+      if (hand === 'right') strip.append(surface, trailing);
+      else strip.append(trailing);
+      if (trailing.contains(focused) || surface.contains(focused))
+        focused.focus({ preventScroll: true });
     }
     $('screen-steering-status').textContent = '';
     $('screen-steering-status').hidden = true;
   }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
+  function currentTouchControls() {
+    return {
+      ...resolveTouchControls(library.preferences.touchControls),
+      side: library.preferences.screenSteeringHand,
+    };
+  }
+  for (const key of ['mode', 'size', 'opacity']) {
+    $(`touch-${key}`).onchange = () => {
+      clearInput();
+      preferences({
+        touchControls: {
+          ...currentTouchControls(),
+          [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
+        },
+      });
+      syncAssistControls();
+    };
+  }
   function refreshTextSize() {
     const size = library.preferences.textSize;
     $('text-size').value = size;
@@ -2943,6 +2981,13 @@ try {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
+    const touch = currentTouchControls();
+    for (const key of ['mode', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
+    document.body.dataset.touchMode = touch.mode;
+    document.body.dataset.touchSide = touch.side;
+    document.body.dataset.touchSize = touch.size;
+    document.body.style.setProperty('--touch-opacity', touch.opacity);
+    $('touch-instruction').textContent = touch.mode === 'swipe' ? 'Swipe to turn' : 'Drag to steer';
   }
   for (const id of ['reduced-effects', 'settings-reduced-effects']) {
     $(id).onchange = () => {
@@ -3242,6 +3287,7 @@ try {
     show('choose-mission', kind === 'campaign-complete');
     show('retry-button', kind === 'won' || kind === 'lost');
     show('start-button', kind === 'ready' || kind === 'pause');
+    show('overlay-restart', kind === 'pause');
     show('overlay-brief', !courseSession && (kind === 'ready' || kind === 'pause'));
     show('result-medals', kind === 'won');
     show('retry-consequence', false);
@@ -3864,6 +3910,20 @@ try {
           ? status.message
           : `Keyboard / touch · ${status.message}`;
     }
+    if (status.code === 'joined') refreshControllerPrompts();
+    const connectionHint = $('controller-connection-hint');
+    const hintParent = controllerDialog() || document.body;
+    if (connectionHint.parentElement !== hintParent) hintParent.append(connectionHint);
+    connectionHint.hidden = !(
+      assigned || ['waiting-neutral', 'unsupported', 'disconnected'].includes(status.code)
+    );
+    const connectionText =
+      assigned && status.code !== 'waiting-neutral'
+        ? scope === 'flight'
+          ? controllerFlightHint()
+          : controllerMenuHint()
+        : status.message;
+    if (connectionHint.textContent !== connectionText) connectionHint.textContent = connectionText;
     show('controller-ui-hint', !!assigned);
     if (scope !== controllerPreviousScope) {
       controllerPreviousScope = scope;
@@ -3880,8 +3940,27 @@ try {
       );
     } else {
       controllerNavigation.handle(controllerFrame.ui);
-      if (controllerFrame?.flight.hangar && !$('hangar-button').disabled) {
-        $('hangar-button').click();
+      const flight = controllerFrame?.flight ?? {};
+      const capabilities = arcadeActionCapabilities(run?.level);
+      if (scope === 'flight' && (flight.stop || (flight.action && !capabilities.manualAbility))) {
+        pause(true);
+        clearInput();
+      } else if (scope === 'flight' && flight.pickup && !capabilities.manualPickup) {
+        pause(true);
+        $('shell-guide').click();
+        clearInput();
+      } else if (flight.hangar) {
+        if (
+          capabilities.manualAbility &&
+          run?.hangars?.length &&
+          !$('hangar-button').hidden &&
+          !$('hangar-button').disabled
+        )
+          $('hangar-button').click();
+        else {
+          pause(true);
+          $('shell-packs').click();
+        }
         clearInput();
       }
     }
@@ -4202,13 +4281,25 @@ try {
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
   $('pause-button').onclick = () => pause();
-  $('restart-button').onclick = () => {
+  const restartMission = () => {
     if (defeatActive || campaignOverview || courseBlocked()) return;
+    if ($('restart-dialog').open) $('restart-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
     prepare();
     resume();
   };
+  $('restart-button').onclick = restartMission;
+  $('overlay-restart').onclick = () => {
+    if (defeatActive || campaignOverview || courseBlocked()) return;
+    $('restart-dialog').showModal();
+    $('restart-cancel').focus({ preventScroll: true });
+  };
+  $('restart-dialog').addEventListener('close', () => {
+    if (paused && $('game-overlay').dataset.kind === 'pause')
+      $('overlay-restart').focus({ preventScroll: true });
+  });
+  $('restart-confirm').onclick = restartMission;
   $('retry-button').onclick = () => {
     if (defeatActive || courseBlocked()) return;
     demo = false;
@@ -4637,6 +4728,7 @@ try {
     onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
     onWorlds: () => optionalWorlds.open(),
   });
+  attachFullscreen($('shell-fullscreen'));
   void initializeSoundtrack();
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {

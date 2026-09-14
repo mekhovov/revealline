@@ -44,7 +44,7 @@ function controls(page, t, mode) {
     frame();
   };
   frame();
-  pulse(0); // Neutral + physical Confirm joins without activating a menu action.
+  // A neutral sample connects automatically; Confirm is now a real menu action.
   return { next: () => pulse(13), confirm: () => pulse(0), back: () => pulse(1) };
 }
 function activate(page, input, target, scope) {

@@ -130,18 +130,18 @@ export function drawEventFeedback(
       : event.type === 'shield.absorbed'
         ? 'SHIELD USED'
         : 'READY';
-  const textWidth = Math.min(width - 16, label.length * 6 * unit + 12),
+  const textWidth = Math.min(width - 16, label.length * 8.4 * unit + 12 * unit),
     x = Math.max(8, Math.min(width - textWidth - 8, event.x * 16 - textWidth / 2)),
-    y = Math.max(12 * unit, Math.min(height - 12 * unit, event.y * 16 - 24 * unit));
+    y = Math.max(18 * unit, Math.min(height - 18 * unit, event.y * 16 - 24 * unit));
   ctx.save();
   ctx.globalAlpha = 1;
   ctx.fillStyle = '#0c1423';
-  ctx.fillRect(x, y - 10 * unit, textWidth, 14 * unit);
+  ctx.fillRect(x, y - 15 * unit, textWidth, 22 * unit);
   ctx.fillStyle = color;
-  ctx.font = `${10 * unit}px monospace`;
+  ctx.font = `500 ${14 * unit}px "Field Kit Mono", monospace`;
   ctx.textBaseline = 'middle';
   ctx.textAlign = 'left';
-  ctx.fillText(label, x + 4, y - 3 * unit);
+  ctx.fillText(label, x + 6 * unit, y - 3 * unit);
   ctx.restore();
 }
 
@@ -152,11 +152,11 @@ export function drawRecoveryCue(ctx, run, palette, { screenScale = 1, width = 11
     unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
   if (!Number.isFinite(seconds)) return;
   ctx.save();
-  ctx.font = `${11 * unit}px monospace`;
+  ctx.font = `500 ${16 * unit}px "Field Kit Mono", monospace`;
   ctx.textBaseline = 'top';
   ctx.textAlign = 'center';
   ctx.fillStyle = '#0c1423';
-  ctx.fillRect(width / 2 - 106 * unit, 18 * unit, 212 * unit, 18 * unit);
+  ctx.fillRect(width / 2 - 106 * unit, 18 * unit, 212 * unit, 26 * unit);
   ctx.fillStyle = palette.accent;
   ctx.fillText(`RECOVERY ${seconds.toFixed(1)}s`, width / 2, 21 * unit);
   ctx.restore();

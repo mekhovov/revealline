@@ -5,6 +5,8 @@ description: Maintain, test, build and archive this project's playable Xonix run
 
 # Xonix Runtime Maintainer
 
+The active [FPV Field Kit redesign](../../../docs/fpv-redesign-design.md) uses local Handjet display, Exo 2 UI and IBM Plex Mono telemetry through `game/ui/field-kit-{fonts,tokens,components}.css` and `body.field-kit`. Preserve `game-shell`, input ownership, saved identities and opaque Pause. Consult the [phase register](../../../docs/fpv-redesign-execution.md) before claiming studio/runtime adoption. New controls use the semantic tokens and documented states; preserve Standard/Large text and 44px targets. [Current authoring examples](../../prompts/fpv-field-kit.md) replace the old Pixelify guidance for new presentation work.
+
 Locate the project from the current workspace or this source skill's project path. Read [development.md](../../../docs/development.md) and the relevant code before editing. The playable application is `game/`; the historical `authoring/motion-lab/` is a separate study. A preview class or catalog reference is not automatically implemented in the game.
 
 ## Current native edition

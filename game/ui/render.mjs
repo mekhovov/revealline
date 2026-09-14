@@ -741,7 +741,7 @@ export class BoardPainter {
       }
       if (state.player.queuedDirection) {
         ctx.fillStyle = p.accent;
-        ctx.font = '12px monospace';
+        ctx.font = '500 16px "Field Kit Mono", monospace';
         ctx.fillText(
           { up: '↑', right: '→', down: '↓', left: '←' }[state.player.queuedDirection],
           state.player.x * CELL + playerSize.diameter / 2 + 3,

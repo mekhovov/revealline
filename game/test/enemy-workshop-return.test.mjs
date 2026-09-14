@@ -193,9 +193,7 @@ test('actual practice controller pause and Return reopens the unsaved parent dra
     frame();
   };
   frame();
-  press(9, true);
-  press(9, false);
-  assert.equal(page.$('game-overlay').hidden, true, 'joining consumes the first Menu press');
+  assert.equal(page.$('game-overlay').hidden, true, 'neutral auto-join leaves the flight active');
   press(9, true);
   press(9, false);
   assert.equal(page.$('game-overlay').dataset.kind, 'pause');

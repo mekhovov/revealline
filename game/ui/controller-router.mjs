@@ -1,11 +1,17 @@
 import {
   resolveControllerBindings,
   CONTROLLER_DIRECTION_PRIORITY,
+  DEFAULT_CONTROLLER_BINDINGS,
 } from '../controller-bindings.mjs';
 import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from '../controller-boost.mjs';
 
 const JOIN_BUTTONS = [0, 1, 2, 3, 9];
 const CONTEXTS = ['flight', 'menu'];
+const usesDefaultLayout = (config) =>
+  CONTEXTS.every(
+    (context) =>
+      JSON.stringify(config[context]) === JSON.stringify(DEFAULT_CONTROLLER_BINDINGS[context]),
+  );
 export const neutralControllerFlight = () => ({
   direction: null,
   boost: false,
@@ -72,6 +78,8 @@ export function createControllerRouter({
   deadZone = 0.35,
   repeatDelayMs = 350,
   repeatIntervalMs = 120,
+  autoJoin = false,
+  navigationAliases = false,
 } = {}) {
   if (typeof readPads !== 'function' || typeof now !== 'function')
     throw new TypeError('Controller readers must be functions.');
@@ -92,6 +100,7 @@ export function createControllerRouter({
   // Legacy callers without one retain their equal press/release deadZone.
   if (bindings == null) initial.deadZone = { press: deadZone, release: deadZone };
   let compiled = compileBindings(initial),
+    defaultLayout = usesDefaultLayout(initial),
     mode = resolveControllerBoostMode(boostMode),
     boostLatched = false,
     boostArmed = false;
@@ -122,9 +131,11 @@ export function createControllerRouter({
   }
   function setBindings(value) {
     if (destroyed) throw new Error('Controller input is stopped.');
-    const next = compileBindings(resolveControllerBindings(value));
+    const config = resolveControllerBindings(value);
+    const next = compileBindings(config);
     // Validation and compilation must finish before any live state is cleared.
     compiled = next;
+    defaultLayout = usesDefaultLayout(config);
     clear();
   }
   function setBoostMode(value) {
@@ -163,7 +174,9 @@ export function createControllerRouter({
     if (!pad?.connected || pad.mapping !== 'standard') return null;
     const index = pad.index ?? fallbackIndex;
     if (!Number.isInteger(index) || index < 0 || index > 1023) return null;
-    const buttons = new Set(compiled.usedButtons.filter((i) => pressed(pad.buttons?.[i])));
+    const usedButtons =
+      navigationAliases && defaultLayout ? [...Array(16).keys()] : compiled.usedButtons;
+    const buttons = new Set(usedButtons.filter((i) => pressed(pad.buttons?.[i])));
     const id = typeof pad.id === 'string' ? pad.id.slice(0, 512) : '';
     const signature = JSON.stringify([
       id,
@@ -180,8 +193,14 @@ export function createControllerRouter({
     for (const context of CONTEXTS) {
       const mapping = compiled[context],
         { stick } = mapping;
-      const x = axes[stick.xAxis] * (stick.invertX ? -1 : 1),
-        y = axes[stick.yAxis] * (stick.invertY ? -1 : 1),
+      // The second stick is useful in a single-direction game without a camera.
+      // Explicit remaps keep exactly the axes the player selected.
+      const secondStick =
+        navigationAliases &&
+        defaultLayout &&
+        Math.max(Math.abs(axes[0]), Math.abs(axes[1])) <= compiled.release;
+      const x = axes[secondStick ? 2 : stick.xAxis] * (stick.invertX ? -1 : 1),
+        y = axes[secondStick ? 3 : stick.yAxis] * (stick.invertY ? -1 : 1),
         magnitude = Math.max(Math.abs(x), Math.abs(y));
       const active =
         stick.enabled && magnitude > (previous?.[context] ? compiled.release : compiled.press);
@@ -303,14 +322,19 @@ export function createControllerRouter({
     if (!assigned) {
       for (const pad of [...pads.values()].sort((a, b) => a.index - b.index)) {
         const candidate = seen.get(pad.index);
-        const join =
-          candidate.armed &&
-          JOIN_BUTTONS.some((i) => pad.buttons.has(i) && !candidate.previousJoin.has(i));
+        const join = autoJoin
+          ? pad.neutral
+          : candidate.armed &&
+            JOIN_BUTTONS.some((i) => pad.buttons.has(i) && !candidate.previousJoin.has(i));
         candidate.previousJoin = new Set(pad.buttons);
         if (join) {
           assigned = candidate;
           clear();
-          return result('joined', 'Controller joined. Release controls to continue.');
+          if (autoJoin) blocked = false;
+          return result(
+            'joined',
+            autoJoin ? 'Controller ready.' : 'Controller joined. Release controls to continue.',
+          );
         }
       }
       if (!pads.size)
@@ -350,7 +374,8 @@ export function createControllerRouter({
       ui = neutralControllerUI();
     if (scope === 'flight') {
       const buttons = compiled.flight.buttons;
-      if (edge(buttons.pause)) flight.pause = true;
+      if (edge(buttons.pause) || (navigationAliases && defaultLayout && edge(8)))
+        flight.pause = true;
       else if (edge(buttons.hangar)) flight.hangar = true;
       else if (edge(buttons.stop)) flight.stop = true;
       else {
@@ -365,10 +390,19 @@ export function createControllerRouter({
       if (flight.pause || flight.hangar || flight.stop) clear();
     } else {
       const buttons = compiled.menu.buttons,
-        direction = pad.direction.menu;
+        aliases = navigationAliases && defaultLayout,
+        direction =
+          pad.direction.menu ||
+          (aliases
+            ? pad.buttons.has(4) || pad.buttons.has(6)
+              ? 'up'
+              : pad.buttons.has(5) || pad.buttons.has(7)
+                ? 'down'
+                : null
+            : null);
       if (edge(buttons.menu)) ui.menu = true;
-      else if (edge(buttons.back)) ui.back = true;
-      else if (edge(buttons.confirm)) ui.confirm = true;
+      else if (edge(buttons.back) || (aliases && (edge(3) || edge(8)))) ui.back = true;
+      else if (edge(buttons.confirm) || (aliases && edge(2))) ui.confirm = true;
       if (!ui.menu && !ui.back && !ui.confirm && direction) {
         if (direction !== repeatDirection || time >= repeatAt) {
           ui.direction = direction;
@@ -388,7 +422,9 @@ export function createControllerRouter({
     pendingDisconnect = false;
     return result(
       'disconnected',
-      'Controller disconnected. Release controls, then press a face button to join again.',
+      autoJoin
+        ? 'Controller disconnected. Reconnect and release controls to continue.'
+        : 'Controller disconnected. Release controls, then press a face button to join again.',
       undefined,
       undefined,
       true,
