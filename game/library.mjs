@@ -12,6 +12,7 @@ import { resolveControllerBindings } from './controller-bindings.mjs';
 import { DEFAULT_CONTROLLER_BOOST_MODE, resolveControllerBoostMode } from './controller-boost.mjs';
 import { DEFAULT_CAMPAIGN_DIFFICULTY, resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import { DEFAULT_TEXT_SIZE, resolveTextSize } from './text-size.mjs';
+import { DEFAULT_TEXT_FACE, resolveTextFace } from './text-face.mjs';
 import {
   resolveMasteryRecords,
   mergeMasteryRecords,
@@ -82,6 +83,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   controllerBoostMode: DEFAULT_CONTROLLER_BOOST_MODE,
   campaignDifficulty: DEFAULT_CAMPAIGN_DIFFICULTY,
   textSize: DEFAULT_TEXT_SIZE,
+  textFace: DEFAULT_TEXT_FACE,
   style: 'hybrid',
   showGrid: false,
   matchClassAppearance: true,
@@ -145,6 +147,7 @@ function preferencesValid(preferences) {
   preferences.controllerBoostMode = resolveControllerBoostMode(preferences.controllerBoostMode);
   preferences.campaignDifficulty = resolveCampaignDifficulty(preferences.campaignDifficulty);
   preferences.textSize = resolveTextSize(preferences.textSize);
+  preferences.textFace = resolveTextFace(preferences.textFace);
   preferences.screenControls = resolveScreenControls(preferences.screenControls);
   preferences.screenSteeringHand = resolveScreenSteeringHand(preferences.screenSteeringHand);
   required(
@@ -283,6 +286,8 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.campaignDifficulty = DEFAULT_PREFERENCES.campaignDifficulty;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'textSize'))
     value.preferences.textSize = DEFAULT_PREFERENCES.textSize;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'textFace'))
+    value.preferences.textFace = DEFAULT_PREFERENCES.textFace;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenControls'))
     value.preferences.screenControls = DEFAULT_PREFERENCES.screenControls;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenSteeringHand'))
