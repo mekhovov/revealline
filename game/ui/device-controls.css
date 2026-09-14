@@ -335,6 +335,14 @@
     .arena-panel:has(> .encounter-status:not([hidden])) {
     max-width: calc(100% - var(--side-gutter));
   }
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel,
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
+  .game-shell[data-arena-chrome='full'][data-screen-controls='shown']:not(.first-flight-session)
+    .arena-panel:has(> .encounter-status:not([hidden])) {
+    max-width: calc(100% - var(--side-gutter) - 16px);
+  }
   .game-shell[data-arena-chrome='full']:not(.first-flight-session) .arena-panel > .arena-shell,
   .game-shell[data-arena-chrome='full']:not(.first-flight-session)
     .arena-panel:has(> .encounter-status:not([hidden]))
