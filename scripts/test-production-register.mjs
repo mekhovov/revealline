@@ -73,13 +73,18 @@ async function fixture(t) {
   }
   // Historical metadata remains part of the source fixture, not original media.
   const historyRoot = 'authoring/production/history';
-  const history = JSON.parse(await readFile(path.join(root, historyRoot, 'index.json'), 'utf8'));
   await mkdir(path.join(dir, historyRoot), { recursive: true });
-  for (const name of ['index.json', ...history.entries.map((p) => `${p.sha256}.json`)])
-    await writeFile(
-      path.join(dir, historyRoot, name),
-      await readFile(path.join(root, historyRoot, name)),
-    );
+  for (const [indexName, extension] of [
+    ['index.json', 'json'],
+    ['source-index.json', 'source'],
+  ]) {
+    const history = JSON.parse(await readFile(path.join(root, historyRoot, indexName), 'utf8'));
+    for (const name of [indexName, ...history.entries.map((p) => `${p.sha256}.${extension}`)])
+      await writeFile(
+        path.join(dir, historyRoot, name),
+        await readFile(path.join(root, historyRoot, name)),
+      );
+  }
   await mkdir(path.join(dir, 'authoring/production'), { recursive: true });
   await writeFile(path.join(dir, input), JSON.stringify(seed));
   return dir;
