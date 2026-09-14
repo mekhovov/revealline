@@ -1,6 +1,6 @@
 # v0.40 native interface candidate
 
-This is a source and browser-preview checkpoint. Full v0.40 source gates, frozen release, PR and public deployment are still pending at this checkpoint. Public v0.38 remains the verified release while v0.39's replacement CI runs.
+This is a source and browser-preview checkpoint. Full v0.40 source gates, frozen release, PR and public deployment are still pending at this checkpoint. Public v0.38 remains the verified release. v0.39 PR #15 passed its replacement CI and merged as `4d6154e8`; its main deployment checks are running.
 
 ## Player-visible changes
 
@@ -21,6 +21,12 @@ A later actual game check selected each of Scout, Light carrier, Heavy carrier, 
 The first Scout image failed because the preview served an active sparse worktree whose image files were later removed by a checkout transition. The visible fallback and server 404 are retained. A replacement serves fixed copies of the same exact committed files on the same preview origin; reload/Continue restored the real Scout. No game validator, saved state or artwork was changed to resolve that preview failure. Follow the [fixed-preview workflow](../../feature-delivery-workflow.md#fixed-source-previews-during-parallel-work).
 
 Local evidence: `native-ui-retention-browser/role-followup/receipt.json`, 7,429 bytes, SHA-256 `498e2ba6aa5d6af4844f4c74fc3b18fb518d38e08609c2925eb6b87b327da9e1`; independent peer, 4,766 bytes, `fd7a08375975d0271fb08a72d5100b42ac8e89031e2abc0d7f7c7d5a4a689946`, beneath the task's `.cache/round47/`.
+
+## Follow-up before the combined source gate
+
+The wide Orchard Crossing preview also retained its complete arena and four external direction controls at 844×390 with Large text. Manual Scout camera quad selection remained independent of the authored Arcade class and was visible during a short flight. At 390×844, the compact three-action pause panel fit. The portrait pad was present in the live DOM, but the scrollable outer lab clipped its lower section in the screenshots; full portrait control comfort is not claimed. Entering the iframe after changing the outer viewport required a pointer action in this test, so this is not a complete keyboard-only journey. No additional win or physical-device qualification was recorded. Scoped evidence: `.cache/round47/fpv-role-viewport/receipt.json`, 5,876 bytes, SHA-256 `5ed2656cf15e22060377613817aae0f0ff1a2cddd6d02044240c09a030aad6a0`.
+
+A stale “Installing…” message prompted a source regression: focus loss invalidates the pending chapter launch, but previously left its progress caption unchanged. Commit `b59e11e2` now announces cancellation immediately while preserving late-response and storage guards. The old source fails the new deferred-response case; all four chapter-download host tests pass on Node 20 and 22. The earlier native iframe symptom is consistent with this path, but its actual blur event was not recorded. The frozen and public gate must still qualify the combined source.
 
 ## Release checks still required
 

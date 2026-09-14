@@ -209,3 +209,7 @@ All thirteen project skills follow the [selected-chapter contract](selected-chap
 ## Fixed source previews during parallel work
 
 A preview serving files directly from an active sparse worktree can lose its images after a merge reapplies checkout rules. For a reviewed combined preview, serve a small immutable copy of the exact changed Git blobs over the declared frozen base, and hash every override. Preserve route aliases and actual runtime version/profile channel. Do not infer an asset or game defect from a missing checkout file, or relabel a source overlay as a frozen/offline release. Keep failed native observations, the old binding and the replacement binding. A later source change requires a new explicit binding; do not silently serve changed bytes under the old source label.
+
+## Cancelled chapter-launch feedback
+
+All project skills must preserve the launch-generation and storage guards when improving download feedback. If focus loss cancels an active launch, replace its progress message with an explicit cancellation notice; idle focus loss must not overwrite an existing result. A late response cannot adopt the chapter, resume play or publish success. Join the actual pending handler in regression tests and check the unchanged flight, selection and durable writes. Do not infer that an unrecorded browser blur caused a particular native failure simply because source code can reproduce its symptoms.
