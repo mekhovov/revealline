@@ -114,3 +114,55 @@ test('close after absent open resolution cannot publish stale absence', async ()
   await assert.rejects(reader.snapshot(), /closed/);
   assert.deepEqual(f.model.contents(), new Map());
 });
+
+test('selected availability is diagnostic while the existing full snapshot stays strict', async () => {
+  const f = await recoveryMediaFixture({ mediaRecords: [['library', generic]] }),
+    reader = createProfileSharedMediaReader(f);
+  const selected = await reader.originalSnapshot();
+  assert.deepEqual(selected.value.diagnostics, [{ sha256: sha, availability: 'missing' }]);
+  assert.equal(selected.value.originalBytesVerified, false);
+  assert(Object.isFrozen(selected.value.diagnostics));
+  assert.equal(selected.value.marker.media.generation, 2);
+  await assert.rejects(reader.snapshot(), /absent/);
+  assert.deepEqual(f.model.allPuts, []);
+  assert.deepEqual(f.model.contents(), f.before);
+  reader.close();
+});
+test('selected availability keeps schema, pending-work, physical-handle and budget refusals', async () => {
+  for (const [data, options] of [
+    [{}, { version: 5 }],
+    [{ mediaRecords: [['library', undefined]] }, {}],
+    [{ reservations: [['pending', null]] }, {}],
+    [{ ...rows(), audio: [[sha, new Blob(['small'])]] }, {}],
+    [{ mediaBlobs: [[sha, { size: 5 }]] }, {}],
+    [
+      {
+        mediaBlobs: Array.from({ length: 513 }, (_, i) => [
+          i.toString(16).padStart(64, '0'),
+          new Blob(['x']),
+        ]),
+      },
+      {},
+    ],
+  ]) {
+    const f = await recoveryMediaFixture(data, options),
+      reader = createProfileSharedMediaReader(f);
+    await assert.rejects(reader.originalSnapshot());
+    assert.deepEqual(f.model.allPuts, []);
+    assert.deepEqual(f.model.contents(), f.before);
+    reader.close();
+  }
+});
+test('selected availability aborts missing database creation and closes late reads', async () => {
+  const f = await recoveryMediaFixture({}, { absent: true }),
+    reader = createProfileSharedMediaReader(f);
+  assert.deepEqual(await reader.originalSnapshot(), { state: 'absent' });
+  assert.deepEqual(f.model.contents(), new Map());
+  reader.close();
+  const g = await recoveryMediaFixture(rows()),
+    other = createProfileSharedMediaReader(g);
+  g.controls.onRead = () => g.controls.versionchange();
+  await assert.rejects(other.originalSnapshot());
+  assert.deepEqual(g.model.allPuts, []);
+  other.close();
+});
