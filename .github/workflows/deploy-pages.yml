@@ -66,7 +66,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          ref: ${{ github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -105,7 +105,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          ref: ${{ github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
+
+      - name: Check out the current test sharding helper
+        if: github.event_name != 'pull_request'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: .ci-tools
+          sparse-checkout: scripts/run-test-shard.mjs
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -119,6 +127,9 @@ jobs:
       - name: Run test shard ${{ matrix.shard }}/4
         run: |
           mkdir -p .cache
+          if [ ! -f scripts/run-test-shard.mjs ]; then
+            cp .ci-tools/scripts/run-test-shard.mjs scripts/run-test-shard.mjs
+          fi
           node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
 
   build:
@@ -130,7 +141,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: ${{ github.ref }}
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event_name == 'release' && github.event.release.tag_name || github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
