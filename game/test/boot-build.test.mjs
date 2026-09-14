@@ -100,6 +100,10 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   const extras = await fs.readFile(path.join(out, 'site/about.html'), 'utf8');
   assert.match(extras, /data-current-version="v0.29.0"/);
   assert.match(extras, /href="\.\.\/game\//);
+  const game = await fs.readFile(path.join(out, 'game/index.html'), 'utf8');
+  assert.match(game, /data-build-version="v0.29.0"/);
+  assert.match(game, /id="landing-version"[^>]*>[\s\S]*Version v0.29.0/);
+  assert.doesNotMatch(game, /__REVEALLINE_VERSION__/);
   const cache = JSON.parse(await fs.readFile(path.join(out, 'offline-cache.json'), 'utf8'));
   for (const name of [
     'index.html',

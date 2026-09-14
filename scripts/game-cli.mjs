@@ -376,6 +376,7 @@ function publicPage(title, body) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>${html(title)} · Reveal Line</title><style>body{margin:0;background:#091324;color:#edf2e8;font:17px/1.7 system-ui}main{max-width:760px;margin:8vh auto;padding:24px}a{color:#7fdbeb}h1{font-size:clamp(32px,6vw,58px);line-height:1.1}nav{display:flex;gap:16px;flex-wrap:wrap;margin:32px 0}nav a{padding:10px 16px;border:1px solid #456071;border-radius:8px;text-decoration:none}small{color:#adc1ca}code{overflow-wrap:anywhere}li{margin:12px 0}</style></head><body><main>${body}</main></body></html>\n`;
 }
 function addPublicEntries(entries, info) {
+  const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
   const has = (name) => entries.some((e) => e.name === name);
   const links = [
     `<a href="./${html(info.entry)}">Play solo</a>`,
@@ -387,7 +388,6 @@ function addPublicEntries(entries, info) {
   ];
   const landing = entries.find((e) => e.name === 'site/index.html');
   if (landing) {
-    const displayVersion = info.version.startsWith('v') ? info.version : `v${info.version}`;
     const rendered = landing.bytes
       .toString()
       .replaceAll('__REVEALLINE_VERSION__', html(displayVersion))
@@ -413,6 +413,11 @@ function addPublicEntries(entries, info) {
         ),
       ),
     });
+  const game = entries.find((entry) => entry.name === 'game/index.html');
+  if (game)
+    game.bytes = Buffer.from(
+      game.bytes.toString().replaceAll('__REVEALLINE_VERSION__', html(displayVersion)),
+    );
   entries.push({
     name: 'privacy.html',
     bytes: Buffer.from(

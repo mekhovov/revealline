@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-boot-state="loading">
+<html lang="en" data-build-version="__REVEALLINE_VERSION__" data-boot-state="loading">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -129,7 +129,7 @@
         ><button id="library-button" class="text-button" type="button">Library & saves</button
         ><button id="settings-button" class="text-button" type="button">Settings</button
         ><button id="help-button" class="text-button" type="button">How to play</button
-        ><span id="version" class="version">v0.42.0</span>
+        ><span id="version" class="version">__REVEALLINE_VERSION__</span>
       </nav>
     </header>
     <main data-boot-inert inert aria-busy="true">
@@ -1044,6 +1044,9 @@
         <p class="eyebrow">A WORLD WORTH UNCOVERING</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find an opening.<br />Make your line. Reveal the story.</p>
+        <p id="landing-version" class="landing-version" aria-label="Game version">
+          Version __REVEALLINE_VERSION__
+        </p>
         <nav class="home-actions" aria-label="Main menu">
           <button id="shell-course-return" type="button" class="button primary" hidden>
             Back to lesson
