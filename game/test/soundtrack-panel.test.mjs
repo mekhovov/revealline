@@ -1,3 +1,4 @@
+import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
@@ -817,4 +818,132 @@ test('native adapter receives prepared bytes synchronously on explicit activatio
   assert.equal(requests[1].filename, 'RevealLine-soundtrack.rlsound');
   assert.match(app.node('status').textContent, /request handed to the host/);
   assert.equal((await app.store.read()).generation, 1);
+});
+
+test('optional album additions preserve applied and unapplied drafts, playlist choice and playing transport', async (t) => {
+  const a = await albumFixture('qa.first'),
+    b = await albumFixture('qa.second');
+  let requests = 0;
+  const fetch = async (url) => {
+    requests++;
+    return responseFor(
+      url.endsWith('.json')
+        ? JSON.stringify(albumCatalog(a.album, b.album))
+        : url.includes(a.album.id)
+          ? a.blob
+          : b.blob,
+      url,
+    );
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  assert.equal(requests, 0, 'opening Studio does not fetch metadata or audio');
+  app.node('mp3-files').files = [file('Personal.mp3')];
+  await app.click('import-mp3');
+  app.node('track-title').value = 'Applied personal title';
+  await app.click('apply-track');
+  app.node('track-title').value = 'Typed but not applied';
+  app.node('selection').value = 'builtin.fpv';
+  await app.click('browse-albums');
+  assert.equal(requests, 1);
+  assert.equal(app.node('track-title').value, 'Typed but not applied');
+  await app.click('album-add-qa.first');
+  assert.equal(app.node('track-title').value, 'Typed but not applied');
+  assert.equal(app.node('selection').value, 'builtin.fpv');
+  assert.equal((await app.store.read()).generation, 0, 'Add is only a draft');
+  await app.click('album-add-qa.second');
+  await app.click('save');
+  const current = await app.store.read();
+  assert.equal(current.library.tracks.length, 3);
+  assert.equal(current.library.tracks[0].title, 'Applied personal title');
+  assert.equal(
+    current.library.selection.playlistId,
+    null,
+    'unapplied selection was not silently saved',
+  );
+  assert.deepEqual(
+    current.library.playlists.map((p) => p.id),
+    ['qa.first', 'qa.second'],
+  );
+  assert.equal(
+    app.calls.some(([name]) => ['play', 'pause', 'select'].includes(name)),
+    false,
+  );
+  assert.equal(app.state.track.id, 'builtin.fpv');
+});
+
+test('cancelled album download preserves an earlier draft and typed editor fields', async (t) => {
+  const a = await albumFixture();
+  let cancelCount = 0,
+    requested;
+  const started = new Promise((resolve) => {
+    requested = resolve;
+  });
+  const fetch = async (url) => {
+    if (url.endsWith('.json')) return responseFor(JSON.stringify(albumCatalog(a.album)), url);
+    requested();
+    return responseFor(
+      new ReadableStream({
+        cancel() {
+          cancelCount++;
+        },
+      }),
+      url,
+    );
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  app.node('mp3-files').files = [file()];
+  await app.click('import-mp3');
+  app.node('track-title').value = 'Retain typed title';
+  await app.click('browse-albums');
+  const promise = app.click('album-add-qa.album');
+  await started;
+  await app.click('cancel');
+  await promise;
+  assert.equal(cancelCount, 1);
+  assert.equal(app.node('track-title').value, 'Retain typed title');
+  assert.match(app.node('status').textContent, /cancelled/);
+  await app.click('save');
+  assert.equal((await app.store.read()).library.tracks.length, 1);
+});
+
+test('album completion restores owned disabled-control focus and respects deliberate navigation', async (t) => {
+  const a = await albumFixture();
+  let respond, entered;
+  const fetch = async (url) => {
+    if (url.endsWith('.json')) return responseFor(JSON.stringify(albumCatalog(a.album)), url);
+    entered?.();
+    return new Promise((resolve) => {
+      respond = () => resolve(responseFor(a.blob, url));
+    });
+  };
+  const app = await setup(t, {
+    callbacks: { albumDownload: { baseURL: 'https://example.test/build/', fetch } },
+  });
+  await app.click('browse-albums');
+  const opener = app.node('album-add-qa.album');
+  opener.focus();
+  const firstStart = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const first = opener.click();
+  await firstStart;
+  app.doc.activeElement = app.doc.body;
+  respond();
+  await first;
+  assert.equal(app.doc.activeElement.id, app.node('save').id);
+  opener.focus();
+  const secondStart = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const second = opener.click();
+  await secondStart;
+  app.node('play').focus();
+  app.doc.emit('focusin', { target: app.node('play') });
+  respond();
+  await second;
+  assert.equal(app.doc.activeElement.id, app.node('play').id);
 });
