@@ -5,6 +5,7 @@ import {
   resolvePresentation,
   validateThemeBundle,
   presentationCoverage,
+  presentationGeometryControls,
 } from '../../game/presentation/model.mjs';
 import {
   hashPresentationBytes,
@@ -20,6 +21,7 @@ import {
   nextAssetRevision,
 } from '../../game/presentation/studio-session.mjs';
 import { createStudioStore } from '../../game/presentation/studio-store.mjs';
+import { loadPublishedStudio } from '../../game/presentation/published-studio.mjs';
 import { inspectImageDataUrl } from '../../game/content.mjs';
 import { centerCrop, checkedCrop, pixelBounds, matchingSlots } from './helpers.mjs';
 import { drawAssetPreview } from './preview.mjs';
@@ -311,10 +313,13 @@ function refreshPrompt() {
       ids
         .map((id) => {
           const item = working.document.slots.find((s) => s.id === id);
+          const current = view.assets[id];
           return JSON.stringify({
             id: item.id,
             dimensions: item.dimensions,
-            geometry: item.geometry,
+            geometry: current?.geometry ?? item.geometry,
+            currentRevision: current ? ref(current) : null,
+            currentProductionBrief: current?.provenance.prompt ?? item.prompt,
             requirements: item.requirements,
             budget: item.budget,
           });
@@ -625,6 +630,13 @@ function populateGeometry() {
   const geometry = pending?.candidate?.geometry;
   $('geometry-panel').hidden = !geometry;
   if (!geometry) return;
+  const controls = presentationGeometryControls(currentSlot());
+  $('pivot-x').disabled = $('pivot-y').disabled = !controls.pivot;
+  $('rotor-anchors').disabled = !controls.rotors;
+  $('nine-slice').disabled = !controls.nineSlice;
+  $('geometry-usage').textContent = controls.pivot
+    ? 'The pivot places this artwork around its unchanged gameplay center. Rotor hubs and panel slices are editable only where the renderer supports them.'
+    : 'This interface or picture slot uses centered placement. Crop the source to change its composition; unsupported anchors and slices stay locked.';
   $('pivot-x').value = geometry.pivot.x;
   $('pivot-y').value = geometry.pivot.y;
   $('rotor-anchors').value = JSON.stringify(geometry.rotorAnchors, null, 2);
@@ -1012,9 +1024,10 @@ async function loadWorkspace() {
   const result = await store.load();
   storageReady = true;
   generation = result?.generation || 0;
+  const published = result ? null : await loadPublishedStudio();
   working = result
     ? { document: result.document, assets: result.assets }
-    : { document: createDefaultThemeBundle(), assets: new Map() };
+    : (published ?? { document: createDefaultThemeBundle(), assets: new Map() });
   saved = working;
   undo = [];
   redo = [];
@@ -1025,10 +1038,25 @@ async function loadWorkspace() {
   status(
     result
       ? 'Saved studio workspace loaded.'
-      : 'Default registry loaded. Choose an asset to begin.',
+      : published
+        ? 'Current release assets loaded. Changes stay in this local studio.'
+        : 'Source registry loaded. A compiled release collection is not present.',
   );
 }
 $('reload-workspace').onclick = () => operation(loadWorkspace);
+$('load-release').onclick = () =>
+  operation(async () => {
+    requireSettled();
+    const published = await loadPublishedStudio();
+    if (!published) throw new Error('This source checkout has no compiled release collection.');
+    const next = adoptStudioBundle(working.document, published.document);
+    const assets = await verifyThemeAssets(next, new Map([...working.assets, ...published.assets]));
+    stage(
+      next,
+      assets,
+      'Release collection staged. Existing local history is retained; save or undo this change.',
+    );
+  });
 window.addEventListener('beforeunload', (event) => {
   if (working !== saved || pending || sprite.hasEdits()) {
     event.preventDefault();

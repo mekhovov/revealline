@@ -5,6 +5,8 @@ description: "Design themed game content using the current generic authoring con
 
 # Xonix Theme Designer
 
+For the current FPV Field Kit implementation, use [the production/adoption contract](../../../docs/field-kit-production.md). The compiler's runtime snapshot and editable studio document share hash-addressed bytes; loading a release collection appends local history. Preserve actual selected geometry and the effective production brief in variation requests. Generated originals, explicitly prepared derivatives and reviewed assets are different evidence stages. Never certify the complete FPV theme while its 38-composition/44-frame manifest reports missing entries or its required slots remain unreviewed.
+
 Turn a theme request into a concrete art direction and draft content pack. Work within the user's approved scope; do not request approval again for routine authoring changes.
 
 For a theme applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md) and the [runtime configuration guide](../../../docs/assets-and-configuration.md). Edit the actual theme record from `game/content/themes.json` or an exported `xonix-playground.v1` scenario; legacy family names and draft-pack fields are not runtime imports. The draft workflow below still applies when a draft pack is the requested deliverable.

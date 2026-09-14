@@ -1,3 +1,4 @@
+import { createPublishedCues } from './published-audio.mjs';
 import {
   MUSIC_STYLES,
   DEFAULT_TRACKS,
@@ -50,6 +51,14 @@ export class Soundscape {
     this.musicTransportPaused = false;
     this.songEndHandler = null;
     this.songEnded = null;
+    this.publishedAudio = null;
+  }
+  setPublishedAudio(readAudio) {
+    this.publishedAudio?.close();
+    this.publishedAudio = readAudio ? createPublishedCues({ sound: this, readAudio }) : null;
+  }
+  publishedCue(name) {
+    return this.publishedAudio?.play(name, { ui: true }) ?? false;
   }
   getSettings() {
     return { ...this.settings, trackId: this.track.id };
@@ -311,6 +320,7 @@ export class Soundscape {
    * and invalidates pending enable/preview actions; resume cannot undo it.
    */
   disable() {
+    this.publishedAudio?.cancelPending();
     ++this.transition;
     this.enabled = false;
     this.paused = true;
@@ -338,6 +348,7 @@ export class Soundscape {
   }
   /** Full lifecycle interruption; ordinary persistent-mode pause is gameplay only. */
   suspend() {
+    this.publishedAudio?.cancelPending();
     ++this.transition;
     this.cancelPreview();
     this.paused = true;
@@ -380,6 +391,7 @@ export class Soundscape {
   async dispose() {
     if (this.disposed) return;
     this.disposed = true;
+    this.setPublishedAudio(null);
     this.cancelPreview();
     ++this.transition;
     this.enabled = false;
@@ -527,6 +539,18 @@ export class Soundscape {
     this.recentEvents.set(key, now);
     if (this.recentEvents.size > 64)
       this.recentEvents.delete(this.recentEvents.keys().next().value);
+    const publishedCue =
+      event.type === 'run.completed'
+        ? event.won === false || event.status === 'lost'
+          ? 'failure'
+          : 'victory'
+        : {
+            'player.failed': 'failure',
+            'cells.claimed': 'capture',
+            'pickup.collected': 'pickup',
+            'powerup.collected': 'pickup',
+          }[event.type];
+    if (publishedCue && this.publishedAudio?.play(publishedCue)) return;
     const base = clamp(this.track.root + 12, 48, 76),
       cue = (steps, voice = 'bell', spacing = 0.09, duration = 0.25) =>
         steps.forEach((n, i) =>

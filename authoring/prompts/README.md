@@ -1,5 +1,7 @@
 # Xonix authoring prompt library
 
+For the current FPV Field Kit, start with the [production and replacement workflows](field-kit-production.md) and the [local Asset Studio](../asset-studio/index.html). Its slot briefs resolve actual shipped assets, geometry, palette, immutable revisions and preparation instructions. The older family templates below remain historical starting points; the selected release contract determines the output requirements. These three prose workflows add no CLI template IDs.
+
 For applied changes to the playable `game/`, pair these briefs with [Runtime Maintainer](../skills/xonix-runtime-maintainer/SKILL.md), [Expansion Author](../skills/xonix-expansion-author/SKILL.md) and the [actual configuration formats](../../docs/assets-and-configuration.md). The shared CLI has 148 templates. Separate prose guides provide [10 reference-import examples](../skills/xonix-reference-importer/references/import-and-style.md), [10 library/expansion workflow prompts](../../docs/library-and-packs.md) and [four audio/reward prompts](../../docs/audio-and-rewards.md); these are not extra CLI IDs. Legacy drafts, media libraries, motion-lab fixtures, runtime expansions and playable scenarios have different formats; select the target first.
 
 Updated 13 September 2026 · 148 reusable CLI examples across nine catalogs: 56 base, 16 source/asset, 16 animation, 16 character collection, 20 ability/world, 9 native-edition/audio, 6 classic, 3 presentation and 6 enemy workflows. Templates are not executed runs; prose requests are counted separately.

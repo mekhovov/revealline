@@ -1,5 +1,5 @@
 {
-  "version": "0.48.0",
+  "version": "0.49.0",
   "entry": "game/index.html",
   "include": [
     "game",
@@ -44,7 +44,18 @@
     "authoring/library/ukraine-role-presentations/originals/trapper.png",
     "docs/presentation-system.md",
     "authoring/asset-studio",
-    "docs/asset-studio.md"
+    "docs/asset-studio.md",
+    "docs/field-kit-production.md",
+    "docs/field-kit-title-v2.md",
+    "docs/field-kit-sprites.md",
+    "docs/field-kit-icons.md",
+    "docs/field-kit-reveals.md",
+    "docs/fpv-reveal-art-audit.md",
+    "docs/presentation-runtime.md",
+    "docs/presentation-audio-and-ui.md",
+    "authoring/library/fpv-field-kit/prepared/reveals/review.html",
+    "authoring/library/fpv-field-kit/prepared/reveals/reveals.json",
+    "authoring/library/fpv-field-kit/prepared/reveals/review.mjs"
   ],
   "optionalOffline": [
     "game/content/packs/fpv-arcade-r3.json",

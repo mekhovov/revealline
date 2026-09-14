@@ -703,3 +703,54 @@ body.field-kit {
   background-size: cover;
   background-position: center;
 }
+
+.component-specimen :is(button, .specimen-semantic) {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.component-specimen :is(canvas, img) {
+  flex: 0 0 auto;
+  image-rendering: pixelated;
+}
+.component-specimen label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.component-specimen input:is([type='checkbox'], [type='radio']) {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  flex: 0 0 24px;
+}
+.component-specimen input[data-file-frame='true']:is([type='checkbox'], [type='radio']) {
+  appearance: none;
+  background: var(--fk-bg);
+}
+.component-specimen input[data-file-frame='true']:checked {
+  background: var(--fk-cyan);
+  box-shadow: inset 0 0 0 5px var(--fk-bg);
+  outline: 2px solid var(--fk-cyan);
+}
+.component-specimen[data-state='focus'] :is(input, select, progress) {
+  outline: 3px solid var(--fk-cyan);
+  outline-offset: 4px;
+}
+.component-specimen [aria-invalid='true'] {
+  border-color: var(--fk-hazard);
+  outline: 2px dashed var(--fk-hazard);
+}
+.specimen-scrollbar {
+  max-height: 140px;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid var(--fk-line);
+}
+.specimen-tooltip {
+  display: block;
+  padding: 16px;
+  border: 2px solid var(--fk-line);
+  margin-block: 16px;
+}
