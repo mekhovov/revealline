@@ -276,5 +276,9 @@
       ]
     }
   ],
-  "deploymentEnabled": false
+  "deploymentEnabled": false,
+  "currentSourceQualification": {
+    "path": "evidence/current-v044/source-qualification.json",
+    "sha256": "1d1b22c2cfd5b6ab31a569dd016e8b1809bf0ef7760fe9fa219cb8b13630317f"
+  }
 }
