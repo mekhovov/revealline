@@ -167,6 +167,13 @@ test('touch preferences survive export/import; old libraries migrate without los
   const changed = updatePreferences(migrated, { touchControls });
   const imported = importLibrary(exportLibrary(changed));
   assert.deepEqual(imported.preferences.touchControls, touchControls);
+  const legacy = structuredClone(changed);
+  delete legacy.preferences.screenSteeringHand;
+  legacy.preferences.touchControls.side = 'right';
+  const migratedHand = importLibrary(legacy);
+  assert.equal(migratedHand.preferences.screenSteeringHand, 'right');
+  assert.deepEqual(migratedHand.preferences.touchControls, legacy.preferences.touchControls);
+  assert.equal(Object.hasOwn(legacy.preferences, 'screenSteeringHand'), false);
   assert.equal(imported.preferences.turnPolicy, old.preferences.turnPolicy);
   for (const invalid of [
     { ...touchControls, mode: 'gyro' },

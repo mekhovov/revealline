@@ -789,12 +789,6 @@
           </select></label
         >
         <label class="field"
-          >Steering hand<select id="touch-side">
-            <option value="right">Right</option>
-            <option value="left">Left</option>
-          </select></label
-        >
-        <label class="field"
           >Touch control size<select id="touch-size">
             <option value="regular">Regular</option>
             <option value="large">Large</option>
@@ -812,6 +806,18 @@
           A short drag turns immediately. Lift your finger to keep flying; use Pause to take a
           break. The stick appears under your thumb. In landscape, controls float over the board.
         </p>
+        <label class="field"
+          >Steering hand
+          <select id="screen-steering-hand" aria-describedby="screen-steering-help">
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+          </select></label
+        >
+        <p id="screen-steering-help" class="micro-note">
+          Move the stick, swipe area or D-pad to your left or right thumb. Actions use the other
+          side.
+        </p>
+        <p id="screen-steering-status" class="micro-note" role="status" hidden></p>
         <p id="equipment-help" class="micro-note"></p>
         <label id="screen-boost-setting"
           ><input id="settings-tap-steering" type="checkbox" /> Toggle on-screen Boost</label

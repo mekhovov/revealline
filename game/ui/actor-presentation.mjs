@@ -1,4 +1,5 @@
 import { enemyCatalogRecord, resolveEnemySkin } from '../enemy-catalog.mjs';
+import { drawEnemyBodyMotion } from './enemy-body-motion.mjs';
 // Cosmetic poses, pixel silhouettes and cut effects. No simulation objects are changed.
 const TAU = Math.PI * 2;
 const CELL = 16;
@@ -10,9 +11,13 @@ const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 const finite = (n, fallback = 0) => (Number.isFinite(n) ? n : fallback);
 const angleDelta = (a, b) => ((((a - b + Math.PI) % TAU) + TAU) % TAU) - Math.PI;
 const family = (id, fallback) =>
-  ['fpv', 'ukraine', 'retro'].includes(id)
+  ['fpv',
+'ukraine',
+'retro'].includes(id)
     ? id
-    : ({ fpv: 'fpv', atlas: 'ukraine', retro: 'retro' }[fallback] ?? 'retro');
+    : ({fpv: 'fpv',
+atlas: 'ukraine',
+retro: 'retro'}[fallback] ?? 'retro');
 export const ACTOR_PRESENTATION_LIMITS = Object.freeze({
   actors: 64,
   tailPoints: 3,
@@ -523,11 +528,13 @@ function distinctBody(c, f, k) {
 /** Original body-only skin; caller owns placement/size and functional badges. */
 export function drawEnemySilhouette(ctx, frame, colors) {
   if (!distinctBody(ctx, frame, colors))
-    (({ fpv, ukraine, retro })[frame.themeId] ?? retro)(ctx, frame, colors);
+    (({fpv,
+ukraine,
+retro})[frame.themeId] ?? retro)(ctx, frame, colors);
 }
 
 /** Image roles override only the body; collision-center cues retain their physical size. */
-export function drawPresentedActor(ctx, frame, palette, image = null) {
+export function drawPresentedActor(ctx, frame, palette, image = null, bodyRecord = null) {
   if (!frame) return;
   const colors = {
     dark: PRESENTATION_PLATE,
@@ -554,6 +561,7 @@ export function drawPresentedActor(ctx, frame, palette, image = null) {
     ctx.scale(d / 28, d / 28);
     drawEnemySilhouette(ctx, frame, colors);
   }
+  if (image && bodyRecord) drawEnemyBodyMotion(ctx, frame, bodyRecord, d);
   if (image) ctx.scale(d / 28, d / 28);
   // Two small nose pixels give rounded/compact and uploaded bodies a stable
   // heading cue. They remain within the body envelope, never a targeting ray.

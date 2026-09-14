@@ -49,6 +49,21 @@ function frame(themeId = 'fpv', style = 'hybrid', type = 'bouncer') {
     .get(actor.id);
 }
 
+test('BoardPainter keeps separate default boss bodies beneath the shared explicit boss upload', () => {
+  const painter = new BoardPainter(presets);
+  const lane = { role: 'boss', type: 'lane-boss' },
+    relay = { role: 'boss', type: 'relay-sentinel' };
+  const laneBody = { image: { id: 'lane-original' }, record: { type: 'lane-boss' } };
+  const relayBody = { image: { id: 'relay-original' }, record: { type: 'relay-sentinel' } };
+  painter.enemyBodies = { current: (frame) => (frame.type === 'lane-boss' ? laneBody : relayBody) };
+  assert.equal(painter.enemyBody(lane), laneBody);
+  assert.equal(painter.enemyBody(relay), relayBody);
+  const upload = { id: 'explicit-boss-upload' };
+  painter.images.boss = upload;
+  assert.deepEqual(painter.enemyBody(lane), { image: upload, record: null });
+  assert.deepEqual(painter.enemyBody(relay), { image: upload, record: null });
+});
+
 test('facing uses newly observed tick positions instead of a stale velocity field', () => {
   const poses = createActorPresentation();
   poses.sample([actor], { tick: 0, time: 0 });

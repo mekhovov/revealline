@@ -19,7 +19,11 @@ import {
 } from './optional-chapters.mjs';
 import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
-import { nextInputModality, showScreenControls } from './input-presentation.mjs';
+import {
+  nextInputModality,
+  showScreenControls,
+  hasCompactArcadeArena,
+} from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun, boardPaintSizeForLevel } from './ui/render.mjs';
@@ -163,6 +167,8 @@ try {
       getJSON('content/packs/catalog.json'),
       getJSON('content/packs/archive-catalog.json'),
     ]);
+  // Guide lessons keep the canonical catalog when a selected pack narrows flight themes.
+  const guideThemes = themesFile.themes;
   const characterPresentations = createCharacterPresentations(presets);
   const packCatalog = preparePackCatalog({
     ...packCatalogSource,
@@ -1164,7 +1170,7 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     continuousSteering: () => true,
-    getTouchSettings: () => resolveTouchControls(library.preferences.touchControls),
+    getTouchSettings: currentTouchControls,
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
@@ -1190,6 +1196,8 @@ try {
     refreshInputPresentation();
   }
   function refreshInputPresentation() {
+    const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
+    if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
     const visible = showScreenControls({
       preference: library.preferences.screenControls,
       modality: document.body.dataset.inputMode,
@@ -1253,7 +1261,7 @@ try {
     onReturn: () => pause(true),
   });
   enemyGuide = attachEnemyGuide({
-    themes: themesFile.themes,
+    themes: guideThemes,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
     loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
@@ -1282,7 +1290,6 @@ try {
   });
   $('shell-guide').onclick = () => {
     pause(true);
-    if ($('shell-home').open) $('shell-home').close();
     enemyGuide.open();
   };
   handlePageHide = (event) => {
@@ -1919,6 +1926,7 @@ try {
     }
     refreshDifficulty();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return saved;
   }
   function preferences(patch) {
@@ -1930,6 +1938,7 @@ try {
     library = updatePreferences(library, { ...library.preferences, ...patch });
     if (!practice) return persistProfile();
     refreshTextSize();
+    refreshScreenSteeringHand();
     return {
       ok: false,
       warning:
@@ -2909,13 +2918,52 @@ try {
     syncAssistControls();
     refreshInputPresentation();
   };
+  $('screen-steering-hand').onchange = () => {
+    clearInput();
+    const requested = $('screen-steering-hand').value,
+      saved = preferences({ screenSteeringHand: requested });
+    refreshScreenSteeringHand();
+    const status = $('screen-steering-status');
+    status.textContent = saved.ok
+      ? 'Steering hand saved.'
+      : library.preferences.screenSteeringHand === requested
+        ? `Steering hand selected for this session. ${saved.warning}`
+        : `Steering hand unchanged. ${saved.warning}`;
+    status.hidden = false;
+  };
+  function refreshScreenSteeringHand() {
+    const hand = library.preferences.screenSteeringHand;
+    $('screen-steering-hand').value = hand;
+    document.body.dataset.screenSteeringHand = hand;
+    document.body.dataset.touchSide = hand;
+    const strip = document.querySelector('.play-controls'),
+      trailing = strip.querySelector(hand === 'right' ? '.direction-controls' : '.ability-buttons');
+    if (strip.lastElementChild !== trailing) {
+      const focused = document.activeElement;
+      const surface = $('touch-surface');
+      // The stick and D-pad alternate in the same position. Move both with one
+      // append so native focus order matches either mode without CSS reversal.
+      if (hand === 'right') strip.append(surface, trailing);
+      else strip.append(trailing);
+      if (trailing.contains(focused) || surface.contains(focused))
+        focused.focus({ preventScroll: true });
+    }
+    $('screen-steering-status').textContent = '';
+    $('screen-steering-status').hidden = true;
+  }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
-  for (const key of ['mode', 'side', 'size', 'opacity']) {
+  function currentTouchControls() {
+    return {
+      ...resolveTouchControls(library.preferences.touchControls),
+      side: library.preferences.screenSteeringHand,
+    };
+  }
+  for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
       preferences({
         touchControls: {
-          ...resolveTouchControls(library.preferences.touchControls),
+          ...currentTouchControls(),
           [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
         },
       });
@@ -2929,11 +2977,12 @@ try {
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
+    refreshScreenSteeringHand();
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
-    const touch = resolveTouchControls(library.preferences.touchControls);
-    for (const key of ['mode', 'side', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
+    const touch = currentTouchControls();
+    for (const key of ['mode', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
     document.body.dataset.touchMode = touch.mode;
     document.body.dataset.touchSide = touch.side;
     document.body.dataset.touchSize = touch.size;

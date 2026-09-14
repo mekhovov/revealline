@@ -111,6 +111,17 @@ for (const mode of ['stick', 'swipe', 'dpad']) {
   test(`actual host: ${mode} changes direction and gesture release keeps continuous flight`, async (t) => {
     const page = await classicPage(t);
     page.change('touch-mode', mode);
+    for (const hand of ['right', 'left']) {
+      page.change('screen-steering-hand', hand);
+      assert.equal(page.doc.body.dataset.touchSide, hand);
+      assert.equal(page.doc.body.dataset.screenSteeringHand, hand);
+      assert.deepEqual(
+        page.doc.querySelector('.play-controls').children.map((node) => node.id || node.className),
+        hand === 'right'
+          ? ['ability-buttons', 'touch-surface', 'direction-controls']
+          : ['touch-surface', 'direction-controls', 'ability-buttons'],
+      );
+    }
     page.change('screen-controls', 'always');
     page.$('start-button').click();
     await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');

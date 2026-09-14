@@ -12,19 +12,25 @@ import {
   prepareExternalCatalog,
   prepareExternalDownload,
 } from '../external-chapter-catalog.mjs';
-import { readExternalDistributionEntries } from '../../scripts/external-distribution.mjs';
+import { buildFractureChapter } from '../../authoring/library/fracture-lines-chapter/build.mjs';
+import { buildFractureTheme } from '../../authoring/library/fracture-theme-chapters/build.mjs';
 import { collectBuildFiles } from '../../scripts/game-cli.mjs';
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const entries = await readExternalDistributionEntries(root, {
-  format: 'revealline-external-distribution.v1',
-  catalog: 'game/content/external-worlds.json',
-});
+const themes = ['fpv', 'ukraine', 'retro'];
+const entries = [];
+for (const [index, theme] of themes.entries()) {
+  const result = await (theme === 'fpv' ? buildFractureChapter() : buildFractureTheme(theme));
+  assert.deepEqual(result.descriptor, SOURCE_EXTERNAL_CHAPTERS[index + 6]);
+  const item = EXTERNAL_CATALOG.chapters[index + 6];
+  for (const kind of ['pack', 'media'])
+    entries.push({
+      name: item[kind].path,
+      bytes: Buffer.from(await result.payloads[kind].arrayBuffer()),
+    });
+}
 const bodies = new Map(entries.map((entry) => [entry.name, entry.bytes]));
-const themes = ['fpv',
-'ukraine',
-'retro'];
 const levels = [
   'fracture-lines-split-ring',
   'fracture-lines-fault-fan',
@@ -35,33 +41,26 @@ const decodeImage = async (blob) => {
   return { naturalWidth: bytes.readUInt32BE(16), naturalHeight: bytes.readUInt32BE(20) };
 };
 
-test('four Fracture producers append exact pairs without changing the eight earlier authorities', async () => {
-  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 16);
-  assert.equal(entries.length, 32);
-  assert.equal(bodies.size, 32);
-  // Independently extracted literal descriptors/catalog from accepted Couch
-  // 513caf1ca140804ae978903825f909288babeb3f, before this adoption.
+test('three Fracture producers preserve the six retained earlier authorities', async () => {
+  assert.equal(SOURCE_EXTERNAL_CHAPTERS.length, 12);
+  assert.equal(entries.length, 6);
+  assert.equal(bodies.size, 6);
+  // Exact identities of the retained descriptor and catalog subsets.
   assert.equal(
-    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 8))),
-    'f1afcbcb71426458b7418326d110d032d22221612bbae120d80e34a35ed4117d',
+    sha(canonicalJSON(SOURCE_EXTERNAL_CHAPTERS.slice(0, 6))),
+    '7bf4835f4c4ee5483fd8dedc021e091e405beb71ef13d9bf85f12ee8bb06d50f',
   );
   assert.equal(
-    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 8))),
-    '17249a24b450df2916cdbc942d035133604e8c86390ce395f8fb7af566fbc1b6',
+    sha(canonicalJSON(EXTERNAL_CATALOG.chapters.slice(0, 6))),
+    'ca694bf9f17813c7b856eaafa0474d7d1834a7ed89abbb12ee2824c1ba51da66',
   );
+  // All earlier body bytes and cumulative totals are checked once by the real-source
+  // loose/ZIP/manifest audit in scripts/test-external-distribution.mjs.
   assert.equal(
     entries.reduce((n, entry) => n + entry.bytes.length, 0),
-    130442755,
+    25398905,
   );
-  assert.equal(
-    entries.slice(0, 16).reduce((n, entry) => n + entry.bytes.length, 0),
-    64546929,
-  );
-  assert.equal(
-    entries.slice(16, 24).reduce((n, entry) => n + entry.bytes.length, 0),
-    34127168,
-  );
-  for (const entry of EXTERNAL_CATALOG.chapters)
+  for (const entry of EXTERNAL_CATALOG.chapters.slice(6, 9))
     for (const kind of ['pack', 'media']) {
       assert.equal(bodies.get(entry[kind].path).length, entry[kind].bytes);
       assert.equal(sha(bodies.get(entry[kind].path)), entry[kind].sha256);

@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 import { Events, Document } from './helpers/couch-dom.mjs';
 import { SoloElement, soloPage, memoryStorage } from './helpers/solo-dom.mjs';
 import { attachEnemyGuide } from '../ui/enemy-guide.mjs';
+import { createEnemyPresentations } from '../enemy-presentations.mjs';
+import { createEnemyBodyAssets, createEnemyImagePool } from '../ui/enemy-body-assets.mjs';
 import {
   attachEnemyWorkshopReturnHost,
   attachEnemyWorkshopReturn,
@@ -16,6 +18,63 @@ const impact = JSON.parse(
   readFileSync(new URL('../content/scenarios/line-impact-demo.json', import.meta.url)),
 );
 const handoff = 'revealline.playground.current';
+const enemyPresentations = createEnemyPresentations(
+  JSON.parse(readFileSync(new URL('../content/enemy-presentations.json', import.meta.url))),
+);
+const settleArtwork = () => new Promise((resolve) => setImmediate(resolve));
+function deferredArtwork() {
+  let resolve;
+  const promise = new Promise((done) => {
+    resolve = done;
+  });
+  return { promise, resolve };
+}
+function artworkFixture({ load, catalog } = {}) {
+  const loads = [],
+    released = [],
+    calls = [];
+  let notify;
+  const context = new Proxy(
+    {},
+    {
+      get: (target, key) => target[key] ?? ((...args) => calls.push([key, ...args])),
+      set: (target, key, value) => {
+        target[key] = value;
+        calls.push(['set', key, value]);
+        return true;
+      },
+    },
+  );
+  const pool = createEnemyImagePool({
+    load: async (record, options) => {
+      loads.push(record.type);
+      return load
+        ? load(record, options)
+        : {
+            image: { type: record.type },
+            release() {
+              released.push(record.type);
+            },
+          };
+    },
+  });
+  return {
+    context,
+    calls,
+    loads,
+    released,
+    pool,
+    notify: () => notify(),
+    createBodyAssets({ changed }) {
+      notify = changed;
+      return createEnemyBodyAssets({
+        pool,
+        changed,
+        catalog: catalog ?? (async () => enemyPresentations),
+      });
+    },
+  };
+}
 function setup(t, options = {}) {
   const doc = new Document(),
     host = new Events();
@@ -125,6 +184,207 @@ test('original role previews move but Pause and reduced effects hold their cosme
   assert.deepEqual(paint(0.1, { paused: true }), moving);
   const reduced = paint(0.1, { reduced: true });
   assert.deepEqual(paint(0.1, { reduced: true }), reduced);
+});
+test('the guide paints only the selected registered image and motion, with separate boss bodies', async (t) => {
+  const art = artworkFixture();
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  assert.deepEqual(art.loads, []);
+  for (const record of enemyPresentations.entries) {
+    h.$('topic').value = record.type;
+    h.$('topic').onchange();
+    await settleArtwork();
+    art.calls.length = 0;
+    h.guide.update(0.1);
+    const images = art.calls.filter(([method]) => method === 'drawImage');
+    assert.equal(images.length, 1);
+    assert.deepEqual(images[0][1], { type: record.type });
+    assert.equal(art.pool.size(), 1);
+    for (const part of record.motion)
+      assert.ok(
+        art.calls.some(
+          ([method, key, value]) => method === 'set' && key === 'fillStyle' && value === part.color,
+        ),
+      );
+    assert.equal(h.$('artwork-status').hidden, true);
+  }
+  assert.deepEqual(
+    art.loads,
+    enemyPresentations.entries.map(({ type }) => type),
+  );
+  h.$('theme').value = 'ukraine';
+  h.$('theme').onchange();
+  await settleArtwork();
+  assert.equal(art.pool.size(), 0);
+  assert.deepEqual(art.released, art.loads);
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  assert.equal(
+    art.calls.some(([method]) => method === 'drawImage'),
+    false,
+  );
+  h.guide.open({ topic: 'line-impact' });
+  art.calls.length = 0;
+  h.guide.update(0.1);
+  await settleArtwork();
+  assert.equal(art.loads.length, 7);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y, width, height]) =>
+        method === 'fillRect' && x === 20 && y === 51 && width === 152 && height === 2,
+    ),
+  );
+  assert.equal(
+    art.calls.some(([method]) => method === 'drawImage'),
+    false,
+  );
+});
+test('artwork completion repaints the same manual-clock frame and preserves reduced effects', async (t) => {
+  const art = artworkFixture();
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  await settleArtwork();
+  const paint = (settings) => {
+    art.calls.length = 0;
+    h.guide.update(0.1, settings);
+    return structuredClone(art.calls);
+  };
+  paint({});
+  for (const settings of [{ paused: true }, { reduced: true }]) {
+    const held = paint(settings);
+    art.calls.length = 0;
+    art.notify();
+    assert.deepEqual(art.calls, held);
+    assert.deepEqual(paint(settings), held);
+  }
+});
+test('retired guide catalogs cannot request images after a topic change, hidden page or disposal', async (t) => {
+  const pending = [];
+  const art = artworkFixture({
+    catalog: () => {
+      const item = deferredArtwork();
+      pending.push(item);
+      return item.promise;
+    },
+  });
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  await settleArtwork();
+  h.guide.open({ topic: 'line-impact' });
+  pending[0].resolve(enemyPresentations);
+  await settleArtwork();
+  assert.deepEqual(art.loads, []);
+  h.guide.open({ topic: 'bouncer' });
+  await settleArtwork();
+  h.doc.hidden = true;
+  h.doc.emit('visibilitychange');
+  pending[1].resolve(enemyPresentations);
+  await settleArtwork();
+  assert.deepEqual(art.loads, []);
+  h.doc.hidden = false;
+  h.doc.emit('visibilitychange');
+  await settleArtwork();
+  h.guide.dispose();
+  pending[2].resolve(enemyPresentations);
+  await settleArtwork();
+  assert.deepEqual(art.loads, []);
+  assert.equal(art.pool.size(), 0);
+});
+test('returning to a visible or reopened guide reacquires only its selected body', async (t) => {
+  const art = artworkFixture();
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  await settleArtwork();
+  for (const boundary of ['visibility', 'pagehide', 'close']) {
+    if (boundary === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+    }
+    if (boundary === 'pagehide') h.host.emit('pagehide');
+    if (boundary === 'close') h.guide.close();
+    assert.equal(art.pool.size(), 0);
+    assert.equal(art.released.length, art.loads.length);
+    if (boundary === 'visibility') {
+      h.doc.hidden = false;
+      h.doc.emit('visibilitychange');
+    }
+    if (boundary === 'pagehide') h.host.emit('pageshow');
+    if (boundary === 'close') h.guide.open();
+    await settleArtwork();
+    assert.equal(art.pool.size(), 1);
+    assert.equal(art.loads.length, art.released.length + 1);
+    assert.ok(art.loads.every((type) => type === 'bouncer'));
+    assert.equal(h.$('artwork-status').hidden, true);
+  }
+});
+test('hidden, closed, page-hidden and disposed previews release pending decodes without late painting', async (t) => {
+  for (const boundary of ['visibility', 'close', 'native-close', 'pagehide', 'dispose']) {
+    const pending = deferredArtwork();
+    let closed = 0,
+      signal;
+    const art = artworkFixture({
+      load: (_record, options) => {
+        signal = options.signal;
+        return pending.promise;
+      },
+    });
+    const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+    await settleArtwork();
+    assert.equal(art.loads.length, 1, boundary);
+    if (boundary === 'visibility') {
+      h.doc.hidden = true;
+      h.doc.emit('visibilitychange');
+    }
+    if (boundary === 'close') h.guide.close();
+    if (boundary === 'native-close') {
+      h.guide.dialog.close();
+      h.guide.dialog.emit('close');
+    }
+    if (boundary === 'pagehide') h.host.emit('pagehide');
+    if (boundary === 'dispose') h.guide.dispose();
+    assert.equal(signal.aborted, true, boundary);
+    assert.equal(art.pool.size(), 0, boundary);
+    art.calls.length = 0;
+    pending.resolve({
+      image: { retired: boundary },
+      release() {
+        closed++;
+      },
+    });
+    await settleArtwork();
+    art.notify();
+    assert.equal(closed, 1, boundary);
+    assert.deepEqual(art.calls, [], boundary);
+  }
+});
+test('practice releases artwork immediately and its return errors survive independent artwork failures', async (t) => {
+  const pause = deferredArtwork();
+  const art = artworkFixture({
+    load: async () => {
+      throw new Error('Artwork unavailable');
+    },
+  });
+  const h = setup(t, { ...art, getThemeId: () => 'fpv', onPractice: () => pause.promise });
+  await settleArtwork();
+  assert.match(h.$('artwork-status').textContent, /unavailable.*vector body/);
+  assert.equal(h.$('artwork-status').hidden, false);
+  const preparing = h.$('play').onclick();
+  assert.equal(art.pool.size(), 0);
+  assert.equal(h.$('artwork-status').hidden, true);
+  const loads = art.loads.length;
+  art.notify();
+  assert.match(h.$('status').textContent, /Preparing an isolated lesson/);
+  await settleArtwork();
+  pause.resolve();
+  assert.equal(await preparing, true);
+  art.notify();
+  assert.equal(art.loads.length, loads);
+  assert.equal(art.pool.size(), 0);
+  assert.match(h.$('status').textContent, /Practice only/);
+  h.host.sessionStorage.setItem = () => {
+    throw new Error('Restoration denied');
+  };
+  h.$('return').click();
+  await settleArtwork();
+  assert.match(h.$('status').textContent, /temporary handoff could not be restored/);
+  assert.match(h.$('artwork-status').textContent, /unavailable.*vector body/);
+  assert.equal(h.$('artwork-status').hidden, false);
 });
 test('practice uses a version-relative same-origin URL and restores only its own temporary handoff', async (t) => {
   const h = setup(t);
@@ -298,4 +558,99 @@ test('actual child practice can lose, Retry the same impact lesson and return to
   assert.equal(page.storage.writes.length, 0);
   assert.deepEqual(authoritativeCheckpoint(lost), checkpoint);
   assert.deepEqual(page.errors, []);
+});
+
+test('enlarged guide artwork keeps a 56px body within its canvas without enlarging contact or sampled poses', async (t) => {
+  const art = artworkFixture(),
+    sampled = [];
+  const h = setup(t, {
+    ...art,
+    getThemeId: () => 'fpv',
+    createBodyAssets(options) {
+      const assets = art.createBodyAssets(options);
+      return {
+        ...assets,
+        update(frames, ...args) {
+          sampled.push(...frames);
+          return assets.update(frames, ...args);
+        },
+      };
+    },
+  });
+  assert.match(h.$('preview-note').textContent, /Enlarged illustration.*center dot marks contact/);
+  assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
+  for (const record of enemyPresentations.entries) {
+    h.$('topic').value = record.type;
+    h.$('topic').onchange();
+    await settleArtwork();
+    // 6.4 seconds traverses more than two complete cosmetic orbits.
+    for (let tick = 0; tick < 64; tick++) {
+      art.calls.length = 0;
+      h.guide.update(0.1);
+      const image = art.calls.find(([method]) => method === 'drawImage');
+      assert.deepEqual(image.slice(2), [-28, -28, 56, 56]);
+      const [, x, y] = art.calls.find(([method]) => method === 'translate');
+      const [, heading] = art.calls.find(([method]) => method === 'rotate');
+      const [, sx, sy] = art.calls.find(([method]) => method === 'scale');
+      for (const px of [-28, 28])
+        for (const py of [-28, 28]) {
+          const u = x + Math.cos(heading) * sx * px - Math.sin(heading) * sy * py;
+          const v = y + Math.sin(heading) * sx * px + Math.cos(heading) * sy * py;
+          assert.ok(u >= 4 && u <= 188 && v >= 4 && v <= 108, `${record.type}: ${u},${v}`);
+        }
+      assert.ok(
+        art.calls.some(
+          ([method, cx, cy, radius]) => method === 'arc' && cx === 0 && cy === 0 && radius === 4,
+        ),
+      );
+    }
+  }
+  assert.ok(
+    sampled.every((frame) => Object.isFrozen(frame) && frame.diameter <= 40 && frame.radius === 4),
+  );
+});
+test('enlargement preserves failed-art and theme vector fallbacks, while the impact diagram stays separate', async (t) => {
+  const art = artworkFixture({
+    load: async () => {
+      throw new Error('No artwork');
+    },
+  });
+  const h = setup(t, { ...art, getThemeId: () => 'fpv' });
+  await settleArtwork();
+  for (const theme of ['fpv', 'ukraine']) {
+    h.$('theme').value = theme;
+    h.$('theme').onchange();
+    await settleArtwork();
+    art.calls.length = 0;
+    h.guide.update(0.1, { reduced: true });
+    assert.equal(
+      art.calls.some(([method]) => method === 'drawImage'),
+      false,
+    );
+    assert.deepEqual(art.calls.filter(([method]) => method === 'scale')[1], ['scale', 2, 2]);
+    assert.ok(
+      art.calls.some(
+        ([method, x, y, radius]) => method === 'arc' && x === 0 && y === 0 && radius === 4,
+      ),
+    );
+    const held = structuredClone(art.calls);
+    art.calls.length = 0;
+    art.notify();
+    assert.deepEqual(art.calls, held);
+  }
+  h.guide.open({ topic: 'line-impact' });
+  art.calls.length = 0;
+  h.guide.update(0.1, { reduced: true });
+  assert.match(h.$('preview-note').textContent, /^Line-impact diagram/);
+  assert.equal(h.$('preview').getAttribute('aria-label'), h.$('preview-note').textContent);
+  assert.ok(
+    art.calls.some(
+      ([method, x, y, w, height]) =>
+        method === 'fillRect' && x === 20 && y === 51 && w === 152 && height === 2,
+    ),
+  );
+  assert.equal(
+    art.calls.some(([method]) => method === 'drawImage' || method === 'arc'),
+    false,
+  );
 });

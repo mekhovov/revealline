@@ -1,5 +1,9 @@
-import { resolveScreenControls } from './input-presentation.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
+import {
+  DEFAULT_SCREEN_STEERING_HAND,
+  resolveScreenControls,
+  resolveScreenSteeringHand,
+} from './input-presentation.mjs';
 import { emptyProgress, validateProgress, awardCompletion, PROGRESS_VERSION } from './progress.mjs';
 import { CLASSES, TURN_POLICIES, loadoutHash } from './core/registry.mjs';
 import { versionsForCampaign } from './core/versions.mjs';
@@ -74,6 +78,7 @@ export const DEFAULT_PREFERENCES = Object.freeze({
   tapSteering: null,
   screenControls: 'auto',
   touchControls: null,
+  screenSteeringHand: DEFAULT_SCREEN_STEERING_HAND,
   keyboardBindings: null,
   controllerBindings: null,
   controllerBoostMode: DEFAULT_CONTROLLER_BOOST_MODE,
@@ -145,6 +150,7 @@ function preferencesValid(preferences) {
   preferences.screenControls = resolveScreenControls(preferences.screenControls);
   if (preferences.touchControls !== null)
     preferences.touchControls = resolveTouchControls(preferences.touchControls);
+  preferences.screenSteeringHand = resolveScreenSteeringHand(preferences.screenSteeringHand);
   required(
     ['hybrid', 'microtile', 'props'].includes(preferences.style),
     'preferences.style is invalid.',
@@ -285,6 +291,9 @@ function checkLibrary(candidate, { campaigns = [] } = {}) {
     value.preferences.screenControls = DEFAULT_PREFERENCES.screenControls;
   if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'touchControls'))
     value.preferences.touchControls = DEFAULT_PREFERENCES.touchControls;
+  if (plainObject(value.preferences) && !Object.hasOwn(value.preferences, 'screenSteeringHand'))
+    value.preferences.screenSteeringHand =
+      value.preferences.touchControls?.side ?? DEFAULT_PREFERENCES.screenSteeringHand;
   preferencesValid(value.preferences);
   required(plainObject(value.campaigns), 'Library campaigns must be an object.');
   capacity('campaigns', Object.keys(value.campaigns).length, LIBRARY_LIMITS.campaigns);

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ukraine Atlas wider body comparison</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        font:
+          16px system-ui,
+          sans-serif;
+        background: #14202d;
+        color: #f3ecdf;
+      }
+      body {
+        margin: 24px;
+        max-width: 1100px;
+      }
+      h1 {
+        font-size: 1.7rem;
+      }
+      p {
+        max-width: 960px;
+        line-height: 1.5;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+      }
+      select,
+      button {
+        font: inherit;
+        padding: 8px;
+      }
+      label {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+      }
+      article {
+        margin-block: 20px;
+        padding: 12px;
+        border: 1px solid #66727d;
+        border-radius: 8px;
+        overflow: auto;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 4px 0 10px;
+      }
+      canvas {
+        display: block;
+        width: 780px;
+        height: 215px;
+      }
+      a {
+        color: #a9d8ed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Ukraine Atlas: three wider body candidates</h1>
+    <p>
+      Preserved v1 beside new v3 originals, using the same body painter and procedural wings. Each
+      row shows 128px inspection and fixed 20px/32px frames at 1× CSS size. Source comparison only:
+      no gameplay, collider, ability, unlock or runtime binding changes.
+    </p>
+    <div class="controls">
+      <button id="play">Play</button>
+      <label
+        >Heading
+        <select id="heading">
+          <option value="0">North</option>
+          <option value="90">East</option>
+          <option value="180">South</option>
+          <option value="270">West</option>
+        </select></label
+      >
+      <label
+        >Background
+        <select id="background">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select></label
+      >
+      <label
+        >Held wing phase
+        <select id="phase">
+          <option value="0">Open</option>
+          <option value="1">Fold positive</option>
+          <option value="2">Open return</option>
+          <option value="3">Fold negative</option>
+        </select></label
+      >
+      <label
+        >Speed
+        <select id="speed">
+          <option value="0">Idle</option>
+          <option value="1" selected>Moving</option>
+        </select></label
+      >
+      <label><input id="wings" type="checkbox" checked />Wings</label>
+      <label><input id="guides" type="checkbox" />Pivot / sockets</label>
+      <label><input id="reduced" type="checkbox" />Reduced motion</label>
+    </div>
+    <p id="status" role="status">Loading three preserved and three new originals…</p>
+    <section id="rows" aria-label="Three role comparisons"></section>
+    <p>
+      <a href="README.md">Lineage and limits</a> · <a href="variants.json">Candidate records</a>.
+      Canvas rows scroll horizontally on narrow viewports to preserve their labeled 1× sizes. Pink
+      source frames and green roots are inspection guides, not collision geometry.
+    </p>
+    <script type="module">
+      import { validateVariants } from './model.mjs';
+      import { validatePresentations } from '../ukraine-role-presentations/model.mjs';
+      import { paintRole } from '../ukraine-role-presentations/preview.mjs';
+      import { createAnimationState, advanceAnimation } from '../../motion-lab/animation.mjs';
+      const byId = (id) => document.getElementById(id),
+        controls = Object.fromEntries(
+          ['play', 'heading', 'background', 'phase', 'speed', 'wings', 'guides', 'reduced'].map(
+            (id) => [id, byId(id)],
+          ),
+        );
+      let disposed = false,
+        playing = false,
+        frame = null,
+        previous = null;
+      const rows = [];
+      function held() {
+        playing = false;
+        controls.play.textContent = 'Play';
+        for (const row of rows)
+          for (const item of row.items)
+            item.state = {
+              ...createAnimationState(),
+              phases: { wings: (Number(controls.phase.value) * Math.PI) / 2 },
+            };
+      }
+      function draw() {
+        const light = controls.background.value === 'light';
+        for (const row of rows) {
+          const ctx = row.canvas.getContext('2d');
+          ctx.fillStyle = light ? '#f3ecdf' : '#071320';
+          ctx.fillRect(0, 0, 780, 215);
+          ctx.fillStyle = light ? '#152438' : '#e8eee8';
+          ctx.font = '13px monospace';
+          for (const [version, item] of row.items.entries()) {
+            for (const [size, x] of [
+              [128, version ? 252 : 90],
+              [20, version ? 447 : 389],
+              [32, version ? 628 : 553],
+            ]) {
+              paintRole(ctx, item.role, item.image, item.state, {
+                x,
+                y: 105,
+                inspectionPixels: size,
+                heading: (Number(controls.heading.value) * Math.PI) / 180,
+                speedRatio: Number(controls.speed.value),
+                reducedMotion: controls.reduced.checked,
+                showWings: controls.wings.checked,
+                guides: controls.guides.checked,
+              });
+              ctx.fillStyle = light ? '#152438' : '#e8eee8';
+              ctx.fillText(`${version ? 'v3' : 'v1'} ${size}px`, x - (size === 128 ? 33 : 25), 193);
+            }
+          }
+        }
+      }
+      function tick(now) {
+        if (disposed) return;
+        const elapsed = previous === null ? 0 : Math.min(0.1, (now - previous) / 1000);
+        previous = now;
+        if (playing)
+          for (const row of rows)
+            for (const item of row.items)
+              item.state = advanceAnimation(
+                item.state,
+                item.role.recipe,
+                { visualSpeed: Number(controls.speed.value), cruiseSpeed: 1 },
+                elapsed,
+                { reducedMotion: controls.reduced.checked },
+              );
+        draw();
+        frame = requestAnimationFrame(tick);
+      }
+      window.addEventListener(
+        'pagehide',
+        () => {
+          disposed = true;
+          if (frame !== null) cancelAnimationFrame(frame);
+        },
+        { once: true },
+      );
+      controls.play.addEventListener('click', () => {
+        playing = !playing;
+        controls.play.textContent = playing ? 'Pause' : 'Play';
+        previous = null;
+      });
+      controls.phase.addEventListener('change', held);
+      const loadImage = (role, base) =>
+        new Promise((resolve, reject) => {
+          const image = new Image();
+          image.onload = () =>
+            image.naturalWidth === role.width && image.naturalHeight === role.height
+              ? resolve(image)
+              : reject(new Error('Original dimensions differ'));
+          image.onerror = () => reject(new Error('Original load failed'));
+          image.src = new URL(role.body.src, base).href;
+        });
+      try {
+        const responses = await Promise.all([
+          fetch('./variants.json'),
+          fetch('../ukraine-role-presentations/presentations.json'),
+        ]);
+        if (responses.some((response) => !response.ok))
+          throw new Error('Source records unavailable');
+        const [newText, oldText] = await Promise.all(responses.map((response) => response.text()));
+        const newer = validateVariants(newText),
+          older = validatePresentations(oldText);
+        for (const role of newer.roles) {
+          const old = older.roles.find((item) => item.classId === role.classId),
+            items = [];
+          for (const [entry, base] of [
+            [old, new URL('../ukraine-role-presentations/', location.href)],
+            [role, new URL('./', location.href)],
+          ])
+            items.push({
+              role: entry,
+              image: await loadImage(entry, base),
+              state: createAnimationState(),
+            });
+          if (disposed) break;
+          const article = document.createElement('article'),
+            title = document.createElement('h2'),
+            canvas = document.createElement('canvas');
+          title.textContent = `${role.classId} · preserved v1 / fresh v3`;
+          canvas.width = 780;
+          canvas.height = 215;
+          canvas.setAttribute('aria-label', `${role.title}: v1 and v3 body comparison`);
+          article.append(title, canvas);
+          byId('rows').append(article);
+          rows.push({ canvas, items });
+        }
+        if (!disposed) {
+          held();
+          byId('status').textContent =
+            'Six originals loaded. Four held flap phases and animated speed samples are available; source verification and visual qualification remain separate.';
+          frame = requestAnimationFrame(tick);
+        }
+      } catch (error) {
+        if (!disposed) byId('status').textContent = `Preview unavailable: ${error.message}`;
+      }
+    </script>
+  </body>
+</html>
