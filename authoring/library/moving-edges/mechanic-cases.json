@@ -1,0 +1,1384 @@
+{
+  "format": "revealline-moving-edges-mechanic-cases.v1",
+  "classId": "scout",
+  "seed": 1,
+  "turnPolicies": ["immediate", "grid-center"],
+  "cases": [
+    {
+      "id": "standard-terrace-stitch-recover-south",
+      "kind": "recovered-win",
+      "difficulty": "standard",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 7.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 64.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 0.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-terrace-stitch-gameover",
+      "kind": "game-over",
+      "difficulty": "standard",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 3,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-survey-wheel-recover-north",
+      "kind": "recovered-win",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 8.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["right", 69.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 39.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["left", 0.5]
+        },
+        {
+          "to": ["up", 11.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["down", 31.5]
+        },
+        {
+          "to": ["left", 39.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-survey-wheel-gameover",
+      "kind": "game-over",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 3,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-breakwater-return-recover-south",
+      "kind": "recovered-win",
+      "difficulty": "standard",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 16.5]
+        },
+        {
+          "to": ["right", 65.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 26.5]
+        },
+        {
+          "to": ["up", 18.5]
+        },
+        {
+          "to": ["left", 0.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 47.5]
+        },
+        {
+          "to": ["down", 18.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 8.5]
+        },
+        {
+          "to": ["down", 35.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-breakwater-return-gameover",
+      "kind": "game-over",
+      "difficulty": "standard",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 3,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-wheel-warning-return",
+      "kind": "warning-return",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 29.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        }
+      ],
+      "status": "running",
+      "livesLost": 0,
+      "actorId": "wheel-interceptor"
+    },
+    {
+      "id": "standard-life-win-0",
+      "kind": "life-win",
+      "difficulty": "standard",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["down", 29.5]
+        },
+        {
+          "to": ["right", 9.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 7.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 64.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 0.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "standard-enemy-slow-1",
+      "kind": "slow-expiry",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["left", 18.5]
+        },
+        {
+          "to": ["up", 24.5]
+        },
+        {
+          "ticks": 800,
+          "direction": null
+        }
+      ],
+      "status": "running",
+      "livesLost": 0
+    },
+    {
+      "id": "standard-rover-claimed-18.5",
+      "kind": "actor-loss",
+      "difficulty": "standard",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["down", 18.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "terrace-rover",
+      "cause": "enemy-player"
+    },
+    {
+      "id": "standard-interceptor-44.5",
+      "kind": "actor-loss",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 29.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": null
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "wheel-interceptor",
+      "cause": "enemy-trail"
+    },
+    {
+      "id": "standard-wheel-counterclockwise-loss",
+      "kind": "actor-loss",
+      "difficulty": "standard",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "ticks": 276,
+          "direction": "up"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "up"
+        },
+        {
+          "ticks": 248,
+          "direction": "left"
+        },
+        {
+          "ticks": 280,
+          "direction": "down"
+        },
+        {
+          "ticks": 448,
+          "direction": "right"
+        },
+        {
+          "ticks": 180,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "wheel-counterclockwise",
+      "cause": "enemy-trail"
+    },
+    {
+      "id": "standard-breakwater-west-loss",
+      "kind": "actor-loss",
+      "difficulty": "standard",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "ticks": 303,
+          "direction": "right"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "breakwater-west",
+      "cause": "enemy-trail"
+    },
+    {
+      "id": "gentle-terrace-stitch-recover-south",
+      "kind": "recovered-win",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 7.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 64.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 0.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-terrace-stitch-gameover",
+      "kind": "game-over",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 5,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-survey-wheel-recover-north",
+      "kind": "recovered-win",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 8.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["right", 64.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 39.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["left", 0.5]
+        },
+        {
+          "to": ["up", 11.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["down", 31.5]
+        },
+        {
+          "to": ["left", 39.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-survey-wheel-gameover",
+      "kind": "game-over",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["right", 43.5]
+        },
+        {
+          "to": ["down", 33.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 5,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-breakwater-return-recover-north",
+      "kind": "recovered-win",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 26.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 8.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 47.5]
+        },
+        {
+          "to": ["down", 18.5]
+        },
+        {
+          "to": ["left", 0.5]
+        },
+        {
+          "to": ["right", 65.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 47.5]
+        },
+        {
+          "to": ["down", 18.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 14.5]
+        },
+        {
+          "to": ["left", 8.5]
+        },
+        {
+          "to": ["up", 0.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-breakwater-return-gameover",
+      "kind": "game-over",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "lost",
+      "livesLost": 5,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-wheel-warning-return",
+      "kind": "warning-return",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 29.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        }
+      ],
+      "status": "running",
+      "livesLost": 0,
+      "actorId": "wheel-interceptor"
+    },
+    {
+      "id": "gentle-life-win-3",
+      "kind": "life-win",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 7.5]
+        },
+        {
+          "to": ["down", 21.5]
+        },
+        {
+          "to": ["left", 3.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        },
+        {
+          "to": ["down", 29.5]
+        },
+        {
+          "to": ["right", 9.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 7.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["down", 20.5]
+        },
+        {
+          "to": ["right", 71.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["left", 64.5]
+        },
+        {
+          "to": ["down", 35.5]
+        },
+        {
+          "to": ["left", 0.5]
+        },
+        {
+          "to": ["up", 20.5]
+        },
+        {
+          "to": ["right", 71.5]
+        }
+      ],
+      "status": "won",
+      "livesLost": 1,
+      "cause": "self-contact",
+      "actorId": "player"
+    },
+    {
+      "id": "gentle-enemy-slow-1",
+      "kind": "slow-expiry",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 31.5]
+        },
+        {
+          "to": ["left", 18.5]
+        },
+        {
+          "to": ["up", 24.5]
+        },
+        {
+          "ticks": 800,
+          "direction": null
+        }
+      ],
+      "status": "running",
+      "livesLost": 0
+    },
+    {
+      "id": "gentle-rover-claimed-18.5",
+      "kind": "actor-loss",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-terrace-stitch",
+      "commands": [
+        {
+          "to": ["right", 34.5]
+        },
+        {
+          "to": ["up", 0.5]
+        },
+        {
+          "to": ["down", 18.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "terrace-rover",
+      "cause": "enemy-player"
+    },
+    {
+      "id": "gentle-interceptor-44.5",
+      "kind": "actor-loss",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "to": ["up", 29.5]
+        },
+        {
+          "to": ["right", 44.5]
+        },
+        {
+          "untilLoss": true,
+          "direction": null
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "wheel-interceptor",
+      "cause": "enemy-trail"
+    },
+    {
+      "id": "gentle-wheel-counterclockwise-loss",
+      "kind": "actor-loss",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-survey-wheel",
+      "commands": [
+        {
+          "ticks": 200,
+          "direction": "right"
+        },
+        {
+          "ticks": 276,
+          "direction": "up"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "up"
+        },
+        {
+          "ticks": 448,
+          "direction": "left"
+        },
+        {
+          "ticks": 276,
+          "direction": "down"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "down"
+        },
+        {
+          "ticks": 248,
+          "direction": "right"
+        },
+        {
+          "ticks": 120,
+          "direction": "up"
+        },
+        {
+          "ticks": 244,
+          "direction": "left"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 68,
+          "direction": "left"
+        },
+        {
+          "ticks": 72,
+          "direction": "up"
+        },
+        {
+          "ticks": 508,
+          "direction": "right"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 60,
+          "direction": "right"
+        },
+        {
+          "ticks": 160,
+          "direction": "down"
+        },
+        {
+          "ticks": 61,
+          "direction": "left"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "wheel-counterclockwise",
+      "cause": "enemy-trail"
+    },
+    {
+      "id": "gentle-breakwater-west-loss",
+      "kind": "actor-loss",
+      "difficulty": "gentle",
+      "levelId": "moving-edges-breakwater-return",
+      "commands": [
+        {
+          "ticks": 520,
+          "direction": "right"
+        },
+        {
+          "ticks": 132,
+          "direction": "down"
+        },
+        {
+          "ticks": 1,
+          "direction": null
+        },
+        {
+          "ticks": 4,
+          "direction": "down"
+        },
+        {
+          "ticks": 312,
+          "direction": "left"
+        },
+        {
+          "ticks": 125,
+          "direction": "up"
+        },
+        {
+          "recover": true
+        }
+      ],
+      "status": "running",
+      "livesLost": 1,
+      "actorId": "breakwater-west",
+      "cause": "enemy-trail"
+    }
+  ]
+}
