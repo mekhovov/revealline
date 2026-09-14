@@ -308,6 +308,12 @@
       "path": "scripts/test-external-distribution.mjs",
       "bytes": 9084,
       "sha256": "9f666ffd39c61e78acc2f6a59bdf93683c8422f8c8b0b1658a6b6e6e9ae0faa5"
+    },
+    {
+      "path": "scripts/test-production-metadata-history.mjs",
+      "bytes": 11429,
+      "sha256": "3e635bdaa2d71c3f1c18027be0283d53162db025fbee038e596a53353699abc7"
     }
-  ]
+  ],
+  "qualificationCorrection": "The e903 candidate exposed a private v2 test fixture that retained an independent valid copy; the corrected fixture isolates its missing/changed/symlink contract without changing production history."
 }
