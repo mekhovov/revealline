@@ -2,6 +2,8 @@
 
 **Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
 
+The active FPV redesign follows the approved [Field Kit design contract](fpv-redesign-design.md) and its [phase execution register](fpv-redesign-execution.md). The source [design atlas](../authoring/design-atlas/index.html) distinguishes reference evidence, original mockups and implemented review controls. Use those contracts in new asset and UI prompts. Do not describe the atlas as the redesigned runtime, or future studio controls as delivered before their phase passes the release path below.
+
 This project’s current authorization is to commit each completed feature or phase, freeze a new independently playable version, create and merge its pull request, deploy it to GitHub Pages, and verify that deployment. No repeated permission request is needed for these scoped actions. This does not authorize unrelated external messages or native-store purchases/submissions.
 
 Before freezing a successor, project the main and archive Pages sizes from immutable manifests and the proposed allocation. The main site carries a mutable current graph in addition to every unarchived version. Passing game-source tests does not establish hosting capacity. A changed allocation requires a new source candidate; deploy and verify the archive before enabling main-site forwarding. Preserve the held candidate's successful evidence rather than relabelling it as a game failure.
