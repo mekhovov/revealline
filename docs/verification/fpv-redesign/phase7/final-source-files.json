@@ -195,6 +195,16 @@
       "sha256": "7474c86ad6f2336f0297341e347a345c58e39ca1c5932f5c73d24ca251d6b9ca"
     },
     {
+      "path": "game/test/creator-tools-scope-host.test.mjs",
+      "bytes": 4106,
+      "sha256": "4a0321922ecc6a22a21d99af4cf66de350dd0c91bbcf05f86dedfdeb1516e739"
+    },
+    {
+      "path": "game/test/device-controls-host.test.mjs",
+      "bytes": 25719,
+      "sha256": "1ebee1d25db527aa83d6efc144b8b362b54005b46c38591c66164b6393dc327b"
+    },
+    {
       "path": "game/test/enemy-guide-panel.test.mjs",
       "bytes": 25423,
       "sha256": "f682b75958b27eda95f871af6b15d0192ca78c4fd858ffbc1270c754dc96a900"
@@ -243,6 +253,11 @@
       "path": "game/test/still-workshop-build.test.mjs",
       "bytes": 19094,
       "sha256": "8ac637b5a5779bbe055441110a49ad3950583d52fcdd2a426475da4f4483545c"
+    },
+    {
+      "path": "game/test/storage-retention-host.test.mjs",
+      "bytes": 5850,
+      "sha256": "b36d9a015043cf485d4f3d40d23468b4d43dbbc9949d520e1377e54112a0bc59"
     },
     {
       "path": "game/ui/enemy-guide.mjs",
@@ -315,5 +330,9 @@
       "sha256": "3e635bdaa2d71c3f1c18027be0283d53162db025fbee038e596a53353699abc7"
     }
   ],
-  "qualificationCorrection": "The e903 candidate exposed a private v2 test fixture that retained an independent valid copy; the corrected fixture isolates its missing/changed/symlink contract without changing production history."
+  "qualificationCorrections": [
+    "Private v2 provenance fixture isolates its missing/changed/symlink source contract without changing production history.",
+    "Creator and retention host fixtures enter the actual Game data category before asserting usable controls and focus.",
+    "Three full-original featured-picture preparation predicates use the existing bounded bulk-inventory allowance with failure state; ordinary input waits and runtime timeouts are unchanged."
+  ]
 }
