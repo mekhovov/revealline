@@ -1,0 +1,92 @@
+{
+  "result": "DEFECT_CONFIRMED",
+  "scope": "Published v0.57.0 native Library placement repro only; not v0.57.1 qualification or P01 acceptance.",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/",
+  "publicSource": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "unchangedPatchSource": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "method": "Real Chrome native Enter on visible Export game data. Read-only DOM/capture-event observers. No API delay, fetch substitution, app-state mutation or public DOM/style change. Driver focus may scroll before action; no driver scroll after action.",
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "buttonY": [
+        563.1875,
+        607.1875
+      ],
+      "busyStatusY": [
+        1689.375,
+        1743.375
+      ],
+      "busyCancelY": [
+        111.296875,
+        155.296875
+      ],
+      "terminalStatusY": [
+        1625.375,
+        1841.375
+      ],
+      "dialogScrollBeforeDuringAfter": [
+        0,
+        0,
+        0
+      ],
+      "firstMutationAt": "2026-09-15T13:12:29.501Z",
+      "releasedAt": "2026-09-15T13:12:29.648Z"
+    },
+    {
+      "width": 844,
+      "height": 390,
+      "buttonY": [
+        172.640625,
+        216.640625
+      ],
+      "busyStatusY": [
+        945.828125,
+        972.828125
+      ],
+      "busyCancelY": [
+        -189.953125,
+        -145.953125
+      ],
+      "terminalStatusY": [
+        945.828125,
+        1053.828125
+      ],
+      "dialogScrollBeforeDuringAfter": [
+        250,
+        314,
+        250
+      ],
+      "firstMutationAt": "2026-09-15T13:12:55.408Z",
+      "releasedAt": "2026-09-15T13:12:55.549Z"
+    }
+  ],
+  "limits": [
+    "Busy phases are native DOM/geometry observations; screenshots capture before and terminal states, not a promise that every short phase painted a distinct frame.",
+    "Landscape dialog scroll changed 250\u2192314\u2192250 automatically as the header cancel appeared/disappeared; export button remained fixed at y172.640625. No driver scroll followed either activation.",
+    "Focus was export-backup before activation and BODY while disabled/after completion; no separate focus defect conclusion is made.",
+    "No native cancellation was attempted: the real export finished within about 150ms.",
+    "Fresh ordinary profile needed no Solo play and had no service-worker controller. No offline preparation or bulk imports.",
+    "Only final downloaded file bytes remain; both actual 799-byte browser completions are retained in the event log."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "OWN_CAPACITY_STOP_BEFORE_EXPORT",
+      "reason": "Chrome OptimizationGuide model/cache writes exceeded initial 40MiB cap. Owned Chrome terminated; a subsequent CLI fallback about:blank was detected and closed, and excluded."
+    },
+    {
+      "attempt": 2,
+      "result": "REPRO_COMPLETED_AND_CLOSED",
+      "reason": "Explicitly authorized same-profile retry; background OptimizationGuide downloads disabled; 60MiB cap, 512MiB future reserve and 16MiB evidence/package allowances respected. Exact PID/WS guarded each CLI action."
+    }
+  ],
+  "closeHelperInitialRefusal": "Copied helper rejected this profile before action; the replacement changed only the exact allowed owned-profile guard and then closed that browser.",
+  "screenshotOriginals": {
+    "portrait-before-export.png": "/Users/oleksandr.mekhovov/.agent-browser/tmp/screenshots/screenshot-1789477949249.png",
+    "portrait-after-export.png": "/Users/oleksandr.mekhovov/.agent-browser/tmp/screenshots/screenshot-1789477949974.png",
+    "landscape-before-export.png": "/Users/oleksandr.mekhovov/.agent-browser/tmp/screenshots/screenshot-1789477975192.png",
+    "landscape-after-export.png": "/Users/oleksandr.mekhovov/.agent-browser/tmp/screenshots/screenshot-1789477975906.png"
+  },
+  "followup": "Required P01 correction: present the active status and its cancel/Stop together from deep Saves/Packs triggers without forced scrolling. Cache-only proposal follows separately."
+}

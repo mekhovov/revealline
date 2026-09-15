@@ -1,0 +1,21 @@
+{
+  "status": "UPLOADED_VERIFIED",
+  "uploadRequested": true,
+  "repository": "mekhovov/revealline",
+  "releaseId": 389160255,
+  "tag": "v0.57.1",
+  "sourceCommit": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "sourceBytes": 823808000,
+  "sourceSha256": "8a05aeeeae5e3a2a2da53cf5e716d532e27abc1ed48954dd95bcf4307761beb0",
+  "outerSha256": "e9b9cf9d6ac976e443124a2e17468f052f61ad9b92403790d4cc0a5dba47ad52",
+  "inspectionSha256": "9ca77ac1f168fde6494bc9d70b0783b1efcfcb509ff3f99242ddfa4b9c1647f8",
+  "automaticRetry": false,
+  "tagCommit": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "assetId": 565740258,
+  "assetName": "source.tar",
+  "bytes": 823808000,
+  "sha256": "8a05aeeeae5e3a2a2da53cf5e716d532e27abc1ed48954dd95bcf4307761beb0",
+  "serverDigest": "sha256:8a05aeeeae5e3a2a2da53cf5e716d532e27abc1ed48954dd95bcf4307761beb0",
+  "postCount": 1,
+  "readBackVerified": true
+}
