@@ -1,5 +1,10 @@
 # Xonix content authoring kit
 
+For shared-screen cooperative levels, use the [Relay Rescue level and pack builder](coop/README.md).
+Choose a territory or stronghold template per level, then author its routes and encounter timing.
+The builder emits a dedicated co-op pack that can be opened directly in the co-op lobby. Existing
+solo and Race content retain their own formats and rules.
+
 Guide for v0.21 source authoring · 12 September 2026
 
 v0.21 adds [same-map Standard and Gentle campaign play](../docs/campaign-difficulty.md), keeping authored maps, artwork and existing portable formats. Mission/picture/appearance access is shared; scores and medals stay separate, and equipment seals require Standard. Maintain exact derived execution contexts and the immutable `gentle.v1` policy when importing or restoring. The [1,831-test source gates](../docs/verification/round-30/v021-source-gates.md), [152-file archive rebuild](../docs/verification/round-30/v021-integrity.md) and [packaged browser journey](../docs/verification/round-30/v021-browser.md) identify frozen source `1250a8afdcf9594d87ed6a79ba29639d1225fa69`; deployment status is tracked separately in the [public-release guide](../docs/public-release.md).

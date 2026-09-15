@@ -653,6 +653,7 @@ export async function buildProject({
   const files = await collectBuildFiles(root, config);
   await assertOutput(root, out, config.include);
   await validateBuildReferences(root, files);
+  if (files.includes('game/coop/library.mjs')) await validateCoopContent(root);
   if (files.includes('game/content/campaign.json')) await validateLevels(root);
   if (files.includes('game/content/themes.json')) await validateThemes(root);
   if (files.includes('game/content/classes.json')) await validateClasses(root);
@@ -1114,6 +1115,7 @@ export async function main(argv = process.argv.slice(2)) {
         ...(await validateThemes()),
         ...(await validateClasses()),
         ...(await validatePacks()),
+        ...(await validateCoopContent()),
       }),
     );
   } else if (action === 'inspect-goals') {
@@ -1141,6 +1143,19 @@ async function coreValidator(root = PROJECT_ROOT) {
   );
   if (typeof validateLevel !== 'function') fail('Core does not export validateLevel');
   return validateLevel;
+}
+
+export async function validateCoopContent(root = PROJECT_ROOT) {
+  if (!(await exists(path.join(root, 'game/coop/library.mjs')))) return {};
+  const { COOP_STARTER_PACK } = await import(
+    pathToFileURL(path.join(root, 'game/coop/library.mjs')).href
+  );
+  const { validateCoopPack } = await import(
+    pathToFileURL(path.join(root, 'game/coop/recipes.mjs')).href
+  );
+  const result = validateCoopPack(COOP_STARTER_PACK);
+  if (!result.valid) fail(`Invalid co-op library: ${result.errors.join(' ')}`);
+  return { coopPacks: 1, coopLevels: COOP_STARTER_PACK.levels.length };
 }
 
 export async function validateLevels(root = PROJECT_ROOT) {
