@@ -91,7 +91,10 @@ fonts, complete text, visible focus, scrolling, pause actions and 44px touch
 targets after reflow. Verify the real system preference and a second page's
 storage event, including a denied save. Resume must remain explicit. Keep
 physical controller, touch-device and assistive-technology evidence separate.
-No browser, device or visual acceptance is claimed by this candidate.
+The [scoped native preference journey](verification/cross-mode/p05-a/README.md)
+records keyboard selection and Solo→Team→Versus→Solo restoration at the desktop
+preview. Team only started and paused at 0:00. It does not close the remaining
+viewport, system-toggle, storage-event, failure or physical-device checks.
 
 A final integrated source must receive its normal exact-source tests, static and
 production-readiness checks before release qualification. This slice does not

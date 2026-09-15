@@ -1,0 +1,242 @@
+{
+  "format": "revealline.p05a-scoped-native.v1",
+  "packagedAt": "2026-09-15T15:54:28.606217+00:00",
+  "observationDate": "2026-09-15",
+  "observer": "Root assistant using actual in-app browser keyboard and computed DOM observations",
+  "source": {
+    "commit": "4700120adbc670cb6632eca00b151080d73aa1ad",
+    "tree": "59be833c39f24b6e2917192f1c3f65b3e6f2e3f3",
+    "preview": "http://127.0.0.1:50168/game/",
+    "authority": "Local source overlay with exact 4700120 Git fallback for absent files; source worktree remained clean through native handoff. No per-request complete response manifest or public/frozen-release claim."
+  },
+  "journey": [
+    {
+      "step": "Solo Settings",
+      "result": "Keyboard Space, direction arrows, Return selected Plain and Large; Reduced effects checked. Root observed body plain/large/reduced and a system-ui 48px heading.",
+      "evidence": ["native/solo-plain-large-reduced.txt", "native/solo-plain-large-reduced.jpg"]
+    },
+    {
+      "step": "Team entry and limited pause",
+      "result": "Inherited Plain/Large/Reduced. Root observed system-ui 48px heading and matching body state. Keyboard selected Theme font while preserving Large/Reduced, started then paused at 0:00; root judged the Theme HUD readable at reported 1231×1348 desktop viewport. This was not an ongoing-cut checkpoint journey.",
+      "evidence": [
+        "native/team-inherited-plain-large-reduced.txt",
+        "native/team-large-theme-paused.txt",
+        "native/team-large-theme-paused.jpg"
+      ]
+    },
+    {
+      "step": "Versus Options",
+      "result": "Inherited Theme font/Large/Reduced; keyboard chose Plain/Standard, retaining Reduced.",
+      "evidence": [
+        "native/versus-inherited-theme-large-reduced.txt",
+        "native/versus-plain-standard-reduced.txt"
+      ]
+    },
+    {
+      "step": "Return to Solo",
+      "result": "Settings restored Plain/Standard/Reduced after cross-document navigation.",
+      "evidence": ["native/solo-restored-plain-standard-reduced.txt"]
+    }
+  ],
+  "inputObservation": "Initial Return\u2192Down\u2192Return did not change the native selects. Space\u2192arrow\u2192Return did. Retained as a platform input observation, not a demonstrated game defect.",
+  "computedObservationsAuthority": "Reported by root from live computed DOM; the retained text captures primarily show accessibility state and selected controls, not an independent raw computed-style receipt.",
+  "automated": {
+    "wholeFileCasesPerRuntime": 113,
+    "filteredSurfaceCasesPerRuntime": 6,
+    "runtimes": ["20.19.5", "22.22.2"],
+    "scope": "Ten complete files plus six selected Settings/surface cases. Separate original runtime receipt retains exact commands/counts/held source hashes; source/cache relative references describe the original run layout. Only listed files are repackaged here.",
+    "initialFailures": "First host bootstrap lacked exact 4,170-byte existing MP3; finite Git restore corrected setup. Initial 11-file run had 119pass/1fail because full packaging namespace was absent; its packaging-only case remains unverified, not silently counted as passed."
+  },
+  "images": [
+    {
+      "path": "native/solo-plain-large-reduced.jpg",
+      "mime": "image/jpeg",
+      "raster": {
+        "width": 1231,
+        "height": 1348
+      },
+      "note": "Original cache .png name contained JPEG bytes; retained bytes under .jpg, without editing or re-encoding."
+    },
+    {
+      "path": "native/team-large-theme-paused.jpg",
+      "mime": "image/jpeg",
+      "raster": {
+        "width": 1231,
+        "height": 1348
+      },
+      "note": "Original cache .png name contained JPEG bytes; retained bytes under .jpg, without editing or re-encoding."
+    }
+  ],
+  "limits": [
+    "No resized portrait/short-landscape viewport or zoom qualification.",
+    "No real system-motion toggle, storage-event delivery, denied-storage or practice/writer-failure native journey.",
+    "No physical controller, touch device or assistive-technology acceptance.",
+    "No native paused ongoing cut, replay or score preservation proof; those boundaries have focused modeled-host tests.",
+    "No full Team art/palette integration, full phase completion, full release CI, producer or public-release acceptance."
+  ],
+  "files": [
+    {
+      "path": "native/solo-plain-large-reduced.txt",
+      "bytes": 3336,
+      "sha256": "7bac13cc0dc57169bf29f28ff42908eec5359e7ccbbe3e8096218ffe3a86dab8",
+      "originalPath": ".cache/p05a-browser/solo-plain-large-reduced.txt",
+      "originalBytes": 3335,
+      "originalSha256": "e4e637b9c1df99c544fd7b271b296560768f15ebd3a32d2fce5bd74546a35672",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/solo-restored-plain-standard-reduced.txt",
+      "bytes": 3336,
+      "sha256": "982a6cb1f25bfa817c241b95381ca152db553ad2cad0fa5a17da5158989ac227",
+      "originalPath": ".cache/p05a-browser/solo-restored-plain-standard-reduced.txt",
+      "originalBytes": 3335,
+      "originalSha256": "e3270ae1d7147a8340a62a6f94eadf2945067a2f813f967aae7998b6667260ee",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/team-inherited-plain-large-reduced.txt",
+      "bytes": 3632,
+      "sha256": "f44739baddf54081cb7723cec133c8a6e3d14949697b94a05cfdb51ff47ea447",
+      "originalPath": ".cache/p05a-browser/team-inherited-plain-large-reduced.txt",
+      "originalBytes": 3631,
+      "originalSha256": "a8b6222298b7b423cd75a89b0c8c5959e2251be8249e5ebb25721b5a3254a923",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/team-large-theme-paused.txt",
+      "bytes": 1420,
+      "sha256": "37f7d57f2a312b450a6e32bd55d86f298ea93c1339fa3d1e743605cc098eac76",
+      "originalPath": ".cache/p05a-browser/team-large-theme-paused.txt",
+      "originalBytes": 1419,
+      "originalSha256": "3c755c46c009bbd1f36deb154df450c3e4f35b2d8c087de3ae04cd79e8bcd3aa",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/versus-inherited-theme-large-reduced.txt",
+      "bytes": 1355,
+      "sha256": "34c68789f5d4661235eead3871da78014ff1ca4429ec0a471f782e43e30d5190",
+      "originalPath": ".cache/p05a-browser/versus-inherited-theme-large-reduced.txt",
+      "originalBytes": 1354,
+      "originalSha256": "6e1216aba68fed7cc45c326da4e942177372a8ee16665867d41514165dd0e30e",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/versus-plain-standard-reduced.txt",
+      "bytes": 1355,
+      "sha256": "a40f677a8ad5c04087b690a5774d57b8d648469db23d1e0d24e27366ff595cf4",
+      "originalPath": ".cache/p05a-browser/versus-plain-standard-reduced.txt",
+      "originalBytes": 1354,
+      "originalSha256": "1868e6e3cf323cfe1586001a54a80154602fa9bc20cf86046738cb5bd4c4447c",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "native/solo-plain-large-reduced.jpg",
+      "bytes": 79966,
+      "sha256": "26ed0cc7759156d8c10d6068b782547b5121739aeaf3f4b57a0fa81597c4269d",
+      "originalPath": ".cache/p05a-browser/solo-plain-large-reduced.png",
+      "originalBytes": 79966,
+      "originalSha256": "26ed0cc7759156d8c10d6068b782547b5121739aeaf3f4b57a0fa81597c4269d",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "native/team-large-theme-paused.jpg",
+      "bytes": 95371,
+      "sha256": "7775633d4b6f93d9b12f165ea1f653ed86a5f5fafa40210dc126dc84e92a31db",
+      "originalPath": ".cache/p05a-browser/team-large-theme-paused.png",
+      "originalBytes": 95371,
+      "originalSha256": "7775633d4b6f93d9b12f165ea1f653ed86a5f5fafa40210dc126dc84e92a31db",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "preview/serve.py",
+      "bytes": 1699,
+      "sha256": "7d8b0f914dc4b6780c5104c4c25be5c4fb90fead3c885c2528aa8e8e4e58d343",
+      "originalPath": ".cache/p05a-browser/serve.py",
+      "originalBytes": 1699,
+      "originalSha256": "7d8b0f914dc4b6780c5104c4c25be5c4fb90fead3c885c2528aa8e8e4e58d343",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "preview/server.json",
+      "bytes": 175,
+      "sha256": "2cb127ac5464442f531eeafee7fa19a082bdba4ba757c9f214ca70a1ec980c36",
+      "originalPath": ".cache/p05a-browser/server.json",
+      "originalBytes": 174,
+      "originalSha256": "eb4b9302a3189d7109e73287615cfdf8f6031de0d47f847b997690f8283f6413",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "automated/verification.json",
+      "bytes": 9364,
+      "sha256": "2032e3d6dfe9cc0814d470fd1aba3d00e4808b411b13b48b5ab9b6f33cb79b96",
+      "originalPath": ".cache/p05a/verification.json",
+      "originalBytes": 9364,
+      "originalSha256": "2032e3d6dfe9cc0814d470fd1aba3d00e4808b411b13b48b5ab9b6f33cb79b96",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "automated/peer-source.json",
+      "bytes": 922,
+      "sha256": "0fef56f05db6b78bdd6e8330d2fc9ee0e8d43e6512fd639cd05cde0ea656dd79",
+      "originalPath": ".cache/p05a/peer-source.json",
+      "originalBytes": 922,
+      "originalSha256": "0fef56f05db6b78bdd6e8330d2fc9ee0e8d43e6512fd639cd05cde0ea656dd79",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "automated/focused-node20.txt",
+      "bytes": 26603,
+      "sha256": "d32d024f5a799a7494ca449355268d9636434585b289c72e2c89ca04cef37c7a",
+      "originalPath": ".cache/p05a/focused-node20.log",
+      "originalBytes": 26715,
+      "originalSha256": "8472a55866d782224fd44abb68b0a21b5373eb0528d41f7fd6537d4cb2ffb54d",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "automated/focused-node22.txt",
+      "bytes": 28305,
+      "sha256": "420818152a911b1849dcd7c7d046b4b60610739030afa4ba4f2f0425f2c41d8d",
+      "originalPath": ".cache/p05a/focused-node22.log",
+      "originalBytes": 28417,
+      "originalSha256": "7c455e57e6af28f41a33f853a795351eef44a96e012f3470931c64ac71c9e91c",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    },
+    {
+      "path": "automated/surfaces-node20.txt",
+      "bytes": 1726,
+      "sha256": "d71ad94249dc16b8bea57399ead1bd978ad22ebcb82543471d7fa214617c84b8",
+      "originalPath": ".cache/p05a/surfaces-node20.log",
+      "originalBytes": 1726,
+      "originalSha256": "d71ad94249dc16b8bea57399ead1bd978ad22ebcb82543471d7fa214617c84b8",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "automated/surfaces-node22.txt",
+      "bytes": 1568,
+      "sha256": "fb1d92b4aad0888ed46ae8a66a0ea8d3f46b0d399f6565b916343717039d19a8",
+      "originalPath": ".cache/p05a/surfaces-node22.log",
+      "originalBytes": 1568,
+      "originalSha256": "fb1d92b4aad0888ed46ae8a66a0ea8d3f46b0d399f6565b916343717039d19a8",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "automated/host-initial-node20.txt",
+      "bytes": 1536,
+      "sha256": "2bf9019fff4d8ccdacb002e382cfc4c1a9d64698f7eab0fb18e006f085dfa632",
+      "originalPath": ".cache/p05a/host-initial-node20.log",
+      "originalBytes": 1536,
+      "originalSha256": "2bf9019fff4d8ccdacb002e382cfc4c1a9d64698f7eab0fb18e006f085dfa632",
+      "transformation": "none; byte-exact"
+    },
+    {
+      "path": "automated/focused-initial-node20.txt",
+      "bytes": 29419,
+      "sha256": "b1e553e30d18f915341128877a7e6046535bf119adaed3b015349f40783c5de7",
+      "originalPath": ".cache/p05a/focused-initial-node20.log",
+      "originalBytes": 29531,
+      "originalSha256": "0210de8e872fbfc952360d35b798d433f24788a37b9bb14b5688913c842a723a",
+      "transformation": "trim trailing line whitespace and normalize exactly one terminal LF"
+    }
+  ],
+  "freshFreeBytes": 1853210624
+}
