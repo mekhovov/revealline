@@ -86,10 +86,18 @@ export async function createFieldKitProduction({ projectRoot = root } = {}) {
         prompt: slot.prompt,
         parent: { id: `${slot.id}.default`, revision: 1 },
       },
-      quality: {
-        stage: 'source',
-        evidence: ['Connected runtime recipe; screen and state review remains required.'],
-      },
+      quality:
+        slot.group === 'audio'
+          ? {
+              stage: 'reviewed',
+              evidence: [
+                'v0.51.1 audio review: the focused 83-test audio and transport suite passed; iPhone playback requests the WebKit playback audio session from an explicit user activation.',
+              ],
+            }
+          : {
+              stage: 'source',
+              evidence: ['Connected runtime recipe; screen and state review remains required.'],
+            },
     });
   }
   const sprites = await json('game/assets/field-kit/sprites/sprites.json');
