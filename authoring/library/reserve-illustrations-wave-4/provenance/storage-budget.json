@@ -1,0 +1,16 @@
+{
+  "scope": "Combined waves4+5 current production snapshot; prospective raw Git bytes count both waves once. Final wave5 receipt supersedes this partial count.",
+  "atWave": 4,
+  "generatedOutputsSoFar": 5,
+  "toolOriginalBytes": 12937018,
+  "workspaceCohortBytes": 13325891,
+  "cacheEvidenceBytes": 374072,
+  "prospectiveRawGitBytes": 13325891,
+  "smallOverheadAllowanceBytes": 1048576,
+  "conservativeBytes": 41011448,
+  "capBytes": 73400320,
+  "freeBeforeWriteBytes": 1628549120,
+  "minimumActionFreeBytes": 1073741824,
+  "reserveBytes": 805306368,
+  "sharingCredit": 0
+}

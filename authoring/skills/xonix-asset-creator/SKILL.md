@@ -23,12 +23,6 @@ For moving sprites, rotors, trails, capture effects or UI transitions, consult [
 
 For applying art to selectable or earned characters, use [Character Collection](../xonix-character-collection/SKILL.md) to preserve stable IDs, component bindings and eligibility. Inspect the actual switched visual after loading; a contact sheet or registered filename does not establish that the intended character paints correctly in the preview.
 
-## Count reserve artwork separately
-
-The reserve picture cohorts contain eight distinct source illustrations: four at `ec052af43a53354e3b8df5733448adcbb0b020b1` under `authoring/library/reserve-illustrations-wave-1`, and four selected works at `2bdb1d890202ec74f3b13fab1f7b3c7de286e508` under `authoring/library/reserve-illustrations-wave-2`. Each wave covers FPV Front, Ukraine Atlas, 1994 Forever and fictional Spend. Wave 2 also retains two initial cleanup variants; six tool outputs still represent only four selected works. These cohorts are not included in the combined `485903` runtime tree and do not establish eight maps, packs, reward assignments or animation rigs. Resolve their exact committed provenance before reuse; do not assume a nearby worktree or a generated-file count establishes adoption.
-
-Preserve full prompts, tool outputs and every original. Inspect whole images and actual game-scale display; state crop, emblem, alpha/palette and fine-detail limits honestly. A browser image measured at a phone-sized viewport is browser layout evidence, not physical touch/controller or device qualification. To ship art, separately bind the exact source and runtime derivative through the existing presentation compiler or the already-supported fallback record; do not create a second registry or overwrite earned originals.
-
 ## Locate inputs
 
 Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this installed skill's physical directory to its parent kit. Read the target theme brief and relevant records in `prompts/catalog.json`. Use `python3 authoring/prompt.py list --family FAMILY` to choose a template, then `show ID` or `render ID --set key=value`. If the kit is absent, use [the handoff template](references/asset-handoff.md) without pretending to validate a pack.
@@ -107,3 +101,17 @@ For a complete replacement, test against the retained production ledger plus its
 Recipe-only rotor, trail and effect slots request a reviewable change to registered source code or supported theme tokens and related body anchors. They do not accept PNG uploads or executable content in `.rltheme` bundles. Recipe metadata stores only a registered ID; new behavior or a new recipe requires implementation and review. Keep prior source/revisions and validate the actual runtime, pause and reduced-motion behavior. All three copy actions retain the current custom production brief.
 
 Studio Context must use the runtime geometry adapter. Complete picture-owner metadata stays authoritative even offline; never replace an unavailable owner with a different mission. Player rotor/body previews require presets and selected asset bytes, not a download of an unrelated chapter. Generic inspection fixtures may use the same code-owned level metadata when an optional pack is unavailable and must remain labelled isolated fixtures.
+
+## Reserve illustration cohorts
+
+The [ten-wave reserve series](../../library/reserve-illustrations-wave-10/README.md) contains forty selected source illustrations, ten per theme. Use its cumulative metadata inventory to locate existing originals before commissioning another scene. Selected works and all retained tool outputs are separate counts: earlier unselected variants remain preserved. These counts do not establish playable levels, runtime adoption, animation or offline inclusion.
+
+Retain exact effective prompts, returned originals, actual dimensions and hashes, and requested-versus-observed differences. Respect the current task's explicit disk admission and total-copy budget; account for tool files, workspace copies, Git additions and reports without assuming clone sharing is exclusive free space. Reuse prior originals read-only for comparison.
+
+Record full-original visual review, PNG structural/decode checks and native target-size review separately. A configured 320x160 comparison page is not evidence that it was viewed. If the browser is unavailable, record source-only acceptance and leave the native review gate open; do not label it a native or gameplay pass. Wave10 was accepted by the owner after full-size local review; its native 320x160 comparison remains unverified. Preserve generic marks and uncertain equipment geometry honestly rather than claiming brand absence or engineering authenticity beyond observation.
+
+Use the [read-only cumulative reserve catalog](../../library/reserve-illustrations-catalog/README.md) to browse all forty selections by theme, download an unchanged original, and read its generation/cleanup prompts and provenance. Its sparse Git-backed server loads only the selected image; do not hydrate or preload the full collection just to browse it. The two preserved unselected outputs stay outside the chooser.
+
+Copyable request: “Open the reserve illustration catalog, filter to THEME, and compare existing source choices one at a time. Link the selected original, its exact prompt(s), provenance and wave limitations. Keep this an authoring selection; do not install it, award a picture or imply a released level. If I later request adoption, preserve the original and use the existing picture-authoring contract with separate validation.”
+
+The cumulative catalog has a scoped native select/Previous/Next and exact-original download check. That does not replace the individual waves’ small-view limits or establish exhaustive keyboard, physical-device, gameplay or runtime-adoption qualification.

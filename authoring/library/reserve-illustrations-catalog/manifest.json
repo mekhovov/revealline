@@ -1,0 +1,1611 @@
+{
+  "format": "revealline-reserve-catalog.v1",
+  "sourceRevision": "091936e27c3b9f1c061081ca93827014a927d963",
+  "sourceOnly": true,
+  "selectedWorks": 40,
+  "selectedOriginalBytes": 92797189,
+  "themes": {
+    "fpv": "FPV Front",
+    "ukraine": "Ukraine Atlas",
+    "retro": "1994 Forever",
+    "coupa": "Spend Network"
+  },
+  "inventory": {
+    "path": "authoring/library/reserve-illustrations-wave-10/provenance/selected-inventory-40.json",
+    "url": "../reserve-illustrations-wave-10/provenance/selected-inventory-40.json",
+    "bytes": 21058,
+    "gitBlob": "f5c5680c0c1c13057f5586dd4ed683af14678605",
+    "sha256": "1e9c6ca11e7f2efcbcf8b1592eee1f785314b159d2f123773657585e1ae52ce6"
+  },
+  "verificationScope": "Original SHA-256 and dimensions come from committed inspection records. Git modes, blob IDs and lengths plus all linked text hashes are checked here; this command does not decode or rehash PNG bodies.",
+  "excludedRetainedOriginals": [
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/originals/retro-midnight-disk-station.png",
+      "mode": "100644",
+      "gitBlob": "71e056e3dc8c49e1c27dfd1140c46192590958c0",
+      "bytes": 2328046
+    },
+    {
+      "path": "authoring/library/reserve-illustrations-wave-2/originals/spend-cloud-cart-exchange.png",
+      "mode": "100644",
+      "gitBlob": "fb5d4e51d7324316e4c527efbbf44859635ea4ca",
+      "bytes": 2656655
+    }
+  ],
+  "entries": [
+    {
+      "id": "fpv-sunflower-signal",
+      "title": "Sunflower Signal",
+      "themeId": "fpv",
+      "wave": 1,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-1/originals/fpv-sunflower-signal.png",
+        "url": "../reserve-illustrations-wave-1/originals/fpv-sunflower-signal.png",
+        "bytes": 2943263,
+        "gitBlob": "3b623507650a7c4a3759f969749eb721405a9a7c",
+        "sha256": "dc20bbb10005b385590da02e8401572089a78022239e8ffc41a365ca322af776"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-1/prompts/fpv-sunflower-signal.txt",
+          "url": "../reserve-illustrations-wave-1/prompts/fpv-sunflower-signal.txt",
+          "bytes": 2275,
+          "gitBlob": "a404da98ca6262086c6af7efd19c910976a5ae6d",
+          "sha256": "38402a25a468a059d09a0534371450bb674a43076f0b8fe16621b1457c4b0e70"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-1/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-1/provenance/originals.json",
+        "bytes": 7798,
+        "gitBlob": "0eee38f4b0fa2d0154ffa4c21e857b115c1321fd",
+        "sha256": "cb0a3be05fa8803e377f592fd5db53aec8c84df9eb348bade62581d556d33e1b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-1/README.md",
+        "url": "../reserve-illustrations-wave-1/README.md",
+        "bytes": 4408,
+        "gitBlob": "fc7c87ca4695786834b3e2046a44ab030eda90ae",
+        "sha256": "4326407df98b28810777fcf22378bb2b156b69c9e6c2a18944f38a7458281ddc"
+      }
+    },
+    {
+      "id": "ukraine-potters-light",
+      "title": "Potter’s Light",
+      "themeId": "ukraine",
+      "wave": 1,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-1/originals/ukraine-potters-light.png",
+        "url": "../reserve-illustrations-wave-1/originals/ukraine-potters-light.png",
+        "bytes": 2930469,
+        "gitBlob": "1d9bffe015a97ee669e7351c10f7a295fc8b6045",
+        "sha256": "9b04fc50983b82bc4aba26a9047dd4072c959eb3abb39d139fcb1857c59565f1"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-1/prompts/ukraine-potters-light.txt",
+          "url": "../reserve-illustrations-wave-1/prompts/ukraine-potters-light.txt",
+          "bytes": 2091,
+          "gitBlob": "32b2f7b10cc41eb27e81448fb431b3aba648cebe",
+          "sha256": "9da1a1f2cccdba1aa59fdd2170bdff2f7374d8bcbacfe5c0e37e39e5d632def6"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-1/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-1/provenance/originals.json",
+        "bytes": 7798,
+        "gitBlob": "0eee38f4b0fa2d0154ffa4c21e857b115c1321fd",
+        "sha256": "cb0a3be05fa8803e377f592fd5db53aec8c84df9eb348bade62581d556d33e1b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-1/README.md",
+        "url": "../reserve-illustrations-wave-1/README.md",
+        "bytes": 4408,
+        "gitBlob": "fc7c87ca4695786834b3e2046a44ab030eda90ae",
+        "sha256": "4326407df98b28810777fcf22378bb2b156b69c9e6c2a18944f38a7458281ddc"
+      }
+    },
+    {
+      "id": "retro-rooftop-radio",
+      "title": "Rooftop Radio",
+      "themeId": "retro",
+      "wave": 1,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-1/originals/retro-rooftop-radio.png",
+        "url": "../reserve-illustrations-wave-1/originals/retro-rooftop-radio.png",
+        "bytes": 2589360,
+        "gitBlob": "eccbafd04b4dbc31fc1f8fed6e94e44545ae25a8",
+        "sha256": "10bc15f098155c36fd1e144572c6f344a1a852a69a9190cc2af5dff4069c682b"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-1/prompts/retro-rooftop-radio.txt",
+          "url": "../reserve-illustrations-wave-1/prompts/retro-rooftop-radio.txt",
+          "bytes": 2076,
+          "gitBlob": "d18757192c192053a3df6e84c35c2fc020e95bbe",
+          "sha256": "29c0277df15bd6bd1c1bcb4fec2c8fb32df787fba118dae959717f255120e874"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-1/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-1/provenance/originals.json",
+        "bytes": 7798,
+        "gitBlob": "0eee38f4b0fa2d0154ffa4c21e857b115c1321fd",
+        "sha256": "cb0a3be05fa8803e377f592fd5db53aec8c84df9eb348bade62581d556d33e1b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-1/README.md",
+        "url": "../reserve-illustrations-wave-1/README.md",
+        "bytes": 4408,
+        "gitBlob": "fc7c87ca4695786834b3e2046a44ab030eda90ae",
+        "sha256": "4326407df98b28810777fcf22378bb2b156b69c9e6c2a18944f38a7458281ddc"
+      }
+    },
+    {
+      "id": "spend-circular-workshop",
+      "title": "Circular Workshop",
+      "themeId": "coupa",
+      "wave": 1,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-1/originals/spend-circular-workshop.png",
+        "url": "../reserve-illustrations-wave-1/originals/spend-circular-workshop.png",
+        "bytes": 2820419,
+        "gitBlob": "c9549ff67bfe8b8d80ef679e1b8863ca2214c949",
+        "sha256": "d62070c73c86808cb43fdcc7117da98bcd625621aa44924ce9139c602bb5c6d5"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-1/prompts/spend-circular-workshop.txt",
+          "url": "../reserve-illustrations-wave-1/prompts/spend-circular-workshop.txt",
+          "bytes": 2346,
+          "gitBlob": "6642281a98a8f54016f1608c7547b51cde391b13",
+          "sha256": "1e8e7e3e331341c003c8d252de67fef4bf8de100b1bb5012cb567d3b5fc58027"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-1/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-1/provenance/originals.json",
+        "bytes": 7798,
+        "gitBlob": "0eee38f4b0fa2d0154ffa4c21e857b115c1321fd",
+        "sha256": "cb0a3be05fa8803e377f592fd5db53aec8c84df9eb348bade62581d556d33e1b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-1/README.md",
+        "url": "../reserve-illustrations-wave-1/README.md",
+        "bytes": 4408,
+        "gitBlob": "fc7c87ca4695786834b3e2046a44ab030eda90ae",
+        "sha256": "4326407df98b28810777fcf22378bb2b156b69c9e6c2a18944f38a7458281ddc"
+      }
+    },
+    {
+      "id": "fpv-reedwater-relay",
+      "title": "Reedwater Relay",
+      "themeId": "fpv",
+      "wave": 2,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-2/originals/fpv-reedwater-relay.png",
+        "url": "../reserve-illustrations-wave-2/originals/fpv-reedwater-relay.png",
+        "bytes": 2523272,
+        "gitBlob": "249aeeb166f14e5e3b5c5baced725d092c668689",
+        "sha256": "162c53877ee1dc6c3e37fed80a984f3cfa3ce39af20704d0ad9d7e5522dbb9df"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/fpv-reedwater-relay.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/fpv-reedwater-relay.txt",
+          "bytes": 2386,
+          "gitBlob": "e93b064be91e61bc2f240e03089c560407101129",
+          "sha256": "66ce08db8199471d3f783317e127fac673465d2e096d5f3996da1223fae425a7"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "url": "../reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "bytes": 5642,
+        "gitBlob": "d52a40293d3d0bf4b6235656b6a979b856589f62",
+        "sha256": "7f67f507377bba8612121192047f5fe78c093eea1b9c3f1894cecc4195241dc0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-2/README.md",
+        "url": "../reserve-illustrations-wave-2/README.md",
+        "bytes": 5239,
+        "gitBlob": "eba5bec43b754d3557d3f2fe18b1d1759733e9cc",
+        "sha256": "dba680a7ffa2aa53749b8a4440e06d894928becbb39cb8dce93234ab7c814053"
+      }
+    },
+    {
+      "id": "ukraine-moonlit-loom",
+      "title": "Moonlit Loom",
+      "themeId": "ukraine",
+      "wave": 2,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-2/originals/ukraine-moonlit-loom.png",
+        "url": "../reserve-illustrations-wave-2/originals/ukraine-moonlit-loom.png",
+        "bytes": 2623257,
+        "gitBlob": "04c581b6d247982d4878a4b47eef830cea6e34f8",
+        "sha256": "9d96f5919633b1c2e8396f9aa91c899c57b7623f91dfac2472485f3fc172cd38"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/ukraine-moonlit-loom.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/ukraine-moonlit-loom.txt",
+          "bytes": 2246,
+          "gitBlob": "cab3d1fd85c401a4ee05a54d113cb62f38579ed0",
+          "sha256": "9cb444acda5ceee0770a198282e892934e1dc1c4bd17543f0f6f26ec2dc9f8e0"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "url": "../reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "bytes": 5642,
+        "gitBlob": "d52a40293d3d0bf4b6235656b6a979b856589f62",
+        "sha256": "7f67f507377bba8612121192047f5fe78c093eea1b9c3f1894cecc4195241dc0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-2/README.md",
+        "url": "../reserve-illustrations-wave-2/README.md",
+        "bytes": 5239,
+        "gitBlob": "eba5bec43b754d3557d3f2fe18b1d1759733e9cc",
+        "sha256": "dba680a7ffa2aa53749b8a4440e06d894928becbb39cb8dce93234ab7c814053"
+      }
+    },
+    {
+      "id": "retro-midnight-disk-station",
+      "title": "Midnight Disk Station",
+      "themeId": "retro",
+      "wave": 2,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-2/originals/retro-midnight-disk-station-clean.png",
+        "url": "../reserve-illustrations-wave-2/originals/retro-midnight-disk-station-clean.png",
+        "bytes": 2136452,
+        "gitBlob": "987c379435b6d8abbed9762c56871ae5a837d325",
+        "sha256": "d5f622764afb21dcaf155209c5e4afeb1e65906cb6e0aeed8bd53eb4e6a320b6"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/retro-midnight-disk-station.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/retro-midnight-disk-station.txt",
+          "bytes": 2163,
+          "gitBlob": "6565fb0a222b0a7bd8996fcfb0f3bc74530b3d8c",
+          "sha256": "2f809f40a3dbb28886c3d9ca6236bbc1854597ed9e276d8c4a22474ce974ad78"
+        },
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/retro-midnight-disk-station-cleanup.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/retro-midnight-disk-station-cleanup.txt",
+          "bytes": 659,
+          "gitBlob": "a40a39df23e914fe5d889235406118c99ec6fb3d",
+          "sha256": "634adaea6acaac38d3bc719868be62351b5671940e28c4230ed2fd374f665d0d"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "url": "../reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "bytes": 5642,
+        "gitBlob": "d52a40293d3d0bf4b6235656b6a979b856589f62",
+        "sha256": "7f67f507377bba8612121192047f5fe78c093eea1b9c3f1894cecc4195241dc0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-2/README.md",
+        "url": "../reserve-illustrations-wave-2/README.md",
+        "bytes": 5239,
+        "gitBlob": "eba5bec43b754d3557d3f2fe18b1d1759733e9cc",
+        "sha256": "dba680a7ffa2aa53749b8a4440e06d894928becbb39cb8dce93234ab7c814053"
+      }
+    },
+    {
+      "id": "spend-cloud-cart-exchange",
+      "title": "Cloud Cart Exchange",
+      "themeId": "coupa",
+      "wave": 2,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-2/originals/spend-cloud-cart-exchange-clean.png",
+        "url": "../reserve-illustrations-wave-2/originals/spend-cloud-cart-exchange-clean.png",
+        "bytes": 2549711,
+        "gitBlob": "d21dd94089d762b11b437020a927731f17fb1649",
+        "sha256": "560949cad2ee1031dd5f5edd9c5115db576db5d8133ae3712faa11243cee0971"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange.txt",
+          "bytes": 2335,
+          "gitBlob": "ee5cb1a19c28e05be3e9b66be6a64cb198be9b01",
+          "sha256": "af7b9acae0dfc51534dca1afb14303f45f1a2f3ac437a288e727b1383d988112"
+        },
+        {
+          "path": "authoring/library/reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange-cleanup.txt",
+          "url": "../reserve-illustrations-wave-2/prompts/spend-cloud-cart-exchange-cleanup.txt",
+          "bytes": 538,
+          "gitBlob": "631d7f685f41ac3b4b0a72ce30803f02add551b8",
+          "sha256": "8c6c7de6b21f9661636fa86b9e882681b8de23f656c33eb847e6ade400ef9c22"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "url": "../reserve-illustrations-wave-2/provenance/selected-originals.json",
+        "bytes": 5642,
+        "gitBlob": "d52a40293d3d0bf4b6235656b6a979b856589f62",
+        "sha256": "7f67f507377bba8612121192047f5fe78c093eea1b9c3f1894cecc4195241dc0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-2/README.md",
+        "url": "../reserve-illustrations-wave-2/README.md",
+        "bytes": 5239,
+        "gitBlob": "eba5bec43b754d3557d3f2fe18b1d1759733e9cc",
+        "sha256": "dba680a7ffa2aa53749b8a4440e06d894928becbb39cb8dce93234ab7c814053"
+      }
+    },
+    {
+      "id": "fpv-basalt-beacon",
+      "title": "Basalt Beacon",
+      "themeId": "fpv",
+      "wave": 3,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-3/originals/fpv-basalt-beacon.png",
+        "url": "../reserve-illustrations-wave-3/originals/fpv-basalt-beacon.png",
+        "bytes": 2235880,
+        "gitBlob": "18c0bd6c328a6da44f1c8d299fdac13e6b6d0f49",
+        "sha256": "f47a9bc806289eb2203922569ca88cfd5c8230a3ccead0c589b633d29b8715d6"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-3/prompts/fpv-basalt-beacon.txt",
+          "url": "../reserve-illustrations-wave-3/prompts/fpv-basalt-beacon.txt",
+          "bytes": 2023,
+          "gitBlob": "7b525550ca9776af438774dbed05e419606e8568",
+          "sha256": "1ba7f75f7f886202756a7cccb67a819dcc1abdae0dfac7f6d20f7acc9c6476a6"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-3/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-3/provenance/originals.json",
+        "bytes": 14864,
+        "gitBlob": "8306cebc0ed5acc1c8621d0b662c32c74d2d87c5",
+        "sha256": "1d0816fc07138a16c64d83ca8803f8ec3fdf80d76c6b76591db307aeb409c144"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-3/README.md",
+        "url": "../reserve-illustrations-wave-3/README.md",
+        "bytes": 4611,
+        "gitBlob": "ed37a9b96ac19c6bf22f72733e1c0c4b62f67eb9",
+        "sha256": "7fbba5c734f043f6cc507c11373f58e4b866a0511b928276493d708ad3a4d4aa"
+      }
+    },
+    {
+      "id": "ukraine-apricot-glasshouse",
+      "title": "Apricot Glasshouse",
+      "themeId": "ukraine",
+      "wave": 3,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-3/originals/ukraine-apricot-glasshouse.png",
+        "url": "../reserve-illustrations-wave-3/originals/ukraine-apricot-glasshouse.png",
+        "bytes": 2704541,
+        "gitBlob": "558e88de39f8ea0b8d9a5fe9cf75a602897c3a14",
+        "sha256": "710af7d1315ddb8615bcb8f4c12f5544e70a0df8863929bc295688e1d53ac93c"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-3/prompts/ukraine-apricot-glasshouse.txt",
+          "url": "../reserve-illustrations-wave-3/prompts/ukraine-apricot-glasshouse.txt",
+          "bytes": 2004,
+          "gitBlob": "3f3baed10f128f1bc4b2c0d5458c41f97dc398d8",
+          "sha256": "abaea3fc60931b6e6432d37080455de4ae601e5145e1ee82fd7bdd1bcb2b4a56"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-3/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-3/provenance/originals.json",
+        "bytes": 14864,
+        "gitBlob": "8306cebc0ed5acc1c8621d0b662c32c74d2d87c5",
+        "sha256": "1d0816fc07138a16c64d83ca8803f8ec3fdf80d76c6b76591db307aeb409c144"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-3/README.md",
+        "url": "../reserve-illustrations-wave-3/README.md",
+        "bytes": 4611,
+        "gitBlob": "ed37a9b96ac19c6bf22f72733e1c0c4b62f67eb9",
+        "sha256": "7fbba5c734f043f6cc507c11373f58e4b866a0511b928276493d708ad3a4d4aa"
+      }
+    },
+    {
+      "id": "retro-poolside-mixtape",
+      "title": "Poolside Mixtape",
+      "themeId": "retro",
+      "wave": 3,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-3/originals/retro-poolside-mixtape.png",
+        "url": "../reserve-illustrations-wave-3/originals/retro-poolside-mixtape.png",
+        "bytes": 2243333,
+        "gitBlob": "798147bd08e1b3b3d4a58cfab491c1109b1f2ca4",
+        "sha256": "c56fb59e923ca7bd531f1abaa22d96a2e11a88c38f7e9bf7e9438403995c0948"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-3/prompts/retro-poolside-mixtape.txt",
+          "url": "../reserve-illustrations-wave-3/prompts/retro-poolside-mixtape.txt",
+          "bytes": 1925,
+          "gitBlob": "94f5e1b242202cc9c5fd20d6d254a6d745c0f55e",
+          "sha256": "5ecd879196d66b2fa143b3161afdbd63165c3f2d8f2b6d4357ad30cb0587952f"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-3/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-3/provenance/originals.json",
+        "bytes": 14864,
+        "gitBlob": "8306cebc0ed5acc1c8621d0b662c32c74d2d87c5",
+        "sha256": "1d0816fc07138a16c64d83ca8803f8ec3fdf80d76c6b76591db307aeb409c144"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-3/README.md",
+        "url": "../reserve-illustrations-wave-3/README.md",
+        "bytes": 4611,
+        "gitBlob": "ed37a9b96ac19c6bf22f72733e1c0c4b62f67eb9",
+        "sha256": "7fbba5c734f043f6cc507c11373f58e4b866a0511b928276493d708ad3a4d4aa"
+      }
+    },
+    {
+      "id": "spend-copper-kettle-bazaar",
+      "title": "Copper Kettle Bazaar",
+      "themeId": "coupa",
+      "wave": 3,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-3/originals/spend-copper-kettle-bazaar.png",
+        "url": "../reserve-illustrations-wave-3/originals/spend-copper-kettle-bazaar.png",
+        "bytes": 2175587,
+        "gitBlob": "a7934688a039ca041531b7f314ff2406e58b908d",
+        "sha256": "6114aefe292f9c5410ad27cfd4c959fb0054a0374cfb8794eb6144a6ba6f9edb"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-3/prompts/spend-copper-kettle-bazaar.txt",
+          "url": "../reserve-illustrations-wave-3/prompts/spend-copper-kettle-bazaar.txt",
+          "bytes": 2016,
+          "gitBlob": "319525c5cff3d6d3045cbcf42eafe3b6351fd5c6",
+          "sha256": "30e04c040fa14958e1cf21751f33af07993691b53f389bf26a9c9c7a5147fce1"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-3/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-3/provenance/originals.json",
+        "bytes": 14864,
+        "gitBlob": "8306cebc0ed5acc1c8621d0b662c32c74d2d87c5",
+        "sha256": "1d0816fc07138a16c64d83ca8803f8ec3fdf80d76c6b76591db307aeb409c144"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-3/README.md",
+        "url": "../reserve-illustrations-wave-3/README.md",
+        "bytes": 4611,
+        "gitBlob": "ed37a9b96ac19c6bf22f72733e1c0c4b62f67eb9",
+        "sha256": "7fbba5c734f043f6cc507c11373f58e4b866a0511b928276493d708ad3a4d4aa"
+      }
+    },
+    {
+      "id": "fpv-aurora-snowfield",
+      "title": "Aurora Snowfield",
+      "themeId": "fpv",
+      "wave": 4,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-4/originals/fpv-aurora-snowfield.png",
+        "url": "../reserve-illustrations-wave-4/originals/fpv-aurora-snowfield.png",
+        "bytes": 2090400,
+        "gitBlob": "3131a33db8b40d240f483291d164c3d54cb4c2e8",
+        "sha256": "45845e23ca0f9294bdff5c0bc35c8b6332d8e6e145ae9c6fdfc194d17086260e"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-4/prompts/fpv-aurora-snowfield.txt",
+          "url": "../reserve-illustrations-wave-4/prompts/fpv-aurora-snowfield.txt",
+          "bytes": 1691,
+          "gitBlob": "c5bea58fa09d8dbe8ae1e353487add7f38501b36",
+          "sha256": "6cad1be1e97ca70dbbf7b1846373acb2c389e7c9d379baa432d0c7479d4e0080"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-4/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-4/provenance/originals.json",
+        "bytes": 3282,
+        "gitBlob": "3af0a1e652d4d3c6978626d67871a25b932d0f46",
+        "sha256": "d1f66c92174f5c7f37a8e32887a7b611363c4846f76cfa1af629fbfc47ca3764"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-4/README.md",
+        "url": "../reserve-illustrations-wave-4/README.md",
+        "bytes": 3672,
+        "gitBlob": "f2dce7cd0c48eb507e61178aba72008c417974a3",
+        "sha256": "fb1039a06b1e003e338f8426420ce3ea23b83675ab1b862a530a80fc145de645"
+      }
+    },
+    {
+      "id": "ukraine-autumn-footbridge",
+      "title": "Autumn Footbridge",
+      "themeId": "ukraine",
+      "wave": 4,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-4/originals/ukraine-autumn-footbridge.png",
+        "url": "../reserve-illustrations-wave-4/originals/ukraine-autumn-footbridge.png",
+        "bytes": 3297468,
+        "gitBlob": "c5645fe2e1f29edec51db9803f04f2b94ec9cd76",
+        "sha256": "382009e8981ab36fc225ab02645be2a6d9c93646c81ce45a113e8c9827667728"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-4/prompts/ukraine-autumn-footbridge.txt",
+          "url": "../reserve-illustrations-wave-4/prompts/ukraine-autumn-footbridge.txt",
+          "bytes": 1776,
+          "gitBlob": "1793f85704896c913060a9ba2f3a7f6ed0c0f5c0",
+          "sha256": "6a8ed8c11bab2c6734c26f551079bda402119229a11ee77a6409abfd489bfc95"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-4/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-4/provenance/originals.json",
+        "bytes": 3282,
+        "gitBlob": "3af0a1e652d4d3c6978626d67871a25b932d0f46",
+        "sha256": "d1f66c92174f5c7f37a8e32887a7b611363c4846f76cfa1af629fbfc47ca3764"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-4/README.md",
+        "url": "../reserve-illustrations-wave-4/README.md",
+        "bytes": 3672,
+        "gitBlob": "f2dce7cd0c48eb507e61178aba72008c417974a3",
+        "sha256": "fb1039a06b1e003e338f8426420ce3ea23b83675ab1b862a530a80fc145de645"
+      }
+    },
+    {
+      "id": "retro-violet-laundrette",
+      "title": "Violet Laundrette",
+      "themeId": "retro",
+      "wave": 4,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-4/originals/retro-violet-laundrette.png",
+        "url": "../reserve-illustrations-wave-4/originals/retro-violet-laundrette.png",
+        "bytes": 2252713,
+        "gitBlob": "288b63ead8fd16001414079efed0ad27a6178d14",
+        "sha256": "2b17b32fdb545d05894b56d9716aff7d8c8ecd8afb9eb3e30c2e19b266acca63"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-4/prompts/retro-violet-laundrette.txt",
+          "url": "../reserve-illustrations-wave-4/prompts/retro-violet-laundrette.txt",
+          "bytes": 1751,
+          "gitBlob": "b932330a68169fb2f211d06db63ca4ef81e5e200",
+          "sha256": "aef5467c551e206de6730171e379f0c3471140fa6becfe3ed131aedbd801ecbc"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-4/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-4/provenance/originals.json",
+        "bytes": 3282,
+        "gitBlob": "3af0a1e652d4d3c6978626d67871a25b932d0f46",
+        "sha256": "d1f66c92174f5c7f37a8e32887a7b611363c4846f76cfa1af629fbfc47ca3764"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-4/README.md",
+        "url": "../reserve-illustrations-wave-4/README.md",
+        "bytes": 3672,
+        "gitBlob": "f2dce7cd0c48eb507e61178aba72008c417974a3",
+        "sha256": "fb1039a06b1e003e338f8426420ce3ea23b83675ab1b862a530a80fc145de645"
+      }
+    },
+    {
+      "id": "spend-canal-parcel-crane",
+      "title": "Canal Parcel Crane",
+      "themeId": "coupa",
+      "wave": 4,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-4/originals/spend-canal-parcel-crane.png",
+        "url": "../reserve-illustrations-wave-4/originals/spend-canal-parcel-crane.png",
+        "bytes": 2670342,
+        "gitBlob": "1bec62387488376fa5d979ac1e9063e224eb5ab0",
+        "sha256": "407561c2a427e24175431c19d970f9581f9a6bab7d1adbcdbd69c87bb0e62f2b"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-4/prompts/spend-canal-parcel-crane.txt",
+          "url": "../reserve-illustrations-wave-4/prompts/spend-canal-parcel-crane.txt",
+          "bytes": 1742,
+          "gitBlob": "28183fa9c193bded58c288707cd7bd740ccf1cda",
+          "sha256": "661f9f029c6c4dcd1b5224cae4a3b42812e3aeefb1842ade787a9889c5503be8"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-4/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-4/provenance/originals.json",
+        "bytes": 3282,
+        "gitBlob": "3af0a1e652d4d3c6978626d67871a25b932d0f46",
+        "sha256": "d1f66c92174f5c7f37a8e32887a7b611363c4846f76cfa1af629fbfc47ca3764"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-4/README.md",
+        "url": "../reserve-illustrations-wave-4/README.md",
+        "bytes": 3672,
+        "gitBlob": "f2dce7cd0c48eb507e61178aba72008c417974a3",
+        "sha256": "fb1039a06b1e003e338f8426420ce3ea23b83675ab1b862a530a80fc145de645"
+      }
+    },
+    {
+      "id": "fpv-copper-canyon-flight",
+      "title": "Copper Canyon Flight",
+      "themeId": "fpv",
+      "wave": 5,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-5/originals/fpv-copper-canyon-flight.png",
+        "url": "../reserve-illustrations-wave-5/originals/fpv-copper-canyon-flight.png",
+        "bytes": 2626095,
+        "gitBlob": "9ace5f424de4c713a8560480e3abee527aaafef3",
+        "sha256": "c62856301a5110a1dfe70eb11f6217b5ddba6180bfd9cb087313fd41c0e07481"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-5/prompts/fpv-copper-canyon-flight.txt",
+          "url": "../reserve-illustrations-wave-5/prompts/fpv-copper-canyon-flight.txt",
+          "bytes": 1695,
+          "gitBlob": "31e0d34f76eab6547a3cb86a244f79ecda4fb93c",
+          "sha256": "732dfa157facd3f9634e0934b965ff3f5db9bff5a01c5093f6720b7b5a4039fe"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-5/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-5/provenance/originals.json",
+        "bytes": 3297,
+        "gitBlob": "417a336bc771fbf07e4ce7e6e55cb9df7b36c5e4",
+        "sha256": "40db7b11e47c60b38565436e65b1bc4aa26bc15478a721d5223883bd138efabf"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-5/README.md",
+        "url": "../reserve-illustrations-wave-5/README.md",
+        "bytes": 4185,
+        "gitBlob": "0530d7ea1f7124d20a7abb41c6dbbed1aeae83d7",
+        "sha256": "c25a986f70eb793a6dae6ff06b326a592895b84f3746823d04184149eac54548"
+      }
+    },
+    {
+      "id": "ukraine-winter-sled-courtyard",
+      "title": "Winter Sled Courtyard",
+      "themeId": "ukraine",
+      "wave": 5,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-5/originals/ukraine-winter-sled-courtyard.png",
+        "url": "../reserve-illustrations-wave-5/originals/ukraine-winter-sled-courtyard.png",
+        "bytes": 2618737,
+        "gitBlob": "6fd9fc38f71ee8df95c8edf5ffea063c7d704f9f",
+        "sha256": "feaf5931749962cc698cb204ce1a15acb2ed259a57a26fbf84ef8964d2fd8f15"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-5/prompts/ukraine-winter-sled-courtyard.txt",
+          "url": "../reserve-illustrations-wave-5/prompts/ukraine-winter-sled-courtyard.txt",
+          "bytes": 1759,
+          "gitBlob": "a674a85fe75a584c5d05f2c20bf2586c298e80e5",
+          "sha256": "95afd127893461c4a744040513bbb5ac4054f0e56e50d48151b54a6360eaa64c"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-5/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-5/provenance/originals.json",
+        "bytes": 3297,
+        "gitBlob": "417a336bc771fbf07e4ce7e6e55cb9df7b36c5e4",
+        "sha256": "40db7b11e47c60b38565436e65b1bc4aa26bc15478a721d5223883bd138efabf"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-5/README.md",
+        "url": "../reserve-illustrations-wave-5/README.md",
+        "bytes": 4185,
+        "gitBlob": "0530d7ea1f7124d20a7abb41c6dbbed1aeae83d7",
+        "sha256": "c25a986f70eb793a6dae6ff06b326a592895b84f3746823d04184149eac54548"
+      }
+    },
+    {
+      "id": "retro-lavender-bowling-night",
+      "title": "Lavender Bowling Night",
+      "themeId": "retro",
+      "wave": 5,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-5/originals/retro-lavender-bowling-night.png",
+        "url": "../reserve-illustrations-wave-5/originals/retro-lavender-bowling-night.png",
+        "bytes": 1952789,
+        "gitBlob": "e36875d6d6a753d6521d27bc7bfebafc0222a31d",
+        "sha256": "e9e513cc8abd93dd6d415203cb03d645cec412cdf0672198b6c2d07f80da77ae"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-5/prompts/retro-lavender-bowling-night.txt",
+          "url": "../reserve-illustrations-wave-5/prompts/retro-lavender-bowling-night.txt",
+          "bytes": 1730,
+          "gitBlob": "844e72356a2da189142b1bcfb12480459cebb737",
+          "sha256": "1766c09c01f3f393c4f9190f95a7d88c04d7a5edd26a55936a8da42cc212fca3"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-5/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-5/provenance/originals.json",
+        "bytes": 3297,
+        "gitBlob": "417a336bc771fbf07e4ce7e6e55cb9df7b36c5e4",
+        "sha256": "40db7b11e47c60b38565436e65b1bc4aa26bc15478a721d5223883bd138efabf"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-5/README.md",
+        "url": "../reserve-illustrations-wave-5/README.md",
+        "bytes": 4185,
+        "gitBlob": "0530d7ea1f7124d20a7abb41c6dbbed1aeae83d7",
+        "sha256": "c25a986f70eb793a6dae6ff06b326a592895b84f3746823d04184149eac54548"
+      }
+    },
+    {
+      "id": "spend-raincatcher-rooftops",
+      "title": "Raincatcher Rooftops",
+      "themeId": "coupa",
+      "wave": 5,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-5/originals/spend-raincatcher-rooftops.png",
+        "url": "../reserve-illustrations-wave-5/originals/spend-raincatcher-rooftops.png",
+        "bytes": 2520491,
+        "gitBlob": "bb324d769b31b94e236a56b8da6dcd114ec959f6",
+        "sha256": "f94b2fef94700d10a68d770e4b2ea89ec97905e4c992cf26c5901ef983dafaaf"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-5/prompts/spend-raincatcher-rooftops.txt",
+          "url": "../reserve-illustrations-wave-5/prompts/spend-raincatcher-rooftops.txt",
+          "bytes": 1839,
+          "gitBlob": "39c418372b3d1adf36e01461aa5f1865f83533ed",
+          "sha256": "2f383f30a9a3c073fa6b590de71400684245d7fc02e7f4a6802816f9386d89d6"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-5/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-5/provenance/originals.json",
+        "bytes": 3297,
+        "gitBlob": "417a336bc771fbf07e4ce7e6e55cb9df7b36c5e4",
+        "sha256": "40db7b11e47c60b38565436e65b1bc4aa26bc15478a721d5223883bd138efabf"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-5/README.md",
+        "url": "../reserve-illustrations-wave-5/README.md",
+        "bytes": 4185,
+        "gitBlob": "0530d7ea1f7124d20a7abb41c6dbbed1aeae83d7",
+        "sha256": "c25a986f70eb793a6dae6ff06b326a592895b84f3746823d04184149eac54548"
+      }
+    },
+    {
+      "id": "fpv-saffron-balloon-meadow",
+      "title": "Saffron Balloon Meadow",
+      "themeId": "fpv",
+      "wave": 6,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-6/originals/fpv-saffron-balloon-meadow.png",
+        "url": "../reserve-illustrations-wave-6/originals/fpv-saffron-balloon-meadow.png",
+        "bytes": 2537167,
+        "gitBlob": "deea06c0ec5a34d28da209e2418b29ce8321f9f6",
+        "sha256": "8fe0d7d2d3544fbfc75e15fa03949a8b99950cc2f48a2c73e5bb5f733e3cf264"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-6/prompts/fpv-saffron-balloon-meadow.txt",
+          "url": "../reserve-illustrations-wave-6/prompts/fpv-saffron-balloon-meadow.txt",
+          "bytes": 2015,
+          "gitBlob": "f76ff80ce3e6549cda311b0a1b9bc3c36cb5f27a",
+          "sha256": "bdfd4998ed04695bdcfdaade772c3d3f3031f841e22fd4d0487192fcf7baab5f"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-6/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-6/provenance/originals.json",
+        "bytes": 5262,
+        "gitBlob": "b361720eea30c8782864b9d627e8f00ac05019f9",
+        "sha256": "3155eb67fbc5eb0514ced389722c9731d563a1d3c9adcb0f7ff82af04eaf7a8b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-6/README.md",
+        "url": "../reserve-illustrations-wave-6/README.md",
+        "bytes": 4202,
+        "gitBlob": "5a5b6f3913e3dedcfa1b015be2bad2b2411fb818",
+        "sha256": "686925f83f9dbcdf82aca1ffb8337bd70cbc8ab4506cb1ae6a114472e0a8ad22"
+      }
+    },
+    {
+      "id": "ukraine-bluebell-watermill",
+      "title": "Bluebell Watermill",
+      "themeId": "ukraine",
+      "wave": 6,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-6/originals/ukraine-bluebell-watermill.png",
+        "url": "../reserve-illustrations-wave-6/originals/ukraine-bluebell-watermill.png",
+        "bytes": 3179597,
+        "gitBlob": "02823f8f6aefccdc7b8c7ffb6100f77b179d0446",
+        "sha256": "ba56956de4b7eb341fde544d7be9bae0b7df196a3c3ca1457100ed6eb003b2f1"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-6/prompts/ukraine-bluebell-watermill.txt",
+          "url": "../reserve-illustrations-wave-6/prompts/ukraine-bluebell-watermill.txt",
+          "bytes": 2018,
+          "gitBlob": "645640519af7a8a2a3f4b702825da012da16426d",
+          "sha256": "2cd64d150da5fa0579825b84dcaa780c8e08df426d90c3566ad8ad065e0b2da5"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-6/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-6/provenance/originals.json",
+        "bytes": 5262,
+        "gitBlob": "b361720eea30c8782864b9d627e8f00ac05019f9",
+        "sha256": "3155eb67fbc5eb0514ced389722c9731d563a1d3c9adcb0f7ff82af04eaf7a8b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-6/README.md",
+        "url": "../reserve-illustrations-wave-6/README.md",
+        "bytes": 4202,
+        "gitBlob": "5a5b6f3913e3dedcfa1b015be2bad2b2411fb818",
+        "sha256": "686925f83f9dbcdf82aca1ffb8337bd70cbc8ab4506cb1ae6a114472e0a8ad22"
+      }
+    },
+    {
+      "id": "retro-sunset-bumper-pavilion",
+      "title": "Sunset Bumper Pavilion",
+      "themeId": "retro",
+      "wave": 6,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-6/originals/retro-sunset-bumper-pavilion.png",
+        "url": "../reserve-illustrations-wave-6/originals/retro-sunset-bumper-pavilion.png",
+        "bytes": 2593463,
+        "gitBlob": "5a8add9dfd14feab9ccdf4f3e9c9499c7da993df",
+        "sha256": "efab6ea1191e3251438ab9f84819e74c03c248d8ee3e22d6bc606c59361e54cd"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-6/prompts/retro-sunset-bumper-pavilion.txt",
+          "url": "../reserve-illustrations-wave-6/prompts/retro-sunset-bumper-pavilion.txt",
+          "bytes": 1937,
+          "gitBlob": "b326ae6b0b47c53a77a7b21703cfbb1b908d2996",
+          "sha256": "6e019b559957f2619f9b712fc9288f7e7ca7956fe8e8a6e3f3838a7ca258178c"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-6/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-6/provenance/originals.json",
+        "bytes": 5262,
+        "gitBlob": "b361720eea30c8782864b9d627e8f00ac05019f9",
+        "sha256": "3155eb67fbc5eb0514ced389722c9731d563a1d3c9adcb0f7ff82af04eaf7a8b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-6/README.md",
+        "url": "../reserve-illustrations-wave-6/README.md",
+        "bytes": 4202,
+        "gitBlob": "5a5b6f3913e3dedcfa1b015be2bad2b2411fb818",
+        "sha256": "686925f83f9dbcdf82aca1ffb8337bd70cbc8ab4506cb1ae6a114472e0a8ad22"
+      }
+    },
+    {
+      "id": "spend-coral-dawn-bakery",
+      "title": "Coral Dawn Bakery",
+      "themeId": "coupa",
+      "wave": 6,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-6/originals/spend-coral-dawn-bakery.png",
+        "url": "../reserve-illustrations-wave-6/originals/spend-coral-dawn-bakery.png",
+        "bytes": 2794201,
+        "gitBlob": "f82426c7ebf15396ab6a74c06accea3533c2cdd9",
+        "sha256": "9c62a106d37c55e5b30cc9f4f12e34b1422e6fdc9bef2763e06c581d713861f0"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-6/prompts/spend-coral-dawn-bakery.txt",
+          "url": "../reserve-illustrations-wave-6/prompts/spend-coral-dawn-bakery.txt",
+          "bytes": 2026,
+          "gitBlob": "19f30087bf7573e562a0c2c45caf1605c9bd7c2d",
+          "sha256": "76a5dd3a941ec9ba1fce072e061f75534af60d4eb377004123c3c5f2fe0ccc84"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-6/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-6/provenance/originals.json",
+        "bytes": 5262,
+        "gitBlob": "b361720eea30c8782864b9d627e8f00ac05019f9",
+        "sha256": "3155eb67fbc5eb0514ced389722c9731d563a1d3c9adcb0f7ff82af04eaf7a8b"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-6/README.md",
+        "url": "../reserve-illustrations-wave-6/README.md",
+        "bytes": 4202,
+        "gitBlob": "5a5b6f3913e3dedcfa1b015be2bad2b2411fb818",
+        "sha256": "686925f83f9dbcdf82aca1ffb8337bd70cbc8ab4506cb1ae6a114472e0a8ad22"
+      }
+    },
+    {
+      "id": "fpv-bluehour-coastal-relay",
+      "title": "Bluehour Coastal Relay",
+      "themeId": "fpv",
+      "wave": 7,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-7/originals/fpv-bluehour-coastal-relay.png",
+        "url": "../reserve-illustrations-wave-7/originals/fpv-bluehour-coastal-relay.png",
+        "bytes": 2250446,
+        "gitBlob": "673ad00ed0783a723fec4b2123dfe442dbb27ad5",
+        "sha256": "3dd09693875c7f8d3a6003436abe3d7f8802958d762a7b51e237eb6dc9a313c3"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-7/prompts/fpv-bluehour-coastal-relay.txt",
+          "url": "../reserve-illustrations-wave-7/prompts/fpv-bluehour-coastal-relay.txt",
+          "bytes": 1943,
+          "gitBlob": "110f7e59f7101fef9c56e22d0b4eb2af7fcfd3d3",
+          "sha256": "75e2b766ffe39fd38765d0017b18e70956a089348ac2892134f5d7915a6da7b8"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-7/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-7/provenance/originals.json",
+        "bytes": 5209,
+        "gitBlob": "7d3308aaf7f5c64a1ae150a0f219e911a0a889c5",
+        "sha256": "88ca9815203c3345dfd6860ef34f7018ce534b63b3834ff53130951dd04b9bd0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-7/README.md",
+        "url": "../reserve-illustrations-wave-7/README.md",
+        "bytes": 4546,
+        "gitBlob": "941a643076e1ee4ac5430364f080adf1a16f8fb2",
+        "sha256": "0d44f7aefe14720241947f485f5fc38298a4b9287867ef7b75712ce7d2e35e70"
+      }
+    },
+    {
+      "id": "ukraine-highland-embroidered-fair",
+      "title": "Highland Embroidered Fair",
+      "themeId": "ukraine",
+      "wave": 7,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-7/originals/ukraine-highland-embroidered-fair.png",
+        "url": "../reserve-illustrations-wave-7/originals/ukraine-highland-embroidered-fair.png",
+        "bytes": 2744903,
+        "gitBlob": "5d3b35309ed54c47f23e2387eb0ca30796be52d2",
+        "sha256": "47db3da68ab45920e2aa3add1ed833e94a95a680eb10ab9f33a0bb1089fa45ac"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-7/prompts/ukraine-highland-embroidered-fair.txt",
+          "url": "../reserve-illustrations-wave-7/prompts/ukraine-highland-embroidered-fair.txt",
+          "bytes": 2027,
+          "gitBlob": "f481527199c2fa5502ae976c930d48552bf06fe3",
+          "sha256": "f01933a2d1d93eb4561d4acf2db7b552f2c168e8fb4a294b996ed9ad55775239"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-7/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-7/provenance/originals.json",
+        "bytes": 5209,
+        "gitBlob": "7d3308aaf7f5c64a1ae150a0f219e911a0a889c5",
+        "sha256": "88ca9815203c3345dfd6860ef34f7018ce534b63b3834ff53130951dd04b9bd0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-7/README.md",
+        "url": "../reserve-illustrations-wave-7/README.md",
+        "bytes": 4546,
+        "gitBlob": "941a643076e1ee4ac5430364f080adf1a16f8fb2",
+        "sha256": "0d44f7aefe14720241947f485f5fc38298a4b9287867ef7b75712ce7d2e35e70"
+      }
+    },
+    {
+      "id": "retro-apricot-cassette-repair",
+      "title": "Apricot Tape Workshop",
+      "themeId": "retro",
+      "wave": 7,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-7/originals/retro-apricot-cassette-repair.png",
+        "url": "../reserve-illustrations-wave-7/originals/retro-apricot-cassette-repair.png",
+        "bytes": 2201019,
+        "gitBlob": "95055069920ebfa076a269893e02836f649138df",
+        "sha256": "bcdeeaed20e9b643ae6ad774a8d40f95f7b487342ec3a8aecc3d793e774dea2a"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-7/prompts/retro-apricot-cassette-repair.txt",
+          "url": "../reserve-illustrations-wave-7/prompts/retro-apricot-cassette-repair.txt",
+          "bytes": 2084,
+          "gitBlob": "676e2b2c1ee0f2f33d243003f74f5b2ee3c4b570",
+          "sha256": "8eeae03f47cca5723bb368661a187049d49bf06bbd9eef8249ae8f13a8a433b3"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-7/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-7/provenance/originals.json",
+        "bytes": 5209,
+        "gitBlob": "7d3308aaf7f5c64a1ae150a0f219e911a0a889c5",
+        "sha256": "88ca9815203c3345dfd6860ef34f7018ce534b63b3834ff53130951dd04b9bd0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-7/README.md",
+        "url": "../reserve-illustrations-wave-7/README.md",
+        "bytes": 4546,
+        "gitBlob": "941a643076e1ee4ac5430364f080adf1a16f8fb2",
+        "sha256": "0d44f7aefe14720241947f485f5fc38298a4b9287867ef7b75712ce7d2e35e70"
+      }
+    },
+    {
+      "id": "spend-citrus-parcel-hub",
+      "title": "Citrus Parcel Hub",
+      "themeId": "coupa",
+      "wave": 7,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-7/originals/spend-citrus-parcel-hub.png",
+        "url": "../reserve-illustrations-wave-7/originals/spend-citrus-parcel-hub.png",
+        "bytes": 1916377,
+        "gitBlob": "dc6e4774ed3c4f40fc8ff947cc23212a166b1fd1",
+        "sha256": "a02df60240645d8a010619ae24e994646f71601cfb754db78d15a875bf301c52"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-7/prompts/spend-citrus-parcel-hub.txt",
+          "url": "../reserve-illustrations-wave-7/prompts/spend-citrus-parcel-hub.txt",
+          "bytes": 2109,
+          "gitBlob": "4e3a309f232f3248194f1a75f9743fdfcae2d642",
+          "sha256": "2e27f658c027bf9f0e13ce21482c627a43e9fb26bcfece6e65bcb4e79a9b93a5"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-7/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-7/provenance/originals.json",
+        "bytes": 5209,
+        "gitBlob": "7d3308aaf7f5c64a1ae150a0f219e911a0a889c5",
+        "sha256": "88ca9815203c3345dfd6860ef34f7018ce534b63b3834ff53130951dd04b9bd0"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-7/README.md",
+        "url": "../reserve-illustrations-wave-7/README.md",
+        "bytes": 4546,
+        "gitBlob": "941a643076e1ee4ac5430364f080adf1a16f8fb2",
+        "sha256": "0d44f7aefe14720241947f485f5fc38298a4b9287867ef7b75712ce7d2e35e70"
+      }
+    },
+    {
+      "id": "fpv-peach-rooftop-dawn",
+      "title": "Peach Rooftop Dawn",
+      "themeId": "fpv",
+      "wave": 8,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-8/originals/fpv-peach-rooftop-dawn.png",
+        "url": "../reserve-illustrations-wave-8/originals/fpv-peach-rooftop-dawn.png",
+        "bytes": 1196090,
+        "gitBlob": "a268077029f16e01361788bcb7b3493e3179b84c",
+        "sha256": "f21d0d45fef36bf3640718e2c5f5db50c44ca32b35f5cdc82451f15d352f5ee9"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-8/prompts/fpv-peach-rooftop-dawn.txt",
+          "url": "../reserve-illustrations-wave-8/prompts/fpv-peach-rooftop-dawn.txt",
+          "bytes": 1715,
+          "gitBlob": "983de5cc75f8cb51ef58e69a51124465c16dd972",
+          "sha256": "33c5ebf0685e40b82279311c026ee600701e7d1f379cdbfdfe4582c585517778"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-8/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-8/provenance/originals.json",
+        "bytes": 5358,
+        "gitBlob": "cb2e05ea3b0d88e4bb8fb797c4665369ce6f1432",
+        "sha256": "d950c6520a497eb5236aab8db3e4ddaf46ef763403e099c800b9ce4944a7f41f"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-8/README.md",
+        "url": "../reserve-illustrations-wave-8/README.md",
+        "bytes": 4486,
+        "gitBlob": "c2cd840737d262538f337ce0f2f7d237c93b1ddd",
+        "sha256": "3e768e9c3e73ab69249042de4feb41f672596bf5056195d5eb490dd68d367696"
+      }
+    },
+    {
+      "id": "ukraine-amber-orchard-gate",
+      "title": "Amber Orchard Gate",
+      "themeId": "ukraine",
+      "wave": 8,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-8/originals/ukraine-amber-orchard-gate.png",
+        "url": "../reserve-illustrations-wave-8/originals/ukraine-amber-orchard-gate.png",
+        "bytes": 1905734,
+        "gitBlob": "e3beca35c786acef16fac371400cef9badfd095b",
+        "sha256": "043473598bc0f32f692ebce681c56256998f10ecc1edb18c26492c5f36de07a7"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-8/prompts/ukraine-amber-orchard-gate.txt",
+          "url": "../reserve-illustrations-wave-8/prompts/ukraine-amber-orchard-gate.txt",
+          "bytes": 1760,
+          "gitBlob": "d7d94c18b4042f099f6629bc871ef051a192e12d",
+          "sha256": "c4cab62b8f285392de60c8a0c7acc5e0e8058f57923cadb3d557f8b8f1e777f2"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-8/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-8/provenance/originals.json",
+        "bytes": 5358,
+        "gitBlob": "cb2e05ea3b0d88e4bb8fb797c4665369ce6f1432",
+        "sha256": "d950c6520a497eb5236aab8db3e4ddaf46ef763403e099c800b9ce4944a7f41f"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-8/README.md",
+        "url": "../reserve-illustrations-wave-8/README.md",
+        "bytes": 4486,
+        "gitBlob": "c2cd840737d262538f337ce0f2f7d237c93b1ddd",
+        "sha256": "3e768e9c3e73ab69249042de4feb41f672596bf5056195d5eb490dd68d367696"
+      }
+    },
+    {
+      "id": "retro-violet-video-nook",
+      "title": "Violet Video Nook",
+      "themeId": "retro",
+      "wave": 8,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-8/originals/retro-violet-video-nook.png",
+        "url": "../reserve-illustrations-wave-8/originals/retro-violet-video-nook.png",
+        "bytes": 1325197,
+        "gitBlob": "6eee7d6eb621e30adff84911e334a4defe786989",
+        "sha256": "ad94391a4fac7157783868db8ab5173ab8b9a3fbc36e3d9da7466f97fa940cf3"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-8/prompts/retro-violet-video-nook.txt",
+          "url": "../reserve-illustrations-wave-8/prompts/retro-violet-video-nook.txt",
+          "bytes": 1729,
+          "gitBlob": "1ca25e9624b2007331f4332b061d3f0edb7d595e",
+          "sha256": "499b9fc3840752da5212a314b337d72ed593b9ebc8becd9466fd609d1ce08877"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-8/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-8/provenance/originals.json",
+        "bytes": 5358,
+        "gitBlob": "cb2e05ea3b0d88e4bb8fb797c4665369ce6f1432",
+        "sha256": "d950c6520a497eb5236aab8db3e4ddaf46ef763403e099c800b9ce4944a7f41f"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-8/README.md",
+        "url": "../reserve-illustrations-wave-8/README.md",
+        "bytes": 4486,
+        "gitBlob": "c2cd840737d262538f337ce0f2f7d237c93b1ddd",
+        "sha256": "3e768e9c3e73ab69249042de4feb41f672596bf5056195d5eb490dd68d367696"
+      }
+    },
+    {
+      "id": "spend-mint-canal-tram",
+      "title": "Mint Canal Tram",
+      "themeId": "coupa",
+      "wave": 8,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-8/originals/spend-mint-canal-tram.png",
+        "url": "../reserve-illustrations-wave-8/originals/spend-mint-canal-tram.png",
+        "bytes": 1501782,
+        "gitBlob": "74c96ee80d2e90e92afb3ffdd4fba38f35f77307",
+        "sha256": "a02eedd7fac88c0c1cceb07903b027bb6b3dc5739d7ffecf9906ecd38f963aba"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-8/prompts/spend-mint-canal-tram.txt",
+          "url": "../reserve-illustrations-wave-8/prompts/spend-mint-canal-tram.txt",
+          "bytes": 1737,
+          "gitBlob": "945d05ef5857dde8be2518ca1aa4ecf6e961111a",
+          "sha256": "b0fdbcca43c6cc9fc14031f3635e21d83ab9c4e12a58f4b4c4e3ef988fc31df5"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-8/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-8/provenance/originals.json",
+        "bytes": 5358,
+        "gitBlob": "cb2e05ea3b0d88e4bb8fb797c4665369ce6f1432",
+        "sha256": "d950c6520a497eb5236aab8db3e4ddaf46ef763403e099c800b9ce4944a7f41f"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-8/README.md",
+        "url": "../reserve-illustrations-wave-8/README.md",
+        "bytes": 4486,
+        "gitBlob": "c2cd840737d262538f337ce0f2f7d237c93b1ddd",
+        "sha256": "3e768e9c3e73ab69249042de4feb41f672596bf5056195d5eb490dd68d367696"
+      }
+    },
+    {
+      "id": "fpv-snowglass-rooftop",
+      "title": "Snowglass Rooftop",
+      "themeId": "fpv",
+      "wave": 9,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-9/originals/fpv-snowglass-rooftop.png",
+        "url": "../reserve-illustrations-wave-9/originals/fpv-snowglass-rooftop.png",
+        "bytes": 1863321,
+        "gitBlob": "82a1d017bcd01a83bd4a8764aedadf05f166888c",
+        "sha256": "9c76b363e33ce982777ac48495ac1d949ace6d8cc11d8bbcaee88029ffa5b1b0"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-9/prompts/fpv-snowglass-rooftop.txt",
+          "url": "../reserve-illustrations-wave-9/prompts/fpv-snowglass-rooftop.txt",
+          "bytes": 1796,
+          "gitBlob": "72c5e36663d1413f05ed7f0448920ef3974ff6f9",
+          "sha256": "ae541e3b1c4c69c8ccce9780e81e131ca784ad1d2442bfd9b3e5bc398ad8aba4"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-9/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-9/provenance/originals.json",
+        "bytes": 5627,
+        "gitBlob": "bf53329e7c30744ecd55e32e23f8820ef031c971",
+        "sha256": "f442c956021f556d386ecbb19f8b38cdb07c3e7cbc19c918e1e0f9376ba646f9"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-9/README.md",
+        "url": "../reserve-illustrations-wave-9/README.md",
+        "bytes": 4029,
+        "gitBlob": "7d94bfb27cec1350ef47214d0f014dd9472c79ea",
+        "sha256": "975e14eba1dc6a0ddb7a1dbc8a227f499fcadfa63854bb875abb5176a6c75c14"
+      }
+    },
+    {
+      "id": "ukraine-spring-painted-ferry",
+      "title": "Spring Painted Ferry",
+      "themeId": "ukraine",
+      "wave": 9,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-9/originals/ukraine-spring-painted-ferry.png",
+        "url": "../reserve-illustrations-wave-9/originals/ukraine-spring-painted-ferry.png",
+        "bytes": 2243464,
+        "gitBlob": "5cbd52be9e39662e913be1008b62cf952aab9a19",
+        "sha256": "f914018e7c4465a33f93c188508fb20a9846e3ca7ace9f84157189b8ba2e159c"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-9/prompts/ukraine-spring-painted-ferry.txt",
+          "url": "../reserve-illustrations-wave-9/prompts/ukraine-spring-painted-ferry.txt",
+          "bytes": 1751,
+          "gitBlob": "8f866188310914f5a5f11dd9719847595cdc0d7a",
+          "sha256": "c32a125824ca28362bd164c7ddb7198bab7b3391eb625d485eb52597d06d8d01"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-9/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-9/provenance/originals.json",
+        "bytes": 5627,
+        "gitBlob": "bf53329e7c30744ecd55e32e23f8820ef031c971",
+        "sha256": "f442c956021f556d386ecbb19f8b38cdb07c3e7cbc19c918e1e0f9376ba646f9"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-9/README.md",
+        "url": "../reserve-illustrations-wave-9/README.md",
+        "bytes": 4029,
+        "gitBlob": "7d94bfb27cec1350ef47214d0f014dd9472c79ea",
+        "sha256": "975e14eba1dc6a0ddb7a1dbc8a227f499fcadfa63854bb875abb5176a6c75c14"
+      }
+    },
+    {
+      "id": "retro-rainlight-pinball-hall",
+      "title": "Rainlight Pinball Hall",
+      "themeId": "retro",
+      "wave": 9,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-9/originals/retro-rainlight-pinball-hall.png",
+        "url": "../reserve-illustrations-wave-9/originals/retro-rainlight-pinball-hall.png",
+        "bytes": 1780054,
+        "gitBlob": "a34c335052e6d1f015f5f766c36517286875067b",
+        "sha256": "c5a9a6f2289746712e292b8447aff1381e9760a4e42a3ee09ecc5cb92d1a015e"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-9/prompts/retro-rainlight-pinball-hall.txt",
+          "url": "../reserve-illustrations-wave-9/prompts/retro-rainlight-pinball-hall.txt",
+          "bytes": 1784,
+          "gitBlob": "16f9f08d0f4e70449f2c1e88014102b60b11175b",
+          "sha256": "9100fa69345b351608d48965d98ea03dce813905b0fd8c74984778b7682e9966"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-9/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-9/provenance/originals.json",
+        "bytes": 5627,
+        "gitBlob": "bf53329e7c30744ecd55e32e23f8820ef031c971",
+        "sha256": "f442c956021f556d386ecbb19f8b38cdb07c3e7cbc19c918e1e0f9376ba646f9"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-9/README.md",
+        "url": "../reserve-illustrations-wave-9/README.md",
+        "bytes": 4029,
+        "gitBlob": "7d94bfb27cec1350ef47214d0f014dd9472c79ea",
+        "sha256": "975e14eba1dc6a0ddb7a1dbc8a227f499fcadfa63854bb875abb5176a6c75c14"
+      }
+    },
+    {
+      "id": "spend-sunroof-market-house",
+      "title": "Sunroof Market House",
+      "themeId": "coupa",
+      "wave": 9,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-9/originals/spend-sunroof-market-house.png",
+        "url": "../reserve-illustrations-wave-9/originals/spend-sunroof-market-house.png",
+        "bytes": 2006763,
+        "gitBlob": "caba9229dbcb8a8479ef1615b87fd21c898c86b1",
+        "sha256": "d0328adc0ce24e22afbcaf67e09d93c0eb03e7a805d30890532284ecc0a1f24c"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-9/prompts/spend-sunroof-market-house.txt",
+          "url": "../reserve-illustrations-wave-9/prompts/spend-sunroof-market-house.txt",
+          "bytes": 1763,
+          "gitBlob": "d1dda4e3174290ad2e3077207bd08f8d4461fc79",
+          "sha256": "512c0afdf32685dae7af8b17cd5ba8e8bb8bc3e6be6d197a774f0dfa0e63b76d"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-9/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-9/provenance/originals.json",
+        "bytes": 5627,
+        "gitBlob": "bf53329e7c30744ecd55e32e23f8820ef031c971",
+        "sha256": "f442c956021f556d386ecbb19f8b38cdb07c3e7cbc19c918e1e0f9376ba646f9"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-9/README.md",
+        "url": "../reserve-illustrations-wave-9/README.md",
+        "bytes": 4029,
+        "gitBlob": "7d94bfb27cec1350ef47214d0f014dd9472c79ea",
+        "sha256": "975e14eba1dc6a0ddb7a1dbc8a227f499fcadfa63854bb875abb5176a6c75c14"
+      }
+    },
+    {
+      "id": "fpv-sunflower-workbench",
+      "title": "Sunflower Workbench",
+      "themeId": "fpv",
+      "wave": 10,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-10/originals/fpv-sunflower-workbench.png",
+        "url": "../reserve-illustrations-wave-10/originals/fpv-sunflower-workbench.png",
+        "bytes": 2142888,
+        "gitBlob": "cc8b34edf3a31f00bc0e6c104345b41310893108",
+        "sha256": "5b5997e3f867fa6e8522a437f7917346566ad6e53e794fe2809108206e407ba2"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-10/prompts/fpv-sunflower-workbench.txt",
+          "url": "../reserve-illustrations-wave-10/prompts/fpv-sunflower-workbench.txt",
+          "bytes": 1669,
+          "gitBlob": "21b924da3ff053d028bc23c90a78374c307801a2",
+          "sha256": "b613c6efd424c66b73ea0f3c7c7990ff4370cd7f72ffb0c98a5ce367c04dfb8c"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-10/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-10/provenance/originals.json",
+        "bytes": 5462,
+        "gitBlob": "d319ad46254164b0df5801be1f4c5a988266d4b5",
+        "sha256": "1325ef106ef243095d3360b837885350b8d9eae14a7497bef3ee4592fcdec8b3"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-10/README.md",
+        "url": "../reserve-illustrations-wave-10/README.md",
+        "bytes": 4357,
+        "gitBlob": "a3899ec59385eebabd296941492603bbce5ee8ea",
+        "sha256": "beba623c201a03992309546909f4e99df0718fd2b3fc81bebaef7ca0eed8bb0b"
+      }
+    },
+    {
+      "id": "ukraine-tidal-mosaic-observatory",
+      "title": "Tidal Mosaic Observatory",
+      "themeId": "ukraine",
+      "wave": 10,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-10/originals/ukraine-tidal-mosaic-observatory.png",
+        "url": "../reserve-illustrations-wave-10/originals/ukraine-tidal-mosaic-observatory.png",
+        "bytes": 2350777,
+        "gitBlob": "9b78361abbd015a39e49c0523a82d37c13c7deeb",
+        "sha256": "63005624f666329d77b2fee035f9163e846df64ab44b4b6002ea59e0d52ed7cc"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-10/prompts/ukraine-tidal-mosaic-observatory.txt",
+          "url": "../reserve-illustrations-wave-10/prompts/ukraine-tidal-mosaic-observatory.txt",
+          "bytes": 1638,
+          "gitBlob": "5eb909c7f6dd45d43bf83d201ba20005885bea69",
+          "sha256": "f42387f39b12fd7fcbd730ccc81bde9310eeac057cd28eca57dab26252a400e1"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-10/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-10/provenance/originals.json",
+        "bytes": 5462,
+        "gitBlob": "d319ad46254164b0df5801be1f4c5a988266d4b5",
+        "sha256": "1325ef106ef243095d3360b837885350b8d9eae14a7497bef3ee4592fcdec8b3"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-10/README.md",
+        "url": "../reserve-illustrations-wave-10/README.md",
+        "bytes": 4357,
+        "gitBlob": "a3899ec59385eebabd296941492603bbce5ee8ea",
+        "sha256": "beba623c201a03992309546909f4e99df0718fd2b3fc81bebaef7ca0eed8bb0b"
+      }
+    },
+    {
+      "id": "retro-neon-skate-arcade",
+      "title": "Neon Skate Arcade",
+      "themeId": "retro",
+      "wave": 10,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-10/originals/retro-neon-skate-arcade.png",
+        "url": "../reserve-illustrations-wave-10/originals/retro-neon-skate-arcade.png",
+        "bytes": 1956188,
+        "gitBlob": "a1054047d8b42bc158dc53446e6196a7f884332b",
+        "sha256": "6fcd9f1c294ab1b4215998e74b842380748aa9816ede9d18eecd487b649fd691"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-10/prompts/retro-neon-skate-arcade.txt",
+          "url": "../reserve-illustrations-wave-10/prompts/retro-neon-skate-arcade.txt",
+          "bytes": 1615,
+          "gitBlob": "1fc4ec0ef195b1d23c1bc10b9915c1dc9bce0dd9",
+          "sha256": "19e260b7f3f96fbb8d2bf8a942a7de0950e86a8790640b1568f4644c698cde6a"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-10/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-10/provenance/originals.json",
+        "bytes": 5462,
+        "gitBlob": "d319ad46254164b0df5801be1f4c5a988266d4b5",
+        "sha256": "1325ef106ef243095d3360b837885350b8d9eae14a7497bef3ee4592fcdec8b3"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-10/README.md",
+        "url": "../reserve-illustrations-wave-10/README.md",
+        "bytes": 4357,
+        "gitBlob": "a3899ec59385eebabd296941492603bbce5ee8ea",
+        "sha256": "beba623c201a03992309546909f4e99df0718fd2b3fc81bebaef7ca0eed8bb0b"
+      }
+    },
+    {
+      "id": "spend-storybook-rail-depot",
+      "title": "Storybook Rail Depot",
+      "themeId": "coupa",
+      "wave": 10,
+      "width": 1774,
+      "height": 887,
+      "sourceOnly": true,
+      "original": {
+        "path": "authoring/library/reserve-illustrations-wave-10/originals/spend-storybook-rail-depot.png",
+        "url": "../reserve-illustrations-wave-10/originals/spend-storybook-rail-depot.png",
+        "bytes": 1803179,
+        "gitBlob": "8ce158e3e1f758d52d5f62a5e5553ffab07186ea",
+        "sha256": "f0dd68a9228b140047ca071e9526679cfeea3b29a921b7f0434120f3186e1ba0"
+      },
+      "prompts": [
+        {
+          "path": "authoring/library/reserve-illustrations-wave-10/prompts/spend-storybook-rail-depot.txt",
+          "url": "../reserve-illustrations-wave-10/prompts/spend-storybook-rail-depot.txt",
+          "bytes": 1673,
+          "gitBlob": "122af812aaaaf2361f07b51e37fbc59dd782fbc7",
+          "sha256": "63b6e70e02f6e240598b45ac88decef95c25c1df341824a984565249a7b7a7f4"
+        }
+      ],
+      "provenance": {
+        "path": "authoring/library/reserve-illustrations-wave-10/provenance/originals.json",
+        "url": "../reserve-illustrations-wave-10/provenance/originals.json",
+        "bytes": 5462,
+        "gitBlob": "d319ad46254164b0df5801be1f4c5a988266d4b5",
+        "sha256": "1325ef106ef243095d3360b837885350b8d9eae14a7497bef3ee4592fcdec8b3"
+      },
+      "notes": {
+        "path": "authoring/library/reserve-illustrations-wave-10/README.md",
+        "url": "../reserve-illustrations-wave-10/README.md",
+        "bytes": 4357,
+        "gitBlob": "a3899ec59385eebabd296941492603bbce5ee8ea",
+        "sha256": "beba623c201a03992309546909f4e99df0718fd2b3fc81bebaef7ca0eed8bb0b"
+      }
+    }
+  ]
+}

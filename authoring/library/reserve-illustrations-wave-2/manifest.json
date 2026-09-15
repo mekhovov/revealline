@@ -1,0 +1,66 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 2,
+  "basedOn": "ec052af43a53354e3b8df5733448adcbb0b020b1",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-reedwater-relay",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Reedwater Relay",
+      "file": "originals/fpv-reedwater-relay.png",
+      "bytes": 2523272,
+      "sha256": "162c53877ee1dc6c3e37fed80a984f3cfa3ce39af20704d0ad9d7e5522dbb9df",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/fpv-reedwater-relay.txt",
+      "cleanupPrompt": null,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-moonlit-loom",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Moonlit Loom",
+      "file": "originals/ukraine-moonlit-loom.png",
+      "bytes": 2623257,
+      "sha256": "9d96f5919633b1c2e8396f9aa91c899c57b7623f91dfac2472485f3fc172cd38",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/ukraine-moonlit-loom.txt",
+      "cleanupPrompt": null,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-midnight-disk-station",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Midnight Disk Station",
+      "file": "originals/retro-midnight-disk-station-clean.png",
+      "bytes": 2136452,
+      "sha256": "d5f622764afb21dcaf155209c5e4afeb1e65906cb6e0aeed8bd53eb4e6a320b6",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/retro-midnight-disk-station.txt",
+      "cleanupPrompt": "prompts/retro-midnight-disk-station-cleanup.txt",
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-cloud-cart-exchange",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Cloud Cart Exchange",
+      "file": "originals/spend-cloud-cart-exchange-clean.png",
+      "bytes": 2549711,
+      "sha256": "560949cad2ee1031dd5f5edd9c5115db576db5d8133ae3712faa11243cee0971",
+      "width": 1774,
+      "height": 887,
+      "prompt": "prompts/spend-cloud-cart-exchange.txt",
+      "cleanupPrompt": "prompts/spend-cloud-cart-exchange-cleanup.txt",
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/selected-originals.json"
+}

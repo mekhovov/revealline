@@ -1,0 +1,63 @@
+{
+  "fullOriginalView": {
+    "observer": "author",
+    "complete": true,
+    "count": 4,
+    "method": "view_image detail=original"
+  },
+  "pngValidation": {
+    "chunkCRCs": "PASS",
+    "fullDecode": "PASS",
+    "count": 4
+  },
+  "smallView": {
+    "configuredCSSPixels": [
+      320,
+      160
+    ],
+    "nativeReview": "PASS_SOURCE_ILLUSTRATIONS_ONLY",
+    "observers": [
+      "root operated native browser",
+      "author viewed all three unmodified captures"
+    ],
+    "captures": [
+      {
+        "file": "provenance/native-comparison.jpg",
+        "bytes": 72590,
+        "sha256": "4c69b84849b4009945c9659f4a8acce56eb9e2770b66a2b88117370872c6c7e3",
+        "dimensions": [
+          1280,
+          1282
+        ],
+        "pixelsEdited": false
+      },
+      {
+        "file": "provenance/native-comparison-viewport.jpg",
+        "bytes": 117320,
+        "sha256": "3665dc87729214b0cccbc601845b5deb35b26e86815cb4b90f2ddf3727c4f489",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "pixelsEdited": false
+      },
+      {
+        "file": "provenance/native-comparison-bottom.jpg",
+        "bytes": 127425,
+        "sha256": "1b49a2f5c1b5b43d0f6b7e866490a8582f546d549d37c7659b93272ccd9a935d",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "pixelsEdited": false
+      }
+    ],
+    "rootObservation": "All four new subjects are readable at320\u00d7160; watermill, bumper car and bakery have distinct silhouettes/compositions. Meadow quad is an enclosed-body scenic drone, not a specific real FPV/type reference. Detailed pixel-paint illustration, not a compact sprite.",
+    "limitations": [
+      "Full-page JPEG export is scaled down; top and bottom viewport captures show configured320\u00d7160 composition.",
+      "No runtime adoption, new level, state or animation claim."
+    ]
+  },
+  "runtimeAdoption": false,
+  "observedAt": "2026-09-15T03:08:59.067679+00:00"
+}
