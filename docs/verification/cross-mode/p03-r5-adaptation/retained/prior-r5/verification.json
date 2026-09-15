@@ -1,0 +1,197 @@
+{
+  "format": "revealline-local-source-verification.v1",
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "scope": "R5 held source candidate; no native successor, phase, full CI or release claim.",
+  "sourceFiles": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7679,
+      "sha256": "57d867b71c8fb5146f77f043fb5cf4735768dc38a255432bf930ae38fb2a66a2"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    },
+    {
+      "path": "docs/verification/cross-mode/p03-r5/README.md",
+      "bytes": 3031,
+      "sha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2"
+    }
+  ],
+  "sourceUnchanged": true,
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 77.91643704101443,
+      "log": ".cache/r5/final-whole-node22.log",
+      "logBytes": 34455,
+      "logSha256": "6fee9e89ab4bfd4072e1c4a370ee666630963e01c877516e15d69376135f548c",
+      "summary": {
+        "tests": 141,
+        "pass": 141,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "reportedMs": 77589.850041
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 74.78497554198839,
+      "log": ".cache/r5/final-whole-node20.log",
+      "logBytes": 32358,
+      "logSha256": "4303a0d1ee66a81a38ee2423eba7549061d60740f9f5b7c25d4e394fa2e0891e",
+      "summary": {
+        "tests": 141,
+        "pass": 141,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "reportedMs": 74715.735708
+    }
+  ],
+  "peer": "Parfit source-only closed at runtime623ecf47/newtest57d867b7/shelltest677c5ffe; boot ownership and unchanged P08 guards reviewed.",
+  "predecessors": [
+    "Initial authoring run13 failures included nonexistent fixture slots() accessor; no game-failure claim.",
+    "Corrected baseline12/14 with two exact missing initial Start failures; initial fixed14/14.",
+    "First six-file140/140 both Nodes precedes explicit pagehide invalidation.",
+    "Targeted pagehide-return failed before two-line observer addition; final whole141 pair includes it."
+  ],
+  "limits": [
+    "Four declared owned file pins only; no complete transitive graph proof.",
+    "Finite DOM/media/native activation models; no audible/native/device claim.",
+    "Predecessor f61+A1 native first2events is distinct from this exact1da+R5 candidate.",
+    "No runtime core/Start/picture selection/replay/storage/version change."
+  ],
+  "evidence": [
+    {
+      "path": ".cache/r5/source-held.json",
+      "bytes": 896,
+      "sha256": "f08b5b12f4191a447434e52edf1c49679d67c11efd9d062a8cf01130c9a11044"
+    },
+    {
+      "path": ".cache/r5/source.diff",
+      "bytes": 4413,
+      "sha256": "f38fc771322e83b3204a78fc611bfc23d48630c764a6845c691aa48dc4ae76cb"
+    },
+    {
+      "path": ".cache/r5/execution-final.json",
+      "bytes": 2777,
+      "sha256": "728f48f38929652e14b94e5a0102bf41e52fe37eccae2c9b8d90c9eb93a772e8"
+    },
+    {
+      "path": ".cache/r5/static.json",
+      "bytes": 1047,
+      "sha256": "d304b68a5d5bef03c7ce5b1ce912ada2a562577c156e13762098ae1aa88f8a61"
+    },
+    {
+      "path": ".cache/r5/final-whole-node22.log",
+      "bytes": 34455,
+      "sha256": "6fee9e89ab4bfd4072e1c4a370ee666630963e01c877516e15d69376135f548c"
+    },
+    {
+      "path": ".cache/r5/final-whole-node20.log",
+      "bytes": 32358,
+      "sha256": "4303a0d1ee66a81a38ee2423eba7549061d60740f9f5b7c25d4e394fa2e0891e"
+    },
+    {
+      "path": ".cache/r5/execution.json",
+      "bytes": 2384,
+      "sha256": "7fc0e444a7848f4f2b56ae1650b0e9453e0976c0d34302af6a7e9f9feb0d070a"
+    },
+    {
+      "path": ".cache/r5/whole-node22.log",
+      "bytes": 34233,
+      "sha256": "725e1391d525890a36448e818c4413df18d0d302b89da0236992fe5253c37504"
+    },
+    {
+      "path": ".cache/r5/whole-node20.log",
+      "bytes": 32113,
+      "sha256": "d24ff7f82a15a5ab3e6e4626bf4159b87db93e0f3569a88e0366b9ae9ceb27d1"
+    },
+    {
+      "path": ".cache/r5/baseline-node22.log",
+      "bytes": 12697,
+      "sha256": "9ae0531c3a216561053807b1ace311e5e6d4b7f44bc52d50d5a6454697c19036"
+    },
+    {
+      "path": ".cache/r5/baseline-corrected-node22.log",
+      "bytes": 4542,
+      "sha256": "97e6877fdde9275f1eb816316a73df4b2900a85d275bd4aec8472df26f1de303"
+    },
+    {
+      "path": ".cache/r5/first-fixed-node22.log",
+      "bytes": 3139,
+      "sha256": "be7c0f1efd69a685727ca91991ea383bbefcf16e4ce0a5c8680c84e4d960411e"
+    },
+    {
+      "path": ".cache/r5/pagehide-before-node22.log",
+      "bytes": 1038,
+      "sha256": "62360eb8dcdbf1c6c4f780a34969c1b82f8d5893eef7541bb4439a021ce7c408"
+    },
+    {
+      "path": ".cache/r5/focus-final-node22.log",
+      "bytes": 3376,
+      "sha256": "c5ae17b503a88c2966d0163f244b277deee947a6e9390a23aef22dc3cd035b69"
+    },
+    {
+      "path": ".cache/r5/hydration.json",
+      "bytes": 4903,
+      "sha256": "bd9d1096d30b92fd85cb1faeec071a36d95244b86df4c18ec6f831efb10403d4"
+    },
+    {
+      "path": ".cache/r5/preview-binding.json",
+      "bytes": 348,
+      "sha256": "7a6f32db0a9e183b9086117eef69ddde6ac477d6b0476d48ea56c2374e123732"
+    },
+    {
+      "path": ".cache/r5/preview-preparation.json",
+      "bytes": 608,
+      "sha256": "ed2a62760f61cf7724061d76f6bc16e38b469b91d169dd01f028e8268ba60d5c"
+    },
+    {
+      "path": ".cache/r5/preview-http.json",
+      "bytes": 278,
+      "sha256": "4a0246809e6e8a75c3a46d47c6e7e1c896884bd5e455a46cfdf0a30670d859f0"
+    },
+    {
+      "path": ".cache/r5/serve.py",
+      "bytes": 3633,
+      "sha256": "72b2322f36338d08b1999270bf3f1786f521202efb2ae3800da0b7e0ba678e8b"
+    },
+    {
+      "path": ".cache/r5/server.json",
+      "bytes": 256,
+      "sha256": "f78b3af2df64aa71dea68e9994212941e7d4843e33a5c33d22f6d5135a1d701b"
+    }
+  ]
+}
