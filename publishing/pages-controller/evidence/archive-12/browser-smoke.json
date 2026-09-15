@@ -1,0 +1,28 @@
+{
+  "format": "revealline-archive-browser-smoke.v1",
+  "archiveId": "archive-12",
+  "version": "v0.52.0",
+  "base": "https://mekhovov.github.io/revealline-archive-12/",
+  "observedAt": "2026-09-15T04:45:16.723Z",
+  "journeys": [
+    {
+      "name": "main-menu",
+      "result": "PASS",
+      "detail": "Loaded the deployed game and observed the Release explorer link."
+    },
+    {
+      "name": "mission-selection",
+      "result": "PASS",
+      "detail": "Deploy opened the chapter and mission selector; the base mission was available."
+    },
+    {
+      "name": "active-game",
+      "result": "PASS",
+      "detail": "Deploying the available base mission reached an active territory-capture game with pause/menu controls."
+    }
+  ],
+  "screenshots": [
+    "mission-selection.png",
+    "active-game.png"
+  ]
+}

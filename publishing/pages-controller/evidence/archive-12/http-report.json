@@ -1,0 +1,15 @@
+{
+  "format": "revealline-archive-http-report.v1",
+  "status": "PASS",
+  "archiveId": "archive-12",
+  "base": "https://mekhovov.github.io/revealline-archive-12/",
+  "files": 634,
+  "expectedFiles": 634,
+  "verifiedBytes": 323191930,
+  "expectedBytes": 323191930,
+  "failedFiles": 0,
+  "skipped": [],
+  "expectedInventorySha256": "760c1ae7ea7b34505fb5f40a436cabf389f2bacbaa2e08205a5a448425dcca21",
+  "startedAt": "2026-09-15T04:43:05.579Z",
+  "completedAt": "2026-09-15T04:43:43.276Z"
+}

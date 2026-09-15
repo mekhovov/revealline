@@ -1,0 +1,10 @@
+{
+  "format": "revealline-archive-deployment.v1",
+  "archiveId": "archive-12",
+  "repository": "mekhovov/revealline-archive-12",
+  "infrastructureCommit": "d81a6d4b9fb767309b60114e65453841f20bd30c",
+  "deploymentId": 6451864424,
+  "workflowRun": 34929728876,
+  "base": "https://mekhovov.github.io/revealline-archive-12/",
+  "status": "success"
+}
