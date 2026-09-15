@@ -112,7 +112,7 @@ for (const mode of ['stick', 'swipe', 'dpad']) {
     const page = await classicPage(t);
     page.change('touch-mode', mode);
     for (const hand of ['right', 'left']) {
-      page.change('screen-steering-hand', hand);
+      page.change('touch-side', hand);
       assert.equal(page.doc.body.dataset.touchSide, hand);
       assert.equal(page.doc.body.dataset.screenSteeringHand, hand);
       assert.deepEqual(
