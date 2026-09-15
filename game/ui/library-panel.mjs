@@ -1,3 +1,4 @@
+import { captureOperationFocus } from './operation-focus.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { attachBackupSetPanel } from './backup-set-panel.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
@@ -505,7 +506,6 @@ export function attachLibraryPanel(api) {
   }
   function releaseTask(owner, restoreFocus = true) {
     if (libraryTask !== owner) return;
-    const hadCancelFocus = document.activeElement === $('library-operation-cancel');
     libraryTask = null;
     busy = false;
     for (const { element, disabled } of owner.controls)
@@ -514,22 +514,15 @@ export function attachLibraryPanel(api) {
     cancel.hidden = true;
     cancel.disabled = true;
     refresh();
-    if (
-      restoreFocus &&
-      $('library-dialog').open &&
-      !document.hidden &&
-      document.hasFocus?.() !== false &&
-      hadCancelFocus &&
-      owner.opener?.isConnected &&
-      !owner.opener.disabled
-    )
-      owner.opener.focus({ preventScroll: true });
+    if (restoreFocus && !owner.detached) owner.focus.restore();
+    else owner.focus.cancel();
   }
   function cancelLibraryTask(restoreFocus = true) {
     const owner = libraryTask;
     if (!owner) return false;
     if (owner.committing) {
       owner.detached = true;
+      owner.focus.cancel();
       status(
         owner.id,
         'Stopped waiting. This operation is still finishing; Library changes remain locked until its result is known.',
@@ -537,6 +530,14 @@ export function attachLibraryPanel(api) {
       );
       $('library-operation-cancel').hidden = true;
     } else {
+      // An actual focused Cancel is a new decision, separate from automatic
+      // completion after the user has deliberately tabbed elsewhere.
+      if (restoreFocus && document.activeElement === $('library-operation-cancel')) {
+        owner.focus.cancel();
+        owner.focus = captureOperationFocus($('library-operation-cancel'), {
+          restoreTo: owner.opener,
+        });
+      }
       owner.controller.abort();
       status(
         owner.id,
@@ -559,6 +560,7 @@ export function attachLibraryPanel(api) {
         (element) => ({ element, disabled: element.disabled }),
       ),
     };
+    owner.focus = captureOperationFocus(owner.opener, { owned: [$('library-operation-cancel')] });
     libraryTask = owner;
     busy = true;
     status(id, label, 'busy');
