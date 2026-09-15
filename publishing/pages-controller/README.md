@@ -1,6 +1,6 @@
 # Frozen Pages publication controller
 
-This directory publishes one explicitly selected immutable game and the semantic release explorer. It does not rebuild historical games or change their release records, tags, assets, original workers, saved-data keys or ZIP files. The current `retainedReleasesPerMajor: 100` setting includes all 57 pinned semantic releases. The root and `/game/` select only the newest published stable release; historical and comparison entries link to their own canonical archives. A canonical archive URL satisfies each earlier phase's Pages testing; main does not need to cycle through those phases.
+This directory publishes one explicitly selected immutable game and the semantic release explorer. It does not rebuild historical games or change their release records, tags, assets, original workers, saved-data keys or ZIP files. The current `retainedReleasesPerMajor: 100` setting includes all 58 pinned semantic releases. The root and `/game/` select only the newest published stable release; historical and comparison entries link to their own canonical archives. A canonical archive URL satisfies each earlier phase's Pages testing; main does not need to cycle through those phases.
 
 The publishing controller commit is different from `gameSourceRevision`. For example, v0.42.0 is frozen source `e9928cdaad2f55d912aadd2ef25f635fb99e938c`; the main merge `f56ce9d98f0ce5d77a8f3c7dc310bf1a7e6b795c` was its publishing controller. The same distinction applies here. Infrastructure changes do not increment a frozen game version.
 
@@ -20,7 +20,9 @@ Browser admission is a review record tied to pinned native evidence. It does not
 
 Archive08 now admits the exact v0.47/v0.48 freezes and their native play, Studio and offline checks. Its HTTP evidence retains the first 760 successful bodies and 13 transport failures, then independently reconciles the 13 successful retries against the same 773-file inventory. The original failure and retry receipts remain attached. Browser evidence retains all ordinary offline preparation timeouts and successful offered retries. Those receipts establish the archive admission independently of a later current-edition selection.
 
-Archive11 preserves v0.51.0 from its original release ZIP. Its public audit verifies all 620 files and 323,017,169 bytes without failures or retries. Native evidence verifies online mission installation, keyboard capture, pause/resume and saved-flight restoration. Two uninterrupted offline preparation attempts timed out after an initial interrupted attempt; disconnected reload was not tested. This admission is scoped to historical online preservation and does not claim offline acceptance. The current selector remains v0.51.0 until a separately qualified release is selected.
+Archive11 preserves v0.51.0 from its original release ZIP. Its public audit verifies all 620 files and 323,017,169 bytes without failures or retries. Native evidence verifies online mission installation, keyboard capture, pause/resume and saved-flight restoration. Two uninterrupted offline preparation attempts timed out after an initial interrupted attempt; disconnected reload was not tested. This admission is scoped to historical online preservation and does not claim offline acceptance.
+
+The current selector names v0.52.0, frozen from source `d2b53987672b0501c391b48655180f59ea03d142`. Its original published metadata and six-gate source qualification are pinned without changing the release assets. Current public byte, play and offline acceptance follow the successful deployment of this reviewed selection; the controller preparation does not claim those checks have already passed.
 
 ## Build and publication
 
