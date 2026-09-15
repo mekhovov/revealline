@@ -3,6 +3,7 @@
   'use strict';
   const CONFIG = __XONIX_OFFLINE_CONFIG__;
   const MAX_BYTES = 64 * 1024 * 1024;
+  const DOWNLOAD_CONCURRENCY = 4;
   if (!Array.isArray(CONFIG.files) || CONFIG.files.length > 2000)
     throw new Error('Offline inventory exceeds its file budget');
   let inventoryBytes = 0;
@@ -25,9 +26,11 @@
   const sameScope = (url) => url.origin === scope.origin && url.pathname.startsWith(scope.pathname);
   const hex = (bytes) =>
     Array.from(new Uint8Array(bytes), (n) => n.toString(16).padStart(2, '0')).join('');
-  async function downloadVerified(url, file) {
+  async function downloadVerified(url, file, signal) {
     if (!sameScope(new URL(url))) throw new Error('Precache escaped its distribution scope');
-    const response = await fetch(new Request(url, { cache: 'reload', credentials: 'same-origin' }));
+    const response = await fetch(
+      new Request(url, { cache: 'reload', credentials: 'same-origin', signal }),
+    );
     let reader;
     try {
       if (
@@ -125,13 +128,35 @@
       corrupt,
     };
   }
-  async function install() {
+  async function installFiles() {
     if ((await inspect()).status === 'ready') return;
     // Own and verify every body before creating a new version's cache. Avoid
     // retaining unread network branches while another clone is consumed.
-    const downloaded = [];
-    for (const [url, file] of files)
-      downloaded.push({ url, ...(await downloadVerified(url, file)) });
+    const entries = [...files],
+      downloaded = new Array(entries.length),
+      controller = new AbortController();
+    let next = 0,
+      failure;
+    await Promise.all(
+      Array.from({ length: Math.min(DOWNLOAD_CONCURRENCY, entries.length) }, async () => {
+        while (!failure && next < entries.length) {
+          const index = next++,
+            [url, file] = entries[index];
+          try {
+            downloaded[index] = { url, ...(await downloadVerified(url, file, controller.signal)) };
+          } catch (error) {
+            if (!failure) {
+              failure = error;
+              controller.abort();
+            }
+          }
+        }
+      }),
+    );
+    if (failure) {
+      downloaded.length = 0;
+      throw failure;
+    }
     const cache = await caches.open(cacheName);
     try {
       for (const item of downloaded) {
@@ -148,6 +173,13 @@
     } finally {
       downloaded.length = 0;
     }
+  }
+  let installation;
+  function install() {
+    // Two open tabs repairing one evicted cache share the same bounded work.
+    return (installation ??= installFiles().finally(() => {
+      installation = null;
+    }));
   }
   self.addEventListener('install', (event) => event.waitUntil(install()));
   self.addEventListener('activate', (event) =>
