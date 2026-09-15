@@ -165,6 +165,7 @@ export function attachStillMediaHost({
       setStatus('Use localhost or HTTPS. File URLs cannot safely open this same-origin workshop.');
       return false;
     }
+    const returnFocus = doc.activeElement;
     opening = true;
     $('still-host-open').disabled = true;
     const ticket = ++openSerial;
@@ -204,6 +205,7 @@ export function attachStillMediaHost({
           decodeImage,
           URLImpl,
           onClose: () => {
+            if (opening) cancelOpen();
             router.clear();
             navigation.sync();
           },
@@ -214,7 +216,7 @@ export function attachStillMediaHost({
         message: 'Opening and verifying local picture and story originals…',
         stage: 'verifying',
       });
-      const result = await panel.open();
+      const result = await panel.open({ returnFocus });
       if (!disposed && ticket === openSerial) {
         router.clear();
         navigation.sync();

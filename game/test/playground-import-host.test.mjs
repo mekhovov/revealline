@@ -84,7 +84,9 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     window = new Events(),
     images = [],
     writes = [],
-    storage = new Map();
+    storage = new Map(),
+    layoutFrames = [],
+    resizeObservers = [];
   mount(document, await readFile(new URL('../playground/index.html', import.meta.url), 'utf8'));
   const documents = new Map(
     await Promise.all(
@@ -136,7 +138,25 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
     poll = callback;
     return 1;
   });
-  set('requestAnimationFrame', () => 1);
+  set('requestAnimationFrame', (callback) => {
+    layoutFrames.push(callback);
+    return layoutFrames.length;
+  });
+  set(
+    'ResizeObserver',
+    class {
+      constructor(callback) {
+        this.callback = callback;
+        resizeObservers.push(this);
+      }
+      observe(node) {
+        this.node = node;
+      }
+      disconnect() {
+        this.disconnected = true;
+      }
+    },
+  );
   set(
     'Image',
     class {
@@ -176,7 +196,25 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
   return {
     $,
     poll: () => poll(),
+    holdReplayYields() {
+      const nativeTimer = globalThis.setTimeout,
+        callbacks = [];
+      set('setTimeout', (callback, delay) => {
+        assert.equal(delay, 0, 'the real verifier yields to the host without an invented delay');
+        callbacks.push(callback);
+      });
+      return {
+        callbacks,
+        restore: () => {
+          globalThis.setTimeout = nativeTimer;
+        },
+      };
+    },
     document,
+    window,
+    flushLayout: () => layoutFrames.splice(0).forEach((callback) => callback()),
+    resizeFeedback: () => resizeObservers.forEach((observer) => observer.callback()),
+    resizeObservers,
     load,
     images,
     writes,
@@ -401,19 +439,36 @@ test('preview iframe load waits for the child readiness marker and does not reus
     child = new Document();
   child.documentElement = child.createElement('html');
   child.documentElement.dataset.bootState = 'loading';
+  const feedback = f.$('preview-load-status');
+  assert.ok(
+    f.$('editor-feedback').contains(feedback),
+    'header Play uses the same visible reading region',
+  );
+  assert.equal(f.document.querySelectorAll('#preview-load-status').length, 1);
+  assert.equal(feedback.hidden, false, 'preparation text cannot replace the pending child status');
+  assert.equal(f.$('editor-status').hidden, true);
   f.$('preview-frame').contentDocument = child;
   f.$('preview-frame').emit('load');
   assert.equal(f.$('preview-load-status').dataset.state, 'busy');
   child.documentElement.dataset.bootState = 'ready';
   f.poll();
   assert.equal(f.$('preview-load-status').dataset.state, 'ready');
+  assert.equal(feedback.hidden, false);
+  f.$('preview-button').focus();
+  const originalSource = f.$('preview-frame').src;
   f.$('preview-button').onclick();
+  assert.equal(f.document.activeElement, f.$('preview-button'));
+  assert.equal(feedback.hidden, false);
+  assert.equal(f.$('editor-status').hidden, true);
+  assert.notEqual(f.$('preview-frame').src, originalSource);
   f.poll();
   assert.equal(f.$('preview-load-status').dataset.state, 'busy');
   child.documentElement.dataset.bootState = 'failed';
   f.$('preview-frame').emit('load');
   assert.equal(f.$('preview-load-status').dataset.state, 'error');
   assert.match(f.$('preview-load-status').textContent, /recovery controls/);
+  assert.equal(feedback.hidden, false);
+  assert.equal(f.$('preview-load-status'), feedback);
 });
 
 test('replay file reading acknowledges immediately, cancellation preserves the result, and a fresh real recording verifies', async (t) => {
@@ -438,4 +493,234 @@ test('replay file reading acknowledges immediately, cancellation preserves the r
   assert.match(f.$('replay-status').textContent, /matches its full recorded/);
   assert.equal(JSON.parse(f.$('replay-result').textContent).match, true);
   assert.equal(f.$('cancel-replay').hidden, true);
+});
+
+test('the original editor status and Cancel share one bounded sticky region through decode, cancel, failure and Undo', async (t) => {
+  const f = await harness(t, { deferImage: true }),
+    rail = f.$('editor-feedback'),
+    status = f.$('editor-status'),
+    cancel = f.$('cancel-import'),
+    before = f.$('level-json').value,
+    preview = f.$('preview-frame').src;
+  assert.ok(rail, 'deep operations need a persistent shared feedback region');
+  assert.equal(status.parentElement, f.$('editor-messages'));
+  assert.ok(rail.contains(cancel));
+  assert.equal(
+    status.getAttribute('tabindex'),
+    '0',
+    'the complete bounded message remains keyboard-readable',
+  );
+  assert.equal(f.document.querySelectorAll('#editor-status').length, 1);
+  assert.equal(f.document.querySelectorAll('#cancel-import').length, 1);
+  const pending = f.load.onclick();
+  await settle();
+  assert.equal(status.dataset.state, 'busy');
+  assert.equal(cancel.hidden, false);
+  assert.equal(status.parentElement, f.$('editor-messages'));
+  assert.ok(rail.contains(cancel));
+  cancel.focus();
+  cancel.onclick();
+  await f.finishImage(0);
+  await pending;
+  assert.equal(f.$('level-json').value, before);
+  assert.equal(f.$('preview-frame').src, preview);
+  assert.match(status.textContent, /cancelled/);
+  f.$('import-file').files = [{ size: 2, text: async () => '{bad' }];
+  await f.$('import-file').onchange();
+  assert.equal(status.dataset.state, 'error');
+  assert.ok(rail.contains(status), 'errors remain in the same visible owner');
+  const generate = f.$('generate-button');
+  generate.focus();
+  await generate.onclick();
+  assert.notEqual(f.$('level-json').value, before);
+  assert.equal(f.document.activeElement, generate, 'status changes do not move focus');
+  f.$('undo-button').onclick();
+  assert.equal(f.$('level-json').value, before, 'Undo retains original content bytes');
+  assert.equal(f.$('editor-status'), status);
+  assert.equal(f.$('cancel-import'), cancel);
+  const css = await readFile(new URL('../playground/playground.css', import.meta.url), 'utf8'),
+    common = await readFile(new URL('../style.css', import.meta.url), 'utf8');
+  assert.equal(rail.classList.contains('dialog-operation-rail'), true);
+  assert.match(common, /\.dialog-operation-rail\s*\{[^}]*position:\s*sticky/s);
+  assert.match(css, /#editor-messages\s*\{[^}]*max-block-size:\s*24dvh[^}]*overflow:\s*auto/s);
+  assert.match(css, /#editor-feedback \.feedback-actions button\s*\{[^}]*min-block-size:\s*44px/s);
+  assert.match(css, /#editor-messages\s*\{[^}]*display:\s*flex[^}]*flex-direction:\s*column/s);
+  assert.match(css, /#editor-feedback \.editor-status\s*\{[^}]*flex:\s*0 0 auto/s);
+});
+
+test('page feedback clears only an obscured focused control and releases listeners on pagehide', async (t) => {
+  const f = await harness(t),
+    rail = f.$('editor-feedback'),
+    root = f.document.documentElement,
+    generate = f.$('generate-button');
+  root.scrollTop = 1500;
+  let railHeight = 152,
+    initialTop = 140;
+  rail.getBoundingClientRect = () => ({ top: 0, bottom: railHeight, height: railHeight });
+  generate.getBoundingClientRect = () => ({
+    top: initialTop + 1500 - root.scrollTop,
+    bottom: initialTop + 1500 - root.scrollTop + 44,
+    height: 44,
+  });
+  generate.focus();
+  f.flushLayout();
+  assert.equal(
+    root.scrollTop,
+    1480,
+    'minimum20px clearance for a44px control in short-landscape geometry',
+  );
+  assert.equal(generate.getBoundingClientRect().top, 160);
+  assert.equal(f.document.activeElement, generate);
+  assert.equal(root.style.scrollPaddingBlockStart, '160px');
+  f.flushLayout();
+  assert.equal(root.scrollTop, 1480, 'no oscillation after the scheduled layout');
+  railHeight = 202;
+  f.resizeFeedback();
+  f.flushLayout();
+  assert.equal(
+    generate.getBoundingClientRect().top,
+    210,
+    'actual rail growth clears the same control',
+  );
+  const beforeManual = root.scrollTop;
+  root.scrollTop += 900;
+  f.window.emit('scroll');
+  f.flushLayout();
+  assert.equal(root.scrollTop, beforeManual + 900, 'ordinary manual scrolling is not overridden');
+  f.resizeFeedback();
+  f.flushLayout();
+  assert.equal(
+    root.scrollTop,
+    beforeManual + 900,
+    'a deliberately offscreen old focus is not pulled back',
+  );
+  f.$('editor-status').focus();
+  f.resizeFeedback();
+  f.flushLayout();
+  assert.equal(
+    root.scrollTop,
+    beforeManual + 900,
+    'keyboard reading inside feedback keeps its own scroll',
+  );
+  root.scrollTop = 1500;
+  initialTop = 398.53125;
+  railHeight = 202;
+  generate.focus();
+  f.flushLayout();
+  assert.equal(root.scrollTop, 1500, 'native portrait trigger geometry already clears the rail');
+  f.window.emit('pagehide');
+  const disposedScroll = root.scrollTop;
+  initialTop = 40;
+  generate.focus();
+  f.resizeFeedback();
+  f.flushLayout();
+  assert.equal(root.scrollTop, disposedScroll, 'late queued work cannot scroll a departed page');
+  assert.ok(f.resizeObservers.every((observer) => observer.disconnected));
+  f.window.emit('pageshow', { persisted: true });
+  f.flushLayout();
+  assert.equal(
+    generate.getBoundingClientRect().top,
+    210,
+    'persisted Back restores measured focus protection',
+  );
+  assert.equal(f.document.activeElement, generate);
+  const restoredObservers = f.resizeObservers.length;
+  f.window.emit('pageshow', { persisted: true });
+  f.flushLayout();
+  assert.equal(
+    f.resizeObservers.length,
+    restoredObservers,
+    'repeated pageshow never duplicates the owner',
+  );
+  assert.equal(f.resizeObservers.filter((observer) => !observer.disconnected).length, 1);
+});
+
+test('editor and replay owners share one visible region without hiding either pending Cancel or accepting stale verification', async (t) => {
+  const f = await harness(t, { deferImage: true }),
+    rail = f.$('editor-feedback'),
+    replayStatus = f.$('replay-status'),
+    replayCancel = f.$('cancel-replay'),
+    editorStatus = f.$('editor-status'),
+    editorCancel = f.$('cancel-import'),
+    readGate = deferred(),
+    before = f.$('level-json').value,
+    previousResult = 'Previous verification remains until a current result commits';
+  for (const node of [replayStatus, replayCancel, editorStatus, editorCancel]) {
+    assert.ok(rail.contains(node));
+    assert.equal(f.document.querySelectorAll(`#${node.id}`).length, 1);
+  }
+  assert.equal(replayStatus.parentElement, editorStatus.parentElement);
+  assert.equal(replayCancel.parentElement, editorCancel.parentElement);
+  f.$('replay-result').textContent = previousResult;
+  f.$('replay-paste').value = 'Retained paste draft';
+  f.$('replay-file').files = [{ size: 100, text: () => readGate.promise }];
+  f.$('editor-messages').scrollTop = 90;
+  f.$('replay-file').onchange();
+  assert.equal(replayStatus.style.order, '-1');
+  assert.equal(editorStatus.style.order, '0');
+  assert.equal(
+    f.$('editor-messages').scrollTop,
+    0,
+    'new replay owner is visible before the first read',
+  );
+  assert.equal(replayStatus.hidden, false);
+  assert.equal(editorStatus.hidden, true, 'old Generate/editor message gives way to replay work');
+  assert.equal(replayCancel.hidden, false);
+  assert.equal(replayStatus.dataset.state, 'busy');
+  const editJob = f.load.onclick();
+  await settle();
+  assert.equal(editorStatus.style.order, '-1');
+  assert.equal(replayStatus.style.order, '0');
+  for (const node of [replayStatus, replayCancel, editorStatus, editorCancel])
+    assert.equal(node.hidden, false, 'concurrent owner retains its message and escape action');
+  editorCancel.onclick();
+  await f.finishImage(0);
+  await editJob;
+  assert.equal(f.$('level-json').value, before);
+  assert.equal(replayCancel.hidden, false, 'editor completion cannot detach replay ownership');
+  const timer = f.holdReplayYields(),
+    replay = await readFile(
+      new URL('../replay-theater/data/fieldcraft-01.replay.json', import.meta.url),
+      'utf8',
+    );
+  f.$('editor-messages').scrollTop = 12;
+  readGate.resolve(replay);
+  await settle();
+  assert.equal(f.$('editor-messages').scrollTop, 12, 'progress does not reset reading scroll');
+  assert.match(replayStatus.textContent, /Verifying recorded simulation/);
+  assert.equal(timer.callbacks.length, 1, 'actual verification reached its first host yield');
+  replayCancel.focus();
+  replayCancel.onclick();
+  assert.equal(f.document.activeElement, replayCancel, 'presentation never assigns focus');
+  assert.equal(replayCancel.hidden, true);
+  assert.equal(replayStatus.hidden, false);
+  assert.equal(editorStatus.hidden, true);
+  timer.restore();
+  timer.callbacks.shift()();
+  await settle();
+  assert.equal(replayStatus.dataset.state, 'cancelled');
+  assert.equal(f.$('replay-result').textContent, previousResult);
+  assert.equal(f.$('replay-paste').value, 'Retained paste draft');
+  assert.equal(f.$('level-json').value, before);
+  f.$('replay-paste').value = replay;
+  await f.$('verify-replay-json').onclick();
+  assert.equal(replayStatus.hidden, false, 'pasted JSON uses the same visible status owner');
+  assert.equal(replayStatus.dataset.state, 'ready');
+  assert.equal(JSON.parse(f.$('replay-result').textContent).match, true);
+  assert.equal(f.$('replay-paste').value, replay, 'verification preserves exact pasted bytes');
+  assert.equal(f.$('replay-status'), replayStatus);
+  assert.equal(f.$('cancel-replay'), replayCancel);
+  replayStatus.focus();
+  const messages = f.$('editor-messages');
+  messages.scrollTop = 9;
+  replayStatus.getBoundingClientRect = () => ({ top: replayStatus.style.order === '-1' ? 10 : 74 });
+  f.$('clear-goal').onclick();
+  assert.equal(editorStatus.style.order, '-1', 'the actual newest owner is ordered first');
+  assert.equal(messages.scrollTop, 73, 'focused message keeps its prior reading offset');
+  assert.equal(
+    replayStatus.hidden,
+    false,
+    'another owner cannot hide the message currently being read',
+  );
+  assert.equal(f.document.activeElement, replayStatus);
 });

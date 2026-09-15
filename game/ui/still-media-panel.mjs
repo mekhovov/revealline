@@ -748,6 +748,7 @@ export function attachStillMediaPanel({
     });
   }
   dialog.addEventListener('cancel', (event) => {
+    if (event.target !== dialog) return;
     event.preventDefault();
     back();
   });
@@ -757,10 +758,10 @@ export function attachStillMediaPanel({
   }
   return Object.freeze({
     dialog,
-    async open() {
+    async open({ returnFocus: opener = doc.activeElement } = {}) {
       if (disposed) return false;
       if (!dialog.open) {
-        returnFocus = doc.activeElement;
+        returnFocus = opener;
         dialog.showModal();
       }
       reload.focus();

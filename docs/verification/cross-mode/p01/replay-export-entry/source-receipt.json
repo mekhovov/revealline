@@ -1,0 +1,197 @@
+{
+  "format": "revealline-p01-replay-entry-source-check.v1",
+  "status": "PASS_FOCUSED_SOURCE_ONLY_NATIVE_PENDING",
+  "at": "2026-09-15T16:28:34.764765+00:00",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel",
+  "branch": "codex/p01-file-dialog-cancel",
+  "baseSource": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "versionChanged": false,
+  "sourceCommitted": false,
+  "runtimeChange": "Move the original #export-replay button from the shell-hidden footer beside Replay Theater in Workshop; use existing button secondary styling. No recording, download, modal or focus runtime changes.",
+  "runtimeFiles": [
+    {
+      "path": "game/index.html",
+      "bytes": 68945,
+      "sha256": "293215bd20107d6afebd979ad4f92df0df1d11a3230905a7a37945934b48d15b"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "game/test/main-menu-collection-host.test.mjs",
+      "bytes": 12761,
+      "sha256": "9a06992df1a46c9ee5c1b2b913f0e30452d8832ab7162b9cfd65f994f9fb2a1b"
+    }
+  ],
+  "documentation": [
+    {
+      "path": "docs/presentation-loading.md",
+      "bytes": 11336,
+      "sha256": "3762edee3453df771f7d2f876439b5408043d767e7a8928fadacc04ca7c71ea2"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/native-file-dialog-cancel.md",
+      "bytes": 9044,
+      "sha256": "ee15d448096d13acfa708c6f3dee75ff64b9c9d13ff609ec599936916273e2bc"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 100609,
+      "sha256": "b1520af44531c4ac8cc04a1205d5ff6a6f630213e242a1358db68760c27c0d05"
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 8855,
+      "sha256": "4ebf865d7ff19eb4a086ab7edb35df33f16e861ead6a252b7f2364efdd5a4713"
+    }
+  ],
+  "beforeMove": {
+    "command": "node --test game/test/main-menu-collection-host.test.mjs",
+    "exitCode": 1,
+    "log": {
+      "path": ".cache/cross-mode/p01/replay-export-placement/implementation/before-move.log",
+      "bytes": 1921,
+      "sha256": "33af9d651cf850f58da95e223100d653db9636df8a36be6ed4fffc64559adcd4"
+    },
+    "counts": {
+      "tests": 2,
+      "pass": 0,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 5304.212458,
+    "scope": "Both existing keyboard/modeled-controller journeys newly assert that normal Workshop traversal reaches the original export. Both fail on prior footer placement."
+  },
+  "afterMove": {
+    "command": "node --test game/test/main-menu-collection-host.test.mjs",
+    "exitCode": 0,
+    "log": {
+      "path": ".cache/cross-mode/p01/replay-export-placement/implementation/after-move.log",
+      "bytes": 666,
+      "sha256": "e1cb7ec65db95e9da96359632f3333be3850a644dc623e49e402ab714e1e1d38"
+    },
+    "counts": {
+      "tests": 2,
+      "pass": 2,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 5995.575375
+  },
+  "focused": {
+    "command": "node --test --test-concurrency=2 game/test/main-menu-collection-host.test.mjs game/test/practice-retry.test.mjs game/test/modal-navigation.test.mjs game/test/field-kit-flow.test.mjs game/test/field-kit-surfaces.test.mjs",
+    "exitCode": 0,
+    "log": {
+      "path": ".cache/cross-mode/p01/replay-export-placement/implementation/focused.log",
+      "bytes": 11578,
+      "sha256": "0405ed477cecefb356cd36ee6e8ab62d671fdce97ebd4bc17618fa43f9cc9688"
+    },
+    "counts": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMs": 29349.018375,
+    "scope": "Actual host and replay verification with modeled DOM/native input defaults and controller samples. Includes existing pending export/new-attempt lock and practice isolation, top-layer navigation and collectBuildFiles/validateBuildReferences. No browser or full build."
+  },
+  "checks": [
+    {
+      "command": "node_modules/.bin/eslint game/test/main-menu-collection-host.test.mjs --max-warnings 0",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-export-placement/implementation/lint.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "command": "node_modules/.bin/prettier --check game/index.html game/test/main-menu-collection-host.test.mjs docs/presentation-loading.md docs/verification/cross-mode/p01/native-file-dialog-cancel.md authoring/skills/xonix-runtime-maintainer/SKILL.md authoring/prompts/cross-mode-delivery.md",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-export-placement/implementation/final-format-check.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      }
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/replay-export-placement/implementation/final-diff-check.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "priorFileCancelReceipt": {
+    "path": "docs/verification/cross-mode/p01/file-dialog-cancel/source-receipt.json",
+    "bytes": 9241,
+    "sha256": "b0974735de4b96d4007aa459a4abe719254200e59f6995cc28b8679ccbd7d839"
+  },
+  "fiveFileCancelGuardsUnchanged": true,
+  "unchangedAuthoritativeFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 214387,
+      "sha256": "0d28b67a07ce7d258945fd365d7bcc724dbb0778b07bdd0dece912afd90d9d82"
+    },
+    {
+      "path": "game/replay.mjs",
+      "bytes": 23633,
+      "sha256": "4ff829ba1e0998adf003e7991a29daea466ac7d6a2177e2115301020a3247b7b"
+    },
+    {
+      "path": "game/platform.mjs",
+      "bytes": 2524,
+      "sha256": "737f4e6dabcc08cd45ad5e5b1fb3b16792881897e89927ce5fe7fc609c0f3260"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 14325,
+      "sha256": "477ad6ea992908b1e819d3fb33bcaaaa2f972fa73bf81159f8addeabea2e9806"
+    },
+    {
+      "path": "game/ui/modal-navigation.mjs",
+      "bytes": 3994,
+      "sha256": "f511800fcfba01f86a7e70566578b2016eb056b13aaad54b6632c9ebf2c43b65"
+    },
+    {
+      "path": "game/ui/game-shell.css",
+      "bytes": 12750,
+      "sha256": "0cb26b492d50dbd132b7cc287e9ef80b4092293df14cd36b86016a7b6daa19c5"
+    },
+    {
+      "path": "game/ui/field-kit-flow.css",
+      "bytes": 11341,
+      "sha256": "02c73cb46d9f76da039cade2e6691002b9298539e817bbf40d216c06f7a09708"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "aea77f8a799ed1090a3a0e73288b91258696dc092868e0ad39d12c3b71674329"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "5e68fe93f4c6d6bc6ef23d95b21f9fab96b6ce0f219709ebce4112adf1f86190"
+    }
+  ],
+  "readOnlyDiagnosis": {
+    "path": ".cache/cross-mode/p01/replay-export-placement/receipt.json",
+    "bytes": 2471,
+    "sha256": "17df815bc024a11566a5984dcb6706be8fe519cfee4647f86cf6562d53f0df36"
+  },
+  "limitations": [
+    "No new native browser observation, physical controller/OS picker check, full suite/build, version, commit, push or release claim.",
+    "Immediate Preparing DOM state is modeled synchronous feedback; the tests do not establish a painted transient or an OS-saved file.",
+    "Settled close returns to the exact enabled Workshop opener. Pending-close lock remains tested in the unchanged lifecycle case; no new native pending-close focus result or focus fix is claimed.",
+    "Existing Pause/export may persist the paused flight; tests preserve checkpoint and exact saved bytes after that boundary.",
+    "Public v0.57.1 native earned-run evidence is retained by its original owner. This working correction is separate from frozen cc9 source and awaits native/public qualification."
+  ]
+}

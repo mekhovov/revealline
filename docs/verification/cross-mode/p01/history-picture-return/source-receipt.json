@@ -1,0 +1,113 @@
+{
+  "format": "revealline.history-picture-source-review.v1",
+  "at": "2026-09-15T18:10:29.737072+00:00",
+  "scope": "Uncommitted P01 correction; no version or release acceptance.",
+  "baseCommit": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "runtimeChanges": [
+    "Retire speculative picture prewarm on pagehide and fence both late result branches by exact lease.",
+    "Preserve immutable pinned images/read-only Continue and explicit Resume after permanent writer release.",
+    "Reuse exact retained approved release history read-only; require live writer before downloading new originals and again at durable commit.",
+    "Explain new-picture storage recovery with explicit export/reload; no automatic navigation, writer reacquisition or legacy substitution."
+  ],
+  "peerPreservation": {
+    "r6AppReconstructedExactly": {
+      "path": "game/app.mjs",
+      "bytes": 214706,
+      "sha256": "42903c872b0b63513aa663fcf5fcbabac386acb2725c64c634b8df7691b5c76c"
+    },
+    "meaning": "History-only inverse restores exact r6 app, including all peer replay focus-clearance changes. Other peer source files untouched."
+  },
+  "tests": {
+    "command": "node --test game/test/history-picture-host.test.mjs game/test/flight-pictures-host.test.mjs game/test/flight-pictures.test.mjs game/test/release-pictures.test.mjs game/test/profile-writer.test.mjs game/test/soundtrack-host.test.mjs",
+    "node": "v20.19.5",
+    "exitCode": 0,
+    "tests": 54,
+    "pass": 54,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 90338.313375,
+    "initialFailure": "One initial new-case fixture held validation decode before storage; corrected to hold selected display decode only after actual commit. Prior output retained; no timeout/runtime relaxation.",
+    "transientObservation": "Batch was observed after 11 cases but before process exit. It completed naturally; no teardown failure or forced exit claimed."
+  },
+  "checks": {
+    "scopedESLint": 0,
+    "scopedPrettier": 0,
+    "gitDiffCheck": 0
+  },
+  "sourcePins": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 216134,
+      "sha256": "44739b63bbc6ec2531153d2fa9d0803bc56a6f597d8ea75270be569a8780414f"
+    },
+    {
+      "path": "game/presentation/release-pictures.mjs",
+      "bytes": 14302,
+      "sha256": "74c80b817091f064c5ac775f6450382a4acd7e5a9362ece810e77862f187064d"
+    },
+    {
+      "path": "game/test/history-picture-host.test.mjs",
+      "bytes": 11584,
+      "sha256": "6de53e7a0658a69a93ec6a5005221cc5ceff6986e2d6fd67f9b565c9ff0969e0"
+    },
+    {
+      "path": "docs/presentation-loading.md",
+      "bytes": 12946,
+      "sha256": "f0828125a7f7293770e6cabc0ef448c6834ad128a22e75d9a7b17e91836034b1"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return.md",
+      "bytes": 3442,
+      "sha256": "91f3d5d4b2bda13356ec08061488367c7065cf0ee6e38d80dcdd56ae67fcdc3f"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 102696,
+      "sha256": "83d20a670acc2e8a66fbedd6b6920713f1b7d14d8b6570af7c5c91c3f9255e1b"
+    },
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 10812,
+      "sha256": "52151e1b151ff953ed2a03fa73254448871fd59498fffa1e14d49ba7c5809be1"
+    }
+  ],
+  "logPins": [
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return/initial-decode-fixture.tap.txt",
+      "bytes": 1979,
+      "sha256": "2d66ea70bd7372c32ff71e419d38f8d7bde9492ea7c634d721c0e659d02c1acd"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return/corrected-four-cases.tap.txt",
+      "bytes": 1105,
+      "sha256": "ed9075fc3772762fd816383106af8fc5e5ae4dc3fad80cc423a26c35736b9846"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return/related-54-cases.tap.txt",
+      "bytes": 13159,
+      "sha256": "d5e4fc6ffdfc3fe2416ca819f5ca4365d9b7a36c7b7f5d7ef07c45d48f35a531"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return/lint.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/history-picture-return/format.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "historyPatch": {
+    "path": ".cache/cross-mode/p01/history-picture-return/runtime-history-only.patch",
+    "bytes": 9022,
+    "sha256": "27eaa54c2f0582766102d6ec7bc00ee76f89f217d079667af370e4a291f1a131"
+  },
+  "remaining": [
+    "Native corrected Explorer/Back/Continue/Resume and recovery geometry pending at receipt creation.",
+    "Full gates/build/artifact/public qualification and version bump remain parent-owned.",
+    "No physical-device, browser-cache-admission or actual OS-download claim from modeled host tests."
+  ]
+}

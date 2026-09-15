@@ -322,3 +322,46 @@ test('widening and releasing a retained card never leave focus on disabled page 
     'Focus must remain on the exact expected control.',
   );
 });
+
+test('file picker cancellation retains More Worlds recovery files and pending work; dialog Escape still closes', async (t) => {
+  let finish, signal;
+  const f = fixture(t, {
+    chapter: (i) =>
+      i === 0
+        ? {
+            download: (options) => {
+              signal = options.signal;
+              return new Promise((resolve) => {
+                finish = resolve;
+              });
+            },
+          }
+        : {},
+  });
+  await f.panel.open();
+  const recovery = f.$('source-world-0-recovery');
+  recovery.open = true;
+  for (const id of ['source-world-0-pack', 'source-world-0-media']) {
+    const input = f.$(id);
+    input.files = [new Blob(['retained original'])];
+    input.focus();
+    input.dispatchEvent(new Event('cancel', { bubbles: true }));
+    assert.equal(f.$('dialog').open, true);
+    assert.equal(recovery.open, true);
+    assert.equal(f.doc.activeElement, input);
+    assert.equal(await input.files[0].text(), 'retained original');
+  }
+  const pending = f.$('source-world-0-download').onclick();
+  await waitFor(() => !!finish);
+  const status = f.$('status').textContent;
+  f.$('source-world-0-pack').dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(signal.aborted, false);
+  assert.equal(f.$('status').textContent, status);
+  const escape = new Event('cancel', { cancelable: true });
+  f.$('dialog').dispatchEvent(escape);
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(signal.aborted, true);
+  assert.equal(f.$('dialog').open, false);
+  finish();
+  await pending;
+});

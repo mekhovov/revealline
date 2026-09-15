@@ -7,6 +7,7 @@ import {
 } from './backup.mjs';
 import { emptyLibrary, importLibrary } from './library.mjs';
 import { emptyPackLibrary, PACK_LIMITS } from './packs.mjs';
+import { emptyExternalChapterIndex } from './external-chapter.mjs';
 import { SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { browserDecodeImage } from './imports.mjs';
 import { boundedJSON, canonicalJSON, exactKeys, plainObject, required } from './data-json.mjs';
@@ -267,12 +268,16 @@ export async function prepareProfileTransfer(
         const prepared = await op.wait(() =>
           prepareBackup(
             {
-              format:
-                external?.index === null || !external ? BACKUP_FORMAT : EXTERNAL_BACKUP_FORMAT,
+              // A trusted locked snapshot proves absence. Copy explicitly replaces
+              // all target packs, so retain that meaning even if the target has
+              // already written an empty index. Legacy file imports stay strict.
+              format: external ? EXTERNAL_BACKUP_FORMAT : BACKUP_FORMAT,
               library: library ?? emptyLibrary(),
               packs,
               session,
-              ...(external?.index ? { externalChapters: external.index } : {}),
+              ...(external
+                ? { externalChapters: external.index ?? emptyExternalChapterIndex() }
+                : {}),
             },
             {
               campaigns,

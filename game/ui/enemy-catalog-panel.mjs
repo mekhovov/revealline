@@ -253,6 +253,7 @@ export function attachEnemyCatalogPanel({
       : 'Back';
   }
   const cancel = (event) => {
+    if (event.target !== dialog) return;
     event.preventDefault();
     close();
   };

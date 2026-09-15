@@ -1,0 +1,112 @@
+{
+  "status": "FOCUSED_SOURCE_PASS_NATIVE_CONFIRMATION_SEPARATE",
+  "source": [
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 47650,
+      "sha256": "b48c99890dc80863034372fa79ce45ad941f8fb01a2bb3e870f14b3b1d580248"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 44540,
+      "sha256": "8c84dcf7dbe309c282d7ff3fa8ac20b9e70cd98aae9d3a619dd4f410c16a005b"
+    }
+  ],
+  "tests": {
+    "tests": 38,
+    "pass": 38,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "originalDurationMs": 334.647958,
+  "originalCommands": [
+    {
+      "archiveMember": "before-fix.log",
+      "bytes": 14350,
+      "sha256": "4bd0dbdcef141dcdc41e8935417f1f4c2ede3a3c66beea162311dab979ebf0a9",
+      "command": "node --test --test-name-pattern='pending audition exposes feedback' game/test/soundtrack-panel.test.mjs",
+      "exitCode": 1,
+      "originalToolChunkId": "7eafee",
+      "originalRecordedAt": "2026-09-15T18:41:37.801Z",
+      "originalToolResultMember": "tool-results/7eafee.json",
+      "provenance": "Exact stdout string and tool result captured by the original session; extracted without running the command again.",
+      "counts": {
+        "tests": 38,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 36,
+        "todo": 0
+      },
+      "durationMs": 9530.478042
+    },
+    {
+      "archiveMember": "focused.log",
+      "bytes": 8889,
+      "sha256": "d08994a2d4a03d84b6fd5c82dd34b4d27c637a0760329bf57cd5a4e90717490f",
+      "command": "node --test game/test/soundtrack-panel.test.mjs",
+      "exitCode": 0,
+      "originalToolChunkId": "2f0901",
+      "originalRecordedAt": "2026-09-15T18:41:48.217Z",
+      "originalToolResultMember": "tool-results/2f0901.json",
+      "provenance": "Exact stdout string and tool result captured by the original session; extracted without running the command again.",
+      "counts": {
+        "tests": 38,
+        "pass": 38,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "durationMs": 334.647958
+    },
+    {
+      "archiveMember": "format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "command": "./node_modules/.bin/prettier --check game/ui/soundtrack-panel.mjs game/test/soundtrack-panel.test.mjs",
+      "exitCode": 0,
+      "originalToolChunkId": "c2b3b5",
+      "originalRecordedAt": "2026-09-15T18:42:05.807Z",
+      "originalToolResultMember": "tool-results/c2b3b5.json",
+      "provenance": "Exact stdout string and tool result captured by the original session; extracted without running the command again."
+    },
+    {
+      "archiveMember": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "command": "./node_modules/.bin/eslint game/ui/soundtrack-panel.mjs game/test/soundtrack-panel.test.mjs --max-warnings 0",
+      "exitCode": 0,
+      "originalToolChunkId": "8365cc",
+      "originalRecordedAt": "2026-09-15T18:42:05.807Z",
+      "originalToolResultMember": "tool-results/8365cc.json",
+      "provenance": "Exact stdout string and tool result captured by the original session; extracted without running the command again."
+    }
+  ],
+  "preservation": {
+    "source": "Original subagent tool result records, exact output strings retained without rerun.",
+    "localOriginalTranscriptThread": "01a0a5f6-2890-78f3-ad4a-b966a09930a2",
+    "archive": "source-originals.zip",
+    "members": 8,
+    "bytes": 11182,
+    "sha256": "fcc42f126160e9d3b31ba0d9e29983f73b7162d88b313f53a9b47bdd709efe4b",
+    "everyMemberCRCAndBytesVerified": true,
+    "looseLogFilesRequired": false
+  },
+  "change": "Audition status moved above the Audition/Finish row, outside conditional playback controls; controls refresh after gesture-owned play() is invoked and before its promise is awaited.",
+  "coverage": [
+    "Held playback with no media events: busy feedback has no hidden ancestor, Finish is enabled and accepts native button focus.",
+    "Explicit Finish clears media source/URL/status, restores prior music intent once, and late play resolve/reject cannot repaint, persist activation or write storage.",
+    "Existing successful playback, rejection, lifecycle, first-open focus, file-picker child cancellation, transport and store behavior remain covered by the focused file."
+  ],
+  "limits": [
+    "Modeled DOM/media scheduling with real panel handlers and original MP3/store fixtures; no native geometry or painted-busy pass is inferred.",
+    "Before-fix run selects the two new held-play cases; 36 other tests are explicitly skipped. Final focused run executes all 38.",
+    "Only assertion diagnostic formatting changed between the initial failing fixture and final fixture, alongside the runtime correction.",
+    "No tests, browser, lint or formatting were rerun while preserving this evidence.",
+    "No full source suite, build, committed release identity, deployed correction or P01 acceptance claim."
+  ],
+  "phaseAccepted": false
+}

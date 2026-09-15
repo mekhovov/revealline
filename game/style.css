@@ -1517,6 +1517,7 @@ dialog .eyebrow {
 
 #replay-json {
   display: block;
+  scroll-margin-block: 8px;
   width: 100%;
   height: 180px;
   margin: 18px 0;
@@ -1828,8 +1829,9 @@ dialog textarea {
 .appearance-reward .reward-detail {
   opacity: 0.8;
 }
-/* The active Library owner keeps its original status and escape controls here. */
-#library-operation-rail {
+/* Existing dialog owners keep their original status and escape controls together. */
+#library-operation-rail,
+.dialog-operation-rail {
   position: sticky;
   inset-block-start: 0;
   z-index: 3;
@@ -1840,24 +1842,29 @@ dialog textarea {
   border: var(--fk-border-width, 1px) solid var(--fk-line, #425563);
   background: var(--fk-panel, #101923);
 }
-#library-operation-rail[hidden] {
+#library-operation-rail[hidden],
+.dialog-operation-rail[hidden] {
   display: none;
 }
-#library-operation-message {
+#library-operation-message,
+.dialog-operation-message {
   min-inline-size: 0;
   max-block-size: 40dvh;
   overflow-y: auto;
   overflow-wrap: anywhere;
 }
-#library-operation-message > .operation-status {
+#library-operation-message > .operation-status,
+.dialog-operation-message > .operation-status {
   margin: 0;
 }
-#library-operation-controls {
+#library-operation-controls,
+.dialog-operation-controls {
   display: flex;
   flex-wrap: wrap;
   gap: var(--fk-space-2, 8px);
 }
-#library-operation-controls > button {
+#library-operation-controls > button,
+.dialog-operation-controls > button {
   min-block-size: max(44px, var(--fk-target-size, 44px));
   margin: 0;
 }

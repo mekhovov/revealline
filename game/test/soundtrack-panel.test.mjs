@@ -111,6 +111,14 @@ class Element {
   removeEventListener(type, callback) {
     this.listeners.get(type)?.delete(callback);
   }
+  dispatchEvent(event) {
+    if (!event.target) Object.defineProperty(event, 'target', { value: this });
+    for (let node = this; node; node = event.bubbles ? node.parentNode : null) {
+      for (const listener of node.listeners?.get(event.type) ?? []) listener(event);
+      if (event.cancelBubble) break;
+    }
+    return !event.defaultPrevented;
+  }
   emit(type, data = {}) {
     const event = {
       target: this,
@@ -1197,3 +1205,214 @@ test('pending audition visibly prepares and late playback cannot repopulate a cl
   assert.equal(app.node('status').textContent, current);
   assert.equal(app.node('audition').hidden, true);
 });
+
+for (const ending of ['resolve', 'reject']) {
+  test(`pending audition exposes feedback and Finish before playback settles (${ending})`, async (t) => {
+    const initial = await fixture();
+    let activating = false,
+      enabled = 0,
+      settle;
+    const app = await setup(t, {
+      initial,
+      callbacks: { onAudioEnabled: () => enabled++ },
+    });
+    app.choose('tracks', initial.track.id);
+    const media = app.node('audition'),
+      status = app.node('audition-status'),
+      finish = app.node('stop-audition');
+    media.play = () => {
+      assert.equal(activating, true, 'Play retains the activating event turn.');
+      media.paused = false;
+      return new Promise((resolve, reject) => {
+        settle = () =>
+          ending === 'resolve' ? resolve() : reject(new Error('Retired play attempt rejected.'));
+      });
+    };
+    activating = true;
+    const playing = app.click('audition-track');
+    activating = false;
+    assert.equal(status.dataset.state, 'busy');
+    assert.match(status.textContent, /Starting audition/);
+    assert.equal(
+      Boolean(status.closest('[hidden],[inert]')),
+      false,
+      'Busy feedback has no hidden ancestor.',
+    );
+    assert.equal(Boolean(finish.closest('[hidden],[inert]')), false);
+    assert.equal(finish.disabled, false, 'Finish is enabled while the play promise is unresolved.');
+    finish.focus();
+    assert.equal(app.doc.activeElement, finish, 'The native Finish button accepts focus.');
+    await app.click('stop-audition');
+    assert.equal(media.paused, true);
+    assert.equal(media.hidden, true);
+    assert.equal(media.src, '');
+    assert.equal(status.hidden, true);
+    assert.equal(finish.disabled, true);
+    assert.equal(app.revoked.length, 1);
+    assert.equal(app.state.playing, true, 'Finish restores the earlier music intent once.');
+    const restored = app.calls.filter(([name]) => name === 'play').length,
+      studioStatus = app.node('status').textContent;
+    settle();
+    await playing;
+    assert.equal(app.calls.filter(([name]) => name === 'play').length, restored);
+    assert.equal(enabled, 0, 'A retired audition cannot persist audio activation.');
+    assert.equal(app.node('status').textContent, studioStatus);
+    assert.equal(status.hidden, true);
+    assert.equal(media.hidden, true);
+    assert.equal(media.paused, true);
+    assert.equal(app.revoked.length, 1);
+    assert.equal((await app.store.read()).generation, 1);
+  });
+}
+
+test('file picker cancellation preserves the Music draft and probe; dialog Escape retains its cancellation policy', async (t) => {
+  let slow = false,
+    entered,
+    release,
+    probeSignal;
+  const probing = new Promise((resolve) => {
+    entered = resolve;
+  });
+  const app = await setup(t, {
+    probeMedia: async (blob, options) => {
+      if (slow) {
+        probeSignal = options.signal;
+        entered();
+        await new Promise((resolve, reject) => {
+          release = resolve;
+          options.signal.addEventListener(
+            'abort',
+            () => reject(new DOMException('Cancelled', 'AbortError')),
+            { once: true },
+          );
+        });
+      }
+      return structuralProbe(blob, options);
+    },
+  });
+  app.node('mp3-files').files = [file('Retained.mp3')];
+  await app.click('import-mp3');
+  const draft = app.node('draft-state').textContent,
+    saved = await app.store.read();
+  for (const id of ['mp3-files', 'bundle-file']) {
+    const input = app.node(id);
+    input.focus();
+    input.dispatchEvent(new Event('cancel', { bubbles: true }));
+    assert.equal(app.node('dialog').open, true);
+    assert.equal(app.doc.activeElement, input);
+    assert.equal(app.node('draft-state').textContent, draft);
+  }
+  slow = true;
+  app.node('mp3-files').files = [file('Next.mp3')];
+  const importing = app.click('import-mp3');
+  await probing;
+  const status = app.node('status').textContent;
+  app.node('mp3-files').dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(probeSignal.aborted, false);
+  assert.equal(app.node('status').textContent, status);
+  assert.equal(app.node('status').dataset.state, 'busy');
+  const escape = new Event('cancel', { cancelable: true });
+  app.node('dialog').dispatchEvent(escape);
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(probeSignal.aborted, true);
+  release();
+  await importing;
+  assert.equal(app.node('dialog').open, true);
+  assert.equal(app.node('draft-state').textContent, draft);
+  assert.deepEqual(await app.store.read(), saved);
+  slow = false;
+  await app.click('save');
+  assert.deepEqual(
+    (await app.store.read()).library.tracks.map((track) => track.title),
+    ['Retained'],
+  );
+  app.node('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
+  assert.equal(app.node('dialog').open, false);
+});
+
+for (const settlement of ['resolve', 'reject'])
+  for (const ending of ['Finish', 'Close', 'hidden', 'dispose'])
+    test(`shared master during pending audition keeps P01 Finish and retired intent (${ending}/${settlement})`, async (t) => {
+      const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
+        initial = await fixture();
+      let enabled = 0,
+        settlePlay;
+      const app = await setup(t, {
+        initial,
+        callbacks: {
+          audioMaster,
+          onAudioEnabled: () => {
+            enabled++;
+            audioMaster.setMuted(false);
+          },
+        },
+      });
+      app.choose('tracks', initial.track.id);
+      const media = app.node('audition'),
+        status = app.node('audition-status'),
+        finish = app.node('stop-audition');
+      media.play = () => {
+        media.paused = false;
+        return new Promise((resolve, reject) => {
+          settlePlay = () =>
+            settlement === 'resolve' ? resolve() : reject(new Error('Retired media refusal'));
+        });
+      };
+      const playing = app.click('audition-track');
+      assert.equal(typeof settlePlay, 'function', 'Native Play starts in the activation turn.');
+      assert.equal(status.dataset.state, 'busy');
+      assert.equal(Boolean(status.closest('[hidden],[inert]')), false);
+      assert.equal(Boolean(finish.closest('[hidden],[inert]')), false);
+      assert.equal(finish.disabled, false);
+      app.node('audition-volume').value = '0.4';
+      app.node('audition-volume').oninput();
+      const transportCalls = app.calls.length;
+      await app.click('master-mute');
+      assert.equal(media.muted, true);
+      app.node('master-volume').value = '0';
+      app.node('master-volume').oninput();
+      await app.click('master-mute');
+      assert.equal(audioMaster.snapshot().muted, false);
+      assert.equal(media.muted, true, 'Zero master still gates a pending native output.');
+      app.node('master-volume').value = '0.13';
+      app.node('master-volume').onchange();
+      assert.equal(media.muted, false);
+      assert.equal(media.volume, 0.4 * 0.13);
+      assert.equal(media.paused, false);
+      assert.equal(app.calls.length, transportCalls, 'Master controls do not change music intent.');
+      assert.equal(app.node('audition-volume').value, '0.4');
+      const shared = audioMaster.snapshot();
+      if (ending === 'Finish') await app.click('stop-audition');
+      else if (ending === 'Close') app.panel.close();
+      else if (ending === 'hidden') {
+        app.doc.hidden = true;
+        app.doc.emit('visibilitychange');
+      } else app.panel.dispose();
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(media.muted, true);
+      assert.equal(media.paused, true);
+      assert.equal(media.hidden, true);
+      assert.equal(media.src, '');
+      assert.equal(status.hidden, true);
+      assert.equal(app.revoked.length, 1);
+      const expectedPlay = ending === 'Finish' || ending === 'Close' ? 1 : 0;
+      assert.equal(app.calls.filter(([name]) => name === 'play').length, expectedPlay);
+      assert.equal(app.state.desired, ending !== 'dispose');
+      const calls = app.calls.length,
+        message = app.node('status').textContent;
+      settlePlay();
+      await playing;
+      assert.deepEqual(audioMaster.snapshot(), shared);
+      assert.equal(enabled, 0, 'Late success cannot call the legacy master enable hook.');
+      assert.equal(app.calls.length, calls, 'Retired completion cannot restore intent twice.');
+      assert.equal(app.node('status').textContent, message);
+      assert.equal(status.hidden, true);
+      assert.equal(media.muted, true);
+      assert.equal(media.paused, true);
+      assert.equal(app.revoked.length, 1);
+      assert.equal((await app.store.read()).generation, 1);
+      if (ending !== 'dispose') {
+        app.panel.update();
+        assert.equal(app.node('audition-volume').value, '0.4');
+      }
+    });
