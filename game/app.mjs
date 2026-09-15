@@ -2234,15 +2234,21 @@ try {
       throw new Error('The flight or available missions changed. Stay here and choose again.');
   }
   function isSetupRequest(request) {
-    return request.kind === 'class' || request.kind === 'steering';
+    return ['class', 'steering', 'lesson'].includes(request.kind);
   }
   function restoreReplacementSelectors() {
     refreshContentSelectors();
     $('campaign-select').value = modeSelection().campaignKey;
     $('class-select').value = classId;
     $('turn-select').value = turnPolicy;
+    if (courseSession) $('first-flight-select').value = courseRequest.lessonId;
   }
   function resolveMissionRequest(request) {
+    if (request.kind === 'lesson') {
+      if (!courseSession) throw new Error('First Flight is not active.');
+      const lesson = getFirstFlightLesson(request.id);
+      return { same: courseRequest.lessonId === lesson.id, title: lesson.title };
+    }
     if (request.kind === 'class') {
       const recipe = (scenario?.classRecipes || classRegistry).find(
         (item) => item.id === request.id,
@@ -2298,6 +2304,10 @@ try {
   }
   async function applyMissionRequest(request, ticket = null) {
     const target = resolveMissionRequest(request);
+    if (request.kind === 'lesson') {
+      selectCourseLesson(request.id);
+      return true;
+    }
     if (isSetupRequest(request)) {
       if (request.kind === 'class') classId = request.id;
       else turnPolicy = request.id;
@@ -2344,7 +2354,7 @@ try {
     if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
   }
   async function requestMissionReplacement(request, opener) {
-    // Only explicit mission and starting-setup adapters call this gate. Restore,
+    // Only explicit mission, starting-setup and course-choice adapters call this gate. Restore,
     // replay, Library adoption and authored Hangar actions keep their contracts.
     const setup = isSetupRequest(request);
     if (
@@ -2486,7 +2496,8 @@ try {
         if ($('shell-missions').open)
           $('missions').querySelector('.selected')?.focus({ preventScroll: true });
         else focusMission();
-      } else if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
+      } else if (ticket.request.kind === 'lesson') $('start-button').focus({ preventScroll: true });
+      else if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
     } catch (error) {
       if (missionReplacement !== ticket) return;
       ticket.pending = false;
@@ -2515,7 +2526,7 @@ try {
     $('start-button').focus({ preventScroll: true });
   }
   function nextCourseLesson(skip = false) {
-    if (!courseSession || courseBlocked()) return;
+    if (!courseSession || courseBlocked() || missionReplacement) return;
     const snapshot = courseSnapshot();
     if (!skip && snapshot?.outcome !== 'complete') return;
     if (skip && courseVisit[courseRequest.lessonId] !== 'complete')
@@ -2526,7 +2537,7 @@ try {
     else leaveCourse();
   }
   function leaveCourse() {
-    if (!courseSession || courseBlocked()) return;
+    if (!courseSession || courseBlocked() || missionReplacement) return;
     clearInput();
     paused = true;
     sound.pause();
@@ -3713,7 +3724,7 @@ try {
     onCancelEnter: () => cancelCourseEntry(),
     onNext: () => nextCourseLesson(),
     onSkip: () => nextCourseLesson(true),
-    onSelect: selectCourseLesson,
+    onSelect: (id) => requestMissionReplacement({ kind: 'lesson', id }, $('first-flight-select')),
     onExit: leaveCourse,
     getControlLabels: () => {
       const keys = bindingLabels(resolveKeyBindings(library.preferences.keyboardBindings));
