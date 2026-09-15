@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <link rel="stylesheet" href="../ui/operation-status.css" />
     <link rel="stylesheet" href="../ui/mode-choice.css" />
+    <link rel="stylesheet" href="../ui/menu-appearance.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -298,6 +299,20 @@
             <option value="standard">Standard</option>
             <option value="large">Large</option>
           </select>
+          <label class="field-kit-page-text"
+            >Menu colours<select id="coop-menu-palette">
+              <option value="auto">Automatic</option>
+              <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
+            >Menu ornaments<select id="coop-menu-ornaments">
+              <option value="off">Off</option>
+              <option value="subtle">Subtle</option>
+              <option value="rich">Rich</option>
+            </select></label
+          >
+          <p id="coop-menu-style-status" class="micro-note" role="status"></p>
           <label for="coop-touch">Touch controls</label>
           <select id="coop-touch">
             <option value="auto" selected>Auto · touch players without a controller</option>

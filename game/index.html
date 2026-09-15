@@ -118,6 +118,7 @@
     <link rel="stylesheet" data-boot-href="ui/profile-recovery-dialog.css" />
     <link rel="stylesheet" data-boot-href="ui/backup-set.css" />
     <link rel="stylesheet" data-boot-href="ui/operation-status.css" />
+    <link rel="stylesheet" data-boot-href="ui/menu-appearance.css" />
   </head>
   <body class="field-kit">
     <section id="boot-screen" class="launch-screen" aria-labelledby="boot-title">
@@ -1084,6 +1085,20 @@
             <option value="large">Large</option>
           </select></label
         >
+        <label class="field"
+          >Menu colours<select id="menu-palette">
+            <option value="auto">Automatic</option>
+            <option value="ukrainian">Ukrainian blue &amp; yellow</option>
+          </select></label
+        >
+        <label class="field"
+          >Menu ornaments<select id="menu-ornaments">
+            <option value="off">Off</option>
+            <option value="subtle">Subtle</option>
+            <option value="rich">Rich</option>
+          </select></label
+        >
+        <p id="menu-style-status" class="micro-note" role="status"></p>
         <label class="field"
           >Terrain detail<select id="terrain-select">
             <option value="hybrid">Balanced detail</option>

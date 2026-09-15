@@ -1,0 +1,8 @@
+{
+  "path": "game/test/menu-appearance.test.mjs",
+  "oldName": "Couch ornament gutters reserve content plus the real focus ring inside a border-box at narrow widths",
+  "newName": "Couch ornament source rules reserve content and focus space without clipping",
+  "oldSha256": "2fcf1560a0e743b5ddda2cb5b1809ca469230e22aac28740c87f3bac4d09cce7",
+  "newSha256": "18365f2aa3b5b41211d2a3b441b8d0944d1921f313cff77a7aeaa8af7ad3dabb",
+  "scope": "Test label only; assertions, production CSS and all other sources unchanged. Previous22 logs retained exactly."
+}

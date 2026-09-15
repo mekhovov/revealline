@@ -77,6 +77,7 @@ import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
 import { createAudioMaster } from './ui/audio-master.mjs';
 import { createAudioPreferences } from './audio-preferences.mjs';
 import { createDisplayPreferences } from './display-preferences.mjs';
+import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
@@ -725,6 +726,13 @@ try {
     },
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const menuStyle = attachMenuStyleControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+  });
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
   // The shared authority owns master attenuation; local music and effects keep their faders.
   sound.configure({ master: 1 });
@@ -1256,6 +1264,7 @@ try {
         presentationHost.apply(document.documentElement);
         painter.setPresentation(snapshot);
         presentationSnapshot = snapshot;
+        menuStyle.setPresentation(snapshot);
         enemyGuide?.refreshPresentation();
         document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
         return snapshot;
@@ -1702,6 +1711,7 @@ try {
       stopMasterView();
       stopDisplayView();
       displayPreferences.dispose();
+      menuStyle.dispose();
       audioPreferences.dispose();
       audioMaster.dispose();
       soundtrackStore?.close();
