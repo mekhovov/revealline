@@ -1,0 +1,59 @@
+{
+  "format": "revealline-public-byte-admission.v1",
+  "status": "PASS",
+  "verifiedAt": "2026-09-15T00:17:25.590Z",
+  "archiveId": "archive-09",
+  "infrastructureCommit": "d07e625649b3a56452a284835d43f5ad3d007f33",
+  "infrastructureTree": "ad580347bed6e83c89d4ae9ee392ee04e4d637e5",
+  "deploymentId": 6448874089,
+  "hostedRunId": 34911243947,
+  "selectedVersions": [
+    "v0.49.0",
+    "v0.50.0"
+  ],
+  "versionSources": {
+    "v0.49.0": "8af0d47d73e8633c771823fe024a3456441d62c1",
+    "v0.50.0": "d52b634a231ce0907b83ea681e1e1aaf02387485"
+  },
+  "files": 1181,
+  "verifiedBytes": 618354051,
+  "expectedInventorySha256": "650713afa16181edcdbf24fa5351b1d61a685f6ebc6a3fd793829b678942d7ad",
+  "scope": "Every decoded canonical HTTP body and required MIME passed on the first attempt, including original workers and optional media. Hosted exact-source reproduction and deployment are separately bound. Browser/offline admission remains separate.",
+  "evidence": [
+    {
+      "path": "repository/expected-inventory.json",
+      "bytes": 244236,
+      "sha256": "650713afa16181edcdbf24fa5351b1d61a685f6ebc6a3fd793829b678942d7ad"
+    },
+    {
+      "path": "hosted-publication/deployment-binding.json",
+      "bytes": 443,
+      "sha256": "21e8b36e811b0ab75632b0fda130a9d283e8cfafdd27a8db5c76b1dbc1fe54bd"
+    },
+    {
+      "path": "hosted-publication/independent-reproduction-binding.json",
+      "bytes": 1103,
+      "sha256": "5a949872046485a54460b9ff3f7cea6f21c34c682e9ff5fa25d9149c79fc274a"
+    },
+    {
+      "path": "public-attempt-1/inventory.json",
+      "bytes": 244145,
+      "sha256": "a36ffe089d371c74340eab5b920bbf299d105bed7cccc0373ce8510b1aad71a3"
+    },
+    {
+      "path": "public-attempt-1/report.json",
+      "bytes": 1444,
+      "sha256": "9b58569243b1af8b118c78f9fa4d3ebf00270626a4c74569cae5ae2294cf94bd"
+    },
+    {
+      "path": "public-attempt-1/results.jsonl",
+      "bytes": 818028,
+      "sha256": "f5e85a6e892784938d21f7ffb4a532329ad173a84e5d4e6c547eac9f78ce9023"
+    },
+    {
+      "path": "public-attempt-1/attempts.jsonl",
+      "bytes": 818028,
+      "sha256": "f5e85a6e892784938d21f7ffb4a532329ad173a84e5d4e6c547eac9f78ce9023"
+    }
+  ]
+}

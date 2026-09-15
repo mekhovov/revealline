@@ -1,0 +1,40 @@
+{
+  "format": "revealline-permanent-remote-freeze-retention.v1",
+  "version": "v0.51.0",
+  "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "sourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+  "releaseId": 388769473,
+  "promotionRunId": 34909367226,
+  "sourceArchiveStoredLocally": false,
+  "distributionStoredLocally": false,
+  "looseSiteHydratedLocally": false,
+  "permanentReleaseAssetsVerified": 7,
+  "firstHostedFreezeRun": 34904714317,
+  "independentHostedArtifactRun": 34906472854,
+  "originalHostedLooseProofSha256": "4453139d9af19b0b88a537e461db32a833ca4d0bf7adf4a211f7b16f75a6d967",
+  "independentCaptureSha256": "4e56bbc18d82f616af65d891fb31cdcd4617ea57a76619ce601f27745a778b62",
+  "publicationReceiptSha256": "a4587a2d1a5f2dcdf2348a161137db890c9a5413b3a60160c48fed0742bc7785",
+  "metadataFiles": [
+    {
+      "path": "release.json",
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541",
+      "bytes": 465
+    },
+    {
+      "path": "site/manifest.json",
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3",
+      "bytes": 113770
+    },
+    {
+      "path": "site/.xonix-build.json",
+      "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa",
+      "bytes": 53
+    },
+    {
+      "path": "site/distribution.zip.sha256",
+      "sha256": "b0ae6ba0dae3e41115f36c985c334b557a6e2273e924a2d3d856ee3aeb974a25",
+      "bytes": 83
+    }
+  ],
+  "at": "2026-09-14T23:43:58.510968+00:00"
+}
