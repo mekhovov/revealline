@@ -1,0 +1,17 @@
+{
+  "caches": [
+    {
+      "count": 601,
+      "name": "revealline-offline:https%3A%2F%2Fmekhovov.github.io%2Frevealline-archive-13%2Freleases%2Fv0.54.0%2Fsite%2F:dab7ad53fbba9ee6f30076c5dfd5ea36c1a90ceb852bc4f477b8182d0daab47f"
+    }
+  ],
+  "details": "{\"status\": \"ready\", \"version\": \"v0.54.0\", \"buildId\": \"dab7ad53fbba9ee6f30076c5dfd5ea36c1a90ceb852bc4f477b8182d0daab47f\", \"count\": 600, \"verified\": 600, \"bytes\": 55099084, \"missing\": [], \"corrupt\": []}",
+  "online": true,
+  "workers": [
+    {
+      "active": "activated",
+      "scope": "https://mekhovov.github.io/revealline-archive-13/releases/v0.54.0/site/",
+      "script": "https://mekhovov.github.io/revealline-archive-13/releases/v0.54.0/site/service-worker.js"
+    }
+  ]
+}
