@@ -1,0 +1,24 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-12",
+  "infrastructureCommit": "d81a6d4b9fb767309b60114e65453841f20bd30c",
+  "deploymentId": 6451864424,
+  "versions": [
+    "v0.52.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-12/browser-smoke.json",
+      "sha256": "5c9400001beed0211b21127babae65eed0afd1036fc15e3c7e55ca0785d4fa6a"
+    },
+    {
+      "path": "evidence/archive-12/mission-selection.png",
+      "sha256": "c84e3c4f82dbc616534297289ee0c36c16914a9c2c1c24e7b0988b35ec9dd95d"
+    },
+    {
+      "path": "evidence/archive-12/active-game.png",
+      "sha256": "7d2a122dbf601f2fc6aacfb5d02452ffd007aa18231e225d6aa506d841e6ab7e"
+    }
+  ]
+}
