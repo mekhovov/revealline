@@ -187,7 +187,29 @@ async function page(
         if (!cancel.defaultPrevented) dialog.close();
       }
     }
+    if (!event.defaultPrevented && key === 'Tab') {
+      const dialog = target.closest('dialog[open]');
+      if (dialog) {
+        const stops = [
+          ...dialog.querySelectorAll('button,a[href],input,select,textarea,summary,[tabindex]'),
+        ].filter(
+          (node) =>
+            node.tabIndex >= 0 &&
+            !node.disabled &&
+            !node.closest('[hidden],[inert]') &&
+            node.getClientRects().length,
+        );
+        const index = stops.indexOf(target);
+        if (index >= 0) stops[(index + 1) % stops.length]?.focus();
+      }
+    }
     if (!event.defaultPrevented && key === 'Enter' && target.tagName === 'BUTTON') target.click();
+    // Model only the native anchor default after actual keyboard/click handlers.
+    if (!event.defaultPrevented && key === 'Enter' && target.tagName === 'A') {
+      const click = target.emit('click', { button: 0 });
+      if (!click.defaultPrevented)
+        visits.push(new URL(target.getAttribute('href'), globalThis.location.href).href);
+    }
     return event;
   };
   const tap = (key) => {
@@ -1380,4 +1402,210 @@ test('a repeated Retry paint failure stops the new attempt truthfully until anot
   assert.doesNotMatch(f.$('coop-message').textContent, /Arena stopped/);
   f.tick(150); // Team advances at 120 Hz; cross the displayed one-second boundary.
   assert.notEqual(f.$('coop-clock').textContent, '0:00');
+});
+
+function tabToTeamAction(f, id) {
+  for (let i = 0; i < 20 && f.doc.activeElement.id !== id; i++) f.tap('Tab');
+  assert.equal(f.doc.activeElement.id, id, `Actual paused Tab traversal reaches ${id}.`);
+  assert.equal(f.$('coop-overlay').contains(f.doc.activeElement), true);
+  assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
+}
+const modePanelLinks = [
+  ['coop-solo', '../'],
+  ['coop-versus', './'],
+];
+for (const [id, path] of modePanelLinks)
+  for (const fault of [false, true])
+    test(`in-panel ${id} keyboard departure from ${fault ? 'fault' : 'pause'} preserves its exact Stay/Back opener`, async (t) => {
+      const errors = [];
+      t.mock.method(console, 'error', (error) => errors.push(error));
+      const f = await page(t, { nativeFocus: true, capturePaint: true });
+      playingTeam(f);
+      if (fault) {
+        f.failNextPaint();
+        f.tick();
+        assert.equal(errors.length, 1);
+        assert.equal(f.$('coop-resume').hidden, true);
+      } else f.$('coop-pause').click();
+      tabToTeamAction(f, id);
+      const before = heldTeam(f);
+      f.tap('Enter');
+      assert.equal(f.$('coop-discard-dialog').open, true);
+      assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+      assert.match(
+        f.$('coop-discard-copy').textContent,
+        fault ? /cannot resume/ : /both players paused/,
+      );
+      unchangedPaused(f, before);
+      f.tap('Escape');
+      assert.equal(f.$('coop-discard-dialog').open, false);
+      assert.equal(f.doc.activeElement.id, id);
+      unchangedPaused(f, before);
+      f.tap('Enter');
+      f.tap('Enter');
+      assert.equal(f.$('coop-discard-dialog').open, false, 'Enter on Stay is not Resume.');
+      assert.equal(f.doc.activeElement.id, id);
+      unchangedPaused(f, before);
+      f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');
+      f.tap('Enter');
+      f.tap('Tab');
+      assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
+      f.tap('Enter');
+      assert.deepEqual(f.visits, [new URL(path, globalThis.location.href).href]);
+      f.tick(75);
+      assert.deepEqual(heldTeam(f), before, 'Leaving never resumes or replaces the old page run.');
+    });
+
+for (const [id, path] of modePanelLinks)
+  test(`in-panel ${id} is reachable by actual controller navigation and requires a separate discard`, async (t) => {
+    const f = await page(t, { nativeFocus: true, capturePaint: true });
+    playingTeam(f);
+    f.$('coop-pause').click();
+    const before = heldTeam(f);
+    const pad = {
+      index: 0,
+      id: 'Mode panel controller',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    f.pads.push(pad);
+    const button = (index) => {
+      pad.buttons[index] = { pressed: true, value: 1 };
+      f.tick();
+      pad.buttons[index] = { pressed: false, value: 0 };
+      f.tick();
+    };
+    f.tick(2);
+    button(0); // South adoption/release has no departure action.
+    for (let i = 0; i < 20 && f.doc.activeElement.id !== id; i++) button(13);
+    assert.equal(f.doc.activeElement.id, id);
+    unchangedPaused(f, before);
+    button(0);
+    assert.equal(f.$('coop-discard-dialog').open, true);
+    button(1);
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.equal(f.doc.activeElement.id, id);
+    unchangedPaused(f, before);
+    button(0);
+    button(13);
+    assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
+    button(0);
+    assert.deepEqual(f.visits, [new URL(path, globalThis.location.href).href]);
+    assert.deepEqual(heldTeam(f), before);
+  });
+
+test('in-panel Solo keeps the exact existing one-use return context and does not consume or rewrite it', async (t) => {
+  const entries = new Map(),
+    returnStorage = {
+      getItem: (key) => entries.get(key) ?? null,
+      setItem: (key, value) => entries.set(key, value),
+      removeItem: (key) => entries.delete(key),
+    };
+  const api = createModeReturn({
+    storage: returnStorage,
+    baseURL: 'http://localhost/game/',
+    authority: { channel: 'dev', version: 'dev', sourceRevision: null },
+  });
+  const ticket = api.prepare({
+    campaignKey: 'first-signal/2/88639f3aab7b6cc1',
+    levelId: 'signal-01',
+    themeId: 'fpv',
+  });
+  const recorded = [...entries];
+  const f = await page(t, {
+    href: ticket.href,
+    returnStorage,
+    nativeFocus: true,
+    capturePaint: true,
+  });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  tabToTeamAction(f, 'coop-solo');
+  assert.equal(f.$('coop-solo').getAttribute('href'), `../?mode-return=${ticket.token}`);
+  const before = heldTeam(f);
+  f.tap('Enter');
+  f.tap('Escape');
+  unchangedPaused(f, before);
+  assert.deepEqual([...entries], recorded);
+  f.tap('Enter');
+  f.tap('Tab');
+  f.tap('Enter');
+  assert.deepEqual(f.visits, [new URL(`../?mode-return=${ticket.token}`, ticket.href).href]);
+  assert.deepEqual([...entries], recorded);
+});
+
+for (const [id, path] of modePanelLinks)
+  test(`terminal in-panel ${id} follows the refreshed fixed native route without another discard`, async (t) => {
+    const f = await page(t, { nativeFocus: true, capturePaint: true }),
+      pack = customPack('mode-loss');
+    pack.levels[0].enemies = [];
+    await f.selectFile(JSON.stringify(pack));
+    f.$('coop-difficulty').value = 'expert';
+    f.$('coop-start').click();
+    f.tick(3);
+    for (let loop = 0; loop < 2; loop++)
+      for (const [first, second, ticks] of [
+        ['KeyD', 'ArrowLeft', 30],
+        ['KeyW', 'ArrowUp', 15],
+        ['KeyD', 'ArrowLeft', 15],
+        ['KeyS', 'ArrowDown', 15],
+        ['KeyA', 'ArrowRight', 15],
+      ]) {
+        f.tap(first);
+        f.tap(second);
+        f.tick(ticks);
+      }
+    assert.equal(f.$('coop-overlay').hidden, false);
+    assert.equal(f.$('coop-resume').hidden, true);
+    assert.equal(f.$('coop-overlay-kicker').textContent, 'ONE MORE SHARED PLAN');
+    tabToTeamAction(f, id);
+    const before = heldTeam(f);
+    f.$(id).setAttribute('href', 'https://other.invalid/not-a-mode');
+    f.tap('Enter');
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    assert.deepEqual(f.visits, [new URL(path, globalThis.location.href).href]);
+    assert.deepEqual(heldTeam(f), before);
+  });
+
+test('in-panel navigation failure keeps the paused attempt and explicit retryable actions', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  tabToTeamAction(f, 'coop-versus');
+  const before = heldTeam(f);
+  f.tap('Enter');
+  f.tap('Tab');
+  globalThis.location.assign = () => {
+    throw new Error('Mode navigation unavailable');
+  };
+  f.tap('Enter');
+  assert.match(
+    f.$('coop-message').textContent,
+    /could not be replaced.*Mode navigation unavailable/,
+  );
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  unchangedPaused(f, before);
+  tabToTeamAction(f, 'coop-versus');
+  f.tap('Enter');
+  assert.equal(f.$('coop-discard-dialog').open, true);
+});
+
+test('in-panel departure loses its authority on blur; background return cannot reuse Confirm', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  tabToTeamAction(f, 'coop-solo');
+  f.tap('Enter');
+  const before = heldTeam(f);
+  f.doc.focused = false;
+  f.win.emit('blur');
+  f.doc.focused = true;
+  f.doc.body.focus();
+  f.win.emit('focus');
+  f.$('coop-discard-confirm').click();
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  unchangedPaused(f, before);
 });

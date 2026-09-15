@@ -83,7 +83,7 @@ This is a status snapshot, not another acceptance register. The phase table abov
 | P05   | `5d3560e` on `codex/p05a-display-preferences`: shared display settings, glyph inspection, compact confirmations and correct disabled Couch styling.                        | Integrated Team typography/layout, cross-screen contrast, responsive/zoom and actual-device qualification. Desktop evidence alone does not close this phase.                                                                                                                                   |
 | P08-A | `1da77ee` on `codex/p08a-static-pictures`: exact static Solo/Versus artwork bindings, cancellation and input/focus ownership; 116/116 affected tests on each Node runtime. | Team painter/artwork/actor parity, approved edition variants, imports, actual-size/arena consistency and final production/public qualification. Read-only Team painter/lease is committed separately at `e5b2b91` (107/107 affected tests per runtime); host and artwork adoption are pending. |
 
-The retained P03 source audit identified five transition gaps. Workshop Restart and the course lesson-choice correction are integrated at `4397b36`; [independent integration checks](verification/cross-mode/p03-jk-integration/README.md) pass 76/76 in four complete files on each Node runtime. Candidate-specific native receipts keep their original source scope. A1 in-panel Couch destinations have passed a separate 26-observation keyboard check and await their source integration; Versus initial focus and Library launch decisions are active work. The approved title/lobby composition and final full input journeys remain open. These candidates do not establish completed menu accessibility.
+The retained P03 source audit identified five transition gaps. Workshop Restart and the course lesson-choice correction are integrated at `4397b36`; [independent integration checks](verification/cross-mode/p03-jk-integration/README.md) pass 76/76 in four complete files on each Node runtime. Candidate-specific native receipts keep their original source scope. A1 in-panel Couch destinations are integrated from `c6b57e8` after a separate 26-observation keyboard check; Versus initial focus and Library launch decisions are active work. The approved title/lobby composition and final full input journeys remain open. These candidates do not establish completed menu accessibility.
 
 ## P03-A actual-opener candidate
 
@@ -154,6 +154,22 @@ The existing native Restart decision now serves both the paused overlay and Work
 A captured request refuses competing content/save/course/mission decisions and rechecks the current run, recorder and setup before confirmation. Leaving or losing foreground invalidates the shown decision; returning cannot reuse its destructive intent. A queued old close cannot cancel a new visit. Picture loading/failure and its existing interruption guard remain authoritative after a confirmed restart.
 
 This is an internal P03 candidate based on `3253189`, not a version or phase acceptance. Root’s predecessor observation found immediate reset from Workshop without confirmation and a ready field hidden beneath that retained modal. The [R1 evidence](verification/cross-mode/p03-r1/README.md) separates 145/145 tests on each Node runtime from 14 native keyboard observations of both Restart openers. Integration, public and physical-device gates remain open. Outgoing mode links, Library launch adapters, course lesson selection and the approved mode-entry composition remain separate work; no core, saved format, P01 operation, producer or artwork changes are included.
+
+## P03 mode-departure A1 candidate
+
+The isolated [A1 mode-departure work](mode-departure.md) shares Versus's existing
+Stay/discard screen across the fixed Solo and Team routes, binding the decision
+to the actual match and generation. Team gains Solo/Versus actions inside its
+active paused/results panel using I's existing owner, without widening the
+navigation root or adding saved Team state. Ready/terminal links stay direct;
+Stay never resumes. This source candidate is based on integrated H/I at `f61a249`.
+Seven complete affected files pass 211/211 on each Node runtime. The
+[scoped desktop native record](verification/cross-mode/p03-mode-a1/README.md)
+checks Versus → Team and both Team in-panel keyboard destinations, paused Stay
+and explicit discard; it does not certify physical devices or all return/fault
+paths. Initial Versus focus remains R5. This work does not yet include the separate
+P08 picture host, Solo outgoing retention, title Start/Continue or integrated
+Couch lobby work, and does not accept P03 as a phase or release.
 
 ## Player flow and feedback contract
 

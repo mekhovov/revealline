@@ -425,6 +425,25 @@ canvas {
   gap: 10px;
   margin-top: 22px;
 }
+.coop-mode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-block: 14px;
+}
+.field-kit .coop-mode-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 50px;
+  max-inline-size: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--fk-corner);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
 .controls {
   display: grid;
   grid-template-columns: 1fr 1fr;

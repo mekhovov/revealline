@@ -1,0 +1,18 @@
+{
+  "source": "f61a249277944a5fdd50cf7d545cbb18dbd0eaf8",
+  "freeBefore": 948183040,
+  "files": [
+    {
+      "path": "game/content/packs/sentinel-relay.json",
+      "bytes": 11416,
+      "sha256": "de523b416fa5a107d8d831061b54277d53b63faf17e58ab828a87e28f0fe48f1",
+      "blob": "69544ef1abea85bbc96c8a3fb11e72bad52c22ee"
+    },
+    {
+      "path": "game/replays/sentinel-routes.json",
+      "bytes": 256854,
+      "sha256": "b704c71879c29810f42dca6e94857c6728d2439c08d1807edc008114bdb85a70",
+      "blob": "dc9e89d14a7136b74277440618fa772e5a95049b"
+    }
+  ]
+}
