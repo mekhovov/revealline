@@ -790,3 +790,23 @@ kbd {
     line-height: 1.3;
   }
 }
+
+/* Shared display roles enlarge text without changing either player's geometry. */
+.field-kit[data-field-kit-page='relay-rescue']
+  :is(.identity, .identity strong, .identity > span, .team-status, .masthead, .eyebrow) {
+  font-size: var(--fk-text-secondary);
+  line-height: 1.35;
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.team-status > strong, #coop-clock) {
+  font-family: var(--fk-font-mono);
+  font-size: var(--fk-text-counter);
+}
+.field-kit[data-field-kit-page='relay-rescue'] :is(.mode-label, .team-status) {
+  letter-spacing: normal;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity {
+  min-width: 0;
+}
+.field-kit[data-field-kit-page='relay-rescue'] .identity strong {
+  overflow-wrap: anywhere;
+}

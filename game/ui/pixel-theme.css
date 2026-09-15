@@ -852,23 +852,26 @@ body.game-shell:not(.first-flight-session) {
 .game-shell .game-overlay[data-kind='pause'] .overlay-actions .button.primary::before {
   color: #f675bc;
 }
-.game-shell dialog#restart-dialog.restart-dialog {
-  width: min(460px, calc(100vw - 32px));
+/* Short confirmations opt in; full-screen game panels retain their own layout. */
+.game-shell dialog.restart-dialog {
+  inset: var(--safe-top, 0px) var(--safe-right, 0px) var(--safe-bottom, 0px) var(--safe-left, 0px);
+  width: min(460px, calc(100vw - var(--safe-left, 0px) - var(--safe-right, 0px) - 32px));
   height: fit-content;
   max-width: 460px;
-  max-height: calc(100dvh - 32px);
+  max-height: calc(100dvh - var(--safe-top, 0px) - var(--safe-bottom, 0px) - 32px);
   margin: auto;
   padding: clamp(24px, 5vw, 40px);
   border: 2px solid #466493;
   box-shadow: 0 24px 80px #000e;
+  overflow: auto;
 }
-.game-shell dialog#restart-dialog.restart-dialog .overlay-actions {
+.game-shell dialog.restart-dialog .overlay-actions {
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
   margin-top: 24px;
 }
-.game-shell dialog#restart-dialog.restart-dialog .button {
+.game-shell dialog.restart-dialog .overlay-actions .button {
   width: 100%;
   min-height: 50px;
 }

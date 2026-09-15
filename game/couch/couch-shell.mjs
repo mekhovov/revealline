@@ -11,7 +11,7 @@ const ABILITY = Object.freeze({
 const SCREENS = Object.freeze({
   main: ['race-main', 'race-start'],
   setup: ['race-setup', 'race-level'],
-  options: ['race-options-panel', 'race-touch-0'],
+  options: ['race-options-panel', 'race-text-face'],
   help: ['race-help-panel', 'race-help-read'],
   confirm: ['race-confirm', 'race-confirm-back'],
   leave: ['race-leave-panel', 'race-leave-back'],

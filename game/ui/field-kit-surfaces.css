@@ -300,6 +300,15 @@
 .field-kit[data-field-kit-page='couch'] #couch-app .race-menu-actions :is(button, a):hover {
   border-color: var(--fk-cyan);
 }
+.field-kit[data-field-kit-page='couch']
+  #couch-app
+  .race-menu-actions
+  :is(button, a):is(:disabled, [aria-disabled='true']) {
+  color: var(--fk-muted);
+  background-color: var(--fk-panel);
+  border-color: var(--fk-line);
+  border-style: dashed;
+}
 .field-kit[data-field-kit-page='controller'] :is(.setup, .lab-grid) {
   gap: 20px;
 }

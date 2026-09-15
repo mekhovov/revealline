@@ -1,0 +1,91 @@
+{
+  "base": "3acce1941116d18f9e86dcfa26dea463433cd3b2",
+  "bindingSha256": "73c0c2f9234fa9aab042936ef1ae21f5bd0299442eba0dbc397d85bddda938cc",
+  "rows": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 260548,
+      "sha256": "e9d6b2f30ce4c7ddb19f0490e80c3d337b2283b493ef985dbae6636865aa8fa3",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/app.mjs"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 10237,
+      "sha256": "e695d83afa567ae8a3bcccf9c774782471ed80f1cfdf8f038fbb2223c822c1d3",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/coop-view.mjs"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 42691,
+      "sha256": "81af7b8cc7ac13e97bb65a63c4e9e7fe00cef33eaab938bb271fc5cddecd929e",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/couch.mjs"
+    },
+    {
+      "path": "game/couch/index.html",
+      "bytes": 15719,
+      "sha256": "6001adfc0c381d99312555357a1e2302ca8c4631a4a4572c069578ed2d875d67",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/index.html"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 16322,
+      "sha256": "6e76413f2435970c8c69b75ee05aeeb898297ed851d488b6de241d8edce6056b",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.css"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15922,
+      "sha256": "305fd62619a621a0bbbfeb92a2725a37c92436106e94be801e9b15ca56a69cba",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.html"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 35080,
+      "sha256": "b6aa26c8324549a110ff9ee196d86503f0986ab65f82bf9b6a198a680d0adb4f",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/couch/relay-rescue.mjs"
+    },
+    {
+      "path": "game/display-preferences.mjs",
+      "bytes": 7319,
+      "sha256": "923bff19b744069eddee0735de2716674278d28ca3e00441ad5bf984a081a576",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/display-preferences.mjs"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 71029,
+      "sha256": "abb8283e270d78edca271840ec94978587a8a4c273114ff83a750692730dce7f",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/index.html"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "bytes": 18373,
+      "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/ui/field-kit-surfaces.css"
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "bytes": 2713,
+      "sha256": "30d79b9ec13f845377d5ae80a1c0544ca2323fc7a8d65611fe6acced3a6db2e4",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/ui/field-kit-tokens.css"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "bytes": 21573,
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98",
+      "status": 200,
+      "url": "http://127.0.0.1:58349/game/ui/pixel-theme.css"
+    }
+  ],
+  "scope": "Read-only exact twelve held production bodies, no browser or state"
+}

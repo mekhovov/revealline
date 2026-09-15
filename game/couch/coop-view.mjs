@@ -1,10 +1,17 @@
+import { canvasTextFonts } from '../text-face.mjs';
+
+const THEME_FONTS = Object.freeze({
+  ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
+  numeric: '"Field Kit Mono", ui-monospace, monospace',
+});
 const COLORS = ['#ffda77', '#8be0ed'];
 
 /** Draw the authoritative board once. Rendering never advances game state. */
 export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
-  function paint(run, { reduced = false } = {}) {
+  function paint(run, { reduced = false, textFace = 'pixel' } = {}) {
+    const fonts = canvasTextFonts(textFace, THEME_FONTS);
     const unit = canvas.width / run.width;
     ctx.save();
     ctx.scale(unit, unit);
@@ -60,7 +67,7 @@ export function createCoopPainter(canvas) {
         ctx.fillRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
         ctx.strokeRect(anchor.x - 0.7, anchor.y - 0.7, 1.4, 1.4);
         ctx.fillStyle = '#fff1c8';
-        ctx.font = 'bold 0.85px system-ui';
+        ctx.font = `600 0.85px ${fonts.ui}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(
@@ -86,7 +93,7 @@ export function createCoopPainter(canvas) {
       ctx.beginPath();
       ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
       ctx.fill();
-      ctx.font = 'bold 0.64px system-ui';
+      ctx.font = `600 0.64px ${fonts.ui}`;
       ctx.textAlign = 'center';
       ctx.fillText(
         `${relayLabel ? `RELAY ${relayLabel} · ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELDED' : 'CAPTURE CORE'}`,
@@ -128,7 +135,7 @@ export function createCoopPainter(canvas) {
       ctx.arc(enemy.targetPoint.x, enemy.targetPoint.y, 0.75, 0, Math.PI * 2);
       ctx.stroke();
       ctx.fillStyle = '#ffd279';
-      ctx.font = 'bold 0.65px system-ui';
+      ctx.font = `600 0.65px ${fonts.ui}`;
       ctx.textAlign = 'center';
       ctx.fillText(`P${enemy.target + 1} · LOCKED`, enemy.x, enemy.y - 1.1);
     }
@@ -192,7 +199,7 @@ export function createCoopPainter(canvas) {
       ctx.beginPath();
       ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
       ctx.fill();
-      ctx.font = 'bold 0.66px system-ui';
+      ctx.font = `500 0.66px ${fonts.numeric}`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const labelX =
@@ -232,7 +239,7 @@ export function createCoopPainter(canvas) {
       ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
       if (enemy.type === 'hunter' && enemy.phase !== 'warning') {
         ctx.fillStyle = '#eee7c8';
-        ctx.font = 'bold 0.57px system-ui';
+        ctx.font = `600 0.57px ${fonts.ui}`;
         ctx.textAlign = 'center';
         ctx.fillText(
           enemy.phase === 'commit' ? 'CHARGE' : enemy.phase === 'recovery' ? 'RECOVER' : 'HUNTER',
@@ -250,7 +257,7 @@ export function createCoopPainter(canvas) {
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.fillStyle = '#e6f8ff';
-        ctx.font = 'bold 0.6px system-ui';
+        ctx.font = `600 0.6px ${fonts.ui}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('SLOWED', 0, Math.min(run.height - 0.6, enemy.y + 1.25) - enemy.y);
