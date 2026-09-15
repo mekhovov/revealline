@@ -640,6 +640,7 @@ try {
     courseEntryHold = false,
     modeDeparture = null,
     missionReplacement = null,
+    restartRequest = null,
     modeDepartureHold = false,
     lastOwnedAttempt = null,
     contentSwitchBusy = false,
@@ -1651,6 +1652,7 @@ try {
     if (courseEntry) cancelCourseEntry();
     cancelModeDeparture();
     cancelMissionReplacement();
+    invalidateRestart('Restart cancelled when leaving this page.');
     optionalWorlds?.close(false);
     invalidateContentSwitch();
     pause(true);
@@ -1900,7 +1902,15 @@ try {
     refreshCourse();
   }
   async function enterFirstFlight() {
-    if (practice || courseSession || courseEntry || modeDeparture || missionReplacement) return;
+    if (
+      practice ||
+      courseSession ||
+      courseEntry ||
+      modeDeparture ||
+      missionReplacement ||
+      restartRequest
+    )
+      return;
     attemptFiles?.invalidate();
     const ticket = {
       controller: new AbortController(),
@@ -2081,6 +2091,7 @@ try {
     if (
       modeDeparture ||
       missionReplacement ||
+      restartRequest ||
       courseSession ||
       courseEntry ||
       practice ||
@@ -2339,6 +2350,7 @@ try {
     if (
       missionReplacement ||
       modeDeparture ||
+      restartRequest ||
       (courseSession && !setup) ||
       courseBlocked() ||
       sessionBusy ||
@@ -5370,25 +5382,111 @@ try {
     mission?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
   $('pause-button').onclick = () => pause();
-  const restartMission = () => {
-    if (defeatActive || campaignOverview || courseBlocked()) return;
-    if ($('restart-dialog').open) $('restart-dialog').close();
+  const restartDialog = $('restart-dialog');
+  const restartCopy = $('restart-dialog-copy').textContent;
+  function restartAvailable() {
+    return (
+      unfinishedFlight() &&
+      !defeatActive &&
+      !campaignOverview &&
+      !courseBlocked() &&
+      !courseEntry &&
+      !modeDeparture &&
+      !missionReplacement &&
+      !sessionBusy &&
+      !contentSwitchBusy &&
+      !pictureThemePending &&
+      !backupBusy &&
+      !document.hidden &&
+      document.hasFocus() !== false
+    );
+  }
+  function invalidateRestart(message) {
+    if (!restartRequest) return;
+    restartRequest.cancelled = true;
+    $('restart-confirm').disabled = true;
+    $('restart-dialog-copy').textContent =
+      `${message} Keep this attempt, then choose Restart again when ready.`;
+  }
+  function requestRestart(opener) {
+    const top = controllerDialog();
+    if (
+      restartRequest ||
+      !restartAvailable() ||
+      !availableFocusTarget(opener) ||
+      (top && !top.contains(opener))
+    )
+      return;
+    // The choice itself neither saves nor replaces the attempt. Retain the same
+    // hold through cancellation/pagehide until explicit Resume or a fresh run.
+    modeDepartureHold = true;
+    pause(true);
+    const ticket = {
+      opener,
+      run,
+      recorder,
+      runId,
+      campaign,
+      entry: activeEntry,
+      scenario,
+      classId,
+      turnPolicy,
+      levelIndex,
+      generation: libraryGeneration,
+      cancelled: false,
+    };
+    restartRequest = ticket;
+    $('restart-dialog-copy').textContent = restartCopy;
+    $('restart-confirm').disabled = false;
+    try {
+      restartDialog.showModal();
+      $('restart-cancel').focus({ preventScroll: true });
+    } catch (error) {
+      restartRequest = null;
+      warning(`Restart confirmation unavailable: ${error.message}. Your flight remains paused.`);
+      if (availableFocusTarget(opener)) opener.focus({ preventScroll: true });
+    }
+  }
+  $('restart-button').onclick = () => requestRestart($('restart-button'));
+  $('overlay-restart').onclick = () => requestRestart($('overlay-restart'));
+  restartDialog.addEventListener('close', () => {
+    // A queued close from the preceding visit cannot cancel a reopened decision.
+    if (restartDialog.open) return;
+    const ticket = restartRequest;
+    restartRequest = null;
+    if (!ticket || document.hidden || document.hasFocus() === false) return;
+    const top = controllerDialog();
+    if (availableFocusTarget(ticket.opener) && (!top || top.contains(ticket.opener)))
+      ticket.opener.focus({ preventScroll: true });
+  });
+  $('restart-confirm').onclick = () => {
+    const ticket = restartRequest;
+    if (!ticket || !restartDialog.open || ticket.cancelled) return;
+    if (
+      !restartAvailable() ||
+      run !== ticket.run ||
+      recorder !== ticket.recorder ||
+      runId !== ticket.runId ||
+      campaign !== ticket.campaign ||
+      activeEntry !== ticket.entry ||
+      scenario !== ticket.scenario ||
+      classId !== ticket.classId ||
+      turnPolicy !== ticket.turnPolicy ||
+      levelIndex !== ticket.levelIndex ||
+      libraryGeneration !== ticket.generation
+    ) {
+      invalidateRestart('The flight or available setup changed.');
+      return;
+    }
+    // Only the explicitly confirmed handoff closes retained menu parents.
+    restartRequest = null;
+    restartDialog.close();
+    if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
     prepare();
     resume();
   };
-  $('restart-button').onclick = restartMission;
-  $('overlay-restart').onclick = () => {
-    if (defeatActive || campaignOverview || courseBlocked()) return;
-    $('restart-dialog').showModal();
-    $('restart-cancel').focus({ preventScroll: true });
-  };
-  $('restart-dialog').addEventListener('close', () => {
-    if (paused && $('game-overlay').dataset.kind === 'pause')
-      $('overlay-restart').focus({ preventScroll: true });
-  });
-  $('restart-confirm').onclick = restartMission;
   $('retry-button').onclick = () => {
     if (defeatActive || courseBlocked()) return;
     demo = false;
@@ -5616,6 +5714,7 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
+    invalidateRestart('Restart cancelled when focus changed.');
     invalidateContentSwitch({ announce: true });
     if (courseEntry)
       cancelCourseEntry('Course entry cancelled when focus changed. Your flight remains paused.');

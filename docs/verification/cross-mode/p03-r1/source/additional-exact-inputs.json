@@ -1,0 +1,12 @@
+[
+  {
+    "path": "game/test/terminal-navigation.test.mjs",
+    "bytes": 17305,
+    "sha256": "7d6928633ad7b109bc51d77666411b7604a9b92b75d5e213fe2e8c0c90e0c29b"
+  },
+  {
+    "path": "game/test/flight-pictures-host.test.mjs",
+    "bytes": 16862,
+    "sha256": "a47e489f748df01200b9300c80df9fd289505abea5e3552157919059785707c4"
+  }
+]

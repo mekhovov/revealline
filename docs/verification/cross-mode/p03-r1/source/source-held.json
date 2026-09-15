@@ -1,0 +1,46 @@
+{
+  "base": "3253189f3599378dedc30f8f654e6e0d5dfd2253",
+  "source": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 241350,
+      "sha256": "47009b41f82b759b7af4aa69f2c4a53477c083929d25a844bf73b53262d135de"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70334,
+      "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d"
+    },
+    {
+      "path": "game/test/restart-navigation-host.test.mjs",
+      "bytes": 10733,
+      "sha256": "8d4b02034f63a69bd8d57a6c23d45b3d306ebb8c671facdba285e820e0af4fd2"
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "bytes": 19610,
+      "sha256": "d6345e78806aa1789e259e000d2423ebb0b7b19fd2698e15d855a2908c55ed16"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 41503,
+      "sha256": "90e5cf29581fa0661e59f8ce7f436ed2a14cc15879e99fa1141a81ecfef05ffc"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 106597,
+      "sha256": "9cd3d84a7aab32069fb75ae3960487c8007076969d272fb1ceb7c14eee223a90"
+    }
+  ],
+  "testFiles": [
+    "game/test/restart-navigation-host.test.mjs",
+    "game/test/modal-navigation.test.mjs",
+    "game/test/mission-replacement-host.test.mjs",
+    "game/test/starting-setup-host.test.mjs",
+    "game/test/mode-return-host.test.mjs",
+    "game/test/terminal-navigation.test.mjs",
+    "game/test/flight-pictures-host.test.mjs"
+  ],
+  "status": "Source held; final seven-file pair and source/native review pending",
+  "freeBytes": 1098465280
+}

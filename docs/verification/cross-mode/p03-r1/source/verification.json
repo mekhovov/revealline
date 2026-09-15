@@ -1,0 +1,117 @@
+{
+  "base": "3253189f3599378dedc30f8f654e6e0d5dfd2253",
+  "status": "PASS: seven complete files on each Node runtime; internal P03 candidate only.",
+  "checkedAt": "2026-09-15T18:20:07.265439+00:00",
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 241350,
+      "sha256": "47009b41f82b759b7af4aa69f2c4a53477c083929d25a844bf73b53262d135de"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70334,
+      "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d"
+    },
+    {
+      "path": "game/test/restart-navigation-host.test.mjs",
+      "bytes": 10733,
+      "sha256": "8d4b02034f63a69bd8d57a6c23d45b3d306ebb8c671facdba285e820e0af4fd2"
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "bytes": 19695,
+      "sha256": "dc926477752d329db2ed8ed5b6bf2582d61f2d813d4e1efcbaaf23e4dfe6d8bd"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 41503,
+      "sha256": "90e5cf29581fa0661e59f8ce7f436ed2a14cc15879e99fa1141a81ecfef05ffc"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 106597,
+      "sha256": "9cd3d84a7aab32069fb75ae3960487c8007076969d272fb1ceb7c14eee223a90"
+    }
+  ],
+  "testFiles": [
+    "game/test/restart-navigation-host.test.mjs",
+    "game/test/modal-navigation.test.mjs",
+    "game/test/mission-replacement-host.test.mjs",
+    "game/test/starting-setup-host.test.mjs",
+    "game/test/mode-return-host.test.mjs",
+    "game/test/terminal-navigation.test.mjs",
+    "game/test/flight-pictures-host.test.mjs"
+  ],
+  "results": [
+    {
+      "node": "22",
+      "log": "node22-final-seven-successor.log",
+      "bytes": 35461,
+      "sha256": "ca3dd63c2343070dcf4dbd079837addf7363670946d6304dd57677eeaf22afc5",
+      "tests": 145,
+      "pass": 145,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 139980.3885
+    },
+    {
+      "node": "20",
+      "log": "node20-final-seven-successor.log",
+      "bytes": 33276,
+      "sha256": "098b5ebc3384244d71057d78350cf5760a1ecb00f27b70f4b3d4df0313a06099",
+      "tests": 145,
+      "pass": 145,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "durationMs": 200808.387167
+    }
+  ],
+  "unchangedFiniteStartingInputsVerified": 258,
+  "static": {
+    "eslint": "PASS: app and both changed host files",
+    "prettier": "PASS: six changed source/test/guidance paths",
+    "gitDiffCheck": "PASS"
+  },
+  "predecessors": [
+    {
+      "log": "node22-initial.log",
+      "result": "6/14",
+      "explanation": "Workshop fixture queried an unsupported descendant selector; use real Restart closest(details) summary. No runtime change."
+    },
+    {
+      "log": "node22-successor.log",
+      "result": "16/16",
+      "explanation": "Corrected actual disclosure path and added currentness/pending cases."
+    },
+    {
+      "log": "node22-picture-initial.log",
+      "result": "1/3",
+      "explanation": "Fixture assumed a nonexistent body error state and ready-after-background abort; corrected to actual operation error/released-image outcomes. No runtime change."
+    },
+    {
+      "log": "node22-picture-successor.log",
+      "result": "3/3",
+      "explanation": "New ready/error/background picture ownership cases passed."
+    },
+    {
+      "log": "node22-final-seven.log",
+      "result": "144/145",
+      "explanation": "Existing missing-original test used old unguarded hidden Workshop Restart; updated to visible overlay Restart and explicit Confirm, retaining original save/media oracle. Not a timing failure."
+    },
+    {
+      "log": "node22-existing-picture-successor.log",
+      "result": "1/1",
+      "explanation": "Updated existing missing-original journey passed before final whole-file pair."
+    }
+  ],
+  "native": "Root-owned 14-event keyboard evidence is separate; predecessor 5-event reproduction retained.",
+  "limits": [
+    "No new build, version, publication, physical controller/touch/device or full P03 acceptance.",
+    "No native queued-cut, image failure, blur, storage failure or saved-slot byte comparison claimed.",
+    "Native used separate P05 compact-dialog CSS overlay; no stylesheet changes in this patch."
+  ],
+  "freeBytes": 954671104
+}
