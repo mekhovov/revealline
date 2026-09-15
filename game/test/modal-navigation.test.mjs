@@ -794,3 +794,137 @@ test('programmatic Collection after a real win does not refocus a hidden opener'
   assert.equal(h.rendered.run.status, 'won');
   assert.deepEqual(h.errors, []);
 });
+
+for (const origin of ['title', 'paused flight'])
+  for (const [opener, dialogId] of [
+    ['shell-library', 'library-dialog'],
+    ['shell-help', 'help-dialog'],
+  ])
+    test(`${origin} Workshop ${opener} returns through actual openers for button, Escape and controller Back`, async (t) => {
+      nativeDialogs(t);
+      const h = await soloPage(t, { titleScreen: origin === 'title' }),
+        pad = controllerPad(h, t);
+      if (origin === 'paused flight') {
+        h.$('start-button').click();
+        h.key('ArrowDown');
+        for (let i = 0; i < 24; i++) h.frame();
+        h.key('ArrowDown', false);
+        h.$('overlay-menu').click();
+        assert.equal(h.rendered.run.player.cutting, true);
+      }
+      for (const exit of ['button', 'escape', 'controller']) {
+        h.$('shell-workshop').focus();
+        h.$('shell-workshop').click();
+        h.$(opener).focus();
+        h.$(opener).click();
+        pad.frame();
+        pad.frame();
+        const checkpoint = authoritativeCheckpoint(h.rendered.run),
+          stored = [...h.storage.map];
+        assert.equal(h.$('shell-home').open, true);
+        assert.equal(h.$('shell-workshop-dialog').open, true);
+        assert.equal(h.$(dialogId).open, true);
+        if (exit === 'controller') pad.pulse(1);
+        else if (exit === 'escape') nativeEscape(h.$(dialogId));
+        else h.$(dialogId).querySelector('[data-close]').click();
+        await Promise.resolve();
+        pad.frame();
+        assert.equal(h.$(dialogId).open, false);
+        assert.equal(h.$('shell-workshop-dialog').open, true);
+        assert.equal(h.doc.activeElement.id, opener);
+        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+        assert.deepEqual([...h.storage.map], stored);
+        pad.pulse(1);
+        await Promise.resolve();
+        assert.equal(h.$('shell-workshop-dialog').open, false);
+        assert.equal(h.$('shell-home').open, true);
+        assert.equal(h.doc.activeElement.id, 'shell-workshop');
+        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+        assert.deepEqual([...h.storage.map], stored);
+        pad.frame();
+      }
+      if (origin === 'paused flight') {
+        const checkpoint = authoritativeCheckpoint(h.rendered.run);
+        pad.pulse(1);
+        await Promise.resolve();
+        assert.equal(h.$('shell-home').open, false);
+        assert.equal(h.doc.activeElement.id, 'start-button');
+        assert.equal(h.rendered.paused, true);
+        assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+      } else assert.equal(h.rendered.run.tick, 0);
+      assert.deepEqual(h.errors, []);
+    });
+
+for (const origin of ['title', 'paused flight'])
+  test(`Workshop Library explicit challenge selection leaves retained parents from ${origin}`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: origin === 'title' });
+    if (origin === 'paused flight') {
+      h.$('start-button').click();
+      h.key('ArrowDown');
+      for (let i = 0; i < 24; i++) h.frame();
+      h.key('ArrowDown', false);
+      h.$('overlay-menu').click();
+      assert.equal(h.rendered.run.player.cutting, true);
+    }
+    h.$('shell-workshop').focus();
+    h.$('shell-workshop').click();
+    h.$('shell-library').focus();
+    h.$('shell-library').click();
+    h.doc.querySelector('[data-library-panel="challenges"]').click();
+    h.$('challenge-date').value = '2026-09-15';
+    h.$('challenge-kind').value = 'daily';
+    assert.equal(h.$('shell-workshop-dialog').open, true);
+    h.$('launch-challenge').focus();
+    h.$('launch-challenge').click();
+    await Promise.resolve();
+    h.frame(0);
+    for (const id of ['library-dialog', 'shell-workshop-dialog', 'shell-home'])
+      assert.equal(h.$(id).open, false, `${id} must not cover the chosen challenge`);
+    assert.equal(h.doc.activeElement.id, 'start-button');
+    assert.equal(h.rendered.run.level.id, 'route-2026-09-15-daily');
+    assert.equal(h.rendered.run.tick, 0);
+    assert.equal(h.$('flight-state').textContent, 'Ready for launch');
+    const checkpoint = authoritativeCheckpoint(h.rendered.run);
+    for (let i = 0; i < 30; i++) h.frame();
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.deepEqual(h.errors, []);
+  });
+
+for (const action of ['resume-save', 'import-save'])
+  test(`Workshop Library ${action} returns a verified saved cut to its paused field`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t, { titleScreen: false });
+    h.$('start-button').click();
+    h.key('ArrowDown');
+    for (let i = 0; i < 24; i++) h.frame();
+    h.key('ArrowDown', false);
+    h.$('overlay-menu').click();
+    assert.equal(h.rendered.run.player.cutting, true);
+    const checkpoint = authoritativeCheckpoint(h.rendered.run);
+    h.$('shell-workshop').focus();
+    h.$('shell-workshop').click();
+    h.$('shell-library').focus();
+    h.$('shell-library').click();
+    h.doc.querySelector('[data-library-panel="saves"]').click();
+    const saved = h.storage.getItem('revealline.suspended.dev.v1');
+    assert.ok(saved);
+    if (action === 'import-save') {
+      h.$('save-json').closest('details').open = true;
+      h.$('save-json').value = saved;
+    }
+    h.$(action).focus();
+    await h.$(action).onclick();
+    await Promise.resolve();
+    h.frame(0);
+    for (const id of ['library-dialog', 'shell-workshop-dialog', 'shell-home'])
+      assert.equal(h.$(id).open, false, `${id} must not cover the restored paused flight`);
+    assert.equal(h.doc.activeElement.id, 'start-button');
+    assert.equal(h.$('start-button').textContent, 'Resume →');
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    for (let i = 0; i < 30; i++) h.frame();
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.equal(h.storage.getItem('revealline.suspended.dev.v1'), saved);
+    assert.deepEqual(h.errors, []);
+  });
