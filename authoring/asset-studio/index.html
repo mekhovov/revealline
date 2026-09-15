@@ -56,6 +56,12 @@
         /></label>
       </div>
     </header>
+    <div class="studio-audio" role="group" aria-label="Shared sound settings">
+      <button id="studio-audio-mute" type="button" aria-pressed="false">Unmute sound</button>
+      <label for="studio-master-volume">Master sound volume</label>
+      <input id="studio-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
+      <span id="studio-audio-status" role="status"></span>
+    </div>
     <div class="workspace-state">
       <p id="workspace-summary">Loading the presentation registry…</p>
       <div>

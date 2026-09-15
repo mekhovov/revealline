@@ -1,0 +1,44 @@
+- link "Skip inventory":
+  - /url: "#inspector"
+- paragraph:
+  - status: Current release assets loaded. Changes stay in this local studio.
+- banner:
+  - link "REVEALLINE / WORKSHOP":
+    - /url: ../../game/
+  - heading "Asset Studio" [level=1]
+  - button "Save local revision"
+  - button "Export .rltheme"
+  - text: Import collection
+  - button "Import collection"
+- group "Shared sound settings":
+  - button "Unmute sound"
+  - generic: Master sound volume
+  - slider "Master sound volume": "0.13"
+  - status
+- paragraph: Theme FPV Field Kit · document r19 · local save none
+- button "Undo draft" [disabled]
+- button "Redo draft" [disabled]
+- button "Reset to saved" [disabled]
+- button "Reload saved"
+- button "Load release collection"
+- main:
+  - complementary "Asset inventory":
+    - heading "Asset inventory" [level=2]
+    - generic: 293 / 293
+    - text: Search
+    - searchbox "Search"
+    - text: Theme
+    - combobox "Theme":
+      - option "Field Kit"
+      - option "FPV Field Kit" [selected]
+    - text: Screen
+    - combobox "Screen":
+      - option "All screens" [selected]
+      - option "about"
+      - option "archive"
+      - option "boot"
+      - option "briefing"
+      - option "collection"
+      - option "controller-practice"
+      - option "couch"
+      - option "credits"

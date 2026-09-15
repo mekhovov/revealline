@@ -1,0 +1,30 @@
+[
+  {
+    "stage": "playing-muted",
+    "master": "0.13",
+    "masterLabel": "Unmute master sound",
+    "now": "falling-chime · playing · 0:00 / 0:02",
+    "seek": "0"
+  },
+  {
+    "stage": "explicit-pause",
+    "master": "0.13",
+    "masterLabel": "Unmute master sound",
+    "now": "falling-chime · paused · 0:00 / 0:02",
+    "seek": "0.2"
+  },
+  {
+    "stage": "unmute-paused",
+    "master": "0.13",
+    "masterLabel": "Mute master sound",
+    "now": "falling-chime · paused · 0:00 / 0:02",
+    "seek": "0.2"
+  },
+  {
+    "stage": "mute-paused",
+    "master": "0.13",
+    "masterLabel": "Unmute master sound",
+    "now": "falling-chime · paused · 0:00 / 0:02",
+    "seek": "0.2"
+  }
+]

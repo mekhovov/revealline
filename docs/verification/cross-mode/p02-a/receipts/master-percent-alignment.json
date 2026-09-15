@@ -1,0 +1,261 @@
+{
+  "format": "revealline-scoped-verification.v1",
+  "scope": "P02-A common 1% shared master range precision",
+  "createdAt": "2026-09-15T14:58:35.740992+00:00",
+  "changedPaths": [
+    "game/index.html",
+    "game/couch/index.html",
+    "game/couch/relay-rescue.html",
+    "authoring/asset-studio/index.html",
+    "game/test/soundtrack-master-keyboard-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs"
+  ],
+  "productionDelta": "Only four shared master slider step attributes: 0.05 to 0.01. Original bounds/defaults and all local Music/Effects/audition sliders remain unchanged. Prior Studio input+change callback retained.",
+  "regression": "Root native observation established that the master persisted0.13 but Settings with step0.05 snapped its DOM display to0.15. New actual Solo host test models native range setter sanitization and requires exact0.13 in Studio, hidden Settings, returned Settings and reopened Studio.",
+  "tests": {
+    "wholeFiles": 6,
+    "passed": 68,
+    "runtimes": [
+      "22.22.2",
+      "20.19.5"
+    ],
+    "newKeyboardFileCases": 3,
+    "couchSharedFileCases": 7,
+    "preservation": [
+      "No playback on preference restoration",
+      "Existing .65 default followed by one1%increment persists .66 across Versus and Team",
+      "Actual controller range confirmation commits .51 from .5",
+      "Paused duel/Team/solo state unchanged",
+      "Input+change and change-only commit paths preserved"
+    ]
+  },
+  "runs": {
+    "before": [
+      {
+        "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "bytes": 6968,
+        "sha256": "b963feaae5db2e90b4c2df366de833bd2450625aa5701cda936d9aa4036706ca"
+      },
+      {
+        "path": "game/test/couch-audio-master.test.mjs",
+        "bytes": 10819,
+        "sha256": "2827986ab64cebc068252e97ff16a91ec1a082a1bd9eaad1ddfb5ca871e04acc"
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "bytes": 20448,
+        "sha256": "611a821c061b6520e3db1183505110dd75e9f1025509346310cda97001a60b37"
+      },
+      {
+        "path": "game/test/couch-navigation.test.mjs",
+        "bytes": 22762,
+        "sha256": "77cc3897f2c190d0cf6dfb84dc57014f0d863c0c5916fa23f27b378b306eef01"
+      },
+      {
+        "path": "game/test/coop-host.test.mjs",
+        "bytes": 23284,
+        "sha256": "cc1ac6bb0f87813459a5a4b4a357541279354fb783cfdfdb4df061de8c7f9630"
+      },
+      {
+        "path": "game/test/asset-studio-audio-master.test.mjs",
+        "bytes": 9239,
+        "sha256": "946eb2cadcf3a116902441317ae4c0b467fda0cd7e314e2baf3b824a8c718283"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 68743,
+        "sha256": "5a9e8a2b87666595990ab9757e9738eee1a5b5c74c3fa4fd47db54af21f0520e"
+      },
+      {
+        "path": "game/couch/index.html",
+        "bytes": 15214,
+        "sha256": "7a5c127d0474b583a3612a2f85009c70462f1615d41b51701a917ab30a8e8a46"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 14284,
+        "sha256": "940b94641afa63596b7a30cc1029e7ed113d455dd1f527e8ece715a4b51d8bbb"
+      },
+      {
+        "path": "authoring/asset-studio/index.html",
+        "bytes": 19649,
+        "sha256": "7759f4e26b2256588429da14066dea3dfcd5a631aedca0e01d1dd8ed900567e8"
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 215527,
+        "sha256": "e39b31a183a3a4677c2679520b524655ec738fb51e4e1cacbb0192629d7fd33c"
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "bytes": 38761,
+        "sha256": "88d1fa8d98c7df46dbd29a00a83c04b1b2afe449bc833ebc2a90e2c152b61bf2"
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 23188,
+        "sha256": "f7666f5c360007ef9ded78164e60b1ec314c079bdb08d9fb96e8ed45578fcd2b"
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 50526,
+        "sha256": "a3b61c9636c8b8a0fff13f35b28d16f39abca634fc9989ff2e746cd259740d69"
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "bytes": 14988,
+        "sha256": "73e2569016955531d6d5673b0766fcacf516d3885ab73e0e5bd02677bc84fc4d"
+      },
+      {
+        "path": "game/test/helpers/couch-host.mjs",
+        "bytes": 8103,
+        "sha256": "c84cce71c9cab65da5b4b575fad61d92ae56e0eeb91a2626d69c4796d3aa8441"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      }
+    ],
+    "runs": [
+      {
+        "runtime": "22.22.2",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "game/test/couch-audio-master.test.mjs",
+          "game/test/soundtrack-host.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/asset-studio-audio-master.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 25.742,
+        "log": ".cache/p02a-master-percent/node-22.22.2.log",
+        "logSha256": "e992b5262caf9cc4e85d80e8b1ae6824410955ecb0fc4bc8244f70f2ef7b18bc",
+        "pinsUnchanged": true
+      },
+      {
+        "runtime": "20.19.5",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--test",
+          "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "game/test/couch-audio-master.test.mjs",
+          "game/test/soundtrack-host.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/asset-studio-audio-master.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 48.944,
+        "log": ".cache/p02a-master-percent/node-20.19.5.log",
+        "logSha256": "efbbc951088656d538c17cf9f0854720ce2d7aa74c527c821124e37dcc815ee4",
+        "pinsUnchanged": true
+      }
+    ],
+    "after": [
+      {
+        "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+        "bytes": 6968,
+        "sha256": "b963feaae5db2e90b4c2df366de833bd2450625aa5701cda936d9aa4036706ca"
+      },
+      {
+        "path": "game/test/couch-audio-master.test.mjs",
+        "bytes": 10819,
+        "sha256": "2827986ab64cebc068252e97ff16a91ec1a082a1bd9eaad1ddfb5ca871e04acc"
+      },
+      {
+        "path": "game/test/soundtrack-host.test.mjs",
+        "bytes": 20448,
+        "sha256": "611a821c061b6520e3db1183505110dd75e9f1025509346310cda97001a60b37"
+      },
+      {
+        "path": "game/test/couch-navigation.test.mjs",
+        "bytes": 22762,
+        "sha256": "77cc3897f2c190d0cf6dfb84dc57014f0d863c0c5916fa23f27b378b306eef01"
+      },
+      {
+        "path": "game/test/coop-host.test.mjs",
+        "bytes": 23284,
+        "sha256": "cc1ac6bb0f87813459a5a4b4a357541279354fb783cfdfdb4df061de8c7f9630"
+      },
+      {
+        "path": "game/test/asset-studio-audio-master.test.mjs",
+        "bytes": 9239,
+        "sha256": "946eb2cadcf3a116902441317ae4c0b467fda0cd7e314e2baf3b824a8c718283"
+      },
+      {
+        "path": "game/index.html",
+        "bytes": 68743,
+        "sha256": "5a9e8a2b87666595990ab9757e9738eee1a5b5c74c3fa4fd47db54af21f0520e"
+      },
+      {
+        "path": "game/couch/index.html",
+        "bytes": 15214,
+        "sha256": "7a5c127d0474b583a3612a2f85009c70462f1615d41b51701a917ab30a8e8a46"
+      },
+      {
+        "path": "game/couch/relay-rescue.html",
+        "bytes": 14284,
+        "sha256": "940b94641afa63596b7a30cc1029e7ed113d455dd1f527e8ece715a4b51d8bbb"
+      },
+      {
+        "path": "authoring/asset-studio/index.html",
+        "bytes": 19649,
+        "sha256": "7759f4e26b2256588429da14066dea3dfcd5a631aedca0e01d1dd8ed900567e8"
+      },
+      {
+        "path": "game/app.mjs",
+        "bytes": 215527,
+        "sha256": "e39b31a183a3a4677c2679520b524655ec738fb51e4e1cacbb0192629d7fd33c"
+      },
+      {
+        "path": "game/couch/couch.mjs",
+        "bytes": 38761,
+        "sha256": "88d1fa8d98c7df46dbd29a00a83c04b1b2afe449bc833ebc2a90e2c152b61bf2"
+      },
+      {
+        "path": "game/couch/relay-rescue.mjs",
+        "bytes": 23188,
+        "sha256": "f7666f5c360007ef9ded78164e60b1ec314c079bdb08d9fb96e8ed45578fcd2b"
+      },
+      {
+        "path": "game/ui/soundtrack-panel.mjs",
+        "bytes": 50526,
+        "sha256": "a3b61c9636c8b8a0fff13f35b28d16f39abca634fc9989ff2e746cd259740d69"
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "bytes": 14988,
+        "sha256": "73e2569016955531d6d5673b0766fcacf516d3885ab73e0e5bd02677bc84fc4d"
+      },
+      {
+        "path": "game/test/helpers/couch-host.mjs",
+        "bytes": 8103,
+        "sha256": "c84cce71c9cab65da5b4b575fad61d92ae56e0eeb91a2626d69c4796d3aa8441"
+      },
+      {
+        "path": "game/test/helpers/couch-dom.mjs",
+        "bytes": 10172,
+        "sha256": "044514feae0cf723a7a63c18e204838499fc40357917f6c3b4a7fa57170d7dd5"
+      }
+    ]
+  },
+  "staticChecks": [
+    "ESLint two tests PASS",
+    "Prettier four HTML/two test files PASS",
+    "git diff --check scoped tracked paths PASS"
+  ],
+  "priorEvidence": {
+    "path": ".cache/p02a-master-keyboard/verification.json",
+    "sha256": "c16f8b856f7f95b8e365d219212e9ce058e1d13b9455baddc17a815c1cf1f469",
+    "scope": "Historical53 check event-fallback result; not final precision-aligned source and not diagnosis of original native mismatch."
+  },
+  "limitations": [
+    "Native range behavior is modeled in Node; parent owns actual post-fix browser qualification.",
+    "No audible playback or physical-device qualification.",
+    "No commit, source build or broad project suite."
+  ]
+}

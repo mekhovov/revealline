@@ -40,7 +40,7 @@ export function mountCouch(document, html) {
       if (name === 'class') node.className = value;
       if (name.startsWith('data-'))
         node.dataset[name.slice(5).replace(/-([a-z])/g, (_, c) => c.toUpperCase())] = value;
-      if (['type', 'value'].includes(name)) node[name] = value;
+      if (['type', 'value', 'min', 'max', 'step'].includes(name)) node[name] = value;
       if (['hidden', 'disabled', 'checked', 'inert'].includes(name)) node[name] = true;
     }
     stack.at(-1).append(node);
@@ -66,12 +66,17 @@ export async function couchPage(
     fetchResponse,
     URLImpl = globalThis.URL,
     expectBootFailure = false,
+    audio,
   } = {},
 ) {
   const doc = new Document(),
     win = new Events();
   doc.parentNode = win;
   mountCouch(doc, html);
+  if (audio?.createElement) {
+    const createElement = doc.createElement.bind(doc);
+    doc.createElement = (tag) => (tag === 'audio' ? audio.createElement(doc) : createElement(tag));
+  }
   const $ = (id) => doc.getElementById(id);
   $('race-turn').value = turnPolicy;
   $('race-time').value = seconds;
@@ -146,6 +151,7 @@ export async function couchPage(
       rafs.delete(id);
     },
   };
+  if (audio?.Context) globals.AudioContext = audio.Context;
   for (const [key, value] of Object.entries(globals)) {
     original.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { value, configurable: true, writable: true });

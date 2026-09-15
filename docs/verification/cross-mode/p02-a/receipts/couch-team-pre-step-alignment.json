@@ -1,0 +1,113 @@
+{
+  "scope": "Actual Couch/Team host modules with finite DOM/media/canvas and controlled keyboard/gamepad inputs; no audible/physical-device/native browser claim.",
+  "pins": {
+    "game/test/couch-audio-master.test.mjs": {
+      "bytes": 10814,
+      "sha256": "9e1190495f7ddf4940407c9ad61c3d096c2a4597d574364ecf08a2682f44ef6a"
+    },
+    "game/test/helpers/couch-host.mjs": {
+      "bytes": 8103,
+      "sha256": "c84cce71c9cab65da5b4b575fad61d92ae56e0eeb91a2626d69c4796d3aa8441"
+    },
+    "game/test/couch-navigation.test.mjs": {
+      "bytes": 22762,
+      "sha256": "77cc3897f2c190d0cf6dfb84dc57014f0d863c0c5916fa23f27b378b306eef01"
+    },
+    "game/test/coop-host.test.mjs": {
+      "bytes": 23284,
+      "sha256": "cc1ac6bb0f87813459a5a4b4a357541279354fb783cfdfdb4df061de8c7f9630"
+    },
+    "game/couch/couch.mjs": {
+      "bytes": 38761,
+      "sha256": "88d1fa8d98c7df46dbd29a00a83c04b1b2afe449bc833ebc2a90e2c152b61bf2"
+    },
+    "game/couch/index.html": {
+      "bytes": 15214,
+      "sha256": "7f06f71ff6cf91ae94bb56f16a342205a96a089686c23731531e3868ed518450"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "bytes": 23188,
+      "sha256": "f7666f5c360007ef9ded78164e60b1ec314c079bdb08d9fb96e8ed45578fcd2b"
+    },
+    "game/couch/relay-rescue.html": {
+      "bytes": 14284,
+      "sha256": "a02bbae866b634948c89f587f1780d289aa419e8d1448f3d95e81a5d51139bb0"
+    },
+    "game/audio-preferences.mjs": {
+      "bytes": 5006,
+      "sha256": "f7319b4084dfeb263e05efffb448a275f65c9aaa9fc7329f986ce6181b453da1"
+    },
+    "game/ui/audio-master.mjs": {
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    "game/ui/audio.mjs": {
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    "game/ui/soundtrack-player.mjs": {
+      "bytes": 24085,
+      "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932"
+    }
+  },
+  "runs": [
+    {
+      "version": "22.22.2",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/coop-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 15.413,
+      "sourcePinsUnchanged": true,
+      "log": "final-node-22.22.2.log",
+      "logSha256": "05ec44488d291e84355547055b669068a523ea72f21b8b2e4a2b4836848af70d"
+    },
+    {
+      "version": "20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/couch-audio-master.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/coop-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 22.365,
+      "sourcePinsUnchanged": true,
+      "log": "final-node-20.19.5.log",
+      "logSha256": "b0e3bef36305fc97d84ce490176a5a64b5f863ecd440319a646c086a87c1dd94"
+    }
+  ],
+  "ownedPaths": [
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/helpers/couch-host.mjs"
+  ],
+  "retainedInitial": "first-node22.log: 5pass1fail because HUD read preceded RAF; second-node22.log7pass after normal-frame oracle correction + controller case.",
+  "staticChecks": [
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "check": "node --check",
+      "exitCode": 0
+    },
+    {
+      "path": "game/test/helpers/couch-host.mjs",
+      "check": "node --check",
+      "exitCode": 0
+    },
+    {
+      "check": "eslint",
+      "exitCode": 0
+    },
+    {
+      "check": "prettier",
+      "exitCode": 0
+    }
+  ],
+  "passesPerRuntime": 46,
+  "newCountedCases": 7,
+  "testFileCount": 3
+}

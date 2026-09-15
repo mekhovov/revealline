@@ -1,0 +1,30 @@
+[
+  {
+    "file": "rising-chime.mp3",
+    "sha256": "cdee5b2980749d03f6c622c4438bbf068f7f24f2d7f4214835152929834ae891",
+    "bytes": 32600,
+    "notesHz": [
+      440,
+      660
+    ],
+    "samples": 88200,
+    "sampleRate": 44100,
+    "peakPcm": 6000,
+    "rights": "Original programmatically generated test signal, CC0. Not an album track.",
+    "encoder": "lameenc1.8.4"
+  },
+  {
+    "file": "falling-chime.mp3",
+    "sha256": "2d918540dd087b9620a07132bab2d6aab2d69eff4db747dd58ec95fec6c23f32",
+    "bytes": 32600,
+    "notesHz": [
+      660,
+      440
+    ],
+    "samples": 88200,
+    "sampleRate": 44100,
+    "peakPcm": 6000,
+    "rights": "Original programmatically generated test signal, CC0. Not an album track.",
+    "encoder": "lameenc1.8.4"
+  }
+]

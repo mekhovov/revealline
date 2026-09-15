@@ -12,12 +12,31 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { BoardPainter, boardPaintSizeForLevel } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { createAudioPreferences } from '../audio-preferences.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
+const audioMaster = createAudioMaster();
+const audioPreferences = createAudioPreferences({
+  audioMaster,
+  window,
+  getStorage: () => localStorage,
+  onWarning: (message) => {
+    $('race-audio-status').textContent = message;
+  },
+});
+const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+  $('race-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
+  $('race-audio').setAttribute('aria-pressed', String(!muted));
+  $('race-master-volume').value = volume;
+});
+$('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+$('race-master-volume').onchange = () =>
+  audioPreferences.setVolume(Number($('race-master-volume').value));
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
@@ -46,9 +65,12 @@ const presentationPage = mountPresentationPage({
 let featured, installed, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
+  stopMasterView();
+  audioPreferences.dispose();
   artworkLifetime.abort();
   publishedAudio?.close();
   publishedPlayer?.dispose();
+  audioMaster.dispose();
   presentationPage.close();
   presentationFeedback.dispose();
   featured?.dispose();
@@ -168,10 +190,12 @@ try {
   for (const c of registry) $('race-class').append(new Option(c.label, c.id));
   const painters = [new BoardPainter(presets), new BoardPainter(presets)];
   for (const painter of painters) presentationPage.bindPainter(painter);
-  const sound = new Soundscape({ persistentMusic: true });
+  const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  sound.configure({ master: 1 });
   const musicElement = document.createElement('audio');
   if (typeof musicElement.play === 'function') {
     publishedPlayer = createSoundtrackPlayer({
+      audioMaster,
       soundscape: sound,
       audioElement: musicElement,
       readAsset: async () => {
@@ -476,8 +500,11 @@ try {
     clear();
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
-    if (publishedPlayer && sound.enabled) publishedPlayer.resume().catch(() => {});
-    else sound.resume().catch(() => {});
+    if (publishedPlayer) {
+      (publishedPlayer.snapshot().track ? publishedPlayer.resume() : publishedPlayer.play()).catch(
+        () => {},
+      );
+    } else sound.enable().catch(() => {});
     $('race-message').textContent = 'Make your line count. First clear wins.';
     updateMenu();
     input.focus();
@@ -573,24 +600,6 @@ try {
   $('race-theme').onchange = () => {
     if (match?.status !== 'ready' || disposed) return;
     prepare();
-  };
-  $('race-audio').onclick = async () => {
-    try {
-      let on;
-      if (publishedPlayer) {
-        if (sound.enabled) {
-          publishedPlayer.pause();
-          on = sound.disable();
-        } else {
-          await publishedPlayer.play();
-          on = sound.enabled;
-        }
-      } else on = await sound.toggle();
-      if (disposed) return;
-      $('race-audio').textContent = on ? 'Mute music ♫' : 'Enable music ♫';
-    } catch (e) {
-      if (!disposed) $('race-menu-status').textContent = e.message;
-    }
   };
   $('race-tap').onchange = clear;
   const input = attachCouchInput({
@@ -732,6 +741,7 @@ try {
     'race-tap',
     'race-reduced',
     'race-audio',
+    'race-master-volume',
     'race-menu-release',
     'race-options-back',
     'race-help-back',
