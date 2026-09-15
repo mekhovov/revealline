@@ -1,0 +1,39 @@
+{
+  "status": "NATURAL_FAILED_FULL_COMPLETION_ALL_OWNED_PROCESSES_CLOSED",
+  "at": "2026-09-15T15:03:07.984206+00:00",
+  "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+  "terminationRequestedByParent": true,
+  "preflight": "Requested stop guard could not find owned wrapper because it had naturally exited. Assertion occurred before collecting/signaling any descendant; no signal was sent.",
+  "signals": [],
+  "knownObservedPids": [
+    80969,
+    80980,
+    81002,
+    81006,
+    4048,
+    10036,
+    13180,
+    93995
+  ],
+  "knownPidsOrDescendantsOrOwnedProcessGroupRemaining": [],
+  "ownedCheckoutTestWorkersRemaining": [],
+  "completeSuiteReceipt": {
+    "path": ".cache/cross-mode/p01/v0572/exact-source/full-test-receipt.json",
+    "bytes": 664,
+    "sha256": "01ac15ff2f4050adc172d666fc6221cc9d49511ccbfb09275950f08bf620b102"
+  },
+  "fullCounts": {
+    "tests": 4218,
+    "pass": 4217,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "wallSeconds": 1400.943204500014,
+  "sourceIdentityBeforeAfterIdentical": true,
+  "interrupted": false,
+  "integrityRun": false,
+  "buildRetired": false,
+  "sourceMayBeChangedByParentAfterThisReceipt": true
+}

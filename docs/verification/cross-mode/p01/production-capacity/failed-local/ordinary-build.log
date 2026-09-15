@@ -1,0 +1,11 @@
+
+> revealline@0.57.2 build
+> node scripts/game-cli.mjs build --out .cache/cross-mode/p01/v0572/exact-source/build
+
+{
+  "out": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0572/exact-source/build",
+  "version": "0.57.2",
+  "files": 655,
+  "sha256": "6c5961062830e6c13feea955b1df21ae8b3da4c6a8bd71cf188110a06d751440",
+  "sourceRevision": null
+}

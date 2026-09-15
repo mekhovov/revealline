@@ -1,0 +1,194 @@
+[
+  {
+    "path": "pr-source/job-104427122931.log",
+    "line": 353,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427122931.log",
+    "line": 802,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874133.log",
+    "line": 358,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874133.log",
+    "line": 5264,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874155.log",
+    "line": 359,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874155.log",
+    "line": 5877,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874160.log",
+    "line": 340,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874160.log",
+    "line": 6204,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874247.log",
+    "line": 359,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874247.log",
+    "line": 5382,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline/source",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874385.log",
+    "line": 491,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  },
+  {
+    "path": "pr-source/job-104427874385.log",
+    "line": 529,
+    "matchesExpected": true,
+    "identity": {
+      "format": "revealline-source-identity.v1",
+      "root": "/home/runner/work/revealline/revealline",
+      "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+      "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+      "files": 5968,
+      "bytes": 853523474,
+      "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+      "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+      "allTrackedSourceContentsAndModesMatch": true
+    }
+  }
+]

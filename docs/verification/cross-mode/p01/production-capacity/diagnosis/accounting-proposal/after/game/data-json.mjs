@@ -40,12 +40,12 @@ export function boundedJSON(
     if (++nodes > maxNodes || depth > maxDepth)
       throw new TypeError('JSON exceeds its structural budget.');
     if (value === null || typeof value === 'boolean') {
-      add(value === false ? 5 : 4);
+      add(encodedBytes(value));
       return value;
     }
     if (typeof value === 'number') {
       if (!Number.isFinite(value)) throw new TypeError('JSON numbers must be finite.');
-      add(JSON.stringify(value).length);
+      add(encodedBytes(value));
       return value;
     }
     if (typeof value === 'string') {

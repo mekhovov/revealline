@@ -1,0 +1,1130 @@
+TAP version 13
+# Subtest: homeward-skies/immediate/live: installed export preserves the entire legal checkpoint
+ok 1 - homeward-skies/immediate/live: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 25.497667
+  ...
+# Subtest: homeward-skies/immediate/recovery: installed export preserves the entire legal checkpoint
+ok 2 - homeward-skies/immediate/recovery: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 17.084875
+  ...
+# Subtest: homeward-skies/immediate: missing context yields an explicitly limited rescue file
+ok 3 - homeward-skies/immediate: missing context yields an explicitly limited rescue file
+  ---
+  duration_ms: 11.570292
+  ...
+# Subtest: homeward-skies/immediate: actual won state rejects in both verification paths
+ok 4 - homeward-skies/immediate: actual won state rejects in both verification paths
+  ---
+  duration_ms: 65.298834
+  ...
+# Subtest: homeward-skies/grid-center/live: installed export preserves the entire legal checkpoint
+ok 5 - homeward-skies/grid-center/live: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 20.781084
+  ...
+# Subtest: homeward-skies/grid-center/recovery: installed export preserves the entire legal checkpoint
+ok 6 - homeward-skies/grid-center/recovery: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 13.897666
+  ...
+# Subtest: homeward-skies/grid-center: missing context yields an explicitly limited rescue file
+ok 7 - homeward-skies/grid-center: missing context yields an explicitly limited rescue file
+  ---
+  duration_ms: 6.823625
+  ...
+# Subtest: homeward-skies/grid-center: actual won state rejects in both verification paths
+ok 8 - homeward-skies/grid-center: actual won state rejects in both verification paths
+  ---
+  duration_ms: 66.0995
+  ...
+# Subtest: sentinel-relay/immediate/live: installed export preserves the entire legal checkpoint
+ok 9 - sentinel-relay/immediate/live: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 23.302667
+  ...
+# Subtest: sentinel-relay/immediate/recovery: installed export preserves the entire legal checkpoint
+ok 10 - sentinel-relay/immediate/recovery: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 63.908666
+  ...
+# Subtest: sentinel-relay/immediate: missing context yields an explicitly limited rescue file
+ok 11 - sentinel-relay/immediate: missing context yields an explicitly limited rescue file
+  ---
+  duration_ms: 40.00375
+  ...
+# Subtest: sentinel-relay/immediate: actual won state rejects in both verification paths
+ok 12 - sentinel-relay/immediate: actual won state rejects in both verification paths
+  ---
+  duration_ms: 93.422583
+  ...
+# Subtest: sentinel-relay/grid-center/live: installed export preserves the entire legal checkpoint
+ok 13 - sentinel-relay/grid-center/live: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 24.854416
+  ...
+# Subtest: sentinel-relay/grid-center/recovery: installed export preserves the entire legal checkpoint
+ok 14 - sentinel-relay/grid-center/recovery: installed export preserves the entire legal checkpoint
+  ---
+  duration_ms: 42.134875
+  ...
+# Subtest: sentinel-relay/grid-center: missing context yields an explicitly limited rescue file
+ok 15 - sentinel-relay/grid-center: missing context yields an explicitly limited rescue file
+  ---
+  duration_ms: 36.258375
+  ...
+# Subtest: sentinel-relay/grid-center: actual won state rejects in both verification paths
+ok 16 - sentinel-relay/grid-center: actual won state rejects in both verification paths
+  ---
+  duration_ms: 99.286417
+  ...
+# Subtest: self-contact/immediate: real lost recordings cannot be exported as unfinished
+ok 17 - self-contact/immediate: real lost recordings cannot be exported as unfinished
+  ---
+  duration_ms: 13.268167
+  ...
+# Subtest: self-contact/grid-center: real lost recordings cannot be exported as unfinished
+ok 18 - self-contact/grid-center: real lost recordings cannot be exported as unfinished
+  ---
+  duration_ms: 12.84775
+  ...
+# Subtest: boss-lane/immediate: real lost recordings cannot be exported as unfinished
+ok 19 - boss-lane/immediate: real lost recordings cannot be exported as unfinished
+  ---
+  duration_ms: 9.800417
+  ...
+# Subtest: boss-lane/grid-center: real lost recordings cannot be exported as unfinished
+ok 20 - boss-lane/grid-center: real lost recordings cannot be exported as unfinished
+  ---
+  duration_ms: 13.620333
+  ...
+# Subtest: existing release-before and release-after boundaries survive verification without resuspending
+ok 21 - existing release-before and release-after boundaries survive verification without resuspending
+  ---
+  duration_ms: 14.626917
+  ...
+# Subtest: supplied wrong or malformed campaign rejects before progress, never downgrades
+ok 22 - supplied wrong or malformed campaign rejects before progress, never downgrades
+  ---
+  duration_ms: 7.784333
+  ...
+# Subtest: same claimed key cannot hide a self-consistent different map or full roster
+ok 23 - same claimed key cannot hide a self-consistent different map or full roster
+  ---
+  duration_ms: 22.274375
+  ...
+# Subtest: checkpoint, summary, input, encounter state hashes and mixed version pairs reject
+ok 24 - checkpoint, summary, input, encounter state hashes and mixed version pairs reject
+  ---
+  duration_ms: 72.708458
+  ...
+# Subtest: session and campaign data are owned before yielding; returned data cannot mutate either source
+ok 25 - session and campaign data are owned before yielding; returned data cannot mutate either source
+  ---
+  duration_ms: 18.874333
+  ...
+# Subtest: options are finite own data fields, with host capabilities checked before candidate access
+ok 26 - options are finite own data fields, with host capabilities checked before candidate access
+  ---
+  duration_ms: 1.00625
+  ...
+# Subtest: bounded session and campaign snapshots reject malformed data without invoking getters
+ok 27 - bounded session and campaign snapshots reject malformed data without invoking getters
+  ---
+  duration_ms: 3.072166
+  ...
+# Subtest: portable files may exceed the local slot budget without weakening the portable limit
+ok 28 - portable files may exceed the local slot budget without weakening the portable limit
+  ---
+  duration_ms: 737.226
+  ...
+# Subtest: replay-only cancellation before cannot return a prepared file
+ok 29 - replay-only cancellation before cannot return a prepared file
+  ---
+  duration_ms: 0.266625
+  ...
+# Subtest: replay-only cancellation during cannot return a prepared file
+ok 30 - replay-only cancellation during cannot return a prepared file
+  ---
+  duration_ms: 8.718041
+  ...
+# Subtest: replay-only cancellation final cannot return a prepared file
+ok 31 - replay-only cancellation final cannot return a prepared file
+  ---
+  duration_ms: 18.747333
+  ...
+# Subtest: installed cancellation before cannot return a prepared file
+ok 32 - installed cancellation before cannot return a prepared file
+  ---
+  duration_ms: 0.125875
+  ...
+# Subtest: installed cancellation during cannot return a prepared file
+ok 33 - installed cancellation during cannot return a prepared file
+  ---
+  duration_ms: 7.26425
+  ...
+# Subtest: installed cancellation final cannot return a prepared file
+ok 34 - installed cancellation final cannot return a prepared file
+  ---
+  duration_ms: 13.576459
+  ...
+# Subtest: a throwing final progress callback rejects without producing export data
+ok 35 - a throwing final progress callback rejects without producing export data
+  ---
+  duration_ms: 1.421666
+  ...
+# Subtest: a full archive preserves all member formats, original image bytes and prepared-pack capability
+ok 36 - a full archive preserves all member formats, original image bytes and prepared-pack capability
+  ---
+  duration_ms: 43.669125
+  ...
+# Subtest: profile awards and a live immediate cut survive a single-file backup and continue
+ok 37 - profile awards and a live immediate cut survive a single-file backup and continue
+  ---
+  duration_ms: 96.583042
+  ...
+# Subtest: profile awards and a live grid-center cut survive a single-file backup and continue
+ok 38 - profile awards and a live grid-center cut survive a single-file backup and continue
+  ---
+  duration_ms: 69.210792
+  ...
+# Subtest: a suspended pack campaign resolves only from included prepared content
+ok 39 - a suspended pack campaign resolves only from included prepared content
+  ---
+  duration_ms: 24.476291
+  ...
+# Subtest: a trusted dated-campaign resolver must return the exact registered campaign identity
+ok 40 - a trusted dated-campaign resolver must return the exact registered campaign identity
+  ---
+  duration_ms: 18.414833
+  ...
+# Subtest: bad profile, pack dependencies, decode and replay checkpoints cannot partially replace caller state
+ok 41 - bad profile, pack dependencies, decode and replay checkpoints cannot partially replace caller state
+  ---
+  duration_ms: 51.424708
+  ...
+# Subtest: a self-consistent replay with different rules is rejected against its installed campaign
+ok 42 - a self-consistent replay with different rules is rejected against its installed campaign
+  ---
+  duration_ms: 24.979375
+  ...
+# Subtest: full-envelope and trusted-campaign snapshots resist edits while images decode
+ok 43 - full-envelope and trusted-campaign snapshots resist edits while images decode
+  ---
+  duration_ms: 26.217041
+  ...
+# Subtest: strict envelopes reject executable fields, prototype keys, accessors and missing members
+ok 44 - strict envelopes reject executable fields, prototype keys, accessors and missing members
+  ---
+  duration_ms: 2.977708
+  ...
+# Subtest: outer bytes reject before parsing and member limits remain independently enforced
+ok 45 - outer bytes reject before parsing and member limits remain independently enforced
+  ---
+  duration_ms: 11.644
+  ...
+# Subtest: abort before work and during decode rejects without returning adoptable data
+ok 46 - abort before work and during decode rejects without returning adoptable data
+  ---
+  duration_ms: 7.903
+  ...
+# Subtest: empty backup exports default to no suspended attempt and tolerate older preference migration
+ok 47 - empty backup exports default to no suspended attempt and tolerate older preference migration
+  ---
+  duration_ms: 1.400625
+  ...
+# Subtest: legacy omission and explicit defaults resolve to independent complete standard-pad documents
+ok 48 - legacy omission and explicit defaults resolve to independent complete standard-pad documents
+  ---
+  duration_ms: 1.752417
+  ...
+# Subtest: default flight buttons match the running v0.5 router for every action
+ok 49 - default flight buttons match the running v0.5 router for every action
+  ---
+  duration_ms: 5.825708
+  ...
+# Subtest: default menu buttons match the existing router without producing flight commands
+ok 50 - default menu buttons match the existing router without producing flight commands
+  ---
+  duration_ms: 1.724875
+  ...
+# Subtest: default stick threshold and diagonal tie-break match current router at exact boundaries
+ok 51 - default stick threshold and diagonal tie-break match current router at exact boundaries
+  ---
+  duration_ms: 3.853041
+  ...
+# Subtest: full custom documents remap every action while retaining independent menu semantics
+ok 52 - full custom documents remap every action while retaining independent menu semantics
+  ---
+  duration_ms: 1.477875
+  ...
+# Subtest: single-action capture rejects collisions atomically and allows cross-context reuse
+ok 53 - single-action capture rejects collisions atomically and allows cross-context reuse
+  ---
+  duration_ms: 1.801458
+  ...
+# Subtest: a complete candidate can explicitly swap two buttons without hidden repairs
+ok 54 - a complete candidate can explicitly swap two buttons without hidden repairs
+  ---
+  duration_ms: 0.662458
+  ...
+# Subtest: every document and nested field is required; partial configurations never fall back silently
+ok 55 - every document and nested field is required; partial configurations never fall back silently
+  ---
+  duration_ms: 4.720583
+  ...
+# Subtest: unknown fields, unsupported versions and unimplemented toggle preferences are rejected
+ok 56 - unknown fields, unsupported versions and unimplemented toggle preferences are rejected
+  ---
+  duration_ms: 0.822791
+  ...
+# Subtest: button maps reject aliases, fractions, system inputs and ambiguous same-context directions
+ok 57 - button maps reject aliases, fractions, system inputs and ambiguous same-context directions
+  ---
+  duration_ms: 1.56275
+  ...
+# Subtest: axis indices and inversion flags are bounded even when the stick is disabled
+ok 58 - axis indices and inversion flags are bounded even when the stick is disabled
+  ---
+  duration_ms: 1.297
+  ...
+# Subtest: dead zones are finite normalized magnitudes with release at or below press
+ok 59 - dead zones are finite normalized magnitudes with release at or below press
+  ---
+  duration_ms: 1.40025
+  ...
+# Subtest: configuration copying rejects getters, functions and hidden or symbol data without executing it
+ok 60 - configuration copying rejects getters, functions and hidden or symbol data without executing it
+  ---
+  duration_ms: 1.071833
+  ...
+# Subtest: prototype, cyclic and oversized data fail atomically while null-prototype JSON objects stay valid
+ok 61 - prototype, cyclic and oversized data fail atomically while null-prototype JSON objects stay valid
+  ---
+  duration_ms: 0.799041
+  ...
+# Subtest: canonical copies use fixed field order and normalize negative zero without mutating input
+ok 62 - canonical copies use fixed field order and normalize negative zero without mutating input
+  ---
+  duration_ms: 0.737292
+  ...
+# Subtest: glyph choice updates labels without changing mappings, thresholds or physical-index resolution
+ok 63 - glyph choice updates labels without changing mappings, thresholds or physical-index resolution
+  ---
+  duration_ms: 5.462125
+  ...
+# Subtest: hysteresis has an explicit caller-owned prior-active state and no hidden latch
+ok 64 - hysteresis has an explicit caller-owned prior-active state and no hidden latch
+  ---
+  duration_ms: 0.450125
+  ...
+# Subtest: stick swapping, independent inversion and buttons-only mode use bounded fresh axis values
+ok 65 - stick swapping, independent inversion and buttons-only mode use bounded fresh axis values
+  ---
+  duration_ms: 0.396292
+  ...
+# Subtest: missing and nonfinite axes yield neutral input; magnitude normalization never produces NaN
+ok 66 - missing and nonfinite axes yield neutral input; magnitude normalization never produces NaN
+  ---
+  duration_ms: 0.193625
+  ...
+# Subtest: standard device IDs choose familiar glyphs while an explicit player family wins
+ok 67 - standard device IDs choose familiar glyphs while an explicit player family wins
+  ---
+  duration_ms: 0.320292
+  ...
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 68 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 1.074041
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 69 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.156709
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 70 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.806583
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 71 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.080584
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 72 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.066416
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 73 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.064125
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 74 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 5.148
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 75 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 98.399125
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 76 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.205083
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 77 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 0.288208
+  ...
+# Subtest: default preserves every old shortcut and adds stop without alias collisions
+ok 78 - default preserves every old shortcut and adds stop without alias collisions
+  ---
+  duration_ms: 1.195209
+  ...
+# Subtest: both hand presets cover all actions, retain Escape and cannot be mutated by consumers
+ok 79 - both hand presets cover all actions, retain Escape and cannot be mutated by consumers
+  ---
+  duration_ms: 1.025041
+  ...
+# Subtest: custom mapping can replace all ten actions while Escape remains a fixed fallback
+ok 80 - custom mapping can replace all ten actions while Escape remains a fixed fallback
+  ---
+  duration_ms: 0.525334
+  ...
+# Subtest: missing actions, empty arrays, duplicate aliases and unsupported data are rejected
+ok 81 - missing actions, empty arrays, duplicate aliases and unsupported data are rejected
+  ---
+  duration_ms: 1.00975
+  ...
+# Subtest: native navigation, activation, system keys and shortcuts stay reserved
+ok 82 - native navigation, activation, system keys and shortcuts stay reserved
+  ---
+  duration_ms: 2.527417
+  ...
+# Subtest: IME, prevented events and auto-repeat do not fire gameplay requests
+ok 83 - IME, prevented events and auto-repeat do not fire gameplay requests
+  ---
+  duration_ms: 0.098792
+  ...
+# Subtest: physical key codes survive changed layouts; legacy fixtures still resolve keys and locations
+ok 84 - physical key codes survive changed layouts; legacy fixtures still resolve keys and locations
+  ---
+  duration_ms: 0.189125
+  ...
+# Subtest: labels identify arrows, modifiers, numpad and every assigned action without mutating bindings
+ok 85 - labels identify arrows, modifiers, numpad and every assigned action without mutating bindings
+  ---
+  duration_ms: 0.22525
+  ...
+# Subtest: JSON boundary rejects accessors, cycles, sparse arrays and oversized values without invoking getters
+ok 86 - JSON boundary rejects accessors, cycles, sparse arrays and oversized values without invoking getters
+  ---
+  duration_ms: 0.216625
+  ...
+# Subtest: hold ledger preserves most recent direction and both boost keys release independently
+ok 87 - hold ledger preserves most recent direction and both boost keys release independently
+  ---
+  duration_ms: 0.338333
+  ...
+# Subtest: ability and pickup pulses fire once per fresh press, including duplicate non-repeat events
+ok 88 - ability and pickup pulses fire once per fresh press, including duplicate non-repeat events
+  ---
+  duration_ms: 0.6445
+  ...
+# Subtest: pause, hangar and stop clear movement and pending equipment; stale holds require release
+ok 89 - pause, hangar and stop clear movement and pending equipment; stale holds require release
+  ---
+  duration_ms: 0.226875
+  ...
+# Subtest: unconditional release works through focus, modifier, IME and key-name changes
+ok 90 - unconditional release works through focus, modifier, IME and key-name changes
+  ---
+  duration_ms: 0.157709
+  ...
+# Subtest: changing bindings is transactional, releases old holds and never reinterprets a held physical key
+ok 91 - changing bindings is transactional, releases old holds and never reinterprets a held physical key
+  ---
+  duration_ms: 0.2785
+  ...
+# Subtest: immediate: remapping preserves the authoritative game result for the same action trace
+ok 92 - immediate: remapping preserves the authoritative game result for the same action trace
+  ---
+  duration_ms: 23.225375
+  ...
+# Subtest: grid-center: remapping preserves the authoritative game result for the same action trace
+ok 93 - grid-center: remapping preserves the authoritative game result for the same action trace
+  ---
+  duration_ms: 10.173833
+  ...
+# Subtest: a real kernel win atomically records progress, gallery and local scores; portable roundtrip preserves each
+ok 94 - a real kernel win atomically records progress, gallery and local scores; portable roundtrip preserves each
+  ---
+  duration_ms: 50.583208
+  ...
+# Subtest: practice, failed, incompatible and repeated attempts cannot duplicate rewards or gallery entries
+ok 95 - practice, failed, incompatible and repeated attempts cannot duplicate rewards or gallery entries
+  ---
+  duration_ms: 91.986666
+  ...
+# Subtest: scoreboards cap and rank exact boards, dedupe run IDs and retain every actual attempt statistics together
+ok 96 - scoreboards cap and rank exact boards, dedupe run IDs and retain every actual attempt statistics together
+  ---
+  duration_ms: 226.948125
+  ...
+# Subtest: rules, geometry, roster, seed, policy and mixed class routes partition leaderboards
+ok 97 - rules, geometry, roster, seed, policy and mixed class routes partition leaderboards
+  ---
+  duration_ms: 12.972084
+  ...
+# Subtest: known legacy progress migrates explicitly without fabricating gallery pictures or leaderboard runs
+ok 98 - known legacy progress migrates explicitly without fabricating gallery pictures or leaderboard runs
+  ---
+  duration_ms: 8.805416
+  ...
+# Subtest: preferences validate full shape and immutable patches including audio levels
+ok 99 - preferences validate full shape and immutable patches including audio levels
+  ---
+  duration_ms: 0.417875
+  ...
+# Subtest: bad imports reject before changing the existing library, including malformed identities and duplicates
+ok 100 - bad imports reject before changing the existing library, including malformed identities and duplicates
+  ---
+  duration_ms: 20.695042
+  ...
+# Subtest: prototype pollution, accessors, cycles, sparse/custom arrays and oversized files cannot enter saves
+ok 101 - prototype pollution, accessors, cycles, sparse/custom arrays and oversized files cannot enter saves
+  ---
+  duration_ms: 3.394166
+  ...
+# Subtest: unknown campaign records roundtrip for temporarily removed packs but current campaign records validate against content
+ok 102 - unknown campaign records roundtrip for temporarily removed packs but current campaign records validate against content
+  ---
+  duration_ms: 12.110958
+  ...
+# Subtest: storage read corruption is preserved before replacement and failed recovery write never overwrites original
+ok 103 - storage read corruption is preserved before replacement and failed recovery write never overwrites original
+  ---
+  duration_ms: 0.881375
+  ...
+# Subtest: class route metadata must match the registered roster and initial class
+ok 104 - class route metadata must match the registered roster and initial class
+  ---
+  duration_ms: 24.368792
+  ...
+# Subtest: earlier v1 profiles migrate the additive master volume field while preserving earned records
+ok 105 - earlier v1 profiles migrate the additive master volume field while preserving earned records
+  ---
+  duration_ms: 6.006584
+  ...
+# Subtest: gallery preserves the actual procedural-art seed and upgrades pre-seed records
+ok 106 - gallery preserves the actual procedural-art seed and upgrades pre-seed records
+  ---
+  duration_ms: 5.561709
+  ...
+# Subtest: ordinary tab writes merge remote completions and apply only locally changed preferences
+ok 107 - ordinary tab writes merge remote completions and apply only locally changed preferences
+  ---
+  duration_ms: 5.638167
+  ...
+# Subtest: a changed disk snapshot is re-read before merging and never overwritten blindly
+ok 108 - a changed disk snapshot is re-read before merging and never overwritten blindly
+  ---
+  duration_ms: 7.095334
+  ...
+# Subtest: replacement observed during a merge retry invalidates the older candidate generation
+ok 109 - replacement observed during a merge retry invalidates the older candidate generation
+  ---
+  duration_ms: 5.40575
+  ...
+# Subtest: concurrent completions preserve both setups, aggregate bests and coherent gallery result metadata
+ok 110 - concurrent completions preserve both setups, aggregate bests and coherent gallery result metadata
+  ---
+  duration_ms: 17.632458
+  ...
+# Subtest: explicit replacement and Undo invalidate stale tabs instead of resurrecting removed progress
+ok 111 - explicit replacement and Undo invalidate stale tabs instead of resurrecting removed progress
+  ---
+  duration_ms: 8.385875
+  ...
+# Subtest: backup import lock blocks ordinary writes but permits its owner and preserves disk on quota failures
+ok 112 - backup import lock blocks ordinary writes but permits its owner and preserves disk on quota failures
+  ---
+  duration_ms: 15.97525
+  ...
+# Subtest: stale corruption recovery never overwrites a different unreadable disk value
+ok 113 - stale corruption recovery never overwrites a different unreadable disk value
+  ---
+  duration_ms: 0.645
+  ...
+# Subtest: old profiles preserve manual appearance choice while new profiles default to class matching
+ok 114 - old profiles preserve manual appearance choice while new profiles default to class matching
+  ---
+  duration_ms: 0.329333
+  ...
+# Subtest: tap steering keeps device defaults for legacy profiles and preserves explicit choices through storage and exports
+ok 115 - tap steering keeps device defaults for legacy profiles and preserves explicit choices through storage and exports
+  ---
+  duration_ms: 6.468917
+  ...
+# Subtest: tap steering rejects coercible values and unrelated stale edits cannot undo an explicit choice
+ok 116 - tap steering rejects coercible values and unrelated stale edits cannot undo an explicit choice
+  ---
+  duration_ms: 0.806917
+  ...
+# Subtest: keyboard preferences migrate old profiles to defaults and preserve owned remaps through portable and local saves
+ok 117 - keyboard preferences migrate old profiles to defaults and preserve owned remaps through portable and local saves
+  ---
+  duration_ms: 10.222167
+  ...
+# Subtest: invalid keyboard remaps reject before preference adoption or replacement storage writes
+ok 118 - invalid keyboard remaps reject before preference adoption or replacement storage writes
+  ---
+  duration_ms: 5.552833
+  ...
+# Subtest: unchanged cloned keyboard settings preserve remote remaps while deliberate changes and default resets apply
+ok 119 - unchanged cloned keyboard settings preserve remote remaps while deliberate changes and default resets apply
+  ---
+  duration_ms: 1.630375
+  ...
+# Subtest: campaign capacity overflow is typed and preserves existing completed records
+ok 120 - campaign capacity overflow is typed and preserves existing completed records
+  ---
+  duration_ms: 23.694083
+  ...
+# Subtest: gallery capacity never silently drops old completed pictures
+ok 121 - gallery capacity never silently drops old completed pictures
+  ---
+  duration_ms: 601.614
+  ...
+# Subtest: binary bundle retains exact metadata, owners and raw originals; canonical export is stable
+ok 122 - binary bundle retains exact metadata, owners and raw originals; canonical export is stable
+  ---
+  duration_ms: 30.529208
+  ...
+# Subtest: empty domain is a valid explicit inventory with no invented originals
+ok 123 - empty domain is a valid explicit inventory with no invented originals
+  ---
+  duration_ms: 1.165166
+  ...
+# Subtest: fresh restore hydrates removed-pack owners without installing content; restart keeps hashes
+ok 124 - fresh restore hydrates removed-pack owners without installing content; restart keeps hashes
+  ---
+  duration_ms: 240.778333
+  ...
+# Subtest: same-byte asset aliases deduplicate physical payload and retain both IDs
+ok 125 - same-byte asset aliases deduplicate physical payload and retain both IDs
+  ---
+  duration_ms: 30.202125
+  ...
+# Subtest: preserve mode retains destination assignment; explicit restore changes only assignment with history retained
+ok 126 - preserve mode retains destination assignment; explicit restore changes only assignment with history retained
+  ---
+  duration_ms: 541.386625
+  ...
+# Subtest: corrupt headers, lengths, UTF-8, table order and trailing bytes fail before a decoder
+ok 127 - corrupt headers, lengths, UTF-8, table order and trailing bytes fail before a decoder
+  ---
+  duration_ms: 64.967834
+  ...
+# Subtest: every referenced original is mandatory; extras, corrupt bytes and false image facts fail
+ok 128 - every referenced original is mandatory; extras, corrupt bytes and false image facts fail
+  ---
+  duration_ms: 73.598583
+  ...
+# Subtest: strict full map/class/theme owners reject forged history before decoding
+ok 129 - strict full map/class/theme owners reject forged history before decoding
+  ---
+  duration_ms: 46.061833
+  ...
+# Subtest: source Blob properties and metadata mutation cannot change an in-flight export/import
+ok 130 - source Blob properties and metadata mutation cannot change an in-flight export/import
+  ---
+  duration_ms: 21.27175
+  ...
+# Subtest: aborted import and delayed decode cancellation never publish a verified object
+ok 131 - aborted import and delayed decode cancellation never publish a verified object
+  ---
+  duration_ms: 10.284541
+  ...
+# Subtest: review cancellation is read-only and forged reviews/imports cannot commit
+ok 132 - review cancellation is read-only and forged reviews/imports cannot commit
+  ---
+  duration_ms: 80.286583
+  ...
+# Subtest: immutable asset/revision conflicts and missing earlier revisions refuse during review
+ok 133 - immutable asset/revision conflicts and missing earlier revisions refuse during review
+  ---
+  duration_ms: 285.249792
+  ...
+# Subtest: a newer media writer invalidates the reviewed generation before any restore writes
+ok 134 - a newer media writer invalidates the reviewed generation before any restore writes
+  ---
+  duration_ms: 52.514875
+  ...
+# Subtest: reported quota refusal leaves prior originals/audio and generation intact
+ok 135 - reported quota refusal leaves prior originals/audio and generation intact
+  ---
+  duration_ms: 108.295042
+  ...
+# Subtest: transaction abort rolls back staged originals; cancellation after commit remains success
+ok 136 - transaction abort rolls back staged originals; cancellation after commit remains success
+  ---
+  duration_ms: 286.995167
+  ...
+# Subtest: valid restore preserves the exact separate .rlsound export and original MP3 bytes
+ok 137 - valid restore preserves the exact separate .rlsound export and original MP3 bytes
+  ---
+  duration_ms: 73.663458
+  ...
+# Subtest: retained generic originals round-trip into fresh and matching v2-history stores
+ok 138 - retained generic originals round-trip into fresh and matching v2-history stores
+  ---
+  duration_ms: 212.114709
+  ...
+# Subtest: valid unused owner records are retained exactly without granting installed contexts
+ok 139 - valid unused owner records are retained exactly without granting installed contexts
+  ---
+  duration_ms: 187.708625
+  ...
+# Subtest: unchanged production preserves its exact document and appends changed revisions
+ok 140 - unchanged production preserves its exact document and appends changed revisions
+  ---
+  duration_ms: 1329.690084
+  ...
+# Subtest: review evidence gets an immutable successor and normal reproduction keeps the review
+ok 141 - review evidence gets an immutable successor and normal reproduction keeps the review
+  ---
+  duration_ms: 1722.739333
+  ...
+# Subtest: production refuses silent slot contract mutation and can explicitly return to an old revision
+ok 142 - production refuses silent slot contract mutation and can explicitly return to an old revision
+  ---
+  duration_ms: 899.743666
+  ...
+# Subtest: the current source-pinned motion and feedback recipe reviews remain selected
+ok 143 - the current source-pinned motion and feedback recipe reviews remain selected
+  ---
+  duration_ms: 618.489292
+  ...
+# Subtest: P01 UI and audio reviews cover exact inputs and changed loading sources reopen review
+ok 144 - P01 UI and audio reviews cover exact inputs and changed loading sources reopen review
+  ---
+  duration_ms: 4373.927833
+  ...
+# Subtest: the whole production collection has capacity for immutable review successors
+ok 145 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 24858.790208
+  ...
+# Subtest: studio revisions preserve prior theme records and apply explicit token changes
+ok 146 - studio revisions preserve prior theme records and apply explicit token changes
+  ---
+  duration_ms: 349.84725
+  ...
+# Subtest: a complete required collection can retain separate compact edit revisions
+ok 147 - a complete required collection can retain separate compact edit revisions
+  ---
+  duration_ms: 428.920584
+  ...
+# Subtest: collection replacement rejects incomplete members and missing dependencies atomically
+ok 148 - collection replacement rejects incomplete members and missing dependencies atomically
+  ---
+  duration_ms: 283.815709
+  ...
+# Subtest: studio database compare-and-swap rejects stale tabs and preserves data on write failure
+ok 149 - studio database compare-and-swap rejects stale tabs and preserves data on write failure
+  ---
+  duration_ms: 577.493791
+  ...
+# Subtest: generated prompts carry real slot, theme, states and release limitations
+ok 150 - generated prompts carry real slot, theme, states and release limitations
+  ---
+  duration_ms: 155.646125
+  ...
+# Subtest: audio and font briefs request the actual output medium and preserve the immutable slot document
+ok 151 - audio and font briefs request the actual output medium and preserve the immutable slot document
+  ---
+  duration_ms: 84.04475
+  ...
+# Subtest: all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+ok 152 - all recipe-only slots produce actionable code or metadata briefs for variation, edit and collection
+  ---
+  duration_ms: 132.026583
+  ...
+# Subtest: edit briefs retain actual custom geometry and the production palette contract
+ok 153 - edit briefs retain actual custom geometry and the production palette contract
+  ---
+  duration_ms: 162.652125
+  ...
+# Subtest: saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+ok 154 - saved lineage allows a batch of staged actions and reset, but refuses rewritten history
+  ---
+  duration_ms: 1579.713417
+  ...
+# Subtest: two independent studio tabs serialize compare-and-swap without dropping the winning save
+ok 155 - two independent studio tabs serialize compare-and-swap without dropping the winning save
+  ---
+  duration_ms: 725.959042
+  ...
+# Subtest: a failed save of new bytes and invalid geometry both retain the saved workspace
+ok 156 - a failed save of new bytes and invalid geometry both retain the saved workspace
+  ---
+  duration_ms: 648.193208
+  ...
+# Subtest: imports reserve unoccupied asset and collection identities and retain derivative links
+ok 157 - imports reserve unoccupied asset and collection identities and retain derivative links
+  ---
+  duration_ms: 326.895166
+  ...
+# Subtest: self-imports retain every revision without duplicating history; conflicting parents stay isolated
+ok 158 - self-imports retain every revision without duplicating history; conflicting parents stay isolated
+  ---
+  duration_ms: 615.556833
+  ...
+# Subtest: incompatible imported slots fail atomically and replaced collections retain history
+ok 159 - incompatible imported slots fail atomically and replaced collections retain history
+  ---
+  duration_ms: 680.054583
+  ...
+# Subtest: closing a pending open rejects its caller promptly and closes a late database
+ok 160 - closing a pending open rejects its caller promptly and closes a late database
+  ---
+  duration_ms: 3.314958
+  ...
+# Subtest: closing before a pending upgrade aborts that upgrade without creating a workspace
+ok 161 - closing before a pending upgrade aborts that upgrade without creating a workspace
+  ---
+  duration_ms: 0.64725
+  ...
+# Subtest: a blocked open that succeeds late cannot invalidate the newer studio connection
+ok 162 - a blocked open that succeeds late cannot invalidate the newer studio connection
+  ---
+  duration_ms: 1.595333
+  ...
+# Subtest: a retired database close callback does not detach a newer owned handle
+ok 163 - a retired database close callback does not detach a newer owned handle
+  ---
+  duration_ms: 1.451917
+  ...
+# Subtest: the complete semantic registry covers every screen and resolves procedural baselines
+ok 164 - the complete semantic registry covers every screen and resolves procedural baselines
+  ---
+  duration_ms: 105.751625
+  ...
+# Subtest: future theme IDs inherit a complete base without enumerating four worlds
+ok 165 - future theme IDs inherit a complete base without enumerating four worlds
+  ---
+  duration_ms: 95.833667
+  ...
+# Subtest: unknown fields, executable recipes, CSS injection and accessor data are refused
+ok 166 - unknown fields, executable recipes, CSS injection and accessor data are refused
+  ---
+  duration_ms: 217.463792
+  ...
+# Subtest: missing references, mismatched kinds and incomplete base coverage are refused
+ok 167 - missing references, mismatched kinds and incomplete base coverage are refused
+  ---
+  duration_ms: 274.884917
+  ...
+# Subtest: inheritance and derivative cycles cannot enter a resolved theme
+ok 168 - inheritance and derivative cycles cannot enter a resolved theme
+  ---
+  duration_ms: 140.1735
+  ...
+# Subtest: collections replace their declared set atomically and drafts override them last
+ok 169 - collections replace their declared set atomically and drafts override them last
+  ---
+  duration_ms: 284.427125
+  ...
+# Subtest: collections cannot silently cross world identity
+ok 170 - collections cannot silently cross world identity
+  ---
+  duration_ms: 62.382833
+  ...
+# Subtest: compare-and-swap and immutable revision history reject stale or destructive successors
+ok 171 - compare-and-swap and immutable revision history reject stale or destructive successors
+  ---
+  duration_ms: 410.730125
+  ...
+# Subtest: image bindings require the slot exact dimensions
+ok 172 - image bindings require the slot exact dimensions
+  ---
+  duration_ms: 116.218959
+  ...
+# Subtest: theme transfer retains exact bytes and produces deterministic output
+ok 173 - theme transfer retains exact bytes and produces deterministic output
+  ---
+  duration_ms: 289.99475
+  ...
+# Subtest: invalid hash, corrupt image bytes and extra payloads fail before adoption
+ok 174 - invalid hash, corrupt image bytes and extra payloads fail before adoption
+  ---
+  duration_ms: 378.233917
+  ...
+# Subtest: failed decoding and cancellation never return an accepted candidate
+ok 175 - failed decoding and cancellation never return an accepted candidate
+  ---
+  duration_ms: 429.643208
+  ...
+# Subtest: runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+ok 176 - runtime tokens map to shared Field Kit styles and preserve gameplay palette vocabulary
+  ---
+  duration_ms: 55.006625
+  ...
+# Subtest: compiler emits deterministic allowlisted local assets without source paths or code
+ok 177 - compiler emits deterministic allowlisted local assets without source paths or code
+  ---
+  duration_ms: 249.717416
+  ...
+# Subtest: production adapter preserves the exact v1 document and read-only binding history
+ok 178 - production adapter preserves the exact v1 document and read-only binding history
+  ---
+  duration_ms: 27.544084
+  ...
+# Subtest: frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+ok 179 - frame, occupied bounds, rotor envelopes, nine-slice center and slot budgets are checked
+  ---
+  duration_ms: 213.8465
+  ...
+# Subtest: frame-local rig conversion preserves pivot and leaves source and physics untouched
+ok 180 - frame-local rig conversion preserves pivot and leaves source and physics untouched
+  ---
+  duration_ms: 67.528291
+  ...
+# Subtest: bindings reject geometry controls that their renderer cannot apply
+ok 181 - bindings reject geometry controls that their renderer cannot apply
+  ---
+  duration_ms: 192.894542
+  ...
+# Subtest: rotor geometry permits only blade counts supported by the registered renderer
+ok 182 - rotor geometry permits only blade counts supported by the registered renderer
+  ---
+  duration_ms: 112.477625
+  ...
+# Subtest: source recipe coverage is not a completed production-art claim
+ok 183 - source recipe coverage is not a completed production-art claim
+  ---
+  duration_ms: 236.090208
+  ...
+# Subtest: portable bundles compile through the CLI without rewriting their asset bytes
+ok 184 - portable bundles compile through the CLI without rewriting their asset bytes
+  ---
+  duration_ms: 1386.825834
+  ...
+# Subtest: every current base, playable archive, optional and external picture owner has a stable slot
+ok 185 - every current base, playable archive, optional and external picture owner has a stable slot
+  ---
+  duration_ms: 15651.445708
+  ...
+# Subtest: RLE merges identical canonical commands, copies input and preserves caller options
+ok 186 - RLE merges identical canonical commands, copies input and preserves caller options
+  ---
+  duration_ms: 30.08425
+  ...
+# Subtest: release re-arms a held Scout action even when the resulting summary is identical
+ok 187 - release re-arms a held Scout action even when the resulting summary is identical
+  ---
+  duration_ms: 36.624125
+  ...
+# Subtest: a trailing pause records speed, queue and latch release without adding a tick
+ok 188 - a trailing pause records speed, queue and latch release without adding a tick
+  ---
+  duration_ms: 8.1795
+  ...
+# Subtest: initial and repeated releases are idempotent and export snapshots remain independent
+ok 189 - initial and repeated releases are idempotent and export snapshots remain independent
+  ---
+  duration_ms: 5.411083
+  ...
+# Subtest: every authoritative section is checksummed while decorative data and events are excluded
+ok 190 - every authoritative section is checksummed while decorative data and events are excluded
+  ---
+  duration_ms: 11.703292
+  ...
+# Subtest: complete win and its final shell release verify; appended terminal commands are rejected
+ok 191 - complete win and its final shell release verify; appended terminal commands are rejected
+  ---
+  duration_ms: 50.864792
+  ...
+# Subtest: modified command and forged summary are diagnosed independently of checkpoint metadata
+ok 192 - modified command and forged summary are diagnosed independently of checkpoint metadata
+  ---
+  duration_ms: 9.764291
+  ...
+# Subtest: export rejects missing tick records, identity mismatch and unrecorded partial core time
+ok 193 - export rejects missing tick records, identity mismatch and unrecorded partial core time
+  ---
+  duration_ms: 1.2835
+  ...
+# Subtest: legacy format, malformed segments, unsupported primitives and inconsistent totals fail validation
+ok 194 - legacy format, malformed segments, unsupported primitives and inconsistent totals fail validation
+  ---
+  duration_ms: 3.506834
+  ...
+# Subtest: bounded JSON rejects prototype keys, accessors, cycles, nonfinite values and excessive nesting
+ok 195 - bounded JSON rejects prototype keys, accessors, cycles, nonfinite values and excessive nesting
+  ---
+  duration_ms: 5.741625
+  ...
+# Subtest: recording and verification reject more than 30 minutes before replaying
+ok 196 - recording and verification reject more than 30 minutes before replaying
+  ---
+  duration_ms: 1.464875
+  ...
+# Subtest: asynchronous verification yields, reports bounded progress and matches synchronous verification
+ok 197 - asynchronous verification yields, reports bounded progress and matches synchronous verification
+  ---
+  duration_ms: 86.440875
+  ...
+# Subtest: asynchronous verification can be cancelled without modifying source data or an existing run
+ok 198 - asynchronous verification can be cancelled without modifying source data or an existing run
+  ---
+  duration_ms: 12.170375
+  ...
+# Subtest: a full 216000-tick stationary recording remains compact and verifies asynchronously
+ok 199 - a full 216000-tick stationary recording remains compact and verifies asynchronously
+  ---
+  duration_ms: 1154.766333
+  ...
+# Subtest: saved live cut restores and can continue exactly: immediate
+ok 200 - saved live cut restores and can continue exactly: immediate
+  ---
+  duration_ms: 42.137583
+  ...
+# Subtest: saved live cut restores and can continue exactly: grid-center
+ok 201 - saved live cut restores and can continue exactly: grid-center
+  ---
+  duration_ms: 16.436375
+  ...
+# Subtest: altered checkpoint and uninstalled campaign do not load
+ok 202 - altered checkpoint and uninstalled campaign do not load
+  ---
+  duration_ms: 13.721667
+  ...
+# Subtest: a self-consistent replay of altered campaign rules cannot load as registered progress
+ok 203 - a self-consistent replay of altered campaign rules cannot load as registered progress
+  ---
+  duration_ms: 11.818917
+  ...
+# Subtest: storage failure and oversized save preserve the previous attempt
+ok 204 - storage failure and oversized save preserve the previous attempt
+  ---
+  duration_ms: 5.3175
+  ...
+# Subtest: terminal attempt cannot overwrite suspend slot
+ok 205 - terminal attempt cannot overwrite suspend slot
+  ---
+  duration_ms: 17.244
+  ...
+# Subtest: session envelope rejects malicious getters, unknown fields, cycles and oversized outer files before replay work
+ok 206 - session envelope rejects malicious getters, unknown fields, cycles and oversized outer files before replay work
+  ---
+  duration_ms: 30.662375
+  ...
+# Subtest: invalid dates, unsafe cosmetic IDs and ineligible run IDs cannot enter resumable metadata
+ok 207 - invalid dates, unsafe cosmetic IDs and ineligible run IDs cannot enter resumable metadata
+  ---
+  duration_ms: 49.236
+  ...
+# Subtest: restore snapshots imported replay and metadata before yielding; later caller edits cannot alter the accepted run
+ok 208 - restore snapshots imported replay and metadata before yielding; later caller edits cannot alter the accepted run
+  ---
+  duration_ms: 17.846333
+  ...
+# Subtest: failed metadata serialization preserves the previous suspended slot without invoking toJSON
+ok 209 - failed metadata serialization preserves the previous suspended slot without invoking toJSON
+  ---
+  duration_ms: 7.051667
+  ...
+# Subtest: binary originals roundtrip into a fresh v4 store only after exact paired still recovery
+ok 210 - binary originals roundtrip into a fresh v4 store only after exact paired still recovery
+  ---
+  duration_ms: 1695.085875
+  ...
+# Subtest: export ordering is deterministic; complete byte inspector does not certify false codec facts
+ok 211 - export ordering is deterministic; complete byte inspector does not certify false codec facts
+  ---
+  duration_ms: 698.867417
+  ...
+# Subtest: truncated, trailing, duplicate/unordered, wrong-length/hash and unsupported versions reject without storage
+ok 212 - truncated, trailing, duplicate/unordered, wrong-length/hash and unsupported versions reject without storage
+  ---
+  duration_ms: 609.017208
+  ...
+# Subtest: native file/source budgets and export ownership reject aliases/getters/missing extras before transfer
+ok 213 - native file/source budgets and export ownership reject aliases/getters/missing extras before transfer
+  ---
+  duration_ms: 480.319458
+  ...
+# Subtest: unsupported legacy bundle magic and serialized imports cannot be restored as stories
+ok 214 - unsupported legacy bundle magic and serialized imports cannot be restored as stories
+  ---
+  duration_ms: 502.30625
+  ...
+# Subtest: restore unions local availability and history; missing incoming references never detach current originals
+ok 215 - restore unions local availability and history; missing incoming references never detach current originals
+  ---
+  duration_ms: 1698.106625
+  ...
+# Subtest: same revision collision refuses complete restore without partial second-story install
+ok 216 - same revision collision refuses complete restore without partial second-story install
+  ---
+  duration_ms: 892.22425
+  ...
+# Subtest: cancellation, stale review and copied review do not commit or steal another lease
+ok 217 - cancellation, stale review and copied review do not commit or steal another lease
+  ---
+  duration_ms: 1489.824833
+  ...
+# Subtest: bulk native decode failure/timeout or cancellation releases staging and keeps all prior domains
+ok 218 - bulk native decode failure/timeout or cancellation releases staging and keeps all prior domains
+  ---
+  duration_ms: 1046.712583
+  ...
+# Subtest: shared quota refusal and write abort roll back all imported stories and original bytes
+ok 219 - shared quota refusal and write abort roll back all imported stories and original bytes
+  ---
+  duration_ms: 1269.445041
+  ...
+# Subtest: caller changes after export awaits cannot replace snapshotted descriptor or original
+ok 220 - caller changes after export awaits cannot replace snapshotted descriptor or original
+  ---
+  duration_ms: 600.310125
+  ...
+# Subtest: CLI inspects exact file bytes without codec or database claims and rejects malformed usage/files
+ok 221 - CLI inspects exact file bytes without codec or database claims and rejects malformed usage/files
+  ---
+  duration_ms: 1643.715625
+  ...
+# Subtest: missing actual retained poster rejects before video inspection; complete video restore repairs missing/corrupt available bytes
+ok 222 - missing actual retained poster rejects before video inspection; complete video restore repairs missing/corrupt available bytes
+  ---
+  duration_ms: 1525.280542
+  ...
+# Subtest: second-source codec failure and expired complete review leave no partial imported history
+ok 223 - second-source codec failure and expired complete review leave no partial imported history
+  ---
+  duration_ms: 996.031292
+  ...
+# Subtest: empty inventory stays explicit and unsupported retained owner or changed poster pins cannot become restore authority
+ok 224 - empty inventory stays explicit and unsupported retained owner or changed poster pins cannot become restore authority
+  ---
+  duration_ms: 565.337541
+  ...
+1..224
+# tests 224
+# suites 0
+# pass 224
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35109.698208

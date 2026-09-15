@@ -19,7 +19,6 @@ export function boundedJSON(
   } = {},
 ) {
   const encoder = new TextEncoder();
-  const encodedBytes = (value) => encoder.encode(JSON.stringify(value)).byteLength;
   if (typeof source === 'string') {
     if (source.length > maxBytes || encoder.encode(source).byteLength > maxBytes)
       throw new TypeError('JSON file exceeds its byte budget.');
@@ -40,17 +39,17 @@ export function boundedJSON(
     if (++nodes > maxNodes || depth > maxDepth)
       throw new TypeError('JSON exceeds its structural budget.');
     if (value === null || typeof value === 'boolean') {
-      add(value === false ? 5 : 4);
+      add(5);
       return value;
     }
     if (typeof value === 'number') {
       if (!Number.isFinite(value)) throw new TypeError('JSON numbers must be finite.');
-      add(JSON.stringify(value).length);
+      add(24);
       return value;
     }
     if (typeof value === 'string') {
       if (value.length > maxString) throw new TypeError('JSON string exceeds its budget.');
-      add(encodedBytes(value));
+      add(encoder.encode(value).byteLength + 2);
       return value;
     }
     const array = Array.isArray(value);
@@ -64,7 +63,6 @@ export function boundedJSON(
     if (array && value.length > maxArray)
       throw new TypeError('JSON array exceeds its item budget.');
     ancestors.add(value);
-    add(2); // JSON container delimiters.
     const out = array ? [] : {},
       descriptors = Object.getOwnPropertyDescriptors(value);
     let count = 0;
@@ -79,8 +77,7 @@ export function boundedJSON(
       if (key.length > 512) throw new TypeError('JSON field name exceeds its budget.');
       if (array && (!/^(0|[1-9]\d*)$/.test(key) || Number(key) >= value.length))
         throw new TypeError('JSON arrays cannot have custom properties.');
-      if (count) add(1); // Comma before every subsequent entry.
-      if (!array) add(encodedBytes(key) + 1); // Object key and colon; array indexes are not serialized.
+      add(encoder.encode(key).byteLength + 4);
       out[key] = copy(descriptor.value, depth + 1);
       count++;
     }
