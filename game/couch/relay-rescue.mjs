@@ -22,6 +22,7 @@ import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -105,6 +106,12 @@ export function bootCoop() {
         ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
         : '';
   });
+  const menuStyle = attachMenuStyleControls({
+    document,
+    window,
+    getStorage: () => localStorage,
+    prefix: 'coop-',
+  });
   $('coop-text-face').onchange = () =>
     displayPreferences.set({ textFace: $('coop-text-face').value });
   $('coop-text-size').onchange = () =>
@@ -112,6 +119,7 @@ export function bootCoop() {
   const closeDisplay = () => {
     stopDisplayView();
     displayPreferences.dispose();
+    menuStyle.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
   const batch = createCoopCommandBatch();

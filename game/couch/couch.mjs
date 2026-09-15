@@ -16,6 +16,7 @@ import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 import { createDisplayPreferences } from '../display-preferences.mjs';
+import { attachMenuStyleControls } from '../ui/menu-style-controls.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
@@ -73,6 +74,12 @@ const stopDisplayView = displayPreferences.subscribe((state) => {
       ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
       : '';
 });
+const menuStyle = attachMenuStyleControls({
+  document,
+  window,
+  getStorage: () => localStorage,
+  prefix: 'race-',
+});
 $('race-text-face').onchange = () =>
   displayPreferences.set({ textFace: $('race-text-face').value });
 $('race-text-size').onchange = () =>
@@ -118,12 +125,15 @@ const presentationPage = mountPresentationPage({
     }
   },
 });
+// Cosmetic menu choice follows this same accepted release; it owns no board lease.
+presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
 let featured, installed, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
   stopDisplayView();
   displayPreferences.dispose();
+  menuStyle.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
   publishedAudio?.close();
@@ -814,6 +824,8 @@ try {
     'race-reduced',
     'race-text-face',
     'race-text-size',
+    'race-menu-palette',
+    'race-menu-ornaments',
     'race-audio',
     'race-master-volume',
     'race-menu-release',
