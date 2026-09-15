@@ -1,0 +1,944 @@
+{
+  "schema": "revealline-public-browser-qualification.v1",
+  "version": "v0.49.0",
+  "sourceRevision": "8af0d47d73e8633c771823fe024a3456441d62c1",
+  "canonicalURL": "https://mekhovov.github.io/revealline-archive-09/releases/v0.49.0/site/game/",
+  "reviewer": "AI agent; observed browser actions and images",
+  "status": "passed for the listed common native-browser journeys, with retained attempts and stated limitations",
+  "completedAt": "2026-09-15T01:10:57.479102+00:00",
+  "browserSession": "field-kit-public09",
+  "browser": "HeadlessChrome 153; macOS; measured CSS viewport 1280x800, DPR1",
+  "publication": {
+    "archiveController": "d07e625649b3a56452a284835d43f5ad3d007f33",
+    "runId": 34911243947,
+    "deploymentId": 6448874089,
+    "independentHTTPAudit": {
+      "files": 1181,
+      "bytes": 618354051,
+      "failures": 0,
+      "retries": 0,
+      "skips": 0,
+      "scope": "Both version archives; separately supplied by system audit, not inferred from these browser screenshots"
+    }
+  },
+  "offlineVerification": {
+    "evidence": "121-offline-final-verification.json",
+    "status": "ready",
+    "version": "v0.49.0",
+    "buildId": "95eb0e8f950e239347a0907d6db2f27e17022b74ca3a94a236a6aa2a34f1746a",
+    "count": 531,
+    "verified": 531,
+    "bytes": 63690896,
+    "missing": [],
+    "corrupt": [],
+    "message": "Offline files verified. This version can open without a connection while the browser retains its storage. FPV Front \u00b7 First Light R2, FPV Front \u00b7 First Light R3, FPV Front \u00b7 First Light Arcade R4, FPV Front \u00b7 First Light, FPV Front \u00b7 Frontier Lines, FPV Front \u00b7 Illustrated Pressure, Ukraine Atlas \u00b7 Woven Lines, 1994 Forever \u00b7 After Hours, Spend Network \u00b7 Shared Routes, FPV Front \u00b7 Route Choices \u2014 Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup."
+  },
+  "finalCheckpoint": {
+    "evidence": "162-final-coexistence-checkpoint.json",
+    "url": "https://mekhovov.github.io/revealline-archive-09/releases/v0.49.0/site/game/",
+    "online": true,
+    "text": " \u25e9 REVEAL / LINE\nTACTICAL EDITION\n\u26f6\nMissions\nCollection\nSettings\nREVEALED\n52.2%\nTARGET 58%\nLIVES\n\u25c6 \u25c6 \u25c6\nTIME\n0:40\nSCORE\n08660\n\nPAUSED\n\nResume \u2192\nRestart mission\nMission brief\nMain menu\nPaused\nRelay: 1 / 1\n\nSaved flight verified and restored. Press Resume to continue.",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "textSize": "large",
+    "reduced": false,
+    "registrations": [
+      {
+        "scope": "https://mekhovov.github.io/revealline-archive-09/releases/v0.49.0/site/",
+        "active": "activated"
+      },
+      {
+        "scope": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/",
+        "active": "activated"
+      }
+    ]
+  },
+  "passed": [
+    "Fresh title/version and base mission selection; hidden pictures remain concealed and later missions locked.",
+    "Ordinary Start/Deploy, Pause, reload, Continue with verified paused restoration, and explicit Resume.",
+    "Natural First Signal win, Gold result, earned Collection entry, and full picture viewer.",
+    "Actual defeat from three ordinary self-crossing inputs; Retry resets lives, score, coverage and attempt time, then runs after picture readiness. Earned best result remains.",
+    "Ordinary offline preparation/retry eventually verifies every declared core body, with no missing or corrupt entries.",
+    "Networking disabled on the actual page: canonical reload and saved flight restoration; ordinary direction input advances play; Pause saves the new checkpoint.",
+    "Fresh document navigation from a verified offline about:blank page to the canonical release; Continue restores the updated saved flight.",
+    "Earned full picture opens while offline; online state restored afterward.",
+    "v0.49 and v0.50 keep distinct saved checkpoints and reduced-effects values while both exact service-worker scopes coexist."
+  ],
+  "retainedToolFailures": [
+    "067-offline-state.json"
+  ],
+  "limits": [
+    "Native Chromium controls in the isolated agent-browser profile; viewport and network conditions are emulated. This is not a physical phone, physical network disconnect, Safari, gamepad or multitouch qualification.",
+    "Fresh document navigation from about:blank was tested offline; a full browser-process restart and long-term storage retention were not tested.",
+    "Public checks are representative journeys, not a fresh review of every art slot. The separate source art and renderer reviews remain their own evidence.",
+    "No browser storage was injected, cleared, or edited. Only the ordinary game UI wrote this QA profile. Duplicate owned tabs were closed through normal tab controls, preserving storage."
+  ],
+  "files": [
+    {
+      "path": "v049/001-fresh-dom.json",
+      "bytes": 1357,
+      "sha256": "a6f487389dde1e2a68dda5c27043faee27e6f976c370d9d6f045974d10abee71"
+    },
+    {
+      "path": "v049/002-bootstrap-progress.json",
+      "bytes": 4935,
+      "sha256": "dba2b698361a395deacbc340131ac88a74c4c9df747c976ab298715b5b4d303c"
+    },
+    {
+      "path": "v049/003-page-errors.json",
+      "bytes": 255,
+      "sha256": "61a13d3d0e2e19c325c6d72adde0f06b5b728db1be2e536ff125ec9241bd540e"
+    },
+    {
+      "path": "v049/004-ready-observation.json",
+      "bytes": 855,
+      "sha256": "5d5785bc417670d5dd516a78853e6eec0f9d0fb923cde18be83324e3b4ecae65"
+    },
+    {
+      "path": "v049/005-resource-progress.json",
+      "bytes": 6424,
+      "sha256": "1438d4ca57fa7de505f2f4ac11b99acd2d5e895886b19a8f646150c1c9d66f13"
+    },
+    {
+      "path": "v049/006-visible-controls.json",
+      "bytes": 4337,
+      "sha256": "581ce12514b321c85d105ac47086aa05d2784838e3d831baffa12fb1d311a8e9"
+    },
+    {
+      "path": "v049/007-title-capture.json",
+      "bytes": 550,
+      "sha256": "645cd8aba52210e1e4bc9f131c9de881e03a537dbb8a3563bf7f25e8d5436483"
+    },
+    {
+      "path": "v049/008-missions-focus.json",
+      "bytes": 286,
+      "sha256": "8b118edbc05833027b8b5156c53f249eb433906615230506dbbabb85423e0bb6"
+    },
+    {
+      "path": "v049/009-missions-open.json",
+      "bytes": 280,
+      "sha256": "1045750742bde2c1d165dd36dec714cf9f14dec97f86895253ce5a686f90e074"
+    },
+    {
+      "path": "v049/010-missions-dom.json",
+      "bytes": 11457,
+      "sha256": "3184c6041f6e2ca6dc8f686365051ad19c013084ef0416806058e33c7591d6b2"
+    },
+    {
+      "path": "v049/011-deploy-focus.json",
+      "bytes": 288,
+      "sha256": "6fb2314282b8af9879ca3812e92265550cb0d55888f23b75f6122aa5bfe8267d"
+    },
+    {
+      "path": "v049/012-deploy.json",
+      "bytes": 280,
+      "sha256": "9101d4a02232c4319687d3c56837ebfa84a012329e1e6497bb5ef3d042501525"
+    },
+    {
+      "path": "v049/013-flight-ready.json",
+      "bytes": 781,
+      "sha256": "8e93ce13e3bbc0694e686c8394020515180c4a8cf80219ecd8aaadbebe823f1d"
+    },
+    {
+      "path": "v049/014-pause.json",
+      "bytes": 276,
+      "sha256": "f40073b27459069f120404c63104b04bd2dd97eb98f9082ff7748317f8294a1d"
+    },
+    {
+      "path": "v049/015-paused-dom.json",
+      "bytes": 1751,
+      "sha256": "d6edab517e5f33d2240ed59f0b8c6ab6382d252778da96da3a94ba3eef157eba"
+    },
+    {
+      "path": "v049/016-settings-focus.json",
+      "bytes": 290,
+      "sha256": "bc8fc5dbe373b1d630653fb9b255f5e5bed39619d6bab38bd3e8fe8f98b11261"
+    },
+    {
+      "path": "v049/017-settings.json",
+      "bytes": 280,
+      "sha256": "0648d9755a7a4e353f28aff7cd7315811fc9793708169beb676286596589178a"
+    },
+    {
+      "path": "v049/018-settings-dom.json",
+      "bytes": 3894,
+      "sha256": "b44a2a893ca7c6981018836d4519753ebcd637cd08d7a1d6aac66f576e072244"
+    },
+    {
+      "path": "v049/019-large.json",
+      "bytes": 299,
+      "sha256": "405854bdbb725cc1cf3475bfd51d9de98b9f2c22cb14ffd4d7c45d919074c362"
+    },
+    {
+      "path": "v049/020-offline-focus.json",
+      "bytes": 290,
+      "sha256": "5b5edcb7cce1146362b799e8a5ae9f0ecec09b0233ba5588eccb83108e38323c"
+    },
+    {
+      "path": "v049/021-offline-prepare.json",
+      "bytes": 280,
+      "sha256": "a842361f58a4ddfe4f5cf146db01656620383d1215c5b11a2009727b2f529163"
+    },
+    {
+      "path": "v049/022-offline-start.json",
+      "bytes": 3034,
+      "sha256": "cbe27ed53b56a09e06d8e282131be1291e2a4b61c4ca6c10eae20fae8facb4ae"
+    },
+    {
+      "path": "v049/023-settings-close.json",
+      "bytes": 281,
+      "sha256": "410b3de67cd75bcc2c29af3bed5d018ff342864feaddf98996c3a823d980e6bd"
+    },
+    {
+      "path": "v049/024-reload.json",
+      "bytes": 333,
+      "sha256": "446202bc762768233c30740f253bedec6c4a3fa2f2c3c538a31b0e3a6fba7cf5"
+    },
+    {
+      "path": "v049/025-restored-title.json",
+      "bytes": 1768,
+      "sha256": "b4fa0fd175dd0d03232e0f7cd6c22370aacbae1e533453e413844061bc3effb1"
+    },
+    {
+      "path": "v049/026-continue-focus.json",
+      "bytes": 290,
+      "sha256": "dc1134b0a13384d013710827cf6f9e45509e956f6a33200d97d0d205a129913d"
+    },
+    {
+      "path": "v049/027-continue.json",
+      "bytes": 280,
+      "sha256": "c2c0113413d573ba1f0d8cf2af3821ba7c1abf5b90a4ed7cf56a7c9d9e2c7d34"
+    },
+    {
+      "path": "v049/028-restored-paused.json",
+      "bytes": 890,
+      "sha256": "5dd40b686c9692678d88819ff01efb64d556d5300e4878dcc85b107c64367634"
+    },
+    {
+      "path": "v049/029-resume-focus.json",
+      "bytes": 288,
+      "sha256": "2d40285840a28312fef208943837131775d332b2a9e01f720301a9d66c184aa9"
+    },
+    {
+      "path": "v049/030-resume.json",
+      "bytes": 280,
+      "sha256": "9ccd4d11788b1b8a0d5cb7c870225cc38c385acfae41376b2353147992afe1b4"
+    },
+    {
+      "path": "v049/031-first-cut.json",
+      "bytes": 284,
+      "sha256": "69770c72fab0e5876167e0fbb27b451a8935059796d3d6aa5b45e8844f4f525f"
+    },
+    {
+      "path": "v049/032-first-cut-wait.json",
+      "bytes": 278,
+      "sha256": "0cf9ef1e96367dbdc3e47a45ca8575c86328490fb585f77c4773539a75332f47"
+    },
+    {
+      "path": "v049/033-first-cut-result.json",
+      "bytes": 823,
+      "sha256": "6ed15de8af68a7be3aa1d834f227397de079274978839a60a2ed2d46c73065f4"
+    },
+    {
+      "path": "v049/034-won-capture.json",
+      "bytes": 572,
+      "sha256": "10fd8bece177ceae5d6a0c7ce7eddee721165ce6884220a5d6b8fe769f702cde"
+    },
+    {
+      "path": "v049/035-result-controls.json",
+      "bytes": 2115,
+      "sha256": "006fb9b013a64a2a3aeaf0522d4b9793a1ad3621f90b0335f4d9d6b2098e4bde"
+    },
+    {
+      "path": "v049/036-view-picture-focus.json",
+      "bytes": 288,
+      "sha256": "ceeae2b813cdf6968d5b6f2acf68a2d5ec3c648e743e76f562aa9606a96aa03b"
+    },
+    {
+      "path": "v049/037-view-picture.json",
+      "bytes": 280,
+      "sha256": "e7e3a9c56d307d032aab1ee64cd6a0802452ab2dc8843ef9ef827cad786d04cc"
+    },
+    {
+      "path": "v049/038-viewer-dom.json",
+      "bytes": 1281,
+      "sha256": "3627025bc07a2816df3e5b660309245f25c9b86ee40a861ad4c23a9e467dfbc2"
+    },
+    {
+      "path": "v049/039-collection-focus.json",
+      "bytes": 292,
+      "sha256": "4bbd81cfa13f8e14c96e77b73d8146f3c5062f934ad938e82b7c6e84cef36f5d"
+    },
+    {
+      "path": "v049/040-collection-open.json",
+      "bytes": 280,
+      "sha256": "9712dfe849ac3cc8e806fb7d5d6c7125f7167fddaabb7b3b340467633623305e"
+    },
+    {
+      "path": "v049/041-collection-dom.json",
+      "bytes": 3049,
+      "sha256": "22e5dd02ed3549449226529bcef22f59cde6837245eb7036bd586b0400160435"
+    },
+    {
+      "path": "v049/042-collection-close.json",
+      "bytes": 281,
+      "sha256": "7b52660e2f33693952a017bf2ed19207a217504a0371c5f563575ec6d6519ee8"
+    },
+    {
+      "path": "v049/043-results-focus.json",
+      "bytes": 287,
+      "sha256": "78dd9f66a3b84627955aca2cf1bb8120419470502af27dc72dc2593a14993c17"
+    },
+    {
+      "path": "v049/044-results-return.json",
+      "bytes": 280,
+      "sha256": "9e67005eb61a278b74bcf5e4088fe92e7cf1dbe5673d8c21606dc797adf1e2a3"
+    },
+    {
+      "path": "v049/045-results-focus-return.json",
+      "bytes": 1082,
+      "sha256": "a4e71b6d0282f3ba6f15ef50d33d4380c9bff797d20626e5b537a61abfa86cc5"
+    },
+    {
+      "path": "v049/046-replay-focus.json",
+      "bytes": 288,
+      "sha256": "993bf18068c39d4b6ee5e8057241b433f90f95edafd0ad30028d3a8727ba0f1b"
+    },
+    {
+      "path": "v049/047-replay.json",
+      "bytes": 280,
+      "sha256": "1d79c7f8d860feb754a9c45deb8df4bf49a56c24d3a534177ae52f944717ba85"
+    },
+    {
+      "path": "v049/048-replay-state.json",
+      "bytes": 1058,
+      "sha256": "fe379bcf580fb991f27c104ffacaa95a3910ea3f4dcc7ad8e8eaa25118347ba1"
+    },
+    {
+      "path": "v049/049-replay-start-focus.json",
+      "bytes": 288,
+      "sha256": "c12f89b6df4234e068b809ec5ac16401c3a740b0bd0675d8bc3f659af6404931"
+    },
+    {
+      "path": "v049/050-replay-start.json",
+      "bytes": 280,
+      "sha256": "8ace144f33e7f9e3de50ea02a5e2e8b4f8b46f1a30397e064595b39043bfc78a"
+    },
+    {
+      "path": "v049/051-loss-route-down.json",
+      "bytes": 284,
+      "sha256": "bbf01e444b27f11c0c7b749056406397f9e5b462cfd0bca7cd357866029d9612"
+    },
+    {
+      "path": "v049/052-loss-route-up.json",
+      "bytes": 282,
+      "sha256": "ee356cae401cd521d17cb57c46752c23ad77b5b2d7160d753ed370f7abe4bb7b"
+    },
+    {
+      "path": "v049/053-loss-route-state.json",
+      "bytes": 597,
+      "sha256": "6c3881a4b5de92edb04e67defb5b4132353905f2fb3396673608142318490133"
+    },
+    {
+      "path": "v049/054-recover-wait.json",
+      "bytes": 278,
+      "sha256": "0c07f2538a89d2b53f164cc14b8b28080dbea04be0563a0abe8e63e324b2cfbf"
+    },
+    {
+      "path": "v049/055-loss2-down.json",
+      "bytes": 284,
+      "sha256": "3b873b45ce32045dc5b477d30abb346961c0049d9f915b882b75824925fb3cb9"
+    },
+    {
+      "path": "v049/056-loss2-up.json",
+      "bytes": 282,
+      "sha256": "7a4b81990cc23a0269493a8ea4f45de077218484d7ced160402235ab9f64442a"
+    },
+    {
+      "path": "v049/057-loss2-wait.json",
+      "bytes": 278,
+      "sha256": "b8bdcbaacd00e6a1690ba199d1b62ac42723df93f1aed151fbe3370758753a2f"
+    },
+    {
+      "path": "v049/058-loss3-down.json",
+      "bytes": 284,
+      "sha256": "321b9ed9d4765c13a531dd69f19677cc9f015b9fdca1253ec28d3a7798c0f6f5"
+    },
+    {
+      "path": "v049/059-loss3-up.json",
+      "bytes": 282,
+      "sha256": "9a705abc48c36eb018fece8725033d48215aff9e49c55eb93e908a7abe592d41"
+    },
+    {
+      "path": "v049/060-loss3-wait.json",
+      "bytes": 278,
+      "sha256": "2daed2adb15feb6246c9024a9e0af83aab7c8c540785639a205a4c477808d240"
+    },
+    {
+      "path": "v049/061-defeat-dom.json",
+      "bytes": 1865,
+      "sha256": "b9a7aa6af89dc32e8a3c4b0917de526ab7fb207d32ae836b90ecf42f0a14f584"
+    },
+    {
+      "path": "v049/062-defeat-capture.json",
+      "bytes": 580,
+      "sha256": "8ce565c453d5d49f5722f0234e41a7fc0c648bd869d4662c85d898706657f953"
+    },
+    {
+      "path": "v049/063-defeat-retry.json",
+      "bytes": 280,
+      "sha256": "7357f6cc27c930e83ffef179e99466cb9659859ac612c5eee97c7e454de31a5e"
+    },
+    {
+      "path": "v049/064-defeat-retry-state.json",
+      "bytes": 1125,
+      "sha256": "1a1a842bbd4adef6a324b0cc07fb59e6108558a5259aa86b39e832f8d6933d04"
+    },
+    {
+      "path": "v049/065-offline-settings-focus.json",
+      "bytes": 290,
+      "sha256": "482a32bf29db29e9b8d1ad269bf0a854e7f9a4d55848ff8f0834bbd61b611eeb"
+    },
+    {
+      "path": "v049/066-offline-settings-open.json",
+      "bytes": 280,
+      "sha256": "6b0a5e289cee57075b6dd80f64cf35bda7d254f34b0a7f0682ded21e92973acc"
+    },
+    {
+      "path": "v049/067-offline-state.json",
+      "bytes": 818,
+      "sha256": "5d667c116d3b1860747133c76e9aa884c0add2a01a5439dc2f00715cabc596cd"
+    },
+    {
+      "path": "v049/068-offline-state.json",
+      "bytes": 1363,
+      "sha256": "eaf391c6e7f1d1076631240d0e275095aed9f1070213480740a2f444bd7957c1"
+    },
+    {
+      "path": "v049/069-offline-retry-focus.json",
+      "bytes": 290,
+      "sha256": "57b0b97d81dc8f923cef16019a199cee7769f86d6f0e391ac07ba80dc3c4a4da"
+    },
+    {
+      "path": "v049/070-offline-retry.json",
+      "bytes": 280,
+      "sha256": "fb9352db81c428a508f5459c7bbfcb63812fcefb0397d4e087daf71d23c294f7"
+    },
+    {
+      "path": "v049/071-return-tab.json",
+      "bytes": 364,
+      "sha256": "4d60b9af41bb717bac0b50cacdf02cf867473fcf5fd796919a147d80990cea6e"
+    },
+    {
+      "path": "v049/072-offline-progress.json",
+      "bytes": 1199,
+      "sha256": "6a3819d8cea4b6d977505213ec06e078e9c3cf9cdef09a7fb02105988d32212e"
+    },
+    {
+      "path": "v049/073-offline-dialog-state.json",
+      "bytes": 1103,
+      "sha256": "7b8ab0e6f7809f7b0b374923371e23f665ba717d099011327241ffe97297c9ac"
+    },
+    {
+      "path": "v049/074-prepare-click.json",
+      "bytes": 290,
+      "sha256": "87a68f514ce0fac7010d125a4b491168417cefcee0f38ec7fe5095be4e9b0576"
+    },
+    {
+      "path": "v049/075-prepare-click-state.json",
+      "bytes": 701,
+      "sha256": "6336a796987c62654068e4129dab26bd8aaa253bb1e5c18b477fe80f34b7cde9"
+    },
+    {
+      "path": "v049/076-settings-open-click.json",
+      "bytes": 290,
+      "sha256": "502af110ca06e38d4e8a94e88fbb06549ca050a14e0915fe481c932dbae4ab74"
+    },
+    {
+      "path": "v049/077-settings-visible.json",
+      "bytes": 723,
+      "sha256": "f6178aa3f3f3aa31f8e3bb6a842cabf9c787b2c5921e971e03b51dcc7a0af99f"
+    },
+    {
+      "path": "v049/078-offline-native-focus.json",
+      "bytes": 290,
+      "sha256": "ead34a0fd9d11ec01daaf91ac6165d0eda12c153fe8745fbbdd2e59aaa613b83"
+    },
+    {
+      "path": "v049/079-offline-focus-confirm.json",
+      "bytes": 708,
+      "sha256": "5fb2620d68f5e9f09e29a2ba523d681d8eafb141f3d54b2a5cf27e98eff17a45"
+    },
+    {
+      "path": "v049/080-offline-retry-actual.json",
+      "bytes": 280,
+      "sha256": "4d620f18f45878f250cb926cd8af5aa69f92069e2615d67fdb9245ce0b92cfe9"
+    },
+    {
+      "path": "v049/081-offline-retry-actual-state.json",
+      "bytes": 1206,
+      "sha256": "979e4ba853ef060fcead2f2ccdbdd743a75a07741931b2ecd59b72ea101a3197"
+    },
+    {
+      "path": "v049/082-return-tab.json",
+      "bytes": 364,
+      "sha256": "16a97f8e34406fffaf97b16b7744bb117b95a850e6d188b45ae1420991bda07d"
+    },
+    {
+      "path": "v049/083-close-settings.json",
+      "bytes": 281,
+      "sha256": "9267b9a67442645a3ad1b0388a15e2e9fe328089d50ac99228df88f01019ae48"
+    },
+    {
+      "path": "v049/084-portrait.json",
+      "bytes": 303,
+      "sha256": "b8c9ea8c96dc0e550ca23f60c0e89a4f74d3f1901c8ce222e0e714a3d33cbba7"
+    },
+    {
+      "path": "v049/085-portrait-dom.json",
+      "bytes": 2591,
+      "sha256": "a89ec7a2ec9a1422b791e026f471808adcacf1d1061b0df41278fcc7c1c7d400"
+    },
+    {
+      "path": "v049/086-portrait-capture.json",
+      "bytes": 566,
+      "sha256": "21f604278501e054e55ce4520057e530aded99495a5ef56e3ea66672b3e13bce"
+    },
+    {
+      "path": "v049/087-resume-portrait-click.json",
+      "bytes": 288,
+      "sha256": "97950239a48d2a7631ee79cf003a316eebb59052adb543566b8f1c57d45b139e"
+    },
+    {
+      "path": "v049/088-running-portrait-capture.json",
+      "bytes": 568,
+      "sha256": "de75d34c51d291f9dc5a19b21196b563727436afbbb7d482d5d2dd1c829199cd"
+    },
+    {
+      "path": "v049/089-short-landscape.json",
+      "bytes": 303,
+      "sha256": "a73d7b61f7c3872aa467fd53e7afd62975f567dfe09367b05f00a3e3f35b3c95"
+    },
+    {
+      "path": "v049/090-short-landscape-dom.json",
+      "bytes": 1916,
+      "sha256": "d964051313a7877dddb7c97dcc395b33b03d44993a16d2f9e5a7433492375e6b"
+    },
+    {
+      "path": "v049/091-short-landscape-capture.json",
+      "bytes": 582,
+      "sha256": "dd3e9d63315e8e4eef7043ef70d9f5e443c91baad2ea77d29f82dbb8e150ed8b"
+    },
+    {
+      "path": "v049/092-pause-responsive.json",
+      "bytes": 276,
+      "sha256": "08101f5518286084b022c9a8b4d7bbf1094b4bb461a4ab094b343ad5dfa2c406"
+    },
+    {
+      "path": "v049/093-restore-desktop.json",
+      "bytes": 304,
+      "sha256": "1e5aecbc034d27d8f56f54ba15a239471461b365105fa199448d171d46fafd99"
+    },
+    {
+      "path": "v049/094-return-tab.json",
+      "bytes": 364,
+      "sha256": "e8d2c7058b234788fe75befe1e88bbb087b1c02823a8aadbc0e6587a82c3c449"
+    },
+    {
+      "path": "v049/095-offline-result.json",
+      "bytes": 1630,
+      "sha256": "d3d1eca2cfa5568b09637b9ac08e080567e16c0f7491026918d0aca134a28a7f"
+    },
+    {
+      "path": "v049/096-offline-errors.json",
+      "bytes": 255,
+      "sha256": "249b5bd770adf857353f92e572f2172d32be5a3dc9c587219658329510e2db3c"
+    },
+    {
+      "path": "v049/097-offline-console.json",
+      "bytes": 256,
+      "sha256": "a5525f07c1cbe3bcfb6fafda1011a8499e92a0d150f03d17c2da4d5cd5423ad3"
+    },
+    {
+      "path": "v049/098-settings-open.json",
+      "bytes": 290,
+      "sha256": "ff726778ca694434979251220d3f4dc02d11a97806f44f47b4db26680d5f3df6"
+    },
+    {
+      "path": "v049/099-prepare-new-attempt.json",
+      "bytes": 290,
+      "sha256": "f426f14de493c59ffd2fe60938b70a0585da469980201e6d32b2f0049bb82921"
+    },
+    {
+      "path": "v049/100-prepare-new-attempt-state.json",
+      "bytes": 712,
+      "sha256": "2aaf7fcc09d1f922b4b456e9e79315be4188a48366aee60b0dba974fd7f43453"
+    },
+    {
+      "path": "v049/101-offline-focus.json",
+      "bytes": 290,
+      "sha256": "e030076c4fc4ea2781345f24afb6f204c262885999ee2cbd5de351754275b116"
+    },
+    {
+      "path": "v049/102-offline-enter.json",
+      "bytes": 280,
+      "sha256": "5ceeb07df6f44c8df7537b418a38fac55af7f2548e979fcbf64b5e6227932ad3"
+    },
+    {
+      "path": "v049/103-offline-attempt-start.json",
+      "bytes": 1149,
+      "sha256": "3d30b780e4b70d51fff231c74f81d955fa03c0dc9451ba5f754dd440a8cf5293"
+    },
+    {
+      "path": "v049/104-return-tab.json",
+      "bytes": 364,
+      "sha256": "5aae07f5f2f164fe2ad0f9ca74fdcc4ece613bd4b4a140af86905408a970fff9"
+    },
+    {
+      "path": "v049/105-offline-progress.json",
+      "bytes": 1237,
+      "sha256": "3c0bc3d6d65a32f74c5544c2972368f241b243cb0e985402eb33aeaa61cbf430"
+    },
+    {
+      "path": "v049/106-return-tab.json",
+      "bytes": 364,
+      "sha256": "2c8c1deee4c86d3c19371e22c189219e840d856466170a3c5efa79d380238d79"
+    },
+    {
+      "path": "v049/107-offline-worker-progress.json",
+      "bytes": 921,
+      "sha256": "cff5ee33c25b0dce514539ed89bc0f1eaa03ffabb45e374cb94c93bd948b70e7"
+    },
+    {
+      "path": "v049/108-network-failed-responses.json",
+      "bytes": 370,
+      "sha256": "5c644416b7570a4524e9fc59bc755d15d1e91a3d3880b9bec74e172186ae5b61"
+    },
+    {
+      "path": "v049/109-storage-cache-diagnostic.json",
+      "bytes": 1122,
+      "sha256": "327fed9f4b6fcdf32d61f8cb22fa0e658a9facdf978dc2c2e9b07060dfdfaa81"
+    },
+    {
+      "path": "v049/110-retry-focus.json",
+      "bytes": 290,
+      "sha256": "441ea8167300d3c4b58407a9cdc170c65dcc460a8dfb5b09ab7c3f9e352fb6fc"
+    },
+    {
+      "path": "v049/111-retry-new-headroom.json",
+      "bytes": 280,
+      "sha256": "5c5282b1785640fdf2e71cc32995c009012d71269a12b69f15b7768501c553df"
+    },
+    {
+      "path": "v049/112-retry-new-headroom-state.json",
+      "bytes": 1149,
+      "sha256": "af9ef231de90bbf232303740c4fc32d8708706b42d117f08aff4276597f40dc6"
+    },
+    {
+      "path": "v049/113-return-tab.json",
+      "bytes": 364,
+      "sha256": "a5bb2074454002db162a014b60c7f90079e758bbea4d6257c2231ceb30992ade"
+    },
+    {
+      "path": "v049/114-worker-progress-after-headroom.json",
+      "bytes": 1039,
+      "sha256": "1ce4cc9129d3816717c5e0b4022fd768579f3bca9fbe95ba4fa583f4ff8ec30c"
+    },
+    {
+      "path": "v049/115-activated-worker-visible-action.json",
+      "bytes": 1129,
+      "sha256": "f4d966f4ac439bc33e391e07bbb5770b2e166ce927fecd23a5182836a44e113f"
+    },
+    {
+      "path": "v049/116-return-tab.json",
+      "bytes": 364,
+      "sha256": "a11f52ca897f35794c6f22976e6682ea168d163bf93e26e5ae5b0a040553e79b"
+    },
+    {
+      "path": "v049/117-verify-focus.json",
+      "bytes": 290,
+      "sha256": "d48fab5f0e5f5422778579840bc6cb7458488463418e3d30d7929a107ac01f96"
+    },
+    {
+      "path": "v049/118-verify-retry.json",
+      "bytes": 280,
+      "sha256": "65d570767a9601a881846401770dee98f67f95225c626c5888053772fc7f24c7"
+    },
+    {
+      "path": "v049/119-verify-started.json",
+      "bytes": 1206,
+      "sha256": "8760e9a91dd117b730e1dc7396f02b58af910f43c32ec4497a667d6c318ae978"
+    },
+    {
+      "path": "v049/120-return-tab.json",
+      "bytes": 364,
+      "sha256": "1f83c1a4110acc0bae924b09bd9c6cb6917b2bfeda20b02616c8c40eb48ebe7e"
+    },
+    {
+      "path": "v049/121-offline-final-verification.json",
+      "bytes": 2792,
+      "sha256": "d3bde00a7330ab0614b2a6b2cd89ca94f64197e16d3d21b97d0f559120ea7eee"
+    },
+    {
+      "path": "v049/122-close-settings.json",
+      "bytes": 281,
+      "sha256": "48871cd7eec9277325ab8bb15c6599d31a6d587536dbdf3327a8ca7720ae56ee"
+    },
+    {
+      "path": "v049/123-missions-open.json",
+      "bytes": 287,
+      "sha256": "edbf6211f03207a50ad2ca51866bb9acd5d556c57d64fe66880b875860c33317"
+    },
+    {
+      "path": "v049/124-mission-native-controls.json",
+      "bytes": 48465,
+      "sha256": "748aca1c15187799fa1a9b135e69447433a63b2880fd09f0eb8b96fc20471283"
+    },
+    {
+      "path": "v049/125-relay-focus.json",
+      "bytes": 301,
+      "sha256": "3c268803a7796493ad9a3202c22cb6dcec7dffd9b0a8f51b1fffd102485ed5a3"
+    },
+    {
+      "path": "v049/126-relay-select.json",
+      "bytes": 280,
+      "sha256": "5c95f48b21e39e2236cae412e17b9d0cd1ee25e51e7f4bdc1097ee677dd3b47e"
+    },
+    {
+      "path": "v049/127-relay-selected.json",
+      "bytes": 1707,
+      "sha256": "882c36d39a8d034bcf7e790da9d799483edc749d1287a115930d180dbfb5186a"
+    },
+    {
+      "path": "v049/128-relay-deploy-focus.json",
+      "bytes": 288,
+      "sha256": "31e21933bd44e8d416ba703eacc7aed56b2349b66019212f7925d7fe16a7b127"
+    },
+    {
+      "path": "v049/129-relay-deploy.json",
+      "bytes": 280,
+      "sha256": "73c554a232c75d8f1de659a5b8af0fff4a0ec5e64a14bacfc11e0c0e057ac845"
+    },
+    {
+      "path": "v049/130-relay-running.json",
+      "bytes": 665,
+      "sha256": "bcc1c3280efc65905bc6f02608f90465bbd74592131ac69e728b13a73abef3c1"
+    },
+    {
+      "path": "v049/131-relay-cut.json",
+      "bytes": 284,
+      "sha256": "15dd9901059e71897434bc406f199e3b6fdfcdbaf0e59d45cb8c95f6d85d434a"
+    },
+    {
+      "path": "v049/132-relay-cut-wait.json",
+      "bytes": 278,
+      "sha256": "2d5d7c2d3c62a8054d669d0d1c20f12ae2ac46ebdac96615568f20a372368cdf"
+    },
+    {
+      "path": "v049/133-relay-pause.json",
+      "bytes": 276,
+      "sha256": "f0304aaee3c3598de541dabe3ccc7d417cb4372d295576e8371530e41abacfd3"
+    },
+    {
+      "path": "v049/134-relay-saved-before-offline.json",
+      "bytes": 973,
+      "sha256": "60a9b67f1b6c4cb88b066fe0db25bc7e01ec91125259ca66e48ca6ffd4dafafc"
+    },
+    {
+      "path": "v049/135-network-offline.json",
+      "bytes": 290,
+      "sha256": "95dd8c2ee72dc60a948303916c5c31514468d4c51ea79056b213316a034d7549"
+    },
+    {
+      "path": "v049/136-offline-reload.json",
+      "bytes": 333,
+      "sha256": "661b4466fb52240975bb5129f08c9907a42c798b3c020d1cf4f10c3fe54c048e"
+    },
+    {
+      "path": "v049/137-offline-title.json",
+      "bytes": 1721,
+      "sha256": "fae8bb31001b22cb712523bfdb9a2d5593d9a16dd6476a59bc5f19c46376214e"
+    },
+    {
+      "path": "v049/138-offline-continue.json",
+      "bytes": 290,
+      "sha256": "e29a3e7dba423223c8faa8dc12f1c948d40a6907907d3c5da9c58a247b5e2f2d"
+    },
+    {
+      "path": "v049/139-offline-restored-paused.json",
+      "bytes": 914,
+      "sha256": "e9918633d088fff2fef834cc2c57f36035577a632f31050f1a7d36a53cc3b545"
+    },
+    {
+      "path": "v049/140-offline-resume.json",
+      "bytes": 288,
+      "sha256": "a90cfc84571e85354e3dc7dc1a87239f81f2186fa9d51590e69582abdc2c76b9"
+    },
+    {
+      "path": "v049/141-offline-direction.json",
+      "bytes": 285,
+      "sha256": "01e4c2c2c40a4b48541c65b522f52d9dd6a88df6584a54d02c3e33b49e5cfc2b"
+    },
+    {
+      "path": "v049/142-offline-pause.json",
+      "bytes": 276,
+      "sha256": "bf1f17e7dc55f0c06156b3bfa76c157143aab9edaa05790983caa8d5a34024f4"
+    },
+    {
+      "path": "v049/143-offline-progress-saved.json",
+      "bytes": 919,
+      "sha256": "21d1fad341ccdc073af978a39128712b1006050cdfbe1a0035bbf82f38f15edb"
+    },
+    {
+      "path": "v049/144-offline-new-document.json",
+      "bytes": 460,
+      "sha256": "9d4a431fa9a6e7f25ab10613e5315a61f18e62466f184575aa876f94bbb11c6c"
+    },
+    {
+      "path": "v049/145-offline-new-document-ready.json",
+      "bytes": 2053,
+      "sha256": "cd88c8ed6debabd267385a4a3c8acf630d4408dbc34fc33365e5c45285eb671a"
+    },
+    {
+      "path": "v049/146-close-old-owned-tab.json",
+      "bytes": 299,
+      "sha256": "3a3a705d5fb0892ea6e21f663d9456b8190d0b32fb2ccb09e3b79cd2d1d42845"
+    },
+    {
+      "path": "v049/147-fresh-blank-document.json",
+      "bytes": 296,
+      "sha256": "f9899a165001747707cd336a8c1aedb228737a9aba4a53cf128a93ec8b2acc4b"
+    },
+    {
+      "path": "v049/148-new-page-network-offline.json",
+      "bytes": 290,
+      "sha256": "2a989620dfcafc7afe582cc845c9f81ec9082dba40d27d212228e95413ef0263"
+    },
+    {
+      "path": "v049/149-offline-blank-before-navigation.json",
+      "bytes": 456,
+      "sha256": "255ec45ea4e327b682f124d0caae2ec4319df814b7c164cec4c67a97599b06ba"
+    },
+    {
+      "path": "v049/150-new-offline-navigation.json",
+      "bytes": 439,
+      "sha256": "6d13e6c7fe69a5834734bf8658181b0cde0bf35e47c207aaeb45d7870dcd0a3a"
+    },
+    {
+      "path": "v049/151-fresh-offline-navigation-proof.json",
+      "bytes": 1778,
+      "sha256": "1e4e5955f308a6a9a21af0b800a50f224ec94c68acf400c68caf1151493dd3cd"
+    },
+    {
+      "path": "v049/152-new-document-continue.json",
+      "bytes": 290,
+      "sha256": "42372e5cc1e3605eb95306d2f826a1f7cf603dd28d51ba11015343100808dc98"
+    },
+    {
+      "path": "v049/153-new-document-restore.json",
+      "bytes": 958,
+      "sha256": "e519d38b88cfdb761d1b234cdba8082f2d399e3ff2be2b07eae888b9bc284c3e"
+    },
+    {
+      "path": "v049/154-offline-collection-open.json",
+      "bytes": 292,
+      "sha256": "16c449010517bdd6c7af85e9eabf70ea0c691bcb1e85a9307f6c0426722d2ec3"
+    },
+    {
+      "path": "v049/155-offline-earned-picture.json",
+      "bytes": 307,
+      "sha256": "9990a24f3861c79cb54a25d57c06a32def48cdcfcdb20ffff70f6d261f7bbc5c"
+    },
+    {
+      "path": "v049/156-offline-collection-viewer.json",
+      "bytes": 841,
+      "sha256": "443b1a4c3a02026115192a8ab58563531cc7cdd84a8dde547374f50cfccac3bc"
+    },
+    {
+      "path": "v049/157-offline-gallery-capture.json",
+      "bytes": 568,
+      "sha256": "53fb16e5b4744028bda312f2955330a68be7ae55bb88d189ca39146353558a02"
+    },
+    {
+      "path": "v049/158-gallery-close.json",
+      "bytes": 281,
+      "sha256": "78939eac7c76c2f8197c1dd2677283fcfa785bc82d33cc21695fe761189cd16f"
+    },
+    {
+      "path": "v049/159-collection-close.json",
+      "bytes": 281,
+      "sha256": "b6104ef94388c362bca21e9cf3c584382d17e6f30b9880c1ed3f16d6ad12be77"
+    },
+    {
+      "path": "v049/160-online-restored.json",
+      "bytes": 291,
+      "sha256": "b0d17de39204fe8000cbd05dcc4b02f169fab070355fb97a55f619d641c5163f"
+    },
+    {
+      "path": "v049/161-final-return-tab.json",
+      "bytes": 374,
+      "sha256": "f127f6544798e60d75a1650e1f583289e15aac26dfcf18356cb6449697c743e5"
+    },
+    {
+      "path": "v049/162-final-coexistence-checkpoint.json",
+      "bytes": 1602,
+      "sha256": "7568a1061970ee937e8e423a3bc244554688886e6fe47773de9c7a3570eaf813"
+    },
+    {
+      "path": "v049/first-signal-natural-win.png",
+      "bytes": 98686,
+      "sha256": "223bc3f903f60dc64c9060d158e6127e8bbab53410fa037393dea0246abb9202"
+    },
+    {
+      "path": "v049/natural-line-crossing-defeat.png",
+      "bytes": 91267,
+      "sha256": "3db7d39a41f58133ae018cd447188b9746d34143fc931fe83d3a06c18b41d341"
+    },
+    {
+      "path": "v049/offline-earned-gallery.png",
+      "bytes": 100530,
+      "sha256": "98ed53bdfb5c39ab7b7e572a6f1a804871f36c06641434d1b5c6379ab5c279b9"
+    },
+    {
+      "path": "v049/paused-large-portrait.png",
+      "bytes": 65042,
+      "sha256": "53a1e6fed7e0c3b2cf0199567152662e4d5736547ccf2b1c758acea9ef04d5f8"
+    },
+    {
+      "path": "v049/running-large-portrait.png",
+      "bytes": 32368,
+      "sha256": "8aadef9cce48fae8c0eb5e83d44a51acd913987a6eeae2c6c496acdd99060039"
+    },
+    {
+      "path": "v049/running-large-short-landscape.png",
+      "bytes": 18116,
+      "sha256": "d70010c458d1d4ae71eaea9d3e17466afd481a1638874e9d2ae812db77682500"
+    },
+    {
+      "path": "v049/title-desktop.png",
+      "bytes": 203073,
+      "sha256": "0049d6c14670993629743b9aa1c4bab7d32a66486ee796c34cab928a39a343a1"
+    }
+  ],
+  "firstSignalResult": {
+    "coverage": 50.0,
+    "score": 7820,
+    "timeShown": "0:20",
+    "medal": "Gold",
+    "evidence": "035-result-controls.json"
+  },
+  "responsive": [
+    "Large portrait 390x844 and short landscape 844x390, both DPR1; complete arena and 44px menu/fullscreen/pause controls observed. Standard desktop title also inspected."
+  ],
+  "retainedAttempts": [
+    "Initial direct navigation exceeded its tool wait; bootstrap readiness was subsequently observed (001 through 005).",
+    "First Prepare was followed by the deliberate saved-flight reload (021 through 025); its page callback was interrupted while installation continued.",
+    "Explicit generic offline download/storage failure (095), later preparation timeout (105/107), and activated-worker verification timeout (114/115) are preserved. No named failed core body or causal diagnosis was available.",
+    "The host was low on disk space during failed attempts; ordinary retry succeeded after other agents reclaimed only their own redundant published transport copies. This timing does not prove disk pressure caused the earlier failure.",
+    "The initial new-tab offline attempt (144/145) was actually online because the tool applies offline per page. It is not counted. Corrected blank-page offline navigation (147 through 153) is the acceptance evidence.",
+    "Several offscreen/transition action attempts did not change the visible UI; later observed keyboard activation is the evidence. 067 is an invalid diagnostic expression, retained rather than interpreted as an application error."
+  ]
+}

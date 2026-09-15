@@ -399,6 +399,31 @@
           "path": "evidence/archive-09/native-v050-workshop.json",
           "sha256": "be4b5488e4decef59847ade71f41d0a3f4208f235262e8a6473ac0deeef15b0f",
           "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-09/native-handoff.json",
+          "sha256": "c8585cfd2d3b03a513f75771218c9fde409c05a1fc12b6710821a926a9505b6b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-09/native-v049.json",
+          "sha256": "0ec3b2bafe1f481d840c020844e5e9ee29e785f576dd3c7ce7e940a90e7b8ddf",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-09/native-v050.json",
+          "sha256": "f72504edf530701c4efafe54e444075bc6124cd781f4a6a06a35e715e0016b6d",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-09/http-independent-review.json",
+          "sha256": "ca2e5ed15bf1368e4c84a522e45696002a59ef902a2768cc1cf0d8f17e3902db",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-09/browser-admission.json",
+          "sha256": "3f5ac13c9b1c259f895f80aecf7217ae8ec71ca9927786127b582cf15548401f",
+          "kind": "browser"
         }
       ]
     },
@@ -435,7 +460,7 @@
       ]
     }
   ],
-  "deploymentEnabled": false,
+  "deploymentEnabled": true,
   "currentSourceQualification": {
     "path": "evidence/current-v051/source-qualification.json",
     "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
