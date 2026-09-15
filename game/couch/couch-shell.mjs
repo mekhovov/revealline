@@ -1,3 +1,4 @@
+import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 
 const ABILITY = Object.freeze({
@@ -47,6 +48,11 @@ export function createCouchShell({
     modality = [coarse ? 'touch' : 'keyboard', coarse ? 'touch' : 'keyboard'],
     shown = [false, false],
     removers = [];
+  mountModeChoices({
+    root: $('race-mode-choices'),
+    current: 'versus',
+    actions: { solo: $('race-solo-return'), team: $('race-coop') },
+  });
   let screen = 'main',
     status = null,
     opener = null,

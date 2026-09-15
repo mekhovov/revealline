@@ -33,3 +33,7 @@ Use the P02-A [shared master candidate contract](../../docs/shared-master-audio.
 ## Qualify a twelve-mission campaign
 
 “Follow this campaign's P11–P15 row. Author exactly twelve original missions with deliberate progression, one unfamiliar role introduced at a time, no shooters in the first three and no more than two shooter missions. Qualify Gentle/Standard/Hard with encounters on/off, relevant Versus cases and the edition's two existing Team art variants. Keep scenes, actors, menus and audio consistent, saved originals intact, clear Retry/Next/end destinations, and explicit Support/Combat framing. Update inventory, provenance, prompts and guide; give this campaign its own immutable version and public proof.”
+
+## Qualify shared mode presentation
+
+“Reuse the existing Solo/Versus/Team anchors with the shared mode presenter. Keep the current mode non-actionable and the visible order equal to keyboard order. In both Couch lobbies, use explicit Start and Pause, open a mode-departure decision and Stay back to the same anchor. Verify Team moves the same nodes into its active pause panel and hides them during play. Preserve fixed routes, return-hint namespaces and checked attempt ownership; presentation must not start, save or discard a run. Check shared token styles against host CSS specificity, then test the actual intended viewport. On composition, separately qualify R5 initial focus, Title departure and P08 pending-picture/Start cancellation. Keep source, modeled host, native desktop, physical device and public evidence distinct.”
