@@ -1,0 +1,66 @@
+{
+  "scope": "Final Title Start/Continue source desktop keyboard checks; not phase/public acceptance",
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "verification": {
+    "path": ".cache/p03b-title-entry/verification.json",
+    "bytes": 4756,
+    "sha256": "45ae5ae979d1b9b83346ea9844716e69de53220431ec4294372046d1bca56b26"
+  },
+  "bindings": [
+    {
+      "path": ".cache/p03b-title-entry/title-focus-preview-delayed.json",
+      "bytes": 2157,
+      "sha256": "db5d57cda123acc0104bf4e35eab872da4f6665dd18c6df8ea3271d61b4bef51"
+    },
+    {
+      "path": ".cache/p03b-title-entry/title-focus-preview-20.json",
+      "bytes": 2115,
+      "sha256": "efd3a44dde868e21c4497c312d05874c7b29f8706f22ddc884fa19a92ef1a69a"
+    }
+  ],
+  "events": {
+    "path": ".cache/p03b-title-entry/focus-native/events.json",
+    "bytes": 29701,
+    "sha256": "61da9642982117c7fe6346b7d823c3aea39ae03411e6f4d71fb47a133beb2a54"
+  },
+  "eventCount": 15,
+  "images": [
+    {
+      "path": ".cache/p03b-title-entry/focus-native/cancelled-after-download.png",
+      "bytes": 195038,
+      "sha256": "1a5c3712e6d6f1d2dc8e34ba33f4f55166c5cfae3e2c000d6c4b69ae767d2a9d"
+    },
+    {
+      "path": ".cache/p03b-title-entry/focus-native/cancelled-title.png",
+      "bytes": 69651,
+      "sha256": "fc9e8b8b495291067661b7e79b981b382387eb46ee79598fcd78767c0e29ba61"
+    },
+    {
+      "path": ".cache/p03b-title-entry/focus-native/preparing-title.png",
+      "bytes": 196479,
+      "sha256": "b01351fac496ff6b4e1873e5f8ca8c98f73d600e860dd70b0f24a59ccf9a53ed"
+    },
+    {
+      "path": ".cache/p03b-title-entry/focus-native/restored-paused.png",
+      "bytes": 78821,
+      "sha256": "0ec1a07d5aefc2d8dac1f4d826dc214f578e383c50611dfbc390cb3beeab3516"
+    }
+  ],
+  "observed": [
+    "On the six-second exact-picture response preview, explicit Start kept Title open, displayed download status and focused Cancel.",
+    "On the fresh20-second exact-picture response preview, explicit Start then keyboard Cancel returned focus to Start, left the title open at briefing, and displayed cancellation.",
+    "After the delayed download finished, Title remained at briefing with Start focused. Only another deliberate Start began play.",
+    "Main menu Continue resumed a retained paused flight with one activation. Reload offered Continue without loading or starting; explicit Continue then restored and started it. Explicit Pause remained available."
+  ],
+  "annotations": [
+    "Event03 is running: the six-second download finished between event02 and the attempted Cancel. Its intended label and cancelled-title.png filename do not prove cancellation. Events08-10 are the actual pending-cancellation and no-late-start proof.",
+    "Images are not all unique screen states; exact hashes and event snapshots are preserved.",
+    "Native pause/resume in this final focus pass used a stationary fresh flight. Earlier26-event native receipt covers movement/result behavior at prior shell pins;187 host tests per runtime establish exact saved checkpoint/pending-turn and failure/currentness contracts."
+  ],
+  "limits": [
+    "Artificial20s/6s HTTP delay applies only to the exact unchanged First Signal PNG; it is a timing fixture, not observed network speed or hardware performance.",
+    "No browser application-state/storage injection, physical controller, touch device, portrait/zoom or public deployment.",
+    "Final shell ee4fadd5 differs from retained predecessors66fc/8e; previous native evidence retains its own pins.",
+    "No complete P03 or full game acceptance; three-mode title/common Couch lobby and final integrated qualification remain open."
+  ]
+}

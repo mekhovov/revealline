@@ -1,0 +1,35 @@
+[
+  {
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+      "game/ui/game-shell.mjs",
+      "game/test/title-entry-host.test.mjs"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+      "--check",
+      "game/ui/game-shell.mjs",
+      "game/test/title-entry-host.test.mjs"
+    ],
+    "exitCode": 0,
+    "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "game/ui/game-shell.mjs",
+      "game/test/title-entry-host.test.mjs"
+    ],
+    "exitCode": 0,
+    "output": ""
+  }
+]
