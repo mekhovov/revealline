@@ -93,7 +93,13 @@ export function attachGameShell({
                 : $('mission-brief-title').textContent,
             })
           : copy('title.deployDestination');
-    if (!home.open) home.showModal();
+    if (!home.open) {
+      // A prior successful chapter selection is not the next title action.
+      // Keep errors visible; fresh operation feedback still arrives normally.
+      const status = $('shell-featured-status');
+      if (status && status.dataset.kind !== 'error') status.hidden = true;
+      home.showModal();
+    }
     (training
       ? $('shell-course-return')
       : canContinue()
