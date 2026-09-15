@@ -1,0 +1,63 @@
+{
+  "fullOriginalView": {
+    "observer": "author",
+    "complete": true,
+    "count": 4,
+    "method": "view_image detail=original; first rooftop viewed at retained tool path, exact matching workspace clone later admitted"
+  },
+  "pngValidation": {
+    "chunkCRCs": "PASS",
+    "fullDecode": "PASS",
+    "count": 4
+  },
+  "smallView": {
+    "configuredCSSPixels": [
+      320,
+      160
+    ],
+    "nativeReview": "PASS_SOURCE_ILLUSTRATIONS_ONLY",
+    "observers": [
+      "root operated native browser",
+      "author viewed all three unmodified captures"
+    ],
+    "captures": [
+      {
+        "file": "provenance/native-comparison.jpg",
+        "bytes": 68439,
+        "sha256": "af5cc5843f7b946cfa7576e79566a4d4eabe2788c3e90d30b0aaecf7a5fb7fd3",
+        "dimensions": [
+          1280,
+          1282
+        ],
+        "pixelsEdited": false
+      },
+      {
+        "file": "provenance/native-comparison-viewport.jpg",
+        "bytes": 100421,
+        "sha256": "9cf17acf91c27ceb11bf4dfae6d47fa96a224281413c4b4a058d94c0467fa6a4",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "pixelsEdited": false
+      },
+      {
+        "file": "provenance/native-comparison-bottom.jpg",
+        "bytes": 118512,
+        "sha256": "0f1e4182c322685e695cbec61c4104e728281cd2869322a710291025f0755d4a",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "pixelsEdited": false
+      }
+    ],
+    "rootObservation": "All eight current/prior images loaded1774x887; both320x160 regions viewed. Stronger chunky silhouettes are readable. Video shelf media remain ambiguous books/cases and abstract poster is visible. Stylized tram accepted as original scenic art.",
+    "limitations": [
+      "Full-page export is scaled down; viewport captures show configured small-view composition.",
+      "No runtime, level, state, animation, precise palette, real brand or engineering claim."
+    ]
+  },
+  "runtimeAdoption": false,
+  "at": "2026-09-15T03:45:44.027205+00:00"
+}

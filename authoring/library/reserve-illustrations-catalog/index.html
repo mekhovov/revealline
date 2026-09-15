@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reserve illustrations · Authoring catalog</title>
+    <link rel="stylesheet" href="catalog.css" />
+    <script type="module" src="catalog.mjs"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Reveal Line · Authoring library</p>
+        <h1>Reserve illustrations</h1>
+        <p>40 selected source works · 4 themes · 10 waves</p>
+        <p class="notice">
+          Source art for future authoring. These illustrations are not earned pictures or released
+          levels. Nothing is installed into the game here.
+        </p>
+      </header>
+      <p id="catalog-status" role="status">Loading catalog…</p>
+      <noscript
+        >This catalog needs JavaScript. The <a href="manifest.json">manifest</a> records all
+        selected source paths.</noscript
+      >
+      <div id="catalog" hidden>
+        <section class="chooser" aria-label="Choose an illustration">
+          <label for="theme">Theme</label>
+          <select id="theme">
+            <option value="all">All themes</option>
+          </select>
+          <label for="selection">Illustration</label>
+          <select id="selection" aria-describedby="selection-help"></select>
+          <p id="selection-help">
+            Use the arrow keys in either list, or the Previous and Next buttons.
+          </p>
+          <div class="steps">
+            <button id="previous" type="button">← Previous</button>
+            <span id="position" aria-live="polite"></span>
+            <button id="next" type="button">Next →</button>
+          </div>
+        </section>
+        <section class="viewer" aria-labelledby="title">
+          <p class="eyebrow" id="theme-wave"></p>
+          <h2 id="title"></h2>
+          <p id="dimensions"></p>
+          <figure>
+            <div id="image-slot"></div>
+            <figcaption id="image-status" role="status"></figcaption>
+          </figure>
+          <nav class="links" aria-label="Selected source files">
+            <a id="download">Download original PNG</a>
+            <a id="prompt">Read generation prompt</a>
+            <a id="cleanup" hidden>Read cleanup prompt</a>
+            <a id="provenance">Read provenance</a>
+            <a id="notes">Read wave notes &amp; limitations</a>
+          </nav>
+          <details>
+            <summary>Source identity</summary>
+            <dl>
+              <dt>Recorded SHA-256</dt>
+              <dd id="sha"></dd>
+              <dt>Git blob</dt>
+              <dd id="blob"></dd>
+              <dt>Original path</dt>
+              <dd id="path"></dd>
+            </dl>
+          </details>
+        </section>
+      </div>
+      <footer>
+        <p>
+          Only the selected original loads. Downloads preserve its PNG bytes; no thumbnails or
+          resized files are created. Source artwork is imaginative, with equipment and cultural
+          details qualified in each wave’s notes.
+        </p>
+        <p>
+          Two unselected early outputs remain preserved in Git and are outside this 40-work chooser.
+          <a href="manifest.json">Catalog manifest</a> ·
+          <a href="README.md">Catalog usage and verification</a>
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

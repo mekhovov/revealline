@@ -1,0 +1,13 @@
+{
+  "budgetBytes": 36700160,
+  "toolOriginalsBytes": 9359341,
+  "currentCohortBytesBeforeBudget": 9757687,
+  "cacheEvidenceBytes": 365730,
+  "parentMetadataOnlyBytes": 22848,
+  "prospectiveRawGitFileBytes": 9757687,
+  "remainingSmallTextTreeAndGitOverheadAllowanceBytes": 1048576,
+  "conservativeTotalBytes": 30311869,
+  "remainingBudgetBytes": 6388291,
+  "freshAvailableBytes": 1244667904,
+  "qualification": "Tool PNGs, workspace PNGs and prospective raw Git copies all counted despite APFS shared extents. Three native JPEGs counted in both workspace and cache, plus prospective Git. Allowance covers this record, later peer/commit metadata, tree objects and compression overhead. No parent originals copied."
+}

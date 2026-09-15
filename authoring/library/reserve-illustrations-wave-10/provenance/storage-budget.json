@@ -1,0 +1,13 @@
+{
+  "scope": "Wave10 tool originals +workspace art/skill +prospective raw Git +cache +1MiB overhead, no sharing credit",
+  "toolOriginalBytes": 8253032,
+  "workspaceArtAndSkillBytesBeforeThisReceipt": 8319406,
+  "prospectiveRawGitBytesBeforeThisReceipt": 8319406,
+  "cacheBytesBeforeThisReceipt": 9794,
+  "smallOverheadAllowanceBytes": 1048576,
+  "conservativeBytes": 25950214,
+  "capBytes": 37748736,
+  "freshFreeBeforeWrite": 5291212800,
+  "admissionBytes": 3500000000,
+  "reserveBytes": 3400000000
+}
