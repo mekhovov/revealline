@@ -590,9 +590,9 @@
   body.game-shell.first-flight-session[data-flight-layout][data-flight-state]
   .first-flight-task {
   position: fixed;
-  left: var(--flight-left);
+  left: var(--flight-warning-left);
   top: calc(var(--flight-top) + var(--flight-base-strip));
-  width: var(--flight-usable-width);
+  width: var(--flight-warning-width);
   max-height: calc(var(--flight-strip-height) - var(--flight-base-strip));
   overflow: auto;
   touch-action: pan-y;
