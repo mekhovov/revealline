@@ -1,3 +1,7 @@
+import {
+  installCoopPresentation,
+  waitFor as waitForTeamPicture,
+} from './helpers/coop-presentation-fixture.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -92,7 +96,19 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
       else delete globalThis[key];
   });
+  const artwork = installCoopPresentation({
+    doc,
+    win,
+    install(key, descriptor) {
+      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?display-host=${++sequence}`);
+  await waitForTeamPicture(
+    () => $('coop-picture-status').dataset.state === 'ready',
+    () => $('coop-picture-status').textContent,
+  );
   assert.equal(doc.documentElement.dataset.toolState, 'ready');
   const tick = (count = 1) => {
     for (let i = 0; i < count; i++) {
@@ -103,6 +119,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     }
   };
   return {
+    artwork,
     $,
     doc,
     win,
@@ -199,7 +216,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
-    assert.ok(page.fonts().some((font) => font.includes('Field Kit Mono')));
+    assert.ok(page.fonts().some((font) => font.includes(page.artwork.snapshot.fonts.numeric)));
     assert.equal(page.$('coop-clock').textContent, clock);
     assert.equal(page.$('coop-overlay-title').textContent, 'Both players paused');
     assert.equal(store.getItem(profileKey), profile);

@@ -1,3 +1,7 @@
+import {
+  installCoopPresentation,
+  waitFor as waitForTeamPicture,
+} from './helpers/coop-presentation-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -156,7 +160,19 @@ async function teamPage(t, store) {
       if (descriptor) Object.defineProperty(globalThis, name, descriptor);
       else delete globalThis[name];
   });
+  installCoopPresentation({
+    doc,
+    win,
+    install(key, descriptor) {
+      originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
+      Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
+    },
+  });
   await import(`../couch/relay-rescue.mjs?audio-host=${++sequence}`);
+  await waitForTeamPicture(
+    () => $('coop-picture-status').dataset.state === 'ready',
+    () => $('coop-picture-status').textContent,
+  );
   assert.equal(doc.documentElement.dataset.toolState, 'ready');
   const tick = (count = 1) => {
     for (let index = 0; index < count; index++) {
