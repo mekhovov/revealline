@@ -9,11 +9,20 @@ test('screen help pauses the actual flight, retains score and saved replay, and 
   await settle(() => page.doc.body.dataset.flightState === 'running', 'Flight starts');
   page.frame();
   const before = authoritativeCheckpoint(page.rendered.run);
+  // Restoring a saved flight can open Pause before the next HUD paint.
+  page.$('time').textContent = 'stale clock';
+  page.$('score').textContent = 'stale score';
   page.$('shell-fullscreen').click();
   assert.equal(page.$('fullscreen-dialog').open, true);
   assert.equal(page.doc.body.dataset.flightState, 'paused');
   assert.equal(page.$('pause-summary').hidden, false);
   assert.match(page.$('pause-stats').textContent, /Revealed .*Time .*Score/);
+  assert.doesNotMatch(page.$('pause-stats').textContent, /stale/);
+  assert.ok(
+    page
+      .$('pause-stats')
+      .textContent.endsWith(`Score ${String(page.rendered.run.score).padStart(5, '0')}`),
+  );
   assert.equal(page.$('pause-status').textContent, page.$('run-message').textContent);
   page.doc.querySelector('[data-close="fullscreen-dialog"]').click();
   page.frame();

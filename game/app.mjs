@@ -3490,8 +3490,11 @@ try {
     show('pause-label', kind === 'pause');
     show('pause-summary', kind === 'pause');
     if (kind === 'pause') {
+      const clock = run.rules.timeLimitSeconds
+        ? Math.max(0, run.rules.timeLimitSeconds - run.time)
+        : run.time;
       $('pause-stats').textContent =
-        `Revealed ${(run.coverage * 100).toFixed(1)}% · ${$('target').textContent} · ${$('lives').getAttribute('aria-label')} · Time ${$('time').textContent} · Score ${$('score').textContent}`;
+        `Revealed ${(run.coverage * 100).toFixed(1)}% · TARGET ${Math.round(run.level.goal.coverage * 100)}% · ${run.lives} lives · Time ${timeLabel(clock)} · Score ${String(run.score).padStart(5, '0')}`;
       $('pause-status').textContent = $('run-message').textContent;
     }
     show('overlay-reading', kind !== 'pause');
