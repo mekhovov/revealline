@@ -1,5 +1,9 @@
 # Cross-mode delivery prompts
 
+Recovery continuation: “Exercise the complete advertised recovery sequence: writer-required picture → Export game data → Library → Back → Reload saved profile. Closing the secondary dialog must restore a visible invoker and keep the settled recovery actions without another Check picture request. Preserve only the exact current picture owner/run/theme; actual pending cancellation, retry, replacement and page retirement still invalidate it. Verify checkpoint, pins, reads and writes, then qualify actual native return focus separately from the modeled test.”
+
+Native evidence: “Pin the installed recorder transport and retain bounded post-open error/close diagnostics. Bind observers to the actual development or release channel; a development server need not provide frozen build metadata. Interactive drivers need a live stdin/PTY. Account for browser-owned profile links without following them, and record data/blob URL hashes instead of embedded payloads. Preserve each actual downloaded file before a repeated same-name download can overwrite it; distinct completion GUIDs do not guarantee distinct retained files. Hash large pack rows instead of returning embedded images in storage observations. Read the actual verifier API (`verifyReplay` returns `match`), and compare saved timestamps separately from checkpoint and picture identity. Keep recorder failures, corrected interpretations and product failures distinct; never rewrite an old failure into a pass.”
+
 Use the [active phase register](../../docs/cross-mode-execution.md). Preserve earlier immutable records, player ownership and historical simulations. Each prompt applies only after its prerequisite phase is accepted; examples do not claim implementation.
 
 ## Continue a phase
