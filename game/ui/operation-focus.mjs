@@ -1,7 +1,12 @@
 /** One operation may return focus only while its actual initiating control owns it. */
 export function captureOperationFocus(
   opener,
-  { document: doc = opener?.ownerDocument, owned = [], restoreTo = opener } = {},
+  {
+    document: doc = opener?.ownerDocument,
+    owned = [],
+    restoreTo = opener,
+    resolveTarget = null,
+  } = {},
 ) {
   const root = opener?.closest('dialog'),
     win = doc?.defaultView ?? globalThis.window,
@@ -57,21 +62,44 @@ export function captureOperationFocus(
   return Object.freeze({
     cancel,
     restore() {
+      let target = restoreTo;
+      if (resolveTarget) {
+        const focus = doc?.activeElement;
+        if (
+          !active ||
+          !root.open ||
+          doc.hidden ||
+          doc.hasFocus?.() === false ||
+          (!empty(focus) && !targets.has(focus))
+        ) {
+          cancel();
+          return false;
+        }
+        try {
+          // Only the owning adapter may resolve a logical successor after its
+          // controls are rebuilt. Recheck ownership after this external call.
+          target = resolveTarget();
+        } catch {
+          cancel();
+          return false;
+        }
+      }
       const focus = doc?.activeElement,
         allowed =
           active &&
           root.open &&
-          restoreTo.isConnected &&
-          restoreTo.closest('dialog') === root &&
-          !restoreTo.disabled &&
-          !restoreTo.closest('[hidden],[inert],dialog:not([open]),details:not([open])') &&
+          target?.isConnected &&
+          target.closest('dialog') === root &&
+          !target.disabled &&
+          !target.closest('[hidden],[inert],dialog:not([open]),details:not([open])') &&
           !doc.hidden &&
           doc.hasFocus?.() !== false &&
-          (empty(focus) || targets.has(focus));
+          (empty(focus) || targets.has(focus)) &&
+          active;
       cancel(); // Retire before an external focus handler can reenter the owner.
-      if (!allowed || focus === restoreTo) return false;
-      restoreTo.focus({ preventScroll: true });
-      return doc.activeElement === restoreTo;
+      if (!allowed || focus === target) return false;
+      target.focus({ preventScroll: true });
+      return doc.activeElement === target;
     },
   });
 }
