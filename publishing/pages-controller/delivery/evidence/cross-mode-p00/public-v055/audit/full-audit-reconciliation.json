@@ -1,0 +1,64 @@
+{
+  "format": "revealline-public-http-reconciliation.v1",
+  "status": "PASS",
+  "controllerCommit": "da4459b706555007468d053a578caa215d08eca3",
+  "deploymentId": 6454057759,
+  "runId": 34942712768,
+  "checkedFiles": 2306,
+  "checkedBytes": 635438917,
+  "attempts": 2307,
+  "preservedFailedAttempts": [
+    {
+      "path": "game/playground/board-view.mjs",
+      "url": "https://mekhovov.github.io/revealline/game/playground/board-view.mjs",
+      "attempt": 1,
+      "expectedBytes": 4503,
+      "expectedSha256": "3fadaf2a5e82d2b875d57040738a335443267f7b0f78331021c20fae521c73b9",
+      "startedAt": "2026-09-15T07:44:08.131Z",
+      "status": 503,
+      "contentType": "text/html; charset=utf-8",
+      "contentEncoding": null,
+      "etag": null,
+      "retryAfter": "0",
+      "ok": false,
+      "error": "Error: Expected direct HTTP 200, received 503",
+      "transportError": false,
+      "finishedAt": "2026-09-15T07:44:08.247Z"
+    }
+  ],
+  "everyExpectedPathExactlyOnce": true,
+  "everyFinalAttemptMatchesResult": true,
+  "publicBrowserAcceptance": false,
+  "records": [
+    {
+      "path": "runs/complete-1/report.json",
+      "bytes": 3493,
+      "sha256": "c86fac35ee49affbe7dbe170848b682d06b6c8a824b9a6cf92f7509a6688e6d2"
+    },
+    {
+      "path": "runs/complete-1/inventory.json",
+      "bytes": 592076,
+      "sha256": "8e46b9f72dce010ef0890657d22bed48af6ce327a9c5a4958cfc89738b357d7f"
+    },
+    {
+      "path": "runs/complete-1/attempts.jsonl",
+      "bytes": 1504798,
+      "sha256": "4c8e79878c4b8ab9bf225ff46045eec7c0ab439a03f90e0c924920a7c71007f0"
+    },
+    {
+      "path": "runs/complete-1/results.jsonl",
+      "bytes": 1504287,
+      "sha256": "ffb6ff409f03f9491d60e9e9368b7de099ea9d7a6a7b234c334a477323c64c25"
+    },
+    {
+      "path": "runs/critical-1/report.json",
+      "bytes": 3507,
+      "sha256": "bb5fdbabe1c9ec2fa3dcc9349d5305dbea3688f443f2a02e9ada6876fd010e0a"
+    },
+    {
+      "path": "inputs/da4459b706555007468d053a578caa215d08eca3/binding.json",
+      "bytes": 2020,
+      "sha256": "836a66783993976b1fbe3eff351e78dbfa69d7e1a8541559c6afa5678ec24a7d"
+    }
+  ]
+}

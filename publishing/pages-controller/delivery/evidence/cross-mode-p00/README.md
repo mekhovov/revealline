@@ -1,6 +1,6 @@
 # P00 integration and inventory — delivery evidence
 
-**Status: source qualified and merged; frozen snapshot verified; immutable GitHub Release published; not deployed on main Pages or accepted.** This report is publication metadata outside the immutable game source. Pending rows must receive actual evidence before P01 starts.
+**Status: P00 accepted.** This report is publication metadata outside the immutable game source. The source, immutable release, public bytes and scoped browser journeys have passed independent review. P01 may now begin.
 
 | Identity                         | Value                                                                                   |
 | -------------------------------- | --------------------------------------------------------------------------------------- |
@@ -11,8 +11,8 @@
 | Integrated main                  | `a6406ed51a949c7d94315cc9a58373b70f03bcc0`                                              |
 | Exact-source workflow            | [34933733408](https://github.com/mekhovov/revealline/actions/runs/34933733408) — passed |
 | Hosted gated snapshot            | [34934616278](https://github.com/mekhovov/revealline/actions/runs/34934616278) — passed |
-| Publishing revision / deployment | Pending                                                                                 |
-| Immutable public test URL        | Pending actual deployment and verification                                              |
+| Publishing revision / deployment | `da4459b706555007468d053a578caa215d08eca3` / `6454057759`                               |
+| Immutable public test URL        | [Play v0.55.0](https://mekhovov.github.io/revealline/releases/v0.55.0/site/game/)       |
 
 ## Delivered source scope
 
@@ -26,7 +26,7 @@ The original checkout preservation receipt records 201 files and 629,522,202 log
 
 All six final source gates and the ordinary build passed: **4,051 tests across 365 files**, with zero failures, cancellations, skips or TODOs. All twelve hosted before/after raw identities matched the independent local Git-blob content/mode check. PR #50 merged normally at `9686daf10b172592fc1c2a135be3546f75bc5211`; the frozen game source remains the tested `acc9f265` commit.
 
-The exact source qualification receipt has SHA-256 `b84d2995e56d3034f2eae8b4fa3c175b2c91157d7ad68f58b9ad11cc781fe956`. The prepared `source-qualification-evidence.zip` contains the original workflow/job snapshots, six raw logs, twelve identities, complete test partitions, timing summary and collector: 16 entries / 363,390 bytes, SHA-256 `f0ee2b15537537ff165d3e8c53c320362dda897c4451a9a6a5a240d36ffb67f0`. Every entry was reread. Attachment to the immutable GitHub release is pending.
+The exact source qualification receipt has SHA-256 `b84d2995e56d3034f2eae8b4fa3c175b2c91157d7ad68f58b9ad11cc781fe956`. The prepared `source-qualification-evidence.zip` contains the original workflow/job snapshots, six raw logs, twelve identities, complete test partitions, timing summary and collector: 16 entries / 363,390 bytes, SHA-256 `f0ee2b15537537ff165d3e8c53c320362dda897c4451a9a6a5a240d36ffb67f0`. Every entry was reread. The identical ZIP is attached to the immutable GitHub Release.
 
 Existing-log test-shard wall times were 27:56, 20:15, 16:10 and 19:20. The largest named parent tests were Countercurrent host (18.64 minutes), Fracture host (17.75), Route Worlds host (10.11) and Sentinel theme host (7.83). Nested durations overlap; these are diagnostics from the required run, not isolated benchmarks or an additional test run.
 
@@ -51,18 +51,22 @@ The hosted snapshot was received without rebuilding or rewriting its originals. 
 
 The first serial transfer attempt was cancelled before decoded originals because measured throughput would exceed its time bound. Its failure evidence remains in the local cache. The successful attempt used a separately reviewed bounded parallel receiver; all original release bytes stayed unchanged. An initial independent review assertion expected an unprefixed build-info version; the frozen writer's `v0.55.0` contract was inspected and the assertion corrected before the successful review.
 
-Annotated tag `253ed21b6897a0784ba3d8d2b871c952fee90451` is pushed and peels to the tested source `acc9f265`. Draft release `388923117` contains all nine expected attachments. GitHub reports each uploaded size and SHA-256 equal to its independently verified local original; see [attachment verification](draft-attachment-verification.json). The verified draft was published at 2026-09-15 07:31:10 UTC without replacing any attachment. Published release ID 388923117 retains the same nine hashes. This does not establish Pages or public-play acceptance.
+Annotated tag `253ed21b6897a0784ba3d8d2b871c952fee90451` is pushed and peels to the tested source `acc9f265`. Published release `388923117` contains all nine expected attachments. GitHub reports each uploaded size and SHA-256 equal to its independently verified local original; see [attachment verification](draft-attachment-verification.json). The verified draft was published at 2026-09-15 07:31:10 UTC without replacing any attachment. Published release ID 388923117 retains the same nine hashes. Public acceptance is established separately below, using the actual deployed bytes and browser observations.
 
-## Remaining release acceptance
+## Accepted public release
 
-1. Predecessor v0.54 is published and Archive13 has passed its complete public-byte and ordinary online/offline browser checks. Its first offline preparation timed out; retry verified 600 files and offline play passed. The finding is retained for P01.
-2. Complete the reviewed publishing controller selecting the already published immutable v0.55 release and retain predecessor archives.
-3. Bind the actual successful hosted artifact receipt to the deployment and audit every public body, including root aliases, current canonical assets and historical bridges.
-4. Exercise actual public Solo/Versus/Team routes, relevant fullscreen and core-offline journeys; record release/source identity and scoped findings.
-5. Review and close this report before advancing to P01.
+[PR #52](https://github.com/mekhovov/revealline/pull/52) merged the independently reviewed catalogue at `da4459b706555007468d053a578caa215d08eca3`, tree `08e6ab71b8ac1a5627806a8e86b81bc9c1d8dfb6`. [Production run 34942712768](https://github.com/mekhovov/revealline/actions/runs/34942712768) deployed it as `6454057759`. All 60 catalogued releases and 13 archive admissions remain available. v0.54 is preserved at its separately verified Archive13 URL; no immutable source or release bytes were rewritten.
+
+The complete [public HTTP audit](public-v055/audit/runs/complete-1/report.json) verified **2,306 files / 635,438,917 bytes**, with no missing or uninspected files and no final failures. One transient503 retried successfully; both attempts remain recorded. The nine-file authority binding separates frozen game source, controller and deployment. The final API check confirmed the same main commit and successful deployment after the audit.
+
+[Ordinary Solo/Team browser evidence](public-v055/browser/report.md) verifies keyboard capture, fullscreen entry/exit without resuming the paused game, Retry, saved-flight restoration, offline reload/victory, both Team arenas and return to the intact Solo flight. Offline preparation first hit the existing60-second UI timeout; the offered retry verified **600 files / 55,102,153 bytes**, missing[] and corrupt[]. The scoped worker then served the game with network disabled. The timeout remains a P01 requirement.
+
+[Versus and retained-release evidence](public-v055/browser/versus-history/report.md) verifies both players' keyboard captures, explicit pause/Resume, three viewport layouts, current-release navigation and ordinary startup through the v0.52 Archive12 route. Team's geometric artwork,40-pixel portrait controls, short-landscape clipping and Escape resume behavior remain explicit P03/P08-A baseline defects. The report does not imply those later phases are complete. Browser resize/offline modeling remains distinct from physical-device testing and a new-process cold start.
+
+The independent final review verified all96 browser evidence files and the separate46-file Versus index. The [acceptance record](public-v055/acceptance.json) pins the source, public reports and retained limitations. It is publishing evidence outside the frozen game. All required P00 integration/inventory/release work is complete.
 
 ## Outstanding planned work
 
 P00 does not deliver the new map presentation. Team still needs approved reveal pictures, shared actors/objectives/fonts and control placement; Versus still needs full identity-aware artwork resolution and canvas sizing. Those remain required P03/P04/P05/P06/P08-A acceptance items. No physical touch/controller, Safari/PWA installation, exhaustive campaign, imported-map or full-state qualification is claimed here.
 
-The separate v0.56 player-library/Team-controls candidate follows P00 and preserves its source history. Reconcile its actual released changes before modifying those surfaces in later phases; its existence does not close this report or any later phase.
+The v0.56 player-library/Team-controls source is already merged on main and retains separate publication ownership. P01 must preserve and reconcile those changes; they do not establish later-phase acceptance.

@@ -1,0 +1,207 @@
+{
+  "active": {
+    "id": "start-button",
+    "tag": "BUTTON",
+    "text": "Resume →"
+  },
+  "at": "2026-09-15T07:43:48.731Z",
+  "body": " ◩ REVEAL / LINE\nTACTICAL EDITION\n⛶\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nPAUSED\n\nResume →\nRestart mission\nMission brief\nMain menu\nPaused\nClose a line to reveal the picture\n\nPicture ready.",
+  "canvases": [
+    {
+      "height": 576,
+      "id": "",
+      "rect": {
+        "height": 568,
+        "width": 758,
+        "x": 261,
+        "y": 139.484375
+      },
+      "width": 768
+    },
+    {
+      "height": 0,
+      "id": "result-picture",
+      "rect": {
+        "height": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "width": 0
+    },
+    {
+      "height": 576,
+      "id": "gallery-canvas",
+      "rect": {
+        "height": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "width": 768
+    },
+    {
+      "height": 112,
+      "id": "enemy-guide-preview",
+      "rect": {
+        "height": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "width": 192
+    }
+  ],
+  "controls": [
+    {
+      "disabled": false,
+      "id": "shell-menu",
+      "label": "Game menu",
+      "rect": {
+        "height": 48.59375,
+        "width": 214.453125,
+        "x": 12,
+        "y": 0.703125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "shell-fullscreen",
+      "label": "Enter fullscreen",
+      "rect": {
+        "height": 44,
+        "width": 60,
+        "x": 846.65625,
+        "y": 3
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "shell-packs",
+      "label": "Missions",
+      "rect": {
+        "height": 44,
+        "width": 101.34375,
+        "x": 916.65625,
+        "y": 3
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "shell-collection",
+      "label": "Collection",
+      "rect": {
+        "height": 44,
+        "width": 109.3125,
+        "x": 1028,
+        "y": 3
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "shell-settings",
+      "label": "Game settings",
+      "rect": {
+        "height": 48.59375,
+        "width": 120.6875,
+        "x": 1147.3125,
+        "y": 0.703125
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "start-button",
+      "label": "Resume →",
+      "rect": {
+        "height": 48,
+        "width": 304,
+        "x": 488,
+        "y": 351
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "overlay-restart",
+      "label": "Restart mission",
+      "rect": {
+        "height": 48,
+        "width": 304,
+        "x": 488,
+        "y": 407
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "overlay-brief",
+      "label": "Mission brief",
+      "rect": {
+        "height": 48,
+        "width": 304,
+        "x": 488,
+        "y": 463
+      },
+      "tag": "BUTTON"
+    },
+    {
+      "disabled": false,
+      "id": "overlay-menu",
+      "label": "Main menu",
+      "rect": {
+        "height": 48,
+        "width": 304,
+        "x": 488,
+        "y": 519
+      },
+      "tag": "BUTTON"
+    }
+  ],
+  "databases": [
+    {
+      "name": "revealline-assets-v1",
+      "version": 1
+    },
+    {
+      "name": "revealline-soundtrack-v1",
+      "version": 4
+    }
+  ],
+  "fullscreen": {
+    "dataset": null,
+    "element": null,
+    "enabled": true
+  },
+  "online": true,
+  "storage": [
+    {
+      "bytes": 2659,
+      "key": "revealline.library.release-v0.55.0.v1",
+      "sha256": "26adce17c7281b6874ffb0393e7013a8932f53a560ca05d09beaa5c25794d4a7"
+    },
+    {
+      "bytes": 122,
+      "key": "revealline.library.release-v0.55.0.v1.last-selection.v1",
+      "sha256": "32df3ea06cee85b0e17a11e7f933cbe5e040776b2535f41a9c8a076b1796934c"
+    },
+    {
+      "bytes": 5179,
+      "key": "revealline.suspended.release-v0.55.0.v1",
+      "sha256": "4edd23cd52f3de9d532b8d1a2fd888b8eb9452b500a4763a3063b515bf700abf"
+    }
+  ],
+  "title": "Reveal / Line",
+  "url": "https://mekhovov.github.io/revealline/releases/v0.55.0/site/game/",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "viewport": {
+    "dpr": 1,
+    "height": 800,
+    "width": 1280
+  },
+  "worker": null
+}
