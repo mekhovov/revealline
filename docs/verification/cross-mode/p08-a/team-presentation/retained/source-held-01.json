@@ -1,0 +1,36 @@
+{
+  "format": "revealline-local-source-hold.v1",
+  "source": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "status": "Initial four-file candidate held before focused complete-file execution; no native/adoption claim.",
+  "files": [
+    {
+      "path": "game/couch/coop-view.mjs",
+      "bytes": 13878,
+      "sha256": "8e3351e6c251496e104167491d710fb2e88efae414c6e6b65f76aa203f94debf"
+    },
+    {
+      "path": "game/couch/coop-presentation.mjs",
+      "bytes": 15209,
+      "sha256": "9aa13a34885a798a96a1067061b2b448aa8f6e965715f340057632cad0a05a08"
+    },
+    {
+      "path": "game/test/coop-view-presentation.test.mjs",
+      "bytes": 11832,
+      "sha256": "724342d0b325bd9692c489873772c387571f9bb0a029ac83b32a50805745a66c"
+    },
+    {
+      "path": "game/test/coop-presentation.test.mjs",
+      "bytes": 15896,
+      "sha256": "be6d892f0a7de706857a231ba1f5ca4992713a9805d969ff9a5b4e20cd22ab86"
+    }
+  ],
+  "testsPlanned": [
+    "game/test/coop-view-presentation.test.mjs",
+    "game/test/coop-presentation.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/coop-core.test.mjs",
+    "game/test/coop-library.test.mjs",
+    "game/test/coop-authoring.test.mjs",
+    "game/test/coop-balanced-routes.test.mjs"
+  ]
+}
