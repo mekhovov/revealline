@@ -1,0 +1,43 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "38191df3ed89efa340ffb4a29a6dbe1dd85d70690a38ef1fdde25a7b4f114884",
+  "originalGitBlob": "94d8e6e908f32e6326ce75e2afa815d8164baace",
+  "removedRecordsOrFields": 1,
+  "excerpt": {
+    "step": "06-stay-retains-flight-and-team-focus",
+    "dom": {
+      "dialogs": [
+        "shell-missions"
+      ],
+      "focus": {
+        "id": "shell-team",
+        "tag": "A",
+        "text": "Relay Rescue · 2-player co-op"
+      },
+      "hud": [
+        {
+          "id": "coverage",
+          "text": "1.5%"
+        },
+        {
+          "id": "lives",
+          "text": "◆ ◆ ◆"
+        },
+        {
+          "id": "time",
+          "text": "2:51"
+        },
+        {
+          "id": "score",
+          "text": "00340"
+        }
+      ],
+      "url": "http://127.0.0.1:60366/game/?mode-return=a060d1ad61f34b11aab375a3fa2dd825",
+      "view": [
+        1393,
+        1348
+      ]
+    }
+  }
+}
