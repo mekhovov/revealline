@@ -29,8 +29,22 @@ test('lobby, setup and children use reachable native controls and Back restores 
   assert.equal(f.$('race-main').hidden, false);
   assert.equal(f.$('race-boards').hidden, true);
   assert.equal(f.$('race-setup').inert, true);
+  const modes = f.$('race-mode-choices');
+  assert.deepEqual(
+    modes.children.map((element) => element.dataset.gameMode),
+    ['solo', 'versus', 'team'],
+  );
+  const currentMode = modes.querySelector('[aria-current="page"]');
+  assert.equal(currentMode.tagName, 'SPAN');
+  assert.equal(currentMode.getAttribute('tabindex'), null);
+  assert.equal(currentMode.getAttribute('href'), null);
   assert.equal(f.doc.activeElement.id, 'race-start');
   press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
+  assert.equal(f.doc.activeElement.id, 'race-coop');
+  press(f, 'Tab', f.doc.activeElement, { shiftKey: true });
+  assert.equal(f.doc.activeElement.id, 'race-solo-return');
+  assert.equal(f.doc.activeElement.getAttribute('href'), '../');
+  press(f, 'Tab');
   assert.equal(f.doc.activeElement.id, 'race-coop');
   assert.equal(f.doc.activeElement.getAttribute('href'), 'relay-rescue.html?return=versus');
   press(f, 'Tab');

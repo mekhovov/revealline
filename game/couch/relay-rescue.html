@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -22,6 +23,7 @@
 
       <section id="coop-menu" class="menu" aria-labelledby="coop-title">
         <div class="menu-copy">
+          <div id="coop-lobby-modes"></div>
           <p class="eyebrow">ONE ARENA. TWO PARTNERS.</p>
           <h1 id="coop-title" class="field-kit-display">Find your<br /><em>common ground.</em></h1>
           <p id="coop-intro" class="lead">
@@ -157,7 +159,8 @@
                 <button id="coop-retry" type="button">Retry same arena</button>
                 <button id="coop-lobby" type="button">Change setup</button>
               </div>
-              <nav class="coop-mode-actions" aria-label="Other game modes">
+              <div id="coop-pause-modes"></div>
+              <nav id="coop-mode-actions" class="coop-mode-actions" aria-label="Other game modes">
                 <a id="coop-solo" href="../">Return to Solo</a>
                 <a id="coop-versus" href="./">Go to Versus</a>
               </nav>
