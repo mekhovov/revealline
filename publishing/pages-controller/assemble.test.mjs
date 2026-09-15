@@ -144,6 +144,7 @@ async function fixture(t) {
     currentSourceQualification: { path: 'qualification.json', sha256: digest(qualificationBytes) },
     deploymentEnabled: true,
     retainedReleasesPerMajor: 5,
+    testingRoutes: {},
     currentVersion: 'v0.44.0',
     catalogSha256: digest(catalogBytes),
     allocationSha256: digest(allocationBytes),
@@ -234,6 +235,25 @@ test('retention keeps only the latest releases in each semantic major line', asy
   );
   const { metadata } = await loadCatalog(f.directory);
   assert.deepEqual([...retainRecentMetadata(metadata, 1).keys()], ['v0.44.0']);
+});
+
+test('a comparison-only tag is listed with its dedicated playable archive route', async (t) => {
+  const f = await fixture(t);
+  f.configuration.retainedReleasesPerMajor = 1;
+  f.configuration.testingRoutes = {
+    'v0.1.0': 'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/',
+  };
+  await f.write(path.join(f.directory, 'publication.json'), jsonBytes(f.configuration));
+  await assemble(f);
+  const index = JSON.parse(await fs.readFile(path.join(f.outputDirectory, 'releases/index.json'))),
+    comparison = index.releases.find((release) => release.version === 'v0.1.0');
+  assert.equal(
+    comparison.canonicalPlay,
+    'https://mekhovov.github.io/revealline-archive-01/releases/v0.1.0/site/game/',
+  );
+  await assert.rejects(
+    fs.access(path.join(f.outputDirectory, 'releases/v0.1.0/site/game/index.html')),
+  );
 });
 
 test('wrong and extra current bodies fail before any artifact is created', async (t) => {
