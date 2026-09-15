@@ -98,8 +98,10 @@ export function mountPresentationPage({
   }
   let closed = false;
   const bindings = new Set();
+  const pictureReads = new Set();
   const lease = {
     ready: page.ready,
+    current: () => (closed || page.closed ? null : page.snapshot),
     report(status) {
       if (closed || page.closed) return;
       try {
@@ -110,6 +112,33 @@ export function mountPresentationPage({
       if (closed || page.closed || !page.host)
         return Promise.reject(new Error('Presentation page is closed.'));
       return page.host.readAudio(slot, options);
+    },
+    async readPicture(slot, options = {}) {
+      if (closed || page.closed || !page.host) throw new Error('Presentation page is closed.');
+      const controller = new AbortController(),
+        abort = () => controller.abort();
+      pictureReads.add(controller);
+      options.signal?.addEventListener('abort', abort, { once: true });
+      if (options.signal?.aborted) abort();
+      try {
+        const original = await page.host.readPicture(slot, {
+          ...options,
+          snapshot: options.snapshot ?? page.snapshot,
+          signal: controller.signal,
+          onStatus(status) {
+            if (closed || page.closed || controller.signal.aborted) return;
+            try {
+              options.onStatus?.(status);
+            } catch {}
+          },
+        });
+        if (closed || page.closed || controller.signal.aborted)
+          throw new DOMException('Picture page lease closed.', 'AbortError');
+        return original;
+      } finally {
+        options.signal?.removeEventListener('abort', abort);
+        pictureReads.delete(controller);
+      }
     },
     notify(error) {
       if (!closed) {
@@ -147,6 +176,7 @@ export function mountPresentationPage({
     close() {
       if (closed) return;
       closed = true;
+      for (const controller of pictureReads) controller.abort();
       for (const release of [...bindings]) release();
       page.leases.delete(lease);
       if (!page.leases.size) page.dispose();

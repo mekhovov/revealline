@@ -192,7 +192,15 @@ export async function couchPage(
     assert.ok(rafs.size, $('race-message').textContent);
     if (initialLevel !== null) {
       $('race-level').value = initialLevel;
-      $('race-level').emit('change');
+      const handler = $('race-level').onchange;
+      let preparation;
+      $('race-level').onchange = (event) => (preparation = handler(event));
+      try {
+        $('race-level').emit('change');
+        await preparation;
+      } finally {
+        $('race-level').onchange = handler;
+      }
     }
   }
   function frame(ms = 1000 / 120) {
