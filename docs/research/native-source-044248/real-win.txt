@@ -1,0 +1,36 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: TACTICAL EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 52.2%
+    - emphasis: TARGET 45%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:03
+    - generic: SCORE
+    - strong: "08160"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving."
+    - region "Mission details":
+      - img "The picture revealed in this flight"
+      - paragraph: MISSION 01 / FIRST SIGNAL
+      - heading "A little more light." [level=1]
+      - paragraph: 52.2% captured · 8,160 points · 0:03. Picture collected for this session. Export your library to keep it.
+      - paragraph: Standard difficulty.
+      - generic: ★★★
+    - button "Next uncleared mission →" [active]
+    - button "View picture ⤢"
+    - button "Try again"
+    - button "Choose appearance"
+    - button "Main menu"
+    - paragraph: "Gold: fast and no lives lost."
+    - strong: Mission complete
+    - generic: Target reached
+    - status: Picture unlocked. A whole world, from one brave line.
+    - status: Another game tab owns saving. This tab is session-only; close the other game tab, then reload here to save. Export still works.
+    - status
