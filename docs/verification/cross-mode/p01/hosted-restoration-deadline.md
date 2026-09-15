@@ -1,6 +1,6 @@
 # P01 hosted restoration fixture deadline
 
-The fresh-import subtest now gives its existing initial picture-readiness wait 30 seconds. This applies only to `fresh app import restores the saved flight` in `game/test/external-chapter-app.test.mjs`, using the helper’s existing option and the same allowance as this file’s picture `settle()` calls. The shared five-second default and all runtime deadlines remain unchanged.
+The first correction gave the fresh-import subtest's initial picture-readiness wait 30 seconds. At that revision this applied only to `fresh app import restores the saved flight` in `game/test/external-chapter-app.test.mjs`, using the helper’s existing option and the same allowance as this file’s picture `settle()` calls. The later [whole-fixture correction](external-original-readiness.md) replaces that isolated override after another equivalent initial wait failed. The shared five-second default and all runtime deadlines remain unchanged.
 
 [Hosted shard 3](https://github.com/mekhovov/revealline/actions/runs/34951434495/job/104323400416) on source `6cfe315e5c266075c63f9d651ce12c21c57152c1` failed before the Continue handler: its initial picture predicate was still pending at the five-second fixture deadline, with no reported errors. This installed-original reload performs actual metadata, Blob, hash and picture-binding verification. Test teardown then cancelled the page’s pending work, so eventual completion of that CI attempt is unknown.
 

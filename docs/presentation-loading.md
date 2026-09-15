@@ -27,6 +27,8 @@ Exercise real delayed success, cached success, failure and retry. Then cancel or
 
 Async fixtures should await the owned operation or use `game/test/helpers/wait-for.mjs` with the exact readiness predicate and a bounded elapsed-time allowance. A count of immediate callbacks does not bound Blob, WebCrypto, module loading or replay timer yields. Keep short drains only for known post-resolution microtasks; preserve runtime deadlines, cancellation and identity assertions. Retain scheduling failures and controlled reproductions alongside corrected runs.
 
+When a fixture verifies real installed originals, give its initial preparation and later equivalent picture waits the same documented local allowance. Audit all entry points through that fixture, including restoration, recovery and replacement; a single subtest override leaves the same mismatch elsewhere. Keep the shared ordinary-host default and runtime deadlines unchanged, and preserve explicit shorter allowances used to exercise a timeout boundary.
+
 Review 1280×800, 390×844 and 844×390, Large/Plain text, applicable 200% zoom and reduced motion. Use keyboard, touch and modeled controller checks without presenting them as physical-device evidence. Record initial visual failures as well as corrected retests. Source-only assertions cannot establish visibility or successful public play.
 
 Later phases must add new entry points to the A01–A56 loading inventory and rerun affected lifecycle cases. They must also preserve the six source gates, ordinary build, offline/artifact budgets and immutable release workflow.
