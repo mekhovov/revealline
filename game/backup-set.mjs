@@ -40,6 +40,8 @@ export async function prepareBackupSet(
   );
   const gameIdentity = source.gameIdentity(),
     savedAt = new Date().toISOString(),
+    // One prefix for this observed snapshot, independent of browser rename rules.
+    filenamePrefix = `RevealLine-backup-${savedAt.replace(/[^0-9TZ]/g, '')}-${crypto.randomUUID().replace(/-/g, '')}`,
     metadata = await source.readMetadata({ signal }),
     generationIdentity = generations(metadata),
     game = await source.readGame({ savedAt, signal });
@@ -65,7 +67,7 @@ export async function prepareBackupSet(
   onProgress('Checking game data and the saved flight…');
   await add(
     'game',
-    'RevealLine-game-data.json',
+    `${filenamePrefix}-game-data.json`,
     new Blob([await exportBackup(game.contents, { ...game.options, signal })], {
       type: 'application/json',
     }),
@@ -78,7 +80,7 @@ export async function prepareBackupSet(
   );
   await add(
     'media',
-    'RevealLine-originals.rlmedia',
+    `${filenamePrefix}-originals.rlmedia`,
     await exportMediaBundle(still.document, still.assets, {
       signal,
       decodeImage: source.decodeImage,
@@ -89,7 +91,7 @@ export async function prepareBackupSet(
   required(story.generation === metadata.story, 'Stories changed. Prepare the backup set again.');
   await add(
     'story',
-    'RevealLine-stories.rlstory',
+    `${filenamePrefix}-stories.rlstory`,
     await exportStoryBundle(story.document, story.assets, { still: still.document, signal }),
   );
   onProgress('Checking saved music originals…');
@@ -97,7 +99,7 @@ export async function prepareBackupSet(
   required(audio.generation === metadata.audio, 'Music changed. Prepare the backup set again.');
   await add(
     'audio',
-    'RevealLine-soundtrack.rlsound',
+    `${filenamePrefix}-soundtrack.rlsound`,
     await exportSoundtrackBundle(audio.library, audio.assets, { signal }),
   );
   const detachedStories = story.document.stories
@@ -153,7 +155,7 @@ export async function prepareBackupSet(
   });
   await add(
     'coverage',
-    'RevealLine-backup-coverage.json',
+    `${filenamePrefix}-coverage.json`,
     new Blob([JSON.stringify(coverage, null, 2) + '\n'], { type: 'application/json' }),
   );
   // Re-read full game metadata with the SAME export timestamp. A newly generated

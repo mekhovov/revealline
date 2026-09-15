@@ -20,13 +20,13 @@ The visible capacity display reports campaign count, picture count and used prof
 
 ## Prepare game data and originals together
 
-In **Saves & loads**, choose **Prepare game and originals backup**. The current writable game pauses before this surface opens. Preparation reads the current game-data snapshot and the saved shared-origin picture, story and music inventories, one component at a time. It offers five visible native links:
+In **Saves & loads**, choose **Prepare game and originals backup**. The current writable game pauses before this surface opens. Preparation reads the current game-data snapshot and the saved shared-origin picture, story and music inventories, one component at a time. It offers five visible native links. One prefix is created per preparation: `RevealLine-backup-<UTC timestamp>-<random ID>`, with compact ASCII time and a fresh 32-character random ID. Every filename and report reference in that set uses the same prefix; even preparations in the same millisecond receive different IDs. In the list below, `<prefix>` means that full generated prefix:
 
-- `RevealLine-game-data.json`: the existing validated game-data format, including the current unfinished flight when available.
-- `RevealLine-originals.rlmedia`: referenced picture/poster originals and retained generic still-domain bytes.
-- `RevealLine-stories.rlstory`: story descriptors and their declared-available video originals. Poster bytes remain in `.rlmedia`.
-- `RevealLine-soundtrack.rlsound`: the saved music library and its referenced original MP3 bytes, independent of whether the audio player can initialize.
-- `RevealLine-backup-coverage.json`: a readable coverage report with edition/channel, source revision when the build records it, capture time, domain generations, metadata hashes, distinct original counts, and each component's filename, byte length and SHA-256.
+- `<prefix>-game-data.json`: the existing validated game-data format, including the current unfinished flight when available.
+- `<prefix>-originals.rlmedia`: referenced picture/poster originals and retained generic still-domain bytes.
+- `<prefix>-stories.rlstory`: story descriptors and their declared-available video originals. Poster bytes remain in `.rlmedia`.
+- `<prefix>-soundtrack.rlsound`: the saved music library and its referenced original MP3 bytes, independent of whether the audio player can initialize.
+- `<prefix>-coverage.json`: a readable coverage report with edition/channel, source revision when the build records it, capture time, domain generations, metadata hashes, distinct original counts, and each component's filename, byte length and SHA-256.
 
 **Prepared** means that the existing serializers checked those bytes. Choose each **Download** link yourself; **Download requested** only describes the browser action. Confirm the resulting files at the destination and compare them with the coverage report. The immutable report records preparation, not later browser download outcomes. Links remain available to retry while this Library visit stays open. Preparing again, closing the Library, hiding/leaving the page or detecting changed game data releases this panel's URLs. Cancel stops publication and joins any pending read before another preparation can start. Escape/controller Back first cancels active preparation and keeps focus in the Library; Close may leave immediately while cleanup settles. None of these actions resumes the flight.
 
@@ -38,21 +38,21 @@ Unsaved editor drafts, other game profile channels, unreferenced blobs, browser 
 
 Restore through the existing reviewed tools: picture/poster `.rlmedia` first, `.rlstory` next, saved music `.rlsound` separately, then review/import game-data JSON after its original owners are available. Earlier restored originals remain if a later step refuses. The coverage report is not an import authority and does not provide atomic rollback across files.
 
-Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. The separate [native download record](verification/guided-backup-a858-downloads.md) verifies all five actual files for an empty player profile/default saved metadata, including the CLI on both Node versions. Custom-uploaded media, fresh-origin restore, codec playback, audible music and cold-offline journeys remain unqualified.
+Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. The separate [native download record](verification/guided-backup-a858-downloads.md) verifies all five actual files from the earlier fixed-name `a85817ce` source for an empty player profile/default saved metadata, including the CLI on both Node versions. The new prefixed filenames still need their own native download check. Custom-uploaded media, fresh-origin restore, codec playback, audible music and cold-offline journeys remain unqualified.
 
 ## Check files actually downloaded
 
 Keep each five-file set in its own new folder with the exact names in that set’s coverage report, then run this read-only command from the source checkout with supported Node 20/22:
 
 ```sh
-node scripts/check-backup-set.mjs --report "$HOME/Downloads/RevealLine-backup/RevealLine-backup-coverage.json"
+node scripts/check-backup-set.mjs --report "/path/to/your-downloaded-coverage.json"
 ```
 
-Use `--directory /path/to/components` if the report is elsewhere, or `--help` for usage. The checker never copies, repairs, imports or adopts files. It refuses unsupported reports, duplicate/unsafe filenames, symlinks, missing components, size/SHA-256 mismatches and files that change during inspection. Extra unrelated files are not read. Browsers may add a suffix such as ` (1)` when fixed names already exist. Move that one complete set into a new folder and restore only its report-declared names there; do not overwrite or mix older exports. The command never chooses the newest file, guesses a renamed member or renames it for you.
+Replace the example path with the actual `-coverage.json` filename from the chosen set. Use `--directory /path/to/components` if the report is elsewhere, or `--help` for usage. The checker never copies, repairs, imports or adopts files. It refuses unsupported reports, duplicate/unsafe filenames, symlinks, missing components, size/SHA-256 mismatches and files that change during inspection. Extra unrelated files are not read. The unique prefix groups repeated preparations and avoids routine name collisions. Retrying the same prepared link or downloading an older fixed-name set can still make the browser add a suffix such as ` (1)`. Move that one complete set into a new folder and restore only its report-declared names there; do not overwrite or mix older exports. The command never chooses the newest file, guesses a renamed member or renames it for you.
 
 A successful JSON result means the actual four component files match the supplied report. It also checks bounded binary manifests, referenced-original hashes, paired story/poster metadata and structural MP3 frame facts through existing source validators/inspectors. The game-data check identifies its bounded JSON envelope; it does not replay the saved flight or authorize progress. File hashing uses 64 KiB reads; existing per-file/per-original bounds still apply to metadata and media inspections. No native codecs or media database are opened.
 
-A later small UX enhancement can give all five guided files one unique preparation prefix and record those exact names in the report. That is not implemented here; legacy individual export filenames and current guided filenames remain unchanged.
+Only guided-set filenames gain the common preparation prefix. Legacy individual export filenames, all four component formats and the coverage schema remain unchanged. The CLI accepts either old or new safe report-declared names; it does not infer a set from a prefix or select the newest files.
 
 The report is not signed: matching it does not prove trusted provenance, earned-picture/story ownership, compatibility with another edition, successful restoration or native decoding/audible/offline playback. Detached stories remain explicitly incomplete even when all provided files verify. Preserve the output alongside the original files, then use the existing import reviews for an actual transfer. Do not treat this command as a substitute for native download/readback when no actual destination files are available.
 
