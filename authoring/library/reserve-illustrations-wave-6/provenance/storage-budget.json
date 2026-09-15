@@ -1,0 +1,14 @@
+{
+  "scope": "Wave6 only: all four tool originals plus worktree cohort, prospective raw Git additions, cache evidence and1MiB small-overhead allowance; prior wave PNGs reused read-only and not copied.",
+  "toolOriginalBytes": 11104428,
+  "workspaceCohortBytesBeforeThisReceipt": 11453857,
+  "prospectiveRawGitBytesBeforeThisReceipt": 11453857,
+  "cacheEvidenceBytesBeforeThisReceipt": 334304,
+  "smallOverheadAllowanceBytes": 1048576,
+  "conservativeBytes": 35395022,
+  "capBytes": 37748736,
+  "freeBeforeWriteBytes": 5938335744,
+  "minimumBeforeActionBytes": 2800000000,
+  "reserveBytes": 2700000000,
+  "sharingCredit": 0
+}

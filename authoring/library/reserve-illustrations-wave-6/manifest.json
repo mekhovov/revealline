@@ -1,0 +1,62 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 6,
+  "basedOn": "b2a937f90c08bf000bc52e81d44a5ec04113aa87",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-saffron-balloon-meadow",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Saffron Balloon Meadow",
+      "prompt": "prompts/fpv-saffron-balloon-meadow.txt",
+      "file": "originals/fpv-saffron-balloon-meadow.png",
+      "bytes": 2537167,
+      "sha256": "8fe0d7d2d3544fbfc75e15fa03949a8b99950cc2f48a2c73e5bb5f733e3cf264",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-bluebell-watermill",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Bluebell Watermill",
+      "prompt": "prompts/ukraine-bluebell-watermill.txt",
+      "file": "originals/ukraine-bluebell-watermill.png",
+      "bytes": 3179597,
+      "sha256": "ba56956de4b7eb341fde544d7be9bae0b7df196a3c3ca1457100ed6eb003b2f1",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-sunset-bumper-pavilion",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Sunset Bumper Pavilion",
+      "prompt": "prompts/retro-sunset-bumper-pavilion.txt",
+      "file": "originals/retro-sunset-bumper-pavilion.png",
+      "bytes": 2593463,
+      "sha256": "efab6ea1191e3251438ab9f84819e74c03c248d8ee3e22d6bc606c59361e54cd",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-coral-dawn-bakery",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Coral Dawn Bakery",
+      "prompt": "prompts/spend-coral-dawn-bakery.txt",
+      "file": "originals/spend-coral-dawn-bakery.png",
+      "bytes": 2794201,
+      "sha256": "9c62a106d37c55e5b30cc9f4f12e34b1422e6fdc9bef2763e06c581d713861f0",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/originals.json"
+}
