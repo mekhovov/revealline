@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createCoop, startCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
-import { FIRST_CONNECTION, COOP_EXPERIMENTS } from '../coop/first-connection.mjs';
+import { COOP_EXPERIMENTS } from '../coop/first-connection.mjs';
+import { FIRST_CONNECTION_PROTOTYPE as FIRST_CONNECTION } from './fixtures/coop-prototype.mjs';
 
 const command = (direction) => ({ direction, boost: true, support: false });
 const inward = () => [command('right'), command('left')];
@@ -12,7 +13,7 @@ function experimentRun(experiment) {
     difficulty: 'standard',
     jointCuts: experiment.jointCuts,
     assistCaptures: experiment.assistCaptures,
-    advancedCooperation: experiment.advancedCooperation,
+    advancedCooperation: false,
   });
   startCoop(run);
   return run;
@@ -53,10 +54,11 @@ function clearFirstConnection(experiment) {
 }
 
 for (const experiment of COOP_EXPERIMENTS)
-  test(`First Connection ${experiment.id}: a public-input route completes the authored arena`, () => {
+  test(`Historical First Connection v1 ${experiment.id}: a public-input route completes the authored arena`, () => {
     const original = structuredClone(FIRST_CONNECTION);
     const result = clearFirstConnection(experiment);
     const { run, events } = result;
+    assert.equal(run.config.advancedCooperation, false);
     assert.equal(run.status, 'won');
     assert.equal(run.claimedCount, 1580);
     assert.ok(run.coverage >= FIRST_CONNECTION.goal.coverage);

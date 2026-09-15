@@ -28,6 +28,7 @@ export function nextCell(run, player, velocity, horizon) {
 /** Earliest swept circle contact with a solid tile. Rounded corners are circular. */
 function tileContact(body, velocity, horizon, x, y) {
   const radius = body.radius;
+  const speed = Math.hypot(velocity.x, velocity.y);
   const end = positionAt(body, velocity, horizon);
   const hits = [];
   // A capture may move a boundary inside an otherwise harmless Hunter's radius.
@@ -64,6 +65,12 @@ function tileContact(body, velocity, horizon, x, y) {
     [x, y + 1],
     [x + 1, y + 1],
   ]) {
+    if (speed <= EPS) continue;
+    // A tile corner tangent to the travel line cannot obstruct it. Near-zero
+    // quadratic discriminants otherwise turn exact wall sliding into a tiny
+    // inward corner hit, and every subsequent tick repeats that false contact.
+    const lineDistance = Math.abs((body.x - cx) * velocity.y - (body.y - cy) * velocity.x) / speed;
+    if (lineDistance >= radius - EPS) continue;
     const fraction = circleTime(body, end, { x: cx, y: cy }, radius);
     if (fraction === null) continue;
     const at = pointAt(body, end, fraction);

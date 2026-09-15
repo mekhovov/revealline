@@ -1,6 +1,6 @@
-# First paired playtest — pending
+# First playtest — feedback received
 
-This is the required Phase 3 gate, before producing the six-mission campaign. Two humans should play together; automated runs and one person controlling both seats do not complete this gate. The implementation candidate will be identified by its committed version and frozen artifact in the Phase 3 record.
+The user reports that both arena types are good and the second is more fun and challenging, but the horizontal divider creates an easy uneven route. They requested comparable enemy pressure for both players, harder encounters, reusable level/pack designs, and our own emulated/browser retests. The [balance revision](balance-revision.md) records the resulting work. Input devices, selected difficulty and individual participant observations were not specified; do not invent them. Our single-operator browser and simulation checks are distinct from the supplied feedback and later paired qualification.
 
 ## Learn together
 
@@ -11,7 +11,7 @@ Start **First Connection / Full teamwork / Standard**. Choose Gentle if either p
 3. Try covering a threatened line with Support. A pulse reaches six cells, slows enemies and intercepts travelling sparks. Capturing new territory accelerates both refills in Full teamwork.
 4. If one player goes down, try moving toward each other on safe ground. Hold Support nearby for one second to rescue; either player can suggest continuing a nearly finished cut instead. Full teamwork also revives through 2% new territory or a required objective.
 
-Then try **Relay Yard**. Its central safe route connects both sides, anchors sit on different approaches, and the shielded core blocks entry. Capturing both anchors exposes the core; a later capture must secure the core itself. The emitter stays active until the core falls. A Hunter marks its attack before committing, then enters a non-damaging recovery window. Capturing its cell during that opportunity clears it.
+Then try **Relay Yard**. Its open field has two pillar approaches and no prebuilt crossing. New safe routes are earned by cutting. Capturing both anchors exposes the core; a later capture must secure the core itself. Two guards patrol the core region, and its emitter stays active until the core falls. A Hunter marks its attack before committing, then enters a non-damaging recovery window. Capturing its cell during that opportunity clears it.
 
 ## Compare the same setup
 
@@ -19,7 +19,7 @@ After understanding the mechanics, compare **Individual cuts + ordinary cover**,
 
 Where practical, repeat comparisons in a different order. A practiced second run will naturally be easier; do not attribute every improvement to the selected mechanic. Do not require equal captured area, forced role swapping or a fixed number of retries.
 
-## Feedback needed from this pair
+## Questions for later paired qualification
 
 Record short answers together, including a separate answer from each player where useful:
 
@@ -30,6 +30,4 @@ Record short answers together, including a separate answer from each player wher
 - After a failure, did you form a new plan, and did both of you want another attempt?
 - Which configuration would you choose to play again, and why?
 
-Pair, input devices, difficulty, observations, changes requested, and retest result: **not yet supplied**.
-
-Keep Phase 3 open until this feedback is reviewed and material findings are fixed and retested. Broader newcomer/expert/device qualification requires actual additional participants/devices; this one pair cannot establish those results.
+The initial feedback and requested changes above are supplied; implementation retests are in the balance record. The later mixed-skill, newcomer/expert and physical-device qualifications remain separate. These questions do not require another confirmation before the currently authorized revision proceeds.

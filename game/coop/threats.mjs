@@ -1,13 +1,39 @@
 import { EPS, movingCirclesTime } from '../core/geometry.mjs';
-import { cellAt, positionAt } from './geometry.mjs';
+import { cellAt, enemyWallContact, positionAt } from './geometry.mjs';
 
 export const COOP_TIMING = Object.freeze({
-  gentle: { recovery: 16, hunterWarning: 1.6, emitterWarning: 1.5 },
-  standard: { recovery: 12, hunterWarning: 1.2, emitterWarning: 1 },
-  expert: { recovery: 10, hunterWarning: 0.8, emitterWarning: 0.8 },
+  gentle: { recovery: 16, hunterWarning: 1.6, emitterWarning: 1.5, huntersAtOnce: 1 },
+  standard: { recovery: 12, hunterWarning: 1.2, emitterWarning: 1, huntersAtOnce: 2 },
+  expert: { recovery: 10, hunterWarning: 0.8, emitterWarning: 0.8, huntersAtOnce: 3 },
 });
 
+export const COOP_ENCOUNTER_DEFAULTS = Object.freeze({
+  hunterWakeStep: 0,
+  hunterRecovery: 1.8,
+  hunterRange: 24,
+  hunterAttackSpeed: 8,
+  hunterCommitMax: 1.6,
+  emitterCooldown: 4,
+});
+export const COOP_ENCOUNTER_BOUNDS = Object.freeze({
+  hunterWakeStep: Object.freeze([0, 1]),
+  hunterRecovery: Object.freeze([0.8, 3]),
+  hunterRange: Object.freeze([8, 36]),
+  hunterAttackSpeed: Object.freeze([6, 14]),
+  hunterCommitMax: Object.freeze([0.8, 3]),
+  emitterCooldown: Object.freeze([2, 6]),
+});
+const encounterFor = (run) => ({ ...COOP_ENCOUNTER_DEFAULTS, ...run.level.encounter });
+const byPosition = (a, b) => a.x - b.x || a.y - b.y || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+const attacking = (enemy) =>
+  enemy.active !== false && enemy.type === 'hunter' && ['warning', 'commit'].includes(enemy.phase);
+
 export function initializeThreats(run) {
+  const encounter = encounterFor(run);
+  const hunters = run.enemies
+    .filter((enemy) => enemy.type === 'hunter')
+    .slice()
+    .sort(byPosition);
   run.impacts = [];
   run.nextImpactId = 1;
   for (const enemy of run.enemies) {
@@ -15,17 +41,29 @@ export function initializeThreats(run) {
     enemy.slowUntil = 0;
     enemy.speedScale = 1;
     enemy.patrolVelocity = { x: enemy.vx, y: enemy.vy };
-    enemy.baseSpeed = Math.hypot(enemy.vx, enemy.vy) || (enemy.type === 'hunter' ? 8 : 0);
+    enemy.baseSpeed =
+      enemy.type === 'hunter' ? encounter.hunterAttackSpeed : Math.hypot(enemy.vx, enemy.vy);
     if (enemy.type === 'hunter') {
       enemy.phase = 'patrol';
       enemy.target = null;
       enemy.targetPoint = null;
-      enemy.phaseUntil = 0.5;
+      enemy.wakeOrder = hunters.indexOf(enemy);
+      enemy.waitingSince = null;
+      enemy.phaseUntil = 0.5 + enemy.wakeOrder * encounter.hunterWakeStep;
     }
   }
 }
 
-function targetTrail(run, origin, range) {
+function targetTrail(run, origin, range, reachable = () => true) {
+  const pressure = run.players.map(
+    (player) =>
+      run.enemies.filter((enemy) => attacking(enemy) && enemy.target === player.id).length +
+      run.strongholds.filter(
+        (hold) =>
+          !hold.defeated && hold.emitter.phase === 'warning' && hold.emitter.target === player.id,
+      ).length +
+      run.impacts.filter((impact) => impact.player === player.id).length,
+  );
   const candidates = [];
   for (const player of run.players) {
     if (player.status !== 'active' || !player.cutting || player.graceUntil > run.time + EPS)
@@ -34,19 +72,23 @@ function targetTrail(run, origin, range) {
       if (run.cells[cell.index] !== 0) continue;
       const point = { x: cell.x + 0.5, y: cell.y + 0.5 };
       const distance = Math.hypot(point.x - origin.x, point.y - origin.y);
-      if (distance <= range)
+      if (distance <= range + EPS)
         candidates.push({ player: player.id, point, cellIndex: cell.index, distance });
     }
   }
   candidates.sort(
-    (a, b) => a.distance - b.distance || a.cellIndex - b.cellIndex || a.player - b.player,
+    (a, b) =>
+      pressure[a.player] - pressure[b.player] ||
+      a.distance - b.distance ||
+      a.cellIndex - b.cellIndex ||
+      a.player - b.player,
   );
-  return candidates[0] || null;
+  return candidates.find((candidate) => reachable(candidate.point, candidate.distance)) || null;
 }
 
 function hunterRecovery(run, enemy, emit) {
   enemy.phase = 'recovery';
-  enemy.phaseUntil = run.time + 1.8;
+  enemy.phaseUntil = run.time + encounterFor(run).hunterRecovery;
   enemy.vx = enemy.vy = 0;
   emit(run, 'enemy.recovery', {
     enemy: enemy.id,
@@ -58,18 +100,26 @@ function hunterRecovery(run, enemy, emit) {
 /** All target changes occur at a visible warning boundary, never during a committed attack. */
 export function updateThreatClocks(run, emit) {
   const timing = COOP_TIMING[run.difficulty];
+  const encounter = encounterFor(run);
+  const waiting = [];
   for (const enemy of run.enemies) {
     if (enemy.active === false) continue;
     // Authored reinforcements and deterministic fixtures may add an unadorned actor.
     enemy.slowUntil ??= 0;
     enemy.speedScale ??= 1;
     enemy.patrolVelocity ??= { x: enemy.vx, y: enemy.vy };
-    enemy.baseSpeed ??= Math.hypot(enemy.vx, enemy.vy) || (enemy.type === 'hunter' ? 8 : 0);
+    enemy.baseSpeed ??=
+      enemy.type === 'hunter' ? encounter.hunterAttackSpeed : Math.hypot(enemy.vx, enemy.vy);
     if (enemy.type === 'hunter' && enemy.phase === undefined) {
       enemy.phase = 'patrol';
       enemy.target = null;
       enemy.targetPoint = null;
-      enemy.phaseUntil = run.time + 0.5;
+      enemy.wakeOrder = run.enemies
+        .filter((actor) => actor.type === 'hunter')
+        .slice()
+        .sort(byPosition)
+        .indexOf(enemy);
+      enemy.phaseUntil = run.time + 0.5 + enemy.wakeOrder * encounter.hunterWakeStep;
     }
     if (enemy.speedScale !== 1 && enemy.slowUntil <= run.time + EPS) {
       enemy.vx /= enemy.speedScale;
@@ -78,22 +128,8 @@ export function updateThreatClocks(run, emit) {
     }
     if (enemy.type !== 'hunter' || enemy.phaseUntil > run.time + EPS) continue;
     if (enemy.phase === 'patrol') {
-      const target = targetTrail(run, enemy, 24);
-      if (!target) {
-        enemy.phaseUntil = run.time + 0.25;
-        continue;
-      }
-      enemy.phase = 'warning';
-      enemy.target = target.player;
-      enemy.targetPoint = { ...target.point };
-      enemy.phaseUntil = run.time + timing.hunterWarning;
-      enemy.vx = enemy.vy = 0;
-      emit(run, 'enemy.warning', {
-        enemy: enemy.id,
-        target: enemy.target,
-        targetPoint: { ...enemy.targetPoint },
-        phaseUntil: enemy.phaseUntil,
-      });
+      enemy.waitingSince ??= enemy.phaseUntil;
+      waiting.push(enemy);
     } else if (enemy.phase === 'warning') {
       const player = run.players[enemy.target];
       if (!player || player.status !== 'active' || player.graceUntil > run.time + EPS) {
@@ -108,7 +144,8 @@ export function updateThreatClocks(run, emit) {
         continue;
       }
       enemy.phase = 'commit';
-      enemy.phaseUntil = run.time + Math.min(1.6, Math.max(0.6, distance / enemy.baseSpeed));
+      enemy.phaseUntil =
+        run.time + Math.min(encounter.hunterCommitMax, Math.max(0.6, distance / enemy.baseSpeed));
       enemy.vx = (dx / distance) * enemy.baseSpeed * enemy.speedScale;
       enemy.vy = (dy / distance) * enemy.baseSpeed * enemy.speedScale;
       emit(run, 'enemy.commit', {
@@ -124,6 +161,46 @@ export function updateThreatClocks(run, emit) {
       enemy.vx = enemy.patrolVelocity.x * enemy.speedScale;
       enemy.vy = enemy.patrolVelocity.y * enemy.speedScale;
     }
+  }
+  // Finish existing phases before allocating fresh warnings. Waiting actors keep
+  // a future deadline even when the authored concurrency budget is full.
+  waiting.sort(
+    (a, b) =>
+      a.waitingSince - b.waitingSince ||
+      (a.wakeOrder ?? 0) - (b.wakeOrder ?? 0) ||
+      byPosition(a, b),
+  );
+  for (const enemy of waiting) {
+    if (run.enemies.filter(attacking).length >= timing.huntersAtOnce) {
+      enemy.phaseUntil = Math.min(
+        ...run.enemies.filter(attacking).map((actor) => actor.phaseUntil),
+      );
+      continue;
+    }
+    const range = Math.min(encounter.hunterRange, enemy.baseSpeed * encounter.hunterCommitMax);
+    const target = targetTrail(run, enemy, range, (point, distance) => {
+      if (distance < EPS) return true;
+      const velocity = { vx: (point.x - enemy.x) / distance, vy: (point.y - enemy.y) / distance };
+      const wall = enemyWallContact(run, { ...enemy, ...velocity }, distance);
+      return wall === null || wall.time >= distance - EPS;
+    });
+    if (!target) {
+      enemy.waitingSince = null;
+      enemy.phaseUntil = run.time + 0.25;
+      continue;
+    }
+    enemy.phase = 'warning';
+    enemy.waitingSince = null;
+    enemy.target = target.player;
+    enemy.targetPoint = { ...target.point };
+    enemy.phaseUntil = run.time + timing.hunterWarning;
+    enemy.vx = enemy.vy = 0;
+    emit(run, 'enemy.warning', {
+      enemy: enemy.id,
+      target: enemy.target,
+      targetPoint: { ...enemy.targetPoint },
+      phaseUntil: enemy.phaseUntil,
+    });
   }
   for (const stronghold of run.strongholds) {
     const emitter = stronghold.emitter;
@@ -156,7 +233,7 @@ export function updateThreatClocks(run, emit) {
         });
       }
       emitter.phase = 'cooldown';
-      emitter.phaseUntil = run.time + 4;
+      emitter.phaseUntil = run.time + encounter.emitterCooldown;
     } else {
       const target = targetTrail(run, stronghold.core, 14);
       if (!target) {

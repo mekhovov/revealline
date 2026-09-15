@@ -54,6 +54,11 @@ For a deliberate LAN hardware test, serve a distribution with `node scripts/game
 
 ## Change the right layer
 
+Relay Rescue uses a separate shared simulation in `game/coop/`. Its [level and pack authoring guide](../authoring/coop/README.md)
+provides territory and stronghold templates, bounded encounter controls, a mixed-pack recipe, and explicit
+in-memory lobby import. `validate` and `build` also validate the shipped co-op library. Co-op content does not
+write solo progress or change retained Race replay semantics.
+
 | Layer                                           | Files / contract                                                                                                                               |
 | ----------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Rules, movement, hazards and abilities          | [Core](../game/core/README.md), `game/core/`; legacy, encounter, wide and Classic pairs in `core/versions.mjs`; fixed 120 Hz                   |

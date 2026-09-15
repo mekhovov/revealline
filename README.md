@@ -12,6 +12,10 @@ The remaining production targets include broader map progression, every map/them
 
 ## Run locally
 
+Relay Rescue adds [two-player cooperative play](http://127.0.0.1:8768/game/couch/relay-rescue.html)
+with shared cuts, protection, rescue and enemy strongholds. Create territory and stronghold challenges
+with the [co-op level and pack builder](authoring/coop/README.md), then open the generated pack in its lobby.
+
 Use a supported Node version: 20.19+ within 20.x, 22.13+ within 22.x, or 24+. Then run from this directory:
 
 ```sh
