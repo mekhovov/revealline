@@ -1,0 +1,147 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-09-15T14:18:36.321093+00:00",
+  "scope": "Actual hosted archive original ZIP/member/full inventory and successful deployment authority. Public HTTP and browser admission remain separate.",
+  "repository": "mekhovov/revealline-archive-15",
+  "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "infrastructureTree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "workflowRunId": 34980491924,
+  "deploymentId": 6460910463,
+  "environmentURL": "https://mekhovov.github.io/revealline-archive-15/",
+  "sourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "sourceTree": "d3549d0efd15529f71f4cff9a940bdda5e84f3a6",
+  "tagObject": "8b2c1106606ab42d3246b1bc836c4e6b1ad1cb3f",
+  "originalReceiptArtifact": {
+    "id": 10401690566,
+    "bytes": 35358,
+    "sha256": "5a1f73e1bf29fe2c55592b5fc4ca12230ab5fefa1ea4e59ea6478529ab4d0eb0",
+    "members": [
+      {
+        "path": "expected-inventory.json",
+        "bytes": 136985,
+        "sha256": "c5cf1352d8bcaaa36dd53d65e570ecc8e571bc3724641325521e09e54dd7b89f",
+        "crc32": 748555430
+      },
+      {
+        "path": "receipt.json",
+        "bytes": 1088,
+        "sha256": "4942ba5995131febca00a935cba093e65aa35a13f05973d1cdec7b1def27bfa5",
+        "crc32": 4191408246
+      },
+      {
+        "path": "zip-receipt-v0.57.1.json",
+        "bytes": 407,
+        "sha256": "df1e329cd39a788f6ba45e4a77ba180f08a045a05094cf2a557be389e6c67bee",
+        "crc32": 4244959435
+      }
+    ]
+  },
+  "files": 662,
+  "bytes": 312555435,
+  "frozenManifestFiles": 654,
+  "zipMembersVerified": 655,
+  "allStepsPassed": true,
+  "infrastructureTests": 20,
+  "extractorTests": 4,
+  "noHistoricalBuilds": true,
+  "actualPublicHTTPComplete": false,
+  "nativeBrowserComplete": false,
+  "phaseAccepted": false,
+  "pins": [
+    {
+      "path": "artifacts.json",
+      "bytes": 1454,
+      "sha256": "6e2aba3811816c05ee233d208922b4aebabd6adc52a4c6c9020063e093ab8203"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6817,
+      "sha256": "28ed57cc05f111aadfc84d67d03c6143b6cf018b20a2493249c6e4bfa8c01484"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 3856,
+      "sha256": "1c80414f76a001f52de7154cb1120b7de88f86af9682cec9f0d885c64a0565ee"
+    },
+    {
+      "path": "deployments.json",
+      "bytes": 3858,
+      "sha256": "9a451b0132fac0109f58c26de08fdb70315bdf1c7da1305a20896e5f09d058f7"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 136985,
+      "sha256": "c5cf1352d8bcaaa36dd53d65e570ecc8e571bc3724641325521e09e54dd7b89f"
+    },
+    {
+      "path": "job-104419216859.log",
+      "bytes": 115124,
+      "sha256": "dad739b8b6113f4da6fae1db2255b343baee05f80b6fb16cb91983826eb9bdd3"
+    },
+    {
+      "path": "job-104419445494.log",
+      "bytes": 4921,
+      "sha256": "68a9476a76644597b789c16a2d9fef2526dbf595a97752a4897db016d4f13c16"
+    },
+    {
+      "path": "jobs-20260915T141803Z.json",
+      "bytes": 4835,
+      "sha256": "067c44f0277374da858470496135b19008fdfcedbbdd6ce7473df4c6a57fcbe6"
+    },
+    {
+      "path": "jobs-initial.json",
+      "bytes": 4640,
+      "sha256": "f680e3d648befc63ea118209c285dcaa3c1b0f156fd635b37ccb543f520e6683"
+    },
+    {
+      "path": "jobs.json",
+      "bytes": 4835,
+      "sha256": "067c44f0277374da858470496135b19008fdfcedbbdd6ce7473df4c6a57fcbe6"
+    },
+    {
+      "path": "main-ref.json",
+      "bytes": 358,
+      "sha256": "ec28e72cda6c908efad947a870091c32721e74ac199d9bf380ae9185c9267d42"
+    },
+    {
+      "path": "observe.py",
+      "bytes": 2776,
+      "sha256": "3489988a360525a6e34c919e7d75d3136e1e6037d96b98fa59ccf077205a6ee8"
+    },
+    {
+      "path": "original-receipts.zip",
+      "bytes": 35358,
+      "sha256": "5a1f73e1bf29fe2c55592b5fc4ca12230ab5fefa1ea4e59ea6478529ab4d0eb0"
+    },
+    {
+      "path": "pages.json",
+      "bytes": 348,
+      "sha256": "cf05172a0edaae1515ab74370abd912ef09d85ac3d14b64c7924b2eddbc052b0"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1088,
+      "sha256": "4942ba5995131febca00a935cba093e65aa35a13f05973d1cdec7b1def27bfa5"
+    },
+    {
+      "path": "run-20260915T141803Z.json",
+      "bytes": 13207,
+      "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2"
+    },
+    {
+      "path": "run-initial.json",
+      "bytes": 13204,
+      "sha256": "a4e34e2e94e4531ad2074b89ebe4e6e08fc96e8f58c1c62a014bf91929e1d822"
+    },
+    {
+      "path": "run.json",
+      "bytes": 13207,
+      "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2"
+    },
+    {
+      "path": "zip-receipt-v0.57.1.json",
+      "bytes": 407,
+      "sha256": "df1e329cd39a788f6ba45e4a77ba180f08a045a05094cf2a557be389e6c67bee"
+    }
+  ]
+}
