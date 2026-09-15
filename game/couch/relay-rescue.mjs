@@ -24,6 +24,20 @@ import { createAudioPreferences } from '../audio-preferences.mjs';
 import { teamReturnHref } from '../mode-return.mjs';
 
 const $ = (id) => document.getElementById(id);
+const unclaimedFocus = (element) =>
+  !element || element === document.body || element === document.documentElement;
+// Capture before attached() can hide a deliberately focused loader recovery link.
+let initialFocusPending =
+  unclaimedFocus(document.activeElement) && !document.hidden && document.hasFocus?.() !== false;
+const initialFocusChoice = (event) => {
+  if (!unclaimedFocus(event.target)) initialFocusPending = false;
+};
+const initialFocusLost = () => {
+  initialFocusPending = false;
+};
+const initialVisibility = () => {
+  if (document.hidden) initialFocusLost();
+};
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('coop-boot'));
@@ -607,14 +621,30 @@ export function bootCoop() {
   $('coop-start').textContent = 'Start together →';
   bootDisplay.finish({ message: 'Two players · one screen · a shared victory' });
   document.documentElement.dataset.toolState = 'ready';
+  if (
+    initialFocusPending &&
+    unclaimedFocus(document.activeElement) &&
+    !document.hidden &&
+    document.hasFocus?.() !== false
+  )
+    navigation.focusAvailable();
+  initialFocusPending = false;
   frame = requestAnimationFrame(update);
   return { dispose };
 }
 
 try {
+  document.addEventListener('focusin', initialFocusChoice, true);
+  document.addEventListener('visibilitychange', initialVisibility);
+  window.addEventListener('blur', initialFocusLost);
   bootCoop();
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });
   console.error(error);
+} finally {
+  initialFocusPending = false;
+  document.removeEventListener('focusin', initialFocusChoice, true);
+  document.removeEventListener('visibilitychange', initialVisibility);
+  window.removeEventListener('blur', initialFocusLost);
 }
