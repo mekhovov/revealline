@@ -46,7 +46,7 @@ function setOptions(id, entries, selected) {
   for (const [value, data] of Object.entries(entries)) {
     const option = document.createElement("option");
     option.value = value;
-    option.textContent = data.label;
+    option.textContent = data.label || value;
     select.append(option);
   }
   select.value = selected;

@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#0b1a24" />
     <title>Relay Rescue · RevealLine</title>
+    <link rel="stylesheet" href="../ui/field-kit-fonts.css" />
+    <link rel="stylesheet" href="../ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="relay-rescue.css" />
+    <link rel="stylesheet" href="../ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
   </head>
-  <body>
+  <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
       <header class="masthead">
         <a href="../" class="brand">REVEAL<span>LINE</span></a>
@@ -18,7 +22,7 @@
       <section id="coop-menu" class="menu" aria-labelledby="coop-title">
         <div class="menu-copy">
           <p class="eyebrow">ONE ARENA. TWO PARTNERS.</p>
-          <h1 id="coop-title">Find your<br /><em>common ground.</em></h1>
+          <h1 id="coop-title" class="field-kit-display">Find your<br /><em>common ground.</em></h1>
           <p id="coop-intro" class="lead">
             Start with a small loop. Cover each other, then meet to join a larger cut.
           </p>
@@ -50,7 +54,9 @@
           <p id="coop-level-note" class="setup-note">
             One open field. Bait a Hunter, cover the crossing, then take the anchors together.
           </p>
-          <button id="coop-start" class="primary" type="button" disabled>Preparing arena…</button>
+          <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
+            Preparing arena…
+          </button>
           <p id="coop-boot" role="status">Loading Relay Rescue.</p>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
@@ -59,8 +65,9 @@
             <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
             <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
           </details>
+          <div id="coop-lobby-tools"></div>
         </div>
-        <div class="briefing">
+        <div class="briefing field-kit-panel">
           <p class="eyebrow" id="coop-briefing-title">YOUR FIRST CONNECTION</p>
           <ol>
             <li>
@@ -126,14 +133,17 @@
           ></canvas>
           <div id="coop-overlay" class="overlay" hidden>
             <div class="overlay-card">
-              <p class="eyebrow" id="coop-overlay-kicker">TAKE A BREATH</p>
-              <h2 id="coop-overlay-title">Both players paused</h2>
+              <p class="eyebrow" id="coop-overlay-kicker">PAUSED</p>
+              <h2 id="coop-overlay-title" class="field-kit-display">Both players paused</h2>
               <p id="coop-overlay-copy">Release your controls, then choose Resume together.</p>
               <div class="overlay-actions">
-                <button id="coop-resume" class="primary" type="button">Resume together</button>
+                <button id="coop-resume" class="primary field-kit-primary" type="button">
+                  Resume together
+                </button>
                 <button id="coop-retry" type="button">Retry same arena</button>
                 <button id="coop-lobby" type="button">Change setup</button>
               </div>
+              <div id="coop-pause-tools"></div>
             </div>
           </div>
         </div>
@@ -145,59 +155,117 @@
         </div>
       </section>
 
-      <section class="controls" aria-label="Two player controls">
+      <section id="coop-controls" class="controls" aria-label="Two player touch controls" hidden>
         <article class="control-card sunflower">
           <h2><span class="player-number">1</span> Sunflower</h2>
-          <p>
-            <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer <span>·</span>
-            <kbd>Left Shift</kbd> Boost <span>·</span> <kbd>Q</kbd> Support
-          </p>
-          <p id="coop-support-0" class="support-status">Support ready</p>
           <div class="race-pad" data-player="0" aria-label="Player 1 touch controls" hidden>
-            <div class="race-cross">
-              <button type="button" data-direction="up" aria-label="Player 1 up">↑</button
-              ><button type="button" data-direction="left" aria-label="Player 1 left">←</button
-              ><button type="button" data-direction="down" aria-label="Player 1 down">↓</button
-              ><button type="button" data-direction="right" aria-label="Player 1 right">→</button>
+            <div class="race-cross" role="group" aria-label="Player 1 directions">
+              <button type="button" data-direction="up" aria-label="Player 1 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 1 left">←</button>
+              <span class="cross-center" aria-hidden="true">1</span>
+              <button type="button" data-direction="right" aria-label="Player 1 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 1 down">↓</button>
             </div>
-            <button type="button" data-action="boost" aria-pressed="false">Boost</button>
-            <button type="button" data-action="action" aria-pressed="false">
-              Support · hold to rescue
+            <button
+              type="button"
+              data-action="boost"
+              aria-pressed="false"
+              aria-label="Player 1 Boost"
+            >
+              Boost
+            </button>
+            <button
+              type="button"
+              data-action="action"
+              aria-pressed="false"
+              aria-label="Player 1 Support; hold beside a downed partner to rescue"
+            >
+              Support
             </button>
           </div>
         </article>
         <article class="control-card skyline">
           <h2><span class="player-number">2</span> Skyline</h2>
-          <p>
-            <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> steer <span>·</span>
-            <kbd>Right Shift</kbd> Boost <span>·</span> <kbd>Enter</kbd> Support
-          </p>
-          <p id="coop-support-1" class="support-status">Support ready</p>
           <div class="race-pad" data-player="1" aria-label="Player 2 touch controls" hidden>
-            <div class="race-cross">
-              <button type="button" data-direction="up" aria-label="Player 2 up">↑</button
-              ><button type="button" data-direction="left" aria-label="Player 2 left">←</button
-              ><button type="button" data-direction="down" aria-label="Player 2 down">↓</button
-              ><button type="button" data-direction="right" aria-label="Player 2 right">→</button>
+            <div class="race-cross" role="group" aria-label="Player 2 directions">
+              <button type="button" data-direction="up" aria-label="Player 2 up">↑</button>
+              <button type="button" data-direction="left" aria-label="Player 2 left">←</button>
+              <span class="cross-center" aria-hidden="true">2</span>
+              <button type="button" data-direction="right" aria-label="Player 2 right">→</button>
+              <button type="button" data-direction="down" aria-label="Player 2 down">↓</button>
             </div>
-            <button type="button" data-action="boost" aria-pressed="false">Boost</button>
-            <button type="button" data-action="action" aria-pressed="false">
-              Support · hold to rescue
+            <button
+              type="button"
+              data-action="boost"
+              aria-pressed="false"
+              aria-label="Player 2 Boost"
+            >
+              Boost
+            </button>
+            <button
+              type="button"
+              data-action="action"
+              aria-pressed="false"
+              aria-label="Player 2 Support; hold beside a downed partner to rescue"
+            >
+              Support
             </button>
           </div>
         </article>
       </section>
-      <footer class="help-footer">
-        <p>
-          Tap a direction to keep moving. Banking a cut stops your craft; steer again to leave.
-          Controllers: stick / D-pad to steer, right shoulder to Boost, South button for Support,
-          Menu to pause. A new direction cancels a rescue. A downed player can crawl along safe
-          ground to meet their partner.
-        </p>
-        <label><input id="coop-touch" type="checkbox" /> Show touch controls</label
-        ><label><input id="coop-reduced" type="checkbox" /> Reduce effects</label
-        ><span id="coop-pads" role="status"></span>
-      </footer>
+      <aside id="coop-tools" class="coop-tools" aria-label="Help and options">
+        <details id="coop-help">
+          <summary id="coop-help-toggle">How to play and controls</summary>
+          <button id="coop-help-read" type="button">Read controls</button>
+          <div
+            id="coop-help-reading"
+            role="region"
+            aria-label="Relay Rescue controls"
+            tabindex="0"
+            data-game-reading
+          >
+            <p>
+              Tap a direction to keep moving. Banking a cut stops your craft; steer again to leave.
+              Escape or Menu pauses both players. Resume together is always explicit.
+            </p>
+            <p>
+              <strong>Sunflower:</strong> <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> steer,
+              <kbd>Left Shift</kbd> Boost, <kbd>Q</kbd> Support.
+            </p>
+            <p>
+              <strong>Skyline:</strong> arrow keys steer, <kbd>Right Shift</kbd> Boost,
+              <kbd>Enter</kbd> Support.
+            </p>
+            <p>
+              Controllers: stick or D-pad steers, right shoulder holds Boost, South uses Support,
+              and Menu pauses. Each player keeps their controller assignment.
+            </p>
+            <p>
+              Tap Support to slow nearby enemies and intercept sparks. Hold it beside a downed
+              partner on safe ground for one second to rescue them. A new direction cancels a
+              rescue. A downed player can crawl along safe ground to meet their partner.
+            </p>
+            <p id="coop-support-0" class="support-status">Sunflower: Support ready</p>
+            <p id="coop-support-1" class="support-status">Skyline: Support ready</p>
+          </div>
+        </details>
+        <details id="coop-options">
+          <summary id="coop-options-toggle">Options</summary>
+          <label for="coop-touch">Touch controls</label>
+          <select id="coop-touch">
+            <option value="auto" selected>Auto · touch players without a controller</option>
+            <option value="on">Show both players</option>
+            <option value="off">Hide touch controls</option>
+          </select>
+          <p class="setting-note">
+            Touch controls appear only while playing. Auto follows this screen's touch capability
+            and each player's actual controller assignment. Show and Hide override that choice for
+            this visit.
+          </p>
+          <label><input id="coop-reduced" type="checkbox" /> Reduce effects</label>
+          <span id="coop-pads" role="status"></span>
+        </details>
+      </aside>
     </main>
     <script type="module" src="relay-rescue.mjs"></script>
   </body>

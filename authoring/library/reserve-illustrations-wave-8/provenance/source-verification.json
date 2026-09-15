@@ -1,0 +1,13 @@
+{
+  "scope": "Four new source illustrations and exact prompts/provenance/native comparison evidence only.",
+  "selectedOriginals": 4,
+  "originalBytes": 5928803,
+  "pngValidation": "Four originals passed CRC/Pillow verify/full decode; all original pixels unchanged.",
+  "staticChecks": {
+    "JSON": "PASS",
+    "PythonAST": "PASS"
+  },
+  "native": "Root approved both320x160 regions; author viewed full originals and three captures.",
+  "runtimeTests": "Not applicable: art-only cohort.",
+  "runtimeAdoption": false
+}

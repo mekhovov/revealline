@@ -1,0 +1,43 @@
+{
+  "fullOriginalView": {
+    "observer": "author",
+    "complete": true,
+    "count": 4,
+    "method": "view_image detail=original"
+  },
+  "pngValidation": {
+    "chunkCRCs": "PASS",
+    "fullDecode": "PASS",
+    "count": 4
+  },
+  "smallView": {
+    "configuredCSSPixels": [
+      320,
+      160
+    ],
+    "nativeReview": "PASS: root viewed all eight fully loaded images and both 320x160 regions; author viewed all three retained captures.",
+    "captures": [
+      {
+        "path": "provenance/native-comparison.jpg",
+        "bytes": 67233,
+        "sha256": "f27904a3e03bd3a85478e2f220ac45bce65b51528c9d2936b6f78623456b4f9a",
+        "pixelEdits": false
+      },
+      {
+        "path": "provenance/native-comparison-viewport.jpg",
+        "bytes": 96189,
+        "sha256": "16cb4ee0aa1c8559c1d3c46196e8063135e84d1bcc8afdd8d7e329cd164027c8",
+        "pixelEdits": false
+      },
+      {
+        "path": "provenance/native-comparison-bottom.jpg",
+        "bytes": 113931,
+        "sha256": "7919cbbfd8653ba6f6ad48836514c421b85866e45a53aa83f6baef6ab783d421",
+        "pixelEdits": false
+      }
+    ],
+    "scope": "Source illustration readability only; no runtime, map, animation, technical model or physical device claim.",
+    "fullPageQualification": "Full-page export is scaled down; viewport captures preserve configured small-view composition."
+  },
+  "runtimeAdoption": false
+}

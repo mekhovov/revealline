@@ -1,0 +1,14 @@
+{
+  "scope": "Four new source illustrations and their native comparison evidence only.",
+  "selectedOriginals": 4,
+  "originalBytes": 11104428,
+  "pngValidation": "Four actual originals passed CRC/Pillow verify/full load in prepare.py; pixels unchanged.",
+  "staticChecks": {
+    "JSON": "PASS",
+    "PythonAST": "PASS"
+  },
+  "native": "Root observed all four at320\u00d7160; author viewed full originals and three captures.",
+  "runtimeTests": "Not applicable; no runtime source changes.",
+  "runtimeAdoption": false,
+  "sourceOnly": true
+}
