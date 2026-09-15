@@ -38,7 +38,7 @@ Unsaved editor drafts, other game profile channels, unreferenced blobs, browser 
 
 Restore through the existing reviewed tools: picture/poster `.rlmedia` first, `.rlstory` next, saved music `.rlsound` separately, then review/import game-data JSON after its original owners are available. Earlier restored originals remain if a later step refuses. The coverage report is not an import authority and does not provide atomic rollback across files.
 
-Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. A real four-file download/readback, fresh-origin restore, codec playback, audible music and cold-offline journey still require native qualification; this source change does not claim them.
+Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. The separate [native download record](verification/guided-backup-a858-downloads.md) verifies all five actual files for an empty player profile/default saved metadata, including the CLI on both Node versions. Custom-uploaded media, fresh-origin restore, codec playback, audible music and cold-offline journeys remain unqualified.
 
 ## Check files actually downloaded
 
