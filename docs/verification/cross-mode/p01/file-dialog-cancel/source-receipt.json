@@ -1,0 +1,272 @@
+{
+  "format": "revealline-p01-file-dialog-cancel-source-check.v1",
+  "status": "PASS_FOCUSED_SOURCE_ONLY_NATIVE_PENDING",
+  "at": "2026-09-15T16:14:44.915122+00:00",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel",
+  "branch": "codex/p01-file-dialog-cancel",
+  "baseSource": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "versionChanged": false,
+  "sourceCommitted": false,
+  "runtimeChange": "Five dialog cancel handlers ignore a child event before applying their existing close/busy/detail policy. No task, storage or commit logic changed.",
+  "runtimeFiles": [
+    {
+      "path": "game/ui/enemy-catalog-panel.mjs",
+      "bytes": 11273,
+      "sha256": "c15a95b18a45d02abc9779be1ae4b2c5c98f8317da9921782b4b01dd7d1287fd"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 55870,
+      "sha256": "cdd891667a55eb5a741ef60e11fef49fca36fe105900cf14de1b6f37578c50f5"
+    },
+    {
+      "path": "game/ui/optional-chapters-panel.mjs",
+      "bytes": 27229,
+      "sha256": "f477b6347b53995ae05a39f4e6079f091d0f6fad20a223aa2d35aa1d0b09dea6"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 47443,
+      "sha256": "97a16411ff84c5f37c82acb8d6b9559975f1ec303987ac2e5fde57302b9df73e"
+    },
+    {
+      "path": "game/ui/still-media-panel.mjs",
+      "bytes": 29635,
+      "sha256": "5b620774a8c31a3e52877c0ab919270df5780bc828c4a833b9262f21bb3e60aa"
+    }
+  ],
+  "beforeFix": {
+    "command": "node --test --test-name-pattern=file picker cancellation (the five newly changed host files)",
+    "log": {
+      "path": ".cache/cross-mode/p01/native-file-cancel/before-fix.log",
+      "bytes": 28791,
+      "sha256": "0600d13f91fb7b3eb8eac197c0b22142aff16ab9dd55a36acb91dda36dda476a"
+    },
+    "exitCode": 1,
+    "counts": {
+      "tests": 91,
+      "pass": 0,
+      "fail": 5,
+      "cancelled": 0,
+      "skipped": 86,
+      "todo": 0
+    },
+    "scope": "All five new regressions fail on unchanged base runtime: four parent dialogs close; Library aborts its active export."
+  },
+  "retainedIntermediate": {
+    "log": {
+      "path": ".cache/cross-mode/p01/native-file-cancel/after-fix-regressions.log",
+      "bytes": 25431,
+      "sha256": "528ac51bf9a88a57984ac852922f086fa908ea381bc71c34e218c0eaebcb99e0"
+    },
+    "exitCode": 1,
+    "counts": {
+      "tests": 91,
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 1,
+      "skipped": 86,
+      "todo": 0
+    },
+    "scope": "Four guards pass. The new Music harness kept its later Save probe held; test-only hold released before that Save. Not a product failure or accepted run."
+  },
+  "correctedRegressions": {
+    "log": {
+      "path": ".cache/cross-mode/p01/native-file-cancel/after-fixture-settlement.log",
+      "bytes": 25105,
+      "sha256": "60a18dd3cb96834487a481ce959d7cc6f90776692f1d4bfba643abbbc5173b52"
+    },
+    "exitCode": 0,
+    "counts": {
+      "tests": 91,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 86,
+      "todo": 0
+    },
+    "scope": "Five selected regression cases pass; 86 intentionally filtered cases are not counted as exercised."
+  },
+  "focusedHosts": {
+    "command": [
+      "node",
+      "--test",
+      "--test-concurrency=2",
+      "game/test/still-media-panel.test.mjs",
+      "game/test/enemy-catalog-panel.test.mjs",
+      "game/test/attempt-export-panel.test.mjs",
+      "game/test/soundtrack-panel.test.mjs",
+      "game/test/worlds-browser.test.mjs",
+      "game/test/backup-set-host.test.mjs",
+      "game/test/gallery-focus.test.mjs",
+      "game/test/still-media-bundle-ui.test.mjs",
+      "game/test/still-story-panel.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": {
+      "path": ".cache/cross-mode/p01/native-file-cancel/focused-hosts.log",
+      "bytes": 37743,
+      "sha256": "7b7ad7bc36f996e5659557302106f5ad0e5450be6f826501e9158c24a528d7fd"
+    },
+    "counts": {
+      "tests": 157,
+      "pass": 157,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "nodeVersion": "v20.19.5"
+  },
+  "checks": [
+    {
+      "name": "focused-eslint",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/native-file-cancel/lint.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "name": "changed-source-and-docs-prettier",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/native-file-cancel/format-check.log",
+        "bytes": 66,
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+      }
+    },
+    {
+      "name": "git-diff-check",
+      "exitCode": 0,
+      "log": {
+        "path": ".cache/cross-mode/p01/native-file-cancel/diff-check.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "sourceAndFixturePins": [
+    {
+      "path": "authoring/prompts/cross-mode-delivery.md",
+      "bytes": 8239,
+      "sha256": "2d52d7b2e50d87867838f6e54b4444d7bb19e325afa902c036d64209e496ea43"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 99938,
+      "sha256": "c959b47f1ce2af0d6e3c45aaab37f226c3cb49e235dab2853537f0fcbd700117"
+    },
+    {
+      "path": "docs/presentation-loading.md",
+      "bytes": 10722,
+      "sha256": "e7b5f214f052ae90ce3e1d9cdea2a76f9e329a598bf9e76b82724f63d770543a"
+    },
+    {
+      "path": "game/test/attempt-export-panel.test.mjs",
+      "bytes": 29339,
+      "sha256": "40ddfb793559933c73759512fdd70e79de4bd5af6cb1d95ecd440813b035d9f9"
+    },
+    {
+      "path": "game/test/backup-set-host.test.mjs",
+      "bytes": 14688,
+      "sha256": "4a28a0e09fdf445dce1272f8782494079f19bb54d8b531548d7713116bc95fa3"
+    },
+    {
+      "path": "game/test/enemy-catalog-panel.test.mjs",
+      "bytes": 10825,
+      "sha256": "f8fb5d81c56a6ee92b04faae473596f476b29e32ea34629f507a0707428aff0e"
+    },
+    {
+      "path": "game/test/gallery-focus.test.mjs",
+      "bytes": 49824,
+      "sha256": "29eeadd35f6f418461ba7e68392506a0c39c79a04def416d5d687304b16118d1"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "bytes": 42092,
+      "sha256": "21b6c3417b0cf1fdc498c1fffc541b8d1e56f0d21e4e71a3756fdb259e3157f8"
+    },
+    {
+      "path": "game/test/still-media-bundle-ui.test.mjs",
+      "bytes": 13725,
+      "sha256": "5aaa5ca062f9393cc38503dd47b72f0d188651e9ca507355ec01210ac1732f9a"
+    },
+    {
+      "path": "game/test/still-media-panel.test.mjs",
+      "bytes": 10442,
+      "sha256": "9f4b92d93f27e76b42bec4d8bfea9a01084a17b875e77e5528e4131ad77ea6f2"
+    },
+    {
+      "path": "game/test/worlds-browser.test.mjs",
+      "bytes": 12544,
+      "sha256": "d003d3980bcf4a7b5aa7a94f0424bb9b99027e973ac118227e20363aadb37973"
+    },
+    {
+      "path": "game/ui/enemy-catalog-panel.mjs",
+      "bytes": 11273,
+      "sha256": "c15a95b18a45d02abc9779be1ae4b2c5c98f8317da9921782b4b01dd7d1287fd"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 55870,
+      "sha256": "cdd891667a55eb5a741ef60e11fef49fca36fe105900cf14de1b6f37578c50f5"
+    },
+    {
+      "path": "game/ui/optional-chapters-panel.mjs",
+      "bytes": 27229,
+      "sha256": "f477b6347b53995ae05a39f4e6079f091d0f6fad20a223aa2d35aa1d0b09dea6"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 47443,
+      "sha256": "97a16411ff84c5f37c82acb8d6b9559975f1ec303987ac2e5fde57302b9df73e"
+    },
+    {
+      "path": "game/ui/still-media-panel.mjs",
+      "bytes": 29635,
+      "sha256": "5b620774a8c31a3e52877c0ab919270df5780bc828c4a833b9262f21bb3e60aa"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/native-file-dialog-cancel.md",
+      "bytes": 6105,
+      "sha256": "2640a82e58e6808f5f32c96680d977790eafe273b9bf4fd792eced3b3be220dc"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/file-dialog-cancel/finding.json",
+      "bytes": 2078,
+      "sha256": "40aa157c7d3cef7637d3f4147d173f07dbd009cac8a1c495a2ac2e840c031c88"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/file-dialog-cancel/observed-event-excerpt.jsonl",
+      "bytes": 447,
+      "sha256": "b1911d50d81b6220e393aecea3b089427a16c26e8b95cc723fa2daa52003d0c1"
+    }
+  ],
+  "audit": {
+    "affectedHosts": [
+      "Still Media / Picture Workshop, including injected story controls",
+      "Music",
+      "Enemy Catalog",
+      "More Worlds chapter recovery",
+      "Library"
+    ],
+    "unchangedNoFileInputHandlers": [
+      "Missions",
+      "Main menu",
+      "Field Guide",
+      "Settings key capture",
+      "Stored profile recovery",
+      "Story playback",
+      "Help"
+    ],
+    "fixtureBoundaries": "Node Event plus explicit DOM ancestry/target/default prevention only. No real picker, layout or browser execution added."
+  },
+  "limits": [
+    "No browser launched: corrected same-file reselection, picker dismissal and native Escape/Back/focus remain pending.",
+    "Retained public trusted CDP file-input observation is not a physical OS-picker trial.",
+    "No source-wide test suite, ordinary build, source qualification, release or phase acceptance.",
+    "Original full earned-media event run remains with its owner; durable excerpt is partial."
+  ]
+}

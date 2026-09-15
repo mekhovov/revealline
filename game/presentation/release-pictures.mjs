@@ -33,6 +33,15 @@ const notice = (onStatus, signal, stage, message) => {
 };
 const baselines = new Map(CURRENT_PICTURE_BASELINES.map((row) => [row.id, row]));
 
+export class ReleasePictureWriteRequiredError extends Error {
+  constructor() {
+    super(
+      'This session cannot save a new picture. Export current game data before reloading to prepare it. Previously saved flights and originals are kept.',
+    );
+    this.name = 'ReleasePictureWriteRequiredError';
+  }
+}
+
 /** Same gameplay identity does not prove the embedded picture is still the
  * shipped original: an imported pack may deliberately replace its background. */
 export async function matchesReleasePictureBaseline(identity, background, { signal } = {}) {
@@ -167,6 +176,7 @@ export function createReleasePictureDefaults({
   ready = async () => {},
   executionCatalog,
   readMedia,
+  assertWritable = () => {},
   commit = (store, prepared, options) => store.commit(prepared, options),
 }) {
   required(
@@ -217,6 +227,9 @@ export function createReleasePictureDefaults({
         ];
     }
     if (!same(library, previous)) {
+      // Existing exact originals can be selected read-only after a history
+      // return. Missing history needs the current writer before any download.
+      assertWritable();
       const blobs = new Map();
       notice(onStatus, signal, 'reading', 'Reading retained picture originals…');
       for (const hash of storedStillHashes(media.metadata.document)) {

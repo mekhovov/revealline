@@ -1,0 +1,280 @@
+TAP version 13
+# Subtest: immediate: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory
+ok 1 - immediate: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory
+  ---
+  duration_ms: 12158.874958
+  ...
+# Subtest: grid-center: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory
+ok 2 - grid-center: real cut saves chosen A; assignment B cannot change Resume, completion receipt or victory
+  ---
+  duration_ms: 11069.941667
+  ...
+# Subtest: pending decoded original blocks every fixed tick; background return never resumes it
+ok 3 - pending decoded original blocks every fixed tick; background return never resumes it
+  ---
+  duration_ms: 1103.401792
+  ...
+# Subtest: a failed picture prewarm can be retried without reusing its rejected promise
+ok 4 - a failed picture prewarm can be retried without reusing its rejected promise
+  ---
+  duration_ms: 516.858
+  ...
+# Subtest: cancelling picture preparation restores keyboard focus before native hiding drops it
+ok 5 - cancelling picture preparation restores keyboard focus before native hiding drops it
+  ---
+  duration_ms: 452.026417
+  ...
+# Subtest: old v2 saved flight remains legacy even when a current managed assignment exists
+ok 6 - old v2 saved flight remains legacy even when a current managed assignment exists
+  ---
+  duration_ms: 827.570125
+  ...
+# Subtest: unavailable storage blocks a new flight until explicit original-art choice
+ok 7 - unavailable storage blocks a new flight until explicit original-art choice
+  ---
+  duration_ms: 677.675458
+  ...
+# Subtest: a missing saved original cannot adopt a different picture or overwrite the current paused attempt
+ok 8 - a missing saved original cannot adopt a different picture or overwrite the current paused attempt
+  ---
+  duration_ms: 1037.73325
+  ...
+# Subtest: First Flight keeps legacy artwork and creates no managed or player progress writes
+ok 9 - First Flight keeps legacy artwork and creates no managed or player progress writes
+  ---
+  duration_ms: 872.238042
+  ...
+# Subtest: managed current attempt export and First Flight handoff preserve the exact pinned saved session
+ok 10 - managed current attempt export and First Flight handoff preserve the exact pinned saved session
+  ---
+  duration_ms: 907.299875
+  ...
+# Subtest: raw installed campaign plus retained normalized owner can export a complete pinned backup
+ok 11 - raw installed campaign plus retained normalized owner can export a complete pinned backup
+  ---
+  duration_ms: 667.31525
+  ...
+# Subtest: one attempt freezes managed and explicit legacy worlds; art failure keeps its exact original choice
+ok 12 - one attempt freezes managed and explicit legacy worlds; art failure keeps its exact original choice
+  ---
+  duration_ms: 12.275792
+  ...
+# Subtest: cancelled pending display releases late candidate and never replaces the owned picture
+ok 13 - cancelled pending display releases late candidate and never replaces the owned picture
+  ---
+  duration_ms: 9.066125
+  ...
+# Subtest: old sessions and training never read or mint managed choices
+ok 14 - old sessions and training never read or mint managed choices
+  ---
+  duration_ms: 5.310791
+  ...
+# Subtest: explicit original-art fallback creates validated legacy choices without pretending storage succeeded
+ok 15 - explicit original-art fallback creates validated legacy choices without pretending storage succeeded
+  ---
+  duration_ms: 4.007458
+  ...
+# Subtest: picture owner factory strips art, preserves exact Standard/Gentle world authority, and rejects invented themes
+ok 16 - picture owner factory strips art, preserves exact Standard/Gentle world authority, and rejects invented themes
+  ---
+  duration_ms: 13.796667
+  ...
+# Subtest: backup factory never borrows a similarly named unrelated installed campaign
+ok 17 - backup factory never borrows a similarly named unrelated installed campaign
+  ---
+  duration_ms: 9.08
+  ...
+# Subtest: returning to ready A cancels pending B and releases its late image
+ok 18 - returning to ready A cancels pending B and releases its late image
+  ---
+  duration_ms: 10.067542
+  ...
+# Subtest: picture status precedes real reads and decode, preserves cached readiness, and never revives a cancelled owner
+ok 19 - picture status precedes real reads and decode, preserves cached readiness, and never revives a cancelled owner
+  ---
+  duration_ms: 6.675959
+  ...
+# Subtest: history return retires same-owner speculative work before a late ordinary rejection
+ok 20 - history return retires same-owner speculative work before a late ordinary rejection
+  ---
+  duration_ms: 691.464959
+  ...
+# Subtest: an unfinished new original offers reload and export without another download or a legacy choice
+ok 21 - an unfinished new original offers reload and export without another download or a legacy choice
+  ---
+  duration_ms: 556.068167
+  ...
+# Subtest: history Continue and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+ok 22 - history Continue and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+  ---
+  duration_ms: 2938.958209
+  ...
+# Subtest: history cancellation preserves selected pins while a new explicit Start retries only their decode
+ok 23 - history cancellation preserves selected pins while a new explicit Start retries only their decode
+  ---
+  duration_ms: 1025.65825
+  ...
+# Subtest: one tab receives a lifetime exclusive lease while a second stays session-only
+ok 24 - one tab receives a lifetime exclusive lease while a second stays session-only
+  ---
+  duration_ms: 5.680917
+  ...
+# Subtest: release is idempotent and a later reload can claim without reviving the old lease
+ok 25 - release is idempotent and a later reload can claim without reviving the old lease
+  ---
+  duration_ms: 2.476583
+  ...
+# Subtest: profile keys are isolated so source and release can own separate storage channels
+ok 26 - profile keys are isolated so source and release can own separate storage channels
+  ---
+  duration_ms: 1.185291
+  ...
+# Subtest: missing Web Locks and synchronous or asynchronous denial never pretend persistence is available
+ok 27 - missing Web Locks and synchronous or asynchronous denial never pretend persistence is available
+  ---
+  duration_ms: 0.558458
+  ...
+# Subtest: invalid keys do not call the lock manager or allocate a holding lock
+ok 28 - invalid keys do not call the lock manager or allocate a holding lock
+  ---
+  duration_ms: 0.103292
+  ...
+# Subtest: unexpected lock request rejection revokes an already returned lease
+ok 29 - unexpected lock request rejection revokes an already returned lease
+  ---
+  duration_ms: 1.864667
+  ...
+# Subtest: new attempts durably pin an exact release original without changing assignments or campaign identity
+ok 30 - new attempts durably pin an exact release original without changing assignments or campaign identity
+  ---
+  duration_ms: 671.796833
+  ...
+# Subtest: a newer release appends history while an existing saved pin and restored attempt keep exact bytes
+ok 31 - a newer release appends history while an existing saved pin and restored attempt keep exact bytes
+  ---
+  duration_ms: 1775.321334
+  ...
+# Subtest: explicit assignments win and old unpinned, practice, and explicit legacy attempts never mint defaults
+ok 32 - explicit assignments win and old unpinned, practice, and explicit legacy attempts never mint defaults
+  ---
+  duration_ms: 1362.044917
+  ...
+# Subtest: cancelled original download cannot mint a pin or persist provisional history
+ok 33 - cancelled original download cannot mint a pin or persist provisional history
+  ---
+  duration_ms: 1.61475
+  ...
+# Subtest: a concurrent media writer defeats CAS atomically and preserves its accepted library
+ok 34 - a concurrent media writer defeats CAS atomically and preserves its accepted library
+  ---
+  duration_ms: 82.132417
+  ...
+# Subtest: unknown owners, other themes, and recipes never become inferred picture defaults
+ok 35 - unknown owners, other themes, and recipes never become inferred picture defaults
+  ---
+  duration_ms: 1.218916
+  ...
+# Subtest: transient default selection remains a validated immutable library without publishing assignments
+ok 36 - transient default selection remains a validated immutable library without publishing assignments
+  ---
+  duration_ms: 295.570166
+  ...
+# Subtest: adding a default retains archived media owners that are absent from the current playable catalog
+ok 37 - adding a default retains archived media owners that are absent from the current playable catalog
+  ---
+  duration_ms: 792.006916
+  ...
+# Subtest: invalid original bytes and stale fresh-install proof cannot publish assets or assignments
+ok 38 - invalid original bytes and stale fresh-install proof cannot publish assets or assignments
+  ---
+  duration_ms: 64.774959
+  ...
+# Subtest: source fingerprints stay exact and manually replaced embedded pictures or fitting keep priority
+ok 39 - source fingerprints stay exact and manually replaced embedded pictures or fitting keep priority
+  ---
+  duration_ms: 313.349792
+  ...
+# Subtest: generic reveal defaults are dimension-matched and exact FPV owners always take precedence
+ok 40 - generic reveal defaults are dimension-matched and exact FPV owners always take precedence
+  ---
+  duration_ms: 2.295042
+  ...
+# Subtest: a generic original uses the same durable new-attempt pins and preserves manual and saved choices
+ok 41 - a generic original uses the same durable new-attempt pins and preserves manual and saved choices
+  ---
+  duration_ms: 1236.92225
+  ...
+# Subtest: picture feedback keeps Finishing save through an actual commit and cancellation preserves completed history without adopting pins
+ok 42 - picture feedback keeps Finishing save through an actual commit and cancellation preserves completed history without adopting pins
+  ---
+  duration_ms: 699.323375
+  ...
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+ok 43 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+  ---
+  duration_ms: 1146.1895
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 44 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+  ---
+  duration_ms: 12665.284834
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 45 - actual master, music and SFX controls remain independent and the studio fader persists to game settings
+  ---
+  duration_ms: 422.804
+  ...
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+ok 46 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+  ---
+  duration_ms: 983.825041
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 47 - missing file-audio API disables Studio and leaves the original synth fallback usable
+  ---
+  duration_ms: 250.144333
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 48 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+  ---
+  duration_ms: 285.704834
+  ...
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+ok 49 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+  ---
+  duration_ms: 615.969208
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 50 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+  ---
+  duration_ms: 1422.548875
+  ...
+# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts
+ok 51 - closing Studio during pending Play respects play with saved audio disabled when flight starts
+  ---
+  duration_ms: 404.65875
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts
+ok 52 - closing Studio during pending Play respects pause with saved audio disabled when flight starts
+  ---
+  duration_ms: 415.563459
+  ...
+# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts
+ok 53 - closing Studio during pending Play respects pause with saved audio enabled when flight starts
+  ---
+  duration_ms: 415.404042
+  ...
+# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts
+ok 54 - closing Studio during pending Play respects mute with saved audio enabled when flight starts
+  ---
+  duration_ms: 413.163291
+  ...
+1..54
+# tests 54
+# suites 0
+# pass 54
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 90338.313375

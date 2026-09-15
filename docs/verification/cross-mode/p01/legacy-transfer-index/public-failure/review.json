@@ -1,0 +1,256 @@
+{
+  "at": "2026-09-15T18:42:48.681786+00:00",
+  "status": "FAIL_REQUIRED_TRANSFER_COPY",
+  "phaseAccepted": false,
+  "scope": "Native public desktop transfer prerequisite and stopped Copy attempt; no corrected-source or phase acceptance.",
+  "identity": {
+    "version": "v0.57.2",
+    "source": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+    "publisher": "d0288c502620bfa7a4a0861fbdbce1a60be183c5",
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.2/site/game/",
+    "oldVersion": "v0.42.0",
+    "oldSource": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+    "oldUrl": "https://mekhovov.github.io/revealline-archive-10/releases/v0.42.0/site/game/",
+    "authority": {
+      "path": "authority.json",
+      "bytes": 7316,
+      "sha256": "c4137082fa1a9047e0cc685f44d99991c95f7867a506f85e5d90630d94c88c26"
+    },
+    "criticalBodyScope": "Five canonical bodies checked against frozen manifests; not another complete public audit."
+  },
+  "nativeScope": {
+    "browser": "Chrome 153.0.8010.37",
+    "viewport": [
+      1280,
+      800
+    ],
+    "input": "Scoped native CDP mouse, keys and actual file inputs; read-only DOM/storage observations.",
+    "oldPageClosedBeforeNewSchemaWrites": true,
+    "oldPageReopened": false,
+    "historicalClosure": [
+      "run/action-009.json",
+      "run/closed-historical-target-observation.json",
+      "run/historical-page-closed.json",
+      "run/action-010.json"
+    ]
+  },
+  "passedPrerequisites": [
+    {
+      "case": "Authentic v0.42 Start, brief border motion and Pause",
+      "actions": [
+        1,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "case": "Picture original review, explicit restore and saved-media reload",
+      "actions": [
+        17,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ]
+    },
+    {
+      "case": "Incoming story binding review and explicit restore",
+      "actions": [
+        36,
+        39,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ]
+    },
+    {
+      "case": "Authentic earned backup import, saved flight and one earned picture visible",
+      "actions": [
+        59,
+        60,
+        61
+      ]
+    },
+    {
+      "case": "Earlier-release source review reports verified and enables Copy",
+      "actions": [
+        64,
+        65,
+        66
+      ]
+    }
+  ],
+  "failure": {
+    "action": 67,
+    "terminalEvidence": "run/action-068.json",
+    "screenshot": "run/03-transfer-copy-refused.png",
+    "message": "Replacing indexed chapters requires explicit backup.v2, including an explicit empty index.",
+    "sourcePreview": "v0.42.0 → v0.57.2: 0 completed maps · 0 pictures · 0 score records · 0 campaigns · 0 packs · one saved flight. This release has a saved flight but no saved player profile. Copy includes an empty collection and default preferences. ",
+    "causeScope": "Source diagnosis: prepareProfileTransfer chooses backup.v1 for a verified absent historical external index. Current target has an explicit indexed chapter companion; strict backup.v2 guard correctly rejects the incomplete candidate. Parent owns bounded adaptation; no guard weakening."
+  },
+  "sourceSnapshot": {
+    "channel": "release-v0.42.0",
+    "profileAbsent": true,
+    "runId": "7e6b8aa0-7eeb-436b-bd51-e5046f207538",
+    "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+    "checkpoint": {
+      "algorithm": "fnv1a64-state-v2",
+      "hash": "00bf07d95f219a28",
+      "sections": {
+        "identity": "a9c83cc50704fa14",
+        "configuration": "82eebbe326a6c280",
+        "board": "fdfff9d1d17aa722",
+        "player": "214a82f5200e7e03",
+        "trail": "f0ca473df9efdcc8",
+        "enemies": "17c7a1385442a302",
+        "objectives": "09612b07b5ecb5a5",
+        "supplies": "e1b45854413ff5f8",
+        "ability": "f6b5aef539d929bb",
+        "clock": "519b39d732ebab3b",
+        "continuation": "a1e7286b42b404e7",
+        "result": "5b9bc4ba528108e4"
+      }
+    },
+    "externalChapterIndexAbsent": true,
+    "packsAbsent": true,
+    "ordinaryCloseSavedAtChange": {
+      "paused": "2026-09-15T18:32:15.176Z",
+      "afterClose": "2026-09-15T18:32:22.248Z"
+    },
+    "allOtherSavedFieldsUnchangedSinceHistoricalPause": true
+  },
+  "targetSnapshot": {
+    "channel": "release-v0.57.2",
+    "generation": "generation-6aa58ff3-efea-44ca-b153-780034e703ea",
+    "runId": "12c4d03d-710a-4d40-8d15-81cdbd9863bb",
+    "checkpoint": {
+      "algorithm": "fnv1a64-state-v2",
+      "hash": "568a1677b245cefe",
+      "sections": {
+        "identity": "b2e78a6001917b68",
+        "configuration": "b539b55a56b01abe",
+        "board": "fdfff9d1d17aa722",
+        "player": "e2323b01fb4f70f8",
+        "trail": "f0ca473df9efdcc8",
+        "enemies": "e89721cf9ddca6c5",
+        "objectives": "09612b07b5ecb5a5",
+        "supplies": "e1b45854413ff5f8",
+        "ability": "3b14ed94fb37a5b5",
+        "clock": "f7df3e727153d5cf",
+        "continuation": "a1e7286b42b404e7",
+        "result": "5b9bc4ba528108e4"
+      }
+    },
+    "galleryCount": 1,
+    "campaignCount": 1,
+    "assetStore": {
+      "name": "assets",
+      "count": 3,
+      "keys": [
+        "revealline.library.release-v0.57.2.v1.backup-journal",
+        "revealline.library.release-v0.57.2.v1.external-chapter-index.v1",
+        "revealline.packs.release-v0.57.2.v1"
+      ],
+      "sha256": "45e9267e15d9ae6c21573dfbfb166388be7669c16118b2fbe89f9c76da38bd05",
+      "originals": []
+    },
+    "originals": [
+      {
+        "blobBytes": 46655,
+        "type": "",
+        "sha256": "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65"
+      },
+      {
+        "blobBytes": 442522,
+        "type": "",
+        "sha256": "7f851f9806a1be994b2279f3d1acc4f2f39884ac6cf2fdf6b8a7813e61c73745"
+      },
+      {
+        "blobBytes": 713732,
+        "type": "",
+        "sha256": "d643a6ebbf92b93dc57a0cfe65ca4bcf484ceecd8ed632ed6476707ec720e85a"
+      }
+    ],
+    "readBlobBytes": 1202909,
+    "indexValueAuthority": "Verified imported authentic backup.v2 fixture has explicit empty chapters; native snapshot independently records key presence and whole-store digest, not separately serialized index content."
+  },
+  "preservation": {
+    "before": "run/action-061.json",
+    "after": "run/action-069.json",
+    "allRawLocalStorageEqual": true,
+    "allDatabaseStoreKeysCountsDigestsAndBlobsEqual": true,
+    "limits": "Endpoint equality of read-only snapshots, not a complete IndexedDB transaction trace. Undo visible after failure belongs to prior successful import."
+  },
+  "notExecuted": [
+    "Successful Copy and copied-flight resume",
+    "Copy Undo",
+    "Collection/story/thumbnail after reload",
+    "Settings recovery review of closed v0.42 channel",
+    "Direct original review, verification and download",
+    "Native input cancel and responsive/mobile/controller cases"
+  ],
+  "toolingRefusals": [
+    {
+      "path": "initial-old-route-refusal.json",
+      "reason": "Initial obsolete blueprint URL omitted /releases/ and returned 404; canonical route verified before browser."
+    },
+    {
+      "action": 9,
+      "reason": "Asynchronous target-close observation refused before new navigation; actual old-target absence proved separately before continuation."
+    },
+    {
+      "actions": [
+        20,
+        33
+      ],
+      "reason": "Offscreen pointer hit-test refusals sent no click; subsequent native keyboard scrolling used visible controls."
+    },
+    {
+      "action": 71,
+      "reason": "Final read-only diagnostic expression had a SyntaxError (await in non-async expression); no app-state mutation or product exception inferred."
+    }
+  ],
+  "limits": [
+    "No state injection, fixture mutation, legacy page reopen or new win.",
+    "Coverage fixture differs from later game fixture; no exact five-file export-set claim.",
+    "No physical hardware, audibility, touch-only, gamepad, responsive or full public acceptance claim.",
+    "One canceled media request observed; no recorded product Runtime exception.",
+    "Independent remaining hosts may be resumed under separate authorization without retrying known-failed Copy."
+  ],
+  "closure": {
+    "path": "run/closure.json",
+    "bytes": 882,
+    "sha256": "c9f9ffdf1132f4693824ce3c5866750846755f8b1afb4de527906d60f624475d"
+  },
+  "continuedTools": [
+    {
+      "path": "driver-current.mjs",
+      "bytes": 11208,
+      "sha256": "203092250e3f4e7b581370facb7f552ada63c57506b488559ae26dc5b33f3152"
+    },
+    {
+      "path": "driver-continued.mjs",
+      "bytes": 10722,
+      "sha256": "5d3b908335313cb6bbbb940947cc0bea3496dae1d49b68be1190fc1c88e40032"
+    },
+    {
+      "path": "closed-transition-continuation.json",
+      "bytes": 529,
+      "sha256": "850c5e6ab42df62b732fe356a2e23d742266efbe02e8458dee81a5860daff85a"
+    },
+    {
+      "path": "visible-control-continuation.json",
+      "bytes": 743,
+      "sha256": "9435d336659bdb41393d3fcf4df634b79984f22f89bbe25b5bc71bcf6316b31f"
+    }
+  ]
+}

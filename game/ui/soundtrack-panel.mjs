@@ -363,7 +363,6 @@ export function attachSoundtrackPanel({
   const auditionFeedback = createOperationStatus(auditionStatus);
   const auditionControls = section(
     'Audition controls',
-    auditionStatus,
     row(toggleAudition),
     auditionSeek.field,
     auditionVolume.field,
@@ -388,6 +387,7 @@ export function attachSoundtrackPanel({
     rightsLicense.field,
     rightsSource.field,
     row(applyTrack, deleteTrack),
+    auditionStatus,
     row(auditionButton, stopAuditionButton),
     audition,
     auditionControls,
@@ -1089,7 +1089,11 @@ export function attachSoundtrackPanel({
       audition.hidden = false;
       audition.load();
       auditionMaster?.setLocal({ muted: false });
-      await audition.play();
+      const playing = audition.play();
+      // Keep playback in the activation turn, but expose its status and Finish
+      // before waiting; media events may not arrive while playback is pending.
+      update();
+      await playing;
       await stopping;
       if (token === auditionToken) {
         if (!audioMaster) await onAudioEnabled();
@@ -1241,6 +1245,7 @@ export function attachSoundtrackPanel({
     return true;
   }
   listen(dialog, 'cancel', (event) => {
+    if (event.target !== dialog) return;
     event.preventDefault();
     if (busy) {
       controller?.abort();

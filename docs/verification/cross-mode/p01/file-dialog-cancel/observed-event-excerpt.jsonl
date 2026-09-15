@@ -1,0 +1,3 @@
+{"time":"2026-09-15T16:05:51.105Z","event":{"type":"cancel","trusted":true,"target":"still-media-bundle-file","tag":"INPUT","visibility":"visible"}}
+{"time":"2026-09-15T16:05:51.107Z","event":{"type":"focusin","trusted":true,"target":"still-host-open","tag":"BUTTON","detail":0,"visibility":"visible"}}
+{"time":"2026-09-15T16:05:51.109Z","event":{"type":"close","trusted":true,"target":"still-media-dialog","tag":"DIALOG","visibility":"visible"}}

@@ -47,6 +47,7 @@ export function attachProfileRecoveryView({
     verified = null;
     clearOriginalDownload('original-download');
     clearOriginalDownload('report-download');
+    showOriginal();
   }
   function clearOriginals() {
     clearVerification();
@@ -194,6 +195,14 @@ export function attachProfileRecoveryView({
     });
   function showOriginal() {
     const selected = choice();
+    for (const [index, option] of Array.from($('original').children).entries()) {
+      const item = originals[index];
+      option.textContent = `${item.asset.id} · ${
+        verified && item === selected
+          ? 'verified during review'
+          : item.availability.replaceAll('-', ' ')
+      }`;
+    }
     if (!selected) {
       $('original-summary').textContent = '';
       return;
@@ -202,11 +211,13 @@ export function attachProfileRecoveryView({
     $('original-summary').textContent =
       `${asset.id} · ${asset.width} × ${asset.height} · ${asset.bytes} bytes\n` +
       `SHA-256: ${asset.sha256}\n${selected.references.length} stored presentation references. ` +
-      (selected.availability === 'available-unverified'
-        ? 'Bytes are available but have not been verified.'
-        : selected.availability === 'missing'
-          ? 'The original file is missing; verification is unavailable.'
-          : 'Stored length differs; verification is unavailable.');
+      (verified
+        ? 'Image bytes and dimensions verified during this review. File preparation rechecks them.'
+        : selected.availability === 'available-unverified'
+          ? 'Bytes are available but have not been verified.'
+          : selected.availability === 'missing'
+            ? 'The original file is missing; verification is unavailable.'
+            : 'Stored length differs; verification is unavailable.');
   }
   $('originals-review').onclick = () =>
     task(
@@ -257,6 +268,7 @@ export function attachProfileRecoveryView({
         const result = await reader.verifyOriginal(selected, { signal });
         if (!current()) return;
         verified = result;
+        showOriginal();
         status(
           'Selected image verified. Prepare either file, then activate its download link. This is not a complete backup or earned-picture proof.',
         );

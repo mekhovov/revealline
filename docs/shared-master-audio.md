@@ -1,6 +1,6 @@
 # Shared master sound — P02-A
 
-Status: v0.58.0 implementation candidate, based on released v0.57.1. P01 remains the release prerequisite. See the [execution register](cross-mode-execution.md) for the approved phase order; this document is a behavior contract, not a public-release certificate.
+Status: v0.58.0 implementation candidate. The preparatory composition includes frozen P01 source `7945c6d` on P02 candidate `ac644a9`; P01 public acceptance remains the release prerequisite. See the [execution register](cross-mode-execution.md) for the approved phase order; this document is a behavior contract, not a public-release certificate.
 
 ## Player behavior
 
@@ -21,13 +21,13 @@ Play and audition are transport actions, including while muted. The Library expl
 
 ## Required acceptance register
 
-| ID       | Implementation/result                                                                       | Remaining acceptance                                                                                      |
-| -------- | ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| P02-A.01 | Shared authority and explicit cross-page persistence implemented; focused tests retained    | Final integrated source gates and regression                                                              |
-| P02-A.02 | Synth and streamed music share one gate; late-play modeled; real muted MP3 playback and native speaker override checked | Final built/public verification; audible quality and physical-device qualification stay separately tracked                                         |
-| P02-A.03 | All existing output paths integrated; browser checked two simultaneous native MP3 previews                         | Final built/public input journeys; physical controllers/touch hardware remain P18                               |
-| P02-A.04 | Real MP3 paused position preserved across mute; exact 13% survives reload and all four host routes              | Final built/public lifecycle/history verification; transfer/offline expansion remains P02-B                                     |
-| P02-A.05 | Skills, prompt examples and scoped test receipts included                                   | Review final intended source; P01 integration; source PR, frozen build and public acceptance |
+| ID       | Implementation/result                                                                                                   | Remaining acceptance                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| P02-A.01 | Shared authority and explicit cross-page persistence implemented; focused tests retained                                | Final integrated source gates and regression                                                               |
+| P02-A.02 | Synth and streamed music share one gate; late-play modeled; real muted MP3 playback and native speaker override checked | Final built/public verification; audible quality and physical-device qualification stay separately tracked |
+| P02-A.03 | All existing output paths integrated; browser checked two simultaneous native MP3 previews                              | Final built/public input journeys; physical controllers/touch hardware remain P18                          |
+| P02-A.04 | Real MP3 paused position preserved across mute; exact 13% survives reload and all four host routes                      | Final built/public lifecycle/history verification; transfer/offline expansion remains P02-B                |
+| P02-A.05 | Skills, prompt examples and scoped test receipts included                                                               | Review final intended source; P01 integration; source PR, frozen build and public acceptance               |
 
 Focused tests use real game modules with finite media/context/DOM boundaries. They establish sequencing and state, not audible quality, actual decoding, native hit targets or hardware behavior. The source preview can serve unchanged missing assets from the exact v0.57.1 Git tree; that preview is explicitly separate from an ordinary production build and immutable public verification.
 
@@ -42,3 +42,9 @@ Native media has a broadly supported boolean mute flag; programmable media volum
 A media Play promise may resolve late or reject because browser policy denies playback. Keep the master state independent and provide explicit transport retry rather than changing preferences from completion callbacks. [MDN play](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play).
 
 All shared master faders use the same 1% steps. Native range controls can round values to their configured step; a 5% Settings fader would display a different value from a 1% Library fader. Browser review reproduced that mismatch and verified exact 1% and 13% after alignment. [MDN range step](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input/range#step).
+
+## Frozen P01 composition
+
+The [scoped composition evidence](verification/cross-mode/p02-a/p01-composition/README.md) combines P01's pending audition/Finish visibility, file-picker cancellation, history-picture recovery and replay operation ownership with P02's existing shared master. Audition resets only its local mute, invokes Play in the activation turn, updates visible feedback and Finish, then awaits playback. The legacy enable callback remains disabled when the shared authority is injected; master changes never restore music intent or enable a retired output.
+
+The twelve complete focused files pass 178 checks on each Node runtime; the inherited offline utility suite passes 40 checks. Eight new combinations cover resolve/reject after Finish, Close, hiding or disposal while the master changes through mute, zero and 13% with a separate local fader. These modeled results do not extend earlier native evidence to this composition. The incoming raw evidence remains exact, including historical diff/log whitespace. Accept P01 first, integrate its accepted main history, then qualify and freeze the exact final P02 source; these focused results are not those final gates.

@@ -1,0 +1,52 @@
+{
+  "archive": {
+    "path": "docs/verification/cross-mode/p01/music-pending-audition/source-originals.zip",
+    "bytes": 11182,
+    "sha256": "fcc42f126160e9d3b31ba0d9e29983f73b7162d88b313f53a9b47bdd709efe4b"
+  },
+  "originals": [
+    {
+      "archiveMember": "before-fix.log",
+      "bytes": 14350,
+      "sha256": "4bd0dbdcef141dcdc41e8935417f1f4c2ede3a3c66beea162311dab979ebf0a9"
+    },
+    {
+      "archiveMember": "focused.log",
+      "bytes": 8889,
+      "sha256": "d08994a2d4a03d84b6fd5c82dd34b4d27c637a0760329bf57cd5a4e90717490f"
+    },
+    {
+      "archiveMember": "format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "archiveMember": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "archiveMember": "tool-results/2f0901.json",
+      "bytes": 9196,
+      "sha256": "3b5c1c95874430583611f0039d2e3ddd8a5127268e25a79d109ba5f61242f986"
+    },
+    {
+      "archiveMember": "tool-results/7eafee.json",
+      "bytes": 14777,
+      "sha256": "ea20e3bb8f1ca56e7d6a4cfc7616981d68452d049de1f8da5cd81454e5b56f2f"
+    },
+    {
+      "archiveMember": "tool-results/8365cc.json",
+      "bytes": 132,
+      "sha256": "729e4578034b0b02efa2a655f1bce265516400773bc2bb7d0c6b07b3a1173395"
+    },
+    {
+      "archiveMember": "tool-results/c2b3b5.json",
+      "bytes": 204,
+      "sha256": "101114905ea04064958df475fbbafe3d5ffb78784869ba33db5c9e0035165a51"
+    }
+  ],
+  "count": 8,
+  "originalBytes": 47614,
+  "scope": "Exact retained command stdout and original tool-result JSON strings. No rerun; all pinned originals are members of the tracked archive."
+}

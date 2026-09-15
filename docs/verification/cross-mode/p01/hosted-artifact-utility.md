@@ -1,0 +1,9 @@
+# Hosted inspection of original release artifacts
+
+The original qualification artifact exceeds the available local disk reserve. The release workflow now provides explicit `inspect-artifact` and `upload-originals` operations on a hosted runner, retaining the default six-gate qualification and freeze path. [Usage and binding schema](../../../../publishing/utility/README.md) describe the two-stage review boundary.
+
+Inspection verifies the exact original outer artifact, Git source archive, frozen distribution and offline inventory without a release write. The separately selected upload job requires the existing immutable tag, draft and seven reviewed small attachments, then verifies both original payloads before streaming them. It retains the established single-POST and readback rules; ambiguous outcomes stop and require an explicit asset reread. It does not create, publish, rebuild, overwrite or retry a release.
+
+The [source receipt](hosted-artifact-utility/source-receipt.json) records all 11 changed files and 40 passing bounded tests. The [original test output and review inputs](hosted-artifact-utility/source-evidence.zip) are retained with [byte checks](hosted-artifact-utility/source-evidence-record.json). Five previously reviewed inspector/upload engine and test files remain byte-identical. Tests include real tiny Git/TAR/ZIP/offline fixtures, malformed authority, changed hashes and incomplete gates, both-member preflight, ambiguity stopping the second upload, and final nine-attachment binding. [Independent review](hosted-artifact-utility/independent-review.json) rehashes those files and records no blocking finding.
+
+These are source and synthetic transport checks. A real run still requires its actual qualified source, immutable artifact metadata, reviewed binding and original receipts. Hosted artifact inspection does not establish public play, offline browser behavior or P01 acceptance.

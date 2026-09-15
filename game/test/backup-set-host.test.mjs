@@ -305,8 +305,23 @@ test('Title Settings Library cancel consumes filename detail before native dialo
   dialog.addEventListener('close', () => {
     closes++;
   });
-  // The browser owns native summary activation; retain its resulting open state.
+  // A file input emits its own bubbling, non-cancelable cancel. The native
+  // dialog close request below is a separate event with the dialog as target.
   h.$('backup-set-filenames').open = true;
+  for (const id of ['save-file', 'pack-file']) {
+    const input = h.$(id),
+      status = h.$('backup-set-status').textContent;
+    input.focus();
+    input.dispatchEvent(new Event('cancel', { bubbles: true }));
+    assert.equal(dialog.open, true);
+    assert.equal(h.$('backup-set-filenames').open, true);
+    assert.equal(h.$('backup-set-status').textContent, status);
+    assert.equal(h.doc.activeElement, input);
+    assert.equal(h.$('backup-set-files').children.length, 5);
+  }
+  assert.deepEqual(cancelStates, [false, false]);
+  cancelStates.length = 0;
+  // The browser owns native summary activation; retain its resulting open state.
   summary.focus();
   const first = new Event('cancel', { cancelable: true });
   if (dialog.dispatchEvent(first)) dialog.close();

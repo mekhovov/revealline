@@ -1,5 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { createRun, stepRun, CLASSES, FIXED_DT } from '../core/index.mjs';
+import { createRecorder, recordInput } from '../replay.mjs';
+import { suspendSession } from '../sessions.mjs';
 import { createExternalChapterBackup } from '../external-chapter-backup.mjs';
 import {
   createExternalBackupAssets,
@@ -7,7 +11,7 @@ import {
 } from '../external-backup-assets.mjs';
 import { prepareBackup, exportBackup, BACKUP_FORMAT, EXTERNAL_BACKUP_FORMAT } from '../backup.mjs';
 import { commitBackup, recoverBackupImport } from '../backup-storage.mjs';
-import { emptyLibrary, updatePreferences } from '../library.mjs';
+import { campaignKey, emptyLibrary, updatePreferences } from '../library.mjs';
 import { emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 import { emptyExternalChapterIndex } from '../external-chapter.mjs';
 import { createManagedMediaStore } from '../managed-media-store.mjs';
@@ -612,8 +616,78 @@ test('legacy release source with no index still reads through the optional sourc
     ...h.options(),
     readExternalSnapshot: h.companion.readExternalSnapshot,
   });
-  assert.equal(Object.hasOwn(result.prepared, 'externalChapters'), false);
+  assert.deepEqual(result.prepared.externalChapters, emptyExternalChapterIndex());
   assert.equal(h.idb.allPuts.length, 0);
+});
+
+test('reviewed suspended-only legacy transfer replaces an explicit empty or populated target index and Undo restores it', async (t) => {
+  const source = await setup(t, 'release-v0.42.0'),
+    campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url))),
+    options = { classId: 'scout', classRecipes: CLASSES, seed: 1 },
+    run = createRun(campaign.levels[0], options),
+    recorder = createRecorder(campaign.levels[0], options);
+  for (let tick = 0; tick < 20; tick++) {
+    const input = { direction: 'left' };
+    stepRun(run, input, FIXED_DT);
+    recordInput(recorder, input);
+  }
+  const session = suspendSession({
+    run,
+    recorder,
+    campaignKey: campaignKey(campaign),
+    themeId: 'fpv',
+    bodyId: 'fpv-body',
+    runId: 'legacy-index-transfer',
+    savedAt: '2026-09-15T18:00:00.000Z',
+    continuation: { direction: null },
+  });
+  source.local.set(source.keys.sessionKey, JSON.stringify(session));
+  const sourceLocal = new Map(source.local),
+    sourceAssets = await source.companion.assets.snapshot(),
+    transferOptions = {
+      storage: source.storage,
+      readAsset: source.api.readAsset,
+      lockManager: source.locks,
+      currentVersion: '0.43.0',
+      campaigns: [campaign],
+      ...source.options(),
+    };
+  const unadapted = await prepareProfileTransfer('release-v0.42.0', transferOptions);
+  assert.equal(Object.hasOwn(unadapted.prepared, 'externalChapters'), false);
+  const review = await prepareProfileTransfer('release-v0.42.0', {
+    ...transferOptions,
+    readExternalSnapshot: source.companion.readExternalSnapshot,
+  });
+  assert.equal(review.preview.profileAbsent, true);
+  assert.deepEqual(review.prepared.session, session);
+  for (const populated of [false, true]) {
+    const target = await setup(t);
+    if (populated) await target.installMedia();
+    assert.equal((await commitBackup(await target.prepare(populated), target.api)).ok, true);
+    const previous = await target.companion.snapshot(() => ({
+        library: emptyLibrary(),
+        packs: populated ? packs : emptyPackLibrary(),
+        session: null,
+      })),
+      undo = await prepareBackup({ format: EXTERNAL_BACKUP_FORMAT, ...previous }, target.options()),
+      before = await target.companion.assets.snapshot(),
+      originals = target.media.contents(),
+      mediaWrites = target.media.allPuts.length;
+    const copied = await commitBackup(review.prepared, target.api);
+    assert.equal(copied.ok, true, copied.warning);
+    assert.deepEqual(JSON.parse(target.storage.getItem(target.keys.sessionKey)), session);
+    assert.deepEqual((await target.companion.assets.snapshot()).index, emptyExternalChapterIndex());
+    const restored = await commitBackup(undo, target.api);
+    assert.equal(restored.ok, true, restored.warning);
+    assert.deepEqual(await target.companion.assets.snapshot(), before);
+    assert.equal(target.storage.getItem(target.keys.sessionKey), null);
+    assert.deepEqual(target.media.contents(), originals);
+    assert.equal(target.media.allPuts.length, mediaWrites, 'Copy and Undo retain original media');
+  }
+  assert.deepEqual(source.local, sourceLocal);
+  assert.deepEqual(await source.companion.assets.snapshot(), sourceAssets);
+  assert.equal(source.localWrites.length, 0);
+  assert.equal(source.idb.allPuts.length, 0);
 });
 
 test('cross-key journal and stale raw assets refuse native publication', async (t) => {

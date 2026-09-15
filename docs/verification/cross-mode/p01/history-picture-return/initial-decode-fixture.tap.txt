@@ -1,0 +1,44 @@
+TAP version 13
+# Subtest: history return retires same-owner speculative work before a late ordinary rejection
+ok 1 - history return retires same-owner speculative work before a late ordinary rejection
+  ---
+  duration_ms: 559.751083
+  ...
+# Subtest: an unfinished new original offers reload and export without another download or a legacy choice
+ok 2 - an unfinished new original offers reload and export without another download or a legacy choice
+  ---
+  duration_ms: 393.840583
+  ...
+# Subtest: history Continue and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+ok 3 - history Continue and explicit Resume keep the saved pin and checkpoint without reacquiring or writing
+  ---
+  duration_ms: 2106.078709
+  ...
+# Subtest: history cancellation preserves selected pins while a new explicit Start retries only their decode
+not ok 4 - history cancellation preserves selected pins while a new explicit Start retries only their decode
+  ---
+  duration_ms: 5468.334083
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel/game/test/history-picture-host.test.mjs:244:1'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel/game/test/helpers/wait-for.mjs:13:12)
+    async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel/game/test/helpers/solo-dom.mjs:146:3)
+    async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel/game/test/history-picture-host.test.mjs:267:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 3
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8866.611708
