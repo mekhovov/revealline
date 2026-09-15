@@ -235,10 +235,14 @@ try {
     masteryCatalog = content.registrations;
   }
   let buildVersion = document.documentElement.dataset.buildVersion;
+  let buildSourceRevision = null;
   if (!buildVersion || buildVersion === '__REVEALLINE_VERSION__') buildVersion = 'dev';
   let isRelease = false;
   try {
-    buildVersion = (await getJSON('build-info.json')).version;
+    const info = await getJSON('build-info.json');
+    buildVersion = info.version;
+    if (typeof info.sourceRevision === 'string' && /^[0-9a-f]{40,64}$/.test(info.sourceRevision))
+      buildSourceRevision = info.sourceRevision;
     isRelease = true;
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
@@ -2516,8 +2520,7 @@ try {
       ? snapshotAttempt(savedAt)
       : savedAttempt();
   }
-  function snapshotCurrentBackup() {
-    const savedAt = new Date().toISOString();
+  function snapshotCurrentBackup(savedAt = new Date().toISOString()) {
     return externalBackup.snapshot(() => {
       if (contentSwitchBusy || sessionBusy || backupBusy)
         throw new Error('Finish the pending content or save operation before exporting.');
@@ -2718,6 +2721,40 @@ try {
       ? { prepareExternalChapters: externalBackup.prepareExternalChapters }
       : undefined,
     backupSnapshot: externalBackup ? snapshotCurrentBackup : undefined,
+    backupSet: practice
+      ? null
+      : {
+          edition: { version: buildVersion, channel, sourceRevision: buildSourceRevision },
+          gameIdentity: () => {
+            assertWriter();
+            if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
+              throw new Error(
+                'Finish training or the pending content/save operation before preparing a backup set.',
+              );
+            if (!storedStateAdopted || !persistenceReady || !writer.writable)
+              throw new Error(
+                'Resolve storage recovery before preparing all inventories. Individual game-data export remains available.',
+              );
+            if (started && !paused && !['won', 'lost'].includes(run.status))
+              throw new Error('Pause the flight before preparing a backup set.');
+            return JSON.stringify({
+              library,
+              packs,
+              session: currentBackupSession('2000-01-01T00:00:00.000Z'),
+              runId,
+              backupMarker: localStorage.getItem(`${libraryKey}.backup-lock`),
+            });
+          },
+          readContents: ({ savedAt }) =>
+            externalBackup
+              ? snapshotCurrentBackup(savedAt)
+              : { library, packs, session: currentBackupSession(savedAt) },
+          readMetadata: async (options) => (await pictureManager.usage(options)).generations,
+          readStill: (options) => pictureStore.read(options),
+          readStory: (options) => storyStore.exportInventory(options),
+          // Byte recovery is available even when the audio player cannot initialize.
+          readAudio: (options) => pictureManager.readDomain('audio', options),
+        },
     openStory: (request) => storyDialog.open(request),
     resolveMediaIdentityCatalog: (metadata) =>
       createBackupPictureIdentityResolver({

@@ -1,0 +1,168 @@
+import { prepareBackupSet } from '../backup-set.mjs';
+
+/** Uses the existing Library dialog and native links. Owns only its operation
+ * and Blob URLs, never the borrowed game/media adapters or profile writer. */
+export function attachBackupSetPanel({
+  document,
+  dialog,
+  root,
+  source,
+  busy,
+  setBusy,
+  refresh,
+  URLImpl = URL,
+}) {
+  const node = (tag, id, text) => {
+    const element = document.createElement(tag);
+    element.id = id;
+    element.textContent = text;
+    return element;
+  };
+  const prepare = node('button', 'prepare-backup-set', 'Prepare game and originals backup'),
+    cancelButton = node('button', 'cancel-backup-set', 'Cancel preparation'),
+    status = node(
+      'p',
+      'backup-set-status',
+      'Prepare separate game data, picture, story and saved music files. Unsaved drafts are excluded.',
+    ),
+    list = node('ul', 'backup-set-files', '');
+  prepare.type = cancelButton.type = 'button';
+  prepare.className = 'button primary';
+  cancelButton.className = 'button secondary';
+  cancelButton.hidden = true;
+  status.setAttribute('role', 'status');
+  status.setAttribute('aria-live', 'polite');
+  root.append(prepare, cancelButton, status, list);
+  let operation = null,
+    prepared = null;
+  const urls = new Set();
+  function release() {
+    for (const url of urls) URLImpl.revokeObjectURL(url);
+    urls.clear();
+    prepared = null;
+    list.replaceChildren();
+  }
+  function finish(op) {
+    if (operation !== op) return;
+    operation = null;
+    cancelButton.hidden = true;
+    for (const [element, disabled] of op.controls)
+      if (element.isConnected) element.disabled = disabled;
+    setBusy(false);
+    refresh();
+  }
+  function cancel({
+    focus = true,
+    message = 'Preparation cancelled. Your data is unchanged.',
+  } = {}) {
+    const op = operation;
+    if (!op && !prepared) return false;
+    if (op) {
+      op.controller.abort();
+      op.restoreFocus = focus;
+    }
+    release();
+    status.textContent = message;
+    if (!op && focus && dialog.open && !document.hidden) prepare.focus({ preventScroll: true });
+    return true;
+  }
+  function checkCurrent() {
+    if (!prepared) return;
+    try {
+      prepared.assertGameCurrent();
+    } catch {
+      cancel({ message: 'Game data changed. Prepare the backup set again.' });
+    }
+  }
+  prepare.onclick = async () => {
+    if (busy() || !dialog.open || !root.getClientRects().length) return false;
+    release();
+    const op = {
+      controller: new AbortController(),
+      controls: [...dialog.querySelectorAll('button,input,select,textarea')].map((element) => [
+        element,
+        element.disabled,
+      ]),
+    };
+    operation = op;
+    setBusy(true);
+    for (const [element] of op.controls) {
+      // The existing Close button stays usable while asynchronous reads settle.
+      if (!element.hasAttribute('data-close')) element.disabled = true;
+    }
+    cancelButton.hidden = false;
+    cancelButton.disabled = false;
+    cancelButton.focus({ preventScroll: true });
+    try {
+      const result = await prepareBackupSet(source, {
+        signal: op.controller.signal,
+        onProgress: (text) => {
+          if (operation === op) status.textContent = text;
+        },
+      });
+      if (operation !== op || !dialog.open || op.controller.signal.aborted) return false;
+      result.assertGameCurrent();
+      prepared = result;
+      for (const file of result.files) {
+        const row = node('li', `backup-set-${file.id}`, ''),
+          link = node('a', `download-backup-${file.id}`, `Download ${file.filename}`),
+          state = node('span', `backup-set-state-${file.id}`, ` — Prepared · ${file.bytes} bytes`),
+          url = URLImpl.createObjectURL(file.blob);
+        urls.add(url);
+        link.href = url;
+        link.download = file.filename;
+        link.className = 'button secondary';
+        link.onclick = (event) => {
+          if (prepared !== result || !dialog.open || busy()) {
+            event?.preventDefault();
+            return false;
+          }
+          try {
+            result.assertGameCurrent();
+          } catch (error) {
+            event?.preventDefault();
+            cancel({ message: error.message });
+            return false;
+          }
+          state.textContent = ` — Download requested · ${file.bytes} bytes`;
+          status.textContent =
+            'Download requested. Check your browser destination; this does not confirm a disk write. Prepared files remain available to retry.';
+          return true; // Native default action, no async or synthetic click.
+        };
+        row.append(link, state);
+        list.append(row);
+      }
+      status.textContent = result.coverage.detachedStories.length
+        ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
+        : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.';
+      finish(op);
+      list.querySelector('a')?.focus({ preventScroll: true });
+      return true;
+    } catch (error) {
+      if (operation === op && !op.controller.signal.aborted) {
+        release();
+        status.textContent = `Backup set was not prepared: ${error.message}`;
+      }
+      return false;
+    } finally {
+      if (operation === op) {
+        finish(op);
+        if (op.restoreFocus !== false && dialog.open && !document.hidden)
+          prepare.focus({ preventScroll: true });
+      }
+    }
+  };
+  cancelButton.onclick = () => cancel();
+  dialog.addEventListener('close', () => {
+    if (!dialog.open) cancel({ focus: false });
+  });
+  globalThis.addEventListener?.('pagehide', () => cancel({ focus: false }));
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancel({ focus: false });
+  });
+  return {
+    cancel: () => (operation ? cancel() : false),
+    invalidate: () => cancel({ focus: false }),
+    checkCurrent,
+  };
+}
