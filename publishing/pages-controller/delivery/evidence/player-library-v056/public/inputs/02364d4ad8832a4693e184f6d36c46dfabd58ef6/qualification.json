@@ -1,0 +1,164 @@
+{
+  "format": "revealline-source-qualification.v1",
+  "version": "v0.56.0",
+  "sourceRevision": "20f017963e6f3875ce6388a198a6fb601e0aea40",
+  "sourceTree": "b48ab534db3a202ee070802957944fa898d864ef",
+  "passed": true,
+  "allTrackedSourceContentsAndModesMatch": true,
+  "sourceIdentity": {
+    "sourceRevision": "20f017963e6f3875ce6388a198a6fb601e0aea40",
+    "sourceTree": "b48ab534db3a202ee070802957944fa898d864ef",
+    "files": 4029,
+    "bytes": 770076804,
+    "aggregateSha256": "7037bbe01077ac89238541b1fdd7ec45cd61f3e6ad38ef57ae12f53720cd1599",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "executionProof": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/v056-ci-20f0179/execution-proof.json",
+    "bytes": 36901,
+    "sha256": "c1aafe4ce9cfbeb63da443938e7927bebc841a3e94cc13c2cfd41d331be1a6b1"
+  },
+  "gates": [
+    {
+      "gate": "validate",
+      "jobId": 104279723170,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:39:43Z",
+        "completed_at": "2026-09-15T06:40:09Z"
+      },
+      "scope": "Shared actual successful preflight step; see exact command and workflow pins."
+    },
+    {
+      "gate": "lint",
+      "jobId": 104279723170,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:39:43Z",
+        "completed_at": "2026-09-15T06:40:09Z"
+      },
+      "scope": "Shared actual successful preflight step; see exact command and workflow pins."
+    },
+    {
+      "gate": "format",
+      "jobId": 104279723170,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:39:43Z",
+        "completed_at": "2026-09-15T06:40:09Z"
+      },
+      "scope": "Shared actual successful preflight step; see exact command and workflow pins."
+    },
+    {
+      "gate": "native-format",
+      "jobId": 104279723170,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:39:43Z",
+        "completed_at": "2026-09-15T06:40:09Z"
+      },
+      "scope": "Shared actual successful preflight step; see exact command and workflow pins."
+    },
+    {
+      "gate": "motion-syntax",
+      "jobId": 104279723170,
+      "step": {
+        "name": "Validate, lint, and format source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:39:43Z",
+        "completed_at": "2026-09-15T06:40:09Z"
+      },
+      "scope": "Shared actual successful preflight step; see exact command and workflow pins."
+    },
+    {
+      "gate": "test",
+      "jobId": 104280013653,
+      "step": {
+        "name": "Run test shard 3/4",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-09-15T06:41:00Z",
+        "completed_at": "2026-09-15T07:01:51Z"
+      },
+      "actualJobSteps": [
+        {
+          "jobId": 104280013628,
+          "step": {
+            "name": "Run test shard 1/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-15T06:40:59Z",
+            "completed_at": "2026-09-15T06:51:35Z"
+          }
+        },
+        {
+          "jobId": 104280013574,
+          "step": {
+            "name": "Run test shard 2/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-15T06:41:24Z",
+            "completed_at": "2026-09-15T07:00:15Z"
+          }
+        },
+        {
+          "jobId": 104280013653,
+          "step": {
+            "name": "Run test shard 3/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-15T06:41:00Z",
+            "completed_at": "2026-09-15T07:01:51Z"
+          }
+        },
+        {
+          "jobId": 104280013591,
+          "step": {
+            "name": "Run test shard 4/4",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-09-15T06:40:56Z",
+            "completed_at": "2026-09-15T06:55:08Z"
+          }
+        }
+      ],
+      "counts": {
+        "tests": 4110,
+        "pass": 4110,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "scope": "Actual last-completed successful shard step, with all four required successful steps and complete unfiltered partition evidenced above."
+    }
+  ],
+  "limits": [
+    "Source PR qualification only. No freeze, tag, publication, release merge, artifact-byte audit or native/device/offline acceptance is authorized or established by this receipt.",
+    "Five source commands share one successful bash-e preflight step; no individual command exit codes or timestamps were invented.",
+    "The test gate aggregates all four actual completed successful unfiltered shard steps. Per-shard discovery is corroborated by exact pinned runner semantics and a complete Git filename partition; no direct per-file execution event log is claimed.",
+    "Twelve raw pre/post observations authenticate complete tracked source contents and modes at those boundaries. They are not a continuous filesystem lock or an independent local770MB body rehash.",
+    "The PR build reports sourceRevision:null. Its job ran between exact20f source identity observations, but this is an ordinary PR build result, not a frozen source-pinned distribution or a byte verification of its649 outputs.",
+    "This workflow runs production reproduction but has no separate check-field-kit-readiness.mjs step. The producer coverage result is retained; a new explicit readiness execution is not claimed.",
+    "The workflow checkout commit is not assumed to exist locally. Its retained authenticated GitHub commit metadata binds it to the same full Git tree as exact local20f; small automation texts are authenticated through that tree identity."
+  ]
+}

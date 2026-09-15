@@ -1,0 +1,55 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: TACTICAL EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 0.0%
+    - emphasis: TARGET 45%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 0:00
+    - generic: SCORE
+    - strong: "00000"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving."
+    - region "Mission details":
+      - paragraph: MISSION 01
+      - heading "Clear a path. Reveal a world." [level=1]
+      - paragraph: Leave safe ground, draw a line and return. Reveal 45% by enclosing regions without a field enemy.
+      - paragraph: Standard difficulty.
+    - button "Start mission ↗"
+    - button "Learn by playing"
+    - button "Mission brief"
+    - button "Main menu"
+    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.
+    - strong: Ready for launch
+    - generic: Close a line to reveal the picture
+    - status: "Your first route: fly down from the marked start to the opposite border."
+    - status
+- dialog "REVEAL / LINE":
+  - paragraph: FPV FIELD KIT / FLIGHT READY
+  - heading "REVEAL / LINE" [level=1]:
+    - text: REVEAL
+    - generic: / LINE
+  - navigation "Main menu":
+    - button "Deploy":
+      - generic: Deploy
+      - generic: →
+    - button "Missions"
+    - button "Collection"
+    - button "Settings"
+    - button "Workshop"
+    - link "Release explorer Play another edition":
+      - /url: https://mekhovov.github.io/revealline/releases/
+      - text: Release explorer
+      - generic: Play another edition
+  - paragraph: Deploy · Pressure Lines / Arcade
+  - paragraph: Choose a flight. Trace a path. Close the line.
+  - paragraph: Version v0.56.0
+  - paragraph:
+    - text: HANGAR 01
+    - generic: FIRST LIGHT

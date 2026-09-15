@@ -1,0 +1,145 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: ARCADE EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 50.0%
+    - emphasis: TARGET 68%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 2:25
+    - generic: SCORE
+    - strong: "11720"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - status: Paused
+    - text: ◆
+    - button "Resume →"
+    - text: ◆ ◆ ◆ ◆ ◆
+    - button "Restart mission"
+    - button "Mission brief"
+    - button "Main menu"
+    - strong: Paused
+    - generic: Close a line to reveal the picture
+    - status: Saved flight verified and restored. Press Resume to continue.
+    - status
+- dialog "Flight settings.":
+  - button "Close settings": ×
+  - paragraph: TUNE YOUR ARCADE
+  - heading "Flight settings." [level=2]
+  - tablist "Settings categories":
+    - tab "Controls"
+    - tab "Audio"
+    - tab "Display & accessibility"
+    - tab "Game data" [selected]
+  - tabpanel "Game data":
+    - heading "Game data" [level=3]
+    - paragraph: Saves, recovery, installed chapters and offline play.
+    - paragraph: Stored profile recovery inspects profiles and downloads one verified image. It does not restore a flight. A profile open for writing may be busy; use existing exports for this flight.
+    - status: Close the other tool before opening recovery.
+    - button "Stored profile recovery" [disabled]
+    - button "Saves & recovery"
+    - button "Installed chapters"
+    - paragraph: Manage saved flights, game-data backups and installed chapters in your flight library.
+    - region "Download retention":
+      - button "Keep downloads on this device"
+      - paragraph: Ask this browser to protect this site's saved data from automatic removal. This does not download files or replace backups.
+      - status: Retention is not enabled. Downloads may be removed by the browser.
+    - paragraph: Download this release for offline play on this device.
+    - button "Prepare offline play"
+    - generic "Offline verification details"
+    - generic "Creator tools and original media"
+- dialog "Flight library.":
+  - button "Close library": ×
+  - paragraph: THE THINGS YOU KEEP
+  - heading "Flight library." [level=2]
+  - group "Library sections":
+    - button "Records"
+    - button "Saves & loads"
+    - button "Expansion packs"
+    - button "Challenges"
+  - paragraph: 0 / 4096 pictures · 0 / 4096 equipment seals · 0 / 512 campaigns · 0.0% of profile budget. Old pictures are preserved; export archives before reaching capacity.
+  - region "Game and originals backup":
+    - button "Prepare game and originals backup"
+    - status: Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.
+    - list:
+      - link "Download game data" [active]:
+        - /url: blob:https://mekhovov.github.io/7c523ac6-b298-4de7-8e44-b1744f0ea086
+      - generic: Prepared · 11705388 bytes
+      - link "Download pictures":
+        - /url: blob:https://mekhovov.github.io/93152c66-bbb9-45d3-b7ed-7677b07300be
+      - generic: Prepared · 118048 bytes
+      - link "Download stories":
+        - /url: blob:https://mekhovov.github.io/087d79cf-7c8a-4ab7-8f95-319eb69a8f84
+      - generic: Prepared · 24412 bytes
+      - link "Download music":
+        - /url: blob:https://mekhovov.github.io/df697690-0d73-49ea-96c7-4e09ba9a06eb
+      - generic: Prepared · 192 bytes
+      - link "Download coverage report":
+        - /url: blob:https://mekhovov.github.io/42659161-fc63-4ae0-af59-01a030c8b846
+      - generic: Prepared · 2700 bytes
+    - generic "File names"
+  - button "Export game data"
+  - paragraph: This JSON includes your player library, installed packs and saved flight. Importing it replaces those three together. Uploaded originals and custom music need their separate .rlmedia and .rlsound backups. Restore originals first when transferring saved custom pictures, then import the game data. Keep your current backups to preserve both collections.
+  - button "Undo game-data import" [disabled]
+  - paragraph: "Saved flight: Orchard Crossing · Standard · 2026-09-15 09:23:52"
+  - button "Load suspended attempt"
+  - button "Export current attempt"
+  - button "Export player library"
+  - paragraph
+  - paragraph: Player library files contain campaign progress, picture records, local scores and preferences. Attempt files contain a verified unfinished flight. Install matching expansion packs before resuming their flights.
+  - text: Load a saved JSON file
+  - button "Load a saved JSON file"
+  - generic "Copy or paste save JSON"
+  - button "Undo last library import" [disabled]
+  - status
+  - generic "Bring progress from an earlier release"
+  - option "v0.55.0 · needs review" [selected]
+  - option "v0.52.0 · needs review"
+  - option "v0.51.0 · needs review"
+  - option "v0.42.0 · needs review"
+  - option "v0.40.0 · needs review"
+  - option "v0.39.0 · needs review"
+  - option "v0.38.0 · needs review"
+  - option "v0.37.0 · needs review"
+  - option "v0.36.0 · needs review"
+  - option "v0.35.0 · needs review"
+  - option "v0.34.0 · needs review"
+  - option "v0.33.0 · needs review"
+  - option "v0.32.0 · needs review"
+  - option "v0.31.0 · needs review"
+  - option "v0.30.0 · needs review"
+  - option "v0.29.2 · needs review"
+  - option "v0.29.1 · needs review"
+  - option "v0.29.0 · needs review"
+  - option "v0.28.0 · needs review"
+  - option "v0.27.0 · needs review"
+  - option "v0.26.0 · needs review"
+  - option "v0.19.0 · needs review"
+- dialog "REVEAL / LINE":
+  - paragraph: FPV FIELD KIT / FLIGHT READY
+  - heading "REVEAL / LINE" [level=1]:
+    - text: REVEAL
+    - generic: / LINE
+  - navigation "Main menu":
+    - button "Continue":
+      - generic: Continue
+      - generic: →
+    - button "Missions"
+    - button "Collection"
+    - button "Settings"
+    - button "Workshop"
+    - link "Release explorer Play another edition":
+      - /url: https://mekhovov.github.io/revealline/releases/
+      - text: Release explorer
+      - generic: Play another edition
+  - paragraph: Continue · Orchard Crossing
+  - paragraph: Choose a flight. Trace a path. Close the line.
+  - paragraph: Version v0.56.0
+  - paragraph:
+    - text: HANGAR 01
+    - generic: FIRST LIGHT

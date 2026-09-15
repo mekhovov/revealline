@@ -1,0 +1,114 @@
+{
+  "sourceRevision": "f63939e77cef4208f6fd54c2fc0684928744a2ed",
+  "actualGameFile": "/Users/oleksandr.mekhovov/Downloads/RevealLine-backup-20260915T070057311Z-d8fd61e4f26a4c5899d082aaf9e666eb-game-data.json",
+  "gameBytes": 11702388,
+  "gameSha256": "a2511e07fc7e558e81962a01cf0ca27a54a8614998042d5f77201c2f13931abc",
+  "format": "xonix-backup.v2",
+  "libraryFormat": "xonix-library.v4",
+  "galleryCount": 1,
+  "scoreCount": 1,
+  "pictureReceiptCount": 1,
+  "storyReceiptCount": 1,
+  "galleryRecord": {
+    "key": "gallery-v1-34699bbf24576070",
+    "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+    "levelId": "orchard-crossing",
+    "levelRevision": "1",
+    "levelName": "Orchard Crossing",
+    "themeId": "fpv",
+    "bodyId": "fpv-body",
+    "sourcePackId": "fpv-arcade-r5",
+    "seed": 1,
+    "score": 16250,
+    "time": 151.30000000002673,
+    "medal": "bronze",
+    "completedAt": "2026-09-15T06:53:41.680Z",
+    "runId": "2d413772-5567-46aa-aa7e-286f2c681147"
+  },
+  "scoreRecord": {
+    "boardId": "board-v1-669532335298ab95",
+    "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+    "levelId": "orchard-crossing",
+    "levelName": "Orchard Crossing",
+    "classId": "scout",
+    "classRevision": "2",
+    "turnPolicy": "immediate",
+    "seed": 1,
+    "score": 16250,
+    "time": 151.30000000002673,
+    "medal": "bronze",
+    "completedAt": "2026-09-15T06:53:41.680Z",
+    "runId": "2d413772-5567-46aa-aa7e-286f2c681147",
+    "switches": 0,
+    "classRoute": [
+      "scout"
+    ]
+  },
+  "campaignProgress": {
+    "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+    "campaignId": "fpv-pressure-lines",
+    "revision": "1",
+    "clear": {
+      "score": 16250,
+      "time": 151.30000000002673,
+      "medals": 1,
+      "clean": false,
+      "variants": {
+        "immediate/scout/2/loadout-v1-8360440c/1/roster-v1-25103a34/route-v1-a2189a2432a1556c": {
+          "score": 16250,
+          "time": 151.30000000002673,
+          "medals": 1,
+          "clean": false
+        }
+      }
+    },
+    "seenRunIds": [
+      "2d413772-5567-46aa-aa7e-286f2c681147"
+    ]
+  },
+  "pictureReceipt": {
+    "galleryKey": "gallery-v1-34699bbf24576070",
+    "earnedRunId": "2d413772-5567-46aa-aa7e-286f2c681147",
+    "earnedAt": "2026-09-15T06:53:41.680Z",
+    "seed": 1,
+    "bodyId": "fpv-body",
+    "presentationPin": {
+      "kind": "still",
+      "identity": {
+        "baseCampaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+        "levelId": "orchard-crossing",
+        "levelRevision": "1",
+        "themeId": "fpv"
+      },
+      "presentationId": "fk-picture-41c46cb641bb7a0ac8f3f9972eb433741096bdfb7d7e9bdec498ff80e44d16e3",
+      "presentationRevision": 1,
+      "assetId": "fk-art-53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+      "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850"
+    }
+  },
+  "storyReceipts": [
+    {
+      "format": "revealline-earned-story.v1",
+      "galleryKey": "gallery-v1-34699bbf24576070",
+      "earnedRunId": "2d413772-5567-46aa-aa7e-286f2c681147",
+      "storyPin": null
+    }
+  ],
+  "activeSession": null,
+  "linkageChecks": {
+    "sameGalleryAndPictureKey": true,
+    "sameEarnedAndScoreRunId": true,
+    "sameCampaignAndLevel": true,
+    "score16250AcrossGalleryScoreAndProgress": true,
+    "earnedRunInProgressSeen": true
+  },
+  "qualifications": [
+    "The strict checker verifies supplied coverage and component bytes; it does not independently validate replay or grant earned ownership.",
+    "Root supplied the actual native win observation. Matching saved records corroborate its score, level, elapsed time, medal and run linkage.",
+    "69.3% final coverage and two remaining lives are retained native playtest observations; they are not fields of these extracted persisted result records.",
+    "Immediate is the saved turnPolicy.",
+    "One story receipt has storyPin null; it is not evidence of an earned video.",
+    "No restore, media playback, offline use or physical-device claim.",
+    "No Downloads files were renamed, copied, replaced or modified."
+  ]
+}
