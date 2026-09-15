@@ -1,0 +1,98 @@
+{
+  "base": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+  "sourcePins": [
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 60304,
+      "sha256": "032a8b7cc0c037fc6c581e04419f4d43e6299609ed5a490f35c65de0633f5bee"
+    },
+    {
+      "path": "scripts/test-game-cli.mjs",
+      "bytes": 39051,
+      "sha256": "74484ef77103d8c50ef32c4c48f5eebd29d89c8a7a679715f2b0fb5b473a6c63"
+    },
+    {
+      "path": "scripts/test-snapshot-archive-transfer.mjs",
+      "bytes": 5511,
+      "sha256": "414ad055c9194a064a110c9a768c4b0795b4b5b3bbd2a1e8082d95ddbc69c99d"
+    },
+    {
+      "path": "docs/snapshot-staging.md",
+      "bytes": 2469,
+      "sha256": "1821d633d77162ff4d707dd8c9a988aa52c1157fb8ebcbd1bcb9bf9c48657e25"
+    }
+  ],
+  "testResults": [
+    {
+      "name": "transfer-node22",
+      "counts": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "whole helper file",
+      "elapsedSeconds": 38.02254483406432
+    },
+    {
+      "name": "snapshot-node22",
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "one complete real-Git snapshot case; unrelated cases explicitly filtered",
+      "elapsedSeconds": 238.34074391704053
+    },
+    {
+      "name": "transfer-node20",
+      "counts": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "scope": "whole helper file",
+      "elapsedSeconds": 21.808330290950835
+    },
+    {
+      "name": "snapshot-node20",
+      "counts": {
+        "tests": 27,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 26
+      },
+      "scope": "one complete real-Git snapshot case; unrelated cases explicitly filtered",
+      "elapsedSeconds": 34.08871387480758
+    }
+  ],
+  "distinctSelectedCasesEachRuntime": 8,
+  "smallFixturesOnly": true,
+  "physicalCrossFilesystemTest": false,
+  "inputPreservation": {
+    "completed": true,
+    "runs": 4,
+    "inputs": 36,
+    "inputBytes": 407825,
+    "unchanged": true,
+    "sampledPeakScratchBytes": 1388114,
+    "finalScratchBytes": 880733
+  },
+  "sourcePeer": "peer-source-dewey.json",
+  "static": "static.json",
+  "setupQualifications": "setup-diagnostics.json",
+  "admission": {
+    "sameFilesystem": "T + S + U + Z + B + R + G",
+    "EXDEV": "2*T + S + U + Z + B + R + G",
+    "U": "loose site excluding ZIP",
+    "B": "any additional frozen-builder intermediates, excluding already counted site",
+    "saving": "one TAR body at transfer stage, no memory reduction or overall peak measurement claimed"
+  },
+  "productionArchiveOrBuild": false
+}
