@@ -1,0 +1,33 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "sourceHoldSha256": "55756dc7ea57b33b68cb8e8f53d8e6b3fa3ba7d3210fb3038bb378e2c63d49a6",
+  "overlays": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 245151,
+      "sha256": "9c61336914c6b1d4e5c1ef2fcd870050804e87d1c69dd5858a0a9243f321700b"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70354,
+      "sha256": "216121d369e6b112c01073916f5e17c8d556248749ea0299f3a85ae018e04165"
+    },
+    {
+      "path": "game/mode-return-v2.mjs",
+      "bytes": 6771,
+      "sha256": "0d10a32521d4f615559691964276e23f6c40d992d0c517e4fe3ff4c51e04f036"
+    },
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 39262,
+      "sha256": "4c92a981ed7a29596a5c6fcc823394460c1d0d350af179a4199055ce3ddeaba5"
+    },
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14014,
+      "sha256": "c2b2b732c020411af0ed95adb0a2abbbb1b6cc1f70b37686971b0559ac18f913"
+    }
+  ],
+  "port": 65444,
+  "scope": "Five held A2 production overlays over exact c7f4faa. No P08/P05/R5/title/R3 overlay, timing fixture or game-state injection."
+}

@@ -39,6 +39,7 @@ export function createCouchShell({
   onNewMatch = () => {},
   getDepartureState = () => null,
   onLeaveRequest = () => {},
+  getSoloReturnToken = () => null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
     pads = [...doc.querySelectorAll('.race-pad')],
@@ -146,6 +147,16 @@ export function createCouchShell({
     show(status === 'ready' ? 'setup' : 'confirm', { remember: $('race-focus') });
   }
   const foreground = () => !doc.hidden && doc.hasFocus?.() !== false;
+  function soloReturnToken() {
+    try {
+      const token = getSoloReturnToken();
+      return typeof token === 'string' && /^[0-9a-f]{32}$/.test(token) ? token : null;
+    } catch {
+      return null;
+    }
+  }
+  const destinationHref = (kind, token) =>
+    kind === 'solo' && token ? `../?mode-return-v2=${token}` : DESTINATIONS[kind];
   function departureCurrent(ticket) {
     const current = getDepartureState();
     return (
@@ -175,7 +186,8 @@ export function createCouchShell({
     )
       return;
     // Fixed routes are owned here; no target is accepted from a URL or control.
-    element.setAttribute('href', DESTINATIONS[kind]);
+    const returnToken = kind === 'solo' ? soloReturnToken() : null;
+    element.setAttribute('href', destinationHref(kind, returnToken));
     const before = getDepartureState();
     if (destroyed || departure || screen !== 'main' || !foreground() || !before?.match) {
       event.preventDefault();
@@ -194,7 +206,13 @@ export function createCouchShell({
       current.match.status !== 'paused'
     )
       return;
-    const ticket = { kind, opener: element, match: current.match, generation: current.generation };
+    const ticket = {
+      kind,
+      returnToken,
+      opener: element,
+      match: current.match,
+      generation: current.generation,
+    };
     departure = ticket;
     setText('race-leave-title', kind === 'team' ? 'Go to Couch Team?' : 'Return to Solo?');
     setText(
@@ -205,7 +223,7 @@ export function createCouchShell({
       'race-leave',
       kind === 'team' ? 'Discard and go to Team' : 'Discard and return to Solo',
     );
-    $('race-leave').setAttribute('href', DESTINATIONS[kind]);
+    $('race-leave').setAttribute('href', destinationHref(kind, returnToken));
     show('leave', { remember: element });
     if (!departureCurrent(ticket)) cancelDeparture();
   }
@@ -241,7 +259,7 @@ export function createCouchShell({
       cancelDeparture();
       return;
     }
-    $('race-leave').setAttribute('href', DESTINATIONS[ticket.kind]);
+    $('race-leave').setAttribute('href', destinationHref(ticket.kind, ticket.returnToken));
     // Preserve native anchor activation. If the browser cannot leave, the
     // original paused attempt stays intact and another decision remains explicit.
   });

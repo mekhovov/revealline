@@ -133,6 +133,7 @@ import { challengeCampaign } from './challenges.mjs';
 import { savedFlightPreview } from './continuation.mjs';
 import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
 import { createModeReturn } from './mode-return.mjs';
+import { createModeReturnV2 } from './mode-return-v2.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
 import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import {
@@ -532,10 +533,21 @@ try {
     baseURL: location.href,
     authority: { channel, version: buildVersion, sourceRevision: buildSourceRevision },
   });
-  const returnedSelection =
+  const modeReturnV2 = createModeReturnV2({
+    storage: returnStorage,
+    baseURL: location.href,
+    authority: { channel, version: buildVersion, sourceRevision: buildSourceRevision },
+  });
+  const returnContext =
     !practiceSession && !courseSession && !packLaunchRequest && storedStateAdopted
-      ? modeReturn.consume(location.search)
+      ? new URLSearchParams(location.search).has('mode-return-v2')
+        ? modeReturnV2.consume(location.search)
+        : (() => {
+            const selection = modeReturn.consume(location.search);
+            return selection ? { selection, focus: 'team' } : null;
+          })()
       : null;
+  const returnedSelection = returnContext?.selection ?? null;
   const returnedMission = returnedSelection
     ? resolveSelectionBookmark(
         { ...returnedSelection, format: 'revealline-selection.v1' },
@@ -1650,7 +1662,7 @@ try {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
     if (courseEntry) cancelCourseEntry();
-    cancelModeDeparture();
+    cancelModeDeparture({ close: true });
     cancelMissionReplacement();
     invalidateRestart('Restart cancelled when leaving this page.');
     optionalWorlds?.close(false);
@@ -2002,9 +2014,37 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
-  function cancelModeDeparture() {
-    modeDeparture?.controller.abort();
+  const modeDestinations = Object.freeze({
+    team: 'couch/relay-rescue.html?return=solo',
+    versus: 'couch/?return=solo',
+  });
+  const modeLabel = (kind) => (kind === 'versus' ? 'Versus' : 'Team');
+  function prepareModeHint(ticket) {
+    return ticket.kind === 'versus'
+      ? modeReturnV2.prepare({
+          origin: 'solo-missions',
+          destination: 'versus',
+          selection: ticket.selection,
+        })
+      : modeReturn.prepare(ticket.selection);
+  }
+  function clearModeHint(ticket) {
+    if (ticket.token) (ticket.kind === 'versus' ? modeReturnV2 : modeReturn).clear(ticket.token);
+  }
+  function cancelModeDeparture({ close = false, restore = false, clearHint = false } = {}) {
+    const ticket = modeDeparture;
+    if (!ticket) return;
+    ticket.controller.abort();
     modeDeparture = null;
+    if (clearHint) clearModeHint(ticket);
+    if (close && $('mode-leave-dialog').open) $('mode-leave-dialog').close();
+    if (
+      restore &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      availableFocusTarget(ticket.opener)
+    )
+      ticket.opener.focus({ preventScroll: true });
     // As with First Flight, only explicit Resume/new attempt releases the save hold.
   }
   function modeSelection() {
@@ -2016,6 +2056,8 @@ try {
   }
   function modeDepartureCurrent(ticket) {
     if (
+      document.hidden ||
+      document.hasFocus?.() === false ||
       modeDeparture !== ticket ||
       ticket.controller.signal.aborted ||
       run !== ticket.run ||
@@ -2025,7 +2067,9 @@ try {
       libraryGeneration !== ticket.generation ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
-      throw new Error('The flight or selected mission changed. Stay here and choose Team again.');
+      throw new Error(
+        `The flight, selected mission or foreground changed. Stay here and choose ${modeLabel(ticket.kind)} again.`,
+      );
   }
   function modeDepartureMessage(ticket) {
     const flight = !ticket.unfinished
@@ -2035,8 +2079,8 @@ try {
         : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
     $('mode-leave-status').textContent = `${flight} ${
       ticket.fallback
-        ? 'Return context is unavailable. Back from Team will open Solo’s title.'
-        : 'Back from Team returns to this Missions selection; it does not resume a flight.'
+        ? `Return context is unavailable. Back from ${modeLabel(ticket.kind)} will open Solo’s title.`
+        : `Back from ${modeLabel(ticket.kind)} returns to this Missions selection; it does not resume a flight.`
     }`;
   }
   function unfinishedFlight() {
@@ -2086,9 +2130,21 @@ try {
     ticket.savedRaw = raw;
     lastOwnedAttempt = raw;
   }
-  async function requestTeam(event) {
-    event.preventDefault();
+  async function requestModeDeparture(kind, event, opener) {
     if (
+      event.defaultPrevented ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.altKey ||
+      event.shiftKey ||
+      (event.button !== undefined && event.button !== 0)
+    )
+      return;
+    event.preventDefault();
+    if (!Object.hasOwn(modeDestinations, kind)) return;
+    if (
+      document.hidden ||
+      document.hasFocus?.() === false ||
       modeDeparture ||
       missionReplacement ||
       restartRequest ||
@@ -2100,10 +2156,13 @@ try {
       pictureThemePending ||
       backupBusy
     ) {
-      warning('Finish the current operation before choosing Team.');
+      warning(`Finish the current operation before choosing ${modeLabel(kind)}.`);
       return;
     }
     const ticket = {
+      kind,
+      opener,
+      dialogShown: false,
       controller: new AbortController(),
       run,
       recorder,
@@ -2116,18 +2175,21 @@ try {
       fallback: false,
       pending: true,
     };
+    modeDeparture = ticket;
     if (!ticket.unfinished) {
       let prepared;
       try {
-        prepared = modeReturn.prepare(ticket.selection);
+        prepared = prepareModeHint(ticket);
+        ticket.token = prepared.token;
+        modeDepartureCurrent(ticket);
         location.href = prepared.href;
         return;
       } catch {
-        if (prepared) modeReturn.clear(prepared.token);
+        if (prepared) clearModeHint(ticket);
+        if (modeDeparture !== ticket || ticket.controller.signal.aborted) return;
         ticket.fallback = true;
       }
     }
-    modeDeparture = ticket;
     if (ticket.unfinished) modeDepartureHold = true;
     pause(true);
     clearInput();
@@ -2135,8 +2197,17 @@ try {
     $('mode-leave-status').textContent = ticket.unfinished
       ? 'Checking the saved flight before leaving. Your current flight stays paused. You can Stay now.'
       : 'Checking the return to Missions…';
-    $('mode-leave-dialog').showModal();
-    $('mode-leave-stay').focus({ preventScroll: true });
+    $('mode-leave-title').textContent = `Open ${modeLabel(kind)}?`;
+    $('mode-leave-confirm').textContent = `Leave for ${modeLabel(kind)}`;
+    ticket.dialogShown = true;
+    try {
+      $('mode-leave-dialog').showModal();
+      $('mode-leave-stay').focus({ preventScroll: true });
+    } catch (error) {
+      cancelModeDeparture({ close: true, restore: true, clearHint: true });
+      warning(`The departure could not open. Your flight remains here. ${error.message}`);
+      return;
+    }
     try {
       if (ticket.unfinished) {
         await retainNavigationFlight(
@@ -2162,15 +2233,19 @@ try {
     if (ticket.failure)
       $('mode-leave-status').textContent += ` Saving was not verified: ${ticket.failure}`;
   }
-  $('shell-team').onclick = requestTeam;
+  $('shell-team').onclick = (event) => requestModeDeparture('team', event, $('shell-team'));
+  $('shell-versus').onclick = (event) => requestModeDeparture('versus', event, $('shell-versus'));
   $('mode-leave-dialog').addEventListener('close', () => {
-    if ($('mode-leave-dialog').open) return;
-    cancelModeDeparture();
-    if ($('shell-missions').open) $('shell-team').focus({ preventScroll: true });
+    if ($('mode-leave-dialog').open || !modeDeparture?.dialogShown) return;
+    cancelModeDeparture({ restore: true, clearHint: true });
   });
   $('mode-leave-confirm').onclick = () => {
     const ticket = modeDeparture;
     if (!ticket || ticket.pending) return;
+    if (document.hidden || document.hasFocus?.() === false) {
+      cancelModeDeparture({ close: true, clearHint: true });
+      return;
+    }
     try {
       modeDepartureCurrent(ticket);
       if (ticket.savedRaw) {
@@ -2186,10 +2261,10 @@ try {
           return;
         }
       }
-      let destination = new URL('couch/relay-rescue.html?return=solo', location.href).href;
+      let destination = new URL(modeDestinations[ticket.kind], location.href).href;
       if (!ticket.fallback) {
         try {
-          const prepared = modeReturn.prepare(ticket.selection);
+          const prepared = prepareModeHint(ticket);
           ticket.token = prepared.token;
           destination = prepared.href;
         } catch {
@@ -2198,9 +2273,10 @@ try {
           return;
         }
       }
+      modeDepartureCurrent(ticket);
       location.href = destination;
     } catch (error) {
-      if (ticket.token) modeReturn.clear(ticket.token);
+      clearModeHint(ticket);
       $('mode-leave-status').textContent = `${error.message} Your flight remains paused here.`;
     }
   };
@@ -5725,6 +5801,7 @@ try {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
+    cancelModeDeparture({ close: true });
     invalidateRestart('Restart cancelled when focus changed.');
     invalidateContentSwitch({ announce: true });
     if (courseEntry)
@@ -6030,7 +6107,8 @@ try {
   ) {
     gameShell.openMissions();
     $('shell-mode-choice').open = true;
-    $('shell-team').focus({ preventScroll: true });
+    const returnFocus = $(returnContext.focus === 'versus' ? 'shell-versus' : 'shell-team');
+    if (availableFocusTarget(returnFocus)) returnFocus.focus({ preventScroll: true });
   }
   controllerReading?.refresh();
   // Boot removes the visibility guard synchronously. Do not refocus a hidden

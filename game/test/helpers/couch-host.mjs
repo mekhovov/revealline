@@ -62,6 +62,8 @@ export async function couchPage(
     ImageClass,
     assetDatabase,
     storage,
+    previewStorage,
+    href = 'http://localhost/game/couch/',
     lockManager,
     fetchResponse,
     URLImpl = globalThis.URL,
@@ -125,7 +127,8 @@ export async function couchPage(
           this.released = (this.released || 0) + 1;
         }
       },
-    location: { href: 'http://localhost/game/couch/', search: '' },
+    location: { href, search: new URL(href).search },
+    sessionStorage: previewStorage,
     matchMedia: (query) => ({ matches: query === '(pointer: coarse)' && coarse }),
     Option: class extends Element {
       constructor(label, value) {
