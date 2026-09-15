@@ -1,0 +1,22 @@
+{
+  "source": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 32622,
+      "sha256": "0613908b460a5bc813d80fd44db51b537027946769e8f796c02c3db10b61313e"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 14942,
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15174,
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    }
+  ],
+  "createdAt": "2026-09-15T17:50:04.429451+00:00",
+  "status": "Fault-handler successor. Tests and source peer pending.",
+  "freeBytes": 1216692224
+}
