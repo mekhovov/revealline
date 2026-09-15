@@ -30,8 +30,40 @@
       "file": "collection-disclosure.txt",
       "bytes": 3944,
       "sha256": "4382cb8a9c73b257f7fb2ba88c0360cb159753f4f471d19ca02a310248805767"
+    },
+    {
+      "file": "real-win.txt",
+      "bytes": 1531,
+      "sha256": "896cd5833616b4ab1808257c36e4fbf6bf454adc55386a00aaa15eb503a9c6ce"
+    },
+    {
+      "file": "real-win.jpg",
+      "bytes": 68374,
+      "sha256": "743e4bd6ef77e598701f28bc85588362022193a944f9ab7c1d34d2774257636d"
+    },
+    {
+      "file": "real-win-viewer.txt",
+      "bytes": 982,
+      "sha256": "76109b2415b2e14a7da2f3a5b9e35c45812150bcfc73653275b66dd877de9ac7"
+    },
+    {
+      "file": "real-win-return.txt",
+      "bytes": 1531,
+      "sha256": "3197a74ecb1a87df1b26ccdf2af9ca3d38e0311e82569b9eda0fafe7789009d6"
+    },
+    {
+      "file": "title-after-win-corrected.txt",
+      "bytes": 2156,
+      "sha256": "9015a46090edaa116f3c516f5beaa494af1241667348f58a453b3eeee0ad5b75"
+    },
+    {
+      "file": "wrapped-mission-arrow-focus.txt",
+      "bytes": 3791,
+      "sha256": "ff51ce72dd3d430e4cba4553f8b4d152279614a2808acac7233e0bcdcc9a452d"
     }
   ],
   "physicalDevice": false,
-  "numericDomMeasurements": false
+  "numericDomMeasurements": false,
+  "followupRuntime": "a6485318f341e087d19617115ccd983e3dfba479",
+  "followupScope": "Real session-only legacy tutorial win, results/picture focus, Collection entry, repeated direct-page menu, stale title correction."
 }
