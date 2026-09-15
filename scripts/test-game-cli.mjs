@@ -647,7 +647,7 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   await fs.mkdir(path.join(root, 'game/playground'));
   await fs.writeFile(
     path.join(root, 'game/playground/index.html'),
-    '<html><head><title>Nested</title></head><body>Preview</body></html>',
+    '<html><head><title>Nested</title><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head><body>Preview</body></html>',
   );
   const source = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   const first = await buildProject({ root, out });
@@ -657,6 +657,8 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   const manifest = JSON.parse(await fs.readFile(path.join(out, 'manifest.webmanifest'), 'utf8'));
   assert.equal(manifest.start_url, './game/');
   assert.equal(manifest.scope, './');
+  assert.equal(manifest.display, 'fullscreen');
+  assert.deepEqual(manifest.display_override, ['fullscreen', 'standalone', 'minimal-ui']);
   assert.ok(manifest.icons.some((i) => i.sizes === '192x192'));
   assert.ok(manifest.icons.some((i) => i.sizes === '512x512'));
   for (const file of cache.files) {
@@ -680,6 +682,17 @@ test('packaged offline builds generate scoped metadata, original icons, complete
   assert.match(entry, new RegExp(cache.buildId));
   const nested = await fs.readFile(path.join(out, 'game/playground/index.html'), 'utf8');
   assert.match(nested, /\.\.\/\.\.\/manifest.webmanifest/);
+  // Both missing metadata and an already prepared page produce one declaration.
+  for (const page of [entry, nested]) {
+    for (const [name, content] of [
+      ['mobile-web-app-capable', 'yes'],
+      ['apple-mobile-web-app-capable', 'yes'],
+      ['apple-mobile-web-app-status-bar-style', 'black-translucent'],
+    ]) {
+      assert.equal([...page.matchAll(new RegExp(`name="${name}"`, 'g'))].length, 1);
+      assert.match(page, new RegExp(`<meta name="${name}" content="${content}">`));
+    }
+  }
   const worker = await fs.readFile(path.join(out, 'service-worker.js'), 'utf8');
   assert.ok(worker.includes(cache.buildId));
   assert.ok(!worker.includes('__XONIX_OFFLINE_CONFIG__'));
