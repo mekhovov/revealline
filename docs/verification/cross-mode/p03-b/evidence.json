@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "35efcc685eae50ede8d117b0c5cefcc6ac6e9a2d",
+  "status": "SCOPED_NATIVE_INITIAL_FOCUS_PASS",
+  "phaseComplete": false,
+  "publicAccepted": false,
+  "receipts": [
+    {
+      "path": "fresh-deploy-focus.txt",
+      "source": ".cache/p03b-browser/fresh-deploy-focus.txt",
+      "rawBytes": 980,
+      "rawSha256": "f1c1587402943d7fa75942ddd800da6d935a45e1740d03dc252d61fcf97dd8ab",
+      "bytes": 981,
+      "sha256": "53173e942d486e72008e490c9afc1e4055ba391979046938a5de7bbf6caa5d3f",
+      "normalization": "Trailing whitespace trimmed; one final LF; accessibility text can contain incremental diff."
+    },
+    {
+      "path": "team-return-title-focus.txt",
+      "source": ".cache/p03b-browser/team-return-title-focus.txt",
+      "rawBytes": 980,
+      "rawSha256": "f1c1587402943d7fa75942ddd800da6d935a45e1740d03dc252d61fcf97dd8ab",
+      "bytes": 981,
+      "sha256": "53173e942d486e72008e490c9afc1e4055ba391979046938a5de7bbf6caa5d3f",
+      "normalization": "Trailing whitespace trimmed; one final LF; accessibility text can contain incremental diff."
+    },
+    {
+      "path": "saved-continue-focus.txt",
+      "source": ".cache/p03b-browser/saved-continue-focus.txt",
+      "rawBytes": 1010,
+      "rawSha256": "3eec029f85d1491d9023026888d28f34c1d871648b9ae11dcd40b8dc961c8083",
+      "bytes": 1011,
+      "sha256": "2d3315601e3154f3ca5a4d3de1817754204c1d3757b19b9132acfe0b17e479f7",
+      "normalization": "Trailing whitespace trimmed; one final LF; accessibility text can contain incremental diff."
+    },
+    {
+      "path": "verification.json",
+      "source": ".cache/p03b-initial-focus/verification.json",
+      "rawBytes": 4694,
+      "rawSha256": "7c1295b971a3cb5b893f4d06f69098c99d83921b8452e3493cb67412063f6719",
+      "bytes": 4694,
+      "sha256": "7c1295b971a3cb5b893f4d06f69098c99d83921b8452e3493cb67412063f6719",
+      "normalization": "Trailing whitespace trimmed; one final LF; accessibility text can contain incremental diff."
+    }
+  ],
+  "currentSourceComparisons": [
+    {
+      "path": "game/app.mjs",
+      "hashAtObservationEnd": "53b1ae462f7fae6e302852c9ffceef67d235e6775909fe2c4aca29428bcbf086",
+      "candidateHash": "53b1ae462f7fae6e302852c9ffceef67d235e6775909fe2c4aca29428bcbf086",
+      "matches": true
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "hashAtObservationEnd": "aeff03078904a29dfd43d4ff25550715ee5a07c8195db21030952d3a61532fbb",
+      "candidateHash": "aeff03078904a29dfd43d4ff25550715ee5a07c8195db21030952d3a61532fbb",
+      "matches": true
+    }
+  ],
+  "observed": [
+    "Fresh origin51652: initial title automatically focuses Deploy without a key press.",
+    "Existing60366 test-origin saved flight: title automatically focuses Continue.",
+    "Direct Team entry51652 with return=solo then keyboard Escape returns title and automatically focuses Deploy."
+  ],
+  "limits": [
+    "Native source overlay, not production build or public edition.",
+    "Exact previous Missions context and unfinished-flight departure handling remain P03-C.",
+    "No physical controller, touch or multi-viewport acceptance.",
+    "Generic disabled/hidden-button fallback, deliberate focus preservation and background-page behavior are covered by51 modeled actual-host cases on each Node version, not separately native-tested here."
+  ]
+}
