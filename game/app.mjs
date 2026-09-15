@@ -3765,7 +3765,12 @@ try {
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
     // Enable audio on the original gesture, before any storage/decode await.
-    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
+    // A Studio Play may still be awaiting media completion before its preference
+    // is saved. Preserve that live intent; explicit Pause/Mute clears it.
+    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
+      ? activateAudio()
+      : muteAudio()
+    )?.catch?.(() => {});
     if (!flightPictures?.ready(theme.id)) {
       if (pictureResume) return;
       const owner = flightPictures,
@@ -3818,7 +3823,10 @@ try {
           : 'Flight resumed.',
       );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
-    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
+    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
+      ? activateAudio()
+      : muteAudio()
+    )?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
