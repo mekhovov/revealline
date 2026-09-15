@@ -1,0 +1,34 @@
+{
+  "format": "revealline-bounded-original-evidence.v1",
+  "scope": "Original failed hosted utility gate and complete corrected local 40-case utility run. No successful exact-source qualification or phase acceptance is asserted.",
+  "sourceFailure": "75d409b1abf31f23302816ce88ea6f44248237d6",
+  "count": 5,
+  "bytes": 57148,
+  "files": [
+    {
+      "path": "run.json",
+      "bytes": 12610,
+      "sha256": "e9bb4dc66f052c2e928153313fc6aebc8ce6df6851e102737bfbf19529d7656d"
+    },
+    {
+      "path": "jobs.json",
+      "bytes": 7301,
+      "sha256": "9c2075023c5164406a825d588868ceffc8e8fe5ff4c0a96acbcaa91d49304981"
+    },
+    {
+      "path": "qualify.log",
+      "bytes": 36372,
+      "sha256": "4d48abcb57b9ad0f34c3fde5ebe3d5d67b217d58651e85ae759e8e6b03e6ad25"
+    },
+    {
+      "path": "fixed-utility-tests.log",
+      "bytes": 365,
+      "sha256": "9cbff4150128b2eb063de7b440b3c483fee4880f4af750144f63c07a0b480e29"
+    },
+    {
+      "path": "disposition.json",
+      "bytes": 500,
+      "sha256": "a0bb6efd5997922d5c553c82f2e7fa18af4928e8610e5b24f728ce3fc2336377"
+    }
+  ]
+}
