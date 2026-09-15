@@ -21,15 +21,28 @@ test('seven exact source identities bind independent bodies including both boss 
   );
   for (const [index, row] of model.entries.entries()) {
     const original = provenance.items[index];
-    assert.equal(row.sha256, original.sha256);
-    assert.equal(row.bytes, original.bytes);
+    assert.equal(row.derivation.source.sha256, original.sha256);
+    assert.equal(row.derivation.source.bytes, original.bytes);
     assert.equal(row.presentationId, original.presentationId);
-    assert.equal(row.src, `authoring/library/fpv-enemy-presentations/${original.original}`);
+    assert.equal(
+      row.derivation.source.src,
+      `authoring/library/fpv-enemy-presentations/${original.original}`,
+    );
+    assert.deepEqual(row.derivation.output, {
+      bytes: row.bytes,
+      sha256: row.sha256,
+      width: row.width,
+      height: row.height,
+    });
   }
   assert.equal(new Set(model.entries.map((row) => row.src)).size, 7);
   assert.notEqual(model.entries[5].src, model.entries[6].src);
   assert.equal(
     model.entries.reduce((n, row) => n + row.bytes, 0),
+    460159,
+  );
+  assert.equal(
+    model.entries.reduce((n, row) => n + row.derivation.source.bytes, 0),
     6522849,
   );
 });

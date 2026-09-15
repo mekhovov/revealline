@@ -131,6 +131,9 @@ function open(page) {
   page.$('collection-button').click();
   page.frame(0);
   assert.equal(page.$('collection-dialog').open, true);
+  // These tests browse the explicit secondary progress view.
+  page.$('collection-progress').open = true;
+  page.$('collection-progress').emit('toggle');
 }
 function padFor(page, t) {
   let now = 1000;

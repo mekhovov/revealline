@@ -417,14 +417,13 @@ export function drawClassicEnemy(
     const role = { 'contour-patrol': 'contour', 'claimed-rover': 'rover', eroder: 'eroder' }[
       enemy.type
     ];
-    const geometry = images.presentationSprites?.[role] ?? null;
     drawPresentedActor(
       ctx,
       presentation,
       palette,
-      geometry ? images[role] : (body?.image ?? images[role]),
-      geometry ? null : body?.record,
-      geometry,
+      body?.image ?? images[role],
+      body ? body.geometry : images.presentationSprites?.[role],
+      body?.record,
     );
     ctx.save();
     ctx.translate(enemy.x * SIZE, enemy.y * SIZE);

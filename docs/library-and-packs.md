@@ -2,7 +2,7 @@
 
 The playable runtime separates a portable player library from an installed expansion library. Both are versioned, local data. Importing a file does not fetch remote media, execute scripts, grant authenticated online scores, or alter archived game releases.
 
-The [public game](https://mekhovov.github.io/revealline/) serves v0.19.0, including the current/saved attempt export described below. [Public deployment evidence](verification/round-28/v019-public-deployment.md) identifies the exact source and checked journeys; [frozen archive](verification/round-28/v019-integrity.md) and [offline browser](verification/round-28/v019-browser.md) evidence remain separate.
+The library/export baseline described here was released in v0.19.0. These historical receipts do not identify the version currently served by the [public game](https://mekhovov.github.io/revealline/); see [Delivery priorities](delivery-priorities.md) for current release status. [Public deployment evidence](verification/round-28/v019-public-deployment.md) identifies the exact source and checked journeys; [frozen archive](verification/round-28/v019-integrity.md) and [offline browser](verification/round-28/v019-browser.md) evidence remain separate.
 
 ## Player library
 

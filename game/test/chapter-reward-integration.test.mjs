@@ -175,6 +175,9 @@ test('chapter reward work preserves routes and the reviewed campaign membership 
   assert.equal(Object.hasOwn(owned.preferences, 'touchControls'), true);
   assert.equal(owned.preferences.touchControls, null);
   delete owned.preferences.touchControls;
+  assert.equal(Object.hasOwn(owned.preferences, 'textFace'), true);
+  assert.equal(owned.preferences.textFace, 'pixel');
+  delete owned.preferences.textFace;
   assert.equal(Object.hasOwn(owned.preferences, 'textSize'), true);
   assert.equal(owned.preferences.textSize, 'standard');
   delete owned.preferences.textSize;

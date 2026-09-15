@@ -1,3 +1,4 @@
+import { canvasTextFonts } from '../text-face.mjs';
 import { presentationEvent, drawEventFeedback, drawRecoveryCue } from './event-feedback.mjs';
 import { geometryForLevel, geometryForRun } from '../core/geometry.mjs';
 import { drawPresentationImage } from './presentation-draw-image.mjs';
@@ -171,10 +172,13 @@ export class BoardPainter {
   reportAssets() {
     this.onAsset([this.lookWarning, this.enemyBodies.status()].filter(Boolean).join(' '));
   }
-  enemyBody(frame) {
+  enemyBody(frame, compiled = null) {
     if (!frame) return null;
     const image = this.images[frame.role];
-    return image ? { image, record: null } : this.enemyBodies.current(frame);
+    if (image) return { image, geometry: null, record: null };
+    return compiled
+      ? { image: compiled.image, geometry: compiled.geometry, record: null }
+      : this.enemyBodies.current(frame);
   }
   makeArt(theme, level = this.levelInfo, seed = this.artSeed) {
     return createSceneArt(theme, level, seed, () => makeCanvas(384, 288));
@@ -266,6 +270,7 @@ export class BoardPainter {
       actorScale = 1,
       playerScale = 1,
       displayCSSWidth = null,
+      textFace = 'pixel',
       actorSkins = {},
       backdrop = null,
     } = {},
@@ -273,6 +278,7 @@ export class BoardPainter {
     if (!this.theme || !state) return;
     const presentation =
       this.theme.id === 'fpv' || this.theme.family === 'fpv' ? this.presentation : null;
+    const fonts = canvasTextFonts(textFace, presentation?.fonts);
     reduced = reduced || presentation?.canvas.motionScale === 0;
     const motionDt = dt * (presentation?.canvas.motionScale ?? 1);
     const { width: columns, height: rows } = geometryForRun(state);
@@ -376,6 +382,7 @@ export class BoardPainter {
       scale: actorScale,
       actorSkins,
     });
+    // A compiled default owns its bitmap; do not acquire the old full original too.
     this.enemyBodies.update(
       [...actorFrames.values()].filter((frame) => !enemySprites[frame.type]),
       this.overrides,
@@ -694,15 +701,14 @@ export class BoardPainter {
         if (e.type !== 'relay-sentinel' || state.encounter?.defeated) continue;
         const stunned = (e.stunnedUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        const sprite = enemySprites[e.type],
-          body = sprite ? null : this.enemyBody(actorFrames.get(e.id));
+        const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
           ctx,
           actorFrames.get(e.id),
           p,
-          sprite?.image ?? body?.image,
+          body?.image,
+          body?.geometry,
           body?.record,
-          sprite?.geometry,
         );
         ctx.globalAlpha = 1;
         drawEncounterCore(ctx, state, e, p, reduced);
@@ -710,7 +716,7 @@ export class BoardPainter {
       drawEnemyPressure(ctx, classic, p, {
         screenScale: canvasCSSWidth / W,
         frames: actorFrames,
-        fonts: presentation?.fonts,
+        fonts,
       });
       drawActiveTrail(ctx, state.trailSegments, state.trail, state.player, p, {
         time: this.time,
@@ -726,7 +732,7 @@ export class BoardPainter {
             p,
             images,
             actorFrames.get(e.id),
-            this.enemyBody(actorFrames.get(e.id)),
+            this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]),
           )
         )
           continue;
@@ -748,15 +754,14 @@ export class BoardPainter {
         const stunned = (e.stunnedUntil || 0) > t,
           slowed = (e.slowUntil || 0) > t;
         ctx.globalAlpha = stunned ? 0.4 : 1;
-        const sprite = enemySprites[e.type],
-          body = sprite ? null : this.enemyBody(actorFrames.get(e.id));
+        const body = this.enemyBody(actorFrames.get(e.id), enemySprites[e.type]);
         drawPresentedActor(
           ctx,
           actorFrames.get(e.id),
           p,
-          sprite?.image ?? body?.image,
+          body?.image,
+          body?.geometry,
           body?.record,
-          sprite?.geometry,
         );
         ctx.globalAlpha = 1;
         if ((state.ability.scanUntil || 0) > t && e.type === 'bouncer' && !stunned) {
@@ -781,7 +786,7 @@ export class BoardPainter {
         screenScale: canvasCSSWidth / W,
         canvasCSSWidth,
         frames: actorFrames,
-        fonts: presentation?.fonts,
+        fonts,
       });
       const facing =
         { up: 0, right: Math.PI / 2, down: Math.PI, left: -Math.PI / 2 }[state.player.direction] ??
@@ -861,7 +866,7 @@ export class BoardPainter {
       }
       if (state.player.queuedDirection) {
         ctx.fillStyle = p.accent;
-        ctx.font = `500 16px ${presentation?.fonts.numeric || '"Field Kit Mono", monospace'}`;
+        ctx.font = `500 16px ${fonts?.numeric || '"Field Kit Mono", monospace'}`;
         ctx.fillText(
           { up: '↑', right: '→', down: '↓', left: '←' }[state.player.queuedDirection],
           state.player.x * CELL + playerSize.diameter / 2 + 3,
@@ -877,7 +882,7 @@ export class BoardPainter {
           screenScale: canvasCSSWidth / W,
           width: W,
           height: H,
-          fonts: presentation?.fonts,
+          fonts,
         });
       if (!fullReveal && !reduced && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
@@ -907,7 +912,7 @@ export class BoardPainter {
       drawRecoveryCue(ctx, state, p, {
         screenScale: canvasCSSWidth / W,
         width: W,
-        fonts: presentation?.fonts,
+        fonts,
       });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);

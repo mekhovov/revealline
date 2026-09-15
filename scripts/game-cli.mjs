@@ -916,6 +916,30 @@ function command(binary, args, options = {}) {
   return result.stdout;
 }
 
+// Both paths belong to one snapshot. Reserve the fixed destination exclusively
+// before replacing it, so an existing file or symlink is never overwritten.
+export async function transferSnapshotArchive(
+  archivePath,
+  staging,
+  { rename = fs.rename, copyFile = fs.copyFile, unlink = fs.unlink } = {},
+) {
+  const destination = path.join(staging, 'source.tar');
+  const reservation = await fs.open(destination, 'wx');
+  try {
+    await reservation.close();
+    try {
+      await rename(archivePath, destination);
+    } catch (error) {
+      if (error.code !== 'EXDEV') throw error;
+      await copyFile(archivePath, destination);
+      await unlink(archivePath);
+    }
+  } catch (error) {
+    await fs.rm(destination, { force: true });
+    throw error;
+  }
+}
+
 export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}) {
   if (typeof ref !== 'string' || !ref || ref.startsWith('-') || /[\x00-\x1f]/.test(ref))
     fail('Provide a trusted local commit, branch or tag with --ref');
@@ -986,7 +1010,7 @@ export async function releaseSnapshot({ root = PROJECT_ROOT, ref, version } = {}
       play: `${version}/site/game/`,
       download: `${version}/site/distribution.zip`,
     };
-    await fs.copyFile(archivePath, path.join(staging, 'source.tar'));
+    await transferSnapshotArchive(archivePath, staging);
     await fs.writeFile(path.join(staging, 'release.json'), json(release));
     // Only snapshot-owned labels enter the index. Invalid neighboring folders fail loudly.
     const prior = [];

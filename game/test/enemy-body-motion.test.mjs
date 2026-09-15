@@ -42,7 +42,7 @@ test('seven exact image objects paint before retained heading badges and physica
       .get(actor.id);
     const image = { src: record.src };
     const { ctx, calls } = surface();
-    drawPresentedActor(ctx, frame, palette, image, record);
+    drawPresentedActor(ctx, frame, palette, image, null, record);
     assert.equal(calls.filter((call) => call.op === 'drawImage').length, 1);
     const index = calls.findIndex((call) => call.op === 'drawImage');
     assert.equal(calls[index].args[0], image);
@@ -54,6 +54,19 @@ test('seven exact image objects paint before retained heading badges and physica
     ]);
     assert.ok(calls.findIndex((call) => call.op === 'arc') > index);
     assert.ok(calls.some((call) => call.op === 'arc' && call.args[2] === actor.radius * 16));
+    const surfaceMarks = calls.filter(
+      (call) => call.op === 'fillRect' && call.globalAlpha === 0.55,
+    );
+    assert.equal(
+      surfaceMarks.length,
+      record.motion.length,
+      'Only declared original surface parts are painted',
+    );
+    for (const part of record.motion)
+      assert.ok(
+        surfaceMarks.some((call) => call.fillStyle === part.color),
+        'The explicit sixth-argument original record still paints its surface motion',
+      );
     assert.deepEqual(actor, before);
   }
 });
