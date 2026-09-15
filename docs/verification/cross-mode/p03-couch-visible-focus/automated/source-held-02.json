@@ -1,0 +1,17 @@
+{
+  "base": "063ff5d650b6e071d2b59e89fa6e9fb5058b3f08",
+  "predecessor": "9858a299f10aafeef848bfbdc36585caba84ab13c632b12b2a73fc70b93c4ef0",
+  "scope": "Synchronous transition-only focus after shell content/visibility installation; preserved first helper and screen flow. New whole-file checks pending peer.",
+  "files": [
+    {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 15181,
+      "sha256": "a6f66819d255cf6fd0bb3bc3e22a52991ef1435095fc1d7cbb72af9153dce893"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 20435,
+      "sha256": "d02d788b864a1b430228415c04b469ff93f0d878f6233835c27b496ec8ebe768"
+    }
+  ]
+}
