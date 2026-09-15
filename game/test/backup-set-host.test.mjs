@@ -248,6 +248,24 @@ for (const exit of ['escape', 'controller'])
     if (exit === 'escape') {
       const event = new Event('cancel', { cancelable: true });
       if (h.$('library-dialog').dispatchEvent(event)) h.$('library-dialog').close();
+      assert.equal(event.defaultPrevented, true);
+    } else {
+      pad.buttons[1] = { pressed: true, value: 1 };
+      h.frame();
+      pad.buttons[1] = { pressed: false, value: 0 };
+      h.frame();
+    }
+    assert.equal(h.$('library-dialog').open, true, 'First Back closes only File names.');
+    assert.equal(h.$('backup-set-filenames').open, false);
+    assert.equal(h.$('backup-set-filenames').hidden, false);
+    assert.equal(h.doc.activeElement.id, 'backup-set-filename-summary');
+    assert.equal(h.$('backup-set-filename-list').children.length, 10);
+    assert.equal(h.$('download-backup-game').href, downloadUrl);
+    assert.equal((await fetchBlob(downloadUrl)).status, 200);
+    assert.doesNotMatch(h.$('controller-ui-hint').textContent, /operation is still in progress/);
+    if (exit === 'escape') {
+      const event = new Event('cancel', { cancelable: true });
+      if (h.$('library-dialog').dispatchEvent(event)) h.$('library-dialog').close();
       assert.equal(event.defaultPrevented, false);
     } else {
       pad.buttons[1] = { pressed: true, value: 1 };
@@ -255,7 +273,7 @@ for (const exit of ['escape', 'controller'])
       pad.buttons[1] = { pressed: false, value: 0 };
       h.frame();
     }
-    assert.equal(h.$('library-dialog').open, false, 'File names add no separate Back layer.');
+    assert.equal(h.$('library-dialog').open, false, 'Second Back follows the dialog origin.');
     assert.equal(h.$('backup-set-filenames').hidden, true);
     assert.equal(h.$('backup-set-filenames').open, false);
     assert.equal(h.$('backup-set-filename-list').children.length, 0);
@@ -265,3 +283,55 @@ for (const exit of ['escape', 'controller'])
     assert.deepEqual(h.storage.map, stored);
     assert.deepEqual(h.errors, []);
   });
+
+test('Title Settings Library cancel consumes filename detail before native dialog close and refocus', async (t) => {
+  const h = await soloPage(t);
+  h.$('shell-settings').focus();
+  h.$('shell-settings').click();
+  h.$('settings-tab-data').click();
+  h.$('settings-saves').focus();
+  h.$('settings-saves').click();
+  [...h.$('library-dialog').querySelectorAll('button')]
+    .find((node) => node.dataset.libraryPanel === 'saves')
+    .click();
+  assert.equal(await h.$('prepare-backup-set').onclick(), true);
+  const dialog = h.$('library-dialog'),
+    summary = h.$('backup-set-filename-summary'),
+    before = authoritativeCheckpoint(h.rendered.run),
+    stored = new Map(h.storage.map),
+    cancelStates = [];
+  let closes = 0;
+  dialog.addEventListener('cancel', (event) => cancelStates.push(event.defaultPrevented));
+  dialog.addEventListener('close', () => {
+    closes++;
+  });
+  // The browser owns native summary activation; retain its resulting open state.
+  h.$('backup-set-filenames').open = true;
+  summary.focus();
+  const first = new Event('cancel', { cancelable: true });
+  if (dialog.dispatchEvent(first)) dialog.close();
+  await Promise.resolve();
+  assert.equal(first.bubbles, false, 'A native dialog cancel is cancellable, not bubbling.');
+  assert.deepEqual(
+    cancelStates,
+    [true],
+    'The existing Library listener consumes the first cancel.',
+  );
+  assert.equal(closes, 0);
+  assert.equal(dialog.open, true);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.$('backup-set-filenames').open, false);
+  assert.equal(h.doc.activeElement === summary, true, h.doc.activeElement.id);
+  assert.equal(h.$('backup-set-files').children.length, 5);
+  const second = new Event('cancel', { cancelable: true });
+  if (dialog.dispatchEvent(second)) dialog.close();
+  await Promise.resolve();
+  assert.deepEqual(cancelStates, [true, false]);
+  assert.equal(closes, 1);
+  assert.equal(dialog.open, false);
+  assert.equal(h.$('settings-dialog').open, true);
+  assert.equal(h.doc.activeElement.id, 'settings-saves');
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+  assert.deepEqual(h.storage.map, stored);
+  assert.deepEqual(h.errors, []);
+});

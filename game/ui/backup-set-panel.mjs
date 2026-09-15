@@ -184,7 +184,16 @@ export function attachBackupSetPanel({
     if (document.hidden) cancel({ focus: false });
   });
   return {
-    cancel: () => (operation ? cancel() : false),
+    cancel: () => {
+      if (operation) return cancel();
+      if (!dialog.open || filenames.hidden || !filenames.open || !root.getClientRects().length)
+        return false;
+      // Both native dialog cancellation and controller Back use the Library's
+      // existing cancellation seam. Consume this level without releasing files.
+      filenames.open = false;
+      if (!document.hidden) filenameSummary.focus({ preventScroll: true });
+      return true;
+    },
     invalidate: () => cancel({ focus: false }),
     checkCurrent,
   };
