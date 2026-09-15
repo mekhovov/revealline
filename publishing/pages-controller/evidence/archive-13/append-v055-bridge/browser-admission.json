@@ -1,0 +1,95 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-13",
+  "infrastructureCommit": "58b21ebeff3c2d8e8ca37d5b7764f8203b8824ed",
+  "deploymentId": 6454910731,
+  "versions": [
+    "v0.54.0",
+    "v0.55.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/bridge-native-completion.json",
+      "sha256": "a7df0365a5c31acf671c179b5e72d6f375ff999797dfaae4dc77eca251e8b7e1"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/capture-paused.txt",
+      "sha256": "d045327e586031f92509c169c0b9ff94316312579b5df7825e0c26ca689de9b0"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/observation.json",
+      "sha256": "93518066e982fd271631b9846a904661ba93b448bbe318fe9e3d903cca832b66"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/restored-paused.txt",
+      "sha256": "300f3a410160b78cc58bf4f180c0555cc7542e8214f91104ac6d2b4185cb2ac8"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/v054-release-explorer.txt",
+      "sha256": "97df09bff8e2d5d22e34b82b38dee6a73ba347d643731101d6c578dce626b7a6"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/v054-title-return.txt",
+      "sha256": "4cdc366a5db50e8812c73dd438ea26b2358c39fea9bcae5f71c52781eee3ba6c"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native/v055-release-explorer.txt",
+      "sha256": "97df09bff8e2d5d22e34b82b38dee6a73ba347d643731101d6c578dce626b7a6"
+    },
+    {
+      "path": "evidence/archive-13/append-v055-bridge/native-retention.json",
+      "sha256": "09c0ffefe3981cf75648d1e5486a05ea9dbd69b316257f798933e8e8927e2213"
+    },
+    {
+      "path": "evidence/archive-13/browser-review.json",
+      "sha256": "dbb9410fe85c1493942c9777056c8e27d1b8460aa7b517a986edd11764bfbb50"
+    },
+    {
+      "path": "delivery/evidence/cross-mode-p00/public-v055/acceptance.json",
+      "sha256": "2879f774c50b8c8d48e0bef6e575be3b11d67ce80ecc7602257fac4dd9b55ef2"
+    }
+  ],
+  "category": "Scoped in-app browser keyboard observations reported by root",
+  "scope": "Both archived title Release explorer links were followed using Tab and Enter after bridge deployment58b21 to the visible canonical main catalog. Root also observed v054 mission-navigation/title-return and v055 online capture, explicit pause/resume and saved-flight restoration; the v055 flight/save observations precede the bridge-only deployment and remain bound to unchanged frozen game bytes.",
+  "observedJourneys": {
+    "v0.55.0": [
+      "Visible exact version title; keyboard Deploy and actual pack preparation completed",
+      "Actual Standard Immediate Orchard Crossing movement, travelling line-strike warning, closure at51.5%,12060points,3lives",
+      "Explicit Pause/Resume with directional release; reload then Continue restored same coverage,score,lives,time paused",
+      "Keyboard pause menu returned to title; Tab reached Release explorer and Enter followed the real game anchor through new bridge to https://mekhovov.github.io/revealline/releases/ with visible Playable versions catalog"
+    ],
+    "v0.54.0": [
+      "Visible exact version title; keyboard Deploy-to-Missions focus and Enter opened Choose mission",
+      "Escape from mission selection returned title with Deploy focus",
+      "Tab reached Release explorer; Enter followed the actual game link through the bridge to canonical main catalog"
+    ]
+  },
+  "historicalOfflineReferences": [
+    {
+      "path": "evidence/archive-13/browser-review.json",
+      "sha256": "dbb9410fe85c1493942c9777056c8e27d1b8460aa7b517a986edd11764bfbb50",
+      "scope": "Historical v054 archive03986/deployment6453754021 automated Chromium offline reload/play after retry; not a fresh test of bridge deployment58b21."
+    },
+    {
+      "path": "delivery/evidence/cross-mode-p00/public-v055/acceptance.json",
+      "sha256": "2879f774c50b8c8d48e0bef6e575be3b11d67ce80ecc7602257fac4dd9b55ef2",
+      "scope": "Historical P00 v055 on main controllerda4459/deployment6454057759; origin/scope differs from archive13. Not archive055 disconnected acceptance."
+    }
+  ],
+  "retainedFindings": [
+    {
+      "phase": "P01",
+      "detail": "The prior archive055 Release explorer404 remains in native/observation.json; the actual game-anchor route passed after the bridge deployment. This does not erase unrelated offline preparation findings in historical evidence."
+    }
+  ],
+  "scopeLimitations": [
+    "No new disconnected archive test, offline cold start or service-worker cache acceptance was performed in this successor check.",
+    "Historical v054 archive offline and P00 main v055 offline evidence retain their original deployments, origins, retries and limitations.",
+    "No full archive mission win, exhaustive menus/maps/states, physical device, touch or controller qualification.",
+    "The observed v055 capture ended at an outer border and does not independently establish internal-junction capture-stop behavior.",
+    "No performance or difficulty inference from inspection timing.",
+    "Only original text observations are copied here. Screenshot bodies remain at the retained root paths listed in native-retention.json; this preparation did not decode or independently hash them.",
+    "This browser record does not substitute for the independently completed full HTTP inventory and deployment identity admission."
+  ]
+}

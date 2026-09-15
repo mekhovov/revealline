@@ -1,0 +1,10 @@
+{
+  "command": [
+    "gh",
+    "api",
+    "repos/mekhovov/revealline-archive-13/deployments?environment=github-pages&per_page=5"
+  ],
+  "startedAt": "2026-09-15T08:36:25.932506+00:00",
+  "finishedAt": "2026-09-15T08:36:26.566997+00:00",
+  "stderr": ""
+}
