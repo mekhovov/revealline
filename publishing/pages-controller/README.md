@@ -22,6 +22,8 @@ Archive08 now admits the exact v0.47/v0.48 freezes and their native play, Studio
 
 Archive11 preserves v0.51.0 from its original release ZIP. Its public audit verifies all 620 files and 323,017,169 bytes without failures or retries. Native evidence verifies online mission installation, keyboard capture, pause/resume and saved-flight restoration. Two uninterrupted offline preparation attempts timed out after an initial interrupted attempt; disconnected reload was not tested. This admission is scoped to historical online preservation and does not claim offline acceptance.
 
+Archive10's later deployment retains v0.42.0 and an additional v0.51.0 copy. Its successor admission preserves the earlier evidence and pins the complete 976-file, 633,532,427-byte audit plus scoped native journeys at infrastructure `55019541f8210ccef70f09cc04885f0debf1c4a7`. Independent review reconciled every retained HTTP observation with both original manifests; 18 fresh probes corroborated the unchanged deployment. Those probes are not a new full audit or offline acceptance. Main allocations still route v0.42.0 to archive10 and v0.51.0 to archive11.
+
 The current selector names v0.52.0, frozen from source `d2b53987672b0501c391b48655180f59ea03d142`. Its original published metadata and six-gate source qualification are pinned without changing the release assets. Current public byte, play and offline acceptance follow the successful deployment of this reviewed selection; the controller preparation does not claim those checks have already passed.
 
 ## Build and publication

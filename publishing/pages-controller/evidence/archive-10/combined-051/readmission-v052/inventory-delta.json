@@ -1,0 +1,147 @@
+{
+  "oldInventorySha256": "7797737f83985d4946dcfba9f1b20468ab820db339854c3d1595c5d3cd7ca972",
+  "newInventorySha256": "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a",
+  "candidateEvidenceCommit": "68abd915bd2b776359d5be79630b0ba811e1def5",
+  "oldFileCount": 358,
+  "newFileCount": 976,
+  "retainedCanonicalV042Files": 353,
+  "allRetainedV042DescriptorsIdentical": true,
+  "removedFiles": [],
+  "changedExistingFiles": [
+    {
+      "path": "archive-routing.json",
+      "old": {
+        "path": "archive-routing.json",
+        "bytes": 15093,
+        "sha256": "79ca254f50d4246a7bf66f9d9b22352a954af5cf7a507b3a822d976a19c42598"
+      },
+      "new": {
+        "path": "archive-routing.json",
+        "bytes": 16543,
+        "sha256": "3583ea8888ff218ac3220057909fe3617f71fcf9fe9205117c0f302537d2eadf"
+      }
+    },
+    {
+      "path": "releases/index.html",
+      "old": {
+        "path": "releases/index.html",
+        "bytes": 813,
+        "sha256": "71ddf26c63b3840fcda3291c5f097816ca034c306b450fa896ae1363969ef235"
+      },
+      "new": {
+        "path": "releases/index.html",
+        "bytes": 1099,
+        "sha256": "3925c439c223d309dbe4facbdb2df8a1c5d81c568e3ef232d6406c9b913497e4"
+      }
+    },
+    {
+      "path": "releases/index.json",
+      "old": {
+        "path": "releases/index.json",
+        "bytes": 626,
+        "sha256": "e899bca70594a8b3591a6e3d5bbc89a11c9212b72e2830e048836d81e7992c7c"
+      },
+      "new": {
+        "path": "releases/index.json",
+        "bytes": 1184,
+        "sha256": "27653cef341794fcb94535336e80973de586777a6950587d646af13774ca8954"
+      }
+    }
+  ],
+  "addedFiles": 618,
+  "selectedProbes": [
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "archive-routing.json",
+      "bytes": 16543,
+      "sha256": "3583ea8888ff218ac3220057909fe3617f71fcf9fe9205117c0f302537d2eadf"
+    },
+    {
+      "path": "index.html",
+      "bytes": 144,
+      "sha256": "20514a86c4a483d992f9a4feeda2ca0298d0c123b5428a3d209d6b77cd1ebdfb"
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 1099,
+      "sha256": "3925c439c223d309dbe4facbdb2df8a1c5d81c568e3ef232d6406c9b913497e4"
+    },
+    {
+      "path": "releases/index.json",
+      "bytes": 1184,
+      "sha256": "27653cef341794fcb94535336e80973de586777a6950587d646af13774ca8954"
+    },
+    {
+      "path": "releases/v0.42.0/release.json",
+      "bytes": 465,
+      "sha256": "e1c3bba8875c27bb36403ab79ec6dd28879c3029f1f98b4af77f1a0abbaf0f46"
+    },
+    {
+      "path": "releases/v0.42.0/site/.xonix-build.json",
+      "bytes": 53,
+      "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa"
+    },
+    {
+      "path": "releases/v0.42.0/site/game/index.html",
+      "bytes": 50935,
+      "sha256": "4dc9a6fe2c7f513bee17896d06efff16418494e6b76c4c9130eff1cee2b91a1b"
+    },
+    {
+      "path": "releases/v0.42.0/site/manifest.json",
+      "bytes": 59476,
+      "sha256": "6c38c9d0ac7ea99cf3ff2f8da277bc4c1272f2c2a922178a591ba5ebafda596c"
+    },
+    {
+      "path": "releases/v0.42.0/site/offline-cache.json",
+      "bytes": 52460,
+      "sha256": "53c15ef9ec7824b73fd59242c86084264b46ef5511bd16de2a35b7135963c836"
+    },
+    {
+      "path": "releases/v0.42.0/site/service-worker.js",
+      "bytes": 49516,
+      "sha256": "d24478493e734dac2fc42a7cf4fea6f88659a3c16b39947d0236a8a979d2ee62"
+    },
+    {
+      "path": "releases/v0.51.0/release.json",
+      "bytes": 465,
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541"
+    },
+    {
+      "path": "releases/v0.51.0/site/.xonix-build.json",
+      "bytes": 53,
+      "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa"
+    },
+    {
+      "path": "releases/v0.51.0/site/game/index.html",
+      "bytes": 62921,
+      "sha256": "179d3ce1b755d29a1d2cae10ab5d21122bfaac73122fa462e81ca7c42dc1af23"
+    },
+    {
+      "path": "releases/v0.51.0/site/manifest.json",
+      "bytes": 113770,
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3"
+    },
+    {
+      "path": "releases/v0.51.0/site/offline-cache.json",
+      "bytes": 106718,
+      "sha256": "0f1aa05dd2027dae719e4f497dc73eba0dcf123f58e1cacbe71812dfb060f7e2"
+    },
+    {
+      "path": "releases/v0.51.0/site/service-worker.js",
+      "bytes": 94764,
+      "sha256": "ed1e1c62ab8e5625914b0dacf907fd8bc22a0c0492236707568dec3b39c9e746"
+    },
+    {
+      "path": "releases/v0.42.0/site/authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+      "bytes": 12358446,
+      "sha256": "690c56f06c85fddf01bab9b997022ed3c5ed9b8872b79b4124cd263607a3d91b"
+    }
+  ],
+  "fullHistoricalAuditRerun": false,
+  "infrastructureCommit": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "deploymentId": 6450531920
+}
