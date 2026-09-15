@@ -48,6 +48,10 @@ checkout was performed for this slice.
 
 ## Still open
 
+The subsequent [font-byte and Ukrainian specimen check](glyphs/README.md) passed
+for the existing local fonts and design atlas. It does not close the remaining
+gameplay layout and hardware checks below.
+
 Narrow portrait, short landscape, zoom and cold-font checks remain open, as do
 native system-reduction changes, cross-tab storage events, denied saves and
 practice/writer failure. This native Team attempt only started and paused at 0:00;
