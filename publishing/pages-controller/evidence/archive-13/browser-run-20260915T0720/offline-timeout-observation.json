@@ -1,0 +1,8 @@
+{
+  "kind": "transcribed-tool-observation",
+  "observedAt": "2026-09-15T07:29:14Z",
+  "status": "Offline preparation timed out. Keep the page online and try again.",
+  "online": true,
+  "source": "Root agent-browser read-only document.body.innerText tool result; no screenshot of timeout captured. Two attempted diagnostic evals had syntax errors before a valid diagnostic was collected.",
+  "recovery": "Clicked enabled Prepare offline play again; ready report then verified all 600 files."
+}

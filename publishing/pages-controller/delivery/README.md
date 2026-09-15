@@ -1,5 +1,7 @@
 # Reveal Line — FPV Field Kit delivery
 
+The later [cross-mode P00 audit and delivery record](evidence/cross-mode-p00/README.md) tracks the approved Solo, Versus and Team redesign. It identifies unfinished Team artwork, actor/objective integration and responsive controls, plus Versus artwork-resolution gaps. The historical v0.51 report below retains its original scope and evidence; its registry-completeness statements do not establish the new P08-A cross-mode acceptance.
+
 **The FPV Field Kit redesign is delivered as v0.51.0.** All eight phases have versioned releases, and the final frozen game has passed source, public-file and browser qualification. This report records the implemented scope, test evidence and remaining limits.
 
 [Play v0.51.0](https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/) · [Asset Studio](https://mekhovov.github.io/revealline/releases/v0.51.0/site/authoring/asset-studio/) · [Design atlas](https://mekhovov.github.io/revealline/releases/v0.51.0/site/authoring/design-atlas/) · [Immutable release](https://github.com/mekhovov/revealline/releases/tag/v0.51.0)
