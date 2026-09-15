@@ -55,3 +55,7 @@ When a task touches reveal artwork, a saved flight, Collection or media export, 
 ## Field Kit Asset Studio audio
 
 Use the selected slot's medium-specific copyable brief and [Field Kit requests](../../prompts/field-kit-production.md#replace-an-audio-cue-or-loop). Short cue candidates are mono 48 kHz / 16-bit PCM WAV up to one second; music candidates are seamless 4–16-bar OGG/MP3 loops with retained lossless source, within the actual slot budget. Preserve custom production requirements, event timing and explicit activation/Stop/mute/volume. The installed defaults remain original procedural Soundscape recipes. Report native playback observations separately from subjective listening; never call a successful button click a listening review.
+
+## Mobile playback and history restoration
+
+Keep the call that starts or wakes media on the direct user-gesture path; do not put unrelated asynchronous preparation ahead of it. Check the actual play Promise before announcing playback. Preserve one session transport across menus/retries, and distinguish visible pageshow restoration, focus/visibility changes, nested practice ownership and a deliberate music-only Pause. Test these paths with real MP3 playback and browser history in addition to modeled event sequencing. Browser policy can still deny playback; give an actionable retry and never silently claim that permission was granted. [MDN playback guidance](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play) explains the Promise and policy boundary.
