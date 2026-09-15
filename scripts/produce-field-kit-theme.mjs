@@ -53,11 +53,11 @@ const REVIEWED_RECIPE_INPUTS = {
     ],
   },
   audio: {
-    sha256: '998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95',
+    sha256: 'ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130',
     evidence: [
-      'Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.',
-      'game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.',
-      'Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim.',
+      'Scoped P02-A source review (functional): docs/verification/cross-mode/p02-a/recipe-review.md; audio recipe inputs sha256:ffc98cb5fae178aa91524368abbe5d62f13e79ab7726f0f312feb4e64dc4e130. Shared master mute/volume applies once while local buses, media envelopes, independent transport intent and historical cue/composition recipes remain separate. The four exact reviewed inputs remain unchanged after integrating P01 candidate cc9f8ff.',
+      'Focused core, persistence, native-media binding and actual-host tests retain delayed-play/context ownership, mute/zero enforcement, observer reentrancy, shared 1-percent control precision and disposal coverage in docs/verification/cross-mode/p02-a/. These scoped observations do not replace final integrated-source qualification.',
+      'Native owned MP3 and silent-video observations preserve independent transport under master changes. The reproducible output-probe measures actual Soundscape PCM: silent mute/zero windows, quarter-volume RMS ratio0.250056547, restored ratio0.999610075 and owned-context cleanup. This functional recipe approval is not album listening, physical-speaker, native MP3/video gain, device or public-release certification.',
     ],
   },
   motion: {
