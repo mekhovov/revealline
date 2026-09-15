@@ -65,6 +65,12 @@ jobs:
       - name: Require reviewed production slots in the committed ledger
         run: node scripts/check-field-kit-readiness.mjs
 
+      - name: Verify qualified tracked source is unchanged
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code
+          git diff --cached --exit-code
+
   test:
     needs: qualify
     runs-on: ubuntu-latest
@@ -102,6 +108,12 @@ jobs:
         run: |
           mkdir -p .cache
           node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+
+      - name: Verify tested tracked source is unchanged
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          git diff --exit-code
+          git diff --cached --exit-code
 
   freeze:
     if: github.event_name == 'workflow_dispatch' && inputs.freeze_snapshot
