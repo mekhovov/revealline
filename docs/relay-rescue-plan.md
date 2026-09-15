@@ -1,5 +1,23 @@
 # Together: Relay Rescue
 
+## Shared Field Kit interface follow-up
+
+The isolated follow-up to source `68abd915bd2b776359d5be79630b0ba811e1def5` uses the existing Field Kit fonts, semantic palette, control states and compiled-style hooks. It adds no presentation registry, co-op mechanics, progression, version or release. The two virtual pads are cardinal 3×3 crosses with the shared 44px target minimum, player markers and pressed feedback. The arena retains its 2:1 shape; narrower layouts can scroll rather than compressing targets below that minimum.
+
+Short landscape touch play reserves a 140px gutter for each player beside the full arena, compacts the HUD spacing and hides the header only while playing. The pause/result panel uses viewport bounds and its own scroll area, so the arena height cannot clip its actions.
+
+Help and Options use one retained disclosure group in the lobby or paused/result overlay. Desktop play shows the live HUD and actions rather than permanent keyboard instructions. Reading controls supports the existing controller reading mode. Back exits reading or an open disclosure; from the paused root it focuses Resume together. Only actual Resume resumes the attempt. Pause copy is simply “PAUSED.”
+
+Touch mode is local to this visit: Auto uses coarse-pointer capability and the input adapter's actual per-player controller slots; Show both players and Hide are explicit overrides. Virtual flight controls remain hidden in all menus, including when Show is selected. Hiding a previously visible pad releases that seat's physical inputs while retaining continuous steering intent; ordinary pause and lifecycle boundaries still release gameplay inputs. Support and held Boost remain the authored cooperative controls, including free nearby rescue. Solo Arcade bonus policy does not govern this mode.
+
+The complete 13-case host file passes on Node 22.22.2 and Node 20.19.5. It covers current assignments, overrides, pause/menu visibility, held-clock reading, explicit Resume and the prior pack/recovery/Support cases. The minimal DOM models native disclosure activation. A source-matching CSS geometry assertion was removed; geometry was checked in the browser instead.
+
+Scoped native browser review on 2026-09-15 checked desktop 1280×720 and fixed CSS iframe viewports of landscape 852×393 and portrait 390×844. The desktop computed record confirms all eight arrow targets are 44×44 and form cardinal crosses. Landscape initially clipped the arena; the side-gutter correction shows the complete arena, HUD, objective, both pads and Pause. Portrait running also shows that set. Pause initially clipped actions inside the arena; the viewport correction exposes Resume, Retry, Change setup, Help and Options in both viewports. In landscape, Enter opens Read controls, PageDown scrolls, and successive Escape actions return to Read controls, collapse Help and focus Resume while time stays paused at 0:00. Portrait keyboard navigation reaches Options, changes Touch controls to Hide and closes Options without resuming. Retained screenshots and geometry are under the local evidence directory `.cache/round47/relay-field-kit-native`; prior failed views remain historical.
+
+These are bounded browser viewport and keyboard observations, not physical-device, physical-gamepad, native-touch, paired-play or complete gameplay acceptance. Craft markers and fine arena details remain small. Importing the shared CSS does not load the solo profile’s Plain/Large preferences; this change does not claim full preference parity. Those readability and preference gaps remain open.
+
+The layout follows the supplied primary guidance on contextual handheld controls, safe edges and readable targets from [Apple's handheld interface session](https://developer.apple.com/videos/play/meet-with-apple/243/), and consistent Back/confirm and focus order from [Xbox Accessibility Guideline 112](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/112). These inform the source change; they do not replace native or paired evaluation.
+
 ## Player experience
 
 Two equivalent craft reclaim one territory board, defeat enemy strongholds, rescue one another and finish each mission together. The mode is a new choice beside the existing couch race. It uses one shared camera, world, enemy population, clock, coverage total and result. Each player can cut, protect and rescue. Players may prefer covering or cutting without forced role rotation or equal contribution quotas.
