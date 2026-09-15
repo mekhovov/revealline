@@ -4,7 +4,11 @@
 
 Publication PR #54 merged at controller `02364d4`. [Production run 34950891496](https://github.com/mekhovov/revealline/actions/runs/34950891496) and deployment `6455476355` succeeded, serving frozen game source `20f0179`. The [complete public audit](public/completion.json) verified **2,337 files / 635,636,681 bytes**, with **zero failures, retries, skips or uninspected files**. Source and deployment identity remained unchanged after the audit. This covers the deployed namespace; it does not repeat every historical archive-body audit.
 
+[PR #57](https://github.com/mekhovov/revealline/pull/57) subsequently admitted Archive12's preserved v0.52/v0.56 editions. [Production run 34954644998](https://github.com/mekhovov/revealline/actions/runs/34954644998), controller `65b1935` and deployment `6456165541` succeeded. The [successor full public audit](public-successor/completion.json) again passed all **2,337 files / 635,636,681 bytes**, with zero failures, retries or skips. Its entire ordered public inventory is byte-identical to the first deployment. The earlier browser observations below retain their original attribution; they are not presented as new native checks.
+
 P00/v0.55 is accepted. **P01/v0.57 is in progress in the cross_mode workstream.** This additive release preserves P00 and the earlier Field Kit work; it does not mark later roadmap phases complete.
+
+The [feedback-to-phase review](planning/feedback-and-next-phases.md) maps every requested correction to its implemented behavior, remaining acceptance and priority. The [audio acceptance matrix](planning/audio/ACCEPTANCE.md) defines the next bounded implementation slices against its explicitly recorded source checkpoint; it is planning, not completed audio qualification.
 
 ## Delivered player changes
 
@@ -23,6 +27,8 @@ Keyboard Deploy entered the installed Pressure Lines campaign. A Down cut captur
 Keyboard navigation reached Settings and Studio. First-open focus landed on **Close studio**; Escape returned to **Music library & playlists**. Game Data → Library prepared all five backup files. First Escape closed File names; second returned to Saves & recovery. **No public backup downloads were requested in this check.**
 
 Public Team play started Relay Yard. Escape paused; keyboard Options selected **Show both** after explicitly opening the native select. The earlier ArrowDown/Enter attempt left Auto unchanged and remains recorded. Options Escape kept the game paused. Resume displayed cardinal pads below an unobscured arena; the final state was paused. Team artwork parity remains P08 work.
+
+Team also needs the shared Plain/Large preference bridge and actor-size/state review. Existing pursuit/interception behaviors and three completed source missions do not establish that the requested enemy speed, challenge and enjoyment are satisfactory; difficulty tuning remains open acceptance.
 
 These observations do **not** certify disconnected-network behavior, audible media, real gamepads/physical touch, phones or Safari. Earlier source-layout observations and P00 offline evidence retain their own identities.
 

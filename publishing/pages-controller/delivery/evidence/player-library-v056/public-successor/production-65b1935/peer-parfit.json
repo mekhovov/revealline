@@ -1,0 +1,122 @@
+{
+  "format": "revealline-v056-successor-binding-peer.v1",
+  "reviewer": "Parfit /root/runtime_expansion",
+  "status": "PASS",
+  "recordedAt": "2026-09-15T09:55:25.460171+00:00",
+  "controllerCommit": "65b1935aa3300ae5349c71dde71b61767cb7cd06",
+  "controllerTree": "39b386c046cb98fa6123bd463d9df2883b6fd8fc",
+  "runId": 34954644998,
+  "deploymentId": 6456165541,
+  "bindingSha256": "c9c329fd19deddc8401ca423ad3da0303a6578a058c0a1d9d5abaf3287fe3fa8",
+  "verified": [
+    "All nine raw input byte/sha pins exact.",
+    "Authenticated actual65 Git-commit API tree39b equals locally present tree; each of five input source blobs independently equals that tree. Actual65 commit object is not claimed local.",
+    "Both workflow jobs completed successfully; deploy job104334181644, run34954644998, main65/latestdeployment6456165541/status success agree.",
+    "Small receipt artifact10389849194 metadata112397B/digesta0592b74 matches intake and two retained JSON member pins.",
+    "All2337 ordered path/byte/sha rows equal prior actual02364 receipt exactly, total635636681B and inventory45c0d50c. No added/removed/changed paths. This retains the prior independently derived complete namespace, including aliases/bridges/workers/catalog graph.",
+    "Current source20f/treeb48, canonical qualification9f02, manifest/record/catalog61 are byte-identical. Only Archive12 admission differs; all other configuration fields/12 admissions stay unchanged.",
+    "All five reused helper/reference files are byte-identical to previous qualified audit; retained check output pin matches successful Node20.19.5 no-network check."
+  ],
+  "limits": [
+    "Source/metadata review only; no imports, tests, API requests, browser actions or public/archive body reads by reviewer.",
+    "Receipt ZIP CRC/outer hash intake was performed by Dewey; reviewer checked retained artifact metadata and extracted member pins, not an independent ZIP intake.",
+    "Successor public stream remains the owner task; this pre-stream review does not claim its success or a new native/offline/device check."
+  ],
+  "pins": [
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/binding.json",
+      "bytes": 2019,
+      "sha256": "c9c329fd19deddc8401ca423ad3da0303a6578a058c0a1d9d5abaf3287fe3fa8"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/receipt.json",
+      "bytes": 450377,
+      "sha256": "e19a504ad9723462c6dda040fd361c43f98262152cdbcd6258318bdfce5b4dcb"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/deployment.json",
+      "bytes": 3823,
+      "sha256": "6da9df633db9b08f9871c8fdc88b62d46f0e2bc77f8a67c00da078556cbe679d"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/statuses.json",
+      "bytes": 6586,
+      "sha256": "a8b2ede299726b4f73624dcfe24a5d9e047c929f71c5617d543696172d50dcc2"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/run.json",
+      "bytes": 12210,
+      "sha256": "86d4fa8ddef1a43dc3451458b11819effd8d1e5f25a392844e38625ee4874e3d"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/manifest.json",
+      "bytes": 120574,
+      "sha256": "e64c601809366ad5122ecc09d02dc597af410f934e81f75da86b0c75876b0de5"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/record.json",
+      "bytes": 465,
+      "sha256": "a3d3f7c09a1c464629c7bc40349fecd0a7536b90e017ba6256e1902657f434b3"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/qualification.json",
+      "bytes": 6380,
+      "sha256": "9f02b6c92499a9f88e1b874366d3719c6dfb878ff460e50b2800259b4af68cfc"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/catalog.json",
+      "bytes": 27244,
+      "sha256": "405e397691d8fd37bbf3bc13b2b013eba9f2af64fb1c5a245260e2202e8f5abd"
+    },
+    {
+      "path": "inputs/65b1935aa3300ae5349c71dde71b61767cb7cd06/configuration.json",
+      "bytes": 50788,
+      "sha256": "453d6db9e3f913e3222440b115ece86c2b483af3614ac468261213035a4a9fd3"
+    },
+    {
+      "path": "production-65b1935/controller-commit.json",
+      "bytes": 2720,
+      "sha256": "feb631fdceba602e0462fb70e0cc1974fb7cbd119ac5c4d5fdaba003a7dc6348"
+    },
+    {
+      "path": "production-65b1935/source-comparison.json",
+      "bytes": 109141,
+      "sha256": "743fc88a9d5f1b48162d94f71146c41cf001d48e1fc63b1b809aace315c8ca7d"
+    },
+    {
+      "path": "production-65b1935/inventory-comparison.json",
+      "bytes": 740,
+      "sha256": "3c0d2313bed7ac72d7aea639d72919e67b6507a025a578b8a31cde558cf25f61"
+    },
+    {
+      "path": "production-65b1935/receipt-artifact-intake.json",
+      "bytes": 652,
+      "sha256": "578cca705b2241a2d478df25faa060cc9d487fe0c6f3a6dd3600b77a5d1d7a5f"
+    },
+    {
+      "path": "production-65b1935/artifacts.json",
+      "bytes": 1401,
+      "sha256": "6c915fbe23e8bbcac480ffb2deaf5af6366716467a9bdeb9d996ecc20ffa7be6"
+    },
+    {
+      "path": "production-65b1935/jobs-final.json",
+      "bytes": 5571,
+      "sha256": "56c959257d095728a882e222d2d8bdf0b0c4be933430290242ccb5c38539ca53"
+    },
+    {
+      "path": "production-65b1935/main-before.json",
+      "bytes": 336,
+      "sha256": "3c988dc915d6c0a9602a866b8190fbc74619d74f13ae07068e779311e4620b71"
+    },
+    {
+      "path": "production-65b1935/deployments-latest-before.json",
+      "bytes": 19121,
+      "sha256": "98c9e2ad106bcedcb078e580a21de96f5a2238fab98b3009c4c2b13ea0263859"
+    },
+    {
+      "path": "production-65b1935/binding-check.json",
+      "bytes": 699,
+      "sha256": "28b96279276dd70735ac4de7831595874b9ab2a04be0a9b6745d80eb0a194892"
+    }
+  ]
+}

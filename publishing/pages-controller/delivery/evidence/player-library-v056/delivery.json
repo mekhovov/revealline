@@ -68,11 +68,45 @@
       "path": "source/original-verification.json",
       "bytes": 122537,
       "sha256": "2bd2bd7038132d939d2f14f10fb659bce7808884e811e72f8a32735170756501"
+    },
+    {
+      "path": "public-successor/completion.json",
+      "bytes": 16437,
+      "sha256": "5597b05e433ab6d4df3de8b332dba3ac9dfe1ba63ec2c88998efc9ce7b60a54f"
+    },
+    {
+      "path": "planning/feedback-and-next-phases.md",
+      "bytes": 10421,
+      "sha256": "026a5c851fd92affd3d0f7b78c13fb323374403d8a5d16457e50a9802ed9b386"
+    },
+    {
+      "path": "planning/audio/publication.json",
+      "bytes": 819,
+      "sha256": "064f108d1fc70ed479d6edc5da863ea387bd9b4214b13fbe25f72f468a323078"
+    },
+    {
+      "path": "public-successor/production-65b1935/peer-final-parfit.json",
+      "bytes": 3288,
+      "sha256": "b8c0ebe596d53559eb7a2283246dc176aaa40a08bb2da9bcf7ebeacd5ae30444"
     }
   ],
   "evidenceNotes": [
     "Public and native evidence trees are included byte-for-byte with their referenced files.",
     "Copied source summaries preserve original local paths; underlying source play/download artifacts remain retained locally and their scope is distinct from this public check.",
-    "This report does not self-assert the merge of its later evidence-only PR."
-  ]
+    "This report does not self-assert the merge of its later evidence-only PR.",
+    "The successor public audit records PR57 and the same complete runtime inventory. Earlier native observations retain their original deployment and limits. The planning matrix is not accepted P02 execution."
+  ],
+  "publicSuccessor": {
+    "controller": "65b1935aa3300ae5349c71dde71b61767cb7cd06",
+    "runId": 34954644998,
+    "deploymentId": 6456165541,
+    "publicationPullRequest": "https://github.com/mekhovov/revealline/pull/57",
+    "files": 2337,
+    "bytes": 635636681,
+    "failures": 0,
+    "retries": 0,
+    "skips": 0,
+    "sameOrderedPublicInventory": true,
+    "newNativeBrowserChecks": false
+  }
 }
