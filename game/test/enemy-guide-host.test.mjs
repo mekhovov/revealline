@@ -497,7 +497,15 @@ for (const listening of [false, true]) {
     );
     page.$('soundtrack-play').click();
     const media = page.audioElements[0];
-    await settle(() => !media.paused);
+    // Play starts media within the click task; let its persisted listening
+    // intent settle before the next separate Close/Start gesture.
+    await settle(
+      () =>
+        !media.paused &&
+        loadLibrary(page.storage, profileKey, { campaigns: [campaign] }).library.preferences
+          .musicEnabled,
+      'Playback and persisted listening intent must settle before opening the guide.',
+    );
     if (!listening) {
       page.$('soundtrack-pause').click();
       await settle(() => media.paused);
