@@ -4,9 +4,11 @@
   const open = document.getElementById('still-host-open');
   const fail = (message) => {
     open.disabled = true;
+    status.removeAttribute?.('data-state');
     status.textContent = message;
   };
   if (!['http:', 'https:'].includes(location.protocol)) {
+    status.removeAttribute?.('data-state');
     fail(
       'Use the repository source server on localhost or HTTPS. This file URL cannot open local media; no database was accessed.',
     );

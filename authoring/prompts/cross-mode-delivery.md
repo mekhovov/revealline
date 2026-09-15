@@ -6,6 +6,10 @@ Use the [active phase register](../../docs/cross-mode-execution.md). Preserve ea
 
 “Inspect the current branch, latest main and `docs/cross-mode-execution.md`. Continue the active unaccepted phase. Reconcile related work without touching unrelated hunks. Show exact evidence for its blocking acceptance, fix failures, update this contract and relevant skills, synchronize the next unused version, commit related changes, qualify the exact source, freeze and deploy through the existing Pages controller. Verify all public bytes and ordinary play before marking accepted or beginning the next phase. Report physical devices separately from modeled/browser checks.”
 
+## Add or change asynchronous presentation
+
+“Read `docs/presentation-loading.md` and the active A01–A56 inventory. Use the shared operation presenter with the host's existing operation identity, cancellation and storage owner. Announce before the first delayed boundary; show truthful stages and measured counts only. Keep Back/Cancel visible, retain the original audio gesture, and make old completion/finally callbacks unable to alter a newer screen, focus, draft or run. Join existing picture preparation instead of repeating it. Distinguish stopping observation from aborting a durable/shared operation. Add delayed, cached, failure/retry, close/reopen and stale completion checks, then review portrait/landscape and reduced motion. Update inventory, phase evidence and this contract before the release gate.”
+
 ## Bind a map across modes
 
 “Resolve this mission using its complete content/revision, edition, collection and artwork revision. Compare fresh Solo and both Versus boards; preserve pinned saved/earned and authenticated installed originals. Verify preview, reveal, result and Retry retain the decoded binding. For Team use a versioned presentation envelope and the shared read-only painter primitives, preserving its 72×36 mechanics. Exercise invalid required art, stale preparation, cancellation and offline. Do not infer missing art from absent JSON image fields or use an unannounced procedural substitute.”

@@ -42,13 +42,15 @@ test('the actual game has a static dark guard before resources and a single caug
   );
   assert.match(html, /<section\b[^>]*id="boot-screen"/);
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
-  assert.match(html, /<script src="boot.mjs"><\/script>/);
-  assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js"><\/script>/);
+  assert.match(html, /<script src="boot.mjs" defer><\/script>/);
+  assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
+  assert.doesNotMatch(html, /<link\b[^>]*\shref="[^\"]+\.css"/);
+  assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
   assert.ok(
     html.indexOf('src="boot.mjs"') < html.indexOf('href="style.css"'),
-    'resource failures can be observed before app styles load',
+    'bootstrap installs resource listeners before requesting deferred styles',
   );
 });
 

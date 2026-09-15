@@ -95,12 +95,42 @@ test('changing mission/world while acquisition is pending releases late art with
   });
   const loading = thumbnails.refresh(argumentsFor(f, old));
   await started.promise;
+  assert.equal(old.dataset.pictureState, 'loading');
   await thumbnails.refresh({ ...argumentsFor(f, next), themeId: 'ukraine' });
   gate.resolve();
   await loading;
   assert.equal(releases, 1);
+  assert.equal(old.dataset.pictureState, 'unavailable');
   assert.equal(old.dataset.missionArtwork, undefined);
   assert.equal(next.dataset.missionArtwork, undefined);
+  thumbnails.close();
+});
+test('an aborted original acquisition clears activity from all pending mission tiles', async (t) => {
+  const f = await earnedPictureFixture();
+  t.after(() => f.manager.close());
+  const first = button(),
+    second = button(),
+    args = argumentsFor(f, first),
+    gate = deferred(),
+    thumbnails = createMissionPictureThumbnails({
+      readMedia: () => gate.promise,
+      acquire: () => {
+        throw new DOMException('Original read cancelled.', 'AbortError');
+      },
+      render: () => assert.fail('Cancelled originals cannot paint.'),
+    });
+  const pending = thumbnails.refresh({
+    ...args,
+    targets: [...args.targets, { ...args.targets[0], button: second }],
+  });
+  assert.equal(first.dataset.pictureState, 'loading');
+  assert.equal(second.dataset.pictureState, 'loading');
+  gate.resolve({ metadata: f.metadata, store: f.store });
+  await pending;
+  assert.equal(first.dataset.pictureState, 'unavailable');
+  assert.equal(second.dataset.pictureState, 'unavailable');
+  assert.equal(first.dataset.missionArtwork, undefined);
+  assert.equal(second.dataset.missionArtwork, undefined);
   thumbnails.close();
 });
 test('unearned missions never read originals and old receipt-free gallery rows retain installed legacy art', async (t) => {

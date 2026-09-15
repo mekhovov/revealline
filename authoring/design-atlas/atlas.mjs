@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 // Original review mockups only. This module never imports the game or writes player storage.
 const $ = (selector) => document.querySelector(selector);
 
@@ -548,21 +550,43 @@ function renderInventory() {
 }
 $('#inventory-filter').addEventListener('change', renderInventory);
 
+const copyPresenter = createOperationStatus($('#copy-status')),
+  fontPresenter = createOperationStatus($('#font-status')),
+  referencePresenter = createOperationStatus($('#reference-status'));
+let copyGeneration = 0;
 $('#copy-prompt').addEventListener('click', async () => {
+  const generation = ++copyGeneration,
+    lease = copyPresenter.begin({
+      message: 'Copying the example brief…',
+      isCurrent: () => generation === copyGeneration,
+    });
   try {
     await navigator.clipboard.writeText($('#prompt-example-text').textContent);
-    $('#copy-status').textContent = 'Example brief copied.';
+    lease.finish({ message: 'Example brief copied.' });
   } catch {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents($('#prompt-example-text'));
-    selection.removeAllRanges();
-    selection.addRange(range);
-    $('#copy-status').textContent = 'Brief selected. Use your device’s Copy action.';
+    if (generation !== copyGeneration) return;
+    if (
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      document.activeElement === $('#copy-prompt')
+    ) {
+      const selection = window.getSelection(),
+        range = document.createRange();
+      range.selectNodeContents($('#prompt-example-text'));
+      selection.removeAllRanges();
+      selection.addRange(range);
+      lease.finish({ message: 'Brief selected. Use your device’s Copy action.', state: 'error' });
+    } else
+      lease.finish({
+        message:
+          'Copy was unavailable. Select the example brief and use your device’s Copy action.',
+        state: 'error',
+      });
   }
 });
 
 async function checkFonts() {
+  const lease = fontPresenter.begin({ message: 'Loading the three local font roles…' });
   const required = [
     ['Field Kit Display', 600],
     ['Field Kit UI', 400],
@@ -570,19 +594,30 @@ async function checkFonts() {
   ];
   const results = await Promise.allSettled(
     required.map(([family, weight]) =>
-      document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її RevealLine'),
+      Promise.resolve().then(() =>
+        document.fonts.load(`${weight} 20px "${family}"`, 'Ґґ Єє Іі Її RevealLine'),
+      ),
     ),
   );
   const ready = results.every((result) => result.status === 'fulfilled' && result.value.length > 0);
-  $('#font-status').textContent = ready
-    ? 'All three local font roles loaded. Glyph coverage is independently documented in the typography specification.'
-    : 'One or more local font files are unavailable here. Fallback text is visible; do not approve typography from this rendering.';
+  lease.finish({
+    state: ready ? 'ready' : 'error',
+    message: ready
+      ? 'All three local font roles loaded. Glyph coverage is independently documented in the typography specification.'
+      : 'One or more local font files are unavailable here. Fallback text is visible; do not approve typography from this rendering. Reload to retry.',
+  });
 }
 
 async function revealLocalReferences() {
-  // A published review never requests the source screenshots. Even a local distribution
-  // only reveals links whose files really exist, rather than rendering broken images.
-  if (!['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) return;
+  // Published review pages do not request source screenshots.
+  if (!['localhost', '127.0.0.1', '[::1]'].includes(location.hostname)) {
+    referencePresenter.begin({ message: '' }).finish({
+      message:
+        'Source screenshots are available only in the local research folder. Review the official source links below.',
+    });
+    return;
+  }
+  const lease = referencePresenter.begin({ message: 'Checking available local reference files…' });
   const links = [...document.querySelectorAll('[data-local-reference]')];
   const results = await Promise.allSettled(
     links.map(async (link) => {
@@ -594,14 +629,19 @@ async function revealLocalReferences() {
       link.href = source;
       link.hidden = false;
       const image = link.querySelector('[data-local-image]');
-      if (image) image.src = image.dataset.localImage;
+      if (image) {
+        image.src = image.dataset.localImage;
+        await image.decode();
+      }
       return isImage;
     }),
   );
   const count = results.filter((result) => result.status === 'fulfilled' && result.value).length;
-  $('#reference-status').textContent = count
-    ? `${count} local screenshot previews available from the source research folder. These images are reference evidence, not production assets.`
-    : 'Source screenshots are not present in this local build. Review the observations here and the official source links below.';
+  lease.finish({
+    message: count
+      ? `${count} local screenshot previews available from the source research folder. These images are reference evidence, not production assets.`
+      : 'Source screenshots are not present in this local build. Review the observations here and the official source links below.',
+  });
 }
 
 chooseScreen('title');

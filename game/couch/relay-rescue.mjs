@@ -17,8 +17,13 @@ import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
+import { createOperationStatus } from '../ui/operation-status.mjs';
 
 const $ = (id) => document.getElementById(id);
+globalThis.RevealLineToolLaunch?.attached();
+document.documentElement.dataset.toolState = 'loading';
+const bootStatus = createOperationStatus($('coop-boot'));
+const bootDisplay = bootStatus.begin({ message: 'Preparing the Team arena…', stage: 'preparing' });
 const names = ['Sunflower', 'Skyline'];
 const clock = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
@@ -36,6 +41,20 @@ export function bootCoop() {
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let importRequest = 0;
+  const packStatus = createOperationStatus($('coop-pack-status'), { isCurrent: () => !disposed });
+  const packPicker = $('coop-pack-file').closest('details');
+  let importDisplay = null;
+  function cancelImport() {
+    if (!importDisplay) return;
+    importDisplay.finish({
+      state: 'detached',
+      message: 'Stopped waiting. The selected pack is unchanged.',
+    });
+    importDisplay = null;
+    importRequest++;
+    $('coop-pack-cancel').hidden = true;
+    $('coop-pack-file').value = '';
+  }
   let knockdowns = [null, null];
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
@@ -75,6 +94,10 @@ export function bootCoop() {
     showTouch();
   }
   function back() {
+    if (importDisplay) {
+      stopWaiting();
+      return;
+    }
     const details =
       document.activeElement?.closest('details') || tools.querySelector('details[open]');
     if (details?.open && tools.contains(details)) {
@@ -204,6 +227,7 @@ export function bootCoop() {
     }
   }
   function start() {
+    cancelImport();
     importRequest++;
     $('coop-pack-file').value = '';
     const experiment = selectedConfiguration();
@@ -253,12 +277,14 @@ export function bootCoop() {
     message('Choose fresh directions when you are ready.');
   }
   function lobby() {
+    cancelImport();
     importRequest++;
     clear();
     run = null;
     document.body.classList.remove('playing');
     $('coop-play').hidden = true;
     $('coop-menu').hidden = false;
+    showPackStatus();
     placeTools(false);
     $('coop-start').focus({ preventScroll: true });
   }
@@ -409,6 +435,11 @@ export function bootCoop() {
       ? 'Captures recharge both players’ Support and can rescue a downed partner.'
       : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
+  function showPackStatus() {
+    packStatus
+      .begin({ message: `${pack.name} · ${pack.levels.length} levels` })
+      .finish({ message: `${pack.name} · ${pack.levels.length} levels` });
+  }
   function showPack(next, preferred = next.levels[0].id) {
     pack = next;
     $('coop-level').replaceChildren(
@@ -420,29 +451,62 @@ export function bootCoop() {
       }),
     );
     $('coop-level').value = preferred;
-    $('coop-pack-status').textContent = `${pack.name} · ${pack.levels.length} levels`;
+    showPackStatus();
     $('coop-pack-reset').hidden = pack === COOP_STARTER_PACK;
     setupNote();
   }
   $('coop-pack-file').onchange = async () => {
-    const request = ++importRequest;
     const file = $('coop-pack-file').files?.[0];
+    cancelImport();
+    const request = ++importRequest;
     if (!file || run) return;
+    const origin = document.activeElement;
+    const current = () => !disposed && request === importRequest && !run;
+    const display = packStatus.begin({
+      message: 'Reading the selected Team pack…',
+      stage: 'reading',
+      isCurrent: current,
+    });
+    importDisplay = display;
+    $('coop-pack-cancel').hidden = false;
     try {
       if (file.size > COOP_PACK_MAX_BYTES)
         throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
-      const next = readCoopPack(await file.text());
-      if (disposed || request !== importRequest || run) return;
+      const source = await file.text();
+      if (!current()) return;
+      if (!packPicker.open) {
+        cancelImport();
+        return;
+      }
+      display.update({ message: 'Checking Team arenas and rules…', stage: 'verifying' });
+      const next = readCoopPack(source);
+      if (!current()) return;
       showPack(next);
-      $('coop-start').focus({ preventScroll: true });
+      if (!document.hidden && document.hasFocus() && document.activeElement === origin)
+        $('coop-start').focus({ preventScroll: true });
     } catch (error) {
-      if (!disposed && request === importRequest)
-        $('coop-pack-status').textContent = `Pack unchanged: ${error.message}`;
+      if (current())
+        display.finish({ state: 'error', message: `Pack unchanged: ${error.message}` });
     } finally {
-      if (request === importRequest) $('coop-pack-file').value = '';
+      if (request === importRequest) {
+        importDisplay = null;
+        $('coop-pack-cancel').hidden = true;
+        $('coop-pack-file').value = '';
+      }
     }
   };
+  function stopWaiting() {
+    cancelImport();
+    $('coop-pack-file').value = '';
+    $('coop-pack-file').focus({ preventScroll: true });
+  }
+  $('coop-pack-cancel').onclick = stopWaiting;
+  const pickerToggled = () => {
+    if (!packPicker.open) cancelImport();
+  };
+  packPicker.addEventListener('toggle', pickerToggled);
   $('coop-pack-reset').onclick = () => {
+    cancelImport();
     importRequest++;
     showPack(COOP_STARTER_PACK, RELAY_YARD.id);
     $('coop-start').focus({ preventScroll: true });
@@ -479,6 +543,8 @@ export function bootCoop() {
   const dispose = () => {
     importRequest++;
     disposed = true;
+    packStatus.dispose();
+    packPicker.removeEventListener('toggle', pickerToggled);
     cancelAnimationFrame(frame);
     clear();
     input.destroy();
@@ -487,13 +553,17 @@ export function bootCoop() {
     touchQuery.removeEventListener?.('change', touchChanged);
     unsubscribeNative();
   };
-  window.addEventListener('pagehide', () => pause());
+  window.addEventListener('pagehide', () => {
+    cancelImport();
+    pause();
+  });
   window.addEventListener('pageshow', () => {
     last = null;
   });
   $('coop-start').disabled = false;
   $('coop-start').textContent = 'Start together →';
-  $('coop-boot').textContent = 'Two players · one screen · a shared victory';
+  bootDisplay.finish({ message: 'Two players · one screen · a shared victory' });
+  document.documentElement.dataset.toolState = 'ready';
   frame = requestAnimationFrame(update);
   return { dispose };
 }
@@ -501,6 +571,7 @@ export function bootCoop() {
 try {
   bootCoop();
 } catch (error) {
-  $('coop-boot').textContent = `Could not start Relay Rescue: ${error.message}`;
+  document.documentElement.dataset.toolState = 'error';
+  bootDisplay.finish({ state: 'error', message: `Could not start Relay Rescue: ${error.message}` });
   console.error(error);
 }

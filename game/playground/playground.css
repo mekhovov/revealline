@@ -2,6 +2,16 @@
   max-width: 1460px;
   padding-bottom: 40px;
 }
+.playground-page .boot-status {
+  position: static;
+  transform: none;
+  margin: 12px 18px;
+  padding: 12px 14px;
+  background: var(--fk-panel, #101923);
+  color: var(--fk-text, #f3f0db);
+  border: 1px solid var(--fk-line, #425563);
+  box-shadow: none;
+}
 .workshop-title {
   display: flex;
   justify-content: space-between;
@@ -27,14 +37,14 @@
 }
 .editor-status {
   padding: 10px 14px;
-  background: #e2e9dc;
-  border-left: 3px solid #6c928c;
+  background: var(--fk-panel, #101923);
+  color: var(--fk-text, #f3f0db);
+  border-left: 3px solid var(--fk-focus, #78dce8);
   font: 11px var(--fk-font-mono, monospace);
   white-space: pre-wrap;
 }
 .editor-status.error {
-  background: #f1ded1;
-  border-color: #ce876e;
+  border-color: var(--fk-hazard, #f07879);
 }
 .editor-grid {
   display: grid;

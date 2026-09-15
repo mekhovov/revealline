@@ -282,10 +282,30 @@ textarea {
   padding: 10px;
   font: 0.8125rem/1.4 var(--fk-font-mono, monospace);
 }
+.load-status {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--fk-panel, #f9f6ee);
+}
+.load-status:has(#import-status[data-state='busy']) {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+}
+.load-status:not(:has(> :not([hidden]))) {
+  display: none;
+}
 .load-status p {
-  font-size: 0.8125rem;
-  margin-top: 12px;
+  flex: 1 1 220px;
   overflow-wrap: anywhere;
+}
+#presentation-status {
+  flex-basis: 100%;
 }
 .check {
   display: flex;

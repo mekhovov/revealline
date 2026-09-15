@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import {createOperationStatus} from "../../game/ui/operation-status.mjs";
 import {DIRECTIONS, clamp, createMotionState, validatePresets} from "./motion.mjs";
 import {createManualSteering} from "./steering.mjs";
 import {nextGridCenter} from "./grid-motion.mjs";
@@ -8,6 +10,11 @@ import {validateAbilityPresets,createAbilityState,switchAbilityLoadout,requestAb
 import {paintAbilityStage} from "./render-ability.mjs";
 
 const $ = id => document.getElementById(id);
+const loadPresenter = createOperationStatus($("motion-load-status"));
+const backgroundPresenter = createOperationStatus($("background-status"));
+const assetPresenter = createOperationStatus($("asset-status"));
+let pendingBackground = null;
+const backgroundMessage = (message,state="ready") => backgroundPresenter.begin({message}).finish({message,state});
 const canvas = $("arena");
 const ctx = canvas.getContext("2d", {alpha: false});
 const inspectionCanvas = $("inspection"), inspectionCtx = inspectionCanvas.getContext("2d", {alpha: false});
@@ -82,7 +89,9 @@ function updateAssetStatus() {
   const declared = roles.flatMap(role => [role.microSrc, role.propSrc]).filter(Boolean);
   const loaded = declared.filter(src => assetRecord(src).state === "loaded").length;
   const terrainText = declared.length ? `Terrain: ${loaded}/${declared.length} image layers loaded; missing layers use diagrams` : "Terrain: vector material diagrams";
-  $("asset-status").textContent = `${bodyText}. ${terrainText}. Rotor anchors are an approximate study rig.`;
+  const message = `${bodyText}. ${terrainText}. Rotor anchors are an approximate study rig.`;
+  const lease = assetPresenter.begin({message});
+  if (body.state !== "loading" && !declared.some(src => assetRecord(src).state === "loading")) lease.finish({message});
 }
 
 function resize() {
@@ -286,28 +295,30 @@ function setupCollection() {
 
 function setupBackground() {
   const clear = () => {
-    backgroundToken++; if (background) URL.revokeObjectURL(background.url); background = null;
+    backgroundToken++; if (pendingBackground) {pendingBackground.image.removeAttribute("src"); URL.revokeObjectURL(pendingBackground.url); pendingBackground=null;} if (background) URL.revokeObjectURL(background.url); background = null;
     $("background-file").value = ""; $("clear-background").disabled = true;
-    $("background-status").textContent = "Local preview cleared. The original file is unchanged."; render();
+    backgroundMessage("Local preview cleared. The original file is unchanged.","cancelled"); render();
   };
   $("clear-background").addEventListener("click", clear);
   $("background-file").addEventListener("change", async event => {
     const file = event.target.files[0]; event.target.value = ""; if (!file) return;
-    if (!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type) || file.size > 25*1024*1024) {$("background-status").textContent = "Choose a PNG, JPEG, WebP or GIF up to 25 MiB. The current preview is retained."; return;}
+    if (!["image/png","image/jpeg","image/webp","image/gif"].includes(file.type) || file.size > 25*1024*1024) {backgroundMessage("Choose a PNG, JPEG, WebP or GIF up to 25 MiB. The current preview is retained.","error"); return;}
+    if (pendingBackground) {pendingBackground.image.removeAttribute("src"); URL.revokeObjectURL(pendingBackground.url);}
     const token = ++backgroundToken, url = URL.createObjectURL(file), image = new Image();
-    $("background-status").textContent = "Decoding local image…";
+    pendingBackground = {image,url}; $("clear-background").disabled = false;
+    const lease = backgroundPresenter.begin({message:"Decoding local image…",isCurrent:()=>token===backgroundToken});
     image.onload = () => {
       if (token !== backgroundToken) {URL.revokeObjectURL(url); return;}
       if (background) URL.revokeObjectURL(background.url);
-      background = {image,url}; $("clear-background").disabled = false;
-      $("background-status").textContent = `${file.name} · ${image.naturalWidth} × ${image.naturalHeight}. Local display only; source unchanged, no upload or AI call.`; render();
+      pendingBackground = null; background = {image,url}; $("clear-background").disabled = false;
+      lease.finish({message:`${file.name} · ${image.naturalWidth} × ${image.naturalHeight}. Local display only; source unchanged, no upload or AI call.`}); render();
     };
-    image.onerror = () => {URL.revokeObjectURL(url); if (token === backgroundToken) $("background-status").textContent = "This image could not be decoded. The current preview and original file are retained.";};
+    image.onerror = () => {URL.revokeObjectURL(url); if (token === backgroundToken) {pendingBackground=null; lease.finish({message:"This image could not be decoded. The current preview and original file are retained.",state:"error"});}};
     image.src = url;
   });
   $("background-fit").addEventListener("change", event => {backgroundFit = event.target.value; render();});
   $("background-opacity").addEventListener("input", event => {backgroundOpacity = Number(event.target.value); $("background-opacity-output").textContent = `${Math.round(backgroundOpacity*100)}%`; render();});
-  window.addEventListener("pagehide", () => {if (background) URL.revokeObjectURL(background.url);});
+  window.addEventListener("pagehide", event => {backgroundToken++; if (pendingBackground) {pendingBackground.image.removeAttribute("src"); URL.revokeObjectURL(pendingBackground.url); pendingBackground=null; backgroundMessage("Image loading cancelled. Choose the file again to retry.","cancelled");} if (!event.persisted && background) URL.revokeObjectURL(background.url);});
 }
 
 function drawGrid(colors) {
@@ -658,6 +669,7 @@ function frame(time) {
 }
 
 async function start() {
+  const lease = loadPresenter.begin({message:"Loading presentation, collection and ability studies…"});
   try {
     const responses = await Promise.all([fetch(presetURL),fetch(new URL("./collection-presets.json",import.meta.url)),fetch(new URL("./ability-presets.json",import.meta.url))]);
     if (responses.some(response => !response.ok)) throw new Error("A presentation or collection JSON file could not be loaded");
@@ -677,8 +689,10 @@ async function start() {
     setupControls(); applyPalette(); resize(); updateAssetStatus(); readouts(); render();
     new ResizeObserver(() => {resize(); render(); readouts();}).observe(canvas);
     if (reducedMotion) eventNote("Reduced motion is on. Press Play for intentional movement.");
+    lease.finish({message:"Motion study ready."});
     requestAnimationFrame(frame);
   } catch (error) {
+    lease.finish({message:"Motion study unavailable. Reload this page to retry.",state:"error"});
     $("load-error").hidden = false;
     $("load-error").textContent = `The study could not load: ${error.message}. Serve this folder over local HTTP; from the repository root run python3 -m http.server 8080, then open /authoring/motion-lab/.`;
     $("state-label").textContent = "Study unavailable";

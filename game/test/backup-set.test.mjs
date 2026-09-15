@@ -184,3 +184,26 @@ test('preparations within the same millisecond have distinct safe common filenam
   assert.notEqual(prefixes[0], prefixes[1], 'The timestamp alone must not identify a set.');
   assert.equal(new Set([...first.files, ...second.files].map((file) => file.filename)).size, 10);
 });
+
+test('backup phases precede metadata/game reads and distinguish coverage hashing from final consistency checks', async () => {
+  const fixture = await backupSetFixture();
+  const source = fixture.source;
+  const messages = [];
+  const reads = [];
+  for (const name of ['readMetadata', 'readGame']) {
+    const read = source[name];
+    source[name] = async (options) => {
+      reads.push([name, messages.at(-1)]);
+      return read(options);
+    };
+  }
+  await prepareBackupSet(source, { onProgress: (message) => messages.push(message) });
+  assert.deepEqual(reads, [
+    ['readMetadata', 'Reading saved original inventories…'],
+    ['readGame', 'Reading game data and the saved flight…'],
+    ['readGame', 'Rechecking game data for a consistent backup set…'],
+    ['readMetadata', 'Rechecking saved original inventories…'],
+  ]);
+  assert.ok(messages.includes('Hashing inventory metadata for the coverage report…'));
+  assert.ok(messages.includes('Hashing the coverage report…'));
+});

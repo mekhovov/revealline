@@ -1,3 +1,5 @@
+globalThis.RevealLineToolLaunch?.attached();
+import { createOperationStatus } from '../ui/operation-status.mjs';
 import { geometryForLevel } from '../core/geometry.mjs';
 import { paintEditorMap, editorCellFromPointer } from './board-view.mjs';
 import {
@@ -46,30 +48,33 @@ let campaign,
   height = 844,
   importEpoch = 0,
   pendingImport = null,
+  pendingTicket = null,
   previousPreviewHref = null,
   replayEpoch = 0,
   replayController = null;
-const beginImport = () => {
+const beginImport = (message = 'Validating and decoding the selected content…') => {
   if (pendingImport === null) previousPreviewHref = $('open-preview').getAttribute('href');
   const ticket = { epoch: ++importEpoch, editRevision, before: JSON.stringify(current) };
   pendingImport = ticket.epoch;
+  pendingTicket = ticket;
+  $('cancel-import').hidden = false;
   $('preview-button').disabled = true;
   $('preview-mode').disabled = true;
   $('open-preview').setAttribute('aria-disabled', 'true');
   $('open-preview').removeAttribute('href');
-  $('editor-status').setAttribute('aria-busy', 'true');
-  status('Preparing the selected content. Play becomes available after validation and decoding.');
+  status(message, false, true);
   return ticket;
 };
 const finishImport = (ticket) => {
   if (pendingImport !== ticket.epoch) return;
   pendingImport = null;
+  pendingTicket = null;
+  $('cancel-import').hidden = true;
   $('preview-button').disabled = false;
   $('preview-mode').disabled = false;
   $('open-preview').removeAttribute('aria-disabled');
   if (previousPreviewHref !== null) $('open-preview').setAttribute('href', previousPreviewHref);
   previousPreviewHref = null;
-  $('editor-status').removeAttribute('aria-busy');
 };
 const importCurrent = (ticket) => ticket.epoch === importEpoch;
 const assertImportCurrent = (ticket) => {
@@ -82,10 +87,62 @@ const assertImportCurrent = (ticket) => {
       'The pack changed while this import was being read. Retry with the latest settings.',
     );
 };
-const status = (message, error = false) => {
-  $('editor-status').textContent = message;
+const editorPresenter = createOperationStatus($('editor-status')),
+  replayPresenter = createOperationStatus($('replay-status')),
+  previewPresenter = createOperationStatus($('preview-load-status'));
+const status = (message, error = false, busy = false) => {
+  const lease = editorPresenter.begin({ message });
+  if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
   $('editor-status').classList.toggle('error', error);
+  return lease;
 };
+const cancelImport = () => {
+  if (!pendingTicket) return;
+  finishImport(pendingTicket);
+  importEpoch++;
+  status('Preparation cancelled. The working map and previous preview are unchanged.');
+};
+$('cancel-import').onclick = cancelImport;
+$('cancel-replay').onclick = () => {
+  replayEpoch++;
+  replayController?.abort();
+  replayPresenter
+    .begin({ message: '' })
+    .finish({ message: 'Replay verification cancelled.', state: 'cancelled' });
+  $('cancel-replay').hidden = true;
+};
+window.addEventListener('pagehide', () => {
+  cancelImport();
+  $('cancel-replay').onclick();
+});
+let previewLease = null,
+  previewDocumentLoaded = false;
+function beginPreview() {
+  previewDocumentLoaded = false;
+  previewLease = previewPresenter.begin({ message: 'Loading the child game for this preview…' });
+}
+function checkPreviewReady() {
+  if (!previewDocumentLoaded || !previewLease) return;
+  try {
+    const child = $('preview-frame').contentDocument;
+    const state =
+      child?.documentElement?.dataset.bootState ?? child?.documentElement?.dataset.toolState;
+    if (state === 'ready') {
+      previewLease.finish({ message: 'Preview game ready. Practice progress stays separate.' });
+      previewLease = null;
+    } else if (state === 'failed' || state === 'error' || state === 'file') {
+      previewLease.finish({
+        message:
+          'The child game could not start. Use its recovery controls or Play configuration to retry.',
+        state: 'error',
+      });
+      previewLease = null;
+    }
+  } catch {
+    /* The frame itself retains its direct navigation/recovery controls. */
+  }
+}
+status('Loading campaigns, themes and class recipes…', false, true);
 const remember = () => {
   editRevision++;
   history.push({ current: clone(current), catalog, activeKey, packLibrary });
@@ -116,6 +173,7 @@ function useEntry(key, levelId) {
 async function adoptDocument(candidate, message, ticket = beginImport()) {
   try {
     assertImportCurrent(ticket);
+    status('Validating content and decoding its original images…', false, true);
     const prepared = await prepareDocument(candidate, { current, packLibrary });
     assertImportCurrent(ticket);
     remember();
@@ -287,6 +345,7 @@ function drawAssets() {
 async function adopt(candidate, message, ticket = beginImport()) {
   try {
     assertImportCurrent(ticket);
+    status('Validating the scenario and decoding its artwork…', false, true);
     const prepared = await prepareScenario(candidate);
     assertImportCurrent(ticket);
     remember();
@@ -316,6 +375,7 @@ function preview() {
   if ($('preview-mode').value === 'course') {
     try {
       const href = firstFlightPreviewURL({ turnPolicy: $('turn-select').value });
+      beginPreview();
       $('preview-frame').src = href;
       $('open-preview').href = href;
       status(
@@ -328,6 +388,7 @@ function preview() {
     }
   }
   if ($('preview-mode').value === 'couch') {
+    beginPreview();
     $('preview-frame').src = '../couch/?focus=1';
     $('open-preview').href = '../couch/?focus=1';
     status('Couch preview uses installed maps and packs. Solo configuration stays in the editor.');
@@ -336,11 +397,12 @@ function preview() {
   if (!checked()) return false;
   try {
     sessionStorage.setItem('revealline.playground.current', JSON.stringify(current));
+    beginPreview();
     $('preview-frame').src = `../?practice=1&revision=${++revision}`;
     $('open-preview').href = `../?practice=1&revision=${revision}`;
     status(
       [
-        'Valid configuration loaded into the real engine. Practice awards are disabled.',
+        'Valid configuration prepared for the real engine. The child game reports when play is ready; practice awards are disabled.',
         ...validateScenario(current).warnings,
       ].join(' '),
     );
@@ -382,6 +444,7 @@ function resizePreview(nextWidth, nextHeight) {
   fit();
 }
 function measure() {
+  checkPreviewReady();
   try {
     const frame = $('preview-frame'),
       doc = frame.contentDocument,
@@ -583,12 +646,18 @@ try {
     };
     $('teaching-examples').append(button);
   }
+  const exampleStatus = document.createElement('p');
+  $('example-packs').append(exampleStatus);
+  const examples = createOperationStatus(exampleStatus).begin({
+    message: 'Loading example pack choices…',
+  });
   fetch('../content/packs/index.json')
     .then((r) => {
       if (!r.ok) throw new Error('Example list unavailable.');
       return r.json();
     })
     .then((index) => {
+      examples.finish({ message: '' });
       // The role lab is an explicit authoring example, separate from campaign progression.
       for (const entry of [...index.packs, { id: 'classic-lab', path: 'classic-lab.json' }]) {
         const button = document.createElement('button');
@@ -614,7 +683,12 @@ try {
         $('example-packs').append(button);
       }
     })
-    .catch((error) => status(error.message, true));
+    .catch((error) =>
+      examples.finish({
+        message: `${error.message} Reload to retry the examples.`,
+        state: 'error',
+      }),
+    );
   campaign.levels.forEach((l, i) =>
     $('level-select').append(
       new Option(`${String(i + 1).padStart(2, '0')} / ${l.name}`, String(i)),
@@ -776,7 +850,7 @@ try {
     }
   };
   $('generate-button').onclick = async () => {
-    const ticket = beginImport();
+    const ticket = beginImport('Generating and validating the new map…');
     try {
       const level = await generateLevel($('seed-input').value);
       assertImportCurrent(ticket);
@@ -870,21 +944,26 @@ try {
     if (!preview()) event.preventDefault();
   };
   $('export-button').onclick = async () => {
+    let lease;
     try {
       if (checked()) {
         $('pack-json').value = JSON.stringify(current, null, 2);
         $('pack-json').closest('details').open = true;
-        status((await downloadJSON(current, `${current.level.id}.xonix.json`)).message);
+        lease = status('Preparing the configuration download…', false, true);
+        lease.finish({
+          message: (await downloadJSON(current, `${current.level.id}.xonix.json`)).message,
+        });
       }
     } catch (error) {
-      status(error.message, true);
+      if (lease) lease.finish({ message: error.message, state: 'error' });
+      else status(error.message, true);
     }
   };
   $('import-file').onchange = async () => {
     const file = $('import-file').files[0];
     $('import-file').value = '';
     if (!file) return;
-    const ticket = beginImport();
+    const ticket = beginImport('Reading the selected content file…');
     try {
       if (file.size > PACK_LIMITS.libraryBytes) throw new Error('Content is larger than 48 MiB.');
       const candidate = JSON.parse(await file.text());
@@ -930,7 +1009,7 @@ try {
       fit = $('asset-fit').value;
     $('asset-file').value = '';
     if (!file) return;
-    const ticket = beginImport();
+    const ticket = beginImport('Reading the selected artwork file…');
     try {
       if (
         !['image/png', 'image/jpeg', 'image/webp'].includes(file.type) ||
@@ -993,33 +1072,42 @@ try {
     }
   };
   $('export-expansion').onclick = async () => {
+    let lease;
     try {
       if (!checked()) return;
       const track = currentTrack();
       const pack = expansionFromScenario(current, { music: track ? [track] : [] });
       $('pack-json').value = JSON.stringify(pack, null, 2);
       $('pack-json').closest('details').open = true;
+      const goal = current.masteryDefinition
+        ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.`
+        : '';
+      lease = status('Preparing the expansion download…', false, true);
       const exported = await downloadJSON(pack, `${pack.id}.expansion.json`);
-      status(
-        `Edited map prepared as a complete playable expansion.${current.masteryDefinition ? ` Its goal now belongs to the new campaign ${current.level.id}; the new definition identity is separate from the source goal.` : ''} ${exported.message} Import it into the main game to keep campaign progress.`,
-      );
+      lease.finish({
+        message: `Edited map prepared as a complete playable expansion.${goal} ${exported.message} Import it into the main game to keep campaign progress.`,
+      });
     } catch (error) {
-      status(error.message, true);
+      if (lease) lease.finish({ message: error.message, state: 'error' });
+      else status(error.message, true);
     }
   };
   $('export-catalog').onclick = async () => {
+    let lease;
     try {
       $('pack-json').value = exportPackLibrary(packLibrary);
       $('pack-json').closest('details').open = true;
+      lease = status('Preparing the expansion library download…', false, true);
       const exported = await downloadJSON(
         JSON.parse($('pack-json').value),
         'workshop-expansions.json',
       );
-      status(
-        `Original loaded expansion library prepared. ${exported.message} Current map edits are exported separately with Export map as expansion.`,
-      );
+      lease.finish({
+        message: `Original loaded expansion library prepared. ${exported.message} Current map edits are exported separately with Export map as expansion.`,
+      });
     } catch (error) {
-      status(error.message, true);
+      if (lease) lease.finish({ message: error.message, state: 'error' });
+      else status(error.message, true);
     }
   };
   async function verifyText(readText) {
@@ -1027,17 +1115,23 @@ try {
     replayController?.abort();
     replayController = new AbortController();
     const signal = replayController.signal;
-    $('replay-result').textContent = '';
+    const lease = replayPresenter.begin({
+      message: 'Reading the selected replay…',
+      isCurrent: () => epoch === replayEpoch,
+    });
+    $('cancel-replay').hidden = false;
     try {
       const text = await readText();
       if (text.length > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
       if (epoch !== replayEpoch) return;
-      status('Verifying recorded simulation…');
+      lease.update({ message: 'Verifying recorded simulation…' });
       const result = await verifyReplayAsync(text, {
         signal,
         onProgress: (p) => {
           if (epoch === replayEpoch)
-            status(`Verifying recorded simulation… ${Math.round(p.fraction * 100)}%`);
+            lease.update({
+              progress: p.total > 0 ? { completed: p.ticks, total: p.total, unit: 'ticks' } : null,
+            });
         },
       });
       if (epoch !== replayEpoch) return;
@@ -1046,14 +1140,16 @@ try {
         null,
         2,
       );
-      status(
-        result.match
+      lease.finish({
+        message: result.match
           ? 'Replay matches its full recorded simulation state.'
           : 'Replay differs: check the reported state sections.',
-        !result.match,
-      );
+        state: result.match ? 'ready' : 'error',
+      });
     } catch (error) {
-      if (epoch === replayEpoch) status(`Replay rejected: ${error.message}`, true);
+      lease.finish({ message: `Replay rejected: ${error.message}`, state: 'error' });
+    } finally {
+      if (epoch === replayEpoch) $('cancel-replay').hidden = true;
     }
   }
   $('replay-file').onchange = () => {
@@ -1085,6 +1181,8 @@ try {
   $('capture-geometry').addEventListener('click', () => requestAnimationFrame(captureGeometry));
   $('preview-mode').onchange = preview;
   $('preview-frame').addEventListener('load', () => {
+    previewDocumentLoaded = true;
+    previewLease?.update({ message: 'Child document loaded. Waiting for game readiness…' });
     observeGeometryPreview();
     measure();
     $('preview-frame').contentDocument?.addEventListener('click', () =>
@@ -1096,7 +1194,7 @@ try {
   fit();
   preview();
 } catch (error) {
-  status(`Playground could not load: ${error.message}`, true);
+  status(`Playground could not load: ${error.message}. Reload this page to retry.`, true);
 } finally {
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
     element.inert = false;

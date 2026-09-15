@@ -347,7 +347,18 @@ test('real transfer panel reviews empty-profile meaning, rechecks source and app
     api: { profileTransfer: f.options },
     container: doc.body,
     backupOptions: () => ({ campaigns: [campaign] }),
-    task: (_id, work) => work(),
+    task: (_id, work) => {
+      const controller = new AbortController();
+      return work({
+        controller,
+        signal: controller.signal,
+        check: () => controller.signal.throwIfAborted(),
+        phase: (message) => {
+          doc.getElementById('transfer-status').textContent = message;
+        },
+        commit() {},
+      });
+    },
     applyPrepared: async (prepared) => {
       const result = await commitBackup(prepared, adapters);
       assert.equal(result.ok, true, result.warning);
@@ -383,4 +394,61 @@ test('real transfer panel reviews empty-profile meaning, rechecks source and app
   assert.equal(JSON.parse(target.get(targetKeys.profileKey)).preferences.textSize, 'large');
   assert.deepEqual(f.local, before);
   assert.equal(assets.get(targetKeys.journalKey), null);
+});
+
+test('a cancelled transfer read cannot hide the next review controls or publish its preview', async (t) => {
+  const doc = new Document(),
+    prior = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  Object.defineProperty(globalThis, 'document', { value: doc, configurable: true });
+  t.after(() =>
+    prior ? Object.defineProperty(globalThis, 'document', prior) : delete globalThis.document,
+  );
+  const f = source();
+  f.local.set(f.k.sessionKey, JSON.stringify(live().session));
+  const before = structuredClone(f.local),
+    reads = [],
+    controllers = [];
+  attachProfileTransferPanel({
+    api: { profileTransfer: f.options },
+    container: doc.body,
+    backupOptions: () => new Promise((resolve) => reads.push(resolve)),
+    task: async (_id, work) => {
+      const controller = new AbortController();
+      controllers.push(controller);
+      try {
+        await work({
+          controller,
+          signal: controller.signal,
+          check: () => controller.signal.throwIfAborted(),
+          phase: (message) => {
+            doc.getElementById('transfer-status').textContent = message;
+          },
+          commit() {
+            assert.fail('Review cannot commit.');
+          },
+        });
+      } catch (error) {
+        assert.equal(error.name, 'AbortError');
+      }
+    },
+    applyPrepared: () => assert.fail('Review cannot replace the collection.'),
+  });
+  const $ = (id) => doc.getElementById(id);
+  $('transfer-source').value = f.id;
+  const first = $('transfer-review').onclick();
+  assert.match($('transfer-status').textContent, /Checking the earlier collection/);
+  controllers[0].abort();
+  const second = $('transfer-review').onclick();
+  reads[0]({ campaigns: [campaign] });
+  await first;
+  assert.equal($('transfer-cancel').hidden, false);
+  assert.equal($('transfer-cancel').disabled, false);
+  assert.equal($('transfer-preview').textContent, '');
+  assert.equal(f.reads.length, 0);
+  reads[1]({ campaigns: [campaign] });
+  await second;
+  assert.match($('transfer-status').textContent, /Verified/);
+  assert.match($('transfer-preview').textContent, /one saved flight/);
+  assert.equal($('transfer-cancel').hidden, true);
+  assert.deepEqual(f.local, before);
 });

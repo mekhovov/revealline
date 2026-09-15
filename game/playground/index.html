@@ -12,10 +12,14 @@
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../presentation/page-entry.mjs"></script>
+    <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
   <body class="playground-page field-kit field-kit-support">
-    <p id="boot-status" class="boot-status" role="status">Preparing your arcade…</p>
-    <header class="masthead" data-boot-inert inert>
+    <p id="boot-status" class="boot-status operation-status" data-state="busy">
+      <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+      ><span class="operation-status-label" role="status">Loading Playground tools…</span>
+    </p>
+    <header class="masthead">
       <a class="wordmark" href="../">◩ REVEAL / LINE</a>
       <nav>
         <span>PLAYGROUND</span><a href="../controller-lab/">Controller practice ↗</a
@@ -38,6 +42,9 @@
         </div>
       </div>
       <p id="editor-status" class="editor-status" role="status">Loading the authoring contract…</p>
+      <button id="cancel-import" class="button secondary" type="button" hidden>
+        Cancel preparation
+      </button>
       <div class="editor-grid">
         <section class="editor-panel" aria-label="Configuration">
           <label class="field">Campaign source<select id="campaign-select"></select></label>
@@ -478,10 +485,15 @@
                 placeholder="Or paste exported replay JSON here"
               ></textarea></label
             ><button id="verify-replay-json" class="button">Verify pasted replay</button>
+            <p id="replay-status" role="status" hidden></p>
+            <button id="cancel-replay" class="button secondary" type="button" hidden>
+              Cancel verification
+            </button>
             <pre id="replay-result"></pre>
           </details>
         </section>
         <section class="preview-panel" aria-label="Playable preview">
+          <p id="preview-load-status" role="status" hidden></p>
           <div class="section-line">
             <span>LIVE ENGINE / PRACTICE</span
             ><a id="open-preview" href="../?practice=1" target="_blank" rel="opener"
@@ -578,6 +590,11 @@
         </section>
       </div>
     </main>
-    <script type="module" src="playground.mjs"></script>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="playground.mjs"
+      data-status="boot-status"
+    ></script>
   </body>
 </html>

@@ -5,9 +5,31 @@ import { MAX_REPLAY_BYTES } from '../replay.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../ui/render.mjs';
 import { encounterView } from '../ui/encounter-view.mjs';
 import { attachReplayNavigation } from './navigation.mjs';
+import { createOperationStatus } from '../ui/operation-status.mjs';
 
 const $ = (id) => document.getElementById(id);
-const presentationPage = mountPresentationPage();
+globalThis.RevealLineToolLaunch?.attached();
+const bootStatus = createOperationStatus($('boot-status'));
+const bootDisplay = bootStatus.begin({ message: 'Preparing the theater…', stage: 'reading' });
+const presentationFeedback = createOperationStatus($('presentation-status'));
+let presentationOperation = null;
+const presentationPage = mountPresentationPage({
+  onStatus(status) {
+    if (status.status === 'preparing') {
+      if (!presentationOperation) presentationOperation = presentationFeedback.begin(status);
+      else presentationOperation.update(status);
+    } else {
+      presentationOperation?.finish({
+        state: status.status === 'error' ? 'error' : 'ready',
+        message:
+          status.status === 'error'
+            ? 'Release artwork is unavailable; the current look is kept.'
+            : '',
+      });
+      presentationOperation = null;
+    }
+  },
+});
 const examples = {
   'fieldcraft-01': {
     file: './data/fieldcraft-01.replay.json',
@@ -61,6 +83,8 @@ try {
     disposed = false,
     frameId = null,
     nativeUnsubscribe = null;
+  const importStatus = createOperationStatus($('import-status'), { isCurrent: () => !disposed });
+  let importDisplay = null;
   const chosenTheme = () => themes.find((theme) => theme.id === $('theme').value) || themes[0];
   const bodyFor = (theme, state) => theme.classBodies?.[state.activeClassId] || theme.player;
   function updateControls() {
@@ -132,10 +156,14 @@ try {
   }
   function cancelLoad() {
     if (!pending) return;
+    importDisplay?.finish({
+      state: 'cancelled',
+      message: 'Load cancelled. The previous recording is unchanged.',
+    });
+    importDisplay = null;
     controller?.abort();
     epoch++;
     pending = false;
-    $('import-status').textContent = 'Load cancelled. The previous recording is unchanged.';
     updateControls();
   }
   async function load(getSource, label) {
@@ -147,15 +175,26 @@ try {
     pending = true;
     player?.pause();
     updateControls();
-    $('import-status').textContent = `Reading ${clipped(label)}…`;
     const current = () => !disposed && ticket === epoch && !nextController.signal.aborted;
+    const display = importStatus.begin({
+      message: `Reading ${clipped(label)}…`,
+      stage: 'reading',
+      isCurrent: current,
+    });
+    importDisplay = display;
     try {
       const source = await getSource(nextController.signal);
       if (!current()) return;
+      display.update({
+        message: 'Verifying the recording’s exact input ticks…',
+        stage: 'verifying',
+      });
       const nextPlayer = await prepareReplayPlayer(source, {
         signal: nextController.signal,
         onProgress: ({ ticks, total }) => {
-          if (current()) $('import-status').textContent = `Verifying ${ticks} / ${total} ticks…`;
+          display.update({
+            progress: total > 0 ? { completed: ticks, total, unit: 'ticks' } : null,
+          });
         },
       });
       if (!current()) return;
@@ -168,6 +207,11 @@ try {
       });
       nextPainter.setLevel(nextPlayer.state.level, { seed: nextPlayer.info.seed });
       const theme = chosenTheme();
+      display.update({
+        message: 'Preparing the recording’s artwork…',
+        stage: 'decoding',
+        progress: null,
+      });
       await nextPainter.setLook(theme, bodyFor(theme, nextPlayer.state));
       if (!current()) return;
       const size = boardPaintSizeForRun(nextPlayer.state);
@@ -186,7 +230,7 @@ try {
       displayEvents([]);
       $('recording-name').textContent = player.info.levelName;
       $('asset-status').textContent = assetMessage;
-      $('import-status').textContent = `${clipped(label)} verified and loaded. Ready to watch.`;
+      display.finish({ message: `${clipped(label)} verified and loaded. Ready to watch.` });
       $('transport-status').textContent =
         player.phase === 'complete'
           ? 'This recording contains no input ticks. Its final checkpoint matches.'
@@ -194,10 +238,13 @@ try {
       readouts();
     } catch (error) {
       if (current())
-        $('import-status').textContent =
-          `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`;
+        display.finish({
+          state: 'error',
+          message: `Could not load recording: ${clipped(error.message, 300)} The previous recording is unchanged.`,
+        });
     } finally {
       if (ticket === epoch) {
+        importDisplay = null;
         pending = false;
         updateControls();
       }
@@ -300,8 +347,10 @@ try {
     },
     onDispose: () => {
       disposed = true;
+      importStatus.dispose();
       releasePresentationPainter?.();
       presentationPage.close();
+      presentationFeedback.dispose();
       globalThis.cancelAnimationFrame?.(frameId);
       nativeUnsubscribe?.();
     },
@@ -337,10 +386,12 @@ try {
   exampleBrief();
   document.querySelector('main').inert = false;
   document.querySelector('main').removeAttribute('aria-busy');
-  $('boot-status').hidden = true;
+  bootDisplay.clear();
   frameId = requestAnimationFrame(frame);
   void load(fetchExample, 'Copper Crossing example');
 } catch (error) {
-  $('boot-status').textContent =
-    `The theater could not start: ${clipped(error.message, 300)} Reload the page to try again.`;
+  bootDisplay.finish({
+    state: 'error',
+    message: `The theater could not start: ${clipped(error.message, 300)} Reload the page to try again.`,
+  });
 }

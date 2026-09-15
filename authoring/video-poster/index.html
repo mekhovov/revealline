@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>RevealLine — video poster workshop</title>
     <link rel="stylesheet" href="./workshop.css" />
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
@@ -20,12 +21,19 @@
         and world. Keep the original video separately; this preview does not store it.
       </p>
       <h1 class="field-kit-display">VIDEO POSTER WORKSHOP</h1>
+      <p
+        id="video-poster-status"
+        role="status"
+        aria-live="polite"
+        class="operation-status"
+        data-state="busy"
+      >
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Loading the video poster workshop…</span>
+      </p>
       <p>
         Inspect your own video, choose a time and capture its picture. This preview does not save
         assignments, stories or game data.
-      </p>
-      <p id="video-poster-status" role="status" aria-live="polite">
-        Starting the local authoring preview…
       </p>
       <fieldset id="video-poster-controls" disabled>
         <legend>Local source</legend>

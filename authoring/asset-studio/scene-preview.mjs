@@ -1,3 +1,4 @@
+import { createOperationStatus } from '../../game/ui/operation-status.mjs';
 import { createRun } from '../../game/core/index.mjs';
 import { BoardPainter, boardPaintSizeForRun } from '../../game/ui/render.mjs';
 import { createStudioPreviewRun, pickupKinds } from './preview-fixture.mjs';
@@ -139,12 +140,16 @@ export function createStudioContextPresentation(resolved, decoded, selectedPlaye
   });
 }
 
-async function croppedImage(asset, blobs) {
+async function croppedImage(asset, blobs, options) {
   const blob = blobs.get(asset.file.sha256);
   if (!blob) throw new Error('Preview media is missing.');
   const bitmap = await createImageBitmap(blob),
     f = asset.geometry.frame,
     canvas = document.createElement('canvas');
+  if (!options.isCurrent()) {
+    bitmap.close();
+    return null;
+  }
   canvas.width = f.width;
   canvas.height = f.height;
   canvas.getContext('2d').drawImage(bitmap, f.x, f.y, f.width, f.height, 0, 0, f.width, f.height);
@@ -152,7 +157,7 @@ async function croppedImage(asset, blobs) {
   const image = new Image();
   image.src = canvas.toDataURL('image/png');
   await image.decode();
-  return image;
+  return options.isCurrent() ? image : null;
 }
 function loop(surface, own, draw, motion) {
   let alive = true,
@@ -172,16 +177,20 @@ function loop(surface, own, draw, motion) {
   run(last);
 }
 export async function playerRecipePreview(surface, slot, resolved, blobs, options, own) {
+  options.onStatus?.('loading player preview fixtures…', 'downloading');
   const presets = await fixtureLoader.presets(),
     classId = slot.id.split('.')[1],
     bodyId = bodyIds[classId] || bodyIds.scout;
+  if (!options.isCurrent()) return;
+  options.onStatus?.('decoding player preview artwork…', 'decoding');
   let body = structuredClone(presets.characters[bodyId]);
   const recipe = structuredClone(presets.animationRecipes[body.animationRecipe]);
   const imageAsset =
     resolved.assets[`player.${classId}.${slot.id.endsWith('detailed') ? 'detailed' : 'compact'}`];
   let image;
   if (imageAsset?.kind === 'image') {
-    image = await croppedImage(imageAsset, blobs);
+    image = await croppedImage(imageAsset, blobs, options);
+    if (!options.isCurrent()) return;
     const geometry = imagePresentation(imageAsset);
     body.rotors = geometry.rotors;
     body.presentationPivot = geometry.pivot;
@@ -234,6 +243,7 @@ export async function playerRecipePreview(surface, slot, resolved, blobs, option
   );
 }
 export async function boardContextPreview(surface, slot, asset, resolved, blobs, options, own) {
+  options.onStatus?.('loading scene fixtures…', 'downloading');
   const classId = slot.id.startsWith('player.') ? slot.id.split('.')[1] : 'scout',
     pictureOwner = options.pictureOwner || options.sourcePicture,
     {
@@ -242,6 +252,8 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       run,
       theme: fixtureTheme,
     } = await fixtureLoader.context(slot.id, pictureOwner);
+  if (!options.isCurrent()) return;
+  options.onStatus?.('preparing scene artwork…', 'decoding');
   const painter = new BoardPainter(presets),
     theme = {
       ...fixtureTheme,
@@ -251,7 +263,12 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
   painter.onAsset = (message) => {
     warning = message;
   };
+  own(() => painter.enemyBodies.clear());
   await painter.setLook(theme, bodyIds[classId] || bodyIds.scout);
+  if (!options.isCurrent()) {
+    painter.enemyBodies.clear();
+    return;
+  }
   painter.setLevel(level, { seed: pictureOwner?.descriptor?.seed ?? 42 });
   if (slot.id.startsWith('effect.')) {
     const type = {
@@ -277,7 +294,9 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
     if (id === slot.id && (slot.group === 'pictures' || slot.group === 'screens'))
       role = 'background';
     if (!role) continue;
-    const image = await croppedImage(candidate, blobs);
+    options.onStatus?.(`decoding ${id} for the scene…`, 'decoding');
+    const image = await croppedImage(candidate, blobs, options);
+    if (!options.isCurrent()) return;
     if (role === 'background') painter.images.background = image;
     else decoded.set(id, { asset: candidate, image });
   }
@@ -288,7 +307,6 @@ export async function boardContextPreview(surface, slot, asset, resolved, blobs,
       slot.id.startsWith('player.') ? slot.id : null,
     ),
   );
-  own(() => painter.enemyBodies.clear());
   if (options.sourcePicture) painter.images.background = options.sourcePicture.image;
   if (!options.isCurrent()) return;
   const size = boardPaintSizeForRun(run),
@@ -357,12 +375,19 @@ export function audioRecipePreview(surface, slot, own) {
   stop.type = 'button';
   box.append(text('h3', slot.label), play, stop, result);
   surface.append(box);
+  const auditionStatus = createOperationStatus(result);
+  auditionStatus
+    .begin({ message: 'Sound starts only from this button. Local audition volume: 35%.' })
+    .finish({ message: 'Sound starts only from this button. Local audition volume: 35%.' });
+  let audition = 0;
   let frame,
     alive = true;
   own(() => {
     alive = false;
     cancelAnimationFrame(frame);
     player.dispose();
+    audition++;
+    auditionStatus.dispose();
   });
   const tick = () => {
     if (!alive) return;
@@ -370,13 +395,19 @@ export function audioRecipePreview(surface, slot, own) {
     if (player.previewActive) frame = requestAnimationFrame(tick);
   };
   play.onclick = async () => {
+    const request = ++audition;
+    const lease = auditionStatus.begin({ message: 'Preparing the sound audition…' });
     try {
       player.configure({ master: 0.35, music: 0.5, sfx: 0.7 });
       if (slot.id === 'audio.music') {
-        await player.preview({ seconds: 4 });
+        const ready = await player.preview({ seconds: 4 });
+        if (!alive || request !== audition) return;
+        if (!ready) throw new Error('Audio is unavailable.');
         tick();
       } else {
-        if (!(await player.enable())) throw new Error('Audio is unavailable.');
+        const enabled = await player.enable();
+        if (!alive || request !== audition) return;
+        if (!enabled) throw new Error('Audio is unavailable.');
         const cue = slot.id.slice(6);
         const event = {
           capture: 'cells.claimed',
@@ -389,15 +420,18 @@ export function audioRecipePreview(surface, slot, own) {
         }[cue];
         player.event({ type: event, won: true, tick: performance.now() });
       }
-      result.textContent = 'Playing the registered Soundscape recipe.';
+      lease.finish({ message: 'Playing the registered Soundscape recipe.' });
     } catch (error) {
-      result.textContent = error.message;
+      if (alive && request === audition) lease.finish({ message: error.message, state: 'error' });
     }
   };
   stop.onclick = () => {
+    audition++;
     player.disable();
     cancelAnimationFrame(frame);
-    result.textContent = 'Audition stopped.';
+    auditionStatus
+      .begin({ message: 'Audition stopped.' })
+      .finish({ message: 'Audition stopped.', state: 'cancelled' });
   };
 }
 export function effectRecipePreview(surface, slot, resolved, options, own) {

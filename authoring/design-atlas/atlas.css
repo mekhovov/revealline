@@ -148,6 +148,12 @@ button svg {
 .atlas-footer > span {
   font-family: var(--atlas-mono);
 }
+#font-status {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  background: var(--atlas-panel);
+}
 .atlas-header {
   max-width: 1400px;
   margin: auto;
@@ -158,6 +164,11 @@ button svg {
   gap: 24px;
   font-size: 14px;
   border-bottom: 1px solid var(--atlas-line);
+}
+.atlas-header > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .atlas-brand {
   display: flex;

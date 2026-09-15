@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Reserve illustrations · Authoring catalog</title>
     <link rel="stylesheet" href="catalog.css" />
-    <script type="module" src="catalog.mjs"></script>
+    <script
+      defer
+      src="../../../game/ui/direct-tool-launch.js"
+      data-module="catalog.mjs"
+      data-status="catalog-status"
+    ></script>
+    <link rel="stylesheet" href="../../../game/ui/operation-status.css" />
   </head>
   <body>
     <main>
       <header>
+        <a class="return-link" href="../../../game/">Return to game</a>
         <p class="eyebrow">Reveal Line · Authoring library</p>
         <h1>Reserve illustrations</h1>
         <p>40 selected source works · 4 themes · 10 waves</p>
@@ -18,7 +25,11 @@
           levels. Nothing is installed into the game here.
         </p>
       </header>
-      <p id="catalog-status" role="status">Loading catalog…</p>
+      <p id="catalog-status" class="operation-status" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span class="operation-status-label" role="status">Loading catalog…</span>
+      </p>
+      <p id="image-status" role="status" hidden></p>
       <noscript
         >This catalog needs JavaScript. The <a href="manifest.json">manifest</a> records all
         selected source paths.</noscript
@@ -46,7 +57,6 @@
           <p id="dimensions"></p>
           <figure>
             <div id="image-slot"></div>
-            <figcaption id="image-status" role="status"></figcaption>
           </figure>
           <nav class="links" aria-label="Selected source files">
             <a id="download">Download original PNG</a>

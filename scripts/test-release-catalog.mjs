@@ -43,6 +43,7 @@ test('catalog has a portable shared presentation with identical assets and font 
   assert.equal(bytes, receipt.bytes);
   assert.ok(bytes < 40 * 1024 * 1024);
   assert.ok(files.includes('game/presentation/compiled/runtime.json'));
+  assert.ok(files.includes('game/ui/operation-status.css'));
   assert.ok(files.includes('game/ui/fonts/field-kit/Exo2-OFL.txt'));
   assert.ok(files.includes('game/ui/fonts/field-kit/Handjet-OFL.txt'));
   assert.ok(files.includes('game/ui/fonts/field-kit/IBMPlexMono-OFL.txt'));

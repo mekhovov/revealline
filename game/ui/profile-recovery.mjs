@@ -1,3 +1,5 @@
+import { createOperationStatus } from './operation-status.mjs';
+
 /** Standalone read-only controls; the injected reader exposes no write/restore operation. */
 export function attachProfileRecoveryView({
   document: doc = globalThis.document,
@@ -7,6 +9,7 @@ export function attachProfileRecoveryView({
   onBack = () => {},
   supportedChannels = [],
   catalogIssue = '',
+  presenter = createOperationStatus(doc.getElementById('profile-recovery-status')),
 } = {}) {
   const $ = (id) => doc.getElementById(`profile-recovery-${id}`);
   let channels = [],
@@ -22,9 +25,11 @@ export function attachProfileRecoveryView({
   const supported = new Set(supportedChannels);
   const choice = () =>
     /^\d+$/.test($('original').value) ? originals[Number($('original').value)] : null;
-  const status = (text) => {
-    $('status').textContent = text;
+  const status = (message, state = 'ready') => {
+    const lease = active?.lease ?? presenter.begin({ message });
+    lease.finish({ message, state });
   };
+  const phase = (message) => active?.lease.update({ message });
   function clearDownload() {
     if (url) revokeURL(url);
     url = null;
@@ -69,18 +74,23 @@ export function attachProfileRecoveryView({
     if (active || closed) return;
     const operation = { id: ++serial, controller: new AbortController() };
     active = operation;
+    operation.lease = presenter.begin({
+      message: 'Checking stored profile data…',
+      isCurrent: () => !closed && active === operation,
+    });
     if (clearRaw) clearDownload();
     refresh();
     const current = () => !closed && active === operation && !operation.controller.signal.aborted;
     try {
       await fn(operation.controller.signal, current);
     } catch (error) {
-      if (current()) status(error.message);
+      if (current()) status(error.message, 'error');
     } finally {
       if (active === operation) {
+        const hadCancelFocus = doc.activeElement === $('cancel');
         active = null;
         refresh();
-        if (!closed && doc.activeElement === $('cancel'))
+        if (!closed && !doc.hidden && doc.hasFocus?.() !== false && hadCancelFocus)
           ($('review').disabled ? $('find') : $('review')).focus();
       }
     }
@@ -88,7 +98,7 @@ export function attachProfileRecoveryView({
   function cancel() {
     if (!active) return;
     active.controller.abort();
-    status('Check cancelled. Stored profiles are unchanged.');
+    status('Check cancelled. Stored profiles are unchanged.', 'cancelled');
   }
   function showReview(value) {
     const fields = [];
@@ -111,7 +121,7 @@ export function attachProfileRecoveryView({
     task(async (signal, current) => {
       review = null;
       clearOriginals();
-      status('Finding exact profile channels…');
+      phase('Finding exact profile channels…');
       const result = await reader.discover({ signal });
       if (!current()) return;
       channels = result.channels;
@@ -145,7 +155,7 @@ export function attachProfileRecoveryView({
       clearOriginals();
       const selected = channels[Number($('channel').value)];
       if (!selected) throw new Error('Choose an exact profile channel.');
-      status('Reviewing stored values…');
+      phase('Reviewing stored values…');
       const result = await reader.review(selected, { signal });
       if (!current()) return;
       review = result;
@@ -156,7 +166,7 @@ export function attachProfileRecoveryView({
     });
   $('export').onclick = () =>
     task(async (signal, current) => {
-      status('Rechecking the reviewed profile before export…');
+      phase('Rechecking the reviewed profile before export…');
       const result = await reader.exportStoredData(review, { signal });
       if (!current()) return;
       url = createURL(result.blob);
@@ -175,7 +185,12 @@ export function attachProfileRecoveryView({
           ? 'Snapshot prepared. It contains stored profile data, without original media or verified flight recovery.'
           : 'Incomplete diagnostic prepared. Unsupported components remain in storage and are not included as values.',
       );
-      $('download').focus();
+      if (
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        [$('export'), $('cancel')].includes(doc.activeElement)
+      )
+        $('download').focus();
     });
   function showOriginal() {
     const selected = choice();
@@ -201,7 +216,7 @@ export function attachProfileRecoveryView({
           throw new Error(
             'No trusted catalog is packaged for this exact channel. Raw diagnostics remain available.',
           );
-        status('Checking shared original metadata and exact channel identity…');
+        phase('Checking shared original metadata and exact channel identity…');
         const result = await reader.reviewOriginals(review, { signal });
         if (!current()) return;
         originals = result.originals;
@@ -238,7 +253,7 @@ export function attachProfileRecoveryView({
         const selected = choice();
         if (selected?.availability !== 'available-unverified')
           throw new Error('Choose an available original file.');
-        status('Verifying image: decoding dimensions, hashing bytes and rechecking identity…');
+        phase('Verifying image: decoding dimensions, hashing bytes and rechecking identity…');
         const result = await reader.verifyOriginal(selected, { signal });
         if (!current()) return;
         verified = result;
@@ -253,7 +268,7 @@ export function attachProfileRecoveryView({
       async (signal, current) => {
         clearOriginalDownload(id);
         if (!verified) throw new Error('Verify the selected original before preparing a file.');
-        status('Rechecking and verifying fresh selected bytes before preparing this file…');
+        phase('Rechecking and verifying fresh selected bytes before preparing this file…');
         const result = await reader.exportOriginalComponent(verified, { component, signal });
         if (!current()) return;
         const next = createURL(result.blob);
@@ -268,7 +283,12 @@ export function attachProfileRecoveryView({
         status(
           'File prepared. Activate its download link to save it; browser download completion is not checked here.',
         );
-        $(id).focus();
+        if (
+          !doc.hidden &&
+          doc.hasFocus?.() !== false &&
+          [$('original-file'), $('original-report'), $('cancel')].includes(doc.activeElement)
+        )
+          $(id).focus();
       },
       { clearRaw: false },
     );
@@ -291,8 +311,16 @@ export function attachProfileRecoveryView({
     },
   };
   $('back').onclick = async () => {
-    await view.close();
-    await onBack();
+    const lease = presenter.begin({ message: 'Closing recovery and releasing its reads…' });
+    try {
+      await view.close();
+      await onBack();
+    } catch (error) {
+      lease.finish({
+        message: `Recovery cleanup did not finish: ${error.message}`,
+        state: 'error',
+      });
+    }
   };
   status('Choose Find profiles to inspect stored channel names.');
   $('catalog-status').textContent = catalogIssue

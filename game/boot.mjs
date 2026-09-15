@@ -12,6 +12,7 @@
   let frame = null;
   let padNeutral = false;
   let padCommand = null;
+  const styleCleanups = new Set();
   const $ = (id) => doc.getElementById(id);
 
   function stop() {
@@ -19,6 +20,8 @@
     host.cancelAnimationFrame(frame);
     host.removeEventListener('error', resourceError, true);
     doc.removeEventListener('keydown', keydown);
+    for (const cleanup of styleCleanups) cleanup();
+    styleCleanups.clear();
   }
   function renderFailure() {
     if (!mounted) return;
@@ -68,6 +71,41 @@
     if (target?.id === 'boot-phaser') fail(new Error('The game renderer did not load.'));
     else if (target?.tagName === 'LINK' && target.rel === 'stylesheet')
       fail(new Error('A game stylesheet did not load.'));
+  }
+  function progress(message) {
+    if (state !== 'loading' || !mounted) return false;
+    $('boot-status').textContent = message;
+    return true;
+  }
+  function prepareStyles() {
+    // The HTML carries URLs without starting render-blocking requests. Install
+    // listeners before requesting them, including when a cached load is instant.
+    return Promise.all(
+      [...doc.querySelectorAll('link[data-boot-href]')].map(
+        (link) =>
+          new Promise((resolve, reject) => {
+            const cleanup = () => {
+              link.removeEventListener('load', loaded);
+              link.removeEventListener('error', failed);
+              styleCleanups.delete(cleanup);
+            };
+            const loaded = () => {
+              cleanup();
+              link.media = 'all';
+              resolve();
+            };
+            const failed = () => {
+              cleanup();
+              reject(new Error(`A game stylesheet did not load: ${link.dataset.bootHref}`));
+            };
+            styleCleanups.add(cleanup);
+            link.addEventListener('load', loaded, { once: true });
+            link.addEventListener('error', failed, { once: true });
+            link.media = 'print';
+            link.href = link.dataset.bootHref;
+          }),
+      ),
+    );
   }
   function actions() {
     return [...$('boot-screen').querySelectorAll('a,button,summary')].filter(
@@ -156,15 +194,22 @@
         $('boot-status').textContent =
           'Still preparing your arcade. You can wait, reload, or use Play online. No flight has started.';
     }, 15000);
-    import(appURL)
+    progress('Loading game styles…');
+    prepareStyles()
+      .then(() => {
+        if (state !== 'loading') return;
+        progress('Loading flight systems…');
+        return import(appURL);
+      })
       .then(() => {
         if (state === 'loading')
           fail(new Error('The game did not confirm startup. Open the current online edition.'));
       })
       .catch(fail);
   }
-  host.RevealLineBoot = Object.freeze({ ready, fail });
+  host.RevealLineBoot = Object.freeze({ ready, fail, progress });
   host.addEventListener('error', resourceError, true);
-  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', mount, { once: true });
+  if (doc.readyState !== 'complete')
+    doc.addEventListener('DOMContentLoaded', mount, { once: true });
   else mount();
 })();

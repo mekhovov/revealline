@@ -8,21 +8,49 @@
     <link rel="stylesheet" href="../../game/ui/field-kit-fonts.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-tokens.css" />
     <link rel="stylesheet" href="../../game/ui/field-kit-components.css" />
+    <link rel="stylesheet" href="../../game/ui/operation-status.css" />
     <link rel="stylesheet" href="./studio.css" />
   </head>
   <body class="field-kit">
     <a class="skip-link" href="#inspector">Skip inventory</a>
+    <div class="studio-operation">
+      <p id="studio-status" class="status-bar operation-status" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="operation-status-label" role="status" aria-live="polite"
+          >Loading the Studio workspace and presentation registry…</span
+        >
+      </p>
+      <button id="cancel-studio-operation" type="button" hidden>Cancel</button>
+    </div>
     <header class="studio-header">
       <div>
         <a href="../../game/">REVEALLINE / WORKSHOP</a>
         <h1>Asset Studio</h1>
       </div>
       <div class="workspace-actions">
-        <button type="button" id="save-workspace" class="primary">Save local revision</button
-        ><button type="button" id="export-workspace">Export .rltheme</button
+        <button
+          type="button"
+          id="save-workspace"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+          class="primary"
+        >
+          Save local revision</button
+        ><button
+          type="button"
+          id="export-workspace"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Export .rltheme</button
         ><label class="file-button"
           >Import collection<input
             id="import-workspace"
+            data-tool-control
+            data-studio-startup-disabled
+            disabled
             type="file"
             accept=".rltheme,application/vnd.revealline.theme"
         /></label>
@@ -34,13 +62,25 @@
         <button type="button" id="undo-draft" disabled>Undo draft</button
         ><button type="button" id="redo-draft" disabled>Redo draft</button
         ><button type="button" id="reset-draft" disabled>Reset to saved</button
-        ><button type="button" id="reload-workspace">Reload saved</button
-        ><button type="button" id="load-release">Load release collection</button>
+        ><button
+          type="button"
+          id="reload-workspace"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Reload saved</button
+        ><button
+          type="button"
+          id="load-release"
+          data-tool-control
+          data-studio-startup-disabled
+          disabled
+        >
+          Load release collection
+        </button>
       </div>
     </div>
-    <p id="studio-status" class="status-bar" role="status" aria-live="polite">
-      Changes stay in this studio until saved or exported. Player saves are separate.
-    </p>
     <main class="studio-layout">
       <aside class="inventory" aria-labelledby="inventory-title">
         <div class="inventory-heading">
@@ -149,10 +189,18 @@
         <div class="compare-grid">
           <figure>
             <figcaption>Saved / current</figcaption>
+            <div class="preview-operation">
+              <p id="current-preview-status" role="status"></p>
+              <button id="current-preview-cancel" type="button" hidden>Stop waiting</button>
+            </div>
             <div class="preview-surface" id="current-preview"></div>
           </figure>
           <figure>
             <figcaption>Working draft</figcaption>
+            <div class="preview-operation">
+              <p id="draft-preview-status" role="status"></p>
+              <button id="draft-preview-cancel" type="button" hidden>Stop waiting</button>
+            </div>
             <div class="preview-surface" id="draft-preview"></div>
           </figure>
         </div>
@@ -373,7 +421,7 @@
           ><button type="button" id="copy-generated-prompt">Copy prompt</button>
           <p id="prompt-status" class="support-copy" role="status"></p>
         </details>
-        <details>
+        <details id="review-panel">
           <summary>Asset revision history</summary>
           <p class="support-copy">
             Reverting binds an earlier immutable asset in a new theme revision. It never overwrites
@@ -404,6 +452,11 @@
       >JavaScript is required for local previews, editing and theme transfers. No assets are
       uploaded to a server by this studio.</noscript
     >
-    <script type="module" src="./studio.mjs"></script>
+    <script
+      defer
+      src="../../game/ui/direct-tool-launch.js"
+      data-module="./studio.mjs"
+      data-status="studio-status"
+    ></script>
   </body>
 </html>

@@ -13,6 +13,7 @@
     <script type="module" src="../presentation/page-entry.mjs"></script>
     <link rel="stylesheet" href="../ui/field-kit-surfaces.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
+    <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="controller">
     <header>
@@ -21,6 +22,10 @@
       <a href="../playground/">Open Playground ↗</a>
     </header>
     <main>
+      <p id="load-status" class="operation-status notice" data-state="busy">
+        <span class="operation-status-signal" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span class="operation-status-label" role="status">Loading validated game content…</span>
+      </p>
       <section class="intro">
         <p class="eyebrow">REAL GAME UI · SIMULATED CONTROLLER</p>
         <h1 class="field-kit-display">Try the whole journey.</h1>
@@ -58,7 +63,6 @@
         >
         <button id="load" disabled>Load practice</button>
       </section>
-      <p id="load-status" class="notice" role="status">Loading validated game content…</p>
       <div class="lab-grid">
         <aside aria-label="Virtual controller">
           <div class="connection">
@@ -257,6 +261,11 @@
         remain available there.
       </p>
     </main>
-    <script type="module" src="lab.mjs"></script>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="lab.mjs"
+      data-status="load-status"
+    ></script>
   </body>
 </html>

@@ -401,7 +401,7 @@ test('paused external flight exports exact v2 descriptor/session; import and Und
   );
 });
 
-test('a changed current flight during real descriptor hashing refuses the export instead of reusing a cached session', async (t) => {
+test('closing during descriptor hashing cancels export and a changed flight cannot publish its stale result', async (t) => {
   const p = await page(t);
   await install(p);
   await choose(p);
@@ -440,6 +440,8 @@ test('a changed current flight during real descriptor hashing refuses the export
   pending = p.$('export-backup').onclick();
   await settle(() => !!release);
   p.$('library-dialog').close();
+  assert.equal(p.$('save-status').dataset.state, 'cancelled');
+  const cancelledMessage = p.$('save-status').textContent;
   p.$('start-button').click();
   ticks(p, 6);
   p.$('pause-button').click();
@@ -448,7 +450,10 @@ test('a changed current flight during real descriptor hashing refuses the export
   assert.equal(p.rendered.paused, true);
   release();
   await pending;
-  assert.match(p.$('save-status').textContent, /Current backup snapshot changed/);
+  // Close now abandons this preparing operation immediately. The lower snapshot
+  // guard still rejects changed state; its late error cannot replace Cancelled.
+  assert.equal(p.$('save-status').textContent, cancelledMessage);
+  assert.equal(p.$('save-status').dataset.state, 'cancelled');
   assert.equal(p.$('save-json').value, 'previous prepared export');
   assert.deepEqual(p.errors, []);
 });

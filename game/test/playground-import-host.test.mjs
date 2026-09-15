@@ -59,7 +59,7 @@ function mount(document, html) {
       continue;
     }
     if (!text.startsWith('<')) {
-      stack.at(-1).textContent += text.trim();
+      stack.at(-1)._text += text.trim();
       continue;
     }
     const tag = text.match(/^<([\w-]+)/)[1],
@@ -131,7 +131,11 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
       storage.set(key, value);
     },
   });
-  set('setInterval', () => 1);
+  let poll;
+  set('setInterval', (callback) => {
+    poll = callback;
+    return 1;
+  });
   set('requestAnimationFrame', () => 1);
   set(
     'Image',
@@ -171,6 +175,7 @@ async function harness(t, { deferImage = false, classicRole = false, tacticalRes
   assert.ok(load);
   return {
     $,
+    poll: () => poll(),
     document,
     load,
     images,
@@ -339,6 +344,23 @@ test('older decode completion cannot release a newer import; failed reads releas
   assert.match(f.$('editor-status').textContent, /Import rejected/);
 });
 
+test('explicit cancellation preserves the current map and preview while a late decode releases', async (t) => {
+  const f = await harness(t, { deferImage: true });
+  const before = f.$('level-json').value,
+    href = f.$('open-preview').getAttribute('href');
+  const pending = f.load.onclick();
+  await settle();
+  assert.equal(f.$('editor-status').dataset.state, 'busy');
+  assert.equal(f.$('cancel-import').hidden, false);
+  f.$('cancel-import').onclick();
+  assert.equal(f.$('preview-button').disabled, false);
+  assert.equal(f.$('open-preview').getAttribute('href'), href);
+  await f.finishImage(0);
+  await pending;
+  assert.equal(f.$('level-json').value, before);
+  assert.match(f.$('editor-status').textContent, /cancelled/);
+});
+
 test('actual classic JSON edit retains descriptors; explicit generator replacement returns to its legacy edition', async (t) => {
   const f = await harness(t, { classicRole: true });
   const loading = f.load.onclick();
@@ -372,4 +394,48 @@ test('actual classic JSON edit retains descriptors; explicit generator replaceme
   f.$('preview-button').click();
   assert.equal(f.saved().format, 'xonix-playground.v5');
   assert.ok(f.saved().visualOverrides.rover, 'Undo restores the original Classic binding');
+});
+
+test('preview iframe load waits for the child readiness marker and does not reuse the previous child state', async (t) => {
+  const f = await harness(t),
+    child = new Document();
+  child.documentElement = child.createElement('html');
+  child.documentElement.dataset.bootState = 'loading';
+  f.$('preview-frame').contentDocument = child;
+  f.$('preview-frame').emit('load');
+  assert.equal(f.$('preview-load-status').dataset.state, 'busy');
+  child.documentElement.dataset.bootState = 'ready';
+  f.poll();
+  assert.equal(f.$('preview-load-status').dataset.state, 'ready');
+  f.$('preview-button').onclick();
+  f.poll();
+  assert.equal(f.$('preview-load-status').dataset.state, 'busy');
+  child.documentElement.dataset.bootState = 'failed';
+  f.$('preview-frame').emit('load');
+  assert.equal(f.$('preview-load-status').dataset.state, 'error');
+  assert.match(f.$('preview-load-status').textContent, /recovery controls/);
+});
+
+test('replay file reading acknowledges immediately, cancellation preserves the result, and a fresh real recording verifies', async (t) => {
+  const f = await harness(t),
+    readGate = deferred();
+  f.$('replay-result').textContent = 'Previous verification';
+  f.$('replay-file').files = [{ size: 100, text: () => readGate.promise }];
+  f.$('replay-file').onchange();
+  assert.equal(f.$('replay-status').dataset.state, 'busy');
+  assert.match(f.$('replay-status').textContent, /Reading the selected replay/);
+  f.$('cancel-replay').onclick();
+  readGate.resolve('{bad');
+  await settle();
+  assert.equal(f.$('replay-status').dataset.state, 'cancelled');
+  assert.equal(f.$('replay-result').textContent, 'Previous verification');
+  f.$('replay-paste').value = await readFile(
+    new URL('../replay-theater/data/fieldcraft-01.replay.json', import.meta.url),
+    'utf8',
+  );
+  await f.$('verify-replay-json').onclick();
+  assert.equal(f.$('replay-status').dataset.state, 'ready');
+  assert.match(f.$('replay-status').textContent, /matches its full recorded/);
+  assert.equal(JSON.parse(f.$('replay-result').textContent).match, true);
+  assert.equal(f.$('cancel-replay').hidden, true);
 });

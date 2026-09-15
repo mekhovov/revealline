@@ -23,6 +23,23 @@ a {
   color: var(--accent);
   overflow-wrap: anywhere;
 }
+header > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+#production-panel + .button {
+  box-sizing: border-box;
+  padding-block: 0;
+}
+@media (max-height: 480px) {
+  body {
+    padding-block: 16px;
+  }
+  header p {
+    margin-block: 4px 6px;
+  }
+}
 button,
 select,
 input {

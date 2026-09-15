@@ -30,6 +30,9 @@ body.field-kit {
   border-bottom: 1px solid var(--fk-line);
 }
 .studio-header a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font: 12px var(--fk-font-mono);
   letter-spacing: 0.08em;
   color: var(--fk-cyan);
@@ -97,7 +100,7 @@ body.field-kit {
 }
 .workspace-state button {
   font-size: 12px;
-  min-height: 36px;
+  min-height: 44px;
   padding: 6px 10px;
 }
 .status-bar {
@@ -398,7 +401,7 @@ body.field-kit {
   color: var(--fk-cyan);
   font-size: 17px;
   cursor: pointer;
-  min-height: 32px;
+  min-height: 44px;
 }
 .field-kit details > label,
 .field-kit details > .field-grid {
@@ -492,9 +495,9 @@ body.field-kit {
   margin: 16px 0;
 }
 .sprite-palette button {
-  width: 34px;
-  min-height: 34px;
-  height: 34px;
+  width: 44px;
+  min-height: 44px;
+  height: 44px;
   padding: 0;
   border: 1px solid #ffffff50;
 }
@@ -767,4 +770,49 @@ body.field-kit {
   padding: 16px;
   border: 2px solid var(--fk-line);
   margin-block: 16px;
+}
+
+.studio-operation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-right: 16px;
+  border-bottom: 1px solid var(--fk-line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--fk-bg);
+}
+.studio-operation .status-bar {
+  flex: 1;
+  min-width: 0;
+  border-bottom: 0;
+}
+.studio-operation button {
+  flex-shrink: 0;
+}
+.preview-operation {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}
+.preview-operation p {
+  flex: 1;
+  min-width: 140px;
+  margin: 0;
+  font-size: 13px;
+}
+@media (max-width: 700px) {
+  .studio-operation {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 0 16px 12px;
+    gap: 4px;
+  }
+  .studio-operation .status-bar {
+    flex-basis: 100%;
+    padding: 12px 0;
+  }
 }

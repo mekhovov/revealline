@@ -24,7 +24,10 @@ export function mountCouch(document, html) {
       continue;
     }
     if (!text.startsWith('<')) {
-      stack.at(-1).textContent += text.trim();
+      // A parser appends a text node; assigning textContent would remove the
+      // already-parsed child controls in this finite DOM boundary.
+      const parent = stack.at(-1);
+      parent._text = (parent._text || '') + text.trim();
       continue;
     }
     const tag = text.match(/^<([\w-]+)/)[1];

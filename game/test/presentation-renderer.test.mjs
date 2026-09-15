@@ -429,3 +429,56 @@ test('Plain canvas text uses the selected system pair and switching back restore
   );
   assert.deepEqual(authoritativeCheckpoint(run), before);
 });
+
+test('cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback', async (t) => {
+  const previousImage = globalThis.Image,
+    pending = [],
+    statuses = [],
+    warnings = [];
+  globalThis.Image = class {
+    constructor() {
+      pending.push(this);
+    }
+    set src(value) {
+      this.source = value;
+    }
+  };
+  t.after(() => {
+    if (previousImage === undefined) delete globalThis.Image;
+    else globalThis.Image = previousImage;
+  });
+  const painter = new BoardPainter(presets, {
+    onAssetStatus: (s) => statuses.push(s),
+    onAsset: (s) => warnings.push(s),
+  });
+  painter.makeArt = () => ({});
+  const theme = themes.find((entry) => entry.id === 'fpv');
+  const first = painter.setLook(theme, 'fpv-scout-v1');
+  assert.equal(statuses.at(-1).status, 'preparing');
+  assert.equal(pending.length, 1);
+  const second = painter.setLook(theme, 'fpv-scout-v1');
+  pending[1].onload();
+  await second;
+  assert.equal(statuses.at(-1).status, 'ready');
+  const count = statuses.length;
+  pending[0].onload();
+  await first;
+  assert.equal(statuses.length, count);
+  assert.equal(painter.image, pending[1]);
+  const failed = painter.setLook(theme, 'fpv-scout-v1');
+  pending[2].onerror();
+  await failed;
+  assert.equal(statuses.at(-1).status, 'error');
+  assert.match(warnings.at(-1), /artwork is unavailable/);
+  const superseded = painter.setLook(theme, 'fpv-scout-v1');
+  assert.equal(statuses.at(-1).status, 'preparing');
+  await painter.setLook(theme, 'neutral-marker');
+  assert.equal(statuses.at(-1).status, 'ready');
+  assert.equal(painter.image, null);
+  assert.equal(pending.length, 4, 'the procedural body needs no image request');
+  const proceduralCount = statuses.length;
+  pending[3].onload();
+  await superseded;
+  assert.equal(statuses.length, proceduralCount, 'obsolete pixels cannot revive their status');
+  assert.equal(painter.image, null);
+});
