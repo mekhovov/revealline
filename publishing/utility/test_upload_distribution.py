@@ -24,6 +24,7 @@ PREFIX = f'/repos/{REPO}/releases/{RELEASE}'
 class FixtureServer:
     def __init__(self, mode='ok'):
         self.mode, self.posts, self.gets, self.assets = mode, [], [], []
+        self.post_recorded = threading.Event()
         owner = self
 
         class Handler(http.server.BaseHTTPRequestHandler):
@@ -82,6 +83,7 @@ class FixtureServer:
                                     'sha256': hashlib.sha256(body).hexdigest(),
                                     'type': self.headers.get('Content-Type'),
                                     'chunked': self.headers.get('Transfer-Encoding')})
+                owner.post_recorded.set()
                 asset = {'id': 27, 'url': f'https://api.github.com/repos/{REPO}/releases/assets/27',
                          'name': 'distribution.zip', 'state': 'uploaded', 'size': len(body),
                          'digest': 'sha256:' + hashlib.sha256(body).hexdigest()}
@@ -237,8 +239,9 @@ class UploaderTests(unittest.TestCase):
         with self.server() as server:
             with self.assertRaisesRegex(u.Ambiguous, 'reread'):
                 server.api().upload(PREFIX + '/assets?name=distribution.zip', io.BytesIO(b'abc'), 10, '0' * 64)
-            # shutdown waits for the finite request handler before checking its result.
-            server.server.shutdown()
+            # ThreadingHTTPServer.shutdown stops accepting; it does not join handlers.
+            # Wait for this finite request before checking that upload was not retried.
+            self.assertTrue(server.post_recorded.wait(2), "Mock server did not record the short request")
             self.assertEqual(len(server.posts), 1)
             self.assertEqual(server.posts[0]['bytes'], 3)
 
