@@ -1,4 +1,5 @@
 import { createOperationStatus } from './operation-status.mjs';
+import { bindAudioMasterMedia } from './audio-master.mjs';
 import {
   BUILTIN_SOUNDTRACK_PLAYLISTS,
   BUILTIN_SOUNDTRACK_TRACKS,
@@ -37,6 +38,9 @@ export function attachSoundtrackPanel({
   onVolume = () => {},
   onPlayback = () => {},
   onAudioEnabled = () => {},
+  audioMaster = null,
+  onMasterMuted = null,
+  onMasterVolume = null,
   beforeAudio = async () => {},
 } = {}) {
   if (!doc?.body || !store?.read || !store?.commit || !player?.snapshot)
@@ -157,6 +161,55 @@ export function attachSoundtrackPanel({
     step: '0.01',
   });
   const selection = input('selection', 'Playback playlist', { tag: 'select' });
+  const masterStatus = node('p', 'master-status', '', { role: 'status', 'aria-live': 'polite' });
+  const masterToggle = button('master-mute', 'Unmute master sound', () =>
+    changeMaster('muted', !audioMaster.snapshot().muted),
+  );
+  const masterVolume = input('master-volume', 'Master sound volume', {
+    type: 'range',
+    min: '0',
+    max: '1',
+    step: '0.01',
+  });
+  const masterControls = section(
+    'Master sound',
+    row(masterToggle),
+    masterVolume.field,
+    masterStatus,
+  );
+  masterControls.hidden = !audioMaster;
+  function updateMaster() {
+    if (!audioMaster || disposed) return;
+    const state = audioMaster.snapshot();
+    masterToggle.textContent = state.muted ? 'Unmute master sound' : 'Mute master sound';
+    masterToggle.setAttribute('aria-pressed', String(!state.muted));
+    masterVolume.element.value = String(state.volume);
+    masterStatus.textContent =
+      state.muted || state.volume === 0
+        ? 'Master sound is muted. Play and audition keep their own playback state.'
+        : 'Master sound applies to music, effects and auditions. Playback controls stay independent.';
+  }
+  function changeMaster(kind, value) {
+    if (!audioMaster || disposed) return;
+    try {
+      const callback = kind === 'muted' ? onMasterMuted : onMasterVolume;
+      const result = callback
+        ? callback(value)
+        : kind === 'muted'
+          ? audioMaster.setMuted(value)
+          : audioMaster.setVolume(value);
+      updateMaster();
+      if (result?.ok === false)
+        masterStatus.textContent += ` ${result.warning || 'The setting is active for this session but could not be saved.'}`;
+    } catch (error) {
+      updateMaster();
+      report(error);
+    }
+  }
+  // Native/assistive range controls may publish only their committed change.
+  masterVolume.element.oninput = masterVolume.element.onchange = () =>
+    changeMaster('volume', Number(masterVolume.element.value));
+  if (audioMaster) bindings.push(audioMaster.subscribe(updateMaster));
   const useSelection = button('use-selection', 'Save & use playlist', () => {
     const chosen = selection.element.value || null;
     return task('Saving your playlist choice…', async (signal) => {
@@ -249,6 +302,15 @@ export function attachSoundtrackPanel({
     preload: 'metadata',
     'aria-label': 'Imported track audition',
   });
+  let auditionLocalVolume = 1;
+  const auditionMaster = audioMaster
+    ? bindAudioMasterMedia({
+        audioMaster,
+        element: audition,
+        volume: auditionLocalVolume,
+        muted: true,
+      })
+    : null;
   audition.hidden = true;
   const auditionButton = button('audition-track', 'Audition MP3', () =>
     playback(() => startAudition()),
@@ -276,6 +338,7 @@ export function attachSoundtrackPanel({
         auditionActivity?.clear();
         auditionActivity = null;
         audition.pause();
+        auditionMaster?.setLocal({ muted: true });
       } else {
         wakeAudio();
         if (disposed || token !== auditionToken || !auditionURL) return;
@@ -286,6 +349,7 @@ export function attachSoundtrackPanel({
         });
         auditionActivity = lease;
         try {
+          auditionMaster?.setLocal({ muted: false });
           await audition.play();
           lease.finish({ message: 'Audition playing.' });
         } catch (error) {
@@ -622,6 +686,7 @@ export function attachSoundtrackPanel({
   dialog.append(
     row(heading, closeButton),
     availability,
+    masterControls,
     operationRow,
     transport,
     columns,
@@ -983,6 +1048,7 @@ export function attachSoundtrackPanel({
     auditionActivity?.clear();
     auditionActivity = null;
     auditionToken++;
+    auditionMaster?.setLocal({ muted: true });
     audition.pause();
     audition.removeAttribute('src');
     try {
@@ -1022,10 +1088,11 @@ export function attachSoundtrackPanel({
       audition.src = auditionURL;
       audition.hidden = false;
       audition.load();
+      auditionMaster?.setLocal({ muted: false });
       await audition.play();
       await stopping;
       if (token === auditionToken) {
-        await onAudioEnabled();
+        if (!audioMaster) await onAudioEnabled();
         lease.finish({
           message: `Auditioning ${track.title}. Finish audition returns to the previous music state.`,
         });
@@ -1069,7 +1136,7 @@ export function attachSoundtrackPanel({
   async function notifyPlayback() {
     const state = player.snapshot();
     await onPlayback({ playing: state.playing, desired: state.desired ?? state.playing });
-    if (state.playing) await onAudioEnabled();
+    if (state.playing && !audioMaster) await onAudioEnabled();
   }
   function updateAudition() {
     const available = auditionURL !== null && !disposed;
@@ -1086,7 +1153,13 @@ export function attachSoundtrackPanel({
         Number.isFinite(audition.currentTime) ? audition.currentTime : 0,
       );
     if (doc.activeElement !== auditionVolume.element)
-      auditionVolume.element.value = String(Number.isFinite(audition.volume) ? audition.volume : 1);
+      auditionVolume.element.value = String(
+        auditionMaster
+          ? auditionLocalVolume
+          : Number.isFinite(audition.volume)
+            ? audition.volume
+            : 1,
+      );
   }
   function update(snapshot = player.snapshot()) {
     if (disposed) return;
@@ -1222,9 +1295,20 @@ export function attachSoundtrackPanel({
     });
   auditionVolume.element.oninput = () => {
     const value = Number(auditionVolume.element.value);
-    if (auditionURL && !busy && Number.isFinite(value))
-      audition.volume = Math.max(0, Math.min(1, value));
+    if (auditionURL && !busy && Number.isFinite(value)) {
+      const local = Math.max(0, Math.min(1, value));
+      if (auditionMaster) {
+        auditionLocalVolume = local;
+        auditionMaster.setLocal({ volume: local });
+      } else audition.volume = local;
+    }
   };
+  if (auditionMaster)
+    listen(audition, 'play', () => {
+      const active = !disposed && dialog.open && auditionURL !== null;
+      auditionMaster.setLocal({ muted: !active });
+      if (!active) audition.pause();
+    });
   for (const type of [
     'loadedmetadata',
     'durationchange',
@@ -1265,6 +1349,7 @@ export function attachSoundtrackPanel({
     transportFeedback.dispose();
     auditionFeedback.dispose();
     void stopAudition(false);
+    auditionMaster?.dispose();
     for (const unbind of bindings) unbind();
     invalidateBackup();
     dialog.remove();

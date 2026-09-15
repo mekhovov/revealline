@@ -18,6 +18,8 @@ import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-policy.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
+import { createAudioPreferences } from '../audio-preferences.mjs';
 
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
@@ -29,6 +31,28 @@ const clock = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
 export function bootCoop() {
+  const audioMaster = createAudioMaster();
+  const audioPreferences = createAudioPreferences({
+    audioMaster,
+    window,
+    getStorage: () => localStorage,
+    onWarning: (message) => {
+      $('coop-audio-status').textContent = message;
+    },
+  });
+  const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+    $('coop-audio').textContent = muted ? 'Unmute sound' : 'Mute sound';
+    $('coop-audio').setAttribute('aria-pressed', String(!muted));
+    $('coop-master-volume').value = volume;
+  });
+  $('coop-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
+  $('coop-master-volume').onchange = () =>
+    audioPreferences.setVolume(Number($('coop-master-volume').value));
+  const closeAudio = () => {
+    stopMasterView();
+    audioPreferences.dispose();
+    audioMaster.dispose();
+  };
   const painter = createCoopPainter($('coop-canvas'));
   const batch = createCoopCommandBatch();
   let loopStopped = false;
@@ -541,6 +565,7 @@ export function bootCoop() {
     })
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
+    closeAudio();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -553,9 +578,10 @@ export function bootCoop() {
     touchQuery.removeEventListener?.('change', touchChanged);
     unsubscribeNative();
   };
-  window.addEventListener('pagehide', () => {
+  window.addEventListener('pagehide', (event) => {
     cancelImport();
     pause();
+    if (!event.persisted) closeAudio();
   });
   window.addEventListener('pageshow', () => {
     last = null;

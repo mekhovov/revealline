@@ -42,6 +42,7 @@ export function createStoryDialog({
   saveVolume = () => {},
   neutralize = () => {},
   musicDucker = null,
+  audioMaster = null,
   acquire = acquirePinnedStory,
   createPresentation = createVictoryStoryPresentation,
 } = {}) {
@@ -159,6 +160,7 @@ export function createStoryDialog({
         signal: own.signal,
         musicDucker,
         ...initial,
+        audioMaster,
         onChange(snapshot) {
           if (!current()) return;
           neutralize();

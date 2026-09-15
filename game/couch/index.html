@@ -235,7 +235,10 @@
           <label class="race-check"
             ><input id="race-reduced" type="checkbox" /> Reduced effects</label
           >
-          <button id="race-audio" type="button">Enable music</button>
+          <button id="race-audio" type="button" aria-pressed="false">Unmute sound</button>
+          <label for="race-master-volume">Master sound volume</label>
+          <input id="race-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
+          <p id="race-audio-status" role="status"></p>
           <button id="race-menu-release" type="button" hidden disabled>
             Release menu controller
           </button>

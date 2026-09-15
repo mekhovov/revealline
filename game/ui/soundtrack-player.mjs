@@ -9,6 +9,7 @@ import {
 } from '../soundtrack.mjs';
 import { validateTrack } from './music.mjs';
 import { inspectMP3, ownSoundtrackBlob, throwIfSoundtrackAborted } from '../mp3.mjs';
+import { bindAudioMasterMedia } from './audio-master.mjs';
 
 const wait = (ms, signal) =>
   new Promise((resolve, reject) => {
@@ -33,6 +34,7 @@ export function createSoundtrackPlayer({
   random = Math.random,
   URLImpl = globalThis.URL,
   fadeMs = 120,
+  audioMaster,
 } = {}) {
   required(
     soundscape?.persistentMusic === true &&
@@ -92,6 +94,9 @@ export function createSoundtrackPlayer({
     fallbackUsed = false,
     listeners = [];
   const gainLeases = new Map();
+  const masterMedia = audioMaster
+    ? bindAudioMasterMedia({ audioMaster, element: media, volume: 0 })
+    : null;
   const tracks = () => [
     ...BUILTIN_SOUNDTRACK_TRACKS,
     ...library.tracks,
@@ -190,7 +195,9 @@ export function createSoundtrackPlayer({
     let factor = 1;
     for (const value of gainLeases.values()) factor = Math.min(factor, value);
     soundscape.configure({ music: volume * fade * factor });
-    media.volume = Math.max(0, Math.min(1, master * volume * fade * factor));
+    const localVolume = Math.max(0, Math.min(1, master * volume * fade * factor));
+    if (masterMedia) masterMedia.setLocal({ volume: localVolume });
+    else media.volume = localVolume;
   }
   /** Temporary attenuation only; the player remains the owner of base volume/intent.
    * Overlapping owners use the lowest factor. Each owner releases only its lease.
@@ -753,6 +760,7 @@ export function createSoundtrackPlayer({
     gainLeases.clear();
     gains();
     status = 'disposed';
+    masterMedia?.dispose();
     emit();
   }
   soundscape.pauseMusic();

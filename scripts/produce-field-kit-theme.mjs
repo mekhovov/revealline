@@ -27,7 +27,8 @@ const sources = {
     'game/ui/field-kit-flow.css; game/ui/field-kit-surfaces.css; game/ui/field-kit-compiled.css; site/release-catalog.css',
   motion: 'authoring/motion-lab/render-character.mjs; game/ui/actor-presentation.mjs',
   effects: 'game/ui/classic-view.mjs; game/ui/event-feedback.mjs',
-  audio: 'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs',
+  audio:
+    'game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs; game/ui/audio-master.mjs',
 };
 
 // A recipe stays unreviewed whenever one of its source inputs changes. These

@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachSoundtrackPanel } from '../ui/soundtrack-panel.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createSoundtrackStore } from '../soundtrack-store.mjs';
 import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { prepareSoundtrackLibrary, importSoundtrackBundle } from '../soundtrack-bundle.mjs';
@@ -293,6 +294,139 @@ async function setup(
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
+
+test('shared master immediately governs audition output while retaining local volume and transport', async (t) => {
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
+    initial = await fixture(),
+    app = await setup(t, { initial, callbacks: { audioMaster } });
+  app.choose('tracks', initial.track.id);
+  await app.click('audition-track');
+  const media = app.node('audition');
+  media.currentTime = 8;
+  app.node('audition-volume').value = '0.4';
+  app.node('audition-volume').oninput();
+  const intent = { ...app.state },
+    calls = app.calls.length;
+  assert.equal(media.volume, 0.2);
+  audioMaster.setMuted(true);
+  assert.equal(media.muted, true);
+  audioMaster.setVolume(0.25);
+  assert.equal(media.volume, 0.1);
+  assert.equal(media.paused, false);
+  assert.equal(media.currentTime, 8);
+  assert.deepEqual(app.state, intent);
+  assert.equal(app.calls.length, calls);
+  // Model native controls attempting to replace effective values; queued events
+  // cannot overwrite the explicit audition fader or shared master policy.
+  media.muted = false;
+  media.volume = 1;
+  media.emit('volumechange');
+  assert.equal(media.muted, true);
+  assert.equal(media.volume, 0.1);
+  app.panel.update();
+  assert.equal(app.node('audition-volume').value, '0.4');
+  assert.match(app.node('master-status').textContent, /Master sound is muted/);
+  audioMaster.setMuted(false);
+  assert.equal(media.muted, false);
+  assert.equal(media.volume, 0.1);
+  assert.equal(media.plays, 1);
+  assert.equal((await app.store.read()).generation, 1);
+  app.panel.dispose();
+  audioMaster.setVolume(1);
+  assert.equal(media.muted, true);
+  assert.equal(media.volume, 0.1, 'Disposed panel releases its master subscription');
+  assert.equal(app.revoked.length, 1);
+});
+
+test('master controls remain available during loading and host save failure does not veto session mute', async (t) => {
+  let finish;
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.7 }),
+    changes = [],
+    app = await setup(t, {
+      open: false,
+      store: {
+        read: () =>
+          new Promise((resolve) => {
+            finish = resolve;
+          }),
+        commit() {},
+      },
+      callbacks: {
+        audioMaster,
+        onMasterMuted(value) {
+          changes.push(['muted', value]);
+          audioMaster.setMuted(value);
+          return { ok: false, warning: 'Session only: storage is unavailable.' };
+        },
+        onMasterVolume(value) {
+          changes.push(['volume', value]);
+          audioMaster.setVolume(value);
+        },
+      },
+    });
+  const opening = app.panel.open();
+  assert.equal(app.node('close').disabled, true);
+  assert.equal(app.node('master-mute').disabled, false);
+  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), 'true');
+  app.click('master-mute');
+  assert.equal(audioMaster.snapshot().muted, true);
+  assert.equal(app.node('master-mute').getAttribute('aria-pressed'), 'false');
+  assert.equal(audioMaster.snapshot().revision, 1, 'Host applies authority exactly once');
+  assert.match(app.node('master-status').textContent, /Session only/);
+  app.node('master-volume').value = '0.3';
+  app.node('master-volume').oninput();
+  assert.equal(audioMaster.snapshot().volume, 0.3);
+  assert.deepEqual(changes, [
+    ['muted', true],
+    ['volume', 0.3],
+  ]);
+  assert.deepEqual(app.calls, []);
+  finish({ library: emptySoundtrackLibrary(), assets: [], generation: 0 });
+  await opening;
+  const calls = app.calls.length;
+  app.node('master-mute').focus();
+  app.click('master-mute');
+  assert.equal(app.doc.activeElement, app.node('master-mute'));
+  assert.equal(app.calls.length, calls, 'Master action never invokes a transport');
+});
+
+test('late audition and music Play completion cannot invoke the legacy master-enable callback', async (t) => {
+  const audioMaster = createAudioMaster({ muted: false, volume: 0.5 }),
+    initial = await fixture();
+  let enabled = 0,
+    finish;
+  const app = await setup(t, {
+    initial,
+    callbacks: {
+      audioMaster,
+      onAudioEnabled() {
+        enabled++;
+        audioMaster.setMuted(false);
+      },
+    },
+  });
+  app.choose('tracks', initial.track.id);
+  app.node('audition').play = () =>
+    new Promise((resolve) => {
+      finish = () => {
+        app.node('audition').paused = false;
+        resolve();
+      };
+    });
+  const starting = app.click('audition-track');
+  app.click('master-mute');
+  assert.equal(audioMaster.snapshot().muted, true);
+  assert.equal(app.node('audition').muted, true);
+  finish();
+  await starting;
+  assert.equal(app.node('audition').muted, true);
+  assert.equal(enabled, 0);
+  await app.click('play');
+  assert.equal(audioMaster.snapshot().muted, true);
+  assert.equal(enabled, 0);
+  assert.equal(app.state.desired, true, 'Play still changes transport intent while muted');
+  assert.match(app.node('master-status').textContent, /Master sound is muted/);
+});
 
 // Hold the actual first store read while the DOM models native blur when the
 // focused Close button becomes disabled. Cached openings must not read again.

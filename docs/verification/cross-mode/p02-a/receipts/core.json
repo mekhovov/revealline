@@ -1,0 +1,138 @@
+{
+  "sourceBase": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "scope": "Core authority/mixer/player only; modeled media, not audible/browser qualification",
+  "initialDiagnostics": [
+    {
+      "addedCasesPassed": 10,
+      "cancelled": 3,
+      "cause": "MP3 fixture playlist started with synth; corrected explicit first MP3 plus track-kind assertion. Initial tool output retained in task, not as a raw file."
+    },
+    {
+      "cause": "Node20.20.0/bin/node absent. No test process started; used actual installed20.19.5 instead."
+    }
+  ],
+  "pins": [
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26731,
+      "sha256": "b0703011e0981ed4d86d62cb36b721f65f52e7033a4f63417a81287731ee0388"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 24085,
+      "sha256": "6b45ab2c75fc313443c97ec3a64ed8e1526d89052292c6c3ab2c9817b1465932"
+    },
+    {
+      "path": "game/test/audio-master.test.mjs",
+      "bytes": 9813,
+      "sha256": "29b24158d719f7ca972922ae2a6b6a90c773863b2fefcec8047c39d93d270672"
+    },
+    {
+      "path": "game/test/soundtrack-master.test.mjs",
+      "bytes": 4717,
+      "sha256": "4240522c3078d4bee0b1b4b749c6987d8654c0319006b0b2cbd6cedd53d07d99"
+    },
+    {
+      "path": "game/test/audio.test.mjs",
+      "bytes": 25189,
+      "sha256": "45b7baedeb9961d81547e1b97ef4321159e3d6bd199848b89b29905e15ab7637"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 22043,
+      "sha256": "da235bcb141e82fbc33a177acf73eb48005915741c6d90f75814e2050abdc7fd"
+    },
+    {
+      "path": "game/test/soundtrack-gain-leases.test.mjs",
+      "bytes": 8418,
+      "sha256": "e7c63f38db5822bb69649712decc2fd1a8a4bd0303069cb912615d73da634971"
+    }
+  ],
+  "runs": [
+    {
+      "version": "v22.22.2",
+      "exitCode": 0,
+      "passed": 78,
+      "sourcePinsUnchanged": true,
+      "durationSeconds": 0.199,
+      "log": "node-22.22.2.log",
+      "logSha256": "f58eab1cbfa65a4a2e27765fbcddb95f451e85be18cc3b91c2869292bc7fc1e2"
+    },
+    {
+      "version": "v20.19.5",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/audio-master.test.mjs",
+        "game/test/soundtrack-master.test.mjs",
+        "game/test/audio.test.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-gain-leases.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.186,
+      "log": "node-20.19.5.log",
+      "logSha256": "39d9e875294509f5e816df08bdff75acec9af211daa6ac695c967c49244da413",
+      "sourcePinsUnchanged": true
+    }
+  ],
+  "staticChecks": [
+    {
+      "check": "node --check",
+      "path": "game/ui/audio-master.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "node --check",
+      "path": "game/ui/audio.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "node --check",
+      "path": "game/ui/soundtrack-player.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "node --check",
+      "path": "game/test/audio-master.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "node --check",
+      "path": "game/test/soundtrack-master.test.mjs",
+      "exitCode": 0
+    },
+    {
+      "check": "prettier",
+      "exitCode": 0
+    },
+    {
+      "check": "eslint",
+      "exitCode": 0
+    },
+    {
+      "check": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "changedPaths": [
+    "game/ui/audio-master.mjs",
+    "game/ui/audio.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "game/test/audio-master.test.mjs",
+    "game/test/soundtrack-master.test.mjs"
+  ],
+  "addedCases": 15,
+  "completeTestFiles": 5,
+  "passedPerRuntime": 78,
+  "limits": [
+    "No host persistence code owned in this slice.",
+    "Native output setters/event model do not establish audible playback or iOS effective volume.",
+    "No commit, version, build or publication action."
+  ]
+}

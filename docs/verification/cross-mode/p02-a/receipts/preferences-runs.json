@@ -1,0 +1,63 @@
+{
+  "before": [
+    {
+      "path": "game/audio-preferences.mjs",
+      "bytes": 5006,
+      "sha256": "f7319b4084dfeb263e05efffb448a275f65c9aaa9fc7329f986ce6181b453da1"
+    },
+    {
+      "path": "game/test/audio-preferences.test.mjs",
+      "bytes": 9667,
+      "sha256": "837b52c18b83ecdd221d57a72d1fe84d517331520dc91c3d59ddee04d0b37c5e"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    }
+  ],
+  "after": [
+    {
+      "path": "game/audio-preferences.mjs",
+      "bytes": 5006,
+      "sha256": "f7319b4084dfeb263e05efffb448a275f65c9aaa9fc7329f986ce6181b453da1"
+    },
+    {
+      "path": "game/test/audio-preferences.test.mjs",
+      "bytes": 9667,
+      "sha256": "837b52c18b83ecdd221d57a72d1fe84d517331520dc91c3d59ddee04d0b37c5e"
+    },
+    {
+      "path": "game/ui/audio-master.mjs",
+      "bytes": 5277,
+      "sha256": "b7f4ffa09292d03aa18c3377d343da5699b2affd38f0459ad4e0daa384f8670c"
+    }
+  ],
+  "inputsUnchanged": true,
+  "results": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/audio-preferences.test.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.06950612482614815,
+      "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/.cache/audio-preferences/node-20.19.5.log",
+      "bytes": 5303,
+      "sha256": "647ab5e87234dc0566e7bdad097f5fdc64a31377c7d13bc9d83f5a84f678ab3e"
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/audio-preferences.test.mjs"
+      ],
+      "exitCode": 0,
+      "seconds": 0.0743215000256896,
+      "log": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p02a-shared-audio/.cache/audio-preferences/node-22.22.2.log",
+      "bytes": 5660,
+      "sha256": "3f4c6a553455ed6caabb9b29f2439c554b05a4df3757474cc27ae58bcf599021"
+    }
+  ]
+}

@@ -74,6 +74,8 @@ import { controllerBindingLabels, controllerStickLabel } from './controller-bind
 import { attachKeySettings } from './ui/key-settings.mjs';
 import { actionForKey, bindingLabels, keyLabel, resolveKeyBindings } from './key-bindings.mjs';
 import { Soundscape, DEFAULT_TRACKS } from './ui/audio.mjs';
+import { createAudioMaster } from './ui/audio-master.mjs';
+import { createAudioPreferences } from './audio-preferences.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
 import { createManagedMediaStore } from './managed-media-store.mjs';
@@ -640,7 +642,31 @@ try {
     seed = scenario.settings.seed;
     bodyId = theme.player;
   }
-  const sound = new Soundscape({ persistentMusic: true });
+  const audioMaster = createAudioMaster();
+  const audioPreferences = createAudioPreferences({
+    audioMaster,
+    window,
+    getStorage: () => localStorage,
+    fallback: {
+      muted: !library.preferences.musicEnabled,
+      volume: library.preferences.masterVolume,
+    },
+    writable: () =>
+      !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
+    onWarning: (message) => {
+      if (message) warning(message);
+    },
+  });
+  const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  // The shared authority owns master attenuation; local music and effects keep their faders.
+  sound.configure({ master: 1 });
+  const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
+    $('master-volume').value = volume;
+    $('sound-button').setAttribute('aria-pressed', String(!muted));
+    $('sound-button').setAttribute('aria-label', muted ? 'Unmute sound' : 'Mute sound');
+    $('settings-master-mute').textContent = muted ? 'Unmute sound' : 'Mute sound';
+    $('settings-master-mute').setAttribute('aria-pressed', String(!muted));
+  });
   let neutralResumeTick = false;
   let gameShell = null,
     missionPicker = null,
@@ -712,11 +738,12 @@ try {
     if (restoreFocus) $('start-button').focus({ preventScroll: true });
   };
   const storyDialog = createStoryDialog({
+    audioMaster,
     readMedia: pictureMedia,
     settings: () => ({
       volume: library.cinematicVolume ?? DEFAULT_CINEMATIC_VOLUME,
-      masterVolume: library.preferences.masterVolume,
-      muted: !sound.enabled,
+      masterVolume: audioMaster.snapshot().volume,
+      muted: audioMaster.snapshot().muted,
       reducedMotion: $('reduced-effects').checked,
     }),
     saveVolume(volume) {
@@ -939,8 +966,9 @@ try {
     else if (track) sound.setTrack(track, { atBoundary });
   }
   function configureAudio(settings) {
-    if (!soundtrackPlayer) return sound.configure(settings);
-    const { style: _style, music, ...mix } = settings;
+    const { master: _master, ...local } = settings;
+    if (!soundtrackPlayer) return sound.configure({ ...local, master: 1 });
+    const { style: _style, music, ...mix } = local;
     sound.configure(mix);
     if (music !== undefined) soundtrackPlayer.setVolume(music);
   }
@@ -958,9 +986,18 @@ try {
     // Ordinary Resume enables effects but keeps an intentional music-only Pause.
     return sound.enable();
   }
-  function muteAudio() {
-    soundtrackPlayer?.pause();
-    sound.disable();
+  function setMasterMuted(muted) {
+    audioPreferences.setMuted(muted);
+    // Only explicit player actions mirror the legacy preference. Playback promises never do.
+    const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
+    const warning = audioPreferences.getWarning() || saved.warning || '';
+    return { ok: !warning, warning };
+  }
+  function setMasterVolume(volume) {
+    audioPreferences.setVolume(volume);
+    const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
+    const warning = audioPreferences.getWarning() || saved.warning || '';
+    return { ok: !warning, warning };
   }
   function suspendAudio() {
     soundtrackSuspended = true;
@@ -991,6 +1028,7 @@ try {
         );
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
       soundtrackPlayer = createSoundtrackPlayer({
+        audioMaster,
         soundscape: sound,
         audioElement,
         readAsset: async (hash) => {
@@ -1021,6 +1059,9 @@ try {
       publishedAudio.setPlayer(soundtrackPlayer);
       if (soundtrackSuspended) soundtrackPlayer.suspend();
       soundtrackPanel = attachSoundtrackPanel({
+        audioMaster,
+        onMasterMuted: setMasterMuted,
+        onMasterVolume: setMasterVolume,
         document,
         store: soundtrackStore,
         player: soundtrackPlayer,
@@ -1046,7 +1087,6 @@ try {
           $('music-volume').value = value;
           preferences({ musicVolume: value });
         },
-        onAudioEnabled: () => preferences({ musicEnabled: true }),
         beforeAudio: () => {
           if (soundtrackSuspended) {
             soundtrackSuspended = false;
@@ -1225,7 +1265,7 @@ try {
   syncAssistControls();
   refreshTextSize();
   $('music-select').value = library.preferences.musicGenre;
-  $('master-volume').value = library.preferences.masterVolume;
+  $('master-volume').value = audioMaster.snapshot().volume;
   $('music-volume').value = library.preferences.musicVolume;
   $('sfx-volume').value = library.preferences.sfxVolume;
   $('terrain-select').value = library.preferences.style;
@@ -1545,13 +1585,7 @@ try {
     },
     onReturn: () => {
       clearInput();
-      if (
-        !soundtrackDisposed &&
-        guideMusicWasPlaying &&
-        library.preferences.musicEnabled &&
-        !document.hidden &&
-        document.hasFocus()
-      )
+      if (!soundtrackDisposed && guideMusicWasPlaying && !document.hidden && document.hasFocus())
         activateAudio().catch(() => {});
       guideMusicWasPlaying = false;
     },
@@ -1590,6 +1624,9 @@ try {
       optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
+      stopMasterView();
+      audioPreferences.dispose();
+      audioMaster.dispose();
       soundtrackStore?.close();
       flightPictures?.dispose();
       missionThumbnails.close();
@@ -2848,7 +2885,7 @@ try {
     bodyId = p.bodyId;
     $('theme-select').value = theme.id;
     $('music-select').value = p.musicGenre;
-    $('master-volume').value = p.masterVolume;
+    $('master-volume').value = audioMaster.snapshot().volume;
     $('music-volume').value = p.musicVolume;
     $('sfx-volume').value = p.sfxVolume;
     $('terrain-select').value = p.style;
@@ -2872,7 +2909,6 @@ try {
       music: p.musicVolume,
       sfx: p.sfxVolume,
     });
-    if (!p.musicEnabled) muteAudio();
     themeOverride = true;
     musicOverride = true;
     prepare();
@@ -3258,6 +3294,8 @@ try {
   });
   show('native-diagnostics', nativePlatform() === 'ios');
   function tuneMusic(event) {
+    if (Number($('master-volume').value) !== audioMaster.snapshot().volume)
+      setMasterVolume(Number($('master-volume').value));
     if (event?.target.id === 'music-select' && !soundtrackPlayer) {
       musicOverride = true;
       assignMusic(
@@ -3286,11 +3324,8 @@ try {
         ? await activateAudio({ explicit: true })
         : await sound.preview({ seconds: 4 });
       $('music-preview').textContent = ok ? 'Soundtrack playing ♫' : 'Audio is unavailable';
-      if (ok) {
-        preferences({ musicEnabled: true });
-        $('sound-button').setAttribute('aria-pressed', 'true');
-        $('sound-button').setAttribute('aria-label', 'Mute sound');
-      }
+      if (ok && audioMaster.snapshot().muted)
+        $('music-preview').textContent = 'Playlist playing · master sound muted';
     } catch (e) {
       warning(e.message);
     }
@@ -3989,12 +4024,8 @@ try {
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
     // Enable audio on the original gesture, before any storage/decode await.
-    // A Studio Play may still be awaiting media completion before its preference
-    // is saved. Preserve that live intent; explicit Pause/Mute clears it.
-    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
-      ? activateAudio()
-      : muteAudio()
-    )?.catch?.(() => {});
+    // Master mute only gates output. It never discards a pending or paused playlist.
+    activateAudio().catch(() => {});
     if (!flightPictures?.ready(theme.id)) {
       if (pictureResume) return;
       const owner = flightPictures,
@@ -4068,10 +4099,7 @@ try {
           : 'Flight resumed.',
       );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
-    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
-      ? activateAudio()
-      : muteAudio()
-    )?.catch?.(() => {});
+    activateAudio().catch(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
@@ -4660,8 +4688,6 @@ try {
     else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       $('music-preview').textContent = 'Preview music ♫';
-    $('sound-button').setAttribute('aria-pressed', String(sound.enabled));
-    $('sound-button').setAttribute('aria-label', sound.enabled ? 'Mute sound' : 'Enable sound');
     refreshHUD();
   }
   for (const t of themesFile.themes) $('theme-select').append(new Option(t.name, t.id));
@@ -4864,20 +4890,8 @@ try {
     resume();
     warning('Demonstration: this is a real simulated cut. It grants no rewards.');
   };
-  $('sound-button').onclick = async () => {
-    try {
-      let on;
-      if (sound.enabled) {
-        muteAudio();
-        on = false;
-      } else on = await activateAudio({ explicit: true });
-      $('sound-button').setAttribute('aria-pressed', String(on));
-      $('sound-button').setAttribute('aria-label', on ? 'Mute sound' : 'Enable sound');
-      preferences({ musicEnabled: on });
-    } catch {
-      warning('Audio could not start in this browser.');
-    }
-  };
+  $('sound-button').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
+  $('settings-master-mute').onclick = () => setMasterMuted(!audioMaster.snapshot().muted);
   for (const id of ['tap-steering', 'settings-tap-steering']) {
     $(id).onchange = () => {
       clearInput();
@@ -5072,7 +5086,7 @@ try {
       document.hidden ||
       soundtrackDisposed ||
       enemyGuide?.practiceActive ||
-      !library.preferences.musicEnabled
+      audioMaster.snapshot().muted
     )
       return;
     if (soundtrackPlayer && soundtrackSuspended) void activateAudio();

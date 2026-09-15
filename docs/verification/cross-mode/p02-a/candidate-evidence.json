@@ -1,0 +1,442 @@
+{
+  "format": "revealline.p02a-local-candidate-evidence.v1",
+  "createdAt": "2026-09-15T14:57:51.579251+00:00",
+  "baseCommit": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "status": "LOCAL_CANDIDATE_FINAL_SOURCE_UNBOUND",
+  "finalCandidateCommit": null,
+  "finalCandidateTree": null,
+  "publicAccepted": false,
+  "phaseComplete": false,
+  "p01Prerequisite": "Public P01 acceptance/integration remains pending; this package does not approve it.",
+  "supersession": "Historical focused working-tree checkpoints. Studio change-event wiring and master-step alignment supersede affected earlier pins. Final root source hold and exact-source rerun have not been supplied.",
+  "receipts": [
+    {
+      "path": "receipts/core.json",
+      "originalPath": ".cache/p02a-core/verification.json",
+      "bytes": 4036,
+      "sha256": "fc26398dfd1dcccb9435f0963d42d853624b0e98e3239692710332ae96b25904",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/preferences-held.json",
+      "originalPath": ".cache/audio-preferences/held.json",
+      "bytes": 708,
+      "sha256": "87e480a89c2f207c1fd3f76343465c8f2bc62a73be47036a6c56fcaac7f1f023",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/preferences-runs.json",
+      "originalPath": ".cache/audio-preferences/test-runs.json",
+      "bytes": 2063,
+      "sha256": "e364d05f15461fcbcd2342dfaff3204d6890a365d1cc850c43e49b4da626a15a",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/studio-story.json",
+      "originalPath": ".cache/studio-story-master/verification.json",
+      "bytes": 7544,
+      "sha256": "744723f72c29dff78d6ff247ea4bf13707f17687a718001f9d63647d168caf01",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/keyboard-pre-step-alignment.json",
+      "originalPath": ".cache/p02a-master-keyboard/verification.json",
+      "bytes": 7009,
+      "sha256": "c16f8b856f7f95b8e365d219212e9ce058e1d13b9455baddc17a815c1cf1f469",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/couch-team-pre-step-alignment.json",
+      "originalPath": ".cache/p02a-couch/verification.json",
+      "bytes": 3744,
+      "sha256": "dc46e768ca41332f467f47cf62cc174f67f9de4af26d1c6e1847b1b6cbb2c53d",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/production-dependency-plan.json",
+      "originalPath": ".cache/p02a-production/handoff.json",
+      "bytes": 12061,
+      "sha256": "a93e2537d8b573d1d53d061272c799222c6883cf7227e69a3ce49078d2ee2ef4",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/production-fingerprint-support.json",
+      "originalPath": ".cache/p02a-production/fingerprint-support/handoff.json",
+      "bytes": 3122,
+      "sha256": "ab0f77d7562b370c52dc92b68ac621860ea78eabd807756b7b20244559d40829",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/production-fingerprint-runs.json",
+      "originalPath": ".cache/p02a-production/fingerprint-support/test-runs.json",
+      "bytes": 126072,
+      "sha256": "db0d39b249e758342aa1c99e3e13f328ce4f7c4e1737fabeab4ca37306dc5ec6",
+      "copyByteExact": true
+    },
+    {
+      "path": "receipts/master-percent-alignment.json",
+      "originalPath": ".cache/p02a-master-percent/verification.json",
+      "bytes": 9659,
+      "sha256": "40d11ea9eadf86bf16e4a684ad7406ebc84f812e524bf1ddefa0f9f1d5920347",
+      "copyByteExact": true
+    }
+  ],
+  "rawLogMetadata": [
+    {
+      "group": "core",
+      "originalPath": ".cache/p02a-core/node-22.22.2.log",
+      "bytes": 18888,
+      "sha256": "f58eab1cbfa65a4a2e27765fbcddb95f451e85be18cc3b91c2869292bc7fc1e2",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 156.287334
+      }
+    },
+    {
+      "group": "core",
+      "originalPath": ".cache/p02a-core/node-20.19.5.log",
+      "bytes": 17739,
+      "sha256": "39d9e875294509f5e816df08bdff75acec9af211daa6ac695c967c49244da413",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 78,
+        "pass": 78,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 150.115625
+      }
+    },
+    {
+      "group": "preferences",
+      "originalPath": ".cache/audio-preferences/node-22.22.2.log",
+      "bytes": 5660,
+      "sha256": "3f4c6a553455ed6caabb9b29f2439c554b05a4df3757474cc27ae58bcf599021",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 24,
+        "pass": 24,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 48.004834
+      }
+    },
+    {
+      "group": "preferences",
+      "originalPath": ".cache/audio-preferences/node-20.19.5.log",
+      "bytes": 5303,
+      "sha256": "647ab5e87234dc0566e7bdad097f5fdc64a31377c7d13bc9d83f5a84f678ab3e",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 24,
+        "pass": 24,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 46.12425
+      }
+    },
+    {
+      "group": "studio-story",
+      "originalPath": ".cache/studio-story-master/node22.stdout.log",
+      "bytes": 21043,
+      "sha256": "9b024104e0c66fed3aaba245f254fd83ba5e89ece376c82d15669bd8e7a68ece",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 85,
+        "pass": 85,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 423.802541
+      }
+    },
+    {
+      "group": "studio-story",
+      "originalPath": ".cache/studio-story-master/node20.stdout.log",
+      "bytes": 19775,
+      "sha256": "ac0f2262b3a29a3de40acbf0c0e32905dee3f9d533ebac29db8d40edc3ccc1af",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 85,
+        "pass": 85,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 978.417875
+      }
+    },
+    {
+      "group": "keyboard-pre-step-alignment",
+      "originalPath": ".cache/p02a-master-keyboard/node-22.22.2.log",
+      "bytes": 13723,
+      "sha256": "1bb9da127d121f6f42bdca8655fe134ddc1c1a31e02c1347646161f88bcc7cc2",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 53,
+        "pass": 53,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 13441.588167
+      }
+    },
+    {
+      "group": "keyboard-pre-step-alignment",
+      "originalPath": ".cache/p02a-master-keyboard/node-20.19.5.log",
+      "bytes": 12922,
+      "sha256": "c3685678e958d6d40031dc8cf9c4080cb0499305f848881ad6af3f4a2ed6b3c9",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 53,
+        "pass": 53,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 19342.20225
+      }
+    },
+    {
+      "group": "couch-team-pre-step-alignment",
+      "originalPath": ".cache/p02a-couch/final-node-22.22.2.log",
+      "bytes": 11428,
+      "sha256": "05ec44488d291e84355547055b669068a523ea72f21b8b2e4a2b4836848af70d",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 46,
+        "pass": 46,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 15382.367833
+      }
+    },
+    {
+      "group": "couch-team-pre-step-alignment",
+      "originalPath": ".cache/p02a-couch/final-node-20.19.5.log",
+      "bytes": 10734,
+      "sha256": "b0e3bef36305fc97d84ce490176a5a64b5f863ecd440319a646c086a87c1dd94",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 46,
+        "pass": 46,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 22335.864542
+      }
+    },
+    {
+      "group": "production-fingerprint-support",
+      "originalPath": ".cache/p02a-production/fingerprint-support/node-22.22.2.log",
+      "bytes": 2469,
+      "sha256": "8c4c5cc83e1fc3eed7a35ad8876d99c89b6d9143c7cfba7f91a93dc5d53bce2d",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 7,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 32140.512791
+      }
+    },
+    {
+      "group": "production-fingerprint-support",
+      "originalPath": ".cache/p02a-production/fingerprint-support/node-20.19.5.log",
+      "bytes": 2353,
+      "sha256": "8a0e3feef8f3c636331982a387373b5445686dfcf2a7a793e81cf8c6c4071929",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 7,
+        "pass": 6,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 26260.113917
+      }
+    },
+    {
+      "group": "master-percent-alignment",
+      "originalPath": ".cache/p02a-master-percent/node-22.22.2.log",
+      "bytes": 17505,
+      "sha256": "e992b5262caf9cc4e85d80e8b1ae6824410955ecb0fc4bc8244f70f2ef7b18bc",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 68,
+        "pass": 68,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 25655.079958
+      }
+    },
+    {
+      "group": "master-percent-alignment",
+      "originalPath": ".cache/p02a-master-percent/node-20.19.5.log",
+      "bytes": 16501,
+      "sha256": "efbbc951088656d538c17cf9f0854720ce2d7aa74c527c821124e37dcc815ee4",
+      "retainedInGit": false,
+      "summary": {
+        "tests": 68,
+        "pass": 68,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 48870.777875
+      }
+    }
+  ],
+  "observedDeclaredPinComparisons": [
+    {
+      "receipt": "receipts/core.json",
+      "matchingDeclaredPins": 8,
+      "differences": [],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/preferences-held.json",
+      "matchingDeclaredPins": 2,
+      "differences": [],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/preferences-runs.json",
+      "matchingDeclaredPins": 0,
+      "differences": [],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/studio-story.json",
+      "matchingDeclaredPins": 9,
+      "differences": [
+        {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "recordedSha256": "c0b225030dcd57697ef52406ddec38e687fe7aa4da6f882bd6a48e43728fc18e",
+          "observedSha256": "a3b61c9636c8b8a0fff13f35b28d16f39abca634fc9989ff2e746cd259740d69"
+        },
+        {
+          "path": "authoring/asset-studio/preview.mjs",
+          "recordedSha256": "649f0585e9a8a8228c8b3cbeb693d03493ddc8203cac0492f7664e47e9e23b91",
+          "observedSha256": "96cd2ae1f81ec9483e47b6d26eea21aa708a9d6e8f2bd89e15d23a009a2facd2"
+        },
+        {
+          "path": "authoring/asset-studio/scene-preview.mjs",
+          "recordedSha256": "00c82561b6c79c24982f5fdf5ed627caf2e111fb08befb1ee746306ed672edc3",
+          "observedSha256": "89e48861d360c68aaf6d396980f477816059c327ad96b08c26b54e98c6e66937"
+        }
+      ],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/keyboard-pre-step-alignment.json",
+      "matchingDeclaredPins": 8,
+      "differences": [
+        {
+          "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+          "recordedSha256": "2ebc60ccc2ef3fcae947deb9e3e787762f3125fd61ef5f53bc0b93f14233798d",
+          "observedSha256": "b963feaae5db2e90b4c2df366de833bd2450625aa5701cda936d9aa4036706ca"
+        }
+      ],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/couch-team-pre-step-alignment.json",
+      "matchingDeclaredPins": 0,
+      "differences": [],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/production-dependency-plan.json",
+      "matchingDeclaredPins": 15,
+      "differences": [
+        {
+          "path": "game/index.html",
+          "recordedSha256": "7f132b4125772e9191caf2d39e384be2488fd95e8c6b720cf91ae0791b3a3d3d",
+          "observedSha256": "5a9e8a2b87666595990ab9757e9738eee1a5b5c74c3fa4fd47db54af21f0520e"
+        },
+        {
+          "path": "game/couch/index.html",
+          "recordedSha256": "7f06f71ff6cf91ae94bb56f16a342205a96a089686c23731531e3868ed518450",
+          "observedSha256": "7a5c127d0474b583a3612a2f85009c70462f1615d41b51701a917ab30a8e8a46"
+        },
+        {
+          "path": "game/couch/relay-rescue.html",
+          "recordedSha256": "a02bbae866b634948c89f587f1780d289aa419e8d1448f3d95e81a5d51139bb0",
+          "observedSha256": "940b94641afa63596b7a30cc1029e7ed113d455dd1f527e8ece715a4b51d8bbb"
+        },
+        {
+          "path": "authoring/asset-studio/index.html",
+          "recordedSha256": "d4bcc8b0168e6f4edfe9bb437cb9dd8257f12e7caf378457cb62bfe62db17c45",
+          "observedSha256": "7759f4e26b2256588429da14066dea3dfcd5a631aedca0e01d1dd8ed900567e8"
+        }
+      ],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/production-fingerprint-support.json",
+      "matchingDeclaredPins": 2,
+      "differences": [],
+      "limit": "Listed pins only, not a complete import graph or final source qualification."
+    },
+    {
+      "receipt": "receipts/master-percent-alignment.json",
+      "matchingDeclaredPins": 17,
+      "differences": [],
+      "limit": "Seventeen listed pins, not a complete import graph or final source qualification."
+    }
+  ],
+  "limitations": [
+    "Raw test logs remain in original private cache paths; only bounded JSON receipts and log hashes/summaries are copied here.",
+    "Receipt-internal paths preserve the original producer layout; they are not rewritten as package-local proof files.",
+    "Overlapping focused batches must not be added to make a unique test count or a whole-suite claim.",
+    "No native listening, physical controller, iOS output behavior, full browser journey, offline or public release proof supplied.",
+    "Production support is 6/7 on each runtime: strict audio approval remains refused. Old committed readiness does not qualify the changed candidate.",
+    "Later integrated-source-native.json adds scoped256-case Node22 and root-native/owned-MP3 observations; earlier limits are checkpoint-specific, and no complete final-source or listening claim follows."
+  ],
+  "preparationDiagnostic": "Initial metadata collector treated a list-valued evidence member as a dictionary and stopped before writing this index. Nine byte-exact receipt copies were retained and rechecked; no test or source operation occurred.",
+  "nativeObservation": {
+    "path": "native-range.json",
+    "bytes": 1987,
+    "sha256": "389af22cb69cae7afa6a48585e7d098a022ef615c635e71b19f627e0a2a38b3e"
+  },
+  "candidateVersion": "0.58.0",
+  "supplementCollectedAt": "2026-09-15T15:00:02.783314+00:00",
+  "integratedSupplement": {
+    "path": "integrated-source-native.json",
+    "bytes": 10884,
+    "sha256": "a5dec6c35156ebcbd14abaa6e350e91dc1519888b76016e2c0d501fdde75442e"
+  },
+  "retainedTextNormalizations": [
+    {
+      "path": "native/asset-studio-master-13.txt",
+      "originalPath": ".cache/p02a-browser/asset-studio-master-13.txt",
+      "originalRawBytes": 1302,
+      "originalRawSha256": "21a5d52f3ff7725e30c48a9188e6044fbbcd68bdfef86ab6778eb778f6d71eeb",
+      "bytes": 1299,
+      "sha256": "48724d8cc2e076ca8db7e88408d6d7976a138c7bfea70944e848a4aa446cf73d",
+      "copyByteExact": false,
+      "operation": "Trim trailing whitespace from each line, remove blank end lines, retain exactly one final LF."
+    }
+  ]
+}
