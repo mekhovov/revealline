@@ -1,6 +1,8 @@
 # RevealLine implementation roadmap
 
-**Current priorities and delivery status:** [current delivery plan](current-delivery-plan.md). The checkpoints below retain their original observation times and pending-gate wording.
+> Retained excerpt after an ownership migration. Historical totals and verification statements describe the original scope; this excerpt is not a current release qualification. Original bytes and removed material are preserved separately.
+
+**Current priorities and delivery status:** [Delivery priorities](delivery-priorities.md) is the single current register. This page is a historical checkpoint record: its status tables, next steps and pending/latest wording apply only to the recorded editions and dates. Preserve their evidence and versioned contracts; do not execute them as today’s release queue.
 
 Approved for implementation on 2026-09-12. This register tracks the user's **RevealLine — revised implementation plan**. Historical evidence describes its original edition; frozen releases remain immutable. Source verification, network-byte delivery and actual browser startup are separate gates.
 

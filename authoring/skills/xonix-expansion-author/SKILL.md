@@ -5,6 +5,8 @@ description: Create, revise, validate and install playable Reveal Line expansion
 
 # Xonix Expansion Author
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Read [library-and-packs.md](../../../docs/library-and-packs.md) for the current file shapes, limits, APIs and ten concrete prompt examples. Inspect the authored examples in `game/content/packs/` and exports in `game/packs.mjs` before choosing IDs or fields. Runtime packs v1/v2 and the finite encounter pack v3 are distinct from the older motion-lab collection and concept schemas.
 
 For a staged encounter pack, use [Sentinel Relay](../../../docs/sentinel-relay.md), its [editable source](../../library/sentinel-relay/proposedpack-source.json) and [ten finite prompt recipes](../../library/sentinel-relay/prompts.json). Pack-v3 requires engine core-v3, homogeneous level-v2 campaigns and empty `masteries`; it exports playground-v3 with null `masteryDefinition`. Do not reinterpret pack-v2 mastery semantics or accept unsupported boss goals. Keep all existing pack/image limits and prospective dependency/catalog validation before decoding and atomic adoption. Preserve old members in mixed backups; replacement/removal must not discard their earned pictures or archived records.
@@ -37,7 +39,7 @@ Validate syntax, resolve references, then play positive and ordinary/action-omis
 
 ## Deliver the completed feature
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 ## Preserve native launch and input access
 
