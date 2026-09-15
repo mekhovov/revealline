@@ -43,11 +43,13 @@ version and its six-gate source qualification. It must be enabled and match the 
 non-draft, non-prerelease semantic version. Publishing a newer release never edits the selector or
 moves an old tag. Commit the reviewed selection after freezing the release and verifying its
 archive routes. The selector commit triggers publication; it preserves original file hashes and
-keeps the five newest versions of each semantic major line in `/releases/<version>/`. Older
-versions remain downloadable from GitHub Releases but are intentionally omitted from the Pages
-catalog and routing overlay. See the [controller contract](../publishing/pages-controller/README.md)
-for byte checks, capacity limits, and the distinction between the controller commit and the frozen
-game source.
+keeps every immutable semantic release tag in `/releases/`. The root game and `/game/` always
+point only to the newest published stable release; the explorer links historical tags to their
+own archive sites so a tester can compare them without replacing the player default. Tags that
+are still being prepared use explicitly reviewed `testingRoutes` and are never chosen as the
+default game. See the [controller contract](../publishing/pages-controller/README.md) for byte
+checks, capacity limits, and the distinction between the controller commit and the frozen game
+source.
 
 Set the repository Pages source to **GitHub Actions** once. Both workflows use `GITHUB_TOKEN`; no
 additional secret is required. Source checks and publication have separate concurrency groups,
