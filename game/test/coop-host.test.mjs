@@ -867,9 +867,13 @@ for (const [query, path, label] of [
 test('the existing Solo and Versus Team entry links declare their code-owned return context', async () => {
   const solo = await readFile(new URL('../index.html', import.meta.url), 'utf8'),
     versus = await readFile(new URL('../couch/index.html', import.meta.url), 'utf8');
-  const entries = [...solo.matchAll(/href="(couch\/relay-rescue\.html[^"\s]*)"/g)];
-  assert.equal(entries.length, 2);
-  for (const [, href] of entries) assert.equal(href, 'couch/relay-rescue.html?return=solo');
+  const entries = [...solo.matchAll(/<a\b([^>]*href="(couch\/relay-rescue\.html[^"\s]*)"[^>]*)>/g)];
+  assert.deepEqual(
+    entries.map(([, attributes]) => /\bid="([^"]+)"/.exec(attributes)?.[1] ?? 'header'),
+    ['header', 'shell-title-team', 'shell-team'],
+    'Header, visible Title and Missions each retain their own fixed Team anchor',
+  );
+  for (const [, , href] of entries) assert.equal(href, 'couch/relay-rescue.html?return=solo');
   assert.match(versus, /id="race-coop"[^>]*href="relay-rescue\.html\?return=versus"/);
 });
 
