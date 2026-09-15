@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:03:59.544025+00:00",
+  "finishedAt": "2026-09-15T14:03:59.946257+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "eval",
+    "Array.from(document.querySelectorAll(\"[data-controller-settings-action],#controller-settings-root-status\")).filter(e=>e.getClientRects().length).map(e=>({id:e.id,action:e.dataset.controllerSettingsAction,text:e.textContent,rect:e.getBoundingClientRect().toJSON(),disabled:e.disabled,hit:document.elementFromPoint(e.getBoundingClientRect().x+e.getBoundingClientRect().width/2,e.getBoundingClientRect().y+e.getBoundingClientRect().height/2)?.id}))"
+  ],
+  "exitCode": 0,
+  "stdout": "[\n  {\n    \"action\": \"apply\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1510.3125,\n      \"height\": 44,\n      \"left\": 24,\n      \"right\": 366,\n      \"top\": 1466.3125,\n      \"width\": 342,\n      \"x\": 24,\n      \"y\": 1466.3125\n    },\n    \"text\": \"Apply controller settings\"\n  },\n  {\n    \"action\": \"cancel\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1562.3125,\n      \"height\": 44,\n      \"left\": 24,\n      \"right\": 366,\n      \"top\": 1518.3125,\n      \"width\": 342,\n      \"x\": 24,\n      \"y\": 1518.3125\n    },\n    \"text\": \"Cancel draft\"\n  },\n  {\n    \"action\": \"defaults\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1614.3125,\n      \"height\": 44,\n      \"left\": 24,\n      \"right\": 366,\n      \"top\": 1570.3125,\n      \"width\": 342,\n      \"x\": 24,\n      \"y\": 1570.3125\n    },\n    \"text\": \"Restore defaults in draft\"\n  },\n  {\n    \"id\": \"controller-settings-root-status\",\n    \"rect\": {\n      \"bottom\": 1694.3125,\n      \"height\": 54,\n      \"left\": 24,\n      \"right\": 366,\n      \"top\": 1640.3125,\n      \"width\": 342,\n      \"x\": 24,\n      \"y\": 1640.3125\n    },\n    \"text\": \"Draft changed. Current controls are unchanged until Apply.\"\n  }\n]\n",
+  "stderr": ""
+}

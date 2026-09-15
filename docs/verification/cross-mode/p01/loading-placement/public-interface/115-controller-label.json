@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-09-15T14:03:58.520624+00:00",
+  "finishedAt": "2026-09-15T14:03:58.926442+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "select",
+    "#controller-settings-root-glyphFamily",
+    "xbox"
+  ],
+  "exitCode": 0,
+  "stdout": "\u2713 Done\n",
+  "stderr": ""
+}

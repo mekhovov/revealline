@@ -1,6 +1,6 @@
 # P01 — loading feedback
 
-**v0.57.1 is published on GitHub; Pages selection and public verification are pending. P01 remains unaccepted.** The patch corrects the offline progress label that displaced count/Stop on portrait phones. A separate native check also confirmed that Library export status is below the viewport, with Cancel above it in short landscape; that requires another P01 correction. Existing releases remain immutable and P02 remains queued. This report is publishing evidence outside the frozen game sources.
+**v0.57.1 is deployed and its offline correction is accepted as an independently shipped feature. P01 remains unaccepted.** Its [public record](public-v0571/README.md) includes the complete byte audit and scoped cold-start, resumed-play and responsive/zoom proof. Native checks also found Library export feedback offscreen and craft preparation feedback behind the mission dialog; these require another P01 correction. Existing releases remain immutable and P02 remains queued. This report is publishing evidence outside the frozen game sources.
 
 [Play v0.57.0](https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/) · [Frozen release and original evidence](https://github.com/mekhovov/revealline/releases/tag/v0.57.0)
 
@@ -36,7 +36,7 @@ The released offline inventory is **608 files / 55,383,385 bytes**, build `8b7ab
 
 [Source PR #59](https://github.com/mekhovov/revealline/pull/59) provides exact source `4c85277ac7393eeeabab035387d4d4ae8734aba1`, tree `d3549d0efd15529f71f4cff9a940bdda5e84f3a6`. All six local source gates and both hosted suites passed 4,187 tests. The frozen archive matches all 4,884 tracked files and modes; every one of its 654 game files matches the original manifest. All nine [release attachments](https://github.com/mekhovov/revealline/releases/tag/v0.57.1) were verified. The [delivery record](release-v0571/delivery.json) and original server/inspection receipts preserve these distinct identities.
 
-The patch keeps the active offline label concise and moves the full optional-pack explanation into verification details. Its actual frozen offline identity is `2cb26c9e82fad6384b497699af2f1333bc0556bb1dc8beaadb3a08428f6aa62f`, with 608 files / 55,383,737 bytes. Public correction and cold-start verification remain pending; ordinary local browser evidence does not replace them.
+The patch keeps the active offline label concise and moves the full optional-pack explanation into verification details. Its actual frozen offline identity is `2cb26c9e82fad6384b497699af2f1333bc0556bb1dc8beaadb3a08428f6aa62f`, with 608 files / 55,383,737 bytes. Public correction and cold-start verification passed their bounded scopes in the [new public record](public-v0571/README.md); those observations remain distinct from the earlier local checks.
 
 The [separate native Library reproduction](library-placement-v057/reproduction.md) preserves the new placement finding at 390×844 and 844×390. Its Library implementation is byte-identical in v0.57.0 and v0.57.1. Exports completed successfully, but status was offscreen in both layouts and Cancel was also offscreen in landscape. Short busy phases were captured as actual DOM observations, not claimed screenshot frames. P01 remains open for that correction and bounded remaining native loading checks.
 
@@ -54,4 +54,4 @@ The original failed portrait screenshot is retained with the successful ordinary
 
 Public Team selection also exposed an interaction worth checking in P03: Enter on the arena select could start the previously selected run, and changing a hidden selection did not rebuild that run. Only the later explicit First Connection start counts as evidence for that arena. P01 does not claim this navigation issue resolved.
 
-Inventory, source fixtures, actual browser interaction, modeled touch/controller input and physical hardware remain distinct evidence categories. No physical phone, real controller, Safari, OS installation, IndexedDB write audit or long-term retention qualification is claimed by this phase. Final corrective-release acceptance remains pending.
+Inventory, source fixtures, actual browser interaction, modeled touch/controller input and physical hardware remain distinct evidence categories. No physical phone, real controller, Safari, OS installation, IndexedDB write audit or long-term retention qualification is claimed by this phase. The offline correction is accepted; complete P01 acceptance remains pending.

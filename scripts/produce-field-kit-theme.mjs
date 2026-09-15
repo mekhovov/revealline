@@ -35,6 +35,14 @@ const sources = {
 // changing a digest creates a new source-stage revision and re-opens the
 // release readiness gate rather than silently inheriting this review.
 const REVIEWED_RECIPE_INPUTS = {
+  screens: {
+    sha256: '47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6',
+    evidence: [
+      'Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.',
+      'Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.',
+      'game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases.',
+    ],
+  },
   ui: {
     sha256: 'e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450',
     evidence: [

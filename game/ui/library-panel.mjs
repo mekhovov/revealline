@@ -50,6 +50,109 @@ const fileText = async (file, max = 32 * 1024 * 1024) => {
 };
 
 export function attachLibraryPanel(api) {
+  // Presentation only: the existing task/attempt/backup owner still controls
+  // status text, leases, disabled state, cancellation, and focus restoration.
+  const feedbackRail = (() => {
+    const rail = $('library-operation-rail'),
+      message = $('library-operation-message'),
+      controls = $('library-operation-controls'),
+      dialog = $('library-dialog');
+    let placements = [];
+    let cancelIds = [];
+    let layoutPending = false;
+    const keepFocusVisible = () => {
+      if (rail.hidden || !dialog.open) return;
+      const area = dialog.getBoundingClientRect(),
+        feedback = rail.getBoundingClientRect(),
+        focused = document.activeElement;
+      const top = feedback.bottom + 8;
+      dialog.style.scrollPaddingBlockStart = `${Math.max(0, top - area.top)}px`;
+      if (
+        !focused ||
+        !dialog.contains(focused) ||
+        rail.contains(focused) ||
+        focused.disabled ||
+        !focused.getClientRects().length ||
+        document.hidden ||
+        document.hasFocus?.() === false
+      )
+        return;
+      const target = focused.getBoundingClientRect();
+      if (focused.hasAttribute('data-close')) {
+        // Close lives before the rail. It must remain reachable above it.
+        dialog.style.scrollPaddingBlockStart = '0px';
+        if (target.top < area.top || target.bottom > area.bottom)
+          focused.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+      } else if (target.top < top) dialog.scrollTop += target.top - top;
+      else if (target.bottom > area.bottom - 8)
+        // A tall editor may not fit below feedback. Keep its beginning visible
+        // rather than hiding it again while trying to reveal its lower edge.
+        dialog.scrollTop += Math.min(target.bottom - (area.bottom - 8), target.top - top);
+    };
+    const scheduleLayout = () => {
+      if (layoutPending || typeof requestAnimationFrame !== 'function') return;
+      layoutPending = true;
+      requestAnimationFrame(() => {
+        layoutPending = false;
+        keepFocusVisible();
+      });
+    };
+    dialog.addEventListener('focusin', scheduleLayout);
+    globalThis.addEventListener?.('resize', scheduleLayout);
+    if (typeof ResizeObserver === 'function') new ResizeObserver(scheduleLayout).observe(rail);
+    const clear = (id = null) => {
+      if (id && rail.dataset.statusId !== id) return;
+      for (const { element, placeholder } of placements) {
+        placeholder.after(element);
+        placeholder.remove();
+      }
+      placements = [];
+      cancelIds = [];
+      rail.hidden = true;
+      delete rail.dataset.statusId;
+      dialog.style.scrollPaddingBlockStart = '0px';
+    };
+    const present = (id, nextCancelIds = []) => {
+      if (
+        rail.dataset.statusId === id &&
+        cancelIds.length === nextCancelIds.length &&
+        cancelIds.every((value, index) => value === nextCancelIds[index])
+      )
+        return;
+      const focused = document.activeElement;
+      const moving = [$(id), ...nextCancelIds.map($)];
+      const movedFocus = [...placements.map(({ element }) => element), ...moving].some((element) =>
+        element?.contains(focused),
+      );
+      clear();
+      const mount = (element, destination) => {
+        if (!element || element.parentNode === destination) return;
+        const placeholder = document.createElement('span');
+        placeholder.hidden = true;
+        element.after(placeholder);
+        element.remove();
+        placements.push({ element, placeholder });
+        destination.append(element);
+      };
+      mount($(id), message);
+      for (const cancelId of nextCancelIds) mount($(cancelId), controls);
+      cancelIds = [...nextCancelIds];
+      rail.dataset.statusId = id;
+      rail.hidden = false;
+      scheduleLayout();
+      if (
+        movedFocus &&
+        focused?.isConnected &&
+        !focused.disabled &&
+        focused.getClientRects().length &&
+        $('library-dialog').open &&
+        !document.hidden &&
+        document.hasFocus?.() !== false
+      )
+        focused.focus({ preventScroll: true });
+    };
+    return { present, clear };
+  })();
   let galleryPopulation = 0,
     viewBackdrop = null;
   const releaseViewBackdrop = () => {
@@ -60,6 +163,7 @@ export function attachLibraryPanel(api) {
   let attemptExport = null;
   let libraryTask = null;
   let backupSetPanel = null;
+  let clearBackupFeedbackOnSettle = false;
   let previousLibrary = null,
     previousBackup = null,
     busy = false,
@@ -151,7 +255,19 @@ export function attachLibraryPanel(api) {
       ? api.getReducedEffects()
       : api.get().library.preferences.reducedEffects) === true;
   function open(panel = 'scores') {
-    backupSetPanel?.invalidate();
+    const invalidatedBackup = backupSetPanel?.invalidate();
+    if (libraryTask)
+      feedbackRail.present(
+        libraryTask.id,
+        libraryTask.id === 'transfer-status' ? ['transfer-cancel'] : [],
+      );
+    else if (attemptExport) feedbackRail.present('save-status', ['cancel-attempt-export']);
+    else if (invalidatedBackup && busy) {
+      // Cancellation still joins its pending read. Keep feedback visible while
+      // that owner holds the lock, then discard its navigated-away terminal.
+      clearBackupFeedbackOnSettle = true;
+      feedbackRail.present('backup-set-status', ['cancel-backup-set']);
+    } else feedbackRail.clear();
     api.pause();
     for (const id of ['scores', 'saves', 'packs', 'challenges'])
       $(`library-${id}`).hidden = id !== panel;
@@ -299,6 +415,7 @@ export function attachLibraryPanel(api) {
     if (!$('library-dialog').open) {
       endAttemptExport(false);
       cancelLibraryTask(false);
+      feedbackRail.clear();
     }
   });
   globalThis.addEventListener?.('pagehide', () => {
@@ -359,6 +476,7 @@ export function attachLibraryPanel(api) {
   async function exportAttempt() {
     if (busy || !$('library-dialog').open) return;
     const source = api.attemptExportSource();
+    feedbackRail.present('save-status', ['cancel-attempt-export']);
     if (source.source === null) {
       status('save-status', source.reason);
       return;
@@ -498,6 +616,7 @@ export function attachLibraryPanel(api) {
     };
     libraryTask = owner;
     busy = true;
+    feedbackRail.present(id, id === 'transfer-status' ? ['transfer-cancel'] : []);
     status(id, label, 'busy');
     for (const { element } of owner.controls)
       if (!element.hasAttribute('data-close')) element.disabled = true;
@@ -668,8 +787,13 @@ export function attachLibraryPanel(api) {
       busy: () => busy,
       setBusy: (value) => {
         busy = value;
+        if (!value && clearBackupFeedbackOnSettle) {
+          clearBackupFeedbackOnSettle = false;
+          feedbackRail.clear('backup-set-status');
+        }
       },
       refresh,
+      presentFeedback: () => feedbackRail.present('backup-set-status', ['cancel-backup-set']),
     });
   $('export-backup').onclick = () =>
     task('save-status', async (operation) => {
@@ -726,6 +850,7 @@ export function attachLibraryPanel(api) {
   };
   $('undo-library').onclick = () => {
     if (previousLibrary) {
+      feedbackRail.present('save-status');
       const result = api.setLibrary(previousLibrary);
       if (result.ok) previousLibrary = null;
       $('undo-library').disabled = true;

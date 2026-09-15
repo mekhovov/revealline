@@ -1,0 +1,40 @@
+{
+  "targetInfos": [
+    {
+      "targetId": "9037F97113C1CBFABEDF82E09E83A9D2",
+      "type": "service_worker",
+      "title": "Service Worker chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+      "url": "chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "CB2C1CFA3889BB5189FF4502EC19211C"
+    },
+    {
+      "targetId": "7B0C7B5933605C06C729F163231F042B",
+      "type": "browser_ui",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "CB2C1CFA3889BB5189FF4502EC19211C"
+    },
+    {
+      "targetId": "24B2D360D66C5CD03ACAE889609A2103",
+      "type": "browser_ui",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "CB2C1CFA3889BB5189FF4502EC19211C"
+    },
+    {
+      "targetId": "19AEB6F1C36F38D69FBEDF4B78ED2DBD",
+      "type": "page",
+      "title": "Reveal / Line",
+      "url": "http://127.0.0.1:52589/game/",
+      "attached": true,
+      "canAccessOpener": false,
+      "browserContextId": "CB2C1CFA3889BB5189FF4502EC19211C"
+    }
+  ]
+}

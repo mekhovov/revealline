@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:02:35.919003+00:00",
+  "finishedAt": "2026-09-15T14:02:36.347464+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "exitCode": 0,
+  "stdout": "- button \"Close settings\" [ref=e1]\n- heading \"Flight settings.\" [level=2, ref=e2]\n- tab \"Controls\" [ref=e3]\n- tab \"Audio\" [selected, ref=e4]\n- tab \"Display & accessibility\" [ref=e5]\n- tab \"Game data\" [ref=e6]\n- heading \"Audio\" [level=3, ref=e7]\n- slider \"Master\" [ref=e10]: 0.800000011920929\n- slider \"Music\" [ref=e11]: 0.44999998807907104\n- slider \"Effects\" [ref=e12]: 0.6000000238418579\n- button \"Play selected playlist \u266b\" [ref=e8]\n- button \"Music library & playlists\" [ref=e9]\n",
+  "stderr": ""
+}

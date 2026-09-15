@@ -1,6 +1,7 @@
 import { attachModalNavigation } from './modal-navigation.mjs';
 import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
 import { fieldKitCopy } from './field-kit-copy.mjs';
+import { attachFocusClearance } from './focus-clearance.mjs';
 
 /** Game navigation owns presentation only; the host owns pause, save and start. */
 export function attachGameShell({
@@ -31,6 +32,30 @@ export function attachGameShell({
   const deck = doc.querySelector('.flight-deck');
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
+  const focusClearance = attachFocusClearance({
+    document: doc,
+    container: missions,
+    heading: missions.querySelector('.shell-dialog-heading'),
+    footer: $('shell-deploy-bar'),
+  });
+  // Keep the renderer's one live status in the same top layer as its selectors.
+  // Moving the node changes neither its presenter nor the current load owner.
+  let craftFeedbackMarker = null;
+  const showCraftFeedback = () => {
+    const status = $('craft-preparation-status'),
+      slot = $('shell-craft-feedback');
+    if (!status || !slot || craftFeedbackMarker) return;
+    craftFeedbackMarker = doc.createElement('span');
+    craftFeedbackMarker.hidden = true;
+    status.after(craftFeedbackMarker);
+    slot.append(status);
+  };
+  const restoreCraftFeedback = () => {
+    if (!craftFeedbackMarker) return;
+    craftFeedbackMarker.after($('craft-preparation-status'));
+    craftFeedbackMarker.remove();
+    craftFeedbackMarker = null;
+  };
   const closeHome = () => {
     homeVisit++;
     if (workshop?.open) workshop.close();
@@ -66,7 +91,10 @@ export function attachGameShell({
   const closedMissions = () => {
     // Native close events may arrive after a new showModal. Do not dismantle
     // the current reading view because a previous close was queued.
-    if (!missions.open) restoreMissionView();
+    if (!missions.open) {
+      restoreMissionView();
+      restoreCraftFeedback();
+    }
   };
   missions.addEventListener('close', closedMissions);
   const openMissions = () => {
@@ -74,8 +102,10 @@ export function attachGameShell({
     pause(true);
     restoreMissionView();
     closeHome();
+    showCraftFeedback();
     if (!missions.open) missions.showModal();
     syncPreparation();
+    focusClearance.refresh();
     if (!focusMissions?.()) $('pack-select').focus();
   };
   const openHome = () => {
@@ -190,7 +220,9 @@ export function attachGameShell({
         $('mission-brief-reading').scrollTop = 0;
       }
       if (brief) brief.open = true;
+      showCraftFeedback();
       if (!missions.open) missions.showModal();
+      focusClearance.refresh();
       if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
     };
   $('shell-packs').onclick = openMissions;
@@ -322,6 +354,8 @@ export function attachGameShell({
     destroy() {
       destroyed = true;
       restoreMissionView();
+      restoreCraftFeedback();
+      focusClearance.destroy();
       missions.removeEventListener('close', closedMissions);
       missions.removeEventListener('cancel', cancelMissions);
       if (overlayMenu) overlayMenu.onclick = null;

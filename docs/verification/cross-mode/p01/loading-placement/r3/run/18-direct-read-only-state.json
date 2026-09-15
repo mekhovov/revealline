@@ -1,0 +1,18 @@
+{
+  "at": "2026-09-15T13:52:14.425Z",
+  "target": {
+    "targetId": "28DE98CF2CFE53A93DCB238231B89A9C",
+    "type": "page",
+    "title": "Reveal / Line",
+    "url": "http://127.0.0.1:51549/game/",
+    "attached": true,
+    "canAccessOpener": false,
+    "browserContextId": "6FA60E34D28FE00B12B7AEBB499C8EC8"
+  },
+  "result": {
+    "result": {
+      "type": "string",
+      "value": "{\"at\":1789480334425,\"url\":\"http://127.0.0.1:51549/game/\",\"visibility\":\"hidden\",\"hasFocus\":true,\"active\":\"library-operation-message\",\"detailScroll\":0}"
+    }
+  }
+}

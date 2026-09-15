@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:46:02.187464+00:00",
+  "finishedAt": "2026-09-15T13:46:02.397383+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "- button \"Close settings\" [ref=e1]\n- heading \"Flight settings.\" [level=2, ref=e2]\n- tab \"Controls\" [ref=e3]\n- tab \"Audio\" [ref=e4]\n- tab \"Display & accessibility\" [ref=e5]\n- tab \"Game data\" [selected, ref=e6]\n- heading \"Game data\" [level=3, ref=e7]\n- button \"Stored profile recovery\" [ref=e8]\n- button \"Saves & recovery\" [ref=e9]\n- button \"Installed chapters\" [ref=e10]\n- region \"Download retention\" [ref=e11]\n  - button \"Keep downloads on this device\" [ref=e13]\n- button \"Verify offline files\" [ref=e12]\n",
+  "stderr": ""
+}

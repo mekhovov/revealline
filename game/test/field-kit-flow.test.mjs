@@ -9,6 +9,61 @@ const visibleActions = (page) =>
     .filter((node) => !node.hidden)
     .map((node) => node.id || node.href);
 
+test('Mission setup keeps the original craft status in its modal and restores it after closing', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  const status = page.$('craft-preparation-status'),
+    originalParent = status.parentNode,
+    originalSiblings = [...originalParent.children],
+    originalChildren = [...status.children];
+  page.$('shell-play').click();
+  assert.equal(status.closest('dialog'), page.$('shell-missions'));
+  assert.equal(
+    status.closest('.shell-dialog-heading'),
+    page.$('shell-missions').querySelector('.shell-dialog-heading'),
+  );
+  assert.deepEqual(
+    [...status.children],
+    originalChildren,
+    'The existing live presenter is retained',
+  );
+  page.$('shell-prepare').click();
+  const focused = page.doc.activeElement;
+  page.$('shell-missions').emit('close');
+  assert.equal(
+    status.closest('dialog'),
+    page.$('shell-missions'),
+    'A queued old close cannot move current feedback',
+  );
+  assert.equal(page.doc.activeElement, focused);
+  page.$('shell-missions-back').click();
+  assert.equal(status.parentNode, originalParent);
+  assert.deepEqual([...originalParent.children], originalSiblings);
+  assert.deepEqual([...status.children], originalChildren);
+  page.$('shell-play').click();
+  assert.equal(status.closest('dialog'), page.$('shell-missions'));
+  page.$('shell-briefing').click();
+  assert.deepEqual([...originalParent.children], originalSiblings);
+  assert.deepEqual(page.errors, []);
+});
+
+test('direct briefing and disposal retain one craft presenter outside hidden mission content', async (t) => {
+  const page = await soloPage(t),
+    status = page.$('craft-preparation-status'),
+    originalParent = status.parentNode,
+    originalChildren = [...status.children];
+  page.$('overlay-brief').click();
+  assert.equal(page.$('shell-missions').dataset.view, 'brief');
+  assert.equal(status.closest('dialog'), page.$('shell-missions'));
+  assert.equal(page.$('shell-mission-content').contains(status), false);
+  assert.equal(page.$('shell-deploy-bar').contains(status), false);
+  assert.deepEqual([...status.children], originalChildren);
+  page.win.emit('pagehide', { persisted: false });
+  assert.equal(status.parentNode, originalParent);
+  assert.deepEqual([...status.children], originalChildren);
+  assert.equal(page.doc.querySelectorAll('#craft-preparation-status').length, 1);
+  assert.deepEqual(page.errors, []);
+});
+
 test('title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
