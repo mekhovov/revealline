@@ -48,7 +48,6 @@ test('lobby, setup and children use reachable native controls and Back restores 
   for (const [button, screen] of [
     ['race-options', 'race-options-panel'],
     ['race-help', 'race-help-panel'],
-    ['race-solo-return', 'race-leave-panel'],
   ]) {
     f.$(button).click();
     assert.equal(f.$(screen).hidden, false);
@@ -57,6 +56,10 @@ test('lobby, setup and children use reachable native controls and Back restores 
     assert.equal(f.$(screen).inert, true);
   }
   assert.equal(f.tick(), 0);
+  for (const id of ['race-solo-return', 'race-coop']) {
+    assert.equal(f.$(id).emit('click').defaultPrevented, false, 'ready mode links stay direct');
+    assert.equal(f.$('race-leave-panel').hidden, true);
+  }
 });
 
 test('an embedded Couch route stays loading until its actual setup is prepared', async (t) => {
@@ -107,7 +110,7 @@ test('pause children and cancelled new match preserve two different continuation
       .filter((b) => /^New match/.test(b.textContent)).length,
     1,
   );
-  for (const id of ['race-options', 'race-help', 'race-focus', 'race-solo-return']) {
+  for (const id of ['race-options', 'race-help', 'race-focus', 'race-solo-return', 'race-coop']) {
     f.$(id).click();
     f.frames(4, 100);
     assert.deepEqual(f.checkpoint(), held);
