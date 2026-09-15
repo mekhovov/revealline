@@ -1,0 +1,21 @@
+{
+  "base": "87f0f49c84e2f92bceb24b0a317d5e6c79e64ac6",
+  "scope": "Gallery return owner only plus actual Solo host regression and coordinated legacy fixture upgrade; no pager/render changes. First diagnostic hold, final tests pending.",
+  "files": [
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 58305,
+      "sha256": "b71af2d75576583b2390aa4bb4468690548ddfe57b7929cd4f045b93552c2929"
+    },
+    {
+      "path": "game/test/gallery-return-host.test.mjs",
+      "bytes": 11823,
+      "sha256": "099d247469140c69422cdce827acb71866d9e6a5d92ca9f32d361a7745af676f"
+    },
+    {
+      "path": "game/test/gallery-focus.test.mjs",
+      "bytes": 50281,
+      "sha256": "b9e36ad0ca642035616a4d3cbef05cb55c7ec1f5c149d7f741474b155eba83ef"
+    }
+  ]
+}

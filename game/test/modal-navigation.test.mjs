@@ -195,9 +195,12 @@ function nativeDialogs(t) {
   };
   SoloElement.prototype.close = function () {
     if (!this.open) return;
-    originalClose.call(this);
+    this.open = false;
+    this.removeAttribute('open');
     const origin = origins.get(this);
     if (origin?.isConnected && !origin.disabled) origin.focus();
+    // Native close restores the opener before dispatching its queued close event.
+    queueMicrotask(() => this.emit('close', { bubbles: false }));
   };
   t.after(() => {
     SoloElement.prototype.setAttribute = originalAttribute;
@@ -705,8 +708,16 @@ for (const exit of ['controller', 'escape', 'close button'])
       () => !h.$('gallery-view-dialog').open && h.$('gallery-grid').contains(h.doc.activeElement),
     );
     const currentCard = h.$('gallery-grid').querySelector('button');
-    assert.notEqual(currentCard, oldCard, 'Back resolves the recreated card by picture identity.');
-    assert.equal(h.doc.activeElement, currentCard);
+    assert.equal(
+      currentCard !== oldCard,
+      true,
+      'Back resolves the recreated card by picture identity.',
+    );
+    assert.equal(
+      h.doc.activeElement === currentCard,
+      true,
+      'The recreated earned card owns focus.',
+    );
     assert.equal(currentCard.children[1].textContent, oldCard.children[1].textContent);
     assert.equal(h.$('shell-home').open, true);
     nativeEscape(h.$('collection-dialog'));
@@ -714,7 +725,11 @@ for (const exit of ['controller', 'escape', 'close button'])
     pad.frame();
     assert.equal(h.$('collection-dialog').open, false);
     assert.equal(h.$('shell-home').open, true);
-    assert.equal(h.doc.activeElement, h.$('shell-gallery'));
+    assert.equal(
+      h.doc.activeElement === h.$('shell-gallery'),
+      true,
+      'The title Collection opener owns focus.',
+    );
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
     assert.deepEqual([...h.storage.map], before);
     assert.equal(h.storage.writes.length, writes);
