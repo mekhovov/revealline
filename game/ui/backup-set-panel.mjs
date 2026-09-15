@@ -23,7 +23,7 @@ export function attachBackupSetPanel({
     status = node(
       'p',
       'backup-set-status',
-      'Prepare separate game data, picture, story and saved music files. Unsaved drafts are excluded.',
+      'Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.',
     ),
     list = node('ul', 'backup-set-files', '');
   prepare.type = cancelButton.type = 'button';
@@ -126,7 +126,7 @@ export function attachBackupSetPanel({
           }
           state.textContent = ` — Download requested · ${file.bytes} bytes`;
           status.textContent =
-            'Download requested. Check your browser destination; this does not confirm a disk write. Prepared files remain available to retry.';
+            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.';
           return true; // Native default action, no async or synthetic click.
         };
         row.append(link, state);

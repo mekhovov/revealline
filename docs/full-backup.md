@@ -40,6 +40,22 @@ Restore through the existing reviewed tools: picture/poster `.rlmedia` first, `.
 
 Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. A real four-file download/readback, fresh-origin restore, codec playback, audible music and cold-offline journey still require native qualification; this source change does not claim them.
 
+## Check files actually downloaded
+
+Keep each five-file set in its own new folder with the exact names in that set’s coverage report, then run this read-only command from the source checkout with supported Node 20/22:
+
+```sh
+node scripts/check-backup-set.mjs --report "$HOME/Downloads/RevealLine-backup/RevealLine-backup-coverage.json"
+```
+
+Use `--directory /path/to/components` if the report is elsewhere, or `--help` for usage. The checker never copies, repairs, imports or adopts files. It refuses unsupported reports, duplicate/unsafe filenames, symlinks, missing components, size/SHA-256 mismatches and files that change during inspection. Extra unrelated files are not read. Browsers may add a suffix such as ` (1)` when fixed names already exist. Move that one complete set into a new folder and restore only its report-declared names there; do not overwrite or mix older exports. The command never chooses the newest file, guesses a renamed member or renames it for you.
+
+A successful JSON result means the actual four component files match the supplied report. It also checks bounded binary manifests, referenced-original hashes, paired story/poster metadata and structural MP3 frame facts through existing source validators/inspectors. The game-data check identifies its bounded JSON envelope; it does not replay the saved flight or authorize progress. File hashing uses 64 KiB reads; existing per-file/per-original bounds still apply to metadata and media inspections. No native codecs or media database are opened.
+
+A later small UX enhancement can give all five guided files one unique preparation prefix and record those exact names in the report. That is not implemented here; legacy individual export filenames and current guided filenames remain unchanged.
+
+The report is not signed: matching it does not prove trusted provenance, earned-picture/story ownership, compatibility with another edition, successful restoration or native decoding/audible/offline playback. Detached stories remain explicitly incomplete even when all provided files verify. Preserve the output alongside the original files, then use the existing import reviews for an actual transfer. Do not treat this command as a substitute for native download/readback when no actual destination files are available.
+
 ## File and preparation contract
 
 ```json
