@@ -1,6 +1,6 @@
 import { createSpriteEditor, spriteDocument } from '../../game/presentation/sprite-editor.mjs';
 import { hexColor, rgbHex } from './helpers.mjs';
-export function mountSpritePanel({ onPrepare, onError }) {
+export function mountSpritePanel({ onPrepare, onError, runOperation }) {
   const $ = (id) => document.getElementById(id),
     canvas = $('sprite-canvas'),
     ctx = canvas.getContext('2d');
@@ -171,20 +171,18 @@ export function mountSpritePanel({ onPrepare, onError }) {
       selection.x += dx;
       selection.y += dy;
     });
-  $('use-sprite').onclick = async () => {
-    try {
+  $('use-sprite').onclick = () =>
+    runOperation('Encoding the edited sprite…', async (task) => {
       const doc = editor.snapshot(),
         output = document.createElement('canvas');
       output.width = doc.width;
       output.height = doc.height;
       output.getContext('2d').putImageData(new ImageData(doc.pixels, doc.width, doc.height), 0, 0);
       const blob = await new Promise((resolve) => output.toBlob(resolve, 'image/png'));
+      task.check();
       if (!blob) throw new Error('The browser could not encode this sprite.');
-      await onPrepare(blob);
-    } catch (error) {
-      onError(error);
-    }
-  };
+      await onPrepare(blob, task);
+    });
   return {
     hasEdits() {
       if (!editor || !baseline) return false;

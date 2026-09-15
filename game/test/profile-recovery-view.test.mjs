@@ -1,35 +1,35 @@
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { attachProfileRecoveryView } from '../ui/profile-recovery.mjs';
 
-class Element {
-  constructor(doc) {
+class Element extends DOMElement {
+  constructor(doc, attributes = '', tag = 'span') {
+    super(doc, tag);
     this.doc = doc;
-    this.children = [];
-    this.value = '';
-    this.hidden = false;
-    this.disabled = false;
-    this.textContent = '';
-  }
-  append(child) {
-    this.children.push(child);
-  }
-  replaceChildren() {
-    this.children = [];
+    this.hidden = /\bhidden\b/.test(attributes);
+    this.disabled = /\bdisabled\b/.test(attributes);
+    this.clicks = 0;
   }
   removeAttribute(name) {
+    super.removeAttribute(name);
     delete this[name];
   }
   focus() {
     this.doc.activeElement = this;
   }
+  click() {
+    this.clicks++;
+    return this.onclick?.();
+  }
 }
+
 function fixture(reader) {
   const doc = {
       activeElement: null,
-      createElement() {
-        return new Element(doc);
+      createElement(tag) {
+        return new Element(doc, '', tag);
       },
     },
     elements = new Map();
@@ -78,6 +78,7 @@ test('view keeps media/flight limits visible and prepares a native explicit down
     /Media and original availability have not been inspected/,
   );
   assert.match(f.$('summary').textContent, /Flight inspection is unavailable/);
+  f.$('export').focus();
   await f.$('export').onclick();
   assert.equal(f.$('download').href, 'blob:1');
   assert.equal(f.doc.activeElement, f.$('download'));
@@ -140,7 +141,7 @@ test('cancelled discovery returns focus to enabled Find when no profile choice e
 async function bootstrap(t, fetchResponse) {
   const doc = new EventTarget(),
     elements = new Map();
-  doc.createElement = () => new Element(doc);
+  doc.createElement = (tag) => new Element(doc, '', tag);
   doc.getElementById = (id) => {
     if (!elements.has(id)) elements.set(id, new Element(doc));
     return elements.get(id);

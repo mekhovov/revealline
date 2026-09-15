@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { canonicalJSON, required } from '../data-json.mjs';
 import { snapshotStoryPin, resolveAuthoredStoryPin } from '../story-bindings.mjs';
 import { requirePreparedVictoryStory } from '../victory-story.mjs';
@@ -57,7 +58,7 @@ export function createStoryDialog({
   close.className = 'dialog-close';
   close.textContent = '×';
   close.setAttribute('aria-label', 'Close story');
-  notice.setAttribute('role', 'status');
+  const feedback = createOperationStatus(notice);
   stage.className = 'story-stage';
   dialog.append(close, title, notice, stage);
   doc.body.append(dialog);
@@ -70,6 +71,7 @@ export function createStoryDialog({
   const failure = (error) =>
     `Story unavailable. Your exact picture stays visible. Restore its original .rlstory file and reopen to try again. ${error instanceof Error ? error.message : String(error)}`;
   function cancel() {
+    feedback.clear();
     generation++;
     externalCleanup?.();
     externalCleanup = null;
@@ -116,9 +118,13 @@ export function createStoryDialog({
     externalCleanup = () => signal?.removeEventListener('abort', abort);
     title.textContent = label;
     stage.replaceChildren(canvas);
-    notice.textContent = 'Your picture is ready. Checking the optional story original…';
+    const lease = feedback.begin({
+      message: 'Your picture is ready. Reading optional story metadata…',
+      stage: 'reading',
+      isCurrent: () => !disposed && generation === ticket && controller === own,
+    });
     dialog.dataset.storyState = 'preparing';
-    dialog.setAttribute('aria-busy', 'true');
+    stage.setAttribute('aria-busy', 'true');
     if (!dialog.open) dialog.showModal();
     close.focus({ preventScroll: true });
     const current = () =>
@@ -134,6 +140,10 @@ export function createStoryDialog({
       }
       const media = await readMedia({ signal: own.signal });
       if (!current()) return false;
+      lease.update({
+        message: 'Checking and opening the exact story original…',
+        stage: 'verifying',
+      });
       const prepared = await acquire({ pin, media }, { signal: own.signal });
       if (!current()) return false;
       const initial = settings();
@@ -153,13 +163,16 @@ export function createStoryDialog({
           if (!current()) return;
           neutralize();
           dialog.dataset.storyState = snapshot.state;
-          dialog.setAttribute('aria-busy', String(snapshot.state === 'preparing'));
+          stage.setAttribute('aria-busy', 'false');
           if (snapshot.volume !== volume) {
             volume = snapshot.volume;
             try {
               saveVolume(volume);
             } catch (error) {
-              notice.textContent = `Cinematic preference could not be saved. ${error.message}`;
+              lease.finish({
+                message: `Cinematic preference could not be saved. ${error.message}`,
+                state: 'error',
+              });
             }
             previousSettings = { ...settings() };
           }
@@ -170,13 +183,14 @@ export function createStoryDialog({
         return false;
       }
       presentation = created;
-      notice.textContent = '';
+      stage.setAttribute('aria-busy', 'false');
+      lease.finish();
       return true;
     } catch (error) {
       if (current()) {
-        notice.textContent = failure(error);
+        lease.finish({ message: failure(error), state: 'error' });
         dialog.dataset.storyState = 'unavailable';
-        dialog.setAttribute('aria-busy', 'false');
+        stage.setAttribute('aria-busy', 'false');
       }
       return false;
     } finally {
@@ -210,6 +224,7 @@ export function createStoryDialog({
     if (disposed) return;
     disposed = true;
     closeDialog();
+    feedback.dispose();
     doc.removeEventListener('visibilitychange', hidden);
     win.removeEventListener('blur', blurred);
     win.removeEventListener('pagehide', pageHidden);

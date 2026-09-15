@@ -76,6 +76,7 @@ export function createSoundtrackPlayer({
     lastPositionSecond = -1,
     resourceGeneration = 0,
     notice = null;
+  let preparation = null;
   let status = 'idle',
     error = null,
     desired = false,
@@ -151,6 +152,10 @@ export function createSoundtrackPlayer({
   function snapshot() {
     return Object.freeze({
       status,
+      preparation:
+        preparation?.generation === generation
+          ? Object.freeze({ stage: preparation.stage, message: preparation.message })
+          : null,
       playing: status === 'playing',
       desired,
       track: current
@@ -281,6 +286,8 @@ export function createSoundtrackPlayer({
     const token = generation,
       controller = new AbortController();
     operation = controller;
+    preparation = { generation: token, stage: 'preparing', message: 'Preparing selected music…' };
+    emit();
     try {
       if (fading) await fadeOut(controller.signal);
       if (token !== generation) return false;
@@ -314,6 +321,14 @@ export function createSoundtrackPlayer({
           status = 'playing';
         }
       } else {
+        preparation = {
+          generation: token,
+          stage: 'reading',
+          message: 'Reading the selected audio original…',
+        };
+        emit();
+        throwIfSoundtrackAborted(controller.signal);
+        if (token !== generation || disposed) return false;
         const blob =
           current.kind === 'published'
             ? await current.readBlob({ signal: controller.signal })
@@ -330,6 +345,12 @@ export function createSoundtrackPlayer({
             'Published audio is unavailable.',
           );
         } else {
+          preparation = {
+            generation: token,
+            stage: 'verifying',
+            message: 'Verifying the audio original…',
+          };
+          emit();
           const actual = await inspectMP3(blob, { signal: controller.signal });
           required(
             canonicalJSON(actual) === canonicalJSON(current.asset),
@@ -393,6 +414,11 @@ export function createSoundtrackPlayer({
         return false;
       }
       return failedTrack(failure?.message || 'This track could not be played.', token);
+    } finally {
+      if (token === generation) {
+        preparation = null;
+        emit();
+      }
     }
   }
   async function failedTrack(message, token) {
@@ -554,7 +580,15 @@ export function createSoundtrackPlayer({
       (current.kind === 'synth' || url !== null)
     ) {
       const token = generation;
+      const preparing = {
+        generation: token,
+        stage: 'playing',
+        message: 'Starting music playback…',
+      };
+      preparation = preparing;
+      emit();
       try {
+        if (token !== generation || disposed || !desired) return false;
         if (current.kind === 'synth') {
           const enabled = await soundscape.enable();
           if (token !== generation || disposed || !desired) return false;
@@ -595,6 +629,11 @@ export function createSoundtrackPlayer({
           return false;
         }
         return failedTrack(failure?.message || 'Playback failed.', token);
+      } finally {
+        if (token === generation && preparation === preparing) {
+          preparation = null;
+          emit();
+        }
       }
     }
     if (!playlist || dirty || status === 'ended' || status === 'error') install(resolve());

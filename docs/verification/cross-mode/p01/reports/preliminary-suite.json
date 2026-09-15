@@ -1,0 +1,54 @@
+{
+  "phase": "P01",
+  "scope": "Preliminary working-tree run; source changed during run, not exact-source qualification",
+  "command": "node scripts/game-cli.mjs test",
+  "tests": 4185,
+  "pass": 4177,
+  "fail": 8,
+  "skipped": 0,
+  "durationMs": 2046119.573375,
+  "exitCode": 1,
+  "log": ".cache/cross-mode/p01/integration-tests.log",
+  "logSha256": "45ea440e7ee0e231ea940c1a9902c3c85f64cce39e72c1d6a667ec15bb8e2071",
+  "failures": [
+    {
+      "names": [
+        "Collection earned mode standard",
+        "Collection earned mode gentle",
+        "Collection earned mode standard+gentle"
+      ],
+      "correction": "Dedicated picture state preserves card score/difficulty metadata",
+      "retest": {
+        "pass": 57,
+        "fail": 0,
+        "log": "collection-state-final.log"
+      }
+    },
+    {
+      "name": "Snapshot-change backup expectation after Close",
+      "correction": "Assert immediate cancellation and suppress late completion; preserve previous export; lower snapshot guard retained",
+      "retest": {
+        "pass": 2,
+        "skipped": 26,
+        "fail": 0,
+        "log": "backup-close-retest.log"
+      }
+    },
+    {
+      "names": [
+        "built workshop0.32.0",
+        "built workshopv0.32.0",
+        "immutable same-edition workshop route",
+        "cached poster/still teaching requests"
+      ],
+      "correction": "Include new HTML stylesheet in isolated build fixture; explicit CSS/module loose, ZIP, manifest and offline-byte assertions",
+      "retest": {
+        "pass": 5,
+        "fail": 0,
+        "log": "still-workshop-build-after.log"
+      }
+    }
+  ],
+  "unresolvedFailures": 0,
+  "requiresFreshExactSourceRun": true
+}

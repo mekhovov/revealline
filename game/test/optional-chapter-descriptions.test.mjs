@@ -234,11 +234,17 @@ test('source install reports checking immediately and late completion after Back
   h.$('source-media').files = [new Blob(['originals'])];
   pending = h.$('source-install').onclick();
   assert.equal(h.$('source-install').disabled, true);
-  assert.equal(h.$('status').textContent, 'Checking gameplay and original pictures…');
+  assert.equal(
+    h.$('status').querySelector('.operation-status-label').textContent,
+    'Checking gameplay and original pictures…',
+  );
+  assert.equal(h.$('status').dataset.state, 'busy');
+  assert.equal(h.$('cancel').disabled, false);
   h.$('top-back').click();
   assert.equal(signal.aborted, true);
   const cancelled = h.$('status').textContent;
-  assert.match(cancelled, /cancelled/);
+  assert.match(cancelled, /Cancellation requested/);
+  assert.equal(h.$('status').dataset.state, 'cancelled');
   finish();
   await pending;
   assert.equal(h.$('dialog').open, false);
@@ -264,16 +270,31 @@ test('source reopen reports checking; obsolete inspection cannot replace the cur
   initial = false;
   pending.push(h.panel.open());
   await waitFor(() => jobs.length === 1);
-  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  assert.equal(
+    h.$('status').querySelector('.operation-status-label').textContent,
+    'Checking installed pictures…',
+  );
+  assert.equal(h.$('status').querySelector('progress').max, 1);
+  assert.equal(h.$('status').querySelector('progress').value, 0);
   assert.equal(h.$('source-install').disabled, true);
   h.panel.close();
   assert.equal(jobs[0].signal.aborted, true);
   pending.push(h.panel.open());
   await waitFor(() => jobs.length === 2);
-  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  assert.equal(
+    h.$('status').querySelector('.operation-status-label').textContent,
+    'Checking installed pictures…',
+  );
+  assert.equal(h.$('status').querySelector('progress').max, 1);
+  assert.equal(h.$('status').querySelector('progress').value, 0);
   jobs[0].resolve({ status: 'unavailable', message: 'Obsolete inspection' });
   await pending[0];
-  assert.equal(h.$('status').textContent, 'Checking installed pictures…');
+  assert.equal(
+    h.$('status').querySelector('.operation-status-label').textContent,
+    'Checking installed pictures…',
+  );
+  assert.equal(h.$('status').querySelector('progress').max, 1);
+  assert.equal(h.$('status').querySelector('progress').value, 0);
   assert.equal(h.$('reload').disabled, true);
   assert.doesNotMatch(h.$('source-state').textContent, /Obsolete/);
   jobs[1].resolve({ status: 'installed' });

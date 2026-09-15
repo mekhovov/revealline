@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import { required } from '../data-json.mjs';
 import { requirePreparedVictoryStory, VICTORY_STORY_LIMITS } from '../victory-story.mjs';
 
@@ -100,7 +101,8 @@ export function createVictoryStoryPresentation({
   const description = document.createElement('p');
   description.textContent = story.description;
   const notice = document.createElement('p');
-  notice.setAttribute('role', 'status');
+  const feedback = createOperationStatus(notice);
+  let activity = null;
   notice.tabIndex = -1;
   const controls = document.createElement('div');
   const buttons = {};
@@ -175,20 +177,32 @@ export function createVictoryStoryPresentation({
     buttons.pause.hidden = !['playing', 'starting'].includes(state);
     buttons.skip.hidden = state === 'poster' || state === 'error';
     buttons.replay.hidden = !hasPlayed || !['poster', 'blocked', 'paused'].includes(state);
-    notice.textContent =
+    let message =
       reason ||
       (state === 'preparing'
         ? 'Preparing optional story. Your picture is unchanged.'
-        : state === 'playing'
-          ? 'Story playing.'
-          : state === 'paused'
-            ? 'Story paused. Resume explicitly.'
-            : reducedMotion
-              ? 'Reduced motion: the earned picture stays available. Play is optional.'
-              : 'Your picture. Story playback is optional.');
+        : state === 'starting'
+          ? 'Starting story playback…'
+          : state === 'playing'
+            ? 'Story playing.'
+            : state === 'paused'
+              ? 'Story paused. Resume explicitly.'
+              : reducedMotion
+                ? 'Reduced motion: the earned picture stays available. Play is optional.'
+                : 'Your picture. Story playback is optional.');
     if (muted || masterVolume === 0)
-      notice.textContent += ' Master sound is muted; cinematic volume does not unmute it.';
-    if (audioWarning) notice.textContent += ` ${audioWarning}`;
+      message += ' Master sound is muted; cinematic volume does not unmute it.';
+    if (audioWarning) message += ` ${audioWarning}`;
+    if (state === 'preparing' || state === 'starting') {
+      activity ??= feedback.begin({ message, isCurrent: () => !disposed });
+      activity.update({ message, stage: state === 'starting' ? 'playing' : 'decoding' });
+    } else {
+      (activity ?? feedback.begin({ message })).finish({
+        message,
+        state: state === 'error' || state === 'blocked' ? 'error' : 'ready',
+      });
+      activity = null;
+    }
     const focused = document.activeElement;
     if (Object.values(buttons).includes(focused) && (focused.hidden || focused.disabled)) {
       (
@@ -454,6 +468,7 @@ export function createVictoryStoryPresentation({
   function dispose() {
     if (disposed) return;
     disposed = true;
+    feedback.dispose();
     halt();
     generation++;
     for (const remove of listeners.splice(0)) remove();

@@ -1,3 +1,4 @@
+import { Element as DOMElement } from './helpers/couch-dom.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { attachLibraryPanel } from '../ui/library-panel.mjs';
@@ -6,8 +7,10 @@ import { advanceCelebration } from '../ui/celebration.mjs';
 import { campaignKey, emptyLibrary } from '../library.mjs';
 import { CLASSES } from '../core/index.mjs';
 
-class Element {
+class Element extends DOMElement {
   constructor() {
+    super(globalThis.document, 'div');
+    Object.defineProperty(this, 'isConnected', { value: true, writable: true });
     this.children = [];
     this.listeners = new Map();
     this.style = {};

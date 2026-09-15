@@ -8,6 +8,34 @@ import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 const raw = JSON.parse(
   await readFile(new URL('../content/scenarios/line-impact-demo.json', import.meta.url), 'utf8'),
 );
+
+test('a new attempt keeps replay export locked until the previous download request settles', async (t) => {
+  const page = await soloPage(t);
+  const schedule = globalThis.setTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+    const timer = schedule(callback, delay, ...args);
+    if (delay === 60000) timer.unref();
+    return timer;
+  });
+  const previousRun = page.rendered.run;
+  // The real web export is pending at its promise boundary. A native adapter
+  // can stay at this same boundary while its Save sheet remains open.
+  const downloading = page.$('export-replay').onclick();
+  assert.equal(page.$('replay-dialog').open, true);
+  assert.equal(page.$('export-replay').disabled, true);
+  page.$('replay-dialog').close();
+  page.$('restart-button').onclick();
+  page.frame(0);
+  assert.notEqual(page.rendered.run, previousRun);
+  assert.equal(page.$('export-replay').disabled, true);
+  assert.equal(page.$('replay-operation-status').hidden, true);
+  await downloading;
+  assert.equal(page.$('export-replay').disabled, false);
+  assert.equal(page.$('replay-dialog').open, false);
+  assert.equal(page.$('replay-operation-status').hidden, true);
+  assert.deepEqual(page.errors, []);
+});
+
 for (const turnPolicy of ['immediate', 'grid-center'])
   test(`${turnPolicy}: native practice Retry retains the imported one-life impact scenario, rules and replay identity`, async (t) => {
     const scenario = (await prepareScenario({ ...raw, settings: { ...raw.settings, turnPolicy } }))

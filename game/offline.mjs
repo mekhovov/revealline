@@ -72,62 +72,213 @@ export function offlineAvailability({
     ...(config.optionalPacks?.length ? { note: optionalNote(config).trim() } : {}),
   };
 }
-function requestReport(
-  worker,
-  {
+const PROTOCOL = 'revealline.offline-progress.v1';
+let requestSequence = 0;
+const phaseMessages = {
+  connecting: 'Connecting to this version’s offline worker…',
+  checking: 'Checking saved core files before preparation…',
+  downloading: 'Downloading and verifying core offline files…',
+  saving: 'Saving verified core files on this device…',
+  verifying: 'Verifying every saved core file…',
+};
+function abortError() {
+  return new DOMException(
+    'Stopped waiting. Shared offline preparation can continue.',
+    'AbortError',
+  );
+}
+function throwIfAborted(signal) {
+  if (signal?.aborted) throw abortError();
+}
+function observePromise(promise, signal) {
+  if (!signal) return promise;
+  return new Promise((resolve, reject) => {
+    const aborted = () => reject(abortError());
+    signal.addEventListener('abort', aborted, { once: true });
+    if (signal.aborted) aborted();
+    promise.then(resolve, reject).finally(() => signal.removeEventListener('abort', aborted));
+  });
+}
+function selectedWorker(registration) {
+  return registration?.installing ?? registration?.waiting ?? registration?.active;
+}
+function workerMatches(worker, registration, config) {
+  return (
+    registration.scope === config.scope &&
+    selectedWorker(registration) === worker &&
+    (!worker.scriptURL || worker.scriptURL === config.worker)
+  );
+}
+function unfinished(worker, latest) {
+  // The browser can confirm that installation is still pending. An active
+  // worker's old progress alone cannot prove whether a repair is still running.
+  const running = worker.state === 'installing';
+  return {
+    status: running ? 'still-running' : 'unconfirmed',
+    stage: latest?.stage ?? 'connecting',
+    progress: latest?.progress ?? null,
+    message: running
+      ? 'Offline preparation is still running. Keep this page online; check progress to reconnect to it.'
+      : 'Stopped waiting for the offline report. Completion is not yet confirmed; check progress again.',
+  };
+}
+function requestReport(worker, registration, config, options) {
+  const {
     MessageChannelImpl = globalThis.MessageChannel,
     timeout = 30000,
-    messageType = 'revealline.offline-check',
-  } = {},
-) {
+    installTimeout = 60000,
+    signal,
+    messageType,
+    onStatus,
+  } = options;
+  const preparing = messageType === 'revealline.offline-prepare';
+  throwIfAborted(signal);
   return new Promise((resolve, reject) => {
-    const channel = new MessageChannelImpl();
-    const timer = setTimeout(() => {
-      channel.port1.close();
-      reject(new Error('Offline verification timed out. Reconnect and try again.'));
-    }, timeout);
-    channel.port1.onmessage = (event) => {
+    const channel = new MessageChannelImpl(),
+      requestId = `offline-${++requestSequence}`;
+    let timer,
+      latest,
+      terminal,
+      settled = false;
+    const finish = (result, error) => {
+      if (settled) return;
+      settled = true;
       clearTimeout(timer);
-      channel.port1.close();
-      resolve(event.data);
-    };
-    try {
-      worker.postMessage({ type: messageType }, [channel.port2]);
-    } catch (error) {
-      clearTimeout(timer);
+      signal?.removeEventListener('abort', aborted);
+      worker.removeEventListener?.('statechange', changed);
+      channel.port1.onmessage = null;
+      channel.port1.onmessageerror = null;
+      try {
+        channel.port1.postMessage({ type: 'revealline.offline-detach', requestId });
+      } catch {}
       channel.port1.close();
       channel.port2.close();
-      reject(error);
+      error ? reject(error) : resolve(result);
+    };
+    const resetTimer = () => {
+      clearTimeout(timer);
+      // Measured progress renews an observation, rather than imposing a total
+      // download deadline. A stalled observation ends without cancelling work.
+      timer = setTimeout(
+        () => {
+          changed();
+          if (!settled) finish(unfinished(worker, latest));
+        },
+        worker.state === 'installing' || (preparing && latest) ? installTimeout : timeout,
+      );
+    };
+    const aborted = () => finish(null, abortError());
+    const changed = () => {
+      if (worker.state === 'redundant')
+        finish(
+          null,
+          new Error('Offline download failed or the browser could not save every file.'),
+        );
+      else if (!workerMatches(worker, registration, config))
+        finish(
+          null,
+          new Error('Offline worker changed. Reopen this version online and try again.'),
+        );
+      else if (terminal && worker.state !== 'installing') finish(terminal);
+    };
+    channel.port1.onmessageerror = () => {
+      changed();
+      if (!settled) finish(unfinished(worker, latest));
+    };
+    channel.port1.onmessage = (event) => {
+      if (settled) return;
+      const report = event.data;
+      if (!report || typeof report !== 'object') return;
+      const streaming = report.format === PROTOCOL;
+      if (streaming && report.requestId !== requestId) return;
+      if (report.format && !streaming) return;
+      if (!workerMatches(worker, registration, config)) {
+        finish(
+          null,
+          new Error('Offline worker changed. Reopen this version online and try again.'),
+        );
+        return;
+      }
+      if (
+        (streaming && report.scope !== config.scope) ||
+        (report.buildId && report.buildId !== config.buildId)
+      ) {
+        finish({
+          status: 'not-ready',
+          message:
+            'Cached worker belongs to a different build. Reconnect and prepare this version again.',
+        });
+        return;
+      }
+      if (streaming && report.kind === 'progress') {
+        if (report.buildId !== config.buildId || !phaseMessages[report.stage]) return;
+        const measured = report.progress;
+        const progress =
+          measured &&
+          measured.unit === 'files' &&
+          Number.isSafeInteger(measured.completed) &&
+          Number.isSafeInteger(measured.total) &&
+          measured.total > 0 &&
+          measured.total <= 2000 &&
+          measured.completed >= 0 &&
+          measured.completed <= measured.total
+            ? measured
+            : null;
+        const update = {
+          ...report,
+          status: preparing ? 'preparing' : 'checking',
+          progress,
+          message: phaseMessages[report.stage] + optionalNote(config),
+        };
+        // Duplicate snapshots cannot keep a dead operation alive indefinitely.
+        const advanced =
+          !latest ||
+          latest.operationId !== update.operationId ||
+          latest.stage !== update.stage ||
+          latest.progress?.completed !== progress?.completed;
+        latest = update;
+        if (advanced) resetTimer();
+        onStatus(update);
+        return;
+      }
+      if (streaming && report.kind !== 'terminal') return;
+      if (!['ready', 'not-ready', 'error'].includes(report.status)) return;
+      if (report.status === 'ready' && report.buildId !== config.buildId) {
+        finish({ status: 'not-ready', message: 'Offline report could not confirm this build.' });
+        return;
+      }
+      if (report.status === 'ready' && worker.state === 'installing') {
+        terminal = report;
+        resetTimer();
+        changed();
+      } else finish(report);
+    };
+    signal?.addEventListener('abort', aborted, { once: true });
+    worker.addEventListener?.('statechange', changed);
+    resetTimer();
+    changed();
+    if (settled) return;
+    try {
+      // Old workers ignore these added fields and still return exactly one
+      // terminal report. New workers only stream for an explicit opt-in.
+      worker.postMessage(
+        {
+          type: messageType,
+          protocol: PROTOCOL,
+          requestId,
+          buildId: config.buildId,
+          scope: config.scope,
+        },
+        [channel.port2],
+      );
+    } catch (error) {
+      finish(null, error);
     }
   });
 }
 async function registered(config, navigatorRef) {
   const registration = await navigatorRef.serviceWorker.getRegistration(config.scope);
   return registration?.scope === config.scope ? registration : null;
-}
-function installed(registration, timeout = 60000) {
-  if (registration.waiting) return Promise.resolve(registration.waiting);
-  if (registration.active && !registration.installing) return Promise.resolve(registration.active);
-  const worker = registration.installing;
-  if (!worker) return Promise.reject(new Error('Offline worker did not begin installing.'));
-  return new Promise((resolve, reject) => {
-    const finish = (error) => {
-      clearTimeout(timer);
-      worker.removeEventListener('statechange', changed);
-      error ? reject(error) : resolve(worker);
-    };
-    const changed = () => {
-      if (['installed', 'activated'].includes(worker.state)) finish();
-      else if (worker.state === 'redundant')
-        finish(new Error('Offline download failed or the browser could not save every file.'));
-    };
-    const timer = setTimeout(
-      () => finish(new Error('Offline preparation timed out. Keep the page online and try again.')),
-      timeout,
-    );
-    worker.addEventListener('statechange', changed);
-    changed();
-  });
 }
 function environment(options) {
   return {
@@ -142,34 +293,51 @@ function requireConfig(env) {
   if (!available.available) throw new Error(available.reason);
   return configFromPage(env.documentRef, env.locationRef);
 }
-/** The caller must connect this function to a deliberate player action. No startup side effects. */
+/** The caller must connect this function to a deliberate player action. No startup side effects.
+ * signal only detaches this observer; it never cancels a shared installation.
+ */
 export async function prepareOffline(options = {}) {
   const env = environment(options),
     config = requireConfig(env),
     status = options.onStatus ?? (() => {});
+  throwIfAborted(options.signal);
   status({
     status: 'preparing',
-    message: 'Downloading and verifying this version’s core offline files…' + optionalNote(config),
+    stage: 'connecting',
+    progress: null,
+    message: phaseMessages.connecting + optionalNote(config),
   });
-  const registration = await env.navigatorRef.serviceWorker.register(config.worker, {
-    scope: config.scope,
-    updateViaCache: 'none',
-  });
-  let worker = await installed(registration, options.installTimeout);
-  const report = await requestReport(worker, {
+  const registration = await observePromise(
+    env.navigatorRef.serviceWorker.register(config.worker, {
+      scope: config.scope,
+      updateViaCache: 'none',
+    }),
+    options.signal,
+  );
+  throwIfAborted(options.signal);
+  const worker = selectedWorker(registration);
+  if (!worker || !workerMatches(worker, registration, config))
+    throw new Error('Offline worker does not match this version. Reopen it online and try again.');
+  const report = await requestReport(worker, registration, config, {
     ...options,
+    onStatus: status,
     messageType: 'revealline.offline-prepare',
   });
+  throwIfAborted(options.signal);
+  if (report.status === 'still-running' || report.status === 'unconfirmed') {
+    status(report);
+    return report;
+  }
   if (report.status !== 'ready' || report.buildId !== config.buildId)
     throw new Error(
-      report.message ??
-        'Offline files do not match this build. Close this version’s tabs and reopen it online.',
+      report.message ?? 'Offline files could not be verified. Reconnect and try again.',
     );
+  const waiting = registration.waiting === worker || worker.state === 'installed';
   const result = {
     ...report,
-    status: registration.waiting === worker ? 'waiting' : 'ready',
+    status: waiting ? 'waiting' : 'ready',
     message:
-      (registration.waiting === worker
+      (waiting
         ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
         : 'Offline files verified. This version can open without a connection while the browser retains its storage.') +
       optionalNote(config),
@@ -182,29 +350,43 @@ export async function checkOffline(options = {}) {
   const env = environment(options),
     config = requireConfig(env),
     status = options.onStatus ?? (() => {});
-  status({ status: 'checking', message: 'Checking every saved game file…' });
-  const registration = await registered(config, env.navigatorRef),
-    worker = registration?.waiting ?? registration?.active;
+  throwIfAborted(options.signal);
+  status({
+    status: 'checking',
+    stage: 'verifying',
+    progress: null,
+    message: phaseMessages.verifying,
+  });
+  const registration = await observePromise(registered(config, env.navigatorRef), options.signal);
+  throwIfAborted(options.signal);
+  const worker = selectedWorker(registration);
   if (!worker) {
     const result = { status: 'not-ready', message: 'Prepare offline play first.', verified: 0 };
     status(result);
     return result;
   }
-  const report = await requestReport(worker, options);
-  const result =
-    report.buildId === config.buildId
+  if (!workerMatches(worker, registration, config))
+    throw new Error('Offline worker does not match this version. Reopen it online and try again.');
+  const report = await requestReport(worker, registration, config, {
+    ...options,
+    onStatus: status,
+    messageType: 'revealline.offline-check',
+  });
+  throwIfAborted(options.signal);
+  const waiting =
+    report.status === 'ready' && (registration.waiting === worker || worker.state === 'installed');
+  const result = {
+    ...report,
+    ...(report.status === 'ready'
       ? {
-          ...report,
-          ...(report.status === 'ready' && config.optionalPacks?.length
-            ? { message: (report.message || 'Core offline files verified.') + optionalNote(config) }
-            : {}),
-        }
-      : {
-          ...report,
-          status: 'not-ready',
+          status: waiting ? 'waiting' : 'ready',
           message:
-            'Cached worker belongs to a different build. Reconnect and prepare this version again.',
-        };
+            (waiting
+              ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
+              : report.message || 'Core offline files verified.') + optionalNote(config),
+        }
+      : {}),
+  };
   status(result);
   return result;
 }

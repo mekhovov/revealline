@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-tool-state="loading">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="relay-rescue.css" />
     <link rel="stylesheet" href="../ui/field-kit-components.css" />
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
+    <link rel="stylesheet" href="../ui/operation-status.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
@@ -57,11 +58,24 @@
           <button id="coop-start" class="primary field-kit-primary" type="button" disabled>
             Preparing arena…
           </button>
-          <p id="coop-boot" role="status">Loading Relay Rescue.</p>
+          <p id="coop-boot" class="operation-status" data-state="busy" role="status">
+            <span aria-hidden="true" style="display: inline-flex; gap: 3px; color: #78dce8"
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i
+              ><i
+                style="display: inline-block; width: 4px; height: 8px; background: currentColor"
+              ></i></span
+            ><span>Loading Relay Rescue.</span>
+          </p>
           <details class="pack-picker">
             <summary>Play a created co-op pack</summary>
             <label for="coop-pack-file">Open a co-op pack JSON file</label>
             <input id="coop-pack-file" type="file" accept=".json,application/json" />
+            <button id="coop-pack-cancel" type="button" hidden>Stop waiting</button>
             <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
             <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
           </details>
@@ -267,6 +281,11 @@
         </details>
       </aside>
     </main>
-    <script type="module" src="relay-rescue.mjs"></script>
+    <script
+      defer
+      src="../ui/direct-tool-launch.js"
+      data-module="./relay-rescue.mjs"
+      data-status="coop-boot"
+    ></script>
   </body>
 </html>

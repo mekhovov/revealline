@@ -90,9 +90,10 @@ const imageLoad = (src) =>
   });
 
 export class BoardPainter {
-  constructor(presets, { onAsset = () => {} } = {}) {
+  constructor(presets, { onAsset = () => {}, onAssetStatus = () => {} } = {}) {
     this.presets = presets;
     this.onAsset = onAsset;
+    this.onAssetStatus = onAssetStatus;
     this.lookWarning = '';
     this.enemyBodies = createEnemyBodyAssets({ changed: () => this.reportAssets() });
     this.animation = createAnimationState();
@@ -149,8 +150,21 @@ export class BoardPainter {
         .filter(([role]) => role !== 'player')
         .map(([role, v]) => [role, v.dataUrl]),
     ];
+    const requested = jobs.filter(([, src]) => src);
+    const report = (status, message) => {
+      if (token !== this.loadToken) return;
+      try {
+        this.onAssetStatus({
+          status,
+          stage: status === 'preparing' ? 'decoding' : status,
+          message,
+          progress: null,
+        });
+      } catch {}
+    };
+    if (requested.length) report('preparing', 'Loading craft and scene artwork…');
     const settled = await Promise.allSettled(
-      jobs.filter(([, src]) => src).map(async ([role, src]) => [role, await imageLoad(src)]),
+      requested.map(async ([role, src]) => [role, await imageLoad(src)]),
     );
     if (token !== this.loadToken) return;
     for (const item of settled)
@@ -168,6 +182,11 @@ export class BoardPainter {
       .filter(Boolean)
       .join(' ');
     this.reportAssets();
+    // A procedural look also completes any status from the look it superseded.
+    report(
+      settled.some((item) => item.status === 'rejected') ? 'error' : 'ready',
+      this.lookWarning || 'Craft and scene artwork are ready.',
+    );
   }
   reportAssets() {
     this.onAsset([this.lookWarning, this.enemyBodies.status()].filter(Boolean).join(' '));

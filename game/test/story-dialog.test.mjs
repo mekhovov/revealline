@@ -139,9 +139,16 @@ test('opening stages exact poster before awaiting originals and never calls Play
   assert.equal(h.host.dialog.open, true);
   assert.equal(h.host.dialog.querySelector('canvas').dataset.original, f.pin.sha256);
   assert.equal(h.host.dialog.dataset.storyState, 'preparing');
+  const status = h.host.dialog.querySelector('.operation-status');
+  assert.equal(status.dataset.state, 'busy');
+  assert.equal(status.dataset.stage, 'reading');
+  assert.match(status.textContent, /Reading optional story metadata/);
+  assert.notEqual(h.host.dialog.getAttribute('aria-busy'), 'true');
   assert.equal(h.calls.length, 0);
   wait.resolve(media());
   assert.equal(await opened, true);
+  assert.equal(status.hidden, true);
+  assert.equal(status.dataset.state, 'ready');
   assert.equal(h.calls.length, 1);
   assert.equal(h.calls[0].prepared, f.prepared);
   assert.equal(h.calls[0].posterElement.hidden, false);
@@ -169,6 +176,7 @@ test('missing/corrupt movie keeps the already staged exact poster and gives fini
   assert.equal(await h.host.open(h.request), false);
   assert.equal(h.host.dialog.open, true);
   assert.equal(h.host.dialog.dataset.storyState, 'unavailable');
+  assert.equal(h.host.dialog.querySelector('.operation-status').dataset.state, 'error');
   assert.equal(h.host.dialog.querySelector('canvas').dataset.original, f.pin.sha256);
   assert.match(
     h.host.dialog.children.find((child) => child.tagName === 'P').textContent,

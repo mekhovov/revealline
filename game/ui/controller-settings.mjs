@@ -1,3 +1,4 @@
+import { createOperationStatus } from './operation-status.mjs';
 import {
   CONTROLLER_BINDING_ACTIONS,
   CONTROLLER_ACTION_LABELS,
@@ -86,8 +87,10 @@ export function attachControllerSettings({
   errors.hidden = true;
   editor.setAttribute('aria-describedby', status.id);
   actions.append(apply, cancel, defaults);
-  const announce = (message) => {
-    status.textContent = message;
+  const presenter = createOperationStatus(status);
+  const announce = (message, state = 'ready') => {
+    const lease = presenter.begin({ message });
+    if (state !== 'busy') lease.finish({ message, state });
   };
   function clearErrors() {
     errors.replaceChildren();
@@ -335,7 +338,7 @@ export function attachControllerSettings({
     pending = abort;
     busy = true;
     syncBusy();
-    announce('Applying controller settings…');
+    announce('Applying controller settings…', 'busy');
     const isCurrent = () => {
       if (destroyed || abort.signal.aborted || generation !== ticket) return false;
       try {
@@ -374,7 +377,7 @@ export function attachControllerSettings({
           invalidate(
             'Controller settings changed during this operation. Review the current settings before editing again.',
           );
-        else announce(`Controller settings were not applied. ${error.message}`);
+        else announce(`Controller settings were not applied. ${error.message}`, 'error');
       }
     } finally {
       if (pending === abort) {
@@ -382,7 +385,14 @@ export function attachControllerSettings({
         busy = false;
         if (!destroyed) {
           syncBusy();
-          if (focusAfterApply && generation === ticket) edit.focus({ preventScroll: true });
+          if (
+            focusAfterApply &&
+            generation === ticket &&
+            !doc.hidden &&
+            doc.hasFocus?.() !== false &&
+            container.contains(doc.activeElement)
+          )
+            edit.focus({ preventScroll: true });
         }
       }
     }
@@ -400,6 +410,7 @@ export function attachControllerSettings({
       generation++;
       pending?.abort();
       for (const remove of listeners) remove();
+      presenter.dispose();
       container.replaceChildren();
     },
   };

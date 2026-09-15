@@ -12,18 +12,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.cancel.field-kit", "revision": 3 },
+          "parent": { "id": "audio.cancel.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit cancel audio cue for slot audio.cancel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.capture": {
         "description": "capture audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -35,18 +37,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.capture.field-kit", "revision": 3 },
+          "parent": { "id": "audio.capture.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit capture audio cue for slot audio.capture. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.confirm": {
         "description": "confirm audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -58,18 +62,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.confirm.field-kit", "revision": 3 },
+          "parent": { "id": "audio.confirm.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit confirm audio cue for slot audio.confirm. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.failure": {
         "description": "failure audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -81,18 +87,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.failure.field-kit", "revision": 3 },
+          "parent": { "id": "audio.failure.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit failure audio cue for slot audio.failure. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.focus": {
         "description": "focus audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -104,18 +112,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.focus.field-kit", "revision": 3 },
+          "parent": { "id": "audio.focus.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit focus audio cue for slot audio.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.music": {
         "description": "Theme music: existing bounded component with Field Kit tokens and state styling.",
@@ -127,18 +137,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.music.field-kit", "revision": 3 },
+          "parent": { "id": "audio.music.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit theme music for slot audio.music. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.music.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.pickup": {
         "description": "pickup audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -150,18 +162,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.pickup.field-kit", "revision": 3 },
+          "parent": { "id": "audio.pickup.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit pickup audio cue for slot audio.pickup. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "audio.victory": {
         "description": "victory audio cue: existing bounded component with Field Kit tokens and state styling.",
@@ -173,18 +187,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "audio.victory.field-kit", "revision": 3 },
+          "parent": { "id": "audio.victory.field-kit", "revision": 5 },
           "prompt": "Create one original FPV Field Kit victory audio cue for slot audio.victory. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. This is a registered presentation component; describe the bounded visual settings. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:431e6fb58240c3ca0d43248cb285eec6812db7693786a6c9c912e972536c501e"
+          "source": "game/ui/audio.mjs; game/ui/published-audio.mjs; game/ui/soundtrack-player.mjs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95"
         },
         "quality": {
           "evidence": [
-            "Codex technical integration assessment, 2026-09-15: compared upstream audio-session and gesture-wake changes through source fe018b81 with prior reviewed recipe sources. Registered cue/music recipes, instrument/event mappings, gains and media bytes are unchanged. Updated provenance records playback-session selection with graceful unsupported-API handling and selected-track preparation/gesture wake ordering. Audio, transport, published-media and host suite passes 64/64 with zero skips; retained log SHA256 e3bbea8d484b1dc71949ee6e4b91910f41d03f6cd3812b634dae3c373d7e96d6. Host synchronization waits for persisted playback intent within the existing 500ms bound. This assessment covers source integration and tested state transitions; it does not establish subjective listening approval or physical iPhone, Silent-switch or speaker qualification."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; audio recipe inputs sha256:998a1326a484cb3a492770ec68b927181ae5cb6d0041cdf309628fefd9349a95. Soundscape and published cue recipes are byte-unchanged; soundtrack changes observe current preparation and recheck ownership after observers, retaining explicit activation, gain/mute, transport and no-late-cue behavior.",
+            "game/test/soundtrack-player.test.mjs, published-audio.test.mjs and soundtrack-gain-leases.test.mjs verify silent preparation, gesture-safe playback, overlapping and cancelled observers, exact original verification, mute/disposal and gain ownership; the combined exact-source P01 recipe review passes67/67.",
+            "Current P01 browser evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: music-held-mp3-current-landscape.png with portrait measurements shows the controlled real MP3 Blob read and accessible Cancel; music-cancel-after-read-settles.json and music-retry-draft-ready.json record cancellation without a saved-library change and successful same-original retry to draft. Existing functional recipe approval is retained; no new audio composition, listening-panel, physical-speaker or codec-wide quality claim."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "audio.ui.v1" },
-        "revision": 4
+        "revision": 6
       },
       "control.ability": {
         "description": "Brackets around an active diamond: class ability binding.",
@@ -8597,29 +8613,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.chip.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.chip.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit chip button for slot ui.button.chip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.chip. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.button.danger": {
         "description": "danger button: existing bounded component with Field Kit tokens and state styling.",
@@ -8631,29 +8638,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.danger.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.danger.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit danger button for slot ui.button.danger. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.danger. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.button.icon": {
         "description": "icon button: existing bounded component with Field Kit tokens and state styling.",
@@ -8665,29 +8663,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.icon.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.icon.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit icon button for slot ui.button.icon. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.icon. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.button.primary": {
         "description": "primary button: existing bounded component with Field Kit tokens and state styling.",
@@ -8699,29 +8688,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.primary.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.primary.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit primary button for slot ui.button.primary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.primary. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.button.secondary": {
         "description": "secondary button: existing bounded component with Field Kit tokens and state styling.",
@@ -8733,29 +8713,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.secondary.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.secondary.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit secondary button for slot ui.button.secondary. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.secondary. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.button.tab": {
         "description": "tab button: existing bounded component with Field Kit tokens and state styling.",
@@ -8767,29 +8738,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.button.tab.field-kit", "revision": 6 },
+          "parent": { "id": "ui.button.tab.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit tab button for slot ui.button.tab. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.button.tab. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.button.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.cursor": {
         "description": "Selection cursor: existing bounded component with Field Kit tokens and state styling.",
@@ -8801,29 +8763,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.cursor.field-kit", "revision": 6 },
+          "parent": { "id": "ui.cursor.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit selection cursor for slot ui.cursor. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 16 by 16 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.cursor. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.cursor.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.dialog": {
         "description": "Dialog frame: existing bounded component with Field Kit tokens and state styling.",
@@ -8835,29 +8788,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.dialog.field-kit", "revision": 6 },
+          "parent": { "id": "ui.dialog.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit dialog frame for slot ui.dialog. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.dialog. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.focus": {
         "description": "Focus brackets: existing bounded component with Field Kit tokens and state styling.",
@@ -8869,29 +8813,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.focus.field-kit", "revision": 6 },
+          "parent": { "id": "ui.focus.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit focus brackets for slot ui.focus. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.focus. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.focus.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.checkbox": {
         "description": "checkbox control: existing bounded component with Field Kit tokens and state styling.",
@@ -8903,29 +8838,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.checkbox.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.checkbox.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit checkbox control for slot ui.input.checkbox. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.checkbox. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.radio": {
         "description": "radio control: existing bounded component with Field Kit tokens and state styling.",
@@ -8937,29 +8863,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.radio.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.radio.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit radio control for slot ui.input.radio. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.radio. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.scrollbar": {
         "description": "scrollbar control: existing bounded component with Field Kit tokens and state styling.",
@@ -8971,29 +8888,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.scrollbar.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit scrollbar control for slot ui.input.scrollbar. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.scrollbar. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.select": {
         "description": "select control: existing bounded component with Field Kit tokens and state styling.",
@@ -9005,29 +8913,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.select.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.select.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit select control for slot ui.input.select. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.select. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.slider": {
         "description": "slider control: existing bounded component with Field Kit tokens and state styling.",
@@ -9039,29 +8938,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.slider.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.slider.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit slider control for slot ui.input.slider. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.slider. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.text": {
         "description": "text control: existing bounded component with Field Kit tokens and state styling.",
@@ -9073,29 +8963,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.text.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.text.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit text control for slot ui.input.text. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.text. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.input.toggle": {
         "description": "toggle control: existing bounded component with Field Kit tokens and state styling.",
@@ -9107,29 +8988,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.input.toggle.field-kit", "revision": 6 },
+          "parent": { "id": "ui.input.toggle.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit toggle control for slot ui.input.toggle. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.input.toggle. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.input.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.meter.ability": {
         "description": "ability meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9141,29 +9013,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.ability.field-kit", "revision": 6 },
+          "parent": { "id": "ui.meter.ability.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit ability meter for slot ui.meter.ability. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.meter.ability. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.meter.coverage": {
         "description": "coverage meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9175,29 +9038,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.coverage.field-kit", "revision": 6 },
+          "parent": { "id": "ui.meter.coverage.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit coverage meter for slot ui.meter.coverage. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.meter.coverage. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.meter.progress": {
         "description": "progress meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9209,29 +9063,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.progress.field-kit", "revision": 6 },
+          "parent": { "id": "ui.meter.progress.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit progress meter for slot ui.meter.progress. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.meter.progress. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.meter.time": {
         "description": "time meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9243,29 +9088,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.time.field-kit", "revision": 6 },
+          "parent": { "id": "ui.meter.time.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit time meter for slot ui.meter.time. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.meter.time. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.meter.volume": {
         "description": "volume meter: existing bounded component with Field Kit tokens and state styling.",
@@ -9277,29 +9113,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.meter.volume.field-kit", "revision": 6 },
+          "parent": { "id": "ui.meter.volume.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit volume meter for slot ui.meter.volume. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.meter.volume. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.meter.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.panel": {
         "description": "Panel frame: existing bounded component with Field Kit tokens and state styling.",
@@ -9311,29 +9138,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.panel.field-kit", "revision": 6 },
+          "parent": { "id": "ui.panel.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit panel frame for slot ui.panel. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.panel. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.toast": {
         "description": "Status message frame: existing bounded component with Field Kit tokens and state styling.",
@@ -9345,29 +9163,20 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.toast.field-kit", "revision": 6 },
+          "parent": { "id": "ui.toast.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit status message frame for slot ui.toast. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.toast. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 7
+        "revision": 9
       },
       "ui.tooltip": {
         "description": "Tooltip frame: existing bounded component with Field Kit tokens and state styling.",
@@ -9379,40 +9188,31 @@
         "provenance": {
           "creator": "Reveal Line",
           "license": "Project-authored runtime recipe",
-          "parent": { "id": "ui.tooltip.field-kit", "revision": 6 },
+          "parent": { "id": "ui.tooltip.field-kit", "revision": 8 },
           "prompt": "Create one original FPV Field Kit tooltip frame for slot ui.tooltip. Use a restrained pixel-art style with deliberate square clusters, deep ink #070B12, panel #101923, warm text #F3F0DB, cyan #78DCE8, amber #F4BF62, hazard #F07879 and success #9DBB7A. Export exactly 24 by 24 pixels as PNG. Keep real text and functional gameplay cues separate. Preserve the slot purpose and every listed requirement. Do not reproduce reference game artwork, logos or lettering. Save the original and a separate derivative with the complete effective prompt and actual export dimensions; a prompt is not proof of a valid asset.",
-          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs sha256:52ae4f755d89e2d53d0fe74ff393353cb54d125c4636606949cc606308e46394"
+          "source": "game/ui/field-kit-components.css; game/ui/field-kit-compiled.css; game/presentation/host.mjs; game/ui/operation-status.css; game/ui/operation-status.mjs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450"
         },
         "quality": {
           "evidence": [
-            "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/component-asset-decisions.json#ui.tooltip. Approve shared Field Kit component construction: readable role-correct primary/danger/icon/tab/input/meter/frame controls, distinct focus/pressed/selected/disabled/error styling and native semantic behavior. Native specimens supplement actual settings, gallery, dialog and navigation observations; this does not claim every state in every screen.",
-            "docs/verification/fpv-redesign/phase7/component-native-observations.json",
-            "docs/verification/fpv-redesign/phase7/component-native-tabs.json",
-            "docs/verification/fpv-redesign/phase7/component-primary-default.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-focus.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-pressed.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-selected.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-disabled.png",
-            "docs/verification/fpv-redesign/phase7/component-primary-error.png",
-            "docs/verification/fpv-redesign/phase7/native-zoom-200-settings.png",
-            "docs/verification/fpv-redesign/phase7/component-and-audio-tests.txt",
-            "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+            "Scoped P01 source review: docs/verification/cross-mode/p01/recipe-review.md; UI recipe inputs sha256:e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450. Existing control CSS and accepted artwork mapping are unchanged; guarded presentation observations and the shared status DOM/CSS preserve native control, focus and measured-progress semantics.",
+            "game/test/operation-status.test.mjs, presentation-host.test.mjs, presentation-page.test.mjs and presentation-ui.test.mjs verify current-owner status, original byte validation, stale cleanup, native handlers/checked state and no focus theft; the P01 recipe-source run passes67/67 including audio contracts.",
+            "Current P01 Chromium evidence retained in docs/verification/cross-mode/p01/recipe-evidence/: deploy-large-plain-portrait.png with portrait/landscape measurements and Reduced Effects animationName none; couch-cosmetic-held-portrait.png plus landscape measurements show ready controls during a real141.572s compiled-runtime wait; replay-held-landscape-fixed.png with both viewport measurements shows loading/Cancel44px. These are source-browser checks, not physical-device or release acceptance."
           ],
           "stage": "reviewed"
         },
         "recipe": { "id": "ui.panel.v1" },
-        "revision": 7
+        "revision": 9
       }
     },
     "bindings": {
-      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 4 },
-      "audio.capture": { "id": "audio.capture.field-kit", "revision": 4 },
-      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 4 },
-      "audio.failure": { "id": "audio.failure.field-kit", "revision": 4 },
-      "audio.focus": { "id": "audio.focus.field-kit", "revision": 4 },
-      "audio.music": { "id": "audio.music.field-kit", "revision": 4 },
-      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 4 },
-      "audio.victory": { "id": "audio.victory.field-kit", "revision": 4 },
+      "audio.cancel": { "id": "audio.cancel.field-kit", "revision": 6 },
+      "audio.capture": { "id": "audio.capture.field-kit", "revision": 6 },
+      "audio.confirm": { "id": "audio.confirm.field-kit", "revision": 6 },
+      "audio.failure": { "id": "audio.failure.field-kit", "revision": 6 },
+      "audio.focus": { "id": "audio.focus.field-kit", "revision": 6 },
+      "audio.music": { "id": "audio.music.field-kit", "revision": 6 },
+      "audio.pickup": { "id": "audio.pickup.field-kit", "revision": 6 },
+      "audio.victory": { "id": "audio.victory.field-kit", "revision": 6 },
       "control.ability": { "id": "control.ability.field-kit", "revision": 2 },
       "control.boost": { "id": "control.boost.field-kit", "revision": 2 },
       "control.cancel": { "id": "control.cancel.field-kit", "revision": 2 },
@@ -10145,33 +9945,33 @@
       "trail.active": { "id": "trail.active.field-kit", "revision": 5 },
       "trail.head": { "id": "trail.head.field-kit", "revision": 5 },
       "trail.secured": { "id": "trail.secured.field-kit", "revision": 5 },
-      "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 7 },
-      "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 7 },
-      "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 7 },
-      "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 7 },
-      "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 7 },
-      "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 7 },
-      "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 7 },
-      "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 7 },
-      "ui.focus": { "id": "ui.focus.field-kit", "revision": 7 },
-      "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 7 },
-      "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 7 },
-      "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 7 },
-      "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 7 },
-      "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 7 },
-      "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 7 },
-      "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 7 },
-      "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 7 },
-      "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 7 },
-      "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 7 },
-      "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 7 },
-      "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 7 },
-      "ui.panel": { "id": "ui.panel.field-kit", "revision": 7 },
-      "ui.toast": { "id": "ui.toast.field-kit", "revision": 7 },
-      "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 7 }
+      "ui.button.chip": { "id": "ui.button.chip.field-kit", "revision": 9 },
+      "ui.button.danger": { "id": "ui.button.danger.field-kit", "revision": 9 },
+      "ui.button.icon": { "id": "ui.button.icon.field-kit", "revision": 9 },
+      "ui.button.primary": { "id": "ui.button.primary.field-kit", "revision": 9 },
+      "ui.button.secondary": { "id": "ui.button.secondary.field-kit", "revision": 9 },
+      "ui.button.tab": { "id": "ui.button.tab.field-kit", "revision": 9 },
+      "ui.cursor": { "id": "ui.cursor.field-kit", "revision": 9 },
+      "ui.dialog": { "id": "ui.dialog.field-kit", "revision": 9 },
+      "ui.focus": { "id": "ui.focus.field-kit", "revision": 9 },
+      "ui.input.checkbox": { "id": "ui.input.checkbox.field-kit", "revision": 9 },
+      "ui.input.radio": { "id": "ui.input.radio.field-kit", "revision": 9 },
+      "ui.input.scrollbar": { "id": "ui.input.scrollbar.field-kit", "revision": 9 },
+      "ui.input.select": { "id": "ui.input.select.field-kit", "revision": 9 },
+      "ui.input.slider": { "id": "ui.input.slider.field-kit", "revision": 9 },
+      "ui.input.text": { "id": "ui.input.text.field-kit", "revision": 9 },
+      "ui.input.toggle": { "id": "ui.input.toggle.field-kit", "revision": 9 },
+      "ui.meter.ability": { "id": "ui.meter.ability.field-kit", "revision": 9 },
+      "ui.meter.coverage": { "id": "ui.meter.coverage.field-kit", "revision": 9 },
+      "ui.meter.progress": { "id": "ui.meter.progress.field-kit", "revision": 9 },
+      "ui.meter.time": { "id": "ui.meter.time.field-kit", "revision": 9 },
+      "ui.meter.volume": { "id": "ui.meter.volume.field-kit", "revision": 9 },
+      "ui.panel": { "id": "ui.panel.field-kit", "revision": 9 },
+      "ui.toast": { "id": "ui.toast.field-kit", "revision": 9 },
+      "ui.tooltip": { "id": "ui.tooltip.field-kit", "revision": 9 }
     },
     "collection": null,
-    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 17 },
+    "theme": { "id": "fpv", "name": "FPV Field Kit", "revision": 19 },
     "tokens": {
       "amber": "#f4bf62",
       "borderWidth": 2,
@@ -10199,7 +9999,7 @@
       "textSize": 18
     }
   },
-  "source": { "id": "field-kit", "revision": 17 },
+  "source": { "id": "field-kit", "revision": 19 },
   "urls": {
     "00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f": "./assets/00b0f847cd1f80495615e3ada13899df67c6df05bf1f6d846ffc46cb3cc3fc5f.png",
     "0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65": "./assets/0233c5f399b93700594af044a5f56687a0742333d32b7bc54ef7122173f1dc65.png",

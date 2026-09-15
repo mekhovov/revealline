@@ -1,0 +1,109 @@
+{
+  "scope": "P01 A45/A46 ordinary-source native Chromium browser verification. Does not accept the complete phase or a release.",
+  "status": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "recordedAt": "2026-09-15T09:02:44.434003+00:00",
+  "sourceBase": "a395462b101c348d28ee2643c24263ca72b2c751",
+  "origin": "http://127.0.0.1:55719",
+  "session": "p01-versus-originals",
+  "cdpPort": 55721,
+  "input": "Supported visible More worlds paired-file installation; native Enter after explicit control focus; native select/file-picker adapters; Escape pause. Not an exhaustive keyboard-only navigation or touch/controller-device claim.",
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "fixture": {
+    "producer": "authoring/library/external-chapter-pilot/build.mjs",
+    "source": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json",
+    "sourceSha256": "dc7b29694ec409c629e4006f11b96a2834937bf0f846e9dd9f29c5981aa5daa9",
+    "descriptorMatchesShipped": true,
+    "proof": "fixture-verification.json",
+    "packBytes": 9398,
+    "mediaBytes": 8037391,
+    "installation": "More worlds / FPV Front / Pressure Pictures / Restore from files / Install matching exact pair. Fresh isolated native IndexedDB profile."
+  },
+  "checks": [
+    {
+      "id": "A45-immediate",
+      "status": "PASS",
+      "detail": "Visible scoped verification before real exact-original preparation. Both Start and new commits stay gated."
+    },
+    {
+      "id": "A46-native-originals",
+      "status": "PASS",
+      "detail": "All three native decoded originals match the shipped descriptor bytes, SHA256 and 1774\u00d7887 dimensions. The held selected-original completion is real native Image.decode; both native canvas draw calls use the same accepted Blob source."
+    },
+    {
+      "id": "A45-cancel-stale",
+      "status": "PASS",
+      "detail": "Original completion held 10.830 s; native Back cancels before it returns. Same selected target, both counters/states/clock/series and localStorage retained; cancelled candidate never drawn. Repeat after rotated correction held 8.567 s and passed identical fences."
+    },
+    {
+      "id": "A45-rotation-feedback",
+      "status": "FIXED_AND_RETESTED",
+      "detail": "Initial landscape Retry put busy status at y=-326. Minimal sticky busy and terminal message rule now keeps busy y=0..27, native focused Done/Back y=266..315 after portrait-to-landscape rotation. Portrait notice y=0..54 and exit >=44px also fit."
+    },
+    {
+      "id": "A45-error-retry",
+      "status": "PASS",
+      "detail": "Held actual callback 20.905 s exceeds existing 15 s decode deadline; real timeout and Retry are visible. Late callback cannot mark ready. New retry held 7.252 s then reaches ready with both boards using exact Courtyard original."
+    },
+    {
+      "id": "A45-explicit-start-pause",
+      "status": "PASS",
+      "detail": "Ready message visible at y=0..27 with enabled Start; both states remain ready until native Enter. Actual both-board play reaches 1:22; Escape pauses both at 1:22."
+    }
+  ],
+  "finalBinding": {
+    "source": "blob:http://127.0.0.1:55719/47d34a36-cf75-4c53-9d7a-7191146664c6",
+    "sha256": "e87e23b60bb32a51d92aa535737420c87ae25d56520ba624eee39054ca2fce62",
+    "bytes": 2912184
+  },
+  "sourceCorrection": {
+    "path": "game/couch/couch.css",
+    "sha256": "cab9b05f39138fa83744788e183dd122dac2388052dee739ea1bcb1a282feb7f",
+    "change": "Seven-line shared selector rule: #race-preparation and #race-message sticky at safe-area top, z-index 2, existing navy background. No canvas geometry, simulation, content, schema or flow change."
+  },
+  "decisiveEvidence": [
+    "assertions.json",
+    "corrected-held-portrait.json",
+    "corrected-held-portrait.png",
+    "corrected-held-rotated-landscape.json",
+    "corrected-held-rotated-landscape.png",
+    "corrected-cancel-before-completion.json",
+    "corrected-cancel-after-completion.json",
+    "deadline-error-fixed.json",
+    "deadline-error-fixed.png",
+    "final-retry-held-landscape.json",
+    "final-ready.json",
+    "final-ready.png",
+    "final-playing.json",
+    "final-playing.png",
+    "final-paused.json",
+    "final-native-restored.json"
+  ],
+  "evidenceAssertions": 92,
+  "checksNotClaimed": [
+    "Concurrent CAS/store-writer or quota failures in the browser: covered by actual host/store tests, not injected here.",
+    "Full native IndexedDB snapshot/no-write proof: browser observes unchanged empty localStorage, exact managed originals and unchanged counters; profile had no saved Solo flight.",
+    "Physical touch/controller/iOS/native share/native zoom or exhaustive navigation.",
+    "All installed editions, loss/victory/capture completion, public download/offline and exact release qualification."
+  ],
+  "retainedInitialAttempts": "automation-notes.md explains failed instrumentation Blob fetch, offscreen mouse/hidden setup attempt, earlier confirmation-only start and their corrected evidence; none are relabeled as accepted passes.",
+  "cleanup": {
+    "nativeMethodsRestored": true,
+    "gateCleared": true,
+    "browserClosed": true,
+    "ownServerStopped": true
+  },
+  "focusedRegressions": "Existing couch-installed-chapters + couch-markup run is separately logged in focused-tests.log; browser assertions and CSS formatting passed. Final focused receipt will be written when the running process finishes."
+}

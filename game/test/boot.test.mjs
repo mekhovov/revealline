@@ -209,6 +209,54 @@ test('app import rejection has an actual caught promise path and stays concealed
   assert.equal(page.timers.size, 0);
 });
 
+test('delayed required styles keep the static launch active and report an actionable failure', async () => {
+  const page = boundary();
+  const style = page.make('link', 'delayed-style');
+  style.setAttribute('data-boot-href', 'ui/game-shell.css');
+  style.dataset.bootHref = 'ui/game-shell.css';
+  page.run();
+  page.mount();
+  await settle();
+  assert.equal(style.href, 'ui/game-shell.css');
+  assert.equal(style.media, 'print', 'Pending styles cannot prevent the static loading paint');
+  assert.equal(page.screen.hidden, false);
+  assert.equal(page.game.inert, true);
+  assert.match(page.document.getElementById('boot-status').textContent, /Loading game styles/);
+  style.emit('error');
+  await settle();
+  assert.equal(page.document.documentElement.dataset.bootState, 'failed');
+  assert.match(page.document.getElementById('boot-detail').textContent, /ui\/game-shell.css/);
+  assert.equal(page.document.activeElement, page.retry);
+  assert.equal(page.context.RevealLineBoot.progress('Late progress'), false);
+});
+
+test('cached and delayed styles both finish before app initialization is admitted', async (t) => {
+  let imported = false;
+  const page = await moduleBoundary(t, (current) => {
+    imported = true;
+    current.context.RevealLineBoot.progress('Reading saved flight…');
+    current.context.RevealLineBoot.ready();
+  });
+  const styles = ['first.css', 'second.css'].map((href) => {
+    const link = page.make('link', href);
+    link.setAttribute('data-boot-href', href);
+    link.dataset.bootHref = href;
+    return link;
+  });
+  page.run();
+  page.mount();
+  styles[0].emit('load');
+  await settle();
+  assert.equal(imported, false);
+  assert.equal(styles[0].media, 'all');
+  assert.equal(page.screen.hidden, false);
+  styles[1].emit('load');
+  await page.appSettled;
+  assert.equal(imported, true);
+  assert.equal(page.screen.hidden, true);
+  assert.equal(page.game.inert, false);
+});
+
 test(
   'resolved legacy app cannot substitute hidden status for the ready handshake',
   { timeout: 5000 },

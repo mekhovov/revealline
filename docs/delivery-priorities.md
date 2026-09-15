@@ -1,6 +1,6 @@
 # RevealLine delivery plan
 
-Updated 15 September 2026. The active priority and acceptance register is [cross-mode execution](cross-mode-execution.md), implementing the approved P00–P18 plan. P00 is qualifying as v0.55 through PR #50; later cross-mode phases are not accepted. The additive player-library, Team-controls and reserve-art candidate uses v0.56. Its source preserves the canonical v0.54 production repair and P00 source `acc9f26` through normal merges. Source integration does not establish deployment or acceptance of either candidate.
+Updated 15 September 2026. The active priority and acceptance register is [cross-mode execution](cross-mode-execution.md), implementing the approved P00–P18 plan. P00 is accepted as immutable v0.55.0 with [public evidence](../publishing/pages-controller/delivery/evidence/cross-mode-p00/public-v055/acceptance.json). P01 loading feedback is preparing v0.57.0 from reviewed v0.56 source and P00 evidence merge `a395462`; its [loading contract](presentation-loading.md) and current verification records describe implementation, not public acceptance. Later phases cannot advance until its own committed-source gates, frozen release and public play/offline checks pass. Historical artwork, saves and releases remain preserved.
 
 For a concise player-facing overview, read [what is next](player-roadmap.md).
 

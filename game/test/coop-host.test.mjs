@@ -73,9 +73,11 @@ async function page(t, { touch = false } = {}) {
   });
   await import(`../couch/relay-rescue.mjs?host-test=${++sequence}`);
   assert.equal($('coop-start').disabled, false, $('coop-boot').textContent);
+  assert.equal(doc.documentElement.dataset.toolState, 'ready');
   assert.ok(frames.size);
   $('coop-difficulty').value = 'standard';
   const selectFile = (text, read = async () => text) => {
+    $('coop-pack-file').closest('details').open = true;
     $('coop-pack-file').files = [{ size: Buffer.byteLength(text), text: read }];
     return $('coop-pack-file').onchange();
   };
@@ -554,4 +556,66 @@ test('assigning a controller releases hidden held touch; disconnect stays paused
     [false, false],
   );
   assert.equal(boost.getAttribute('aria-pressed'), 'false');
+});
+
+test('Team pack reads show immediate status, Stop waiting rejects late adoption, and completion preserves deliberately moved focus', async (t) => {
+  const f = await page(t),
+    read = deferred(),
+    candidate = JSON.stringify(customPack('slow'));
+  f.$('coop-pack-file').focus();
+  const pending = f.selectFile(candidate, () => read.promise);
+  assert.equal(f.$('coop-pack-status').dataset.state, 'busy');
+  assert.equal(f.$('coop-pack-status').dataset.stage, 'reading');
+  assert.match(f.$('coop-pack-status').textContent, /Reading the selected Team pack/);
+  assert.equal(f.$('coop-pack-cancel').hidden, false);
+  assert.equal(f.$('coop-start').disabled, false, 'an import never blocks the existing arena');
+  f.$('coop-pack-cancel').click();
+  assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
+  const cancelled = f.$('coop-pack-status').textContent;
+  read.resolve(candidate);
+  await pending;
+  assert.equal(f.$('coop-pack-status').textContent, cancelled);
+  assert.equal(f.$('coop-level').value, 'relay-yard');
+  const nextRead = deferred();
+  const next = f.selectFile(candidate, () => nextRead.promise);
+  f.$('coop-race').focus();
+  nextRead.resolve(candidate);
+  await next;
+  assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
+  assert.equal(f.$('coop-level').value, 'slow-coverage');
+  assert.equal(f.doc.activeElement, f.$('coop-race'));
+});
+
+test('Back and closing the Team pack picker detach a read before reopening', async (t) => {
+  const f = await page(t),
+    candidate = JSON.stringify(customPack('closed'));
+  const first = deferred();
+  f.$('coop-pack-file').focus();
+  const pending = f.selectFile(candidate, () => first.promise);
+  f.tap('Escape');
+  assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
+  assert.equal(f.doc.activeElement, f.$('coop-pack-file'));
+  first.resolve(candidate);
+  await pending;
+  const second = deferred();
+  const next = f.selectFile(candidate, () => second.promise);
+  const picker = f.$('coop-pack-file').closest('details');
+  f.$('coop-pack-file').value = 'C:\\fakepath\\team.json';
+  picker.open = false;
+  picker.emit('toggle');
+  assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
+  assert.equal(
+    f.$('coop-pack-file').value,
+    '',
+    'native same-file selection can emit change on retry',
+  );
+  second.resolve(candidate);
+  await next;
+  picker.open = true;
+  picker.emit('toggle');
+  assert.equal(f.$('coop-pack-status').dataset.state, 'detached');
+  assert.equal(f.$('coop-level').value, 'relay-yard');
+  await f.selectFile(candidate);
+  assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
+  assert.equal(f.$('coop-level').value, 'closed-coverage');
 });

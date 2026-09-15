@@ -49,6 +49,7 @@ import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { createOperationStatus } from './ui/operation-status.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
@@ -140,7 +141,7 @@ import {
 import { missionBriefing } from './mission-brief.mjs';
 import { claimProfileWriter } from './profile-writer.mjs';
 import { commitBackup, recoverBackupImport } from './backup-storage.mjs';
-import { offlineAvailability, prepareOffline, checkOffline } from './offline.mjs';
+import { attachOfflinePanel } from './ui/offline-panel.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
@@ -162,8 +163,21 @@ const getJSON = async (path) => {
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
+function preparationStatus(observer, message, stage, isCurrent = () => true) {
+  if (!isCurrent()) return;
+  try {
+    observer?.({ status: 'preparing', message, stage, progress: null });
+  } catch {
+    // A status observer cannot alter content verification or a durable commit.
+  }
+}
 
 try {
+  globalThis.RevealLineBoot?.progress?.('Loading missions and flight equipment…');
+  const contentFeedback = ['content-select-status', 'shell-featured-status']
+    .map((id) => $(id))
+    .filter(Boolean)
+    .map((target) => ({ target, presenter: createOperationStatus(target), lease: null }));
   let attemptFiles = null,
     profileRecovery = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
@@ -334,6 +348,7 @@ try {
       warning(message);
     },
   });
+  globalThis.RevealLineBoot?.progress?.('Reading your saved flight and installed chapters…');
   const writer = scenario
     ? {
         writable: false,
@@ -563,6 +578,8 @@ try {
     runMessageCue = null,
     bodyWarning = '',
     lastReplay = null,
+    replayFeedback = null,
+    replayDownload = null,
     completionWarning = '',
     appearanceRewardIds = [],
     celebrationActive = false,
@@ -645,6 +662,7 @@ try {
   const pictureStore = practice ? null : createStillMediaStore({ managedStore: pictureManager });
   const storyStore = practice ? null : createStoryMediaStore({ managedStore: pictureManager });
   let flightPictures = null,
+    picturePrewarm = null,
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
@@ -652,6 +670,47 @@ try {
     'Preparing the chosen picture. Flight stays paused until it is ready.';
   const savedFlightRestoredMessage =
     'Saved flight verified and restored. Press Resume to continue.';
+  const preparationFeedback = createOperationStatus($('flight-preparation-status'));
+  const themeFeedback = createOperationStatus($('theme-preparation-status'));
+  let preparationOperation = null;
+  function clearPreparation() {
+    preparationOperation = null;
+    preparationFeedback.clear();
+    $('flight-preparation-cancel').hidden = true;
+  }
+  function beginPreparation(message, cancel, stage = 'preparing') {
+    const operation = { status: preparationFeedback.begin({ message, stage }), cancel };
+    preparationOperation = operation;
+    $('flight-preparation-cancel').hidden = !cancel;
+    return {
+      update(status) {
+        if (preparationOperation !== operation || status.status !== 'preparing') return;
+        operation.status.update({
+          message: status.message,
+          stage: status.stage,
+          progress: status.progress ?? null,
+        });
+      },
+      finish(message = '', state = 'ready') {
+        if (preparationOperation !== operation) return;
+        operation.status.finish({ message, state });
+        preparationOperation = null;
+        $('flight-preparation-cancel').hidden = true;
+      },
+    };
+  }
+  $('flight-preparation-cancel').onclick = () => {
+    const operation = preparationOperation;
+    if (!operation) return;
+    const restoreFocus = document.activeElement === $('flight-preparation-cancel');
+    operation.cancel();
+    clearPreparation();
+    preparationFeedback.begin({ message: '' }).finish({
+      state: 'cancelled',
+      message: 'Preparation cancelled. Your flight remains paused.',
+    });
+    if (restoreFocus) $('start-button').focus({ preventScroll: true });
+  };
   const storyDialog = createStoryDialog({
     readMedia: pictureMedia,
     settings: () => ({
@@ -816,8 +875,14 @@ try {
     });
   }
   function cancelPictureStart() {
+    clearPreparation();
+    themeFeedback.clear();
+    $('theme-preparation-cancel').hidden = true;
     pictureGeneration++;
-    if (pictureResume !== null) flightPictures?.cancel();
+    if (pictureResume !== null) {
+      flightPictures?.cancel();
+      picturePrewarm = null;
+    } else if (picturePrewarm) picturePrewarm.observe = null;
     pictureThemePending?.controller.abort();
     pictureResume = null;
     pictureThemePending = null;
@@ -833,12 +898,21 @@ try {
   function warmPicture() {
     const owner = flightPictures;
     if (!owner || owner.ready(theme.id)) return;
-    void owner
-      .ensure(theme.id)
+    const prewarm = { owner, themeId: theme.id, observe: null, latest: null, promise: null };
+    picturePrewarm = prewarm;
+    prewarm.promise = owner.ensure(theme.id, {
+      onStatus(status) {
+        if (picturePrewarm !== prewarm || owner !== flightPictures) return;
+        prewarm.latest = status;
+        prewarm.observe?.(status);
+      },
+    });
+    void prewarm.promise
       .then(() => {
         if (owner === flightPictures) refreshHUD();
       })
       .catch((error) => {
+        if (picturePrewarm === prewarm) picturePrewarm = null;
         if (owner === flightPictures) pictureFailure(error);
       });
   }
@@ -893,8 +967,20 @@ try {
     if (soundtrackPlayer) soundtrackPlayer.suspend();
     else sound.suspend();
   }
-  function soundtrackStatus(message) {
-    $('soundtrack-summary').textContent = message;
+  const soundtrackFeedback = createOperationStatus($('soundtrack-summary'));
+  let soundtrackLoading = true,
+    soundtrackOperation = soundtrackFeedback.begin({
+      message: 'Loading music library…',
+      stage: 'reading',
+    });
+  function soundtrackStatus(message, preparation = null) {
+    if (preparation) {
+      if (!soundtrackOperation) soundtrackOperation = soundtrackFeedback.begin(preparation);
+      else soundtrackOperation.update(preparation);
+    } else {
+      (soundtrackOperation ?? soundtrackFeedback.begin({ message })).finish({ message });
+      soundtrackOperation = null;
+    }
   }
   async function initializeSoundtrack() {
     try {
@@ -918,12 +1004,15 @@ try {
           $('music-preview').textContent = state.playing
             ? 'Soundtrack playing ♫'
             : 'Play selected playlist ♫';
+          if (soundtrackLoading) return;
           soundtrackStatus(
             state.error ||
               state.notice ||
+              state.preparation?.message ||
               (state.track
                 ? `${state.track.title} · ${state.status}`
                 : 'Choose a playlist or import MP3 songs.'),
+            state.preparation,
           );
         },
       });
@@ -973,6 +1062,7 @@ try {
       $('soundtrack-open').onclick = () => soundtrackPanel.open();
       try {
         const snapshot = await soundtrackStore.read({ signal: soundtrackLoad.signal });
+        soundtrackLoading = false;
         if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
           soundtrackGeneration = snapshot.generation;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
@@ -980,14 +1070,22 @@ try {
           // This does not play audio. It only makes a selected local MP3 ready
           // before the player taps Start or Play, which iOS requires.
           void soundtrackPlayer.prepare();
+        } else if (!soundtrackDisposed) {
+          const state = soundtrackPlayer.snapshot();
+          soundtrackStatus(
+            state.preparation?.message || state.error || 'Music library ready.',
+            state.preparation,
+          );
         }
       } catch (error) {
+        soundtrackLoading = false;
         if (!soundtrackDisposed)
           soundtrackStatus(
             `Custom music storage: ${error.message}. Built-in playback is available; the studio can retry.`,
           );
       }
     } catch (error) {
+      soundtrackLoading = false;
       soundtrackPanel?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackStore?.close();
@@ -1000,8 +1098,30 @@ try {
       if (!soundtrackDisposed) soundtrackStatus(error.message || String(error));
     }
   }
+  function cosmeticFeedback(id) {
+    const presenter = createOperationStatus($(id));
+    let operation = null;
+    return {
+      dispose: () => presenter.dispose(),
+      update(status) {
+        if (status.status === 'preparing') {
+          if (!operation) operation = presenter.begin(status);
+          else operation.update(status);
+        } else {
+          operation?.finish({
+            message: status.status === 'error' ? status.message : '',
+            state: status.status === 'error' ? 'error' : 'ready',
+          });
+          operation = null;
+        }
+      },
+    };
+  }
+  const craftFeedback = cosmeticFeedback('craft-preparation-status');
+  const presentationFeedback = cosmeticFeedback('presentation-preparation-status');
   let compiledPresentationWarning = '';
   const painter = new BoardPainter(presets, {
+    onAssetStatus: craftFeedback.update,
     onAsset: (message) => {
       const rig = visuals()?.player
         ? 'Custom player artwork keeps the selected body’s rotor anchors. Check alignment.'
@@ -1023,7 +1143,7 @@ try {
       baseURL: new URL('presentation/compiled/', location.href),
     });
     presentationReady = presentationHost
-      .load()
+      .load({ onStatus: presentationFeedback.update })
       .then((snapshot) => {
         presentationHost.apply(document.documentElement);
         painter.setPresentation(snapshot);
@@ -1099,6 +1219,7 @@ try {
   });
   const mediaReduce = matchMedia('(prefers-reduced-motion: reduce)');
   $('reduced-effects').checked = mediaReduce.matches || library.preferences.reducedEffects;
+  document.body.dataset.effects = $('reduced-effects').checked ? 'reduced' : 'full';
   $('tap-steering').checked =
     library.preferences.tapSteering ?? matchMedia('(pointer: coarse)').matches;
   syncAssistControls();
@@ -1456,6 +1577,8 @@ try {
     cancelPictureStart();
     missionThumbnails.cancel();
     clearInput();
+    if (replayDownload) replayDownload.observed = false;
+    replayFeedback?.clear();
     suspendAudio();
     writer.release();
     persistenceReady = false;
@@ -1486,6 +1609,13 @@ try {
       practiceNavigation.destroy();
       enemyWorkshopReturn.dispose();
       courseView?.destroy();
+      for (const feedback of contentFeedback) feedback.presenter.dispose();
+      preparationFeedback.dispose();
+      themeFeedback.dispose();
+      soundtrackFeedback.dispose();
+      craftFeedback.dispose();
+      presentationFeedback.dispose();
+      replayFeedback?.dispose();
     }
   };
   window.addEventListener('pageshow', (event) => {
@@ -1972,15 +2102,15 @@ try {
     $('campaign-select').value = activeEntry.baseCampaignKey || campaignKey(campaign);
     refreshContentSelectors();
   }
-  function contentStatus(message, error = false) {
-    $('content-select-status').textContent = message;
-    if (error) $('content-select-status').dataset.kind = 'error';
-    else delete $('content-select-status').dataset.kind;
-    const homeStatus = $('shell-featured-status');
-    if (homeStatus) {
-      homeStatus.textContent = message;
-      homeStatus.hidden = !message;
-      homeStatus.dataset.kind = error ? 'error' : 'status';
+  function contentStatus(message, error = false, { busy = false, stage = 'preparing' } = {}) {
+    for (const feedback of contentFeedback) {
+      const options = { message, stage };
+      if (busy && feedback.target.dataset.state === 'busy') feedback.lease.update(options);
+      else {
+        feedback.lease = feedback.presenter.begin(options);
+        if (!busy) feedback.lease.finish({ message, state: error ? 'error' : 'ready' });
+      }
+      feedback.target.dataset.kind = error ? 'error' : 'status';
     }
   }
   function invalidateContentSwitch({ announce = false } = {}) {
@@ -1992,6 +2122,9 @@ try {
     $('level-select').disabled = courseSession;
     if (announce && interrupted)
       contentStatus('Pending pack launch cancelled; your newer play choice is kept.');
+    else if (interrupted)
+      for (const feedback of contentFeedback)
+        if (feedback.target.dataset.state === 'busy') feedback.presenter.clear();
     return interrupted;
   }
   function refreshContentSelectors() {
@@ -2100,7 +2233,10 @@ try {
     };
   }
   function cancelRestore() {
-    restoreController?.abort();
+    if (restoreController) {
+      restoreController.abort();
+      clearPreparation();
+    }
   }
   function rememberSelection() {
     return selectionBookmark.remember({
@@ -2247,7 +2383,10 @@ try {
     const summary = packCatalog.packs.find((pack) => pack.id === packId);
     if (!summary) throw new Error('This pack is not bundled with the current build.');
     assertWriter();
-    contentStatus(`Installing ${summary.name} on this device…`);
+    contentStatus(`Installing ${summary.name} on this device…`, false, {
+      busy: true,
+      stage: 'downloading',
+    });
     const source = await packLaunchGuard.run(
       operation,
       before,
@@ -2260,6 +2399,10 @@ try {
       () => packs,
       async () => {
         try {
+          contentStatus(`Checking ${summary.name} and preparing its artwork…`, false, {
+            busy: true,
+            stage: 'verifying',
+          });
           return await preparePack(source, { library: before });
         } catch (error) {
           if (error.message === 'JSON exceeds its byte budget.')
@@ -2270,12 +2413,18 @@ try {
         }
       },
     );
+    packLaunchGuard.assert(operation, packs);
+    contentStatus(`Saving ${summary.name} on this device…`, false, { busy: true, stage: 'saving' });
     await replacePackLibrary(installPack(before, prepared.pack), {
       contentSwitchTicket: operation,
     });
     return { pack: prepared.pack, installed: true };
   }
-  async function installSourceChapter(chapterId, files, { signal, download = false } = {}) {
+  async function installSourceChapter(
+    chapterId,
+    files,
+    { signal, download = false, onStatus } = {},
+  ) {
     const descriptor = sourceExternalChapter(chapterId);
     if (practiceSession || courseEntry || !writer.writable)
       throw new Error('Open the writable game to install this chapter.');
@@ -2288,8 +2437,21 @@ try {
       if (packLaunchGuard.current(operation, packs)) invalidateContentSwitch();
     };
     signal?.addEventListener('abort', cancel, { once: true });
+    const report = (message, stage) =>
+      preparationStatus(
+        onStatus,
+        message,
+        stage,
+        () => !signal?.aborted && packLaunchGuard.current(operation, packs),
+      );
     let committed = false;
     try {
+      report(
+        download
+          ? 'Downloading and verifying chapter originals…'
+          : 'Reading and verifying chapter files…',
+        download ? 'downloading' : 'verifying',
+      );
       const prepared = download
         ? await prepareExternalDownload(descriptor.id, {
             signal,
@@ -2297,15 +2459,18 @@ try {
           })
         : await prepareSourceExternalChapter(files, { chapterId: descriptor.id, signal });
       packLaunchGuard.assert(operation, before);
+      report('Checking installed chapters before saving…', 'verifying');
       const snapshot = await inspectChapters({ signal });
       if (snapshot.status !== 'checked' && snapshot.reason !== 'external-recovery')
         throw new Error(
           'Backup and mixed recovery must be resolved before this chapter can install.',
         );
+      report('Saving the verified chapter and originals…', 'saving');
       const installed = await externalChapters[
         snapshot.reason === 'external-recovery' ? 'recover' : 'install'
       ](prepared, { signal });
       committed = true;
+      report('Verifying the saved chapter is ready to play…', 'verifying');
       const next = await checkedChapters({ signal });
       await externalChapters.readiness(next, descriptor.id, { signal });
       packLaunchGuard.assert(operation, before);
@@ -2319,6 +2484,7 @@ try {
             mediaGeneration: installed.mediaGeneration,
             identityCatalog: pictureIdentity(),
             signal,
+            onStatus: (status) => report(status.message, status.stage),
           });
         } catch (error) {
           if (error.name !== 'AbortError')
@@ -2347,7 +2513,7 @@ try {
       }
     }
   }
-  async function installOptionalChapter(summary, { signal } = {}) {
+  async function installOptionalChapter(summary, { signal, onStatus } = {}) {
     if (courseEntry || courseSession || practice)
       throw new Error('Return from practice before installing worlds.');
     const old = packs.packs.find((item) => item.id === summary.id);
@@ -2364,6 +2530,12 @@ try {
     };
     signal?.addEventListener('abort', cancelled, { once: true });
     try {
+      preparationStatus(
+        onStatus,
+        `Downloading and verifying ${summary.name}…`,
+        'downloading',
+        () => !signal?.aborted && packLaunchGuard.current(operation, packs),
+      );
       const pack = await packLaunchGuard.run(
         operation,
         before,
@@ -2376,6 +2548,12 @@ try {
           }),
       );
       packLaunchGuard.assert(operation, packs);
+      preparationStatus(
+        onStatus,
+        `Saving ${summary.name}…`,
+        'saving',
+        () => !signal?.aborted && packLaunchGuard.current(operation, packs),
+      );
       await replacePackLibrary(installPack(before, pack), {
         contentSwitchTicket: operation,
         preserveCurrentRun: true,
@@ -2397,11 +2575,13 @@ try {
     packCommits.markIntent();
     contentSwitchBusy = true;
     refreshContentSelectors();
+    contentStatus('Preparing your selected chapter…', false, { busy: true });
     try {
       if (!packId) {
         selectEntry(baseEntry, { levelId, contentSwitchTicket: operation });
         if (announce)
           contentStatus(`Base game · ${campaign.levels[levelIndex].name} selected and ready.`);
+        else contentStatus('');
         return operation;
       }
       const result = await ensureBundledPack(packId, operation);
@@ -2429,6 +2609,7 @@ try {
         contentStatus(
           `${result.installed ? `${result.pack.name} installed · ` : ''}${campaign.levels[levelIndex].name} selected and ready.`,
         );
+      else contentStatus('');
       return operation;
     } catch (error) {
       if (!packLaunchGuard.current(operation, packs)) return false;
@@ -2578,6 +2759,7 @@ try {
     clearInput();
     const controller = new AbortController();
     restoreController = controller;
+    const feedback = beginPreparation('Verifying your saved flight…', cancelRestore, 'verifying');
     let stagedPictures = null;
     try {
       const restored = await restoreSession(candidate, {
@@ -2590,7 +2772,10 @@ try {
           undefined,
       });
       if (controller.signal.aborted)
-        throw new Error('Loading was cancelled; your newer selection is kept.');
+        throw new DOMException(
+          'Loading was cancelled; your newer selection is kept.',
+          'AbortError',
+        );
       stagedPictures = newFlightPictures({
         nextRun: restored.run,
         nextRunId: restored.session.runId,
@@ -2599,9 +2784,13 @@ try {
         pins: restored.session.presentationPins,
         legacy: !restored.session.presentationPins,
       });
-      await stagedPictures.ensure(restored.session.themeId, { signal: controller.signal });
+      await stagedPictures.ensure(restored.session.themeId, {
+        signal: controller.signal,
+        onStatus: feedback.update,
+      });
       if (controller.signal.aborted)
         throw new DOMException('Picture restore cancelled.', 'AbortError');
+      feedback.finish(savedFlightRestoredMessage);
       selectEntry(entry, {
         levelId: restored.run.levelId,
         themeId: restored.session.themeId,
@@ -2634,6 +2823,14 @@ try {
       overlay('pause');
       refreshHUD();
       warning(savedFlightRestoredMessage, 'restored');
+    } catch (error) {
+      if (controller.signal.aborted)
+        throw new DOMException(
+          'Loading was cancelled; your newer selection is kept.',
+          'AbortError',
+        );
+      feedback.finish(`Saved flight unavailable: ${error.message}`, 'error');
+      throw error;
     } finally {
       sessionBusy = false;
       stagedPictures?.dispose();
@@ -2658,6 +2855,7 @@ try {
     $('settings-grid').checked = p.showGrid;
     $('match-class-appearance').checked = p.matchClassAppearance;
     $('reduced-effects').checked = p.reducedEffects;
+    document.body.dataset.effects = p.reducedEffects ? 'reduced' : 'full';
     $('tap-steering').checked = p.tapSteering ?? matchMedia('(pointer: coarse)').matches;
     syncAssistControls();
     keySettings.refresh();
@@ -3054,34 +3252,11 @@ try {
       return '';
     },
   });
-  let offlinePrepared = false;
-  const offline = offlineAvailability();
-  show('offline-button', offline.available);
+  const offlinePanel = attachOfflinePanel();
+  window.addEventListener('pagehide', (event) => {
+    if (!event.persisted) offlinePanel.destroy();
+  });
   show('native-diagnostics', nativePlatform() === 'ios');
-  $('offline-status').textContent = offline.available
-    ? 'Download this release for offline play on this device.'
-    : offline.reason;
-  $('offline-button').onclick = async () => {
-    $('offline-button').disabled = true;
-    try {
-      const result = await (offlinePrepared ? checkOffline : prepareOffline)({
-        onStatus: (s) => {
-          $('offline-status').textContent = s.message || String(s);
-        },
-      });
-      $('offline-status').textContent =
-        `${result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`;
-      $('offline-details').textContent = JSON.stringify(result, null, 2);
-      offlinePrepared = result.status === 'ready' || result.status === 'waiting';
-      $('offline-button').textContent = offlinePrepared
-        ? 'Verify offline files'
-        : 'Prepare offline play';
-    } catch (e) {
-      $('offline-status').textContent = e.message;
-    } finally {
-      $('offline-button').disabled = false;
-    }
-  };
   function tuneMusic(event) {
     if (event?.target.id === 'music-select' && !soundtrackPlayer) {
       musicOverride = true;
@@ -3219,6 +3394,7 @@ try {
     $(id).onchange = () => {
       preferences({ reducedEffects: $(id).checked });
       $('reduced-effects').checked = library.preferences.reducedEffects;
+      document.body.dataset.effects = $('reduced-effects').checked ? 'reduced' : 'full';
       syncAssistControls();
     };
   }
@@ -3776,7 +3952,7 @@ try {
       { seed, turnPolicy, classId, classRecipes: scenario?.classRecipes || classRegistry },
       buildVersion,
     );
-    $('export-replay').disabled = false;
+    $('export-replay').disabled = !!replayDownload;
     captionUntil = 0;
     $('mode-caption').textContent = courseSession
       ? 'FIRST FLIGHT / OPTIONAL TRAINING'
@@ -3829,9 +4005,27 @@ try {
       paused = true;
       clearInput();
       warning(picturePreparingMessage);
-      void owner
-        .ensure(selectedTheme)
+      const feedback = beginPreparation(picturePreparingMessage, cancelPictureStart);
+      const prewarm =
+        picturePrewarm?.owner === owner && picturePrewarm.themeId === selectedTheme
+          ? picturePrewarm
+          : null;
+      if (prewarm) {
+        prewarm.observe = feedback.update;
+        if (prewarm.latest) feedback.update(prewarm.latest);
+      }
+      const prepared =
+        prewarm?.promise ?? owner.ensure(selectedTheme, { onStatus: feedback.update });
+      void prepared
         .then(() => {
+          if (
+            pictureResume === ticket &&
+            pictureGeneration === ticket &&
+            owner === flightPictures &&
+            run === selectedRun &&
+            theme.id === selectedTheme
+          )
+            feedback.finish('Picture ready. Press Resume to continue.');
           if (
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
@@ -3848,7 +4042,10 @@ try {
           resume({ alignCourseBoard, contentSwitchTicket });
         })
         .catch((error) => {
-          if (pictureResume === ticket) pictureFailure(error);
+          if (pictureResume === ticket) {
+            feedback.finish(`Picture unavailable: ${error.message}`, 'error');
+            pictureFailure(error);
+          }
         })
         .finally(() => {
           if (pictureResume === ticket) pictureResume = null;
@@ -4471,6 +4668,16 @@ try {
   if (scenario && !themesFile.themes.some((t) => t.id === theme.id))
     $('theme-select').append(new Option(theme.name, theme.id));
   $('theme-select').value = theme.id;
+  $('theme-preparation-cancel').onclick = () => {
+    const restoreFocus = document.activeElement === $('theme-preparation-cancel');
+    cancelPictureStart();
+    $('theme-select').value = theme.id;
+    themeFeedback.begin({ message: '' }).finish({
+      state: 'cancelled',
+      message: 'World preparation cancelled. Your current picture is kept.',
+    });
+    if (restoreFocus) $('theme-select').focus({ preventScroll: true });
+  };
   for (const c of scenario?.classRecipes || classRegistry)
     $('class-select').append(new Option(c.label, c.id));
   $('theme-select').onchange = async () => {
@@ -4489,8 +4696,18 @@ try {
       legacy: owner.legacy,
     });
     pictureThemePending = { ticket, controller };
+    const feedback = themeFeedback.begin({
+      message: `Preparing ${next.name || next.id} artwork…`,
+      isCurrent: () => pictureThemePending?.ticket === ticket && !controller.signal.aborted,
+    });
+    $('theme-preparation-cancel').hidden = false;
     try {
-      await candidate.ensure(next.id, { signal: controller.signal });
+      await candidate.ensure(next.id, {
+        signal: controller.signal,
+        onStatus: (status) => {
+          if (status.status === 'preparing') feedback.update(status);
+        },
+      });
       if (owner !== flightPictures || ticket !== pictureGeneration || document.hidden) return;
       flightPictures = candidate;
       candidate = null;
@@ -4504,12 +4721,19 @@ try {
       if (!started && !campaignOverview) overlay('ready');
       preferences({ themeId: theme.id, bodyId });
       rememberSelection();
+      feedback.finish({ message: `${next.name || next.id} artwork ready.` });
     } catch (error) {
-      if (owner === flightPictures) pictureFailure(error);
+      if (owner === flightPictures && ticket === pictureGeneration && !controller.signal.aborted) {
+        feedback.finish({ message: `World artwork unavailable: ${error.message}`, state: 'error' });
+        pictureFailure(error);
+      }
     } finally {
       candidate?.dispose();
-      if (pictureThemePending?.ticket === ticket) pictureThemePending = null;
-      $('theme-select').value = theme.id;
+      if (pictureThemePending?.ticket === ticket) {
+        pictureThemePending = null;
+        $('theme-preparation-cancel').hidden = true;
+        $('theme-select').value = theme.id;
+      }
     }
   };
   $('body-select').onchange = () => {
@@ -4546,6 +4770,7 @@ try {
       await restoreAttempt(savedAttempt());
       $('start-button').focus({ preventScroll: true });
     } catch (error) {
+      if (error.name === 'AbortError') return;
       warning(`Saved flight was not loaded: ${error.message}`);
       // A new selection may have cancelled verification. Preserve its focus;
       // only recover focus lost when the loading button was disabled.
@@ -4757,30 +4982,63 @@ try {
         $(b.dataset.close).close();
       }),
   );
+  replayFeedback = createOperationStatus($('replay-operation-status'));
+  async function downloadCurrentReplay(replay) {
+    if (replayDownload) return;
+    const operation = {
+      run,
+      observed: true,
+      status: replayFeedback.begin({
+        message: 'Preparing replay download…',
+        stage: 'downloading',
+      }),
+    };
+    replayDownload = operation;
+    $('export-replay').disabled = $('download-replay').disabled = true;
+    try {
+      const exported = await downloadJSON(
+        replay,
+        `revealline-${replay.summary.levelId}-replay.json`,
+      );
+      if (operation.observed && $('replay-dialog').open) {
+        operation.status.finish({ message: exported.message });
+        if (operation.run === run)
+          warning(
+            `Replay prepared with its exact rules, inputs and final state. ${exported.message}`,
+          );
+      }
+    } catch (error) {
+      if (operation.observed && $('replay-dialog').open)
+        operation.status.finish({ message: `Replay download: ${error.message}`, state: 'error' });
+    } finally {
+      if (replayDownload === operation) {
+        replayDownload = null;
+        if (!soundtrackDisposed) {
+          $('export-replay').disabled = !recorder;
+          $('download-replay').disabled = !lastReplay;
+        }
+      }
+    }
+  }
+  $('replay-dialog').addEventListener('close', () => {
+    if ($('replay-dialog').open) return;
+    if (replayDownload) replayDownload.observed = false;
+    replayFeedback.clear();
+  });
   $('export-replay').onclick = async () => {
+    if (replayDownload) return;
     try {
       if (!recorder) throw new Error('Start a new attempt to record a replay.');
       pause(true);
       lastReplay = exportReplay(recorder, run);
       $('replay-json').value = JSON.stringify(lastReplay, null, 2);
       $('replay-dialog').showModal();
-      const exported = await downloadJSON(lastReplay, `revealline-${run.levelId}-replay.json`);
-      warning(`Replay prepared with its exact rules, inputs and final state. ${exported.message}`);
+      await downloadCurrentReplay(lastReplay);
     } catch (error) {
       warning(`Replay could not export: ${error.message}`);
     }
   };
-  $('download-replay').onclick = async () => {
-    try {
-      if (lastReplay)
-        warning(
-          (await downloadJSON(lastReplay, `revealline-${lastReplay.summary.levelId}-replay.json`))
-            .message,
-        );
-    } catch (error) {
-      warning(`Replay download: ${error.message}`);
-    }
-  };
+  $('download-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
     // Menu and result screens also need a neutral gate. Their pause() path
     // deliberately returns early, and a hidden renderer may not tick at all.
@@ -4952,11 +5210,17 @@ try {
             return { status: installed ? 'installed' : 'absent' };
           },
           install: (files, options) => installSourceChapter(descriptor.id, files, options),
-          async choose({ signal }) {
+          async choose({ signal, onStatus }) {
             if (!storedStateAdopted || !persistenceReady)
               throw new Error(
                 'Reload after recovery to adopt the preserved profile before choosing this chapter.',
               );
+            preparationStatus(
+              onStatus,
+              'Checking installed chapter originals…',
+              'verifying',
+              () => !signal?.aborted,
+            );
             const snapshot = await checkedChapters({ signal });
             await externalChapters.readiness(snapshot, descriptor.id, { signal });
             if (signal.aborted)
@@ -4987,11 +5251,17 @@ try {
       selectEntry(resolvePackCampaign(pack, pack.campaigns[0].id));
       return true;
     },
-    choose: async (summary, { signal }) => {
+    choose: async (summary, { signal, onStatus }) => {
       if (courseEntry || courseSession || practice)
         throw new Error('Return from practice before choosing a world.');
       const pack = packs.packs.find((item) => item.id === summary.id);
       if (!pack) throw new Error('Install this world before choosing it.');
+      preparationStatus(
+        onStatus,
+        `Verifying ${summary.name}…`,
+        'verifying',
+        () => !signal?.aborted,
+      );
       await verifyOptionalInstalled(pack, summary, { signal });
       if (signal?.aborted) throw new DOMException('World selection cancelled.', 'AbortError');
       if (packs.packs.find((item) => item.id === summary.id) !== pack)

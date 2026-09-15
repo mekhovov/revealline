@@ -2,7 +2,9 @@
 
 Approved scope: **consistent maps and presentation across Solo, Versus and Team**, followed by complete edition production. This register implements the user's revised P00–P18 plan. It supersedes earlier phase ordering, not historical release evidence or ownership. Updated 15 September 2026.
 
-**Active phase: P00 — integration and inventory. Not accepted or deployed.** No later phase may advance until P00 has its own exact-source qualification, immutable release and public acceptance. A source change, unit test, generated asset or uploaded artifact alone is not a completed phase.
+**Active phase: P01 — loading feedback. Implementation and qualification in progress.** P00 is accepted as immutable v0.55.0, source `acc9f265b651017fd268ffd8bbe6989bec614c41`; its [public acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p00/public-v055/acceptance.json) records the deployed bytes and ordinary play. The integration worktree includes the subsequently reviewed v0.56.0 source and P00 evidence merge `a395462b101c348d28ee2643c24263ca72b2c751`. P02 cannot start until P01 has its own exact-source qualification, immutable release and public acceptance. A source change, unit test, generated asset or uploaded artifact alone is not a completed phase.
+
+The [P01 loading contract](presentation-loading.md) documents the implemented shared presenter, operation ownership and required regression cases. It applies to later phases; phase acceptance remains separate from this implementation description.
 
 ## Baseline and preservation
 
@@ -10,17 +12,17 @@ The starting user checkout was `codex/fpv-redesign` at `677b091681d424198de17c6f
 
 Implementation uses the separate `codex/cross-mode-p00` worktree. The initial integration cutoff is main `5595b63243cdb7ec64f5d97c0e5e485b6c1fda0a`. The first rebase result is `3f8930e`:
 
-| Original work | Disposition and reason |
-| --- | --- |
-| `4c9ae09` design atlas | Equivalent atlas, fonts and evidence are already upstream via `fc789c7`; retain newer main improvements. |
-| `76b0498` gesture audio and `677b091` iPhone audio | Already upstream; Git dropped equivalent changes during rebase. |
-| `912a0f7` fullscreen/PWA | Retain display-mode detection, lifecycle listeners, manifest/Apple metadata and adapter tests. Keep current main responsive styles and version files. |
-| Old fullscreen CSS | Do not adopt HUD-over-arena positioning, hidden status or 10px telemetry. P03/P08-A qualify layout against the current control-clearance contract. |
-| Four staged audio reversions | Unstaged restorations cancel them exactly. Do not stage the stale reversions. |
-| Older presentation/compiler/Studio drafts | Preserve locally; current main contains later implementations and stronger validation. Reconcile useful missing work individually within its assigned phase. |
-| Reference and concept files | Preserve as research/source material; do not automatically publish as runtime art. The untracked title PNG duplicates the upstream original. |
+| Original work                                      | Disposition and reason                                                                                                                                       |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `4c9ae09` design atlas                             | Equivalent atlas, fonts and evidence are already upstream via `fc789c7`; retain newer main improvements.                                                     |
+| `76b0498` gesture audio and `677b091` iPhone audio | Already upstream; Git dropped equivalent changes during rebase.                                                                                              |
+| `912a0f7` fullscreen/PWA                           | Retain display-mode detection, lifecycle listeners, manifest/Apple metadata and adapter tests. Keep current main responsive styles and version files.        |
+| Old fullscreen CSS                                 | Do not adopt HUD-over-arena positioning, hidden status or 10px telemetry. P03/P08-A qualify layout against the current control-clearance contract.           |
+| Four staged audio reversions                       | Unstaged restorations cancel them exactly. Do not stage the stale reversions.                                                                                |
+| Older presentation/compiler/Studio drafts          | Preserve locally; current main contains later implementations and stronger validation. Reconcile useful missing work individually within its assigned phase. |
+| Reference and concept files                        | Preserve as research/source material; do not automatically publish as runtime art. The untracked title PNG duplicates the upstream original.                 |
 
-The source package at the cutoff is v0.53.0; the latest published stable observed during integration is v0.52.0. v0.53.0 is already tagged and v0.54.0 has a concurrent release candidate in PR #49. Neither was reused: **P00 candidate version is v0.55.0**, checked against remote tags before the bump. This is not yet a released version.
+At the original inventory cutoff the source package was v0.53.0 and the latest published stable observed was v0.52.0. v0.53.0 was already tagged and v0.54.0 had a concurrent candidate in PR #49. Neither version was reused: P00 allocated v0.55.0 after checking remote tags, and subsequently completed its release and public acceptance recorded above.
 
 Production reproduction exposed a stale ledger on the integration cutoff. P00 adopts the six production files from PR #49 source `1af33851e93ee95110de20cc73622ed43d85a4da`: generator, production-history test, source bundle and three compiled JSON files. Review confirmed preservation of all 948 historical asset records, 16 theme revisions, one collection and 127 original asset blobs. The repair appends 34 asset and two theme revisions and pins reviewed motion/effect approvals to exact source fingerprints. Earlier checks on that candidate do not qualify the combined P00 source. The inventory remains a faithful pre-repair baseline; final receipts record the adopted delta.
 
@@ -32,34 +34,34 @@ The [source inventory](verification/cross-mode/p00/inventory.md) and [machine-re
 
 Statuses are `queued`, `implementing`, `reviewing`, `qualifying`, `deployed`, `accepted`. A required failure blocks advancement. Post-publication corrections require a new patch release; frozen bytes and tags are immutable.
 
-| Phase | Status | Independently releasable deliverable | Blocking acceptance |
-| --- | --- | --- | --- |
-| P00 | implementing | Preserve and integrate relevant work; inventory screens, maps, content paths, assets and compatibility. | Reproducible baseline, preserved historical saves/art/releases, every requirement assigned below; exact-source and public release proof. |
-| P01 | queued | Immediate loading feedback across boot, launch, download, preparation, recovery, media and Studio. | Slow/failure/cancel/retry/cached/stale completion journeys preserve state. |
-| P02 | queued | Shared quick master sound controls across modes, dialogs and media tools. | Every audio path obeys mute, including late promises; transport intent, volume and bindings preserved. |
-| P03 | queued | Single player, Couch Versus and Couch Team entry; integrated lobbies and Back/Resume. | Direct Solo Start/Continue, mode-plus-Start Couch entry; keyboard/touch/controller routing and responsive controls. |
-| P04 | queued | Five-edition registry, explicit Team slots, cross-mode Studio previews, bindings, editing/history/prompts/bundles. | Real upload/edit/save/export/import, exact byte round trip, invalid/stale/capacity/atomic failure handling. |
-| P05 | queued | Shared typography, Ukrainian palettes, ornaments, components and Team shell. | Actual EN/UA glyphs, contrast, Large/Plain text, zoom, focus, reduced motion and affected screens. |
-| P06 | queued | Unified compatible-content catalogue, controlled installation and shared art preparation. | Every campaign selectable; correct Download & play; failure/staleness preserves selected content and saved flight. |
-| P07 | queued | Direct Retry/Next, clear endings, one-race Versus tours, optional first-to-two and Team order. | No duplicate scoring; failed Next retains results; named successors; independent Solo progress. |
-| P08-A | queued | Complete existing map presentation parity, imported Team rendering, Versus art resolution and canvas fit. | All ten map-consistency gates below. Existing Team maps cannot wait for P10. |
-| P08-B | queued | Countdown, cut/capture, loss/recovery, Support/rescue, objective/HUD feedback and reduced effects. | Readability in motion, unchanged historical outcomes, performance and responsive checks. |
-| P09 | queued | Versioned auxiliary patrols/carriers/shooters, difficulty, defeat, telegraphs, remains and replay/checkpoints. | Small deterministic compatibility slice before bulk content. |
-| P10 | queued | Encounter variants of First Connection and Relay Yard. | Separate 36-case Team matrix; Support/rescue/stronghold/two-player readability. |
-| P11-A | queued | FPV First Contact, twelve missions. | Complete first-edition assets and compatible modes; campaign production/playability/progression/public gates. |
-| P11-B | queued | FPV Crossing Lines, twelve missions. | Same independent campaign gates. |
-| P11-C | queued | FPV Signal Pressure, twelve missions. | Same independent campaign gates. |
-| P11-D | queued | FPV Last Relay, twelve missions. | Same independent campaign gates. |
-| P12-A | queued | DroneAid Community Connections, twelve missions. | Complete brand/animated logo/poster and mode assets; Support framing and campaign gates. |
-| P12-B | queued | DroneAid Supply Corridors, twelve missions. | Support framing and independent campaign gates. |
-| P12-C | queued | DroneAid Contested Signal, twelve missions. | Clearly labelled Combat framing and independent campaign gates. |
-| P12-D | queued | DroneAid Return Signal, twelve missions. | Clearly labelled Combat framing and independent campaign gates. |
-| P13 | queued | Living Atlas, twelve culture/history missions. | Complete edition, cultural/art review, variety, applicable modes and release checks. |
-| P14 | queued | After School Arcade, twelve Retro missions. | Complete edition, distinct encounters/art/audio, cross-mode and release checks. |
-| P15 | queued | Spend in Motion, twelve Coupa missions. | Complete edition, clear noncombat semantics, cross-mode and release checks. |
-| P16 | queued | Collection, settings/data/recovery, learning, replay, workshops, supporting pages and legacy categories. | Full navigation/state coverage; originals and historical content preserved. |
-| P17 | queued | Community guide, prompts, templates, compatibility and release workflow. | Independent fresh-workspace example created, installed, played and recovered. |
-| P18 | queued | Full cross-phase/edition/content/accessibility/performance/offline/public regression. | No unresolved required content, slot or acceptance item. |
+| Phase | Status       | Independently releasable deliverable                                                                               | Blocking acceptance                                                                                                                      |
+| ----- | ------------ | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| P00   | accepted     | Preserve and integrate relevant work; inventory screens, maps, content paths, assets and compatibility.            | Reproducible baseline, preserved historical saves/art/releases, every requirement assigned below; exact-source and public release proof. |
+| P01   | implementing | Immediate loading feedback across boot, launch, download, preparation, recovery, media and Studio.                 | Slow/failure/cancel/retry/cached/stale completion journeys preserve state.                                                               |
+| P02   | queued       | Shared quick master sound controls across modes, dialogs and media tools.                                          | Every audio path obeys mute, including late promises; transport intent, volume and bindings preserved.                                   |
+| P03   | queued       | Single player, Couch Versus and Couch Team entry; integrated lobbies and Back/Resume.                              | Direct Solo Start/Continue, mode-plus-Start Couch entry; keyboard/touch/controller routing and responsive controls.                      |
+| P04   | queued       | Five-edition registry, explicit Team slots, cross-mode Studio previews, bindings, editing/history/prompts/bundles. | Real upload/edit/save/export/import, exact byte round trip, invalid/stale/capacity/atomic failure handling.                              |
+| P05   | queued       | Shared typography, Ukrainian palettes, ornaments, components and Team shell.                                       | Actual EN/UA glyphs, contrast, Large/Plain text, zoom, focus, reduced motion and affected screens.                                       |
+| P06   | queued       | Unified compatible-content catalogue, controlled installation and shared art preparation.                          | Every campaign selectable; correct Download & play; failure/staleness preserves selected content and saved flight.                       |
+| P07   | queued       | Direct Retry/Next, clear endings, one-race Versus tours, optional first-to-two and Team order.                     | No duplicate scoring; failed Next retains results; named successors; independent Solo progress.                                          |
+| P08-A | queued       | Complete existing map presentation parity, imported Team rendering, Versus art resolution and canvas fit.          | All ten map-consistency gates below. Existing Team maps cannot wait for P10.                                                             |
+| P08-B | queued       | Countdown, cut/capture, loss/recovery, Support/rescue, objective/HUD feedback and reduced effects.                 | Readability in motion, unchanged historical outcomes, performance and responsive checks.                                                 |
+| P09   | queued       | Versioned auxiliary patrols/carriers/shooters, difficulty, defeat, telegraphs, remains and replay/checkpoints.     | Small deterministic compatibility slice before bulk content.                                                                             |
+| P10   | queued       | Encounter variants of First Connection and Relay Yard.                                                             | Separate 36-case Team matrix; Support/rescue/stronghold/two-player readability.                                                          |
+| P11-A | queued       | FPV First Contact, twelve missions.                                                                                | Complete first-edition assets and compatible modes; campaign production/playability/progression/public gates.                            |
+| P11-B | queued       | FPV Crossing Lines, twelve missions.                                                                               | Same independent campaign gates.                                                                                                         |
+| P11-C | queued       | FPV Signal Pressure, twelve missions.                                                                              | Same independent campaign gates.                                                                                                         |
+| P11-D | queued       | FPV Last Relay, twelve missions.                                                                                   | Same independent campaign gates.                                                                                                         |
+| P12-A | queued       | DroneAid Community Connections, twelve missions.                                                                   | Complete brand/animated logo/poster and mode assets; Support framing and campaign gates.                                                 |
+| P12-B | queued       | DroneAid Supply Corridors, twelve missions.                                                                        | Support framing and independent campaign gates.                                                                                          |
+| P12-C | queued       | DroneAid Contested Signal, twelve missions.                                                                        | Clearly labelled Combat framing and independent campaign gates.                                                                          |
+| P12-D | queued       | DroneAid Return Signal, twelve missions.                                                                           | Clearly labelled Combat framing and independent campaign gates.                                                                          |
+| P13   | queued       | Living Atlas, twelve culture/history missions.                                                                     | Complete edition, cultural/art review, variety, applicable modes and release checks.                                                     |
+| P14   | queued       | After School Arcade, twelve Retro missions.                                                                        | Complete edition, distinct encounters/art/audio, cross-mode and release checks.                                                          |
+| P15   | queued       | Spend in Motion, twelve Coupa missions.                                                                            | Complete edition, clear noncombat semantics, cross-mode and release checks.                                                              |
+| P16   | queued       | Collection, settings/data/recovery, learning, replay, workshops, supporting pages and legacy categories.           | Full navigation/state coverage; originals and historical content preserved.                                                              |
+| P17   | queued       | Community guide, prompts, templates, compatibility and release workflow.                                           | Independent fresh-workspace example created, installed, played and recovered.                                                            |
+| P18   | queued       | Full cross-phase/edition/content/accessibility/performance/offline/public regression.                              | No unresolved required content, slot or acceptance item.                                                                                 |
 
 ## Player flow and feedback contract
 

@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: installed couch reader authenticates the same three originals without acquiring a writer or changing solo data
+ok 1 - installed couch reader authenticates the same three originals without acquiring a writer or changing solo data
+  ---
+  duration_ms: 20162.867
+  ...
+# Subtest: publication rejects a changed original generation after actual decode and a changed pointer before Start
+ok 2 - publication rejects a changed original generation after actual decode and a changed pointer before Start
+  ---
+  duration_ms: 18700.961375
+  ...
+# Subtest: cancelled decode is joined before replacement and cannot publish a late image
+ok 3 - cancelled decode is joined before replacement and cannot publish a late image
+  ---
+  duration_ms: 14550.038041
+  ...
+# Subtest: pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork
+ok 4 - pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork
+  ---
+  duration_ms: 7962.417042
+  ...
+# Subtest: Couch recovers installed R5 originals when its optional shipped URL is unavailable
+ok 5 - Couch recovers installed R5 originals when its optional shipped URL is unavailable
+  ---
+  duration_ms: 6475.244
+  ...
+# Subtest: actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus
+ok 6 - actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus
+  ---
+  duration_ms: 31995.605458
+  ...
+# Subtest: superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit
+ok 7 - superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit
+  ---
+  duration_ms: 6326.216083
+  ...
+# Subtest: main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode
+ok 8 - main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode
+  ---
+  duration_ms: 14972.962959
+  ...
+# Subtest: new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+ok 9 - new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+  ---
+  duration_ms: 29968.266334
+  ...
+# Subtest: new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+ok 10 - new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes
+  ---
+  duration_ms: 26850.268167
+  ...
+# Subtest: couch markup mounts controls with bare body
+ok 11 - couch markup mounts controls with bare body
+  ---
+  duration_ms: 2.218958
+  ...
+# Subtest: couch markup mounts controls with body attributes
+ok 12 - couch markup mounts controls with body attributes
+  ---
+  duration_ms: 0.204042
+  ...
+# Subtest: couch markup mounts controls with quoted delimiters and case
+ok 13 - couch markup mounts controls with quoted delimiters and case
+  ---
+  duration_ms: 0.106125
+  ...
+# Subtest: couch markup rejects a missing or incomplete body with a controlled error
+ok 14 - couch markup rejects a missing or incomplete body with a controlled error
+  ---
+  duration_ms: 0.669791
+  ...
+# Subtest: appending parsed text preserves nested boot and game controls
+ok 15 - appending parsed text preserves nested boot and game controls
+  ---
+  duration_ms: 1.042959
+  ...
+# Subtest: ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+ok 16 - ../couch/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 12.592667
+  ...
+# Subtest: ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+ok 17 - ../couch/relay-rescue.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 1.912167
+  ...
+# Subtest: ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+ok 18 - ../replay-theater/index.html has a visible static loading signal and a reachable exit before modules load
+  ---
+  duration_ms: 1.349958
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 191337.772125
