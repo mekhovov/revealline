@@ -18,6 +18,28 @@ The game reserves one writing tab for each player-profile channel. Another tab c
 
 The visible capacity display reports campaign count, picture count and used profile bytes. The limits are 512 campaign identities, 4,096 picture records and 4 MiB overall; existing pictures are not silently discarded to make room. Archive a complete backup before the limit and retain that file before replacing a collection. Gallery search displays 12 pictures per page; local-score search displays ten setup groups per page. Image bytes live in embedded packs or the separate managed store, so picture metadata counts do not represent artwork's full memory cost.
 
+## Prepare game data and originals together
+
+In **Saves & loads**, choose **Prepare game and originals backup**. The current writable game pauses before this surface opens. Preparation reads the current game-data snapshot and the saved shared-origin picture, story and music inventories, one component at a time. It offers five visible native links:
+
+- `RevealLine-game-data.json`: the existing validated game-data format, including the current unfinished flight when available.
+- `RevealLine-originals.rlmedia`: referenced picture/poster originals and retained generic still-domain bytes.
+- `RevealLine-stories.rlstory`: story descriptors and their declared-available video originals. Poster bytes remain in `.rlmedia`.
+- `RevealLine-soundtrack.rlsound`: the saved music library and its referenced original MP3 bytes, independent of whether the audio player can initialize.
+- `RevealLine-backup-coverage.json`: a readable coverage report with edition/channel, source revision when the build records it, capture time, domain generations, metadata hashes, distinct original counts, and each component's filename, byte length and SHA-256.
+
+**Prepared** means that the existing serializers checked those bytes. Choose each **Download** link yourself; **Download requested** only describes the browser action. Confirm the resulting files at the destination and compare them with the coverage report. The immutable report records preparation, not later browser download outcomes. Links remain available to retry while this Library visit stays open. Preparing again, closing the Library, hiding/leaving the page or detecting changed game data releases this panel's URLs. Cancel stops publication and joins any pending read before another preparation can start. Escape/controller Back first cancels active preparation and keeps focus in the Library; Close may leave immediately while cleanup settles. None of these actions resumes the flight.
+
+All four component formats, their validators and storage limits are unchanged. The coordinator adds an aggregate preparation bound of `MAX_BACKUP_BYTES + 256 MiB + 8 MiB`; it can refuse a very large combined set even when individual exports remain possible. Hashing is sequential and bounded by each existing file limit, but it still needs memory for one component's bytes. No new database, archive format, writer lease, media transcoding or restore transaction is introduced. The existing build includes these modules through its `game` include.
+
+The coordinator brackets all exports with the same manager's atomic generation snapshot and checks each returned generation. It re-reads full game contents with the same capture timestamp and checks current game identity before native link activation. This establishes a stable observed snapshot under the existing monotonic writers; it is not a lock across localStorage and IndexedDB, protection against arbitrary database reset, or a promise that storage cannot change after preparation. Prepared files remain an immutable snapshot of the reported interval. Ordinary library changes invalidate the links; prepare again after editing originals elsewhere.
+
+Unsaved editor drafts, other game profile channels, unreferenced blobs, browser caches and unavailable downloads are excluded. A missing or corrupt declared-available original fails the entire preparation. Intentionally detached stories remain named in the report and produce an explicitly **incomplete** set; a retained descriptor is not a recovered video. Training, unresolved storage recovery and a non-writing game cannot prepare all inventories through this coordinated entry. Existing individual/session-only exports remain available under their own rules.
+
+Restore through the existing reviewed tools: picture/poster `.rlmedia` first, `.rlstory` next, saved music `.rlsound` separately, then review/import game-data JSON after its original owners are available. Earlier restored originals remain if a later step refuses. The coverage report is not an import authority and does not provide atomic rollback across files.
+
+Focused source tests exercise actual finite PNG, MP4 and MP3 bytes through the unchanged serializers, concurrent generation/profile changes, detached/missing originals, cancellation, native-link cleanup and the actual paused solo host. DOM/media boundaries are modeled. A real four-file download/readback, fresh-origin restore, codec playback, audible music and cold-offline journey still require native qualification; this source change does not claim them.
+
 ## File and preparation contract
 
 ```json

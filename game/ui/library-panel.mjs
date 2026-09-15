@@ -1,3 +1,4 @@
+import { attachBackupSetPanel } from './backup-set-panel.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
 import { importLibrary, exportLibrary, libraryCapacity } from '../library.mjs';
 import {
@@ -45,6 +46,7 @@ export function attachLibraryPanel(api) {
   };
   let transferPanel = null;
   let attemptExport = null;
+  let backupSetPanel = null;
   let previousLibrary = null,
     previousBackup = null,
     busy = false,
@@ -136,6 +138,7 @@ export function attachLibraryPanel(api) {
       ? api.getReducedEffects()
       : api.get().library.preferences.reducedEffects) === true;
   function open(panel = 'scores') {
+    backupSetPanel?.invalidate();
     api.pause();
     for (const id of ['scores', 'saves', 'packs', 'challenges'])
       $(`library-${id}`).hidden = id !== panel;
@@ -215,6 +218,7 @@ export function attachLibraryPanel(api) {
     populateGallery();
   };
   function refresh() {
+    backupSetPanel?.checkCurrent();
     transferPanel?.refresh();
     renderScores();
     $('undo-library').disabled = !previousLibrary;
@@ -301,6 +305,7 @@ export function attachLibraryPanel(api) {
     }
   }
   function cancelAttemptExport() {
+    if (backupSetPanel?.cancel()) return true;
     if (!attemptExport || attemptExport.phase !== 'verifying') return false;
     endAttemptExport(true);
     status('save-status', 'Export cancelled. The previous copy is unchanged.');
@@ -501,6 +506,24 @@ export function attachLibraryPanel(api) {
   $('library-button').onclick = () => open();
   for (const b of document.querySelectorAll('[data-library-panel]'))
     b.onclick = () => open(b.dataset.libraryPanel);
+  if (api.backupSet && $('backup-set'))
+    backupSetPanel = attachBackupSetPanel({
+      document,
+      dialog: $('library-dialog'),
+      root: $('backup-set'),
+      source: {
+        ...api.backupSet,
+        readGame: async (options) => ({
+          contents: await api.backupSet.readContents(options),
+          options: await backupOptions(),
+        }),
+      },
+      busy: () => busy,
+      setBusy: (value) => {
+        busy = value;
+      },
+      refresh,
+    });
   $('export-backup').onclick = () =>
     task('save-status', async () => {
       const options = await backupOptions();
