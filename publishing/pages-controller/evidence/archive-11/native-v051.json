@@ -1,0 +1,56 @@
+{
+  "format": "revealline-native-browser-observation.v1",
+  "status": "PASS",
+  "scope": "Historical v0.51.0 online play and verified saved-flight restoration only. Offline preparation failed twice; disconnected use was not tested.",
+  "observedAt": "2026-09-15T02:31:31.128367+00:00",
+  "url": "https://mekhovov.github.io/revealline-archive-11/releases/v0.51.0/site/game/",
+  "version": "v0.51.0",
+  "sourceCommit": "5d4bd98718955fa471fe71d798715864af166d18",
+  "infrastructureCommit": "fc27c76cb6b285f723ab50072ded7f8b0b27c104",
+  "deploymentId": "6450262257",
+  "method": "Codex in-app native browser; public UI and sequential keyboard inputs; no application-state injection.",
+  "checks": [
+    {
+      "name": "Canonical title boots",
+      "status": "PASS",
+      "observed": "Field Kit title and VERSION V0.51.0 visible."
+    },
+    {
+      "name": "Installed mission play",
+      "status": "PASS",
+      "observed": "Deployed FPV Front / Pressure Lines / Orchard Crossing. Direction inputs captured 2.0%, score 480; active enemies and revealed path visible."
+    },
+    {
+      "name": "Pause and resume",
+      "status": "PASS",
+      "observed": "Native Pause and Resume controls operated."
+    },
+    {
+      "name": "Reload and Continue restore",
+      "status": "PASS",
+      "observed": "After reload, Continue restored paused flight showing 2.0%, score 480, two lives, 2:29. UI: Saved flight verified and restored. Press Resume to continue. Exact pre-reload timer/lives were not recorded, so no exact equivalence claim."
+    },
+    {
+      "name": "Prepare offline",
+      "status": "FAIL",
+      "observed": "One initial interrupted attempt, followed by two uninterrupted attempts each ending after the UI deadline: Offline preparation timed out. Keep the page online and try again. Historical source was preserved unchanged."
+    },
+    {
+      "name": "Disconnected reload",
+      "status": "NOT_TESTED",
+      "observed": "No success claim because offline preparation did not complete."
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "evidence/archive-11/native-restored.jpg",
+      "bytes": 67628,
+      "sha256": "c34dec7b7c6dd02cbcb5c4934c1f9c7e7894f4e3432817de4ec0e6b7280a3154"
+    },
+    {
+      "path": "evidence/archive-11/native-offline.jpg",
+      "bytes": 69413,
+      "sha256": "6c549627cf85bffaf1a5010342dac0b215884b0d3495e1b5205fce9772519158"
+    }
+  ]
+}

@@ -116,6 +116,13 @@
       "versions": [
         "v0.42.0"
       ]
+    },
+    {
+      "id": "archive-11",
+      "repository": "mekhovov/revealline-archive-11",
+      "versions": [
+        "v0.51.0"
+      ]
     }
   ]
 }
