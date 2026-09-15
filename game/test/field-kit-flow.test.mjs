@@ -8,7 +8,7 @@ const visibleActions = (page) =>
     .filter((node) => !node.hidden)
     .map((node) => node.id);
 
-test('title has five destinations; Workshop and mission Back preserve an unstarted flight', async (t) => {
+test('title exposes the Release explorer; Workshop and mission Back preserve an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
@@ -16,6 +16,7 @@ test('title has five destinations; Workshop and mission Back preserve an unstart
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Pressure Lines/);
   page.$('shell-workshop').click();
@@ -92,6 +93,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-gallery',
     'shell-options',
     'shell-workshop',
+    'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];
