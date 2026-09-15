@@ -96,12 +96,14 @@ records keyboard selection and Solo→Team→Versus→Solo restoration at the de
 preview. Team only started and paused at 0:00. It does not close the remaining
 viewport, system-toggle, storage-event, failure or physical-device checks.
 
-Remaining P05 visual work also includes disabled-action distinction and primary
-action hierarchy. A separate root-reported P08 delayed-picture observation found
-Versus Start correctly disabled but still bright yellow like an enabled primary
-action, with the Relay Rescue link similarly prominent. Review those states in
-the actual preparation and ready layouts; this is a visual follow-up, not an
-inferred input-control failure. It is outside the confirmation-layout correction.
+A P08 delayed-picture observation found Versus Start correctly disabled but still
+bright yellow like an enabled primary action. The [disabled-control correction](verification/cross-mode/p05-a/disabled-controls/README.md)
+now gives unavailable Couch actions the shared muted/panel colours and dashed
+border. Native loading and ready observations retain the same 48.5px target:
+Start returns to its accent style only when enabled and remains keyboard usable.
+This is a scoped visual correction, not an input change or complete P05
+acceptance. The equally prominent Relay Rescue link, broader primary-action
+hierarchy and physical/compact-device checks remain open.
 
 A final integrated source must receive its normal exact-source tests, static and
 production-readiness checks before release qualification. This slice does not

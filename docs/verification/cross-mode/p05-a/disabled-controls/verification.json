@@ -1,0 +1,55 @@
+{
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "runtimeChange": "CSS only; exact1da P08 runtime for native fixture.",
+  "css": {
+    "path": "game/ui/field-kit-surfaces.css",
+    "bytes": 18373,
+    "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af",
+    "httpExact": true
+  },
+  "evidence": [
+    {
+      "path": "events.json",
+      "bytes": 4291,
+      "sha256": "2d0e47f76b0c080ebc180e436af58ef556bbc980afd90b3fea579689e4d6dc7f"
+    },
+    {
+      "path": "disabled.jpg",
+      "bytes": 75600,
+      "sha256": "70c5d851413d16b569700239589f341cb6b5ebb6b9098de4ecf7e2e9643b6a06"
+    },
+    {
+      "path": "ready.jpg",
+      "bytes": 75160,
+      "sha256": "816a763ef867e09efe819ba0fffcba0fb598c7bf5f4042d7d503588620345995"
+    }
+  ],
+  "result": "PASS: pending disabled Start uses muted text, panel background and dashed border; readiness restores accent+solid border; actualStart andPause work.",
+  "observed": {
+    "disabled": {
+      "background": "rgb(16,25,35)",
+      "text": "rgb(165,178,187)",
+      "border": "rgb(66,85,99)",
+      "borderStyle": "dashed"
+    },
+    "enabled": {
+      "background": "rgb(244,191,98)",
+      "text": "rgb(7,11,18)",
+      "borderStyle": "solid"
+    },
+    "heightCSSPixels": 48.49826431274414
+  },
+  "limitations": [
+    "Three native observations, one desktop viewport; no completeP05/device/zoom acceptance.",
+    "Exact Orchard PNG response delayed8s by the testHTTPserver; bytes unchanged, no application-state injection.",
+    "DOM and accessibility observations are separately awaited.",
+    "Primary-action ordering and RelayRescue prominence remain unchanged.",
+    "No runtime behavior, media producer, schema, save, version or release change."
+  ],
+  "sourceReview": {
+    "result": "PASS",
+    "reviewer": "independent Dewey source peer",
+    "cssSha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af",
+    "scope": "Exact9-line delta plus Couch markup, prior components/couch styles and later compiled disabled frame rules; no enabled/input behavior change. Computed dashed style is distinct from proving border-image appearance."
+  }
+}
