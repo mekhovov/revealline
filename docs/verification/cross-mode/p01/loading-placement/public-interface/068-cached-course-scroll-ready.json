@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-09-15T14:01:32.223764+00:00",
+  "finishedAt": "2026-09-15T14:01:32.639210+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/?course=first-flight&lesson=close-line&turn-policy=immediate",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "scroll",
+    "down",
+    "560"
+  ],
+  "exitCode": 0,
+  "stdout": "\u2713 Done\n",
+  "stderr": ""
+}

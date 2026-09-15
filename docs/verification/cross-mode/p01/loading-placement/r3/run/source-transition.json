@@ -1,0 +1,10 @@
+{
+  "preliminaryLibrarySha256": "2ee2ced94b662c14ed3b7fbd6d3306e4b046a6b4a79bafb6916b1a2b71d40b70",
+  "finalLibrarySha256": "9fc7ae8e3bd699cabb17681e4d1fd5203f08fd3beb53db609640635fb1b8b3b5",
+  "preliminaryCaptures": [
+    "01-large-landscape-before",
+    "02-large-landscape-terminal",
+    "03-large-landscape-refocused"
+  ],
+  "action": "Owned page reload before subsequent final-candidate captures; same fresh isolated profile."
+}

@@ -1,0 +1,1690 @@
+{
+  "active": {
+    "id": "pack-select",
+    "tag": "SELECT"
+  },
+  "at": "2026-09-15T14:12:40.147Z",
+  "elements": [
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHit": "DIV",
+      "centerHitWithin": true,
+      "clientHeight": 844,
+      "clientWidth": 374,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "shell-missions",
+      "interiorHits": [
+        {
+          "hit": "shell-missions",
+          "inside": true,
+          "x": 12,
+          "y": 4
+        },
+        {
+          "hit": "shell-missions",
+          "inside": true,
+          "x": 378,
+          "y": 4
+        },
+        {
+          "hit": "shell-missions",
+          "inside": true,
+          "x": 12,
+          "y": 840
+        },
+        {
+          "hit": "shell-missions",
+          "inside": true,
+          "x": 378,
+          "y": 840
+        }
+      ],
+      "open": true,
+      "parent": "",
+      "position": "fixed",
+      "rect": {
+        "bottom": 844,
+        "height": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0,
+        "width": 374,
+        "x": 8,
+        "y": 0
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 4336,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 2292,
+      "scrollWidth": 374,
+      "text": "\n      \n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        \n      \n      \n        Mode \u00b7 Solo flight\n        \n          Solo flight selected\n          Relay Rescue \u00b7 2-player co-op\n          Couch race \u00b7 2 players\n          More worlds\n        \n      \n      \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n          \n        \n            FLIGHT DECK00 / 12 \u00b7 Standard medals\n          Choose a chapterBase game \u00b7 12 levelsCurrent chapterFPV Front \u00b7 Pressure Lines \u00b7 3 levelsChoose chapterFPV Front \u00b7 Frontier Lines \u00b7 3 levelsChoose chapterNight Shift \u00b7 3 levelsChoose chapterLiving Threads \u00b7 3 levelsChoose chapterFieldcraft \u00b7 4 levelsChoose chapterHomeward Skies \u00b7 3 levelsChoose chapterEquipment Workshop \u00b7 3 levelsChoose chapterSentinel Relay \u00b7 1 levelChoose chapterOlder chapters (4)Earlier First Light editions keep their original rules and progress.FPV Front \u00b7 First Light Arcade R4 \u00b7 3 levelsChoose chapterFPV Front \u00b7 First Light R3 \u00b7 3 levelsChoose chapterFPV Front \u00b7 First Light R2 \u00b7 3 levelsChoose chapterFPV Front \u00b7 First Light \u00b7 3 levelsChoose chapter\n            CAMPAIGN / First SignalCollection\n          01First Signal\u2197Picture concealed02Relay Orchard\u2014Locked03Crosswind\u2014Locked04Stone Lanes\u2014Locked05Night Patrol\u2014Locked06Hidden Frequency\u2014Locked07The Crossing\u2014Locked08Last Light\u2014Locked09Signal Garden\u2014Locked10Supply Circuit\u2014Locked11Short Fuse\u2014Locked12Relay S"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "id": "shell-craft-feedback",
+      "interiorHits": [],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(165, 178, 187)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": true,
+      "id": "craft-preparation-status",
+      "interiorHits": [],
+      "parent": "shell-craft-feedback",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "state": "ready",
+      "text": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHit": "shell-missions-back",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 109,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "shell-missions-back",
+      "interiorHits": [
+        {
+          "hit": "shell-missions-back",
+          "inside": true,
+          "x": 256.984375,
+          "y": 74.640625
+        },
+        {
+          "hit": "shell-missions-back",
+          "inside": true,
+          "x": 362,
+          "y": 74.640625
+        },
+        {
+          "hit": "shell-missions-back",
+          "inside": true,
+          "x": 256.984375,
+          "y": 110.640625
+        },
+        {
+          "hit": "shell-missions-back",
+          "inside": true,
+          "x": 362,
+          "y": 110.640625
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 114.640625,
+        "height": 44,
+        "left": 252.984375,
+        "right": 366,
+        "top": 70.640625,
+        "width": 113.015625,
+        "x": 252.984375,
+        "y": 70.640625
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 109,
+      "text": "Back",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHit": "shell-prepare",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 119,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "shell-prepare",
+      "interiorHits": [
+        {
+          "hit": "shell-prepare",
+          "inside": true,
+          "x": 246.765625,
+          "y": 736
+        },
+        {
+          "hit": "shell-prepare",
+          "inside": true,
+          "x": 362,
+          "y": 736
+        },
+        {
+          "hit": "shell-prepare",
+          "inside": true,
+          "x": 246.765625,
+          "y": 772
+        },
+        {
+          "hit": "shell-prepare",
+          "inside": true,
+          "x": 362,
+          "y": 772
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 776,
+        "height": 44,
+        "left": 242.765625,
+        "right": 366,
+        "top": 732,
+        "width": 123.234375,
+        "x": 242.765625,
+        "y": 732
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 119,
+      "text": "Flight setup",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHit": "shell-deploy-bar",
+      "centerHitWithin": false,
+      "clientHeight": 1720,
+      "clientWidth": 342,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "id": "mission-picker-setup",
+      "interiorHits": [
+        {
+          "hit": "DIV",
+          "inside": false,
+          "x": 28,
+          "y": 143.71875
+        },
+        {
+          "hit": "DIV",
+          "inside": false,
+          "x": 362,
+          "y": 143.71875
+        },
+        {
+          "inside": false,
+          "x": 28,
+          "y": 1857.765625
+        },
+        {
+          "inside": false,
+          "x": 362,
+          "y": 1857.765625
+        }
+      ],
+      "open": true,
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 1861.765625,
+        "height": 1722.046875,
+        "left": 24,
+        "right": 366,
+        "top": 139.71875,
+        "width": 342,
+        "x": 24,
+        "y": 139.71875
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 1720,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 342,
+      "text": "Flight setup\n            PackBase game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select\n            Level01 \u00b7 First Signal02 \u00b7 Relay Orchard \u00b7 locked03 \u00b7 Crosswind \u00b7 locked04 \u00b7 Stone Lanes \u00b7 locked05 \u00b7 Night Patrol \u00b7 locked06 \u00b7 Hidden Frequency \u00b7 locked07 \u00b7 The Crossing \u00b7 locked08 \u00b7 Last Light \u00b7 locked09 \u00b7 Signal Garden \u00b7 locked10 \u00b7 Supply Circuit \u00b7 locked11 \u00b7 Short Fuse \u00b7 locked12 \u00b7 Relay Storm \u00b7 locked\n          WorldFPV FrontUkraine Atlas1994 ForeverSpend Network\n            \n            \n              Cancel world preparation\n            \n          CampaignFirst Signal\n            Campaign difficulty\n            \n              Standard\n              Gentle\n            \n          Standard: the authored lives, hazards and deadlines. Both difficulties unlock the same pictures, missions and appearances; scores and medals stay separate. Equipment seals require Standard.\n            Compare this mission\u2019s rules\n            Starting lives: Standard 3 \u00b7 Gentle 5.Mission deadline: Standard none \u00b7 Gentle none.Cut de"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 28, 45)",
+      "centerHit": "pack-select",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 278,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "pack-select",
+      "interiorHits": [
+        {
+          "hit": "pack-select",
+          "inside": true,
+          "x": 59,
+          "y": 253.3125
+        },
+        {
+          "hit": "pack-select",
+          "inside": true,
+          "x": 333,
+          "y": 253.3125
+        },
+        {
+          "hit": "pack-select",
+          "inside": true,
+          "x": 59,
+          "y": 289.3125
+        },
+        {
+          "hit": "pack-select",
+          "inside": true,
+          "x": 333,
+          "y": 289.3125
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 293.3125,
+        "height": 44,
+        "left": 55,
+        "right": 337,
+        "top": 249.3125,
+        "width": 282,
+        "x": 55,
+        "y": 249.3125
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 278,
+      "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 28, 45)",
+      "centerHit": "campaign-select",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 306,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "campaign-select",
+      "interiorHits": [
+        {
+          "hit": "campaign-select",
+          "inside": true,
+          "x": 44,
+          "y": 579.09375
+        },
+        {
+          "hit": "campaign-select",
+          "inside": true,
+          "x": 346,
+          "y": 579.09375
+        },
+        {
+          "hit": "campaign-select",
+          "inside": true,
+          "x": 44,
+          "y": 615.09375
+        },
+        {
+          "hit": "campaign-select",
+          "inside": true,
+          "x": 346,
+          "y": 615.09375
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 619.09375,
+        "height": 44,
+        "left": 40,
+        "right": 350,
+        "top": 575.09375,
+        "width": 310,
+        "x": 40,
+        "y": 575.09375
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 306,
+      "text": "First Signal",
+      "value": "first-signal/2/88639f3aab7b6cc1"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 28, 45)",
+      "centerHit": "theme-select",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 306,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "theme-select",
+      "interiorHits": [
+        {
+          "hit": "theme-select",
+          "inside": true,
+          "x": 44,
+          "y": 460.5
+        },
+        {
+          "hit": "theme-select",
+          "inside": true,
+          "x": 346,
+          "y": 460.5
+        },
+        {
+          "hit": "theme-select",
+          "inside": true,
+          "x": 44,
+          "y": 496.5
+        },
+        {
+          "hit": "theme-select",
+          "inside": true,
+          "x": 346,
+          "y": 496.5
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 500.5,
+        "height": 44,
+        "left": 40,
+        "right": 350,
+        "top": 456.5,
+        "width": 310,
+        "x": 40,
+        "y": 456.5
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 306,
+      "text": "FPV FrontUkraine Atlas1994 ForeverSpend Network",
+      "value": "fpv"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 28, 45)",
+      "centerHit": "shell-deploy-bar",
+      "centerHitWithin": false,
+      "clientHeight": 40,
+      "clientWidth": 148,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "id": "class-select",
+      "interiorHits": [
+        {
+          "inside": false,
+          "x": 44,
+          "y": 1097.5
+        },
+        {
+          "inside": false,
+          "x": 187.5,
+          "y": 1097.5
+        },
+        {
+          "inside": false,
+          "x": 44,
+          "y": 1133.5
+        },
+        {
+          "inside": false,
+          "x": 187.5,
+          "y": 1133.5
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 1137.5,
+        "height": 44,
+        "left": 40,
+        "right": 191.5,
+        "top": 1093.5,
+        "width": 151.5,
+        "x": 40,
+        "y": 1093.5
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 148,
+      "text": "ScoutLight carrierHeavy carrierInterceptorFiber relayImpact craftTrapper",
+      "value": "scout"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 28, 45)",
+      "centerHit": "shell-deploy-bar",
+      "centerHitWithin": false,
+      "clientHeight": 40,
+      "clientWidth": 306,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "id": "body-select",
+      "interiorHits": [
+        {
+          "inside": false,
+          "x": 44,
+          "y": 1374.390625
+        },
+        {
+          "inside": false,
+          "x": 346,
+          "y": 1374.390625
+        },
+        {
+          "inside": false,
+          "x": 44,
+          "y": 1410.390625
+        },
+        {
+          "inside": false,
+          "x": 346,
+          "y": 1410.390625
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 1414.390625,
+        "height": 44,
+        "left": 40,
+        "right": 350,
+        "top": 1370.390625,
+        "width": 310,
+        "x": 40,
+        "y": 1370.390625
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 306,
+      "text": "Daybreak FPVNeutral markerAtlas birdTape runnerSpend SpriteSkyline FPV \u00b7 lockedNight signal FPV \u00b7 lockedFalcon trim \u00b7 lockedVector trail \u00b7 lockedAudit pulse \u00b7 lockedScout quadHeavy liftFixed-wing body \u00b7 lockedDelta interceptor \u00b7 lockedScout camera quadLight support carrierHeavy six-hub carrierCompact interceptorFiber relay quadBlunt pulse craftLattice support craftRound courier swallowPottery courierCarved supply chestBroad falcon chevronWide barrel bobbinBell wardenWoven basket",
+      "value": "atlas-pottery-courier-v1"
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(244, 191, 98)",
+      "centerHit": "shell-deploy",
+      "centerHitWithin": true,
+      "clientHeight": 40,
+      "clientWidth": 138,
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "shell-deploy",
+      "interiorHits": [
+        {
+          "hit": "shell-deploy",
+          "inside": true,
+          "x": 228.046875,
+          "y": 788
+        },
+        {
+          "hit": "shell-deploy",
+          "inside": true,
+          "x": 362,
+          "y": 788
+        },
+        {
+          "hit": "shell-deploy",
+          "inside": true,
+          "x": 228.046875,
+          "y": 824
+        },
+        {
+          "hit": "shell-deploy",
+          "inside": true,
+          "x": 362,
+          "y": 824
+        }
+      ],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 828,
+        "height": 44,
+        "left": 224.046875,
+        "right": 366,
+        "top": 784,
+        "width": 141.953125,
+        "x": 224.046875,
+        "y": 784
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 40,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 138,
+      "text": "Deploy \u2192",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 0,
+        "right": 390,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "library-dialog",
+      "interiorHits": [],
+      "open": false,
+      "parent": "",
+      "position": "absolute",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n      \u00d7\n      THE THINGS YOU KEEP\n      Flight library.\n      \n        \n        \n          \n            Cancel operation\n          \n        \n      \n      \n        RecordsSaves & loadsExpansion packsChallenges\n      \n      \n        \n          Your best clears, grouped by map and exact setup. These scores are stored on this device;\n          there is no global ranking service.\n        \n        Find a score\n        \n        \n      \n      \n        \n        Prepare game and originals backupCancel preparationPrepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.File names\n        Export game data\n        \n          This JSON includes your player library, installed packs and saved flight. Importing it\n          replaces those three together. Uploaded originals and custom music need their separate\n          .rlmedia and .rlsound backups. Restore originals first when transferring saved custom\n          pictures, then import the game data. Keep your current backups to preserve both\n          collections.\n        \n        Undo game-data import\n        No suspended attempt.\n        \n          Load suspended attempt\n            Export saved attempt\n            Cancel exportExport player library\n        \n        \n        \n          Player library files contain campaign progress, picture records, local scores and\n          preferences. Attempt files contain a verified unfinished flight. Install matching\n          expansion packs before resuming their flights.\n        \n        Load a "
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "library-title",
+      "interiorHits": [],
+      "parent": "library-dialog",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Flight library."
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "library-operation-rail",
+      "interiorHits": [],
+      "parent": "library-dialog",
+      "position": "sticky",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n        \n        \n          \n            Cancel operation\n          \n        \n      "
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "library-operation-message",
+      "interiorHits": [],
+      "parent": "library-operation-rail",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "library-operation-controls",
+      "interiorHits": [],
+      "parent": "library-operation-rail",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n          \n            Cancel operation\n          \n        "
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(244, 191, 98)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "export-backup",
+      "interiorHits": [],
+      "parent": "library-saves",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Export game data",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "export-session",
+      "interiorHits": [],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n            Export saved attempt",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "export-library",
+      "interiorHits": [],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Export player library",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "export-packs",
+      "interiorHits": [],
+      "parent": "library-packs",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Export installed packs",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(244, 191, 98)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(7, 11, 18)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "prepare-backup-set",
+      "interiorHits": [],
+      "parent": "backup-set",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Prepare game and originals backup",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "save-status",
+      "interiorHits": [],
+      "parent": "library-saves",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": "status",
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "pack-status",
+      "interiorHits": [],
+      "parent": "library-packs",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": "status",
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "id": "transfer-status",
+      "missing": true
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "backup-set-status",
+      "interiorHits": [],
+      "parent": "backup-set",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "state": "ready",
+      "text": "Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded."
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": true,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "library-operation-cancel",
+      "interiorHits": [],
+      "parent": "library-operation-controls",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n            Cancel operation\n          ",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(16, 25, 35)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": true,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "cancel-attempt-export",
+      "interiorHits": [],
+      "parent": "",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\n            Cancel export",
+      "value": ""
+    },
+    {
+      "id": "transfer-cancel",
+      "missing": true
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "cancel-backup-set",
+      "interiorHits": [],
+      "parent": "backup-set",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Cancel preparation",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "backup-set-files",
+      "interiorHits": [],
+      "parent": "backup-set",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "id": "download-backup-game",
+      "missing": true
+    },
+    {
+      "id": "save-status-label",
+      "missing": true
+    },
+    {
+      "id": "save-status-count",
+      "missing": true
+    },
+    {
+      "id": "save-status-progress",
+      "missing": true
+    },
+    {
+      "id": "pack-status-label",
+      "missing": true
+    },
+    {
+      "id": "pack-status-count",
+      "missing": true
+    },
+    {
+      "id": "pack-status-progress",
+      "missing": true
+    },
+    {
+      "id": "transfer-status-label",
+      "missing": true
+    },
+    {
+      "id": "transfer-status-count",
+      "missing": true
+    },
+    {
+      "id": "transfer-status-progress",
+      "missing": true
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": "polite",
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "backup-set-status-label",
+      "interiorHits": [],
+      "parent": "backup-set-status",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": "status",
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded."
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "backup-set-status-count",
+      "interiorHits": [],
+      "parent": "backup-set-status",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgba(0, 0, 0, 0)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": true,
+      "id": "backup-set-status-progress",
+      "interiorHits": [],
+      "max": 1,
+      "parent": "backup-set-status",
+      "position": "static",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "",
+      "value": 0
+    },
+    {
+      "ancestorClip": {
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(24, 37, 49)",
+      "centerHitWithin": false,
+      "clientHeight": 0,
+      "clientWidth": 0,
+      "color": "rgb(243, 240, 219)",
+      "disabled": false,
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "library-close",
+      "interiorHits": [],
+      "parent": "library-dialog",
+      "position": "absolute",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "rendered": false,
+      "role": null,
+      "scrollHeight": 0,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 0,
+      "text": "\u00d7",
+      "value": ""
+    },
+    {
+      "ancestorClip": {
+        "bottom": 844,
+        "left": 8,
+        "right": 382,
+        "top": 0
+      },
+      "ariaLive": null,
+      "background": "rgb(8, 14, 32)",
+      "centerHit": "shell-missions-title",
+      "centerHitWithin": true,
+      "clientHeight": 153,
+      "clientWidth": 342,
+      "color": "rgb(243, 240, 219)",
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "id": "craft-sticky-heading",
+      "interiorHits": [
+        {
+          "hit": "DIV",
+          "inside": true,
+          "x": 28,
+          "y": 20
+        },
+        {
+          "hit": "DIV",
+          "inside": true,
+          "x": 362,
+          "y": 20
+        },
+        {
+          "hit": "DIV",
+          "inside": true,
+          "x": 28,
+          "y": 165.296875
+        },
+        {
+          "hit": "DIV",
+          "inside": true,
+          "x": 362,
+          "y": 165.296875
+        }
+      ],
+      "parent": "shell-missions",
+      "position": "sticky",
+      "rect": {
+        "bottom": 169.296875,
+        "height": 153.296875,
+        "left": 24,
+        "right": 366,
+        "top": 16,
+        "width": 342,
+        "x": 24,
+        "y": 16
+      },
+      "rendered": true,
+      "role": null,
+      "scrollHeight": 153,
+      "scrollPaddingBlockStart": "auto",
+      "scrollTop": 0,
+      "scrollWidth": 342,
+      "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        \n      "
+    }
+  ],
+  "hasFocus": true,
+  "performanceNow": 16132.900000095367,
+  "preferences": {
+    "effects": "full",
+    "face": "pixel",
+    "osReduced": false,
+    "textSize": "standard"
+  },
+  "url": "http://127.0.0.1:52589/game/",
+  "viewport": {
+    "dpr": 1,
+    "height": 844,
+    "visual": {
+      "height": 844,
+      "scale": 1,
+      "width": 390
+    },
+    "width": 390
+  },
+  "visibility": "visible",
+  "windowScroll": {
+    "x": 0,
+    "y": 0
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "at": "2026-09-15T14:35:51.404363+00:00",
+  "identity": {
+    "format": "revealline-source-identity.v1",
+    "root": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode",
+    "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+    "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+    "files": 5968,
+    "bytes": 853523474,
+    "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80",
+    "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+    "allTrackedSourceContentsAndModesMatch": true
+  },
+  "runners": [
+    {
+      "path": ".cache/cross-mode/p01/v0572/run-patch-exact-gates.py",
+      "sha256": "44efd1e9fcb4f5e4d87eec436508bb123ab9b75c9c9b83f88cec473e64a5bec7",
+      "change": "Output root only; all guards and commands unchanged."
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/run-patch-full-test.py",
+      "sha256": "ea1ad194ae5bcb807837a38eadf810904b0ad65ac40ae6eeb4ef93f521815db8",
+      "change": "Output root only; all guards and commands unchanged."
+    }
+  ],
+  "nodeVersion": "v20.19.5",
+  "npmCi": "Not run: existing dependency symlink retained; no lockfile/dependency mutation."
+}

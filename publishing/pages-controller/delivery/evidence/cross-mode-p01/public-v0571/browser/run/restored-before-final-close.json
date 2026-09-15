@@ -1,0 +1,22 @@
+{
+  "time": "2026-09-15T13:53:21.290203+00:00",
+  "passed": true,
+  "observedHealth": {
+    "state": "ready",
+    "time": "2026-09-15T13:53:20.324Z",
+    "collectorPid": 7986,
+    "target": "E51B07E75D7D43431E06678493CF9E8A",
+    "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/public-browser-preparation/run/profile",
+    "scope": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/",
+    "endpoint": "ws://127.0.0.1:51927/devtools/browser/3d3e4769-c0ec-4f39-8208-b68535debccb",
+    "eventSequence": 1824,
+    "logBytes": 576729,
+    "capped": false,
+    "pageSession": "F35294AB9ACA8208BBBE4DD0FA758C0D",
+    "pageURL": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "timeOrigin": 1789480398833.5
+  },
+  "ageSeconds": 0.966203,
+  "collectorProcessAlive": true,
+  "meaning": "Confirms observer health at this boundary only; full interval also requires no stop/detach/cap or heartbeat gaps in final log."
+}

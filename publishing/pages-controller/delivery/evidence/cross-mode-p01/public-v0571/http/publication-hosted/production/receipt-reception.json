@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "runId": 34976023839,
+  "event": "push",
+  "observedAt": "2026-09-15T13:39:39.533696+00:00",
+  "artifactId": 10399740660,
+  "receiptZipBytes": 115052,
+  "receiptZipSha256": "aa6a8d270a7e61894d508ba969e0caa0b4255d9b4e59e933c469b5634933fc89",
+  "files": [
+    {
+      "path": "artifact-receipt.json",
+      "bytes": 461631,
+      "sha256": "7229368384f376590d4dbd8f2127589e97abbbb3b706a74cdb50cb90d4eb0ad4"
+    },
+    {
+      "path": "zip-receipt.json",
+      "bytes": 407,
+      "sha256": "df1e329cd39a788f6ba45e4a77ba180f08a045a05094cf2a557be389e6c67bee"
+    }
+  ],
+  "controllerCommit": "9ef75091762cfb9c84b02475ef79913a4476c651",
+  "controllerTree": "15963dede1cdcd977486d68fdc69714db9c02892",
+  "currentVersion": "v0.57.1",
+  "gameSourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "hostedArtifactFileCount": 2398,
+  "hostedArtifactBytes": 636567742,
+  "publishable": true,
+  "scope": "Original hosted tiny receipt bytes. Preview cannot authorize production or public claims."
+}

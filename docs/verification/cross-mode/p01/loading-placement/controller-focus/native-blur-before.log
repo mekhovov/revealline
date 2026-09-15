@@ -1,0 +1,157 @@
+TAP version 13
+# Subtest: mount is inert and renders every button map with sixteen explicit options
+ok 1 - mount is inert and renders every button map with sixteen explicit options
+  ---
+  duration_ms: 4.206084
+  ...
+# Subtest: generated select, range and checkbox controls expose readable names for controller previews
+ok 2 - generated select, range and checkbox controls expose readable names for controller previews
+  ---
+  duration_ms: 2.00225
+  ...
+# Subtest: an explicit draft keeps the original configuration unchanged until canonical Apply
+not ok 3 - an explicit draft keeps the original configuration unchanged until canonical Apply
+  ---
+  duration_ms: 716.063834
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/controller-settings.test.mjs:212:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected "actual" to be reference-equal to "expected":
+    + actual - expected ... Lines skipped
+    
+    + <ref *1> Element {
+    - <ref *3> Element {
+        _disabled: false,
+        _hidden: false,
+    ...
+          y: 0
+        },
+    +   _text: '',
+    -   _text: 'Edit controller settings',
+        attributes: {},
+        captureListeners: Map(0) {},
+        captures: Set(0) {},
+        checked: false,
+    +   children: [
+    +     <ref *3> Element {
+    +       _disabled: false,
+    +       _hidden: false,
+    +       _rect: {
+    +         height: 44,
+    +         width: 100,
+    +         x: 0,
+    +         y: 0
+    +       },
+    +       _text: '',
+    +       attributes: {},
+    +       captureListeners: Map(0) {},
+    +       captures: Set(0) {},
+    +       checked: false,
+    +       children: [
+    +         Element {
+    +           _disabled: false,
+    +           _hidden: false,
+    +           _rect: {
+    ...
+    -   children: [],
+    -   classList: Classes {
+    -     values: Set(2) {
+    -       'button',
+    -       'secondary'
+    -     }
+    -   },
+    -   clientHeight: 44,
+    -   dataset: {
+    -     controllerSettingsAction: 'edit'
+    -   },
+    -   id: '',
+    -   inert: false,
+    -   listeners: Map(1) {
+    -     'click' => [
+    -       [Function (anonymous)]
+    -     ]
+    -   },
+    -   nodeName: 'BUTTON',
+    -   nodeType: 1,
+    ...
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+ok 4 - temporary button conflicts permit complete swaps but invalid Apply never reaches the host
+  ---
+  duration_ms: 1.488041
+  ...
+# Subtest: Cancel discards valid and conflicting draft changes without adoption
+ok 5 - Cancel discards valid and conflicting draft changes without adoption
+  ---
+  duration_ms: 1.171208
+  ...
+# Subtest: Restore defaults changes only the draft and requires Apply
+ok 6 - Restore defaults changes only the draft and requires Apply
+  ---
+  duration_ms: 1.666041
+  ...
+# Subtest: button label choices update draft option text without changing saved indices or detecting hardware
+ok 7 - button label choices update draft option text without changing saved indices or detecting hardware
+  ---
+  duration_ms: 5.943333
+  ...
+# Subtest: whole-candidate validation rejects axes, bounds and release-above-press conflicts
+ok 8 - whole-candidate validation rejects axes, bounds and release-above-press conflicts
+  ---
+  duration_ms: 9.703542
+  ...
+# Subtest: session-only success adopts the map and displays the host persistence warning as text
+ok 9 - session-only success adopts the map and displays the host persistence warning as text
+  ---
+  duration_ms: 0.891042
+  ...
+# Subtest: a thrown host rejection retains the current map and permits repairing the draft
+ok 10 - a thrown host rejection retains the current map and permits repairing the draft
+  ---
+  duration_ms: 0.673042
+  ...
+# Subtest: source change before Apply discards the old draft without overwriting new preferences
+ok 11 - source change before Apply discards the old draft without overwriting new preferences
+  ---
+  duration_ms: 0.650334
+  ...
+# Subtest: refresh explicitly invalidates even an unchanged source draft
+ok 12 - refresh explicitly invalidates even an unchanged source draft
+  ---
+  duration_ms: 0.552084
+  ...
+# Subtest: async Apply is single-flight and allows its own canonical adoption
+ok 13 - async Apply is single-flight and allows its own canonical adoption
+  ---
+  duration_ms: 0.696834
+  ...
+# Subtest: refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+ok 14 - refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status
+  ---
+  duration_ms: 1.014291
+  ...
+# Subtest: source changes during asynchronous preparation invalidate the guard without a refresh
+ok 15 - source changes during asynchronous preparation invalidate the guard without a refresh
+  ---
+  duration_ms: 2.751792
+  ...
+# Subtest: malformed current data fails visibly and a later valid refresh recovers
+ok 16 - malformed current data fails visibly and a later valid refresh recovers
+  ---
+  duration_ms: 0.720167
+  ...
+# Subtest: destroy removes listeners and aborts pending work without late DOM adoption
+ok 17 - destroy removes listeners and aborts pending work without late DOM adoption
+  ---
+  duration_ms: 0.614667
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 16
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1063.154792

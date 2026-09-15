@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-09-15T13:56:51.241462+00:00",
+  "finishedAt": "2026-09-15T13:56:51.445758+00:00",
+  "session": "p01-public-v0571-interface",
+  "action": [
+    "eval",
+    "(() => {const e=document.getElementById(\"craft-preparation-status\"); return {at:new Date().toISOString(),visibility:document.visibilityState,hasFocus:document.hasFocus(),closestDialog:e.closest(\"dialog\")?.id||null,parentId:e.parentElement?.id,ancestors:[e.parentElement,e.parentElement?.parentElement,e.parentElement?.parentElement?.parentElement].map(x=>({id:x?.id,tag:x?.tagName,class:x?.className})),state:e.dataset.state,text:e.textContent,hidden:e.hidden,openDialogs:[...document.querySelectorAll(\"dialog[open]\")].map(x=>x.id)};})()"
+  ],
+  "exitCode": 0,
+  "stdout": "{\n  \"ancestors\": [\n    {\n      \"class\": \"arena-panel\",\n      \"id\": \"\",\n      \"tag\": \"SECTION\"\n    },\n    {\n      \"class\": \"game-layout\",\n      \"id\": \"\",\n      \"tag\": \"DIV\"\n    },\n    {\n      \"class\": \"\",\n      \"id\": \"\",\n      \"tag\": \"MAIN\"\n    }\n  ],\n  \"at\": \"2026-09-15T13:56:51.438Z\",\n  \"closestDialog\": null,\n  \"hasFocus\": true,\n  \"hidden\": true,\n  \"openDialogs\": [\n    \"shell-missions\"\n  ],\n  \"parentId\": \"\",\n  \"state\": \"ready\",\n  \"text\": \"\",\n  \"visibility\": \"visible\"\n}\n",
+  "stderr": ""
+}

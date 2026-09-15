@@ -1,0 +1,36 @@
+{
+  "active": "pack-select",
+  "at": "2026-09-15T14:09:05.793Z",
+  "hasFocus": true,
+  "header": {
+    "background": "rgb(8, 14, 32)",
+    "position": "sticky",
+    "rect": {
+      "bottom": 148.484375,
+      "height": 124.484375,
+      "left": 42,
+      "right": 802,
+      "top": 24,
+      "width": 760,
+      "x": 42,
+      "y": 24
+    },
+    "zIndex": "5"
+  },
+  "slot": {
+    "pointerEvents": "auto",
+    "position": "sticky",
+    "rect": {
+      "bottom": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "width": 0,
+      "x": 0,
+      "y": 0
+    },
+    "zIndex": "3"
+  },
+  "visibility": "visible"
+}

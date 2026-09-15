@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:44:14.423811+00:00",
+  "finishedAt": "2026-09-15T13:44:14.628523+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "- region \"Find your line.\" [ref=e1]\n  - heading \"Find your line.\" [level=1, ref=e2]\n  - navigation \"Launch options\" [ref=e3]\n    - link \"Reload game\" [ref=e4]\n    - link \"Play online\" [ref=e5]\n",
+  "stderr": ""
+}

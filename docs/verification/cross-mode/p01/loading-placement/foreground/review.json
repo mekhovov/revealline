@@ -1,0 +1,13 @@
+{
+  "status": "PREPARED_UNLAUNCHED_AWAIT_ROOT_GO",
+  "foregroundSession": "p01-library-r3-foreground",
+  "guard": "Explicit unique target/profile/endpoint; initial Page.bringToFront; fail if hidden/blurred/wrong URL or unexpected page; pre/post actions; passive visibility events. No automatic healing.",
+  "existingCleanEvidence": "../library-rail-r3-native/run/review.json",
+  "sourceUnchanged": true,
+  "newBrowserOrServer": false,
+  "networkRequests": false,
+  "freeBytes": 1549381632,
+  "transferBuildPrerequisite": "Root confirms actual public v0.57.0\u2192v0.57.1 for scoped transfer family; corrected placement repeated on genuine candidate build next release cycle; no overlay.",
+  "remainingFixtures": "Fresh real old-version saved attempt needed; earned family outputs not available yet.",
+  "sourcePinUpdate": "Refreshed index and existing craft host/CSS pins after root craft-feedback addition; Library panel/style/backup byte-equal final R3. Rehash again before GO if source changes."
+}

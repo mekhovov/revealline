@@ -1,0 +1,41 @@
+[ {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:51866/devtools/page/B5C5DE830FFDE8EF2181FADD36956CE8",
+   "id": "B5C5DE830FFDE8EF2181FADD36956CE8",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:51866/devtools/page/B5C5DE830FFDE8EF2181FADD36956CE8"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:51866/devtools/page/F96FA1E0C4AEA618FC90FFF5E0BE5606",
+   "id": "F96FA1E0C4AEA618FC90FFF5E0BE5606",
+   "title": "Omnibox Popup",
+   "type": "browser_ui",
+   "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:51866/devtools/page/F96FA1E0C4AEA618FC90FFF5E0BE5606"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:51866/devtools/page/E38B3AC8B292FE8B8BFD517A4D502ACF",
+   "id": "E38B3AC8B292FE8B8BFD517A4D502ACF",
+   "title": "Google Hangouts",
+   "type": "background_page",
+   "url": "chrome-extension://nkeimhogjdpnpccoofpliimaahmaaome/background.html",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:51866/devtools/page/E38B3AC8B292FE8B8BFD517A4D502ACF"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:51866/devtools/page/42A5C65D96BC4675CC1BDCBEE6C2FB9A",
+   "id": "42A5C65D96BC4675CC1BDCBEE6C2FB9A",
+   "title": "about:blank",
+   "type": "page",
+   "url": "about:blank",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:51866/devtools/page/42A5C65D96BC4675CC1BDCBEE6C2FB9A"
+}, {
+   "description": "",
+   "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/worker_app.html?ws=127.0.0.1:51866/devtools/page/C20CA65F53792A48840AEDB5581ED997",
+   "id": "C20CA65F53792A48840AEDB5581ED997",
+   "title": "Service Worker chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+   "type": "service_worker",
+   "url": "chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+   "webSocketDebuggerUrl": "ws://127.0.0.1:51866/devtools/page/C20CA65F53792A48840AEDB5581ED997"
+} ]

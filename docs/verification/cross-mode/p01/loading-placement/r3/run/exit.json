@@ -1,0 +1,13 @@
+{
+  "pid": 1343,
+  "exitCode": 0,
+  "capacity": {
+    "at": "2026-09-15T13:52:39.207268+00:00",
+    "stage": "after-exit",
+    "freeBytes": 1568620544,
+    "projectedReserveBytes": 1494672996,
+    "profileBytes": 5744228,
+    "profileLimit": 62914560,
+    "reserveBytes": 536870912
+  }
+}
