@@ -1,0 +1,155 @@
+Guide baseline (layout disabled)
+
+TAP version 13
+# Subtest: a restored FPV-only pack keeps all four canonical Guide appearances and practices
+ok 1 - a restored FPV-only pack keeps all four canonical Guide appearances and practices # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.500834
+  ...
+# Subtest: immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 2 - immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return # SKIP test name does not match pattern
+  ---
+  duration_ms: 3.35375
+  ...
+# Subtest: grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 3 - grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.285917
+  ...
+# Subtest: actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+ok 4 - actual guide repeated return and canceled load preserve the parent and reject stale lesson messages # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.094042
+  ...
+# Subtest: actual guide returns with streamed music still explicitly paused, without resuming flight
+ok 5 - actual guide returns with streamed music still explicitly paused, without resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.108042
+  ...
+# Baseline check: loading app without the new flight layout import/call.
+# Subtest: actual guide returns with streamed music continuing, without resuming flight
+not ok 6 - actual guide returns with streamed music continuing, without resuming flight
+  ---
+  duration_ms: 8008.6745
+  location: '/private/tmp/revealline-mobile-ux-latest/game/test/enemy-guide-host.test.mjs:468:3'
+  failureType: 'testCodeFailure'
+  error: 'Asynchronous host action did not settle.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-mobile-ux-latest/game/test/helpers/wait-for.mjs:13:12)
+    async settle (file:///private/tmp/revealline-mobile-ux-latest/game/test/helpers/solo-dom.mjs:146:3)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-mobile-ux-latest/game/test/enemy-guide-host.test.mjs:524:20)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 8583.515041
+
+Soundtrack baseline (layout disabled)
+
+TAP version 13
+# Baseline check: loading app without the new flight layout import/call.
+# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+not ok 1 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight
+  ---
+  duration_ms: 2143.617375
+  location: '/private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:104:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    false !== true
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:119:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection
+ok 2 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.6715
+  ...
+# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings
+ok 3 - actual master, music and SFX controls remain independent and the studio fader persists to game settings # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.055167
+  ...
+# Baseline check: loading app without the new flight layout import/call.
+# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+not ok 4 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume
+  ---
+  duration_ms: 2338.772083
+  location: '/private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:204:1'
+  failureType: 'testCodeFailure'
+  error: 'Prior audio desire resumes on visible focus'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:41:10)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:226:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable
+ok 5 - missing file-audio API disables Studio and leaves the original synth fallback usable # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.243709
+  ...
+# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight
+ok 6 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050167
+  ...
+# Baseline check: loading app without the new flight layout import/call.
+# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+not ok 7 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight
+  ---
+  duration_ms: 2375.798125
+  location: '/private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:288:1'
+  failureType: 'testCodeFailure'
+  error: 'Visible cached page must recover prior listening intent'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    waitFor (file:///private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:41:10)
+    async TestContext.<anonymous> (file:///private/tmp/revealline-mobile-ux-latest/game/test/soundtrack-host.test.mjs:307:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight
+ok 8 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.312417
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 5
+# todo 0
+# duration_ms 7449.947334

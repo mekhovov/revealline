@@ -1,0 +1,786 @@
+/* Height-aware game layout. Keep this separate from the visual theme: borders,
+   fonts and colours may change without moving controls over the live board. */
+.flight-viewport {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  padding: max(4px, var(--safe-top)) max(4px, var(--safe-right)) max(4px, var(--safe-bottom))
+    max(4px, var(--safe-left));
+  visibility: hidden;
+  pointer-events: none;
+  contain: strict;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] main {
+  position: fixed;
+  inset: 0;
+  padding: 0;
+  margin: 0;
+  height: 100dvh;
+  max-width: none;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .arena-panel {
+  position: static;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] #arena-shell {
+  position: fixed;
+  inset: auto;
+  left: var(--flight-x);
+  top: var(--flight-y);
+  width: var(--flight-width);
+  height: var(--flight-height);
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  transform: none;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .shell-bar {
+  position: fixed;
+  inset: auto;
+  top: var(--flight-top);
+  left: var(--flight-left);
+  width: var(--flight-usable-width);
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  gap: 4px;
+  z-index: 9;
+  pointer-events: none;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .shell-bar > button {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 4px;
+  margin: 0;
+  font-size: 20px;
+  pointer-events: auto;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .shell-bar > [data-presentation-icon] {
+  display: grid;
+  place-items: center;
+  font-size: 0;
+}
+:root
+  body.game-shell[data-flight-layout][data-flight-state]
+  .shell-bar
+  > :is(.shell-edition, #shell-packs, #shell-collection, #shell-settings),
+:root body.game-shell[data-flight-layout][data-flight-state] #shell-menu span,
+:root body.game-shell[data-flight-layout][data-flight-state] #shell-menu::after {
+  display: none;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] #shell-fullscreen {
+  margin-left: auto;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] #pause-button {
+  margin-left: auto;
+}
+:root
+  body.game-shell[data-flight-layout][data-flight-state]
+  .shell-fullscreen:not([hidden])
+  + #pause-button {
+  margin-left: 0;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry {
+  position: fixed;
+  inset: auto;
+  top: var(--flight-top);
+  left: calc(var(--flight-left) + 52px);
+  width: calc(var(--flight-usable-width) - 152px);
+  height: var(--flight-strip-height);
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1.3fr 0.8fr 1fr 1.2fr;
+  align-items: start;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  transform: none;
+  pointer-events: none;
+  z-index: 6;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry > div {
+  min-width: 0;
+  padding: 0 0 0 6px;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry :is(span, em) {
+  font-size: 11px;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry strong {
+  margin: 1px 0 0;
+  font-size: 20px;
+  line-height: 1.1;
+}
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry .meter,
+:root body.game-shell[data-flight-layout][data-flight-state] :is(.flight-status, .run-message) {
+  display: none;
+}
+:root
+  body.game-shell:is([data-flight-layout='strip'], [data-flight-layout='portrait'])
+  .telemetry
+  [data-presentation-hud]::before {
+  display: none;
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] .shell-bar {
+  width: var(--flight-rail-width);
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] #shell-fullscreen {
+  position: fixed;
+  top: calc(var(--flight-top) + var(--flight-usable-height) - 44px);
+  left: var(--flight-left);
+  right: auto;
+  margin: 0;
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] #pause-button {
+  margin-left: auto;
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] .telemetry {
+  top: calc(var(--flight-top) + 56px);
+  left: var(--flight-left);
+  width: var(--flight-rail-width);
+  height: auto;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] .telemetry > div {
+  padding: 0 6px;
+  border: 0;
+}
+:root
+  body.game-shell[data-flight-layout][data-flight-state][data-text-size='large']
+  .telemetry
+  :is(span, em) {
+  font-size: 13px;
+}
+:root
+  body.game-shell[data-flight-layout][data-flight-state][data-text-size='large']
+  .telemetry
+  strong {
+  font-size: 24px;
+}
+/* A compact field-condition label sits in reserved chrome, including warnings.
+   The complete instruction remains available in the mission brief. */
+:root
+  body.game-shell[data-flight-layout][data-flight-state]
+  .encounter-status:not([hidden]):not([data-phase='open']) {
+  display: block;
+  position: fixed;
+  inset: auto;
+  left: calc(var(--flight-left) + 52px);
+  top: calc(var(--flight-top) + var(--flight-strip-height) - 18px);
+  width: calc(var(--flight-usable-width) - 152px);
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  transform: none;
+  background: transparent;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:root
+  body.game-shell[data-flight-layout][data-flight-state]
+  .encounter-status
+  :is(#encounter-instruction, #classic-summary) {
+  display: none;
+}
+:root
+  body.game-shell[data-flight-layout='rail'][data-flight-state]
+  .encounter-status:not([hidden]):not([data-phase='open']) {
+  left: var(--flight-left);
+  top: calc(var(--flight-top) + var(--flight-usable-height) - 76px);
+  width: var(--flight-rail-width);
+  height: 30px;
+  white-space: normal;
+  line-height: 1.15;
+}
+/* Native dialogs have one reachable vertical scroll surface. Safe-area padding
+   is applied to content, never subtracted twice from the browser viewport. */
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell dialog:not(#restart-dialog) {
+    position: fixed;
+    inset: 0;
+    margin: 0 auto;
+    width: min(1120px, 100%);
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: max(12px, var(--safe-top)) max(16px, var(--safe-right)) max(12px, var(--safe-bottom))
+      max(16px, var(--safe-left));
+    overflow: auto;
+    overscroll-behavior: contain;
+    scroll-padding-block: 64px 16px;
+    font-size: 16px;
+  }
+  :root body.game-shell dialog :is(button, .button, select, input:not([type='checkbox']), summary) {
+    min-height: 44px;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  :root body.game-shell dialog :is(button, .button, summary) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  :root body.game-shell dialog :is(h2, .shell-dialog-heading h2) {
+    font-size: 26px;
+    line-height: 1.15;
+    margin-block: 8px 12px;
+  }
+  :root body.game-shell dialog h3 {
+    font-size: 20px;
+    line-height: 1.25;
+    margin-block: 12px 8px;
+  }
+  :root body.game-shell dialog > :is(h2, .eyebrow) {
+    padding-right: 52px;
+  }
+  :root body.game-shell dialog > .eyebrow {
+    margin-block: 0 4px;
+    font-size: 12px;
+  }
+  :root body.game-shell dialog .dialog-close {
+    position: sticky;
+    top: 0;
+    right: auto;
+    float: right;
+    z-index: 10;
+    width: 44px;
+    height: 44px;
+    margin: 0 0 0 8px;
+    background: var(--paper);
+  }
+  :root body.game-shell .shell-dialog-heading {
+    position: sticky;
+    top: -12px;
+    gap: 12px;
+    margin: 0 0 8px;
+    padding: 4px 0;
+    min-height: 52px;
+  }
+  :root body.game-shell .shell-dialog-heading > div {
+    min-width: 0;
+  }
+  :root body.game-shell .shell-dialog-heading :is(.eyebrow, #shell-missions-context) {
+    margin: 0;
+    font-size: 11px;
+  }
+  :root body.game-shell .shell-dialog-heading h2 {
+    margin: 2px 0;
+  }
+  :root body.game-shell .shell-dialog-heading > button {
+    flex-shrink: 0;
+    padding: 6px 12px;
+  }
+  :root body.game-shell .slider-field {
+    gap: 12px;
+    margin-block: 8px;
+  }
+  :root body.game-shell .slider-field > input {
+    min-width: 0;
+  }
+  :root body.game-shell .shell-home[open] {
+    display: block;
+  }
+  :root body.game-shell #shell-title {
+    font-size: 48px;
+    line-height: 1;
+    margin: 8px 0;
+  }
+  :root body.game-shell .home-content {
+    max-width: 920px;
+    margin: auto;
+  }
+  :root body.game-shell .home-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 12px 0;
+    max-width: none;
+  }
+  :root body.game-shell .home-actions :is(.button, #shell-play, #shell-featured) {
+    min-height: 48px;
+    padding: 8px 12px;
+    font-size: 17px;
+    line-height: 1.25;
+  }
+  :root body.game-shell .home-actions :is(#shell-play, #shell-featured) {
+    grid-column: 1 / -1;
+  }
+  :root body.game-shell .home-actions .button::before {
+    display: none;
+  }
+  :root body.game-shell .home-hint {
+    margin: 8px 0;
+  }
+  :root body.game-shell .shell-tools {
+    margin-top: 8px;
+  }
+  :root body.game-shell .shell-tools summary {
+    padding-block: 10px;
+  }
+  :root body.game-shell .shell-tools a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  :root body.game-shell .game-overlay:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: max(12px, var(--safe-top)) max(16px, var(--safe-right)) max(12px, var(--safe-bottom))
+      max(16px, var(--safe-left));
+    z-index: 40;
+    overflow: auto;
+    align-items: safe center;
+    background-color: #050a14;
+  }
+  :root body.game-shell .game-overlay .overlay-card {
+    width: min(760px, 100%);
+    max-width: 100%;
+    max-height: none;
+    margin: auto;
+    padding: 12px;
+    overflow: visible;
+  }
+  :root body.game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    gap: 12px;
+  }
+  :root body.game-shell .game-overlay[data-kind='pause'] .pause-label {
+    font-size: 30px;
+  }
+  :root body.game-shell .game-overlay .overlay-actions {
+    min-width: 0;
+    max-width: 100%;
+    gap: 8px;
+  }
+  :root body.game-shell .game-overlay .overlay-actions .button {
+    min-height: 44px;
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+  :root body.game-shell #shell-missions #shell-brief-content {
+    min-height: 0;
+    flex: none;
+  }
+  :root body.game-shell #shell-brief-content #mission-brief-reading {
+    flex: none;
+    max-height: none;
+    overflow: visible;
+  }
+  :root body.game-shell #shell-brief-content #mission-brief-reading > p {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+  :root body.game-shell #shell-brief-content .reading-hint {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+  :root
+    body.game-shell[data-text-size='large']
+    dialog
+    :is(button, select, input, label, summary, p),
+  :root body.game-shell[data-text-size='large'] #shell-brief-content #mission-brief-reading > p {
+    font-size: 20px;
+  }
+}
+@media (orientation: landscape) and (max-height: 600px) {
+  :root body.game-shell .home-content {
+    display: grid;
+    grid-template-columns: minmax(160px, 0.7fr) minmax(0, 1.6fr);
+    gap: 4px 24px;
+    align-items: start;
+  }
+  :root body.game-shell .home-content > :is(.eyebrow, #shell-title, .landing-version) {
+    grid-column: 1;
+  }
+  :root body.game-shell .home-actions {
+    grid-column: 2;
+    grid-row: 1 / 6;
+    margin: 0;
+  }
+  :root body.game-shell .home-actions :is(#shell-play, #shell-featured) {
+    grid-column: auto;
+  }
+  :root body.game-shell .home-copy,
+  :root body.game-shell .home-hint {
+    display: none;
+  }
+  :root body.game-shell .shell-tools {
+    grid-column: 1 / -1;
+  }
+  :root body.game-shell .mission-picker-stage {
+    grid-template-columns: minmax(170px, 0.65fr) minmax(0, 1.6fr);
+    gap: 16px;
+  }
+  :root body.game-shell .mission-picker-chapter-section {
+    max-height: none;
+    overflow: visible;
+  }
+  :root body.game-shell .mission-picker-cards {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-template-columns: minmax(0, 1fr);
+    overflow: visible;
+    padding: 4px;
+  }
+  :root body.game-shell .mission-picker-card {
+    min-height: 64px;
+    padding: 8px;
+    gap: 6px;
+  }
+  :root body.game-shell .mission-picker-missions .missions {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr));
+  }
+  :root body.game-shell .game-overlay[data-kind='pause'] .overlay-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+  :root body.game-shell .game-overlay[data-kind='pause'] :is(#start-button, #overlay-menu) {
+    grid-column: auto;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  :root body.game-shell .home-actions {
+    gap: 4px 8px;
+  }
+  :root body.game-shell .home-actions :is(.button, #shell-play, #shell-featured) {
+    min-height: 44px;
+    padding: 6px 10px;
+    background: #101923eb;
+    border: 1px solid var(--line);
+  }
+  :root body.game-shell .home-actions :is(#shell-featured, #shell-continue) {
+    background: var(--fk-amber, #f9c15b);
+    color: var(--fk-on-accent, #07101e);
+  }
+}
+
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell #soundtrack-dialog > .soundtrack-actions:first-child,
+  :root body.game-shell .optional-worlds-top {
+    position: sticky;
+    top: -12px;
+    z-index: 10;
+    margin: 0;
+    padding: 4px 0;
+    background: var(--paper);
+  }
+  :root body.game-shell #soundtrack-dialog > .soundtrack-actions:first-child h2 {
+    min-width: 0;
+    flex: 1 1 120px;
+    margin: 0;
+  }
+  :root body.game-shell #soundtrack-close {
+    flex: 0 0 auto;
+  }
+  :root body.game-shell .soundtrack-section {
+    padding: 12px;
+    margin-block: 8px;
+  }
+  :root body.game-shell .soundtrack-dialog .micro-note {
+    font-size: 14px;
+  }
+  :root body.game-shell .shell-deploy-bar {
+    bottom: -12px;
+    margin-top: 8px;
+    padding: 6px 0;
+    gap: 8px;
+  }
+  :root body.game-shell .shell-deploy-bar > div {
+    min-width: 0;
+    gap: 8px;
+  }
+  :root body.game-shell #shell-briefing {
+    position: static;
+    margin: 0;
+    width: auto;
+  }
+}
+
+@media (max-width: 680px), (max-height: 600px) {
+  :root
+    body.game-shell:has(.game-overlay:not([hidden]))
+    :is(.shell-bar, .telemetry, .encounter-status) {
+    visibility: hidden;
+  }
+  :root body.game-shell .game-overlay[data-kind='pause'] .overlay-card {
+    min-height: 0;
+    height: auto;
+    flex: none;
+  }
+}
+
+.game-shell .shell-tools a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell dialog :is(button, a, input, select, summary) {
+    scroll-margin-block: 64px 16px;
+  }
+  :root body.game-shell .game-overlay .overlay-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+    width: 100%;
+  }
+}
+
+/* Rotating an immersive game back to portrait restores a separate HUD row. */
+:root body.game-shell[data-flight-layout='portrait'][data-flight-state] .telemetry {
+  left: var(--flight-left);
+  top: calc(var(--flight-top) + 52px);
+  width: var(--flight-usable-width);
+  height: calc(var(--flight-strip-height) - 52px);
+}
+:root
+  body.game-shell[data-flight-layout='portrait'][data-flight-state]
+  .encounter-status:not([hidden]):not([data-phase='open']) {
+  left: var(--flight-left);
+  width: var(--flight-usable-width);
+}
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell #shell-mission-content .flight-deck.mission-picker {
+    gap: 10px;
+    margin-top: 0;
+  }
+  :root body.game-shell .mission-picker > .mission-brief {
+    margin-block: 0;
+  }
+}
+
+:root
+  body.game-shell.first-flight-session[data-flight-layout][data-flight-state]
+  .first-flight-task {
+  position: fixed;
+  left: var(--flight-left);
+  top: calc(var(--flight-top) + 54px);
+  width: calc(var(--flight-usable-width) - var(--touch-size) - 16px);
+  max-height: calc(var(--flight-strip-height) - 54px);
+  overflow: auto;
+  touch-action: pan-y;
+  margin: 0;
+  padding: 4px 8px;
+  font-size: 14px;
+  line-height: 1.3;
+}
+:root
+  body.game-shell.first-flight-session[data-flight-layout][data-touch-side='left']
+  .first-flight-task {
+  left: calc(var(--flight-left) + var(--touch-size) + 16px);
+}
+:root body.game-shell.first-flight-session[data-flight-layout='portrait'] .first-flight-task {
+  top: calc(var(--flight-top) + 112px);
+  left: var(--flight-left);
+  width: var(--flight-usable-width);
+  max-height: calc(var(--flight-strip-height) - 112px);
+}
+
+/* Keep the second thumb's actions beside the HUD, never on its values. */
+:root
+  body.game-shell[data-flight-layout='rail'][data-flight-state]
+  .play-controls
+  .ability-buttons {
+  position: fixed;
+  left: calc(var(--flight-left) + var(--flight-rail-width) + 8px);
+  bottom: max(24px, calc(var(--safe-bottom) + 12px));
+  width: 88px;
+  max-width: 88px;
+}
+:root
+  body.game-shell[data-flight-layout='rail'][data-flight-state][data-touch-side='left']
+  .play-controls
+  .ability-buttons {
+  left: calc(var(--flight-left) - 96px);
+}
+:root
+  body.game-shell.first-flight-session[data-flight-layout][data-text-size='large']
+  .first-flight-task {
+  font-size: 20px;
+  line-height: 1.25;
+}
+:root body.game-shell .game-overlay .first-flight-panel:not([hidden]) {
+  display: block;
+  width: 100%;
+  margin: 12px 0 0;
+  padding: 12px;
+  text-align: left;
+}
+:root body.game-shell .game-overlay .first-flight-panel :is(select, summary, button) {
+  min-height: 44px;
+  max-width: 100%;
+}
+
+/* Put chapter and mission choices in the first screenful. Keep the saved
+   flight explanation on Continue so it does not displace mission choices. */
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell #shell-missions .shell-dialog-heading h2 {
+    margin: 2px 0;
+    font-size: 24px;
+    line-height: 1.1;
+  }
+  :root
+    body.game-shell
+    #shell-mission-content
+    .mission-picker
+    > :is(.deck-heading, #continue-saved-note) {
+    display: none;
+  }
+  :root body.game-shell #mission-picker-stage[data-status='normal'] #content-select-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  :root body.game-shell #mission-picker-stage h3 {
+    margin: 4px 0 8px;
+  }
+}
+@media (orientation: landscape) and (max-height: 300px) {
+  :root body.game-shell .mission-picker-chapter-section {
+    max-height: max(96px, calc(100dvh - 160px));
+    overflow-y: auto;
+    scroll-padding-block: 4px;
+  }
+  :root body.game-shell .mission-picker-chapter-section button {
+    scroll-margin-block: 4px;
+  }
+  :root body.game-shell #shell-missions .shell-dialog-heading {
+    min-height: 44px;
+    padding-block: 0;
+  }
+  :root body.game-shell #shell-missions .shell-dialog-heading .eyebrow {
+    display: none;
+  }
+}
+@media (max-width: 680px), (max-height: 600px) {
+  :root body.game-shell dialog label:not([hidden]):has(> input[type='checkbox']) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+  }
+}
+
+/* The current Field Kit has tabs, illustrated missions and a shared deploy
+   footer. Keep their choices visible in a phone's short landscape viewport. */
+@media (orientation: landscape) and (max-height: 600px) {
+  :root body.game-shell #settings-dialog > .eyebrow,
+  :root body.game-shell .field-kit-settings-panel > h3 {
+    display: none;
+  }
+  :root body.game-shell .field-kit-settings-tabs {
+    padding-block: 6px;
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+  :root body.game-shell .field-kit-settings-panel > .micro-note:first-of-type {
+    margin-block: 4px 8px;
+  }
+  :root body.game-shell .field-kit-settings-panel :is(.field, .slider-field, .soundtrack-field),
+  :root body.game-shell dialog .shell-mode-choice {
+    margin-block: 8px;
+  }
+  :root body.game-shell dialog .shell-mode-choice {
+    padding: 0 8px;
+  }
+  :root body.game-shell .shell-deploy-bar {
+    flex-direction: row;
+    align-items: center;
+  }
+  :root body.game-shell .shell-deploy-bar .shell-prepared-context p {
+    display: none;
+  }
+  :root body.game-shell .shell-deploy-bar button {
+    flex: 0 0 auto;
+    padding: 6px 12px;
+  }
+  :root body.game-shell .mission-gallery .mission {
+    grid-template-columns: 68px minmax(0, 1fr);
+    grid-template-rows: 16px auto 16px;
+    gap: 2px 6px;
+    padding: 4px;
+    min-height: 76px;
+  }
+  :root body.game-shell .mission-gallery-art {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    width: 68px;
+    height: 100%;
+    aspect-ratio: auto;
+    border: 0;
+  }
+  :root body.game-shell .mission-gallery .mission :is(.number, .name, .medal) {
+    grid-column: 2;
+    margin: 0;
+    padding: 0;
+    min-height: 0;
+  }
+  :root body.game-shell .mission-gallery .mission .number {
+    grid-row: 1;
+    font-size: 12px;
+  }
+  :root body.game-shell .mission-gallery .mission .name {
+    grid-row: 2;
+    font-size: 16px;
+  }
+  :root body.game-shell[data-text-size='large'] .mission-gallery .mission .name {
+    font-size: 20px;
+  }
+  :root body.game-shell .mission-gallery .mission .medal {
+    grid-row: 3;
+    font-size: 14px;
+  }
+  :root body.game-shell .mission-gallery-state {
+    font-size: 11px;
+    padding: 3px;
+  }
+  :root body.game-shell .mission-picker-missions .section-line {
+    flex-wrap: nowrap;
+  }
+  :root body.game-shell .mission-picker-missions .section-line > p {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+  }
+  :root body.game-shell .mission-picker-missions .section-line > button {
+    flex: 0 0 auto;
+  }
+}
+@media (orientation: landscape) and (max-height: 300px) {
+  :root body.game-shell .mission-picker-missions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  :root body.game-shell .mission-picker-missions .missions {
+    order: 1;
+  }
+  :root body.game-shell .mission-gallery-pages {
+    order: 2;
+  }
+  :root body.game-shell .mission-picker-missions .section-line {
+    order: 3;
+  }
+}

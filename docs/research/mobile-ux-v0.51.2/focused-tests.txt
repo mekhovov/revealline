@@ -1,0 +1,420 @@
+layout-final.log
+
+TAP version 13
+# Subtest: 956×440, standard text: whole board outside HUD
+ok 1 - 956×440, standard text: whole board outside HUD
+  ---
+  duration_ms: 1.715958
+  ...
+# Subtest: 956×440, large text: whole board outside HUD
+ok 2 - 956×440, large text: whole board outside HUD
+  ---
+  duration_ms: 0.270917
+  ...
+# Subtest: 956×330, standard text: whole board outside HUD
+ok 3 - 956×330, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.089792
+  ...
+# Subtest: 956×330, large text: whole board outside HUD
+ok 4 - 956×330, large text: whole board outside HUD
+  ---
+  duration_ms: 0.0835
+  ...
+# Subtest: 874×402, standard text: whole board outside HUD
+ok 5 - 874×402, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.077791
+  ...
+# Subtest: 874×402, large text: whole board outside HUD
+ok 6 - 874×402, large text: whole board outside HUD
+  ---
+  duration_ms: 0.779625
+  ...
+# Subtest: 874×300, standard text: whole board outside HUD
+ok 7 - 874×300, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.47225
+  ...
+# Subtest: 874×300, large text: whole board outside HUD
+ok 8 - 874×300, large text: whole board outside HUD
+  ---
+  duration_ms: 0.557166
+  ...
+# Subtest: 852×393, standard text: whole board outside HUD
+ok 9 - 852×393, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.866125
+  ...
+# Subtest: 852×393, large text: whole board outside HUD
+ok 10 - 852×393, large text: whole board outside HUD
+  ---
+  duration_ms: 0.442
+  ...
+# Subtest: 844×390, standard text: whole board outside HUD
+ok 11 - 844×390, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.218542
+  ...
+# Subtest: 844×390, large text: whole board outside HUD
+ok 12 - 844×390, large text: whole board outside HUD
+  ---
+  duration_ms: 0.260167
+  ...
+# Subtest: 915×412, standard text: whole board outside HUD
+ok 13 - 915×412, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.136625
+  ...
+# Subtest: 915×412, large text: whole board outside HUD
+ok 14 - 915×412, large text: whole board outside HUD
+  ---
+  duration_ms: 0.437167
+  ...
+# Subtest: 800×360, standard text: whole board outside HUD
+ok 15 - 800×360, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.114084
+  ...
+# Subtest: 800×360, large text: whole board outside HUD
+ok 16 - 800×360, large text: whole board outside HUD
+  ---
+  duration_ms: 0.250083
+  ...
+# Subtest: 740×360, standard text: whole board outside HUD
+ok 17 - 740×360, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.087166
+  ...
+# Subtest: 740×360, large text: whole board outside HUD
+ok 18 - 740×360, large text: whole board outside HUD
+  ---
+  duration_ms: 0.419375
+  ...
+# Subtest: 667×375, standard text: whole board outside HUD
+ok 19 - 667×375, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.096625
+  ...
+# Subtest: 667×375, large text: whole board outside HUD
+ok 20 - 667×375, large text: whole board outside HUD
+  ---
+  duration_ms: 0.164375
+  ...
+# Subtest: 667×280, standard text: whole board outside HUD
+ok 21 - 667×280, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.067458
+  ...
+# Subtest: 667×280, large text: whole board outside HUD
+ok 22 - 667×280, large text: whole board outside HUD
+  ---
+  duration_ms: 0.05425
+  ...
+# Subtest: 568×256, standard text: whole board outside HUD
+ok 23 - 568×256, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.053125
+  ...
+# Subtest: 568×256, large text: whole board outside HUD
+ok 24 - 568×256, large text: whole board outside HUD
+  ---
+  duration_ms: 0.047625
+  ...
+# Subtest: 1133×744, standard text: whole board outside HUD
+ok 25 - 1133×744, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.053375
+  ...
+# Subtest: 1133×744, large text: whole board outside HUD
+ok 26 - 1133×744, large text: whole board outside HUD
+  ---
+  duration_ms: 0.190375
+  ...
+# Subtest: 1180×820, standard text: whole board outside HUD
+ok 27 - 1180×820, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.086833
+  ...
+# Subtest: 1180×820, large text: whole board outside HUD
+ok 28 - 1180×820, large text: whole board outside HUD
+  ---
+  duration_ms: 0.145291
+  ...
+# Subtest: 1280×800, standard text: whole board outside HUD
+ok 29 - 1280×800, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.076458
+  ...
+# Subtest: 1280×800, large text: whole board outside HUD
+ok 30 - 1280×800, large text: whole board outside HUD
+  ---
+  duration_ms: 0.066125
+  ...
+# Subtest: 1024×600, standard text: whole board outside HUD
+ok 31 - 1024×600, standard text: whole board outside HUD
+  ---
+  duration_ms: 1.361584
+  ...
+# Subtest: 1024×600, large text: whole board outside HUD
+ok 32 - 1024×600, large text: whole board outside HUD
+  ---
+  duration_ms: 0.384625
+  ...
+# Subtest: wide Safari viewport keeps the board at full available height beside the HUD
+ok 33 - wide Safari viewport keeps the board at full available height beside the HUD
+  ---
+  duration_ms: 0.346209
+  ...
+# Subtest: short/narrow landscape falls back to a horizontal strip with reachable controls
+ok 34 - short/narrow landscape falls back to a horizontal strip with reachable controls
+  ---
+  duration_ms: 0.090833
+  ...
+# Subtest: empty/invalid measurements cannot produce a broken layout
+ok 35 - empty/invalid measurements cannot produce a broken layout
+  ---
+  duration_ms: 0.2295
+  ...
+# Subtest: left-handed steering puts the HUD on the right without shrinking the board
+ok 36 - left-handed steering puts the HUD on the right without shrinking the board
+  ---
+  duration_ms: 0.206458
+  ...
+# Subtest: rotating fullscreen to portrait keeps the HUD and thumb controls off the board
+ok 37 - rotating fullscreen to portrait keeps the HUD and thumb controls off the board
+  ---
+  duration_ms: 0.311
+  ...
+# Subtest: lessons reserve instruction space instead of covering the board with the task
+ok 38 - lessons reserve instruction space instead of covering the board with the task
+  ---
+  duration_ms: 0.184625
+  ...
+# Subtest: browser viewport/settings events update geometry once per frame and dispose cleanly
+ok 39 - browser viewport/settings events update geometry once per frame and dispose cleanly
+  ---
+  duration_ms: 1.46675
+  ...
+# Subtest: native fullscreen and installed display modes reserve portrait HUD space
+ok 40 - native fullscreen and installed display modes reserve portrait HUD space
+  ---
+  duration_ms: 0.743083
+  ...
+# Subtest: compact course controls join the scrollable menu and return to their original position
+ok 41 - compact course controls join the scrollable menu and return to their original position
+  ---
+  duration_ms: 0.361209
+  ...
+# Subtest: long lesson instructions resize their reserved space and leave a visible board
+ok 42 - long lesson instructions resize their reserved space and leave a visible board
+  ---
+  duration_ms: 0.369209
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 192.879375
+
+
+field-kit-final.log
+
+TAP version 13
+# Subtest: title has five game destinations and the edition archive; Back preserves an unstarted flight
+ok 1 - title has five game destinations and the edition archive; Back preserves an unstarted flight
+  ---
+  duration_ms: 1134.403791
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 2 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 1186.690333
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 3 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 1098.856458
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 4 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 1012.357334
+  ...
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4934.387625
+
+
+countercurrent-retry.log
+
+TAP version 13
+# Subtest: four Countercurrent owners explicitly download and Choose without replacing an unrelated cut; exact earned and saved data recover
+    # Subtest: four Arcade downloads retain the paused base run and earn separate exact first pictures
+    ok 1 - four Arcade downloads retain the paused base run and earn separate exact first pictures
+      ---
+      duration_ms: 622777.913208
+      ...
+    # Subtest: restart authenticates all owners and exports the exact next-mission unfinished cut
+    ok 2 - restart authenticates all owners and exports the exact next-mission unfinished cut
+      ---
+      duration_ms: 85735.29175
+      ...
+    # Subtest: fresh profile refuses missing originals without writes, then exact downloads allow explicit backup recovery
+    ok 3 - fresh profile refuses missing originals without writes, then exact downloads allow explicit backup recovery
+      ---
+      duration_ms: 207123.619958
+      ...
+    1..3
+ok 1 - four Countercurrent owners explicitly download and Choose without replacing an unrelated cut; exact earned and saved data recover
+  ---
+  duration_ms: 915639.85475
+  ...
+1..1
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+
+
+fracture-retry.log
+
+TAP version 13
+# Subtest: four Fracture owners explicitly download and Choose without replacing an unrelated cut; exact earned and saved data recover
+    # Subtest: four Arcade downloads retain the paused base run and earn separate exact first pictures
+    ok 1 - four Arcade downloads retain the paused base run and earn separate exact first pictures
+      ---
+      duration_ms: 686708.446959
+      ...
+    # Subtest: restart authenticates all owners and exports the exact next-mission unfinished cut
+    ok 2 - restart authenticates all owners and exports the exact next-mission unfinished cut
+      ---
+      duration_ms: 94973.170375
+      ...
+    # Subtest: fresh profile refuses missing originals without writes, then exact downloads allow explicit backup recovery
+    ok 3 - fresh profile refuses missing originals without writes, then exact downloads allow explicit backup recovery
+      ---
+      duration_ms: 254280.040334
+      ...
+    1..3
+ok 1 - four Fracture owners explicitly download and Choose without replacing an unrelated cut; exact earned and saved data recover
+  ---
+  duration_ms: 1035973.281666
+  ...
+1..1
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+
+
+route-worlds-retry.log
+
+TAP version 13
+# Subtest: five exact registered editions install together within unchanged budgets, preserve a paused cut, and separately Choose/earn Route Choices and Sentinel originals
+    # Subtest: five native pairs, three Route Choices wins and one Sentinel win
+    ok 1 - five native pairs, three Route Choices wins and one Sentinel win
+      ---
+      duration_ms: 523424.765666
+      ...
+    # Subtest: restart authenticates all five indexed editions and retains exact first-earned pictures
+    ok 2 - restart authenticates all five indexed editions and retains exact first-earned pictures
+      ---
+      duration_ms: 54489.075875
+      ...
+    1..2
+ok 1 - five exact registered editions install together within unchanged budgets, preserve a paused cut, and separately Choose/earn Route Choices and Sentinel originals
+  ---
+  duration_ms: 577918.101583
+  ...
+# Subtest: foreign theme pair refuses before writes and cannot make the selected chapter available
+ok 2 - foreign theme pair refuses before writes and cannot make the selected chapter available
+  ---
+  duration_ms: 778.46475
+  ...
+# Subtest: released host reads the exact small catalog then explicitly downloads only one pair; restart resolves that released registry
+    # Subtest: explicit download retains current ready flight until Choose
+    ok 1 - explicit download retains current ready flight until Choose
+      ---
+      duration_ms: 21810.932917
+      ...
+    # Subtest: fresh released app uses the same persistent authority
+    ok 2 - fresh released app uses the same persistent authority
+      ---
+      duration_ms: 18088.708875
+      ...
+    1..2
+ok 3 - released host reads the exact small catalog then explicitly downloads only one pair; restart resolves that released registry
+  ---
+  duration_ms: 39902.701333
+  ...
+# Subtest: inventory completion still refuses a fulfilled action without verified readiness
+ok 4 - inventory completion still refuses a fulfilled action without verified readiness
+  ---
+  duration_ms: 7.20325
+  ...
+# Subtest: inventory deadline cancels through the panel and joins the pending action before failure
+ok 5 - inventory deadline cancels through the panel and joins the pending action before failure
+  ---
+  duration_ms: 24.94
+  ...
+# Subtest: inventory cleanup reports a still-pending action within its separate finite allowance
+ok 6 - inventory cleanup reports a still-pending action within its separate finite allowance
+  ---
+  duration_ms: 37.582917
+  ...
+1..6
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+
+
+validate-final.log
+
+{
+  "version": "0.51.2",
+  "files": 569,
+  "literalReferencesValid": true,
+  "navigationWarnings": [
+    "game/index.html → ../releases/",
+    "game/index.html → ../releases/",
+    "game/index.html → ../diagnostics/",
+    "game/index.html → ../releases/",
+    "game/index.html → ../releases/",
+    "site/about.html → ../privacy.html",
+    "site/about.html → ../credits.html"
+  ],
+  "campaign": "first-signal",
+  "levels": 12,
+  "themes": 4,
+  "classes": 7,
+  "packs": 12,
+  "packLevels": 35,
+  "packGoals": 6
+}
+
+
+format-final.log
+
+Checking formatting...
+All matched files use Prettier code style!
