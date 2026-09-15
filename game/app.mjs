@@ -27,6 +27,7 @@ import {
   nextInputModality,
   showScreenControls,
   hasCompactArcadeArena,
+  hasFlightWarnings,
 } from './input-presentation.mjs';
 import { onNativeInactive, nativePlatform } from './platform.mjs';
 import { createRun, stepRun, getSummary, CLASSES, FIXED_DT } from './core/index.mjs';
@@ -1344,6 +1345,9 @@ try {
     refreshInputPresentation();
   }
   function refreshInputPresentation() {
+    const flightWarnings = String(hasFlightWarnings(run?.level));
+    if (document.body.dataset.flightWarnings !== flightWarnings)
+      document.body.dataset.flightWarnings = flightWarnings;
     const chrome = hasCompactArcadeArena(run?.level) ? 'compact' : 'full';
     if (document.body.dataset.arenaChrome !== chrome) document.body.dataset.arenaChrome = chrome;
     const visible = showScreenControls({
@@ -3477,6 +3481,12 @@ try {
     drawResultPicture($('result-picture'), { kind, run, theme, seed, painter, flightPictures });
     $('game-overlay').dataset.kind = kind;
     show('pause-label', kind === 'pause');
+    show('pause-summary', kind === 'pause');
+    if (kind === 'pause') {
+      $('pause-stats').textContent =
+        `Revealed ${(run.coverage * 100).toFixed(1)}% · ${$('target').textContent} · ${$('lives').getAttribute('aria-label')} · Time ${$('time').textContent} · Score ${$('score').textContent}`;
+      $('pause-status').textContent = $('run-message').textContent;
+    }
     show('overlay-reading', kind !== 'pause');
     show('overlay-footnote', kind !== 'pause');
     $('game-overlay').dataset.intro = String(
@@ -4009,6 +4019,17 @@ try {
     $('encounter-status').dataset.phase =
       encounter?.phase ||
       (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
+    const fieldAlert = encounter
+      ? `${encounter.title}. ${encounter.instruction}`
+      : classic?.enemies
+          .filter((enemy) => enemy.mode === 'warning')
+          .map(
+            (enemy) =>
+              `${enemy.type === 'eroder' ? 'Ground reopens' : 'Rover wakes'} in ${enemy.seconds.toFixed(1)}s`,
+          )
+          .join(' · ') || '';
+    if ($('flight-alert').textContent !== fieldAlert) $('flight-alert').textContent = fieldAlert;
+    show('flight-alert', !!fieldAlert && !campaignOverview);
     refreshMastery();
     refreshCourse();
   }
@@ -5000,7 +5021,13 @@ try {
     onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
     onWorlds: () => optionalWorlds.open(),
   });
-  attachFullscreen($('shell-fullscreen'));
+  attachFullscreen($('shell-fullscreen'), document, {
+    onHelp: () => {
+      pause(true);
+      clearInput();
+    },
+  });
+  $('fullscreen-dialog').addEventListener('close', () => clearInput());
   attachFlightLayout();
   void initializeSoundtrack();
   if (autoplayPackLaunch)

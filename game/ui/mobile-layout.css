@@ -79,6 +79,8 @@
   display: none;
 }
 :root body.game-shell[data-flight-layout][data-flight-state] #shell-fullscreen {
+  position: static;
+  inset: auto;
   margin-left: auto;
 }
 :root body.game-shell[data-flight-layout][data-flight-state] #pause-button {
@@ -96,10 +98,10 @@
   top: var(--flight-top);
   left: calc(var(--flight-left) + 52px);
   width: calc(var(--flight-usable-width) - 152px);
-  height: var(--flight-strip-height);
+  height: calc(var(--flight-base-strip) - var(--flight-warning-height));
   min-height: 0;
   display: grid;
-  grid-template-columns: 1.3fr 0.8fr 1fr 1.2fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   align-items: start;
   gap: 6px;
   padding: 0;
@@ -124,6 +126,7 @@
   font-size: 20px;
   line-height: 1.1;
 }
+:root body.game-shell[data-flight-layout][data-flight-state] .telemetry > div:last-child,
 :root body.game-shell[data-flight-layout][data-flight-state] .telemetry .meter,
 :root body.game-shell[data-flight-layout][data-flight-state] :is(.flight-status, .run-message) {
   display: none;
@@ -171,43 +174,58 @@
   strong {
   font-size: 24px;
 }
-/* A compact field-condition label sits in reserved chrome, including warnings.
-   The complete instruction remains available in the mission brief. */
-:root
-  body.game-shell[data-flight-layout][data-flight-state]
-  .encounter-status:not([hidden]):not([data-phase='open']) {
-  display: block;
-  position: fixed;
-  inset: auto;
-  left: calc(var(--flight-left) + 52px);
-  top: calc(var(--flight-top) + var(--flight-strip-height) - 18px);
-  width: calc(var(--flight-usable-width) - 152px);
-  height: 18px;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  transform: none;
-  background: transparent;
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Warning space is fixed for the authored mission, not its current phase. */
+:root body.game-shell[data-flight-layout][data-flight-state] .encounter-status {
+  display: none;
 }
-:root
-  body.game-shell[data-flight-layout][data-flight-state]
-  .encounter-status
-  :is(#encounter-instruction, #classic-summary) {
+.flight-alert {
   display: none;
 }
 :root
-  body.game-shell[data-flight-layout='rail'][data-flight-state]
-  .encounter-status:not([hidden]):not([data-phase='open']) {
+  body.game-shell[data-flight-layout][data-flight-state][data-flight-warnings='true']
+  .flight-alert:not([hidden]) {
+  display: block;
+  position: fixed;
   left: var(--flight-left);
-  top: calc(var(--flight-top) + var(--flight-usable-height) - 76px);
+  top: calc(var(--flight-top) + var(--flight-base-strip) - var(--flight-warning-height));
+  width: var(--flight-usable-width);
+  height: var(--flight-warning-height);
+  padding: 2px 8px;
+  margin: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  font: 13px/1.25 var(--fk-font-ui, sans-serif);
+  color: var(--danger);
+  z-index: 6;
+}
+:root body.game-shell[data-flight-layout='rail'][data-flight-state] .flight-alert:not([hidden]) {
+  top: calc(var(--flight-top) + var(--flight-usable-height) - 48px - var(--flight-warning-height));
   width: var(--flight-rail-width);
-  height: 30px;
-  white-space: normal;
-  line-height: 1.15;
+}
+:root body.game-shell[data-flight-layout][data-flight-state][data-text-size='large'] .flight-alert {
+  font-size: 16px;
+}
+.pause-summary {
+  margin: 8px 0;
+  font: 16px/1.4 var(--fk-font-ui, sans-serif);
+  color: var(--muted);
+}
+.pause-summary p {
+  margin: 4px 0;
+}
+.screen-help {
+  max-width: 600px;
+}
+.screen-help li {
+  margin-block: 12px;
+}
+.screen-help .screen-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.screen-help button {
+  min-height: 44px;
 }
 /* Native dialogs have one reachable vertical scroll surface. Safe-area padding
    is applied to content, never subtracted twice from the browser viewport. */
@@ -519,7 +537,7 @@
 @media (max-width: 680px), (max-height: 600px) {
   :root
     body.game-shell:has(.game-overlay:not([hidden]))
-    :is(.shell-bar, .telemetry, .encounter-status) {
+    :is(.shell-bar, .telemetry, .encounter-status, .flight-alert) {
     visibility: hidden;
   }
   :root body.game-shell .game-overlay[data-kind='pause'] .overlay-card {
@@ -545,12 +563,12 @@
   }
 }
 
-/* Rotating an immersive game back to portrait restores a separate HUD row. */
+/* Portrait browser play has one navigation row and one essentials row. */
 :root body.game-shell[data-flight-layout='portrait'][data-flight-state] .telemetry {
   left: var(--flight-left);
-  top: calc(var(--flight-top) + 52px);
+  top: calc(var(--flight-top) + 48px);
   width: var(--flight-usable-width);
-  height: calc(var(--flight-strip-height) - 52px);
+  height: calc(var(--flight-base-strip) - var(--flight-warning-height) - 48px);
 }
 :root
   body.game-shell[data-flight-layout='portrait'][data-flight-state]
@@ -573,26 +591,15 @@
   .first-flight-task {
   position: fixed;
   left: var(--flight-left);
-  top: calc(var(--flight-top) + 54px);
-  width: calc(var(--flight-usable-width) - var(--touch-size) - 16px);
-  max-height: calc(var(--flight-strip-height) - 54px);
+  top: calc(var(--flight-top) + var(--flight-base-strip));
+  width: var(--flight-usable-width);
+  max-height: calc(var(--flight-strip-height) - var(--flight-base-strip));
   overflow: auto;
   touch-action: pan-y;
   margin: 0;
-  padding: 4px 8px;
+  padding: 2px 8px;
   font-size: 14px;
   line-height: 1.3;
-}
-:root
-  body.game-shell.first-flight-session[data-flight-layout][data-touch-side='left']
-  .first-flight-task {
-  left: calc(var(--flight-left) + var(--touch-size) + 16px);
-}
-:root body.game-shell.first-flight-session[data-flight-layout='portrait'] .first-flight-task {
-  top: calc(var(--flight-top) + 112px);
-  left: var(--flight-left);
-  width: var(--flight-usable-width);
-  max-height: calc(var(--flight-strip-height) - 112px);
 }
 
 /* Keep the second thumb's actions beside the HUD, never on its values. */
@@ -783,4 +790,8 @@
   :root body.game-shell .mission-picker-missions .section-line {
     order: 3;
   }
+}
+
+:root body.game-shell[data-text-size='large'] .pause-summary {
+  font-size: 20px;
 }

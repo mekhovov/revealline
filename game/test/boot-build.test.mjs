@@ -18,6 +18,9 @@ const fieldKitFiles = [
   'game/ui/field-kit-surfaces.mjs',
   'game/ui/field-kit-copy.mjs',
   'game/ui/field-kit-compiled.css',
+  'game/ui/mobile-layout.css',
+  'game/ui/flight-layout.mjs',
+  'game/ui/fullscreen.mjs',
   'game/presentation/page-entry.mjs',
   'game/presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png',
   'game/presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png',
@@ -46,6 +49,10 @@ test('the actual game has a static dark guard before resources and a single caug
   assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js"><\/script>/);
   assert.doesNotMatch(html, /<script\b[^>]*src="app.mjs"/);
   assert.equal([...html.matchAll(/id="boot-status"/g)].length, 1);
+  assert.ok(
+    html.indexOf('href="ui/mobile-layout.css"') > html.indexOf('href="ui/field-kit-compiled.css"'),
+    'Adaptive layout loads after presentation styles',
+  );
   assert.ok(
     html.indexOf('src="boot.mjs"') < html.indexOf('href="style.css"'),
     'resource failures can be observed before app styles load',
@@ -115,7 +122,7 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     await copy(name);
   const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
   for (const [, relative] of html.matchAll(/<link[^>]*href="([^"]+\.css)"/g))
-    if (relative !== 'boot.css' && !relative.startsWith('ui/field-kit-'))
+    if (relative !== 'boot.css' && !fieldKitFiles.includes(`game/${relative}`))
       await put(`game/${relative}`, '/* unrelated fixture style */');
   await put('game/vendor/phaser-4.2.1.min.js', 'globalThis.Phaser = {};');
   await put('game/app.mjs', 'export {};');

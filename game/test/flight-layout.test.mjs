@@ -57,8 +57,9 @@ test('wide Safari viewport keeps the board at full available height beside the H
   assert.equal(board.height, 305);
   assert.equal(board.width, 610);
 });
-test('short/narrow landscape falls back to a horizontal strip with reachable controls', () => {
-  assert.equal(fitFlightLayout({ width: 560, height: 248, aspect: 2 }).mode, 'strip');
+test('short landscape uses the larger rail fit until its controls no longer fit vertically', () => {
+  assert.equal(fitFlightLayout({ width: 560, height: 248, aspect: 2 }).mode, 'rail');
+  assert.equal(fitFlightLayout({ width: 560, height: 220, aspect: 2 }).mode, 'strip');
 });
 test('empty/invalid measurements cannot produce a broken layout', () => {
   for (const args of [
@@ -111,7 +112,7 @@ test('lessons reserve instruction space instead of covering the board with the t
     const lesson = fitFlightLayout({ width, height, aspect: 4 / 3, taskHeight: 48 });
     assert.notEqual(lesson.mode, 'rail');
     assert.ok(lesson.board.y >= lesson.stripHeight);
-    assert.ok(lesson.stripHeight >= 120);
+    assert.ok(lesson.stripHeight >= 104);
   }
 });
 
@@ -208,7 +209,7 @@ function layoutHost() {
     matchMedia: (query) =>
       query.includes('display-mode')
         ? displayMode
-        : query.includes('orientation')
+        : query.includes('any-pointer')
           ? media
           : menuMedia,
     requestAnimationFrame(callback) {
@@ -297,7 +298,7 @@ test('native fullscreen and installed display modes reserve portrait HUD space',
     host.doc.fullscreenChange();
     host.flush();
     assert.equal(host.body.dataset.flightLayout, 'portrait', kind);
-    assert.ok(parseFloat(host.body.values['--flight-y']) >= 124);
+    assert.ok(parseFloat(host.body.values['--flight-y']) >= 104);
     detach();
   }
 });
@@ -312,7 +313,7 @@ test('compact course controls join the scrollable menu and return to their origi
   host.flush();
   assert.equal(host.panel.parentElement, host.card);
   assert.equal(host.body.dataset.flightLayout, 'strip');
-  assert.equal(host.body.values['--flight-strip-height'], '120px');
+  assert.equal(host.body.values['--flight-strip-height'], '104px');
   host.media.matches = false;
   host.media.change();
   host.flush();
@@ -342,8 +343,8 @@ test('long lesson instructions resize their reserved space and leave a visible b
   host.task.scrollHeight = 160;
   host.observers[1].callback();
   host.flush();
-  assert.equal(host.body.values['--flight-strip-height'], '232px');
-  assert.equal(host.body.values['--flight-y'], '236px');
+  assert.equal(host.body.values['--flight-strip-height'], '128px');
+  assert.equal(host.body.values['--flight-y'], '132px');
   host.body.dataset.textSize = 'large';
   host.dimensions.width = 568;
   host.dimensions.height = 256;
@@ -372,6 +373,78 @@ test('long lesson instructions resize their reserved space and leave a visible b
     host.observers[1].targets.some(
       ([target, options]) => target === host.task && options.characterData,
     ),
+  );
+  detach();
+});
+
+test('ordinary portrait browsers get a compact header without requesting fullscreen', () => {
+  const host = layoutHost();
+  host.dimensions.width = 440;
+  host.dimensions.height = 760;
+  const detach = attachFlightLayout({ document: host.doc, window: host.win });
+  assert.equal(host.body.dataset.flightLayout, 'portrait');
+  assert.equal(host.body.values['--flight-y'], '104px');
+  assert.equal(host.body.values['--flight-width'], '432px');
+  assert.equal(host.body.values['--flight-height'], '216px');
+  detach();
+});
+
+test('warning-capable missions reserve space and D-pads stay outside either side of the board', () => {
+  for (const [width, height] of viewports) {
+    for (const largeText of [false, true]) {
+      for (const railSide of ['left', 'right']) {
+        const args = {
+          width,
+          height,
+          largeText,
+          railSide,
+          aspect: 2,
+          steeringWidth: 180,
+          warnings: true,
+        };
+        const layout = fitFlightLayout(args);
+        const { board } = layout;
+        assert.ok(board.width > 0 && board.height > 0);
+        assert.ok(board.y + board.height <= height + 1e-8);
+        if (railSide === 'right') assert.ok(board.x >= 180);
+        else assert.ok(board.x + board.width <= width - 180 + 1e-8);
+        if (layout.mode === 'rail') assert.ok(height >= (largeText ? 424 : 360));
+        else assert.ok(board.y >= layout.stripHeight);
+      }
+    }
+  }
+});
+
+test('portrait warning rows and large controls fit inside browser chrome constraints', () => {
+  for (const width of [320, 360, 393, 440]) {
+    const { board, stripHeight } = fitFlightLayout({
+      width,
+      height: 568,
+      aspect: 2,
+      warnings: true,
+      largeText: true,
+      portraitControlHeight: 228,
+    });
+    assert.ok(board.y >= stripHeight);
+    assert.ok(board.y + board.height <= 340 + 1e-8);
+    assert.ok(board.width > 0);
+  }
+});
+
+test('warning phase changes do not resize the board; authored layout changes do', () => {
+  const host = layoutHost();
+  host.body.dataset.flightWarnings = 'true';
+  const detach = attachFlightLayout({ document: host.doc, window: host.win });
+  const before = { ...host.body.values };
+  host.observers[1].callback();
+  host.flush();
+  assert.deepEqual(host.body.values, before);
+  host.body.dataset.flightWarnings = 'false';
+  host.observers[1].callback();
+  host.flush();
+  assert.equal(host.body.dataset.flightLayout, 'rail');
+  assert.ok(
+    parseFloat(host.body.values['--flight-height']) > parseFloat(before['--flight-height']),
   );
   detach();
 });

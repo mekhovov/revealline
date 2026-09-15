@@ -190,6 +190,10 @@
             <div id="game-overlay" class="game-overlay">
               <div id="overlay-reading-unit" class="overlay-card">
                 <p id="pause-label" class="pause-label" role="status" hidden>Paused</p>
+                <div id="pause-summary" class="pause-summary" hidden>
+                  <p id="pause-stats"></p>
+                  <p id="pause-status"></p>
+                </div>
                 <div
                   id="overlay-reading"
                   class="overlay-message"
@@ -298,6 +302,7 @@
             <span><i id="status-dot"></i><strong id="flight-state">Ready for launch</strong></span
             ><span id="objective-state">Close a line to reveal the picture</span>
           </div>
+          <p id="flight-alert" class="flight-alert" hidden></p>
           <p id="controller-boost-cue" class="controller-boost-cue" role="status" hidden></p>
           <div
             id="encounter-status"
@@ -767,6 +772,47 @@
       <button id="switch-class-button" class="button primary">Switch & continue →</button>
       <p id="switch-status" role="status"></p>
     </dialog>
+    <dialog id="fullscreen-dialog" class="screen-help" aria-labelledby="fullscreen-title">
+      <button
+        class="dialog-close"
+        type="button"
+        data-close="fullscreen-dialog"
+        aria-label="Close fullscreen help"
+      >
+        ×
+      </button>
+      <h2 id="fullscreen-title">More room to play</h2>
+      <p id="fullscreen-message" role="status"></p>
+      <div id="fullscreen-home-steps">
+        <h3>On iPhone or iPad</h3>
+        <ol>
+          <li>
+            Open this game in Safari and choose <strong>Share</strong> (in the page menu on some
+            layouts).
+          </li>
+          <li>Choose <strong>Add to Home Screen</strong>.</li>
+          <li>Leave <strong>Open as Web App</strong> enabled, then tap <strong>Add</strong>.</li>
+          <li>Launch Reveal Line from its Home Screen icon.</li>
+        </ol>
+        <p>
+          On other devices, use your browser’s Install app or Add to Home Screen option when
+          available.
+        </p>
+      </div>
+      <p id="fullscreen-home-note">
+        To keep a portable copy of your progress, use Settings → Game data → Saves &amp; recovery
+        before switching. Browser and Home Screen storage may be separate; your saves are not
+        transferred automatically.
+      </p>
+      <div class="screen-actions">
+        <button id="fullscreen-retry" class="button secondary" type="button" data-fullscreen hidden>
+          Try fullscreen
+        </button>
+        <button class="button primary" type="button" data-close="fullscreen-dialog">
+          Back to game
+        </button>
+      </div>
+    </dialog>
     <dialog id="settings-dialog" aria-labelledby="settings-title">
       <button class="dialog-close" data-close="settings-dialog" aria-label="Close settings">
         ×
@@ -988,6 +1034,9 @@
         <p class="micro-note" data-field-kit-copy="settings.displayDescription">
           Readable text, terrain and comfortable motion.
         </p>
+        <button id="settings-fullscreen" class="button secondary" type="button" data-fullscreen>
+          Fullscreen &amp; Home Screen
+        </button>
         <label class="field"
           >Text style<select id="text-face">
             <option value="pixel">Theme font</option>
