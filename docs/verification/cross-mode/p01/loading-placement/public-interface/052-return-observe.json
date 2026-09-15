@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:00:07.701602+00:00",
+  "finishedAt": "2026-09-15T14:00:08.145054+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/?course=first-flight&lesson=close-line&turn-policy=immediate",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "exitCode": 0,
+  "stdout": "- button \"Game menu\" [ref=e1]\n- button \"Enter fullscreen\" [ref=e2]\n- button \"Pause or resume\" [ref=e3]\n- region \"Game\" [ref=e4]\n  - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up \u2191 / W; down \u2193 / S; left \u2190 / A; right \u2192 / D; ability E; boost Left Shift / Right Shift; pause Esc / P. Releasing a direction keeps you moving.\" [ref=e6] focusable [tabindex]\n  - region \"First Flight course\" [ref=e5]\n    - heading \"First Flight \u00b7 Close a line\" [level=2, ref=e7]\n    - combobox \"Choose a First Flight lesson\" [expanded=false, ref=e8]: 1. Close a line\n      - option \"1. Close a line\" [selected, ref=e11]\n      - option \"2. Find the empty side\" [ref=e12]\n      - option \"3. Bring the picture home\" [ref=e13]\n    - button \"Skip lesson\" [ref=e9]\n    - button \"Return to the game\" [ref=e10]\n",
+  "stderr": ""
+}

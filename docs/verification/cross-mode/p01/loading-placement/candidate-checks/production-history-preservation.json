@@ -1,0 +1,40 @@
+{
+  "scope": "Candidate r20 append-only source recipe adoption; seven changed screen recipes need a new scoped review before release readiness.",
+  "before": {
+    "bytes": 6748756,
+    "sha256": "02576a6d3f7af62636d044e74fb39bf5629d8f6de21569dd0613b6c170b211a7",
+    "revision": 19
+  },
+  "after": {
+    "bytes": 6759180,
+    "sha256": "74e6af248a05e736093bae7d91a9917011d41d0540155f0aa0ee790c1341a246",
+    "revision": 20
+  },
+  "groups": {
+    "assets": {
+      "before": 1046,
+      "after": 1053,
+      "preserved": 1046
+    },
+    "themes": {
+      "before": 20,
+      "after": 21,
+      "preserved": 20
+    },
+    "collections": {
+      "before": 1,
+      "after": 1,
+      "preserved": 1
+    },
+    "slots": {
+      "before": 293,
+      "after": 293,
+      "preserved": 293
+    }
+  },
+  "originalBlobs": {
+    "before": 127,
+    "after": 127,
+    "allBytesPreserved": true
+  }
+}

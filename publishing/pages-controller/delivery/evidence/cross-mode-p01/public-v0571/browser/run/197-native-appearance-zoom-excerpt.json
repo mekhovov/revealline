@@ -1,0 +1,10 @@
+{
+  "originalPath": "197-native-appearance.json",
+  "originalSha256": "de475bf82d683d753e4539636e79044772b8a686d09621c9b6cedacf8e6a1f9d",
+  "time": "2026-09-15T13:52:36.753176+00:00",
+  "attempt": "restored-1",
+  "pid": 7246,
+  "endpoint": "ws://127.0.0.1:51927/devtools/browser/3d3e4769-c0ec-4f39-8208-b68535debccb",
+  "unchangedRelevantExcerpt": "- combobox \"Page zoom\" [expanded=false, ref=e26]: 100%\n  - option \" 25% \" [ref=e54]\n  - option \" 33% \" [ref=e55]\n  - option \" 50% \" [ref=e56]\n  - option \" 67% \" [ref=e57]\n  - option \" 75% \" [ref=e58]\n  - option \" 80% \" [ref=e59]\n  - option \" 90% \" [ref=e60]\n  - option \" 100% \" [selected, ref=e61]\n  - option \" 110% \" [ref=e62]\n  - option \" 125% \" [ref=e63]\n  - option \" 150% \" [ref=e64]\n  - option \" 175% \" [ref=e65]\n  - option \" 200% \" [ref=e66]\n  - option \" 250% \" [ref=e67]\n  - option \" 300% \" [ref=e68]\n  - option \" 400% \" [ref=e69]\n  - option \" 500% \" [ref=e70]",
+  "omission": "Unrelated inherited managed-policy browser settings omitted; original retained cache-only."
+}

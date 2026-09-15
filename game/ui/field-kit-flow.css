@@ -278,6 +278,25 @@
   justify-content: space-between;
   gap: 16px;
 }
+.field-kit #shell-missions > .shell-dialog-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  row-gap: 8px;
+}
+.field-kit #shell-craft-feedback {
+  grid-column: 1 / -1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  padding: 8px 12px;
+  background: var(--fk-panel);
+  border: 1px solid var(--fk-line);
+}
+.field-kit #shell-craft-feedback:not(:has(> :not([hidden]))) {
+  display: none;
+}
+.field-kit #shell-craft-feedback > .operation-status {
+  margin: 0;
+}
 .field-kit .shell-deploy-bar > div {
   display: flex;
   gap: 12px;

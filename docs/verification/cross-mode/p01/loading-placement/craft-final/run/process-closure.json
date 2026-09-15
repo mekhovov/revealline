@@ -1,0 +1,29 @@
+{
+  "at": "2026-09-15T14:26:54.447126+00:00",
+  "processes": [
+    {
+      "pid": 41822,
+      "alive": false
+    },
+    {
+      "pid": 41867,
+      "alive": false
+    },
+    {
+      "pid": 42180,
+      "alive": false
+    }
+  ],
+  "ports": [
+    {
+      "port": 52965,
+      "open": false
+    },
+    {
+      "port": 52966,
+      "open": false
+    }
+  ],
+  "browserObserverExit": 0,
+  "serverExit": 143
+}

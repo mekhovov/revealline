@@ -1,0 +1,11 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/gallery-focus.test.mjs"
+  ],
+  "exit": 0,
+  "seconds": 1.1711678504943848,
+  "bytes": 9566,
+  "sha256": "e662cfb0675eee33ae1cb345f0ceceb6493e78f1893c6df9c7d4539f13f1046a"
+}

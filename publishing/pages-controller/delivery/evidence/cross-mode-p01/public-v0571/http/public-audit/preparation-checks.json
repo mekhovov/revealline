@@ -1,0 +1,77 @@
+{
+  "status": "PREPARATION_CHECKED",
+  "checkedAt": "2026-09-15T12:35:37.409225+00:00",
+  "commands": [
+    {
+      "command": "node --check audit-main.mjs",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "node --check http-engine.mjs",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "node --check self-check.mjs",
+      "exitCode": 0,
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": "node self-check.mjs",
+      "exitCode": 0,
+      "stdoutSha256": "6c4204382b11da86aab8668d7013b41d767b248ef74e0da8178da0096ad54ee5",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "selfCheck": {
+    "status": "HELPER_SELF_CHECK_PASS",
+    "realNetworkRequests": 0,
+    "mockedFetchCalls": 1,
+    "productionBindingsCreated": 0,
+    "publicAcceptance": false
+  },
+  "engineBytesUnchanged": true,
+  "auditorDiffOnlyIdentityAndRetainedCatalogPins": true,
+  "actualAuthorityValidation": "not run; actual eventual publication inputs do not exist",
+  "inputDirectoriesCreated": false,
+  "runDirectoriesCreated": false,
+  "sourceQualificationAssumed": false,
+  "networkRequests": 0,
+  "publicAcceptance": false,
+  "preparedPins": [
+    {
+      "path": "audit-main.mjs",
+      "bytes": 21865,
+      "sha256": "fbc3bc6da90f550a50d357c3bbf330f476495a70d39006dde5a6ba4daef0d74b"
+    },
+    {
+      "path": "http-engine.mjs",
+      "bytes": 3851,
+      "sha256": "7660dd3ac7453bc31f6ba26e005340dd719986ac7fc1a29bd42b30db71b81c6d"
+    },
+    {
+      "path": "retained-catalog.json",
+      "bytes": 27689,
+      "sha256": "aed42caac670f9540c7af76bfbb61f3e9546346cde11c555a447c1cf90e13178"
+    },
+    {
+      "path": "self-check.mjs",
+      "bytes": 3794,
+      "sha256": "0a7f0b9cd6781f08f02701feb222809b80f3de7f9beb11ebdd252098dfa3535a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4797,
+      "sha256": "70fe8a27233aa50e4f57bc8cf01cfa9cc29b3a584ba6ff7639485302b72a8378"
+    },
+    {
+      "path": "preparation-provenance.json",
+      "bytes": 3031,
+      "sha256": "4c8b3ce75ba9c9e52b2bc0c2a3fe4a5f52aaefa9d03e97bf6fab72bb06e16395"
+    }
+  ]
+}

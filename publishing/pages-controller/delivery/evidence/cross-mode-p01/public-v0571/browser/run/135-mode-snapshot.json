@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:50:14.653404+00:00",
+  "finishedAt": "2026-09-15T13:50:14.871957+00:00",
+  "attempt": "refused-1",
+  "pid": 816,
+  "endpoint": "ws://127.0.0.1:51531/devtools/browser/54c3dd62-c275-4cb8-8806-3ef5bbccee59",
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "- heading \"Choose your mission\" [level=2, ref=e1]\n- button \"Back\" [ref=e2]\n- navigation \"Game mode\" [ref=e3]\n  - link \"Relay Rescue \u00b7 2-player co-op\" [ref=e7]\n  - link \"Couch race \u00b7 2 players\" [ref=e8]\n  - button \"More worlds\" [ref=e9]\n- region \"Choose a chapter\" [ref=e10]\n  - heading \"Choose a chapter\" [level=3, ref=e12]\n  - button \"Base game \u00b7 12 levels Current chapter\" [ref=e15]\n  - button \"FPV Front \u00b7 Pressure Lines \u00b7 3 levels Choose chapter\" [ref=e16]\n  - button \"FPV Front \u00b7 Frontier Lines \u00b7 3 levels Choose chapter\" [ref=e17]\n  - button \"Night Shift \u00b7 3 levels Choose chapter\" [ref=e18]\n  - button \"Living Threads \u00b7 3 levels Choose chapter\" [ref=e19]\n  - button \"Fieldcraft \u00b7 4 levels Choose chapter\" [ref=e20]\n  - button \"Homeward Skies \u00b7 3 levels Choose chapter\" [ref=e21]\n  - button \"Equipment Workshop \u00b7 3 levels Choose chapter\" [ref=e22]\n  - button \"Sentinel Relay \u00b7 1 level Choose chapter\" [ref=e23]\n- region \"Missions in this chapter\" [ref=e11]\n  - button \"Collection\" [ref=e13]\n  - button \"1. First Signal\" [ref=e24]\n  - button \"2. Relay Orchard \u2014 locked\" [disabled, ref=e25]\n  - button \"3. Crosswind \u2014 locked\" [disabled, ref=e26]\n  - button \"4. Stone Lanes \u2014 locked\" [disabled, ref=e27]\n  - button \"5. Night Patrol \u2014 locked\" [disabled, ref=e28]\n  - button \"6. Hidden Frequency \u2014 locked\" [disabled, ref=e29]\n  - navigation \"Mission pages\" [ref=e14]\n    - button \"\u2190 Previous\" [disabled, ref=e30]\n    - button \"Next \u2192\" [ref=e31]\n- button \"Flight setup\" [ref=e4]\n- button \"Back to flight\" [ref=e5]\n- button \"Deploy \u2192\" [ref=e6]\n",
+  "stderr": ""
+}

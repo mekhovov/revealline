@@ -1,0 +1,116 @@
+{
+  "at": "2026-09-15T14:09:44.398589+00:00",
+  "sourcePins": [
+    {
+      "path": "game/index.html",
+      "bytes": 68940,
+      "sha256": "950eb261b4b10c1cb2ad7be89a93f3d54f75607e6207488b043abcec56d3474a",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/style.css",
+      "bytes": 45503,
+      "sha256": "147e193a9d20f190d25e19661613517a783e9284a2981db30f6392e578ee1aa9",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 55820,
+      "sha256": "9fc7ae8e3bd699cabb17681e4d1fd5203f08fd3beb53db609640635fb1b8b3b5",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/ui/backup-set-panel.mjs",
+      "bytes": 8446,
+      "sha256": "06593f84e63d8df92ed521bdc9aaf64989f0b7279f54d93fef45df5d3e533fff",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 13974,
+      "sha256": "da21ad8ddc2283bae605431dca44bfda4fb689656b9356d4bf301feb8e49c116",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/ui/field-kit-flow.css",
+      "bytes": 11246,
+      "sha256": "69e1a0eadddea7592af9b47535f733086b65160bce3e7be1ad6ca31ff86b3c9c",
+      "matchesLaunch": true
+    },
+    {
+      "path": "package.json",
+      "bytes": 1819,
+      "sha256": "aea77f8a799ed1090a3a0e73288b91258696dc092868e0ad39d12c3b71674329",
+      "matchesLaunch": true
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 36138,
+      "sha256": "5e68fe93f4c6d6bc6ef23d95b21f9fab96b6ce0f219709ebce4112adf1f86190",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/build-config.json",
+      "bytes": 5252,
+      "sha256": "dd3836927c65c18a5a35b386b0ae6faad6306e328cae7d8443b67dcc1643cebf",
+      "matchesLaunch": true
+    },
+    {
+      "path": "authoring/library/fpv-field-kit/production.rltheme",
+      "bytes": 6759180,
+      "sha256": "74e6af248a05e736093bae7d91a9917011d41d0540155f0aa0ee790c1341a246",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 960138,
+      "sha256": "e3711ae014beed7ceea8c3b95110c728e66da18ab60637ceb2d96d01cff476ae",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/presentation/compiled/studio.json",
+      "bytes": 3157119,
+      "sha256": "47c56befd84128340de3006b11e2c6b11319255fb5300b581bb0370ad4679619",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/presentation/compiled/manifest.json",
+      "bytes": 27214,
+      "sha256": "83861d32f1801990ad2ebc6cd17cbd978940d260825bbd263c8a6ef83667d018",
+      "matchesLaunch": true
+    },
+    {
+      "path": "game/presentation/compiled/theme.css",
+      "bytes": 2057,
+      "sha256": "8b3baca084d898773986c1e3691855f92572c6db39901e8e4f9138e23470f9b3",
+      "matchesLaunch": true
+    }
+  ],
+  "processes": [
+    {
+      "pid": 32505,
+      "alive": false
+    },
+    {
+      "pid": 32679,
+      "alive": false
+    },
+    {
+      "pid": 33042,
+      "alive": false
+    }
+  ],
+  "ports": [
+    {
+      "port": 52171,
+      "open": false
+    },
+    {
+      "port": 52172,
+      "open": false
+    }
+  ],
+  "browserExit": 0,
+  "serverExit": 143,
+  "noTrackedEdits": true
+}

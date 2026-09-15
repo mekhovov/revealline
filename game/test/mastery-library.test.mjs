@@ -13,6 +13,7 @@ import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { MASTERY_RECORD_VERSION, MasteryCapacityError } from '../mastery-records.mjs';
 import {
   LIBRARY_VERSION,
+  LIBRARY_LIMITS,
   LIBRARY_STORAGE_VERSION,
   emptyLibrary,
   importLibrary,
@@ -369,8 +370,18 @@ test('the whole library byte limit still applies when individually valid collect
   });
   const old = importLibrary(pictures),
     before = exportLibrary(old),
-    records = Array.from({ length: 4096 }, (_, index) => record(index)),
+    records = Array.from({ length: 4096 }, (_, index) => {
+      const entry = record(index);
+      return { ...entry, runId: entry.runId.padEnd(159, 'x') };
+    }),
     seals = withMasteryRecords(emptyLibrary(), records);
+  // Individually valid collections must exceed the actual encoded quota when combined.
+  assert.ok(Buffer.byteLength(before, 'utf8') < LIBRARY_LIMITS.maxBytes);
+  assert.ok(Buffer.byteLength(exportLibrary(seals), 'utf8') < LIBRARY_LIMITS.maxBytes);
+  assert.ok(
+    Buffer.byteLength(JSON.stringify({ ...old, masteries: seals.masteries }), 'utf8') >
+      LIBRARY_LIMITS.maxBytes,
+  );
   assert.equal(old.gallery.length, 4096);
   assert.equal(seals.masteries.length, 4096);
   assert.throws(() => withMasteryRecords(old, records), LibraryCapacityError);

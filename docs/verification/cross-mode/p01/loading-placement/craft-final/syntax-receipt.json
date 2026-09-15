@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "path": "foreground.mjs",
+      "check": "node --check syntax",
+      "passed": true
+    },
+    {
+      "path": "control.py",
+      "check": "Python AST",
+      "passed": true
+    },
+    {
+      "path": "close-owned-browser.mjs",
+      "check": "node --check syntax",
+      "passed": true
+    },
+    {
+      "path": "capture.py",
+      "check": "Python AST",
+      "passed": true
+    },
+    {
+      "path": "act.py",
+      "check": "Python AST",
+      "passed": true
+    },
+    {
+      "path": "launch-owned-chrome.py",
+      "check": "Python AST",
+      "passed": true
+    },
+    {
+      "path": "serve-current-source.mjs",
+      "check": "node --check syntax",
+      "passed": true
+    },
+    {
+      "path": "observe.mjs",
+      "check": "node --check syntax",
+      "passed": true
+    }
+  ],
+  "browserLaunched": false,
+  "serverStarted": false
+}

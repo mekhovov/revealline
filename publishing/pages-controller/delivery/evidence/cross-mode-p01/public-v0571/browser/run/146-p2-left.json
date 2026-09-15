@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:50:39.020484+00:00",
+  "finishedAt": "2026-09-15T13:50:39.216423+00:00",
+  "attempt": "refused-1",
+  "pid": 816,
+  "endpoint": "ws://127.0.0.1:51531/devtools/browser/54c3dd62-c275-4cb8-8806-3ef5bbccee59",
+  "action": [
+    "press",
+    "ArrowLeft"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "\u2713 Done\n",
+  "stderr": ""
+}

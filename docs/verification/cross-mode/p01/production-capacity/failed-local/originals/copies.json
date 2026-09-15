@@ -1,0 +1,68 @@
+{
+  "status": "COPIED_SMALL_ORIGINALS_FROM_FAILED_QUALIFICATION_BUILD",
+  "copies": [
+    {
+      "source": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/build/manifest.json",
+        "bytes": 121523,
+        "sha256": "e265efa4e9fda72c371f9a344ffbc6fb876a77e0ca1729f7e66caad6b6a18c21"
+      },
+      "copy": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/failed-attempt-originals/manifest.json",
+        "bytes": 121523,
+        "sha256": "e265efa4e9fda72c371f9a344ffbc6fb876a77e0ca1729f7e66caad6b6a18c21"
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/build/offline-cache.json",
+        "bytes": 114508,
+        "sha256": "d4052fb41fcabf900904640174f23ad8938cfc8c080ef1905cc6ecd4fd81e464"
+      },
+      "copy": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/failed-attempt-originals/offline-cache.json",
+        "bytes": 114508,
+        "sha256": "d4052fb41fcabf900904640174f23ad8938cfc8c080ef1905cc6ecd4fd81e464"
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/build/game/build-info.json",
+        "bytes": 104,
+        "sha256": "f287db17658d55c7d0a680daad668cf0b7004c38f05a55347922ce056669c52d"
+      },
+      "copy": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/failed-attempt-originals/game/build-info.json",
+        "bytes": 104,
+        "sha256": "f287db17658d55c7d0a680daad668cf0b7004c38f05a55347922ce056669c52d"
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/build/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "53cedf98a0df99c2cfd4a08a9aff0c88a51bb5e5bb3e39cf2473c21654632616"
+      },
+      "copy": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/failed-attempt-originals/distribution.zip.sha256",
+        "bytes": 83,
+        "sha256": "53cedf98a0df99c2cfd4a08a9aff0c88a51bb5e5bb3e39cf2473c21654632616"
+      }
+    },
+    {
+      "source": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/build/.xonix-build.json",
+        "bytes": 53,
+        "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa"
+      },
+      "copy": {
+        "path": ".cache/cross-mode/p01/v0572/exact-source/failed-attempt-originals/.xonix-build.json",
+        "bytes": 53,
+        "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa"
+      }
+    }
+  ],
+  "allLooseOrZipBodiesVerified": false,
+  "integrityRun": false,
+  "releaseAccepted": false
+}

@@ -1,0 +1,1399 @@
+diff --git a/game/index.html b/game/index.html
+index 94a46e3..c483905 100644
+--- a/game/index.html
++++ b/game/index.html
+@@ -1241,9 +1241,24 @@
+       <button class="dialog-close" data-close="library-dialog" aria-label="Close library">×</button>
+       <p class="eyebrow">THE THINGS YOU KEEP</p>
+       <h2 id="library-title" data-field-kit-copy="library.title">Flight library.</h2>
+-      <button id="library-operation-cancel" class="button secondary" type="button" hidden disabled>
+-        Cancel operation
+-      </button>
++      <div id="library-operation-rail" hidden>
++        <div
++          id="library-operation-message"
++          tabindex="0"
++          aria-label="Library operation details"
++        ></div>
++        <div id="library-operation-controls">
++          <button
++            id="library-operation-cancel"
++            class="button secondary"
++            type="button"
++            hidden
++            disabled
++          >
++            Cancel operation
++          </button>
++        </div>
++      </div>
+       <div class="library-tabs" role="group" aria-label="Library sections">
+         <button
+           data-library-panel="scores"
+@@ -1569,6 +1584,7 @@
+         >
+           Back
+         </button>
++        <div id="shell-craft-feedback"></div>
+       </div>
+       <details id="shell-mode-choice" class="shell-mode-choice">
+         <summary>Mode · Solo flight</summary>
+diff --git a/game/style.css b/game/style.css
+index 15d361e..4e39bd1 100644
+--- a/game/style.css
++++ b/game/style.css
+@@ -1828,6 +1828,39 @@ dialog textarea {
+ .appearance-reward .reward-detail {
+   opacity: 0.8;
+ }
++/* The active Library owner keeps its original status and escape controls here. */
++#library-operation-rail {
++  position: sticky;
++  inset-block-start: 0;
++  z-index: 3;
++  display: grid;
++  gap: var(--fk-space-2, 8px);
++  margin-block: var(--fk-space-3, 12px);
++  padding: var(--fk-space-3, 12px);
++  border: var(--fk-border-width, 1px) solid var(--fk-line, #425563);
++  background: var(--fk-panel, #101923);
++}
++#library-operation-rail[hidden] {
++  display: none;
++}
++#library-operation-message {
++  min-inline-size: 0;
++  max-block-size: 40dvh;
++  overflow-y: auto;
++  overflow-wrap: anywhere;
++}
++#library-operation-message > .operation-status {
++  margin: 0;
++}
++#library-operation-controls {
++  display: flex;
++  flex-wrap: wrap;
++  gap: var(--fk-space-2, 8px);
++}
++#library-operation-controls > button {
++  min-block-size: max(44px, var(--fk-target-size, 44px));
++  margin: 0;
++}
+ #save-status,
+ #pack-status {
+   overflow-wrap: anywhere;
+diff --git a/game/test/attempt-export-panel.test.mjs b/game/test/attempt-export-panel.test.mjs
+index 0078d93..faa2efc 100644
+--- a/game/test/attempt-export-panel.test.mjs
++++ b/game/test/attempt-export-panel.test.mjs
+@@ -1,3 +1,4 @@
++import { backupSetFixture } from './helpers/backup-set-fixture.mjs';
+ import { Element as DOMElement } from './helpers/couch-dom.mjs';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+@@ -9,38 +10,12 @@ import { emptyLibrary, exportLibrary } from '../library.mjs';
+ class Element extends DOMElement {
+   constructor(document, tagName = 'div') {
+     super(document, tagName);
+-    Object.defineProperty(this, 'isConnected', { value: true, writable: true });
+-    Object.assign(this, {
+-      document,
+-      tagName,
+-      children: [],
+-      listeners: new Map(),
+-      dataset: {},
+-      style: {},
+-      disabled: false,
+-      hidden: false,
+-      open: false,
+-      isConnected: true,
+-      value: '',
+-      textContent: '',
+-    });
+-  }
+-  append(...children) {
+-    this.children.push(...children);
+-  }
+-  replaceChildren(...children) {
+-    this.children = children;
++    this.document = document;
+   }
+-  querySelectorAll(selector) {
+-    const tags = selector.split(',');
+-    return this.children.flatMap((child) => [
+-      ...(tags.includes(child.tagName) ? [child] : []),
+-      ...child.querySelectorAll(selector),
+-    ]);
+-  }
+-  addEventListener(type, handler) {
+-    if (!this.listeners.has(type)) this.listeners.set(type, []);
+-    this.listeners.get(type).push(handler);
++  remove() {
++    if (this.isConnected && this.contains(this.document.activeElement))
++      this.document.activeElement = this.document.body;
++    super.remove();
+   }
+   emit(type) {
+     const event = {
+@@ -53,7 +28,7 @@ class Element extends DOMElement {
+     return event;
+   }
+   focus() {
+-    assert.equal(this.disabled || this.hidden || !this.isConnected, false);
++    assert.equal(this.disabled || !this.getClientRects().length, false);
+     this.document.activeElement = this;
+   }
+   showModal() {
+@@ -85,12 +60,29 @@ function deferred() {
+ function setup(t, options = {}) {
+   const nodes = new Map(),
+     events = new Map(),
++    frames = [],
++    resizeCallbacks = [],
+     requests = [],
+     downloads = [],
+     library = emptyLibrary();
+-  const document = { activeElement: null, hidden: false, querySelectorAll: () => [] };
++  const document = {
++    nodeType: 9,
++    activeElement: null,
++    hidden: false,
++    querySelectorAll: () => [],
++    addEventListener() {},
++    hasFocus: () => true,
++  };
++  document.body = new Element(document, 'body');
++  document.body.parentNode = document;
++  document.activeElement = document.body;
+   const node = (id, tag = 'div') => {
+-    if (!nodes.has(id)) nodes.set(id, new Element(document, tag));
++    const found = nodes.get(id) || document.body.querySelector('#' + id);
++    if (found) return found;
++    const created = new Element(document, tag);
++    created.id = id;
++    nodes.set(id, created);
++    document.body.append(created);
+     return nodes.get(id);
+   };
+   document.getElementById = node;
+@@ -118,7 +110,27 @@ function setup(t, options = {}) {
+     'close-library',
+   ])
+     dialog.append(node(id, 'button'));
++  node('close-library').setAttribute('data-close', 'library-dialog');
+   dialog.append(node('save-json', 'textarea'), node('save-file', 'input'));
++  const rail = node('library-operation-rail'),
++    message = node('library-operation-message'),
++    escapes = node('library-operation-controls'),
++    saves = node('library-saves', 'section'),
++    packs = node('library-packs', 'section'),
++    actions = node('save-actions'),
++    backup = node('backup-set', 'section');
++  dialog.append(rail, saves, packs);
++  rail.append(message, escapes);
++  escapes.append(node('library-operation-cancel'));
++  saves.append(backup, actions, node('save-status', 'p'));
++  actions.append(node('export-session'), node('cancel-attempt-export'), node('export-library'));
++  packs.append(
++    node('pack-status', 'p'),
++    node('pack-file', 'input'),
++    node('export-packs', 'button'),
++  );
++  rail.hidden = true;
++  node('library-operation-cancel').hidden = node('library-operation-cancel').disabled = true;
+   node('cancel-attempt-export').hidden = node('cancel-attempt-export').disabled = true;
+   node('save-json').value = 'previous copy';
+   const state = {
+@@ -137,6 +149,13 @@ function setup(t, options = {}) {
+     location: { href: 'https://example.test/game/' },
+     fetch: async () => ({ ok: true, json: async () => ({ packs: [] }) }),
+     addEventListener: (name, handler) => events.set(name, handler),
++    requestAnimationFrame: (callback) => frames.push(callback),
++    ResizeObserver: class {
++      constructor(callback) {
++        resizeCallbacks.push(callback);
++      }
++      observe() {}
++    },
+     setTimeout: () => 0,
+   };
+   for (const [key, value] of Object.entries(replacements)) {
+@@ -188,6 +207,8 @@ function setup(t, options = {}) {
+     requests,
+     downloads,
+     prepared,
++    flushLayout: () => frames.splice(0).forEach((callback) => callback()),
++    resizeFeedback: () => resizeCallbacks.forEach((callback) => callback()),
+     start: () => node('export-session').onclick(),
+     pagehide: () => events.get('pagehide')(),
+   };
+@@ -451,3 +472,240 @@ test('a cancelled Library file read cannot install or unlock a newer read', asyn
+   assert.match(h.node('save-status').textContent, /Player library loaded/);
+   assert.equal(h.node('export-library').disabled, false);
+ });
++
++function railState(h, id, cancelId = 'library-operation-cancel') {
++  assert.equal(h.node('library-operation-rail').hidden, false);
++  assert.equal(h.node('library-operation-rail').dataset.statusId, id);
++  assert.equal(h.node(id).parentNode, h.node('library-operation-message'));
++  assert.equal(h.node(cancelId).parentNode, h.node('library-operation-controls'));
++  assert.equal(h.document.body.querySelectorAll('#' + id).length, 1);
++  assert.equal(h.document.body.querySelectorAll('#' + cancelId).length, 1);
++}
++
++test('rail places the exact status and escape before a held read; navigation restores their original nodes', async (t) => {
++  const h = setup(t),
++    gate = deferred(),
++    original = h.node('save-status');
++  h.node('save-file').files = [{ size: 1, text: () => gate.promise }];
++  const pending = h.node('save-file').onchange();
++  railState(h, 'save-status');
++  assert.match(original.textContent, /Reading the selected game-data file/);
++  assert.equal(h.node('save-json').value, 'previous copy');
++  h.panel.cancelAttemptExport();
++  h.panel.open('packs');
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  assert.equal(original.parentNode, h.node('library-saves'));
++  gate.resolve('must never parse this cancelled read');
++  await pending;
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  assert.equal(h.node('save-json').value, 'previous copy');
++});
++
++test('older cancelled read cannot replace a newer Packs rail or release its controls', async (t) => {
++  const h = setup(t),
++    first = deferred(),
++    second = deferred();
++  h.node('save-file').files = [{ size: 1, text: () => first.promise }];
++  const older = h.node('save-file').onchange();
++  h.panel.cancelAttemptExport();
++  h.panel.open('packs');
++  h.node('pack-file').files = [{ size: 1, text: () => second.promise }];
++  const newer = h.node('pack-file').onchange();
++  railState(h, 'pack-status');
++  first.resolve('cancelled bytes');
++  await older;
++  railState(h, 'pack-status');
++  assert.equal(h.node('library-operation-cancel').hidden, false);
++  assert.equal(h.node('export-library').disabled, true);
++  assert.match(h.node('pack-status').textContent, /Reading the selected pack file/);
++  second.reject(new Error('Native file read failed.'));
++  await newer;
++  railState(h, 'pack-status');
++  assert.match(h.node('pack-status').textContent, /Native file read failed/);
++  assert.equal(h.node('library-operation-cancel').hidden, true);
++  assert.equal(h.node('save-json').value, 'previous copy');
++});
++
++test('attempt rail preserves count, cancel focus and exact sibling order across terminal navigation', async (t) => {
++  const h = setup(t),
++    status = h.node('save-status'),
++    cancel = h.node('cancel-attempt-export');
++  const originalOrder = [...h.node('save-actions').children];
++  const pending = h.start();
++  railState(h, 'save-status', 'cancel-attempt-export');
++  assert.equal(h.document.activeElement, cancel);
++  assert.equal(h.node('library-operation-cancel').hidden, true);
++  h.requests[0].onProgress({ ticks: 3, total: 10 });
++  assert.match(status.textContent, /3 \/ 10/);
++  // Presenting the already selected current owner must not detach focused Cancel.
++  h.panel.open('saves');
++  assert.equal(h.document.activeElement, cancel);
++  assert.equal(cancel.parentNode, h.node('library-operation-controls'));
++  h.panel.cancelAttemptExport();
++  assert.equal(h.document.activeElement, h.node('export-session'));
++  h.requests[0].resolve(h.prepared());
++  await pending;
++  h.panel.open('packs');
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  assert.deepEqual(h.node('save-actions').children, originalOrder);
++  assert.equal(status.parentNode, h.node('library-saves'));
++  assert.equal(cancel.hidden, true);
++  assert.equal(h.downloads.length, 0);
++});
++
++test('non-abortable owner reopens with its exact detached status and no stale closed rail', async (t) => {
++  const h = setup(t),
++    pending = h.node('export-library').onclick();
++  railState(h, 'save-status');
++  h.dialog.close();
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  assert.equal(h.node('save-status').parentNode, h.node('library-saves'));
++  h.panel.open('saves');
++  railState(h, 'save-status');
++  assert.equal(h.node('save-status').dataset.state, 'detached');
++  assert.equal(h.node('library-operation-cancel').hidden, true);
++  assert.equal(h.node('export-library').disabled, true);
++  await pending;
++  railState(h, 'save-status');
++  assert.equal(h.node('save-status').dataset.state, 'ready');
++  assert.equal(h.node('export-library').disabled, false);
++  h.dialog.close();
++  h.panel.open('saves');
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  assert.equal(h.node('save-status').parentNode, h.node('library-saves'));
++});
++
++for (const route of ['same-section', 'other-section', 'close-reopen']) {
++  test(`backup navigation ${route} joins cancellation then clears only the invalidated backup host`, async (t) => {
++    const fixture = await backupSetFixture(),
++      gate = deferred(),
++      entered = deferred();
++    const h = setup(t, {
++      base: () => ({ campaign: fixture.f.campaign, classRecipes: [] }),
++      backupSet: {
++        ...fixture.source,
++        readContents: async () => fixture.contents,
++        readMetadata: () => {
++          entered.resolve();
++          return gate.promise;
++        },
++      },
++    });
++    const status = h.node('backup-set-status'),
++      cancel = h.node('cancel-backup-set');
++    const originalOrder = [...h.node('backup-set').children];
++    const pending = h.node('prepare-backup-set').onclick();
++    await entered.promise;
++    railState(h, 'backup-set-status', 'cancel-backup-set');
++    assert.equal(h.document.activeElement, cancel);
++    if (route === 'close-reopen') {
++      h.dialog.close();
++      assert.equal(h.node('library-operation-rail').hidden, true);
++      assert.equal(status.parentNode, h.node('backup-set'));
++    }
++    h.panel.open(route === 'other-section' ? 'packs' : 'saves');
++    railState(h, 'backup-set-status', 'cancel-backup-set');
++    assert.equal(
++      await h.node('prepare-backup-set').onclick(),
++      false,
++      'The cancelled unfinished read still owns its existing slot.',
++    );
++    gate.resolve(fixture.metadata);
++    assert.equal(await pending, false);
++    assert.equal(h.node('library-operation-rail').hidden, true);
++    assert.equal(h.node('library-operation-rail').dataset.statusId, undefined);
++    assert.deepEqual(h.node('backup-set').children, originalOrder);
++    assert.equal(status.parentNode, h.node('backup-set'));
++    assert.equal(cancel.hidden, true);
++    assert.notEqual(h.document.activeElement, cancel);
++    assert.equal(h.node('export-library').disabled, false);
++    assert.equal(h.downloads.length, 0);
++    assert.equal(h.node('save-json').value, 'previous copy');
++  });
++}
++
++test('native-reported sticky overlap scrolls the live focused control clear without changing focus or ownership', async (t) => {
++  const h = setup(t),
++    pending = h.start();
++  h.requests[0].resolve(h.prepared());
++  await pending;
++  const rail = h.node('library-operation-rail'),
++    target = h.node('export-backup');
++  h.dialog._rect = { x: 16, y: 0, width: 812, height: 390 };
++  rail._rect = { x: 51.75, y: 33.75, width: 740.5, height: 192 };
++  target._rect = { x: 51.75, y: 171.421875, width: 270, height: 47 };
++  h.dialog.scrollTop = 548;
++  target.focus();
++  h.dialog.emit('focusin');
++  h.flushLayout();
++  assert.equal(h.dialog.scrollTop, 485.671875);
++  assert.equal(h.dialog.style.scrollPaddingBlockStart, '233.75px');
++  assert.equal(h.document.activeElement, target);
++  assert.equal(h.state.prepareCalls, 1);
++  assert.equal(h.downloads.length, 1);
++  assert.match(h.node('save-status').textContent, /Download requested/);
++});
++
++test('a queued feedback layout reads current focus and cannot follow an old opener or a closed dialog', async (t) => {
++  const h = setup(t),
++    pending = h.start();
++  h.dialog._rect = { x: 0, y: 0, width: 844, height: 390 };
++  h.node('library-operation-rail')._rect = { x: 0, y: 30, width: 740, height: 190 };
++  h.dialog.scrollTop = 400;
++  h.flushLayout();
++  assert.equal(h.dialog.scrollTop, 400, 'Active Cancel inside the rail is not scrolled.');
++  h.resizeFeedback();
++  h.document.activeElement = h.document.body;
++  h.flushLayout();
++  assert.equal(h.dialog.scrollTop, 400, 'A different screen owns the live focus.');
++  h.resizeFeedback();
++  h.document.activeElement = h.node('export-backup');
++  assert.equal(h.node('export-backup').disabled, true);
++  h.flushLayout();
++  assert.equal(h.dialog.scrollTop, 400, 'A disabled opener cannot cause scrolling.');
++  h.resizeFeedback();
++  h.dialog.close();
++  h.flushLayout();
++  assert.equal(h.dialog.style.scrollPaddingBlockStart, '0px');
++  assert.equal(h.dialog.scrollTop, 400);
++  assert.equal(h.node('library-operation-rail').hidden, true);
++  h.requests[0].resolve(h.prepared());
++  await pending;
++  assert.equal(h.downloads.length, 0);
++});
++
++test('Close above feedback retains its own native scroll destination', async (t) => {
++  const h = setup(t),
++    pending = h.start();
++  h.requests[0].resolve(h.prepared());
++  await pending;
++  h.dialog._rect = { x: 0, y: 0, width: 844, height: 390 };
++  h.node('library-operation-rail')._rect = { x: 0, y: 30, width: 740, height: 190 };
++  const close = h.node('close-library');
++  close._rect = { x: 780, y: -538, width: 44, height: 44 };
++  close.focus();
++  h.dialog.emit('focusin');
++  h.flushLayout();
++  assert.equal(close.scrolled, 1);
++  assert.equal(h.dialog.style.scrollPaddingBlockStart, '0px');
++  assert.equal(h.document.activeElement, close);
++});
++
++test('a tall Library editor keeps its beginning below feedback when its full height cannot fit', async (t) => {
++  const h = setup(t),
++    pending = h.start();
++  h.requests[0].resolve(h.prepared());
++  await pending;
++  h.dialog._rect = { x: 16, y: 0, width: 812, height: 390 };
++  h.node('library-operation-rail')._rect = { x: 51.75, y: 33.75, width: 740.5, height: 192 };
++  const editor = h.node('save-json');
++  editor._rect = { x: 51.75, y: 300, width: 700, height: 170 };
++  h.dialog.scrollTop = 300;
++  editor.focus();
++  h.dialog.emit('focusin');
++  h.flushLayout();
++  assert.equal(h.dialog.scrollTop, 366.25);
++  assert.equal(h.document.activeElement, editor);
++  assert.equal(300 - (h.dialog.scrollTop - 300), 233.75);
++  assert.equal(h.state.prepareCalls, 1);
++});
+diff --git a/game/test/controller-settings.test.mjs b/game/test/controller-settings.test.mjs
+index 49929f0..a2f1f6f 100644
+--- a/game/test/controller-settings.test.mjs
++++ b/game/test/controller-settings.test.mjs
+@@ -1,5 +1,5 @@
+ import test from 'node:test';
+-import { Element as DOMElement } from './helpers/couch-dom.mjs';
++import { Element as DOMElement, Events } from './helpers/couch-dom.mjs';
+ import assert from 'node:assert/strict';
+ import { attachControllerSettings } from '../ui/controller-settings.mjs';
+ import {
+@@ -23,6 +23,21 @@ class Element extends DOMElement {
+     this.disabled = false;
+     this.hidden = false;
+   }
++  get disabled() {
++    return this._disabled ?? false;
++  }
++  set disabled(value) {
++    this._disabled = value;
++    if (value && this.ownerDocument.activeElement === this) this.blur();
++  }
++  get hidden() {
++    return this._hidden ?? false;
++  }
++  set hidden(value) {
++    this._hidden = value;
++    if (value && this.contains(this.ownerDocument.activeElement))
++      this.ownerDocument.activeElement.blur();
++  }
+   set innerHTML(_value) {
+     throw new Error('Use text-only DOM.');
+   }
+@@ -58,18 +73,41 @@ class Element extends DOMElement {
+     for (const listener of this.listeners.get(type) ?? []) await listener({ target: this });
+   }
+   focus() {
+-    if (!this.disabled && !this.hidden) this.owner.activeElement = this;
++    if (this.disabled) return;
++    for (let element = this; element?.nodeType === 1; element = element.parentNode)
++      if (element.hidden) return;
++    this.owner.activeElement = this;
++    this.owner.emit('focusin', { target: this });
++  }
++  blur() {
++    if (this.ownerDocument.activeElement !== this) return;
++    this.ownerDocument.blurred.push(this);
++    this.ownerDocument.activeElement = this.ownerDocument.body;
+   }
+ }
+ function fixture(initial = null) {
+-  const doc = { activeElement: null },
++  const doc = Object.assign(new Events(), {
++      nodeType: 9,
++      activeElement: null,
++      hidden: false,
++      focused: true,
++      hasFocus() {
++        return this.focused;
++      },
++      defaultView: new Events(),
++      blurred: [],
++    }),
+     all = [];
+   doc.createElement = (tag) => {
+     const element = new Element(tag, doc);
+     all.push(element);
+     return element;
+   };
++  doc.body = doc.createElement('body');
++  doc.body.parentNode = doc;
++  doc.activeElement = doc.body;
+   const container = doc.createElement('section');
++  doc.body.append(container);
+   container.id = 'controller-settings-root';
+   let current = initial,
+     before = 0,
+@@ -102,7 +140,12 @@ function fixture(initial = null) {
+     action,
+     field,
+     status,
+-    click: (value) => action(value).emit('click'),
++    click: async (value) => {
++      const button = action(value);
++      if (button.disabled || button.hidden || button.parentNode?.hidden) return;
++      button.focus();
++      await button.emit('click');
++    },
+     set: async (path, value) => {
+       const control = field(path);
+       if (control.type === 'checkbox') control.checked = value;
+@@ -355,6 +398,82 @@ test('async Apply is single-flight and allows its own canonical adoption', async
+   assert.equal(f.action('edit').disabled, false);
+ });
+ 
++test('native Apply blur restores the same enabled Edit button and releases focus observers', async () => {
++  const f = fixture(),
++    done = deferred();
++  f.setWriter(async (candidate) => {
++    await done.promise;
++    f.setCurrent(candidate);
++    return { ok: true };
++  });
++  await f.click('edit');
++  const edit = f.action('edit'),
++    applying = f.click('apply');
++  assert.equal(f.doc.blurred.at(-1), f.action('apply'));
++  assert.equal(f.doc.activeElement, f.doc.body, 'Native disabling removes action focus.');
++  assert.ok(f.doc.listeners.get('focusin').size > 0);
++  done.resolve();
++  await applying;
++  assert.equal(f.doc.activeElement, edit);
++  assert.equal(edit.disabled, false);
++  assert.equal(edit.hidden, false);
++  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
++  assert.ok([...f.doc.defaultView.listeners.values()].every((listeners) => listeners.size === 0));
++});
++
++for (const departure of [
++  'other modal',
++  'other control then blur',
++  'pointer on body',
++  'keyboard navigation',
++  'window blur and return',
++  'hidden page',
++  'hidden page then return',
++])
++  test(`pending Apply does not reclaim focus after ${departure}`, async () => {
++    const f = fixture(),
++      done = deferred(),
++      outside = f.doc.createElement('button');
++    f.doc.body.append(outside);
++    f.setWriter(async (candidate) => {
++      await done.promise;
++      f.setCurrent(candidate);
++      return { ok: true };
++    });
++    await f.click('edit');
++    const applying = f.click('apply');
++    assert.equal(f.doc.activeElement, f.doc.body);
++    if (departure === 'other modal' || departure === 'other control then blur') {
++      outside.focus();
++      if (departure === 'other control then blur') outside.blur();
++    } else if (departure === 'pointer on body') f.doc.emit('pointerdown', { target: f.doc.body });
++    else if (departure === 'keyboard navigation') f.doc.emit('keydown', { key: 'Tab' });
++    else if (departure === 'window blur and return') f.doc.defaultView.emit('blur');
++    else {
++      f.doc.hidden = true;
++      f.doc.emit('visibilitychange');
++      if (departure === 'hidden page then return') {
++        f.doc.hidden = false;
++        f.doc.emit('visibilitychange');
++      }
++    }
++    const intendedFocus = f.doc.activeElement;
++    done.resolve();
++    await applying;
++    assert.equal(f.doc.activeElement, intendedFocus);
++    assert.match(f.status.textContent, /settings applied/);
++    assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
++  });
++
++test('programmatic Apply without initial focus ownership does not claim body focus', async () => {
++  const f = fixture();
++  await f.click('edit');
++  f.field('glyphFamily').blur();
++  await f.action('apply').emit('click');
++  assert.equal(f.doc.activeElement, f.doc.body);
++  assert.match(f.status.textContent, /settings applied/);
++});
++
+ test('refresh aborts a pending ticket; a guarded async host cannot adopt it or overwrite fresh status', async () => {
+   const f = fixture(),
+     done = deferred();
+@@ -369,6 +488,7 @@ test('refresh aborts a pending ticket; a guarded async host cannot adopt it or o
+   const message = f.status.textContent;
+   assert.equal(f.calls[0].guard.signal.aborted, true);
+   assert.equal(f.calls[0].guard.isCurrent(), false);
++  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
+   await f.click('edit');
+   assert.equal(f.before, 1);
+   done.resolve();
+@@ -376,6 +496,7 @@ test('refresh aborts a pending ticket; a guarded async host cannot adopt it or o
+   assert.equal(f.current, null);
+   assert.equal(f.status.textContent, message);
+   assert.equal(f.action('edit').disabled, false);
++  assert.equal(f.doc.activeElement, f.doc.body, 'A refreshed ticket cannot restore old focus.');
+ });
+ 
+ test('source changes during asynchronous preparation invalidate the guard without a refresh', async () => {
+@@ -396,6 +517,7 @@ test('source changes during asynchronous preparation invalidate the guard withou
+   await operation;
+   assert.equal(f.current, imported);
+   assert.match(f.status.textContent, /changed before this draft/);
++  assert.equal(f.doc.activeElement, f.doc.body, 'Changed source cannot restore old focus.');
+ });
+ 
+ test('malformed current data fails visibly and a later valid refresh recovers', async () => {
+@@ -427,10 +549,12 @@ test('destroy removes listeners and aborts pending work without late DOM adoptio
+   f.api.destroy();
+   f.api.destroy();
+   assert.equal(f.calls[0].guard.signal.aborted, true);
++  assert.ok([...f.doc.listeners.values()].every((listeners) => listeners.size === 0));
+   assert.equal(f.container.children.length, 0);
+   assert.ok(f.all.every((node) => [...node.listeners.values()].every((list) => list.length === 0)));
+   done.resolve();
+   await operation;
+   assert.equal(f.current, null);
+   assert.equal(f.container.children.length, 0);
++  assert.equal(f.doc.activeElement, f.doc.body, 'Disposal cannot restore detached focus.');
+ });
+diff --git a/game/test/field-kit-flow.test.mjs b/game/test/field-kit-flow.test.mjs
+index b1349be..522e183 100644
+--- a/game/test/field-kit-flow.test.mjs
++++ b/game/test/field-kit-flow.test.mjs
+@@ -9,6 +9,61 @@ const visibleActions = (page) =>
+     .filter((node) => !node.hidden)
+     .map((node) => node.id || node.href);
+ 
++test('Mission setup keeps the original craft status in its modal and restores it after closing', async (t) => {
++  const page = await soloPage(t, { titleScreen: true });
++  const status = page.$('craft-preparation-status'),
++    originalParent = status.parentNode,
++    originalSiblings = [...originalParent.children],
++    originalChildren = [...status.children];
++  page.$('shell-play').click();
++  assert.equal(status.closest('dialog'), page.$('shell-missions'));
++  assert.equal(
++    status.closest('.shell-dialog-heading'),
++    page.$('shell-missions').querySelector('.shell-dialog-heading'),
++  );
++  assert.deepEqual(
++    [...status.children],
++    originalChildren,
++    'The existing live presenter is retained',
++  );
++  page.$('shell-prepare').click();
++  const focused = page.doc.activeElement;
++  page.$('shell-missions').emit('close');
++  assert.equal(
++    status.closest('dialog'),
++    page.$('shell-missions'),
++    'A queued old close cannot move current feedback',
++  );
++  assert.equal(page.doc.activeElement, focused);
++  page.$('shell-missions-back').click();
++  assert.equal(status.parentNode, originalParent);
++  assert.deepEqual([...originalParent.children], originalSiblings);
++  assert.deepEqual([...status.children], originalChildren);
++  page.$('shell-play').click();
++  assert.equal(status.closest('dialog'), page.$('shell-missions'));
++  page.$('shell-briefing').click();
++  assert.deepEqual([...originalParent.children], originalSiblings);
++  assert.deepEqual(page.errors, []);
++});
++
++test('direct briefing and disposal retain one craft presenter outside hidden mission content', async (t) => {
++  const page = await soloPage(t),
++    status = page.$('craft-preparation-status'),
++    originalParent = status.parentNode,
++    originalChildren = [...status.children];
++  page.$('overlay-brief').click();
++  assert.equal(page.$('shell-missions').dataset.view, 'brief');
++  assert.equal(status.closest('dialog'), page.$('shell-missions'));
++  assert.equal(page.$('shell-mission-content').contains(status), false);
++  assert.equal(page.$('shell-deploy-bar').contains(status), false);
++  assert.deepEqual([...status.children], originalChildren);
++  page.win.emit('pagehide', { persisted: false });
++  assert.equal(status.parentNode, originalParent);
++  assert.deepEqual([...status.children], originalChildren);
++  assert.equal(page.doc.querySelectorAll('#craft-preparation-status').length, 1);
++  assert.deepEqual(page.errors, []);
++});
++
+ test('title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
+   const page = await soloPage(t, { titleScreen: true });
+   assert.deepEqual(visibleActions(page), [
+diff --git a/game/test/gallery-focus.test.mjs b/game/test/gallery-focus.test.mjs
+index 3a47152..43e6dde 100644
+--- a/game/test/gallery-focus.test.mjs
++++ b/game/test/gallery-focus.test.mjs
+@@ -35,8 +35,16 @@ class Element extends DOMElement {
+   get isConnected() {
+     return this.rootConnected || !!this.parent?.isConnected;
+   }
++  get parentNode() {
++    return this.parent;
++  }
++  set parentNode(value) {
++    this.parent = value;
++  }
+   append(...children) {
+     for (const child of children) {
++      child.remove();
++      child.rootConnected = false;
+       child.parent = this;
+       this.children.push(child);
+     }
+@@ -121,6 +129,16 @@ async function setup(t, count = 30, hostOverrides = {}) {
+   document.createElement = (tag) => new Element(document, tag);
+   document.querySelectorAll = () => [];
+   const node = document.getElementById;
++  // Library feedback moves existing nodes; retain their actual parent/sibling
++  // relationships instead of supplying permanently detached status elements.
++  node('library-dialog').append(node('library-operation-rail'), node('library-saves'));
++  node('library-operation-rail').append(
++    node('library-operation-message'),
++    node('library-operation-controls'),
++  );
++  node('library-operation-controls').append(node('library-operation-cancel'));
++  node('library-operation-rail').hidden = true;
++  node('library-saves').append(node('save-status'), node('cancel-attempt-export'));
+   node('collection-dialog').append(
+     node('gallery-search'),
+     node('gallery-grid'),
+diff --git a/game/ui/backup-set-panel.mjs b/game/ui/backup-set-panel.mjs
+index 046e5a4..7c879b3 100644
+--- a/game/ui/backup-set-panel.mjs
++++ b/game/ui/backup-set-panel.mjs
+@@ -19,6 +19,7 @@ export function attachBackupSetPanel({
+   busy,
+   setBusy,
+   refresh,
++  presentFeedback = () => {},
+   URLImpl = URL,
+ }) {
+   const node = (tag, id, text) => {
+@@ -111,6 +112,7 @@ export function attachBackupSetPanel({
+       ]),
+     };
+     operation = op;
++    presentFeedback();
+     op.lease = presenter.begin({
+       message: 'Reading saved inventories for the backup set…',
+       isCurrent: () => operation === op && !op.controller.signal.aborted,
+@@ -155,6 +157,7 @@ export function attachBackupSetPanel({
+             cancel({ message: error.message });
+             return false;
+           }
++          presentFeedback();
+           state.textContent = `Download requested · ${file.bytes} bytes`;
+           showStatus(
+             'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.',
+diff --git a/game/ui/controller-settings.mjs b/game/ui/controller-settings.mjs
+index c7cf761..6a3d908 100644
+--- a/game/ui/controller-settings.mjs
++++ b/game/ui/controller-settings.mjs
+@@ -334,7 +334,30 @@ export function attachControllerSettings({
+       expected = signature(candidate),
+       ticket = generation,
+       abort = new AbortController();
+-    let focusAfterApply = false;
++    let focusAfterApply = false,
++      restoreApplyFocus = container.contains(doc.activeElement);
++    // Disabling the initiating control can natively blur to body. Remember that
++    // ownership, but relinquish it after any later focus or input choice.
++    const relinquishFocus = () => {
++      restoreApplyFocus = false;
++    };
++    const focusChanged = (event) => {
++      if (event.target !== doc.body) relinquishFocus();
++    };
++    const focusListeners = [
++      ['focusin', focusChanged],
++      ['pointerdown', relinquishFocus],
++      ['keydown', relinquishFocus],
++      ['visibilitychange', relinquishFocus],
++    ];
++    const stopObservingFocus = () => {
++      for (const [type, callback] of focusListeners) doc.removeEventListener(type, callback);
++      doc.defaultView?.removeEventListener('blur', relinquishFocus);
++      abort.signal.removeEventListener('abort', stopObservingFocus);
++    };
++    for (const [type, callback] of focusListeners) doc.addEventListener(type, callback);
++    doc.defaultView?.addEventListener('blur', relinquishFocus);
++    abort.signal.addEventListener('abort', stopObservingFocus, { once: true });
+     pending = abort;
+     busy = true;
+     syncBusy();
+@@ -380,6 +403,7 @@ export function attachControllerSettings({
+         else announce(`Controller settings were not applied. ${error.message}`, 'error');
+       }
+     } finally {
++      stopObservingFocus();
+       if (pending === abort) {
+         pending = null;
+         busy = false;
+@@ -387,10 +411,12 @@ export function attachControllerSettings({
+           syncBusy();
+           if (
+             focusAfterApply &&
++            restoreApplyFocus &&
+             generation === ticket &&
+             !doc.hidden &&
+             doc.hasFocus?.() !== false &&
+-            container.contains(doc.activeElement)
++            container.isConnected !== false &&
++            (container.contains(doc.activeElement) || doc.activeElement === doc.body)
+           )
+             edit.focus({ preventScroll: true });
+         }
+diff --git a/game/ui/field-kit-flow.css b/game/ui/field-kit-flow.css
+index fe4ee9c..5254507 100644
+--- a/game/ui/field-kit-flow.css
++++ b/game/ui/field-kit-flow.css
+@@ -278,6 +278,25 @@
+   justify-content: space-between;
+   gap: 16px;
+ }
++.field-kit #shell-missions > .shell-dialog-heading {
++  display: grid;
++  grid-template-columns: minmax(0, 1fr) auto;
++  row-gap: 8px;
++}
++.field-kit #shell-craft-feedback {
++  grid-column: 1 / -1;
++  min-width: 0;
++  overflow-wrap: anywhere;
++  padding: 8px 12px;
++  background: var(--fk-panel);
++  border: 1px solid var(--fk-line);
++}
++.field-kit #shell-craft-feedback:not(:has(> :not([hidden]))) {
++  display: none;
++}
++.field-kit #shell-craft-feedback > .operation-status {
++  margin: 0;
++}
+ .field-kit .shell-deploy-bar > div {
+   display: flex;
+   gap: 12px;
+diff --git a/game/ui/game-shell.mjs b/game/ui/game-shell.mjs
+index 1d6f2b2..e6af836 100644
+--- a/game/ui/game-shell.mjs
++++ b/game/ui/game-shell.mjs
+@@ -1,6 +1,7 @@
+ import { attachModalNavigation } from './modal-navigation.mjs';
+ import { attachFieldKitSurfaces } from './field-kit-surfaces.mjs';
+ import { fieldKitCopy } from './field-kit-copy.mjs';
++import { attachFocusClearance } from './focus-clearance.mjs';
+ 
+ /** Game navigation owns presentation only; the host owns pause, save and start. */
+ export function attachGameShell({
+@@ -31,6 +32,30 @@ export function attachGameShell({
+   const deck = doc.querySelector('.flight-deck');
+   if (deck) $('shell-mission-content').append(deck);
+   doc.body.classList.add('game-shell');
++  const focusClearance = attachFocusClearance({
++    document: doc,
++    container: missions,
++    heading: missions.querySelector('.shell-dialog-heading'),
++    footer: $('shell-deploy-bar'),
++  });
++  // Keep the renderer's one live status in the same top layer as its selectors.
++  // Moving the node changes neither its presenter nor the current load owner.
++  let craftFeedbackMarker = null;
++  const showCraftFeedback = () => {
++    const status = $('craft-preparation-status'),
++      slot = $('shell-craft-feedback');
++    if (!status || !slot || craftFeedbackMarker) return;
++    craftFeedbackMarker = doc.createElement('span');
++    craftFeedbackMarker.hidden = true;
++    status.after(craftFeedbackMarker);
++    slot.append(status);
++  };
++  const restoreCraftFeedback = () => {
++    if (!craftFeedbackMarker) return;
++    craftFeedbackMarker.after($('craft-preparation-status'));
++    craftFeedbackMarker.remove();
++    craftFeedbackMarker = null;
++  };
+   const closeHome = () => {
+     homeVisit++;
+     if (workshop?.open) workshop.close();
+@@ -66,7 +91,10 @@ export function attachGameShell({
+   const closedMissions = () => {
+     // Native close events may arrive after a new showModal. Do not dismantle
+     // the current reading view because a previous close was queued.
+-    if (!missions.open) restoreMissionView();
++    if (!missions.open) {
++      restoreMissionView();
++      restoreCraftFeedback();
++    }
+   };
+   missions.addEventListener('close', closedMissions);
+   const openMissions = () => {
+@@ -74,8 +102,10 @@ export function attachGameShell({
+     pause(true);
+     restoreMissionView();
+     closeHome();
++    showCraftFeedback();
+     if (!missions.open) missions.showModal();
+     syncPreparation();
++    focusClearance.refresh();
+     if (!focusMissions?.()) $('pack-select').focus();
+   };
+   const openHome = () => {
+@@ -190,7 +220,9 @@ export function attachGameShell({
+         $('mission-brief-reading').scrollTop = 0;
+       }
+       if (brief) brief.open = true;
++      showCraftFeedback();
+       if (!missions.open) missions.showModal();
++      focusClearance.refresh();
+       if (!focusBriefing?.()) $('mission-brief-read')?.focus({ preventScroll: true });
+     };
+   $('shell-packs').onclick = openMissions;
+@@ -322,6 +354,8 @@ export function attachGameShell({
+     destroy() {
+       destroyed = true;
+       restoreMissionView();
++      restoreCraftFeedback();
++      focusClearance.destroy();
+       missions.removeEventListener('close', closedMissions);
+       missions.removeEventListener('cancel', cancelMissions);
+       if (overlayMenu) overlayMenu.onclick = null;
+diff --git a/game/ui/library-panel.mjs b/game/ui/library-panel.mjs
+index 03bcec4..d9c121e 100644
+--- a/game/ui/library-panel.mjs
++++ b/game/ui/library-panel.mjs
+@@ -50,6 +50,109 @@ const fileText = async (file, max = 32 * 1024 * 1024) => {
+ };
+ 
+ export function attachLibraryPanel(api) {
++  // Presentation only: the existing task/attempt/backup owner still controls
++  // status text, leases, disabled state, cancellation, and focus restoration.
++  const feedbackRail = (() => {
++    const rail = $('library-operation-rail'),
++      message = $('library-operation-message'),
++      controls = $('library-operation-controls'),
++      dialog = $('library-dialog');
++    let placements = [];
++    let cancelIds = [];
++    let layoutPending = false;
++    const keepFocusVisible = () => {
++      if (rail.hidden || !dialog.open) return;
++      const area = dialog.getBoundingClientRect(),
++        feedback = rail.getBoundingClientRect(),
++        focused = document.activeElement;
++      const top = feedback.bottom + 8;
++      dialog.style.scrollPaddingBlockStart = `${Math.max(0, top - area.top)}px`;
++      if (
++        !focused ||
++        !dialog.contains(focused) ||
++        rail.contains(focused) ||
++        focused.disabled ||
++        !focused.getClientRects().length ||
++        document.hidden ||
++        document.hasFocus?.() === false
++      )
++        return;
++      const target = focused.getBoundingClientRect();
++      if (focused.hasAttribute('data-close')) {
++        // Close lives before the rail. It must remain reachable above it.
++        dialog.style.scrollPaddingBlockStart = '0px';
++        if (target.top < area.top || target.bottom > area.bottom)
++          focused.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
++      } else if (target.top < top) dialog.scrollTop += target.top - top;
++      else if (target.bottom > area.bottom - 8)
++        // A tall editor may not fit below feedback. Keep its beginning visible
++        // rather than hiding it again while trying to reveal its lower edge.
++        dialog.scrollTop += Math.min(target.bottom - (area.bottom - 8), target.top - top);
++    };
++    const scheduleLayout = () => {
++      if (layoutPending || typeof requestAnimationFrame !== 'function') return;
++      layoutPending = true;
++      requestAnimationFrame(() => {
++        layoutPending = false;
++        keepFocusVisible();
++      });
++    };
++    dialog.addEventListener('focusin', scheduleLayout);
++    globalThis.addEventListener?.('resize', scheduleLayout);
++    if (typeof ResizeObserver === 'function') new ResizeObserver(scheduleLayout).observe(rail);
++    const clear = (id = null) => {
++      if (id && rail.dataset.statusId !== id) return;
++      for (const { element, placeholder } of placements) {
++        placeholder.after(element);
++        placeholder.remove();
++      }
++      placements = [];
++      cancelIds = [];
++      rail.hidden = true;
++      delete rail.dataset.statusId;
++      dialog.style.scrollPaddingBlockStart = '0px';
++    };
++    const present = (id, nextCancelIds = []) => {
++      if (
++        rail.dataset.statusId === id &&
++        cancelIds.length === nextCancelIds.length &&
++        cancelIds.every((value, index) => value === nextCancelIds[index])
++      )
++        return;
++      const focused = document.activeElement;
++      const moving = [$(id), ...nextCancelIds.map($)];
++      const movedFocus = [...placements.map(({ element }) => element), ...moving].some((element) =>
++        element?.contains(focused),
++      );
++      clear();
++      const mount = (element, destination) => {
++        if (!element || element.parentNode === destination) return;
++        const placeholder = document.createElement('span');
++        placeholder.hidden = true;
++        element.after(placeholder);
++        element.remove();
++        placements.push({ element, placeholder });
++        destination.append(element);
++      };
++      mount($(id), message);
++      for (const cancelId of nextCancelIds) mount($(cancelId), controls);
++      cancelIds = [...nextCancelIds];
++      rail.dataset.statusId = id;
++      rail.hidden = false;
++      scheduleLayout();
++      if (
++        movedFocus &&
++        focused?.isConnected &&
++        !focused.disabled &&
++        focused.getClientRects().length &&
++        $('library-dialog').open &&
++        !document.hidden &&
++        document.hasFocus?.() !== false
++      )
++        focused.focus({ preventScroll: true });
++    };
++    return { present, clear };
++  })();
+   let galleryPopulation = 0,
+     viewBackdrop = null;
+   const releaseViewBackdrop = () => {
+@@ -60,6 +163,7 @@ export function attachLibraryPanel(api) {
+   let attemptExport = null;
+   let libraryTask = null;
+   let backupSetPanel = null;
++  let clearBackupFeedbackOnSettle = false;
+   let previousLibrary = null,
+     previousBackup = null,
+     busy = false,
+@@ -151,7 +255,19 @@ export function attachLibraryPanel(api) {
+       ? api.getReducedEffects()
+       : api.get().library.preferences.reducedEffects) === true;
+   function open(panel = 'scores') {
+-    backupSetPanel?.invalidate();
++    const invalidatedBackup = backupSetPanel?.invalidate();
++    if (libraryTask)
++      feedbackRail.present(
++        libraryTask.id,
++        libraryTask.id === 'transfer-status' ? ['transfer-cancel'] : [],
++      );
++    else if (attemptExport) feedbackRail.present('save-status', ['cancel-attempt-export']);
++    else if (invalidatedBackup && busy) {
++      // Cancellation still joins its pending read. Keep feedback visible while
++      // that owner holds the lock, then discard its navigated-away terminal.
++      clearBackupFeedbackOnSettle = true;
++      feedbackRail.present('backup-set-status', ['cancel-backup-set']);
++    } else feedbackRail.clear();
+     api.pause();
+     for (const id of ['scores', 'saves', 'packs', 'challenges'])
+       $(`library-${id}`).hidden = id !== panel;
+@@ -299,6 +415,7 @@ export function attachLibraryPanel(api) {
+     if (!$('library-dialog').open) {
+       endAttemptExport(false);
+       cancelLibraryTask(false);
++      feedbackRail.clear();
+     }
+   });
+   globalThis.addEventListener?.('pagehide', () => {
+@@ -359,6 +476,7 @@ export function attachLibraryPanel(api) {
+   async function exportAttempt() {
+     if (busy || !$('library-dialog').open) return;
+     const source = api.attemptExportSource();
++    feedbackRail.present('save-status', ['cancel-attempt-export']);
+     if (source.source === null) {
+       status('save-status', source.reason);
+       return;
+@@ -498,6 +616,7 @@ export function attachLibraryPanel(api) {
+     };
+     libraryTask = owner;
+     busy = true;
++    feedbackRail.present(id, id === 'transfer-status' ? ['transfer-cancel'] : []);
+     status(id, label, 'busy');
+     for (const { element } of owner.controls)
+       if (!element.hasAttribute('data-close')) element.disabled = true;
+@@ -668,8 +787,13 @@ export function attachLibraryPanel(api) {
+       busy: () => busy,
+       setBusy: (value) => {
+         busy = value;
++        if (!value && clearBackupFeedbackOnSettle) {
++          clearBackupFeedbackOnSettle = false;
++          feedbackRail.clear('backup-set-status');
++        }
+       },
+       refresh,
++      presentFeedback: () => feedbackRail.present('backup-set-status', ['cancel-backup-set']),
+     });
+   $('export-backup').onclick = () =>
+     task('save-status', async (operation) => {
+@@ -726,6 +850,7 @@ export function attachLibraryPanel(api) {
+   };
+   $('undo-library').onclick = () => {
+     if (previousLibrary) {
++      feedbackRail.present('save-status');
+       const result = api.setLibrary(previousLibrary);
+       if (result.ok) previousLibrary = null;
+       $('undo-library').disabled = true;
+diff --git a/scripts/produce-field-kit-theme.mjs b/scripts/produce-field-kit-theme.mjs
+index 2e48ffd..221bf8c 100644
+--- a/scripts/produce-field-kit-theme.mjs
++++ b/scripts/produce-field-kit-theme.mjs
+@@ -35,6 +35,14 @@ const sources = {
+ // changing a digest creates a new source-stage revision and re-opens the
+ // release readiness gate rather than silently inheriting this review.
+ const REVIEWED_RECIPE_INPUTS = {
++  screens: {
++    sha256: '47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6',
++    evidence: [
++      'Scoped P01 correction review: docs/verification/cross-mode/p01/loading-placement-recipe-review.md; screen recipe inputs sha256:47874ed7ba035680e0f5abac3fa5a69c3e7774ecdbddcf769f490a9f09fdffc6. The CSS delta is restricted to the Missions heading and its original craft-status slot. Hangar, results, collection, settings, couch and studio backdrop rules and all original artwork bytes are unchanged; their existing functional approval is retained in new immutable revisions.',
++      'Missions keeps title, Back and feedback in one sticky heading. Native Standard and Large/Plain/Reduced checks at 390x844 and 844x390 expose the focused Pack selector between the measured heading and action bar, with center and four interior hit targets clear. Real loading, ready collapse and direct-brief ownership are distinguished in docs/verification/cross-mode/p01/craft-operation-visibility.md; retained intermediate overlap failures are not relabelled as passes.',
++      'game/test/focus-clearance.test.mjs, field-kit-flow.test.mjs, presentation-renderer.test.mjs, practice-brief-host.test.mjs and modal-navigation.test.mjs pass 68/68 for measured clearance, original node restoration, current close/disposal and existing renderer/navigation behavior. This source-pinned component approval does not certify physical devices, public correction, all P01 hosts or completion of later map-presentation phases.',
++    ],
++  },
+   ui: {
+     sha256: 'e3f6c6e0b186a3ea3f0ed9203e6da709641782bcbc9a3ca698bdba0bae06a450',
+     evidence: [
+--- /dev/null
++++ game/ui/focus-clearance.mjs
+@@ -0,0 +1,61 @@
++/** Keep the current form control clear of a modal's measured sticky regions. */
++export function attachFocusClearance({
++  container,
++  heading,
++  footer,
++  document: doc = globalThis.document,
++}) {
++  const view = doc.defaultView ?? globalThis;
++  let disposed = false,
++    queued = false;
++  const visible = (node) => node && !node.hidden && node.getClientRects().length > 0;
++  const update = () => {
++    if (disposed || !container.open || doc.hidden || doc.hasFocus?.() === false) return;
++    const box = container.getBoundingClientRect(),
++      top =
++        Math.max(box.top, visible(heading) ? heading.getBoundingClientRect().bottom : box.top) + 8,
++      bottom =
++        Math.min(box.bottom, visible(footer) ? footer.getBoundingClientRect().top : box.bottom) - 8;
++    container.style.scrollPaddingBlockStart = `${Math.max(0, top - box.top)}px`;
++    container.style.scrollPaddingBlockEnd = `${Math.max(0, box.bottom - bottom)}px`;
++    const focused = doc.activeElement;
++    if (
++      bottom <= top ||
++      !focused ||
++      !container.contains(focused) ||
++      heading?.contains(focused) ||
++      footer?.contains(focused) ||
++      focused.disabled ||
++      !visible(focused)
++    )
++      return;
++    const target = focused.getBoundingClientRect();
++    if (target.top < top) container.scrollTop += target.top - top;
++    else if (target.bottom > bottom)
++      container.scrollTop += Math.min(target.bottom - bottom, target.top - top);
++  };
++  const schedule = () => {
++    if (disposed || queued || typeof view.requestAnimationFrame !== 'function') return;
++    queued = true;
++    view.requestAnimationFrame(() => {
++      queued = false;
++      update();
++    });
++  };
++  const Observer = view.ResizeObserver ?? globalThis.ResizeObserver,
++    observer = typeof Observer === 'function' ? new Observer(schedule) : null;
++  for (const node of [heading, footer]) if (node) observer?.observe(node);
++  container.addEventListener('focusin', schedule);
++  view.addEventListener?.('resize', schedule);
++  return {
++    refresh: schedule,
++    destroy() {
++      disposed = true;
++      observer?.disconnect();
++      container.removeEventListener('focusin', schedule);
++      view.removeEventListener?.('resize', schedule);
++      container.style.scrollPaddingBlockStart = '0px';
++      container.style.scrollPaddingBlockEnd = '0px';
++    },
++  };
++}
+--- /dev/null
++++ game/test/focus-clearance.test.mjs
+@@ -0,0 +1,138 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import { attachFocusClearance } from '../ui/focus-clearance.mjs';
++
++// Recorded sticky-header/footer geometry with a scrolling form. No raster claim.
++function fixture({ headingBottom = 294.359, footerTop = 700, height = 844 } = {}) {
++  const queue = [],
++    events = new Map();
++  let resized;
++  const doc = { hidden: false, hasFocus: () => true };
++  const container = {
++    open: true,
++    style: {},
++    scrollTop: 200,
++    contains(node) {
++      return node?.parent === this || node?.parent?.parent === this;
++    },
++    getBoundingClientRect: () => ({ top: 16, bottom: height - 16 }),
++    addEventListener: (type, fn) => events.set(`container:${type}`, fn),
++    removeEventListener: (type) => events.delete(`container:${type}`),
++  };
++  const region = (top, bottom) => ({
++    parent: container,
++    hidden: false,
++    contains(node) {
++      return node?.parent === this;
++    },
++    getClientRects() {
++      return this.hidden ? [] : [{}];
++    },
++    getBoundingClientRect: () => ({ top, bottom }),
++  });
++  const heading = region(16, headingBottom),
++    footer = region(footerTop, height - 16);
++  const control = {
++    parent: container,
++    disabled: false,
++    hidden: false,
++    absoluteTop: 474.344,
++    height: 45,
++    getClientRects() {
++      return this.hidden ? [] : [{}];
++    },
++    getBoundingClientRect() {
++      const top = this.absoluteTop - container.scrollTop;
++      return { top, bottom: top + this.height };
++    },
++    focus() {
++      throw new Error('Layout must not move focus');
++    },
++  };
++  doc.activeElement = control;
++  doc.defaultView = {
++    requestAnimationFrame: (fn) => queue.push(fn),
++    addEventListener: (type, fn) => events.set(`window:${type}`, fn),
++    removeEventListener: (type) => events.delete(`window:${type}`),
++    ResizeObserver: class {
++      constructor(fn) {
++        resized = fn;
++      }
++      observe() {}
++      disconnect() {
++        resized = null;
++      }
++    },
++  };
++  const api = attachFocusClearance({ container, heading, footer, document: doc });
++  return {
++    doc,
++    container,
++    heading,
++    footer,
++    control,
++    api,
++    resize: () => resized?.(),
++    emit: (type) => events.get(`container:${type}`)?.(),
++    flush: () => {
++      for (const fn of queue.splice(0)) fn();
++    },
++  };
++}
++
++test('Large portrait selector is fully below the measured expanded heading', () => {
++  const f = fixture();
++  f.resize();
++  f.flush();
++  assert.ok(f.control.getBoundingClientRect().top >= 302.358);
++  assert.ok(f.control.getBoundingClientRect().bottom <= 692);
++  assert.equal(f.doc.activeElement, f.control);
++  assert.equal(f.container.style.scrollPaddingBlockStart, '286.359px');
++});
++
++test('Large landscape selector clears the measured bottom action bar', () => {
++  const f = fixture({ headingBottom: 208, footerTop: 306, height: 390 });
++  f.emit('focusin');
++  f.flush();
++  assert.ok(f.control.getBoundingClientRect().top >= 216);
++  assert.ok(f.control.getBoundingClientRect().bottom <= 298.001);
++  assert.equal(f.doc.activeElement, f.control);
++});
++
++test('queued reflow reads current focus and leaves the heading action alone', () => {
++  const f = fixture();
++  f.resize();
++  const back = { parent: f.heading };
++  f.doc.activeElement = back;
++  f.flush();
++  assert.equal(f.container.scrollTop, 200);
++  assert.equal(f.doc.activeElement, back);
++});
++
++test('large reading region retains its beginning and manual scrolling is not undone', () => {
++  const f = fixture({ headingBottom: 100, footerTop: 306, height: 390 });
++  f.control.height = 300;
++  f.api.refresh();
++  f.flush();
++  assert.ok(Math.abs(f.control.getBoundingClientRect().top - 108) < 0.001);
++  f.container.scrollTop += 80;
++  const intentional = f.container.scrollTop;
++  f.emit('scroll');
++  f.flush();
++  assert.equal(f.container.scrollTop, intentional);
++});
++
++for (const reason of ['closed', 'hidden', 'blurred', 'outside', 'disposed'])
++  test(`queued layout cannot alter a ${reason} owner's scroll or focus`, () => {
++    const f = fixture();
++    f.api.refresh();
++    if (reason === 'closed') f.container.open = false;
++    if (reason === 'hidden') f.doc.hidden = true;
++    if (reason === 'blurred') f.doc.hasFocus = () => false;
++    if (reason === 'outside') f.doc.activeElement = {};
++    if (reason === 'disposed') f.api.destroy();
++    const focused = f.doc.activeElement;
++    f.flush();
++    assert.equal(f.container.scrollTop, 200);
++    assert.equal(f.doc.activeElement, focused);
++  });

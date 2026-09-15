@@ -1,0 +1,253 @@
+{
+  "label": "03-library-detail-focused",
+  "at": "2026-09-15T14:06:45.859Z",
+  "viewport": {
+    "dpr": 1,
+    "height": 844,
+    "visual": {
+      "height": 844,
+      "scale": 1,
+      "width": 390
+    },
+    "width": 390
+  },
+  "active": {
+    "id": "library-operation-message",
+    "tag": "DIV"
+  },
+  "elements": [
+    {
+      "id": "library-operation-rail",
+      "text": "\n        Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. \n        \n          Stop waiting\n        \n      ",
+      "rect": {
+        "bottom": 499.078125,
+        "height": 373.59375,
+        "left": 24,
+        "right": 366,
+        "top": 125.484375,
+        "width": 342,
+        "x": 24,
+        "y": 125.484375
+      },
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "statusId": "save-status",
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 370,
+      "clientHeight": 370
+    },
+    {
+      "id": "library-operation-message",
+      "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+      "rect": {
+        "bottom": 477.078125,
+        "height": 337.59375,
+        "left": 38,
+        "right": 352,
+        "top": 139.484375,
+        "width": 314,
+        "x": 38,
+        "y": 139.484375
+      },
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 363,
+      "clientHeight": 338
+    },
+    {
+      "id": "export-backup",
+      "text": "Export game data",
+      "rect": {
+        "bottom": 1195.453125,
+        "height": 47,
+        "left": 24,
+        "right": 260.453125,
+        "top": 1148.453125,
+        "width": 236.453125,
+        "x": 24,
+        "y": 1148.453125
+      },
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 43,
+      "clientHeight": 43
+    },
+    {
+      "id": "save-status",
+      "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+      "rect": {
+        "bottom": 502.484375,
+        "height": 363,
+        "left": 38,
+        "right": 352,
+        "top": 139.484375,
+        "width": 314,
+        "x": 38,
+        "y": 139.484375
+      },
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "statusId": null,
+      "state": "ready",
+      "scrollTop": 0,
+      "scrollHeight": 363,
+      "clientHeight": 363
+    },
+    {
+      "id": "backup-set-status",
+      "text": "Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.",
+      "rect": {
+        "bottom": 1110.453125,
+        "height": 198,
+        "left": 24,
+        "right": 366,
+        "top": 912.453125,
+        "width": 342,
+        "x": 24,
+        "y": 912.453125
+      },
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "statusId": null,
+      "state": "ready",
+      "scrollTop": 0,
+      "scrollHeight": 198,
+      "clientHeight": 198
+    },
+    {
+      "id": "library-operation-cancel",
+      "text": "Stop waiting",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": true,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "id": "cancel-backup-set",
+      "text": "Cancel preparation",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": true,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "id": "download-backup-game",
+      "text": null,
+      "rect": null,
+      "fullyInViewport": null,
+      "fullyInsideAncestorClip": null,
+      "hidden": null,
+      "statusId": null,
+      "state": null,
+      "scrollTop": null,
+      "scrollHeight": null,
+      "clientHeight": null
+    },
+    {
+      "id": "save-status-label",
+      "text": "Game data prepared: player library, installed chapters and saved flight. Restore picture originals from .rlmedia before this file. Stories need .rlstory and custom music needs .rlsound. Download requested. Check your downloads or Save dialog; the JSON remains available here to copy. ",
+      "rect": {
+        "bottom": 502.484375,
+        "height": 363,
+        "left": 68,
+        "right": 352,
+        "top": 139.484375,
+        "width": 284,
+        "x": 68,
+        "y": 139.484375
+      },
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": false,
+      "hidden": false,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 363,
+      "clientHeight": 363
+    },
+    {
+      "id": "save-status-count",
+      "text": "",
+      "rect": {
+        "bottom": 0,
+        "height": 0,
+        "left": 0,
+        "right": 0,
+        "top": 0,
+        "width": 0,
+        "x": 0,
+        "y": 0
+      },
+      "fullyInViewport": false,
+      "fullyInsideAncestorClip": false,
+      "hidden": true,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 0,
+      "clientHeight": 0
+    },
+    {
+      "id": "library-close",
+      "text": "\u00d7",
+      "rect": {
+        "bottom": 54,
+        "height": 44,
+        "left": 326,
+        "right": 370,
+        "top": 10,
+        "width": 44,
+        "x": 326,
+        "y": 10
+      },
+      "fullyInViewport": true,
+      "fullyInsideAncestorClip": true,
+      "hidden": false,
+      "statusId": null,
+      "state": null,
+      "scrollTop": 0,
+      "scrollHeight": 40,
+      "clientHeight": 40
+    }
+  ]
+}

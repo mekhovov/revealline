@@ -1,0 +1,27 @@
+{
+  "at": "2026-09-15T14:15:08.265341+00:00",
+  "processes": [
+    {
+      "pid": 27367,
+      "alive": false
+    },
+    {
+      "pid": 27416,
+      "alive": false
+    },
+    {
+      "pid": 28068,
+      "alive": false
+    }
+  ],
+  "ports": [
+    {
+      "port": 52589,
+      "open": false
+    },
+    {
+      "port": 52593,
+      "open": false
+    }
+  ]
+}

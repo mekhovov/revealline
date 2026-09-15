@@ -1,0 +1,84 @@
+{
+  "active": {
+    "action": null,
+    "centerHitId": "controller-settings-root-glyphFamily",
+    "centerHitTag": "SELECT",
+    "centerHitWithin": true,
+    "disabled": false,
+    "focused": true,
+    "fullyInViewport": true,
+    "hidden": false,
+    "id": "controller-settings-root-glyphFamily",
+    "rect": {
+      "bottom": 210.921875,
+      "height": 45,
+      "left": 427,
+      "right": 792.25,
+      "top": 165.921875,
+      "width": 365.25,
+      "x": 427,
+      "y": 165.921875
+    },
+    "rendered": true,
+    "tag": "SELECT",
+    "text": "Automatic / position labelsXbox labelsPlayStation labels",
+    "value": "xbox"
+  },
+  "activeEqualsEnabledEdit": false,
+  "at": "2026-09-15T14:25:02.914Z",
+  "edit": {
+    "action": "edit",
+    "centerHitId": "settings-dialog",
+    "centerHitTag": "DIALOG",
+    "centerHitWithin": false,
+    "disabled": false,
+    "focused": false,
+    "fullyInViewport": false,
+    "hidden": true,
+    "id": "",
+    "rect": {
+      "bottom": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "width": 0,
+      "x": 0,
+      "y": 0
+    },
+    "rendered": false,
+    "tag": "BUTTON",
+    "text": "Edit controller settings",
+    "value": ""
+  },
+  "editorHidden": false,
+  "glyphChoice": "xbox",
+  "hasFocus": true,
+  "status": {
+    "action": null,
+    "centerHitWithin": false,
+    "focused": false,
+    "fullyInViewport": false,
+    "hidden": false,
+    "id": "controller-settings-root-status",
+    "rect": {
+      "bottom": 1012.921875,
+      "height": 66,
+      "left": 51.75,
+      "right": 792.25,
+      "top": 946.921875,
+      "width": 740.5,
+      "x": 51.75,
+      "y": 946.921875
+    },
+    "rendered": true,
+    "tag": "P",
+    "text": "Editing a draft. Apply validates all controls together; Cancel keeps the current map."
+  },
+  "url": "http://127.0.0.1:52965/game/",
+  "viewport": {
+    "height": 390,
+    "width": 844
+  },
+  "visibility": "visible"
+}

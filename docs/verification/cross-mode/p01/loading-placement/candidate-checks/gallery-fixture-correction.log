@@ -1,0 +1,215 @@
+TAP version 13
+# Subtest: Collection shows pagination only when 0 pictures need a second page
+ok 1 - Collection shows pagination only when 0 pictures need a second page
+  ---
+  duration_ms: 3.350042
+  ...
+# Subtest: Collection shows pagination only when 12 pictures need a second page
+ok 2 - Collection shows pagination only when 12 pictures need a second page
+  ---
+  duration_ms: 20.366625
+  ...
+# Subtest: Collection shows pagination only when 13 pictures need a second page
+ok 3 - Collection shows pagination only when 13 pictures need a second page
+  ---
+  duration_ms: 9.612584
+  ...
+# Subtest: Filtering to one page preserves unrelated focus
+ok 4 - Filtering to one page preserves unrelated focus
+  ---
+  duration_ms: 39.036917
+  ...
+# Subtest: Filtering to one page restores removed pager focus to search
+ok 5 - Filtering to one page restores removed pager focus to search
+  ---
+  duration_ms: 36.360625
+  ...
+# Subtest: wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+ok 6 - wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+  ---
+  duration_ms: 3.281667
+  ...
+# Subtest: Back restores the same stable picture on its page and preserves the original filter
+ok 7 - Back restores the same stable picture on its page and preserves the original filter
+  ---
+  duration_ms: 38.484209
+  ...
+# Subtest: native cancel follows the same picture return path and does not clear collection context
+ok 8 - native cancel follows the same picture return path and does not clear collection context
+  ---
+  duration_ms: 38.167959
+  ...
+# Subtest: a reordered collection resolves the stable picture key rather than the old card index
+ok 9 - a reordered collection resolves the stable picture key rather than the old card index
+  ---
+  duration_ms: 32.821416
+  ...
+# Subtest: a removed picture clamps the page and focuses a remaining enabled card
+ok 10 - a removed picture clamps the page and focuses a remaining enabled card
+  ---
+  duration_ms: 32.472542
+  ...
+# Subtest: a missing pack or empty filtered collection falls back to the enabled search field
+ok 11 - a missing pack or empty filtered collection falls back to the enabled search field
+  ---
+  duration_ms: 34.124542
+  ...
+# Subtest: the underlying Collection cannot replace its open child picture
+ok 12 - the underlying Collection cannot replace its open child picture
+  ---
+  duration_ms: 0.777667
+  ...
+# Subtest: Replay leaves the collection closed and preserves the host mission focus
+ok 13 - Replay leaves the collection closed and preserves the host mission focus
+  ---
+  duration_ms: 30.429834
+  ...
+# Subtest: late decoding and a queued old close cannot steal focus from a new picture
+ok 14 - late decoding and a queued old close cannot steal focus from a new picture
+  ---
+  duration_ms: 1.201625
+  ...
+# Subtest: a new picture hides the previous artwork and blocks actions until its own decode completes
+ok 15 - a new picture hides the previous artwork and blocks actions until its own decode completes
+  ---
+  duration_ms: 0.866791
+  ...
+# Subtest: an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+ok 16 - an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+  ---
+  duration_ms: 0.666625
+  ...
+# Subtest: an older rejected decode cannot replace the selected ready picture with an error
+ok 17 - an older rejected decode cannot replace the selected ready picture with an error
+  ---
+  duration_ms: 0.632959
+  ...
+# Subtest: a failed selected decode keeps stale pixels hidden and can be closed and retried
+ok 18 - a failed selected decode keeps stale pixels hidden and can be closed and retried
+  ---
+  duration_ms: 0.742833
+  ...
+# Subtest: a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+ok 19 - a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+  ---
+  duration_ms: 1.005417
+  ...
+# Subtest: a failed illustration reload cannot start a procedural celebration over the ready authored picture
+ok 20 - a failed illustration reload cannot start a procedural celebration over the ready authored picture
+  ---
+  duration_ms: 0.926125
+  ...
+# Subtest: busy library import still prevents cancel until its guarded task finishes
+ok 21 - busy library import still prevents cancel until its guarded task finishes
+  ---
+  duration_ms: 1.480375
+  ...
+# Subtest: profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+ok 22 - profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+  ---
+  duration_ms: 4.87925
+  ...
+# Subtest: a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+ok 23 - a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+  ---
+  duration_ms: 2.085834
+  ...
+# Subtest: a late seal updates an existing focused collection card without repaint or replacement
+ok 24 - a late seal updates an existing focused collection card without repaint or replacement
+  ---
+  duration_ms: 18.651
+  ...
+# Subtest: an already open picture receives friendly seal details without disturbing its focus or artwork
+ok 25 - an already open picture receives friendly seal details without disturbing its focus or artwork
+  ---
+  duration_ms: 1.463625
+  ...
+# Subtest: late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+ok 26 - late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+  ---
+  duration_ms: 1.211542
+  ...
+# Subtest: both difficulty records share a card while mode changes preserve focus and Back returns to that card
+ok 27 - both difficulty records share a card while mode changes preserve focus and Back returns to that card
+  ---
+  duration_ms: 25.744459
+  ...
+# Subtest: picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+ok 28 - picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+  ---
+  duration_ms: 1.358334
+  ...
+# Subtest: picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+ok 29 - picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+  ---
+  duration_ms: 2.307084
+  ...
+# Subtest: rapid difficulty switches retain the latest image generation and keep stale actions blocked
+ok 30 - rapid difficulty switches retain the latest image generation and keep stale actions blocked
+  ---
+  duration_ms: 1.511542
+  ...
+# Subtest: score and saved-attempt mode labels use exact execution keys and searchable separate boards
+ok 31 - score and saved-attempt mode labels use exact execution keys and searchable separate boards
+  ---
+  duration_ms: 15.523542
+  ...
+# Subtest: a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+ok 32 - a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+  ---
+  duration_ms: 6.900458
+  ...
+# Subtest: an open picture cannot replay a pack removed after the picture was resolved
+ok 33 - an open picture cannot replay a pack removed after the picture was resolved
+  ---
+  duration_ms: 0.5055
+  ...
+# Subtest: a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+ok 34 - a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+  ---
+  duration_ms: 0.387958
+  ...
+# Subtest: Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+ok 35 - Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+  ---
+  duration_ms: 185.256917
+  ...
+# Subtest: Collection retains an earned original after its pack is removed without offering replay or invented animation
+ok 36 - Collection retains an earned original after its pack is removed without offering replay or invented animation
+  ---
+  duration_ms: 114.793334
+  ...
+# Subtest: an unavailable original never silently falls back to current authored artwork
+ok 37 - an unavailable original never silently falls back to current authored artwork
+  ---
+  duration_ms: 61.904417
+  ...
+# Subtest: closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+ok 38 - closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+  ---
+  duration_ms: 110.765875
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after navigation
+ok 39 - Back keeps its scope but late metadata cannot steal focus after navigation
+  ---
+  duration_ms: 80.567792
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+ok 40 - Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+  ---
+  duration_ms: 108.227834
+  ...
+# Subtest: Collection labels the retained score run separately from a later best medal without rewriting either record
+ok 41 - Collection labels the retained score run separately from a later best medal without rewriting either record
+  ---
+  duration_ms: 0.746
+  ...
+1..41
+# tests 41
+# suites 0
+# pass 41
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1146.110375
