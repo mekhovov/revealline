@@ -43,6 +43,47 @@ export function bootCoop() {
     COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
     COOP_PLAYTEST_CONFIGURATIONS[0];
   let menuHint = '';
+  const touchQuery = matchMedia('(any-pointer: coarse)');
+  const tools = $('coop-tools');
+  let assignedSlots = [null, null];
+  let input;
+  const touchPads = [...document.querySelectorAll('.race-pad')];
+  function showTouch() {
+    const mode = $('coop-touch').value;
+    for (const pad of touchPads) {
+      const player = Number(pad.dataset.player);
+      const visible =
+        running() &&
+        (mode === 'on' ||
+          (mode === 'auto' && touchQuery.matches && assignedSlots[player] === null));
+      if (!pad.hidden && !visible) input?.clearPhysical(player);
+      pad.hidden = !visible;
+      pad.closest('.control-card').dataset.touchVisible = String(visible);
+    }
+    const visible = touchPads.some((pad) => !pad.hidden);
+    $('coop-controls').hidden = !visible;
+    document.body.dataset.coopTouch = visible ? 'visible' : 'hidden';
+  }
+  function placeTools(paused) {
+    const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
+    if (tools.parentNode !== destination) destination.append(tools);
+    tools.hidden = running();
+    if (tools.hidden) {
+      $('coop-help').open = false;
+      $('coop-options').open = false;
+    }
+    showTouch();
+  }
+  function back() {
+    const details =
+      document.activeElement?.closest('details') || tools.querySelector('details[open]');
+    if (details?.open && tools.contains(details)) {
+      details.open = false;
+      details.querySelector('summary')?.focus({ preventScroll: true });
+    } else if (run?.status === 'paused') $('coop-resume').focus({ preventScroll: true });
+    else if (run) lobby();
+    else $('coop-race').click();
+  }
   const running = () => run?.status === 'running';
   const scope = () => (running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby');
   const primary = () =>
@@ -51,14 +92,16 @@ export function bootCoop() {
       : run.status === 'paused' && !loopStopped
         ? $('coop-resume')
         : $('coop-retry');
-  const input = attachCouchInput({
+  input = attachCouchInput({
     ...COOP_INPUT_CAPABILITIES,
     arena: $('coop-canvas'),
     active: running,
     continuousSteering: () => true,
     getGamepads: () => framePads,
     onPause: () => pause(),
-    onPads: (count) => {
+    onPads: (count, slots) => {
+      assignedSlots = slots;
+      showTouch();
       const text = `${count} controller${count === 1 ? '' : 's'} connected${menuHint ? ` · ${menuHint}` : ''}`;
       if ($('coop-pads').textContent !== text) $('coop-pads').textContent = text;
     },
@@ -70,13 +113,9 @@ export function bootCoop() {
     accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
-    onBack: () => {
-      if (run?.status === 'paused') resume();
-      else if (run) lobby();
-      else $('coop-race').click();
-    },
+    onBack: back,
     onMenu: () => {
-      if (run?.status === 'paused') resume();
+      if (run?.status === 'paused') back();
     },
     onHint: (message) => {
       menuHint = message;
@@ -96,6 +135,7 @@ export function bootCoop() {
   function overlay() {
     const show = run && !running();
     $('coop-overlay').hidden = !show;
+    placeTools(Boolean(show));
     $('coop-pause').disabled = !running();
     if (!show) return;
     const won = run.status === 'won',
@@ -105,7 +145,7 @@ export function bootCoop() {
       ? 'A WORLD YOU REVEALED TOGETHER'
       : lost
         ? 'ONE MORE SHARED PLAN'
-        : 'TAKE A BREATH';
+        : 'PAUSED';
     $('coop-overlay-title').textContent = won
       ? 'You brought it home.'
       : lost
@@ -219,6 +259,7 @@ export function bootCoop() {
     document.body.classList.remove('playing');
     $('coop-play').hidden = true;
     $('coop-menu').hidden = false;
+    placeTools(false);
     $('coop-start').focus({ preventScroll: true });
   }
   function events() {
@@ -409,17 +450,21 @@ export function bootCoop() {
   $('coop-level').onchange = setupNote;
   $('coop-experiment').onchange = setupNote;
   showPack(COOP_STARTER_PACK, RELAY_YARD.id);
-  $('coop-touch').checked = matchMedia('(pointer: coarse)').matches;
-  const showTouch = () =>
-    document.querySelectorAll('.race-pad').forEach((pad) => {
-      pad.hidden = !$('coop-touch').checked;
-    });
+  $('coop-touch').value = 'auto';
   $('coop-touch').onchange = () => {
     input.clearPhysical();
     showTouch();
     if (running()) input.focus();
   };
-  showTouch();
+  const touchChanged = () => showTouch();
+  touchQuery.addEventListener?.('change', touchChanged);
+  $('coop-help-read').onclick = () =>
+    navigation.beginReading({
+      region: $('coop-help-reading'),
+      origin: $('coop-help-read'),
+      label: 'Relay Rescue controls',
+    });
+  placeTools(false);
   $('coop-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   $('coop-reduced').onchange = () => {
     if (running()) input.focus();
@@ -439,6 +484,7 @@ export function bootCoop() {
     input.destroy();
     router.destroy();
     navigation.destroy();
+    touchQuery.removeEventListener?.('change', touchChanged);
     unsubscribeNative();
   };
   window.addEventListener('pagehide', () => pause());

@@ -12,7 +12,7 @@ const html = await readFile(new URL('../couch/relay-rescue.html', import.meta.ur
 let sequence = 0;
 
 /** Real markup and game modules, with a minimal DOM, inert Canvas, and controlled frame callbacks. */
-async function page(t) {
+async function page(t, { touch = false } = {}) {
   const doc = new Document(),
     win = new Events();
   doc.parentNode = win;
@@ -32,6 +32,13 @@ async function page(t) {
   const frames = new Map(),
     originals = new Map();
   let nextFrame = 0;
+  const pads = [];
+  const touchListeners = new Set();
+  const touchQuery = {
+    matches: touch,
+    addEventListener: (type, fn) => touchListeners.add(fn),
+    removeEventListener: (type, fn) => touchListeners.delete(fn),
+  };
   const install = (key, descriptor) => {
     originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
     Object.defineProperty(globalThis, key, { configurable: true, ...descriptor });
@@ -39,9 +46,9 @@ async function page(t) {
   for (const [key, value] of Object.entries({
     document: doc,
     window: win,
-    navigator: { getGamepads: () => [] },
+    navigator: { getGamepads: () => pads },
     location: { href: 'http://localhost/game/couch/relay-rescue.html' },
-    matchMedia: () => ({ matches: false }),
+    matchMedia: (query) => (query === '(any-pointer: coarse)' ? touchQuery : { matches: false }),
     requestAnimationFrame(callback) {
       frames.set(++nextFrame, callback);
       return nextFrame;
@@ -89,7 +96,27 @@ async function page(t) {
       callback((now += FIXED_DT * 1000));
     }
   };
-  return { $, doc, selectFile, choose, press, tap, tick };
+  return {
+    $,
+    doc,
+    selectFile,
+    choose,
+    press,
+    tap,
+    tick,
+    pads,
+    touchPads: [...doc.querySelectorAll('.race-pad')],
+    setTouch(value) {
+      touchQuery.matches = value;
+      for (const fn of touchListeners) fn();
+    },
+    // This minimal host has no native summary activation. Model only that
+    // browser default while retaining real navigation/cancel callbacks.
+    disclose(id) {
+      $(id).open = true;
+      $(id).querySelector('summary').focus();
+    },
+  };
 }
 
 function customPack(id = 'custom') {
@@ -231,8 +258,8 @@ test('custom fractional coverage and multiple required cores drive the actual br
 test('lobby keyboard navigation reaches Race and accessibility controls while excluding flight pads', async (t) => {
   const f = await page(t),
     seen = new Set();
-  f.$('coop-touch').checked = true;
-  f.$('coop-touch').onchange();
+  f.disclose('coop-options');
+  f.choose('coop-touch', 'on');
   f.doc.body.focus();
   for (let index = 0; index < 30; index++) {
     f.press('Tab');
@@ -243,6 +270,7 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
     assert.ok(seen.has(id), `Lobby Tab must reach ${id}.`);
   let left = 0;
   f.$('coop-race').onclick = () => left++;
+  f.$('coop-options').open = false;
   f.press('Escape');
   assert.equal(left, 1, 'Lobby Back activates the visible Race destination.');
   f.$('coop-start').click();
@@ -394,4 +422,136 @@ test('a slowed enemy stays marked after the pulse, through pause and reduced eff
     run.events.some((event) => event.type === 'support.pulse' && !event.slowedEnemies.length),
   );
   assert.equal(marked(), false, 'An empty pulse does not claim an enemy is slowed.');
+});
+
+test('Auto touch uses actual controller seats while menu hiding and explicit overrides stay authoritative', async (t) => {
+  const f = await page(t, { touch: true });
+  assert.equal(f.$('coop-controls').hidden, true);
+  assert.equal(f.$('coop-tools').parentNode.id, 'coop-lobby-tools');
+  f.$('coop-start').click();
+  f.tick(3);
+  assert.deepEqual(
+    f.touchPads.map((p) => p.hidden),
+    [false, false],
+  );
+  assert.equal(f.$('coop-tools').hidden, true);
+  f.pads.push({
+    index: 7,
+    id: 'First pad',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  });
+  f.tick(2);
+  assert.deepEqual(
+    f.touchPads.map((p) => p.hidden),
+    [true, false],
+    'The assigned seat loses only its Auto virtual pad.',
+  );
+  f.$('coop-pause').click();
+  assert.deepEqual(
+    f.touchPads.map((p) => p.hidden),
+    [true, true],
+  );
+  assert.equal(f.$('coop-tools').parentNode.id, 'coop-pause-tools');
+  f.disclose('coop-options');
+  f.choose('coop-touch', 'on');
+  f.setTouch(false);
+  assert.equal(
+    f.$('coop-controls').hidden,
+    true,
+    'Even explicit Show does not expose flight controls over menus.',
+  );
+  f.$('coop-resume').click();
+  assert.deepEqual(
+    f.touchPads.map((p) => p.hidden),
+    [false, false],
+    'Show overrides pointer capability and controller assignment.',
+  );
+  f.$('coop-pause').click();
+  f.disclose('coop-options');
+  f.choose('coop-touch', 'off');
+  f.setTouch(true);
+  f.$('coop-resume').click();
+  assert.equal(f.$('coop-controls').hidden, true);
+  f.$('coop-pause').click();
+  f.$('coop-lobby').click();
+  assert.equal(f.$('coop-controls').hidden, true);
+  assert.equal(f.$('coop-tools').hidden, false);
+  assert.equal(f.$('coop-tools').parentNode.id, 'coop-lobby-tools');
+});
+
+test('paused Help reading and Back return to an action without resuming the shared simulation', async (t) => {
+  const f = await page(t);
+  f.$('coop-start').click();
+  f.tick(60);
+  f.$('coop-pause').click();
+  const clock = f.$('coop-clock').textContent;
+  f.disclose('coop-help');
+  assert.equal(f.$('coop-help-read').onclick(), true);
+  assert.equal(f.doc.activeElement.id, 'coop-help-reading');
+  f.tick(120);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.press('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-help-read');
+  f.press('Escape');
+  assert.equal(f.$('coop-help').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-help-toggle');
+  f.press('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.disclose('coop-options');
+  f.$('coop-touch').focus();
+  assert.equal(f.press('ArrowDown').defaultPrevented, false, 'Native select arrows stay native.');
+  assert.equal(
+    f.press('Enter').defaultPrevented,
+    false,
+    'Select confirmation is not player-two Support.',
+  );
+  f.tick(60);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  f.press('Escape');
+  f.press('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+  f.$('coop-resume').click();
+  f.tick(65);
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.notEqual(f.$('coop-clock').textContent, clock);
+});
+
+test('assigning a controller releases hidden held touch; disconnect stays paused until Resume', async (t) => {
+  const f = await page(t, { touch: true });
+  f.$('coop-start').click();
+  f.tick(3);
+  const boost = f.touchPads[0].querySelector('[data-action="boost"]');
+  boost.emit('pointerdown', { pointerId: 9, pointerType: 'touch', button: 0 });
+  assert.equal(boost.getAttribute('aria-pressed'), 'true');
+  f.pads.push({
+    index: 5,
+    id: 'Assigned pad',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  });
+  f.tick(2);
+  assert.equal(f.touchPads[0].hidden, true);
+  assert.equal(boost.getAttribute('aria-pressed'), 'false');
+  f.pads[0].connected = false;
+  f.tick();
+  const clock = f.$('coop-clock').textContent;
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-controls').hidden, true);
+  f.tick(60);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  f.$('coop-resume').click();
+  assert.deepEqual(
+    f.touchPads.map((p) => p.hidden),
+    [false, false],
+  );
+  assert.equal(boost.getAttribute('aria-pressed'), 'false');
 });
