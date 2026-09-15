@@ -7,7 +7,7 @@ import { exportMediaBundle } from '../media-bundle.mjs';
 import { exportStoryBundle } from '../story-bundle.mjs';
 import { exportSoundtrackBundle } from '../soundtrack-bundle.mjs';
 import { backupSetFixture } from './helpers/backup-set-fixture.mjs';
-import { deferred } from './helpers/media-fixtures.mjs';
+import { deferred, pngBytes } from './helpers/media-fixtures.mjs';
 const bytes = async (blob) => Buffer.from(await blob.arrayBuffer());
 const hash = (b) => createHash('sha256').update(b).digest('hex');
 
@@ -129,4 +129,14 @@ test('a smaller host preparation budget refuses rather than returning partial fi
   const f = await backupSetFixture();
   await assert.rejects(prepareBackupSet(f.source, { maxBytes: 128 }), /budget/);
   assert.deepEqual(f.calls, []);
+});
+
+test('the old invalid-CRC embedded PNG is a corrupt-original negative, never the positive backup fixture', async () => {
+  const f = await backupSetFixture(),
+    read = f.source.readStill;
+  f.source.readStill = async (options) => {
+    const value = await read(options);
+    return { ...value, assets: [{ ...value.assets[0], blob: new Blob([pngBytes()]) }] };
+  };
+  await assert.rejects(prepareBackupSet(f.source));
 });
