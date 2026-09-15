@@ -1289,7 +1289,7 @@ try {
       // Follow the same cancellable lifecycle as Escape. Library transactions
       // may prevent cancellation; picture close restores its collection focus.
       if (dialog.dispatchEvent(new Event('cancel', { cancelable: true }))) dialog.close();
-      else
+      else if (dialog.open)
         $('controller-ui-hint').textContent =
           'This operation is still in progress. Use its Cancel action when available.';
       return;
