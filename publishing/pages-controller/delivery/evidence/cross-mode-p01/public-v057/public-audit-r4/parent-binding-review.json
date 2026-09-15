@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "at": "2026-09-15T12:01:07.057Z",
+  "binding": {
+    "path": ".cache/cross-mode/p01/public-audit-r4/inputs/74f289510617603c28768bb3f6bfd8e9f7a72cdd/binding.json",
+    "bytes": 2020,
+    "sha256": "1012ce11b82893c75e3c20bbbd0efeda71e1a5dd92100ef1fa46f51b78f1445e"
+  },
+  "originalsReviewed": 9,
+  "gitOriginalsReviewed": 5,
+  "inventoryRows": 2373,
+  "controllerCommit": "74f289510617603c28768bb3f6bfd8e9f7a72cdd",
+  "controllerTree": "8d8173c2f14effcac2e63b8cec22848943d88110",
+  "source": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "deploymentId": 6458234240,
+  "runId": 34965929587,
+  "scope": "Actual authority binding and original bytes independently reviewed. Authorizes full HTTP audit; no public all-body or browser pass claimed."
+}

@@ -1,0 +1,10 @@
+{
+  "elapsedMs": 2.299999952316284,
+  "errorName": "TypeError",
+  "expected": "network refusal",
+  "message": "Failed to fetch",
+  "origin": "https://mekhovov.github.io",
+  "outcome": "rejected",
+  "time": "2026-09-15T12:09:46.637Z",
+  "warning": "Requires matching proxy CONNECT refusal and launch-argument evidence; an unrelated network failure or timeout is insufficient."
+}

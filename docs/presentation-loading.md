@@ -12,6 +12,8 @@ The presenter does not own tasks, storage, focus, cancellation or disabled contr
 
 Report an operation before its first delayed boundary. Keep the indicator beside its activating action or at the top of the current screen. A status below a long form does not acknowledge a visible action. Static direct-route feedback must exist before the main module runs. Main game boot also prepares styles after its independent initial loading card is present, and fails visibly if a required stylesheet cannot load.
 
+Keep the active label concise. Optional pack catalogues and explanatory background belong in expandable details, so changing progress cannot push its count or Stop control out of the player's view. Offline observations provide a concise `summary` while retaining the complete `message` for existing consumers and diagnostic details. The panel uses the summary when available and preserves the message fallback. Qualify this with the full shipped optional-pack list, not only an empty or single-pack fixture.
+
 ## Existing integration boundaries
 
 - Solo Deploy, saved-flight restoration, theme preparation and Retry retain their exact run/theme/generation guards. Foreground Start observes an existing picture prewarm promise. It must not restart download or decoding. Cosmetic craft/release decoration does not hold a playable run. Required-picture failure retains the original paused flight and explicit recovery actions.

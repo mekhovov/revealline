@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { MessageChannel } from 'node:worker_threads';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
+import { offlineAvailability, prepareOffline, checkOffline } from '../offline.mjs';
 import { attachOfflinePanel } from '../ui/offline-panel.mjs';
 
 function boundary(overrides = {}) {
@@ -25,15 +29,137 @@ function boundary(overrides = {}) {
     },
   });
   const status = make('p', 'offline-status');
-  make('pre', 'offline-details');
+  const note = make('p', 'offline-optional-note');
+  const details = make('pre', 'offline-details');
   const panel = attachOfflinePanel({
     document: doc,
     window: win,
     availability: () => ({ available: true }),
     ...overrides,
   });
-  return { doc, win, dialog, button, stop, status, panel };
+  return { doc, win, dialog, button, stop, status, note, details, panel };
 }
+
+test('all packaged optional pack names stay in details through real host progress and readiness', async (t) => {
+  const readJSON = async (path) =>
+    JSON.parse(await readFile(new URL(`../../${path}`, import.meta.url), 'utf8'));
+  const config = await readJSON('game/build-config.json');
+  const catalog = await readJSON(config.optionalChapters.catalog);
+  const optionalPacks = [
+    ...(await Promise.all(config.optionalOffline.map(readJSON))),
+    ...catalog.packs,
+  ].map(({ name }) => ({ name }));
+  assert.equal(optionalPacks.length, 11, 'Exercise the full current packaged optional list');
+  const scope = 'https://game.example/releases/v057/site/';
+  const marker = {
+    format: 'revealline-offline.v1',
+    version: '0.57.0',
+    buildId: 'a'.repeat(64),
+    scope: '../',
+    worker: '../service-worker.js',
+    optionalPacks,
+  };
+  const requests = [];
+  const worker = {
+    state: 'activated',
+    scriptURL: `${scope}service-worker.js`,
+    postMessage(data, [port]) {
+      requests.push({ data, port });
+    },
+  };
+  const registration = { scope, active: worker, installing: null, waiting: null };
+  const env = {
+    documentRef: { querySelector: () => ({ content: JSON.stringify(marker) }) },
+    locationRef: { href: `${scope}game/` },
+    secure: true,
+    navigatorRef: {
+      serviceWorker: {
+        register: async () => registration,
+        getRegistration: async () => registration,
+      },
+    },
+    MessageChannelImpl: MessageChannel,
+  };
+  const available = offlineAvailability(env);
+  const page = boundary({
+    availability: () => available,
+    prepare: (options) => prepareOffline({ ...env, ...options }),
+    check: (options) => checkOffline({ ...env, ...options }),
+  });
+  t.after(() => page.panel.destroy());
+  const noteUnchanged = () => {
+    assert.equal(page.note.hidden, false);
+    assert.equal(page.note.textContent, available.note);
+    for (const { name } of optionalPacks) assert.ok(page.note.textContent.includes(name));
+    assert.match(page.note.textContent, /Already-installed packs.*complete backup/);
+    assert.doesNotMatch(page.status.textContent, /optional:|First Light|Illustrated Pressure/);
+  };
+  noteUnchanged();
+  const pending = page.button.onclick();
+  assert.match(page.status.textContent, /^Connecting to this version’s offline worker…$/);
+  assert.equal(page.stop.hidden, false);
+  noteUnchanged();
+  await waitFor(() => requests.length === 1);
+  const reply = (request, report) =>
+    request.port.postMessage({
+      format: 'revealline.offline-progress.v1',
+      requestId: request.data.requestId,
+      operationId: 'current-worker-operation',
+      buildId: marker.buildId,
+      scope,
+      ...report,
+    });
+  for (const stage of ['checking', 'downloading', 'saving', 'verifying']) {
+    reply(requests[0], {
+      kind: 'progress',
+      stage,
+      progress: { completed: 3, total: 624, unit: 'files' },
+    });
+    await waitFor(() => page.status.dataset.stage === stage);
+    assert.match(page.status.textContent, /3 \/ 624 files/);
+    assert.equal(page.stop.hidden, false);
+    assert.equal(page.button.disabled, true);
+    noteUnchanged();
+  }
+  reply(requests[0], { kind: 'terminal', status: 'ready', verified: 624 });
+  await pending;
+  assert.equal(page.status.dataset.state, 'ready');
+  assert.match(page.status.textContent, /^Offline files verified\..*624 files verified$/);
+  assert.equal(page.stop.hidden, true);
+  const originalResult = JSON.parse(page.details.textContent);
+  assert.equal(originalResult.message, `${originalResult.summary} ${available.note}`);
+  noteUnchanged();
+
+  const checking = page.button.onclick();
+  await waitFor(() => requests.length === 2);
+  reply(requests[1], {
+    kind: 'terminal',
+    status: 'ready',
+    message: 'Core offline files verified.',
+    verified: 624,
+  });
+  await checking;
+  assert.equal(page.status.textContent, 'Core offline files verified. · 624 files verified');
+  assert.equal(
+    JSON.parse(page.details.textContent).message,
+    `Core offline files verified. ${available.note}`,
+  );
+  noteUnchanged();
+});
+
+test('optional notes use plain text and are hidden when unavailable', () => {
+  const page = boundary({
+    availability: () => ({ available: true, note: '<b>Pack</b> is optional.' }),
+  });
+  assert.equal(page.note.textContent, '<b>Pack</b> is optional.');
+  assert.equal(page.note.children.length, 0);
+  assert.equal(page.note.hidden, false);
+  page.panel.destroy();
+  const empty = boundary();
+  assert.equal(empty.note.textContent, '');
+  assert.equal(empty.note.hidden, true);
+  empty.panel.destroy();
+});
 
 test('offline host shows feedback before work and detached old callbacks cannot replace a rejoined check', async () => {
   const requests = [];
