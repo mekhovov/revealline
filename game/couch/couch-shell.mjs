@@ -43,6 +43,7 @@ export function createCouchShell({
   getSoloReturnToken = () => null,
 } = {}) {
   const $ = (id) => doc.getElementById(id),
+    view = doc.defaultView,
     pads = [...doc.querySelectorAll('.race-pad')],
     preferences = ['auto', 'auto'],
     modality = [coarse ? 'touch' : 'keyboard', coarse ? 'touch' : 'keyboard'],
@@ -58,6 +59,7 @@ export function createCouchShell({
     opener = null,
     departure = null,
     destroyed = false,
+    revealingResize = false,
     equipment = [];
   const setText = (id, text) => {
     if ($(id).textContent !== text) $(id).textContent = text;
@@ -76,11 +78,11 @@ export function createCouchShell({
   function root() {
     return status === 'running' || screen === 'review' ? $('race-hud') : $(SCREENS[screen][0]);
   }
-  function focus(element = primary()) {
+  function actionCurrent(element) {
     const owner = root(),
       previousScreen = screen,
       previousStatus = status;
-    const eligible = () =>
+    return () =>
       !destroyed &&
       foreground() &&
       screen === previousScreen &&
@@ -92,12 +94,63 @@ export function createCouchShell({
       !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
       element.getClientRects().length > 0 &&
       doc.defaultView?.getComputedStyle(element)?.visibility !== 'hidden';
+  }
+  function focus(element = primary()) {
+    const eligible = actionCurrent(element);
     if (!eligible()) return;
     element.focus({ preventScroll: true });
     // The screen is installed first. Reveal its actual focused action without
     // letting a synchronous focus callback scroll a replacement/background view.
     if (eligible() && doc.activeElement === element)
       element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
+  }
+  function revealResizedAction(event) {
+    if (revealingResize || event.target !== view) return;
+    revealingResize = true;
+    try {
+      // Resize owns no opener or future focus. Measure only this current action.
+      const element = doc.activeElement,
+        owner = root(),
+        previousScreen = screen,
+        previousStatus = status,
+        current = actionCurrent(element),
+        eligible = () => current() && doc.activeElement === element;
+      if (!eligible()) return;
+      const width = doc.documentElement.clientWidth || view.innerWidth,
+        height = doc.documentElement.clientHeight || view.innerHeight,
+        rect = element.getBoundingClientRect();
+      if (
+        ![
+          width,
+          height,
+          rect.left,
+          rect.top,
+          rect.right,
+          rect.bottom,
+          rect.width,
+          rect.height,
+        ].every(Number.isFinite) ||
+        width <= 0 ||
+        height <= 0 ||
+        rect.width <= 0 ||
+        rect.height <= 0
+      )
+        return;
+      if (
+        (rect.left < 0 || rect.top < 0 || rect.right > width || rect.bottom > height) &&
+        eligible() &&
+        // DOM reads can synchronously retire this resize's current owner.
+        foreground() &&
+        !destroyed &&
+        screen === previousScreen &&
+        status === previousStatus &&
+        root() === owner &&
+        doc.activeElement === element
+      )
+        element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    } finally {
+      revealingResize = false;
+    }
   }
   function renderScreens() {
     const running = status === 'running' || screen === 'review';
@@ -381,6 +434,7 @@ export function createCouchShell({
     if (status !== previous && previous !== null && status !== 'running') focus();
   }
   renderScreens();
+  if (view?.addEventListener) listen(view, 'resize', revealResizedAction);
   return {
     update,
     back,
