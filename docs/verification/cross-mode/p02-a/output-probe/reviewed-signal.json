@@ -1,0 +1,111 @@
+{
+  "format": "revealline.native-master-signal-check.v1",
+  "startedAt": "2026-09-15T15:33:38.863Z",
+  "url": "http://127.0.0.1:53903/docs/verification/cross-mode/p02-a/output-probe/",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+  "scope": "Actual Soundscape native Web Audio mixer; quiet fixture oscillators at music/sfx bus inputs; analyser after compressor. No native media, listening or physical-device qualification.",
+  "observations": [
+    {
+      "id": "initial-muted",
+      "muted": true,
+      "volume": 1,
+      "rms": 0,
+      "peak": 0,
+      "samples": 22528,
+      "frames": 11,
+      "start": 0.2,
+      "end": 0.38
+    },
+    {
+      "id": "full",
+      "muted": false,
+      "volume": 1,
+      "rms": 0.007430757046657456,
+      "peak": 0.014152079820632935,
+      "samples": 22528,
+      "frames": 11,
+      "start": 0.6000000000000001,
+      "end": 0.78
+    },
+    {
+      "id": "quarter",
+      "muted": false,
+      "volume": 0.25,
+      "rms": 0.001858109449198259,
+      "peak": 0.00353804393671453,
+      "samples": 22528,
+      "frames": 11,
+      "start": 0.9946666666666666,
+      "end": 1.1746666666666665
+    },
+    {
+      "id": "zero",
+      "muted": false,
+      "volume": 0,
+      "rms": 0,
+      "peak": 0,
+      "samples": 22528,
+      "frames": 11,
+      "start": 1.384,
+      "end": 1.5639999999999998
+    },
+    {
+      "id": "restored",
+      "muted": false,
+      "volume": 1,
+      "rms": 0.0074278596086180095,
+      "peak": 0.014152353629469872,
+      "samples": 20480,
+      "frames": 10,
+      "start": 1.768,
+      "end": 1.948
+    },
+    {
+      "id": "muted-after-playing",
+      "muted": true,
+      "volume": 1,
+      "rms": 0,
+      "peak": 0,
+      "samples": 22528,
+      "frames": 11,
+      "start": 2.152,
+      "end": 2.3320000000000003
+    }
+  ],
+  "checks": [
+    {
+      "name": "initial-muted has no measured signal",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "zero has no measured signal",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "muted-after-playing has no measured signal",
+      "pass": true,
+      "actual": 0
+    },
+    {
+      "name": "unmuted fixture is present",
+      "pass": true,
+      "actual": 0.007430757046657456
+    },
+    {
+      "name": "quarter volume applies once",
+      "pass": true,
+      "actual": 0.25005654706933045
+    },
+    {
+      "name": "restored signal matches initial full volume",
+      "pass": true,
+      "actual": 0.9996100749868077
+    }
+  ],
+  "sampleRate": 48000,
+  "passed": true,
+  "contextStateAfterCleanup": "closed",
+  "ownedContextClosed": true
+}
