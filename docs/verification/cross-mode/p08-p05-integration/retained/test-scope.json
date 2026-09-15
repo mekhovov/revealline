@@ -1,0 +1,14 @@
+[
+  "game/test/couch-static-pictures.test.mjs",
+  "game/test/couch-static-picture-host.test.mjs",
+  "game/test/presentation-page.test.mjs",
+  "game/test/couch-chapter.test.mjs",
+  "game/test/couch-installed-chapters.test.mjs",
+  "game/test/couch-navigation.test.mjs",
+  "game/test/couch-shell.test.mjs",
+  "game/test/couch-initial-focus.test.mjs",
+  "game/test/couch-input.test.mjs",
+  "game/test/controller-navigation.test.mjs",
+  "game/test/display-preferences-host.test.mjs",
+  "game/test/couch-audio-master.test.mjs"
+]

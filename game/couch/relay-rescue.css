@@ -425,6 +425,9 @@ canvas {
   gap: 10px;
   margin-top: 22px;
 }
+.field-kit #coop-pause-modes {
+  margin-block-start: var(--fk-space-4, 16px);
+}
 .coop-mode-actions {
   display: flex;
   flex-wrap: wrap;

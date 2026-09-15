@@ -1,5 +1,5 @@
 // Actual P03 Couch entry, initial preparation, input and menu code run here.
-// The separate P08 required-picture case remains on its own retained R5 source.
+// Combined P08 required-picture cases also run in couch-static-picture-host.
 // DOM layout/focus and native media are finite models, not device evidence.
 import test from 'node:test';
 import assert from 'node:assert/strict';

@@ -3,6 +3,7 @@ import { createCouchShell } from './couch-shell.mjs';
 import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
+import { createCouchStaticPictures } from './couch-static-pictures.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
 import { onNativeInactive } from '../platform.mjs';
 import { createDuel, stepDuel, pauseDuel, resumeDuel } from '../multiplayer.mjs';
@@ -127,7 +128,7 @@ const presentationPage = mountPresentationPage({
 });
 // Cosmetic menu choice follows this same accepted release; it owns no board lease.
 presentationPage.ready.then((snapshot) => menuStyle.setPresentation(snapshot)).catch(() => {});
-let featured, installed, publishedAudio, publishedPlayer;
+let featured, installed, staticPictures, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
@@ -143,6 +144,7 @@ const releaseArtwork = (event) => {
   presentationFeedback.dispose();
   featured?.dispose();
   installed?.dispose();
+  staticPictures?.dispose();
   window.removeEventListener('pagehide', releaseArtwork);
 };
 window.addEventListener('pagehide', releaseArtwork);
@@ -163,6 +165,15 @@ try {
     json('../../authoring/motion-lab/presets.json'),
   ]);
   const characterPresentations = createCharacterPresentations(presets);
+  const baseEntry = {
+    campaign: { ...campaign, classRecipes: registry },
+    classRecipes: registry,
+    themes: themes.themes,
+    visualOverrides: {},
+    levelVisuals: [],
+    music: [],
+    sourcePackId: null,
+  };
   const maps = campaign.levels.map((level) => ({
     key: level.id,
     chapter: campaign.title,
@@ -172,6 +183,8 @@ try {
     visualOverrides: {},
     defaultThemeId: level.themeId || campaign.themeId,
     track: null,
+    pictureEntry: baseEntry,
+    authoredBackground: null,
   }));
   let featuredSource,
     featuredStatus = '';
@@ -210,10 +223,20 @@ try {
           }).filter(([role]) => role !== 'background'),
         ),
         backdrop: featured.backdrop(level.id),
+        pictureEntry: featured.resolved,
+        authoredBackground:
+          featured.resolved.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides
+            ?.background ||
+          featured.resolved.visualOverrides.background ||
+          null,
       })),
     );
   }
   const shippedMaps = [...maps];
+  staticPictures = createCouchStaticPictures({
+    entries: [baseEntry, ...(featured ? [featured.resolved] : [])],
+    presentationPage,
+  });
   let installedStatus = 'Installed chapters have not been checked.';
   try {
     const channel = document.querySelector('meta[name="revealline-offline"]')
@@ -221,17 +244,7 @@ try {
       : 'dev';
     installed = createCouchInstalledChapters({
       channel,
-      registeredEntries: [
-        {
-          campaign: { ...campaign, classRecipes: registry },
-          classRecipes: registry,
-          themes: themes.themes,
-          visualOverrides: {},
-          levelVisuals: [],
-          music: [],
-          sourcePackId: null,
-        },
-      ],
+      registeredEntries: [baseEntry],
     });
     bootDisplay.update({
       message: 'Checking installed chapters and pictures…',
@@ -310,6 +323,7 @@ try {
     won = [0, 0],
     finished = false,
     generation = 0,
+    startIntentEpoch = 0,
     framePads = [],
     frameReadError = null,
     padDescriptors = new Map(),
@@ -343,26 +357,59 @@ try {
     menuHint = '';
   }
   function actionFocus(origin) {
-    const startedHere = document.activeElement === origin,
+    const foreground = () => !document.hidden && document.hasFocus(),
+      startedHere = document.activeElement === origin && foreground(),
       scope = shell.scope();
-    let moved = false;
+    let moved = false,
+      shifting = false,
+      pendingTarget = null;
     const observe = (event) => {
-      if (![origin, document.body, document.documentElement].includes(event.target)) moved = true;
+      if (!shifting && ![origin, document.body, document.documentElement].includes(event.target))
+        moved = true;
     };
+    const hidden = () => {
+      if (!foreground()) moved = true;
+    };
+    const blurred = () => {
+      moved = true;
+    };
+    const owns = (current) =>
+      current &&
+      !disposed &&
+      startedHere &&
+      !moved &&
+      foreground() &&
+      shell.scope() === scope &&
+      [origin, pendingTarget, document.body, document.documentElement].includes(
+        document.activeElement,
+      );
+    const available = (target) =>
+      target?.isConnected &&
+      !target.disabled &&
+      !target.closest('[hidden],[inert]') &&
+      target.getClientRects().length > 0;
     document.addEventListener('focusin', observe);
-    return (target, current) => {
+    document.addEventListener('visibilitychange', hidden);
+    window.addEventListener('blur', blurred);
+    const restore = (target, current) => {
       document.removeEventListener('focusin', observe);
-      if (
-        current &&
-        !disposed &&
-        startedHere &&
-        !moved &&
-        shell.scope() === scope &&
-        !target.disabled &&
-        !target.closest('[hidden],[inert]')
-      )
-        target.focus({ preventScroll: true });
+      document.removeEventListener('visibilitychange', hidden);
+      window.removeEventListener('blur', blurred);
+      if (owns(current) && available(target)) target.focus({ preventScroll: true });
     };
+    restore.pending = (target, current) => {
+      if (!owns(current) || !available(target)) return;
+      // This transfer belongs to the action, not to a new user choice. Later
+      // navigation or foreground loss still relinquishes completion focus.
+      pendingTarget = target;
+      shifting = true;
+      try {
+        target.focus({ preventScroll: true });
+      } finally {
+        shifting = false;
+      }
+    };
+    return restore;
   }
   function cancelContent() {
     if (!contentBusy) return;
@@ -370,6 +417,7 @@ try {
     preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
+    staticPictures.cancel();
     backdrop = null;
     contentBusy = false;
     contentReady = false;
@@ -379,11 +427,17 @@ try {
     $('race-message').textContent = contentError;
     updateMenu();
   }
+  $('race-picture-cancel').onclick = () => {
+    const restoreFocus = actionFocus($('race-picture-cancel'));
+    cancelContent();
+    restoreFocus($('race-chapter-retry'), !!contentError);
+  };
   function prepare() {
     preparationStatus.clear();
     preparationDisplay = null;
     contentController?.abort();
     installed?.clear();
+    staticPictures.cancel();
     contentController = new AbortController();
     contentScope = shell?.scope() || 'main';
     contentError = null;
@@ -430,29 +484,33 @@ try {
     });
     finished = false;
     $('race-start').textContent = 'Start round ↗';
-    contentReady = shippedMaps.includes(entry);
-    contentBusy = !contentReady;
-    $('race-message').textContent = contentReady
-      ? [featuredStatus, 'Both boards use the same map, class and seed. Ready when you are.']
-          .filter(Boolean)
-          .join(' ')
-      : 'Checking this chapter and loading its original picture…';
+    return loadPreparedPicture(entry);
+  }
+  function loadPreparedPicture(entry) {
+    contentReady = false;
+    contentBusy = true;
+    contentError = null;
+    const staticEntry = shippedMaps.includes(entry),
+      owner = staticEntry ? staticPictures : installed,
+      message = staticEntry
+        ? 'Checking this map and preparing the same picture for both boards…'
+        : 'Checking this chapter and loading its original picture…';
+    $('race-message').textContent = message;
     updateMenu();
-    if (contentReady) return Promise.resolve(true);
     const selectedRun = match,
       ticket = generation,
       controller = contentController;
     const current = () =>
       !disposed && !controller.signal.aborted && match === selectedRun && ticket === generation;
     const display = preparationStatus.begin({
-      message: 'Checking this chapter and loading its original picture…',
+      message,
       stage: 'verifying',
       isCurrent: current,
     });
     preparationDisplay = display;
     return (async () => {
       try {
-        const image = await installed.select(entry, {
+        const image = await owner.select(entry, {
           themeId: theme.id,
           raceId: ticket,
           signal: controller.signal,
@@ -462,14 +520,19 @@ try {
           return false;
         backdrop = image;
         contentReady = true;
-        $('race-message').textContent =
-          'Original picture ready for both boards. Start when you are ready.';
+        $('race-message').textContent = [
+          staticEntry ? featuredStatus : '',
+          image?.notice,
+          'Both boards use the same map, class, seed and prepared picture. Start when you are ready.',
+        ]
+          .filter(Boolean)
+          .join(' ');
         display.finish({ message: '' });
         return true;
       } catch (error) {
         if (disposed || controller.signal.aborted || match !== selectedRun || ticket !== generation)
           return false;
-        contentError = `This chapter could not load: ${error.message}`;
+        contentError = `This ${staticEntry ? 'map picture' : 'chapter'} could not load: ${error.message}`;
         $('race-message').textContent = contentError;
         display.finish({ state: 'error', message: '' });
         return false;
@@ -482,6 +545,9 @@ try {
     })();
   }
   function pause() {
+    // Suspend and controller-loss paths also pass here. Picture preparation
+    // may finish, but an interrupted gesture no longer authorizes a start.
+    startIntentEpoch++;
     sound.pause();
     if (!match || match.status === 'finished') return;
     pauseDuel(match, { preserveContinuation: true });
@@ -497,23 +563,41 @@ try {
       disposed ||
       contentBusy ||
       !contentReady ||
+      document.hidden ||
+      !document.hasFocus() ||
       match.status === 'running' ||
       shell.scope() !== 'main'
     )
       return;
+    const intent = ++startIntentEpoch,
+      ownsStartIntent = () =>
+        !disposed && intent === startIntentEpoch && !document.hidden && document.hasFocus();
     if (match.status === 'finished') {
       if (won.some((n) => n >= 2)) won = [0, 0];
-      // A fresh installed round first loads its original, then awaits a new Start.
-      const ready = prepare();
+      const isStatic = shippedMaps.some((row) => row.key === selectedMapKey);
+      const ready = prepare(),
+        nextRun = match,
+        nextController = contentController;
       if (contentBusy) {
-        await ready;
-        return;
+        const prepared = await ready;
+        // Preserve the installed-chapter confirmation gesture. For a shipped
+        // round, this explicit Next action starts after its own preparation only.
+        if (
+          !isStatic ||
+          !prepared ||
+          !ownsStartIntent() ||
+          match !== nextRun ||
+          contentController !== nextController ||
+          nextController.signal.aborted ||
+          shell.scope() !== 'main'
+        )
+          return;
       }
     }
     const entry = maps.find((row) => row.key === selectedMapKey),
       selectedRun = match,
       ticket = generation;
-    if (match.status === 'ready' && !shippedMaps.includes(entry)) {
+    if (match.status === 'ready') {
       const restoreFocus = actionFocus($('race-start'));
       contentBusy = true;
       const controller = contentController;
@@ -530,14 +614,25 @@ try {
       preparationDisplay = display;
       updateMenu();
       try {
-        await installed.confirm(entry, {
-          raceId: ticket,
-          signal: controller.signal,
-          onStatus: (status) => display.update(status),
-        });
+        const confirmation = (shippedMaps.includes(entry) ? staticPictures : installed).confirm(
+          entry,
+          {
+            raceId: ticket,
+            signal: controller.signal,
+            onStatus: (status) => display.update(status),
+          },
+        );
+        if (confirmation?.then) {
+          restoreFocus.pending(
+            $('race-picture-cancel'),
+            ownsStartIntent() && controller === contentController && !controller.signal.aborted,
+          );
+          await confirmation;
+        }
         if (
-          disposed ||
-          contentController.signal.aborted ||
+          !ownsStartIntent() ||
+          controller !== contentController ||
+          controller.signal.aborted ||
           match !== selectedRun ||
           ticket !== generation ||
           shell.scope() !== 'main'
@@ -548,28 +643,43 @@ try {
           !disposed &&
           match === selectedRun &&
           ticket === generation &&
-          !contentController.signal.aborted
+          controller === contentController &&
+          !controller.signal.aborted
         ) {
           contentReady = false;
-          contentError = `Refresh installed chapters in Race setup before starting: ${error.message}`;
+          contentError = shippedMaps.includes(entry)
+            ? `The prepared picture could not be confirmed. Retry or choose a new setup: ${error.message}`
+            : `Refresh installed chapters in Race setup before starting: ${error.message}`;
           $('race-message').textContent = contentError;
           display.finish({ state: 'error', message: '' });
         }
         return;
       } finally {
-        if (!disposed && match === selectedRun && ticket === generation) {
+        if (
+          !disposed &&
+          match === selectedRun &&
+          ticket === generation &&
+          controller === contentController &&
+          !controller.signal.aborted
+        ) {
           if (!contentError) display.finish({ message: '' });
           contentBusy = false;
           updateMenu();
         }
         restoreFocus(
           $('race-chapter-retry'),
-          contentError && match === selectedRun && ticket === generation,
+          contentError &&
+            ownsStartIntent() &&
+            match === selectedRun &&
+            ticket === generation &&
+            controller === contentController &&
+            !controller.signal.aborted,
         );
       }
     }
     if (!contentReady || disposed) return;
     clear();
+    if (!ownsStartIntent()) return;
     resumeDuel(match, { preserveContinuation: true });
     neutralResumeTick = true;
     if (publishedPlayer) {
@@ -584,8 +694,19 @@ try {
   $('race-chapter-retry').onclick = async () => {
     if (disposed || contentBusy || match.status !== 'ready') return;
     const restoreFocus = actionFocus($('race-chapter-retry'));
-    const ready = prepare(),
-      controller = contentController;
+    preparationStatus.clear();
+    contentController?.abort();
+    contentController = new AbortController();
+    contentScope = shell.scope();
+    const entry = maps.find((row) => row.key === selectedMapKey);
+    // Retry the same untouched attempt and picture choice; only setup changes
+    // establish a new race identity and may resolve a new assignment.
+    const controller = contentController,
+      ready = loadPreparedPicture(entry);
+    restoreFocus.pending(
+      $('race-picture-cancel'),
+      controller === contentController && !controller.signal.aborted,
+    );
     try {
       return await ready;
     } finally {
@@ -667,11 +788,11 @@ try {
     $(id).onchange = () => {
       if (match?.status !== 'ready' || disposed) return;
       won = [0, 0];
-      prepare();
+      return prepare();
     };
   $('race-theme').onchange = () => {
     if (match?.status !== 'ready' || disposed) return;
-    prepare();
+    return prepare();
   };
   $('race-tap').onchange = clear;
   const input = attachCouchInput({
@@ -782,6 +903,7 @@ try {
     $('race-start').disabled = running || contentBusy || !contentReady;
     $('race-chapter-retry').hidden = !contentError || match.status !== 'ready';
     $('race-chapter-retry').disabled = contentBusy;
+    $('race-picture-cancel').hidden = !contentBusy;
     $('race-installed-refresh').disabled = match.status !== 'ready' || contentBusy || !installed;
     $('race-installed-status').textContent = [featuredStatus, installedStatus]
       .filter(Boolean)
@@ -807,6 +929,7 @@ try {
     'race-coop',
     'race-start',
     'race-chapter-retry',
+    'race-picture-cancel',
     'race-installed-refresh',
     'race-focus',
     'race-options',
@@ -1097,10 +1220,11 @@ try {
     initialMatch = match,
     initialGeneration = generation;
   frameId = requestAnimationFrame(frame);
-  const initialReady = await initialPreparation;
-  document.documentElement.dataset.toolState = contentReady ? 'ready' : 'error';
-  // Retain the existing loading barrier; focus only after its inertness clears.
+  // Install the usable lobby before waiting for its required picture. Cancel
+  // and Back stay reachable; only Start waits for this exact preparation.
   finishBoot();
+  document.documentElement.dataset.toolState = 'ready';
+  const initialReady = await initialPreparation;
   const start = $('race-start');
   if (
     initialFocusPending &&
