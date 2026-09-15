@@ -1,0 +1,47 @@
+{
+  "status": "PASS_ARCHIVE_PRESERVATION_WITH_FINDINGS",
+  "archiveId": "archive-15",
+  "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "deploymentId": 6460910463,
+  "versions": [
+    "v0.57.1"
+  ],
+  "scope": "Bounded online Archive15 preservation journey in one fresh owned native Chromium profile. No P01 acceptance or future v0.57.2 correction claim.",
+  "completed": [
+    "Frozen native route and source identity",
+    "Cold Deploy preparation and standard content selection",
+    "One ordinary successful capture with preserved unsuccessful gameplay attempts",
+    "Explicit pause",
+    "Canonical Explorer and one native Back with capture/focus retained",
+    "390x844 title control geometry",
+    "Owned process/observer closure"
+  ],
+  "findings": [
+    "Library feedback placement and craft feedback behind the Missions modal remain in immutable v0.57.1; later source corrections are separate.",
+    "Controller Apply focus finding is preserved by the exact frozen source, and was not re-tested in this short archive journey.",
+    "Canonical main Explorer requests /revealline/catalog-ui/game/ui/operation-status.css and receives 404 plus ERR_ABORTED. Explorer content renders and native Back works; this auxiliary main-page loading-style defect remains for open P01.",
+    "Origin-root favicon.ico returns 404 outside the declared archive/game graph."
+  ],
+  "interventionAndAttempts": [
+    "First long straight cut was caught by an enemy; one life lost, no product failure inferred.",
+    "Initial Restart click opened a confirmation. The subsequent ArrowDown and Escape were confirmation navigation/cancel, not a restarted gameplay capture. No success is attributed to those actions.",
+    "One later explicitly confirmed Restart occurred; its straight cut was also caught. Within that same attempt the short turned cut then secured 6.9%; there was no second confirmed Restart.",
+    "An unexpected chrome://settings/help page appeared inside the owned profile; the strict target-count guard refused subsequent observations/actions. Actual game was hidden. Original target lists and refusal are retained.",
+    "At 14:31:00Z the operator closed only the unexpected owned Help target and brought the existing game target forward, before the parent clarification not to close it arrived. This explicit intervention is retained; no cause or product attribution is inferred. The page was not recreated, and no fresh browser was launched.",
+    "The explicit game continuation required visible and focused current page checks. No visibility override, global OS action, F1/help request, or arbitrary page input was used.",
+    "The observer STOP stdin request was refused because that tool pipe was closed. The verified owned observer received SIGTERM and exited normally; no observation gap is claimed before the recorded final stop."
+  ],
+  "limits": [
+    "Pause intentionally conceals the playfield. The pause screenshot proves the pause UI; captured coverage/score are established by original DOM receipts, not by claiming concealed pixels are visible.",
+    "Initial title and navigation used pointer controls; gameplay used native keyboard. No exhaustive keyboard-only/touch-only/controller-only path is claimed.",
+    "No offline install, fixture import, multiplayer, loss/retry qualification matrix, victory, audio audibility, native zoom, physical controller or complete accessibility qualification.",
+    "Full 662-body HTTP evidence is separate from this native sample. An auxiliary main Explorer request absent from its public inventory is disclosed, not erased by the archive byte pass.",
+    "v0.57.2 is a separately qualified Library/craft/Controller focus feature correction. P01 remains open for remaining loading hosts."
+  ],
+  "assertions": {
+    "path": "native-assertions.json",
+    "bytes": 10160,
+    "sha256": "36f218d42cff2907de62d219481f7e4414f4bc0c0e55c41d5520bdf3b34b1b11"
+  },
+  "phaseAccepted": false
+}

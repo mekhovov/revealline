@@ -1,0 +1,121 @@
+{
+  "format": "revealline-archive-preservation-candidate.v1",
+  "status": "CACHE_ONLY_PREPARATION_REMOTE_EXECUTION_NOT_AUTHORIZED",
+  "recordedAt": "2026-09-15T17:31:01.056932+00:00",
+  "archiveId": "archive-16",
+  "repository": "mekhovov/revealline-archive-16",
+  "templateRepository": "mekhovov/revealline-archive-15",
+  "templateCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "templateTree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "toolingCommit": "0594b60136db000c9d6c87527c7885c2c51a2562",
+  "extractorSha256": "38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b",
+  "publishedMetadataCommit": "d0288c502620bfa7a4a0861fbdbce1a60be183c5",
+  "releaseId": 389319807,
+  "publishedAt": "2026-09-15T17:06:37Z",
+  "version": "v0.57.2",
+  "sourceRevision": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "sourceTree": "f6ff808b2d7cf60c4295f99e24e65fa9a26d9ed4",
+  "tagObject": "67a6fc9c6d0dce662949cb06f55a7228f22967bf",
+  "assets": [
+    {
+      "name": "distribution.zip",
+      "id": 566125783,
+      "bytes": 312673777,
+      "sha256": "64e4c7bee71ef0af099530d0159018932b2acd333386dd66251be1798f91967e"
+    },
+    {
+      "name": "distribution.zip.sha256",
+      "id": 566129448,
+      "bytes": 83,
+      "sha256": "61d61243d117c53783fa08ab585e2e5ff6e08fd7ede170163208f59d97db42d1"
+    },
+    {
+      "name": "manifest.json",
+      "id": 566129446,
+      "bytes": 121562,
+      "sha256": "e451485b178a2f14ba3e87350f9a305d4f03f264025794544bc924b0003a318d"
+    },
+    {
+      "name": "qualification-evidence-record.json",
+      "id": 566129524,
+      "bytes": 5943,
+      "sha256": "3d6cad9c74f41544e9a669a4891a124880595c9998e8340fdb88c2c97dacf2d3"
+    },
+    {
+      "name": "release.json",
+      "id": 566129452,
+      "bytes": 465,
+      "sha256": "8b5a376673ae2beee6118c8d7c3c2cd1101c678efec3405e7056181146aaa1dd"
+    },
+    {
+      "name": "source-qualification-evidence.zip",
+      "id": 566129449,
+      "bytes": 11197720,
+      "sha256": "cd33b0c3e878c22389c463f64d85874dddd003abb7ef19530dccd92f0da73596"
+    },
+    {
+      "name": "source-qualification.json",
+      "id": 566129450,
+      "bytes": 64747,
+      "sha256": "899192dd56c7baa3824d28fef5d53d9221b90014aa36269649e1eb08d9bbf5fb"
+    },
+    {
+      "name": "source.tar",
+      "id": 566117773,
+      "bytes": 865269760,
+      "sha256": "a3cbb09e4efea6cbcf0f19ee1c13f85a36cf97ad3b7056933f457aeb1b47cf4e"
+    },
+    {
+      "name": "verification.json",
+      "id": 566129521,
+      "bytes": 2012,
+      "sha256": "f5ddcf89cabd8f824b1e1592de988b1da49b09d9ea5bf843068750ec70c6cbf0"
+    }
+  ],
+  "capacity": {
+    "expectedFiles": 663,
+    "expectedBytes": 312625191,
+    "archiveBudgetBytes": 800000000,
+    "archiveHeadroomBytes": 487374809,
+    "hostedMinimumFreeBytes": 3221225472,
+    "mainBudgetBytes": 950000000,
+    "localPayloadBuild": false
+  },
+  "originalMetadata": [
+    {
+      "name": "release.json",
+      "originalPath": ".cache/cross-mode/p01/v0572-library-boundary/qualified-artifact-verified/release.json",
+      "bytes": 465,
+      "sha256": "8b5a376673ae2beee6118c8d7c3c2cd1101c678efec3405e7056181146aaa1dd"
+    },
+    {
+      "name": "manifest.json",
+      "originalPath": ".cache/cross-mode/p01/v0572-library-boundary/qualified-artifact-verified/manifest.json",
+      "bytes": 121562,
+      "sha256": "e451485b178a2f14ba3e87350f9a305d4f03f264025794544bc924b0003a318d"
+    },
+    {
+      "name": "distribution.zip.sha256",
+      "originalPath": ".cache/cross-mode/p01/v0572-library-boundary/qualified-artifact-verified/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "61d61243d117c53783fa08ab585e2e5ff6e08fd7ede170163208f59d97db42d1"
+    },
+    {
+      "name": "source-qualification.json",
+      "originalPath": ".cache/cross-mode/p01/v0572-library-boundary/qualification/source-qualification.json",
+      "bytes": 64747,
+      "sha256": "899192dd56c7baa3824d28fef5d53d9221b90014aa36269649e1eb08d9bbf5fb"
+    }
+  ],
+  "knownHistoricalLimits": [
+    "v0.57.2 contains the Library/craft/Controller focus and JSON byte-accounting correction; native current-feature acceptance is parent-owned and still pending at preparation.",
+    "Distinct file-input cancel and Solo replay-export entry follow-ups are absent from immutable cc9. Do not claim this archive fixes those behaviors or completes P01."
+  ],
+  "futureArchiveCommit": null,
+  "futureWorkflowRun": null,
+  "futureDeployment": null,
+  "futureBrowserAdmission": null,
+  "nextGameVersionOrSource": null,
+  "preservation": "Every one of the 655 original manifest rows and original release/manifest/checksum/source-qualification bytes is preserved. Only eight declared wrapper/metadata files are added. Original source TAR, distribution and qualification evidence remain immutable GitHub Release attachments.",
+  "scope": "Cache-only Archive16 candidate. No repository creation, Git/source/index/main/allocation writes, payload build/download, deployment or browser execution. Existing fifteen archives remain untouched."
+}

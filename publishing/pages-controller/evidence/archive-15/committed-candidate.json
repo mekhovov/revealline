@@ -1,0 +1,121 @@
+{
+  "at": "2026-09-15T14:15:27.031027+00:00",
+  "commit": "45d856314155205777f680691ebe7805507ebced",
+  "tree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "candidatePinsSha256": "b4f984ce4ec34b99513c165e4597016e06b0061b0027932adee5030e8aa96f03",
+  "trackedFiles": 16,
+  "allCommittedBytesMatchReviewedCandidate": true,
+  "actions": [
+    {
+      "argv": [
+        "git",
+        "switch",
+        "-c",
+        "codex/p01-preserve-v0571"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Switched to a new branch 'codex/p01-preserve-v0571'\n"
+    },
+    {
+      "argv": [
+        "git",
+        "add",
+        "--",
+        ".github/workflows/deploy.yml",
+        ".gitignore",
+        "README.md",
+        "expected-inventory.json",
+        "index.html",
+        "input-authority.json",
+        "metadata/v0.57.1/distribution.zip.sha256",
+        "metadata/v0.57.1/manifest.json",
+        "metadata/v0.57.1/release.json",
+        "metadata/v0.57.1/source-qualification.json",
+        "releases/index.html",
+        "source-lock.json",
+        "tools/prepare.py",
+        "tools/test_prepare.py",
+        "tools/test_verify.py",
+        "tools/verify.py"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exitCode": 0,
+      "stdout": ".github/workflows/deploy.yml\n.gitignore\nREADME.md\nexpected-inventory.json\nindex.html\ninput-authority.json\nmetadata/v0.57.1/distribution.zip.sha256\nmetadata/v0.57.1/manifest.json\nmetadata/v0.57.1/release.json\nmetadata/v0.57.1/source-qualification.json\nreleases/index.html\nsource-lock.json\ntools/prepare.py\ntools/test_prepare.py\ntools/test_verify.py\ntools/verify.py\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--stat"
+      ],
+      "exitCode": 0,
+      "stdout": " .github/workflows/deploy.yml               |   79 +\n .gitignore                                 |    2 +\n README.md                                  |   12 +-\n expected-inventory.json                    | 3315 ++++++++++++++++++++++++++++\n index.html                                 |   20 +\n input-authority.json                       |   93 +\n metadata/v0.57.1/distribution.zip.sha256   |    1 +\n metadata/v0.57.1/manifest.json             | 3279 +++++++++++++++++++++++++++\n metadata/v0.57.1/release.json              |   10 +\n metadata/v0.57.1/source-qualification.json | 1409 ++++++++++++\n releases/index.html                        |   16 +\n source-lock.json                           |   32 +\n tools/prepare.py                           |   85 +\n tools/test_prepare.py                      |  306 +++\n tools/test_verify.py                       |   49 +\n tools/verify.py                            |  140 ++\n 16 files changed, 8847 insertions(+), 1 deletion(-)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "commit",
+        "-m",
+        "Preserve original v0.57.1 in Archive15"
+      ],
+      "exitCode": 0,
+      "stdout": "[codex/p01-preserve-v0571 45d8563] Preserve original v0.57.1 in Archive15\n 16 files changed, 8847 insertions(+), 1 deletion(-)\n create mode 100644 .github/workflows/deploy.yml\n create mode 100644 .gitignore\n create mode 100644 expected-inventory.json\n create mode 100644 index.html\n create mode 100644 input-authority.json\n create mode 100644 metadata/v0.57.1/distribution.zip.sha256\n create mode 100644 metadata/v0.57.1/manifest.json\n create mode 100644 metadata/v0.57.1/release.json\n create mode 100644 metadata/v0.57.1/source-qualification.json\n create mode 100644 releases/index.html\n create mode 100644 source-lock.json\n create mode 100644 tools/prepare.py\n create mode 100644 tools/test_prepare.py\n create mode 100644 tools/test_verify.py\n create mode 100644 tools/verify.py\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exitCode": 0,
+      "stdout": "45d856314155205777f680691ebe7805507ebced\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD^{tree}"
+      ],
+      "exitCode": 0,
+      "stdout": "9881cab9459e1d2dc6f093c8e002468973406829\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "format": "revealline-archive-preservation-candidate.v1",
+  "status": "REVIEWED_PLAN_AUTHORIZED_FOR_ARCHIVE_ONLY_EXECUTION",
+  "recordedAt": "2026-09-15T14:13:03.214720+00:00",
+  "archiveId": "archive-15",
+  "repository": "mekhovov/revealline-archive-15",
+  "templateRepository": "mekhovov/revealline-archive-14",
+  "templateCommit": "740878b685b08edb40db5494f7ebbe71536b523a",
+  "toolingCommit": "0594b60136db000c9d6c87527c7885c2c51a2562",
+  "extractorSha256": "38081b1791b49cb7328d18b4d4325c2876bb3bc8d7db03f4610f8d8a7c4bf91b",
+  "publishedMetadataCommit": "9ef75091762cfb9c84b02475ef79913a4476c651",
+  "id": 389160255,
+  "publishedAt": "2026-09-15T13:24:27Z",
+  "version": "v0.57.1",
+  "sourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "sourceTree": "d3549d0efd15529f71f4cff9a940bdda5e84f3a6",
+  "tagObject": "8b2c1106606ab42d3246b1bc836c4e6b1ad1cb3f",
+  "assets": [
+    {
+      "name": "distribution.zip",
+      "id": 565746975,
+      "bytes": 312616348,
+      "sha256": "743519288b61b061112ae5d3aea1cd8f011eb015d0e205c3a38f6baf47807401"
+    },
+    {
+      "name": "distribution.zip.sha256",
+      "id": 565750453,
+      "bytes": 83,
+      "sha256": "f2f0331f64f19fe074d9a854b4b4e4b872e661bb3fc02948763333b46bd5f30a"
+    },
+    {
+      "name": "manifest.json",
+      "id": 565750452,
+      "bytes": 121400,
+      "sha256": "7f0be3dbdddb0b3252e0f3c60b53b0f6f93a38f9e5c513d37cf0e38a176e0f78"
+    },
+    {
+      "name": "qualification-evidence-record.json",
+      "id": 565750596,
+      "bytes": 3868,
+      "sha256": "751ce77684e87836ebfa720b8b07a249ff8629bd1a499f03a02a45444997dfac"
+    },
+    {
+      "name": "release.json",
+      "id": 565750456,
+      "bytes": 465,
+      "sha256": "1687fe1846f7f6cec588d24085a422fa0d9e75a1555f8c0e9a7aefcfe796ac66"
+    },
+    {
+      "name": "source-qualification-evidence.zip",
+      "id": 565750459,
+      "bytes": 3630930,
+      "sha256": "71dca4afc1b9ac44886c51d636efd8eef1bf913efd59808f3698f5f53139edb0"
+    },
+    {
+      "name": "source-qualification.json",
+      "id": 565750458,
+      "bytes": 52290,
+      "sha256": "3f191263ad827c30ecd797d7dcf1186d03551fae9a8500611b91a5d72ce512bd"
+    },
+    {
+      "name": "source.tar",
+      "id": 565740258,
+      "bytes": 823808000,
+      "sha256": "8a05aeeeae5e3a2a2da53cf5e716d532e27abc1ed48954dd95bcf4307761beb0"
+    },
+    {
+      "name": "verification.json",
+      "id": 565750592,
+      "bytes": 1978,
+      "sha256": "9ca77ac1f168fde6494bc9d70b0783b1efcfcb509ff3f99242ddfa4b9c1647f8"
+    }
+  ],
+  "capacity": {
+    "expectedFiles": 662,
+    "expectedBytes": 312555435,
+    "archiveBudgetBytes": 800000000,
+    "archiveHeadroomBytes": 487444565,
+    "mainBudgetBytes": 950000000,
+    "currentMainArtifactBytes": 636567742,
+    "templateArchive14Bytes": 312553884,
+    "archive14PlusPlannedArchive15BytesUpperBound": 625109319,
+    "newArchiveChosenForIsolationNotCapacityNecessity": true,
+    "hostedMinimumFreeBytes": 3221225472,
+    "localBulkExecution": false
+  },
+  "knownHistoricalFindings": [
+    "Published v0.57.1 Library progress/controls placement remains incomplete; later corrective source does not change these immutable bytes.",
+    "Published v0.57.1 craft-loading notice is behind Missions modal. Archive qualification preserves and discloses this prior defect; it must not claim a fix or P01 acceptance."
+  ],
+  "preservation": "All654 original manifest rows and original release/checksum/manifest/qualification bytes. No game rebuild or replacement. ZIP/source TAR remain immutable release attachments.",
+  "scope": "Only Archive15 infrastructure/publication; no other archive, game source, main controller or tag changes. Native archival evidence follows separately; P01 unaccepted."
+}
