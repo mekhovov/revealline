@@ -5,6 +5,8 @@ description: 'Design audio direction, music prompts, adaptive stems, event sound
 
 # Xonix Audio Director
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Translate gameplay events and a theme into an original, practical audio system. Separate a composition brief from actual generated or recorded audio.
 
 For current game work, read [soundtrack libraries](references/soundtrack-libraries.md). The runtime now has preserved MP3 libraries, binary backups, mixed playlists and a session transport; the game studio integrates those separately from legacy pack JSON. Existing synthesized recipes remain supported. `xonix-playground.v1` still has no imported soundtrack/stem fields: never insert a file path or invented music property into an old pack. For event cues, consult [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), `game/ui/audio.mjs` and the [core events](../../../game/core/README.md).
@@ -40,7 +42,7 @@ Link prompts, the cue/stem table, and any actual audio files; show playable audi
 
 ## Deliver the completed feature
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 For nested [Field Guide practice](../../../docs/enemy-guide.md), retain the parent player’s prior listening intent and stream position. Suspend its music while the child owns practice, including focus/visibility returns; resume only prior playback when allowed. A player’s intentional music-only Pause must survive practice and ordinary Resume. Model media tests establish sequencing, while real MP3 playback and listening still need browser/audio evidence.
 
