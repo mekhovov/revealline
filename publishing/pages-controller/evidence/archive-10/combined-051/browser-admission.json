@@ -1,0 +1,60 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-10",
+  "infrastructureCommit": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "deploymentId": 6450531920,
+  "versions": [
+    "v0.42.0",
+    "v0.51.0"
+  ],
+  "scope": "Routing admission and the exact parent-observed basic journeys only. v0.42 completed First Signal, opened View picture with actual keyboard focus, and returned to Results; its missing-pack Continue refusal is retained. v0.51 captured, stopped, resumed and paused; it remained session-only because another same-origin tab owned saving. No fresh offline, save/load, save-isolation, all-edition replay or physical-device claim. Original limitations remain in the native receipt.",
+  "evidence": [
+    {
+      "path": "evidence/archive-10/combined-051/native/native-journeys.json",
+      "sha256": "2a7aa5acd973e08d828d829105ebda0f7f28294b40daa28d033538b446ccf00e",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v042-missing-pack-guard.txt",
+      "sha256": "52846703e2cebf786b6849b06a690bdcd68bb3cc5cd7d1f1b016da2b677f8c5a",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v042-picture.png",
+      "sha256": "72ebce20218b86dfd62e5a57493400539dcf247bbb824579ff3d00fe8433d093",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v042-picture.txt",
+      "sha256": "d78bf3e32560021542f414c134c29b6bc2c37df80d336b675c089e37effb7f73",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v042-win.png",
+      "sha256": "c53d650600717e3ddc353825c6109b8df73dc72fa45ed8e598368ca00827e4a9",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v042-win.txt",
+      "sha256": "b0e19886dbd9d215647884bcbaced1c167cef98e92df2e8b4b8c08f5324b006a",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v051-cut.png",
+      "sha256": "fd1f926dc6e78bb7ba606ae9362be83298ec40c79501ad40753bbd8c476d6c8a",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v051-cut.txt",
+      "sha256": "31c15e976a83fbc50acc82785f180c2ddadc1d0b78033debaaa873c6b0bb3adc",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-10/combined-051/native/v051-resume-pause.txt",
+      "sha256": "31c15e976a83fbc50acc82785f180c2ddadc1d0b78033debaaa873c6b0bb3adc",
+      "kind": "reference"
+    }
+  ],
+  "basis": "Root-owned native in-app-browser observations on this exact deployed archive, combined with the separately pinned complete 976-file HTTP audit and original frozen metadata equality. Historical v0.42-only evidence is preserved separately."
+}

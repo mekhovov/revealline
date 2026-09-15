@@ -1,0 +1,72 @@
+{
+  "format": "revealline-archive-drift-independent-review.v1",
+  "status": "PASS_SCOPED_REVIEW",
+  "checkedAt": "2026-09-15T04:07:28.026279+00:00",
+  "archiveId": "archive-10",
+  "currentMain": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "deploymentId": 6450531920,
+  "latestDeploymentStatus": "success",
+  "oldCanonicalV042ContentChangedInInventory": false,
+  "all353CanonicalDescriptorsUnchanged": true,
+  "sharedRoutingFilesChanged": [
+    "archive-routing.json",
+    "releases/index.html",
+    "releases/index.json"
+  ],
+  "newV051Files": 618,
+  "freshPublicProbes": {
+    "files": 18,
+    "bytes": 12969012,
+    "failed": 0,
+    "retries": 0
+  },
+  "fullFreshPublicInventoryAudit": false,
+  "minimalValidReadmission": "Use reviewed current deployment admission, complete 976-file expanded inventory and its retained full HTTP/native scope evidence from PR44, while preserving old historical evidence and current allocation ownership. A commit/deployment-only substitution into the old 358-file admission would be invalid.",
+  "rawEvidence": {
+    "probe.mjs": {
+      "bytes": 2795,
+      "sha256": "df8ffdc2babcfe4045552ab192f10e6d349709ab8cd95179160a6eb5ddff335b"
+    },
+    "report.json": {
+      "bytes": 1393,
+      "sha256": "7037a02debab6764c37fea9d9bc86bbb6d4b9c245ef359f30e1cb228bdb98297"
+    },
+    "old-expected-inventory.json": {
+      "bytes": 68819,
+      "sha256": "7797737f83985d4946dcfba9f1b20468ab820db339854c3d1595c5d3cd7ca972"
+    },
+    "live-main.json": {
+      "bytes": 358,
+      "sha256": "cde41591e1657bd8aa0edf0322facfd110618269a09878368d9d97cae382f09a"
+    },
+    "inventory-delta.json": {
+      "bytes": 4848,
+      "sha256": "3ec73a7eebdd94c79adb03d2066b5709eccfdc4d7604ed03382592188cbe6401"
+    },
+    "new-expected-inventory.json": {
+      "bytes": 196644,
+      "sha256": "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a"
+    },
+    "results.jsonl": {
+      "bytes": 11261,
+      "sha256": "c3a246a1a85e93d542d4420c8baf2f7d9debad67549d61ae483f07890d3d7c71"
+    },
+    "live-deployments.json": {
+      "bytes": 7715,
+      "sha256": "dba3da34d57115ce48582dae5b4a4b889856156bb6fc9d8214a468ebb3d725d3"
+    },
+    "attempts.jsonl": {
+      "bytes": 11261,
+      "sha256": "c3a246a1a85e93d542d4420c8baf2f7d9debad67549d61ae483f07890d3d7c71"
+    },
+    "live-deployment-statuses.json": {
+      "bytes": 6817,
+      "sha256": "d994fec7fdfd1a7f1c6cea46b93bf7609d81d5bca5c7e74f0a3dec8a4c796e39"
+    },
+    "selected-semantic-bodies.json": {
+      "bytes": 656628,
+      "sha256": "76b9b8af2121e55ea69172452f5f0ea581dcc7a659be7998bfe17dc4e666f908"
+    }
+  },
+  "noMutations": true
+}

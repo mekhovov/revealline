@@ -1,0 +1,13 @@
+{
+  "format": "revealline-archive-native-pending.v1",
+  "status": "PENDING",
+  "archiveId": "archive-10",
+  "infrastructureCommit": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "deploymentId": 6450531920,
+  "versions": [
+    "v0.42.0",
+    "v0.51.0"
+  ],
+  "browserAdmission": null,
+  "scope": "Root owns actual both-version native checks. This file is not a browser admission and is not included in active evidence pins. Full publication must refuse until reviewed native references and a matching browser admission are added."
+}

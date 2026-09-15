@@ -1,0 +1,32 @@
+{
+  "startedAt": "2026-09-15T02:39:22.984585+00:00",
+  "finishedAt": "2026-09-15T02:43:31.602854+00:00",
+  "durationSeconds": 248.613,
+  "exitCode": 0,
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension/.cache/extension051/public-tool/audit-public.mjs",
+    "--authority",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension/.cache/extension051/public-authority",
+    "--base",
+    "https://mekhovov.github.io/revealline-archive-10/",
+    "--commit",
+    "adacdfbe15359bfd73e96ce03695b369b5097bc8",
+    "--inventory-sha",
+    "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a",
+    "--out",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension/.cache/extension051/public-http-attempt-1"
+  ],
+  "outputs": [
+    {
+      "path": "http.stdout",
+      "bytes": 1423,
+      "sha256": "47fe7295f7704e172269f25472d27853b1822a0bab6c64cf8fb551e404d0be58"
+    },
+    {
+      "path": "http.stderr",
+      "bytes": 4379,
+      "sha256": "36aa3895809daa53bd031acb99d1fd9e6a9da5f2cb7dce8220a607b53d01fbd6"
+    }
+  ]
+}

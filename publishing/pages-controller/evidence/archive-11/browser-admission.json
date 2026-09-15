@@ -1,0 +1,33 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-11",
+  "infrastructureCommit": "fc27c76cb6b285f723ab50072ded7f8b0b27c104",
+  "deploymentId": 6450262257,
+  "versions": [
+    "v0.51.0"
+  ],
+  "scope": [
+    "Preservation of the unchanged historical v0.51.0 edition at its canonical archive, with actual public online play and saved-flight restoration.",
+    "Native title, Pressure Lines installation, Orchard Crossing keyboard capture, pause/resume, and reload/Continue were observed without application-state injection.",
+    "Offline preparation failed at the visible deadline in two uninterrupted attempts after an initial interrupted attempt. Disconnected reload was not tested. This admission does not assert offline acceptance.",
+    "This scoped historical admission does not replace the separate play and offline acceptance required for a newly published current edition."
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-11/native-v051.json",
+      "sha256": "e3c35aafbb5aace36ce2e4dfe8e92c708a4aaf02de15bd44131c8dcb901e51e6",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-11/native-restored.jpg",
+      "sha256": "c34dec7b7c6dd02cbcb5c4934c1f9c7e7894f4e3432817de4ec0e6b7280a3154",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-11/native-offline.jpg",
+      "sha256": "6c549627cf85bffaf1a5010342dac0b215884b0d3495e1b5205fce9772519158",
+      "kind": "reference"
+    }
+  ]
+}
