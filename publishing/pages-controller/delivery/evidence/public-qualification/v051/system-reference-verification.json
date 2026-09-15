@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-15T02:00:56.949386+00:00",
+  "receiptSha256": "bb1d9f79f4b80d14c2ebf60fbb0e098f50e79fb047d5b4fab8aed4946b4ec719",
+  "files": 231,
+  "bytes": 1295718,
+  "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "scope": "Final native receipt and all evidence references rechecked; observations remain the native reviewer authority. Final HTTP disposition remains separate."
+}

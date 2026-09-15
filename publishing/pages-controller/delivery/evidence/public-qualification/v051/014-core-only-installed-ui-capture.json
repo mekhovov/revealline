@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-09-15T01:07:00.609330+00:00",
+  "completedAt": "2026-09-15T01:07:02.187716+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "screenshot",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/v051/core-only-no-r5-installed.png"
+  ],
+  "returncode": 0,
+  "stdout": "\u2713 Screenshot saved to /Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/v051/core-only-no-r5-installed.png\n",
+  "stderr": ""
+}

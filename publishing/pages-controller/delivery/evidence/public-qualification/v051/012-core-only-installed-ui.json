@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-09-15T01:05:37.524932+00:00",
+  "completedAt": "2026-09-15T01:05:38.401376+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "eval",
+    "JSON.stringify({time:new Date().toISOString(),dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(e=>({id:e.id,text:e.innerText})),status:document.querySelector(\"#offline-status\")?.textContent})"
+  ],
+  "returncode": 0,
+  "stderr": ""
+}

@@ -1,0 +1,59 @@
+{
+  "format": "revealline-final-main-public-binding.v1",
+  "base": "https://mekhovov.github.io/revealline/",
+  "currentVersion": "v0.51.0",
+  "gameSourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "qualifiedSourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+  "controllerCommit": "2b8521b0a118df8663f93de5500e14da11741407",
+  "controllerTree": "5dcd633d3cb1ba69e7a66fe5d2074239c9b33071",
+  "deploymentId": 6449937007,
+  "runId": 34918140908,
+  "inventorySha256": "63020b559aedbd26ed25aae4b6733a1f4a2f2c138da3c6d8dc1ecac15e771a1f",
+  "pins": {
+    "receipt": {
+      "path": "artifact-receipt.json",
+      "bytes": 417726,
+      "sha256": "cdb4ab9af7a530dec1eb60271cfde9f8ee7957929d9377a89a23a94c5a4f439f"
+    },
+    "deployment": {
+      "path": "deployment.json",
+      "bytes": 4656,
+      "sha256": "8d2e2dcd2f74b35c141c9129c859346be81f8346d7755a6e2fb6c0d7b4bc077d"
+    },
+    "statuses": {
+      "path": "deployment-statuses.json",
+      "bytes": 8221,
+      "sha256": "c9a6ab9a654fb530a0b47ec01985d21cf13206fe6e03cb52da155dd74dbb36d0"
+    },
+    "run": {
+      "path": "run.json",
+      "bytes": 12220,
+      "sha256": "843ac5a9ead372cbffa2aa401d7e85c9981ad70d867a7f11cfbb64b253aabdd8"
+    },
+    "manifest": {
+      "path": "manifest.json",
+      "bytes": 113770,
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3"
+    },
+    "record": {
+      "path": "release.json",
+      "bytes": 465,
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541"
+    },
+    "qualification": {
+      "path": "source-qualification.json",
+      "bytes": 21221,
+      "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
+    },
+    "catalog": {
+      "path": "catalog.json",
+      "bytes": 25464,
+      "sha256": "ea9d39ac3271d41354bd17ab12c75f4aef8910b3c45e5c21f7bb79386060cea5"
+    },
+    "configuration": {
+      "path": "publication.json",
+      "bytes": 17782,
+      "sha256": "405b4cd9769fc9840da3733e4246c78b70e66302289d45f406d83e9ec61f06b1"
+    }
+  }
+}

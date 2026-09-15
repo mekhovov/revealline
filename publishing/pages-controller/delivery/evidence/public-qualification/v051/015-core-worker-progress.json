@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-09-15T01:09:37.391355+00:00",
+  "completedAt": "2026-09-15T01:09:38.052656+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "eval",
+    "(async()=>JSON.stringify({time:new Date().toISOString(),status:document.querySelector(\"#offline-status\")?.textContent,details:document.querySelector(\"#offline-details\")?.textContent,disabled:document.querySelector(\"#offline-button\")?.disabled,registrations:(await navigator.serviceWorker.getRegistrations()).map(r=>({scope:r.scope,active:r.active?.state,installing:r.installing?.state,waiting:r.waiting?.state})),r5InstallOffer:[...document.querySelectorAll(\"#builtin-packs button\")].map(e=>e.innerText),installedCount:document.querySelector(\"#installed-packs\")?.children.length}))()"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"time\\\":\\\"2026-09-15T01:09:37.908Z\\\",\\\"status\\\":\\\"Offline preparation timed out. Keep the page online and try again.\\\",\\\"details\\\":\\\"No offline check yet.\\\",\\\"disabled\\\":false,\\\"registrations\\\":[{\\\"scope\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/\\\",\\\"installing\\\":\\\"installing\\\"}],\\\"r5InstallOffer\\\":[\\\"Install fpv arcade r5\\\",\\\"Install fpv pressure frontier\\\",\\\"Install night shift\\\",\\\"Install living threads\\\",\\\"Install fieldcraft\\\",\\\"Install homeward skies\\\",\\\"Install equipment workshop\\\",\\\"Install sentinel relay\\\"],\\\"installedCount\\\":0}\"\n",
+  "stderr": ""
+}

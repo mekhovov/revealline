@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:52:21.125089+00:00",
+  "completedAt": "2026-09-15T01:52:21.479230+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({pack:document.querySelector(\"#pack-select\")?.value,level:document.querySelector(\"#level-select\")?.value,status:document.querySelector(\"#content-select-status\")?.textContent,dialog:document.querySelector(\"#shell-missions\")?.innerText,deploy:document.querySelector(\"#shell-deploy\")?.getBoundingClientRect().toJSON()})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"pack\\\":\\\"fpv-arcade-r5\\\",\\\"level\\\":\\\"orchard-crossing\\\",\\\"status\\\":\\\"Orchard Crossing selected and ready.\\\",\\\"dialog\\\":\\\"YOUR NEXT FLIGHT\\\\n\\\\nChoose your mission\\\\nBack\\\\nMode \u00b7 Solo flight\\\\nFLIGHT DECK\\\\n00 / 03 \u00b7 Standard medals\\\\n\\\\nFirst Signal \u00b7 First Signal \u00b7 Standard. Recorded 0% revealed. Verified before loading; flight stays paused.\\\\n\\\\nChoose a chapter\\\\nBase game \u00b7 12 levels\\\\nChoose chapter\\\\nFPV Front \u00b7 Pressure Lines \u00b7 3 levels\\\\nCurrent chapter\\\\nFPV Front \u00b7 Frontier Lines \u00b7 3 levels\\\\nChoose chapter\\\\nNight Shift \u00b7 3 levels\\\\nChoose chapter\\\\nLiving Threads \u00b7 3 levels\\\\nChoose chapter\\\\nFieldcraft \u00b7 4 levels\\\\nChoose chapter\\\\nHomeward Skies \u00b7 3 levels\\\\nChoose chapter\\\\nEquipment Workshop \u00b7 3 levels\\\\nChoose chapter\\\\nSentinel Relay \u00b7 1 level\\\\nChoose chapter\\\\nOlder chapters (4)\\\\n\\\\nOrchard Crossing selected and ready.\\\\n\\\\nCAMPAIGN / FPV Front \u00b7 Pressure Lines\\\\nCollection\\\\n01\\\\nOrchard Crossing\\\\n\u2197\\\\nPicture concealed\\\\n02\\\\nCourtyard Exits\\\\n\u2014\\\\nLocked\\\\n03\\\\nNight Crossfire\\\\n\u2014\\\\nLocked\\\\nMission brief\\\\nFlight setup\\\\n\\\\nOrchard Crossing\\\\n\\\\nFlight setup\\\\nBack to flight\\\\nDeploy \u2192\\\",\\\"deploy\\\":{\\\"x\\\":1046.046875,\\\"y\\\":737,\\\"width\\\":157.953125,\\\"height\\\":47,\\\"top\\\":737,\\\"right\\\":1204,\\\"bottom\\\":784,\\\"left\\\":1046.046875}}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

@@ -1,0 +1,14 @@
+{
+  "observedAt": "2026-09-15T01:23:31.430259+00:00",
+  "session": "field-kit-public51-persistent",
+  "daemonPid": 71952,
+  "expectedPersistentProfile": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+  "children": [
+    {
+      "pid": 71955,
+      "parent": 71952,
+      "startAndCommand": "Tue Sep 15 03:21:44 2026     /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --remote-debugging-port=0 --no-first-run --no-default-browser-check --disable-background-networking --disable-backgrounding-occluded-windows --disable-component-update --disable-default-apps --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --disable-features=Translate --enable-features=NetworkService,NetworkServiceInProcess --metrics-recording-only --password-store=basic --use-mock-keychain --headless=new --enable-unsafe-swiftshader --user-data-dir=/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51 --window-size=1280,720"
+    }
+  ],
+  "actualProfileMatches": true
+}

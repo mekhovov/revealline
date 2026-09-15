@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-09-15T01:12:19.551680+00:00",
+  "completedAt": "2026-09-15T01:12:20.070094+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "press",
+    "Escape"
+  ],
+  "returncode": 0,
+  "stdout": "\u2713 Done\n",
+  "stderr": ""
+}
