@@ -21,6 +21,8 @@ import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
 
+import { teamReturnHref } from '../mode-return.mjs';
+
 const $ = (id) => document.getElementById(id);
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
@@ -35,7 +37,16 @@ export function bootCoop() {
   // Older/direct links and ambiguous contexts retain the existing Versus return.
   const returns = new URL(location.href).searchParams.getAll('return');
   const fromSolo = returns.length === 1 && returns[0] === 'solo';
-  $('coop-race').setAttribute('href', fromSolo ? '../' : './');
+  let returnStorage;
+  try {
+    returnStorage = sessionStorage;
+  } catch {
+    /* Fixed title fallback remains available. */
+  }
+  $('coop-race').setAttribute(
+    'href',
+    teamReturnHref({ href: location.href, storage: returnStorage }),
+  );
   $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({

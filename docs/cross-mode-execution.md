@@ -84,6 +84,14 @@ The Solo title's initial focus handoff waits until boot has revealed the game, c
 
 Exact cross-document Missions/opener restoration and unfinished-flight departure confirmation remain separate work; P03-A's code-owned Solo/Versus destination does not preserve the old document's menu state.
 
+## P03-C Solo Missions → Team return candidate
+
+A deliberate Team entry from Solo Missions retains a bounded one-use tab record with exact installed campaign, mission and theme identities. Team Back uses only the fixed Solo route. Once Solo is ready, a compatible record reopens Missions and Mode with the Team link focused; it never installs content, loads a saved flight, resumes play or changes player progress. Missing, expired, consumed, ambiguous or incompatible records fall back to the visible title. Release records bind the build's source revision, version and channel; source previews with no build revision are limited to their origin/version/channel and are not frozen-source proof.
+
+An unfinished Solo flight pauses before the departure check. The existing checked flight-retention helper verifies replay/checkpoint and actual storage readback under the backup lock. Stay, Escape and controller Back return to the Team opener without resuming. Leave stays unavailable while checking. A failed check remains in Solo and warns that leaving may lose the session-only attempt; only a subsequent explicit Leave permits departure. An externally changed saved slot is preserved, and a later changed slot invalidates the earlier saved claim. The save hold lasts through pagehide and ends at explicit Resume or a new attempt. A post-write failure cannot claim the older slot is unchanged.
+
+Ready and finished attempts keep direct Team entry when the return record is available. If tab storage is unavailable, a separate explicit Leave choice uses the fixed Team → Solo-title fallback; return metadata never blocks Team permanently. This isolated candidate still needs native and integrated release qualification. Confirmation when starting a different mission, browser-history restoration, Versus departure redesign, integrated mode lobbies and story transport focus are separate slices.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.

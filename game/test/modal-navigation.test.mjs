@@ -928,3 +928,47 @@ for (const action of ['resume-save', 'import-save'])
     assert.equal(h.storage.getItem('revealline.suspended.dev.v1'), saved);
     assert.deepEqual(h.errors, []);
   });
+
+for (const exit of ['button', 'escape', 'controller'])
+  test(`Team departure ${exit} stays at the actual Missions opener without resuming the saved cut`, async (t) => {
+    nativeDialogs(t);
+    const h = await soloPage(t),
+      pad = controllerPad(h, t);
+    h.$('start-button').click();
+    h.key('ArrowDown');
+    for (let i = 0; i < 24; i++) h.frame();
+    h.key('ArrowDown', false);
+    h.$('overlay-menu').click();
+    h.$('shell-packs').click();
+    h.$('shell-mode-choice').open = true;
+    h.$('shell-team').focus();
+    const checkpoint = authoritativeCheckpoint(h.rendered.run);
+    h.$('shell-team').click();
+    await settle(() => !h.$('mode-leave-confirm').disabled);
+    assert.match(h.$('mode-leave-status').textContent, /saved and verified/);
+    const saved = h.storage.getItem('revealline.suspended.dev.v1');
+    pad.frame();
+    if (exit === 'controller') pad.pulse(1);
+    else if (exit === 'escape') nativeEscape(h.$('mode-leave-dialog'));
+    else h.$('mode-leave-stay').click();
+    await Promise.resolve();
+    assert.equal(h.$('mode-leave-dialog').open, false);
+    assert.equal(h.$('shell-missions').open, true);
+    assert.equal(h.doc.activeElement.id, 'shell-team');
+    assert.equal(globalThis.location.href, 'http://localhost/game/');
+    for (let i = 0; i < 30; i++) h.frame();
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+    assert.equal(h.storage.getItem('revealline.suspended.dev.v1'), saved);
+    // An explicitly reopened confirmation owns its later close event.
+    h.$('shell-team').click();
+    await settle(() => !h.$('mode-leave-confirm').disabled);
+    h.$('mode-leave-dialog').emit('close');
+    assert.equal(h.$('mode-leave-dialog').open, true);
+    h.$('mode-leave-confirm').click();
+    assert.match(
+      globalThis.location.href,
+      /relay-rescue.html\?return=solo&return-token=[0-9a-f]{32}$/,
+    );
+    assert.deepEqual(h.errors, []);
+  });

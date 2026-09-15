@@ -6,6 +6,7 @@ import { mountCouch } from './helpers/couch-host.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
+import { createModeReturn } from '../mode-return.mjs';
 import { coopRetryFeedback } from '../couch/coop-feedback.mjs';
 
 const html = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
@@ -14,7 +15,11 @@ let sequence = 0;
 /** Real markup and game modules, with a minimal DOM, inert Canvas, and controlled frame callbacks. */
 async function page(
   t,
-  { touch = false, href = 'http://localhost/game/couch/relay-rescue.html' } = {},
+  {
+    touch = false,
+    href = 'http://localhost/game/couch/relay-rescue.html',
+    returnStorage = null,
+  } = {},
 ) {
   const doc = new Document(),
     win = new Events();
@@ -61,12 +66,17 @@ async function page(
     },
   }))
     install(key, { value, writable: true });
-  for (const key of ['localStorage', 'sessionStorage', 'indexedDB'])
+  for (const key of ['localStorage', 'sessionStorage', 'indexedDB']) {
+    if (key === 'sessionStorage' && returnStorage) {
+      install(key, { value: returnStorage });
+      continue;
+    }
     install(key, {
       get() {
         throw new Error(`Unexpected co-op storage access: ${key}`);
       },
     });
+  }
   t.after(() => {
     win.emit('pagehide');
     frames.clear();
@@ -687,4 +697,36 @@ test('the existing Solo and Versus Team entry links declare their code-owned ret
   assert.equal(entries.length, 2);
   for (const [, href] of entries) assert.equal(href, 'couch/relay-rescue.html?return=solo');
   assert.match(versus, /id="race-coop"[^>]*href="relay-rescue\.html\?return=versus"/);
+});
+
+test('actual Team lobby preserves the bounded Solo return token through native Back without consuming it', async (t) => {
+  const entries = new Map(),
+    returnStorage = {
+      getItem: (key) => entries.get(key) ?? null,
+      setItem: (key, value) => entries.set(key, value),
+      removeItem: (key) => entries.delete(key),
+    };
+  const api = createModeReturn({
+    storage: returnStorage,
+    baseURL: 'http://localhost/game/',
+    authority: { channel: 'dev', version: 'dev', sourceRevision: null },
+  });
+  const ticket = api.prepare({
+    campaignKey: 'first-signal/2/88639f3aab7b6cc1',
+    levelId: 'signal-01',
+    themeId: 'fpv',
+  });
+  const before = [...entries];
+  const h = await page(t, { href: ticket.href, returnStorage });
+  assert.equal(h.$('coop-race').getAttribute('href'), `../?mode-return=${ticket.token}`);
+  assert.equal(h.$('coop-race').textContent, 'Back to Solo');
+  let visited;
+  h.$('coop-race').onclick = () => {
+    visited = h.$('coop-race').getAttribute('href');
+  };
+  h.$('coop-start').focus();
+  h.tap('Escape');
+  assert.equal(visited, `../?mode-return=${ticket.token}`);
+  assert.deepEqual([...entries], before);
+  assert.equal(h.$('coop-start').disabled, false);
 });

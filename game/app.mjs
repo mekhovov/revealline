@@ -127,11 +127,12 @@ import {
   resolvePackLaunch,
 } from './content-launch.mjs';
 import { readAssetStore, writeAssetStore } from './storage.mjs';
-import { suspendSession, restoreSession, saveSession } from './sessions.mjs';
+import { suspendSession, restoreSession, saveSession, SESSION_STORAGE_BYTES } from './sessions.mjs';
 import { createAttemptFilePreparer } from './attempt-file.mjs';
 import { challengeCampaign } from './challenges.mjs';
 import { savedFlightPreview } from './continuation.mjs';
 import { createSelectionBookmark, resolveSelectionBookmark } from './selection-bookmark.mjs';
+import { createModeReturn } from './mode-return.mjs';
 import { createExecutionCatalog } from './campaign-contexts.mjs';
 import { resolveCampaignDifficulty } from './campaign-difficulty.mjs';
 import {
@@ -520,8 +521,43 @@ try {
       !backupBusy &&
       localStorage.getItem(`${libraryKey}.backup-lock`) === null,
   });
-  const rememberedSelection =
-    !practiceSession && !packLaunchRequest && !packLaunchError && storedStateAdopted
+  let returnStorage;
+  try {
+    returnStorage = sessionStorage;
+  } catch {
+    /* Team remains reachable without this hint. */
+  }
+  const modeReturn = createModeReturn({
+    storage: returnStorage,
+    baseURL: location.href,
+    authority: { channel, version: buildVersion, sourceRevision: buildSourceRevision },
+  });
+  const returnedSelection =
+    !practiceSession && !courseSession && !packLaunchRequest && storedStateAdopted
+      ? modeReturn.consume(location.search)
+      : null;
+  const returnedMission = returnedSelection
+    ? resolveSelectionBookmark(
+        { ...returnedSelection, format: 'revealline-selection.v1' },
+        {
+          select: (key) => executionCatalog.select(key, library.preferences.campaignDifficulty),
+          playable: (entry, index) =>
+            difficultyNavigation.playable(
+              entry,
+              library.campaigns,
+              progressFor(library, entry.campaign),
+              index,
+            ),
+        },
+      )
+    : null;
+  const exactReturn =
+    returnedMission?.levelId === returnedSelection?.levelId &&
+    returnedMission?.themeId === returnedSelection?.themeId &&
+    !!returnedMission;
+  const rememberedSelection = exactReturn
+    ? returnedMission
+    : !practiceSession && !packLaunchRequest && !packLaunchError && storedStateAdopted
       ? resolveSelectionBookmark(selectionBookmark.read().selection, {
           select: (key) => executionCatalog.select(key, library.preferences.campaignDifficulty),
           playable: (entry, index) =>
@@ -602,6 +638,9 @@ try {
     courseEntry = null,
     courseEntryMessage = '',
     courseEntryHold = false,
+    modeDeparture = null,
+    modeDepartureHold = false,
+    lastOwnedAttempt = null,
     contentSwitchBusy = false,
     backupBusy = false;
   const packLaunchGuard = createPackLaunchGuard();
@@ -1609,6 +1648,7 @@ try {
     // Suspend while this tab still owns the writer. A history-cache return
     // keeps its memory available for export without reclaiming stale storage.
     if (courseEntry) cancelCourseEntry();
+    cancelModeDeparture();
     optionalWorlds?.close(false);
     invalidateContentSwitch();
     pause(true);
@@ -1950,6 +1990,200 @@ try {
       $('first-flight-help-enter').focus({ preventScroll: true });
     }
   }
+  function cancelModeDeparture() {
+    modeDeparture?.controller.abort();
+    modeDeparture = null;
+    // As with First Flight, only explicit Resume/new attempt releases the save hold.
+  }
+  function modeSelection() {
+    return {
+      campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
+      levelId: campaign.levels[levelIndex].id,
+      themeId: theme.id,
+    };
+  }
+  function modeDepartureCurrent(ticket) {
+    if (
+      modeDeparture !== ticket ||
+      ticket.controller.signal.aborted ||
+      run !== ticket.run ||
+      recorder !== ticket.recorder ||
+      runId !== ticket.runId ||
+      campaign !== ticket.campaign ||
+      libraryGeneration !== ticket.generation ||
+      canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
+    )
+      throw new Error('The flight or selected mission changed. Stay here and choose Team again.');
+  }
+  function modeDepartureMessage(ticket) {
+    const flight = !ticket.unfinished
+      ? 'No unfinished flight is being replaced.'
+      : ticket.savedRaw
+        ? 'Your paused flight was saved and verified. Continue can restore it after returning.'
+        : 'This current flight is session-only: it remains paused in this tab. Leaving may lose this attempt. This flight was not verified as safely saved.';
+    $('mode-leave-status').textContent = `${flight} ${
+      ticket.fallback
+        ? 'Return context is unavailable. Back from Team will open Solo’s title.'
+        : 'Back from Team returns to this Missions selection; it does not resume a flight.'
+    }`;
+  }
+  async function requestTeam(event) {
+    event.preventDefault();
+    if (
+      modeDeparture ||
+      courseSession ||
+      courseEntry ||
+      practice ||
+      sessionBusy ||
+      contentSwitchBusy ||
+      pictureThemePending ||
+      backupBusy
+    ) {
+      warning('Finish the current operation before choosing Team.');
+      return;
+    }
+    const ticket = {
+      controller: new AbortController(),
+      run,
+      recorder,
+      runId,
+      campaign,
+      generation: libraryGeneration,
+      selection: modeSelection(),
+      unfinished: started && ['running', 'respawning'].includes(run?.status),
+      savedRaw: null,
+      fallback: false,
+      pending: true,
+    };
+    if (!ticket.unfinished) {
+      let prepared;
+      try {
+        prepared = modeReturn.prepare(ticket.selection);
+        location.href = prepared.href;
+        return;
+      } catch {
+        if (prepared) modeReturn.clear(prepared.token);
+        ticket.fallback = true;
+      }
+    }
+    modeDeparture = ticket;
+    if (ticket.unfinished) modeDepartureHold = true;
+    pause(true);
+    clearInput();
+    $('mode-leave-confirm').disabled = true;
+    $('mode-leave-status').textContent = ticket.unfinished
+      ? 'Checking the saved flight before leaving. Your current flight stays paused. You can Stay now.'
+      : 'Checking the return to Missions…';
+    $('mode-leave-dialog').showModal();
+    $('mode-leave-stay').focus({ preventScroll: true });
+    try {
+      if (ticket.unfinished) {
+        const retained = await retainFlightForFirstFlight({
+          run,
+          recorder,
+          campaign,
+          campaignKey: campaignKey(campaign),
+          themeId: theme.id,
+          bodyId,
+          runId,
+          continuation: { direction: input.snapshotDirection() },
+          presentationPins: flightPictures?.pins(),
+          mediaIdentityCatalog: flightPictures?.identityCatalog,
+          storage: localStorage,
+          sessionKey,
+          signal: ticket.controller.signal,
+          assertCurrent: () => modeDepartureCurrent(ticket),
+          assertWritable: async () => {
+            assertWriter();
+            const currentSaved = localStorage.getItem(sessionKey);
+            if (currentSaved !== null && currentSaved !== lastOwnedAttempt)
+              throw new Error(
+                'The saved flight is not this tab’s last verified save. Its bytes were kept.',
+              );
+            if (
+              !storedStateAdopted ||
+              recovery !== null ||
+              (await readAssetStore(journalKey)) !== null
+            )
+              throw new Error('Stored data needs recovery before this flight can be retained.');
+          },
+          withStorageLock: (work) => {
+            if (!navigator.locks?.request)
+              throw new Error('Checked saving is unavailable in this browser.');
+            return navigator.locks.request(
+              `${libraryKey}.backup-lock`,
+              { signal: ticket.controller.signal },
+              work,
+            );
+          },
+          onProgress: ({ ticks, total }) => {
+            if (modeDeparture === ticket)
+              $('mode-leave-status').textContent =
+                `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
+          },
+        });
+        modeDepartureCurrent(ticket);
+        const raw = localStorage.getItem(sessionKey);
+        if (!attemptReadbackMatches(raw, retained.session))
+          throw new Error('The checked saved flight changed before departure was ready.');
+        ticket.savedRaw = raw;
+        lastOwnedAttempt = raw;
+      }
+      modeDepartureCurrent(ticket);
+    } catch (error) {
+      if (modeDeparture !== ticket || ticket.controller.signal.aborted) return;
+      ticket.savedRaw = null;
+      ticket.failure = error.message;
+    }
+    if (modeDeparture !== ticket) return;
+    ticket.pending = false;
+    $('mode-leave-confirm').disabled = false;
+    modeDepartureMessage(ticket);
+    if (ticket.failure)
+      $('mode-leave-status').textContent += ` Saving was not verified: ${ticket.failure}`;
+  }
+  $('shell-team').onclick = requestTeam;
+  $('mode-leave-dialog').addEventListener('close', () => {
+    if ($('mode-leave-dialog').open) return;
+    cancelModeDeparture();
+    if ($('shell-missions').open) $('shell-team').focus({ preventScroll: true });
+  });
+  $('mode-leave-confirm').onclick = () => {
+    const ticket = modeDeparture;
+    if (!ticket || ticket.pending) return;
+    try {
+      modeDepartureCurrent(ticket);
+      if (ticket.savedRaw) {
+        try {
+          assertWriter();
+          if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
+            throw new Error('Saved flight changed.');
+        } catch {
+          ticket.savedRaw = null;
+          modeDepartureMessage(ticket);
+          $('mode-leave-status').textContent +=
+            ' The saved flight changed or saving became unavailable. Review this warning before choosing Leave again.';
+          return;
+        }
+      }
+      let destination = new URL('couch/relay-rescue.html?return=solo', location.href).href;
+      if (!ticket.fallback) {
+        try {
+          const prepared = modeReturn.prepare(ticket.selection);
+          ticket.token = prepared.token;
+          destination = prepared.href;
+        } catch {
+          ticket.fallback = true;
+          modeDepartureMessage(ticket);
+          return;
+        }
+      }
+      location.href = destination;
+    } catch (error) {
+      if (ticket.token) modeReturn.clear(ticket.token);
+      $('mode-leave-status').textContent = `${error.message} Your flight remains paused here.`;
+    }
+  };
   function selectCourseLesson(lessonId) {
     if (!courseSession || ['switching', 'leaving', 'ended'].includes(coursePhase)) return;
     getFirstFlightLesson(lessonId);
@@ -2755,7 +2989,17 @@ try {
       return { library, packs, session: currentBackupSession(savedAt) };
     });
   }
+  function attemptReadbackMatches(raw, session) {
+    return (
+      typeof raw === 'string' &&
+      raw.length <= SESSION_STORAGE_BYTES &&
+      new TextEncoder().encode(raw).length <= SESSION_STORAGE_BYTES &&
+      canonicalJSON(JSON.parse(raw)) === canonicalJSON(session)
+    );
+  }
   function persistAttempt(notify = true) {
+    if (modeDepartureHold)
+      throw new Error('Return to the flight and explicitly Resume before saving again.');
     if (courseEntryHold)
       throw new Error(
         'The course handoff keeps this flight paused. Resume explicitly before saving again.',
@@ -2767,6 +3011,14 @@ try {
       saved = saveSession(localStorage, sessionKey, session);
     } catch {
       saved = { ok: false, warning: 'Storage is unavailable. Export this attempt.' };
+    }
+    if (saved.ok) {
+      try {
+        const raw = localStorage.getItem(sessionKey);
+        if (attemptReadbackMatches(raw, session)) lastOwnedAttempt = raw;
+      } catch {
+        /* A successful write result alone is not readback authority. */
+      }
     }
     if (notify)
       warning(
@@ -3869,6 +4121,7 @@ try {
     if (contentSwitchTicket) packLaunchGuard.assert(contentSwitchTicket, packs);
     else invalidateContentSwitch({ announce: true });
     courseEntryHold = false;
+    modeDepartureHold = false;
     courseEntryMessage = '';
     if (courseSession) coursePhase = 'ready';
     if (!restoreAdoption) {
@@ -4096,6 +4349,7 @@ try {
     clearInput();
     neutralResumeTick = true;
     courseEntryHold = false;
+    modeDepartureHold = false;
     courseEntryMessage = '';
     if (!started) rememberSelection();
     started = true;
@@ -4162,7 +4416,7 @@ try {
     clearInput();
     paused = true;
     sound.pause?.();
-    if (!practice && !courseEntryHold && recorder && !sessionBusy) {
+    if (!practice && !courseEntryHold && !modeDepartureHold && recorder && !sessionBusy) {
       try {
         persistAttempt(false);
       } catch {}
@@ -5360,6 +5614,16 @@ try {
       element.removeAttribute('aria-busy');
     });
     $('boot-status').hidden = true;
+  }
+  if (
+    exactReturn &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    (document.activeElement === document.body || !availableFocusTarget(document.activeElement))
+  ) {
+    gameShell.openMissions();
+    $('shell-mode-choice').open = true;
+    $('shell-team').focus({ preventScroll: true });
   }
   controllerReading?.refresh();
   // Boot removes the visibility guard synchronously. Do not refocus a hidden
