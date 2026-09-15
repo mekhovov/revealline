@@ -1,0 +1,20 @@
+{
+  "scope": "Timing fixture only, no game state injection; one6s exact original PNG response delay. Normal63774 unchanged.",
+  "original": {
+    "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+    "bytes": 52720,
+    "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+    "seconds": 6,
+    "policy": "Before response headers on each request for only this exact original PNG; unchanged bytes."
+  },
+  "bindingSha256": "893c2a537bbd7cb4df6fb491636d85231463957b3906d305dc57d9b44c904e48",
+  "helperSha256": "11ff0d0b6af2660094ab1a44a9d0edf59f2d53ee615c19ef4d37e1ed1841a8b4",
+  "baselineHelperSha256": "72b2322f36338d08b1999270bf3f1786f521202efb2ae3800da0b7e0ba678e8b",
+  "runtime": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    }
+  ]
+}

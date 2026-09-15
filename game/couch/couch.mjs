@@ -22,6 +22,20 @@ import { createCharacterPresentations } from '../character-presentations.mjs';
 import { emptyProgress, unlockedBodies } from '../progress.mjs';
 import { createOperationStatus } from '../ui/operation-status.mjs';
 const $ = (id) => document.getElementById(id);
+const unclaimedFocus = (element) =>
+  !element || element === document.body || element === document.documentElement;
+// Capture before attached() can hide a deliberately chosen loader recovery link.
+let initialFocusPending =
+  unclaimedFocus(document.activeElement) && !document.hidden && document.hasFocus?.() !== false;
+const initialFocusChoice = (event) => {
+  if (!unclaimedFocus(event.target)) initialFocusPending = false;
+};
+const initialFocusLost = () => {
+  initialFocusPending = false;
+};
+const initialVisibility = () => {
+  if (document.hidden) initialFocusLost();
+};
 const audioMaster = createAudioMaster();
 const audioPreferences = createAudioPreferences({
   audioMaster,
@@ -115,6 +129,10 @@ const json = async (url) => {
   return r.json();
 };
 try {
+  document.addEventListener('focusin', initialFocusChoice, true);
+  document.addEventListener('visibilitychange', initialVisibility);
+  window.addEventListener('blur', initialFocusLost);
+  window.addEventListener('pagehide', initialFocusLost);
   const [campaign, registry, themes, presets] = await Promise.all([
     json('../content/campaign.json'),
     json('../content/classes.json'),
@@ -1158,7 +1176,9 @@ try {
     updateMenu();
     frameId = requestAnimationFrame(frame);
   }
-  const initialPreparation = prepare();
+  const initialPreparation = prepare(),
+    initialMatch = match,
+    initialGeneration = generation;
   frameId = requestAnimationFrame(frame);
   // Controls are installed and the lobby is usable while its required picture
   // is preparing. Keep Cancel/Back reachable; only Start depends on the picture.
@@ -1169,7 +1189,29 @@ try {
   bootDisplay.clear();
   $('boot-return').hidden = true;
   document.documentElement.dataset.toolState = 'ready';
-  await initialPreparation;
+  const initialReady = await initialPreparation;
+  const start = $('race-start');
+  if (
+    initialFocusPending &&
+    initialReady &&
+    !disposed &&
+    !artworkLifetime.signal.aborted &&
+    match === initialMatch &&
+    generation === initialGeneration &&
+    match.status === 'ready' &&
+    contentReady &&
+    !contentBusy &&
+    shell.scope() === 'main' &&
+    unclaimedFocus(document.activeElement) &&
+    !document.hidden &&
+    document.hasFocus?.() !== false &&
+    start.isConnected &&
+    !start.disabled &&
+    !start.closest('[hidden],[inert],[aria-hidden="true"]') &&
+    start.getClientRects().length > 0 &&
+    document.defaultView?.getComputedStyle(start)?.visibility !== 'hidden'
+  )
+    start.focus({ preventScroll: true });
 } catch (error) {
   document.documentElement.dataset.toolState = 'error';
   bootFailed = true;
@@ -1178,6 +1220,11 @@ try {
   $('race-start').disabled = true;
   $('race-message').textContent = `The race could not load: ${error.message}`;
 } finally {
+  initialFocusPending = false;
+  document.removeEventListener('focusin', initialFocusChoice, true);
+  document.removeEventListener('visibilitychange', initialVisibility);
+  window.removeEventListener('blur', initialFocusLost);
+  window.removeEventListener('pagehide', initialFocusLost);
   document.querySelectorAll('[data-boot-inert]').forEach((element) => {
     element.inert = false;
     element.removeAttribute('aria-busy');

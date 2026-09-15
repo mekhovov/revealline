@@ -1,0 +1,10 @@
+{
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "helperSource": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p08a-static-pictures/.cache/p08a/serve-intent.py",
+    "sha256": "9b2851d169bcf31c10ac7228a407ecc4feebece074d15dc6ca152868b3010433"
+  },
+  "helperSha256": "72b2322f36338d08b1999270bf3f1786f521202efb2ae3800da0b7e0ba678e8b",
+  "bindingSha256": "7a6f32db0a9e183b9086117eef69ddde6ac477d6b0476d48ea56c2374e123732",
+  "scope": "Same bounded local Git-streaming helper with new owned cache, strict base and one overlay; no browser/action/state injection."
+}

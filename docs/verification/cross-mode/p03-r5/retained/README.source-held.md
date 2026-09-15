@@ -1,0 +1,15 @@
+# P03 R5: first Ready focus in Versus
+
+Local source candidate on exact P08 static baseline `1da77ee586d0fdd3ac73883235a822b959e85b37`; no version, phase or release acceptance. The host gives an untouched first prepared lobby one focus handoff to its visible enabled Start. It does not activate a controller, begin a race or continuously enforce focus.
+
+Initial intent is captured before the launcher can hide a deliberately focused recovery link. Deliberate focus and foreground loss relinquish that intent. The final handoff requires the same initial match/generation, successful picture preparation, Ready/main state and available Start. Native hidden/inert/ARIA-hidden, layout rectangles and CSS visibility are checked. Error and cancelled preparation do not focus disabled Start. Boot observers are removed after the one attempt.
+
+The existing P08 required-picture selection, immutable choice, Cancel/Retry focus ownership and Start-intent epochs remain unchanged. A later picture operation retains its own focus and lifecycle authority. The shell Tab regression now checks initial Start, Shift+Tab to Team, Tab back to Start and then Race setup; native menu order is unchanged.
+
+The new whole host file models immediate/delayed boot, deliberate current/abandoned/recovery focus, background loss, unavailable controls, boot error and required-picture refusal. It uses real Couch/duel/reader/navigation code with finite DOM/media boundaries. The baseline reproduced two missed Start handoffs. An earlier test-authoring diagnostic called a nonexistent harness `slots()` accessor; it was replaced by actual visible seat labels plus absence of controller focus marking. That diagnostic is not a runtime defect.
+
+Root's prior native observation belongs to **f61 + A1**, not this P08 baseline or a verified R5 successor: `.cache/worktrees/p03a1-mode-departure/.cache/p03a1-mode-departure/native-root/events.json`, 41,026 B / `9205fe4208242b6da2dfd0848db4113f343157d2dda69e5144f9f3295b1857e7`. Its first two events at local preview 58731 record prepared active ID empty, then first Tab reaching `race-coop`. This links the original finding without copying the unrelated Team events/screenshots. No new native/device review is claimed here.
+
+Composition: A1 is based on f61 and owns `couch-shell.mjs` fixed departure routes plus small Couch getter/pause/lifecycle hunks. R5 is based on 1da and only adds boot focus authority around existing P08 code. Merge these by hunks; do not replace the whole host from either branch. Preserve P08's asynchronous Start interruption and captured-controller checks, A1's current match/generation departure checks, and their separate tests. Team E/I, R1/K Solo app changes and Team picture/registry work are outside this patch.
+
+Focused final run counts and exact source/log pins are retained under this worktree's `.cache/r5/`; the final source hold will identify the completed pair. Whole-source CI, source-bound browser retest, actual gamepad/touch and physical-device acceptance remain separate.

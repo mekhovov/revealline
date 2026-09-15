@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: untouched prepared lobby focuses enabled Start once without controller ownership or starting
+ok 1 - untouched prepared lobby focuses enabled Start once without controller ownership or starting
+  ---
+  duration_ms: 109.347667
+  type: 'test'
+  ...
+# Subtest: delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+ok 2 - delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+  ---
+  duration_ms: 46.07125
+  type: 'test'
+  ...
+# Subtest: a deliberate current focus is never replaced by the initial handoff
+ok 3 - a deliberate current focus is never replaced by the initial handoff
+  ---
+  duration_ms: 40.45525
+  type: 'test'
+  ...
+# Subtest: a deliberate moved-away focus is never replaced by the initial handoff
+ok 4 - a deliberate moved-away focus is never replaced by the initial handoff
+  ---
+  duration_ms: 35.225125
+  type: 'test'
+  ...
+# Subtest: a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+ok 5 - a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+  ---
+  duration_ms: 36.534542
+  type: 'test'
+  ...
+# Subtest: initial-background permanently relinquishes initial focus even when ready later
+ok 6 - initial-background permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 37.921583
+  type: 'test'
+  ...
+# Subtest: blur-return permanently relinquishes initial focus even when ready later
+ok 7 - blur-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 34.795
+  type: 'test'
+  ...
+# Subtest: hidden-return permanently relinquishes initial focus even when ready later
+ok 8 - hidden-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 33.306083
+  type: 'test'
+  ...
+# Subtest: an initially disabled Start is never chosen as focus
+ok 9 - an initially disabled Start is never chosen as focus
+  ---
+  duration_ms: 35.651292
+  type: 'test'
+  ...
+# Subtest: an initially no-rect Start is never chosen as focus
+ok 10 - an initially no-rect Start is never chosen as focus
+  ---
+  duration_ms: 34.652125
+  type: 'test'
+  ...
+# Subtest: an initially css-hidden Start is never chosen as focus
+ok 11 - an initially css-hidden Start is never chosen as focus
+  ---
+  duration_ms: 30.646959
+  type: 'test'
+  ...
+# Subtest: an initially aria-hidden Start is never chosen as focus
+ok 12 - an initially aria-hidden Start is never chosen as focus
+  ---
+  duration_ms: 33.473458
+  type: 'test'
+  ...
+# Subtest: boot failure preserves recovery focus and cannot establish a Ready handoff
+ok 13 - boot failure preserves recovery focus and cannot establish a Ready handoff
+  ---
+  duration_ms: 4.209125
+  type: 'test'
+  ...
+# Subtest: required picture error keeps Start unavailable and does not steal its visible Cancel or setup choice
+ok 14 - required picture error keeps Start unavailable and does not steal its visible Cancel or setup choice
+  ---
+  duration_ms: 35.172
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 881.771459

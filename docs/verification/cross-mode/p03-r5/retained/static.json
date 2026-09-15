@@ -1,0 +1,38 @@
+[
+  {
+    "name": "lint",
+    "args": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/eslint/bin/eslint.js",
+      "game/couch/couch.mjs",
+      "game/test/couch-initial-focus.test.mjs",
+      "game/test/couch-shell.test.mjs"
+    ],
+    "exitCode": 0,
+    "output": ""
+  },
+  {
+    "name": "format",
+    "args": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/node_modules/prettier/bin/prettier.cjs",
+      "--check",
+      "game/couch/couch.mjs",
+      "game/test/couch-initial-focus.test.mjs",
+      "game/test/couch-shell.test.mjs",
+      "docs/verification/cross-mode/p03-r5/README.md"
+    ],
+    "exitCode": 0,
+    "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+  },
+  {
+    "name": "whitespace",
+    "args": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "output": ""
+  }
+]

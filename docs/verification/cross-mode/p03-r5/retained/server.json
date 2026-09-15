@@ -1,0 +1,6 @@
+{
+  "port": 63774,
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "bindingSha256": "7a6f32db0a9e183b9086117eef69ddde6ac477d6b0476d48ea56c2374e123732",
+  "scope": "One held R5 runtime overlay; every other response from exact base Git, no build."
+}
