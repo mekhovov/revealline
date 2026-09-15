@@ -1,4 +1,6 @@
 import { canvasTextFonts } from '../text-face.mjs';
+import { createCoopActorPresentation } from './coop-actor-presentation.mjs';
+import { coopCueScale, placeCoopCue } from './coop-actor-layout.mjs';
 
 const THEME_FONTS = Object.freeze({
   ui: '"Field Kit UI", "Field Kit Mono", system-ui, sans-serif',
@@ -10,6 +12,7 @@ const COLORS = ['#ffda77', '#8be0ed'];
 export function createCoopPainter(canvas) {
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Relay Rescue needs a browser with Canvas 2D support.');
+  const actors = createCoopActorPresentation();
   let presentation = null,
     look = null;
   function setPresentation(snapshot) {
@@ -47,10 +50,14 @@ export function createCoopPainter(canvas) {
     }
     // Keep the page lease's exact snapshot identity while capturing its display
     // values. The painter never changes or disposes shared presentation assets.
+    actors.setPresentation(snapshot ?? null);
     presentation = snapshot ?? null;
     look = next;
   }
-  function paint(run, { reduced = false, textFace = 'pixel', picture = null } = {}) {
+  function paint(
+    run,
+    { reduced = false, textFace = 'pixel', picture = null, actorStyle = 'hybrid' } = {},
+  ) {
     // This is a defensive arena guard, not full content-hash authority. The
     // picture lease verifies the pack/level hashes; the host owns attempt intent.
     if (picture !== null) {
@@ -79,7 +86,39 @@ export function createCoopPainter(canvas) {
     const colors = palette ? [palette.accent, palette.safe] : COLORS;
     const motionScale = reduced ? 0 : (look?.motionScale ?? 1);
     reduced ||= motionScale === 0;
+    actors.update(run, {
+      reduced,
+      motionScale,
+      canvasCSSWidth: canvas.clientWidth,
+      style: actorStyle,
+    });
     const unit = canvas.width / run.width;
+    const cueScale = coopCueScale(canvas.clientWidth, run.width),
+      cssCell = cueScale.cell,
+      occupied = [],
+      heads = run.players.map((player) => {
+        const radius = player.radius * cssCell + 2;
+        return {
+          left: player.x * cssCell - radius,
+          right: player.x * cssCell + radius,
+          top: player.y * cssCell - radius,
+          bottom: player.y * cssCell + radius,
+        };
+      });
+    const place = (x, y, width, height) => {
+      const rect = placeCoopCue({
+        x: x * cssCell,
+        y: y * cssCell,
+        width,
+        height,
+        arenaWidth: cueScale.width,
+        arenaHeight: run.height * cssCell,
+        heads,
+        occupied,
+      });
+      if (rect) occupied.push(rect);
+      return rect;
+    };
     ctx.save();
     try {
       ctx.scale(unit, unit);
@@ -139,7 +178,116 @@ export function createCoopPainter(canvas) {
         ctx.stroke();
         ctx.globalAlpha = 1;
       }
+      // Paint every cosmetic body before functional markers and labels. Larger
+      // sprites must never cover another actor's warning or a stronghold anchor.
+      const bodies = new Set();
+      const body = (kind, id) => bodies.has(`${kind}:${id}`);
+      for (const [kind, list] of [
+        ['core', run.strongholds || []],
+        ['pilot', run.players],
+        ['enemy', run.enemies.filter((enemy) => enemy.active !== false)],
+      ])
+        for (const actor of list)
+          if (actors.draw(ctx, kind, actor.id, palette)) bodies.add(`${kind}:${actor.id}`);
+      const clearance = (kind, id, minimum) =>
+        body(kind, id)
+          ? Math.max(minimum, actors.frame(kind, id).diameter / 32 + 9 / cssCell)
+          : minimum;
+      function cue(text, x, y, size, font, backed = false, color = '#f1f7ed') {
+        ctx.save();
+        size = cueScale.font(size, 12, 18);
+        ctx.font = `600 ${size}px ${font}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const measured = ctx.measureText(text)?.width;
+        const width =
+          (Number.isFinite(measured) ? measured : size * text.length * 0.7) * cssCell + 6;
+        const rect = place(x, y, width, size * cssCell * 1.4);
+        if (rect) {
+          if (backed) {
+            ctx.fillStyle = '#07111c';
+            ctx.fillRect(
+              rect.left / cssCell,
+              rect.top / cssCell,
+              rect.width / cssCell,
+              rect.height / cssCell,
+            );
+          }
+          ctx.fillStyle = color;
+          ctx.fillText(text, rect.x / cssCell, rect.y / cssCell);
+        }
+        ctx.restore();
+      }
+      function pilotBadge(player, pilotBody) {
+        const frame = actors.frame('pilot', player.id),
+          offset = frame?.bodyOffset,
+          x = player.x + (offset?.x ?? 0) / 16,
+          y = player.y + (offset?.y ?? 0) / 16,
+          shape = player.id === 0 ? 20 : 24,
+          downed = player.status === 'downed',
+          width = shape + (downed ? 10 : 0),
+          rect = place(
+            x,
+            y - (frame ? frame.diameter / 32 : 0.7) - (shape / 2 + 3) / cssCell,
+            width,
+            shape,
+          );
+        if (!rect) return;
+        const cx = (rect.left + shape / 2) / cssCell,
+          cy = rect.y / cssCell,
+          radius = shape / 2 / cssCell;
+        ctx.save();
+        ctx.fillStyle = '#07111c';
+        ctx.strokeStyle = colors[player.id];
+        ctx.lineWidth = 1.5 / cssCell;
+        if (!downed && player.graceUntil > run.time) ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+        ctx.beginPath();
+        if (player.id === 0) ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+        else {
+          ctx.moveTo(cx, cy - radius);
+          ctx.lineTo(cx + radius, cy);
+          ctx.lineTo(cx, cy + radius);
+          ctx.lineTo(cx - radius, cy);
+          ctx.closePath();
+        }
+        ctx.fill();
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#f1f7ed';
+        ctx.fillText(String(player.id + 1), cx, cy);
+        if (downed) {
+          ctx.fillStyle = '#07111c';
+          ctx.fillRect(
+            (rect.right - 10) / cssCell,
+            (rect.y - 8) / cssCell,
+            10 / cssCell,
+            16 / cssCell,
+          );
+          ctx.fillStyle = '#f1f7ed';
+          ctx.font = `600 ${12 / cssCell}px ${fonts.numeric}`;
+          ctx.fillText('+', (rect.right - 5) / cssCell, cy);
+        }
+        if (pilotBody && offset && (offset.x !== 0 || offset.y !== 0)) {
+          // Dashed cosmetic tether ends at the true cutting head; it is not a trail.
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 3 / cssCell;
+          ctx.beginPath();
+          ctx.moveTo(player.x, player.y);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          ctx.strokeStyle = '#f1f7ed';
+          ctx.lineWidth = 1 / cssCell;
+          ctx.setLineDash([2 / cssCell, 2 / cssCell]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        ctx.restore();
+      }
       for (const stronghold of run.strongholds || []) {
+        const coreBody = body('core', stronghold.id);
         const relayLabel =
           run.strongholds.length > 1 ? `${run.strongholds.indexOf(stronghold) + 1}` : '';
         for (const [i, anchor] of stronghold.anchors.entries()) {
@@ -152,10 +300,14 @@ export function createCoopPainter(canvas) {
           ctx.font = `600 0.85px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText(
+          cue(
             anchor.captured ? '✓' : `${relayLabel}${String.fromCharCode(65 + i)}`,
             anchor.x,
             anchor.y,
+            0.85,
+            fonts.ui,
+            true,
+            '#fff1c8',
           );
         }
         const core = stronghold.core;
@@ -175,12 +327,14 @@ export function createCoopPainter(canvas) {
         ctx.beginPath();
         ctx.arc(core.x, core.y, 0.48, 0, Math.PI * 2);
         ctx.fill();
-        ctx.font = `600 0.64px ${fonts.ui}`;
-        ctx.textAlign = 'center';
-        ctx.fillText(
-          `${relayLabel ? `RELAY ${relayLabel} · ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELDED' : 'CAPTURE CORE'}`,
+        cue(
+          `${relayLabel ? `${relayLabel} ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELD' : 'CAPTURE'}`,
           core.x,
-          core.y - 1.75,
+          Math.max(0.6, core.y - clearance('core', stronghold.id, 1.75)),
+          0.64,
+          fonts.ui,
+          coreBody,
+          stronghold.defeated ? '#a0c887' : '#ffc1a4',
         );
         const emitter = stronghold.emitter;
         if (emitter?.phase === 'warning' && Number.isInteger(emitter.cellIndex)) {
@@ -219,7 +373,15 @@ export function createCoopPainter(canvas) {
         ctx.fillStyle = '#ffd279';
         ctx.font = `600 0.65px ${fonts.ui}`;
         ctx.textAlign = 'center';
-        ctx.fillText(`P${enemy.target + 1} · LOCKED`, enemy.x, enemy.y - 1.1);
+        cue(
+          `LOCK ${enemy.target + 1}`,
+          enemy.x,
+          Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.1)),
+          0.65,
+          fonts.ui,
+          body('enemy', enemy.id),
+          '#ffd279',
+        );
       }
       for (const [i, spawn] of run.level.spawns.entries()) {
         ctx.strokeStyle = colors[i];
@@ -244,7 +406,8 @@ export function createCoopPainter(canvas) {
           ctx.lineTo(player.x, player.y);
           ctx.stroke();
         }
-        const downed = player.status === 'downed';
+        const downed = player.status === 'downed',
+          pilotBody = body('pilot', player.id);
         ctx.save();
         ctx.translate(player.x, player.y);
         if (!downed && player.graceUntil > run.time) {
@@ -275,59 +438,78 @@ export function createCoopPainter(canvas) {
           ctx.lineTo(-0.67, 0);
           ctx.closePath();
         }
-        ctx.fill();
+        if (!pilotBody) ctx.fill();
         ctx.stroke();
         ctx.fillStyle = colors[player.id];
         ctx.beginPath();
         ctx.arc(0, 0, player.radius, 0, Math.PI * 2);
         ctx.fill();
-        ctx.font = `500 0.66px ${fonts.numeric}`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const labelX =
-          Math.max(0.5, Math.min(run.width - 0.5, player.x + (player.id === 0 ? -0.8 : 0.8))) -
-          player.x;
-        const labelY = player.y < 2 ? 1.1 : -1.1;
-        ctx.fillText(downed ? '+' : String(player.id + 1), labelX, labelY);
         ctx.restore();
+        pilotBadge(player, pilotBody);
       }
       for (const enemy of run.enemies) {
         if (enemy.active === false) continue;
+        const enemyBody = body('enemy', enemy.id);
         ctx.save();
         ctx.translate(enemy.x, enemy.y);
-        ctx.fillStyle =
-          enemy.phase === 'warning'
-            ? '#ffd279'
-            : enemy.type === 'hunter' && enemy.phase !== 'commit'
-              ? '#849fa4'
-              : '#fc786f';
-        ctx.strokeStyle = '#ffc0a1';
-        ctx.lineWidth = 0.08;
-        ctx.beginPath();
-        if (enemy.type === 'hunter') {
-          ctx.moveTo(0, -0.65);
-          ctx.lineTo(0.55, 0);
-          ctx.lineTo(0, 0.65);
-          ctx.lineTo(-0.55, 0);
-        } else {
-          ctx.moveTo(0, -0.6);
-          ctx.lineTo(0.58, 0.42);
-          ctx.lineTo(-0.58, 0.42);
+        if (enemyBody) {
+          // Shared body drawing includes a contact cue, but later body images
+          // can cover it. Restore the actual footprint in this final overlay.
+          ctx.strokeStyle = '#07111c';
+          ctx.lineWidth = 3 / 16;
+          ctx.beginPath();
+          ctx.arc(0, 0, enemy.radius, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.strokeStyle = '#f1f7ed';
+          ctx.lineWidth = 1 / 16;
+          ctx.stroke();
+          ctx.fillStyle = '#07111c';
+          ctx.fillRect(-2 / 16, -2 / 16, 4 / 16, 4 / 16);
+          ctx.fillStyle = '#f1f7ed';
+          ctx.fillRect(-1 / 16, -1 / 16, 2 / 16, 2 / 16);
         }
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.fillStyle = '#521f2a';
-        ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
+        if (!enemyBody) {
+          ctx.fillStyle =
+            enemy.phase === 'warning'
+              ? '#ffd279'
+              : enemy.type === 'hunter' && enemy.phase !== 'commit'
+                ? '#849fa4'
+                : '#fc786f';
+          ctx.strokeStyle = '#ffc0a1';
+          ctx.lineWidth = 0.08;
+          ctx.beginPath();
+          if (enemy.type === 'hunter') {
+            ctx.moveTo(0, -0.65);
+            ctx.lineTo(0.55, 0);
+            ctx.lineTo(0, 0.65);
+            ctx.lineTo(-0.55, 0);
+          } else {
+            ctx.moveTo(0, -0.6);
+            ctx.lineTo(0.58, 0.42);
+            ctx.lineTo(-0.58, 0.42);
+          }
+          ctx.closePath();
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = '#521f2a';
+          ctx.fillRect(-0.1, -0.1, 0.2, 0.2);
+        }
         if (enemy.type === 'hunter' && enemy.phase !== 'warning') {
           ctx.fillStyle = '#eee7c8';
           ctx.font = `600 0.57px ${fonts.ui}`;
           ctx.textAlign = 'center';
-          ctx.fillText(
+          ctx.restore();
+          cue(
             enemy.phase === 'commit' ? 'CHARGE' : enemy.phase === 'recovery' ? 'RECOVER' : 'HUNTER',
-            0,
-            -1.05,
+            enemy.x,
+            Math.max(0.6, enemy.y - clearance('enemy', enemy.id, 1.05)),
+            0.57,
+            fonts.ui,
+            enemyBody,
+            '#eee7c8',
           );
+          ctx.save();
+          ctx.translate(enemy.x, enemy.y);
         }
         // Authoritative active time keeps this cue visible through pause and reduced effects.
         if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
@@ -342,9 +524,29 @@ export function createCoopPainter(canvas) {
           ctx.font = `600 0.6px ${fonts.ui}`;
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText('SLOWED', 0, Math.min(run.height - 0.6, enemy.y + 1.25) - enemy.y);
+          ctx.restore();
+          cue(
+            'SLOWED',
+            enemy.x,
+            Math.min(run.height - 0.6, enemy.y + clearance('enemy', enemy.id, 1.25)),
+            0.6,
+            fonts.ui,
+            enemyBody,
+            '#e6f8ff',
+          );
+          ctx.save();
+          ctx.translate(enemy.x, enemy.y);
         }
         ctx.restore();
+      }
+      for (const player of run.players) {
+        ctx.fillStyle = colors[player.id];
+        ctx.strokeStyle = '#07111c';
+        ctx.lineWidth = 1 / cssCell;
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
       }
       for (const impact of run.impacts || []) {
         const x = Number.isFinite(impact.x) ? impact.x : (impact.cellIndex % run.width) + 0.5;
