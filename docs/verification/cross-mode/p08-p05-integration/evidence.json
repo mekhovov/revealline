@@ -1,0 +1,282 @@
+{
+  "format": "revealline-evidence-copies.v1",
+  "sourceBase": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "scope": "Local static P08-on-P05 integration, no native/public or phase acceptance",
+  "copies": [
+    {
+      "original": {
+        "path": ".cache/p08-integration/preparation.json",
+        "bytes": 72229,
+        "sha256": "e2327237735cf1728bf1293d34f6e2d30fea1f5cd0efdada16ae71150981becb"
+      },
+      "retained": {
+        "path": "retained/preparation.json.gz",
+        "bytes": 21701,
+        "sha256": "aedd92845b16293f757647a4a099226ac8ead61e30eed75cccd2e47602621d87"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/added-finite-inputs.json",
+        "bytes": 224,
+        "sha256": "a986fab97b9143ab6c55df88352322dac22aaffc35dc04a5ea3a4beaf04573c4"
+      },
+      "retained": {
+        "path": "retained/added-finite-inputs.json",
+        "bytes": 224,
+        "sha256": "a986fab97b9143ab6c55df88352322dac22aaffc35dc04a5ea3a4beaf04573c4"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/dependency-hydration.json",
+        "bytes": 3864,
+        "sha256": "94da0a0cf23f8ec8e814cc557bb7fd546478176d17501e28e01aad4e84bb70bd"
+      },
+      "retained": {
+        "path": "retained/dependency-hydration.json",
+        "bytes": 3864,
+        "sha256": "94da0a0cf23f8ec8e814cc557bb7fd546478176d17501e28e01aad4e84bb70bd"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/installed-fixture-hydration.json",
+        "bytes": 4996,
+        "sha256": "3b008ce4907ceaacf21924b43003208abd87efc9eb83764bcf65aeb0d45dd452"
+      },
+      "retained": {
+        "path": "retained/installed-fixture-hydration.json",
+        "bytes": 4996,
+        "sha256": "3b008ce4907ceaacf21924b43003208abd87efc9eb83764bcf65aeb0d45dd452"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/couch-conflict-original.txt",
+        "bytes": 48084,
+        "sha256": "369a5ff1875377e80fc34dd79a6125b70fe20bee19b76b8397b829a8723756bd"
+      },
+      "retained": {
+        "path": "retained/couch-conflict-original.txt.gz",
+        "bytes": 12532,
+        "sha256": "2925c6838d923fe6a84a16020adc38d9701cdc5f557c5ee0d7f49b3642aa9e54"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/source-held-01.json",
+        "bytes": 5829,
+        "sha256": "e92141bfea272954915778b99386ce9f4567f4eb937c201519afdefe45579687"
+      },
+      "retained": {
+        "path": "retained/source-held-01.json",
+        "bytes": 5829,
+        "sha256": "e92141bfea272954915778b99386ce9f4567f4eb937c201519afdefe45579687"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/source-held-01.diff",
+        "bytes": 105409,
+        "sha256": "a821cbefee123f0d60f98b50cd72817573c601417a6517d1983d8bb042a5bf3e"
+      },
+      "retained": {
+        "path": "retained/source-held-01.diff.gz",
+        "bytes": 26629,
+        "sha256": "6ed7b6c3d60177c7c2f371690dea50accb8c6dcb65293ce5245dddf008954a9a"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/test-scope.json",
+        "bytes": 523,
+        "sha256": "13e84d12a3493bf2316a909f7ad50a5fc5f48e6d3186b211a499a5a7f80d4f82"
+      },
+      "retained": {
+        "path": "retained/test-scope.json",
+        "bytes": 523,
+        "sha256": "13e84d12a3493bf2316a909f7ad50a5fc5f48e6d3186b211a499a5a7f80d4f82"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/test-inputs-01.json",
+        "bytes": 46257,
+        "sha256": "b892fab5fd07691853be3237ed8dad4f683aae5e510ecc5ef9a2601326889603"
+      },
+      "retained": {
+        "path": "retained/test-inputs-01.json.gz",
+        "bytes": 16075,
+        "sha256": "cd52b2683075b4dcaee23cc81c7f75ddbfd1b9ff2c2684efb93ea0e9a3bfec63"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/test-inputs-02.json",
+        "bytes": 50676,
+        "sha256": "f0a3fed36e739e9ad54377291afa20c1d9b0f5ec12e83825568326135ddc0418"
+      },
+      "retained": {
+        "path": "retained/test-inputs-02.json.gz",
+        "bytes": 17411,
+        "sha256": "3b7d58ac655616730917dc55544a711c25c440d197e47c280b7022891ea5a005"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/whole-01-node22.log",
+        "bytes": 50054,
+        "sha256": "565944a145cf12ca93076db44ba7dad1c793689ff09058245e057e80c924c512"
+      },
+      "retained": {
+        "path": "retained/whole-01-node22.log.gz",
+        "bytes": 9435,
+        "sha256": "0c0595805e2d5acd305807e4c7e4ab6b55659a90c6d0312b4b9d90a64b74e65e"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/whole-01-node22.json",
+        "bytes": 1710,
+        "sha256": "dde0bd5497a3a1076935fd67ccbc53d161297191371c42c9307c66ce2942ac34"
+      },
+      "retained": {
+        "path": "retained/whole-01-node22.json",
+        "bytes": 1710,
+        "sha256": "dde0bd5497a3a1076935fd67ccbc53d161297191371c42c9307c66ce2942ac34"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/installed-02-node22.log",
+        "bytes": 3423,
+        "sha256": "f48582b8aa52efd7fbca8a70f429da177ebe5ed63664ea326b7eb6bcd08f83bc"
+      },
+      "retained": {
+        "path": "retained/installed-02-node22.log.gz",
+        "bytes": 938,
+        "sha256": "73a5cd7b64713ae1d55fbc39beacd2a565436fb8d1cad6c72a3a412935d9a91a"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/installed-02-node22.json",
+        "bytes": 723,
+        "sha256": "1adc404b1ba1ed4a552b1349d6c260dfb8527d6584d0991e999e230a8e10ab94"
+      },
+      "retained": {
+        "path": "retained/installed-02-node22.json",
+        "bytes": 723,
+        "sha256": "1adc404b1ba1ed4a552b1349d6c260dfb8527d6584d0991e999e230a8e10ab94"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/whole-02-node20.log",
+        "bytes": 48743,
+        "sha256": "03d8c1d561277a97c95eb8a2205001c504548e313e0528f39063c77ac05d4043"
+      },
+      "retained": {
+        "path": "retained/whole-02-node20.log.gz",
+        "bytes": 9422,
+        "sha256": "95114bee395e8be3c5ebdafe8d345ae397cb2646f5196ca6b065be2223b70a01"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/whole-02-node20.json",
+        "bytes": 1710,
+        "sha256": "9c4c4a2bbffe8e0fba1b79e405e7b1a0f3e87532e4aa55ea3230cb5bbe0c3f80"
+      },
+      "retained": {
+        "path": "retained/whole-02-node20.json",
+        "bytes": 1710,
+        "sha256": "9c4c4a2bbffe8e0fba1b79e405e7b1a0f3e87532e4aa55ea3230cb5bbe0c3f80"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/static-checks.json",
+        "bytes": 1195,
+        "sha256": "7e0168ea8c40d5524654f3e80da86e94f173276337aa3f91dd74aaba2ec9f5be"
+      },
+      "retained": {
+        "path": "retained/static-checks.json",
+        "bytes": 1195,
+        "sha256": "7e0168ea8c40d5524654f3e80da86e94f173276337aa3f91dd74aaba2ec9f5be"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/static-check-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "retained/static-check-1.log.gz",
+        "bytes": 20,
+        "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/static-check-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "retained": {
+        "path": "retained/static-check-2.log.gz",
+        "bytes": 20,
+        "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+      },
+      "encoding": "gzip-exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/composition-guide-held-01.md",
+        "bytes": 2577,
+        "sha256": "55f4ed3819f39cbd1b92521c01abe45dedfa2d59fbd60228a510442b48afd221"
+      },
+      "retained": {
+        "path": "retained/composition-guide-held-01.md",
+        "bytes": 2577,
+        "sha256": "55f4ed3819f39cbd1b92521c01abe45dedfa2d59fbd60228a510442b48afd221"
+      },
+      "encoding": "exact"
+    },
+    {
+      "original": {
+        "path": ".cache/p08-integration/verification.json",
+        "bytes": 7421,
+        "sha256": "84908338d3394d6b93af1405218d8e2d86d1bed624541617aef665ff04410dce"
+      },
+      "retained": {
+        "path": "retained/verification.json",
+        "bytes": 7421,
+        "sha256": "84908338d3394d6b93af1405218d8e2d86d1bed624541617aef665ff04410dce"
+      },
+      "encoding": "exact"
+    }
+  ],
+  "retainedBytes": 144955,
+  "originalBytes": 455647
+}

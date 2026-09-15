@@ -1,0 +1,296 @@
+{
+  "checkedAt": "2026-09-15T20:57:42.410488+00:00",
+  "base": "3f934b7508645d2cad03466276d20e8d038f9d76",
+  "origins": [
+    {
+      "name": "preview",
+      "port": 64092,
+      "bindingSha256": "f9d92707a05e75cc9ee45dcf22c8c792f6c98b9490f9518b69ae938d6cd77cf1",
+      "delay": null,
+      "sourceRows": [
+        {
+          "path": "game/couch/couch-static-pictures.mjs",
+          "bytes": 16109,
+          "sha256": "7fa81955a6a47b7178daec4be88a334fbe40d837673b7f9e792143913fd501df",
+          "status": 200
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "bytes": 47408,
+          "sha256": "8f933d40c6b9234f02326c446dab8bd60cecfc357f8f20816eca3df84ce32056",
+          "status": 200
+        },
+        {
+          "path": "game/couch/index.html",
+          "bytes": 15809,
+          "sha256": "ff17990b3e9fedf7a34aebdeb4ec6b17806ae781e45d67f6c45cfbaf385128ac",
+          "status": 200
+        },
+        {
+          "path": "game/presentation/page.mjs",
+          "bytes": 6550,
+          "sha256": "a51c2ae4b06cb61b00f7c498b0419ed5b54367169e6dae326b31a0b45c37bf60",
+          "status": 200
+        },
+        {
+          "path": "game/app.mjs",
+          "bytes": 260548,
+          "sha256": "e9d6b2f30ce4c7ddb19f0490e80c3d337b2283b493ef985dbae6636865aa8fa3",
+          "status": 200
+        },
+        {
+          "path": "game/index.html",
+          "bytes": 71029,
+          "sha256": "abb8283e270d78edca271840ec94978587a8a4c273114ff83a750692730dce7f",
+          "status": 200
+        },
+        {
+          "path": "game/couch/couch-shell.mjs",
+          "bytes": 14226,
+          "sha256": "2f6b32d98ac04b1afa313f00d5d68149e42110914db3f316c135a8dbafc97f76",
+          "status": 200
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "bytes": 35080,
+          "sha256": "b6aa26c8324549a110ff9ee196d86503f0986ab65f82bf9b6a198a680d0adb4f",
+          "status": 200
+        },
+        {
+          "path": "game/couch/relay-rescue.html",
+          "bytes": 15922,
+          "sha256": "305fd62619a621a0bbbfeb92a2725a37c92436106e94be801e9b15ca56a69cba",
+          "status": 200
+        },
+        {
+          "path": "game/display-preferences.mjs",
+          "bytes": 7319,
+          "sha256": "923bff19b744069eddee0735de2716674278d28ca3e00441ad5bf984a081a576",
+          "status": 200
+        },
+        {
+          "path": "game/ui/mode-choice.mjs",
+          "bytes": 1339,
+          "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858",
+          "status": 200
+        },
+        {
+          "path": "game/ui/mode-choice.css",
+          "bytes": 1506,
+          "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6",
+          "status": 200
+        },
+        {
+          "path": "game/ui/field-kit-surfaces.css",
+          "bytes": 18373,
+          "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af",
+          "status": 200
+        },
+        {
+          "path": "game/ui/pixel-theme.css",
+          "bytes": 21573,
+          "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98",
+          "status": 200
+        },
+        {
+          "path": "game/presentation/compiled/runtime.json",
+          "bytes": 970555,
+          "sha256": "94e24b96644c5c1c2e8d4e014f4d80fe7812359827863d75f00ab132c684982f",
+          "status": 200
+        }
+      ],
+      "eventCount": 12,
+      "pngCount": 7,
+      "nativeFiles": [
+        {
+          "path": ".cache/p08-integration/native/events.json",
+          "bytes": 37029,
+          "sha256": "1be8c7a153d69cc147d39544b53648c1953ec939b070c24c4b628446fd0dd8ed"
+        },
+        {
+          "path": ".cache/p08-integration/native/solo-collection-after-versus.png",
+          "bytes": 126055,
+          "sha256": "23764c68551917cae65957b17ad0810db6a853c5352f781353371c77bc5947e1"
+        },
+        {
+          "path": ".cache/p08-integration/native/solo-cut-paused.png",
+          "bytes": 85091,
+          "sha256": "85719050c888a5316b0c4f296e732d7c8c3ccd398f1776e25c0852ece01ed9f1"
+        },
+        {
+          "path": ".cache/p08-integration/native/solo-full-picture.png",
+          "bytes": 221058,
+          "sha256": "58ebd6ce2ecb2623901961bef5eec1835ad7898b1ebe90494a1605da5f29925a"
+        },
+        {
+          "path": ".cache/p08-integration/native/solo-start.png",
+          "bytes": 68527,
+          "sha256": "e71797abcf5aedf8fbb76f6d60b5290c4f24840fc33a7f79608c8b688c63927a"
+        },
+        {
+          "path": ".cache/p08-integration/native/versus-cuts-paused.png",
+          "bytes": 76757,
+          "sha256": "6ca18798415670e4fe8229d238ad63673b51300fbe63d35e500d3ee5e0710587"
+        },
+        {
+          "path": ".cache/p08-integration/native/versus-finished-both-boards.png",
+          "bytes": 128318,
+          "sha256": "b7eac7db9e7c1c77493d47121b816e1286a08be482888198c2d49108b905ccc9"
+        },
+        {
+          "path": ".cache/p08-integration/native/versus-large-plain.png",
+          "bytes": 128274,
+          "sha256": "12c40cd4f50d50ac44cae68b5ca96255a75f0714192def5061a25009d1abd1bb"
+        }
+      ],
+      "eventRecordBinding": "f9d92707a05e75cc9ee45dcf22c8c792f6c98b9490f9518b69ae938d6cd77cf1",
+      "eventKeys": [
+        "sourceHold",
+        "binding",
+        "events"
+      ]
+    },
+    {
+      "name": "preview-delayed",
+      "port": 65050,
+      "bindingSha256": "436c66ecfe048eb3e96b2ca2f3fdee5830cc48079f188f4434e8cdf7301efefe",
+      "delay": {
+        "path": "game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png",
+        "seconds": 6
+      },
+      "sourceRows": [
+        {
+          "path": "game/couch/couch-static-pictures.mjs",
+          "bytes": 16109,
+          "sha256": "7fa81955a6a47b7178daec4be88a334fbe40d837673b7f9e792143913fd501df",
+          "status": 200
+        },
+        {
+          "path": "game/couch/couch.mjs",
+          "bytes": 47408,
+          "sha256": "8f933d40c6b9234f02326c446dab8bd60cecfc357f8f20816eca3df84ce32056",
+          "status": 200
+        },
+        {
+          "path": "game/couch/index.html",
+          "bytes": 15809,
+          "sha256": "ff17990b3e9fedf7a34aebdeb4ec6b17806ae781e45d67f6c45cfbaf385128ac",
+          "status": 200
+        },
+        {
+          "path": "game/presentation/page.mjs",
+          "bytes": 6550,
+          "sha256": "a51c2ae4b06cb61b00f7c498b0419ed5b54367169e6dae326b31a0b45c37bf60",
+          "status": 200
+        },
+        {
+          "path": "game/app.mjs",
+          "bytes": 260548,
+          "sha256": "e9d6b2f30ce4c7ddb19f0490e80c3d337b2283b493ef985dbae6636865aa8fa3",
+          "status": 200
+        },
+        {
+          "path": "game/index.html",
+          "bytes": 71029,
+          "sha256": "abb8283e270d78edca271840ec94978587a8a4c273114ff83a750692730dce7f",
+          "status": 200
+        },
+        {
+          "path": "game/couch/couch-shell.mjs",
+          "bytes": 14226,
+          "sha256": "2f6b32d98ac04b1afa313f00d5d68149e42110914db3f316c135a8dbafc97f76",
+          "status": 200
+        },
+        {
+          "path": "game/couch/relay-rescue.mjs",
+          "bytes": 35080,
+          "sha256": "b6aa26c8324549a110ff9ee196d86503f0986ab65f82bf9b6a198a680d0adb4f",
+          "status": 200
+        },
+        {
+          "path": "game/couch/relay-rescue.html",
+          "bytes": 15922,
+          "sha256": "305fd62619a621a0bbbfeb92a2725a37c92436106e94be801e9b15ca56a69cba",
+          "status": 200
+        },
+        {
+          "path": "game/display-preferences.mjs",
+          "bytes": 7319,
+          "sha256": "923bff19b744069eddee0735de2716674278d28ca3e00441ad5bf984a081a576",
+          "status": 200
+        },
+        {
+          "path": "game/ui/mode-choice.mjs",
+          "bytes": 1339,
+          "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858",
+          "status": 200
+        },
+        {
+          "path": "game/ui/mode-choice.css",
+          "bytes": 1506,
+          "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6",
+          "status": 200
+        },
+        {
+          "path": "game/ui/field-kit-surfaces.css",
+          "bytes": 18373,
+          "sha256": "ea7a826b528a565d1a0113f57cd46fa477b962839d8de26f9919d89f7ad6c2af",
+          "status": 200
+        },
+        {
+          "path": "game/ui/pixel-theme.css",
+          "bytes": 21573,
+          "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98",
+          "status": 200
+        },
+        {
+          "path": "game/presentation/compiled/runtime.json",
+          "bytes": 970555,
+          "sha256": "94e24b96644c5c1c2e8d4e014f4d80fe7812359827863d75f00ab132c684982f",
+          "status": 200
+        }
+      ],
+      "eventCount": 9,
+      "pngCount": 5,
+      "nativeFiles": [
+        {
+          "path": ".cache/p08-integration/native-delayed/cancel-result.png",
+          "bytes": 70525,
+          "sha256": "974cb6fb25ee3dd64e67660c45daec95e4a4bd665fa23a0618f350a215683e19"
+        },
+        {
+          "path": ".cache/p08-integration/native-delayed/events.json",
+          "bytes": 25776,
+          "sha256": "ec9e72b7fe81a155a6e428dbac8b3f958f1840fddb8d595cb00e8bd4eaea02d1"
+        },
+        {
+          "path": ".cache/p08-integration/native-delayed/explicit-start-pause.png",
+          "bytes": 70824,
+          "sha256": "8c477974befafa1ca45c1d39b61b34d2698ccfc0ddbc90aac575cfa5e8deff2c"
+        },
+        {
+          "path": ".cache/p08-integration/native-delayed/live-resumed-cuts.png",
+          "bytes": 69458,
+          "sha256": "2f4f47f5a073721ea46e5fb507276011f1c26178dba075512776fd2ec66e6d5d"
+        },
+        {
+          "path": ".cache/p08-integration/native-delayed/ready-keeps-mode-focus.png",
+          "bytes": 71740,
+          "sha256": "8967487ecf33c0f524743b5675735326a88a7b07b9b41c3d6135ae65252538f1"
+        },
+        {
+          "path": ".cache/p08-integration/native-delayed/retry-pending.png",
+          "bytes": 75580,
+          "sha256": "fcf611992edd6bd7aabe52ee3216fc49da860b30e8e85ccbaccbfdde19ebd2de"
+        }
+      ],
+      "eventRecordBinding": "436c66ecfe048eb3e96b2ca2f3fdee5830cc48079f188f4434e8cdf7301efefe",
+      "eventKeys": [
+        "binding",
+        "events"
+      ]
+    }
+  ],
+  "physicalHeldSourceUnchanged": true,
+  "scope": "Post-native loopback HTTP source checks plus retained native-file hashes only. Root performed actual desktop keyboard and screenshot inspection; this sealing script does not inspect images or automate browser input. Every original is preserved."
+}

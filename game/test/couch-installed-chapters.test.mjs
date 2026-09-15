@@ -16,6 +16,7 @@ import { buildFractureTheme } from '../../authoring/library/fracture-theme-chapt
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { couchPage } from './helpers/couch-host.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { deferred } from './helpers/media-fixtures.mjs';
 
 const pilot = await buildExternalPilot();
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -194,6 +195,144 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
   };
 }
 const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 45000, message });
+
+test('interrupted async Start confirmation stays ready after blur and return until a fresh Start', async (t) => {
+  const f = await fixture(t),
+    before = f.writes();
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  page.frame(0);
+  const runs = [...page.renders],
+    checkpoint = page.checkpoint(),
+    picture = page.drawOptions[0].backdrop,
+    entered = deferred(),
+    gate = deferred(),
+    request = f.locks.request.bind(f.locks);
+  let hold = true;
+  f.locks.request = async (...args) => {
+    if (hold) {
+      hold = false;
+      entered.resolve();
+      await gate.promise;
+    }
+    return request(...args);
+  };
+  page.$('race-start').focus();
+  const starting = action(page.$('race-start'));
+  await entered.promise;
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  page.doc.focused = false;
+  page.win.emit('blur');
+  page.doc.body.focus();
+  page.doc.focused = true;
+  page.frame(0);
+  gate.resolve();
+  await starting;
+  page.frame(0);
+  assert.equal(page.state(), 'ready', 'The interrupted Start gesture cannot resume on return.');
+  assert.equal(page.$('race-start').disabled, false, 'The confirmed picture remains usable.');
+  assert.equal(page.doc.activeElement === page.doc.body, true);
+  assert.equal(
+    page.renders.every((run, index) => run === runs[index]),
+    true,
+  );
+  assert.deepEqual(page.checkpoint(), checkpoint);
+  assert.equal(page.drawOptions[0].backdrop === picture, true);
+  assert.equal(page.drawOptions[1].backdrop === picture, true);
+  await action(page.$('race-start'));
+  page.frame(0);
+  assert.equal(page.state(), 'running');
+  assert.deepEqual(f.writes(), before);
+});
+
+test('cancelled Start confirmation cannot overwrite Retry for the same untouched attempt', async (t) => {
+  const f = await fixture(t),
+    before = f.writes();
+  f.reader.dispose();
+  const page = await couchPage(t, {
+    initialLevel: null,
+    ImageClass: f.model.ImageClass,
+    assetDatabase: f.indexedDB,
+    storage: f.storage,
+    lockManager: f.locks,
+    URLImpl: f.model.URLImpl,
+  });
+  const choice = page
+    .$('race-level')
+    .options.find((option) => option.value.startsWith('installed/'));
+  page.$('race-focus').click();
+  page.$('race-level').value = choice.value;
+  await action(page.$('race-level'), 'change');
+  page.$('race-setup-back').click();
+  page.frame();
+  const held = page.checkpoint(),
+    runs = [...page.renders];
+  const oldEntered = deferred(),
+    oldGate = deferred(),
+    decodeEntered = deferred(),
+    decodeGate = deferred();
+  const request = f.locks.request.bind(f.locks);
+  let holdNext = true;
+  f.locks.request = async (...args) => {
+    if (holdNext) {
+      holdNext = false;
+      oldEntered.resolve();
+      await oldGate.promise;
+      throw new Error('Delayed old confirmation refusal.');
+    }
+    return request(...args);
+  };
+  page.$('race-start').focus();
+  const starting = action(page.$('race-start'));
+  await oldEntered.promise;
+  assert.equal(page.$('race-picture-cancel').hidden, false);
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  page.$('race-picture-cancel').click();
+  assert.equal(page.doc.activeElement === page.$('race-chapter-retry'), true);
+  f.model.onDecode = async () => {
+    decodeEntered.resolve();
+    await decodeGate.promise;
+  };
+  const retrying = action(page.$('race-chapter-retry'));
+  oldGate.resolve();
+  await starting;
+  await decodeEntered.promise;
+  assert.equal(page.doc.activeElement === page.$('race-picture-cancel'), true);
+  assert.equal(
+    page.$('race-picture-cancel').hidden,
+    false,
+    'The newer read still owns the busy UI.',
+  );
+  assert.equal(page.$('race-chapter-retry').disabled, true);
+  assert.equal(page.$('race-start').disabled, true);
+  assert.doesNotMatch(page.$('race-message').textContent, /Delayed old confirmation refusal/);
+  assert.deepEqual(page.checkpoint(), held);
+  decodeGate.resolve();
+  await retrying;
+  page.frame(0);
+  assert.equal(page.$('race-start').disabled, false);
+  assert.equal(page.doc.activeElement === page.$('race-start'), true);
+  assert.equal(
+    page.renders.every((run, index) => run === runs[index]),
+    true,
+  );
+  assert.deepEqual(page.checkpoint(), held);
+  assert.deepEqual(f.writes(), before);
+});
 
 // Capture the existing native property handler's promise, then use readiness
 // predicates too: a completed handler alone is not permission to start.
@@ -457,7 +596,6 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.$('race-focus').click();
   page.$('race-level').value = installed[0].value;
   await action(page.$('race-level'), 'change');
-  assert.equal(page.$('race-start').disabled, true);
   await settle(() => !page.$('race-start').disabled, page.$('race-message').textContent);
   page.$('race-setup-back').click();
   page.frame();
@@ -510,7 +648,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
       });
   };
   page.$('race-level').value = installed[1].value;
-  await action(page.$('race-level'), 'change');
+  const pendingMap = action(page.$('race-level'), 'change');
   await settle(() => finish, 'pending map original was not read');
   assert.equal(page.$('race-preparation').dataset.state, 'busy');
   assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
@@ -523,6 +661,7 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   assert.equal(page.$('race-preparation').hidden, true);
   finish();
   f.model.onDecode = null;
+  await pendingMap;
   const retry = page.$('race-chapter-retry');
   blurWhenDisabled(retry);
   retry.focus();

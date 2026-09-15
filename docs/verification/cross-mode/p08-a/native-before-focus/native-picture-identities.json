@@ -1,0 +1,71 @@
+{
+  "base": "f047a46a9a1bb9982600bd7e2682d765a75cb9cc",
+  "inputs": [
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 970555,
+      "sha256": "94e24b96644c5c1c2e8d4e014f4d80fe7812359827863d75f00ab132c684982f"
+    },
+    {
+      "path": "game/presentation/current-pictures.mjs",
+      "bytes": 49810,
+      "sha256": "8f5e54c7e68d5f5870dbce6695db713516c0f732ce4aee984f5de50170f51a95"
+    }
+  ],
+  "pictures": [
+    {
+      "slot": "picture.fpv.26e53164613e83d0",
+      "ownerText": "id: 'picture.fpv.26e53164613e83d0',\n    label: 'First Signal \u00b7 First Signal \u00b7 FPV Front',\n    dimensions: [768, 576],\n    owner: {\n      baseCampaignKey: 'first-signal/2/88639f3aab7b6cc1',\n      levelId: 'signal-01',\n      levelRevision: '1',\n      themeId: 'fpv',\n    },",
+      "assetId": "picture.fpv.26e53164613e83d0.field-kit",
+      "revision": 2,
+      "file": {
+        "bytes": 40810,
+        "height": 576,
+        "mime": "image/png",
+        "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+        "width": 768
+      },
+      "quality": {
+        "evidence": [
+          "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/asset-visual-decisions-integrated.json#picture.fpv.26e53164613e83d0. Landmarks and intended aspect crop remain intact; composition is identifiable at 240px and visually consistent with the field-kit collection. Exact-owner preview retains selected replacement pixels.",
+          "docs/verification/fpv-redesign/phase7/studio-exact-picture-31.png",
+          "docs/verification/fpv-redesign/phase7/studio-exact-picture-31.txt",
+          "docs/verification/fpv-redesign/phase7/reveals-gallery-row-08.png",
+          "docs/verification/fpv-redesign/phase7/reveal-native-review.json",
+          "docs/verification/fpv-redesign/phase7/reveal-owner-integrity.json",
+          "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+        ],
+        "stage": "reviewed"
+      },
+      "fit": "contain",
+      "sampling": "nearest"
+    },
+    {
+      "slot": "picture.fpv.9c57dfab02314b3b",
+      "ownerText": "id: 'picture.fpv.9c57dfab02314b3b',\n    label: 'FPV Front \u00b7 Pressure Lines \u00b7 Orchard Crossing \u00b7 FPV Front',\n    dimensions: [1152, 576],\n    owner: {\n      baseCampaignKey: 'fpv-pressure-lines/1/ebb56ffdd9baa8e8',\n      levelId: 'orchard-crossing',\n      levelRevision: '1',\n      themeId: 'fpv',\n    },",
+      "assetId": "picture.fpv.9c57dfab02314b3b.field-kit",
+      "revision": 2,
+      "file": {
+        "bytes": 52720,
+        "height": 576,
+        "mime": "image/png",
+        "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+        "width": 1152
+      },
+      "quality": {
+        "evidence": [
+          "Agent asset-readiness review: docs/verification/fpv-redesign/phase7/asset-visual-decisions-integrated.json#picture.fpv.9c57dfab02314b3b. Landmarks and intended aspect crop remain intact; composition is identifiable at 240px and visually consistent with the field-kit collection. Exact-owner preview retains selected replacement pixels.",
+          "docs/verification/fpv-redesign/phase7/studio-exact-picture-00.png",
+          "docs/verification/fpv-redesign/phase7/studio-exact-picture-00.txt",
+          "docs/verification/fpv-redesign/phase7/reveals-gallery-row-01.png",
+          "docs/verification/fpv-redesign/phase7/reveal-native-review.json",
+          "docs/verification/fpv-redesign/phase7/reveal-owner-integrity.json",
+          "Scope: asset readiness only. Exact-source release, deployed byte/play/offline evidence and physical-device limits are recorded separately."
+        ],
+        "stage": "reviewed"
+      },
+      "fit": "contain",
+      "sampling": "nearest"
+    }
+  ]
+}
