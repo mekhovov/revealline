@@ -21,6 +21,7 @@ import { createCoopCommandBatch, COOP_INPUT_CAPABILITIES } from '../coop/input-p
 import { createOperationStatus } from '../ui/operation-status.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { createDisplayPreferences } from '../display-preferences.mjs';
 
 import { teamReturnHref } from '../mode-return.mjs';
 
@@ -83,6 +84,34 @@ export function bootCoop() {
     stopMasterView();
     audioPreferences.dispose();
     audioMaster.dispose();
+  };
+  const displayPreferences = createDisplayPreferences({
+    window,
+    matchMedia,
+    getStorage: () => localStorage,
+    onWarning: (message) => {
+      $('coop-display-status').textContent = message;
+    },
+  });
+  const stopDisplayView = displayPreferences.subscribe((state) => {
+    document.body.dataset.textFace = state.textFace;
+    document.body.dataset.textSize = state.textSize;
+    document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    $('coop-text-face').value = state.textFace;
+    $('coop-text-size').value = state.textSize;
+    $('coop-reduced').checked = state.reducedEffects;
+    $('coop-system-reduction').textContent =
+      state.effectiveReducedEffects && !state.reducedEffects
+        ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
+        : '';
+  });
+  $('coop-text-face').onchange = () =>
+    displayPreferences.set({ textFace: $('coop-text-face').value });
+  $('coop-text-size').onchange = () =>
+    displayPreferences.set({ textSize: $('coop-text-size').value });
+  const closeDisplay = () => {
+    stopDisplayView();
+    displayPreferences.dispose();
   };
   const painter = createCoopPainter($('coop-canvas'));
   const batch = createCoopCommandBatch();
@@ -258,7 +287,10 @@ export function bootCoop() {
   }
   function render() {
     if (!run) return;
-    painter.paint(run, { reduced: $('coop-reduced').checked });
+    painter.paint(run, {
+      reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      textFace: displayPreferences.snapshot().textFace,
+    });
     const coverage = run.coverage * 100;
     $('coop-coverage').textContent = `${coverage.toFixed(1)}%`;
     $('coop-progress').value = coverage;
@@ -795,8 +827,8 @@ export function bootCoop() {
       label: 'Relay Rescue controls',
     });
   placeTools(false);
-  $('coop-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
   $('coop-reduced').onchange = () => {
+    displayPreferences.set({ reducedEffects: $('coop-reduced').checked });
     if (running()) input.focus();
   };
   let unsubscribeNative = () => {};
@@ -809,6 +841,7 @@ export function bootCoop() {
   const dispose = () => {
     cancelDeparture({ restore: false });
     closeAudio();
+    closeDisplay();
     importRequest++;
     disposed = true;
     packStatus.dispose();
@@ -826,7 +859,10 @@ export function bootCoop() {
   window.addEventListener('pagehide', (event) => {
     cancelImport();
     suspend();
-    if (!event.persisted) closeAudio();
+    if (!event.persisted) {
+      closeAudio();
+      closeDisplay();
+    }
   });
   window.addEventListener('pageshow', () => {
     last = null;

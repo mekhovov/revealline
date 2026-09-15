@@ -15,6 +15,7 @@ import { encounterView } from '../ui/encounter-view.mjs';
 import { Soundscape, DEFAULT_TRACKS } from '../ui/audio.mjs';
 import { createAudioMaster } from '../ui/audio-master.mjs';
 import { createAudioPreferences } from '../audio-preferences.mjs';
+import { createDisplayPreferences } from '../display-preferences.mjs';
 import { attachPublishedAudio } from '../ui/published-audio.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { createCharacterPresentations } from '../character-presentations.mjs';
@@ -52,6 +53,32 @@ const stopMasterView = audioMaster.subscribe(({ muted, volume }) => {
 $('race-audio').onclick = () => audioPreferences.setMuted(!audioMaster.snapshot().muted);
 $('race-master-volume').onchange = () =>
   audioPreferences.setVolume(Number($('race-master-volume').value));
+const displayPreferences = createDisplayPreferences({
+  window,
+  matchMedia,
+  getStorage: () => localStorage,
+  onWarning: (message) => {
+    $('race-display-status').textContent = message;
+  },
+});
+const stopDisplayView = displayPreferences.subscribe((state) => {
+  document.body.dataset.textFace = state.textFace;
+  document.body.dataset.textSize = state.textSize;
+  document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+  $('race-text-face').value = state.textFace;
+  $('race-text-size').value = state.textSize;
+  $('race-reduced').checked = state.reducedEffects;
+  $('race-system-reduction').textContent =
+    state.effectiveReducedEffects && !state.reducedEffects
+      ? 'System reduced motion is active. Your saved Reduced effects choice is unchanged.'
+      : '';
+});
+$('race-text-face').onchange = () =>
+  displayPreferences.set({ textFace: $('race-text-face').value });
+$('race-text-size').onchange = () =>
+  displayPreferences.set({ textSize: $('race-text-size').value });
+$('race-reduced').onchange = () =>
+  displayPreferences.set({ reducedEffects: $('race-reduced').checked });
 globalThis.RevealLineToolLaunch?.attached();
 document.documentElement.dataset.toolState = 'loading';
 const bootStatus = createOperationStatus($('boot-status'));
@@ -95,6 +122,8 @@ let featured, installed, publishedAudio, publishedPlayer;
 const releaseArtwork = (event) => {
   if (event.persisted) return;
   stopMasterView();
+  stopDisplayView();
+  displayPreferences.dispose();
   audioPreferences.dispose();
   artworkLifetime.abort();
   publishedAudio?.close();
@@ -293,7 +322,7 @@ try {
   let preparationDisplay = null;
   let menuRouter, navigation, shell;
   $('race-tap').checked = matchMedia('(pointer: coarse)').matches;
-  $('race-reduced').checked = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   function clear({ resetDirection = false } = {}) {
     if (resetDirection) input.clear();
     else input.clearPhysical();
@@ -783,6 +812,8 @@ try {
     'race-touch-1',
     'race-tap',
     'race-reduced',
+    'race-text-face',
+    'race-text-size',
     'race-audio',
     'race-master-volume',
     'race-menu-release',
@@ -993,7 +1024,7 @@ try {
           p.startCelebration?.({
             levelId: match.runs[i].levelId,
             seed: 2026,
-            reduced: $('race-reduced').checked,
+            reduced: displayPreferences.snapshot().effectiveReducedEffects,
           });
       });
     }
@@ -1034,8 +1065,9 @@ try {
         delete group.dataset.phase;
       }
       painters[i].draw(contexts[i], run, Math.min(dt, 0.1), {
+        textFace: displayPreferences.snapshot().textFace,
         paused: match.status !== 'running',
-        reduced: $('race-reduced').checked,
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
         fullReveal: run.status === 'won',
         celebrationPaused: document.hidden,
         backdrop,

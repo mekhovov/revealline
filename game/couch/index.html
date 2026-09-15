@@ -205,8 +205,14 @@
           <p class="race-kicker">MAKE YOURSELF AT HOME</p>
           <h1 id="race-options-title" data-field-kit-copy="settings.couchTitle">Flight settings</h1>
           <label class="field-kit-page-text"
+            >Text style<select id="race-text-face">
+              <option value="pixel">Theme font</option>
+              <option value="plain">Plain</option>
+            </select></label
+          >
+          <label class="field-kit-page-text"
             ><span data-field-kit-copy="display.textSize">Text size</span
-            ><select data-field-kit-text-size>
+            ><select id="race-text-size">
               <option value="standard" data-field-kit-copy="display.standard">Standard</option>
               <option value="large" data-field-kit-copy="display.large">Large</option>
             </select></label
@@ -237,6 +243,8 @@
           <label class="race-check"
             ><input id="race-reduced" type="checkbox" /> Reduced effects</label
           >
+          <p id="race-system-reduction" class="setting-note"></p>
+          <p id="race-display-status" class="setting-note" role="status"></p>
           <button id="race-audio" type="button" aria-pressed="false">Unmute sound</button>
           <label for="race-master-volume">Master sound volume</label>
           <input id="race-master-volume" type="range" min="0" max="1" step="0.01" value="0.65" />
