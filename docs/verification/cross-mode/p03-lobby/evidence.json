@@ -1,0 +1,240 @@
+{
+  "format": "revealline.scoped-evidence-map.v1",
+  "scope": "P03 common Couch mode presenter; local source/test and desktop keyboard evidence, not phase/public acceptance.",
+  "base": "1f53e829de7ec5db387ef5803b3622a10816e028",
+  "recordedAt": "2026-09-15T19:28:53.154256+00:00",
+  "originalCache": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03l-common-lobby/.cache/lobby",
+  "source": {
+    "game/ui/mode-choice.mjs": {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    "game/ui/mode-choice.css": {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    },
+    "game/couch/couch-shell.mjs": {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14224,
+      "sha256": "a6eb0558c0326ba2ce9772219dd4ea501d6305d240e0cc91af54f10aa8b9057a"
+    },
+    "game/couch/index.html": {
+      "path": "game/couch/index.html",
+      "bytes": 15335,
+      "sha256": "0762b605c95fbafee43ffb7ad480612a1d44f0677e8aeb34706c906dcefa90f9"
+    },
+    "game/couch/relay-rescue.html": {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15340,
+      "sha256": "45921fe390e71b7120387653b04bc9373d4e7b3f41792e064d9694644aa0a69b"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 33712,
+      "sha256": "4504d44503508c2d0a0579c53ee22b59a302bdad10cb7cf109f1bc5c78a4570d"
+    }
+  },
+  "all275RecordedInputPinsMatchedBeforePackaging": true,
+  "notes": [
+    "Raw log/event/helper compression is lossless; no whitespace normalization or image transformation.",
+    "Root receipts retain their original relative cache paths. Resolve by original SHA through this map.",
+    "Predecessor preview bindings keep their earlier CSS identities and are not final native authority. Final native source is preview-final.json on53720.",
+    "R5 first-ready focus, Title mode entry, P05 presentation and P08 artwork integration remain separate. No source images or large artifacts copied."
+  ],
+  "originalCount": 21,
+  "originalBytes": 599319,
+  "retainedBytes": 402308,
+  "files": [
+    {
+      "original": ".cache/lobby/execution-inputs.json",
+      "originalBytes": 44694,
+      "originalSha256": "37d0b489d716f4805a44e9a587f2c16fc7b7e7ef97a96c2f692d0e8cac57efac",
+      "retained": "retained/execution-inputs.json",
+      "retainedBytes": 44694,
+      "retainedSha256": "37d0b489d716f4805a44e9a587f2c16fc7b7e7ef97a96c2f692d0e8cac57efac",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/execution.json",
+      "originalBytes": 2064,
+      "originalSha256": "7c18193dbe587deb7e8366200f31b968f4de2699671f9f5ac5f956dbf7f33044",
+      "retained": "retained/execution.json",
+      "retainedBytes": 2064,
+      "retainedSha256": "7c18193dbe587deb7e8366200f31b968f4de2699671f9f5ac5f956dbf7f33044",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/native/events.json",
+      "originalBytes": 48062,
+      "originalSha256": "05426f87face561f2cddcffbaff72849a3b5a348d48a026d7050e590e6a612d1",
+      "retained": "retained/native/events.json.gz",
+      "retainedBytes": 4187,
+      "retainedSha256": "7451c69ec0ab049c56880b7aa2d7f42213198deabd09a9a8624ff7087cc60018",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/native/team-lobby.png",
+      "originalBytes": 136726,
+      "originalSha256": "cbce649280ebfeb413ebf129c307b62500578b74d3a6a75dd62ae206186eb3d9",
+      "retained": "retained/native/team-lobby.png",
+      "retainedBytes": 136726,
+      "retainedSha256": "cbce649280ebfeb413ebf129c307b62500578b74d3a6a75dd62ae206186eb3d9",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/native/team-paused-modes.png",
+      "originalBytes": 91366,
+      "originalSha256": "a593b8074d99767bded8a9b109088d4cca9a30d0279f51b541adaa7a6434d456",
+      "retained": "retained/native/team-paused-modes.png",
+      "retainedBytes": 91366,
+      "retainedSha256": "a593b8074d99767bded8a9b109088d4cca9a30d0279f51b541adaa7a6434d456",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/native/versus-lobby.png",
+      "originalBytes": 75081,
+      "originalSha256": "be24ad6a997a8ea37d32e5bc6eb1f07be9a82fee4802dcb79238d45e5af82825",
+      "retained": "retained/native/versus-lobby.png",
+      "retainedBytes": 75081,
+      "retainedSha256": "be24ad6a997a8ea37d32e5bc6eb1f07be9a82fee4802dcb79238d45e5af82825",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/node20-whole.log",
+      "originalBytes": 58498,
+      "originalSha256": "068835ddd66dd626089cd699b4d5e98706aca4322ad229707c91a33363461b96",
+      "retained": "retained/node20-whole.log.gz",
+      "retainedBytes": 9832,
+      "retainedSha256": "906930b9f37b57909cd0e0cc78f14a69bef634e6a7f7adb04fa4498358e6c9d9",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/node22-whole.log",
+      "originalBytes": 62480,
+      "originalSha256": "47b863d5622e5b66bead605bc3413d1e45218bb9ea7eecab3a33ec5872d83baf",
+      "retained": "retained/node22-whole.log.gz",
+      "retainedBytes": 9921,
+      "retainedSha256": "a7848e6504ca99af62a878bf918547ca5c719beba4bc62a2cca01659161cd9d7",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/preview-before-current-border.json",
+      "originalBytes": 1349,
+      "originalSha256": "8f89a5ba7f5dd457f798500c3cd954dd3ac692c9c82d58906d5b06254564ea0b",
+      "retained": "retained/preview-before-current-border.json",
+      "retainedBytes": 1349,
+      "retainedSha256": "8f89a5ba7f5dd457f798500c3cd954dd3ac692c9c82d58906d5b06254564ea0b",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/preview-final-inputs.json",
+      "originalBytes": 1349,
+      "originalSha256": "ead32bd01e36f1a0363d7ddf7aec5b61de0acef5b665da62218af6da665c7953",
+      "retained": "retained/preview-final-inputs.json",
+      "retainedBytes": 1349,
+      "retainedSha256": "ead32bd01e36f1a0363d7ddf7aec5b61de0acef5b665da62218af6da665c7953",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/preview-final.json",
+      "originalBytes": 1676,
+      "originalSha256": "3a424d20005a8be60f18f311228f6c2174949b384f759c489ea3cf3e712de459",
+      "retained": "retained/preview-final.json",
+      "retainedBytes": 1676,
+      "retainedSha256": "3a424d20005a8be60f18f311228f6c2174949b384f759c489ea3cf3e712de459",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/preview-inputs.json",
+      "originalBytes": 1349,
+      "originalSha256": "8f89a5ba7f5dd457f798500c3cd954dd3ac692c9c82d58906d5b06254564ea0b",
+      "retained": "retained/preview-inputs.json",
+      "retainedBytes": 1349,
+      "retainedSha256": "8f89a5ba7f5dd457f798500c3cd954dd3ac692c9c82d58906d5b06254564ea0b",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/preview-normal.json",
+      "originalBytes": 1676,
+      "originalSha256": "b13a8247d80eeafff957d95264ecd2c38db65c5b3fcfcfd9f4e86fe7f544e002",
+      "retained": "retained/preview-normal.json",
+      "retainedBytes": 1676,
+      "retainedSha256": "b13a8247d80eeafff957d95264ecd2c38db65c5b3fcfcfd9f4e86fe7f544e002",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby/run-pair.py",
+      "originalBytes": 2062,
+      "originalSha256": "37be9ff520afb00b8dd41995bbec36208011bdf79efc062de28f0ba664f689b1",
+      "retained": "retained/run-pair.py.gz",
+      "retainedBytes": 1042,
+      "retainedSha256": "29dda9a4b3c9a791bd9ccbaf19e27ac855d7227d190a4be0b749e3c1e91134e3",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/serve-final-preview.py",
+      "originalBytes": 4142,
+      "originalSha256": "df63723102b9fafcf56e34bcd013c795d883c858b43f7dcfd21bb12e3ec10140",
+      "retained": "retained/serve-final-preview.py.gz",
+      "retainedBytes": 1679,
+      "retainedSha256": "ba881a067aeb06508e159aa2d15c6e557fb1a3e1127ebf0ede4b7525cdf0f57b",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/serve-preview.py",
+      "originalBytes": 4174,
+      "originalSha256": "1210cc95c3a5e51f0decfc7aae58f71fc4df490fee6f5f0aedc2308f32cb5e49",
+      "retained": "retained/serve-preview.py.gz",
+      "retainedBytes": 1698,
+      "retainedSha256": "aef4331c1e6702cce3e81bf1b3332f3d509cb6369b95582b77a01a193d22ea7f",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby/verification.json",
+      "originalBytes": 6579,
+      "originalSha256": "5bce9739bee95cc6f863470d8055c09c50012760630618bfaa2320e0cead53e3",
+      "retained": "retained/verification.json",
+      "retainedBytes": 6579,
+      "retainedSha256": "5bce9739bee95cc6f863470d8055c09c50012760630618bfaa2320e0cead53e3",
+      "transformation": "none"
+    },
+    {
+      "original": ".cache/lobby-behavior-node22.log",
+      "originalBytes": 20578,
+      "originalSha256": "2d97e8f78eadd398be4ea213232651e625e95b0c38fe6850a9e5f3c43b97867b",
+      "retained": "retained/predecessors/lobby-behavior-node22.log.gz",
+      "retainedBytes": 3992,
+      "retainedSha256": "b3c8cae60c502a7c04f68908c29e04766005eae68c0e5229a80f511a2768f462",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby-couch-input-fixed-node22.log",
+      "originalBytes": 4050,
+      "originalSha256": "efa944460e8e04512c833e82a742caeeaa84051fbc66cd90dd7cfc481ca2f4da",
+      "retained": "retained/predecessors/lobby-couch-input-fixed-node22.log.gz",
+      "retainedBytes": 1338,
+      "retainedSha256": "d9dbf9e1742639eb5b62551ebf29fad82a67e1b89db905b43465bd9655685c16",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby-initial-node22.log",
+      "originalBytes": 31171,
+      "originalSha256": "2364786702f037cbd3bddc5440debf6d03ed515450b44a1445a31cdd6bfa518d",
+      "retained": "retained/predecessors/lobby-initial-node22.log.gz",
+      "retainedBytes": 4517,
+      "retainedSha256": "0b1849e822d67fe0232b87a3b2afb94e3dbaeb473e724789b32fcb622f2ea45f",
+      "transformation": "deterministic gzip; original bytes unchanged"
+    },
+    {
+      "original": ".cache/lobby-added-input.json",
+      "originalBytes": 193,
+      "originalSha256": "7aab04985c1fbe626cca8dfaac39aaf381966c0e05e0947b5f0fc89addcc780d",
+      "retained": "retained/predecessors/lobby-added-input.json",
+      "retainedBytes": 193,
+      "retainedSha256": "7aab04985c1fbe626cca8dfaac39aaf381966c0e05e0947b5f0fc89addcc780d",
+      "transformation": "none"
+    }
+  ]
+}

@@ -272,6 +272,50 @@ function deferred() {
   return { promise, resolve };
 }
 
+test('the same Team mode choices belong to the lobby and active pause panel, never the live arena', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  const modes = f.$('coop-mode-actions');
+  const solo = f.$('coop-solo');
+  const versus = f.$('coop-versus');
+  assert.deepEqual(
+    modes.children.map((element) => element.dataset.gameMode),
+    ['solo', 'versus', 'team'],
+  );
+  assert.equal(modes.parentNode, f.$('coop-lobby-modes'));
+  assert.equal(modes.hidden, false);
+  const current = modes.querySelector('[aria-current="page"]');
+  assert.equal(current.tagName, 'SPAN');
+  assert.equal(current.getAttribute('tabindex'), null);
+  assert.equal(current.getAttribute('href'), null);
+  assert.equal(solo.getAttribute('href'), '../');
+  assert.equal(versus.getAttribute('href'), './');
+  current.click();
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.visits.length, 0);
+
+  f.$('coop-start').click();
+  f.tick();
+  assert.equal(modes.hidden, true);
+  assert.equal(f.$('coop-overlay').hidden, true);
+  f.$('coop-pause').click();
+  assert.equal(modes.parentNode, f.$('coop-pause-modes'));
+  assert.equal(modes.hidden, false);
+  assert.equal(f.$('coop-overlay').contains(modes), true);
+  assert.equal(f.$('coop-solo'), solo);
+  assert.equal(f.$('coop-versus'), versus);
+  tabToTeamAction(f, 'coop-solo');
+  f.tap('Tab');
+  assert.equal(f.doc.activeElement, versus, 'visible mode order is keyboard order');
+  f.tap('Enter');
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  f.tap('Escape');
+  assert.equal(f.doc.activeElement, versus, 'moving links retain their checked departure owner');
+  assert.equal(f.visits.length, 0);
+  f.$('coop-resume').click();
+  assert.equal(modes.hidden, true);
+  assert.equal(f.$('coop-overlay').hidden, true);
+});
+
 test('a file selected before Start cannot replace setup after returning from an attempt', async (t) => {
   const f = await page(t),
     read = deferred(),

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="../ui/field-kit-compiled.css" />
     <script type="module" src="../ui/field-kit-surfaces.mjs"></script>
     <link rel="stylesheet" href="../ui/operation-status.css" />
+    <link rel="stylesheet" href="../ui/mode-choice.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <p id="boot-status" class="operation-status" data-state="busy" role="status">
@@ -126,6 +127,7 @@
         <p id="race-preparation" hidden></p>
         <p id="race-presentation-status" hidden></p>
         <section id="race-main" class="race-screen" aria-labelledby="race-title">
+          <nav id="race-mode-choices" aria-label="Game mode"></nav>
           <p class="race-kicker">REVEAL LINE / LOCAL TWO PLAYER</p>
           <h1 class="field-kit-display" id="race-title">Two boards.<br />One race.</h1>
           <p id="race-message" role="status">Both boards use the same map, class and seed.</p>

@@ -1,0 +1,197 @@
+{
+  "scope": "P03 shared Couch mode selector on A2/R3 base; not full lobby redesign or phase acceptance",
+  "base": "1f53e829de7ec5db387ef5803b3622a10816e028",
+  "source": {
+    "game/ui/mode-choice.mjs": {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    "game/ui/mode-choice.css": {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    },
+    "game/couch/couch-shell.mjs": {
+      "path": "game/couch/couch-shell.mjs",
+      "bytes": 14224,
+      "sha256": "a6eb0558c0326ba2ce9772219dd4ea501d6305d240e0cc91af54f10aa8b9057a"
+    },
+    "game/couch/index.html": {
+      "path": "game/couch/index.html",
+      "bytes": 15335,
+      "sha256": "0762b605c95fbafee43ffb7ad480612a1d44f0677e8aeb34706c906dcefa90f9"
+    },
+    "game/couch/relay-rescue.html": {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 15340,
+      "sha256": "45921fe390e71b7120387653b04bc9373d4e7b3f41792e064d9694644aa0a69b"
+    },
+    "game/couch/relay-rescue.mjs": {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 33712,
+      "sha256": "4504d44503508c2d0a0579c53ee22b59a302bdad10cb7cf109f1bc5c78a4570d"
+    }
+  },
+  "native": {
+    "events": 14,
+    "viewport": "1309x1348 desktop",
+    "inputs": [
+      "actual keyboard"
+    ],
+    "files": [
+      "native/events.json",
+      "native/versus-lobby.png",
+      "native/team-lobby.png",
+      "native/team-paused-modes.png"
+    ],
+    "observed": [
+      "Equal mode order and selected-mode static label in both lobbies",
+      "Actual DOM styles: matching padding, alignment and text, selected amber border and cyan focus",
+      "Versus keyboard Start/Pause/Team request/Stay actual opener/confirmed Team route",
+      "Team Start hides row, Pause moves row into active panel",
+      "Team Solo then Versus reachable by Tab, checked departure and Stay restores actual opener"
+    ],
+    "limits": [
+      "R5 initial-focus fix is not in this source; separate R5 native evidence exists",
+      "Stationary 0:00 Team attempts do not prove cut geometry preservation; host evidence does",
+      "First Versus screenshot captured independent artwork/fonts loading status",
+      "No phone, zoom, physical controller, touch, public or offline qualification",
+      "Current Team header/briefing/layout and broader P05/P08 work remain separate"
+    ]
+  },
+  "tests": {
+    "base": "1f53e829de7ec5db387ef5803b3622a10816e028",
+    "inputCount": 275,
+    "runs": [
+      {
+        "runtime": "v22.22.2",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+          "--test",
+          "game/test/couch-shell.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/couch-departure.test.mjs",
+          "game/test/controller-navigation.test.mjs",
+          "game/test/mode-return-host.test.mjs",
+          "game/test/couch-markup.test.mjs"
+        ],
+        "startedAt": "2026-09-15T19:25:43.545388+00:00",
+        "seconds": 42.60104416590184,
+        "exitCode": 0,
+        "inputPinsUnchanged": true,
+        "log": {
+          "path": "node22-whole.log",
+          "bytes": 62480,
+          "sha256": "47b863d5622e5b66bead605bc3413d1e45218bb9ea7eecab3a33ec5872d83baf"
+        },
+        "rawSummary": [
+          "# tests 261",
+          "# pass 261",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 42501.630042"
+        ]
+      },
+      {
+        "runtime": "v20.19.5",
+        "command": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "--test",
+          "game/test/couch-shell.test.mjs",
+          "game/test/coop-host.test.mjs",
+          "game/test/couch-navigation.test.mjs",
+          "game/test/couch-departure.test.mjs",
+          "game/test/controller-navigation.test.mjs",
+          "game/test/mode-return-host.test.mjs",
+          "game/test/couch-markup.test.mjs"
+        ],
+        "startedAt": "2026-09-15T19:26:26.163001+00:00",
+        "seconds": 57.16918650013395,
+        "exitCode": 0,
+        "inputPinsUnchanged": true,
+        "log": {
+          "path": "node20-whole.log",
+          "bytes": 58498,
+          "sha256": "068835ddd66dd626089cd699b4d5e98706aca4322ad229707c91a33363461b96"
+        },
+        "rawSummary": [
+          "# tests 261",
+          "# pass 261",
+          "# fail 0",
+          "# cancelled 0",
+          "# skipped 0",
+          "# duration_ms 56819.746167"
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "path": "native/events.json",
+      "bytes": 48062,
+      "sha256": "05426f87face561f2cddcffbaff72849a3b5a348d48a026d7050e590e6a612d1"
+    },
+    {
+      "path": "native/versus-lobby.png",
+      "bytes": 75081,
+      "sha256": "be24ad6a997a8ea37d32e5bc6eb1f07be9a82fee4802dcb79238d45e5af82825"
+    },
+    {
+      "path": "native/team-lobby.png",
+      "bytes": 136726,
+      "sha256": "cbce649280ebfeb413ebf129c307b62500578b74d3a6a75dd62ae206186eb3d9"
+    },
+    {
+      "path": "native/team-paused-modes.png",
+      "bytes": 91366,
+      "sha256": "a593b8074d99767bded8a9b109088d4cca9a30d0279f51b541adaa7a6434d456"
+    }
+  ],
+  "static": [
+    {
+      "name": "format",
+      "args": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/ui/mode-choice.mjs",
+        "game/ui/mode-choice.css",
+        "game/couch/couch-shell.mjs",
+        "game/couch/index.html",
+        "game/couch/relay-rescue.html",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/coop-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "output": "Checking formatting...\nAll matched files use Prettier code style!\n"
+    },
+    {
+      "name": "lint",
+      "args": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/ui/mode-choice.mjs",
+        "game/couch/couch-shell.mjs",
+        "game/couch/relay-rescue.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/coop-host.test.mjs"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "name": "diff",
+      "args": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    }
+  ]
+}

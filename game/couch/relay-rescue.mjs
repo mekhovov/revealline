@@ -1,3 +1,4 @@
+import { mountModeChoices } from '../ui/mode-choice.mjs';
 import {
   createCoop,
   startCoop,
@@ -122,6 +123,12 @@ export function bootCoop() {
   let menuHint = '';
   const touchQuery = matchMedia('(any-pointer: coarse)');
   const tools = $('coop-tools');
+  const modeChoices = $('coop-mode-actions');
+  mountModeChoices({
+    root: modeChoices,
+    current: 'team',
+    actions: { solo: $('coop-solo'), versus: $('coop-versus') },
+  });
   let assignedSlots = [null, null];
   let input;
   const touchPads = [...document.querySelectorAll('.race-pad')];
@@ -142,6 +149,9 @@ export function bootCoop() {
     document.body.dataset.coopTouch = visible ? 'visible' : 'hidden';
   }
   function placeTools(paused) {
+    const modeDestination = $(paused ? 'coop-pause-modes' : 'coop-lobby-modes');
+    if (modeChoices.parentNode !== modeDestination) modeDestination.append(modeChoices);
+    modeChoices.hidden = running();
     const destination = $(paused ? 'coop-pause-tools' : 'coop-lobby-tools');
     if (tools.parentNode !== destination) destination.append(tools);
     tools.hidden = running();
