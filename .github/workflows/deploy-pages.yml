@@ -102,6 +102,9 @@ jobs:
           npm run format:native:check
           node --check authoring/motion-lab/app.js
 
+      - name: Verify Field Kit production ledger and compiled output
+        run: node scripts/produce-field-kit-theme.mjs --check
+
       - name: Verify immutable production sources first
         run: |
           # Production tests use .cache for temporary fixtures.
