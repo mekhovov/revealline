@@ -1,0 +1,57 @@
+{
+  "files": [
+    {
+      "path": ".cache/cross-mode/p01/v0571/library-placement-prepublication/downloads/revealline-complete-backup.json",
+      "bytes": 799,
+      "sha256": "3ca2d3463c403a61c25dcfd63651ac283304cf58e073bdb42c81a61ed520aae8",
+      "copied": false
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0571/library-placement-prepublication/review.json",
+      "bytes": 4047,
+      "sha256": "88c5bb8f87e416adcbc3287b534590675eb36517c3809e22afa6f0105e8f0054",
+      "copied": false
+    },
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/review.json",
+      "bytes": 7004,
+      "sha256": "f53a71f5e5b55c8063db4b61bd8b43b60a0529625fc8fb2ab73527157b386fb9",
+      "copied": false
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/PLAN.md",
+      "bytes": 18469,
+      "sha256": "300f07fcc5a55533cee2471da8bcaf80149e1a854468a46b20670e52e80daddb",
+      "copied": false
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/fixture-provenance.json",
+      "bytes": 5551,
+      "sha256": "59e7c1bd7b273bd3bb83017c916b0d8a85b778e88f1133e3ebbea962a37efd2e",
+      "copied": false
+    },
+    {
+      "path": "authoring/still-media/examples/dawn-signal/manifest.json",
+      "bytes": 2840,
+      "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a",
+      "copied": false
+    },
+    {
+      "path": "authoring/still-media/examples/dawn-signal/Dawn-Signal-originals.rlmedia",
+      "bytes": 458062,
+      "sha256": "2cf9fb37b29f36499802638353a0a5b53042f75806b7297638e41c4bc2ccc6d9",
+      "copied": false
+    },
+    {
+      "path": "authoring/still-media/examples/dawn-signal/Dawn-Signal-stories.rlstory",
+      "bytes": 730651,
+      "sha256": "607a0952eb200178b0fe56957aeef4e1cc60784402c060ea60376358ac4d72b6",
+      "copied": false
+    }
+  ],
+  "oldNativeBackupSession": null,
+  "nativeSavedAttemptBackupAvailable": false,
+  "earnedFamilyOutputsAvailable": false,
+  "offlineOwnerConfirmation": "No finalized native game-backup/attempt export from core; do not convert raw evidence into fixture. Earned family unlaunched pending root GO.",
+  "browserProfileAccessed": false
+}

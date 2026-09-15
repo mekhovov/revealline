@@ -1,0 +1,15 @@
+{
+  "pid": 40891,
+  "exitCode": 0,
+  "capacity": {
+    "at": "2026-09-15T13:13:37.541454+00:00",
+    "stage": "after-exit",
+    "freeBytes": 603660288,
+    "artifactReceivedBytes": 1136547026,
+    "artifactRemainingBytes": 0,
+    "projectedFreeAfterArtifact": 603660288,
+    "profileBytes": 29400567,
+    "profileLimit": 62914560,
+    "reserveBytes": 536870912
+  }
+}

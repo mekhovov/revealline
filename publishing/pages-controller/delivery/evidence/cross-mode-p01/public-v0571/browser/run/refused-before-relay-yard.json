@@ -1,0 +1,22 @@
+{
+  "time": "2026-09-15T13:50:37.515108+00:00",
+  "passed": true,
+  "observedHealth": {
+    "state": "ready",
+    "time": "2026-09-15T13:50:36.296Z",
+    "collectorPid": 1756,
+    "target": "B62D5C56BEAACFDB1A75113E92C60087",
+    "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/public-browser-preparation/run/profile",
+    "scope": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/",
+    "endpoint": "ws://127.0.0.1:51531/devtools/browser/54c3dd62-c275-4cb8-8806-3ef5bbccee59",
+    "eventSequence": 867,
+    "logBytes": 275821,
+    "capped": false,
+    "pageSession": "87A1441E72D3EE3C414E51AB2911E0C9",
+    "pageURL": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/couch/relay-rescue.html",
+    "timeOrigin": 1789480221465.5
+  },
+  "ageSeconds": 1.219108,
+  "collectorProcessAlive": true,
+  "meaning": "Confirms observer health at this boundary only; full interval also requires no stop/detach/cap or heartbeat gaps in final log."
+}

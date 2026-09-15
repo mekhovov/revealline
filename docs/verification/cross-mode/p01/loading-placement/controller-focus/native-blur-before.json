@@ -1,0 +1,12 @@
+{
+  "scope": "Controlled native-focus fixture correction against unchanged public controller runtime; not a browser reproduction",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/controller-settings.test.mjs"
+  ],
+  "exitCode": 1,
+  "seconds": 1.3469227920286357,
+  "logSha256": "b9dd2bf1774418476ab3e657326cf8ba2735fbf0361ba79eb380cf8c168f5cc5",
+  "at": "2026-09-15T14:16:29.755717+00:00"
+}

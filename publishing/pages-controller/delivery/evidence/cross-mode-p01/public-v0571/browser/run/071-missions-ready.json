@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:46:31.811631+00:00",
+  "finishedAt": "2026-09-15T13:46:32.137045+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "script": null,
+  "exitCode": 0,
+  "stdout": "- heading \"Choose your mission\" [level=2, ref=e1]\n- button \"Back\" [ref=e2]\n- region \"Choose a chapter\" [ref=e6]\n  - heading \"Choose a chapter\" [level=3, ref=e8]\n  - button \"Base game \u00b7 12 levels Choose chapter\" [ref=e10]\n  - button \"FPV Front \u00b7 Pressure Lines \u00b7 3 levels Current chapter\" [ref=e11]\n  - button \"FPV Front \u00b7 Frontier Lines \u00b7 3 levels Choose chapter\" [ref=e12]\n  - button \"Night Shift \u00b7 3 levels Choose chapter\" [ref=e13]\n  - button \"Living Threads \u00b7 3 levels Choose chapter\" [ref=e14]\n  - button \"Fieldcraft \u00b7 4 levels Choose chapter\" [ref=e15]\n  - button \"Homeward Skies \u00b7 3 levels Choose chapter\" [ref=e16]\n  - button \"Equipment Workshop \u00b7 3 levels Choose chapter\" [ref=e17]\n  - button \"Sentinel Relay \u00b7 1 level Choose chapter\" [ref=e18]\n- region \"Missions in this chapter\" [ref=e7]\n  - button \"Collection\" [ref=e9]\n  - button \"1. Orchard Crossing\" [ref=e19]\n  - button \"2. Courtyard Exits \u2014 locked\" [disabled, ref=e20]\n  - button \"3. Night Crossfire \u2014 locked\" [disabled, ref=e21]\n- button \"Flight setup\" [ref=e3]\n- button \"Back to flight\" [ref=e4]\n- button \"Deploy \u2192\" [ref=e5]\n",
+  "stderr": ""
+}

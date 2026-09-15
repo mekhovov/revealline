@@ -1,0 +1,21 @@
+# Subtest: the whole production collection has capacity for immutable review successors
+not ok 2815 - the whole production collection has capacity for immutable review successors
+  ---
+  duration_ms: 14671.53375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/presentation-production-history.test.mjs:169:1'
+  failureType: 'testCodeFailure'
+  error: 'JSON exceeds its byte budget.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    add (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:36:32)
+    copy (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:80:7)
+    copy (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:81:18)
+    copy (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:81:18)
+    copy (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:81:18)
+    boundedJSON (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/data-json.mjs:89:18)
+    own (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/presentation/model.mjs:103:10)
+    validateThemeBundle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/presentation/model.mjs:544:17)
+    reviseStudioTheme (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/presentation/studio-session.mjs:40:10)
+    retainProductionHistory (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/scripts/presentation-production-history.mjs:66:10)
+  ...

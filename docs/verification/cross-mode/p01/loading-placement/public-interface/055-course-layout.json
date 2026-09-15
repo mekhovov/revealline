@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:00:34.794626+00:00",
+  "finishedAt": "2026-09-15T14:00:35.212632+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/?course=first-flight&lesson=close-line&turn-policy=immediate",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "eval",
+    "JSON.stringify({viewport:{w:innerWidth,h:innerHeight},exit:Array.from(document.querySelectorAll(\"#first-flight-exit\")).map(e=>({rect:e.getBoundingClientRect().toJSON(),parents:Array.from((function*(x){while(x){yield x;x=x.parentElement}})(e)).map(x=>({id:x.id,tag:x.tagName,scrollTop:x.scrollTop,scrollHeight:x.scrollHeight,clientHeight:x.clientHeight,overflow:getComputedStyle(x).overflowY}))})),visibility:document.visibilityState})"
+  ],
+  "exitCode": 0,
+  "stdout": "\"{\\\"viewport\\\":{\\\"w\\\":1280,\\\"h\\\":800},\\\"exit\\\":[{\\\"rect\\\":{\\\"x\\\":644,\\\"y\\\":703.46875,\\\"width\\\":363,\\\"height\\\":44,\\\"top\\\":703.46875,\\\"right\\\":1007,\\\"bottom\\\":747.46875,\\\"left\\\":644},\\\"parents\\\":[{\\\"id\\\":\\\"first-flight-exit\\\",\\\"tag\\\":\\\"BUTTON\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":40,\\\"clientHeight\\\":40,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"DIV\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":44,\\\"clientHeight\\\":44,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"first-flight-panel\\\",\\\"tag\\\":\\\"SECTION\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":253,\\\"clientHeight\\\":253,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"SECTION\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":1018,\\\"clientHeight\\\":1018,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"DIV\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":1018,\\\"clientHeight\\\":1018,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"MAIN\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":1026,\\\"clientHeight\\\":1026,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"BODY\\\",\\\"scrollTop\\\":0,\\\"scrollHeight\\\":1078,\\\"clientHeight\\\":1078,\\\"overflow\\\":\\\"visible\\\"},{\\\"id\\\":\\\"\\\",\\\"tag\\\":\\\"HTML\\\",\\\"scrollTop\\\":282,\\\"scrollHeight\\\":1082,\\\"clientHeight\\\":800,\\\"overflow\\\":\\\"visible\\\"}]}],\\\"visibility\\\":\\\"visible\\\"}\"\n",
+  "stderr": ""
+}

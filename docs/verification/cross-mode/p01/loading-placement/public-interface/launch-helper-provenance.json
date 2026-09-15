@@ -1,0 +1,16 @@
+{
+  "original": {
+    "path": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/launch-family.py",
+    "sha256": "c5714c07809a4bddf3a653a495fe67497cbf58049c8cd46d6bf83690a7181d1f"
+  },
+  "derived": {
+    "path": ".cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/launch-interface-owned.py",
+    "sha256": "e9e0f537060d1cb7f7bb7b692f7614bd47cdb205fd8ada5abcf4e5391c56e43e"
+  },
+  "changes": [
+    "Require interface-only additive authorization",
+    "Disable background model downloads and shader disk cache as accepted core launcher",
+    "Bound own profile to100MiB and protect64MiB above mandatory512MiB free reserve every2seconds"
+  ],
+  "scope": "Cache-only launcher adaptation; original preparation/core identity unchanged."
+}

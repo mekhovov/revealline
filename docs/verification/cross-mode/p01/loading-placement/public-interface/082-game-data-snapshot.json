@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:02:21.235036+00:00",
+  "finishedAt": "2026-09-15T14:02:21.676186+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "snapshot",
+    "-i"
+  ],
+  "exitCode": 0,
+  "stdout": "- button \"Close settings\" [ref=e1]\n- heading \"Flight settings.\" [level=2, ref=e2]\n- tab \"Controls\" [ref=e3]\n- tab \"Audio\" [ref=e4]\n- tab \"Display & accessibility\" [ref=e5]\n- tab \"Game data\" [selected, ref=e6]\n- heading \"Game data\" [level=3, ref=e7]\n- button \"Stored profile recovery\" [ref=e8]\n- button \"Saves & recovery\" [ref=e9]\n- button \"Installed chapters\" [ref=e10]\n- region \"Download retention\" [ref=e11]\n  - button \"Keep downloads on this device\" [ref=e13]\n- button \"Prepare offline play\" [ref=e12]\n",
+  "stderr": ""
+}

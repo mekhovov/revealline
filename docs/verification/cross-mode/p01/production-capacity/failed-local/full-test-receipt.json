@@ -1,0 +1,23 @@
+{
+  "phase": "P01",
+  "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+  "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+  "command": "npm test",
+  "startedAt": "2026-09-15T14:39:01.812263+00:00",
+  "exitCode": 1,
+  "wallSeconds": 1400.943204500014,
+  "counts": {
+    "tests": 4218,
+    "pass": 4217,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "log": ".cache/cross-mode/p01/v0572/exact-source/npm-test.log",
+  "logBytes": 986300,
+  "logSha256": "45daa81ad8fb5b8b64ae68532f2e6e755b4573af34645321182865e905b38872",
+  "sourceIdentityBeforeAfterIdentical": true,
+  "sourceIdentityExitCode": 0,
+  "passed": false
+}

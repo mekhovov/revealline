@@ -1,0 +1,36 @@
+{
+  "status": "CORRECTION_PROPOSAL_REVIEWED",
+  "at": "2026-09-15T15:00:06.739660+00:00",
+  "failedSourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+  "pins": [
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/accounting-proposal/runtime-proposal.diff",
+      "bytes": 2024,
+      "sha256": "61caaaee6892bc844e655626ebf42a46983cd34d15f39a035667a0aa8e28b559"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/accounting-proposal/after/game/data-json.mjs",
+      "bytes": 4907,
+      "sha256": "5a995c7e748e1f69fe9b9791789336f199a9af54cee668de3e27f495e2e48b9c"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/accounting-proposal/after/game/test/data-json.test.mjs",
+      "bytes": 3449,
+      "sha256": "27a9ce140b136b41d53f7ada7fde588b5d25de938dc27db24a3a52b24eb4f10e"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/accounting-proposal/proposal.json",
+      "bytes": 5031,
+      "sha256": "ccb78900991ca93456858da3006499bbe9516333035da48399c4f51439bf974b"
+    }
+  ],
+  "findings": [
+    "Exact encoded replacement3,918,640 bytes and wrapper3,930,198 bytes fit unchanged4MiB; prior conservative charge4,218,628 exceeds it falsely.",
+    "Count escaped UTF8 string/key bytes and actual serialized delimiters/commas/colons; never invoke serialization on unvalidated containers.",
+    "All shape, depth/node/string/array, cycle/accessor/forbidden-key protections and final encoded check preserved.",
+    "Test families cover object/array exact boundaries, Unicode/escape/surrogate strings,4MiB limit, getter/toJSON nonexecution and malformed structure."
+  ],
+  "applicationAdjustment": "Use known4/5 ASCII byte lengths for null/booleans and JSON.stringify(number).length for finite numbers, avoiding per-scalar UTF8 allocation; same exact values.",
+  "sourceApplied": false,
+  "pending": "Old full suite terminal; actual source application/format and production-history plus affected boundary tests; new committed source qualification."
+}

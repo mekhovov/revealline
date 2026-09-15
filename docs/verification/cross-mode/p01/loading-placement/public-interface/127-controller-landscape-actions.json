@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-09-15T14:04:31.591631+00:00",
+  "finishedAt": "2026-09-15T14:04:31.998213+00:00",
+  "session": "p01-public-v0571-interface",
+  "visibilityBefore": {
+    "hasFocus": true,
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible"
+  },
+  "action": [
+    "eval",
+    "Array.from(document.querySelectorAll(\"[data-controller-settings-action],#controller-settings-root-status\")).filter(e=>e.getClientRects().length).map(e=>({id:e.id,action:e.dataset.controllerSettingsAction,text:e.textContent,rect:e.getBoundingClientRect().toJSON(),disabled:e.disabled}))"
+  ],
+  "exitCode": 0,
+  "stdout": "[\n  {\n    \"action\": \"apply\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1251.875,\n      \"height\": 44,\n      \"left\": 51.75,\n      \"right\": 268.53125,\n      \"top\": 1207.875,\n      \"width\": 216.78125,\n      \"x\": 51.75,\n      \"y\": 1207.875\n    },\n    \"text\": \"Apply controller settings\"\n  },\n  {\n    \"action\": \"cancel\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1251.875,\n      \"height\": 44,\n      \"left\": 276.53125,\n      \"right\": 401.25,\n      \"top\": 1207.875,\n      \"width\": 124.71875,\n      \"x\": 276.53125,\n      \"y\": 1207.875\n    },\n    \"text\": \"Cancel draft\"\n  },\n  {\n    \"action\": \"defaults\",\n    \"disabled\": false,\n    \"id\": \"\",\n    \"rect\": {\n      \"bottom\": 1251.875,\n      \"height\": 44,\n      \"left\": 409.25,\n      \"right\": 624.453125,\n      \"top\": 1207.875,\n      \"width\": 215.203125,\n      \"x\": 409.25,\n      \"y\": 1207.875\n    },\n    \"text\": \"Restore defaults in draft\"\n  },\n  {\n    \"id\": \"controller-settings-root-status\",\n    \"rect\": {\n      \"bottom\": 1304.875,\n      \"height\": 27,\n      \"left\": 51.75,\n      \"right\": 792.25,\n      \"top\": 1277.875,\n      \"width\": 740.5,\n      \"x\": 51.75,\n      \"y\": 1277.875\n    },\n    \"text\": \"Draft changed. Current controls are unchanged until Apply.\"\n  }\n]\n",
+  "stderr": ""
+}

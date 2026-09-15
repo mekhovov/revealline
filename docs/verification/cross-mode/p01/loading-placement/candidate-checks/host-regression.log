@@ -1,0 +1,576 @@
+TAP version 13
+# Subtest: source labels and unavailability follow the host, without suspending or verifying on refresh
+ok 1 - source labels and unavailability follow the host, without suspending or verifying on refresh
+  ---
+  duration_ms: 5.61175
+  ...
+# Subtest: one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+ok 2 - one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+  ---
+  duration_ms: 2.767291
+  ...
+# Subtest: current replay-only export names its source and retains the matching-campaign warning
+ok 3 - current replay-only export names its source and retains the matching-campaign warning
+  ---
+  duration_ms: 1.798083
+  ...
+# Subtest: button cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 4 - button cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 1.340167
+  ...
+# Subtest: Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 5 - Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 1.146125
+  ...
+# Subtest: controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 6 - controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 0.866667
+  ...
+# Subtest: close aborts and suppresses a pending export without restoring focus
+ok 7 - close aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 2.255792
+  ...
+# Subtest: pagehide aborts and suppresses a pending export without restoring focus
+ok 8 - pagehide aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 0.98925
+  ...
+# Subtest: a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+ok 9 - a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+  ---
+  duration_ms: 1.265417
+  ...
+# Subtest: a cancelled operation cannot clear a newer operation or overwrite its status
+ok 10 - a cancelled operation cannot clear a newer operation or overwrite its status
+  ---
+  duration_ms: 1.473334
+  ...
+# Subtest: adapter failure retains the already verified copy and reports the real error
+ok 11 - adapter failure retains the already verified copy and reports the real error
+  ---
+  duration_ms: 2.269375
+  ...
+# Subtest: Stop waiting keeps a requested download protected until the platform returns
+ok 12 - Stop waiting keeps a requested download protected until the platform returns
+  ---
+  duration_ms: 1.043334
+  ...
+# Subtest: verified attempt download offers Stop waiting and reports the actual platform result afterward
+ok 13 - verified attempt download offers Stop waiting and reports the actual platform result afterward
+  ---
+  duration_ms: 1.080875
+  ...
+# Subtest: export-backup awaits the external backup guard before preparation or download
+ok 14 - export-backup awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 0.830083
+  ...
+# Subtest: export-packs awaits the external backup guard before preparation or download
+ok 15 - export-packs awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 1.64625
+  ...
+# Subtest: import-save awaits the external backup guard before preparation or download
+ok 16 - import-save awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 1.032667
+  ...
+# Subtest: a cancelled Library file read cannot install or unlock a newer read
+ok 17 - a cancelled Library file read cannot install or unlock a newer read
+  ---
+  duration_ms: 1.367333
+  ...
+# Subtest: rail places the exact status and escape before a held read; navigation restores their original nodes
+ok 18 - rail places the exact status and escape before a held read; navigation restores their original nodes
+  ---
+  duration_ms: 2.005708
+  ...
+# Subtest: older cancelled read cannot replace a newer Packs rail or release its controls
+ok 19 - older cancelled read cannot replace a newer Packs rail or release its controls
+  ---
+  duration_ms: 1.261916
+  ...
+# Subtest: attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+ok 20 - attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+  ---
+  duration_ms: 0.898292
+  ...
+# Subtest: non-abortable owner reopens with its exact detached status and no stale closed rail
+ok 21 - non-abortable owner reopens with its exact detached status and no stale closed rail
+  ---
+  duration_ms: 1.447375
+  ...
+# Subtest: backup navigation same-section joins cancellation then clears only the invalidated backup host
+ok 22 - backup navigation same-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 49.22
+  ...
+# Subtest: backup navigation other-section joins cancellation then clears only the invalidated backup host
+ok 23 - backup navigation other-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 23.151417
+  ...
+# Subtest: backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+ok 24 - backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 26.309167
+  ...
+# Subtest: paused external flight exports exact v2 descriptor/session; import and Undo adopt each complete native asset pair
+    # Subtest: actual source install and current paused JSON export
+    ok 1 - actual source install and current paused JSON export
+      ---
+      duration_ms: 13935.917167
+      ...
+    # Subtest: new target profile with retained originals restores and explicitly Undoes the index
+    ok 2 - new target profile with retained originals restores and explicitly Undoes the index
+      ---
+      duration_ms: 5567.480708
+      ...
+    # Subtest: missing original metadata refuses before any target profile or asset write
+    ok 3 - missing original metadata refuses before any target profile or asset write
+      ---
+      duration_ms: 488.243583
+      ...
+    # Subtest: native asset transaction refusal keeps the old target and does not report a restore
+    ok 4 - native asset transaction refusal keeps the old target and does not report a restore
+      ---
+      duration_ms: 1916.578667
+      ...
+    # Subtest: an original lost after durable commit reports committed-but-not-ready without inventing a rollback
+    ok 5 - an original lost after durable commit reports committed-but-not-ready without inventing a rollback
+      ---
+      duration_ms: 2425.562625
+      ...
+    1..5
+ok 25 - paused external flight exports exact v2 descriptor/session; import and Undo adopt each complete native asset pair
+  ---
+  duration_ms: 24335.246209
+  ...
+# Subtest: closing during descriptor hashing cancels export and a changed flight cannot publish its stale result
+ok 26 - closing during descriptor hashing cancels export and a changed flight cannot publish its stale result
+  ---
+  duration_ms: 11505.173167
+  ...
+# Subtest: actual startup recovers own-v2 backup publication before catalog adoption
+ok 27 - actual startup recovers own-v2 backup publication before catalog adoption
+  ---
+  duration_ms: 276.698875
+  ...
+# Subtest: actual startup preserves and refuses mixed backup publication before catalog adoption
+ok 28 - actual startup preserves and refuses mixed backup publication before catalog adoption
+  ---
+  duration_ms: 255.205041
+  ...
+# Subtest: actual startup preserves and refuses legacy-v1-indexed backup publication before catalog adoption
+ok 29 - actual startup preserves and refuses legacy-v1-indexed backup publication before catalog adoption
+  ---
+  duration_ms: 256.00025
+  ...
+# Subtest: Collection shows pagination only when 0 pictures need a second page
+ok 30 - Collection shows pagination only when 0 pictures need a second page
+  ---
+  duration_ms: 3.6285
+  ...
+# Subtest: Collection shows pagination only when 12 pictures need a second page
+ok 31 - Collection shows pagination only when 12 pictures need a second page
+  ---
+  duration_ms: 23.387958
+  ...
+# Subtest: Collection shows pagination only when 13 pictures need a second page
+ok 32 - Collection shows pagination only when 13 pictures need a second page
+  ---
+  duration_ms: 13.577083
+  ...
+# Subtest: Filtering to one page preserves unrelated focus
+ok 33 - Filtering to one page preserves unrelated focus
+  ---
+  duration_ms: 44.2415
+  ...
+# Subtest: Filtering to one page restores removed pager focus to search
+ok 34 - Filtering to one page restores removed pager focus to search
+  ---
+  duration_ms: 39.625084
+  ...
+# Subtest: wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+ok 35 - wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+  ---
+  duration_ms: 2.955125
+  ...
+# Subtest: Back restores the same stable picture on its page and preserves the original filter
+ok 36 - Back restores the same stable picture on its page and preserves the original filter
+  ---
+  duration_ms: 43.507208
+  ...
+# Subtest: native cancel follows the same picture return path and does not clear collection context
+ok 37 - native cancel follows the same picture return path and does not clear collection context
+  ---
+  duration_ms: 40.461209
+  ...
+# Subtest: a reordered collection resolves the stable picture key rather than the old card index
+ok 38 - a reordered collection resolves the stable picture key rather than the old card index
+  ---
+  duration_ms: 32.925334
+  ...
+# Subtest: a removed picture clamps the page and focuses a remaining enabled card
+ok 39 - a removed picture clamps the page and focuses a remaining enabled card
+  ---
+  duration_ms: 31.8365
+  ...
+# Subtest: a missing pack or empty filtered collection falls back to the enabled search field
+ok 40 - a missing pack or empty filtered collection falls back to the enabled search field
+  ---
+  duration_ms: 32.942792
+  ...
+# Subtest: the underlying Collection cannot replace its open child picture
+ok 41 - the underlying Collection cannot replace its open child picture
+  ---
+  duration_ms: 0.815583
+  ...
+# Subtest: Replay leaves the collection closed and preserves the host mission focus
+ok 42 - Replay leaves the collection closed and preserves the host mission focus
+  ---
+  duration_ms: 30.746667
+  ...
+# Subtest: late decoding and a queued old close cannot steal focus from a new picture
+ok 43 - late decoding and a queued old close cannot steal focus from a new picture
+  ---
+  duration_ms: 1.213208
+  ...
+# Subtest: a new picture hides the previous artwork and blocks actions until its own decode completes
+ok 44 - a new picture hides the previous artwork and blocks actions until its own decode completes
+  ---
+  duration_ms: 0.854708
+  ...
+# Subtest: an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+ok 45 - an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+  ---
+  duration_ms: 0.7335
+  ...
+# Subtest: an older rejected decode cannot replace the selected ready picture with an error
+ok 46 - an older rejected decode cannot replace the selected ready picture with an error
+  ---
+  duration_ms: 0.714792
+  ...
+# Subtest: a failed selected decode keeps stale pixels hidden and can be closed and retried
+ok 47 - a failed selected decode keeps stale pixels hidden and can be closed and retried
+  ---
+  duration_ms: 0.988833
+  ...
+# Subtest: a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+ok 48 - a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+  ---
+  duration_ms: 0.9735
+  ...
+# Subtest: a failed illustration reload cannot start a procedural celebration over the ready authored picture
+ok 49 - a failed illustration reload cannot start a procedural celebration over the ready authored picture
+  ---
+  duration_ms: 0.422375
+  ...
+# Subtest: busy library import still prevents cancel until its guarded task finishes
+not ok 50 - busy library import still prevents cancel until its guarded task finishes
+  ---
+  duration_ms: 1.903125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:638:1'
+  failureType: 'testCodeFailure'
+  error: 'finish is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:649:3)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+not ok 51 - profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+  ---
+  duration_ms: 0.56625
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:655:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'children')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Element.after (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/helpers/couch-dom.mjs:179:38)
+    mount (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:89:17)
+    Object.present (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:94:7)
+    task (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:575:18)
+    importSave (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:690:38)
+    $.onclick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:795:36)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:690:31)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+not ok 52 - a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+  ---
+  duration_ms: 0.395792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:705:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'children')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    Element.after (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/helpers/couch-dom.mjs:179:38)
+    mount (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:89:17)
+    Object.present (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:94:7)
+    task (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:575:18)
+    importSave (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:690:38)
+    $.onclick (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/ui/library-panel.mjs:795:36)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/game/test/gallery-focus.test.mjs:732:31)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: a late seal updates an existing focused collection card without repaint or replacement
+ok 53 - a late seal updates an existing focused collection card without repaint or replacement
+  ---
+  duration_ms: 24.429375
+  ...
+# Subtest: an already open picture receives friendly seal details without disturbing its focus or artwork
+ok 54 - an already open picture receives friendly seal details without disturbing its focus or artwork
+  ---
+  duration_ms: 1.563708
+  ...
+# Subtest: late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+ok 55 - late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+  ---
+  duration_ms: 1.4105
+  ...
+# Subtest: both difficulty records share a card while mode changes preserve focus and Back returns to that card
+ok 56 - both difficulty records share a card while mode changes preserve focus and Back returns to that card
+  ---
+  duration_ms: 27.70425
+  ...
+# Subtest: picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+ok 57 - picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+  ---
+  duration_ms: 1.92725
+  ...
+# Subtest: picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+ok 58 - picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+  ---
+  duration_ms: 2.111041
+  ...
+# Subtest: rapid difficulty switches retain the latest image generation and keep stale actions blocked
+ok 59 - rapid difficulty switches retain the latest image generation and keep stale actions blocked
+  ---
+  duration_ms: 1.6715
+  ...
+# Subtest: score and saved-attempt mode labels use exact execution keys and searchable separate boards
+ok 60 - score and saved-attempt mode labels use exact execution keys and searchable separate boards
+  ---
+  duration_ms: 14.303125
+  ...
+# Subtest: a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+ok 61 - a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+  ---
+  duration_ms: 6.707667
+  ...
+# Subtest: an open picture cannot replay a pack removed after the picture was resolved
+ok 62 - an open picture cannot replay a pack removed after the picture was resolved
+  ---
+  duration_ms: 0.623167
+  ...
+# Subtest: a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+ok 63 - a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+  ---
+  duration_ms: 0.472542
+  ...
+# Subtest: Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+ok 64 - Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+  ---
+  duration_ms: 183.345625
+  ...
+# Subtest: Collection retains an earned original after its pack is removed without offering replay or invented animation
+ok 65 - Collection retains an earned original after its pack is removed without offering replay or invented animation
+  ---
+  duration_ms: 104.175167
+  ...
+# Subtest: an unavailable original never silently falls back to current authored artwork
+ok 66 - an unavailable original never silently falls back to current authored artwork
+  ---
+  duration_ms: 48.753375
+  ...
+# Subtest: closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+ok 67 - closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+  ---
+  duration_ms: 109.527833
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after navigation
+ok 68 - Back keeps its scope but late metadata cannot steal focus after navigation
+  ---
+  duration_ms: 82.3065
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+ok 69 - Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+  ---
+  duration_ms: 110.48175
+  ...
+# Subtest: Collection labels the retained score run separately from a later best medal without rewriting either record
+ok 70 - Collection labels the retained score run separately from a later best medal without rewriting either record
+  ---
+  duration_ms: 0.842041
+  ...
+# Error: Test "busy library import still prevents cancel until its guarded task finishes" at game/test/gallery-focus.test.mjs:638:1 generated asynchronous activity after the test ended. This activity created the error "TypeError: Cannot read properties of null (reading 'children')" and would have caused the test to fail, but instead triggered an unhandledRejection event.
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 71 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 2.50975
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 72 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 0.223375
+  ...
+# Subtest: actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+ok 73 - actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 637.72775
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 74 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 447.346208
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 75 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 836.172791
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 76 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 928.898209
+  ...
+# Subtest: Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+ok 77 - Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+  ---
+  duration_ms: 511.152667
+  ...
+# Subtest: Collection disclosure ends reading on collapse without stealing later focus
+ok 78 - Collection disclosure ends reading on collapse without stealing later focus
+  ---
+  duration_ms: 480.617917
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 79 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 1068.298084
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 80 - title Settings returns to its title opener after controller Back or native Escape
+  ---
+  duration_ms: 453.713958
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 81 - opening Settings during a flight keeps its paused-flight return instead of opening the title
+  ---
+  duration_ms: 706.509958
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 82 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+  ---
+  duration_ms: 594.230458
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 83 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+  ---
+  duration_ms: 683.070625
+  ...
+# Subtest: title picture controller returns through Collection to its exact title opener
+ok 84 - title picture controller returns through Collection to its exact title opener
+  ---
+  duration_ms: 320.582875
+  ...
+# Subtest: title picture escape returns through Collection to its exact title opener
+ok 85 - title picture escape returns through Collection to its exact title opener
+  ---
+  duration_ms: 287.474375
+  ...
+# Subtest: title picture close button returns through Collection to its exact title opener
+ok 86 - title picture close button returns through Collection to its exact title opener
+  ---
+  duration_ms: 291.190916
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 87 - picture Replay deliberately leaves title and Collection for the selected ready briefing
+  ---
+  duration_ms: 355.441458
+  ...
+# Subtest: Collection Choose appearance deliberately leaves title for Missions setup
+ok 88 - Collection Choose appearance deliberately leaves title for Missions setup
+  ---
+  duration_ms: 322.598542
+  ...
+# Subtest: Collection resets its return label from title to a direct paused-flight visit
+ok 89 - Collection resets its return label from title to a direct paused-flight visit
+  ---
+  duration_ms: 959.707
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 90 - programmatic Collection after a real win does not refocus a hidden opener
+  ---
+  duration_ms: 9503.897292
+  ...
+# Subtest: discovery includes suspended-only releases, deduplicates profiles and excludes recovery markers
+ok 91 - discovery includes suspended-only releases, deduplicates profiles and excludes recovery markers
+  ---
+  duration_ms: 6.562542
+  ...
+# Subtest: candidate bound counts distinct editions across both namespaces
+ok 92 - candidate bound counts distinct editions across both namespaces
+  ---
+  duration_ms: 0.678667
+  ...
+# Subtest: immediate: an unfinished first attempt transfers without ever writing a source profile
+ok 93 - immediate: an unfinished first attempt transfers without ever writing a source profile
+  ---
+  duration_ms: 30.313334
+  ...
+# Subtest: grid-center: an unfinished first attempt transfers without ever writing a source profile
+ok 94 - grid-center: an unfinished first attempt transfers without ever writing a source profile
+  ---
+  duration_ms: 14.191041
+  ...
+# Subtest: null profile never masks corrupt/unreadable profiles, missing sessions or malformed replay data
+ok 95 - null profile never masks corrupt/unreadable profiles, missing sessions or malformed replay data
+  ---
+  duration_ms: 7.936708
+  ...
+# Subtest: suspended-only sources retain writer and recovery exclusion without stealing or repairing
+ok 96 - suspended-only sources retain writer and recovery exclusion without stealing or repairing
+  ---
+  duration_ms: 11.414709
+  ...
+# Subtest: shipped R4 suspended-only first capture retains its exact edition, original art and both turn policies
+ok 97 - shipped R4 suspended-only first capture retains its exact edition, original art and both turn policies
+  ---
+  duration_ms: 4191.914583
+  ...
+# Subtest: included Gentle campaign expansion is forwarded for both absent and present profiles
+ok 98 - included Gentle campaign expansion is forwarded for both absent and present profiles
+  ---
+  duration_ms: 28.684084
+  ...
+# Subtest: real transfer panel reviews empty-profile meaning, rechecks source and applies only the fresh journaled snapshot
+ok 99 - real transfer panel reviews empty-profile meaning, rechecks source and applies only the fresh journaled snapshot
+  ---
+  duration_ms: 17.295125
+  ...
+# Subtest: a cancelled transfer read cannot hide the next review controls or publish its preview
+ok 100 - a cancelled transfer read cannot hide the next review controls or publish its preview
+  ---
+  duration_ms: 7.527792
+  ...
+1..100
+# tests 105
+# suites 0
+# pass 102
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84964.07975

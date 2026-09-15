@@ -1,0 +1,51 @@
+{
+  "scope": "Actual applied r3 candidate source browser trial; not ordinary/frozen/public qualification.",
+  "freshProfile": true,
+  "files": [
+    {
+      "path": "agent-browser.json",
+      "bytes": 3,
+      "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+    },
+    {
+      "path": "capture.py",
+      "bytes": 1453,
+      "sha256": "39c2cb33766cd6ae3d4d96161b557be19c0bedd41aaedc124833a7d17252ce6f"
+    },
+    {
+      "path": "close-owned-browser.mjs",
+      "bytes": 1414,
+      "sha256": "6b8bd16d4cb97141f1bd0505b0561f74aaf2707237cfd91eb43a2edf998aa9f6"
+    },
+    {
+      "path": "config.json",
+      "bytes": 1914,
+      "sha256": "1cfcd63f746a596daa4b01857b8625def4359ebde325045d3e4132546a56d686"
+    },
+    {
+      "path": "control.py",
+      "bytes": 1360,
+      "sha256": "708784f11e7f42636e17c644d07d99b6f6a5f8e02ed4deae25c9079767376194"
+    },
+    {
+      "path": "launch-owned-chrome.py",
+      "bytes": 3175,
+      "sha256": "394bb92a74e9dc247d35b81da521ee940b48d380795e754b382765bd6c125262"
+    },
+    {
+      "path": "measure.js",
+      "bytes": 3051,
+      "sha256": "704b32c00d158f58dd4a77bff0e454f50f5fa555710f9d6c94ec65a36976080b"
+    },
+    {
+      "path": "observe.mjs",
+      "bytes": 3942,
+      "sha256": "dd8d1580aa63712c771108f38a92e70629f324a5d12521deb637e488dcc24fee"
+    },
+    {
+      "path": "serve-current-source.mjs",
+      "bytes": 1314,
+      "sha256": "1fe898fa4fe0b237b85c041cfd9fda991955b739adcb5de366d0895ac183dbb1"
+    }
+  ]
+}

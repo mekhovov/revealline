@@ -1,0 +1,57 @@
+{
+  "at": "2026-09-15T13:17:24.036926+00:00",
+  "processes": [
+    {
+      "pid": 37586,
+      "alive": false
+    },
+    {
+      "pid": 40891,
+      "alive": false
+    },
+    {
+      "pid": 42143,
+      "alive": false
+    }
+  ],
+  "ports": [
+    {
+      "port": 50570,
+      "connectResult": 61
+    },
+    {
+      "port": 50613,
+      "connectResult": 61
+    }
+  ],
+  "libraryHtmlFragment": {
+    "byteIdenticalB7And4c": true,
+    "bytes": 5618,
+    "sha256": "c98a96833660d22bb4dee3e2d30ae3973106482e2468abccb5ee6dba5594a062"
+  },
+  "capacity": {
+    "minimumProjectedFreeAfterArtifactProfileHeadroomAnd16MiBAllowance": 541360116,
+    "requiredReserve": 536870912,
+    "maximumObservedRetryProfileBytes": 29411470,
+    "final": {
+      "at": "2026-09-15T13:13:37.541454+00:00",
+      "stage": "after-exit",
+      "freeBytes": 603660288,
+      "artifactReceivedBytes": 1136547026,
+      "artifactRemainingBytes": 0,
+      "projectedFreeAfterArtifact": 603660288,
+      "profileBytes": 29400567,
+      "profileLimit": 62914560,
+      "reserveBytes": 536870912
+    }
+  },
+  "nativeDownloads": {
+    "completed": 2,
+    "retainedFinalFile": {
+      "path": "downloads/revealline-complete-backup.json",
+      "bytes": 799,
+      "sha256": "3ca2d3463c403a61c25dcfd63651ac283304cf58e073bdb42c81a61ed520aae8"
+    },
+    "limitation": "Both native downloads completed with 799 bytes and the same destination. The second browser download replaced the destination, so only its original bytes remain; the first completion is preserved by the original CDP event log."
+  }
+}

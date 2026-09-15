@@ -1,0 +1,46 @@
+{
+  "active": "export-backup",
+  "hits": [
+    {
+      "id": "export-backup",
+      "inside": true,
+      "x": 52.75,
+      "y": 289.421875
+    },
+    {
+      "id": "export-backup",
+      "inside": true,
+      "x": 287.203125,
+      "y": 289.421875
+    },
+    {
+      "id": "export-backup",
+      "inside": true,
+      "x": 52.75,
+      "y": 334.421875
+    },
+    {
+      "id": "export-backup",
+      "inside": true,
+      "x": 287.203125,
+      "y": 334.421875
+    },
+    {
+      "id": "export-backup",
+      "inside": true,
+      "x": 169.9765625,
+      "y": 311.921875
+    }
+  ],
+  "rect": {
+    "bottom": 335.421875,
+    "height": 47,
+    "left": 51.75,
+    "right": 288.203125,
+    "top": 288.421875,
+    "width": 236.453125,
+    "x": 51.75,
+    "y": 288.421875
+  },
+  "scrollTop": 431
+}

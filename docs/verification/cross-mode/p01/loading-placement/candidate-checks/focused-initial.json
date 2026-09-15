@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/attempt-export-panel.test.mjs",
+    "game/test/backup-set-host.test.mjs",
+    "game/test/profile-transfer.test.mjs"
+  ],
+  "exit": 0,
+  "seconds": 5.098304033279419,
+  "bytes": 11997,
+  "sha256": "d2e9600a78d5787c11a71468b8d1d9ff476e28e99d70ff43816b4f846a97b1e7"
+}

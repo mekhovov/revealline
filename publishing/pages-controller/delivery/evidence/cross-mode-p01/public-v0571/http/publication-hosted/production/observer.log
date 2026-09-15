@@ -1,0 +1,6 @@
+{"observedAt": "20260915T133631Z", "jobId": 104403830677, "name": "assemble", "status": "in_progress", "conclusion": null, "activeStep": "Validate frozen selector and admitted archives", "failedSteps": []}
+{"observedAt": "20260915T133731Z", "jobId": 104403830677, "name": "assemble", "status": "in_progress", "conclusion": null, "activeStep": "Upload verified Pages artifact", "failedSteps": []}
+{"observedAt": "20260915T133831Z", "jobId": 104403830677, "name": "assemble", "status": "completed", "conclusion": "success", "activeStep": null, "failedSteps": []}
+{"observedAt": "20260915T133831Z", "jobId": 104404446153, "name": "deploy", "status": "in_progress", "conclusion": null, "activeStep": "Check out the same publishing selector before deployment", "failedSteps": []}
+{"observedAt": "20260915T133931Z", "jobId": 104404446153, "name": "deploy", "status": "completed", "conclusion": "success", "activeStep": null, "failedSteps": []}
+{"completed": true, "runId": 34976023839, "controllerRevision": "9ef75091762cfb9c84b02475ef79913a4476c651", "conclusion": "success", "scope": "Main v0.57.1 production publication. Public body/browser qualification remains separate."}

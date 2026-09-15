@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-15T13:55:26.870Z",
+  "action": "Page.bringToFront",
+  "target": "42A5C65D96BC4675CC1BDCBEE6C2FB9A",
+  "profile": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/public-browser-preparation/native-extension/families/interface/run/profile",
+  "state": {
+    "url": "https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/",
+    "visibilityState": "visible",
+    "hasFocus": true
+  }
+}

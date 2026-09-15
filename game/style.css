@@ -1828,6 +1828,39 @@ dialog textarea {
 .appearance-reward .reward-detail {
   opacity: 0.8;
 }
+/* The active Library owner keeps its original status and escape controls here. */
+#library-operation-rail {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 3;
+  display: grid;
+  gap: var(--fk-space-2, 8px);
+  margin-block: var(--fk-space-3, 12px);
+  padding: var(--fk-space-3, 12px);
+  border: var(--fk-border-width, 1px) solid var(--fk-line, #425563);
+  background: var(--fk-panel, #101923);
+}
+#library-operation-rail[hidden] {
+  display: none;
+}
+#library-operation-message {
+  min-inline-size: 0;
+  max-block-size: 40dvh;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+}
+#library-operation-message > .operation-status {
+  margin: 0;
+}
+#library-operation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fk-space-2, 8px);
+}
+#library-operation-controls > button {
+  min-block-size: max(44px, var(--fk-target-size, 44px));
+  margin: 0;
+}
 #save-status,
 #pack-status {
   overflow-wrap: anywhere;

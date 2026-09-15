@@ -1,0 +1,14 @@
+{
+  "at": "2026-09-15T14:05:43.596015+00:00",
+  "ownedPids": [
+    6209,
+    6757
+  ],
+  "psExitCode": 1,
+  "psOutput": "",
+  "ownedPort": 51866,
+  "connectEx": 61,
+  "browserAndObserverClosed": true,
+  "sessionCloseCommand": "explicit interface control-family.py close",
+  "noOtherSessionsTouched": true
+}
