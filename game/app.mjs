@@ -2498,7 +2498,7 @@ try {
   function snapshotCurrentBackup() {
     const savedAt = new Date().toISOString();
     return externalBackup.snapshot(() => {
-      if (contentSwitchBusy || sessionBusy || backupBusy)
+      if (sessionBusy || backupBusy || (contentSwitchBusy && !$('shell-home').open))
         throw new Error('Finish the pending content or save operation before exporting.');
       if (started && !paused && !['won', 'lost'].includes(run.status))
         throw new Error('Pause the current flight before preparing game data.');
@@ -2983,7 +2983,7 @@ try {
     unavailable: () => {
       if (practiceSession || courseEntry || courseEntryHold)
         return 'Stored profile recovery is available from ordinary solo Settings.';
-      if (contentSwitchBusy || sessionBusy || backupBusy)
+      if (sessionBusy || backupBusy || (contentSwitchBusy && !$('shell-home').open))
         return 'Finish the pending content or save operation before opening recovery.';
       if (
         [...document.querySelectorAll('dialog[open]')].some(
