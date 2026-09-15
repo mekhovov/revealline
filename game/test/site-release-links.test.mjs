@@ -2,6 +2,22 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { archivedPlayHref } from '../../site/release-links.mjs';
 import { publishedReleaseIndex } from '../../scripts/build-pages.mjs';
+import { releaseExplorerHref } from '../release-explorer.mjs';
+
+test('release explorer resolves to the shared catalog from source and frozen game URLs', () => {
+  assert.equal(
+    releaseExplorerHref('https://mekhovov.github.io/revealline/game/?pack=fpv'),
+    'https://mekhovov.github.io/revealline/releases/',
+  );
+  assert.equal(
+    releaseExplorerHref('https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/'),
+    'https://mekhovov.github.io/revealline/releases/',
+  );
+  assert.equal(
+    releaseExplorerHref('http://127.0.0.1:8768/preview/releases/v0.51.0/site/game/index.html'),
+    'http://127.0.0.1:8768/preview/releases/',
+  );
+});
 
 test('About accepts actual local and canonical archived play records without double-prefixing', () => {
   const versions = ['v0.1.0', 'v0.28.0'];
