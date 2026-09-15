@@ -11,6 +11,7 @@ export function fitFlightLayout({
   taskHeight = 0,
   warnings = false,
   steeringWidth = 0,
+  actionWidth = 0,
 }) {
   if (![width, height, aspect].every((value) => Number.isFinite(value) && value > 0)) return null;
   const fit = (x, y, w, h) => {
@@ -39,8 +40,8 @@ export function fitFlightLayout({
   const railWidth = largeText ? 132 : 112;
   // Fixed D-pad buttons need their own column; floating steering may share
   // unused corners. The steering hand is always opposite the telemetry rail.
-  const steeringLeft = railSide === 'right' ? steeringWidth : 0;
-  const availableWidth = Math.max(0, width - steeringWidth);
+  const steeringLeft = railSide === 'right' ? steeringWidth : actionWidth;
+  const availableWidth = Math.max(0, width - steeringWidth - actionWidth);
   const strip = fit(steeringLeft, stripHeight, availableWidth, height - stripHeight);
   const rail = fit(
     steeringLeft + (railSide === 'right' ? 0 : railWidth + 8),
@@ -143,6 +144,8 @@ export function attachFlightLayout({
         : 0,
       portraitControlHeight,
       warnings,
+      actionWidth:
+        body.dataset.screenControls === 'shown' && body.dataset.flightActions === 'true' ? 112 : 0,
       steeringWidth:
         body.dataset.screenControls === 'shown' && body.dataset.touchMode === 'dpad'
           ? (body.dataset.touchSize === 'large' ? 192 : 156) + 24
@@ -196,6 +199,7 @@ export function attachFlightLayout({
       'data-touch-size',
       'data-touch-mode',
       'data-flight-warnings',
+      'data-flight-actions',
     ],
   });
   if (courseTask)

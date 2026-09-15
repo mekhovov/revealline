@@ -1356,6 +1356,13 @@ try {
       scope: controllerScope(),
       running: run?.status === 'running',
     });
+    const flightActions = String(
+      ['action-button', 'pickup-button', 'boost-button', 'hangar-button'].some(
+        (id) => !$(id).hidden,
+      ),
+    );
+    if (document.body.dataset.flightActions !== flightActions)
+      document.body.dataset.flightActions = flightActions;
     const next = visible ? 'shown' : 'hidden';
     if (document.body.dataset.screenControls !== next) document.body.dataset.screenControls = next;
   }

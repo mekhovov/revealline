@@ -795,3 +795,21 @@
 :root body.game-shell[data-text-size='large'] .pause-summary {
   font-size: 20px;
 }
+
+/* Compact action labels remain readable beside the field. The glyph is
+   redundant with the label and otherwise splits short words on large text. */
+:root
+  body.game-shell[data-flight-layout]
+  .play-controls
+  .ability-buttons
+  .button[data-presentation-icon]::before {
+  display: none;
+}
+:root body.game-shell[data-flight-layout] .play-controls .ability-buttons {
+  max-width: 88px;
+  width: 88px;
+}
+:root body.game-shell[data-flight-layout] .play-controls .ability-buttons .button {
+  overflow-wrap: normal;
+  white-space: normal;
+}

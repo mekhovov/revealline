@@ -448,3 +448,26 @@ test('warning phase changes do not resize the board; authored layout changes do'
   );
   detach();
 });
+
+test('manual actions and a large D-pad each own space outside the board', () => {
+  for (const railSide of ['left', 'right']) {
+    for (const height of [248, 322, 432]) {
+      const args = {
+        width: 948,
+        height,
+        aspect: 4 / 3,
+        largeText: true,
+        steeringWidth: 216,
+        actionWidth: 112,
+        railSide,
+      };
+      const { board, mode, railWidth } = fitFlightLayout(args);
+      const rail = mode === 'rail' ? railWidth + 8 : 0;
+      assert.ok(board.x >= (railSide === 'right' ? 216 : 112 + rail) - 1e-8);
+      assert.ok(
+        board.x + board.width <= args.width - (railSide === 'right' ? 112 + rail : 216) + 1e-8,
+      );
+      if (height === 322) assert.equal(board.height, 322);
+    }
+  }
+});
