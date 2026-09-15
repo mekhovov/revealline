@@ -2,6 +2,7 @@
  * language variants fall back to English without changing game state or saves. */
 export const FIELD_KIT_ENGLISH = Object.freeze({
   'navigation.continue': 'Continue',
+  'navigation.start': 'Start',
   'navigation.deploy': 'Deploy',
   'navigation.missions': 'Missions',
   'navigation.collection': 'Collection',

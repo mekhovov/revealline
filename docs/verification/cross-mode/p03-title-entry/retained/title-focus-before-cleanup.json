@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "game/test/title-entry-host.test.mjs"
+  ],
+  "exitCode": 1,
+  "seconds": 22.78029516711831,
+  "log": ".cache/p03b-title-entry/title-focus-before-cleanup.log",
+  "bytes": 10069,
+  "sha256": "524c78970f2d713d1e8ed6a02646a92cd2cb5ad0049c7c7571f67b4baa46b3e0"
+}

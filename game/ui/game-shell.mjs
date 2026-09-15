@@ -11,6 +11,10 @@ export function attachGameShell({
   initialFocus = true,
   training = false,
   onFeatured,
+  onTitleStart,
+  onTitleContinue,
+  onTitleCancel,
+  titleDestination,
   onWorlds,
   getTopDialog,
   focusMissions,
@@ -33,6 +37,7 @@ export function attachGameShell({
   if (deck) $('shell-mission-content').append(deck);
   doc.body.classList.add('game-shell');
   const closeHome = () => {
+    cancelTitle();
     homeVisit++;
     if (workshop?.open) workshop.close();
     if (home.open) home.close();
@@ -95,7 +100,7 @@ export function attachGameShell({
                 ? $('continue-saved').title
                 : $('mission-brief-title').textContent,
             })
-          : copy('title.deployDestination');
+          : titleDestination?.() || copy('title.deployDestination');
     if (!home.open) {
       // A prior successful chapter selection is not the next title action.
       // Keep errors visible; fresh operation feedback still arrives normally.
@@ -198,8 +203,75 @@ export function attachGameShell({
   $('shell-packs').onclick = openMissions;
   $('shell-play').onclick = openMissions;
   const featured = $('shell-featured');
+  let titleAction = null;
+  const cancelTitle = () => {
+    if (!titleAction) return;
+    const { button, labelNode, label } = titleAction;
+    titleAction = null;
+    onTitleCancel?.();
+    button.disabled = false;
+    labelNode.textContent = label;
+  };
+  const titleCancel = $('shell-flight-cancel');
+  const cancelTitleAndRestore = (operation) => {
+    if (!operation || titleAction !== operation) return;
+    const visit = homeVisit;
+    const ownedFocus = doc.activeElement === doc.body || doc.activeElement === titleCancel;
+    cancelTitle();
+    // Hiding Cancel can synchronously move focus or open another screen. Check
+    // ownership again after that callback; keep an already-returned primary.
+    if (
+      ownedFocus &&
+      !destroyed &&
+      !titleAction &&
+      homeVisit === visit &&
+      topDialog() === home &&
+      !doc.hidden &&
+      doc.hasFocus?.() !== false &&
+      (doc.activeElement === doc.body || doc.activeElement === titleCancel)
+    )
+      operation.button.focus({ preventScroll: true });
+  };
+  if (titleCancel) titleCancel.onclick = () => cancelTitleAndRestore(titleAction);
+  const launchTitle = async (button, callback) => {
+    if (button.disabled || destroyed || topDialog() !== home) return;
+    cancelTitle();
+    const visit = homeVisit;
+    const labelNode = button.querySelector('[data-field-kit-copy]') ?? button;
+    const operation = { button, labelNode, label: labelNode.textContent };
+    titleAction = operation;
+    button.disabled = true;
+    labelNode.textContent = copy('title.preparing');
+    try {
+      const pending = callback({
+        isCurrent: () =>
+          !destroyed &&
+          titleAction === operation &&
+          homeVisit === visit &&
+          topDialog() === home &&
+          !doc.hidden &&
+          doc.hasFocus?.() !== false,
+        leave: closeHome,
+      });
+      if (
+        titleAction === operation &&
+        homeVisit === visit &&
+        topDialog() === home &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        !titleCancel?.hidden &&
+        (doc.activeElement === doc.body || doc.activeElement === button)
+      )
+        titleCancel?.focus({ preventScroll: true });
+      await pending;
+    } finally {
+      cancelTitleAndRestore(operation);
+    }
+  };
   const leaveFeatured = (event) => {
-    if (event.target?.closest?.('button,a,summary') !== featured) homeVisit++;
+    const target = event.target?.closest?.('button,a,summary');
+    if (target !== titleAction?.button && target !== titleCancel) cancelTitle();
+    if (target !== featured) homeVisit++;
   };
   home.addEventListener('click', leaveFeatured, true);
   if (featured && onFeatured)
@@ -222,6 +294,7 @@ export function attachGameShell({
         }
       }
     };
+  if (featured && onTitleStart) featured.onclick = () => launchTitle(featured, onTitleStart);
   $('shell-briefing').onclick = () => {
     missions.close();
     focusGame();
@@ -255,6 +328,8 @@ export function attachGameShell({
     if (!$('continue-saved').hidden) $('continue-saved').click();
     else focusGame();
   };
+  if (onTitleContinue)
+    $('shell-continue').onclick = () => launchTitle($('shell-continue'), onTitleContinue);
   forward('shell-collection', 'collection-button', { keepHome: true });
   forward('shell-gallery', 'collection-button', { keepHome: true });
   forward('shell-settings', 'settings-button', { keepHome: true });
@@ -290,12 +365,26 @@ export function attachGameShell({
       element.hidden = true;
   }
   const cancelHome = () => {
+    cancelTitle();
     homeVisit++;
     queueMicrotask(() => {
       if (!destroyed && !home.open && !topDialog()) focusGame();
     });
   };
   home.addEventListener('cancel', cancelHome);
+  const suspendedTitle = () => cancelTitle();
+  const hiddenTitle = () => {
+    if (doc.hidden) cancelTitle();
+  };
+  const titleClosed = () => {
+    if (!home.open) cancelTitle();
+  };
+  const titleWindow =
+    typeof doc.defaultView?.addEventListener === 'function' ? doc.defaultView : globalThis.window;
+  titleWindow?.addEventListener('blur', suspendedTitle);
+  titleWindow?.addEventListener('pagehide', suspendedTitle);
+  doc.addEventListener('visibilitychange', hiddenTitle);
+  home.addEventListener('close', titleClosed);
   // Native controls retain their arrow editing semantics. Arrows on game menu
   // actions move focus; Enter/Space and Tab remain browser-standard activation.
   const keydown = (event) => {
@@ -323,6 +412,11 @@ export function attachGameShell({
     openMissions,
     destroy() {
       destroyed = true;
+      cancelTitle();
+      titleWindow?.removeEventListener('blur', suspendedTitle);
+      titleWindow?.removeEventListener('pagehide', suspendedTitle);
+      doc.removeEventListener('visibilitychange', hiddenTitle);
+      home.removeEventListener('close', titleClosed);
       restoreMissionView();
       missions.removeEventListener('close', closedMissions);
       missions.removeEventListener('cancel', cancelMissions);
