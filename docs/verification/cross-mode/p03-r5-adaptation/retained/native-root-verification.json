@@ -1,0 +1,66 @@
+{
+  "version": "native-review.v1",
+  "scope": "P03 minimal R5 initial ready focus on c5, not P08 artwork or phase acceptance",
+  "base": "c5bccfc59e9b2dec2defc9d9202565ea3ccceae0",
+  "runtimeSha256": "31f3d4542629c024bef3f28d6c00905079cfc0c594b5279789b28d1ca1e57722",
+  "sourceBindings": [
+    "preview-normal.json",
+    "preview-delayed.json"
+  ],
+  "events": "native/events.json",
+  "count": 9,
+  "screenshots": [
+    "native/initial-ready-start.png",
+    "native/delayed-choice-ready.png"
+  ],
+  "passed": [
+    "Fresh normal Ready focuses enabled Start after boot inert is removed",
+    "Explicit keyboard Start and Pause/Resume focus remain functional",
+    "Deliberate boot Back focus prevents subsequent automatic Start focus",
+    "After loading cleanup focus falls to body then deliberate Tab reaches Team"
+  ],
+  "limits": [
+    "Native desktop keyboard only, 1309x1348",
+    "No physical controller, touch, phone, zoom, public or offline claim",
+    "No native delayed failure/background race; those remain separate host evidence",
+    "Boot Back disappears at ready, so chosen element is not retained; initial-focus action correctly remains retired"
+  ],
+  "files": [
+    {
+      "path": "native/events.json",
+      "bytes": 13293,
+      "sha256": "62a1d9a5d78330ea0ba73b59812ad4138dd235aeaef3815cc96103d37bd26dcd"
+    },
+    {
+      "path": "native/initial-ready-start.png",
+      "bytes": 72522,
+      "sha256": "77e116fe412d3af8f6ed1728c42f0e3774267dacbe7f3c687393c2d9ea4df32b"
+    },
+    {
+      "path": "native/delayed-choice-ready.png",
+      "bytes": 71870,
+      "sha256": "1826312fba5bf83c7a5778ea1a91722497963759ebaf9073546761a43f89bd66"
+    },
+    {
+      "path": "preview-normal.json",
+      "bytes": 1046,
+      "sha256": "6b51fd3ae1f2557c09457d82855a3d9900df9726b9408a5a599c12fd3e90248c"
+    },
+    {
+      "path": "preview-delayed.json",
+      "bytes": 1046,
+      "sha256": "aad664c2c589e04fe3c12f29d91ec0622c5b83eec49a3f83d790a4e53e9601c5"
+    },
+    {
+      "path": "preview-http-check.json",
+      "bytes": 1481,
+      "sha256": "021f7010b1d8f382f4137541dc8d04fc6ef7c6227f91ea533fa88a0ef86a5ee6"
+    },
+    {
+      "path": "source-held.json",
+      "bytes": 836,
+      "sha256": "1543be533de2ddd3cfce0c7042bab7ee0cddd82af2be85038f19f1fad7e9e1e1"
+    }
+  ],
+  "sealing": "Root-authorized metadata completion: expanded runtime prefix to exact held SHA-256 and hashed exact original event/image/source records. Observation text and original bodies are unchanged; initial receipt retained separately."
+}

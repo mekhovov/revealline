@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/couch/couch.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/test/helpers/couch-host.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/test/couch-shell.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--check",
+        "game/test/couch-initial-focus.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/couch/couch.mjs",
+        "game/test/helpers/couch-host.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-initial-focus.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/couch/couch.mjs",
+        "game/test/helpers/couch-host.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-initial-focus.test.mjs"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "log": {
+    "path": "static.log",
+    "bytes": 66,
+    "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+  }
+}

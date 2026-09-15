@@ -52,6 +52,7 @@ export async function couchPage(
   t,
   {
     campaign = base,
+    beforeImport,
     turnPolicy = 'immediate',
     pads = [],
     seconds = '30',
@@ -184,6 +185,7 @@ export async function couchPage(
       value ? Object.defineProperty(globalThis, key, value) : delete globalThis[key];
     for (const [key, value] of methods) BoardPainter.prototype[key] = value;
   });
+  await beforeImport?.({ document: doc, window: win });
   await import(`../../couch/couch.mjs?navigation=${++sequence}`);
   if (expectBootFailure) assert.equal(rafs.size, 0);
   else {
