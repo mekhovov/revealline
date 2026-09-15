@@ -51,6 +51,8 @@ export function createCoopPainter(canvas) {
       ctx.globalAlpha = 1;
     }
     for (const stronghold of run.strongholds || []) {
+      const relayLabel =
+        run.strongholds.length > 1 ? `${run.strongholds.indexOf(stronghold) + 1}` : '';
       for (const [i, anchor] of stronghold.anchors.entries()) {
         ctx.strokeStyle = anchor.captured ? '#c9e4a0' : '#ffd279';
         ctx.fillStyle = anchor.captured ? '#315744' : '#604b30';
@@ -61,7 +63,11 @@ export function createCoopPainter(canvas) {
         ctx.font = 'bold 0.85px system-ui';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(anchor.captured ? '✓' : String.fromCharCode(65 + i), anchor.x, anchor.y);
+        ctx.fillText(
+          anchor.captured ? '✓' : `${relayLabel}${String.fromCharCode(65 + i)}`,
+          anchor.x,
+          anchor.y,
+        );
       }
       const core = stronghold.core;
       ctx.fillStyle = stronghold.defeated ? '#a0c887' : '#ffc1a4';
@@ -83,7 +89,7 @@ export function createCoopPainter(canvas) {
       ctx.font = 'bold 0.64px system-ui';
       ctx.textAlign = 'center';
       ctx.fillText(
-        stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELDED' : 'CAPTURE CORE',
+        `${relayLabel ? `RELAY ${relayLabel} · ` : ''}${stronghold.defeated ? 'SECURED' : stronghold.shielded ? 'SHIELDED' : 'CAPTURE CORE'}`,
         core.x,
         core.y - 1.75,
       );
@@ -124,7 +130,7 @@ export function createCoopPainter(canvas) {
       ctx.fillStyle = '#ffd279';
       ctx.font = 'bold 0.65px system-ui';
       ctx.textAlign = 'center';
-      ctx.fillText('HUNTER LOCKED', enemy.x, enemy.y - 1.1);
+      ctx.fillText(`P${enemy.target + 1} · LOCKED`, enemy.x, enemy.y - 1.1);
     }
     for (const [i, spawn] of run.level.spawns.entries()) {
       ctx.strokeStyle = COLORS[i];

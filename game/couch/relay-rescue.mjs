@@ -7,8 +7,9 @@ import {
   stepCoop,
   FIXED_DT,
 } from '../coop/core.mjs';
-import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD, COOP_PLAYTEST_CONFIGURATIONS } from '../coop/relay-yard.mjs';
+import { COOP_STARTER_PACK, readCoopPack, coopGoalText } from '../coop/library.mjs';
+import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
@@ -32,6 +33,10 @@ export function bootCoop() {
     frame = null,
     disposed = false;
   let previousPads = new Map();
+  let pack = COOP_STARTER_PACK;
+  let importRequest = 0;
+  const selectedLevel = () =>
+    pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
   let menuHint = '';
   const running = () => run?.status === 'running';
   const scope = () => (running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby');
@@ -56,11 +61,14 @@ export function bootCoop() {
   const router = createControllerRouter({ readPads: () => framePads });
   const navigation = attachControllerNavigation({
     getScope: scope,
-    getRoot: () => (run ? $('coop-overlay') : $('coop-menu')),
+    getRoot: () => (run ? $('coop-overlay') : $('coop-app')),
+    accept: (element) => !element.closest('.race-pad'),
     getDefaultFocus: primary,
     keyboard: true,
     onBack: () => {
       if (run?.status === 'paused') resume();
+      else if (run) lobby();
+      else $('coop-race').click();
     },
     onMenu: () => {
       if (run?.status === 'paused') resume();
@@ -99,7 +107,7 @@ export function bootCoop() {
         ? 'Your next route starts here.'
         : 'Both players paused';
     $('coop-overlay-copy').textContent = won
-      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. Try another route or compare individual cuts.`
+      ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. Try another level or a harder challenge.`
       : lost
         ? `You revealed ${(run.coverage * 100).toFixed(1)}%. Agree on a shorter exposed route, save Support for the warning, or move closer for a rescue.`
         : 'Release your controls, then choose Resume together.';
@@ -114,14 +122,13 @@ export function bootCoop() {
     $('coop-reserves').textContent =
       `${run.team.reserves} reserve${run.team.reserves === 1 ? '' : 's'}`;
     $('coop-clock').textContent = clock(run.time);
-    const stronghold = run.strongholds?.[0];
+    const strongholds = run.strongholds.filter((item) => run.level.goal.cores?.includes(item.id));
+    const stronghold = strongholds.find((item) => !item.defeated);
     $('coop-objective').textContent = stronghold
-      ? stronghold.defeated
-        ? 'Stronghold secured together'
-        : stronghold.shielded
-          ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured`
-          : 'Shield down · make a new cut that captures the exposed core'
-      : 'Reveal 65% together';
+      ? `${strongholds.length > 1 ? `${strongholds.filter((item) => item.defeated).length} / ${strongholds.length} secured · Relay ${run.strongholds.indexOf(stronghold) + 1} · ` : ''}${stronghold.shielded ? `Capture the shield anchors · ${stronghold.anchors.filter((anchor) => anchor.captured).length} / 2 secured` : 'Shield down · capture the exposed core in a new cut'}`
+      : strongholds.length
+        ? 'Strongholds secured together'
+        : coopGoalText(run.level);
     for (const player of run.players) {
       $('coop-state-' + player.id).textContent =
         player.status === 'downed'
@@ -134,6 +141,14 @@ export function bootCoop() {
               ? 'Recovery shield · safe ground only'
               : 'On safe ground';
       const recharge = Math.max(0, (player.support?.readyAt || 0) - run.time);
+      $('coop-charge-' + player.id).textContent =
+        player.status === 'downed'
+          ? 'Crawl to your partner'
+          : player.rescue
+            ? 'Hold Support · rescuing'
+            : recharge > 0
+              ? `Support · ${recharge.toFixed(1)}s`
+              : 'Support ready';
       $('coop-support-' + player.id).textContent = player.rescue
         ? `Rescuing partner · ${Math.min(100, Math.floor((run.time - player.rescue.startedAt) * 100))}%`
         : player.status === 'downed'
@@ -144,11 +159,13 @@ export function bootCoop() {
     }
   }
   function start() {
+    importRequest++;
+    $('coop-pack-file').value = '';
     const experiment =
       COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
       COOP_PLAYTEST_CONFIGURATIONS[0];
     clear();
-    const level = $('coop-level').value === RELAY_YARD.id ? RELAY_YARD : FIRST_CONNECTION;
+    const level = selectedLevel();
     run = createCoop(level, {
       seed: 17,
       difficulty: $('coop-difficulty').value,
@@ -164,7 +181,7 @@ export function bootCoop() {
     $('coop-progress').max = level.goal.coverage ? level.goal.coverage * 100 : 100;
     message(
       experiment.jointCuts
-        ? 'Try a cut from opposite edges. Agree on a meeting point first.'
+        ? 'Watch the Hunter warnings. Cover a crossing or join after the charge passes.'
         : 'Comparison: head meetings do not join lines. Find a route back to safe ground.',
     );
     overlay();
@@ -192,6 +209,7 @@ export function bootCoop() {
     message('Choose fresh directions when you are ready.');
   }
   function lobby() {
+    importRequest++;
     clear();
     run = null;
     document.body.classList.remove('playing');
@@ -310,22 +328,68 @@ export function bootCoop() {
   $('coop-pause').onclick = pause;
   $('coop-lobby').onclick = lobby;
   function setupNote() {
-    const stronghold = $('coop-level').value === RELAY_YARD.id;
+    const level = selectedLevel();
+    const stronghold = Boolean(level.goal.cores);
     $('coop-stronghold-help').hidden = !stronghold;
-    $('coop-menu-goal').textContent = stronghold
-      ? 'Capture both anchors, then the exposed core'
-      : 'Reveal 65% of the field';
+    $('coop-menu-goal').textContent = coopGoalText(level);
     $('coop-briefing-title').textContent = stronghold
       ? 'TAKE THE STRONGHOLD TOGETHER'
-      : 'YOUR FIRST CONNECTION';
+      : 'MAKE YOUR COMMON GROUND';
+    $('coop-stage').textContent = level.name.toUpperCase();
+    $('coop-level-note').textContent =
+      pack !== COOP_STARTER_PACK
+        ? stronghold
+          ? 'Plan routes to the anchors, then make a later cut through each exposed core.'
+          : 'Create safe routes together. Use the revealed ground to launch your next cut.'
+        : stronghold
+          ? 'One open field. Bait a Hunter, cover the crossing, then take the anchors together.'
+          : 'Both halves are contested. Create safe routes in small steps, then coordinate a larger cut.';
     $('coop-setup-note').textContent =
       $('coop-experiment').value === 'full'
         ? 'Captures recharge both players’ Support and can rescue a downed partner.'
         : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
+  function showPack(next, preferred = next.levels[0].id) {
+    pack = next;
+    $('coop-level').replaceChildren(
+      ...pack.levels.map((level) => {
+        const option = document.createElement('option');
+        option.value = level.id;
+        option.textContent = `${level.name} · ${level.goal.cores ? 'stronghold' : 'territory'} challenge`;
+        return option;
+      }),
+    );
+    $('coop-level').value = preferred;
+    $('coop-pack-status').textContent = `${pack.name} · ${pack.levels.length} levels`;
+    $('coop-pack-reset').hidden = pack === COOP_STARTER_PACK;
+    setupNote();
+  }
+  $('coop-pack-file').onchange = async () => {
+    const request = ++importRequest;
+    const file = $('coop-pack-file').files?.[0];
+    if (!file || run) return;
+    try {
+      if (file.size > COOP_PACK_MAX_BYTES)
+        throw new TypeError('Choose a co-op pack smaller than 1 MiB.');
+      const next = readCoopPack(await file.text());
+      if (disposed || request !== importRequest || run) return;
+      showPack(next);
+      $('coop-start').focus({ preventScroll: true });
+    } catch (error) {
+      if (!disposed && request === importRequest)
+        $('coop-pack-status').textContent = `Pack unchanged: ${error.message}`;
+    } finally {
+      if (request === importRequest) $('coop-pack-file').value = '';
+    }
+  };
+  $('coop-pack-reset').onclick = () => {
+    importRequest++;
+    showPack(COOP_STARTER_PACK, RELAY_YARD.id);
+    $('coop-start').focus({ preventScroll: true });
+  };
   $('coop-level').onchange = setupNote;
   $('coop-experiment').onchange = setupNote;
-  setupNote();
+  showPack(COOP_STARTER_PACK, RELAY_YARD.id);
   $('coop-touch').checked = matchMedia('(pointer: coarse)').matches;
   const showTouch = () =>
     document.querySelectorAll('.race-pad').forEach((pad) => {
@@ -349,6 +413,7 @@ export function bootCoop() {
     })
     .catch((error) => console.error('Native lifecycle unavailable:', error));
   const dispose = () => {
+    importRequest++;
     disposed = true;
     cancelAnimationFrame(frame);
     clear();

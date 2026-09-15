@@ -7,6 +7,22 @@ description: 'Design, revise, or generate Xonix levels, challenge packs, optiona
 
 Create levels as data against a declared primitive catalog. Keep challenge identity independent of art and device layout.
 
+### Shared-screen cooperative levels
+
+When the request is for two partners against enemies, use the [Relay Rescue authoring contract](../../coop/README.md),
+`game/coop/recipes.mjs` and `scripts/build-coop-pack.mjs`. Choose `coverage` or `stronghold` for each level;
+mixed packs may alternate these challenges. These are explicit co-op recipes and packs, not solo-map conversions.
+Use one connected hostile playground, comparable pressure on both approaches, announced committed attacks,
+and a recovery window that lets partners act. Avoid a presecured divider that gives one player an enemy-free half.
+For strongholds, keep the exposed core contested after the anchors fall: test retention geography and actual
+routes, not only enemy count or speed. A shield drop must still require a later core capture.
+
+Compile and validate the pack, open it through **Play a created co-op pack** in the Relay Rescue lobby,
+and compare an exposed rush with a viable route using banking, positioning and Support. Check both seats,
+all authored difficulties, rescue access and repeated attempts. Preserve successful public-command traces
+and failed shortcut probes alongside browser observations; schema validity alone does not prove challenge,
+and automated play does not establish two-human enjoyment. Keep gameplay revisions and co-op rules identity explicit.
+
 For actual playable levels, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core contract](../../../game/core/README.md) and the [configuration guide](../../../docs/assets-and-configuration.md). Retained ordinary levels use `xonix-level.v1` and playground v1/v2; the finite 48×36 staged encounter uses level v2 and playground v3. Wide 72×36 levels use level v3/core v4/pack v4/playground v4/replay v5. The implemented classic source family uses level v4/core v5/pack v5/playground v5/replay v6; read its reference below before authoring new actors or terrain. `game/generator.mjs` generates ordinary candidates and `scripts/verify-campaign.mjs` replays reviewed campaign completions; neither is a general new-mechanics generator. Keep both steering modes and actual class recipes explicit; the legacy draft-pack steps below remain a separate design route and are not a game importer.
 
 For staged capture, use [Sentinel Relay's source and guide](../../../docs/sentinel-relay.md) and its [ten reusable prompts](../../library/sentinel-relay/prompts.json). The current finite recipe has one centered stationary `relay-sentinel` as the sole field seed, two distinct visible required objectives and two bounded schedules. Capture the relay, then close a sufficient current FIELD trail during an opening, or reduce the remaining field to the derived isolation threshold and finish safely during an opening. Short cuts retain ordinary gains; failed cuts and old safe cells do not accumulate toward the live threshold. Do not invent health, movement, extra stages or boss mastery predicates.
