@@ -5,6 +5,8 @@ description: 'Design, configure and review Xonix player classes, equipment, acti
 
 # Xonix Ability Designer
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Turn a requested play style into a small, explicit set of registered mechanics. Airframe, class, equipment, appearance, allegiance and mission role are separate dimensions. A body replacement does not grant an ability. An explicitly selected class or equipment item may change declared gameplay state; document that change and test it.
 
 For a class applied to the playable `game/`, use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core registry contract](../../../game/core/README.md) and [runtime configuration guide](../../../docs/assets-and-configuration.md). `game/content/classes.json` currently has seven recipes using five primitives; exported `xonix-playground.v1` scenarios can carry a validated `classRecipes` array, with class revision and loadout hash preserved. The ten-class/five-primitive ability lab below has a separate format; its dash, net, radio/fiber options do not automatically work in territory gameplay.
@@ -45,7 +47,7 @@ For future Xonix integration define event order relative to cut failure, closure
 
 ## Deliver the completed feature
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 For registered enemy roles, optional travelling line impacts and theme-specific pickup/defeat feedback, read [enemy catalog](../../../docs/enemy-catalog.md) and [the R3 edition](../../library/fpv-arcade-r3/README.md). The [enemy workflow prompts](../../prompts/enemy-workflows.json) use actual interfaces. Preserve old identities, explicit authoring activation, local artwork provenance and measured input/visual evidence.
 

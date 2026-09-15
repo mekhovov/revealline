@@ -5,6 +5,8 @@ description: 'Plan, vary and inspect modular Xonix animation for avatars, enemie
 
 # Xonix Animation Director
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Direct movement and feedback as replaceable presentation. Preserve the user's source art, family identity and gameplay contract. Animation reads simulation state; it never changes colliders, movement, damage, capture rules or input. A generated contact sheet is an animation concept, not a working animation.
 
 For animation applied to the playable `game/`, read [the implemented presentation contracts](references/motion-handoff.md#implemented-game-presentation) and the actual source they link before changing assets. Use [Runtime Maintainer](../xonix-runtime-maintainer/SKILL.md), the [core state/event contract](../../../game/core/README.md) and [asset/rig guide](../../../docs/assets-and-configuration.md) for integration. The game reuses the motion-lab player rigs and has a separate observed-motion enemy renderer. Scenario image overrides, rig recipes and draw options are different interfaces; none automatically accepts the fields of another. Classic-only art roles require the Classic scenario format. Inspect actual playback without changing either steering mode or its collider.
@@ -21,7 +23,7 @@ For the original optional pressure extension, read only the core's validated tar
 
 Inspect the actual reference assets, current board fixture, intended display scale and available state/event interface. Read `authoring/CONTRACT.md` and relevant records in `authoring/prompts/round-07-animation-variants.json` when the kit is present; resolve an installed skill symlink to its physical kit if needed. The shared CLI includes this supplement: use `python3 authoring/prompt.py show animation-02-state-contract` to inspect inputs before rendering text. Consult [the motion handoff](references/motion-handoff.md) for states, timing and inspection records.
 
-For upcoming v0.27 enemy skins, pickups, failure/recovery cues and traveling line impacts, read [the enemy workshop contracts](references/motion-handoff.md#enemy-workshop-and-event-feedback-upcoming-v027). Catalog enable/disable choices belong to future authoring; they never filter an active scored run.
+For the retained v0.27 enemy-skin, pickup, failure/recovery and traveling-line-impact contract, read [the enemy workshop contracts](references/motion-handoff.md#enemy-workshop-and-event-feedback-upcoming-v027). Catalog enable/disable choices belong to future authoring; they never filter an active scored run.
 
 Use the three [presentation workflow prompts](../../prompts/presentation-workflows.json) for current FPV rigs, four-theme enemy replacements and cut/reveal effects. [Registration and examples](references/motion-handoff.md#presentation-prompt-supplement) describe their exact CLI setup. Historical prompts asking for a smaller FPV are not a standing instruction to shrink the current player below its readable screen-size target.
 
@@ -53,7 +55,7 @@ For applied renderer/rig changes, run the focused checks in [the handoff](refere
 
 ## Deliver the completed feature
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 ## Preserve native launch and input access
 

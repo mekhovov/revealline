@@ -5,6 +5,8 @@ description: Inventory public Telegram emoji references or supplied originals, p
 
 # Xonix Reference Importer
 
+Read [Delivery priorities](../../../docs/delivery-priorities.md) first for the current scope, source/delivery status and remaining acceptance gates. Versioned milestones and older evidence below retain their original contracts; they are not current release certificates. Check the selected source before applying a historical instruction, and keep source assets, runtime adoption and native/device qualification distinct.
+
 Use this workflow when a user supplies a Telegram emoji-set link or source PNG/WEBP/TGS/WEBM files for reference/import. Keep source acquisition, visual analysis, original generation and runtime binding as separate steps with honest statuses. The helper is [scripts/telegram-reference.py](../../../scripts/telegram-reference.py); run it from the repository root. For commands and generation prompts read [references/import-and-style.md](references/import-and-style.md).
 
 ## Establish what is accessible
@@ -31,7 +33,7 @@ Conclude with actual imported/viewed counts, source/rights statuses, generated o
 
 ## Deliver the completed feature
 
-For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. The current project request authorizes that sequence. Update the roadmap with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
+For implemented changes, follow the shared [feature delivery workflow](../../../docs/feature-delivery-workflow.md): related commit, exact-source verification, immutable playable version, reviewed/merged PR, GitHub Release and verified Pages deployment. Follow the active task’s existing scope and authorization throughout that sequence. Update [Delivery priorities](../../../docs/delivery-priorities.md) with actual evidence; keep planned assets, modeled input checks and physical-device qualification distinct. Design-only work remains a reviewable design artifact.
 
 ## Preserve native launch and input access
 
