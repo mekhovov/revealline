@@ -1,0 +1,330 @@
+TAP version 13
+# Subtest: the actual game has a static dark guard before resources and a single caught module entry
+ok 1 - the actual game has a static dark guard before resources and a single caught module entry
+  ---
+  duration_ms: 5.098291
+  ...
+# Subtest: native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+ok 2 - native wrapper CSP precedes bootstrap and permits the existing external-script/inline-style design
+  ---
+  duration_ms: 3.2505
+  ...
+# Subtest: build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+ok 3 - build rewrites native root paths, preserves extras and includes boot bytes in reproducible offline inventory
+  ---
+  duration_ms: 322.646916
+  ...
+# Subtest: explicit Arcade non-card roles can reclaim status space without changing authored data
+ok 4 - explicit Arcade non-card roles can reclaim status space without changing authored data
+  ---
+  duration_ms: 0.810791
+  ...
+# Subtest: Tactical, unknown policy, encounters and every warning-capable or future role retain space
+ok 5 - Tactical, unknown policy, encounters and every warning-capable or future role retain space
+  ---
+  duration_ms: 0.140125
+  ...
+# Subtest: warning transitions and removal of a live enemy cannot release its authored warning reserve
+ok 6 - warning transitions and removal of a live enemy cannot release its authored warning reserve
+  ---
+  duration_ms: 0.076958
+  ...
+# Subtest: manual abilities do not reserve a warning row unless the authored mission can warn
+ok 7 - manual abilities do not reserve a warning row unless the authored mission can warn
+  ---
+  duration_ms: 0.123917
+  ...
+# Subtest: 956×440, standard text: whole board outside HUD
+ok 8 - 956×440, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.732583
+  ...
+# Subtest: 956×440, large text: whole board outside HUD
+ok 9 - 956×440, large text: whole board outside HUD
+  ---
+  duration_ms: 0.549958
+  ...
+# Subtest: 956×330, standard text: whole board outside HUD
+ok 10 - 956×330, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.078583
+  ...
+# Subtest: 956×330, large text: whole board outside HUD
+ok 11 - 956×330, large text: whole board outside HUD
+  ---
+  duration_ms: 0.136667
+  ...
+# Subtest: 874×402, standard text: whole board outside HUD
+ok 12 - 874×402, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.848584
+  ...
+# Subtest: 874×402, large text: whole board outside HUD
+ok 13 - 874×402, large text: whole board outside HUD
+  ---
+  duration_ms: 0.64425
+  ...
+# Subtest: 874×300, standard text: whole board outside HUD
+ok 14 - 874×300, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.387208
+  ...
+# Subtest: 874×300, large text: whole board outside HUD
+ok 15 - 874×300, large text: whole board outside HUD
+  ---
+  duration_ms: 0.140291
+  ...
+# Subtest: 852×393, standard text: whole board outside HUD
+ok 16 - 852×393, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.184791
+  ...
+# Subtest: 852×393, large text: whole board outside HUD
+ok 17 - 852×393, large text: whole board outside HUD
+  ---
+  duration_ms: 0.141125
+  ...
+# Subtest: 844×390, standard text: whole board outside HUD
+ok 18 - 844×390, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.06025
+  ...
+# Subtest: 844×390, large text: whole board outside HUD
+ok 19 - 844×390, large text: whole board outside HUD
+  ---
+  duration_ms: 0.046167
+  ...
+# Subtest: 915×412, standard text: whole board outside HUD
+ok 20 - 915×412, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.043875
+  ...
+# Subtest: 915×412, large text: whole board outside HUD
+ok 21 - 915×412, large text: whole board outside HUD
+  ---
+  duration_ms: 0.186458
+  ...
+# Subtest: 800×360, standard text: whole board outside HUD
+ok 22 - 800×360, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.13025
+  ...
+# Subtest: 800×360, large text: whole board outside HUD
+ok 23 - 800×360, large text: whole board outside HUD
+  ---
+  duration_ms: 0.146041
+  ...
+# Subtest: 740×360, standard text: whole board outside HUD
+ok 24 - 740×360, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.135583
+  ...
+# Subtest: 740×360, large text: whole board outside HUD
+ok 25 - 740×360, large text: whole board outside HUD
+  ---
+  duration_ms: 0.171667
+  ...
+# Subtest: 667×375, standard text: whole board outside HUD
+ok 26 - 667×375, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.056084
+  ...
+# Subtest: 667×375, large text: whole board outside HUD
+ok 27 - 667×375, large text: whole board outside HUD
+  ---
+  duration_ms: 0.096333
+  ...
+# Subtest: 667×280, standard text: whole board outside HUD
+ok 28 - 667×280, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.044583
+  ...
+# Subtest: 667×280, large text: whole board outside HUD
+ok 29 - 667×280, large text: whole board outside HUD
+  ---
+  duration_ms: 0.03475
+  ...
+# Subtest: 568×256, standard text: whole board outside HUD
+ok 30 - 568×256, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.030542
+  ...
+# Subtest: 568×256, large text: whole board outside HUD
+ok 31 - 568×256, large text: whole board outside HUD
+  ---
+  duration_ms: 0.029291
+  ...
+# Subtest: 1133×744, standard text: whole board outside HUD
+ok 32 - 1133×744, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.397292
+  ...
+# Subtest: 1133×744, large text: whole board outside HUD
+ok 33 - 1133×744, large text: whole board outside HUD
+  ---
+  duration_ms: 0.061709
+  ...
+# Subtest: 1180×820, standard text: whole board outside HUD
+ok 34 - 1180×820, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.031167
+  ...
+# Subtest: 1180×820, large text: whole board outside HUD
+ok 35 - 1180×820, large text: whole board outside HUD
+  ---
+  duration_ms: 0.031
+  ...
+# Subtest: 1280×800, standard text: whole board outside HUD
+ok 36 - 1280×800, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.03125
+  ...
+# Subtest: 1280×800, large text: whole board outside HUD
+ok 37 - 1280×800, large text: whole board outside HUD
+  ---
+  duration_ms: 0.028459
+  ...
+# Subtest: 1024×600, standard text: whole board outside HUD
+ok 38 - 1024×600, standard text: whole board outside HUD
+  ---
+  duration_ms: 0.031333
+  ...
+# Subtest: 1024×600, large text: whole board outside HUD
+ok 39 - 1024×600, large text: whole board outside HUD
+  ---
+  duration_ms: 0.076208
+  ...
+# Subtest: wide Safari viewport keeps the board at full available height beside the HUD
+ok 40 - wide Safari viewport keeps the board at full available height beside the HUD
+  ---
+  duration_ms: 0.1505
+  ...
+# Subtest: short landscape uses the larger rail fit until its controls no longer fit vertically
+ok 41 - short landscape uses the larger rail fit until its controls no longer fit vertically
+  ---
+  duration_ms: 0.035291
+  ...
+# Subtest: empty/invalid measurements cannot produce a broken layout
+ok 42 - empty/invalid measurements cannot produce a broken layout
+  ---
+  duration_ms: 0.053625
+  ...
+# Subtest: left-handed steering puts the HUD on the right without shrinking the board
+ok 43 - left-handed steering puts the HUD on the right without shrinking the board
+  ---
+  duration_ms: 0.048583
+  ...
+# Subtest: rotating fullscreen to portrait keeps the HUD and thumb controls off the board
+ok 44 - rotating fullscreen to portrait keeps the HUD and thumb controls off the board
+  ---
+  duration_ms: 0.078917
+  ...
+# Subtest: lessons reserve instruction space instead of covering the board with the task
+ok 45 - lessons reserve instruction space instead of covering the board with the task
+  ---
+  duration_ms: 0.054209
+  ...
+# Subtest: browser viewport/settings events update geometry once per frame and dispose cleanly
+ok 46 - browser viewport/settings events update geometry once per frame and dispose cleanly
+  ---
+  duration_ms: 0.550375
+  ...
+# Subtest: native fullscreen and installed display modes reserve portrait HUD space
+ok 47 - native fullscreen and installed display modes reserve portrait HUD space
+  ---
+  duration_ms: 0.301583
+  ...
+# Subtest: compact course controls join the scrollable menu and return to their original position
+ok 48 - compact course controls join the scrollable menu and return to their original position
+  ---
+  duration_ms: 0.133709
+  ...
+# Subtest: long lesson instructions resize their reserved space and leave a visible board
+ok 49 - long lesson instructions resize their reserved space and leave a visible board
+  ---
+  duration_ms: 0.317542
+  ...
+# Subtest: ordinary portrait browsers get a compact header without requesting fullscreen
+ok 50 - ordinary portrait browsers get a compact header without requesting fullscreen
+  ---
+  duration_ms: 0.070625
+  ...
+# Subtest: warning-capable missions reserve space and D-pads stay outside either side of the board
+ok 51 - warning-capable missions reserve space and D-pads stay outside either side of the board
+  ---
+  duration_ms: 0.321584
+  ...
+# Subtest: portrait warning rows and large controls fit inside browser chrome constraints
+ok 52 - portrait warning rows and large controls fit inside browser chrome constraints
+  ---
+  duration_ms: 0.153125
+  ...
+# Subtest: warning phase changes do not resize the board; authored layout changes do
+ok 53 - warning phase changes do not resize the board; authored layout changes do
+  ---
+  duration_ms: 0.435
+  ...
+# Subtest: manual actions and a large D-pad each own space outside the board
+ok 54 - manual actions and a large D-pad each own space outside the board
+  ---
+  duration_ms: 0.083459
+  ...
+# Subtest: short-landscape warnings remain between manual actions and the large D-pad
+ok 55 - short-landscape warnings remain between manual actions and the large D-pad
+  ---
+  duration_ms: 0.050708
+  ...
+# Subtest: screen help pauses the actual flight, retains score and saved replay, and requires explicit Resume
+ok 56 - screen help pauses the actual flight, retains score and saved replay, and requires explicit Resume
+  ---
+  duration_ms: 817.377708
+  ...
+# Subtest: controller Back closes screen help without closing Settings or resuming the flight
+ok 57 - controller Back closes screen help without closing Settings or resuming the flight
+  ---
+  duration_ms: 933.554958
+  ...
+# Subtest: unsupported fullscreen stays visible and offers optional Home Screen help
+ok 58 - unsupported fullscreen stays visible and offers optional Home Screen help
+  ---
+  duration_ms: 5.057541
+  ...
+# Subtest: supported fullscreen follows real enter, exit and external exit state
+ok 59 - supported fullscreen follows real enter, exit and external exit state
+  ---
+  duration_ms: 0.6685
+  ...
+# Subtest: rejected fullscreen opens readable help, preserves the opener and allows retry
+ok 60 - rejected fullscreen opens readable help, preserves the opener and allows retry
+  ---
+  duration_ms: 0.50975
+  ...
+# Subtest: standalone app mode omits installation instructions and does not make a redundant request
+ok 61 - standalone app mode omits installation instructions and does not make a redundant request
+  ---
+  duration_ms: 1.061917
+  ...
+# Subtest: ios app mode omits installation instructions and does not make a redundant request
+ok 62 - ios app mode omits installation instructions and does not make a redundant request
+  ---
+  duration_ms: 0.364666
+  ...
+# Subtest: display-mode changes update the screen action and listeners are removed on disposal
+ok 63 - display-mode changes update the screen action and listeners are removed on disposal
+  ---
+  duration_ms: 0.329083
+  ...
+# Subtest: Settings offers Home Screen guidance even when native fullscreen is supported
+ok 64 - Settings offers Home Screen guidance even when native fullscreen is supported
+  ---
+  duration_ms: 0.551125
+  ...
+1..64
+# tests 64
+# suites 0
+# pass 64
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2571.595625
