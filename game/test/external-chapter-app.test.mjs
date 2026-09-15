@@ -410,7 +410,11 @@ test('stored external run reloads with exact saved pin and remains paused until 
     assert(f.storage.getItem('revealline.suspended.dev.v1'));
   });
   await t.test('fresh app import restores the saved flight', async (t) => {
-    const p = await page(t, f);
+    // This installed-original reload uses the same allowance as picture settle().
+    const p = await page(t, {
+      ...f,
+      options: { ...f.options, initialReadyTimeoutMs: 30000 },
+    });
     await p.$('continue-saved').onclick();
     await settle(
       () =>

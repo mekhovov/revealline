@@ -78,4 +78,6 @@ Other row-specific limits remain explicit: optional-worlds and theme-selector-sp
 
 The [completed preliminary suite receipt](reports/preliminary-suite.json) records 4,185 tests: 4,177 passes, 8 failures and no skips (2,046,119.573375 ms). All eight known failures have the focused corrections/retests above. The aggregate remains a failed run on a changing working tree and requires a fresh exact-source run. Its full raw-log path and SHA256 are retained in the receipt.
 
+The subsequent local exact-source suite passed 4,185/4,185 on `6cfe315e5c266075c63f9d651ce12c21c57152c1`. A hosted run of that source exposed a five-second installed-original fixture deadline. The [retained investigation and scoped correction](hosted-restoration-deadline.md) preserve the failure and every restoration assertion; the corrected source requires fresh qualification.
+
 Before P01 acceptance, root still owns the exact committed six source gates, ordinary build, applicable production reproduction/readiness and artifact checks, immutable freeze/publication, public version/source/manifest byte agreement, actual play and release-worker offline checks. The preliminary working-tree test run, allocated version and this inventory do not discharge those gates. The execution register and later phase status are unchanged by this documentation task.
