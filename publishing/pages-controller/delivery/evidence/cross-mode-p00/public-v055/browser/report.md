@@ -1,0 +1,27 @@
+# v0.55 public Solo and Team browser qualification
+
+These are ordinary automated Chromium interactions at the deployed canonical game, source `acc9f265b651017fd268ffd8bbe6989bec614c41`. Publishing controller `da4459b706555007468d053a578caa215d08eca3`, run `34942712768`, deployment `6454057759`. This is P00 baseline acceptance evidence; it does not qualify P03 navigation, P08-A presentation parity or physical devices.
+
+The root route redirected to `https://mekhovov.github.io/revealline/releases/v0.55.0/site/game/`. Its declared `game/build-info.json` exactly matched the 143-byte frozen original, SHA `e77f9076ebdc2d4f93aa537e5f03f5db302499e46a899aa97e6f15e7320b6171`. An initial probe omitted the `game/` segment and returned404; the wrong-path probe is retained and is not evidence of a CDN failure.
+
+## Solo
+
+1. Fresh title appeared at the browser's initial1280×633 viewport. Activating Deploy disabled it while the featured Pressure Lines chapter prepared; later it opened the mission gallery with Orchard Crossing ready. The silent interval is a retained P01 baseline issue. This does not claim the future one-click start flow.
+2. Chose Base game, then gallery Deploy. Set1280×800, used ArrowDown, and Escape paused an exposed line at0:11. The real fullscreen button entered document fullscreen (`HTML`, `data-game-fullscreen=true`) and exited it; the paused timer and state remained unchanged. The public webmanifest declares fullscreen with standalone/minimal-ui fallbacks and the page includes Apple Home Screen declarations. OS installation is not tested.
+3. Explicit Resume completed First Signal at52.2%,8,160points,3lives,0:12 and displayed the original field illustration. Try again reset it, Escape paused at0:00, and Reload→Continue restored that paused flight with a visible explicit-Resume instruction.
+4. Settings→Game data→Prepare offline play displayed download/verification status. The first preparation exceeded the existing60-second UI wait. The offered retry verified all600files /55,102,153bytes, with missing[] and corrupt[]. Both timeout and ready screenshots/reports are preserved. This is the known P01 observation/lifecycle defect, not a new P00 mutation.
+5. Network disabled through the browser tool; reload and Continue restored the paused flight. Explicit Resume and ordinary ArrowDown produced a live cut, then a52.2%/8,160point/0:04 victory. `navigator.onLine=false` and the correct version-scoped worker were observed. The process remained open; no disconnected new-process cold start is claimed.
+
+## Team, still offline
+
+1. After a fresh Solo Retry/pause, opened the Team canonical route. Selected First Connection, showed touch controls and started together. D and ArrowLeft put both players into exposed-line states. Escape paused them. A second Escape resumed this older Team implementation; a subsequent attempted Resume button click therefore had no target. This is recorded as a P03 baseline inconsistency, not a successful explicit-Resume test. The resumed run reached team recovery with two reserves. Retry reset the arena to0:00/0%/three reserves.
+2. Change setup→Relay Yard→Start. Both players moved, Escape paused, and clicking the visible Resume together successfully resumed. Retry reset0:00/0%/three reserves. The shield/anchor objective was visible. A separate return to First Connection also verified its actual Resume together button.
+3. Screenshots and rectangle measurements cover1280×800,390×844 and844×390. Team retains geometric craft/enemies and green procedural terrain. At390px, Player1 Up is40×44px. At844×390, Player1 Up starts at y510.84, below the viewport; the pause Resume button spans y348.13–396.91 and is clipped by its overlay. These known defects remain P03/P08-A requirements. Viewport resizing is not physical rotation or touch testing.
+4. The first captured Team state and every subsequent captured Team state retained byte-identical Solo library, last-selection and suspended-flight values. Library/progress also matched the pre-navigation Solo sample. The suspended serialization changed across the Solo→Team navigation boundary before that first Team sample, so that boundary is not claimed byte-identical. On return, ordinary offline Continue restored the original0:00/0%/three-life/zero-score Solo flight and required Resume. IndexedDB names/versions remained the same; database payload writes were not exhaustively audited.
+5. Network restored online, confirmed, then only the owned session was closed.
+
+## Scope and corrections
+
+No simulation state, player saves or scores were injected. Interaction used ordinary navigation, clicks, keys, viewport changes and browser offline mode; read-only DOM/storage/worker observations support the report. No physical touch/controller, native installation, exhaustive mission, imported-map, complete Team objective/rescue matrix or all-menu usability claim is made.
+
+A screenshot command initially used a misspelled local path and was rerun with the correct destination. A Settings close selector did not exist; the subsequent ordinary reload was performed while Settings was still open. These automation mistakes did not change the game. Filenames describing the first Team Escape and recovery were corrected to match observed behavior before evidence hashing. The separate Versus/history report retains its own UI activation limitations and successful keyboard navigation.

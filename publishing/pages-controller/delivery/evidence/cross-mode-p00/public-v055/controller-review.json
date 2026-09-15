@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "reviewedCommit": "a1a7a9d05e1b81b2e1ec9f62e042fae9d7bbdecb",
+  "baseCommit": "9d7111149d16055fcb1ef9971e9fd6003435513b",
+  "reviewer": "p00_release_audit",
+  "recordedAt": "2026-09-15T07:36:56.800827+00:00",
+  "scope": "76publication/evidencepaths; all28proposalhashes; everyadmissionpin;12historicaladmissions/catalog/allocation/historypreserved",
+  "blockingFindings": [],
+  "followup": "In final evidence-only update correct stale README attachment-pending sentence; later paragraph already records9publishedassets."
+}
