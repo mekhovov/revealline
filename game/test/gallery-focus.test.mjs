@@ -18,7 +18,7 @@ class Element extends DOMElement {
   constructor(owner, tagName = 'div', connected = false) {
     super(owner, tagName);
     this.owner = owner;
-    this.tagName = tagName;
+    this.tagName = tagName.toUpperCase();
     this.rootConnected = connected;
     this.parent = null;
     this.children = [];
@@ -38,11 +38,15 @@ class Element extends DOMElement {
   append(...children) {
     for (const child of children) {
       child.parent = this;
+      child.parentNode = this;
       this.children.push(child);
     }
   }
   replaceChildren(...children) {
-    for (const child of this.children) child.parent = null;
+    for (const child of this.children) {
+      child.parent = null;
+      child.parentNode = null;
+    }
     this.children = [];
     this.append(...children);
   }
@@ -59,7 +63,7 @@ class Element extends DOMElement {
   querySelectorAll(selector) {
     const names = selector.split(',');
     return this.children.flatMap((child) => [
-      ...(names.includes(child.tagName) ? [child] : []),
+      ...(names.includes(child.tagName.toLowerCase()) ? [child] : []),
       ...child.querySelectorAll(selector),
     ]);
   }
@@ -114,7 +118,15 @@ async function setup(t, count = 30, hostOverrides = {}) {
     if (!nodes.has(id))
       nodes.set(
         id,
-        new Element(document, id.endsWith('search') || id.endsWith('json') ? 'input' : 'div', true),
+        new Element(
+          document,
+          id.endsWith('dialog')
+            ? 'dialog'
+            : id.endsWith('search') || id.endsWith('json')
+              ? 'input'
+              : 'div',
+          true,
+        ),
       );
     return nodes.get(id);
   };

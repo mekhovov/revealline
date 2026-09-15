@@ -77,6 +77,7 @@ export function attachLibraryPanel(api) {
     galleryReturn = null;
   const galleryCards = new Map();
   const gallerySealSlots = new Map();
+  const pagers = new Map();
   const installedRows = new Map();
   let installedRenderGeneration = 0;
   let pictureSealsSignature = null,
@@ -212,28 +213,105 @@ export function attachLibraryPanel(api) {
   $('library-dialog').addEventListener('close', () => {
     if (!$('library-dialog').open) launchGeneration++;
   });
+  function pagerFor(id) {
+    let pager = pagers.get(id);
+    if (!pager) {
+      pager = {
+        nav: $(id),
+        search: $(id === 'gallery-pages' ? 'gallery-search' : 'score-search'),
+        label: document.createElement('span'),
+        page: 0,
+        change: null,
+        pending: null,
+      };
+      const activate = (control, offset) => {
+        if (control.disabled || !control.isConnected || pager.nav.hidden) return;
+        return pager.change?.(pager.page + offset, control);
+      };
+      pager.previous = button('Previous', () => activate(pager.previous, -1));
+      pager.next = button('Next', () => activate(pager.next, 1));
+      pagers.set(id, pager);
+    }
+    return pager;
+  }
+  function beginPagerFocus(id, requestedOpener) {
+    const pager = pagerFor(id),
+      previous = pager.pending,
+      focused = document.activeElement,
+      opener = [pager.previous, pager.next].includes(focused) ? focused : null,
+      owner = { pager, focus: null, current: null, ticket: null };
+    pager.pending = owner;
+    if (previous && !(opener && requestedOpener === opener)) {
+      // Transfer the same lease, including its retired state. Superseding an
+      // automatic read neither loses live intent nor captures new permission.
+      owner.focus = previous.focus;
+      owner.ticket = previous.ticket;
+      previous.focus = null;
+      previous.ticket = null;
+      if (owner.ticket) owner.ticket.owner = owner;
+      return owner;
+    }
+    previous?.focus?.cancel();
+    if (opener) {
+      const ticket = { owner };
+      owner.ticket = ticket;
+      owner.focus = captureOperationFocus(opener, {
+        document,
+        reveal: true,
+        resolveTarget: () => {
+          const currentOwner = ticket.owner;
+          if (pager.pending !== currentOwner || !currentOwner.current?.()) return null;
+          // Reading the current model may synchronously start another render.
+          if (ticket.owner !== currentOwner || pager.pending !== currentOwner) return null;
+          const opposite = opener === pager.previous ? pager.next : pager.previous;
+          return (
+            [opener, opposite].find(
+              (control) => !pager.nav.hidden && control.isConnected && !control.disabled,
+            ) ?? pager.search
+          );
+        },
+      });
+    }
+    return owner;
+  }
+  function endPagerFocus(owner, current = null) {
+    try {
+      owner.current = current;
+      if (owner.pager.pending === owner && current?.()) owner.focus?.restore();
+    } finally {
+      owner.focus?.cancel();
+      if (owner.pager.pending === owner) owner.pager.pending = null;
+    }
+  }
   function paginate(id, page, total, size, change) {
     const pages = Math.max(1, Math.ceil(total / size)),
-      nav = $(id);
-    const hadPagerFocus = [...nav.querySelectorAll('button')].includes(document.activeElement);
-    nav.replaceChildren();
-    if (id === 'gallery-pages') {
-      nav.hidden = pages <= 1;
-      if (nav.hidden) {
-        if (hadPagerFocus && $('collection-dialog').open)
-          $('gallery-search').focus({ preventScroll: true });
-        return;
-      }
-    }
-    const previous = button('Previous', () => change(page - 1)),
-      next = button('Next', () => change(page + 1)),
-      label = document.createElement('span');
+      pager = pagerFor(id),
+      { nav, previous, next, label } = pager;
+    pager.page = page;
+    pager.change = change;
     previous.disabled = page === 0;
     next.disabled = page >= pages - 1;
     label.textContent = `${total} entries · page ${page + 1} of ${pages}`;
-    nav.append(previous, label, next);
+    if (id === 'gallery-pages') {
+      nav.hidden = pages <= 1;
+      if (nav.hidden) {
+        nav.replaceChildren();
+        return;
+      }
+    }
+    // Updating an existing pager must not detach its focused native control.
+    if (!nav.contains(previous)) nav.append(previous, label, next);
   }
-  function renderScores() {
+  function renderScores(opener) {
+    const owner = beginPagerFocus('score-pages', opener);
+    let library = null;
+    try {
+      library = renderScorePage();
+    } finally {
+      endPagerFocus(owner, library ? () => library === api.get().library : null);
+    }
+  }
+  function renderScorePage() {
     const { library } = api.get();
     const resolver = difficulties();
     $('scoreboard').replaceChildren();
@@ -271,10 +349,11 @@ export function attachLibraryPanel(api) {
       $('scoreboard').textContent = library.scores.length
         ? 'No scores match this search.'
         : 'Your first completed flight will appear here.';
-    paginate('score-pages', scorePage, matches.length, 10, (p) => {
+    paginate('score-pages', scorePage, matches.length, 10, (p, opener) => {
       scorePage = p;
-      renderScores();
+      renderScores(opener);
     });
+    return library;
   }
   $('score-search').oninput = () => {
     scorePage = 0;
@@ -1061,26 +1140,40 @@ export function attachLibraryPanel(api) {
     }
     if (view && $('gallery-view-dialog').open) refreshPictureMasteries(view, records);
   }
-  function populateGallery() {
-    const generation = ++galleryPopulation,
+  function populateGallery(opener) {
+    const owner = beginPagerFocus('gallery-pages', opener),
+      generation = ++galleryPopulation,
       library = api.get().library;
-    if (
-      library.pictureReceipts?.some((receipt) => receipt.presentationPin.kind === 'still') &&
-      api.pictureMedia
-    ) {
-      status('gallery-load-status', 'Reading earned-picture original metadata…', 'busy');
-      return api.pictureMedia().then(
-        (media) => {
-          if (generation === galleryPopulation && library === api.get().library)
-            renderGallery(media);
-        },
-        (error) => {
-          if (generation === galleryPopulation && library === api.get().library)
-            renderGallery({ error });
-        },
+    const current = () => {
+      const actual = api.get().library;
+      return (
+        generation === galleryPopulation && library === actual && owner.pager.pending === owner
       );
+    };
+    const complete = (media) => {
+      let rendered = false;
+      try {
+        if (current()) {
+          renderGallery(media);
+          rendered = true;
+        }
+      } finally {
+        endPagerFocus(owner, rendered ? current : null);
+      }
+    };
+    try {
+      if (
+        library.pictureReceipts?.some((receipt) => receipt.presentationPin.kind === 'still') &&
+        api.pictureMedia
+      ) {
+        status('gallery-load-status', 'Reading earned-picture original metadata…', 'busy');
+        return api.pictureMedia().then(complete, (error) => complete({ error }));
+      }
+      complete(null);
+    } catch (error) {
+      endPagerFocus(owner);
+      throw error;
     }
-    renderGallery(null);
   }
   $('collection-dialog').addEventListener('close', () => {
     if (!$('collection-dialog').open) galleryPopulation++;
@@ -1197,9 +1290,9 @@ export function attachLibraryPanel(api) {
       $('gallery-grid').textContent = api.get().library.gallery.length
         ? 'No pictures match this search.'
         : 'A picture is waiting behind your first completed mission.';
-    paginate('gallery-pages', galleryPage, items.length, 12, (p) => {
+    paginate('gallery-pages', galleryPage, items.length, 12, (p, opener) => {
       galleryPage = p;
-      populateGallery();
+      return populateGallery(opener);
     });
     refreshMasteries();
   }
