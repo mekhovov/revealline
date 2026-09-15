@@ -220,7 +220,7 @@ test('identical alias and worker bytes route localhost and project prefixes with
   }
 });
 
-test('actual launcher and runtime links stay versioned; source-only Versions uses the generated root catalog', async (t) => {
+test('actual launcher and runtime links stay versioned; release explorer uses the generated root catalog', async (t) => {
   const launch = await fs.readFile(new URL('../site/launch.mjs', import.meta.url), 'utf8'),
     link = {};
   let destination;
@@ -275,12 +275,13 @@ test('actual launcher and runtime links stay versioned; source-only Versions use
         assert.match(tag, /\bhidden\b/);
         assert.equal(filename, 'diagnostics/index.html');
       } else if (filename === 'releases/index.html') {
-        // These two development links are hidden by the real app in packaged builds.
-        // The Pages catalog is generated beside the versioned sites, not inside one;
-        // a clean source archive correctly has no ignored local releases/index.html.
+        // The app resolves these public links at runtime because the Pages catalog is
+        // generated beside versioned sites, not inside one. A clean source archive
+        // correctly has no ignored local releases/index.html.
         assert.equal(relative, 'game/index.html');
         assert.equal(reference, '../releases/');
-        assert.match(tag, /\bdata-source-only\b/);
+        assert.match(tag, /\bdata-release-explorer\b/);
+        assert.doesNotMatch(tag, /\bdata-source-only\b/);
         assert.notEqual(target.href, catalogURL.href);
         assert.equal(
           await fs.readFile(
@@ -300,5 +301,5 @@ test('actual launcher and runtime links stay versioned; source-only Versions use
     }
     assert.ok(checked > 0, relative);
   }
-  assert.equal(generatedCatalogLinks, 2);
+  assert.equal(generatedCatalogLinks, 4);
 });
