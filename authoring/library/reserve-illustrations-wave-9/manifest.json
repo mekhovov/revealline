@@ -1,0 +1,62 @@
+{
+  "format": "revealline-reserve-illustrations.v1",
+  "wave": 9,
+  "basedOn": "fdf836991cd93e9b8cdb4e409c92c394f9394457",
+  "selectedWorks": 4,
+  "sourceOnly": true,
+  "entries": [
+    {
+      "id": "fpv-snowglass-rooftop",
+      "themeId": "fpv",
+      "theme": "FPV Front",
+      "title": "Snowglass Rooftop",
+      "prompt": "prompts/fpv-snowglass-rooftop.txt",
+      "file": "originals/fpv-snowglass-rooftop.png",
+      "bytes": 1863321,
+      "sha256": "9c76b363e33ce982777ac48495ac1d949ace6d8cc11d8bbcaee88029ffa5b1b0",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "ukraine-spring-painted-ferry",
+      "themeId": "ukraine",
+      "theme": "Ukraine Atlas",
+      "title": "Spring Painted Ferry",
+      "prompt": "prompts/ukraine-spring-painted-ferry.txt",
+      "file": "originals/ukraine-spring-painted-ferry.png",
+      "bytes": 2243464,
+      "sha256": "f914018e7c4465a33f93c188508fb20a9846e3ca7ace9f84157189b8ba2e159c",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "retro-rainlight-pinball-hall",
+      "themeId": "retro",
+      "theme": "1994 Forever",
+      "title": "Rainlight Pinball Hall",
+      "prompt": "prompts/retro-rainlight-pinball-hall.txt",
+      "file": "originals/retro-rainlight-pinball-hall.png",
+      "bytes": 1780054,
+      "sha256": "c5a9a6f2289746712e292b8447aff1381e9760a4e42a3ee09ecc5cb92d1a015e",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    },
+    {
+      "id": "spend-sunroof-market-house",
+      "themeId": "coupa",
+      "theme": "Spend Network",
+      "title": "Sunroof Market House",
+      "prompt": "prompts/spend-sunroof-market-house.txt",
+      "file": "originals/spend-sunroof-market-house.png",
+      "bytes": 2006763,
+      "sha256": "d0328adc0ce24e22afbcaf67e09d93c0eb03e7a805d30890532284ecc0a1f24c",
+      "width": 1774,
+      "height": 887,
+      "runtimeAdopted": false
+    }
+  ],
+  "selectionProvenance": "provenance/originals.json"
+}
