@@ -30,3 +30,7 @@ If a historical source check lacks a sharding helper or generated cache director
 ## Example publishing prompt
 
 “Publish the exact qualified frozen release selected on main. Preserve every immutable source/tag/asset pin, the complete semantic release explorer and direct archive routes. Keep comparison-only testing routes distinct from full byte/browser admissions and the stable root default. Verify original ZIP and all output/public bytes, latest stable selection and actual current play/offline; keep failed attempts and successful retries in the evidence.”
+
+## Snapshot and integration checks
+
+Use the selected immutable source and its own frozen builder. Follow [snapshot staging](../../../docs/snapshot-staging.md) for the rename-first source-TAR transfer; EXDEV still needs space for the temporary copy. Confirm fresh capacity and filesystem placement before building. Integration must retain the chosen main cutoff and the next release version; earlier candidate checks cannot qualify a later merge. Retire only verified generated previews, preserving the original Git/release assets and verification receipts.

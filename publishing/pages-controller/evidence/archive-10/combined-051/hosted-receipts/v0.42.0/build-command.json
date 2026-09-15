@@ -1,0 +1,11 @@
+[
+  "node",
+  "/home/runner/work/_temp/archive10/v0.42.0/source/scripts/game-cli.mjs",
+  "build",
+  "--out",
+  "/home/runner/work/_temp/archive10/project/releases/v0.42.0/site",
+  "--version",
+  "v0.42.0",
+  "--revision",
+  "e9928cdaad2f55d912aadd2ef25f635fb99e938c"
+]

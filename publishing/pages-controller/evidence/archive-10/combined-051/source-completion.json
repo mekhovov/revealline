@@ -1,0 +1,23 @@
+{
+  "commit": "bd6839c500b09213159eccea92407724ef668056",
+  "parent": "8a56e6ba871a5d167cb3f164960c658039de1fc6",
+  "tree": "5427f5bdcf07dbae1219e10c2dc0217ce16026f9",
+  "branch": "prepare/archive10-v051",
+  "clean": true,
+  "completedAt": "2026-09-15T02:29:51.821673+00:00",
+  "tests": {
+    "command": "python3 tools/test-verify.py",
+    "passed": 27,
+    "durationSeconds": 1.713
+  },
+  "expected": {
+    "files": 976,
+    "bytes": 633532427,
+    "capBytes": 800000000,
+    "headroomBytes": 166467573
+  },
+  "newOwnedLogicalBytes": 1214720,
+  "localBudgetBytes": 16777216,
+  "peer": "peer-source-parfit.json",
+  "execution": "No real game archive/build/reproduction. Tiny guard fixtures only. Push/deployment separately authorized after this source boundary."
+}

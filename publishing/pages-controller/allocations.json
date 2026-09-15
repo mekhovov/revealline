@@ -114,7 +114,8 @@
       "id": "archive-10",
       "repository": "mekhovov/revealline-archive-10",
       "versions": [
-        "v0.42.0"
+        "v0.42.0",
+        "v0.51.0"
       ]
     }
   ]

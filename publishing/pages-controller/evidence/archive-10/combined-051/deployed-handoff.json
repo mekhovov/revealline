@@ -1,0 +1,177 @@
+{
+  "format": "revealline-archive10-combined-public-handoff.v1",
+  "status": "PASS_HOSTED_AND_PUBLIC_BYTES_NATIVE_PENDING",
+  "completedAt": "2026-09-15T02:45:17.572477+00:00",
+  "repository": "mekhovov/revealline-archive-10",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension",
+  "sourceCommit": "bd6839c500b09213159eccea92407724ef668056",
+  "infrastructureCommit": "55019541f8210ccef70f09cc04885f0debf1c4a7",
+  "infrastructureTree": "5427f5bdcf07dbae1219e10c2dc0217ce16026f9",
+  "pullRequest": {
+    "number": 1,
+    "url": "https://github.com/mekhovov/revealline-archive-10/pull/1"
+  },
+  "workflowRun": 34921439329,
+  "deploymentId": 6450531920,
+  "deployedAt": "2026-09-15T02:36:26Z",
+  "latestRemoteMainAndDeploymentRechecked": true,
+  "expectedInventory": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension/expected-inventory.json",
+    "sha256": "98e50fd1c31d9b3b50bbff006c651c63320335b075c29e5a48e605323d18241a",
+    "files": 976,
+    "bytes": 633532427,
+    "hiddenFiles": [
+      ".nojekyll",
+      "releases/v0.42.0/site/.xonix-build.json",
+      "releases/v0.51.0/site/.xonix-build.json"
+    ]
+  },
+  "http": {
+    "report": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/archive10-v051-extension/.cache/extension051/public-http-attempt-1/report.json",
+    "reportSha256": "47fe7295f7704e172269f25472d27853b1822a0bab6c64cf8fb551e404d0be58",
+    "direct200Files": 976,
+    "verifiedBytes": 633532427,
+    "attempts": 976,
+    "retries": 0,
+    "failedFiles": 0,
+    "skipped": 0,
+    "durationSeconds": 248.613
+  },
+  "nativeURLs": [
+    "https://mekhovov.github.io/revealline-archive-10/releases/v0.42.0/site/game/",
+    "https://mekhovov.github.io/revealline-archive-10/releases/v0.51.0/site/game/"
+  ],
+  "canonicalRows": {
+    "v0.42.0": {
+      "files": 353,
+      "bytes": 310496669
+    },
+    "v0.51.0": {
+      "files": 618,
+      "bytes": 323016788
+    }
+  },
+  "globals": {
+    "files": 5,
+    "bytes": 18970
+  },
+  "ownedSourceAndMetadataBytesObserved": 3724930,
+  "metadataBudgetBytes": 12582912,
+  "gamePayloadsRetained": 0,
+  "downloadedArchiveFilesRetained": 0,
+  "mainControllerChanged": false,
+  "tagsChanged": false,
+  "nextBoundary": "Root owns actual native/offline/profile acceptance for both versions and subsequent controller admission. Start from latest main and preserve its new Archive09 admission/independent-build/sync metadata policies. Historical old042-only evidence remains intact and is not claimed as combined native acceptance.",
+  "evidence": [
+    {
+      "path": "source-completion.json",
+      "bytes": 765,
+      "sha256": "b8ec4a4a52d000d8c27bd32944196bf86620b63da6a69c2bf54d2a0cbff8eecd"
+    },
+    {
+      "path": "peer-source-parfit.json",
+      "bytes": 2834,
+      "sha256": "5b6054f2211f7f6bf25bffd9ffd6b0baee580955cadff52d147f7e801754681a"
+    },
+    {
+      "path": "staged.json",
+      "bytes": 2769,
+      "sha256": "cfa5122d48f7df0cb54628bc573cfca65e6f0b27a68ef7f33648151c53b70aa0"
+    },
+    {
+      "path": "final-ref-check.json",
+      "bytes": 515,
+      "sha256": "fe026a0fcbccbd5d266aa57d3c4a1688c3fa316e718eb3a545888a4dd4cc9c1a"
+    },
+    {
+      "path": "pr-before-merge.json",
+      "bytes": 300,
+      "sha256": "bd250c87b3b0ec106b965e22595157e8fb616f95dc239a105dc3d335a853f889"
+    },
+    {
+      "path": "pr-merged.json",
+      "bytes": 239,
+      "sha256": "bac5a834b9ed111743ddb30fd5e5ce6f2e173d15eba58d13876e48693ae77af1"
+    },
+    {
+      "path": "run-final.json",
+      "bytes": 3721,
+      "sha256": "0ff7423a326d9b392c3a350028de62afc2016141c0ea7ab05043da603d48aaf0"
+    },
+    {
+      "path": "hosted-receipt-intake.json",
+      "bytes": 2590,
+      "sha256": "715f729aecd9c40a0b41052db06f5fae1f4c14e78403aee47583a9f7f76e0e06"
+    },
+    {
+      "path": "hosted-completion.json",
+      "bytes": 2701,
+      "sha256": "e93332919fb4749a160b750ee47b4106a071b61f73af497bc4a7dcf1902e2b21"
+    },
+    {
+      "path": "public-tool/preparation.json",
+      "bytes": 927,
+      "sha256": "c0f4ff6507c63be48b6486a2e046de9b3def3a71f7052b2c7d9e200b97649070"
+    },
+    {
+      "path": "public-tool/audit-public.mjs",
+      "bytes": 16845,
+      "sha256": "614a7240df56231e214dfe7cc562906aaf2d6dcea4441049567fdfc2fc8e7829"
+    },
+    {
+      "path": "public-tool/source.diff",
+      "bytes": 9869,
+      "sha256": "786c737c58086fa91b004368a6e092d362d7912494554271d0a7b75158f80b82"
+    },
+    {
+      "path": "public-tool/check.stdout",
+      "bytes": 577,
+      "sha256": "49da40548f3f71d604b3dc3f9d05a1d060fd8932a685df8cc18f3a67e3c52e9c"
+    },
+    {
+      "path": "http-execution.json",
+      "bytes": 1252,
+      "sha256": "a9e9907c23b7cd99e7f7fae742ae4d12c338df020f426a03694eff66b357f7cb"
+    },
+    {
+      "path": "public-http-attempt-1/report.json",
+      "bytes": 1423,
+      "sha256": "47fe7295f7704e172269f25472d27853b1822a0bab6c64cf8fb551e404d0be58"
+    },
+    {
+      "path": "public-http-attempt-1/inventory.json",
+      "bytes": 196517,
+      "sha256": "90bd265b7c575d03dce3f2cda7e27fedb45d6a152cd2d9450b1dfd5d19a86d3c"
+    },
+    {
+      "path": "public-http-attempt-1/attempts.jsonl",
+      "bytes": 667459,
+      "sha256": "457efa94f4a9eb18d8c075b998fd664cfc3ba0e0f97cc99ee649bb6c421c5427"
+    },
+    {
+      "path": "public-http-attempt-1/results.jsonl",
+      "bytes": 667459,
+      "sha256": "457efa94f4a9eb18d8c075b998fd664cfc3ba0e0f97cc99ee649bb6c421c5427"
+    },
+    {
+      "path": "public-final-main.stdout",
+      "bytes": 57,
+      "sha256": "5aa91d73819d29b49c3fd24dd1d20f12675f6ffe89a6c6db736a16f440fab3da"
+    },
+    {
+      "path": "public-final-deployments.json",
+      "bytes": 7715,
+      "sha256": "dba3da34d57115ce48582dae5b4a4b889856156bb6fc9d8214a468ebb3d725d3"
+    },
+    {
+      "path": "public-final-statuses.json",
+      "bytes": 6817,
+      "sha256": "d994fec7fdfd1a7f1c6cea46b93bf7609d81d5bca5c7e74f0a3dec8a4c796e39"
+    },
+    {
+      "path": "main-handoff-boundary.json",
+      "bytes": 641,
+      "sha256": "0370fb165a2413a62d888a08d90d2fa4c43ace7620cc95f010615b99ab6c437a"
+    }
+  ]
+}
