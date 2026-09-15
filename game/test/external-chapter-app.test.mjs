@@ -233,6 +233,9 @@ async function page(t, f = {}) {
     storage: f.storage,
     lockManager: f.locks,
     pictures: { Image: Picture },
+    // Cold hosted runners can take longer than the helper's interactive default
+    // while restoring a retained external picture bundle.
+    initialReadyTimeoutMs: 15000,
     ...f.options,
   });
   const fetchBefore = globalThis.fetch;
