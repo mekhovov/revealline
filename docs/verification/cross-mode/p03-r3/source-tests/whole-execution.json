@@ -1,0 +1,44 @@
+{
+  "before": "whole-before.json",
+  "inputsUnchanged": true,
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/library-launch-host.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/starting-setup-host.test.mjs",
+        "game/test/restart-navigation-host.test.mjs",
+        "game/test/course-selection-host.test.mjs",
+        "game/test/attempt-export-panel.test.mjs",
+        "game/test/backup-set-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 90.23312458302826,
+      "freeBefore": 924143616,
+      "log": "whole-node22.log"
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/library-launch-host.test.mjs",
+        "game/test/mission-replacement-host.test.mjs",
+        "game/test/starting-setup-host.test.mjs",
+        "game/test/restart-navigation-host.test.mjs",
+        "game/test/course-selection-host.test.mjs",
+        "game/test/attempt-export-panel.test.mjs",
+        "game/test/backup-set-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 154.14393054204993,
+      "freeBefore": 918085632,
+      "log": "whole-node20.log"
+    }
+  ]
+}

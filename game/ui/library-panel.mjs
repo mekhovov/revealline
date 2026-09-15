@@ -1,7 +1,8 @@
 import { createOperationStatus } from './operation-status.mjs';
 import { attachBackupSetPanel } from './backup-set-panel.mjs';
 import { prepareBackup, exportBackup, MAX_BACKUP_BYTES } from '../backup.mjs';
-import { importLibrary, exportLibrary, libraryCapacity } from '../library.mjs';
+import { importLibrary, exportLibrary, libraryCapacity, campaignKey } from '../library.mjs';
+import { canonicalJSON } from '../data-json.mjs';
 import {
   preparePack,
   installPack,
@@ -67,7 +68,8 @@ export function attachLibraryPanel(api) {
     viewReady = false,
     galleryFrame = 0,
     viewGeneration = 0,
-    returnToCollection = true;
+    returnToCollection = true,
+    launchGeneration = 0;
   let galleryPage = 0,
     scorePage = 0,
     galleryReturn = null;
@@ -151,6 +153,7 @@ export function attachLibraryPanel(api) {
       ? api.getReducedEffects()
       : api.get().library.preferences.reducedEffects) === true;
   function open(panel = 'scores') {
+    launchGeneration++;
     backupSetPanel?.invalidate();
     api.pause();
     for (const id of ['scores', 'saves', 'packs', 'challenges'])
@@ -158,6 +161,53 @@ export function attachLibraryPanel(api) {
     refresh();
     if (!$('library-dialog').open) $('library-dialog').showModal();
   }
+  // Launch ownership is separate from import/export operation ownership. A
+  // delayed decision may close only the exact Library visit or picture it opened.
+  const launchForeground = () => !document.hidden && document.hasFocus?.() !== false;
+  const retireLaunch = () => {
+    launchGeneration++;
+  };
+  // This epoch retires launch intent only. Existing picture/media and P01
+  // import/export operations retain their own independent lifetime.
+  const pageEvents = globalThis.window ?? globalThis;
+  pageEvents.addEventListener?.('blur', retireLaunch);
+  pageEvents.addEventListener?.('pagehide', retireLaunch);
+  document.addEventListener?.('visibilitychange', () => {
+    if (document.hidden) retireLaunch();
+  });
+  function libraryLaunchCurrent(panel, opener, generation) {
+    return (
+      launchForeground() &&
+      generation === launchGeneration &&
+      $('library-dialog').open &&
+      !$(`library-${panel}`).hidden &&
+      opener.isConnected &&
+      !opener.disabled
+    );
+  }
+  async function launch(descriptor, { opener, isCurrent, close, entry, options, statusId }) {
+    const onSelected = () => {
+      if (!isCurrent()) return;
+      close();
+      api.focusMission?.();
+    };
+    try {
+      if (!isCurrent()) return false;
+      if (api.requestLaunch)
+        return await api.requestLaunch(descriptor, { opener, isCurrent, onSelected });
+      // Optional injection preserves standalone panel callers and their existing
+      // selection contract. The Solo host always supplies its checked decision.
+      api.select(entry, options);
+      onSelected();
+      return true;
+    } catch (error) {
+      if (isCurrent()) status(statusId, error);
+      return false;
+    }
+  }
+  $('library-dialog').addEventListener('close', () => {
+    if (!$('library-dialog').open) launchGeneration++;
+  });
   function paginate(id, page, total, size, change) {
     const pages = Math.max(1, Math.ceil(total / size)),
       nav = $(id);
@@ -256,16 +306,29 @@ export function attachLibraryPanel(api) {
       const p = document.createElement('p');
       p.textContent = pack.description;
       row.append(title, p);
-      for (const source of pack.campaigns)
-        row.append(
-          button(`Play ${source.title || source.name || source.id}`, () => {
-            api.select(
-              api.catalog().find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
-            );
-            $('library-dialog').close();
-            api.focusMission?.();
-          }),
-        );
+      for (const source of pack.campaigns) {
+        const play = button(`Play ${source.title || source.name || source.id}`, () => {
+          const entry = api
+              .catalog()
+              .find((c) => c.sourcePackId === pack.id && c.campaign.id === source.id),
+            generation = launchGeneration;
+          if (!entry) {
+            status('pack-status', new Error('That installed campaign is unavailable.'));
+            return;
+          }
+          return launch(
+            { kind: 'library-installed', id: campaignKey(entry.campaign) },
+            {
+              opener: play,
+              isCurrent: () => libraryLaunchCurrent('packs', play, generation),
+              close: () => $('library-dialog').close(),
+              entry,
+              statusId: 'pack-status',
+            },
+          );
+        });
+        row.append(play);
+      }
       row.append(
         button('Remove from device', () =>
           task('pack-status', async (operation) => {
@@ -777,14 +840,24 @@ export function attachLibraryPanel(api) {
   $('challenge-date').value = new Date().toISOString().slice(0, 10);
   $('launch-challenge').onclick = () => {
     try {
-      const c = challengeCampaign(
-        $('challenge-date').value,
-        $('challenge-kind').value,
-        api.base().classRecipes,
+      const date = $('challenge-date').value,
+        kind = $('challenge-kind').value,
+        c = challengeCampaign(date, kind, api.base().classRecipes),
+        opener = $('launch-challenge'),
+        generation = launchGeneration;
+      return launch(
+        { kind: 'library-challenge', id: c.id },
+        {
+          opener,
+          isCurrent: () =>
+            libraryLaunchCurrent('challenges', opener, generation) &&
+            $('challenge-date').value === date &&
+            $('challenge-kind').value === kind,
+          close: () => $('library-dialog').close(),
+          entry: { ...api.base(), campaign: c, activity: 'challenge' },
+          statusId: 'challenge-status',
+        },
       );
-      api.select({ ...api.base(), campaign: c, activity: 'challenge' });
-      $('library-dialog').close();
-      api.focusMission?.();
     } catch (e) {
       status('challenge-status', e);
     }
@@ -1154,16 +1227,37 @@ export function attachLibraryPanel(api) {
         );
         return;
       }
-      returnToCollection = false;
-      api.select(installed.entry, {
-        levelId: view.level.id,
-        themeId: view.theme.id,
-        seed: view.item.seed ?? 1,
-        ...(installed.difficulty ? { difficulty: installed.difficulty } : {}),
-      });
-      $('gallery-view-dialog').close();
-      if ($('collection-dialog').open) $('collection-dialog').close();
-      api.focusMission?.();
+      const picture = view,
+        generation = viewGeneration,
+        launchEpoch = launchGeneration,
+        recordIdentity = canonicalJSON(picture.item);
+      return launch(
+        { kind: 'library-picture', id: picture.item.key, recordIdentity },
+        {
+          opener: $('gallery-replay'),
+          isCurrent: () =>
+            launchForeground() &&
+            launchEpoch === launchGeneration &&
+            view === picture &&
+            generation === viewGeneration &&
+            viewReady &&
+            $('gallery-view-dialog').open &&
+            canonicalJSON(picture.item) === recordIdentity,
+          close: () => {
+            returnToCollection = false;
+            $('gallery-view-dialog').close();
+            if ($('collection-dialog').open) $('collection-dialog').close();
+          },
+          entry: installed.entry,
+          options: {
+            levelId: picture.level.id,
+            themeId: picture.theme.id,
+            seed: picture.item.seed ?? 1,
+            ...(installed.difficulty ? { difficulty: installed.difficulty } : {}),
+          },
+          statusId: 'gallery-view-meta',
+        },
+      );
     }
   };
   $('gallery-animate').onclick = async () => {

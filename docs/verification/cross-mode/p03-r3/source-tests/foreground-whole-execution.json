@@ -1,0 +1,36 @@
+{
+  "before": "foreground-whole-before.json",
+  "inputsUnchanged": true,
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/library-launch-host.test.mjs",
+        "game/test/attempt-export-panel.test.mjs",
+        "game/test/backup-set-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 76.49308495898731,
+      "freeBefore": 679092224,
+      "log": "foreground-whole-node22.log"
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/library-launch-host.test.mjs",
+        "game/test/attempt-export-panel.test.mjs",
+        "game/test/backup-set-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 84.69018054194748,
+      "freeBefore": 775778304,
+      "log": "foreground-whole-node20.log"
+    }
+  ]
+}

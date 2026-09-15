@@ -1,0 +1,29 @@
+{
+  "base": "4397b367b3f1fa17bf4a0989c90febaca9de9710",
+  "baseTree": "3f52ae7a8c6fb6449347f1cf4da2b0338d647a6b",
+  "sourceHoldSha256": "1294a7841e93db192a88c2fe858b0111ad5f4282e6bd333b2b9df3cdc468bad6",
+  "overlays": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 246930,
+      "sha256": "4ebf6b69bd04eb09721f6ef7c75d6c0d491ac5d7dd845210b9b3ed7c6e043654"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 54216,
+      "sha256": "0ff1538a10911e9896dbc1b4a0270f153071d4debe584fb575dd57d621594bdd"
+    }
+  ],
+  "baseHtml": {
+    "path": "game/index.html",
+    "bytes": 70334,
+    "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d"
+  },
+  "pid": 52356,
+  "port": 51257,
+  "url": "http://127.0.0.1:51257/game/",
+  "gitBlobCacheBytes": 67108864,
+  "maxConcurrentRequests": 4,
+  "helperSha256": "d26abba7abf0f4253bbfd1fdd3023770a9b9d52f6bba7cb51cd01e0b4aea8fd1",
+  "scope": "Exact Git4397 with two immutable memory overlays pinned at held02. HTML and all other regular assets from Git. No simulated state/responses, timing fixtures, P05 CSS, P08 or A2/R5 overlays. LRU cap describes stored Git blobs, not total process RSS."
+}
