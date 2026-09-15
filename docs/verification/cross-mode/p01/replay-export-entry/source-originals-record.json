@@ -1,0 +1,10 @@
+{
+  "status": "ORIGINAL_SOURCE_CHECK_EVIDENCE_PRESERVED",
+  "path": "source-originals.zip",
+  "bytes": 9729,
+  "sha256": "44b4f79613bce487aba54f239daf02e2bef407562c68b84050bbc428111bf1eb",
+  "originalCacheFiles": 7,
+  "originalCacheBytes": 16702,
+  "sourceReceiptSha256": "35293232880b965833487b9439d8f946b8f8a81cd218a2162552f94d48eff382",
+  "limits": "Historical point-in-time source checks; later edits require fresh exact-source qualification. No native/public acceptance conferred."
+}

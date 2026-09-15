@@ -1,0 +1,59 @@
+{
+  "status": "FOCUSED_PASS_NATIVE_PENDING",
+  "files": [
+    {
+      "path": "game/playground/index.html",
+      "bytes": 26024,
+      "sha256": "ffca246e6a99215a897ba7df4cda1ba1780426ec4937a2de58282e134a34c44a"
+    },
+    {
+      "path": "game/playground/playground.css",
+      "bytes": 5783,
+      "sha256": "e2a472c589eb6bccde134940d1ae3d8d9ed173e2e23420bd8d771e417b073487"
+    },
+    {
+      "path": "game/playground/playground.mjs",
+      "bytes": 48750,
+      "sha256": "50068fc68c421c235323d58e8a894514b515c6d39335c5a1719a7c995791e670"
+    },
+    {
+      "path": "game/test/playground-import-host.test.mjs",
+      "bytes": 22806,
+      "sha256": "8ad454397fc2d7473075930e3f51ee17acf3cc631169c6112d76d55571e27abf"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/playground-operation-feedback.md",
+      "bytes": 2316,
+      "sha256": "5a2df4e662e9988ae4c5259589c83cf3101eb095f0a3177fc1d4d197a4527d76"
+    }
+  ],
+  "tests": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 680.985875
+  },
+  "checks": [
+    "focused tests",
+    "ESLint",
+    "Prettier",
+    "git diff --check"
+  ],
+  "originals": [
+    {
+      "path": ".cache/cross-mode/p01/playground-feedback-correction/focused.log",
+      "bytes": 5916,
+      "sha256": "a90ef5ee59e02a40713e781d2b600d4cc2907f925e35c786afd96689ebc19737"
+    },
+    {
+      "path": ".cache/cross-mode/p01/playground-feedback-correction/focused-final.log",
+      "bytes": 5914,
+      "sha256": "f085ea33bda69fe0c37e7261079e419d08c4381222a4fb991f3c0b1d34fbbc79"
+    },
+    {
+      "path": ".cache/cross-mode/p01/playground-feedback-correction/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

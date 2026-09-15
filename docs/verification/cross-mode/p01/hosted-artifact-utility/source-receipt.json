@@ -1,0 +1,124 @@
+{
+  "format": "revealline-hosted-utility-implementation-review.v1",
+  "status": "IMPLEMENTED_SYNTHETIC_VERIFIED",
+  "sourceWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test_p01_file_cancel",
+  "baseCommit": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "scope": "Existing artifact inspection and two original-member uploads to an explicitly reviewed existing draft only. No real network payload/API mutation/job dispatch/rebuild/version/commit performed.",
+  "changedFiles": [
+    {
+      "path": "publishing/utility/README.md",
+      "bytes": 8541,
+      "sha256": "20f96c2bb8a3f5e3d765f2a215ec22d20233dfefcd37e7c3070b24880f1b70d2"
+    },
+    {
+      "path": "publishing/utility/inspect_qualified_artifact.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e"
+    },
+    {
+      "path": "publishing/utility/provenance.json",
+      "bytes": 2488,
+      "sha256": "9c07dcbcada5de8cd901f1a7e6b458220f34746166e3e92dbb9c7aad29397564"
+    },
+    {
+      "path": "publishing/utility/release_artifact.py",
+      "bytes": 29832,
+      "sha256": "f4244438c5df6a6f19d3d197cbb1d785a8a2df616c246b4f4573d4eb4c70604e"
+    },
+    {
+      "path": "publishing/utility/test_release_artifact.py",
+      "bytes": 24465,
+      "sha256": "a463527fcddee391a98f6bd833b47728091428d37358ff3c93fb24e8ced5fd5f"
+    },
+    {
+      "path": "publishing/utility/test_upload_distribution.py",
+      "bytes": 14382,
+      "sha256": "ccc3fce28bdd56aa0f267edab44faf25f5195d286bed4431ba2777fb54fe8d2c"
+    },
+    {
+      "path": "publishing/utility/test_upload_source.py",
+      "bytes": 14206,
+      "sha256": "a098e5068d4737276f5dd4edfb7829d348a4d6ed0da90786ad9ad846234035dc"
+    },
+    {
+      "path": "publishing/utility/upload_distribution.py",
+      "bytes": 18035,
+      "sha256": "036c8a075b1618032f63e795c9f8b622840754f85e22df55334d1638f6cd3662"
+    },
+    {
+      "path": "publishing/utility/upload_source.py",
+      "bytes": 17965,
+      "sha256": "32091bd624eb55fbfc5658432d5948cdef0445d4f989d1c0175c9b3a3da5c5c5"
+    },
+    {
+      "path": "publishing/utility/verify_frozen_offline.py",
+      "bytes": 10600,
+      "sha256": "3345a0aa397de53f6cda0237fdb088ffaf3b9b90e5fe0ea10c89609275fcac25"
+    },
+    {
+      "path": ".github/workflows/qualify-release-source.yml",
+      "bytes": 9779,
+      "sha256": "1556a65202bc0e70ce84e10333df711fc863aec0f261c710b9216eb7d5b4af83"
+    }
+  ],
+  "checks": {
+    "focusedCommand": "python3 -m unittest discover -s publishing/utility -p 'test_*.py'",
+    "tests": 40,
+    "passed": 40,
+    "seconds": 17.188,
+    "syntax": "PASS",
+    "format": "PASS",
+    "workflowDiffCheck": "PASS",
+    "preservedEngineAndTestBytes": "5 of 5 match reviewed originals"
+  },
+  "evidence": [
+    {
+      "path": ".cache/hosted-utility-review/initial-36.log",
+      "bytes": 361,
+      "sha256": "5478c2cb8cee5b51eb73a875e63bc45b382895afcd434989078398d60d1de7bd"
+    },
+    {
+      "path": ".cache/hosted-utility-review/final.log",
+      "bytes": 364,
+      "sha256": "fd8b2a243450528321e62de18a3b78adfbd32f7871363b08fe1702d89144b176"
+    },
+    {
+      "path": ".cache/hosted-utility-review/wrapper-final.log",
+      "bytes": 336,
+      "sha256": "cfc00220fd6a2646ad53cd65851ea7220270001f92f81af4fab86e23e07ad036"
+    },
+    {
+      "path": ".cache/hosted-utility-review/final-40.log",
+      "bytes": 365,
+      "sha256": "10118488f6d43ea55d252b3f720e41ba9d8fdb890873101fe19f359afdec7e71"
+    },
+    {
+      "path": ".cache/hosted-utility-review/format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/hosted-utility-review/syntax-provenance.json",
+      "bytes": 173,
+      "sha256": "6c900de7d8507e5d65af6650e0238546a5bf9682b27de2aaf8481cfa30cce387"
+    },
+    {
+      "path": ".cache/hosted-utility-review/workflow.diff",
+      "bytes": 6106,
+      "sha256": "8d0e276fb9c59723644acf9e30b4d47b4366330ce385dd58fb7f60fe8a66b38f"
+    },
+    {
+      "path": ".cache/hosted-utility-review/offline-portability.diff",
+      "bytes": 2182,
+      "sha256": "33ec34258b5e955337019c5190373ebb519dfc70069dfab9d9f843f9c04bc418"
+    }
+  ],
+  "boundaries": [
+    "Default six source gates/four shards/freeze preserved; focused utility tests are an additional preflight step.",
+    "Read-only inspect and explicit contents-write upload jobs use actual workflow checkout and separate exact qualified checkout.",
+    "Seven reviewed small originals and nine descriptors precede both member preflights; no existing member overwrite or ambiguous POST retry.",
+    "Whole original TAR/Git and ZIP/manifest inspection, offline budget/worker/entry checks preserved.",
+    "No actual artifact/release/public/P01 qualification claimed by synthetic tests.",
+    "Parent reviews actual dispatch binding after the new candidate is committed and qualified."
+  ]
+}

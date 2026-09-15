@@ -409,6 +409,7 @@ export function attachLibraryPanel(api) {
     }
   }
   $('library-dialog').addEventListener('cancel', (e) => {
+    if (e.target !== $('library-dialog')) return;
     if (cancelAttemptExport() || busy) e.preventDefault();
   });
   $('library-dialog').addEventListener('close', () => {

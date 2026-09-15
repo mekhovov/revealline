@@ -1,0 +1,9 @@
+{
+  "status": "EXACT_ORIGINAL_SOURCE_EVIDENCE_PRESERVED",
+  "path": "source-evidence.zip",
+  "bytes": 7198,
+  "sha256": "f16c408d25fe86bed7a97ddc353f2bb6d2bb773a2e3f0af72fadcbaf7894e54a",
+  "originalFiles": 9,
+  "originalBytes": 14849,
+  "scope": "Synthetic tests and source review only; no actual hosted artifact operation or phase acceptance."
+}

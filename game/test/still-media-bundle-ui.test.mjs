@@ -61,6 +61,16 @@ test('actual workshop reviews without writes, explicitly restores all originals,
     /2 distinct retained originals.*No data has been restored/,
   );
   assert.equal(h.doc.activeElement, h.$('restore-originals'));
+  const reviewed = h.$('bundle-review').textContent,
+    selected = h.$('bundle-file').files;
+  h.$('bundle-file').focus();
+  h.$('bundle-file').dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(h.host.panel.dialog.open, true);
+  assert.equal(h.doc.activeElement, h.$('bundle-file'));
+  assert.equal(h.$('bundle-file').files, selected);
+  assert.equal(h.$('bundle-review').textContent, reviewed);
+  assert.equal(h.$('restore-originals').disabled, false);
+  assert.deepEqual(await store.read(), before);
   assert.equal(await h.$('restore-originals').onclick(), true);
   const restored = await store.read();
   assert.equal(restored.generation, 1);
