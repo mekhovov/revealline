@@ -252,6 +252,15 @@
         </div>
       </dialog>
       <aside id="coop-tools" class="coop-tools" aria-label="Help and options">
+        <section class="coop-picture" aria-label="Arena picture">
+          <p id="coop-picture-status" role="status" aria-live="polite">
+            Preparing the Team picture…
+          </p>
+          <div class="coop-picture-actions">
+            <button id="coop-picture-cancel" type="button" hidden>Cancel picture loading</button>
+            <button id="coop-picture-retry" type="button" hidden>Retry picture</button>
+          </div>
+        </section>
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
           <button id="coop-help-read" type="button">Read controls</button>

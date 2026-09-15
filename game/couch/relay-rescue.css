@@ -813,3 +813,19 @@ kbd {
 .field-kit[data-field-kit-page='relay-rescue'] .identity strong {
   overflow-wrap: anywhere;
 }
+
+/* Picture controls share the movable lobby/pause tools and their current root. */
+.coop-picture {
+  min-inline-size: 0;
+}
+.coop-picture p {
+  overflow-wrap: anywhere;
+}
+.coop-picture-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.coop-picture-actions button {
+  min-block-size: 50px;
+}
