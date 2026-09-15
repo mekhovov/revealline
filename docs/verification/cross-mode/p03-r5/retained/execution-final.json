@@ -1,0 +1,85 @@
+{
+  "before": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7679,
+      "sha256": "57d867b71c8fb5146f77f043fb5cf4735768dc38a255432bf930ae38fb2a66a2"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    },
+    {
+      "path": "docs/verification/cross-mode/p03-r5/README.md",
+      "bytes": 3031,
+      "sha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2"
+    }
+  ],
+  "after": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7679,
+      "sha256": "57d867b71c8fb5146f77f043fb5cf4735768dc38a255432bf930ae38fb2a66a2"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    },
+    {
+      "path": "docs/verification/cross-mode/p03-r5/README.md",
+      "bytes": 3031,
+      "sha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2"
+    }
+  ],
+  "unchanged": true,
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 77.91643704101443,
+      "log": ".cache/r5/final-whole-node22.log",
+      "logBytes": 34455,
+      "logSha256": "6fee9e89ab4bfd4072e1c4a370ee666630963e01c877516e15d69376135f548c"
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 74.78497554198839,
+      "log": ".cache/r5/final-whole-node20.log",
+      "logBytes": 32358,
+      "logSha256": "4303a0d1ee66a81a38ee2423eba7549061d60740f9f5b7c25d4e394fa2e0891e"
+    }
+  ]
+}

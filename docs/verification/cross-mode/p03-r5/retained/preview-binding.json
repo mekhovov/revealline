@@ -1,0 +1,11 @@
+{
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "runtime": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    }
+  ],
+  "scope": "One exact R5 Couch host overlay; all other game routes exact1da Git. No state injection/build/copies."
+}

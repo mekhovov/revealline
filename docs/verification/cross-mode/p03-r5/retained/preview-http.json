@@ -1,0 +1,8 @@
+{
+  "url": "http://127.0.0.1:63774/game/couch/couch.mjs",
+  "status": 200,
+  "mime": "text/javascript",
+  "bytes": 46983,
+  "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502",
+  "scope": "One local HTTP source module; no browser/native/asset claim."
+}

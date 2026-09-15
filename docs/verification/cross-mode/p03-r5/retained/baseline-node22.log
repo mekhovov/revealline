@@ -1,0 +1,236 @@
+TAP version 13
+# Subtest: untouched prepared lobby focuses enabled Start once without controller ownership or starting
+not ok 1 - untouched prepared lobby focuses enabled Start once without controller ownership or starting
+  ---
+  duration_ms: 87.848584
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    '' !== 'race-start'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'race-start'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:24:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+not ok 2 - delayed initial preparation leaves loading focus alone, then hands off to Ready Start
+  ---
+  duration_ms: 46.091916
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    '' !== 'race-start'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'race-start'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:58:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a deliberate current focus is never replaced by the initial handoff
+not ok 3 - a deliberate current focus is never replaced by the initial handoff
+  ---
+  duration_ms: 36.659167
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:63:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:84:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a deliberate moved-away focus is never replaced by the initial handoff
+not ok 4 - a deliberate moved-away focus is never replaced by the initial handoff
+  ---
+  duration_ms: 34.326209
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:63:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:84:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+not ok 5 - a deliberate pre-attached-recovery focus is never replaced by the initial handoff
+  ---
+  duration_ms: 38.141125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:63:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:84:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: initial-background permanently relinquishes initial focus even when ready later
+not ok 6 - initial-background permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 36.20725
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:88:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:104:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: blur-return permanently relinquishes initial focus even when ready later
+not ok 7 - blur-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 32.275958
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:88:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:104:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: hidden-return permanently relinquishes initial focus even when ready later
+not ok 8 - hidden-return permanently relinquishes initial focus even when ready later
+  ---
+  duration_ms: 30.090166
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:88:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:104:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: an initially disabled Start is never chosen as focus
+not ok 9 - an initially disabled Start is never chosen as focus
+  ---
+  duration_ms: 35.024666
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:119:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: an initially no-rect Start is never chosen as focus
+not ok 10 - an initially no-rect Start is never chosen as focus
+  ---
+  duration_ms: 32.193333
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:119:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: an initially css-hidden Start is never chosen as focus
+not ok 11 - an initially css-hidden Start is never chosen as focus
+  ---
+  duration_ms: 30.13225
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:119:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: an initially aria-hidden Start is never chosen as focus
+not ok 12 - an initially aria-hidden Start is never chosen as focus
+  ---
+  duration_ms: 32.313959
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:108:3'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:119:5)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: boot failure preserves recovery focus and cannot establish a Ready handoff
+ok 13 - boot failure preserves recovery focus and cannot establish a Ready handoff
+  ---
+  duration_ms: 2.955292
+  type: 'test'
+  ...
+# Subtest: required picture error keeps Start unavailable and does not steal its visible Cancel or setup choice
+not ok 14 - required picture error keeps Start unavailable and does not steal its visible Cancel or setup choice
+  ---
+  duration_ms: 39.4515
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:136:1'
+  failureType: 'testCodeFailure'
+  error: 'page.slots is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    untouched (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:19:25)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03r5-versus-focus/game/test/couch-initial-focus.test.mjs:158:3)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 1
+# fail 13
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 594.022542

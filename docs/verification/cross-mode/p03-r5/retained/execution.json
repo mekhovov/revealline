@@ -1,0 +1,74 @@
+{
+  "before": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46866,
+      "sha256": "24c5e4c15b0e722d5e4e711807ca3da98d29f01542c0aaf4e89f64a509b2d895"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7230,
+      "sha256": "7c81dd0191e36d47be73528a507e3bccc13b43c48aff91d132dbc17a6eedc16c"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    }
+  ],
+  "after": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46866,
+      "sha256": "24c5e4c15b0e722d5e4e711807ca3da98d29f01542c0aaf4e89f64a509b2d895"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7230,
+      "sha256": "7c81dd0191e36d47be73528a507e3bccc13b43c48aff91d132dbc17a6eedc16c"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    }
+  ],
+  "runs": [
+    {
+      "node": "22.22.2",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 50.28990845894441,
+      "log": ".cache/r5/whole-node22.log",
+      "logBytes": 34233,
+      "logSha256": "725e1391d525890a36448e818c4413df18d0d302b89da0236992fe5253c37504"
+    },
+    {
+      "node": "20.19.5",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "game/test/couch-initial-focus.test.mjs",
+        "game/test/couch-shell.test.mjs",
+        "game/test/couch-navigation.test.mjs",
+        "game/test/couch-static-picture-host.test.mjs",
+        "game/test/couch-input.test.mjs",
+        "game/test/controller-navigation.test.mjs"
+      ],
+      "exitCode": 0,
+      "wallSeconds": 71.17099195811898,
+      "log": ".cache/r5/whole-node20.log",
+      "logBytes": 32113,
+      "logSha256": "d24ff7f82a15a5ab3e6e4626bf4159b87db93e0f3569a88e0366b9ae9ceb27d1"
+    }
+  ]
+}

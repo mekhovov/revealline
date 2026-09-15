@@ -1,0 +1,18 @@
+{
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "runtime": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    }
+  ],
+  "scope": "One exact R5 Couch host overlay; all other game routes exact1da Git. No state injection/build/copies. Explicit timing fixture6s only; not measured production latency.",
+  "delay": {
+    "path": "game/presentation/compiled/assets/53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850.png",
+    "bytes": 52720,
+    "sha256": "53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850",
+    "seconds": 6,
+    "policy": "Before response headers on each request for only this exact original PNG; unchanged bytes."
+  }
+}

@@ -1,0 +1,287 @@
+{
+  "format": "revealline-candidate-evidence-map.v1",
+  "scope": "P03 R5 local source and scoped native candidate; not phase/release/device acceptance",
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "reviewDate": "2026-09-15",
+  "runtime": {
+    "path": "game/couch/couch.mjs",
+    "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+  },
+  "sourceAuthority": "Exact 1da Git routes plus SHA-bound Couch overlay; final automated three source/test pins remain unchanged. Historical four-file hold includes README.source-held.md, not the final documentation.",
+  "automated": "Six complete files, 141/141 on Node22.22.2 and20.19.5; no full import-graph or whole-source CI claim. Predecessor140 pair is not additive.",
+  "native": "Root desktop Chromium keyboard review,12 events and2 original PNGs; six-second original response timing fixture, not production latency. Sequential AX/DOM observations are not atomic.",
+  "layout": "Original receipts preserve cache-relative paths; each is mapped below to its retained copy. Preview helpers retain original execution paths and are source evidence, not portable installed tooling.",
+  "retainedBytes": 375490,
+  "files": [
+    {
+      "source": ".cache/r5/baseline-corrected-node22.log",
+      "sourceBytes": 4542,
+      "sourceSha256": "97e6877fdde9275f1eb816316a73df4b2900a85d275bd4aec8472df26f1de303",
+      "path": "retained/baseline-corrected-node22.log",
+      "bytes": 4526,
+      "sha256": "5666f4b82c4366aae04b4ae9826cd1ba2da80d516eb3802e97660c0cc3d1ece9",
+      "transformation": "Trim trailing whitespace from lines and retain one final newline; original raw diagnostic remains in cache."
+    },
+    {
+      "source": ".cache/r5/baseline-node22.log",
+      "sourceBytes": 12697,
+      "sourceSha256": "9ae0531c3a216561053807b1ace311e5e6d4b7f44bc52d50d5a6454697c19036",
+      "path": "retained/baseline-node22.log",
+      "bytes": 12681,
+      "sha256": "e5100fe29fcbd829896a479daaba3d69f236fb038a2c27f8e309fb4a6d01f1ab",
+      "transformation": "Trim trailing whitespace from lines and retain one final newline; original raw diagnostic remains in cache."
+    },
+    {
+      "source": ".cache/r5/delayed-preparation.json",
+      "sourceBytes": 935,
+      "sourceSha256": "5593574bc5c3126300d54ada0ae96cf715986437f160db703f4d425657d97970",
+      "path": "retained/delayed-preparation.json",
+      "bytes": 935,
+      "sha256": "5593574bc5c3126300d54ada0ae96cf715986437f160db703f4d425657d97970",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/execution-final.json",
+      "sourceBytes": 2777,
+      "sourceSha256": "728f48f38929652e14b94e5a0102bf41e52fe37eccae2c9b8d90c9eb93a772e8",
+      "path": "retained/execution-final.json",
+      "bytes": 2777,
+      "sha256": "728f48f38929652e14b94e5a0102bf41e52fe37eccae2c9b8d90c9eb93a772e8",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/execution.json",
+      "sourceBytes": 2384,
+      "sourceSha256": "7fc0e444a7848f4f2b56ae1650b0e9453e0976c0d34302af6a7e9f9feb0d070a",
+      "path": "retained/execution.json",
+      "bytes": 2384,
+      "sha256": "7fc0e444a7848f4f2b56ae1650b0e9453e0976c0d34302af6a7e9f9feb0d070a",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/final-whole-node20.log",
+      "sourceBytes": 32358,
+      "sourceSha256": "4303a0d1ee66a81a38ee2423eba7549061d60740f9f5b7c25d4e394fa2e0891e",
+      "path": "retained/final-whole-node20.log",
+      "bytes": 32358,
+      "sha256": "4303a0d1ee66a81a38ee2423eba7549061d60740f9f5b7c25d4e394fa2e0891e",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/final-whole-node22.log",
+      "sourceBytes": 34455,
+      "sourceSha256": "6fee9e89ab4bfd4072e1c4a370ee666630963e01c877516e15d69376135f548c",
+      "path": "retained/final-whole-node22.log",
+      "bytes": 34455,
+      "sha256": "6fee9e89ab4bfd4072e1c4a370ee666630963e01c877516e15d69376135f548c",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/first-fixed-node22.log",
+      "sourceBytes": 3139,
+      "sourceSha256": "be7c0f1efd69a685727ca91991ea383bbefcf16e4ce0a5c8680c84e4d960411e",
+      "path": "retained/first-fixed-node22.log",
+      "bytes": 3139,
+      "sha256": "be7c0f1efd69a685727ca91991ea383bbefcf16e4ce0a5c8680c84e4d960411e",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/focus-final-node22.log",
+      "sourceBytes": 3376,
+      "sourceSha256": "c5ae17b503a88c2966d0163f244b277deee947a6e9390a23aef22dc3cd035b69",
+      "path": "retained/focus-final-node22.log",
+      "bytes": 3376,
+      "sha256": "c5ae17b503a88c2966d0163f244b277deee947a6e9390a23aef22dc3cd035b69",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/hydration.json",
+      "sourceBytes": 4903,
+      "sourceSha256": "bd9d1096d30b92fd85cb1faeec071a36d95244b86df4c18ec6f831efb10403d4",
+      "path": "retained/hydration.json",
+      "bytes": 4903,
+      "sha256": "bd9d1096d30b92fd85cb1faeec071a36d95244b86df4c18ec6f831efb10403d4",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/native/deliberate-ready.png",
+      "sourceBytes": 76375,
+      "sourceSha256": "15374d4727babae71154d1c918c9a6dd26c352e38c80445eef6243f3d802c9b6",
+      "path": "retained/native/deliberate-ready.png",
+      "bytes": 76375,
+      "sha256": "15374d4727babae71154d1c918c9a6dd26c352e38c80445eef6243f3d802c9b6",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/native/events.json",
+      "sourceBytes": 25231,
+      "sourceSha256": "3f7bcd26094e9cba4918b6f93e7b66ac25442d2e09657624ce961ca65aa2bbc0",
+      "path": "retained/native/events.json",
+      "bytes": 25231,
+      "sha256": "3f7bcd26094e9cba4918b6f93e7b66ac25442d2e09657624ce961ca65aa2bbc0",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/native/fresh-ready.png",
+      "sourceBytes": 76785,
+      "sourceSha256": "891f889316c8c672bc68b02b097580180ee29faf9d4ea19f7efa32d8f6f40b78",
+      "path": "retained/native/fresh-ready.png",
+      "bytes": 76785,
+      "sha256": "891f889316c8c672bc68b02b097580180ee29faf9d4ea19f7efa32d8f6f40b78",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/native-root-verification.json",
+      "sourceBytes": 2036,
+      "sourceSha256": "a366a24ae184cc3a21e79664b38905f6fd56f91f8359c8f66e183d33fe253ec3",
+      "path": "retained/native-root-verification.json",
+      "bytes": 2036,
+      "sha256": "a366a24ae184cc3a21e79664b38905f6fd56f91f8359c8f66e183d33fe253ec3",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/pagehide-before-node22.log",
+      "sourceBytes": 1038,
+      "sourceSha256": "62360eb8dcdbf1c6c4f780a34969c1b82f8d5893eef7541bb4439a021ce7c408",
+      "path": "retained/pagehide-before-node22.log",
+      "bytes": 1030,
+      "sha256": "72cbbd32149684448269712839a1e4cebb0c153756c03bd7135b4e9b29cb7617",
+      "transformation": "Trim trailing whitespace from lines and retain one final newline; original raw diagnostic remains in cache."
+    },
+    {
+      "source": ".cache/r5/preview-binding.json",
+      "sourceBytes": 348,
+      "sourceSha256": "7a6f32db0a9e183b9086117eef69ddde6ac477d6b0476d48ea56c2374e123732",
+      "path": "retained/preview-binding.json",
+      "bytes": 348,
+      "sha256": "7a6f32db0a9e183b9086117eef69ddde6ac477d6b0476d48ea56c2374e123732",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/preview-delayed-binding.json",
+      "sourceBytes": 776,
+      "sourceSha256": "893c2a537bbd7cb4df6fb491636d85231463957b3906d305dc57d9b44c904e48",
+      "path": "retained/preview-delayed-binding.json",
+      "bytes": 776,
+      "sha256": "893c2a537bbd7cb4df6fb491636d85231463957b3906d305dc57d9b44c904e48",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/preview-http.json",
+      "sourceBytes": 278,
+      "sourceSha256": "4a0246809e6e8a75c3a46d47c6e7e1c896884bd5e455a46cfdf0a30670d859f0",
+      "path": "retained/preview-http.json",
+      "bytes": 278,
+      "sha256": "4a0246809e6e8a75c3a46d47c6e7e1c896884bd5e455a46cfdf0a30670d859f0",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/preview-preparation.json",
+      "sourceBytes": 608,
+      "sourceSha256": "ed2a62760f61cf7724061d76f6bc16e38b469b91d169dd01f028e8268ba60d5c",
+      "path": "retained/preview-preparation.json",
+      "bytes": 608,
+      "sha256": "ed2a62760f61cf7724061d76f6bc16e38b469b91d169dd01f028e8268ba60d5c",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/serve-delayed.py",
+      "sourceBytes": 3783,
+      "sourceSha256": "11ff0d0b6af2660094ab1a44a9d0edf59f2d53ee615c19ef4d37e1ed1841a8b4",
+      "path": "retained/serve-delayed.py",
+      "bytes": 3783,
+      "sha256": "11ff0d0b6af2660094ab1a44a9d0edf59f2d53ee615c19ef4d37e1ed1841a8b4",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/serve.py",
+      "sourceBytes": 3633,
+      "sourceSha256": "72b2322f36338d08b1999270bf3f1786f521202efb2ae3800da0b7e0ba678e8b",
+      "path": "retained/serve.py",
+      "bytes": 3633,
+      "sha256": "72b2322f36338d08b1999270bf3f1786f521202efb2ae3800da0b7e0ba678e8b",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/server-delayed.json",
+      "sourceBytes": 256,
+      "sourceSha256": "5fffe9d29abd4f2d298734da68fa6404f29b85a87a211b49cc75885a50de077c",
+      "path": "retained/server-delayed.json",
+      "bytes": 256,
+      "sha256": "5fffe9d29abd4f2d298734da68fa6404f29b85a87a211b49cc75885a50de077c",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/server.json",
+      "sourceBytes": 256,
+      "sourceSha256": "f78b3af2df64aa71dea68e9994212941e7d4843e33a5c33d22f6d5135a1d701b",
+      "path": "retained/server.json",
+      "bytes": 256,
+      "sha256": "f78b3af2df64aa71dea68e9994212941e7d4843e33a5c33d22f6d5135a1d701b",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/source-held.json",
+      "sourceBytes": 896,
+      "sourceSha256": "f08b5b12f4191a447434e52edf1c49679d67c11efd9d062a8cf01130c9a11044",
+      "path": "retained/source-held.json",
+      "bytes": 896,
+      "sha256": "f08b5b12f4191a447434e52edf1c49679d67c11efd9d062a8cf01130c9a11044",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/source.diff",
+      "sourceBytes": 4413,
+      "sourceSha256": "f38fc771322e83b3204a78fc611bfc23d48630c764a6845c691aa48dc4ae76cb",
+      "path": "retained/source.diff",
+      "bytes": 4413,
+      "sha256": "f38fc771322e83b3204a78fc611bfc23d48630c764a6845c691aa48dc4ae76cb",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/static.json",
+      "sourceBytes": 1047,
+      "sourceSha256": "d304b68a5d5bef03c7ce5b1ce912ada2a562577c156e13762098ae1aa88f8a61",
+      "path": "retained/static.json",
+      "bytes": 1047,
+      "sha256": "d304b68a5d5bef03c7ce5b1ce912ada2a562577c156e13762098ae1aa88f8a61",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/verification.json",
+      "sourceBytes": 6828,
+      "sourceSha256": "43f5cba631edf84358b1371b4f9e079aefe023613733cf8059930298b476eee3",
+      "path": "retained/verification.json",
+      "bytes": 6828,
+      "sha256": "43f5cba631edf84358b1371b4f9e079aefe023613733cf8059930298b476eee3",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/whole-node20.log",
+      "sourceBytes": 32113,
+      "sourceSha256": "d24ff7f82a15a5ab3e6e4626bf4159b87db93e0f3569a88e0366b9ae9ceb27d1",
+      "path": "retained/whole-node20.log",
+      "bytes": 32113,
+      "sha256": "d24ff7f82a15a5ab3e6e4626bf4159b87db93e0f3569a88e0366b9ae9ceb27d1",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": ".cache/r5/whole-node22.log",
+      "sourceBytes": 34233,
+      "sourceSha256": "725e1391d525890a36448e818c4413df18d0d302b89da0236992fe5253c37504",
+      "path": "retained/whole-node22.log",
+      "bytes": 34233,
+      "sha256": "725e1391d525890a36448e818c4413df18d0d302b89da0236992fe5253c37504",
+      "transformation": "none: byte-identical copy"
+    },
+    {
+      "source": "docs/verification/cross-mode/p03-r5/README.md",
+      "sourceBytes": 3031,
+      "sourceSha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2",
+      "path": "retained/README.source-held.md",
+      "bytes": 3031,
+      "sha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2",
+      "transformation": "none: byte-identical copy"
+    }
+  ]
+}

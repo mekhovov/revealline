@@ -1,0 +1,26 @@
+{
+  "base": "1da77ee586d0fdd3ac73883235a822b959e85b37",
+  "status": "R5 source held after pagehide-return correction; final whole pair pending. First140 pair is predecessor. No native successor claim.",
+  "files": [
+    {
+      "path": "game/couch/couch.mjs",
+      "bytes": 46983,
+      "sha256": "623ecf47c710b535583cd83bf042c72cbfbfc6dc6622e43fb46d27f5a6ebc502"
+    },
+    {
+      "path": "game/test/couch-initial-focus.test.mjs",
+      "bytes": 7679,
+      "sha256": "57d867b71c8fb5146f77f043fb5cf4735768dc38a255432bf930ae38fb2a66a2"
+    },
+    {
+      "path": "game/test/couch-shell.test.mjs",
+      "bytes": 16474,
+      "sha256": "677c5ffec99827e92c0b6f50406295c86ea69ae43ab1b8ca7cb9ad7c10aea0af"
+    },
+    {
+      "path": "docs/verification/cross-mode/p03-r5/README.md",
+      "bytes": 3031,
+      "sha256": "a2bf74716850ed2e4035bfe0a7295b8f42ddf065c2b90be56675d3bb49f8bfa2"
+    }
+  ]
+}
