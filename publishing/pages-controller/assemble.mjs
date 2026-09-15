@@ -407,7 +407,7 @@ export async function assemble({
   let redirectedHTMLFiles = 0;
   for (const [version, item] of publicationMetadata) {
     await writeFile(outputDirectory, `releases/${version}/release.json`, item.recordBytes);
-    if (version === current.record.version || testingMetadata.has(version)) continue;
+    if (version === current.record.version) continue;
     const files = metadataBridges(item, publicationSites[version]);
     for (const [relative, bytes] of files) {
       await writeFile(outputDirectory, `releases/${version}/site/${relative}`, bytes);
@@ -455,7 +455,7 @@ export async function assemble({
     totalBytes,
     budgetBytes,
     files,
-    historicalBridges: metadata.size - 1,
+    historicalBridges: publicationMetadata.size - 1,
     testingVersions: testingMetadata.size,
     redirectedHTMLFiles,
     browserAdmissionsRequired: requireBrowser,
