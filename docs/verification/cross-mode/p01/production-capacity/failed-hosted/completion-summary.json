@@ -1,0 +1,51 @@
+{
+  "format": "revealline-hosted-workflow-observation.v1",
+  "observedAt": "2026-09-15T15:05:04.315152+00:00",
+  "sourceRevision": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+  "sourceTree": "6dea75eef274c3625d7a7e9c251b20d587a42191",
+  "expectedIdentity": {
+    "files": 5968,
+    "bytes": 853523474,
+    "aggregateSha256": "141fc1c9221dcd34523bca9b6239bea0edd9ff318a0825d85c71a7852822ae80"
+  },
+  "runs": {
+    "manual": {
+      "id": 34982876952,
+      "event": "workflow_dispatch",
+      "conclusion": "failure"
+    },
+    "pr-source": {
+      "id": 34982794201,
+      "event": "pull_request",
+      "conclusion": "failure"
+    },
+    "publisher-preview": {
+      "id": 34982794078,
+      "event": "pull_request",
+      "conclusion": "success"
+    }
+  },
+  "sourceTestTotals": {
+    "pr-source": {
+      "tests": 4218,
+      "suites": 0,
+      "pass": 4217,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "manual": {
+      "tests": 4218,
+      "suites": 0,
+      "pass": 4217,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "identityObservations": 12,
+  "allObservedIdentitiesMatch": true,
+  "scope": "Workflow/API/log observation; not a frozen-artifact verification or successful source-qualification receipt."
+}
