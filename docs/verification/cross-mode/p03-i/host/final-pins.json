@@ -1,0 +1,22 @@
+[
+  {
+    "path": "game/test/coop-host.test.mjs",
+    "bytes": 51109,
+    "sha256": "30e64340bfdeafd667393054eabbfed78a52fbb5c9d556abb0dfe53f6e4310a2"
+  },
+  {
+    "path": "game/couch/relay-rescue.mjs",
+    "bytes": 32926,
+    "sha256": "892e065c39a1c9afbf62d5c7a8b032177cc04e6c8f5c4c7916e076bac9e51ca1"
+  },
+  {
+    "path": "game/couch/relay-rescue.html",
+    "bytes": 14942,
+    "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+  },
+  {
+    "path": "game/couch/relay-rescue.css",
+    "bytes": 15174,
+    "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+  }
+]

@@ -110,6 +110,22 @@ The prompt pauses and holds autosave before reusing P03-C's checked replay, writ
 
 The [G source and native record](verification/cross-mode/p03-g/README.md) separates 101/101 tests on each Node runtime from root’s desktop keyboard journeys. The confirmation currently leaves excessive blank space at full height; P05 should fit this prompt to its content. G is an internal P03 candidate, not public or physical-device acceptance. Starting class and Steering remain an explicit next review: the existing `class-select` and `turn-select` change handlers in `game/app.mjs` still call `prepare()` on live attempts. Settings must not silently convert a live run; starting equipment belongs to a fresh attempt, while the authored Tactical Hangar remains an in-flight action. G does not change those paths, Library scenario launches, Team Change setup or the broader mode-entry design.
 
+## P03-I Team departure candidate
+
+The isolated [Team departure work](team-departure.md) adds an explicit Stay /
+discard choice before Change setup, Retry or either same-tab header departure
+can replace an unfinished Team attempt. Team progress remains in this page only;
+this does not add a saved Team format. Stay preserves the normal paused-input
+boundary, and terminal/no-attempt actions retain their direct paths. Native
+dialog Escape is handled locally so the existing flight listener cannot prevent
+the dialog's cancellation. Four complete affected test files pass 152/152 on each
+Node runtime; the [scoped desktop native record](verification/cross-mode/p03-i/README.md)
+checks Stay, Retry, setup, 50px actions and header pointer requests with keyboard
+confirmation. Paused header keyboard access remains a documented gap requiring
+in-panel destination actions. This is an internal P03 work package, not phase or
+release acceptance. The isolated branch starts at P03-G and does not include the
+separate P03-H starting-setup implementation.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.

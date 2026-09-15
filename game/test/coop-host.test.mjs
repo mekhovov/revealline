@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { Document, Events, Element } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/couch-host.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
@@ -24,6 +25,7 @@ async function page(
     onReady = () => {},
     expectError = false,
     readyStartDisabled = false,
+    capturePaint = false,
   } = {},
 ) {
   const doc = new Document(),
@@ -31,13 +33,60 @@ async function page(
   doc.parentNode = win;
   mountCouch(doc, html);
   const $ = (id) => doc.getElementById(id);
+  // Model only native dialog state/default cancel; production owns its lifecycle.
+  for (const dialog of doc.querySelectorAll('dialog')) {
+    dialog.hidden = true;
+    dialog.showModal = () => {
+      dialog.emit('beforetoggle', { newState: 'open', oldState: 'closed', bubbles: false });
+      dialog.open = true;
+      dialog.hidden = false;
+      dialog.setAttribute('open', '');
+      dialog.querySelector('button:not(:disabled)')?.focus();
+    };
+    dialog.close = () => {
+      if (!dialog.open) return;
+      dialog.open = false;
+      dialog.hidden = true;
+      dialog.removeAttribute('open');
+      if (dialog.contains(doc.activeElement)) doc.body.focus();
+      dialog.emit('close', { bubbles: false });
+    };
+  }
+  let failPaint = false,
+    paintDepth = 0,
+    paintHash = null,
+    lastPaint = null;
+  const visits = [];
+
   $('coop-canvas').width = 1152;
   $('coop-canvas').height = 576;
   const context = new Proxy(
     {},
     {
       get(target, key) {
-        return Object.hasOwn(target, key) ? target[key] : () => {};
+        if (Object.hasOwn(target, key)) return target[key];
+        return (...args) => {
+          if (key === 'save') {
+            if (paintDepth === 0) {
+              if (failPaint) {
+                failPaint = false;
+                throw new Error('Modeled Canvas paint failure');
+              }
+              if (capturePaint) paintHash = createHash('sha256');
+            }
+            paintDepth++;
+          }
+          paintHash?.update(JSON.stringify([key, ...args]));
+          if (key === 'restore' && --paintDepth === 0 && paintHash) {
+            lastPaint = paintHash.digest('hex');
+            paintHash = null;
+          }
+        };
+      },
+      set(target, key, value) {
+        target[key] = value;
+        paintHash?.update(JSON.stringify(['set', key, value]));
+        return true;
       },
     },
   );
@@ -60,7 +109,7 @@ async function page(
     document: doc,
     window: win,
     navigator: { getGamepads: () => pads },
-    location: { href },
+    location: { href, assign: (url) => visits.push(url) },
     matchMedia: (query) => (query === '(any-pointer: coarse)' ? touchQuery : { matches: false }),
     requestAnimationFrame(callback) {
       frames.set(++nextFrame, callback);
@@ -128,7 +177,19 @@ async function page(
     $(id).value = value;
     $(id).onchange();
   };
-  const press = (key) => doc.activeElement.emit('keydown', { key, code: key, repeat: false });
+  const press = (key) => {
+    const target = doc.activeElement;
+    const event = target.emit('keydown', { key, code: key, repeat: false });
+    if (!event.defaultPrevented && key === 'Escape') {
+      const dialog = target.closest('dialog[open]');
+      if (dialog) {
+        const cancel = dialog.emit('cancel', { bubbles: false });
+        if (!cancel.defaultPrevented) dialog.close();
+      }
+    }
+    if (!event.defaultPrevented && key === 'Enter' && target.tagName === 'BUTTON') target.click();
+    return event;
+  };
   const tap = (key) => {
     press(key);
     doc.activeElement.emit('keyup', { key, code: key });
@@ -144,6 +205,14 @@ async function page(
   return {
     $,
     doc,
+    win,
+    visits,
+    get lastPaint() {
+      return lastPaint;
+    },
+    failNextPaint() {
+      failPaint = true;
+    },
     selectFile,
     choose,
     press,
@@ -190,6 +259,8 @@ test('a file selected before Start cannot replace setup after returning from an 
   f.$('coop-start').click();
   f.$('coop-pause').click();
   f.$('coop-lobby').click();
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  f.$('coop-discard-confirm').click();
   read.resolve(text);
   await pending;
   assert.equal(f.$('coop-pack-status').textContent, 'Relay Rescue · 2 levels');
@@ -288,6 +359,8 @@ test('custom fractional coverage and multiple required cores drive the actual br
   assert.ok(Math.abs(f.$('coop-progress').max - 72.4) < 1e-9);
   f.$('coop-pause').click();
   f.$('coop-lobby').click();
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  f.$('coop-discard-confirm').click();
   f.choose('coop-level', 'custom-stronghold');
   assert.match(f.$('coop-menu-goal').textContent, /2 strongholds/);
   assert.doesNotMatch(f.$('coop-level-note').textContent, /Bait a Hunter/);
@@ -349,6 +422,8 @@ test('the selected cut rules agree across the briefing and actual start message'
     );
     f.$('coop-pause').click();
     f.$('coop-lobby').click();
+    assert.equal(f.$('coop-discard-dialog').open, true);
+    f.$('coop-discard-confirm').click();
   }
 });
 
@@ -523,6 +598,8 @@ test('Auto touch uses actual controller seats while menu hiding and explicit ove
   assert.equal(f.$('coop-controls').hidden, true);
   f.$('coop-pause').click();
   f.$('coop-lobby').click();
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  f.$('coop-discard-confirm').click();
   assert.equal(f.$('coop-controls').hidden, true);
   assert.equal(f.$('coop-tools').hidden, false);
   assert.equal(f.$('coop-tools').parentNode.id, 'coop-lobby-tools');
@@ -928,4 +1005,379 @@ test('foreground loss during boot vetoes initial focus even if the page is focus
   );
   h.tick();
   assert.equal(h.doc.activeElement.tagName, 'BODY');
+});
+
+// P03-I oracles bind observable HUD and the real painter's command stream, not
+// private host state or physical Canvas pixels. No synthetic run replaces core.
+function heldTeam(f) {
+  return {
+    hud: [
+      'coop-stage',
+      'coop-clock',
+      'coop-coverage',
+      'coop-reserves',
+      'coop-objective',
+      'coop-state-0',
+      'coop-state-1',
+      'coop-charge-0',
+      'coop-charge-1',
+      'coop-support-0',
+      'coop-support-1',
+    ].map((id) => [id, f.$(id).textContent]),
+    progress: f.$('coop-progress').value,
+    paint: f.lastPaint,
+  };
+}
+function playingTeam(f) {
+  f.$('coop-start').click();
+  f.tick(2);
+  f.tap('KeyD');
+  f.tap('ArrowLeft');
+  f.tick(65);
+}
+function unchangedPaused(f, before) {
+  f.tick(75);
+  assert.deepEqual(heldTeam(f), before);
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-menu').hidden, true);
+  assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+  assert.deepEqual(f.visits, []);
+}
+const departures = [
+  ['setup', 'coop-lobby', 'Discard and change setup'],
+  ['retry', 'coop-retry', 'Discard and retry'],
+  ['return', 'coop-race', 'Discard and leave'],
+  ['home', 'coop-home', 'Discard and leave'],
+];
+for (const [kind, id, label] of departures)
+  for (const paused of [false, true])
+    test(`${kind} from ${paused ? 'paused' : 'running'} requires a separate decision; Stay preserves painted/HUD flight without Resume`, async (t) => {
+      const f = await page(t, { nativeFocus: true, capturePaint: true });
+      playingTeam(f);
+      if (paused) f.$('coop-pause').click();
+      f.$(id).focus();
+      f.$(id).click();
+      assert.equal(f.$('coop-discard-dialog').open, true);
+      assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+      assert.equal(f.$('coop-discard-confirm').textContent, label);
+      assert.match(f.$('coop-discard-copy').textContent, /not saved/);
+      const held = heldTeam(f);
+      assert.ok(held.paint);
+      f.$('coop-resume').click();
+      f.$('coop-start').click();
+      f.$('coop-lobby').click();
+      assert.equal(
+        f.$('coop-discard-confirm').textContent,
+        label,
+        'Other actions cannot replace the owned decision',
+      );
+      unchangedPaused(f, held);
+      f.$('coop-discard-stay').click();
+      assert.equal(f.$('coop-discard-dialog').open, false);
+      assert.equal(
+        f.doc.activeElement.id,
+        kind === 'setup' || kind === 'retry' ? id : 'coop-resume',
+      );
+      unchangedPaused(f, held);
+      f.$('coop-resume').click();
+      f.tick(65);
+      assert.equal(f.$('coop-overlay').hidden, true);
+      assert.notEqual(
+        f.$('coop-clock').textContent,
+        held.hud.find(([id]) => id === 'coop-clock')[1],
+      );
+    });
+
+test('native Escape reaches only the top confirmation cancel and keeps its paused opener', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  f.$('coop-lobby').focus();
+  f.$('coop-lobby').click();
+  const before = heldTeam(f);
+  let windowEscapes = 0;
+  f.win.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') windowEscapes++;
+  });
+  const event = f.press('Escape');
+  assert.equal(
+    event.defaultPrevented,
+    false,
+    'The dialog keeps native Escape cancellation available',
+  );
+  assert.equal(windowEscapes, 0);
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-lobby');
+  unchangedPaused(f, before);
+});
+
+test('confirmation Tab wraps both directions and editor defaults cannot start or discard', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  f.$('coop-retry').click();
+  const before = heldTeam(f);
+  const reverse = f
+    .$('coop-discard-stay')
+    .emit('keydown', { key: 'Tab', code: 'Tab', shiftKey: true });
+  assert.equal(reverse.defaultPrevented, true);
+  assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
+  const forward = f.press('Tab');
+  assert.equal(forward.defaultPrevented, true);
+  assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+  unchangedPaused(f, before);
+  f.press('Enter');
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  unchangedPaused(f, before);
+});
+
+test('controller adoption/held Confirm cannot discard; a separate Back stays paused', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  const pad = {
+    index: 0,
+    id: 'Departure controller',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  f.pads.push(pad);
+  f.tick(2);
+  pad.buttons[0] = { pressed: true, value: 1 };
+  f.tick();
+  pad.buttons[0] = { pressed: false, value: 0 };
+  f.tick();
+  f.$('coop-lobby').focus();
+  pad.buttons[0] = { pressed: true, value: 1 };
+  f.tick();
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+  const before = heldTeam(f);
+  f.tick(8);
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  pad.buttons[0] = { pressed: false, value: 0 };
+  f.tick();
+  pad.buttons[1] = { pressed: true, value: 1 };
+  f.tick();
+  pad.buttons[1] = { pressed: false, value: 0 };
+  f.tick();
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.doc.activeElement.id, 'coop-lobby');
+  unchangedPaused(f, before);
+});
+
+test('confirmed setup discards once into lobby without starting the mutable setup choice', async (t) => {
+  const f = await page(t, { nativeFocus: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  f.$('coop-lobby').click();
+  assert.equal(f.$('coop-menu').hidden, true);
+  f.$('coop-discard-confirm').click();
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.$('coop-menu').hidden, false);
+  assert.equal(f.$('coop-play').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-start');
+  const clock = f.$('coop-clock').textContent;
+  f.tick(100);
+  assert.equal(f.$('coop-clock').textContent, clock);
+  assert.deepEqual(f.visits, []);
+});
+
+test('confirmed retry uses the actual level/configuration, not edited hidden lobby selects', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  f.$('coop-difficulty').value = 'standard';
+  f.$('coop-start').click();
+  const fresh = heldTeam(f);
+  assert.ok(fresh.paint);
+  f.tick(2);
+  f.tap('KeyD');
+  f.tap('ArrowLeft');
+  f.tick(65);
+  assert.notDeepEqual(heldTeam(f), fresh);
+  f.$('coop-pause').click();
+  const stage = f.$('coop-stage').textContent,
+    reserves = f.$('coop-reserves').textContent;
+  f.$('coop-level').value = 'relay-stronghold';
+  f.$('coop-difficulty').value = 'expert';
+  f.$('coop-experiment').value = 'independent';
+  f.$('coop-retry').click();
+  f.$('coop-discard-confirm').click();
+  assert.equal(f.$('coop-stage').textContent, stage);
+  assert.equal(f.$('coop-reserves').textContent, reserves);
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    true,
+    JSON.stringify({
+      message: f.$('coop-message').textContent,
+      title: f.$('coop-overlay-title').textContent,
+      focus: f.doc.activeElement.id,
+      dialog: f.$('coop-discard-dialog').open,
+    }),
+  );
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+  assert.doesNotMatch(f.$('coop-message').textContent, /Comparison:/);
+  assert.deepEqual(
+    heldTeam(f),
+    fresh,
+    'Retry rebuilds the original authored board and initial HUD',
+  );
+  assert.deepEqual(f.visits, []);
+});
+
+for (const [kind, id] of departures.filter(([kind]) => ['home', 'return'].includes(kind)))
+  for (const context of ['solo', 'versus'])
+    test(`confirmed ${kind} keeps only its fixed ${context} destination`, async (t) => {
+      const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html?return=${context}`;
+      const f = await page(t, { href, nativeFocus: true, capturePaint: true });
+      playingTeam(f);
+      f.$(id).setAttribute('href', 'https://other.invalid/steal');
+      const click = f.$(id).emit('click', { button: 0 });
+      assert.equal(click.defaultPrevented, true);
+      assert.deepEqual(f.visits, []);
+      const before = heldTeam(f);
+      f.$('coop-discard-confirm').click();
+      const path = kind === 'home' || context === 'solo' ? '../' : './';
+      assert.deepEqual(f.visits, [new URL(path, href).href]);
+      f.tick(60);
+      assert.deepEqual(heldTeam(f), before);
+      assert.equal(f.$('coop-overlay').hidden, false);
+    });
+
+for (const mode of ['blur', 'hidden', 'pagehide'])
+  test(`${mode} cancels an open discard choice and stale Confirm cannot leave after return`, async (t) => {
+    const f = await page(t, { nativeFocus: true, capturePaint: true });
+    playingTeam(f);
+    f.$('coop-race').click();
+    const before = heldTeam(f);
+    if (mode === 'blur') {
+      f.doc.focused = false;
+      f.win.emit('blur');
+    } else if (mode === 'hidden') {
+      f.doc.hidden = true;
+      f.doc.emit('visibilitychange');
+    } else f.win.emit('pagehide', { persisted: true });
+    f.doc.body.focus();
+    f.doc.hidden = false;
+    f.doc.focused = true;
+    f.win.emit('pageshow', { persisted: true });
+    assert.equal(f.$('coop-discard-dialog').open, false);
+    f.$('coop-discard-confirm').click();
+    assert.equal(f.doc.activeElement, f.doc.body);
+    unchangedPaused(f, before);
+  });
+
+test('faulted attempt cannot Resume and both native Back and header Stay return to visible Retry', async (t) => {
+  const errors = [];
+  t.mock.method(console, 'error', (e) => errors.push(e));
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.failNextPaint();
+  f.tick();
+  assert.equal(errors.length, 1);
+  assert.equal(f.$('coop-resume').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  const before = heldTeam(f);
+  f.press('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  f.$('coop-home').click();
+  assert.match(f.$('coop-discard-copy').textContent, /cannot resume/);
+  f.$('coop-discard-stay').click();
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  f.$('coop-resume').click();
+  unchangedPaused(f, before);
+  f.$('coop-retry').click();
+  f.$('coop-discard-confirm').click();
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  assert.equal(
+    f.$('coop-overlay').hidden,
+    true,
+    JSON.stringify({
+      message: f.$('coop-message').textContent,
+      title: f.$('coop-overlay-title').textContent,
+      focus: f.doc.activeElement.id,
+      dialog: f.$('coop-discard-dialog').open,
+    }),
+  );
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+});
+
+test('failed native navigation retains an explicit paused attempt instead of silently clearing it', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-race').click();
+  const before = heldTeam(f);
+  globalThis.location.assign = () => {
+    throw new Error('Navigation unavailable');
+  };
+  f.$('coop-discard-confirm').click();
+  assert.match(f.$('coop-message').textContent, /could not be replaced.*Navigation unavailable/);
+  unchangedPaused(f, before);
+  assert.equal(f.doc.activeElement.id, 'coop-resume');
+});
+
+test('modified link gestures retain native browser ownership without a discard or current-page mutation', async (t) => {
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.$('coop-pause').click();
+  const before = heldTeam(f);
+  for (const extra of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { button: 1 }]) {
+    const event = f.$('coop-race').emit('click', extra);
+    assert.equal(event.defaultPrevented, false);
+    assert.equal(f.$('coop-discard-dialog').open, false);
+  }
+  unchangedPaused(f, before);
+});
+
+test('paint failure while opening departure releases the invisible intent and exposes stopped Retry', async (t) => {
+  const errors = [];
+  t.mock.method(console, 'error', (e) => errors.push(e));
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.failNextPaint();
+  f.$('coop-lobby').click();
+  assert.equal(errors.length, 1);
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.$('coop-resume').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  assert.match(f.$('coop-message').textContent, /Arena stopped/);
+  const stopped = heldTeam(f);
+  unchangedPaused(f, stopped);
+  f.$('coop-retry').click();
+  assert.equal(f.$('coop-discard-dialog').open, true);
+  assert.equal(f.doc.activeElement.id, 'coop-discard-stay');
+  assert.match(f.$('coop-discard-copy').textContent, /cannot resume/);
+  f.press('Escape');
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  unchangedPaused(f, stopped);
+});
+
+test('a repeated Retry paint failure stops the new attempt truthfully until another explicit Retry', async (t) => {
+  const errors = [];
+  t.mock.method(console, 'error', (e) => errors.push(e));
+  const f = await page(t, { nativeFocus: true, capturePaint: true });
+  playingTeam(f);
+  f.failNextPaint();
+  f.tick();
+  assert.equal(errors.length, 1);
+  f.$('coop-retry').click();
+  f.failNextPaint();
+  f.$('coop-discard-confirm').click();
+  assert.equal(errors.length, 2);
+  assert.equal(f.$('coop-discard-dialog').open, false);
+  assert.equal(f.$('coop-resume').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-retry');
+  assert.match(f.$('coop-message').textContent, /Arena stopped/);
+  assert.doesNotMatch(f.$('coop-message').textContent, /could not be replaced/);
+  const stopped = heldTeam(f);
+  unchangedPaused(f, stopped);
+  f.$('coop-retry').click();
+  f.$('coop-discard-confirm').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(f.doc.activeElement.id, 'coop-canvas');
+  assert.doesNotMatch(f.$('coop-message').textContent, /Arena stopped/);
+  f.tick(150); // Team advances at 120 Hz; cross the displayed one-second boundary.
+  assert.notEqual(f.$('coop-clock').textContent, '0:00');
 });

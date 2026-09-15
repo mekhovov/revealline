@@ -1,0 +1,25 @@
+{
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "createdAt": "2026-09-15T17:42:41.410929+00:00",
+  "source": [
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 31885,
+      "sha256": "7e5bbd779652e51d818b9384d76b3402d0e69c57ad50273d9b4715f27d59b809"
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "bytes": 14942,
+      "sha256": "c0654cb5f3f52843e371ffbcb203a3e680d0bd89e9887a21609ac304c2f51a56"
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "bytes": 15174,
+      "sha256": "d640e6bcbb3c72b3fc6f9a9297740a6636862ea0c1b0432c33e609688b632409"
+    }
+  ],
+  "status": "Initial source hold for actual-host tests and independent source review. No native acceptance.",
+  "scope": "Team-local confirmation only, no core/shared-input/schema/save/version/producer mutations.",
+  "checks": "Node22 syntax, ESLint and formatting pass",
+  "freeBytes": 1261654016
+}

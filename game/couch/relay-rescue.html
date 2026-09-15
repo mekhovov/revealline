@@ -15,7 +15,7 @@
   <body class="field-kit field-kit-support" data-field-kit-page="relay-rescue">
     <main id="coop-app">
       <header class="masthead">
-        <a href="../" class="brand">REVEAL<span>LINE</span></a>
+        <a id="coop-home" href="../" class="brand">REVEAL<span>LINE</span></a>
         <span class="mode-label">COUCH CO-OP <b id="coop-stage">FIRST CONNECTION</b></span>
         <a id="coop-race" href="./">Race mode ↗</a>
       </header>
@@ -227,6 +227,22 @@
           </div>
         </article>
       </section>
+      <dialog
+        id="coop-discard-dialog"
+        class="coop-confirm-dialog"
+        role="alertdialog"
+        aria-labelledby="coop-discard-title"
+        aria-describedby="coop-discard-copy"
+      >
+        <h2 id="coop-discard-title">Discard this Team attempt?</h2>
+        <p id="coop-discard-copy">
+          Team progress is only kept on this page; this attempt is not saved.
+        </p>
+        <div class="coop-confirm-actions">
+          <button id="coop-discard-stay" type="button" autofocus>Stay</button>
+          <button id="coop-discard-confirm" type="button">Discard this attempt</button>
+        </div>
+      </dialog>
       <aside id="coop-tools" class="coop-tools" aria-label="Help and options">
         <details id="coop-help">
           <summary id="coop-help-toggle">How to play and controls</summary>
