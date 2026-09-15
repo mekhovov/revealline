@@ -1,0 +1,654 @@
+TAP version 13
+# Subtest: immediate: embedded First Flight Pause → End course restores the visible reader without resuming or awarding
+ok 1 - immediate: embedded First Flight Pause → End course restores the visible reader without resuming or awarding
+  ---
+  duration_ms: 1828.854042
+  type: 'test'
+  ...
+# Subtest: grid-center: embedded First Flight Pause → End course restores the visible reader without resuming or awarding
+ok 2 - grid-center: embedded First Flight Pause → End course restores the visible reader without resuming or awarding
+  ---
+  duration_ms: 1234.732333
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 3 - immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1692.99675
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 4 - immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1055.611291
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice controller preserves the exact cut and returns to its selector
+ok 5 - immediate: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1641.688042
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 6 - grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 955.726916
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 7 - grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1016.837292
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+ok 8 - grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1677.514375
+  type: 'test'
+  ...
+# Subtest: immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 9 - immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 1115.464
+  type: 'test'
+  ...
+# Subtest: grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 10 - grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 1134.668209
+  type: 'test'
+  ...
+# Subtest: same lesson selection in ready is inert
+ok 11 - same lesson selection in ready is inert
+  ---
+  duration_ms: 287.111291
+  type: 'test'
+  ...
+# Subtest: same lesson selection in flight is inert
+ok 12 - same lesson selection in flight is inert
+  ---
+  duration_ms: 781.852916
+  type: 'test'
+  ...
+# Subtest: fresh Ready choice remains direct; unknown lesson cannot replace it
+ok 13 - fresh Ready choice remains direct; unknown lesson cannot replace it
+  ---
+  duration_ms: 332.050875
+  type: 'test'
+  ...
+# Subtest: pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+ok 14 - pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+  ---
+  duration_ms: 886.887625
+  type: 'test'
+  ...
+# Subtest: page departure invalidates a pending lesson choice before a delayed Confirm can act
+ok 15 - page departure invalidates a pending lesson choice before a delayed Confirm can act
+  ---
+  duration_ms: 802.722083
+  type: 'test'
+  ...
+# Subtest: immediate: retained live cut reconstructs exactly and leaves the original run paused
+ok 16 - immediate: retained live cut reconstructs exactly and leaves the original run paused
+  ---
+  duration_ms: 150.039875
+  type: 'test'
+  ...
+# Subtest: grid-center: retained live cut reconstructs exactly and leaves the original run paused
+ok 17 - grid-center: retained live cut reconstructs exactly and leaves the original run paused
+  ---
+  duration_ms: 47.887541
+  type: 'test'
+  ...
+# Subtest: immediate: an actual recovery is retained without advancing its remaining recovery time
+ok 18 - immediate: an actual recovery is retained without advancing its remaining recovery time
+  ---
+  duration_ms: 40.890583
+  type: 'test'
+  ...
+# Subtest: grid-center: an actual recovery is retained without advancing its remaining recovery time
+ok 19 - grid-center: an actual recovery is retained without advancing its remaining recovery time
+  ---
+  duration_ms: 35.803208
+  type: 'test'
+  ...
+# Subtest: an encounter-version flight uses the same checked handoff without dropping encounter authority
+ok 20 - an encounter-version flight uses the same checked handoff without dropping encounter authority
+  ---
+  duration_ms: 62.316625
+  type: 'test'
+  ...
+# Subtest: malformed or unsupported previous envelope is kept before snapshot or write
+ok 21 - malformed or unsupported previous envelope is kept before snapshot or write
+  ---
+  duration_ms: 23.778958
+  type: 'test'
+  ...
+# Subtest: quota failure preserves the old slot and never reports a retained flight
+ok 22 - quota failure preserves the old slot and never reports a retained flight
+  ---
+  duration_ms: 19.760292
+  type: 'test'
+  ...
+# Subtest: silent non-write and damaged readback reject even though saveSession returned ok
+ok 23 - silent non-write and damaged readback reject even though saveSession returned ok
+  ---
+  duration_ms: 70.903083
+  type: 'test'
+  ...
+# Subtest: cancellation at the final storage boundary leaves the previous slot untouched
+ok 24 - cancellation at the final storage boundary leaves the previous slot untouched
+  ---
+  duration_ms: 25.797625
+  type: 'test'
+  ...
+# Subtest: cancelling from the verifier progress callback cannot proceed to a storage write
+ok 25 - cancelling from the verifier progress callback cannot proceed to a storage write
+  ---
+  duration_ms: 15.394167
+  type: 'test'
+  ...
+# Subtest: changed run or externally replaced slot cannot be overwritten after verification
+ok 26 - changed run or externally replaced slot cannot be overwritten after verification
+  ---
+  duration_ms: 73.236208
+  type: 'test'
+  ...
+# Subtest: writer and recovery checks run again after asynchronous verification
+ok 27 - writer and recovery checks run again after asynchronous verification
+  ---
+  duration_ms: 12.32275
+  type: 'test'
+  ...
+# Subtest: an unavailable recorder and a tampered recording preserve the stored attempt
+ok 28 - an unavailable recorder and a tampered recording preserve the stored attempt
+  ---
+  duration_ms: 18.180917
+  type: 'test'
+  ...
+# Subtest: normal entry remains explicit and pending cancellation stays inside Help
+ok 29 - normal entry remains explicit and pending cancellation stays inside Help
+  ---
+  duration_ms: 10.246375
+  type: 'test'
+  ...
+# Subtest: repeated live updates preserve native selection drafts, focus and host task content
+ok 30 - repeated live updates preserve native selection drafts, focus and host task content
+  ---
+  duration_ms: 8.067167
+  type: 'test'
+  ...
+# Subtest: a missed example and stale lesson snapshot cannot unlock Next or erase prior visit labels
+ok 31 - a missed example and stale lesson snapshot cannot unlock Next or erase prior visit labels
+  ---
+  duration_ms: 3.916708
+  type: 'test'
+  ...
+# Subtest: lesson changes replace finite markers, keep geometry within the board and hide at results
+ok 32 - lesson changes replace finite markers, keep geometry within the board and hide at results
+  ---
+  duration_ms: 7.9355
+  type: 'test'
+  ...
+# Subtest: switching, leaving, ended and destroyed views never invoke disabled course commands
+ok 33 - switching, leaving, ended and destroyed views never invoke disabled course commands
+  ---
+  duration_ms: 6.630125
+  type: 'test'
+  ...
+# Subtest: actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 34 - actual level selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 2383.04275
+  type: 'test'
+  ...
+# Subtest: actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 35 - actual card selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 1621.494917
+  type: 'test'
+  ...
+# Subtest: actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 36 - actual campaign selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 2203.714458
+  type: 'test'
+  ...
+# Subtest: actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+ok 37 - actual pack selection asks once; Stay keeps the queued flight, Replace prepares without Resume
+  ---
+  duration_ms: 1604.774542
+  type: 'test'
+  ...
+# Subtest: same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart
+ok 38 - same mission card/level/campaign/base pack preserves a running attempt without pause, write or restart
+  ---
+  duration_ms: 1073.011
+  type: 'test'
+  ...
+# Subtest: button Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 39 - button Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1243.026292
+  type: 'test'
+  ...
+# Subtest: Escape Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 40 - Escape Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1353.637209
+  type: 'test'
+  ...
+# Subtest: controller Stay cancels a pending check and restores the exact opener without late save or Resume
+ok 41 - controller Stay cancels a pending check and restores the exact opener without late save or Resume
+  ---
+  duration_ms: 1352.57375
+  type: 'test'
+  ...
+# Subtest: quota keeps truthful loss warning and the old attempt until explicit Replace
+ok 42 - quota keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1360.547458
+  type: 'test'
+  ...
+# Subtest: readback keeps truthful loss warning and the old attempt until explicit Replace
+ok 43 - readback keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1266.327291
+  type: 'test'
+  ...
+# Subtest: newer-before keeps truthful loss warning and the old attempt until explicit Replace
+ok 44 - newer-before keeps truthful loss warning and the old attempt until explicit Replace
+  ---
+  duration_ms: 1333.742667
+  type: 'test'
+  ...
+# Subtest: new saved slot after verification requires a second deliberate Replace and is never overwritten
+ok 45 - new saved slot after verification requires a second deliberate Replace and is never overwritten
+  ---
+  duration_ms: 1297.597375
+  type: 'test'
+  ...
+# Subtest: different pack download leaves an installed live run/recorder intact through pagehide
+ok 46 - different pack download leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 1255.550375
+  type: 'test'
+  ...
+# Subtest: different pack save leaves an installed live run/recorder intact through pagehide
+ok 47 - different pack save leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 1354.087
+  type: 'test'
+  ...
+# Subtest: different pack cancel-download leaves an installed live run/recorder intact through pagehide
+ok 48 - different pack cancel-download leaves an installed live run/recorder intact through pagehide
+  ---
+  duration_ms: 2562.593083
+  type: 'test'
+  ...
+# Subtest: successful different-pack install adopts a fresh paused run and leaves the previous run unchanged
+ok 49 - successful different-pack install adopts a fresh paused run and leaves the previous run unchanged
+  ---
+  duration_ms: 1010.516708
+  type: 'test'
+  ...
+# Subtest: chapter card uses the existing pack change adapter but Stay returns to that visible card
+ok 50 - chapter card uses the existing pack change adapter but Stay returns to that visible card
+  ---
+  duration_ms: 1152.520792
+  type: 'test'
+  ...
+# Subtest: restored paused unfinished flight is guarded and Stay preserves its exact saved continuation
+    # Subtest: create a real saved queued turn
+    ok 1 - create a real saved queued turn
+      ---
+      duration_ms: 929.695542
+      type: 'test'
+      ...
+    # Subtest: reload, explicitly Continue, then choose another mission
+    ok 2 - reload, explicitly Continue, then choose another mission
+      ---
+      duration_ms: 750.290083
+      type: 'test'
+      ...
+    1..2
+ok 51 - restored paused unfinished flight is guarded and Stay preserves its exact saved continuation
+  ---
+  duration_ms: 1682.471875
+  type: 'test'
+  ...
+# Subtest: unavailable IDs and locked missions do not create prompts or adopt an arbitrary target
+ok 52 - unavailable IDs and locked missions do not create prompts or adopt an arbitrary target
+  ---
+  duration_ms: 1473.477667
+  type: 'test'
+  ...
+# Subtest: actual Title Missions → Team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 1499.96225
+      type: 'test'
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 2 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 761.17875
+      type: 'test'
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 3 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 319.480292
+      type: 'test'
+      ...
+    1..3
+ok 53 - actual Title Missions → Team → Back restores exact menu without adoption
+  ---
+  duration_ms: 2581.63475
+  type: 'test'
+  ...
+# Subtest: actual paused cut Missions → Team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 1262.051625
+      type: 'test'
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 2 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 618.059792
+      type: 'test'
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 3 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 297.196334
+      type: 'test'
+      ...
+    1..3
+ok 54 - actual paused cut Missions → Team → Back restores exact menu without adoption
+  ---
+  duration_ms: 2177.754542
+  type: 'test'
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 1369.553625
+      type: 'test'
+      ...
+    1..1
+ok 55 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 1369.8265
+  type: 'test'
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+ok 56 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 896.5325
+  type: 'test'
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 631.230042
+      type: 'test'
+      ...
+    1..1
+ok 57 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 631.662625
+  type: 'test'
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 1231.416042
+      type: 'test'
+      ...
+    1..1
+ok 58 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 1231.592291
+  type: 'test'
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+ok 59 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 1169.270792
+  type: 'test'
+  ...
+# Subtest: return with incompatible source falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 279.485791
+      type: 'test'
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 321.568833
+      type: 'test'
+      ...
+    1..2
+ok 60 - return with incompatible source falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 601.487208
+  type: 'test'
+  ...
+# Subtest: return with incompatible selection falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 308.936709
+      type: 'test'
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 290.896791
+      type: 'test'
+      ...
+    1..2
+ok 61 - return with incompatible selection falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 600.042834
+  type: 'test'
+  ...
+# Subtest: checked save quota failure never claims durable storage or navigates silently
+ok 62 - checked save quota failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 1216.892
+  type: 'test'
+  ...
+# Subtest: checked save readback failure never claims durable storage or navigates silently
+ok 63 - checked save readback failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 1156.231083
+  type: 'test'
+  ...
+# Subtest: a newer slot after helper readback cannot become this departure’s saved authority
+ok 64 - a newer slot after helper readback cannot become this departure’s saved authority
+  ---
+  duration_ms: 808.453375
+  type: 'test'
+  ...
+# Subtest: pending theme preparation cannot depart with a stale visible selection
+ok 65 - pending theme preparation cannot depart with a stale visible selection
+  ---
+  duration_ms: 334.780417
+  type: 'test'
+  ...
+# Subtest: class-select running: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+ok 66 - class-select running: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+  ---
+  duration_ms: 2541.445542
+  type: 'test'
+  ...
+# Subtest: class-select paused: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+ok 67 - class-select paused: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+  ---
+  duration_ms: 1746.092125
+  type: 'test'
+  ...
+# Subtest: turn-select running: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+ok 68 - turn-select running: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+  ---
+  duration_ms: 1801.831666
+  type: 'test'
+  ...
+# Subtest: turn-select paused: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+ok 69 - turn-select paused: Stay preserves replay/setup and Prepare creates one paused fresh attempt
+  ---
+  duration_ms: 1631.751834
+  type: 'test'
+  ...
+# Subtest: same setup values are a no-op in ready state
+ok 70 - same setup values are a no-op in ready state
+  ---
+  duration_ms: 342.947917
+  type: 'test'
+  ...
+# Subtest: same setup values are a no-op in running state
+ok 71 - same setup values are a no-op in running state
+  ---
+  duration_ms: 891.577709
+  type: 'test'
+  ...
+# Subtest: class-select: ready selection is direct and invalid IDs cannot mutate setup
+ok 72 - class-select: ready selection is direct and invalid IDs cannot mutate setup
+  ---
+  duration_ms: 449.008208
+  type: 'test'
+  ...
+# Subtest: turn-select: ready selection is direct and invalid IDs cannot mutate setup
+ok 73 - turn-select: ready selection is direct and invalid IDs cannot mutate setup
+  ---
+  duration_ms: 444.006875
+  type: 'test'
+  ...
+# Subtest: pending setup retention button cancels without changing profile/queue or a late write
+ok 74 - pending setup retention button cancels without changing profile/queue or a late write
+  ---
+  duration_ms: 1186.564958
+  type: 'test'
+  ...
+# Subtest: pending setup retention Escape cancels without changing profile/queue or a late write
+ok 75 - pending setup retention Escape cancels without changing profile/queue or a late write
+  ---
+  duration_ms: 1152.814042
+  type: 'test'
+  ...
+# Subtest: pending setup retention controller cancels without changing profile/queue or a late write
+ok 76 - pending setup retention controller cancels without changing profile/queue or a late write
+  ---
+  duration_ms: 1149.436166
+  type: 'test'
+  ...
+# Subtest: pending setup retention pagehide cancels without changing profile/queue or a late write
+ok 77 - pending setup retention pagehide cancels without changing profile/queue or a late write
+  ---
+  duration_ms: 971.652042
+  type: 'test'
+  ...
+# Subtest: setup quota: truthful retained/loss boundary precedes any preference mutation
+ok 78 - setup quota: truthful retained/loss boundary precedes any preference mutation
+  ---
+  duration_ms: 922.485917
+  type: 'test'
+  ...
+# Subtest: setup readback: truthful retained/loss boundary precedes any preference mutation
+ok 79 - setup readback: truthful retained/loss boundary precedes any preference mutation
+  ---
+  duration_ms: 1001.872542
+  type: 'test'
+  ...
+# Subtest: setup newer-before: truthful retained/loss boundary precedes any preference mutation
+ok 80 - setup newer-before: truthful retained/loss boundary precedes any preference mutation
+  ---
+  duration_ms: 1010.166875
+  type: 'test'
+  ...
+# Subtest: setup newer-after: truthful retained/loss boundary precedes any preference mutation
+ok 81 - setup newer-after: truthful retained/loss boundary precedes any preference mutation
+  ---
+  duration_ms: 1116.55
+  type: 'test'
+  ...
+# Subtest: setup prompt excludes the other navigation requests
+ok 82 - setup prompt excludes the other navigation requests
+  ---
+  duration_ms: 1006.061917
+  type: 'test'
+  ...
+# Subtest: mission prompt excludes the other navigation requests
+ok 83 - mission prompt excludes the other navigation requests
+  ---
+  duration_ms: 1068.024417
+  type: 'test'
+  ...
+# Subtest: team prompt excludes the other navigation requests
+ok 84 - team prompt excludes the other navigation requests
+  ---
+  duration_ms: 2142.505
+  type: 'test'
+  ...
+# Subtest: practice setup confirmation is session-only and never writes player progress or suspended flight
+ok 85 - practice setup confirmation is session-only and never writes player progress or suspended flight
+  ---
+  duration_ms: 826.034709
+  type: 'test'
+  ...
+# Subtest: course setup confirmation is session-only and never writes player progress or suspended flight
+ok 86 - course setup confirmation is session-only and never writes player progress or suspended flight
+  ---
+  duration_ms: 617.577542
+  type: 'test'
+  ...
+# Subtest: actual controller editor draft/Back and Confirm are separate from fresh-attempt confirmation
+ok 87 - actual controller editor draft/Back and Confirm are separate from fresh-attempt confirmation
+  ---
+  duration_ms: 1298.692125
+  type: 'test'
+  ...
+# Subtest: Tactical Hangar changes active craft without changing starting identity or opening H
+ok 88 - Tactical Hangar changes active craft without changing starting identity or opening H
+  ---
+  duration_ms: 407.378875
+  type: 'test'
+  ...
+# Subtest: an actual secured capture remains stopped through setup Stay/Resume until fresh movement
+ok 89 - an actual secured capture remains stopped through setup Stay/Resume until fresh movement
+  ---
+  duration_ms: 5750.330458
+  type: 'test'
+  ...
+# Subtest: actual respawning attempt requires confirmation
+ok 90 - actual respawning attempt requires confirmation
+  ---
+  duration_ms: 937.513333
+  type: 'test'
+  ...
+# Subtest: actual lost attempt keeps direct fresh setup
+ok 91 - actual lost attempt keeps direct fresh setup
+  ---
+  duration_ms: 982.908125
+  type: 'test'
+  ...
+1..91
+# tests 106
+# suites 0
+# pass 106
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 34178.165916
