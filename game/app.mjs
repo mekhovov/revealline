@@ -931,6 +931,10 @@ try {
       ? error.message
       : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
     warning(message);
+    // An unjoined prewarm has no launch lease to publish its terminal feedback.
+    // Keep other preparation owners in charge of their existing presenter.
+    if (pictureResume === null && !preparationOperation && !pictureThemePending)
+      preparationFeedback.begin({ message }).finish({ message, state: 'error' });
     for (const button of pictureRecoveryButtons) button.hidden = !needsWriter;
     legacyPictureButton.hidden = needsWriter || started || practice;
     if (!started)
@@ -1477,6 +1481,12 @@ try {
     }
     const scope = controllerScope();
     if (courseBlocked()) return;
+    if (pictureResume !== null && preparationOperation?.cancel === cancelPictureStart) {
+      // Back cancels only this launch owner, after any native modal has handled it.
+      $('flight-preparation-cancel').click();
+      $('start-button').focus({ preventScroll: true });
+      return;
+    }
     if (scope === 'paused') resume();
     else if (scope === 'celebration' || scope === 'defeat-presentation')
       $('skip-celebration').click();
