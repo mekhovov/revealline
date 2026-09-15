@@ -8,7 +8,7 @@ Approved scope: **consistent maps and presentation across Solo, Versus and Team*
 
 The starting user checkout was `codex/fpv-redesign` at `677b091681d424198de17c6f7e864795d2618880`, with mixed staged, unstaged and untracked work. Its index, binary patches and 201 changed/reference files (629,522,202 logical bytes) were preserved locally at `.cache/cross-mode/p00-preservation-20260915T051513Z` in that checkout. `preservation.json` records each file's SHA-256. The original checkout remains untouched.
 
-Implementation uses the separate `codex/cross-mode-p00` worktree. The integration cutoff is main `5595b63243cdb7ec64f5d97c0e5e485b6c1fda0a`. The first rebase result is `3f8930e`:
+Implementation uses the separate `codex/cross-mode-p00` worktree. The initial integration cutoff is main `5595b63243cdb7ec64f5d97c0e5e485b6c1fda0a`. The first rebase result is `3f8930e`:
 
 | Original work | Disposition and reason |
 | --- | --- |
@@ -23,6 +23,8 @@ Implementation uses the separate `codex/cross-mode-p00` worktree. The integratio
 The source package at the cutoff is v0.53.0; the latest published stable observed during integration is v0.52.0. v0.53.0 is already tagged and v0.54.0 has a concurrent release candidate in PR #49. Neither was reused: **P00 candidate version is v0.55.0**, checked against remote tags before the bump. This is not yet a released version.
 
 Production reproduction exposed a stale ledger on the integration cutoff. P00 adopts the six production files from PR #49 source `1af33851e93ee95110de20cc73622ed43d85a4da`: generator, production-history test, source bundle and three compiled JSON files. Review confirmed preservation of all 948 historical asset records, 16 theme revisions, one collection and 127 original asset blobs. The repair appends 34 asset and two theme revisions and pins reviewed motion/effect approvals to exact source fingerprints. Earlier checks on that candidate do not qualify the combined P00 source. The inventory remains a faithful pre-repair baseline; final receipts record the adopted delta.
+
+After PR #49 merged, P00 integrated main `a6406ed` through a normal merge, preserving the first P00 candidate `9a9fc8f` and inventory commit `3f8930e` as reachable history. Only the three version files conflicted; P00 retains v0.55.0. Runtime, content and production bytes remain identical to `9a9fc8f`. The final merge receives fresh exact-source gates; earlier candidate checks remain scoped evidence. Release coordination assigns the separate player-library/Team-controls candidate to v0.56.0, without including its unfinished work in P00. Reconcile that incoming release before changing its affected surfaces in later phases.
 
 The [source inventory](verification/cross-mode/p00/inventory.md) and [machine-readable inventory](verification/cross-mode/p00/inventory.json) distinguish embedded originals, external originals, release-art bindings and intentional procedural scenes. Source counts do not establish browser or physical-device coverage.
 
