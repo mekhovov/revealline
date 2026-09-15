@@ -1,0 +1,13 @@
+{
+  "pid": 15519,
+  "command": [
+    "python3",
+    "-u",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-bridge-public/http_audit.py",
+    "--run",
+    "--workers",
+    "6"
+  ],
+  "cwd": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-bridge-public",
+  "startedAt": "2026-09-15T08:37:33.966887+00:00"
+}

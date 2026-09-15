@@ -1,0 +1,114 @@
+{
+  "status": "READY_FOR_FRESH_FULL1303_STREAM",
+  "sourceCommit": "18f70dba10b6c7e24d3074e05931ecb32b4dcdae",
+  "archiveCommit": "58b21ebeff3c2d8e8ca37d5b7764f8203b8824ed",
+  "tree": "8c1ef505de484c1175a7d8b2dff83fdd093ee699",
+  "deploymentId": 6454910731,
+  "runId": 34947667008,
+  "expectedFiles": 1303,
+  "expectedBytes": 624422286,
+  "inventorySha256": "d825b3ff2c7ae8a6f4a1212d86b28a9f8d6dcee117e1726b976fa25655c74ffa",
+  "pins": [
+    {
+      "path": "http_audit.py",
+      "bytes": 12316,
+      "sha256": "e4b627a42200d8c60f495c1067f2a10d90a53de8f4bc785c40bf60cd945e9629"
+    },
+    {
+      "path": "test_http_audit.py",
+      "bytes": 6469,
+      "sha256": "904fd55b068b536206ccc7dbeba02eedeb8a7e36c0b88001106d4956d481d0ce"
+    },
+    {
+      "path": "literal-rules.json",
+      "bytes": 645,
+      "sha256": "1a24080e4841d4705413b4bbc810c0b2d1d0767dd07fe8e97976c898d5dfd925"
+    },
+    {
+      "path": "http_audit.py.diff",
+      "bytes": 956,
+      "sha256": "9f0ed54b77c71bfac221d8226729e7425e79b5cdfb9e128e0000cf7960330a97"
+    },
+    {
+      "path": "test_http_audit.py.diff",
+      "bytes": 559,
+      "sha256": "2bf69a430122f5ce6852f7a0fd9e3cbdaaaaa107aa362097728250bf7d67d56a"
+    },
+    {
+      "path": "pr2.json",
+      "bytes": 239,
+      "sha256": "b8aeebf5e882d0b3310aa1c8a882d8a6edfedeaa70890c4ac3b7065a19914d8a"
+    },
+    {
+      "path": "merge-commit.json",
+      "bytes": 2785,
+      "sha256": "326110676fc46260281c9dc9acb02924ed9c6afd7f014ea373d74d82a9e1a7a5"
+    },
+    {
+      "path": "run-1.json",
+      "bytes": 3725,
+      "sha256": "ad38b2290ee55a2b6a085efc71502b14b334bf5ce337cc3947d3248b9ca8fa1b"
+    },
+    {
+      "path": "latest-deployments-before.json",
+      "bytes": 11572,
+      "sha256": "ff7927fbb65d631e5ff6a0ce4acc327b9931eecb1be5d487374d8eab56aedc69"
+    },
+    {
+      "path": "main-before.json",
+      "bytes": 358,
+      "sha256": "f339e3b4c29c3132dff52c186b4fb1aec1c02a47220570c8a831d5c408470aa6"
+    },
+    {
+      "path": "statuses-before.json",
+      "bytes": 6817,
+      "sha256": "8fdb221fb50db3b3c882810ecb0e6a35345468447c2da3b479b5c250d977be32"
+    },
+    {
+      "path": "hosted-raw.log",
+      "bytes": 275018,
+      "sha256": "da4355df7ef527fe43a1ffbc036cd6a5ca2ebc92bccbe31a93f84cb7e6720449"
+    },
+    {
+      "path": "hosted-receipt-from-log.json",
+      "bytes": 1753,
+      "sha256": "af1d73dd6582ab67dfd825140243bb11451bb2695abe0282b7aa5a06f9238582"
+    },
+    {
+      "path": "hosted-receipt-provenance.json",
+      "bytes": 212,
+      "sha256": "599ce6ea112ded7b8e9bd2382e88b3a98f3fe9429575ef96e36ba7c59b809af3"
+    },
+    {
+      "path": "offline-checks.json",
+      "bytes": 645,
+      "sha256": "0d8757d61fb52a75cfe2903878a47ae6f7dcef4f88c521b14091f18a464ee100"
+    },
+    {
+      "path": "offline15.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "offline15.stderr",
+      "bytes": 2021,
+      "sha256": "54e2e0357bfc877ac053defdbf55e4f55b5e0a754e5f8cc8ccb9eb19d14bfb19"
+    },
+    {
+      "path": "ready.stdout",
+      "bytes": 225,
+      "sha256": "b27e0841bfd1eb50226d61af3536d8ef2bc0d9cefe95dc83e08fb8c5cabde49e"
+    },
+    {
+      "path": "ready.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "priorEngineSha256": "d8723ed38d2512958c2f0c1369e7fa2b82caeca44c38f2759bf833eb068994a4",
+  "priorProof": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/round47/archive13-append-v055-public/completion.json",
+  "scope": "Fresh whole inventory, unchanged original HTTP engine, new fixed identity literals only. Prior1302 bytes pass/routing fail remains historical. No native/offline/controller acceptance from this HTTP operation.",
+  "freeBytes": 459960320,
+  "metadataCapBytes": 12582912,
+  "reserveBytes": 268435456
+}
