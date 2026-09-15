@@ -52,6 +52,7 @@ import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
 import { attachModalNavigation } from './ui/modal-navigation.mjs';
+import { attachProfileRecoveryDialog } from './ui/profile-recovery-dialog.mjs';
 import { createControllerRouter } from './ui/controller-router.mjs';
 import {
   cancelControllerToggleBoost,
@@ -163,7 +164,8 @@ const timeLabel = (time) =>
   `${Math.floor(time / 60)}:${String(Math.floor(time % 60)).padStart(2, '0')}`;
 
 try {
-  let attemptFiles = null;
+  let attemptFiles = null,
+    profileRecovery = null;
   const [baseCampaign, themesFile, presets, baseClasses, packCatalogSource, archiveCatalogSource] =
     await Promise.all([
       getJSON('content/campaign.json'),
@@ -554,6 +556,7 @@ try {
     recorder = null,
     recordingStopped = false,
     captionUntil = 0,
+    runMessageCue = null,
     bodyWarning = '',
     lastReplay = null,
     completionWarning = '',
@@ -1009,6 +1012,7 @@ try {
   // Published presentation is a separate cosmetic release. Loading it never
   // opens the local Asset Studio database or changes a flight's picture pins.
   let presentationHost = null,
+    presentationSnapshot = null,
     presentationReady = Promise.resolve(null);
   try {
     presentationHost = createPresentationHost({
@@ -1019,6 +1023,8 @@ try {
       .then((snapshot) => {
         presentationHost.apply(document.documentElement);
         painter.setPresentation(snapshot);
+        presentationSnapshot = snapshot;
+        enemyGuide?.refreshPresentation();
         document.documentElement.dataset.presentationTheme = snapshot.resolved.theme.id;
         return snapshot;
       })
@@ -1107,7 +1113,8 @@ try {
     sfx: library.preferences.sfxVolume,
   });
   if (scenario?.music) assignMusic(scenario.music);
-  function warning(message) {
+  function warning(message, cue = null) {
+    runMessageCue = cue;
     $('run-message').textContent = message;
     captionUntil = (run?.time || 0) + 5;
   }
@@ -1141,10 +1148,28 @@ try {
     const b = controllerLabels.menu;
     return `Stick / D-pad: navigate · ${b.confirm}: confirm · ${b.back}: back · ${b.menu}: resume.${library.preferences.controllerBindings ? '' : ' Shoulders / triggers: previous / next · West: confirm · North: back.'}`;
   }
+  function manualSupplyAvailable() {
+    return (
+      arcadeActionCapabilities(run?.level).manualPickup &&
+      !!run?.ability.capacity &&
+      !!run?.supplies?.length
+    );
+  }
+  function craftSwitchAvailable() {
+    return (
+      !courseSession &&
+      !courseEntry &&
+      !campaignOverview &&
+      !!run &&
+      !['won', 'lost'].includes(run.status) &&
+      run.classRecipes.length > 1 &&
+      run.hangars.length > 0
+    );
+  }
   function controllerFlightHint() {
     const b = controllerLabels.flight;
     const actions = arcadeActionCapabilities(run?.level);
-    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${b.pickup}: ${actions.manualPickup ? 'supply' : 'field guide'} · ${b.hangar}: ${actions.manualAbility && run?.hangars?.length ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
+    return `Stick / D-pad: steer · ${b.ability}: ${actions.manualAbility ? 'ability' : 'pause'} · ${actions.manualPickup ? (manualSupplyAvailable() ? `${b.pickup}: supply · ` : '') : `${b.pickup}: field guide · `}${b.hangar}: ${craftSwitchAvailable() ? 'hangar' : 'missions'} · ${b.stop}: pause · ${actions.manualBoost ? `${b.boost}: boost · ` : ''}${b.pause}: pause. Lift the stick to keep flying.`;
   }
   function refreshControllerPrompts() {
     controllerDeviceId = controllerFrame?.assigned?.id ?? controllerDeviceId;
@@ -1249,6 +1274,10 @@ try {
   function controllerBack() {
     const dialog = controllerDialog();
     if (dialog) {
+      if (dialog.id === 'profile-recovery-dialog') {
+        void profileRecovery.close();
+        return;
+      }
       if (dialog.id === 'enemy-guide-dialog') {
         enemyGuide.close();
         return;
@@ -1271,7 +1300,7 @@ try {
       // Follow the same cancellable lifecycle as Escape. Library transactions
       // may prevent cancellation; picture close restores its collection focus.
       if (dialog.dispatchEvent(new Event('cancel', { cancelable: true }))) dialog.close();
-      else
+      else if (dialog.open)
         $('controller-ui-hint').textContent =
           'This operation is still in progress. Use its Cancel action when available.';
       return;
@@ -1288,7 +1317,7 @@ try {
     arena: $('game-canvas'),
     onPause: (force) => pause(force),
     continuousSteering: () => true,
-    getTouchSettings: currentTouchControls,
+    getTouchSettings: () => resolveTouchControls(library.preferences.touchControls),
     touchEnabled: () => library.preferences.screenControls !== 'off',
     tapMode: () => $('tap-steering').checked,
     active: () =>
@@ -1380,9 +1409,9 @@ try {
   });
   enemyGuide = attachEnemyGuide({
     themes: guideThemes,
+    getPresentation: () => presentationSnapshot,
     getThemeId: () => theme.id,
     getTurnPolicy: () => turnPolicy,
-    getPresentation: () => presentationHost?.current(),
     loadImpactScenario: () => getJSON('content/scenarios/line-impact-demo.json'),
     onPractice: () => {
       clearInput();
@@ -1471,7 +1500,7 @@ try {
     const bindings = resolveKeyBindings(library.preferences.keyboardBindings);
     const labels = bindingLabels(bindings);
     const actions = arcadeActionCapabilities(run?.level);
-    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${actions.manualPickup && run?.ability.capacity ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${run?.hangars?.length ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
+    const description = `Tap a direction to fly. Tap another to turn. Up ${labels.up}; down ${labels.down}; left ${labels.left}; right ${labels.right}; ${actions.manualAbility ? `ability ${labels.ability}; ` : ''}${manualSupplyAvailable() ? `supply ${labels.pickup}; ` : ''}${actions.manualBoost ? `boost ${labels.boost}; ` : ''}${craftSwitchAvailable() ? `change craft ${labels.hangar}; ` : ''}pause ${labels.pause}. Releasing a direction keeps you moving.${run?.rules.stopOnCapture ? ' Closing a cut stops your craft; tap a fresh direction to fly again.' : ''}`;
     $('keyboard-help').textContent = description;
     $('game-canvas').setAttribute('aria-label', `Territory capture game. ${description}`);
     for (const [id, action] of [
@@ -2601,7 +2630,7 @@ try {
       updateLoadout();
       overlay('pause');
       refreshHUD();
-      warning(savedFlightRestoredMessage);
+      warning(savedFlightRestoredMessage, 'restored');
     } finally {
       sessionBusy = false;
       stagedPictures?.dispose();
@@ -2910,10 +2939,10 @@ try {
     }
   };
   $('hangar-button').onclick = () => {
-    if (courseSession || courseEntry) return;
+    if (!craftSwitchAvailable()) return;
     pause(true);
     $('switch-class-select').replaceChildren(
-      ...(scenario?.classRecipes || classRegistry).map((c) => new Option(c.label, c.id)),
+      ...run.classRecipes.map((c) => new Option(c.label, c.id)),
     );
     $('switch-class-select').value = run.activeClassId || classId;
     $('switch-description').textContent = run.classRecipe.description;
@@ -2922,11 +2951,10 @@ try {
   };
   $('switch-class-select').onchange = () => {
     $('switch-description').textContent =
-      (scenario?.classRecipes || classRegistry).find((c) => c.id === $('switch-class-select').value)
-        ?.description || '';
+      run.classRecipes.find((c) => c.id === $('switch-class-select').value)?.description || '';
   };
   $('switch-class-button').onclick = () => {
-    if (courseSession || courseEntry) return;
+    if (!craftSwitchAvailable()) return;
     const next = $('switch-class-select').value;
     $('hangar-dialog').close();
     resume();
@@ -2935,6 +2963,7 @@ try {
   document.addEventListener('keydown', (e) => {
     if (
       actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), e) === 'hangar' &&
+      craftSwitchAvailable() &&
       !e.repeat &&
       !e.ctrlKey &&
       !e.metaKey &&
@@ -2965,8 +2994,29 @@ try {
     controllerSettings.refresh();
     controllerBoostSettings.refresh();
     $('settings-dialog').showModal();
+    profileRecovery.refresh();
     void storageRetention.refresh();
   };
+  profileRecovery = attachProfileRecoveryDialog({
+    currentVersion: buildVersion,
+    packaged: isRelease,
+    resolveSourceVersion: async () => (await getJSON('build-config.json')).version,
+    onOpen: () => clearInput(),
+    unavailable: () => {
+      if (practiceSession || courseEntry || courseEntryHold)
+        return 'Stored profile recovery is available from ordinary solo Settings.';
+      if (contentSwitchBusy || sessionBusy || backupBusy)
+        return 'Finish the pending content or save operation before opening recovery.';
+      if (
+        [...document.querySelectorAll('dialog[open]')].some(
+          (dialog) =>
+            !['settings-dialog', 'shell-home', 'profile-recovery-dialog'].includes(dialog.id),
+        )
+      )
+        return 'Close the other tool before opening recovery.';
+      return '';
+    },
+  });
   let offlinePrepared = false;
   const offline = offlineAvailability();
   show('offline-button', offline.available);
@@ -3053,62 +3103,66 @@ try {
     syncAssistControls();
     refreshInputPresentation();
   };
-  $('screen-steering-hand').onchange = () => {
+  $('touch-side').onchange = () => {
     clearInput();
-    const requested = $('screen-steering-hand').value,
-      saved = preferences({ screenSteeringHand: requested });
-    refreshScreenSteeringHand();
+    const requested = $('touch-side').value,
+      saved = preferences({
+        screenSteeringHand: requested,
+        touchControls: {
+          ...resolveTouchControls(library.preferences.touchControls),
+          side: requested,
+        },
+      });
+    syncAssistControls();
     const status = $('screen-steering-status');
     status.textContent = saved.ok
       ? 'Steering hand saved.'
-      : library.preferences.screenSteeringHand === requested
+      : resolveTouchControls(library.preferences.touchControls).side === requested
         ? `Steering hand selected for this session. ${saved.warning}`
         : `Steering hand unchanged. ${saved.warning}`;
     status.hidden = false;
   };
   function refreshScreenSteeringHand() {
-    const hand = library.preferences.screenSteeringHand;
-    $('screen-steering-hand').value = hand;
+    const hand = resolveTouchControls(library.preferences.touchControls).side;
+    $('touch-side').value = hand;
     document.body.dataset.screenSteeringHand = hand;
     document.body.dataset.touchSide = hand;
     const strip = document.querySelector('.play-controls'),
-      trailing = strip.querySelector(hand === 'right' ? '.direction-controls' : '.ability-buttons');
-    if (strip.lastElementChild !== trailing) {
+      steering = [
+        strip.querySelector('#touch-surface'),
+        strip.querySelector('.direction-controls'),
+      ],
+      actions = strip.querySelector('.ability-buttons'),
+      ordered = hand === 'right' ? [actions, ...steering] : [...steering, actions];
+    if (ordered.some((group, index) => strip.children[index] !== group)) {
       const focused = document.activeElement;
-      const surface = $('touch-surface');
-      // The stick and D-pad alternate in the same position. Move both with one
-      // append so native focus order matches either mode without CSS reversal.
-      if (hand === 'right') strip.append(surface, trailing);
-      else strip.append(trailing);
-      if (trailing.contains(focused) || surface.contains(focused))
-        focused.focus({ preventScroll: true });
+      // Match keyboard focus order to the visible side; reuse every existing control.
+      strip.append(...ordered);
+      if (ordered.some((group) => group.contains(focused))) focused.focus({ preventScroll: true });
     }
     $('screen-steering-status').textContent = '';
     $('screen-steering-status').hidden = true;
   }
   $('text-size').onchange = () => preferences({ textSize: $('text-size').value });
-  function currentTouchControls() {
-    return {
-      ...resolveTouchControls(library.preferences.touchControls),
-      side: library.preferences.screenSteeringHand,
-    };
-  }
   for (const key of ['mode', 'size', 'opacity']) {
     $(`touch-${key}`).onchange = () => {
       clearInput();
       preferences({
         touchControls: {
-          ...currentTouchControls(),
+          ...resolveTouchControls(library.preferences.touchControls),
           [key]: key === 'opacity' ? Number($(`touch-${key}`).value) : $(`touch-${key}`).value,
         },
       });
       syncAssistControls();
     };
   }
+  $('text-face').onchange = () => preferences({ textFace: $('text-face').value });
   function refreshTextSize() {
-    const size = library.preferences.textSize;
+    const { textSize: size, textFace: face } = library.preferences;
     $('text-size').value = size;
     document.body.dataset.textSize = size;
+    $('text-face').value = face;
+    document.body.dataset.textFace = face;
   }
   $('settings-grid').onchange = () => preferences({ showGrid: $('settings-grid').checked });
   function syncAssistControls() {
@@ -3116,7 +3170,7 @@ try {
     $('settings-reduced-effects').checked = $('reduced-effects').checked;
     $('settings-tap-steering').checked = $('tap-steering').checked;
     $('screen-controls').value = library.preferences.screenControls;
-    const touch = currentTouchControls();
+    const touch = resolveTouchControls(library.preferences.touchControls);
     for (const key of ['mode', 'size', 'opacity']) $(`touch-${key}`).value = touch[key];
     document.body.dataset.touchMode = touch.mode;
     document.body.dataset.touchSide = touch.side;
@@ -3341,10 +3395,8 @@ try {
     const actions = arcadeActionCapabilities(run?.level);
     $('action-button').firstChild.textContent = `${recipe.id === 'scout' ? 'Scan' : recipe.label} `;
     show('action-button', actions.manualAbility);
-    show(
-      'pickup-button',
-      actions.manualPickup && !!run?.ability.capacity && !!run?.supplies?.length,
-    );
+    show('pickup-button', manualSupplyAvailable());
+    show('manual-equipment-help', actions.manualAbility);
     show('boost-button', actions.manualBoost);
     show('screen-boost-setting', actions.manualBoost);
     show('controller-boost-setting', actions.manualBoost);
@@ -3361,6 +3413,7 @@ try {
     $('turn-select').value = turnPolicy;
   }
   function focusMission() {
+    if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
     (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });
   }
@@ -3723,7 +3776,12 @@ try {
     else invalidateContentSwitch({ announce: true });
     cancelRestore();
     // Enable audio on the original gesture, before any storage/decode await.
-    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
+    // A Studio Play may still be awaiting media completion before its preference
+    // is saved. Preserve that live intent; explicit Pause/Mute clears it.
+    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
+      ? activateAudio()
+      : muteAudio()
+    )?.catch?.(() => {});
     if (!flightPictures?.ready(theme.id)) {
       if (pictureResume) return;
       const owner = flightPictures,
@@ -3769,9 +3827,17 @@ try {
     if (!started) rememberSelection();
     started = true;
     paused = false;
+    if (runMessageCue === 'restored')
+      warning(
+        run.player.cutting
+          ? 'Flight resumed. Your unfinished line is still exposed.'
+          : 'Flight resumed.',
+      );
     if ($('run-message').textContent === picturePreparingMessage) warning('Picture ready.');
-    if ($('run-message').textContent === savedFlightRestoredMessage) warning('Flight resumed.');
-    (library.preferences.musicEnabled ? activateAudio() : muteAudio())?.catch?.(() => {});
+    (library.preferences.musicEnabled || soundtrackPlayer?.snapshot().desired
+      ? activateAudio()
+      : muteAudio()
+    )?.catch?.(() => {});
     show('game-overlay', false);
     show('continue-saved-note', false);
     $('game-canvas').focus({ preventScroll: true });
@@ -3836,6 +3902,7 @@ try {
     refreshHUD();
   }
   function refreshHUD() {
+    profileRecovery?.refresh();
     show(
       'pause-button',
       started &&
@@ -3905,8 +3972,12 @@ try {
     const left = Math.max(0, run.ability.cooldownUntil - run.time);
     $('ability-state').textContent =
       `${left > 0 ? left.toFixed(1) + 's cooldown' : run.ability.capacity && run.ability.ammo === 0 ? 'Empty — refill at supply' : 'Ready'}${run.ability.capacity ? ' · ' + run.ability.ammo + '/' + run.ability.capacity + ' charges' : ''}`;
-    $('hangar-button').disabled =
-      courseSession || !!courseEntry || campaignOverview || ['won', 'lost'].includes(run.status);
+    const canSwitchCraft = craftSwitchAvailable();
+    $('hangar-button').disabled = !canSwitchCraft;
+    show('hangar-button', canSwitchCraft);
+    $('loadout-note').textContent =
+      'Starting class changes begin a fresh attempt.' +
+      (canSwitchCraft ? ' Use a hangar to switch during flight.' : '');
     $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
     $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
     refreshInputPresentation();
@@ -3922,7 +3993,7 @@ try {
         ? run.signal.resistant
           ? 'Fiber link · signal zone bypassed; line remains vulnerable.'
           : 'Signal interference · slower movement or disabled equipment.'
-        : `${run.classRecipe.label}${near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft'}`;
+        : `${run.classRecipe.label}${canSwitchCraft ? (near && !run.player.cutting ? ' · Hangar in range' : ' · Return to a hangar to change craft') : ''}`;
     if (run.rules.timeLimitSeconds)
       $('time').textContent = timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time));
     const encounter = encounterView(run),
@@ -3953,7 +4024,15 @@ try {
       if (event.type === 'cells.claimed')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed${event.indices?.length < 50 ? ' — both sides may still contain an enemy.' : '.'}`,
+          'secured',
         );
+      if (
+        event.type === 'cut.started' &&
+        ['failure', 'secured', 'secured-stopped'].includes(runMessageCue) &&
+        run.status === 'running' &&
+        run.player.cutting
+      )
+        warning('Live line exposed. Reach safe ground to secure it.');
       if (event.type === 'player.failed')
         warning(
           {
@@ -3963,6 +4042,7 @@ try {
             'cable-limit': 'Your cable budget ran out. Close a shorter line.',
             'lethal-terrain': 'A lethal field caught your craft. Enclose it before crossing.',
           }[event.cause] || 'Your line was caught. The territory you revealed is kept.',
+          'failure',
         );
       if (event.type === 'lineImpact.seeded')
         warning('Line struck! Reach safe ground before the travelling spark catches you.');
@@ -3993,6 +4073,7 @@ try {
       if (event.type === 'capture.stopped')
         warning(
           `Line secured. ${(run.coverage * 100).toFixed(1)}% revealed. Tap a direction to fly again.`,
+          'secured-stopped',
         );
       if (event.type === 'powerup.collected')
         warning(
@@ -4109,13 +4190,7 @@ try {
         $('shell-guide').click();
         clearInput();
       } else if (flight.hangar) {
-        if (
-          capabilities.manualAbility &&
-          run?.hangars?.length &&
-          !$('hangar-button').hidden &&
-          !$('hangar-button').disabled
-        )
-          $('hangar-button').click();
+        if (craftSwitchAvailable()) $('hangar-button').click();
         else {
           pause(true);
           $('shell-packs').click();
@@ -4196,6 +4271,13 @@ try {
             stopCourseGuidance();
           }
         stepRun(run, command, FIXED_DT);
+        if (
+          runMessageCue === 'secured-stopped' &&
+          run.status === 'running' &&
+          command.direction &&
+          run.player.speed > 0
+        )
+          warning('Flight moving.', 'secured');
         controls = controllerBoostAfterRecovery({
           beforeStatus,
           run,
@@ -4611,9 +4693,22 @@ try {
   };
   $('collection-button').onclick = () => {
     if (courseSession || courseEntry) return;
+    const opener = document.activeElement;
     pause(true);
     prepareCollectionProgress();
     libraryPanel.populateGallery();
+    $('collection-back').textContent = $('shell-home').open
+      ? 'Back to menu →'
+      : $('shell-missions').open
+        ? 'Back to Missions →'
+        : 'Back to the field →';
+    // Pausing may focus Resume; native return belongs to this entry control.
+    if (
+      opener?.isConnected &&
+      !opener.disabled &&
+      !opener.closest('[hidden],[inert],[aria-hidden="true"]')
+    )
+      opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
   };
   $('choose-appearance').onclick = focusAppearance;
@@ -4761,6 +4856,7 @@ try {
         document.documentElement.style.setProperty('--board-aspect', String(width / height));
       }
       painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
+        textFace: library.preferences.textFace,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.game.canvas.clientWidth,
         paused,

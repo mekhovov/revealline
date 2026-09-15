@@ -1,6 +1,7 @@
 import { boundedJSON, exactKeys, plainObject, required, stableId } from './data-json.mjs';
 import { recommendedBody as authoredRecommendedBody } from './content.mjs';
 import { validateAnimationRecipes } from '../authoring/motion-lab/animation.mjs';
+import { validateBodyDerivative } from './body-derivative.mjs';
 
 const fields = (value, names, label) => {
   exactKeys(value, names, label);
@@ -140,6 +141,7 @@ export function createCharacterPresentations(presets) {
           'availability',
           'compactMinimumCSSPixels',
           'originalSha256',
+          ...(Object.hasOwn(body, 'derivation') ? ['derivation'] : []),
         ],
         'Current presentation body',
       );
@@ -155,10 +157,11 @@ export function createCharacterPresentations(presets) {
           body.sourceStatus.length <= 512,
         'Bounded character copy required.',
       );
+      const sourceSrc = Object.hasOwn(body, 'derivation') ? body.derivation?.source?.src : body.src;
       required(
-        typeof body.src === 'string' &&
+        typeof sourceSrc === 'string' &&
           /^(?:assets\/[a-zA-Z0-9._-]+|\.\.\/library\/[a-z0-9-]+\/originals\/[a-z0-9-]+)\.png$/.test(
-            body.src,
+            sourceSrc,
           ),
         'Portable original PNG path required.',
       );
@@ -166,6 +169,26 @@ export function createCharacterPresentations(presets) {
         typeof body.originalSha256 === 'string' && /^[0-9a-f]{64}$/.test(body.originalSha256),
         'Original hash required.',
       );
+      if (Object.hasOwn(body, 'derivation')) {
+        required(
+          typeof body.src === 'string' && body.src.startsWith('../library/'),
+          'Portable runtime PNG path required.',
+        );
+        const role = Object.keys(set.classBodies).find((key) => set.classBodies[key] === id);
+        required(set.id === 'ukraine-roles-v1', 'Unregistered derivative presentation set.');
+        const originalSrc = ['scout', 'interceptor', 'fiber'].includes(role)
+          ? `../library/ukraine-role-wide-variants/originals/${role}-v3.png`
+          : `../library/ukraine-role-presentations/originals/${role}.png`;
+        validateBodyDerivative(body.derivation, {
+          id,
+          src: `authoring/${body.src.slice(3)}`,
+          sourceSrc: originalSrc,
+        });
+        required(
+          body.originalSha256 === body.derivation.source.sha256,
+          'Character source original hash differs.',
+        );
+      }
       required(
         body.widthCells === 1.25 &&
           body.heightCells === 1.25 &&

@@ -250,6 +250,35 @@ async function setup(t, count = 30, hostOverrides = {}) {
   };
 }
 
+for (const count of [0, 12, 13])
+  test(`Collection shows pagination only when ${count} pictures need a second page`, async (t) => {
+    const h = await setup(t, count);
+    h.collection();
+    const nav = h.node('gallery-pages');
+    assert.equal(nav.hidden, count <= 12);
+    assert.equal(nav.children.length, count <= 12 ? 0 : 3);
+    if (count > 12) {
+      h.next();
+      assert.equal(h.cards().length, 1);
+      assert.match(nav.children[1].textContent, /page 2 of 2/);
+    }
+  });
+
+for (const pagerFocused of [false, true])
+  test(`Filtering to one page ${pagerFocused ? 'restores removed pager focus to search' : 'preserves unrelated focus'}`, async (t) => {
+    const h = await setup(t);
+    h.collection();
+    const target = pagerFocused
+      ? h.node('gallery-pages').children[2]
+      : h.node('collection-records');
+    target.focus();
+    h.search('Picture 00');
+    assert.equal(h.node('gallery-pages').hidden, true);
+    assert.equal(h.node('gallery-pages').children.length, 0);
+    assert.ok(h.document.activeElement === (pagerFocused ? h.node('gallery-search') : target));
+    assert.equal(h.cards().length, 1);
+  });
+
 test('wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records', async (t) => {
   const h = await setup(t, 1);
   const wideLevel = {
@@ -357,7 +386,8 @@ test('a removed picture clamps the page and focuses a remaining enabled card', a
   await h.cards()[5].onclick();
   h.library.gallery.splice(12);
   h.node('gallery-view-dialog').close();
-  assert.match(h.node('gallery-pages').children[1].textContent, /page 1 of 1/);
+  assert.equal(h.node('gallery-pages').hidden, true);
+  assert.equal(h.node('gallery-pages').children.length, 0);
   assert.equal(h.document.activeElement, h.cards()[0]);
   assert.equal(h.document.activeElement.disabled, false);
 });
@@ -380,6 +410,21 @@ test('a missing pack or empty filtered collection falls back to the enabled sear
   h.node('gallery-view-dialog').close();
   assert.equal(h.cards().length, 0);
   assert.equal(h.document.activeElement, h.node('gallery-search'));
+});
+
+test('the underlying Collection cannot replace its open child picture', async (t) => {
+  const h = await setup(t, 2);
+  h.collection();
+  await h.cards()[0].onclick();
+  const title = h.node('gallery-view-title').textContent,
+    paints = h.paints.length;
+  h.closeButton.focus();
+  await h.cards()[1].onclick();
+  assert.equal(h.node('gallery-view-title').textContent, title);
+  assert.equal(h.node('gallery-view-dialog').open, true);
+  assert.equal(h.node('collection-dialog').open, true);
+  assert.equal(h.document.activeElement, h.closeButton);
+  assert.equal(h.paints.length, paints);
 });
 
 test('Replay leaves the collection closed and preserves the host mission focus', async (t) => {
@@ -405,7 +450,7 @@ test('late decoding and a queued old close cannot steal focus from a new picture
   const second = h.cards()[1].onclick();
   h.closeButton.focus();
   h.node('gallery-view-dialog').emit('close');
-  assert.equal(h.node('collection-dialog').open, false);
+  assert.equal(h.node('collection-dialog').open, true);
   for (const resolve of h.decodeJobs) resolve();
   await Promise.all([first, second]);
   assert.equal(h.document.activeElement, h.closeButton);
@@ -790,7 +835,7 @@ test('an already open picture receives friendly seal details without disturbing 
   assert.equal(h.node('gallery-canvas'), canvas);
   assert.equal(h.cards()[0], card);
   assert.equal(h.node('gallery-view-dialog').open, true);
-  assert.equal(h.node('collection-dialog').open, false);
+  assert.equal(h.node('collection-dialog').open, true);
   assert.equal(h.paints.length, paints);
 });
 

@@ -40,12 +40,11 @@ async function fixture(t) {
   for (const name of new Set([
     ...pins(register).map((p) => p.path),
     `${historyRoot}/index.json`,
+    `${historyRoot}/source-index.json`,
+    ...sourceIndex.entries.map((pin) => `${historyRoot}/${pin.sha256}.source`),
     ...index.entries.map(
       (entry) => `${historyRoot}/${entry.sha256}${path.posix.extname(entry.path)}`,
     ),
-    `${historyRoot}/source-index.json`,
-    ...sourceIndex.entries.map((pin) => `${historyRoot}/${pin.sha256}.source`),
-    snapshot,
   ])) {
     await mkdir(path.dirname(path.join(dir, name)), { recursive: true });
     await writeFile(path.join(dir, name), await readFile(path.join(root, name)));
@@ -184,20 +183,6 @@ test('v2 preserves the exact prior renderer as inert source bytes and v1 still a
 test('v2 module history refuses absent, changed and symlinked snapshots without reading the changed live renderer', async (t) => {
   const dir = await fixture(t),
     retained = index.entries[2];
-  // Isolate this v2 metadata contract from the separate exact source-history adapter.
-  // A matching source snapshot legitimately takes precedence when both indexes retain it.
-  await writeFile(
-    path.join(dir, historyRoot, 'source-index.json'),
-    JSON.stringify({
-      ...sourceIndex,
-      entries: sourceIndex.entries.filter(
-        (pin) =>
-          pin.path !== retained.path ||
-          pin.bytes !== retained.bytes ||
-          pin.sha256 !== retained.sha256,
-      ),
-    }),
-  );
   const target = path.join(dir, `${historyRoot}/${retained.sha256}.mjs`);
   await rm(target);
   await assert.rejects(verifyProductionSources(register, { root: dir }), /ENOENT/);

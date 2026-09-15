@@ -1,0 +1,1198 @@
+{
+  "format": "revealline-sprite-candidate-inspection.v1",
+  "status": "DECODE_AND_PARENT_BINDING_PASS_VISUAL_SEPARATE",
+  "sourceCommit": "e9928cdaad2f55d912aadd2ef25f635fb99e938c",
+  "compilerCommit": "386a851716363693c2bdeda903cd4160d58b1c50",
+  "inspector": "Python/Pillow 12.3.0",
+  "inputSHA256": "739b8b707452c0b46345266f8928a9d57c50d39e149842308cae7983304ce6c3",
+  "bindingSHA256": "1814d3d01c4d466a186efe92664df7275f9790f6088b06959a0437f7c39f9f6f",
+  "manifestSHA256": "08400bf88a70e9c89bcd1ef207d9c2116450b39a0abf6b12cc17a2683ef4c96c",
+  "inspectorSHA256": "d0ccfd521701128be836a0472163b122eaa3a2336c4ed635cd18b8c4d5651454",
+  "authoritySHA256": {
+    "game/content/enemy-presentations.json": "c03b85b8f3e42789419d976cd27c34aba687f623250d887c3093af209f1575b6",
+    "authoring/motion-lab/presets.json": "1555f0b6de1bff5535c8d9e556cc44dec920260790a91c3866806f6cf6c7cc6b"
+  },
+  "count": 14,
+  "parentBytes": 12396181,
+  "outputBytes": 920318,
+  "rows": [
+    {
+      "id": "fpv-compact-hunter-v1",
+      "originalGitBlob": "66cd1a4ac21b59286e26e73612600979c79aca08",
+      "parent": {
+        "pixelsSha256": "aa51f9208778bc2e7a9d6d58c91f9d6ece553cd01f7a86062eeb8968dab79e5c",
+        "alphaBBox": [
+          0,
+          57,
+          1236,
+          1224
+        ],
+        "visiblePixels": 906682,
+        "transparentPixels": 665834,
+        "opaquePixels": 1873,
+        "intermediateAlphaPixels": 904809,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 18,
+        "distinctRGBA": 55800
+      },
+      "output": {
+        "pixelsSha256": "1c84b4b575a5bea28cb95fde0228df02cdb670c56a7c67a0fd53ee077a3a8db5",
+        "alphaBBox": [
+          2,
+          13,
+          126,
+          124
+        ],
+        "visiblePixels": 9480,
+        "transparentPixels": 6904,
+        "opaquePixels": 69,
+        "intermediateAlphaPixels": 9411,
+        "alphaLevels": 69,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 3955
+      },
+      "file": "fpv-compact-hunter-v1-e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914.png",
+      "outputBytes": 65737,
+      "outputSHA256": "e7445fff125f6827c5106853067d1ff099b16e30cfc0acdbb501dabe81f6a914",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "ad5125a34f4505f6117662a22e3359af800af7e1424d26ba18a063cdbf58703c",
+      "binding": {
+        "kind": "enemy",
+        "role": "bouncer",
+        "skinId": "bouncer.fpv.v1",
+        "motion": [
+          {
+            "kind": "travel-glint",
+            "x": 0.16,
+            "y": 0.5,
+            "width": 0.025,
+            "height": 0.3,
+            "color": "#f1f7ed",
+            "rate": 6
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.84,
+            "y": 0.5,
+            "width": 0.025,
+            "height": 0.3,
+            "color": "#f1f7ed",
+            "rate": 6
+          }
+        ]
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-border-patrol-v1",
+      "originalGitBlob": "77f83865173c1a4ad0b335aceb03535296d785c7",
+      "parent": {
+        "pixelsSha256": "6ac5ad08c3ba66ff4dff27327eebf8a60df365de392fdc9d16290b504b7f375c",
+        "alphaBBox": [
+          0,
+          0,
+          1251,
+          1238
+        ],
+        "visiblePixels": 773549,
+        "transparentPixels": 798967,
+        "opaquePixels": 3658,
+        "intermediateAlphaPixels": 769891,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 2,
+        "edgeNonzeroPixels": 306,
+        "distinctRGBA": 84328
+      },
+      "output": {
+        "pixelsSha256": "9ebe1bcf3ba896654b6256a44f1c7dfc31d14ca7ca2df8bd10f5ec9c198c0f03",
+        "alphaBBox": [
+          0,
+          0,
+          127,
+          126
+        ],
+        "visiblePixels": 8065,
+        "transparentPixels": 8319,
+        "opaquePixels": 37,
+        "intermediateAlphaPixels": 8028,
+        "alphaLevels": 163,
+        "edgeAlphaMax": 2,
+        "edgeNonzeroPixels": 29,
+        "distinctRGBA": 4032
+      },
+      "file": "fpv-compact-border-patrol-v1-537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1.png",
+      "outputBytes": 65737,
+      "outputSHA256": "537de86076d2fa4141f1c37b23774015da66431657a8ff2db3193d66e0c7ade1",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "12b5e9a81f6a2ab5018f233579de682b4134b35f61f8ed6a121423d23b7f03b7",
+      "binding": {
+        "kind": "enemy",
+        "role": "border-patrol",
+        "skinId": "border-patrol.fpv.v1",
+        "motion": []
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-contour-patrol-v1",
+      "originalGitBlob": "f0eaa77b6694a8224cc4bb617c5d4b9c51a4b91e",
+      "parent": {
+        "pixelsSha256": "731ec47d8c6e8b92ca0080b4fb98ab797612a5dd8cd1188767e82912ae273973",
+        "alphaBBox": [
+          0,
+          3,
+          1248,
+          1254
+        ],
+        "visiblePixels": 535817,
+        "transparentPixels": 1036699,
+        "opaquePixels": 2172,
+        "intermediateAlphaPixels": 533645,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 8,
+        "distinctRGBA": 70295
+      },
+      "output": {
+        "pixelsSha256": "00ff5507b0f4c9049647038ac8b7be2647a2d3982650f86d7f6396dab1818a88",
+        "alphaBBox": [
+          2,
+          5,
+          126,
+          122
+        ],
+        "visiblePixels": 5550,
+        "transparentPixels": 10834,
+        "opaquePixels": 26,
+        "intermediateAlphaPixels": 5524,
+        "alphaLevels": 128,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 3331
+      },
+      "file": "fpv-compact-contour-patrol-v1-9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f.png",
+      "outputBytes": 65737,
+      "outputSHA256": "9df94fb4dcfee56fffc16d15eda5d75ff2fc06a52a7754949ca5fc9e0607a20f",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "c41b4a490bbe29970d8ba33cddd79ac2febda01b1fcf386f5f4f311e6feeddf3",
+      "binding": {
+        "kind": "enemy",
+        "role": "contour-patrol",
+        "skinId": "contour-patrol.fpv.v1",
+        "motion": []
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-claimed-rover-v1",
+      "originalGitBlob": "955e88045f3e8bd3e81004de173d8c34fc355e92",
+      "parent": {
+        "pixelsSha256": "fc762d1967cf38fde6fdf147f0fd56cfb3745eae690764c3249e64fedd01a947",
+        "alphaBBox": [
+          0,
+          0,
+          1232,
+          1254
+        ],
+        "visiblePixels": 1042789,
+        "transparentPixels": 529727,
+        "opaquePixels": 3880,
+        "intermediateAlphaPixels": 1038909,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 14,
+        "distinctRGBA": 80956
+      },
+      "output": {
+        "pixelsSha256": "ededdbee393e8324570bbd893a1a3da3659284e63aab0a6ff63104740532184a",
+        "alphaBBox": [
+          3,
+          0,
+          125,
+          123
+        ],
+        "visiblePixels": 10788,
+        "transparentPixels": 5596,
+        "opaquePixels": 22,
+        "intermediateAlphaPixels": 10766,
+        "alphaLevels": 30,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 1,
+        "distinctRGBA": 4210
+      },
+      "file": "fpv-compact-claimed-rover-v1-ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106.png",
+      "outputBytes": 65737,
+      "outputSHA256": "ddb9f5264822eceb35dcbfa80145c74a3e6d22a547d3171fdfa5095718e90106",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "92dc46957da977df8de82623610b5ac4b05eaf937847c8cde6b00077ad9e8606",
+      "binding": {
+        "kind": "enemy",
+        "role": "claimed-rover",
+        "skinId": "claimed-rover.fpv.v1",
+        "motion": [
+          {
+            "kind": "travel-glint",
+            "x": 0.13,
+            "y": 0.25,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.13,
+            "y": 0.5,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.13,
+            "y": 0.75,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.87,
+            "y": 0.25,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.87,
+            "y": 0.5,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          },
+          {
+            "kind": "travel-glint",
+            "x": 0.87,
+            "y": 0.75,
+            "width": 0.022,
+            "height": 0.065,
+            "color": "#f1f7ed",
+            "rate": 5
+          }
+        ]
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-eroder-v1",
+      "originalGitBlob": "6abcf6621de213295827c36bcef60bf6c9a09865",
+      "parent": {
+        "pixelsSha256": "b96bba9c0e6ca36a49c4b536430360eb014fe390807be5400d49f2b17f09a3eb",
+        "alphaBBox": [
+          0,
+          4,
+          1198,
+          1254
+        ],
+        "visiblePixels": 534746,
+        "transparentPixels": 1037770,
+        "opaquePixels": 1826,
+        "intermediateAlphaPixels": 532920,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 34,
+        "distinctRGBA": 71339
+      },
+      "output": {
+        "pixelsSha256": "03d6caca0715ebd03811279f149bdfc5de4dfd10ba88f051b46175b2e1d12093",
+        "alphaBBox": [
+          17,
+          0,
+          111,
+          127
+        ],
+        "visiblePixels": 5522,
+        "transparentPixels": 10862,
+        "opaquePixels": 5,
+        "intermediateAlphaPixels": 5517,
+        "alphaLevels": 32,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 1,
+        "distinctRGBA": 2947
+      },
+      "file": "fpv-compact-eroder-v1-29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720.png",
+      "outputBytes": 65737,
+      "outputSHA256": "29502a902fadb1d6e1ddf8c4426e61fc5fff9613d3c8608ebfbd55848d5e3720",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "11fc343fea28192ac15362a025af5e65f490001de3a196477127f7e1f4ab5cf3",
+      "binding": {
+        "kind": "enemy",
+        "role": "eroder",
+        "skinId": "eroder.fpv.v1",
+        "motion": [
+          {
+            "kind": "phase-sweep",
+            "x": 0.5,
+            "y": 0.35,
+            "width": 0.22,
+            "height": 0.018,
+            "color": "#f1f7ed",
+            "rate": 3
+          }
+        ]
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-lane-boss-v1",
+      "originalGitBlob": "330415d693336d2de6fde426f013bb16535e9c6b",
+      "parent": {
+        "pixelsSha256": "44a12c8ff086714645fba435a3e274348aa2982b300aac24b00dbbb921ba5c05",
+        "alphaBBox": [
+          0,
+          43,
+          1240,
+          1254
+        ],
+        "visiblePixels": 704412,
+        "transparentPixels": 868104,
+        "opaquePixels": 2274,
+        "intermediateAlphaPixels": 702138,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 43,
+        "distinctRGBA": 67354
+      },
+      "output": {
+        "pixelsSha256": "bf60a3cb334b3bdbb663ba8b8d3cf108cfadbe563ff2b86da1c1c7499bd1dc5b",
+        "alphaBBox": [
+          2,
+          7,
+          127,
+          126
+        ],
+        "visiblePixels": 7350,
+        "transparentPixels": 9034,
+        "opaquePixels": 5,
+        "intermediateAlphaPixels": 7345,
+        "alphaLevels": 133,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 4228
+      },
+      "file": "fpv-compact-lane-boss-v1-e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd.png",
+      "outputBytes": 65737,
+      "outputSHA256": "e44630c2356c86db2611116dde6d12ea121d22aefef263932fabb719fc8e5dfd",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "48fd2bd3df15042b23ab933229a59fb7a4498afa2ea39e1c11a829e31ebcec1c",
+      "binding": {
+        "kind": "enemy",
+        "role": "lane-boss",
+        "skinId": "lane-boss.fpv.v1",
+        "motion": [
+          {
+            "kind": "phase-sweep",
+            "x": 0.5,
+            "y": 0.36,
+            "width": 0.46,
+            "height": 0.025,
+            "color": "#fff0b0",
+            "rate": 1.5
+          }
+        ]
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "fpv-compact-relay-sentinel-v1",
+      "originalGitBlob": "977eef7f5b6ff81b0dd9c09cf15e34fca132649f",
+      "parent": {
+        "pixelsSha256": "634f313a4e961c28016dcec8ef8afc688b750aed519c274fd3922cbb86b1f426",
+        "alphaBBox": [
+          0,
+          39,
+          1226,
+          1254
+        ],
+        "visiblePixels": 978518,
+        "transparentPixels": 593998,
+        "opaquePixels": 2017,
+        "intermediateAlphaPixels": 976501,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 40,
+        "distinctRGBA": 94180
+      },
+      "output": {
+        "pixelsSha256": "f67eb17252477a9a6a7e1cbf6e80702a4246c640d6bad37fd6cdb1817d42c5db",
+        "alphaBBox": [
+          4,
+          4,
+          125,
+          122
+        ],
+        "visiblePixels": 10194,
+        "transparentPixels": 6190,
+        "opaquePixels": 30,
+        "intermediateAlphaPixels": 10164,
+        "alphaLevels": 119,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 5508
+      },
+      "file": "fpv-compact-relay-sentinel-v1-9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db.png",
+      "outputBytes": 65737,
+      "outputSHA256": "9640e613855c6001aa5d2a23550237a6a3235a6637a8a248a7d7cdbc21d534db",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "9affa7cc2a320e5a9d2b1cf68a90d3068e304bc3a95dccafc1c1813b1a1abd4f",
+      "binding": {
+        "kind": "enemy",
+        "role": "relay-sentinel",
+        "skinId": "relay-sentinel.fpv.v1",
+        "motion": []
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-swallow-v3",
+      "originalGitBlob": "8fe9770e161ccf309dcecbf408752135d9ea1b85",
+      "parent": {
+        "pixelsSha256": "718e1f9cf697e10674fae3305794c8970e6937308e4ed454a10eb30277cc5f5c",
+        "alphaBBox": [
+          0,
+          21,
+          1235,
+          1222
+        ],
+        "visiblePixels": 766489,
+        "transparentPixels": 806027,
+        "opaquePixels": 1630,
+        "intermediateAlphaPixels": 764859,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 66,
+        "distinctRGBA": 40723
+      },
+      "output": {
+        "pixelsSha256": "73b456f7e2e5533be26513db2bc316608b7e6f4a48444c26080f802c3c0f443e",
+        "alphaBBox": [
+          2,
+          5,
+          116,
+          125
+        ],
+        "visiblePixels": 7999,
+        "transparentPixels": 8385,
+        "opaquePixels": 5,
+        "intermediateAlphaPixels": 7994,
+        "alphaLevels": 114,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 2377
+      },
+      "file": "atlas-swallow-v3-e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7.png",
+      "outputBytes": 65737,
+      "outputSHA256": "e01a6c53d78acf164d04878b73f06de18cfed676b894bd7353a708fd1005aaf7",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "21e8cc1f8c6e52a5575bebb91a33751072fa4a407a1063267df8fbbea62a5e3f",
+      "binding": {
+        "kind": "player",
+        "role": "scout",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-swallow-v3-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.3,
+                  -0.1,
+                  -1
+                ],
+                [
+                  0.3,
+                  -0.1,
+                  1
+                ]
+              ],
+              "span": 0.185,
+              "chord": 0.14,
+              "frequencyHz": 2.4,
+              "speedFrequencyGain": 0.6,
+              "amplitudeDegrees": 16,
+              "foldFraction": 0.1,
+              "color": "#638a99",
+              "tipColor": "#e5ba6c"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-pottery-courier-v1",
+      "originalGitBlob": "88100358627b3808e4373ba7963ec4a74510c7c9",
+      "parent": {
+        "pixelsSha256": "98f6dec741aee10ce91cabf6f267bbb141d983f2e433367d8acf752586488edd",
+        "alphaBBox": [
+          41,
+          21,
+          1200,
+          1238
+        ],
+        "visiblePixels": 591675,
+        "transparentPixels": 980841,
+        "opaquePixels": 830,
+        "intermediateAlphaPixels": 590845,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 124706
+      },
+      "output": {
+        "pixelsSha256": "26676424febe99bbb0198ed335faa2ac5b85e7f2d676e62c20ff83b4df900503",
+        "alphaBBox": [
+          25,
+          7,
+          122,
+          117
+        ],
+        "visiblePixels": 6172,
+        "transparentPixels": 10212,
+        "opaquePixels": 3,
+        "intermediateAlphaPixels": 6169,
+        "alphaLevels": 75,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 4477
+      },
+      "file": "atlas-pottery-courier-v1-86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2.png",
+      "outputBytes": 65737,
+      "outputSHA256": "86089f57441d33c4153d8da5246f5e5c3822c9304d8e7b9a761ae17e5a217ea2",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "f4a98e8534ca72e90665890f464b3d804d1cece489ead7e4bf95b23733c40414",
+      "binding": {
+        "kind": "player",
+        "role": "bomber",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-pottery-courier-v1-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.23,
+                  -0.13,
+                  -1
+                ],
+                [
+                  0.23,
+                  -0.13,
+                  1
+                ]
+              ],
+              "span": 0.22,
+              "chord": 0.18,
+              "frequencyHz": 1.8,
+              "speedFrequencyGain": 0.45,
+              "amplitudeDegrees": 20,
+              "foldFraction": 0.25,
+              "color": "#f3ecdf",
+              "tipColor": "#d98277"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-carved-chest-v1",
+      "originalGitBlob": "a8bb285bc3852865ac4c9bd5ca0bbb7a202a9620",
+      "parent": {
+        "pixelsSha256": "d17404ff5e4634fc72fc42e268a4c424ab906f4658c48fbccdabbd036585e978",
+        "alphaBBox": [
+          0,
+          21,
+          1192,
+          1222
+        ],
+        "visiblePixels": 584605,
+        "transparentPixels": 987911,
+        "opaquePixels": 959,
+        "intermediateAlphaPixels": 583646,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 1,
+        "distinctRGBA": 139440
+      },
+      "output": {
+        "pixelsSha256": "b1f653e00eb0f3cbe99a7fbf42e461d7983ee7b1723a9b5f395d31c64f95d090",
+        "alphaBBox": [
+          11,
+          5,
+          118,
+          123
+        ],
+        "visiblePixels": 6090,
+        "transparentPixels": 10294,
+        "opaquePixels": 0,
+        "intermediateAlphaPixels": 6090,
+        "alphaLevels": 86,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 4409
+      },
+      "file": "atlas-carved-chest-v1-1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b.png",
+      "outputBytes": 65737,
+      "outputSHA256": "1e68e385ea2166b999e7b9041eabaf90d7b5b552a0034cdce576ddc123cbd91b",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "50b4c6ac000cbd6477ba56fb9035f0bfbe7661ade5309c531e3499773b578515",
+      "binding": {
+        "kind": "player",
+        "role": "carrier",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-carved-chest-v1-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.22,
+                  -0.22,
+                  -1
+                ],
+                [
+                  0.22,
+                  -0.22,
+                  1
+                ]
+              ],
+              "span": 0.23,
+              "chord": 0.22,
+              "frequencyHz": 1.2,
+              "speedFrequencyGain": 0.35,
+              "amplitudeDegrees": 13,
+              "foldFraction": 0.2,
+              "color": "#e5ba6c",
+              "tipColor": "#90b7bf"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-falcon-crest-v3",
+      "originalGitBlob": "43c3dc4af0d5bc0c83de25d0e8c6283f59b7e661",
+      "parent": {
+        "pixelsSha256": "f7274c4e5ea87cba62f926c5317b35c63db6ff51bf9df0c0fdaa0cf7c074d1e6",
+        "alphaBBox": [
+          0,
+          55,
+          1232,
+          1254
+        ],
+        "visiblePixels": 595429,
+        "transparentPixels": 977087,
+        "opaquePixels": 1430,
+        "intermediateAlphaPixels": 593999,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 98,
+        "distinctRGBA": 91511
+      },
+      "output": {
+        "pixelsSha256": "0b640c9bcd9496e2660cb5d7a66b61a3fb81f8b94242a29d95a5218916dc9574",
+        "alphaBBox": [
+          4,
+          6,
+          118,
+          124
+        ],
+        "visiblePixels": 6212,
+        "transparentPixels": 10172,
+        "opaquePixels": 20,
+        "intermediateAlphaPixels": 6192,
+        "alphaLevels": 82,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 3987
+      },
+      "file": "atlas-falcon-crest-v3-f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648.png",
+      "outputBytes": 65737,
+      "outputSHA256": "f3ce0fa984bb43f3a3fa69734c60df3dfa6c8a148f0b1d32778407b92c93a648",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "a75daf93919e9850ef8d270a179e7981bf754a57e4e3f15c6a2428b8d2db4ff0",
+      "binding": {
+        "kind": "player",
+        "role": "interceptor",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-falcon-crest-v3-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.285,
+                  -0.08,
+                  -1
+                ],
+                [
+                  0.285,
+                  -0.08,
+                  1
+                ]
+              ],
+              "span": 0.195,
+              "chord": 0.14,
+              "frequencyHz": 2.6,
+              "speedFrequencyGain": 0.5,
+              "amplitudeDegrees": 12,
+              "foldFraction": 0.12,
+              "color": "#b48845",
+              "tipColor": "#f3ecdf"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-weaver-shuttle-v3",
+      "originalGitBlob": "81c3becea665d52d68317b04db6979ce6ed80309",
+      "parent": {
+        "pixelsSha256": "c281b4298cf7b8f73f076b7c06a977060a5d35c60a25de988792e5a3b6d6e2ef",
+        "alphaBBox": [
+          0,
+          39,
+          1226,
+          1230
+        ],
+        "visiblePixels": 693121,
+        "transparentPixels": 879395,
+        "opaquePixels": 1124,
+        "intermediateAlphaPixels": 691997,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 1,
+        "distinctRGBA": 108602
+      },
+      "output": {
+        "pixelsSha256": "2c5ab1b19d9251daa50bf063413deb73f2d81886ed5740eff1ce27b23ed09093",
+        "alphaBBox": [
+          20,
+          5,
+          125,
+          123
+        ],
+        "visiblePixels": 7197,
+        "transparentPixels": 9187,
+        "opaquePixels": 4,
+        "intermediateAlphaPixels": 7193,
+        "alphaLevels": 45,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 4955
+      },
+      "file": "atlas-weaver-shuttle-v3-39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa.png",
+      "outputBytes": 65737,
+      "outputSHA256": "39c737ed85d1df0c61bb05fce6424d36ea93f452ca19c7542253f37442e914aa",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "50e20806b0a7f254f315c7e5cf405c783c9b0256202150fe6c054536d26438fb",
+      "binding": {
+        "kind": "player",
+        "role": "fiber",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-weaver-shuttle-v3-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.235,
+                  -0.17,
+                  -1
+                ],
+                [
+                  0.235,
+                  -0.17,
+                  1
+                ]
+              ],
+              "span": 0.22,
+              "chord": 0.16,
+              "frequencyHz": 2.2,
+              "speedFrequencyGain": 0.55,
+              "amplitudeDegrees": 18,
+              "foldFraction": 0.3,
+              "color": "#567f90",
+              "tipColor": "#d98277"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-bell-warden-v1",
+      "originalGitBlob": "7c43a3ceb40d3d16ef1be748ec9fc1d1ea8a3003",
+      "parent": {
+        "pixelsSha256": "7236171baa826b28b2e682775a4d84cbe0ffbf0b31281c4e6fb155a20e635a46",
+        "alphaBBox": [
+          0,
+          21,
+          1235,
+          1230
+        ],
+        "visiblePixels": 554833,
+        "transparentPixels": 1017683,
+        "opaquePixels": 1316,
+        "intermediateAlphaPixels": 553517,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 3,
+        "distinctRGBA": 117613
+      },
+      "output": {
+        "pixelsSha256": "eae95761a8c76d86baabe1a9d4ba3e92253265c6225aba9e6cfc826b41b092ef",
+        "alphaBBox": [
+          13,
+          7,
+          108,
+          121
+        ],
+        "visiblePixels": 5792,
+        "transparentPixels": 10592,
+        "opaquePixels": 8,
+        "intermediateAlphaPixels": 5784,
+        "alphaLevels": 74,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 4446
+      },
+      "file": "atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
+      "outputBytes": 65737,
+      "outputSHA256": "aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "578a04175a89fa4c3ec59a350ef956c79ab7e725dd44a062f8b116ce6a714795",
+      "binding": {
+        "kind": "player",
+        "role": "impact",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-bell-warden-v1-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.162,
+                  -0.196,
+                  -1
+                ],
+                [
+                  0.162,
+                  -0.196,
+                  1
+                ]
+              ],
+              "span": 0.28,
+              "chord": 0.2,
+              "frequencyHz": 1.6,
+              "speedFrequencyGain": 0.4,
+              "amplitudeDegrees": 15,
+              "foldFraction": 0.22,
+              "color": "#e5ba6c",
+              "tipColor": "#f3ecdf"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    },
+    {
+      "id": "atlas-woven-basket-v1",
+      "originalGitBlob": "df8f63fecfffc00b17a96bf11a725d8c465b8cf9",
+      "parent": {
+        "pixelsSha256": "2a86f538dfe5d209cd38b71717e8dca1e66591333816a4a4a91ff67f51d1b71e",
+        "alphaBBox": [
+          0,
+          21,
+          1226,
+          1254
+        ],
+        "visiblePixels": 741527,
+        "transparentPixels": 830989,
+        "opaquePixels": 1195,
+        "intermediateAlphaPixels": 740332,
+        "alphaLevels": 256,
+        "edgeAlphaMax": 1,
+        "edgeNonzeroPixels": 27,
+        "distinctRGBA": 145142
+      },
+      "output": {
+        "pixelsSha256": "009db60403f95f5b59b980e1ef677f896be9520f496e2d6730837c7b53d6122e",
+        "alphaBBox": [
+          15,
+          7,
+          113,
+          120
+        ],
+        "visiblePixels": 7724,
+        "transparentPixels": 8660,
+        "opaquePixels": 8,
+        "intermediateAlphaPixels": 7716,
+        "alphaLevels": 113,
+        "edgeAlphaMax": 0,
+        "edgeNonzeroPixels": 0,
+        "distinctRGBA": 5677
+      },
+      "file": "atlas-woven-basket-v1-3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac.png",
+      "outputBytes": 65737,
+      "outputSHA256": "3604eeef2dfbdf02c26f8ae8d86984cb453c52574bfd9dd87d28df015f9c50ac",
+      "frame": {
+        "crop": false,
+        "pivot": [
+          0.5,
+          0.5
+        ],
+        "heading": "north"
+      },
+      "frameSHA256": "6f3c1ff226e2f345b9dfe0a5a0e140f2335f70ff8475a30e6b78c3bd17529f42",
+      "parentBindingSHA256": "2a5034b8db26f7eb2771e2f775055ff455705c3c9d97ecfe9ab2d98741d394fe",
+      "binding": {
+        "kind": "player",
+        "role": "trapper",
+        "themeId": "ukraine",
+        "animationRecipe": "atlas-woven-basket-v1-wings",
+        "recipe": {
+          "components": [
+            {
+              "id": "wings",
+              "type": "wings",
+              "anchors": [
+                [
+                  -0.335,
+                  -0.105,
+                  -1
+                ],
+                [
+                  0.335,
+                  -0.105,
+                  1
+                ]
+              ],
+              "span": 0.12,
+              "chord": 0.16,
+              "frequencyHz": 1.5,
+              "speedFrequencyGain": 0.35,
+              "amplitudeDegrees": 18,
+              "foldFraction": 0.24,
+              "color": "#f3ecdf",
+              "tipColor": "#90b7bf"
+            }
+          ]
+        }
+      },
+      "allSamplesEqualParent": true,
+      "closedPNGChunks": [
+        "IHDR",
+        "IDAT",
+        "IEND"
+      ]
+    }
+  ],
+  "limits": [
+    "No PNGs are written or re-encoded by this inspection.",
+    "Center pivot/north are frame assumptions; mechanical anchors and perception require separate visual review.",
+    "Static sampled bodies do not create new originals or complete animation sets.",
+    "No runtime adapter, storage identity, simulation, release or original source is changed."
+  ]
+}

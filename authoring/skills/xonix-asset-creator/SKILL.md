@@ -21,6 +21,12 @@ For moving sprites, rotors, trails, capture effects or UI transitions, consult [
 
 For applying art to selectable or earned characters, use [Character Collection](../xonix-character-collection/SKILL.md) to preserve stable IDs, component bindings and eligibility. Inspect the actual switched visual after loading; a contact sheet or registered filename does not establish that the intended character paints correctly in the preview.
 
+## Count reserve artwork separately
+
+The reserve picture cohorts contain eight distinct source illustrations: four at `ec052af43a53354e3b8df5733448adcbb0b020b1` under `authoring/library/reserve-illustrations-wave-1`, and four selected works at `2bdb1d890202ec74f3b13fab1f7b3c7de286e508` under `authoring/library/reserve-illustrations-wave-2`. Each wave covers FPV Front, Ukraine Atlas, 1994 Forever and fictional Spend. Wave 2 also retains two initial cleanup variants; six tool outputs still represent only four selected works. These cohorts are not included in the combined `485903` runtime tree and do not establish eight maps, packs, reward assignments or animation rigs. Resolve their exact committed provenance before reuse; do not assume a nearby worktree or a generated-file count establishes adoption.
+
+Preserve full prompts, tool outputs and every original. Inspect whole images and actual game-scale display; state crop, emblem, alpha/palette and fine-detail limits honestly. A browser image measured at a phone-sized viewport is browser layout evidence, not physical touch/controller or device qualification. To ship art, separately bind the exact source and runtime derivative through the existing presentation compiler or the already-supported fallback record; do not create a second registry or overwrite earned originals.
+
 ## Locate inputs
 
 Find `authoring/CONTRACT.md` in the target workspace; if needed resolve this installed skill's physical directory to its parent kit. Read the target theme brief and relevant records in `prompts/catalog.json`. Use `python3 authoring/prompt.py list --family FAMILY` to choose a template, then `show ID` or `render ID --set key=value`. If the kit is absent, use [the handoff template](references/asset-handoff.md) without pretending to validate a pack.

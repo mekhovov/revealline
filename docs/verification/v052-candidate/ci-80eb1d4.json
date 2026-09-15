@@ -1,0 +1,60 @@
+{
+  "format": "revealline-supporting-source-ci.v1",
+  "sourceRevision": "80eb1d46f60165a646f74c5cef68c224da9456d4",
+  "sourceTree": "8b66d3847a56e2e6760866773df9bb6a2768dcbf",
+  "runUrl": "https://github.com/mekhovov/revealline/actions/runs/34923887854",
+  "conclusion": "success",
+  "completedAt": "2026-09-15T03:38:51Z",
+  "nodeVersion": "20.19.6",
+  "shards": [
+    {
+      "shard": 1,
+      "pass": 924
+    },
+    {
+      "shard": 2,
+      "pass": 998
+    },
+    {
+      "shard": 3,
+      "pass": 1029
+    },
+    {
+      "shard": 4,
+      "pass": 924
+    }
+  ],
+  "totals": {
+    "tests": 3875,
+    "pass": 3875,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "productionPreflight": {
+    "tests": 69,
+    "pass": 69,
+    "fail": 0,
+    "skipped": 0
+  },
+  "sourceIdentity": {
+    "observations": 12,
+    "files": 3717,
+    "bytes": 665463573,
+    "allMatched": true
+  },
+  "build": "Passed; ordinary PR output is not a frozen release identity.",
+  "publisherPreview": {
+    "url": "https://github.com/mekhovov/revealline/actions/runs/34923887843",
+    "conclusion": "success",
+    "publishable": false,
+    "selectedRelease": "v0.51.0"
+  },
+  "evidence": {
+    "handoffSha256": "63336ac77d2c9c6161e737058ade74b092d29425c41523db97bd484e4836f9eb",
+    "executionProofSha256": "bb5004dc9a32b070f98b40cbfe2e53af4318609ce2624d4ff569b7921b662b16"
+  },
+  "freezeEligible": false,
+  "limits": "Supporting source evidence only. Native review found Missions Back/cancel and inapplicable craft-switch UI issues. The corrected successor requires new full gates and independent frozen/native/public verification."
+}

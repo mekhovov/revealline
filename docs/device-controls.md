@@ -5,10 +5,12 @@
 The integrated settings expose one **Steering hand** selector for floating stick,
 swipe and D-pad. The same touch surface, direction buttons and ability buttons
 move in native DOM order; CSS does not reverse that order a second time. Mode,
-size and opacity remain independent. When importing a profile that has the older
-`touchControls.side` but omits `screenSteeringHand`, that explicit side becomes
-the in-memory hand preference without rewriting source bytes. An existing
-`screenSteeringHand` remains authoritative; old stored touch metadata is retained.
+size and opacity remain independent. The successor keeps an explicitly supplied
+`touchControls` object or null authoritative for the visible side. Only a legacy
+profile with `screenSteeringHand` and no touch object migrates to that saved D-pad
+side. One hand selector writes both compatible fields on an actual change; parsing
+does not rewrite source bytes, and the legacy alias does not override modern touch
+settings.
 
 The running short-landscape surface uses the baseline fullscreen board and fixed,
 independently sized HUD/warning overlays. The earlier compact-chrome reserve rules
@@ -16,8 +18,9 @@ below apply outside that running surface, avoiding two competing arena size caps
 Opaque Pause and mission restart remain intact. The historical notes below retain
 their original source and browser evidence; they do not certify this merged layout.
 
-Integration checks passed 189 focused input, migration, actor, guide, navigation and
-collection cases, plus the retained production-register/animation checks. A fresh
+The earlier v0.44 integration recorded 189 focused input, migration, actor, guide,
+navigation and collection cases, plus the retained production-register/animation
+checks. Those results do not qualify this successor composition. A fresh
 worktree needs its ignored `.cache` directory before running the metadata-history
 fixtures directly. Actual merged short-landscape layout and physical controls still
 require their separate browser/device checks.
@@ -68,7 +71,7 @@ results must be labeled separately from physical touch/controller evidence.
 
 ## Return from Settings — source candidate
 
-Opening Settings & sound from the title keeps the title beneath the settings dialog. Close, Escape and controller Back return to that same title action. Music Studio remains a child of Settings: Back returns to Settings first, then to the title. Settings entered from a paused flight returns to that paused flight; it never resumes automatically. Mission selection and saved-flight destinations still leave the title through their existing handlers.
+Opening Settings & sound from the title keeps the title beneath the settings dialog. Close, Escape and controller Back return to that same title action. Music Studio remains a child of Settings: Back returns to Settings first, then to the title. Settings entered from a paused flight returns to that paused flight; it never resumes automatically. Mission selection and saved-flight destinations still leave the title through their existing handlers. Missions entered from the title return to that title on Back, Escape or controller Back. Missions or a brief entered from the flight return to the paused field; Back to flight and Deploy retain their explicit destinations. Returning never resumes or changes the saved flight; existing Home entry may refresh its autosave timestamp.
 
 This follows the same-input and consistent-navigation guidance linked above. Source and native verification are recorded separately; this change does not certify physical controllers.
 
@@ -109,6 +112,10 @@ on keeping controls clear of play and showing relevant actions, and
 on keeping essential temporary information near the player's focus. These are
 design principles applied to the browser game, not adoption of Apple's native
 Touch Controller framework.
+
+## Contextual craft switching
+
+Flight setup shows **Change craft** and hangar guidance only when the active flight has more than one craft recipe and authored hangars. The same availability governs the button, keyboard shortcut and controller hangar action; without it, the controller retains its Missions action. R5's single Scout and empty hangar list therefore show no unusable craft-switch control. Starting class still selects a fresh attempt, and Save & pause remains separate. Tactical hangars retain their normal in-flight switch flow; automatic Arcade equipment policy alone does not decide craft availability. These source host checks do not establish native layout or physical-controller acceptance.
 
 ## September 13, 2026 — current chapter menu source
 
