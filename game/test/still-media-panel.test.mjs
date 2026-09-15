@@ -239,3 +239,44 @@ test('existing keyboard/controller navigation edits native selects and Back clos
   nav.handle({ back: true });
   assert.equal(h.panel.dialog.open, false);
 });
+
+test('file picker cancellation preserves the Still Media draft, focus and pending preview; dialog Escape still closes', async (t) => {
+  const gate = deferred();
+  let slow = false;
+  const h = await setup(t, { show: () => (slow ? gate.promise : true) });
+  h.choose();
+  await h.$('preview').onclick();
+  const saved = await h.store.read();
+  for (const id of ['file', 'bundle-file']) {
+    const input = h.$(id);
+    input.focus();
+    const before = h.panel.snapshot(),
+      status = h.$('status').textContent,
+      clears = h.clears;
+    const event = new Event('cancel', { bubbles: true });
+    input.dispatchEvent(event);
+    assert.equal(event.target, input);
+    assert.equal(event.cancelable, false);
+    assert.equal(h.panel.dialog.open, true);
+    assert.deepEqual(h.panel.snapshot(), before);
+    assert.equal(h.doc.activeElement, input);
+    assert.equal(h.$('status').textContent, status);
+    assert.equal(h.clears, clears);
+  }
+  assert.equal(h.panel.snapshot().hasDraft, true);
+  assert.deepEqual(await h.store.read(), saved);
+  slow = true;
+  h.choose();
+  const pending = h.$('preview').onclick();
+  assert.equal(h.panel.snapshot().busy, true);
+  h.$('file').dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(h.panel.snapshot().busy, true);
+  gate.resolve(true);
+  assert.equal(await pending, true);
+  assert.equal(h.panel.snapshot().hasDraft, true);
+  assert.deepEqual(await h.store.read(), saved);
+  const escape = new Event('cancel', { cancelable: true });
+  h.panel.dialog.dispatchEvent(escape);
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(h.panel.dialog.open, false);
+});

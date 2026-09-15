@@ -1,6 +1,9 @@
 import { createCharacterPresentations } from './character-presentations.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
-import { createReleasePictureDefaults } from './presentation/release-pictures.mjs';
+import {
+  createReleasePictureDefaults,
+  ReleasePictureWriteRequiredError,
+} from './presentation/release-pictures.mjs';
 import { createMissionPictureThumbnails } from './ui/mission-thumbnails.mjs';
 import { drawResultPicture } from './ui/result-picture.mjs';
 import { loadExternalCatalog, prepareExternalDownload } from './external-chapter-catalog.mjs';
@@ -49,6 +52,7 @@ import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
+import { attachFocusClearance } from './ui/focus-clearance.mjs';
 import { createOperationStatus } from './ui/operation-status.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
@@ -579,6 +583,7 @@ try {
     bodyWarning = '',
     lastReplay = null,
     replayFeedback = null,
+    replayFocusClearance = null,
     replayDownload = null,
     completionWarning = '',
     appearanceRewardIds = [],
@@ -773,6 +778,23 @@ try {
   legacyPictureButton.textContent = 'Use original pack artwork';
   legacyPictureButton.hidden = true;
   document.querySelector('.overlay-actions').append(legacyPictureButton);
+  const pictureRecoveryButtons = [
+    ['picture-export-data', 'Export game data', () => libraryPanel.open('saves')],
+    ['picture-reload', 'Reload saved profile', () => window.location.reload()],
+  ].map(([id, label, action]) => {
+    const button = document.createElement('button');
+    button.id = id;
+    button.type = 'button';
+    button.className = 'button secondary';
+    button.textContent = label;
+    button.hidden = true;
+    button.onclick = action;
+    document.querySelector('.overlay-actions').append(button);
+    return button;
+  });
+  function clearPictureRecovery() {
+    for (const button of pictureRecoveryButtons) button.hidden = true;
+  }
   async function pictureMedia({ signal } = {}) {
     if (!pictureStore) throw new Error('Practice uses its original artwork.');
     return {
@@ -808,18 +830,17 @@ try {
       pins,
       legacy,
       explicitLegacy,
-      prepareSelection:
-        !legacy && writer.writable
-          ? (options) =>
-              releasePictures.prepareSelection({
-                ...options,
-                authoredBackground:
-                  entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)
-                    ?.visualOverrides?.background ??
-                  entry.visualOverrides?.background ??
-                  null,
-              })
-          : undefined,
+      prepareSelection: !legacy
+        ? (options) =>
+            releasePictures.prepareSelection({
+              ...options,
+              authoredBackground:
+                entry.levelVisuals?.find((row) => row.levelId === nextRun.level.id)?.visualOverrides
+                  ?.background ??
+                entry.visualOverrides?.background ??
+                null,
+            })
+        : undefined,
       selectPins:
         !legacy && chapterSnapshot?.index?.chapters.some((d) => d.id === entry.sourcePackId)
           ? async ({ media, selection, explicitLegacy, signal }) => {
@@ -874,12 +895,13 @@ try {
           : undefined,
     });
   }
-  function cancelPictureStart() {
+  function cancelPictureStart({ retirePrewarm = false } = {}) {
     clearPreparation();
+    clearPictureRecovery();
     themeFeedback.clear();
     $('theme-preparation-cancel').hidden = true;
     pictureGeneration++;
-    if (pictureResume !== null) {
+    if (pictureResume !== null || retirePrewarm) {
       flightPictures?.cancel();
       picturePrewarm = null;
     } else if (picturePrewarm) picturePrewarm.observe = null;
@@ -889,11 +911,15 @@ try {
   }
   function pictureFailure(error) {
     if (error?.name === 'AbortError') return;
-    warning(
-      `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`,
-    );
-    legacyPictureButton.hidden = started || practice;
-    if (!started) $('start-button').textContent = 'Retry picture →';
+    const needsWriter = error instanceof ReleasePictureWriteRequiredError;
+    const message = needsWriter
+      ? error.message
+      : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
+    warning(message);
+    for (const button of pictureRecoveryButtons) button.hidden = !needsWriter;
+    legacyPictureButton.hidden = needsWriter || started || practice;
+    if (!started)
+      $('start-button').textContent = needsWriter ? 'Check picture →' : 'Retry picture →';
   }
   function warmPicture() {
     const owner = flightPictures;
@@ -909,11 +935,12 @@ try {
     });
     void prewarm.promise
       .then(() => {
-        if (owner === flightPictures) refreshHUD();
+        if (picturePrewarm === prewarm && owner === flightPictures) refreshHUD();
       })
       .catch((error) => {
-        if (picturePrewarm === prewarm) picturePrewarm = null;
-        if (owner === flightPictures) pictureFailure(error);
+        if (picturePrewarm !== prewarm || owner !== flightPictures) return;
+        picturePrewarm = null;
+        pictureFailure(error);
       });
   }
   legacyPictureButton.onclick = () => {
@@ -1173,11 +1200,14 @@ try {
     ready: () => presentationReady,
     executionCatalog: () => executionCatalog,
     readMedia: pictureMedia,
+    assertWritable() {
+      if (!writer.writable) throw new ReleasePictureWriteRequiredError();
+    },
     async commit(store, prepared, options) {
-      if (!writer.writable) throw new Error('The profile writer no longer owns picture storage.');
+      if (!writer.writable) throw new ReleasePictureWriteRequiredError();
       const snapshot = await checkedChapters({ signal: options.signal });
       const write = () => {
-        if (!writer.writable) throw new Error('The profile writer no longer owns picture storage.');
+        if (!writer.writable) throw new ReleasePictureWriteRequiredError();
         return store.commit(prepared, options);
       };
       return externalChapters
@@ -1574,7 +1604,7 @@ try {
     pause(true);
     masteryAwards.cancelAll();
     cancelRestore();
-    cancelPictureStart();
+    cancelPictureStart({ retirePrewarm: true });
     missionThumbnails.cancel();
     clearInput();
     if (replayDownload) replayDownload.observed = false;
@@ -1616,6 +1646,7 @@ try {
       craftFeedback.dispose();
       presentationFeedback.dispose();
       replayFeedback?.dispose();
+      replayFocusClearance?.destroy();
     }
   };
   window.addEventListener('pageshow', (event) => {
@@ -4043,7 +4074,12 @@ try {
         })
         .catch((error) => {
           if (pictureResume === ticket) {
-            feedback.finish(`Picture unavailable: ${error.message}`, 'error');
+            feedback.finish(
+              error instanceof ReleasePictureWriteRequiredError
+                ? error.message
+                : `Picture unavailable: ${error.message}`,
+              'error',
+            );
             pictureFailure(error);
           }
         })
@@ -4053,6 +4089,7 @@ try {
       return;
     }
     pictureResume = null;
+    clearPictureRecovery();
     legacyPictureButton.hidden = true;
     clearInput();
     neutralResumeTick = true;
@@ -4724,7 +4761,13 @@ try {
       feedback.finish({ message: `${next.name || next.id} artwork ready.` });
     } catch (error) {
       if (owner === flightPictures && ticket === pictureGeneration && !controller.signal.aborted) {
-        feedback.finish({ message: `World artwork unavailable: ${error.message}`, state: 'error' });
+        feedback.finish({
+          message:
+            error instanceof ReleasePictureWriteRequiredError
+              ? error.message
+              : `World artwork unavailable: ${error.message}`,
+          state: 'error',
+        });
         pictureFailure(error);
       }
     } finally {
@@ -4983,6 +5026,11 @@ try {
       }),
   );
   replayFeedback = createOperationStatus($('replay-operation-status'));
+  replayFocusClearance = attachFocusClearance({
+    container: $('replay-dialog'),
+    heading: $('replay-operation-rail'),
+    document,
+  });
   async function downloadCurrentReplay(replay) {
     if (replayDownload) return;
     const operation = {
@@ -5033,6 +5081,7 @@ try {
       lastReplay = exportReplay(recorder, run);
       $('replay-json').value = JSON.stringify(lastReplay, null, 2);
       $('replay-dialog').showModal();
+      replayFocusClearance.refresh();
       await downloadCurrentReplay(lastReplay);
     } catch (error) {
       warning(`Replay could not export: ${error.message}`);

@@ -323,6 +323,11 @@ test('missing and length-mismatched originals remain visible but cannot start ve
 test('opaque reader handles and separate component links preserve the raw download and revoke only replaced URLs', async () => {
   const f = fixture();
   await prepare(f);
+  assert.match(f.$('original-summary').textContent, /verified during this review/);
+  assert.doesNotMatch(f.$('original-summary').textContent, /have not been verified/);
+  assert.match(f.$('original').children[0].textContent, /verified during review/);
+  assert.match(f.$('original').children[1].textContent, /available unverified/);
+  assert.equal(first.verified, false, 'Reader inventory and opaque handles remain unchanged');
   assert.equal(f.calls.originals[0].value, f.calls.raw[0].value);
   assert.equal(f.calls.verify[0].value, first);
   assert.equal(f.calls.verify[0].args.signal instanceof AbortSignal, true);
@@ -362,6 +367,12 @@ test('changing the selected original drops verification and both component links
   await prepare(f);
   f.$('original').value = '1';
   f.$('original').onchange();
+  assert.match(
+    f.$('original-summary').textContent,
+    /second-original.*\n.*\n.*have not been verified/,
+  );
+  assert.match(f.$('original').children[0].textContent, /available unverified/);
+  assert.match(f.$('original').children[1].textContent, /available unverified/);
   assert.equal(f.$('original-file').disabled, true);
   assert.equal(f.$('original-report').disabled, true);
   assert.equal(f.$('original-download').hidden, true);
@@ -371,6 +382,8 @@ test('changing the selected original drops verification and both component links
   assert.equal(f.calls.export.length, 2);
   await f.$('original-verify').onclick();
   assert.equal(f.calls.verify.at(-1).value, second);
+  assert.match(f.$('original-summary').textContent, /verified during this review/);
+  assert.match(f.$('original').children[1].textContent, /verified during review/);
   assert.equal(f.$('original-file').disabled, false);
   await f.view.close();
 });
@@ -521,10 +534,48 @@ test('fresh component verification failure removes that stale link and keeps the
   };
   await f.$('original-file').onclick();
   assert.match(f.$('status').textContent, /Selected bytes changed/);
+  assert.match(f.$('original-summary').textContent, /verified during this review/);
+  assert.match(f.$('original-summary').textContent, /File preparation rechecks them/);
   assert.equal(f.$('original-download').hidden, true);
   assert.equal(f.$('original-download').href, undefined);
   assert.equal(f.$('report-download').href, 'blob:fixture-3');
   assert.equal(f.$('download').href, 'blob:fixture-1');
   assert.deepEqual(f.revoked, ['blob:fixture-2']);
+  await f.view.close();
+});
+
+test('reverification clears the earlier label before waiting and cancel or failure cannot restore it', async () => {
+  const f = fixture();
+  await prepare(f);
+  const pending = deferred();
+  f.reader.verifyOriginal = () => pending.promise;
+  const checking = f.$('original-verify').onclick();
+  assert.match(f.$('original-summary').textContent, /have not been verified/);
+  assert.match(f.$('original').children[0].textContent, /available unverified/);
+  assert.equal(f.$('original-download').hidden, true);
+  assert.equal(f.$('report-download').hidden, true);
+  f.view.cancel();
+  pending.resolve(f.verified);
+  await checking;
+  assert.match(f.$('status').textContent, /cancelled/);
+  assert.match(f.$('original-summary').textContent, /have not been verified/);
+  assert.equal(f.$('original-file').disabled, true);
+  f.reader.verifyOriginal = async () => {
+    throw new Error('Original hash changed');
+  };
+  await f.$('original-verify').onclick();
+  assert.match(f.$('status').textContent, /Original hash changed/);
+  assert.match(f.$('original-summary').textContent, /have not been verified/);
+  assert.match(f.$('original').children[0].textContent, /available unverified/);
+  assert.equal(f.$('original-file').disabled, true);
+  f.reader.verifyOriginal = async () => f.verified;
+  await f.$('original-verify').onclick();
+  assert.match(f.$('original-summary').textContent, /verified during this review/);
+  assert.match(f.$('original').children[0].textContent, /verified during review/);
+  assert.equal(f.$('original-file').disabled, false);
+  await f.$('originals-review').onclick();
+  assert.match(f.$('original-summary').textContent, /have not been verified/);
+  assert.match(f.$('original').children[0].textContent, /available unverified/);
+  assert.equal(f.$('original-file').disabled, true);
   await f.view.close();
 });

@@ -78,6 +78,7 @@ class Element extends DOMElement {
   emit(type) {
     const event = {
       type,
+      target: this,
       defaultPrevented: false,
       preventDefault() {
         this.defaultPrevented = true;

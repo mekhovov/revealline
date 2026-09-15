@@ -598,8 +598,7 @@
           ><a href="../authoring/design-atlas/">Reference atlas</a
           ><a data-release-explorer href="../releases/">Release explorer</a
           ><a href="replay-theater/">Replay Theater</a
-          ><a href="controller-lab/">Controller practice</a
-          ><button id="export-replay" class="text-button" type="button">Export replay</button>
+          ><a href="controller-lab/">Controller practice</a>
         </nav>
       </footer>
     </main>
@@ -1368,6 +1367,20 @@
       <button class="dialog-close" data-close="replay-dialog" aria-label="Close replay">×</button>
       <p class="eyebrow">REPRODUCE THIS ATTEMPT</p>
       <h2 id="replay-title">Your recorded route.</h2>
+      <div id="replay-operation-rail" class="dialog-operation-rail">
+        <div
+          class="dialog-operation-message"
+          role="region"
+          aria-label="Replay export status"
+          tabindex="0"
+        >
+          <p id="replay-operation-status" class="micro-note" hidden></p>
+        </div>
+        <div class="dialog-operation-controls">
+          <button id="download-replay" class="button primary">Download JSON</button
+          ><button class="button" data-close="replay-dialog">Close</button>
+        </div>
+      </div>
       <p>
         The file contains the exact level, class recipe, inputs and final state. Paste its JSON into
         the Playground to verify it.
@@ -1378,11 +1391,6 @@
         readonly
         spellcheck="false"
       ></textarea>
-      <div class="overlay-actions">
-        <button id="download-replay" class="button primary">Download JSON</button
-        ><button class="button" data-close="replay-dialog">Close</button>
-      </div>
-      <p id="replay-operation-status" class="micro-note" hidden></p>
       <p class="micro-note">
         Closing this panel leaves an already requested download to your browser.
       </p>
@@ -1531,6 +1539,7 @@
         <a href="replay-theater/" class="button secondary"
           >Replay Theater <span>Review a recorded flight</span></a
         >
+        <button id="export-replay" class="button secondary" type="button">Export replay</button>
         <a href="controller-lab/" class="button secondary"
           >Controller practice <span>Check your controls</span></a
         >

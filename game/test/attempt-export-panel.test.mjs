@@ -17,14 +17,17 @@ class Element extends DOMElement {
       this.document.activeElement = this.document.body;
     super.remove();
   }
+  dispatchEvent(event) {
+    if (!event.target) Object.defineProperty(event, 'target', { value: this });
+    for (let node = this; node; node = event.bubbles ? node.parentNode : null) {
+      for (const handler of node.listeners?.get(event.type) || []) handler(event);
+      if (event.cancelBubble) break;
+    }
+    return !event.defaultPrevented;
+  }
   emit(type) {
-    const event = {
-      defaultPrevented: false,
-      preventDefault() {
-        this.defaultPrevented = true;
-      },
-    };
-    for (const handler of this.listeners.get(type) || []) handler(event);
+    const event = new Event(type, { cancelable: type === 'cancel' });
+    this.dispatchEvent(event);
     return event;
   }
   focus() {
@@ -708,4 +711,33 @@ test('a tall Library editor keeps its beginning below feedback when its full hei
   assert.equal(h.document.activeElement, editor);
   assert.equal(300 - (h.dialog.scrollTop - 300), 233.75);
   assert.equal(h.state.prepareCalls, 1);
+});
+
+test('file picker cancellation cannot cancel the Library attempt export or move its focus', async (t) => {
+  const h = setup(t),
+    pending = h.start(),
+    focus = h.document.activeElement,
+    status = h.node('save-status').textContent;
+  for (const id of ['save-file', 'pack-file']) {
+    const input = h.node(id);
+    input.type = 'file';
+    const event = new Event('cancel', { bubbles: true });
+    input.dispatchEvent(event);
+    assert.equal(event.target, input);
+    assert.equal(event.defaultPrevented, false);
+    assert.equal(h.requests[0].signal.aborted, false);
+    assert.equal(h.dialog.open, true);
+    assert.equal(h.document.activeElement, focus);
+    assert.equal(h.node('save-status').textContent, status);
+    assert.equal(h.node('cancel-attempt-export').hidden, false);
+  }
+  assert.equal(h.dialog.requestClose().defaultPrevented, true);
+  assert.equal(h.requests[0].signal.aborted, true);
+  assert.equal(h.dialog.open, true);
+  h.requests[0].resolve(h.prepared());
+  await pending;
+  assert.equal(h.downloads.length, 0);
+  assert.equal(h.node('save-json').value, 'previous copy');
+  assert.equal(h.dialog.requestClose().defaultPrevented, false);
+  assert.equal(h.dialog.open, false);
 });

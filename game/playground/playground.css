@@ -35,6 +35,39 @@
   flex-wrap: wrap;
   gap: 8px;
 }
+/* Keep the existing operation owner and its escape action visible on deep edits. */
+#editor-feedback {
+  inset-block-start: 0;
+  margin-block: 12px;
+  padding: 8px;
+}
+#editor-messages {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  max-block-size: 24dvh;
+  overflow: auto;
+}
+#editor-feedback .editor-status {
+  flex: 0 0 auto;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  margin: 0;
+  box-sizing: border-box;
+}
+#editor-feedback .feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+#editor-feedback .feedback-actions:has(> :not([hidden])) {
+  padding-block-start: 4px;
+}
+#editor-feedback .feedback-actions button {
+  justify-self: start;
+  min-block-size: 44px;
+  margin: 0;
+}
 .editor-status {
   padding: 10px 14px;
   background: var(--fk-panel, #101923);
