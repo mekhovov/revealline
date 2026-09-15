@@ -30,6 +30,13 @@ class Element {
     this.files = [];
     this.paused = true;
   }
+  set disabled(value) {
+    this._disabled = Boolean(value);
+    if (this._disabled) this.blur();
+  }
+  get disabled() {
+    return this._disabled;
+  }
   set id(value) {
     this._id = value;
     this.document.nodes.set(value, this);
@@ -98,7 +105,12 @@ class Element {
     return event;
   }
   focus() {
+    if (this.disabled || !this.isConnected) return;
     this.document.activeElement = this;
+    this.document.emit('focusin', { target: this });
+  }
+  blur() {
+    if (this.document.activeElement === this) this.document.activeElement = this.document.body;
   }
   showModal() {
     this.open = true;
@@ -143,6 +155,7 @@ async function setup(
     otherManagedBytes,
     store: overrideStore,
     callbacks = {},
+    open = true,
   } = {},
 ) {
   const doc = { nodes: new Map(), activeElement: null, hidden: false, nativeDownloads: [] };
@@ -236,7 +249,7 @@ async function setup(
     panel.dispose();
     store.close?.();
   });
-  await panel.open();
+  if (open) await panel.open();
   return {
     panel,
     doc,
@@ -256,6 +269,121 @@ async function setup(
 }
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
+
+// Hold the actual first store read while the DOM models native blur when the
+// focused Close button becomes disabled. Cached openings must not read again.
+async function pendingFirstOpen(t) {
+  const db = memoryIndexedDB(),
+    savedStore = createSoundtrackStore({ indexedDB: db.indexedDB });
+  let release,
+    reject,
+    reads = 0;
+  const held = new Promise((resolve, fail) => {
+    release = resolve;
+    reject = fail;
+  });
+  const app = await setup(t, {
+    open: false,
+    store: {
+      read: async (options) => {
+        reads++;
+        await held;
+        return savedStore.read(options);
+      },
+      commit: (...args) => savedStore.commit(...args),
+      close: () => savedStore.close(),
+    },
+  });
+  const opening = app.panel.open();
+  assert.equal(app.node('close').disabled, true);
+  assert.equal(
+    app.doc.activeElement === app.doc.body,
+    true,
+    'Disabling focused Close causes native-like blur.',
+  );
+  return { ...app, opening, release, reject, reads: () => reads };
+}
+
+test('first Studio read restores displaced Close focus after successful loading', async (t) => {
+  const app = await pendingFirstOpen(t);
+  assert.equal(app.panel.close(), false, 'The existing pending-operation exit guard remains.');
+  app.release();
+  await app.opening;
+  assert.equal(app.node('close').disabled, false);
+  assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
+  assert.match(app.node('status').textContent, /Saved library loaded/);
+  assert.equal((await app.store.read()).generation, 0, 'Opening does not write music.');
+});
+
+test('first Studio read restores displaced Close focus after a reported storage failure', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.reject(new Error('Storage unavailable for first read'));
+  await app.opening;
+  assert.match(app.node('status').textContent, /Storage unavailable for first read/);
+  assert.equal(app.node('close').disabled, false);
+  assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
+  assert.equal(app.panel.close(), true, 'A failed read does not trap the player.');
+});
+
+test('first Studio read preserves a deliberate transport focus chosen while loading', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.node('previous').focus();
+  app.release();
+  await app.opening;
+  assert.equal(app.doc.activeElement === app.node('previous'), true, 'Expected exact focused node');
+});
+
+test('first Studio read relinquishes restoration after a later focus choice even if it blurs', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.node('previous').focus();
+  app.node('previous').blur();
+  app.release();
+  await app.opening;
+  assert.equal(
+    app.doc.activeElement === app.doc.body,
+    true,
+    'Only the original disabling may trigger restoration.',
+  );
+});
+
+test('first Studio read does not refocus a dialog closed externally during loading', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.node('dialog').close();
+  app.release();
+  await app.opening;
+  assert.equal(app.node('dialog').open, false);
+  assert.equal(app.doc.activeElement === app.doc.body, true, 'Expected exact focused node');
+});
+
+test('first Studio read does not refocus a disposed panel when its pending read settles', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.panel.dispose();
+  app.release();
+  await app.opening;
+  assert.equal(app.node('dialog').isConnected, false);
+  assert.equal(app.doc.activeElement === app.doc.body, true, 'Expected exact focused node');
+});
+
+test('first Studio read does not pull focus into a hidden document', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.doc.hidden = true;
+  app.release();
+  await app.opening;
+  assert.equal(app.doc.activeElement === app.doc.body, true, 'Expected exact focused node');
+});
+
+test('cached Studio reopening focuses Close without a second store read', async (t) => {
+  const app = await pendingFirstOpen(t);
+  app.release();
+  await app.opening;
+  app.panel.close();
+  app.doc.body.focus();
+  await app.panel.open();
+  assert.equal(app.reads(), 1);
+  assert.equal(app.node('close').disabled, false);
+  assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
+  assert.equal(app.node('status').textContent, 'Music library ready.');
+});
 
 test('real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport', async (t) => {
   const app = await setup(t);
