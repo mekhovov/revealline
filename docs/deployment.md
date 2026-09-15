@@ -36,6 +36,10 @@ production provenance checks, four isolated test shards, and the ordinary static
 checks use the pull request source. An already qualified immutable release is published from its
 original ZIP; publication does not rerun today's test sharder inside an older tag.
 
+The pull-request package build requires the preflight checks, but does not wait for the optional
+test-shard matrix. A failed shard remains visible in Actions and must be resolved before a source
+revision can be qualified as a release; it simply does not hide the separate build result.
+
 The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
 through the existing main-only `github-pages` environment. Its reviewed
 [`publication.json`](../publishing/pages-controller/publication.json) selects one exact frozen
@@ -75,6 +79,12 @@ from the source working directory, so discovery, imports, child processes and de
 to that selected source. Generated `.cache` state is initialized before tests; no immutable test
 file is patched or replaced. Frozen publication continues to use accepted qualification and
 original distribution bytes rather than scheduling historical source checks.
+
+The [FPV redesign delivery record](../publishing/pages-controller/delivery/README.md) records final
+public byte, play, offline and retained-entry evidence separately from immutable source qualification.
+Changes confined to `publishing/pages-controller/delivery/**` retain pull-request preview checks but
+do not republish Pages when merged. A commit that also changes the selector or another publishing
+input still triggers the normal publisher.
 
 ## Browser installation and offline use
 

@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:57:14.148639+00:00",
+  "completedAt": "2026-09-15T01:57:15.332769+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,textSize:document.body.dataset.textSize})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"text\\\":\\\"REVEAL / LINE\\\\n\\\\nFind your line.\\\\n\\\\nPreparing your arcade. If this screen stays here, reload or open the online game.\\\\n\\\\nReload game\\\\nPlay online\\\\nPlaying a downloaded copy?\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

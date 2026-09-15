@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:56:22.662936+00:00",
+  "completedAt": "2026-09-15T01:56:22.889169+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,status:document.querySelector(\"#race-installed-status\")?.textContent,message:document.querySelector(\"#race-message\")?.textContent,refreshDisabled:document.querySelector(\"#race-installed-refresh\")?.disabled,startDisabled:document.querySelector(\"#race-start\")?.disabled,level:document.querySelector(\"#race-level\")?.value})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"status\\\":\\\"3 installed maps available.\\\",\\\"message\\\":\\\"Original picture ready for both boards. Start when you are ready.\\\",\\\"refreshDisabled\\\":false,\\\"startDisabled\\\":false,\\\"level\\\":\\\"installed/fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

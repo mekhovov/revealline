@@ -1,0 +1,185 @@
+{
+  "format": "revealline-public-browser-receipt.v1",
+  "checkedAt": "2026-09-15T00:21:04.407818+00:00",
+  "release": "0.50.0",
+  "sourceCommit": "d52b634a231ce0907b83ea681e1e1aaf02387485",
+  "deployment": 6448874089,
+  "run": 34911243947,
+  "canonicalUrl": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/game/",
+  "scope": "Normal browser UI, current Chromium desktop profile; no gameplay, offline, physical-device or full-byte claim in this receipt. Full HTTP audit is separately owned.",
+  "checks": [
+    {
+      "name": "Workshop",
+      "result": "pass",
+      "details": "Opened from title; asset and supporting destinations render in shared typography and panels."
+    },
+    {
+      "name": "Field Guide",
+      "result": "historical return-focus issue",
+      "details": "Guide opens and renders. Back to game returns to mission preparation and start-button rather than Workshop. Phase 7 source contains the correction; retest public v0.51 separately. No modification of immutable v0.50."
+    },
+    {
+      "name": "Studio release load",
+      "result": "pass",
+      "details": "Single Load release collection action eventually completed after network delay: document r8, 293 slots, 0 missing, 155 source, 135 produced, 3 reviewed. No repeat action, local Save, upload or player save mutation."
+    },
+    {
+      "name": "Studio scout and prompt",
+      "result": "pass",
+      "details": "Produced 64x64 scout detailed body displayed with alpha, geometry, rotor anchors, requirements, affected screens, budget, current/draft preview. Edit existing yields locked current geometry and full brief; Copy prompt reports Complete prompt copied."
+    },
+    {
+      "name": "Design atlas",
+      "result": "pass",
+      "details": "Native link from Studio, phase0 studies explicitly labeled proposals. Ukrainian specimen selected and visually inspected; all three font roles loaded and complete tested alphabet displayed."
+    },
+    {
+      "name": "About and credits",
+      "result": "pass",
+      "details": "Native Workshop Sound and game extras route, themed About with version0.50.0 and current archive control; credits reached via native footer link. Initial font-load screenshot preserved; settled credits screenshot and 18px DOM text measured."
+    }
+  ],
+  "limitations": [
+    "Historical v0.50 guide return behavior remains in this immutable version and must not be reported as corrected until final v0.51 public retest.",
+    "Copy success is the app-visible status; clipboard contents were not read.",
+    "Loading delays and initial unstyled/partially styled captures are retained.",
+    "No hidden page state, network injection, cache reset or saved-flight replacement used."
+  ],
+  "evidence": [
+    {
+      "path": "about.jpg",
+      "bytes": 103483,
+      "sha256": "6e4886c9bc042467233b10c454f5942575cd3decab32bbdf5dfaa09454becc3a"
+    },
+    {
+      "path": "about.json",
+      "bytes": 389,
+      "sha256": "c6dc3d783c942360e99b25ad0bb21b5596b34c9bca2da3d3076a63903ae7b882"
+    },
+    {
+      "path": "about.txt",
+      "bytes": 12749,
+      "sha256": "e20990380b1df3397f3b87cd271bcafdfb2d1524d82349faeaa3bc27ab2414cf"
+    },
+    {
+      "path": "atlas-ukrainian.jpg",
+      "bytes": 114721,
+      "sha256": "537e79fb9bf720c4efe93eb1ca8a08ae0c340b02cc50a98813edee0f513d385b"
+    },
+    {
+      "path": "atlas-ukrainian.json",
+      "bytes": 296,
+      "sha256": "ec88b22196c8e589e9abcbcff7e4c968eb47509d31e74932562f225082559ea0"
+    },
+    {
+      "path": "atlas-ukrainian.txt",
+      "bytes": 33717,
+      "sha256": "dfe8458815204396a035459060711ffdd14221f86dc92e94e16a710b092a85f2"
+    },
+    {
+      "path": "credits-ready.jpg",
+      "bytes": 117375,
+      "sha256": "df2d1a954801b8f02cce79e80d200b724300fc381377b65b2dd2a4ddf0e68001"
+    },
+    {
+      "path": "credits-ready.json",
+      "bytes": 390,
+      "sha256": "8bb420fdac97ecb3bf711d492e423a1049385516b71fe84c88334531e75b2036"
+    },
+    {
+      "path": "credits-ready.txt",
+      "bytes": 1907,
+      "sha256": "305e38dceda73989f5a1d9801501d65158b6e501373c587cd9711d26f7caf634"
+    },
+    {
+      "path": "credits.jpg",
+      "bytes": 49542,
+      "sha256": "ddcf1f7bec6b352825bb7e6737e8e9be5c480b6ac2760f210e3b79e4f2af31c4"
+    },
+    {
+      "path": "credits.json",
+      "bytes": 390,
+      "sha256": "8bb420fdac97ecb3bf711d492e423a1049385516b71fe84c88334531e75b2036"
+    },
+    {
+      "path": "credits.txt",
+      "bytes": 1907,
+      "sha256": "305e38dceda73989f5a1d9801501d65158b6e501373c587cd9711d26f7caf634"
+    },
+    {
+      "path": "field-guide-return.json",
+      "bytes": 158,
+      "sha256": "9c671ab8381d1ec2c7a7cf99abb0b41fdde9aab0b94da44dfed96c0bfe554278"
+    },
+    {
+      "path": "field-guide.jpg",
+      "bytes": 66179,
+      "sha256": "d443fdfabb7cdbbf7290ae7937cb8f836adfd92791eb41a209b3c5bd9215e8a0"
+    },
+    {
+      "path": "field-guide.json",
+      "bytes": 361,
+      "sha256": "42737a6b305c025e4d63cee62a7df6c257d01f600ca407785da1c5aae02fff09"
+    },
+    {
+      "path": "field-guide.txt",
+      "bytes": 2808,
+      "sha256": "435860b9c5b27d1c0168eec81f4aaed5124cf9dec778ca193ecf2f389b7d3ef7"
+    },
+    {
+      "path": "studio-edit-prompt.jpg",
+      "bytes": 110346,
+      "sha256": "4e314e4799295b4995e2c293e9fc115b9db23ca235015fce56a53d44dfa5bce4"
+    },
+    {
+      "path": "studio-edit-prompt.json",
+      "bytes": 275,
+      "sha256": "1000168da59b5e759358ae3fa48c2b9655149773e08dd25c3bff008de776bf11"
+    },
+    {
+      "path": "studio-edit-prompt.txt",
+      "bytes": 16211,
+      "sha256": "0351647dcb9042127bede91642f0f46e189c6fe0b8f9d34974b3aa0056fb92bc"
+    },
+    {
+      "path": "studio-loaded-inventory.txt",
+      "bytes": 89742,
+      "sha256": "420c34665b0c21d6ee3a01d1b6c68492607efe04051c5b4eb76b01507f421143"
+    },
+    {
+      "path": "studio-scout-produced.jpg",
+      "bytes": 150241,
+      "sha256": "65cf7ef403d602174e4a0867b100363d42ad8c8ebd41647b756ece04088ea09a"
+    },
+    {
+      "path": "studio-scout-produced.json",
+      "bytes": 275,
+      "sha256": "1000168da59b5e759358ae3fa48c2b9655149773e08dd25c3bff008de776bf11"
+    },
+    {
+      "path": "studio-scout-produced.txt",
+      "bytes": 8600,
+      "sha256": "f76004baadff77cc75319f102fc70268987f7e53c3babc8ef66d9e2e818a7327"
+    },
+    {
+      "path": "workshop.jpg",
+      "bytes": 67084,
+      "sha256": "630729c550d963383fcfa98a41436b5972d449cd86185318513336ee4041537a"
+    },
+    {
+      "path": "workshop.json",
+      "bytes": 242,
+      "sha256": "54de1efbf3fbd6fb1387fdc0b2d58e6ccb42e6858d87591b02cad19927090491"
+    },
+    {
+      "path": "workshop.txt",
+      "bytes": 3344,
+      "sha256": "cf1c1d8cb4731dce175deb486c70b6c70360fbd319f3bdeffc10beb46026cc11"
+    },
+    {
+      "path": "credits-metrics.json",
+      "bytes": 600,
+      "sha256": "561049e636eab14645f6d218578505bb86771f7477e671bcbf0f6d9b7893d247"
+    }
+  ]
+}

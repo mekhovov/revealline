@@ -16,10 +16,11 @@ test('title has five game destinations and the release catalog; Workshop and mis
     'shell-gallery',
     'shell-options',
     'shell-workshop',
-    'http://localhost/releases/',
+    'shell-release-explorer',
   ]);
   const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
   assert.equal(catalog.tagName, 'A');
+  assert.equal(catalog.href, 'http://localhost/releases/');
   assert.match(catalog.textContent, /Release explorer/);
   assert.equal(catalog.hidden, false);
   assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
@@ -98,7 +99,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-gallery',
     'shell-options',
     'shell-workshop',
-    'http://localhost/releases/',
+    'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];

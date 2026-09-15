@@ -1,0 +1,13 @@
+{
+  "schema": "revealline-browser-receipt-integrity.v1",
+  "verifiedAt": "2026-09-15T01:59:41.159363+00:00",
+  "receipt": {
+    "path": "v051/receipt.json",
+    "bytes": 55454,
+    "sha256": "bb1d9f79f4b80d14c2ebf60fbb0e098f50e79fb047d5b4fab8aed4946b4ec719"
+  },
+  "referencedFilesVerified": 231,
+  "bytesVerified": 1295718,
+  "status": "PASS",
+  "scope": "Local cache evidence integrity only; no game/profile/publication mutation"
+}

@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:52:28.967712+00:00",
+  "completedAt": "2026-09-15T01:52:29.559796+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,pack:document.querySelector(\"#pack-select\")?.value,level:document.querySelector(\"#level-select\")?.value,focus:document.activeElement.id})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":true,\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nARCADE EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 68%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n2:58\\\\nSCORE\\\\n00000\\\\n\\\\nPAUSED\\\\n\\\\nResume \u2192\\\\nRestart mission\\\\nMission brief\\\\nMain menu\\\\nPaused\\\\nClose a line to reveal the picture\\\\n\\\\nAIM \u2192 CHASE \u2192 REST. Bait a locked target, then choose another exit.\\\",\\\"pack\\\":\\\"fpv-arcade-r5\\\",\\\"level\\\":\\\"orchard-crossing\\\",\\\"focus\\\":\\\"start-button\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

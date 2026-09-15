@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:54:48.484141+00:00",
+  "completedAt": "2026-09-15T01:54:48.674318+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,focus:document.activeElement.id,viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio}})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nARCADE EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 68%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n2:57\\\\nSCORE\\\\n00000\\\\n\\\\nPAUSED\\\\n\\\\nResume \u2192\\\\nRestart mission\\\\nMission brief\\\\nMain menu\\\\nPaused\\\\nClose a line to reveal the picture\\\\n\\\\nFlight resumed.\\\",\\\"focus\\\":\\\"start-button\\\",\\\"viewport\\\":{\\\"width\\\":1280,\\\"height\\\":633,\\\"dpr\\\":1}}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

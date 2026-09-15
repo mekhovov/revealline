@@ -1,0 +1,86 @@
+{
+  "format": "revealline-independent-final-public-row-review.v1",
+  "reviewer": "reference_audit",
+  "reviewedAt": "2026-09-15T02:07:37.152744+00:00",
+  "result": "PASS",
+  "scope": "Independent read-only reconciliation of the fresh completed final deployment audit. No new HTTP requests, tests, source changes, Git mutations, incremental reuse or cancellation.",
+  "controllerCommit": "2b8521b0a118df8663f93de5500e14da11741407",
+  "controllerTree": "5dcd633d3cb1ba69e7a66fe5d2074239c9b33071",
+  "gameSourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "qualifiedSourceTree": "37331db1a89526aedffd25ae979b7378a1a707fc",
+  "runId": 34918140908,
+  "deploymentId": 6449937007,
+  "method": "Fresh complete final-deployment HTTP audit",
+  "files": 2170,
+  "verifiedBytes": 656572716,
+  "attempts": 2171,
+  "retries": 1,
+  "finalFailures": 0,
+  "missing": 0,
+  "skipped": 0,
+  "incrementalReuse": false,
+  "bindingSha256": "ac63f868131ff7e54065cb6b9654cfedd2b9c737e60181322e9bc82cc8923a24",
+  "inventorySha256": "63020b559aedbd26ed25aae4b6733a1f4a2f2c138da3c6d8dc1ecac15e771a1f",
+  "evidenceHashes": {
+    "report.json": "f64cf04f5991efd5197cd743765f0f5e98644b1a083bdb544426805a693fac1e",
+    "results.jsonl": "ccfedfcab96225e783f38285c5f825507e9ee8d48ae7fc8b4ea7fe41d79c42dc",
+    "attempts.jsonl": "fa50a7b4677a6e6644e4ae6a4819a6071c8576217009e151ad8748d3fa7b6675"
+  },
+  "collector": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/final-main-public-audit/finalize2b.mjs",
+    "sha256": "5603f03b091b264fc5bb6cbae545590591f61f074c5e00678cff24e8c666e155",
+    "review": "PASS: pinned source/authority, actual MIME and exact URLs, expected attempt paths and contiguous bounded sequence, transient-only failed predecessors, final-last equality, final input reread and exclusive output."
+  },
+  "checks": [
+    "All nine input pins and report runner hashes remain exact; current selector/catalog equal final2b Git blobs.",
+    "All2170 unique successful rows cover exactly the hosted inventory with no extra/missing path; exact encoded approved URL/direct200/actual MIME/decoded size/SHA checked.",
+    "All2171 attempts have expected paths/identities, contiguous1..N sequences at most3, and final rows equal the last attempts.",
+    "All614 original canonical files and all57 original release records retain exact bytes/hashes; hidden, root alias, worker and56historical bridge paths are included.",
+    "Actual final controller/tree/run/deployment snapshots agree with the pinned successful main publication; ten archives admitted and zero comparison routes."
+  ],
+  "retainedRetry": {
+    "first": {
+      "path": "releases/v0.51.0/site/game/content/packs/fpv-arcade-r2.json",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/fpv-arcade-r2.json",
+      "attempt": 1,
+      "expectedBytes": 11706060,
+      "expectedSha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
+      "startedAt": "2026-09-15T01:57:52.141Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentEncoding": "gzip",
+      "etag": "W/\"6aa8a247-b29ecc\"",
+      "retryAfter": null,
+      "ok": false,
+      "error": "TimeoutError: The operation was aborted due to timeout",
+      "transportError": true,
+      "finishedAt": "2026-09-15T02:02:52.146Z"
+    },
+    "final": {
+      "path": "releases/v0.51.0/site/game/content/packs/fpv-arcade-r2.json",
+      "url": "https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/fpv-arcade-r2.json",
+      "attempt": 2,
+      "expectedBytes": 11706060,
+      "expectedSha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
+      "startedAt": "2026-09-15T02:02:54.149Z",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentEncoding": "gzip",
+      "etag": "W/\"6aa8a247-b29ecc\"",
+      "retryAfter": null,
+      "bytes": 11706060,
+      "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f",
+      "bytesMatch": true,
+      "hashMatch": true,
+      "contentTypeAccepted": true,
+      "ok": true,
+      "finishedAt": "2026-09-15T02:03:10.362Z"
+    },
+    "note": "The first R2 JSON body request reached its300-second TimeoutError. The second exact request passed; the first record remains intact. No cause beyond the observed timeout is inferred."
+  },
+  "remainingBlockers": [],
+  "limitations": [
+    "This receipt verifies saved HTTP/MIME/body and deployment evidence; separate final51 native/offline evidence is not incorporated or promoted here.",
+    "It does not qualify the newer audio/explorer source0.51.1, physical devices, a full browser-process restart, or long-term storage retention."
+  ]
+}

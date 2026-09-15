@@ -1,0 +1,79 @@
+{
+  "format": "revealline-independent-archive-http-admission-review.v1",
+  "at": "2026-09-15T00:25:13.571104+00:00",
+  "verdict": "PASS for complete Archive09 HTTP/body/MIME and hosted reproduction evidence; browser admission still pending",
+  "blockers": [],
+  "archiveId": "archive-09",
+  "infrastructureCommit": "d07e625649b3a56452a284835d43f5ad3d007f33",
+  "infrastructureTree": "ad580347bed6e83c89d4ae9ee392ee04e4d637e5",
+  "hostedRunId": 34911243947,
+  "deploymentId": 6448874089,
+  "publicAdmissionSha256": "c976ef05ae590817af6310d619fcfb56597145de535e7f1f23095466042efade",
+  "expectedInventorySha256": "650713afa16181edcdbf24fa5351b1d61a685f6ebc6a3fd793829b678942d7ad",
+  "files": 1181,
+  "bytes": 618354051,
+  "retries": 0,
+  "skipped": 0,
+  "independentRecordedResponseChecks": [
+    "All1181paths unique and equal exact inventory",
+    "Each approved canonical URL direct200",
+    "Each actual/expected length and SHA match original authority",
+    "Each actual MIME independently checked against reviewed map",
+    "Every attempt1 and retained attempts bytes equal finalresults",
+    "Hidden nojekyll and both original ownership markers included"
+  ],
+  "hostedProofChecks": [
+    "126777-byte receipt artifact transport SHA and CRCs verified; all extracted small members match",
+    "Hosted complete inventory equals independently frozen canonical authority",
+    "Before/after complete58tag objects unchanged",
+    "Both original per-version CLI sources/records and fc789builder match",
+    "Successful mainrun/deployment/status/link match exact infrastructure; actualcheckout identities retained"
+  ],
+  "copiedEvidence": [
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/deployment-snapshot.json",
+      "sha256": "fb487bea021a0a38f8847b00e6699417352c8b75d5fdacacd1f9a29366747476",
+      "bytes": 28250
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/expected-inventory.json",
+      "sha256": "650713afa16181edcdbf24fa5351b1d61a685f6ebc6a3fd793829b678942d7ad",
+      "bytes": 244236
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/hosted-frozen-reproduction.json",
+      "sha256": "5a949872046485a54460b9ff3f7cea6f21c34c682e9ff5fa25d9149c79fc274a",
+      "bytes": 1103
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/http-attempts.jsonl",
+      "sha256": "f5e85a6e892784938d21f7ffb4a532329ad173a84e5d4e6c547eac9f78ce9023",
+      "bytes": 818028
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/http-report.json",
+      "sha256": "9b58569243b1af8b118c78f9fa4d3ebf00270626a4c74569cae5ae2294cf94bd",
+      "bytes": 1444
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/http-results.jsonl",
+      "sha256": "f5e85a6e892784938d21f7ffb4a532329ad173a84e5d4e6c547eac9f78ce9023",
+      "bytes": 818028
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/public-byte-admission.json",
+      "sha256": "c976ef05ae590817af6310d619fcfb56597145de535e7f1f23095466042efade",
+      "bytes": 2171
+    },
+    {
+      "path": "publishing/pages-controller/evidence/archive-09/source-review.json",
+      "sha256": "7783bf39a1fccbbdbaa90742b2cb2ecdeae3364d64c1f244f568ccc7ce1dca3e",
+      "bytes": 4934
+    }
+  ],
+  "qualificationLimits": [
+    "No network, payload build or native review performed by this reviewer.",
+    "Hosted frozenByteEquality:false describes originalCLI rebuild mode rather than direct mounted frozen directory; independent inventory and original TAR/ZIP/body pins establish equality.",
+    "During final checks owner advanced the selector fromv48 to disabledv51 and added supplemental native evidence. This receipt covers only the original8 listed evidence files, unchanged; no native or final selector approval is inferred."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:57:23.944960+00:00",
+  "completedAt": "2026-09-15T01:57:24.504776+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,textSize:document.body.dataset.textSize})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nARCADE EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 68%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n3:00\\\\nSCORE\\\\n00000\\\\n\\\\nMISSION 01\\\\n\\\\nOrchard Crossing\\\\n\\\\nReveal 68%.\\\\nDeadline 180s\\\\nClosing a cut stops your craft. Tap a fresh direction to fly again.\\\\nLine hit? Close your cut before the travelling spark reaches you.\\\\nAIM locks a target. Turn before CHASE; REST returns it to patrol.\\\\n\\\\nStandard difficulty.\\\\n\\\\nRead details\\\\nLoad saved flight \u2192\\\\nStart mission \u2197\\\\nLearn by playing\\\\nMission brief\\\\nMain menu\\\\n\\\\nTap a direction to fly. Bonuses activate on contact. Esc / P pauses.\\\\n\\\\nReady for launch\\\\nClose a line to reveal the picture\\\\n\\\\nAIM \u2192 CHASE \u2192 REST. Bait a locked target, then choose another exit.\\\\n\\\\nFPV FIELD KIT / FLIGHT READY\\\\n\\\\nREVEAL\\\\n/ LINE\\\\nContinue\\\\n\u2192\\\\nMissions\\\\nCollection\\\\nSettings\\\\nWorkshop\\\\n\\\\nContinue \u00b7 FPV Front \u00b7 Pressure Lines \u00b7 Orchard Crossing\\\\n\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Orchard Crossing selected. Continue a saved flight separately.\\\\n\\\\nChoose a flight. Trace a path. Close the line.\\\\n\\\\nVERSION V0.51.0\\\\n\\\\nHANGAR 01\\\\nFIRST LIGHT\\\",\\\"textSize\\\":\\\"large\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

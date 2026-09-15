@@ -1,0 +1,16 @@
+{
+  "schema": "revealline-archive09-browser-handoff.v1",
+  "receipts": [
+    {
+      "path": "v049/receipt.json",
+      "bytes": 34179,
+      "sha256": "0ec3b2bafe1f481d840c020844e5e9ee29e785f576dd3c7ce7e940a90e7b8ddf"
+    },
+    {
+      "path": "v050/receipt.json",
+      "bytes": 40581,
+      "sha256": "f72504edf530701c4efafe54e444075bc6124cd781f4a6a06a35e715e0016b6d"
+    }
+  ],
+  "scope": "Both canonical49/50 public core journeys complete; all retained attempts and hardware limits remain in the receipts. Final51 is a separate unfinished qualification."
+}
