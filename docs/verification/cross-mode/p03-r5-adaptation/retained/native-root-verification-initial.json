@@ -1,0 +1,28 @@
+{
+  "version": "native-review.v1",
+  "scope": "P03 minimal R5 initial ready focus on c5, not P08 artwork or phase acceptance",
+  "base": "c5bccfc59e9b2dec2defc9d9202565ea3ccceae0",
+  "runtimeSha256": "31f3d454",
+  "sourceBindings": [
+    "preview-normal.json",
+    "preview-delayed.json"
+  ],
+  "events": "native/events.json",
+  "count": 9,
+  "screenshots": [
+    "native/initial-ready-start.png",
+    "native/delayed-choice-ready.png"
+  ],
+  "passed": [
+    "Fresh normal Ready focuses enabled Start after boot inert is removed",
+    "Explicit keyboard Start and Pause/Resume focus remain functional",
+    "Deliberate boot Back focus prevents subsequent automatic Start focus",
+    "After loading cleanup focus falls to body then deliberate Tab reaches Team"
+  ],
+  "limits": [
+    "Native desktop keyboard only, 1309x1348",
+    "No physical controller, touch, phone, zoom, public or offline claim",
+    "No native delayed failure/background race; those remain separate host evidence",
+    "Boot Back disappears at ready, so chosen element is not retained; initial-focus action correctly remains retired"
+  ]
+}
