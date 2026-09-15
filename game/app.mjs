@@ -1900,7 +1900,7 @@ try {
     refreshCourse();
   }
   async function enterFirstFlight() {
-    if (practice || courseSession || courseEntry) return;
+    if (practice || courseSession || courseEntry || modeDeparture || missionReplacement) return;
     attemptFiles?.invalidate();
     const ticket = {
       controller: new AbortController(),
@@ -2212,11 +2212,41 @@ try {
       activeEntry !== ticket.entry ||
       libraryGeneration !== ticket.generation ||
       (!installed && packs !== ticket.packs) ||
+      classId !== ticket.classId ||
+      turnPolicy !== ticket.turnPolicy ||
+      scenario !== ticket.scenario ||
+      classRegistry !== ticket.classRegistry ||
+      courseRequest?.lessonId !== ticket.lessonId ||
+      courseBlocked() ||
       canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
     )
       throw new Error('The flight or available missions changed. Stay here and choose again.');
   }
+  function isSetupRequest(request) {
+    return request.kind === 'class' || request.kind === 'steering';
+  }
+  function restoreReplacementSelectors() {
+    refreshContentSelectors();
+    $('campaign-select').value = modeSelection().campaignKey;
+    $('class-select').value = classId;
+    $('turn-select').value = turnPolicy;
+  }
   function resolveMissionRequest(request) {
+    if (request.kind === 'class') {
+      const recipe = (scenario?.classRecipes || classRegistry).find(
+        (item) => item.id === request.id,
+      );
+      if (courseSession || !recipe) throw new Error('That starting class is unavailable.');
+      return { same: classId === request.id, title: `Starting class: ${recipe.label}` };
+    }
+    if (request.kind === 'steering') {
+      if (!['immediate', 'grid-center'].includes(request.id))
+        throw new Error('That steering policy is unavailable.');
+      return {
+        same: turnPolicy === request.id,
+        title: `Steering: ${request.id === 'immediate' ? 'Immediate' : 'Grid + buffer'}`,
+      };
+    }
     if (request.kind === 'level' || request.kind === 'card') {
       const index = campaign.levels.findIndex((level) => level.id === request.id);
       if (index < 0 || !missionAvailable(index))
@@ -2257,6 +2287,15 @@ try {
   }
   async function applyMissionRequest(request, ticket = null) {
     const target = resolveMissionRequest(request);
+    if (isSetupRequest(request)) {
+      if (request.kind === 'class') classId = request.id;
+      else turnPolicy = request.id;
+      demo = false;
+      preferences(request.kind === 'class' ? { classId } : { turnPolicy });
+      if (courseSession) selectCourseLesson(courseRequest.lessonId);
+      else prepare();
+      return true;
+    }
     if (request.kind === 'pack') {
       if (ticket) ticket.installing = true;
       return activatePack(request.id, {
@@ -2281,43 +2320,52 @@ try {
     return true;
   }
   function missionReplacementMessage(ticket) {
-    $('mission-replace-status').textContent = ticket.savedRaw
-      ? 'Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.'
-      : 'This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; Replace deliberately discards it.';
+    const action = isSetupRequest(ticket.request)
+      ? courseSession
+        ? 'Prepare fresh lesson'
+        : 'Prepare fresh attempt'
+      : 'Replace';
+    $('mission-replace-status').textContent = ticket.sessionOnly
+      ? `This ${courseSession ? 'lesson' : 'practice attempt'} is session-only and is not saved to campaign progress. Stay keeps it paused; ${action} deliberately discards this attempt without starting the next one.`
+      : ticket.savedRaw
+        ? `Your current flight was saved and verified. ${action} ${isSetupRequest(ticket.request) ? 'uses the requested starting setup' : 'selects the new mission'} without starting it. Stay keeps this flight paused.`
+        : `This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; ${action} deliberately discards it.`;
     if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
   }
   async function requestMissionReplacement(request, opener) {
-    // Only the four explicit player adapters call this gate. Restore, replay,
-    // Library adoption and internal pack selection retain their own contracts.
+    // Only explicit mission and starting-setup adapters call this gate. Restore,
+    // replay, Library adoption and authored Hangar actions keep their contracts.
+    const setup = isSetupRequest(request);
     if (
       missionReplacement ||
       modeDeparture ||
-      courseSession ||
-      courseEntry ||
+      (courseSession && !setup) ||
+      courseBlocked() ||
       sessionBusy ||
       contentSwitchBusy ||
       pictureThemePending ||
       backupBusy
     ) {
-      refreshContentSelectors();
-      $('campaign-select').value = modeSelection().campaignKey;
+      restoreReplacementSelectors();
       return false;
     }
     let target;
     try {
       target = resolveMissionRequest(request);
     } catch (error) {
-      refreshContentSelectors();
-      $('campaign-select').value = modeSelection().campaignKey;
+      restoreReplacementSelectors();
       contentStatus(error.message, true);
       return false;
     }
+    if (setup && target.same) {
+      restoreReplacementSelectors();
+      return false;
+    }
     if (!unfinishedFlight()) return applyMissionRequest(request);
-    refreshContentSelectors();
-    $('campaign-select').value = modeSelection().campaignKey;
+    restoreReplacementSelectors();
     if (target.same) return false;
     // Practice retains its existing non-advertised selection behavior.
-    if (practice) return applyMissionRequest(request);
+    if (practice && !setup) return applyMissionRequest(request);
     const ticket = {
       request: { kind: request.kind, id: request.id },
       opener,
@@ -2329,6 +2377,12 @@ try {
       entry: activeEntry,
       generation: libraryGeneration,
       packs,
+      classId,
+      turnPolicy,
+      scenario,
+      classRegistry,
+      lessonId: courseRequest?.lessonId,
+      sessionOnly: setup && practice,
       selection: modeSelection(),
       savedRaw: null,
       pending: true,
@@ -2338,23 +2392,34 @@ try {
     modeDepartureHold = true;
     pause(true);
     clearInput();
+    $('mission-replace-title').textContent = setup
+      ? courseSession
+        ? 'Prepare a fresh lesson?'
+        : 'Prepare a fresh attempt?'
+      : 'Replace this flight?';
+    $('mission-replace-confirm').textContent = setup
+      ? courseSession
+        ? 'Prepare fresh lesson'
+        : 'Prepare fresh attempt'
+      : 'Replace';
     $('mission-replace-target').textContent =
-      `${campaign.levels[levelIndex].name} → ${target.title}`;
+      `${scenario?.level.name || campaign.levels[levelIndex].name} → ${target.title}`;
     $('mission-replace-status').textContent =
       'Checking the saved flight. Your current flight stays paused. Stay cancels waiting.';
     $('mission-replace-confirm').disabled = true;
     $('mission-replace-dialog').showModal();
     $('mission-replace-stay').focus({ preventScroll: true });
     try {
-      await retainNavigationFlight(
-        ticket,
-        () => missionReplacementCurrent(ticket),
-        ({ ticks, total }) => {
-          if (missionReplacement === ticket)
-            $('mission-replace-status').textContent =
-              `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
-        },
-      );
+      if (!ticket.sessionOnly)
+        await retainNavigationFlight(
+          ticket,
+          () => missionReplacementCurrent(ticket),
+          ({ ticks, total }) => {
+            if (missionReplacement === ticket)
+              $('mission-replace-status').textContent =
+                `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
+          },
+        );
     } catch (error) {
       if (missionReplacement !== ticket || ticket.controller.signal.aborted) return false;
       ticket.savedRaw = null;
@@ -2385,16 +2450,16 @@ try {
             throw new Error('Saved flight changed.');
         } catch {
           ticket.savedRaw = null;
-          ticket.failure =
-            'The saved flight changed or saving became unavailable. Review this warning before choosing Replace again.';
+          ticket.failure = `The saved flight changed or saving became unavailable. Review this warning before choosing ${isSetupRequest(ticket.request) ? 'Prepare' : 'Replace'} again.`;
           missionReplacementMessage(ticket);
           return;
         }
       }
       ticket.pending = true;
       $('mission-replace-confirm').disabled = true;
-      $('mission-replace-status').textContent =
-        'Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.';
+      $('mission-replace-status').textContent = isSetupRequest(ticket.request)
+        ? 'Preparing the requested fresh attempt without starting it.'
+        : 'Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.';
       const selected = await applyMissionRequest(ticket.request, ticket);
       if (missionReplacement !== ticket) return;
       missionReplacement = null;
@@ -5280,24 +5345,10 @@ try {
     preferences({ bodyId, matchClassAppearance: false });
     $('match-class-appearance').checked = false;
   };
-  $('class-select').onchange = () => {
-    if (courseSession || courseEntry) return;
-    classId = $('class-select').value;
-    demo = false;
-    preferences({ classId });
-    prepare();
-  };
-  $('turn-select').onchange = () => {
-    if (courseEntry || courseBlocked()) return;
-    turnPolicy = $('turn-select').value;
-    demo = false;
-    preferences({ turnPolicy });
-    if (courseSession) {
-      selectCourseLesson(courseRequest.lessonId);
-      return;
-    }
-    prepare();
-  };
+  $('class-select').onchange = () =>
+    requestMissionReplacement({ kind: 'class', id: $('class-select').value }, $('class-select'));
+  $('turn-select').onchange = () =>
+    requestMissionReplacement({ kind: 'steering', id: $('turn-select').value }, $('turn-select'));
   $('start-button').onclick = () => resume();
   $('continue-saved').onclick = async () => {
     try {
