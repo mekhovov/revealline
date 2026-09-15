@@ -1,0 +1,84 @@
+{
+  "format": "revealline-partial-public-native-handoff.v1",
+  "status": "PARTIAL_CRITICAL_PASS",
+  "verifiedAt": "2026-09-15T01:44:12.683755+00:00",
+  "controllerCommit": "2b8521b0a118df8663f93de5500e14da11741407",
+  "controllerTree": "5dcd633d3cb1ba69e7a66fe5d2074239c9b33071",
+  "runId": 34918140908,
+  "deploymentId": 6449937007,
+  "base": "https://mekhovov.github.io/revealline/",
+  "version": "v0.51.0",
+  "sourceRevision": "5d4bd98718955fa471fe71d798715864af166d18",
+  "criticalFilesVerified": 8,
+  "completeInventoryFiles": 2170,
+  "fullPublicFilesVerified": false,
+  "nativeAdmissionPassed": false,
+  "artifactTransportSha256": "506e3d62813c67270db3b8eb26c968079ccb71cb98361d20b0ebac913cca2441",
+  "rows": [
+    {
+      "path": "release.json",
+      "status": 200,
+      "bytes": 465,
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541",
+      "mime": "application/json",
+      "passed": true
+    },
+    {
+      "path": "game/build-info.json",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "afb298d22f2b3622ff1238a114db1758d547270bf30332bcaace3cbe47af5235",
+      "mime": "application/json",
+      "passed": true
+    },
+    {
+      "path": "game/index.html",
+      "status": 200,
+      "bytes": 1200,
+      "sha256": "5fefc01c2e21f4e8b8208fa3e2b205c38587f1e8f0e624a2073aaaef8c125b22",
+      "mime": "text/html",
+      "passed": true
+    },
+    {
+      "path": "manifest.json",
+      "status": 200,
+      "bytes": 113770,
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3",
+      "mime": "application/json",
+      "passed": true
+    },
+    {
+      "path": "releases/v0.51.0/release.json",
+      "status": 200,
+      "bytes": 465,
+      "sha256": "c7cbd9192b9326cdd3541a24736ed91dadcb42a2666c372ab4475da02a93c541",
+      "mime": "application/json",
+      "passed": true
+    },
+    {
+      "path": "releases/v0.51.0/site/game/build-info.json",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "afb298d22f2b3622ff1238a114db1758d547270bf30332bcaace3cbe47af5235",
+      "mime": "application/json",
+      "passed": true
+    },
+    {
+      "path": "releases/v0.51.0/site/game/index.html",
+      "status": 200,
+      "bytes": 62921,
+      "sha256": "179d3ce1b755d29a1d2cae10ab5d21122bfaac73122fa462e81ca7c42dc1af23",
+      "mime": "text/html",
+      "passed": true
+    },
+    {
+      "path": "releases/v0.51.0/site/manifest.json",
+      "status": 200,
+      "bytes": 113770,
+      "sha256": "69bf17d6a635eb69f65b8e765832091c9c0525f7191e950f5053126b894a0dc3",
+      "mime": "application/json",
+      "passed": true
+    }
+  ],
+  "scope": "Exactly8 public root/canonical critical files; all614 canonical original manifest rows independently match hosted inventory. This controller fully admits49/50 and preserves the original51 bodies. Complete public HTTP and native/offline acceptance remain separate pending evidence."
+}

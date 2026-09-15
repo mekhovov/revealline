@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:55:24.147440+00:00",
+  "completedAt": "2026-09-15T01:55:24.349020+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,level:document.querySelector(\"#race-level\")?.value,focus:document.activeElement.id,canvases:[...document.querySelectorAll(\"canvas\")].map(c=>({width:c.width,height:c.height,rect:c.getBoundingClientRect().toJSON()}))})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"text\\\":\\\"REVEAL LINE / LOCAL TWO PLAYER\\\\n\\\\nTwo boards. One race.\\\\n\\\\nThis chapter could not load: Select a current installed couch chapter.\\\\n\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Installed \u00b7 Orchard Crossing \u00b7 Arcade \u00b7 FPV Front \u00b7 Immediate turns \u00b7 180 seconds\\\\n\\\\nPLAYER 1\\\\nSunflower\\\\n\\\\nW A S D\\\\n\\\\nPLAYER 2\\\\nSkyline\\\\n\\\\nArrow keys\\\\n\\\\nStart round \u2197\\\\nRetry chapter picture\\\\nRace setup\\\\nOptions\\\\nHow to play\\\\nReturn to solo\\\\n\\\\nFirst to two rounds. Couch races do not change your solo progress.\\\\n\\\\nConnect a controller and use it while this page is visible. Keyboard and touch remain available.\\\",\\\"level\\\":\\\"installed/fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing\\\",\\\"focus\\\":\\\"race-chapter-retry\\\",\\\"canvases\\\":[{\\\"width\\\":1152,\\\"height\\\":576,\\\"rect\\\":{\\\"x\\\":0,\\\"y\\\":0,\\\"width\\\":0,\\\"height\\\":0,\\\"top\\\":0,\\\"right\\\":0,\\\"bottom\\\":0,\\\"left\\\":0}},{\\\"width\\\":1152,\\\"height\\\":576,\\\"rect\\\":{\\\"x\\\":0,\\\"y\\\":0,\\\"width\\\":0,\\\"height\\\":0,\\\"top\\\":0,\\\"right\\\":0,\\\"bottom\\\":0,\\\"left\\\":0}}]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

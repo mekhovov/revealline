@@ -1,0 +1,31 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-09",
+  "infrastructureCommit": "d07e625649b3a56452a284835d43f5ad3d007f33",
+  "deploymentId": 6448874089,
+  "versions": ["v0.49.0", "v0.50.0"],
+  "scope": "Both exact canonical versions passed ordinary online play, saved continuation, natural wins, earned full-picture viewing, loss/Retry, complete core offline verification, offline reload and fresh-document navigation, and two-way independent storage scopes. v0.50 additionally passed categorized Settings and independent Couch keyboard rounds; its separate Workshop/Studio/Atlas receipt preserves the historical Guide-return limitation corrected in v0.51. Preparation/storage failures, timeout and normal retry evidence remain intact, without attributing an unproven cause. This admits these archive versions and does not claim final v0.51 native completion, physical-device testing, browser-process restart or long-term storage retention.",
+  "evidence": [
+    {
+      "path": "evidence/archive-09/native-handoff.json",
+      "sha256": "c8585cfd2d3b03a513f75771218c9fde409c05a1fc12b6710821a926a9505b6b",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-09/native-v049.json",
+      "sha256": "0ec3b2bafe1f481d840c020844e5e9ee29e785f576dd3c7ce7e940a90e7b8ddf",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-09/native-v050.json",
+      "sha256": "f72504edf530701c4efafe54e444075bc6124cd781f4a6a06a35e715e0016b6d",
+      "kind": "reference"
+    },
+    {
+      "path": "evidence/archive-09/native-v050-workshop.json",
+      "sha256": "be4b5488e4decef59847ade71f41d0a3f4208f235262e8a6473ac0deeef15b0f",
+      "kind": "reference"
+    }
+  ]
+}

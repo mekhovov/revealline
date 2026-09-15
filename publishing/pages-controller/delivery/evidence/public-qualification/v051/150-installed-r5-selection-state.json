@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:48:46.376004+00:00",
+  "completedAt": "2026-09-15T01:48:48.089794+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({text:document.body.innerText,pack:document.querySelector(\"#pack-select\")?.value,level:document.querySelector(\"#level-select\")?.value,dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(d=>d.id),focus:document.activeElement.id})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nTACTICAL EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 45%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n0:00\\\\nSCORE\\\\n00000\\\\n\\\\nPAUSED\\\\n\\\\nResume \u2192\\\\nRestart mission\\\\nMission brief\\\\nMain menu\\\\nPaused\\\\nClose a line to reveal the picture\\\\n\\\\nSaved flight verified and restored. Press Resume to continue.\\\\n\\\\n\u00d7\\\\n\\\\nTUNE YOUR ARCADE\\\\n\\\\nFlight settings.\\\\nControls\\\\nAudio\\\\nDisplay & accessibility\\\\nGame data\\\\nGame data\\\\n\\\\nSaves, recovery, installed chapters and offline play.\\\\n\\\\nSaves & recovery\\\\nInstalled chapters\\\\n\\\\nManage saved flights, game-data backups and installed chapters in your flight library.\\\\n\\\\nKeep downloads on this device\\\\n\\\\nAsk this browser to protect this site's saved data from automatic removal. This does not download files or replace backups.\\\\n\\\\nRetention is not enabled. Downloads may be removed by the browser.\\\\n\\\\nDownload this release for offline play on this device.\\\\n\\\\nPrepare offline play\\\\nOffline verification details\\\\nCreator tools and original media\\\\n\u00d7\\\\n\\\\nTHE THINGS YOU KEEP\\\\n\\\\nFlight library.\\\\nRecords\\\\nSaves & loads\\\\nExpansion packs\\\\nChallenges\\\\n\\\\nExpansion packs add campaigns, maps, registered abilities, themes, images and original music recipes. Packs contain data; they cannot execute scripts.\\\\n\\\\nInstall fpv arcade r5Install fpv pressure frontierInstall night shiftInstall living threadsInstall fieldcraftInstall homeward skiesInstall equipment workshopInstall sentinel relay\\\\nFPV Front \u00b7 Pressure Lines \u00b7 5.0.0\\\\n\\\\nThree direction-only Arcade missions. Watch a hunter lock its target, choose a different exit, and secure the cut before its impact catches you. Walls, patrols, erosion and timed lanes create different route choices. Three original First Light pictures accompany these new pressure layouts. The separate Frontier Lines chapter adds three more missions and pictures.\\\\n\\\\nPlay FPV Front \u00b7 Pressure LinesRemove from device\\\\nInstall a pack file\\\\nPaste pack JSON\\\\nExport installed packs\\\\n\\\\nValidated and installed. Choose Play above or use the Campaign selector.\\\",\\\"pack\\\":\\\"\\\",\\\"level\\\":\\\"signal-01\\\",\\\"dialogs\\\":[\\\"settings-dialog\\\",\\\"library-dialog\\\"],\\\"focus\\\":\\\"\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

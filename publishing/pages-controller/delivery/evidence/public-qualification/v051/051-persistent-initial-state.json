@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:22:50.179990+00:00",
+  "completedAt": "2026-09-15T01:22:50.944825+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({url:location.href,ready:document.readyState,text:document.body.innerText,online:navigator.onLine,viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio},time:new Date().toISOString()})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"url\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/\\\",\\\"ready\\\":\\\"complete\\\",\\\"text\\\":\\\"\u25e9 REVEAL / LINE\\\\nTACTICAL EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 45%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n0:00\\\\nSCORE\\\\n00000\\\\n\\\\nMISSION 01\\\\n\\\\nClear a path.\\\\nReveal a world.\\\\n\\\\nLeave safe ground, draw a line and return.\\\\nReveal 45% by enclosing regions without a field enemy.\\\\n\\\\nStandard difficulty.\\\\n\\\\nStart mission \u2197\\\\nLearn by playing\\\\nMission brief\\\\nMain menu\\\\n\\\\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\\\\n\\\\nReady for launch\\\\nClose a line to reveal the picture\\\\n\\\\nYour first route: fly down from the marked start to the opposite border.\\\\n\\\\nFPV FIELD KIT / FLIGHT READY\\\\n\\\\nREVEAL\\\\n/ LINE\\\\nDeploy\\\\n\u2192\\\\nMissions\\\\nCollection\\\\nSettings\\\\nWorkshop\\\\n\\\\nDeploy \u00b7 Pressure Lines / Arcade\\\\n\\\\nChoose a flight. Trace a path. Close the line.\\\\n\\\\nVERSION V0.51.0\\\\n\\\\nHANGAR 01\\\\nFIRST LIGHT\\\",\\\"online\\\":true,\\\"viewport\\\":{\\\"width\\\":1280,\\\"height\\\":800,\\\"dpr\\\":1},\\\"time\\\":\\\"2026-09-15T01:22:50.840Z\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

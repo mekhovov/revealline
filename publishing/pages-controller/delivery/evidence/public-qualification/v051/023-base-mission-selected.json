@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-09-15T01:12:28.780065+00:00",
+  "completedAt": "2026-09-15T01:12:29.071089+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51",
+    "eval",
+    "JSON.stringify({pack:document.querySelector(\"#pack-select\")?.value,level:document.querySelector(\"#level-select\")?.value,dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(e=>e.id),selected:document.querySelector(\".mission.selected\")?.innerText})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"pack\\\":\\\"\\\",\\\"level\\\":\\\"signal-01\\\",\\\"dialogs\\\":[\\\"shell-missions\\\"],\\\"selected\\\":\\\"01\\\\nFirst Signal\\\\n\u2197\\\\nPicture concealed\\\"}\"\n",
+  "stderr": ""
+}

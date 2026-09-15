@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:46:31.163691+00:00",
+  "completedAt": "2026-09-15T01:46:31.470797+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,installed:document.querySelector(\"#installed-packs\")?.innerText,rows:document.querySelector(\"#installed-packs\")?.children.length,buttons:[...document.querySelectorAll(\"#builtin-packs button\")].map(b=>({text:b.textContent,disabled:b.disabled})),status:document.querySelector(\"#pack-status\")?.textContent})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":true,\\\"installed\\\":\\\"\\\",\\\"rows\\\":0,\\\"buttons\\\":[{\\\"text\\\":\\\"Install fpv arcade r5\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install fpv pressure frontier\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install night shift\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install living threads\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install fieldcraft\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install homeward skies\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install equipment workshop\\\",\\\"disabled\\\":false},{\\\"text\\\":\\\"Install sentinel relay\\\",\\\"disabled\\\":false}],\\\"status\\\":\\\"\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

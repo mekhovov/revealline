@@ -1,0 +1,62 @@
+{
+  "schema": "revealline-post-test-network-restore.v1",
+  "completedAt": "2026-09-15T02:01:13.816021+00:00",
+  "status": "PASS",
+  "scope": "Restore network online on two owned persistent-profile pages only; both remain paused. No gameplay input, storage changes, reload or new qualification.",
+  "session": "field-kit-public51-persistent",
+  "completedNativeReceipt": {
+    "path": "v051/receipt.json",
+    "sha256": "bb1d9f79f4b80d14c2ebf60fbb0e098f50e79fb047d5b4fab8aed4946b4ec719",
+    "unchanged": true
+  },
+  "observations": {
+    "solo": {
+      "url": "https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/",
+      "online": true,
+      "text": " \u25e9 REVEAL / LINE\nARCADE EDITION\n\u26f6\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 68%\nLIVES\n\u25c6 \u25c6 \u25c6\nTIME\n2:57\nSCORE\n00000\n\nPAUSED\n\nResume \u2192\nRestart mission\nMission brief\nMain menu\nPaused\nClose a line to reveal the picture\n\nSaved flight verified and restored. Press Resume to continue.",
+      "textSize": "large",
+      "pack": "fpv-arcade-r5",
+      "level": "orchard-crossing",
+      "focus": "start-button",
+      "viewport": {
+        "width": 1280,
+        "height": 633,
+        "dpr": 1
+      }
+    },
+    "couch": {
+      "url": "https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/couch/",
+      "online": true,
+      "text": "REVEAL LINE / LOCAL TWO PLAYER\n\nBoth boards paused.\n\nBoth players are paused. Resume when everyone is ready.\n\nFPV Front \u00b7 Pressure Lines \u00b7 Installed \u00b7 Orchard Crossing \u00b7 Arcade \u00b7 FPV Front \u00b7 Immediate turns \u00b7 180 seconds\n\nPLAYER 1\nSunflower\n\nW A S D\n\nPLAYER 2\nSkyline\n\nArrow keys\n\nResume round \u2192\nNew match \u00b7 setup\nOptions\nHow to play\nReturn to solo\n\nFirst to two rounds. Couch races do not change your solo progress.\n\nConnect a controller and use it while this page is visible. Keyboard and touch remain available.",
+      "couchLevel": "installed/fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "focus": "race-start",
+      "viewport": {
+        "width": 1280,
+        "height": 633,
+        "dpr": 1
+      }
+    }
+  },
+  "captures": [
+    {
+      "path": "post-test-network-restore/solo-network-online.json",
+      "bytes": 680,
+      "sha256": "b07a64c64d6a15ec34f960568aae65ea4da426ea4b00efefff9ce195f4d1a2e6"
+    },
+    {
+      "path": "post-test-network-restore/solo-paused-state.json",
+      "bytes": 1684,
+      "sha256": "c5dbb294ecff09d499d74723ab2214f6fa62c029941421644217e6a890a052b4"
+    },
+    {
+      "path": "post-test-network-restore/couch-network-online.json",
+      "bytes": 702,
+      "sha256": "44c4eaf17179ff81e8aaacbc8fc01a4b257b549f71a058d03e5cc44380dd1f52"
+    },
+    {
+      "path": "post-test-network-restore/couch-paused-state.json",
+      "bytes": 1924,
+      "sha256": "e079be56dcce2a6d32f59e8a77dd2c50a0e49f7a7290d5d2b34ecfce8becbb6a"
+    }
+  ]
+}
