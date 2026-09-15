@@ -122,14 +122,21 @@ export function attachGameShell({
       workshop?.showModal();
       workshop?.querySelector('button,a')?.focus();
     };
-  if ($('shell-missions-back'))
-    $('shell-missions-back').onclick = () => {
-      if (!briefing && returnToHome) openHome();
-      else {
-        missions.close();
-        focusGame();
-      }
-    };
+  const backFromMissions = () => {
+    if (!briefing && returnToHome) openHome();
+    else {
+      missions.close();
+      focusGame();
+    }
+  };
+  if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
+  const cancelMissions = (event) => {
+    // Both native Escape and controller Back use this cancellable boundary.
+    // Intentional closes (Deploy / Back to flight) keep their own destinations.
+    event.preventDefault();
+    backFromMissions();
+  };
+  missions.addEventListener('cancel', cancelMissions);
   const overlayMenu = $('overlay-menu');
   if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
   const worlds = $('shell-worlds');
@@ -299,6 +306,7 @@ export function attachGameShell({
       destroyed = true;
       restoreMissionView();
       missions.removeEventListener('close', closedMissions);
+      missions.removeEventListener('cancel', cancelMissions);
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);
