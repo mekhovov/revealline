@@ -1,0 +1,22 @@
+Browser tab: 431, Title: "Reveal / Line", URL: "http://127.0.0.1:60366/game/".
+1 AXWebArea Reveal / Line, URL: 127.0.0.1:60366/game/
+	2 container REVEAL / LINE, ID: shell-home
+		3 container
+			4 text FPV FIELD KIT / FLIGHT READY
+			5 heading REVEAL / LINE, Value: 1, ID: shell-title
+				6 text REVEAL / LINE
+			7 text Find your line.
+			8 text Bring the picture home.
+			9 container Main menu
+				10 button Deploy, ID: shell-featured
+				11 button Missions, ID: shell-play
+				12 button Collection, ID: shell-gallery
+				13 button Settings, ID: shell-options
+				14 button Workshop, ID: shell-workshop
+				15 link Description: Release explorer Play another edition, Value: 127.0.0.1:60366/releases/, ID: shell-release-explorer
+			16 text Deploy · Pressure Lines / Arcade
+			17 text Choose a flight. Trace a path. Close the line.
+			18 container Description: Game version, ID: landing-version
+				19 text VERSION DEV
+
+The focused UI element is 14 button Workshop, ID: shell-workshop
