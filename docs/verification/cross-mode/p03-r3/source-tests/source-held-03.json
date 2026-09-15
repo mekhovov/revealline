@@ -1,0 +1,42 @@
+{
+  "base": "4397b367b3f1fa17bf4a0989c90febaca9de9710",
+  "sourceFiles": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 246930,
+      "sha256": "4ebf6b69bd04eb09721f6ef7c75d6c0d491ac5d7dd845210b9b3ed7c6e043654"
+    },
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 54216,
+      "sha256": "0ff1538a10911e9896dbc1b4a0270f153071d4debe584fb575dd57d621594bdd"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70334,
+      "sha256": "ce6f600d6209f6cd7b4e2e98e6af1f5fa0c39ff2e773371750da18aead06e33d"
+    },
+    {
+      "path": "game/test/library-launch-host.test.mjs",
+      "bytes": 21765,
+      "sha256": "f9218589128203a1d165d18047c6d78183ecdb047f02ecc2d2451ee35057e1a9"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 48889,
+      "sha256": "135794f3891de5dc8af906d490a0ed81602144215b72a2144f63d65a067d226d"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 110703,
+      "sha256": "653e066b1c5fbb33fec19524e893b21e061909c86fd1a4d569463614756800c4"
+    },
+    {
+      "path": "game/test/difficulty-host.test.mjs",
+      "bytes": 22335,
+      "sha256": "e2785205588d176d831dd0561a78983cf0a3ef62ad528d1cdb2a582de635362b"
+    }
+  ],
+  "scope": "R3 final source hold: held02 runtime unchanged; difficulty test-only visible Restart/confirmation, visible Packs and asynchronous guarded close adaptation. All declared complete-file pairs pass both supported runtimes; native separately owned.",
+  "initialTests": "Held01 eight complete files157/157 both; held02 four affected complete files87/87 both; final difficulty whole file10/10 both. Counts are not additive or a phase/full-suite total. Predecessor fixture/model failures and baseline4397 Restart reproduction retained."
+}
