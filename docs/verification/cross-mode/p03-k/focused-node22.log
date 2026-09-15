@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 1 - immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1293.045875
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 2 - immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1225.755041
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice controller preserves the exact cut and returns to its selector
+ok 3 - immediate: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1765.281417
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 4 - grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1029.825417
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 5 - grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 952.721917
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+ok 6 - grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1516.0215
+  type: 'test'
+  ...
+# Subtest: immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 7 - immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 1106.638125
+  type: 'test'
+  ...
+# Subtest: grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 8 - grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 991.412958
+  type: 'test'
+  ...
+# Subtest: same lesson selection in ready is inert
+ok 9 - same lesson selection in ready is inert
+  ---
+  duration_ms: 267.092416
+  type: 'test'
+  ...
+# Subtest: same lesson selection in flight is inert
+ok 10 - same lesson selection in flight is inert
+  ---
+  duration_ms: 672.467458
+  type: 'test'
+  ...
+# Subtest: fresh Ready choice remains direct; unknown lesson cannot replace it
+ok 11 - fresh Ready choice remains direct; unknown lesson cannot replace it
+  ---
+  duration_ms: 294.84175
+  type: 'test'
+  ...
+# Subtest: pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+ok 12 - pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+  ---
+  duration_ms: 819.599791
+  type: 'test'
+  ...
+# Subtest: page departure invalidates a pending lesson choice before a delayed Confirm can act
+ok 13 - page departure invalidates a pending lesson choice before a delayed Confirm can act
+  ---
+  duration_ms: 761.918291
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 13079.684708
