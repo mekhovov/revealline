@@ -147,6 +147,14 @@ in-panel destination actions. This is an internal P03 work package, not phase or
 release acceptance. The isolated branch starts at P03-G and does not include the
 separate P03-H starting-setup implementation.
 
+## P03-R1 Workshop Restart candidate
+
+The existing native Restart decision now serves both the paused overlay and Workshop’s Sound & game extras. Stay paused, Escape and controller Back preserve the current attempt and restore the actual visible opener. The decision holds autosave without making a new saved-flight claim. Only explicit Restart closes its retained Workshop/title parents before the existing fresh-attempt preparation and start path. Terminal Retry remains direct.
+
+A captured request refuses competing content/save/course/mission decisions and rechecks the current run, recorder and setup before confirmation. Leaving or losing foreground invalidates the shown decision; returning cannot reuse its destructive intent. A queued old close cannot cancel a new visit. Picture loading/failure and its existing interruption guard remain authoritative after a confirmed restart.
+
+This is an internal P03 candidate based on `3253189`, not a version or phase acceptance. Root’s predecessor observation found immediate reset from Workshop without confirmation and a ready field hidden beneath that retained modal. The [R1 evidence](verification/cross-mode/p03-r1/README.md) separates 145/145 tests on each Node runtime from 14 native keyboard observations of both Restart openers. Integration, public and physical-device gates remain open. Outgoing mode links, Library launch adapters, course lesson selection and the approved mode-entry composition remain separate work; no core, saved format, P01 operation, producer or artwork changes are included.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.
