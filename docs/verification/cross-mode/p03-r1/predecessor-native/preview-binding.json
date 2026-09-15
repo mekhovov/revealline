@@ -1,0 +1,15 @@
+{
+  "base": "bb372a012ec2d12cf89bba1b251a4721e30b3c13",
+  "overlays": {
+    "game/app.mjs": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03a-navigation/game/app.mjs",
+      "sha256": "57624d92220cd1fbc8de70f0bb845a8e4c368d1698f9110f40192ee337f75291"
+    },
+    "game/ui/pixel-theme.css": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p05a-display-preferences/game/ui/pixel-theme.css",
+      "sha256": "de78f169100bd13c83bc16a4b95eca19e754b83ff95c2b73a1c59cbda20b8d98"
+    }
+  },
+  "port": 60241,
+  "scope": "Root P03-H actual keyboard journeys with reviewed P05 compact CSS. Exact Git fallback; no game-state hooks."
+}
