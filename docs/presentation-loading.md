@@ -25,6 +25,8 @@ Report an operation before its first delayed boundary. Keep the indicator beside
 
 Exercise real delayed success, cached success, failure and retry. Then cancel or navigate away, start a newer operation and let the old promise settle. Check current run/content/draft bytes, disabled controls, focus and status ownership. Non-interruptible saves and shared downloads need separate observed and durable outcomes. No artificial minimum delay is permitted.
 
+Async fixtures should await the owned operation or use `game/test/helpers/wait-for.mjs` with the exact readiness predicate and a bounded elapsed-time allowance. A count of immediate callbacks does not bound Blob, WebCrypto, module loading or replay timer yields. Keep short drains only for known post-resolution microtasks; preserve runtime deadlines, cancellation and identity assertions. Retain scheduling failures and controlled reproductions alongside corrected runs.
+
 Review 1280×800, 390×844 and 844×390, Large/Plain text, applicable 200% zoom and reduced motion. Use keyboard, touch and modeled controller checks without presenting them as physical-device evidence. Record initial visual failures as well as corrected retests. Source-only assertions cannot establish visibility or successful public play.
 
 Later phases must add new entry points to the A01–A56 loading inventory and rerun affected lifecycle cases. They must also preserve the six source gates, ordinary build, offline/artifact budgets and immutable release workflow.

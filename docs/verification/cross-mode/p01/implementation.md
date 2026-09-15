@@ -80,4 +80,6 @@ The [completed preliminary suite receipt](reports/preliminary-suite.json) record
 
 The subsequent local exact-source suite passed 4,185/4,185 on `6cfe315e5c266075c63f9d651ce12c21c57152c1`. A hosted run of that source exposed a five-second installed-original fixture deadline. The [retained investigation and scoped correction](hosted-restoration-deadline.md) preserve the failure and every restoration assertion; the corrected source requires fresh qualification.
 
+A later hosted Replay case on `a03f621` exposed a callback-count readiness loop. The [controlled reproduction and five-file async-fixture correction](async-fixture-readiness.md) preserve that failure and the interrupted local run, with 56/56 focused full-file tests passing. These fixture changes retain runtime behavior and still require complete qualification of their successor commit.
+
 Before P01 acceptance, root still owns the exact committed six source gates, ordinary build, applicable production reproduction/readiness and artifact checks, immutable freeze/publication, public version/source/manifest byte agreement, actual play and release-worker offline checks. The preliminary working-tree test run, allocated version and this inventory do not discharge those gates. The execution register and later phase status are unchanged by this documentation task.

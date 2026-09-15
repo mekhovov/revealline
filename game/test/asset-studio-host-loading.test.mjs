@@ -7,6 +7,7 @@ import { createStudioStore, STUDIO_DATABASE } from '../presentation/studio-store
 import { iconForSlot } from '../presentation/icons.mjs';
 import { encodeSpritePNG } from '../../scripts/produce-field-kit-sprites.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const deferred = () => {
@@ -16,13 +17,8 @@ const deferred = () => {
   });
   return { promise, resolve };
 };
-async function until(predicate) {
-  for (let count = 0; count < 100; count++) {
-    if (predicate()) return;
-    await flush();
-  }
-  assert.fail('Studio operation did not reach the expected state.');
-}
+const until = (predicate) =>
+  waitFor(predicate, { message: 'Studio operation did not reach the expected state.' });
 function mount(doc, html) {
   const stack = [doc.body];
   for (const [token] of html

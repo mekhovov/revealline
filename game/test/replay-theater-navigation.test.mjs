@@ -6,16 +6,13 @@ import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 
 const read = (path) => JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8'));
 const html = readFileSync(new URL('../replay-theater/index.html', import.meta.url), 'utf8');
 let serial = 0;
 async function until(predicate, label) {
-  for (let i = 0; i < 100; i++) {
-    if (predicate()) return;
-    await setImmediate();
-  }
-  assert.fail(label);
+  await waitFor(predicate, { message: label });
 }
 function recording(turnPolicy = 'immediate', classic = false) {
   const level = {
