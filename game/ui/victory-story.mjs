@@ -180,6 +180,9 @@ export function createVictoryStoryPresentation({
   };
   const render = () => {
     if (disposed) return;
+    // Native browsers can blur an active control immediately when it is hidden
+    // or disabled. Remember ownership before updating its availability.
+    const focused = document.activeElement;
     const showing = state === 'playing' || state === 'paused' || state === 'starting';
     posterElement.hidden = showing;
     if (media) media.hidden = !showing;
@@ -216,8 +219,11 @@ export function createVictoryStoryPresentation({
       });
       activity = null;
     }
-    const focused = document.activeElement;
-    if (Object.values(buttons).includes(focused) && (focused.hidden || focused.disabled)) {
+    if (
+      Object.values(buttons).includes(focused) &&
+      (focused.hidden || focused.disabled) &&
+      (document.activeElement === focused || document.activeElement === document.body)
+    ) {
       (
         Object.values(buttons).find((button) => !button.hidden && !button.disabled) ?? notice
       ).focus();
