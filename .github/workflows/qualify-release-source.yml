@@ -4,6 +4,12 @@ on:
   push:
     branches: ['codex/fpv-redesign-phase*']
   workflow_dispatch:
+    inputs:
+      freeze_snapshot:
+        description: Preserve a playable snapshot after every source gate passes
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -96,3 +102,49 @@ jobs:
         run: |
           mkdir -p .cache
           node scripts/run-test-shard.mjs --shard ${{ matrix.shard }}/4
+
+  freeze:
+    if: github.event_name == 'workflow_dispatch' && inputs.freeze_snapshot
+    needs: [qualify, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the qualified source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.19.x
+
+      - name: Freeze the exact qualified commit
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          VERSION=$(node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const read = file => JSON.parse(fs.readFileSync(file));
+          const version = read('package.json').version;
+          const lock = read('package-lock.json');
+          if (!/^\d+\.\d+\.\d+$/.test(version) ||
+              [lock.version, lock.packages[''].version, read('game/build-config.json').version].some(v => v !== version))
+            throw new Error('All package/build versions must match one stable numeric version');
+          process.stdout.write(`v${version}`);
+          JS
+          )
+          node scripts/game-cli.mjs release-snapshot --ref "$GITHUB_SHA" --version "$VERSION"
+          (cd "releases/$VERSION/site" && sha256sum distribution.zip) > "releases/$VERSION/distribution.zip.sha256"
+
+      - name: Retain original release assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: qualified-release-snapshot
+          path: |
+            releases/*/release.json
+            releases/*/source.tar
+            releases/*/distribution.zip.sha256
+            releases/*/site/manifest.json
+            releases/*/site/distribution.zip
+          compression-level: 0
+          retention-days: 14
+          if-no-files-found: error
