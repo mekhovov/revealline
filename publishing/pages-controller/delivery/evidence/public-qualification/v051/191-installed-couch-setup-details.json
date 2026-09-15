@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:55:05.281002+00:00",
+  "completedAt": "2026-09-15T01:55:05.477640+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({text:document.body.innerText,dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(d=>d.id),level:document.querySelector(\"#race-level\")?.value,buttons:[...document.querySelectorAll(\"button\")].filter(b=>/race-installed|race-setup|race-confirm/.test(b.id)).map(b=>({id:b.id,text:b.textContent,disabled:b.disabled}))})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"text\\\":\\\"SAME CONDITIONS / TWO ROUTES\\\\n\\\\nRace setup\\\\n\\\\nChoose together. Each player starts with the same map, craft and time.\\\\n\\\\nMap\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Orchard Crossing \u00b7 Arcade\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Courtyard Exits \u00b7 Arcade\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Night Crossfire \u00b7 Arcade\\\\nFirst Signal \u00b7 First Signal \u00b7 Tactical\\\\nFirst Signal \u00b7 Relay Orchard \u00b7 Tactical\\\\nFirst Signal \u00b7 Crosswind \u00b7 Tactical\\\\nFirst Signal \u00b7 Stone Lanes \u00b7 Tactical\\\\nFirst Signal \u00b7 Night Patrol \u00b7 Tactical\\\\nFirst Signal \u00b7 Hidden Frequency \u00b7 Tactical\\\\nFirst Signal \u00b7 The Crossing \u00b7 Tactical\\\\nFirst Signal \u00b7 Last Light \u00b7 Tactical\\\\nFirst Signal \u00b7 Signal Garden \u00b7 Tactical\\\\nFirst Signal \u00b7 Supply Circuit \u00b7 Tactical\\\\nFirst Signal \u00b7 Short Fuse \u00b7 Tactical\\\\nFirst Signal \u00b7 Relay Storm \u00b7 Tactical\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Installed \u00b7 Orchard Crossing \u00b7 Arcade\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Installed \u00b7 Courtyard Exits \u00b7 Arcade\\\\nFPV Front \u00b7 Pressure Lines \u00b7 Installed \u00b7 Night Crossfire \u00b7 Arcade\\\\nWorld\\\\nFPV Front\\\\nSteering\\\\nImmediate turns\\\\nGrid-center turns\\\\nRound time\\\\n90 seconds\\\\n3 minutes\\\\n30 seconds\\\\n\\\\nDirections only. Pickups activate on contact.\\\\n\\\\n3 installed maps available. Choose a map to check its original.\\\\n\\\\nRefresh installed chapters\\\\nDone \u00b7 back to lobby\\\\n\\\\nConnect a controller and use it while this page is visible. Keyboard and touch remain available.\\\",\\\"dialogs\\\":[],\\\"level\\\":\\\"shipped/fpv-arcade-r5/fpv-pressure-lines/orchard-crossing\\\",\\\"buttons\\\":[{\\\"id\\\":\\\"race-installed-refresh\\\",\\\"text\\\":\\\"Refresh installed chapters\\\",\\\"disabled\\\":false},{\\\"id\\\":\\\"race-setup-back\\\",\\\"text\\\":\\\"Done \u00b7 back to lobby\\\",\\\"disabled\\\":false},{\\\"id\\\":\\\"race-confirm-back\\\",\\\"text\\\":\\\"Keep this match\\\",\\\"disabled\\\":false},{\\\"id\\\":\\\"race-confirm-reset\\\",\\\"text\\\":\\\"New match \u00b7 edit setup\\\",\\\"disabled\\\":false}]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-09-15T01:36:36.539572+00:00",
+  "completedAt": "2026-09-15T01:36:40.933032+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "batch",
+    "--bail",
+    "press Escape",
+    "focus #collection-records",
+    "press Enter"
+  ],
+  "returncode": 0,
+  "stdout": "\u2713 Done\n\n\u2713 Done\n\n\u2713 Done\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

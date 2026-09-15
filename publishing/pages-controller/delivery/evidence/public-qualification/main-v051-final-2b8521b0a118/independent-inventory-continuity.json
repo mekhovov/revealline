@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-09-15T01:45:50.256778+00:00",
+  "previewSha256": "11cafa1412104388317172f6c20693f13a895a5bf342bb1f8e33f913b9d1d72d",
+  "actualSha256": "cdb4ab9af7a530dec1eb60271cfde9f8ee7957929d9377a89a23a94c5a4f439f",
+  "priorPublicSha256": "f6254c9f730c8acd71579c276cabd57ebf56c4ce72d9eb18cb74a3be66d37a79",
+  "actualController": "2b8521b0a118df8663f93de5500e14da11741407",
+  "actualRun": 34918140908,
+  "actualDeployment": 6449937007,
+  "files": 2170,
+  "bytes": 656572716,
+  "allPreparedRowsMatchPreview": true,
+  "changedFromPriorPublic": [
+    "archive-routing.json"
+  ],
+  "allFrozenGameBodiesUnchanged": true,
+  "scope": "Hosted artifact inventories and independent critical public pins; fresh full HTTP and native journey evidence remain separate."
+}
