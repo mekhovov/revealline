@@ -972,3 +972,41 @@ for (const exit of ['button', 'escape', 'controller'])
     );
     assert.deepEqual(h.errors, []);
   });
+
+test('actual nested Collection picture Tab wraps only its current modal and close restores the earned card', async (t) => {
+  const { page: h } = await earnedTitleCollection(t);
+  const checkpoint = authoritativeCheckpoint(h.rendered.run),
+    stored = [...h.storage.map];
+  openTitleCollection(h);
+  await openFirstPicture(h);
+  const picture = h.$('gallery-view-dialog'),
+    collection = h.$('collection-dialog');
+  const controls = [
+    ...picture.querySelectorAll('button,a[href],input,select,textarea,summary'),
+  ].filter((node) => !node.disabled && !node.closest('[hidden],[inert]') && node.tabIndex >= 0);
+  assert.ok(controls.length > 1);
+  const first = controls[0],
+    last = controls.at(-1);
+  first.focus();
+  assert.equal(
+    first.emit('keydown', { key: 'Tab', code: 'Tab', shiftKey: true }).defaultPrevented,
+    true,
+  );
+  assert.equal(h.doc.activeElement === last, true);
+  assert.equal(last.emit('keydown', { key: 'Tab', code: 'Tab' }).defaultPrevented, true);
+  assert.equal(h.doc.activeElement === first, true);
+  assert.equal(first.emit('keydown', { key: 'Tab', code: 'Tab' }).defaultPrevented, false);
+  assert.equal(picture.open, true);
+  assert.equal(collection.open, true);
+  nativeEscape(picture);
+  await settle(() => !picture.open && h.$('gallery-grid').contains(h.doc.activeElement));
+  assert.equal(collection.open, true);
+  assert.equal(h.doc.activeElement === h.$('gallery-grid').querySelector('button'), true);
+  nativeEscape(collection);
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement.id, 'shell-gallery');
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), checkpoint);
+  assert.deepEqual([...h.storage.map], stored);
+  assert.equal(h.rendered.paused, true);
+  assert.deepEqual(h.errors, []);
+});
