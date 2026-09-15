@@ -998,7 +998,9 @@ export function attachSoundtrackPanel({
   async function notifyPlayback() {
     const state = player.snapshot();
     await onPlayback({ playing: state.playing, desired: state.desired ?? state.playing });
-    if (state.playing) await onAudioEnabled();
+    // A permitted Play gesture establishes listening intent before an async
+    // stream/context transition has necessarily published `playing`.
+    if (state.desired || state.playing) await onAudioEnabled();
   }
   function updateAudition() {
     const available = auditionURL !== null && !disposed;
