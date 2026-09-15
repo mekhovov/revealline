@@ -102,6 +102,7 @@ const resultActions = [
   'shell-packs',
   'shell-collection',
   'shell-settings',
+  'shell-fullscreen',
 ];
 function resultSurface(page) {
   for (const id of resultActions) assert.equal(page.$(id).hidden, false);
