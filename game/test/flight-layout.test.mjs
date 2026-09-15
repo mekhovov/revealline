@@ -471,3 +471,22 @@ test('manual actions and a large D-pad each own space outside the board', () => 
     }
   }
 });
+
+test('short-landscape warnings remain between manual actions and the large D-pad', () => {
+  for (const railSide of ['left', 'right']) {
+    const layout = fitFlightLayout({
+      width: 560,
+      height: 248,
+      aspect: 4 / 3,
+      largeText: true,
+      warnings: true,
+      steeringWidth: 216,
+      actionWidth: 112,
+      railSide,
+    });
+    assert.equal(layout.mode, 'strip');
+    assert.equal(layout.warningWidth, 232);
+    assert.equal(layout.warningX, railSide === 'right' ? 216 : 112);
+    assert.ok(layout.board.y >= layout.stripHeight);
+  }
+});

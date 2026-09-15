@@ -34,7 +34,15 @@ export function fitFlightLayout({
       Math.max(0, height - stripHeight - portraitControlHeight),
     );
     board.y = stripHeight;
-    return { mode: 'portrait', board, chromeX: 0, railWidth: 0, stripHeight };
+    return {
+      mode: 'portrait',
+      board,
+      chromeX: 0,
+      railWidth: 0,
+      stripHeight,
+      warningX: 0,
+      warningWidth: width,
+    };
   }
   const stripHeight = (largeText ? 68 : 56) + taskHeight + (warnings ? (largeText ? 64 : 48) : 0);
   const railWidth = largeText ? 132 : 112;
@@ -57,6 +65,8 @@ export function fitFlightLayout({
     railWidth,
     chromeX: useRail && railSide === 'right' ? width - railWidth : 0,
     stripHeight,
+    warningX: useRail ? (railSide === 'right' ? width - railWidth : 0) : steeringLeft,
+    warningWidth: useRail ? railWidth : availableWidth,
   };
 }
 
@@ -165,6 +175,8 @@ export function attachFlightLayout({
       'rail-width': layout.railWidth,
       'strip-height': layout.stripHeight,
       'base-strip': baseStrip,
+      'warning-left': left + layout.warningX,
+      'warning-width': layout.warningWidth,
       'warning-height': warnings
         ? layout.mode === 'rail'
           ? largeText

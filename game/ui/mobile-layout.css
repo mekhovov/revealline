@@ -186,9 +186,9 @@
   .flight-alert:not([hidden]) {
   display: block;
   position: fixed;
-  left: var(--flight-left);
+  left: var(--flight-warning-left);
   top: calc(var(--flight-top) + var(--flight-base-strip) - var(--flight-warning-height));
-  width: var(--flight-usable-width);
+  width: var(--flight-warning-width);
   height: var(--flight-warning-height);
   padding: 2px 8px;
   margin: 0;
