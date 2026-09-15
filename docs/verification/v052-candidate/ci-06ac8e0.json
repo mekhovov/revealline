@@ -1,0 +1,113 @@
+{
+  "format": "revealline-source-ci-review.v1",
+  "at": "2026-09-15T01:43:19.246002+00:00",
+  "sourceRevision": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+  "run": 34915424316,
+  "url": "https://github.com/mekhovov/revealline/actions/runs/34915424316",
+  "status": "PASS",
+  "tests": 3853,
+  "shards": [
+    {
+      "shard": 1,
+      "tests": 923,
+      "pass": 923,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".cache/pr35-ci-06ac8e0/shard1-direct.log",
+        "bytes": 379077,
+        "sha256": "13cf00fe747f374db6f2668cb13dad5c7ea0781aaefb3968df069634cb154cdf"
+      }
+    },
+    {
+      "shard": 2,
+      "tests": 994,
+      "pass": 994,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".cache/pr35-ci-06ac8e0/shard2-direct.log",
+        "bytes": 412085,
+        "sha256": "17edfdfc0ff003e72faf98a390fddc50f45565d474a2d0a12a4390a81e57f8e1"
+      }
+    },
+    {
+      "shard": 3,
+      "tests": 1022,
+      "pass": 1022,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".cache/pr35-ci-06ac8e0/shard3-direct.log",
+        "bytes": 415931,
+        "sha256": "7089795700fd8811d7bfae1cd7218e690d57776cfa528b16b97925ec49ee83da"
+      }
+    },
+    {
+      "shard": 4,
+      "tests": 914,
+      "pass": 914,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".cache/pr35-ci-06ac8e0/shard4-direct.log",
+        "bytes": 378333,
+        "sha256": "c0d774790dfca1dfe3ff825d15443bf887bdfbbfb85c79c5fde12f8e251b8b28"
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104211889106
+    },
+    {
+      "name": "release_gate",
+      "status": "completed",
+      "conclusion": "skipped",
+      "job": 104211890147
+    },
+    {
+      "name": "test (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104212194463
+    },
+    {
+      "name": "test (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104212194467
+    },
+    {
+      "name": "test (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104212194540
+    },
+    {
+      "name": "test (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104212194552
+    },
+    {
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success",
+      "job": 104217422071
+    }
+  ],
+  "buildLog": {
+    "path": ".cache/pr35-ci-06ac8e0/build-direct.log",
+    "bytes": 30298,
+    "sha256": "fe8b1abbfc18e4acc9935ef84870f4d3808edbba63f535f12fa3fd767b59e3e4"
+  },
+  "scope": "Exact source preflight, four complete unfiltered shards and ordinary generated build. Not immutable release/native device/Pages qualification. Subsequent source changes require a new exact-head run."
+}

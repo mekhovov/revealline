@@ -1,14 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
 import { attachMissionPicker } from '../ui/mission-picker.mjs';
 
 const visibleActions = (page) =>
   [...page.doc.querySelector('.home-actions').children]
     .filter((node) => !node.hidden)
-    .map((node) => node.id || node.getAttribute('href'));
+    .map((node) => node.id || node.href);
 
-test('title includes the release explorer; Workshop and mission Back preserve an unstarted flight', async (t) => {
+test('title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.deepEqual(visibleActions(page), [
     'shell-featured',
@@ -16,8 +17,14 @@ test('title includes the release explorer; Workshop and mission Back preserve an
     'shell-gallery',
     'shell-options',
     'shell-workshop',
-    '../releases/',
+    'shell-release-explorer',
   ]);
+  const catalog = page.doc.querySelector('.home-actions').querySelector('[data-release-explorer]');
+  assert.equal(catalog.tagName, 'A');
+  assert.equal(catalog.href, 'http://localhost/releases/');
+  assert.match(catalog.textContent, /Release explorer/);
+  assert.equal(catalog.hidden, false);
+  assert.ok(catalog.tabIndex >= 0, 'The catalog remains keyboard reachable');
   assert.match(page.$('shell-destination').textContent, /Pressure Lines/);
   page.$('shell-workshop').click();
   assert.equal(page.$('shell-workshop-dialog').open, true);
@@ -93,7 +100,7 @@ test('Deploy uses the existing start guard and Continue replaces Deploy after a 
     'shell-gallery',
     'shell-options',
     'shell-workshop',
-    '../releases/',
+    'shell-release-explorer',
   ]);
   assert.match(page.$('shell-destination').textContent, /Continue/);
   const snapshot = [...page.storage.map];
@@ -114,4 +121,125 @@ test('an accepted world change rebuilds mission thumbnails without starting the 
   assert.equal(page.$('theme-select').value, 'ukraine');
   page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
+});
+
+// The real shell, controller router and simulation run here. Only native cancel
+// dispatch and gamepad hardware are modeled; browser focus/layout stays separate.
+for (const origin of ['home', 'flight', 'brief']) {
+  for (const exit of ['button', 'escape', 'controller']) {
+    test(`Missions ${exit} returns to ${origin} without resuming or changing a saved cut`, async (t) => {
+      const pad = {
+        index: 0,
+        id: 'Missions navigation',
+        connected: true,
+        mapping: 'standard',
+        axes: [0, 0, 0, 0],
+        buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+      };
+      const page = await soloPage(t, { titleScreen: true, readPads: () => [pad] });
+      page.$('shell-play').click();
+      page.$('shell-deploy').click();
+      await settle(() => page.doc.body.dataset.flightState === 'running');
+      page.key('ArrowDown');
+      for (let i = 0; i < 24; i++) page.frame();
+      page.key('ArrowDown', false);
+      page.key('Escape');
+      page.key('Escape', false);
+      page.frame(0);
+      assert.equal(page.rendered.paused, true);
+      assert.equal(page.rendered.run.player.cutting, true);
+      if (origin === 'home') {
+        page.$('overlay-menu').click();
+        page.$('shell-play').click();
+        page.$('shell-prepare').click();
+        page.$('save-attempt-button').click();
+      } else if (origin === 'brief') page.$('overlay-brief').click();
+      else page.$('shell-packs').click();
+      const checkpoint = authoritativeCheckpoint(page.rendered.run);
+      const stored = [...page.storage.map];
+      assert.equal(page.$('shell-missions').open, true);
+      if (origin === 'brief') assert.equal(page.$('shell-missions').dataset.view, 'brief');
+      if (exit === 'button') page.$('shell-missions-back').click();
+      else if (exit === 'escape') {
+        const cancel = new Event('cancel', { cancelable: true });
+        if (page.$('shell-missions').dispatchEvent(cancel)) page.$('shell-missions').close();
+        assert.equal(cancel.defaultPrevented, true, 'The shell owns the native close destination');
+      } else {
+        page.frame();
+        page.frame(); // Real controller adoption requires neutral samples.
+        pad.buttons[1] = { pressed: true, value: 1 };
+        page.frame();
+        pad.buttons[1] = { pressed: false, value: 0 };
+        page.frame();
+      }
+      await Promise.resolve();
+      page.frame(0);
+      assert.equal(page.$('shell-missions').open, false);
+      assert.equal(page.$('shell-home').open, origin === 'home');
+      assert.equal(
+        page.doc.activeElement.id,
+        origin === 'home' ? 'shell-continue' : 'start-button',
+      );
+      assert.equal(page.rendered.paused, true);
+      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+      const storedAfter = [...page.storage.map];
+      // Existing Home entry pauses/autosaves again. Its timestamp may advance;
+      // every saved payload field and every other storage entry must remain exact.
+      if (origin === 'home') {
+        const savedBefore = stored.find(([key]) => key === 'revealline.suspended.dev.v1')[1];
+        const savedAfter = storedAfter.find(([key]) => key === 'revealline.suspended.dev.v1');
+        const beforeSession = JSON.parse(savedBefore);
+        const afterSession = JSON.parse(savedAfter[1]);
+        assert.ok(Date.parse(afterSession.savedAt) >= Date.parse(beforeSession.savedAt));
+        afterSession.savedAt = beforeSession.savedAt;
+        assert.deepEqual(afterSession, beforeSession);
+        savedAfter[1] = savedBefore;
+      }
+      assert.deepEqual(storedAfter, stored);
+      assert.doesNotMatch(
+        page.$('controller-ui-hint').textContent,
+        /operation is still in progress/,
+      );
+      assert.equal(page.$('shell-missions').dataset.view, undefined);
+      assert.deepEqual(page.errors, []);
+    });
+  }
+}
+
+test('Back to flight remains an intentional exit from title Missions', async (t) => {
+  const page = await soloPage(t, { titleScreen: true });
+  page.$('shell-play').click();
+  page.$('shell-briefing').click();
+  await Promise.resolve();
+  page.frame(0);
+  assert.equal(page.$('shell-home').open, false);
+  assert.equal(page.$('shell-missions').open, false);
+  assert.equal(page.doc.activeElement.id, 'start-button');
+  assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('controller Back retains a cancellation warning when a transaction keeps its dialog open', async (t) => {
+  const pad = {
+    index: 0,
+    id: 'Blocked cancellation',
+    connected: true,
+    mapping: 'standard',
+    axes: [0, 0, 0, 0],
+    buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+  };
+  const page = await soloPage(t, { titleScreen: true, readPads: () => [pad] });
+  page.$('shell-options').click();
+  // The minimal DOM does not perform showModal's native autofocus.
+  page.$('settings-dialog').querySelector('button').focus();
+  page.$('settings-dialog').addEventListener('cancel', (event) => event.preventDefault());
+  page.frame();
+  page.frame();
+  pad.buttons[1] = { pressed: true, value: 1 };
+  page.frame();
+  assert.equal(page.$('settings-dialog').open, true);
+  assert.equal(page.$('shell-home').open, true);
+  assert.match(page.$('controller-ui-hint').textContent, /operation is still in progress/);
+  assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
 });

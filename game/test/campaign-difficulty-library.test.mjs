@@ -194,6 +194,7 @@ for (const source of oldProfiles)
       controllerBoostMode: 'hold',
       campaignDifficulty: 'standard',
       textSize: 'standard',
+      textFace: 'pixel',
       screenControls: 'auto',
       touchControls: null,
       screenSteeringHand: 'left',

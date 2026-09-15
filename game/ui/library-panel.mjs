@@ -145,7 +145,16 @@ export function attachLibraryPanel(api) {
   function paginate(id, page, total, size, change) {
     const pages = Math.max(1, Math.ceil(total / size)),
       nav = $(id);
+    const hadPagerFocus = [...nav.querySelectorAll('button')].includes(document.activeElement);
     nav.replaceChildren();
+    if (id === 'gallery-pages') {
+      nav.hidden = pages <= 1;
+      if (nav.hidden) {
+        if (hadPagerFocus && $('collection-dialog').open)
+          $('gallery-search').focus({ preventScroll: true });
+        return;
+      }
+    }
     const previous = button('Previous', () => change(page - 1)),
       next = button('Next', () => change(page + 1)),
       label = document.createElement('span');
@@ -847,7 +856,7 @@ export function attachLibraryPanel(api) {
       !picture ||
       (switching
         ? !$('gallery-view-dialog').open || !viewVariants.includes(picture)
-        : !$('collection-dialog').open)
+        : !$('collection-dialog').open || $('gallery-view-dialog').open)
     )
       return;
     if (!switching)
@@ -883,10 +892,8 @@ export function attachLibraryPanel(api) {
     $('gallery-view-meta').setAttribute('role', 'status');
     $('gallery-view-meta').textContent = `${meta} · Loading picture…`;
     refreshPictureMasteries(picture, api.get().library.masteries);
-    if (!switching) {
-      $('collection-dialog').close();
-      $('gallery-view-dialog').showModal();
-    }
+    // Keep Collection and its original opener underneath this child picture.
+    if (!switching) $('gallery-view-dialog').showModal();
     try {
       const drawn = await drawPicture($('gallery-canvas'), picture, current);
       if (drawn && current()) {
@@ -925,6 +932,7 @@ export function attachLibraryPanel(api) {
         ...(installed.difficulty ? { difficulty: installed.difficulty } : {}),
       });
       $('gallery-view-dialog').close();
+      if ($('collection-dialog').open) $('collection-dialog').close();
       api.focusMission?.();
     }
   };

@@ -93,7 +93,13 @@ export function attachGameShell({
                 : $('mission-brief-title').textContent,
             })
           : copy('title.deployDestination');
-    if (!home.open) home.showModal();
+    if (!home.open) {
+      // A prior successful chapter selection is not the next title action.
+      // Keep errors visible; fresh operation feedback still arrives normally.
+      const status = $('shell-featured-status');
+      if (status && status.dataset.kind !== 'error') status.hidden = true;
+      home.showModal();
+    }
     (training
       ? $('shell-course-return')
       : canContinue()
@@ -103,9 +109,8 @@ export function attachGameShell({
   };
   const forward = (source, target, { keepHome = false } = {}) => {
     $(source).onclick = () => {
-      // Settings is a child of its actual entry screen. Keeping the title
-      // underneath lets native modal navigation restore both it and its opener.
-      // Destinations that can start/load a flight still leave the title.
+      // Child screens retain their actual entry screen and opener. Explicit
+      // selection actions leave those parents when choosing a flight.
       if (!keepHome) closeHome();
       $(target).click();
     };
@@ -117,14 +122,21 @@ export function attachGameShell({
       workshop?.showModal();
       workshop?.querySelector('button,a')?.focus();
     };
-  if ($('shell-missions-back'))
-    $('shell-missions-back').onclick = () => {
-      if (!briefing && returnToHome) openHome();
-      else {
-        missions.close();
-        focusGame();
-      }
-    };
+  const backFromMissions = () => {
+    if (!briefing && returnToHome) openHome();
+    else {
+      missions.close();
+      focusGame();
+    }
+  };
+  if ($('shell-missions-back')) $('shell-missions-back').onclick = backFromMissions;
+  const cancelMissions = (event) => {
+    // Both native Escape and controller Back use this cancellable boundary.
+    // Intentional closes (Deploy / Back to flight) keep their own destinations.
+    event.preventDefault();
+    backFromMissions();
+  };
+  missions.addEventListener('cancel', cancelMissions);
   const overlayMenu = $('overlay-menu');
   if (overlayMenu) overlayMenu.onclick = () => $('shell-menu').click();
   const worlds = $('shell-worlds');
@@ -226,8 +238,8 @@ export function attachGameShell({
     if (!$('continue-saved').hidden) $('continue-saved').click();
     else focusGame();
   };
-  forward('shell-collection', 'collection-button');
-  forward('shell-gallery', 'collection-button');
+  forward('shell-collection', 'collection-button', { keepHome: true });
+  forward('shell-gallery', 'collection-button', { keepHome: true });
   forward('shell-settings', 'settings-button', { keepHome: true });
   forward('shell-library', 'library-button');
   forward('shell-options', 'settings-button', { keepHome: true });
@@ -294,6 +306,7 @@ export function attachGameShell({
       destroyed = true;
       restoreMissionView();
       missions.removeEventListener('close', closedMissions);
+      missions.removeEventListener('cancel', cancelMissions);
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);

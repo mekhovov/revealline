@@ -40,8 +40,10 @@
   width: 100%;
 }
 .enemy-guide-dialog canvas {
-  width: 144px;
-  height: 84px;
+  width: 288px;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 12 / 7;
   image-rendering: pixelated;
   display: block;
   margin: 12px auto 0;
@@ -88,8 +90,7 @@
     font-size: 16px;
   }
   .enemy-guide-dialog canvas {
-    width: 120px;
-    height: 70px;
+    width: 192px;
   }
   .enemy-guide-dialog [data-game-reading] {
     max-height: 190px;
