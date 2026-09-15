@@ -440,5 +440,6 @@
     "path": "evidence/current-v051/source-qualification.json",
     "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
   },
-  "retainedReleasesPerMajor": 5
+  "retainedReleasesPerMajor": 100,
+  "testingRoutes": {}
 }
