@@ -1,0 +1,43 @@
+{
+  "attempts": [
+    {
+      "transport": "HTTPS configured OAuth",
+      "action": "push exact archive branch containing workflow",
+      "status": "rejected",
+      "reason": "OAuth App lacks workflow scope",
+      "remoteBranchCreated": false
+    },
+    {
+      "transport": "Existing SSH BatchMode with StrictHostKeyChecking",
+      "action": "read exact remote main then push same reviewed archive branch",
+      "status": "success",
+      "credentialChanges": false
+    }
+  ],
+  "sourceChecksAffected": false,
+  "mergeAttempts": [
+    {
+      "transport": "GraphQL",
+      "status": "HTTP 502",
+      "reconciled": "PR open, main unchanged"
+    },
+    {
+      "transport": "GraphQL retry",
+      "status": "Internal server error",
+      "reconciled": "PR open, main unchanged"
+    },
+    {
+      "transport": "REST merge with exact head",
+      "status": "Unexpected end of JSON input",
+      "reconciled": "PR open, main unchanged"
+    },
+    {
+      "transport": "Existing authorized SSH",
+      "status": "PASS",
+      "commit": "48fadddd098af0e3e71e7913445144731d6da259",
+      "force": false,
+      "treeEqualsReviewedCandidate": true,
+      "githubPrMerged": true
+    }
+  ]
+}

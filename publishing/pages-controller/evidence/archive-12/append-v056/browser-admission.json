@@ -1,0 +1,46 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-12",
+  "infrastructureCommit": "48fadddd098af0e3e71e7913445144731d6da259",
+  "deploymentId": 6455796852,
+  "versions": [
+    "v0.52.0",
+    "v0.56.0"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-12/append-v056/browser-review.json",
+      "sha256": "1f25c8d2e51703bf93993df659bc2665709bf598bb3f990fa4136835ebb22997"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native-assertions.json",
+      "sha256": "784eaa2d7d27c9ba2980b9c985ae6a50ae23f09688d125543e89035cda9acac5"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native-evidence.zip",
+      "sha256": "a769895636429a8b54ca9eaedba2e856fbb2aaa345bb2292c0f13feff7e3e071"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native-evidence-record.json",
+      "sha256": "105355c616c88b963dea0e29a4da1977fb27fff52fd0cfdac18d8eaa8a58a442"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native/v056-active-capture.png",
+      "sha256": "84834506f842fe6e2040d489b5427fe9833426950af9ec2ba4fa557d947e32c4"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native/v056-back-continue-remains-paused.png",
+      "sha256": "1ad8edd2b576ed161d5990099088980ee632e5894d020b5515003896730e06fb"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native/v056-release-explorer.png",
+      "sha256": "8bce75439ffbfa8efe92d74a1258ae630573bfbd0b6c727b4b2e91e83ebe8c81"
+    },
+    {
+      "path": "evidence/archive-12/append-v056/native/v052-active-capture.png",
+      "sha256": "f98354156555aea93c5c5c680d16e62c0a294683bbe79d1fff75d29df407887b"
+    }
+  ],
+  "scope": "Online native Chromium; both original versions, actual capture/pause, title explorer and browser Back. No new offline/physical-device/P01 acceptance claim."
+}
