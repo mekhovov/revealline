@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { Document, Events } from './helpers/couch-dom.mjs';
+import { Document, Events, Element } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/couch-host.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
@@ -19,6 +19,11 @@ async function page(
     touch = false,
     href = 'http://localhost/game/couch/relay-rescue.html',
     returnStorage = null,
+    beforeImport = () => {},
+    nativeFocus = false,
+    onReady = () => {},
+    expectError = false,
+    readyStartDisabled = false,
   } = {},
 ) {
   const doc = new Document(),
@@ -84,10 +89,35 @@ async function page(
       if (original) Object.defineProperty(globalThis, key, original);
       else delete globalThis[key];
   });
+  const focusAttempts = [];
+  if (nativeFocus) {
+    const focus = Element.prototype.focus;
+    t.mock.method(Element.prototype, 'focus', function (...args) {
+      focusAttempts.push({
+        id: this.id,
+        phase: doc.documentElement.dataset.toolState,
+        disabled: this.disabled,
+      });
+      if (!this.disabled && !this.closest('[hidden],[inert]') && this.getClientRects().length)
+        focus.apply(this, args);
+    });
+  }
+  let toolState = 'loading';
+  Object.defineProperty(doc.documentElement.dataset, 'toolState', {
+    configurable: true,
+    get: () => toolState,
+    set(value) {
+      toolState = value;
+      if (value === 'ready') onReady({ $, doc, win });
+    },
+  });
+  beforeImport({ $, doc, win, install });
   await import(`../couch/relay-rescue.mjs?host-test=${++sequence}`);
-  assert.equal($('coop-start').disabled, false, $('coop-boot').textContent);
-  assert.equal(doc.documentElement.dataset.toolState, 'ready');
-  assert.ok(frames.size);
+  if (!expectError) {
+    assert.equal($('coop-start').disabled, readyStartDisabled, $('coop-boot').textContent);
+    assert.equal(doc.documentElement.dataset.toolState, 'ready');
+    assert.ok(frames.size);
+  }
   $('coop-difficulty').value = 'standard';
   const selectFile = (text, read = async () => text) => {
     $('coop-pack-file').closest('details').open = true;
@@ -120,6 +150,7 @@ async function page(
     tap,
     tick,
     pads,
+    focusAttempts,
     touchPads: [...doc.querySelectorAll('.race-pad')],
     setTouch(value) {
       touchQuery.matches = value;
@@ -729,4 +760,172 @@ test('actual Team lobby preserves the bounded Solo return token through native B
   assert.equal(visited, `../?mode-return=${ticket.token}`);
   assert.deepEqual([...entries], before);
   assert.equal(h.$('coop-start').disabled, false);
+});
+
+test('fresh Team lobby focuses enabled Start only after actual ready, without starting play', async (t) => {
+  const h = await page(t, { nativeFocus: true });
+  assert.equal(h.doc.activeElement.id, 'coop-start');
+  assert.deepEqual(
+    h.focusAttempts.filter(({ id }) => id === 'coop-start'),
+    [{ id: 'coop-start', phase: 'ready', disabled: false }],
+  );
+  for (let i = 0; i < 8; i++) h.tick();
+  assert.equal(h.$('coop-menu').hidden, false);
+  assert.equal(h.$('coop-play').hidden, true);
+  assert.equal(h.doc.activeElement.id, 'coop-start');
+  h.tap('Tab');
+  assert.equal(h.doc.activeElement.tagName, 'SUMMARY');
+  const chosen = h.doc.activeElement;
+  for (let i = 0; i < 8; i++) h.tick();
+  assert.equal(h.doc.activeElement === chosen, true, 'Later frames must not retry initial focus.');
+});
+
+for (const id of ['coop-race', 'coop-level'])
+  test(`a deliberate preload ${id} focus is kept through Team readiness`, async (t) => {
+    const h = await page(t, { nativeFocus: true, beforeImport: ({ $ }) => $(id).focus() });
+    assert.equal(h.doc.activeElement.id, id);
+    assert.equal(
+      h.focusAttempts.some(({ id }) => id === 'coop-start'),
+      false,
+    );
+    h.tick();
+    assert.equal(h.doc.activeElement.id, id);
+  });
+
+test('a late deliberate menu choice at ready is not replaced by Team initial focus', async (t) => {
+  const h = await page(t, {
+    nativeFocus: true,
+    onReady: ({ $, doc }) => {
+      $('coop-options').open = true;
+      $('coop-master-volume').focus();
+      assert.equal(doc.activeElement.id, 'coop-master-volume');
+    },
+  });
+  assert.equal(h.doc.activeElement.id, 'coop-master-volume');
+  h.tick();
+  assert.equal(h.doc.activeElement.id, 'coop-master-volume');
+  assert.equal(
+    h.focusAttempts.some(({ id }) => id === 'coop-start'),
+    false,
+  );
+});
+
+for (const background of ['hidden', 'unfocused'])
+  test(`a ${background} Team page does not claim focus now or after returning`, async (t) => {
+    const h = await page(t, {
+      nativeFocus: true,
+      beforeImport: ({ doc }) => {
+        if (background === 'hidden') doc.hidden = true;
+        else doc.focused = false;
+      },
+    });
+    assert.equal(h.doc.activeElement === h.doc.body, true);
+    assert.equal(h.focusAttempts.length, 0);
+    h.doc.hidden = false;
+    h.doc.focused = true;
+    h.doc.emit('focus');
+    h.tick();
+    assert.equal(h.doc.activeElement === h.doc.body, true);
+  });
+
+for (const kind of ['hidden', 'disabled', 'inert', 'invisible'])
+  test(`a ${kind} Start uses the existing visible navigation fallback`, async (t) => {
+    const h = await page(t, {
+      nativeFocus: true,
+      readyStartDisabled: kind === 'disabled',
+      onReady: ({ $ }) => {
+        if (kind === 'invisible') $('coop-start').style.visibility = 'hidden';
+        else $('coop-start')[kind] = true;
+      },
+    });
+    const fallback = h.$('coop-app').querySelector('a[href]');
+    assert.equal(h.doc.activeElement === fallback, true, 'The first visible fallback owns focus.');
+    assert.equal(h.doc.activeElement.tagName, 'A');
+    assert.equal(h.doc.activeElement.getAttribute('href'), fallback.getAttribute('href'));
+    assert.equal(
+      h.focusAttempts.some(({ id }) => id === 'coop-start'),
+      false,
+    );
+    assert.equal(h.$('coop-play').hidden, true);
+  });
+
+test('a loader recovery link hidden by attachment is not mistaken for untouched BODY', async (t) => {
+  const h = await page(t, {
+    nativeFocus: true,
+    beforeImport: ({ $, doc, install }) => {
+      const reload = doc.createElement('a');
+      reload.setAttribute('href', './relay-rescue.html');
+      reload.textContent = 'Reload this tool';
+      $('coop-menu').append(reload);
+      reload.focus();
+      install('RevealLineToolLaunch', {
+        value: {
+          attached() {
+            reload.hidden = true;
+            // Native hiding blurs the focused link, exactly as the classic loader does.
+            doc.activeElement = doc.body;
+          },
+        },
+      });
+    },
+  });
+  assert.equal(h.doc.activeElement === h.doc.body, true);
+  assert.equal(
+    h.focusAttempts.some(({ id }) => id === 'coop-start'),
+    false,
+  );
+});
+
+test('a real Canvas boot failure retains recovery focus and never runs the ready handoff', async (t) => {
+  const errors = [];
+  t.mock.method(console, 'error', (error) => errors.push(error));
+  const h = await page(t, {
+    nativeFocus: true,
+    expectError: true,
+    beforeImport: ({ $ }) => {
+      $('coop-race').focus();
+      $('coop-canvas').getContext = () => null;
+    },
+  });
+  assert.equal(h.doc.documentElement.dataset.toolState, 'error');
+  assert.equal(h.doc.activeElement.id, 'coop-race');
+  assert.match(h.$('coop-boot').textContent, /Canvas 2D/);
+  assert.equal(h.$('coop-start').disabled, true);
+  assert.equal(
+    h.focusAttempts.some(({ id }) => id === 'coop-start'),
+    false,
+  );
+  assert.equal(errors.length, 1);
+});
+
+test('a deliberate ready-time choice that then blurs is not reclaimed by initial focus', async (t) => {
+  const h = await page(t, {
+    nativeFocus: true,
+    onReady: ({ $, doc }) => {
+      $('coop-race').focus();
+      $('coop-race').blur();
+      assert.equal(doc.activeElement.tagName, 'BODY');
+    },
+  });
+  assert.equal(h.doc.activeElement.tagName, 'BODY');
+  assert.equal(
+    h.focusAttempts.some(({ id }) => id === 'coop-start'),
+    false,
+  );
+});
+
+test('foreground loss during boot vetoes initial focus even if the page is focused again at ready', async (t) => {
+  const h = await page(t, {
+    nativeFocus: true,
+    onReady: ({ win }) => {
+      win.emit('blur');
+    },
+  });
+  assert.equal(h.doc.activeElement.tagName, 'BODY');
+  assert.equal(
+    h.focusAttempts.some(({ id }) => id === 'coop-start'),
+    false,
+  );
+  h.tick();
+  assert.equal(h.doc.activeElement.tagName, 'BODY');
 });

@@ -591,6 +591,13 @@ export function attachControllerNavigation({
     beginReading,
     endReading,
     readingState,
+    // One focus handoff; callers own readiness/foreground/intent checks.
+    // Unlike engage(), this does not enable later controller scope refocusing.
+    focusAvailable() {
+      if (destroyed) return null;
+      sync();
+      return scope === 'flight' ? null : ensureFocus();
+    },
     engage() {
       if (destroyed) return;
       sync();
