@@ -12,7 +12,10 @@ const html = await readFile(new URL('../couch/relay-rescue.html', import.meta.ur
 let sequence = 0;
 
 /** Real markup and game modules, with a minimal DOM, inert Canvas, and controlled frame callbacks. */
-async function page(t, { touch = false } = {}) {
+async function page(
+  t,
+  { touch = false, href = 'http://localhost/game/couch/relay-rescue.html' } = {},
+) {
   const doc = new Document(),
     win = new Events();
   doc.parentNode = win;
@@ -47,7 +50,7 @@ async function page(t, { touch = false } = {}) {
     document: doc,
     window: win,
     navigator: { getGamepads: () => pads },
-    location: { href: 'http://localhost/game/couch/relay-rescue.html' },
+    location: { href },
     matchMedia: (query) => (query === '(any-pointer: coarse)' ? touchQuery : { matches: false }),
     requestAnimationFrame(callback) {
       frames.set(++nextFrame, callback);
@@ -618,4 +621,70 @@ test('Back and closing the Team pack picker detach a read before reopening', asy
   await f.selectFile(candidate);
   assert.equal(f.$('coop-pack-status').dataset.state, 'ready');
   assert.equal(f.$('coop-level').value, 'closed-coverage');
+});
+
+for (const [query, path, label] of [
+  ['?return=solo', '../', 'Back to Solo'],
+  ['?return=versus', './', 'Race mode ↗'],
+  ['', './', 'Race mode ↗'],
+  ['?return=https://other.invalid/', './', 'Race mode ↗'],
+  ['?return=solo&return=versus', './', 'Race mode ↗'],
+])
+  test(`Team lobby uses only its code-owned return destination ${query || '(default)'}`, async (t) => {
+    const href = `http://localhost/releases/v0.58.0/couch/relay-rescue.html${query}`,
+      f = await page(t, { href }),
+      destination = new URL(path, href).href,
+      link = f.$('coop-race'),
+      visited = [];
+    assert.equal(new URL(link.getAttribute('href'), href).href, destination);
+    assert.equal(link.textContent, label);
+    link.onclick = () => visited.push(new URL(link.getAttribute('href'), href).href);
+    link.focus();
+    link.click();
+    f.$('coop-start').focus();
+    f.press('Escape');
+    const pad = {
+      index: 0,
+      id: 'Team Back',
+      connected: true,
+      mapping: 'standard',
+      axes: [0, 0, 0, 0],
+      buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
+    };
+    f.pads.push(pad);
+    f.tick(2);
+    // The first deliberate press joins this non-auto-join host; release it
+    // before a separate Back, so controller adoption cannot leave the lobby.
+    pad.buttons[1] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[1] = { pressed: false, value: 0 };
+    f.tick();
+    assert.equal(visited.length, 2);
+    pad.buttons[1] = { pressed: true, value: 1 };
+    f.tick();
+    pad.buttons[1] = { pressed: false, value: 0 };
+    f.tick();
+    assert.deepEqual(visited, [destination, destination, destination]);
+    assert.equal(f.$('coop-overlay').hidden, true);
+    f.$('coop-start').click();
+    f.tick(60);
+    f.$('coop-pause').click();
+    const clock = f.$('coop-clock').textContent,
+      progress = f.$('coop-coverage').textContent;
+    f.press('Escape');
+    assert.equal(f.doc.activeElement.id, 'coop-resume');
+    f.tick(60);
+    assert.equal(f.$('coop-clock').textContent, clock);
+    assert.equal(f.$('coop-coverage').textContent, progress);
+    assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
+    assert.equal(visited.length, 3, 'Paused Back never leaves or resumes Team.');
+  });
+
+test('the existing Solo and Versus Team entry links declare their code-owned return context', async () => {
+  const solo = await readFile(new URL('../index.html', import.meta.url), 'utf8'),
+    versus = await readFile(new URL('../couch/index.html', import.meta.url), 'utf8');
+  const entries = [...solo.matchAll(/href="(couch\/relay-rescue\.html[^"\s]*)"/g)];
+  assert.equal(entries.length, 2);
+  for (const [, href] of entries) assert.equal(href, 'couch/relay-rescue.html?return=solo');
+  assert.match(versus, /id="race-coop"[^>]*href="relay-rescue\.html\?return=versus"/);
 });

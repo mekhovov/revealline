@@ -31,6 +31,12 @@ const clock = (seconds) =>
   `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
 
 export function bootCoop() {
+  // Entry links select a code-owned destination, never a supplied URL or referrer.
+  // Older/direct links and ambiguous contexts retain the existing Versus return.
+  const returns = new URL(location.href).searchParams.getAll('return');
+  const fromSolo = returns.length === 1 && returns[0] === 'solo';
+  $('coop-race').setAttribute('href', fromSolo ? '../' : './');
+  $('coop-race').textContent = fromSolo ? 'Back to Solo' : 'Race mode ↗';
   const audioMaster = createAudioMaster();
   const audioPreferences = createAudioPreferences({
     audioMaster,

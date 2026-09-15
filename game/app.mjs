@@ -3661,6 +3661,8 @@ try {
     $('turn-select').value = turnPolicy;
   }
   function focusMission() {
+    // Explicit content selection leaves the retained menus; passive Back does not.
+    if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     $('arena-shell').scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
     (campaignOverview ? $('next-button') : $('start-button')).focus({ preventScroll: true });

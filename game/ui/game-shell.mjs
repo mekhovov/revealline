@@ -256,11 +256,11 @@ export function attachGameShell({
   forward('shell-collection', 'collection-button', { keepHome: true });
   forward('shell-gallery', 'collection-button', { keepHome: true });
   forward('shell-settings', 'settings-button', { keepHome: true });
-  forward('shell-library', 'library-button');
+  forward('shell-library', 'library-button', { keepHome: true });
   forward('shell-options', 'settings-button', { keepHome: true });
   // Toggle music without leaving the title; browser activation remains local.
   $('shell-music').onclick = () => $('sound-button').click();
-  forward('shell-help', 'help-button');
+  forward('shell-help', 'help-button', { keepHome: true });
   // Keep Workshop beneath its Guide so native modal return restores the visible opener.
   const courseReturn = $('shell-course-return');
   if (courseReturn) {

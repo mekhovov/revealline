@@ -596,6 +596,7 @@ export function attachLibraryPanel(api) {
         await api.restore(parsed);
         operation.check();
         $('library-dialog').close();
+        api.focusMission?.();
         return;
       }
       const next = importLibrary(parsed, { campaigns: executionEntries().map((c) => c.campaign) });
@@ -744,6 +745,7 @@ export function attachLibraryPanel(api) {
       await api.restore(api.saved());
       operation.check();
       $('library-dialog').close();
+      api.focusMission?.();
     });
   $('export-session').onclick = exportAttempt;
   $('install-pack').onclick = () => install($('pack-json').value);

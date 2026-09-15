@@ -70,6 +70,14 @@ Statuses are `queued`, `implementing`, `reviewing`, `qualifying`, `deployed`, `a
 
 Queued means phase acceptance is outstanding; it does not erase delivered foundations. The audited baseline retains partial saves/scores/Collection/backups, 15 of 29 map families (60 of 116 pictures), one of twelve stories, incomplete animated presentation sets, five synthesized runtime recipes, thirteen authoring skills, and partial Versus/Team play. Forty reserve originals are accepted as source art, not installed missions. Another three picture families and the 24-track album are candidates. The 132 new Solo missions remain a production backlog; bulk production follows the three-level gameplay benchmark.
 
+## P03-A actual-opener candidate
+
+This isolated source candidate keeps Workshop and its parent menu open beneath Scores & saves and How to play. Closing either child by its button, Escape or controller Back returns focus to its actual Workshop opener; another Back returns to the menu. A paused flight stays paused with its checkpoint intact. Successful explicit Library play/challenge selection or saved-flight loading instead closes both retained parents before focusing the chosen or restored flight; it still does not implicitly start or resume it.
+
+Existing Solo and Versus Team links now declare a code-owned return context. Team's visible lobby return link and lobby Escape/controller Back use that same destination. Direct, unknown or ambiguous contexts retain the existing Versus fallback; supplied URLs and browser history are not return authority. This is a cross-document return, not restoration of the previous page's exact menu/focus or an automatic Resume. Team's paused Back still focuses Resume together without leaving or starting play.
+
+This candidate does not accept all P03: native/public qualification, entry redesign, integrated lobby, departure confirmations and broader progression remain separate work. Root-reported follow-ups include confirming replacement of an unfinished Solo flight and preserving a meaningful focus target when a story ends and Pause becomes Replay; neither behavior is changed here. Existing direct-flight dialog openers and explicit flight starts keep their current behavior.
+
 ## Player flow and feedback contract
 
 - Title offers Single player, Couch Versus (separate-board race) and Couch Team (shared arena). Solo starts/continues in one activation. Ready Couch players choose a mode and Start from one integrated lobby. Future online/Deathmatch remain deferred, without nonfunctional menu choices.
