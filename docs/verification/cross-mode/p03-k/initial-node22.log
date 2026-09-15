@@ -1,0 +1,97 @@
+TAP version 13
+# Subtest: immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 1 - immediate: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1043.564375
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 2 - immediate: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 847.300166
+  type: 'test'
+  ...
+# Subtest: immediate: live lesson choice controller preserves the exact cut and returns to its selector
+ok 3 - immediate: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1644.972584
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+ok 4 - grid-center: live lesson choice Stay preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1238.158041
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+ok 5 - grid-center: live lesson choice Escape preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 877.912958
+  type: 'test'
+  ...
+# Subtest: grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+ok 6 - grid-center: live lesson choice controller preserves the exact cut and returns to its selector
+  ---
+  duration_ms: 1465.157833
+  type: 'test'
+  ...
+# Subtest: immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 7 - immediate: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 1097.074625
+  type: 'test'
+  ...
+# Subtest: grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+ok 8 - grid-center: only Prepare adopts the requested lesson, paused at tick zero without awards
+  ---
+  duration_ms: 1009.082167
+  type: 'test'
+  ...
+# Subtest: same lesson selection in ready is inert
+ok 9 - same lesson selection in ready is inert
+  ---
+  duration_ms: 276.755084
+  type: 'test'
+  ...
+# Subtest: same lesson selection in flight is inert
+ok 10 - same lesson selection in flight is inert
+  ---
+  duration_ms: 667.335042
+  type: 'test'
+  ...
+# Subtest: fresh Ready choice remains direct; unknown lesson cannot replace it
+ok 11 - fresh Ready choice remains direct; unknown lesson cannot replace it
+  ---
+  duration_ms: 293.375
+  type: 'test'
+  ...
+# Subtest: pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+not ok 12 - pending choice cannot be bypassed by Skip or Exit; cancelled choice releases those deliberate actions
+  ---
+  duration_ms: 743.531667
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03k-course-selection/game/test/course-selection-host.test.mjs:180:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'length')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/p03k-course-selection/game/test/course-selection-host.test.mjs:190:40)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: page departure invalidates a pending lesson choice before a delayed Confirm can act
+ok 13 - page departure invalidates a pending lesson choice before a delayed Confirm can act
+  ---
+  duration_ms: 913.908417
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12223.827708
