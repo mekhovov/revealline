@@ -1,0 +1,37 @@
+{
+  "createdAt": "2026-09-15T17:31:23.327226+00:00",
+  "scope": "Explicit timing fixture only: 8s delay before each of two exact original PNG responses; four unchanged SHA-fenced runtime overlays, all other responses exact base Git. No state injection or changed picture bytes.",
+  "baseline": {
+    "path": ".cache/p08a/preview-intent-binding.json",
+    "bytes": 903,
+    "sha256": "57a5f3c0847f93e79e7e1755a21ff567aeff2ebc366109a7a874f8ddcdd57392"
+  },
+  "fixtureBinding": {
+    "path": ".cache/p08a/preview-intent-delayed-binding.json",
+    "bytes": 1499,
+    "sha256": "bf954e2b185f70183a72723dcd62a380e79b5aeb15d18e3fb1fb3ba2ebe63843"
+  },
+  "baselineHelper": {
+    "path": ".cache/p08a/serve-intent.py",
+    "bytes": 3666,
+    "sha256": "9b2851d169bcf31c10ac7228a407ecc4feebece074d15dc6ca152868b3010433"
+  },
+  "fixtureHelper": {
+    "path": ".cache/p08a/serve-intent-delayed.py",
+    "bytes": 4092,
+    "sha256": "a63dfb43bc822952f691b4a2b98341fe1f115764f903cada8ebf53116149ce88"
+  },
+  "server": {
+    "path": ".cache/p08a/server-intent-delayed.json",
+    "bytes": 388,
+    "sha256": "2b1a78aeec98e5775e9ea617da46cc24ba881022b082bb6781185cb75cb5b02e"
+  },
+  "sourceRuntimeUnchanged": true,
+  "originalProof": "Both exact original Git blobs were read in bounded memory at preparation and checked against the binding SHA/byte count. HTTP responses still stream those immutable base Git blobs; no media files are copied.",
+  "delayPolicy": "Before response headers, wait 8 seconds only for either of the two allowlisted original compiled PNG routes. Every request for either route receives that delay. Four stream slots and 64KiB copy remain. Other routes unchanged.",
+  "limits": [
+    "Timing fixture, not measured production latency.",
+    "No browser action or app state injection by preparer.",
+    "Does not itself prove keyboard behavior or asynchronous Start interruption; actual browser observations and 116-case host proof remain distinct."
+  ]
+}

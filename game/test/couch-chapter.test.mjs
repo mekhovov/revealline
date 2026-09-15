@@ -115,7 +115,8 @@ test('an offline optional featured download leaves base Couch maps playable and 
   assert.match(f.$('race-message').textContent, /Featured Pressure Lines.*unavailable/);
   assert.match(f.$('race-installed-status').textContent, /Featured Pressure Lines.*unavailable/);
   assert.ok(f.$('race-level').options.every((option) => !option.value.startsWith('shipped/')));
-  assert.equal(f.drawOptions[0].backdrop, null);
+  assert.equal(f.drawOptions[0].backdrop.image, null);
+  assert.equal(f.drawOptions[0].backdrop.choice.kind, 'authored');
   f.$('race-start').click();
   f.frame();
   f.key('KeyD');

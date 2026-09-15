@@ -1,0 +1,6 @@
+{
+  "port": 55878,
+  "base": "f047a46a9a1bb9982600bd7e2682d765a75cb9cc",
+  "bindingSha256": "bf954e2b185f70183a72723dcd62a380e79b5aeb15d18e3fb1fb3ba2ebe63843",
+  "scope": "Explicit timing fixture only: 8s delay before each of two exact original PNG responses; four unchanged SHA-fenced runtime overlays, all other responses exact base Git. No state injection or changed picture bytes."
+}

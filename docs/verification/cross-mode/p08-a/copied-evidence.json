@@ -1,0 +1,305 @@
+{
+  "scope": "Original layout strings remain inside raw receipts. This mapping identifies copies and any explicitly recorded display-text normalization; raw receipts retain original log hashes. Historical native and 109-case runs precede pending-focus successor.",
+  "files": [
+    {
+      "original": ".cache/p08a/native-root/cancelled-picture.jpg",
+      "copy": "native-before-focus/cancelled-picture.jpg",
+      "bytes": 74215,
+      "sha256": "25b0c5143cfedee313baba181423fadedf05bb2af1335b209803f35c1d865972",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/events.json",
+      "copy": "native-before-focus/events.json",
+      "bytes": 41653,
+      "sha256": "ab2269568ac8813d3ad8dba8acf18783db3362947e56d2dea6a2a2ada026aeb3",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/first-signal-earned-solo.jpg",
+      "copy": "native-before-focus/first-signal-earned-solo.jpg",
+      "bytes": 240054,
+      "sha256": "c5331a2d2451cb9630ceded9517e9539a024db48a94da26a81002bd379d9e3d5",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/first-signal-earned-versus.jpg",
+      "copy": "native-before-focus/first-signal-earned-versus.jpg",
+      "bytes": 129855,
+      "sha256": "48a0fa0661f5a21d80844f95a5f545b7a3a454f6be5d517085201b4cef364786",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/first-signal-next-round.jpg",
+      "copy": "native-before-focus/first-signal-next-round.jpg",
+      "bytes": 68846,
+      "sha256": "493d998f980ba16bb37f8664bb512a228d48504ab6ea70b05bd1dae02c579eb6",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/orchard-cut.jpg",
+      "copy": "native-before-focus/orchard-cut.jpg",
+      "bytes": 101818,
+      "sha256": "e3b307eda1cd0f35bf5b81dd9c41acb394c26c9c5ff114313249e568360bb3de",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root/retried-orchard.jpg",
+      "copy": "native-before-focus/retried-orchard.jpg",
+      "bytes": 93734,
+      "sha256": "57afddb2508632b962fd4aee47b516e4d8275c448364823ec982c7b08e79cf00",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root-verification.json",
+      "copy": "native-before-focus/native-root-verification.json",
+      "bytes": 2114,
+      "sha256": "f1cce1310c916bb67086e03f0d5eeee6539404a47429e48891d82a11b14a501c",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-root-picture-bytes.json",
+      "copy": "native-before-focus/native-root-picture-bytes.json",
+      "bytes": 591,
+      "sha256": "c5c93317cd603557e8b80a9c30b08f37fa9f8018e02b4f14df7b76b6c3509c3e",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/held-source-native.json",
+      "copy": "native-before-focus/held-source-native.json",
+      "bytes": 2713,
+      "sha256": "c515d99fb227ec0ecfd7035dd7139f1a28eecbb78ff9eb66e5961bdefe2aa8e1",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-picture-identities.json",
+      "copy": "native-before-focus/native-picture-identities.json",
+      "bytes": 3867,
+      "sha256": "c8dfd2969b4ab0800bf3a0f60a5698c90ef6269cd4ca70205862a022afd80097",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/complete-results.json",
+      "copy": "automated/complete-results.json",
+      "bytes": 7371,
+      "sha256": "4eb5f50a9a0578790a3b142a291be427188432e78d4f8d4fd65dab6c7a9a8481",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/complete-node22.log",
+      "copy": "automated/complete-node22.log",
+      "bytes": 28287,
+      "sha256": "e254bd32fabd112c4831953e518a98bdc6537a9782d6e2d3c8ac817bfa3540b8",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/complete-node20.log",
+      "copy": "automated/complete-node20.log",
+      "bytes": 26645,
+      "sha256": "c70237357e7ec132bf424d42080a542dceaaa77bb13dd46f79a1482ff505f94c",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/final-results.json",
+      "copy": "automated/final-results.json",
+      "bytes": 6300,
+      "sha256": "385297ad116ff05f7ba3183c430def144cd129cd35c7e7b267a84e7c0871cdba",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/final-node22.log",
+      "copy": "automated/final-node22.log",
+      "bytes": 29001,
+      "sha256": "e2c7c71e0e2050cf92a9d40f8850ebaab6958167fa714d88aa3bfffca13c145f",
+      "transformation": "Retained text only: trim trailing whitespace on each line and retain one final newline for Git whitespace hygiene. Original raw cache bytes are unchanged and pinned here.",
+      "originalBytes": 29009,
+      "originalSha256": "10b90f01c6fa475dab5df6ac14e9541b8cf8a7f288ae3652c21987715df53036"
+    },
+    {
+      "original": ".cache/p08a/pending-focus-baseline-node22.log",
+      "copy": "automated/pending-focus-baseline-node22.log",
+      "bytes": 6237,
+      "sha256": "ec24f4fbfeeb8626f3625a6c39e1830aaa4bbf223a0fb94ed64e07e523f59a5e",
+      "transformation": "Retained text only: trim trailing whitespace on each line and retain one final newline for Git whitespace hygiene. Original raw cache bytes are unchanged and pinned here.",
+      "originalBytes": 6277,
+      "originalSha256": "1b92c24a56a61598cc9baed8d321c3cc27e9aafadecf315c2d3a7527c6164b09"
+    },
+    {
+      "original": ".cache/p08a/pending-focus-targeted-node22.log",
+      "copy": "automated/pending-focus-targeted-node22.log",
+      "bytes": 1218,
+      "sha256": "d91a794c55ae5d21589b05f730f381a99d0f8360eed343707260c4e7e8ddcc1f",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/focus-complete-results.json",
+      "copy": "automated/focus-complete-results.json",
+      "bytes": 7358,
+      "sha256": "889e68b16a018caa19e91ff738ac3028dd285181a6d34df5a08eab5563e5b1cd",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/focus-complete-node22.log",
+      "copy": "automated/focus-complete-node22.log",
+      "bytes": 29150,
+      "sha256": "6463c1b19ca72f3ac6605f0a1e1ce86587eabafa8635f773a704d42ce9acc360",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/focus-complete-node20.log",
+      "copy": "automated/focus-complete-node20.log",
+      "bytes": 27446,
+      "sha256": "734a3f9a1912278e0ebbd3034f2f7afdcb3b0a550c08684e79bfcca75fa9afca",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/focus-static-results.json",
+      "copy": "automated/focus-static-results.json",
+      "bytes": 2211,
+      "sha256": "cbc8f8e23f8953855532362d44841339988d79e965d6f60a2051e9b8431937de",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/held-source-focus.json",
+      "copy": "automated/held-source-focus.json",
+      "bytes": 3127,
+      "sha256": "747011dd06964c994fa2ec1c281053e5d3726389ca79ccdbf4aa5f300014ac23",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/start-intent-baseline-state-node22.log",
+      "copy": "automated/start-intent-baseline-state-node22.log",
+      "bytes": 2061,
+      "sha256": "b1bb7575b7424d8ad3991563ac4a8d3538e8bea736a505132f7779b91ff8211c",
+      "transformation": "Retained text only: trailing whitespace trimmed and one final newline; original cache bytes unchanged.",
+      "originalBytes": 2077,
+      "originalSha256": "e3a73c2c3cce61e5ca59ff744f618be48a52334af89806dc3dda2ed47f6e7b90"
+    },
+    {
+      "original": ".cache/p08a/start-intent-targeted-node22.log",
+      "copy": "automated/start-intent-targeted-node22.log",
+      "bytes": 1696,
+      "sha256": "8b46c23a802e90e2972bc94d94b9a3c5100b4cb4c1fa4334f047c100daaf9ae0",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/held-source-start-intent.json",
+      "copy": "automated/held-source-start-intent.json",
+      "bytes": 2605,
+      "sha256": "d86d97ccdafa28668148770925ba40e8c788463e0467ba25eb6382cd17ee3f48",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/intent-complete-results.json",
+      "copy": "automated/intent-complete-results.json",
+      "bytes": 7370,
+      "sha256": "6ade43a736704164aee45062e1bc29412c8e35868c5967f2a098548bc39d1925",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/intent-complete-node22.log",
+      "copy": "automated/intent-complete-node22.log",
+      "bytes": 29627,
+      "sha256": "75f95399e126c86e73bf919bb2cb0b662a9ca553f51bf66af95aaaff58c6a811",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/intent-complete-node20.log",
+      "copy": "automated/intent-complete-node20.log",
+      "bytes": 27892,
+      "sha256": "ca8537d8bf63a675f8bcc3c36895949024a92b4f33d6f7d456d9613c6b4d43e6",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/intent-static-results.json",
+      "copy": "automated/intent-static-results.json",
+      "bytes": 2270,
+      "sha256": "950cae62d7693cf5129e94c26518e11c2f6f4716de1714a766287700076c8f2e",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/peer-start-intent.json",
+      "copy": "automated/peer-start-intent.json",
+      "bytes": 887,
+      "sha256": "588758770ab043101a919e61b443f5d72a5a16bab0e423fb7a7e9d94a2f4339d",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-intent-root/events.json",
+      "copy": "native-successor/events.json",
+      "bytes": 21561,
+      "sha256": "2a890509283a76bdd3532a6906f341295c199cfb94be823b2951330a58c01df6",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-intent-root/retry-pending.jpg",
+      "copy": "native-successor/retry-pending.jpg",
+      "bytes": 78134,
+      "sha256": "9e8aeafcd9c61659f7a8088baf27db564b15534b38ec3316cea313ffbe2e90b3",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-intent-root/retry-start-pause.jpg",
+      "copy": "native-successor/retry-start-pause.jpg",
+      "bytes": 73936,
+      "sha256": "b7ee9af3b1d26516ecd83bb30202c0f8c5421f7384b8e660de261dba266aedf0",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/native-intent-verification.json",
+      "copy": "native-successor/native-intent-verification.json",
+      "bytes": 2747,
+      "sha256": "4d25281a224c0c4e416e5c385056c6539655ea151bc8b7da5ea8194ddc3c0593",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/preview-intent-binding.json",
+      "copy": "native-successor/preview-intent-binding.json",
+      "bytes": 903,
+      "sha256": "57a5f3c0847f93e79e7e1755a21ff567aeff2ebc366109a7a874f8ddcdd57392",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/preview-intent-delayed-binding.json",
+      "copy": "native-successor/preview-intent-delayed-binding.json",
+      "bytes": 1499,
+      "sha256": "bf954e2b185f70183a72723dcd62a380e79b5aeb15d18e3fb1fb3ba2ebe63843",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/delayed-preview-preparation.json",
+      "copy": "native-successor/delayed-preview-preparation.json",
+      "bytes": 1962,
+      "sha256": "4cee226931e1b9a373c4df37281ed5c71b70e2256aa0b65ff7465d17e344efb4",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/serve-intent.py",
+      "copy": "native-successor/serve-intent.py",
+      "bytes": 3666,
+      "sha256": "9b2851d169bcf31c10ac7228a407ecc4feebece074d15dc6ca152868b3010433",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/serve-intent-delayed.py",
+      "copy": "native-successor/serve-intent-delayed.py",
+      "bytes": 4092,
+      "sha256": "a63dfb43bc822952f691b4a2b98341fe1f115764f903cada8ebf53116149ce88",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/server-intent.json",
+      "copy": "native-successor/server-intent.json",
+      "bytes": 255,
+      "sha256": "8e3e4e74af44e778be565251719474f0a0f6c6a39226442b5182e85070d61bf9",
+      "transformation": "none; byte-identical"
+    },
+    {
+      "original": ".cache/p08a/server-intent-delayed.json",
+      "copy": "native-successor/server-intent-delayed.json",
+      "bytes": 388,
+      "sha256": "2b1a78aeec98e5775e9ea617da46cc24ba881022b082bb6781185cb75cb5b02e",
+      "transformation": "none; byte-identical"
+    }
+  ]
+}

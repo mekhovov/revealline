@@ -19,6 +19,23 @@ const pad = (index) => ({
   buttons: Array.from({ length: 16 }, () => ({ pressed: false, value: 0 })),
 });
 
+// Join the actual menu activation when Next prepares a fresh exact picture.
+// Keep controller dispatch and every core route/checkpoint assertion unchanged.
+async function nextAction(f, activate) {
+  const button = f.$('race-start'),
+    handler = button.onclick,
+    preparingNext = f.state() === 'finished';
+  let operation;
+  button.onclick = (event) => (operation = handler(event));
+  try {
+    activate();
+    await operation;
+  } finally {
+    button.onclick = handler;
+  }
+  if (preparingNext) f.frame(0);
+}
+
 test('two sparse pads deliberately claim one menu; join/held Confirm cannot start or leak flight actions', async (t) => {
   const pads = [null, pad(1), null, pad(3)],
     f = await page(t, { pads });
@@ -299,9 +316,11 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       (r) => r.variant === 'ordinary' && r.classId === 'scout' && r.turnPolicy === turnPolicy,
     );
     for (let round = 1; round <= 2; round++) {
-      f.button(0, 0, true);
-      f.frame();
-      f.button(0, 0, false);
+      await nextAction(f, () => {
+        f.button(0, 0, true);
+        f.frame();
+        f.button(0, 0, false);
+      });
       assert.equal(f.tick(), 0);
       const oracle = createRun(sentinel.campaigns[0].levels[0], {
         seed: 2026,
@@ -336,7 +355,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       assert.equal(f.state(), 'finished');
     }
     assert.match(f.$('race-start').textContent, /Play another match/);
-    f.pulse(0, 0);
+    await nextAction(f, () => f.pulse(0, 0));
     assert.equal(f.state(), 'running');
     assert.equal(f.$('series-score').textContent, '0 : 0');
   });
@@ -344,7 +363,10 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 
 test('one lost craft does not expose shared menu; both ended draws retain explicit Next', async (t) => {
   const { level } = retryFixture('self-contact');
-  const f = await page(t, { campaign: { ...base, levels: [level] }, pads: [pad(0), pad(1)] });
+  const f = await page(t, {
+    campaign: { ...base, briefs: [], levels: [level] },
+    pads: [pad(0), pad(1)],
+  });
   f.join(0);
   f.pulse(0, 0);
   f.frame();
@@ -372,7 +394,7 @@ test('one lost craft does not expose shared menu; both ended draws retain explic
   f.frame();
   f.pulse(0, 9);
   assert.equal(f.state(), 'finished');
-  f.pulse(0, 0);
+  await nextAction(f, () => f.pulse(0, 0));
   assert.equal(f.state(), 'running');
 });
 
@@ -456,7 +478,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: real recovery clears only that player's continuous intent before later substeps`, async (t) => {
     const { level } = retryFixture('enemy-player');
     level.rules = { ...level.rules, lives: 3, respawnSeconds: 0.1, graceSeconds: 0 };
-    const f = await page(t, { campaign: { ...base, levels: [level] }, turnPolicy });
+    const f = await page(t, { campaign: { ...base, briefs: [], levels: [level] }, turnPolicy });
     f.$('race-start').click();
     f.frame();
     f.key('KeyD');
@@ -509,8 +531,10 @@ test('timeout draw keeps series at zero and needs a fresh explicit Next gesture'
   f.frame();
   f.pulse(0, 1);
   const run = f.renders[0];
-  f.button(0, 0, true);
-  f.frame();
+  await nextAction(f, () => {
+    f.button(0, 0, true);
+    f.frame();
+  });
   assert.notEqual(f.renders[0], run);
   assert.equal(f.tick(), 0);
   f.frames(30);
@@ -541,7 +565,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
         },
       };
       const f = await page(t, {
-        campaign: { ...base, levels: [level] },
+        campaign: { ...base, briefs: [], levels: [level] },
         turnPolicy,
         pads: adapter === 'controller' ? [pad(0)] : [],
       });
