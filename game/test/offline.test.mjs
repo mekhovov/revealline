@@ -99,6 +99,7 @@ function host(configPatch = {}, storage = new Map(), options = {}) {
     Request,
     Response,
     Headers,
+    AbortController,
     Uint8Array,
     console,
     fetch: async (request) => {
@@ -632,6 +633,217 @@ test('all downloads finish before a new cache exists and the older build stays e
     }
   }
 });
+
+test(
+  'installation overlaps at most four downloads and publishes in inventory order only after every body verifies',
+  { timeout: 3000 },
+  async () => {
+    const deferred = () => {
+        let resolve;
+        const promise = new Promise((done) => {
+          resolve = done;
+        });
+        return { promise, resolve };
+      },
+      entries = Array.from({ length: 9 }, (_, i) => [`game/${i}.txt`, `verified body ${i}`]),
+      started = entries.map(deferred),
+      release = entries.map(deferred);
+    let active = 0,
+      peak = 0;
+    const h = host({}, new Map(), {
+      entries,
+      async fetch(request) {
+        const index = entries.findIndex(([name]) => request.url === `${scope}${name}`);
+        active++;
+        peak = Math.max(peak, active);
+        started[index].resolve();
+        await release[index].promise;
+        active--;
+        return new Response(entries[index][1]);
+      },
+    });
+    const installing = h.dispatch('install');
+    await Promise.all(started.slice(0, 4).map((entry) => entry.promise));
+    assert.equal(h.calls.length, 4);
+    assert.equal(h.storage.size, 0);
+    release[3].resolve();
+    await started[4].promise;
+    assert.equal(h.calls.length, 5);
+    assert.equal(h.writes.length, 0);
+    assert.equal(h.storage.size, 0);
+    release.forEach((entry) => entry.resolve());
+    await installing;
+    assert.equal(peak, 4);
+    assert.equal(active, 0);
+    assert.deepEqual(
+      h.writes.map(({ url }) => url),
+      [...entries.map(([name]) => `${scope}${name}`), `${scope}.offline-ready`],
+    );
+    const report = await h.report();
+    assert.equal(report.status, 'ready');
+    assert.equal(report.verified, entries.length);
+  },
+);
+
+test(
+  'a failed parallel download aborts active requests, stops the queue and preserves the previous cache',
+  { timeout: 3000 },
+  async () => {
+    const entries = Array.from({ length: 8 }, (_, i) => [`game/${i}.txt`, `verified body ${i}`]),
+      old = `revealline-offline:${encodeURIComponent(scope)}:previous`;
+    let fail,
+      allStarted,
+      aborted = 0;
+    const pending = new Promise((resolve) => {
+        allStarted = resolve;
+      }),
+      h = host({}, new Map([[old, new Map([['kept', new Response('old exact bytes')]])]]), {
+        entries,
+        fetch(request) {
+          const first = request.url === `${scope}${entries[0][0]}`;
+          const response = new Promise((resolve, reject) => {
+            if (first) fail = () => resolve(new Response('wrong hash'));
+            else
+              request.signal.addEventListener(
+                'abort',
+                () => {
+                  aborted++;
+                  reject(request.signal.reason);
+                },
+                { once: true },
+              );
+          });
+          if (h.calls.length === 4) allStarted();
+          return response;
+        },
+      });
+    const rejected = assert.rejects(h.dispatch('install'), /integrity|byte budget/);
+    await pending;
+    fail();
+    await rejected;
+    assert.equal(h.calls.length, 4);
+    assert.equal(aborted, 3);
+    assert.equal(h.writes.length, 0);
+    assert.deepEqual(await h.caches.keys(), [old]);
+    assert.equal(await h.storage.get(old).get('kept').clone().text(), 'old exact bytes');
+    assert.equal(h.claimed, 0);
+  },
+);
+
+test(
+  'simultaneous prepare requests share one install and can retry after a failed download',
+  { timeout: 3000 },
+  async () => {
+    let release,
+      started,
+      fail = true;
+    const pending = new Promise((resolve) => {
+        started = resolve;
+      }),
+      wait = new Promise((resolve) => {
+        release = resolve;
+      }),
+      h = oneFile('verified body', {
+        async fetch() {
+          started();
+          await wait;
+          return new Response(fail ? 'incorrect body' : 'verified body');
+        },
+      });
+    const prepare = async () => {
+      let report;
+      await h.dispatch('message', {
+        data: { type: 'revealline.offline-prepare' },
+        source: { url: `${scope}game/` },
+        ports: [
+          {
+            postMessage(value) {
+              report = value;
+            },
+          },
+        ],
+      });
+      return report;
+    };
+    const first = prepare(),
+      second = prepare();
+    await pending;
+    assert.equal(h.calls.length, 1);
+    release();
+    for (const report of await Promise.all([first, second])) {
+      assert.equal(report.status, 'error');
+      assert.match(report.message, /integrity|byte budget/);
+    }
+    assert.equal(h.storage.size, 0);
+    fail = false;
+    for (const report of await Promise.all([prepare(), prepare()]))
+      assert.equal(report.status, 'ready');
+    assert.equal(h.calls.length, 2);
+    assert.equal((await h.report()).status, 'ready');
+  },
+);
+
+test(
+  'native streaming downloads abort after another file fails verification',
+  { timeout: 5000 },
+  async () => {
+    let releaseFailure, receivedBody, closedStream, upstream;
+    const failureReady = new Promise((resolve) => {
+        releaseFailure = resolve;
+      }),
+      bodyReady = new Promise((resolve) => {
+        receivedBody = resolve;
+      }),
+      streamClosed = new Promise((resolve) => {
+        closedStream = resolve;
+      }),
+      server = createServer(async (request, response) => {
+        if (request.url.endsWith('/bad.txt')) {
+          await failureReady;
+          response.end('xxxxxx');
+        } else {
+          response.on('close', closedStream);
+          response.writeHead(200, { 'Content-Length': 6 });
+          response.write('abc');
+        }
+      });
+    await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+    try {
+      const h = host({}, new Map(), {
+        entries: [
+          ['game/bad.txt', 'abcdef'],
+          ['game/slow.txt', 'abcdef'],
+        ],
+        async fetch(request) {
+          const response = await fetch(
+            `http://127.0.0.1:${server.address().port}/${new URL(request.url).pathname.split('/').at(-1)}`,
+            { signal: request.signal },
+          );
+          if (request.url.endsWith('/slow.txt')) {
+            upstream = response;
+            receivedBody();
+          }
+          return response;
+        },
+      });
+      const rejected = assert.rejects(h.dispatch('install'), /integrity/);
+      await bodyReady;
+      releaseFailure();
+      await rejected;
+      await streamClosed;
+      assert.equal(upstream.bodyUsed, true);
+      assert.equal(upstream.body.locked, false);
+      assert.equal(h.storage.size, 0);
+      assert.equal(h.writes.length, 0);
+    } finally {
+      releaseFailure();
+      server.closeAllConnections();
+      await new Promise((resolve, reject) =>
+        server.close((error) => (error ? reject(error) : resolve())),
+      );
+    }
+  },
+);
 
 test('asset and marker cache-write failures clean only the partial build and never claim clients', async () => {
   for (const failedPath of ['game/app.mjs', '.offline-ready']) {
