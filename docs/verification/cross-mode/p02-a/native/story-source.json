@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "a2794f954467fd97c1b89af9c6848da6b7a630e6",
+  "entries": [
+    {
+      "source": "authoring/still-media/examples/dawn-signal/Dawn-Signal-originals.rlmedia",
+      "bytes": 458062,
+      "sha256": "2cf9fb37b29f36499802638353a0a5b53042f75806b7297638e41c4bc2ccc6d9"
+    },
+    {
+      "source": "authoring/still-media/examples/dawn-signal/Dawn-Signal-stories.rlstory",
+      "bytes": 730651,
+      "sha256": "607a0952eb200178b0fe56957aeef4e1cc60784402c060ea60376358ac4d72b6"
+    },
+    {
+      "source": "authoring/still-media/examples/dawn-signal/manifest.json",
+      "bytes": 2840,
+      "sha256": "f207698be2328a687d7f9730f18a57740756186dbd4dfc547d016b828334243a"
+    }
+  ]
+}

@@ -412,7 +412,8 @@
     "Overlapping focused batches must not be added to make a unique test count or a whole-suite claim.",
     "No native listening, physical controller, iOS output behavior, full browser journey, offline or public release proof supplied.",
     "Production support is 6/7 on each runtime: strict audio approval remains refused. Old committed readiness does not qualify the changed candidate.",
-    "Later integrated-source-native.json adds scoped256-case Node22 and root-native/owned-MP3 observations; earlier limits are checkpoint-specific, and no complete final-source or listening claim follows."
+    "Later integrated-source-native.json adds scoped256-case Node22 and root-native/owned-MP3 observations; earlier limits are checkpoint-specific, and no complete final-source or listening claim follows.",
+    "story-and-paused-flight.json adds scoped native silent-video and flight/music pause observations at a2794f9; PR62 initial producer preflight failed. No audible or complete-release claim follows."
   ],
   "preparationDiagnostic": "Initial metadata collector treated a list-valued evidence member as a dictionary and stopped before writing this index. Nine byte-exact receipt copies were retained and rechecked; no test or source operation occurred.",
   "nativeObservation": {
@@ -438,5 +439,13 @@
       "copyByteExact": false,
       "operation": "Trim trailing whitespace from each line, remove blank end lines, retain exactly one final LF."
     }
-  ]
+  ],
+  "storyPausedFlightSupplement": {
+    "path": "story-and-paused-flight.json",
+    "bytes": 9960,
+    "sha256": "9b9be393db93edffbfe56f0ab48d74848d3f83ee60af21b74441f1b1f7e173ee",
+    "candidateSourceCommit": "a2794f954467fd97c1b89af9c6848da6b7a630e6",
+    "status": "SCOPED_SOURCE_PREVIEW_INITIAL_CI_FAILED",
+    "supersedesHistoricalEvidence": false
+  }
 }
