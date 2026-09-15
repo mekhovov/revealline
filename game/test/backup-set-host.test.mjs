@@ -63,6 +63,13 @@ test('explicit native links preserve retry URLs, distinguish requested from prep
   const h = await panel();
   assert.equal(await h.$('prepare-backup-set').onclick(), true);
   assert.equal(h.urls.size, 5);
+  const names = ['game', 'media', 'story', 'audio', 'coverage'].map((id) => {
+    const anchor = h.$(`download-backup-${id}`);
+    assert.match(anchor.download, /^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/);
+    assert.equal(anchor.textContent, `Download ${anchor.download}`);
+    return anchor.download.match(/^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/)[0];
+  });
+  assert.equal(new Set(names).size, 1, 'The actual native links keep the shared prefix.');
   assert.match(h.$('backup-set-status').textContent, /No file has been saved/);
   assert.equal(h.document.activeElement.id, 'download-backup-game');
   const link = h.$('download-backup-media'),
