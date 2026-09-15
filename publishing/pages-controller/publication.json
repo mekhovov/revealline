@@ -1,7 +1,7 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.48.0",
-  "catalogSha256": "53e316a82e1ca1ec68204aa2885546485d468f4176596597f3a0ab018c14d215",
+  "currentVersion": "v0.51.0",
+  "catalogSha256": "ea9d39ac3271d41354bd17ab12c75f4aef8910b3c45e5c21f7bb79386060cea5",
   "allocationSha256": "9ff568faadcf7189841386dc3b935d1e7dae7be45e35dfbc156ecebc5fd0b3e6",
   "admissions": [
     {
@@ -385,8 +385,12 @@
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v048/source-qualification.json",
-    "sha256": "faa4e072c43cc6b867589fb2f2a2312730f90b42fd612ed3ac9dea22c50fb4c4"
+    "path": "evidence/current-v0510/source-qualification.json",
+    "sha256": "73338bc1960f17f4e97daec43c1227470653ad92d392482e4afa98898bc3e2d0"
   },
-  "retainedReleasesPerMajor": 5
+  "retainedReleasesPerMajor": 100,
+  "testingRoutes": {
+    "v0.49.0": "https://mekhovov.github.io/revealline-archive-09/releases/v0.49.0/site/",
+    "v0.50.0": "https://mekhovov.github.io/revealline-archive-09/releases/v0.50.0/site/"
+  }
 }
