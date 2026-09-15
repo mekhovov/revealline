@@ -1,5 +1,6 @@
 import { mountPresentationPage } from '../presentation/page.mjs';
 import { createCouchShell } from './couch-shell.mjs';
+import { readVersusSoloReturnToken } from '../mode-return-v2.mjs';
 import { prepareCouchChapter } from './couch-chapter.mjs';
 import { createCouchInstalledChapters } from './couch-installed-chapters.mjs';
 import { arcadeActionCapabilities } from '../core/arcade-actions.mjs';
@@ -619,10 +620,18 @@ try {
       if ($('race-pad-status').textContent !== message) $('race-pad-status').textContent = message;
     },
   });
+  let soloReturnStorage;
+  try {
+    soloReturnStorage = sessionStorage;
+  } catch {
+    /* The fixed Solo title route remains available. */
+  }
   shell = createCouchShell({
     coarse: matchMedia('(pointer: coarse)').matches,
     getDepartureState: () => ({ match, generation }),
     onLeaveRequest: pause,
+    getSoloReturnToken: () =>
+      readVersusSoloReturnToken({ href: location.href, storage: soloReturnStorage }),
     onTransition: ({ to, back = false } = {}) => {
       clear();
       if (back || to !== contentScope) cancelContent();

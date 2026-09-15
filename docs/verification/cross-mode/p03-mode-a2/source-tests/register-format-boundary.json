@@ -1,0 +1,8 @@
+{
+  "scope": "Original register baseline passed. Initial A2 append had one extra blank line; only that authored whitespace corrected. Baseline bytes remain an exact prefix. No formatter exception is needed.",
+  "baselineCheckExit": 0,
+  "initialCurrentCheckExit": 1,
+  "baselineSha256": "de16727a98ac94a8032ab1b795bdffc9e4a1f2003e2042f61a75d7b8716fee0d",
+  "newSectionBytes": 850,
+  "newSectionSha256": "50fd6f3707d8b5d16147e1132e50aa3adaa33645b54d4a150ab706514ee169c4"
+}

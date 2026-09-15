@@ -162,7 +162,7 @@ test('a real terminal draw keeps both destination links direct and does not star
 
 // Inject only the host identity reader for adversarial currentness. The shell
 // mounts real HTML and observes a real duel; it cannot replace the host's core.
-async function shellFixture(t) {
+async function shellFixture(t, options = {}) {
   const doc = new Document();
   mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
   const level = retryFixture('enemy-player').level;
@@ -173,6 +173,7 @@ async function shellFixture(t) {
   const shell = createCouchShell({
     document: doc,
     getDepartureState: () => ({ match, generation }),
+    ...options,
   });
   shell.update({ match, summary: 'Identity fixture', won: [0, 0] });
   t.after(() => shell.destroy());
@@ -204,3 +205,43 @@ for (const change of ['replace', 'advanceGeneration', 'resume']) {
     assert.equal(f.$('race-leave-panel').hidden, true);
   });
 }
+
+test('Solo departure captures one validated scalar token and never adopts a newer return at Confirm', async (t) => {
+  let token = '1'.repeat(32),
+    reads = 0;
+  const f = await shellFixture(t, {
+    getSoloReturnToken() {
+      reads++;
+      return token;
+    },
+  });
+  f.$('race-solo-return').click();
+  assert.equal(f.shell.scope(), 'leave');
+  token = '2'.repeat(32);
+  assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
+  assert.equal(f.$('race-leave').getAttribute('href'), `../?mode-return-v2=${'1'.repeat(32)}`);
+  assert.equal(
+    reads,
+    1,
+    'Confirm keeps the captured identity instead of resolving a newer return.',
+  );
+  f.$('race-leave-back').click();
+  f.$('race-coop').click();
+  assert.equal(f.$('race-leave').getAttribute('href'), 'relay-rescue.html?return=versus');
+  assert.equal(reads, 1, 'Going to Team never forwards a Solo origin or nests a return stack.');
+});
+
+for (const reader of [
+  () => null,
+  () => '../?stolen=1',
+  () => 'A'.repeat(32),
+  () => {
+    throw Error('unavailable');
+  },
+])
+  test(`invalid scalar return reader keeps the fixed Solo Title fallback: ${reader}`, async (t) => {
+    const f = await shellFixture(t, { getSoloReturnToken: reader });
+    f.$('race-solo-return').click();
+    assert.equal(f.$('race-leave').emit('click').defaultPrevented, false);
+    assert.equal(f.$('race-leave').getAttribute('href'), '../');
+  });
