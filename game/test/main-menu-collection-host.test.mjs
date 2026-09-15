@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { soloPage, SoloElement } from './helpers/solo-dom.mjs';
-import { authoritativeCheckpoint } from '../replay.mjs';
+import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 
 function key(page, value) {
   const target = page.doc.activeElement;
@@ -218,6 +218,120 @@ for (const mode of ['keyboard', 'controller']) {
     assert.equal(page.rendered.paused, true);
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
     assert.equal(page.$('collection-dialog').contains(page.doc.activeElement), false);
+
+    activate(page, input, page.$('shell-workshop'), home);
+    const exportButton = page.$('export-replay'),
+      replayDialog = page.$('replay-dialog'),
+      replayStatus = page.$('replay-operation-status'),
+      replayRail = page.$('replay-operation-rail');
+    assert.ok(replayRail, 'Replay feedback and escape controls share one operation rail');
+    assert.ok(replayRail.contains(replayStatus), 'The original presenter target stays in the rail');
+    const replayControls = replayRail.querySelector('.dialog-operation-controls'),
+      replayClose = replayControls.querySelector('[data-close="replay-dialog"]');
+    assert.ok(replayControls.contains(page.$('download-replay')));
+    assert.ok(replayClose, 'The operation rail includes its own genuine Close action');
+    assert.ok(
+      replayDialog.children.indexOf(replayRail) <
+        replayDialog.children.indexOf(page.$('replay-json')),
+      'Operation feedback and controls precede the long readonly replay payload',
+    );
+    assert.ok(workshop.contains(exportButton), 'The original replay export belongs to Workshop');
+    assert.equal(page.doc.querySelectorAll('#export-replay').length, 1);
+    assert.equal(exportButton.closest('.page-footer'), null);
+    assert.equal(exportButton.disabled, false);
+    const originalExport = exportButton.onclick;
+    let exportRequest;
+    t.mock.method(exportButton, 'onclick', (...args) => {
+      exportRequest = originalExport(...args);
+      return exportRequest;
+    });
+    // Retain the browser's real Blob/request boundary and cleanup duration;
+    // only keep its delayed URL release from holding the Node process open.
+    const schedule = globalThis.setTimeout;
+    t.mock.method(globalThis, 'setTimeout', (callback, delay, ...args) => {
+      const timer = schedule(callback, delay, ...args);
+      if (delay === 60000) timer.unref();
+      return timer;
+    });
+    const layoutFrames = [];
+    page.doc.defaultView.requestAnimationFrame = (callback) => {
+      layoutFrames.push(callback);
+      return layoutFrames.length;
+    };
+    activate(page, input, exportButton, workshop);
+    assert.ok(exportRequest instanceof Promise, 'Normal scoped activation invokes the real export');
+    assert.equal(replayDialog.open, true);
+    assert.equal(workshop.open, true);
+    assert.equal(home.open, true);
+    assert.ok(replayDialog.contains(page.doc.activeElement));
+    assert.equal(exportButton.disabled, true);
+    assert.equal(page.$('download-replay').disabled, true);
+    assert.equal(replayStatus.hidden, false);
+    assert.match(replayStatus.textContent, /Preparing replay download/);
+    const replayText = page.$('replay-json').value,
+      replay = JSON.parse(replayText),
+      verified = verifyReplay(replay);
+    assert.equal(verified.match, true);
+    assert.deepEqual(replay.checkpoint, paused);
+    assert.deepEqual(verified.actual.checkpoint, paused);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
+    assert.equal(page.rendered.paused, true);
+    // Pause/export may persist the existing flight. Completion and modal return
+    // must not introduce more writes or alter those exact saved bytes.
+    const exportedStorage = [...page.storage.map],
+      exportedWrites = page.storage.writes.length;
+    await exportRequest;
+    assert.equal(exportButton.disabled, false);
+    assert.equal(page.$('download-replay').disabled, false);
+    assert.match(replayStatus.textContent, /Download requested/);
+    assert.equal(page.$('replay-json').value, replayText);
+    assert.ok(replayRail.contains(replayStatus), 'Settlement retains the exact presenter target');
+    // Native r5: Tab scrolls this 180px textarea to y120.34375, under a rail
+    // ending at y134.046875. Model only geometry; the actual app wires clearance.
+    const replayJSON = page.$('replay-json');
+    replayDialog.scrollTop = 194;
+    t.mock.method(replayDialog, 'getBoundingClientRect', () => ({ top: 0, bottom: 390 }));
+    t.mock.method(replayRail, 'getBoundingClientRect', () => ({
+      top: 33.75,
+      bottom: 134.046875,
+    }));
+    t.mock.method(replayJSON, 'getBoundingClientRect', () => ({
+      top: 314.34375 - replayDialog.scrollTop,
+      bottom: 494.34375 - replayDialog.scrollTop,
+    }));
+    replayJSON.focus();
+    for (const callback of layoutFrames.splice(0)) callback();
+    assert.ok(
+      replayJSON.getBoundingClientRect().top >= replayRail.getBoundingClientRect().bottom + 8,
+      'Focused replay JSON begins below the actual sticky rail',
+    );
+    assert.equal(replayDialog.style.scrollPaddingBlockStart, '142.046875px');
+    assert.equal(page.doc.activeElement, replayJSON);
+    assert.equal(replayJSON.value, replayText);
+    const manualScroll = (replayDialog.scrollTop += 40);
+    replayDialog.emit('scroll');
+    for (const callback of layoutFrames.splice(0)) callback();
+    assert.equal(replayDialog.scrollTop, manualScroll, 'Manual reading scroll is not undone');
+    activate(page, input, replayClose, replayDialog);
+    page.frame(0);
+    assert.equal(replayDialog.open, false);
+    assert.equal(workshop.open, true);
+    assert.equal(home.open, true);
+    assert.equal(replayStatus.hidden, true);
+    assert.equal(
+      page.doc.activeElement,
+      exportButton,
+      'Settled export returns to its visible opener',
+    );
+    input.back();
+    page.frame(0);
+    assert.equal(workshop.open, false);
+    assert.equal(home.open, true);
+    assert.equal(page.doc.activeElement, page.$('shell-workshop'));
+    assert.equal(page.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), paused);
+    assert.deepEqual([...page.storage.map], exportedStorage);
+    assert.equal(page.storage.writes.length, exportedWrites);
     assert.deepEqual(page.errors, []);
   });
 }

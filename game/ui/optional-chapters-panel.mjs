@@ -712,6 +712,7 @@ export function attachOptionalChaptersPanel({
     if (notify) onClose();
   }
   const escape = (event) => {
+    if (event.target !== dialog) return;
     event.preventDefault();
     close();
   };

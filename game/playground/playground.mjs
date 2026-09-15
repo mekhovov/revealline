@@ -33,6 +33,89 @@ import { firstFlightPreviewURL } from '../ui/first-flight-preview.mjs';
 import { verifyReplayAsync, MAX_REPLAY_BYTES } from '../replay.mjs';
 const $ = (id) => document.getElementById(id),
   clone = (v) => structuredClone(v);
+// A page rail needs viewport bounds, rather than the modal-only clearance helper.
+// Only actual focus/reflow can clear an obscured control; ordinary scrolling is free.
+function keepEditorFocusClear() {
+  const rail = $('editor-feedback'),
+    scroller = document.scrollingElement ?? document.documentElement,
+    previousPadding = scroller.style.scrollPaddingBlockStart;
+  let disposed = false,
+    queued = false;
+  const update = () => {
+    queued = false;
+    if (disposed || document.hidden || document.hasFocus?.() === false) return;
+    const viewportTop = window.visualViewport?.offsetTop ?? 0,
+      bounds = rail.getBoundingClientRect(),
+      pinned =
+        rail.getClientRects().length &&
+        bounds.top <= viewportTop + 1 &&
+        bounds.bottom > viewportTop,
+      clearTop = pinned ? bounds.bottom + 8 : viewportTop;
+    scroller.style.scrollPaddingBlockStart = `${Math.max(0, clearTop - viewportTop)}px`;
+    const focused = document.activeElement;
+    if (
+      !pinned ||
+      !focused ||
+      rail.contains(focused) ||
+      !['BUTTON', 'INPUT', 'SELECT', 'TEXTAREA', 'A', 'SUMMARY'].includes(focused.tagName) ||
+      focused.disabled ||
+      focused.getClientRects().length === 0
+    )
+      return;
+    const target = focused.getBoundingClientRect();
+    // A deliberately scrolled-away control must not pull the page back on a resize.
+    if (target.bottom > viewportTop && target.top < clearTop)
+      scroller.scrollTop += target.top - clearTop;
+  };
+  const schedule = () => {
+    if (disposed || queued) return;
+    queued = true;
+    requestAnimationFrame(update);
+  };
+  const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(schedule) : null;
+  observer?.observe(rail);
+  document.addEventListener('focusin', schedule);
+  window.addEventListener('resize', schedule);
+  return {
+    refresh: schedule,
+    destroy() {
+      disposed = true;
+      observer?.disconnect();
+      document.removeEventListener('focusin', schedule);
+      window.removeEventListener('resize', schedule);
+      scroller.style.scrollPaddingBlockStart = previousPadding;
+    },
+  };
+}
+let editorClearance = keepEditorFocusClear(),
+  feedbackOwner = 'editor';
+// One bounded reading region serves both existing operation owners. A second
+// pending owner's message and escape action remain available until it settles.
+function showFeedback(owner = feedbackOwner) {
+  const changedOwner = owner !== feedbackOwner,
+    messages = $('editor-messages'),
+    focused =
+      changedOwner && messages.contains(document.activeElement) ? document.activeElement : null,
+    previousTop = focused?.getBoundingClientRect().top;
+  feedbackOwner = owner;
+  for (const [name, id, cancel] of [
+    ['editor', 'editor-status', 'cancel-import'],
+    ['replay', 'replay-status', 'cancel-replay'],
+    ['preview', 'preview-load-status', null],
+  ]) {
+    const message = $(id),
+      pending = cancel ? !$(cancel).hidden : previewLease !== null;
+    message.hidden = owner !== name && !pending && !message.contains(document.activeElement);
+    message.style.order = owner === name ? '-1' : '0';
+  }
+  if (changedOwner) {
+    // Expose a new owner's message without moving the page or disturbing a
+    // message already being read. Progress updates retain the reader's scroll.
+    if (focused) messages.scrollTop += focused.getBoundingClientRect().top - previousTop;
+    else messages.scrollTop = 0;
+  }
+  editorClearance?.refresh();
+}
 let campaign,
   themes,
   current,
@@ -75,6 +158,7 @@ const finishImport = (ticket) => {
   $('open-preview').removeAttribute('aria-disabled');
   if (previousPreviewHref !== null) $('open-preview').setAttribute('href', previousPreviewHref);
   previousPreviewHref = null;
+  showFeedback();
 };
 const importCurrent = (ticket) => ticket.epoch === importEpoch;
 const assertImportCurrent = (ticket) => {
@@ -94,6 +178,7 @@ const status = (message, error = false, busy = false) => {
   const lease = editorPresenter.begin({ message });
   if (!busy) lease.finish({ message, state: error ? 'error' : 'ready' });
   $('editor-status').classList.toggle('error', error);
+  showFeedback('editor');
   return lease;
 };
 const cancelImport = () => {
@@ -104,22 +189,33 @@ const cancelImport = () => {
 };
 $('cancel-import').onclick = cancelImport;
 $('cancel-replay').onclick = () => {
+  const wasPending = !$('cancel-replay').hidden;
   replayEpoch++;
   replayController?.abort();
   replayPresenter
     .begin({ message: '' })
     .finish({ message: 'Replay verification cancelled.', state: 'cancelled' });
   $('cancel-replay').hidden = true;
+  showFeedback(wasPending ? 'replay' : feedbackOwner);
 };
 window.addEventListener('pagehide', () => {
+  editorClearance?.destroy();
+  editorClearance = null;
   cancelImport();
   $('cancel-replay').onclick();
+});
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted && !editorClearance) {
+    editorClearance = keepEditorFocusClear();
+    editorClearance.refresh();
+  }
 });
 let previewLease = null,
   previewDocumentLoaded = false;
 function beginPreview() {
   previewDocumentLoaded = false;
   previewLease = previewPresenter.begin({ message: 'Loading the child game for this preview…' });
+  showFeedback('preview');
 }
 function checkPreviewReady() {
   if (!previewDocumentLoaded || !previewLease) return;
@@ -130,6 +226,7 @@ function checkPreviewReady() {
     if (state === 'ready') {
       previewLease.finish({ message: 'Preview game ready. Practice progress stays separate.' });
       previewLease = null;
+      showFeedback();
     } else if (state === 'failed' || state === 'error' || state === 'file') {
       previewLease.finish({
         message:
@@ -137,6 +234,7 @@ function checkPreviewReady() {
         state: 'error',
       });
       previewLease = null;
+      showFeedback();
     }
   } catch {
     /* The frame itself retains its direct navigation/recovery controls. */
@@ -381,6 +479,7 @@ function preview() {
       status(
         'First Flight course uses three fixed practice lessons. Your editor, history and saved configuration stay unchanged.',
       );
+      showFeedback('preview');
       return true;
     } catch (error) {
       status(`Course preview was not replaced: ${error.message}`, true);
@@ -392,6 +491,7 @@ function preview() {
     $('preview-frame').src = '../couch/?focus=1';
     $('open-preview').href = '../couch/?focus=1';
     status('Couch preview uses installed maps and packs. Solo configuration stays in the editor.');
+    showFeedback('preview');
     return true;
   }
   if (!checked()) return false;
@@ -406,6 +506,7 @@ function preview() {
         ...validateScenario(current).warnings,
       ].join(' '),
     );
+    showFeedback('preview');
     return true;
   } catch (error) {
     status(
@@ -1120,6 +1221,7 @@ try {
       isCurrent: () => epoch === replayEpoch,
     });
     $('cancel-replay').hidden = false;
+    showFeedback('replay');
     try {
       const text = await readText();
       if (text.length > MAX_REPLAY_BYTES) throw new Error('Replay exceeds the import budget.');
@@ -1149,7 +1251,10 @@ try {
     } catch (error) {
       lease.finish({ message: `Replay rejected: ${error.message}`, state: 'error' });
     } finally {
-      if (epoch === replayEpoch) $('cancel-replay').hidden = true;
+      if (epoch === replayEpoch) {
+        $('cancel-replay').hidden = true;
+        showFeedback();
+      }
     }
   }
   $('replay-file').onchange = () => {

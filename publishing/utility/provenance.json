@@ -1,0 +1,46 @@
+{
+  "scope": "Reviewed cache helper promotion for explicit hosted utility only; no payload or release execution.",
+  "files": [
+    {
+      "path": "inspect_qualified_artifact.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/inspect-qualified-member.py",
+      "bytes": 25776,
+      "sha256": "0584cfcb5e3d846d7bc39bccc1a1622a06ed7c63ce543da883cfa5d11290451e",
+      "adaptation": "none; byte-identical reviewed engine/test"
+    },
+    {
+      "path": "upload_source.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/source-stream-upload/upload_source.py",
+      "bytes": 17965,
+      "sha256": "32091bd624eb55fbfc5658432d5948cdef0445d4f989d1c0175c9b3a3da5c5c5",
+      "adaptation": "none; byte-identical reviewed engine/test"
+    },
+    {
+      "path": "upload_distribution.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/distribution-stream-upload/upload_distribution.py",
+      "bytes": 18035,
+      "sha256": "036c8a075b1618032f63e795c9f8b622840754f85e22df55334d1638f6cd3662",
+      "adaptation": "none; byte-identical reviewed engine/test"
+    },
+    {
+      "path": "test_upload_source.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/source-stream-upload/test_upload_source.py",
+      "bytes": 14206,
+      "sha256": "a098e5068d4737276f5dd4edfb7829d348a4d6ed0da90786ad9ad846234035dc",
+      "adaptation": "none; byte-identical reviewed engine/test"
+    },
+    {
+      "path": "test_upload_distribution.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/distribution-stream-upload/test_upload_distribution.py",
+      "bytes": 14382,
+      "sha256": "ccc3fce28bdd56aa0f267edab44faf25f5195d286bed4431ba2777fb54fe8d2c",
+      "adaptation": "none; byte-identical reviewed engine/test"
+    },
+    {
+      "path": "verify_frozen_offline.py",
+      "originalPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0572-library-boundary/verify-frozen-offline.py",
+      "originalSha256": "9c84716e7a93eefff319a609f998cb89064b335b61415cd7ed5cad2899e03f0b",
+      "adaptation": "Explicit repo/base/source/tree/version CLI; absolute receipt locators. Inventory/budget/worker/entry and raw-byte checks unchanged."
+    }
+  ]
+}
