@@ -58,10 +58,27 @@ test('BoardPainter keeps separate default boss bodies beneath the shared explici
   painter.enemyBodies = { current: (frame) => (frame.type === 'lane-boss' ? laneBody : relayBody) };
   assert.equal(painter.enemyBody(lane), laneBody);
   assert.equal(painter.enemyBody(relay), relayBody);
+  const compiled = {
+    image: { id: 'compiled-boss' },
+    geometry: { frame: { width: 64, height: 48 }, pivot: { x: 0.25, y: 0.5 }, rotors: [] },
+  };
+  assert.deepEqual(painter.enemyBody(lane, compiled), { ...compiled, record: null });
+  assert.deepEqual(painter.enemyBody(relay, compiled), { ...compiled, record: null });
   const upload = { id: 'explicit-boss-upload' };
   painter.images.boss = upload;
-  assert.deepEqual(painter.enemyBody(lane), { image: upload, record: null });
-  assert.deepEqual(painter.enemyBody(relay), { image: upload, record: null });
+  assert.deepEqual(painter.enemyBody(lane), { image: upload, geometry: null, record: null });
+  assert.deepEqual(painter.enemyBody(relay), { image: upload, geometry: null, record: null });
+  // Uploaded pixels must not inherit a compiled body's crop/pivot or legacy motion record.
+  assert.deepEqual(painter.enemyBody(lane, compiled), {
+    image: upload,
+    geometry: null,
+    record: null,
+  });
+  assert.deepEqual(painter.enemyBody(relay, compiled), {
+    image: upload,
+    geometry: null,
+    record: null,
+  });
 });
 
 test('facing uses newly observed tick positions instead of a stale velocity field', () => {
