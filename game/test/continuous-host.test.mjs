@@ -73,13 +73,21 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
     assert.equal(page.doc.body.dataset.flightState, 'paused');
     assert.match(page.$('run-message').textContent, /Saved flight verified.*Press Resume/);
+    assert.equal(page.rendered.run.player.cutting, true);
+    assert.ok(
+      page.rendered.run.trail.length > 0,
+      'The restored flight retains its unfinished line',
+    );
     const restoredBytes = storage.getItem(sessionKey);
     page.$('start-button').click();
     await settle(
       () => page.doc.body.dataset.flightState === 'running',
       'Explicit Start/Resume waits for the selected picture before movement.',
     );
-    assert.equal(page.$('run-message').textContent, 'Flight resumed.');
+    assert.equal(
+      page.$('run-message').textContent,
+      'Flight resumed. Your unfinished line is still exposed.',
+    );
     assert.equal(storage.getItem(sessionKey), restoredBytes, 'Resume copy does not rewrite save');
     ticks(page, 8);
     assert.equal(page.rendered.run.tick, saved.replay.ticks + 8);

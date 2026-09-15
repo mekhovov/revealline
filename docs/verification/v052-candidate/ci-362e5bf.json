@@ -1,0 +1,52 @@
+{
+  "sourceRevision": "362e5bfccaf7554257abd8f2599d29fda0f30375",
+  "run": 34920260049,
+  "passed": false,
+  "preflight": "success",
+  "build": "skipped",
+  "shards": [
+    {
+      "shard": 1,
+      "tests": 924,
+      "pass": 924,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "bytes": 379855,
+      "sha256": "860daddf5a4d473994b1dfc84bd6a64dd4b4847e471589059369ed6c27e8debd"
+    },
+    {
+      "shard": 2,
+      "tests": 998,
+      "pass": 998,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "bytes": 413174,
+      "sha256": "0bf0d202eeee85c339ba963a9c99b16a9fc153a3fa3f59b277694e7e04150d63"
+    },
+    {
+      "shard": 3,
+      "tests": 1029,
+      "pass": 1029,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "bytes": 418131,
+      "sha256": "27c557fb647cfbedee12b7594284504d12ac39807ba8a58946bfb4638d28dda3"
+    },
+    {
+      "shard": 4,
+      "tests": 916,
+      "pass": 914,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "bytes": 380710,
+      "sha256": "7c4b8ccc3ae83cde5a9fd524c92cd4934291c1cc69e44cae2b016192e93a329d"
+    }
+  ],
+  "tests": 3867,
+  "failures": "Two five-destination menu assertions; corrected by07ab4a4 and retained with incoming catalog id during reconciliation.",
+  "nativeReload": "The later same-URL reload observation is unqualified; source review found no ordinary-URL auto-resume/fullscreen path."
+}

@@ -1,0 +1,123 @@
+{
+  "sourceRevision": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+  "sourceTree": "e3afc737a7684459487bc8c2aad544fe0ffb86a7",
+  "nodeVersion": "v22.22.2",
+  "exitCode": 0,
+  "elapsedSeconds": 6.053666708059609,
+  "result": {
+    "format": "revealline-production-readiness.v1",
+    "source": {
+      "id": "field-kit",
+      "revision": 13
+    },
+    "selection": {
+      "base": {
+        "id": "base",
+        "revision": 1
+      },
+      "collection": null,
+      "theme": {
+        "id": "fpv",
+        "revision": 13
+      }
+    },
+    "requiredReviewed": 194,
+    "optionalSlots": 99,
+    "coverage": {
+      "missing": 0,
+      "source": 99,
+      "produced": 0,
+      "reviewed": 194
+    },
+    "declarationOnly": true,
+    "limitation": "Reviewed state and evidence declarations; no visual acceptance inferred.",
+    "sourceRevision": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+    "sourceTree": "e3afc737a7684459487bc8c2aad544fe0ffb86a7",
+    "ledgerPath": "authoring/library/fpv-field-kit/production.rltheme",
+    "ledgerSha256": "9bf459cbbde311413887feae897d1905f9cab4645c8a3a5444441eec4e79ce99"
+  },
+  "inputFiles": 33,
+  "inputBytes": 6837994,
+  "inputsUnchanged": true,
+  "detachedHeadVerified": true,
+  "trackedClean": true,
+  "logicalNewDataBeforeCompletionBytes": 7284630,
+  "includedGitAdminBytes": 416314,
+  "completionAllowanceBytes": 16384,
+  "budgetBytes": 16777216,
+  "ciObservation": {
+    "observedAt": "2026-09-15T01:11:10.670035+00:00",
+    "runId": 34915424316,
+    "headSha": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+    "status": "in_progress",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "release_gate",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "test (4)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "test (3)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "test (1)",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "test (2)",
+        "status": "in_progress",
+        "conclusion": ""
+      }
+    ],
+    "qualification": "One read only; no subsequent polling. In-progress job conclusions do not establish leaf-test success or failure."
+  },
+  "pins": {
+    "execution.json": {
+      "bytes": 1975,
+      "sha256": "1a5025a28e403f3af9446f752461f776d59b994a2ff4a9659a9f1e47c0839906"
+    },
+    "stdout.json": {
+      "bytes": 673,
+      "sha256": "0d9f755869b70cfa5ceb9c3db2603659f848b9c7f55e0eccd75d23c58a82f846"
+    },
+    "stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preparation.json": {
+      "bytes": 15982,
+      "sha256": "e2607068b6d13799a4d53c6027c2313fac41cbc18cfec895789536b846b0312b"
+    },
+    "setup.json": {
+      "bytes": 2027,
+      "sha256": "2bd275f2368332de9be57b55771685ad02e9a05fb2c74e953d838111a4ad2ccd"
+    },
+    "ci-run.json": {
+      "bytes": 8999,
+      "sha256": "74e40e8b746b38a3eddcd86a6fade733cc921e5c2f55a2070dd33b9243a2f34f"
+    },
+    "ci-run.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ci-read-receipt.json": {
+      "bytes": 584,
+      "sha256": "1ed682838bbc6df80840854b18989aa26a78f900e47880d2509334ec2e5e9bd4"
+    }
+  },
+  "scope": "No branch/source changes, builds, large exports, tag/PR mutation or publication. Small detached checkout has exact33 input files. Declaration and embedded-ledger integrity verification only, no visual/native acceptance inferred."
+}

@@ -16,7 +16,7 @@ import {
 const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 const presets = await json('../../authoring/motion-lab/presets.json');
 const prior = await json(
-  "../../authoring/production/history/e16731f4065e5d1e76b84abc985874187c5133cf55776ea352a4479bded5cdb0.json",
+  '../../authoring/production/history/e857a548bccaa9649d86ccb6443fbf9fd37f8ff4de8e3f6a7a7da900b92ed8cb.json',
 );
 const first = await json('../../authoring/library/ukraine-role-presentations/presentations.json');
 const wide = await json('../../authoring/library/ukraine-role-wide-variants/variants.json');
@@ -59,7 +59,8 @@ test('seven selected originals and wing recipes are exact; historical presets an
     const path = `authoring/library/${area}/${role.body.src}`;
     paths.push(path);
     assert.equal(body.originalSha256, role.sha256);
-    assert.equal(body.src, `../library/${area}/${role.body.src}`);
+    assert.equal(body.derivation.source.src, `../library/${area}/${role.body.src}`);
+    assert.equal(body.derivation.source.sha256, role.sha256);
     for (const key of Object.keys(role.body).filter((key) => key !== 'src'))
       assert.deepEqual(body[key], role.body[key]);
     assert.deepEqual(presets.animationRecipes[body.animationRecipe], role.recipe);
@@ -71,8 +72,11 @@ test('seven selected originals and wing recipes are exact; historical presets an
   assert.equal(total, 5873332);
   assert.deepEqual(
     config.include.filter((path) => path.startsWith('authoring/library/ukraine-role')),
-    paths,
+    [],
   );
+  for (const [, id] of selected)
+    assert.ok(config.include.includes(`authoring/${presets.characters[id].src.slice(3)}`));
+  assert.ok(paths.every((path) => !config.include.includes(path)));
   assert.ok(
     52816659 + total + 65536 < 64 * 1024 * 1024,
     'Projected core allowance; an actual candidate build is separate.',

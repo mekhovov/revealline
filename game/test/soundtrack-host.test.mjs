@@ -91,13 +91,11 @@ async function openStudio(page) {
 }
 const musicMedia = (page) => page.audioElements[0];
 async function playStudio(page) {
-  page.$('soundtrack-play').click();
-  // Prepared media starts within the click task. These persistence journeys
-  // wait for its listening intent to settle before issuing the next gesture.
-  await waitFor(
-    () => musicMedia(page).paused === false && preferences(page).musicEnabled,
-    'Studio playback and persisted listening intent settle before the next gesture',
-  );
+  const play = page.$('soundtrack-play');
+  assert.equal(play.disabled, false);
+  // Prepared media starts before the Studio action finishes its host notification.
+  await play.onclick();
+  await waitFor(() => musicMedia(page).paused === false, page.$('soundtrack-now').textContent);
 }
 function leaveStudio(page) {
   page.$('soundtrack-close').click();
@@ -426,3 +424,59 @@ test('actual Studio prepares without downloading; controller, keyboard and touch
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });
+
+for (const [intent, initiallyEnabled] of [
+  ['play', false],
+  ['pause', false],
+  ['pause', true],
+  ['mute', true],
+])
+  test(`closing Studio during pending Play respects ${intent} with saved audio ${initiallyEnabled ? 'enabled' : 'disabled'} when flight starts`, async (t) => {
+    const { page } = await setup(t);
+    await openStudio(page);
+    if (initiallyEnabled) {
+      await playStudio(page);
+      await page.$('soundtrack-pause').onclick();
+    }
+    const media = musicMedia(page);
+    await waitFor(() => !!media.src, 'Selected MP3 is prepared before the play gesture');
+    const originalPlay = media.play.bind(media);
+    let release;
+    const completion = new Promise((resolve) => {
+      release = resolve;
+    });
+    t.after(() => release());
+    media.play = async () => {
+      await originalPlay();
+      await completion;
+    };
+    const playing = page.$('soundtrack-play').onclick();
+    await waitFor(() => !media.paused, 'The real media element received Play');
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(
+      preferences(page).musicEnabled,
+      initiallyEnabled,
+      'Successful playback notification is still pending',
+    );
+    assert.equal(page.$('soundtrack-close').disabled, false);
+    const url = media.src;
+    if (intent === 'pause') await page.$('soundtrack-pause').onclick();
+    leaveStudio(page);
+    if (intent === 'mute') await page.$('sound-button').onclick();
+    page.$('start-button').click();
+    ticks(page, 3);
+    assert.equal(page.rendered.paused, false, 'Flight remains available while media completes');
+    assert.equal(
+      media.paused,
+      intent !== 'play',
+      'Starting flight preserves the latest explicit listening intent',
+    );
+    release();
+    await playing;
+    assert.equal(
+      preferences(page).musicEnabled,
+      intent === 'mute' ? false : initiallyEnabled || intent === 'play',
+    );
+    assert.equal(media.src, url);
+    assert.deepEqual(page.errors, []);
+  });

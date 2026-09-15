@@ -50,6 +50,13 @@ export function releaseDecision({ configuration, pages, requested = '', route = 
     };
   if (!configuration || configuration.deploymentEnabled !== true)
     throw new Error('The reviewed frozen publication selector is not enabled.');
+  if (configuration.currentVersion !== latest && route)
+    return {
+      shouldDispatch: false,
+      requested,
+      latest,
+      reason: 'Awaiting a reviewed frozen selector for the latest stable release.',
+    };
   if (configuration.currentVersion !== latest)
     throw new Error(
       `The reviewed selector ${configuration.currentVersion} is not the latest stable release ${latest}.`,

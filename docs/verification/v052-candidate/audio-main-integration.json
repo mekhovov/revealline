@@ -1,0 +1,267 @@
+{
+  "base": "06ac8e08a4f3aa28cb0874bc1e9d15e0c6b3e863",
+  "incoming": "ac6d842052bba4addef21e404cdfc91f5a909321",
+  "status": "FOCUSED_PASS_BEFORE_COMMITS",
+  "node20": {
+    "initialCases": 89,
+    "initialPass": 86,
+    "initialFail": 3,
+    "correctedWholeHostCases": 12,
+    "finalDistinctPass": 93,
+    "qualification": "Five unchanged complete file results plus final complete host file; initial failures retained."
+  },
+  "node22": {
+    "wholeFiles": 6,
+    "cases": 93,
+    "pass": 93,
+    "fail": 0,
+    "skip": 0
+  },
+  "casesEqual": true,
+  "sourcePins": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 201611,
+      "sha256": "d05ac0a12c211e21a05f9a71b2424c99fd53666f5ca3eabd72b6bc8539b1472b"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 64850,
+      "sha256": "a52b54ebdea401b393e5c71b56766fab2fd760e58d96944383b48a86d9db3226"
+    },
+    {
+      "path": "game/release-explorer.mjs",
+      "bytes": 448,
+      "sha256": "440ca2e8344c4ab7f0053dc3248fbb357ed9bb8b1c4b9423a0988d7419e437f1"
+    },
+    {
+      "path": "game/test/audio.test.mjs",
+      "bytes": 25189,
+      "sha256": "45b7baedeb9961d81547e1b97ef4321159e3d6bd199848b89b29905e15ab7637"
+    },
+    {
+      "path": "game/test/site-release-links.test.mjs",
+      "bytes": 2792,
+      "sha256": "56d0de9ccbcf9607a8853d0c32208a849832d11e61aefaafef03005640e56123"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "bytes": 18520,
+      "sha256": "37039dc6372c7b52d6d31b4dd37599df616e4e41818e766039f57c00aebec38b"
+    },
+    {
+      "path": "game/test/soundtrack-player.test.mjs",
+      "bytes": 19966,
+      "sha256": "2a9630941ec2c95496bb733c90656713d5530fef832f302ef4b9077d231f0f02"
+    },
+    {
+      "path": "game/ui/audio.mjs",
+      "bytes": 26268,
+      "sha256": "bb30a2903496244b365ae1a336b3d382d51104461205fe601d138e9a94154ff4"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "bytes": 43368,
+      "sha256": "e767d35d6443ea718a66153e21831c6c4a831ee5e76e9c4431a742384a89e376"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "bytes": 22494,
+      "sha256": "e9ac713b5f23b1f05e1b150b70f776e2114681343c6a2eaf650c2e19e7d28a48"
+    },
+    {
+      "path": "scripts/test-pages-current-entry.mjs",
+      "bytes": 12965,
+      "sha256": "b889eccf062bb61bb1c9046d702a9fd1e984248385a0da7cd988ed0543628b19"
+    }
+  ],
+  "inputFiles": 270,
+  "inputBytes": 5569666,
+  "physicalCheckoutAndScratchBytes": 6014983,
+  "checkoutScratchCap": 33554432,
+  "runtimeFix": "Both flight resume audio decisions preserve current explicit player.desired while media completion has not yet persisted musicEnabled. Existing activation respects music-only Pause; Mute clears intent and preference.",
+  "sourcePeer": "Lagrange full merged app/index and two-path successor review: no blocker.",
+  "excluded": "No build/archive/full-suite/tag/release/PR/workflow/source-ref mutation. Final root full CI remains required.",
+  "evidence": [
+    {
+      "path": ".cache/main-integration/app.merged-before-race.mjs",
+      "bytes": 201340,
+      "sha256": "cdb7594200a09f4c12bb200f28696ce9a46217ef559cfdd32041c3a2593964e6"
+    },
+    {
+      "path": ".cache/main-integration/executions.json",
+      "bytes": 910,
+      "sha256": "1a4ab5e058abd9c81d3e476d10aaf8bfae91a57fe43d24737e5e8d81f3173feb"
+    },
+    {
+      "path": ".cache/main-integration/final-static-1.execution.json",
+      "bytes": 597,
+      "sha256": "99583d3ac6f5b7daa57709ba5c7a1bb3ad25fb07c79fa7decf0319cd6fab4ede"
+    },
+    {
+      "path": ".cache/main-integration/final-static-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-1.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-2.execution.json",
+      "bytes": 619,
+      "sha256": "535bb4a40b426b81814127c2286f7f3f901ae1217e0fe170bb3882715f401cc4"
+    },
+    {
+      "path": ".cache/main-integration/final-static-2.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-2.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-3.execution.json",
+      "bytes": 737,
+      "sha256": "434815a1e6741c96fb36282062d1ac0cde3009b0d20f56c7673795327574fa6d"
+    },
+    {
+      "path": ".cache/main-integration/final-static-3.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-3.stdout.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "path": ".cache/main-integration/final-static-4.execution.json",
+      "bytes": 716,
+      "sha256": "2bbf19b387e476f85614edfa4a521e40355224072a5be3b9c11d54485d16506b"
+    },
+    {
+      "path": ".cache/main-integration/final-static-4.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-4.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-5.execution.json",
+      "bytes": 520,
+      "sha256": "538229997893aa246e104c4c44f1a2d87fe27a432c93d6aaf6f150794c507f68"
+    },
+    {
+      "path": ".cache/main-integration/final-static-5.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/final-static-5.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/inputs-final.json",
+      "bytes": 63011,
+      "sha256": "5d8310e7f63c52dd2f7d3cd28c523a348705339d3411d747770deed352519458"
+    },
+    {
+      "path": ".cache/main-integration/inputs.json",
+      "bytes": 62857,
+      "sha256": "6580891271da4a669f14ee9a90559a19caeabc8fce415f75d4f8dbc9606d8bf1"
+    },
+    {
+      "path": ".cache/main-integration/interleaving-after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/interleaving-after.stdout.log",
+      "bytes": 3536,
+      "sha256": "4dc3eeeebe7b562b21b36ddef0105b1b50568ac7c1b03b8ff2963af92f08b10f"
+    },
+    {
+      "path": ".cache/main-integration/interleaving-before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/interleaving-before.stdout.log",
+      "bytes": 3515,
+      "sha256": "2c1c68e290b37d85f2ccc92e0967e4c9c36cd0f4f63eeb964b596000710a4521"
+    },
+    {
+      "path": ".cache/main-integration/node20-host-final.execution.json",
+      "bytes": 624,
+      "sha256": "f3eaa0326d6727dd181acf07aaa035c8e53e4949c35e98b07de569b883d410c6"
+    },
+    {
+      "path": ".cache/main-integration/node20-host-final.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/node20-host-final.stdout.log",
+      "bytes": 3234,
+      "sha256": "3d554917116afb1a6b8e7d545f9f2d4b82c9f3dda19bebb71ab53a1e7fe707a9"
+    },
+    {
+      "path": ".cache/main-integration/node20.execution.json",
+      "bytes": 850,
+      "sha256": "4a59113050ed3c4d0f65ae892eb75ee47f7dbc57c90921598bc214cb2794c5df"
+    },
+    {
+      "path": ".cache/main-integration/node20.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/node20.stdout.log",
+      "bytes": 23587,
+      "sha256": "bf00a07d214f5627b31d1e413beee10f9df54cd22652bb331d6d3ee6b26ea6a0"
+    },
+    {
+      "path": ".cache/main-integration/node22-final.execution.json",
+      "bytes": 856,
+      "sha256": "a6125665401b449fc2e1b0db3abb4903dedf95fa78ac3d334a491af2e32b52f1"
+    },
+    {
+      "path": ".cache/main-integration/node22-final.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": ".cache/main-integration/node22-final.stdout.log",
+      "bytes": 23459,
+      "sha256": "6310a6465cf6a73bfa5d0f1dd86b29c0d322389c3e3655253c7ff8251dc61c1d"
+    },
+    {
+      "path": ".cache/main-integration/run-final.py",
+      "bytes": 1972,
+      "sha256": "cf8e35788ad60eb8e7b9d609c0edd4239f2e360e819098f716c6e57c1f7bf3db"
+    },
+    {
+      "path": ".cache/main-integration/soundtrack-host.before.mjs",
+      "bytes": 16375,
+      "sha256": "aaf11adf0b2683e9adc6e762e59c4a9966cecc7f437b49dde5edbfd029ea4a77"
+    },
+    {
+      "path": ".cache/main-integration/source.diff",
+      "bytes": 20989,
+      "sha256": "64c82290f7cd3e47bfc5ceab24638c177843b5044d2893c32f992da7791015c3"
+    },
+    {
+      "path": ".cache/main-integration/static.json",
+      "bytes": 3879,
+      "sha256": "d7e16810d7209b8c829e60a91f295af6b986387b9605f6b4477cc7bb76a226ad"
+    }
+  ]
+}

@@ -89,6 +89,9 @@ test('v0.10 profile export, chapter continuation, rewards and campaign identity 
     assert.equal(Object.hasOwn(owned.preferences, 'touchControls'), true);
     assert.equal(owned.preferences.touchControls, null);
     delete owned.preferences.touchControls;
+    assert.equal(Object.hasOwn(owned.preferences, 'textFace'), true);
+    assert.equal(owned.preferences.textFace, 'pixel');
+    delete owned.preferences.textFace;
     assert.equal(Object.hasOwn(owned.preferences, 'screenSteeringHand'), true);
     assert.equal(owned.preferences.screenSteeringHand, 'left');
     delete owned.preferences.screenSteeringHand;

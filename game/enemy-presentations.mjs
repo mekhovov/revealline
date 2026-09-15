@@ -1,5 +1,6 @@
 import { boundedJSON, exactKeys, required, stableId } from './data-json.mjs';
 import { ENEMY_CATALOG, enemyCatalogRecord, enemySkinId } from './enemy-catalog.mjs';
+import { validateBodyDerivative } from './body-derivative.mjs';
 
 export const ENEMY_PRESENTATION_LIMITS = Object.freeze({
   records: 7,
@@ -50,6 +51,7 @@ export function validateEnemyPresentations(source) {
         'height',
         'pivot',
         'motion',
+        ...(Object.hasOwn(row, 'derivation') ? ['derivation'] : []),
       ],
       'enemy presentation',
     );
@@ -60,10 +62,18 @@ export function validateEnemyPresentations(source) {
       'Unique presentation identity required.',
     );
     ids.add(row.presentationId);
-    required(
-      row.src === `authoring/library/fpv-enemy-presentations/originals/${row.type}.png`,
-      'Unregistered enemy image path.',
-    );
+    const originalSrc = `authoring/library/fpv-enemy-presentations/originals/${row.type}.png`;
+    if (Object.hasOwn(row, 'derivation')) {
+      const output = validateBodyDerivative(row.derivation, {
+        id: row.presentationId,
+        src: row.src,
+        sourceSrc: originalSrc,
+      });
+      required(
+        ['bytes', 'sha256', 'width', 'height'].every((key) => row[key] === output[key]),
+        'Enemy runtime derivative identity differs.',
+      );
+    } else required(row.src === originalSrc, 'Unregistered enemy image path.');
     required(
       Number.isSafeInteger(row.bytes) &&
         row.bytes > 0 &&
@@ -75,7 +85,7 @@ export function validateEnemyPresentations(source) {
       'Enemy image hash required.',
     );
     required(
-      row.width === 1254 && row.height === 1254,
+      row.width === (row.derivation ? 128 : 1254) && row.height === row.width,
       'Registered enemy image dimensions differ.',
     );
     required(

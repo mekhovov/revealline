@@ -7,6 +7,7 @@ import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
 import { BACKUP_FORMAT } from '../backup.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
+import { resolveTouchControls } from '../touch-controls.mjs';
 
 const profileKey = 'revealline.library.dev.v1',
   sessionKey = 'revealline.suspended.dev.v1';
@@ -111,6 +112,9 @@ test('featured pressure chapter hides manual actions and actual keyboard action 
   page.$('shell-featured').click();
   await featuredPictureReady(page);
   assert.equal(page.$('pack-select').value, 'fpv-arcade-r5');
+  assert.equal(page.$('manual-equipment-help').hidden, true);
+  assert.doesNotMatch(page.$('keyboard-help').textContent, /supply/i);
+  assert.doesNotMatch(page.$('controller-help').textContent, /: supply/i);
   for (const id of ['action-button', 'pickup-button', 'boost-button', 'ability-state'])
     assert.equal(page.$(id).hidden, true, id);
   page.$('shell-deploy').click();
@@ -353,9 +357,19 @@ test('an already joined controller takes its first fresh turn after touch withou
   assert.deepEqual(page.errors, []);
 });
 
+const handPreferences = (side) => ({
+  screenSteeringHand: side,
+  touchControls: { ...resolveTouchControls(null), side },
+});
 function steeringHand(page, expected) {
-  assert.equal(page.$('screen-steering-hand').value, expected);
+  assert.equal(page.$('touch-side').value, expected);
   assert.equal(page.doc.body.dataset.screenSteeringHand, expected);
+  assert.equal(page.doc.body.dataset.touchSide, expected);
+  assert.equal(
+    page.doc.getElementById('screen-steering-hand'),
+    null,
+    'There is one placement selector.',
+  );
   const groups = page.doc.querySelector('.play-controls').children;
   assert.deepEqual(
     [...groups].map((group) => group.id || group.className),
@@ -377,6 +391,8 @@ function startHandCut(page) {
 }
 function pauseForHand(page) {
   page.$('settings-button').click();
+  page.$('settings-tab-controls').click();
+  assert.equal(page.$('settings-panel-controls').hidden, false);
   page.frame(0);
   assert.equal(page.$('settings-dialog').open, true);
   assert.equal(page.rendered.paused, true);
@@ -401,7 +417,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: changing steering hand retains the original pad, paused cut and exact continuation`, async (t) => {
     const page = await soloPage(t, {
       campaign,
-      storage: storageWith({ turnPolicy, screenControls: 'always' }),
+      storage: storageWith({ ...handPreferences('left'), turnPolicy, screenControls: 'always' }),
     });
     steeringHand(page, 'left');
     const down = startHandCut(page),
@@ -420,8 +436,8 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
     for (const hand of ['right', 'right', 'left', 'left', 'right']) {
       const previousMoves = groupMoves;
       const padReads = page.padReads;
-      page.$('screen-steering-hand').focus();
-      page.change('screen-steering-hand', hand);
+      page.$('touch-side').focus();
+      page.change('touch-side', hand);
       assert.equal(
         groupMoves - previousMoves,
         Number(hand !== previousHand),
@@ -429,13 +445,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
       );
       previousHand = hand;
       steeringHand(page, hand);
-      assert.strictEqual(page.doc.activeElement, page.$('screen-steering-hand'));
+      assert.strictEqual(page.doc.activeElement, page.$('touch-side'));
       assert.equal(page.padReads, padReads, 'Placement never polls hardware.');
       assert.strictEqual(page.doc.querySelector('[data-move="down"]'), down);
       assert.equal(page.$('screen-controls').value, 'always');
       assert.deepEqual(
         currentProfile(page.storage).library,
-        updatePreferences(library, { screenSteeringHand: hand }),
+        updatePreferences(library, handPreferences(hand)),
       );
       assert.match(page.$('screen-steering-status').textContent, /Steering hand saved/);
       assert.equal(page.$('screen-steering-status').hidden, false);
@@ -467,13 +483,13 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Right hand survives actual app reload while Auto still hides keyboard controls', async (t) => {
-  const storage = storageWith({}),
+  const storage = storageWith(handPreferences('left')),
     lifetime = { after: (callback) => (dispose = callback) };
   let dispose;
   t.after(async () => dispose?.());
   const page = await soloPage(lifetime, { campaign, storage });
   pauseForHand(page);
-  page.change('screen-steering-hand', 'right');
+  page.change('touch-side', 'right');
   steeringHand(page, 'right');
   controls(page, 'hidden');
   const close = dispose;
@@ -500,7 +516,7 @@ test('Right hand survives actual app reload while Auto still hides keyboard cont
 });
 
 test('unrelated saves apply the actual merged hand, and a deliberate Left remains explicit', async (t) => {
-  const storage = storageWith({}),
+  const storage = storageWith(handPreferences('left')),
     page = await soloPage(t, { campaign, storage });
   startHandCut(page);
   const before = pauseForHand(page),
@@ -509,18 +525,20 @@ test('unrelated saves apply the actual merged hand, and a deliberate Left remain
     saveLibrary(
       storage,
       profileKey,
-      updatePreferences(current.library, { screenSteeringHand: 'right' }),
+      updatePreferences(current.library, handPreferences('right')),
       null,
       { baseline: current.library, generation: current.generation },
     ).ok,
     true,
   );
   steeringHand(page, 'left');
+  page.$('settings-tab-display').click();
   page.$('settings-grid').click();
   steeringHand(page, 'right');
   assert.equal(currentProfile(storage).library.preferences.showGrid, true);
   assertHandPaused(page, before);
-  page.change('screen-steering-hand', 'left');
+  page.$('settings-tab-controls').click();
+  page.change('touch-side', 'left');
   steeringHand(page, 'left');
   assert.equal(currentProfile(storage).library.preferences.screenSteeringHand, 'left');
   assertHandPaused(page, before);
@@ -528,7 +546,7 @@ test('unrelated saves apply the actual merged hand, and a deliberate Left remain
 });
 
 test('quota refusal keeps the session hand and exact stored bytes with visible feedback', async (t) => {
-  const storage = storageWith({}),
+  const storage = storageWith(handPreferences('left')),
     page = await soloPage(t, { campaign, storage });
   startHandCut(page);
   const before = pauseForHand(page),
@@ -539,13 +557,14 @@ test('quota refusal keeps the session hand and exact stored bytes with visible f
     if (deny && key === profileKey) throw new DOMException('Storage is full', 'QuotaExceededError');
     setItem(key, value);
   };
-  page.change('screen-steering-hand', 'right');
+  page.change('touch-side', 'right');
   steeringHand(page, 'right');
   assert.equal(storage.getItem(profileKey), raw);
   assert.match(page.$('screen-steering-status').textContent, /selected for this session/i);
   assert.equal(page.$('screen-steering-status').hidden, false);
   assertHandPaused(page, before);
   deny = false;
+  page.$('settings-tab-display').click();
   page.$('settings-grid').click();
   steeringHand(page, 'right');
   assert.equal(currentProfile(storage).library.preferences.screenSteeringHand, 'right');
@@ -555,12 +574,12 @@ test('quota refusal keeps the session hand and exact stored bytes with visible f
 });
 
 test('practice hand placement stays session-only without changing profile or saved flight', async (t) => {
-  const page = await soloPage(t, { campaign, storage: storageWith({}) });
+  const page = await soloPage(t, { campaign, storage: storageWith(handPreferences('left')) });
   page.$('demo-button').click();
   pauseForHand(page);
   const before = new Map(page.storage.map),
     writes = page.storage.writes.length;
-  page.change('screen-steering-hand', 'right');
+  page.change('touch-side', 'right');
   steeringHand(page, 'right');
   assert.match(page.$('screen-steering-status').textContent, /selected for this session.*Practice/);
   assert.deepEqual(page.storage.map, before);
@@ -571,7 +590,7 @@ test('practice hand placement stays session-only without changing profile or sav
 });
 
 test('complete-backup import and Undo adopt hand placement without rewriting the saved attempt', async (t) => {
-  const page = await soloPage(t, { campaign, storage: storageWith({}) });
+  const page = await soloPage(t, { campaign, storage: storageWith(handPreferences('left')) });
   startHandCut(page);
   page.$('library-button').click();
   page.frame(0);
@@ -579,7 +598,7 @@ test('complete-backup import and Undo adopt hand placement without rewriting the
     library = currentProfile(page.storage).library;
   page.$('save-json').value = JSON.stringify({
     format: BACKUP_FORMAT,
-    library: updatePreferences(library, { screenSteeringHand: 'right' }),
+    library: updatePreferences(library, handPreferences('right')),
     packs: emptyPackLibrary(),
     session: original,
   });

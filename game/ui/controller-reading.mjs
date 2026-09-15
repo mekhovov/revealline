@@ -121,6 +121,27 @@ export function attachControllerReading({
       if (!brief.open && getNavigation().readingState()?.regionId === 'mission-brief-reading')
         getNavigation().endReading({ restoreFocus: false });
     });
+  const collectionProgress = doc.getElementById('collection-progress');
+  if (collectionProgress)
+    listen(collectionProgress, 'toggle', () => {
+      if (collectionProgress.open) return;
+      const summary = collectionProgress.querySelector('summary');
+      const hiddenFocus =
+        collectionProgress.contains(doc.activeElement) &&
+        doc.activeElement !== summary &&
+        !summary?.contains(doc.activeElement);
+      if (getNavigation().readingState()?.regionId === 'collection-reading')
+        getNavigation().endReading({ restoreFocus: false });
+      // Native disclosure closure must not leave focus in its hidden content.
+      // A later toggle cannot steal focus from another control or closed dialog.
+      if (
+        hiddenFocus &&
+        collectionProgress.closest('dialog')?.open &&
+        summary?.isConnected &&
+        !summary.closest('[hidden],[inert],[aria-hidden="true"]')
+      )
+        summary.focus({ preventScroll: true });
+    });
   const overlay = compactOverlay
     ? surfaces.find((surface) => surface.id === 'overlay-reading')
     : null;

@@ -1,3 +1,4 @@
+import { versionParts, compare, targetVersion, sourceFor } from './profile-channel.mjs';
 import {
   BACKUP_FORMAT,
   EXTERNAL_BACKUP_FORMAT,
@@ -16,7 +17,6 @@ export const TRANSFER_LIMITS = Object.freeze({
   timeoutMs: 120000,
   maxTimeoutMs: 300000,
 });
-const versionPattern = /^(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})\.(0|[1-9]\d{0,4})$/;
 const prefix = 'revealline.library.';
 const discoveryPrefixes = [prefix, 'revealline.suspended.'];
 const suffix = '.v1';
@@ -49,43 +49,6 @@ async function fingerprintValue(value, digest) {
   required(bytes?.byteLength === 32, 'The SHA-256 digest must contain exactly 32 bytes.');
   return `sha256-${Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('')}`;
 }
-function versionParts(version) {
-  if (typeof version !== 'string') return null;
-  const match = versionPattern.exec(version.replace(/^v/, ''));
-  return match ? match.slice(1).map(Number) : null;
-}
-function compare(a, b) {
-  for (let i = 0; i < 3; i++) if (a[i] !== b[i]) return a[i] - b[i];
-  return 0;
-}
-function targetVersion(version) {
-  const parsed = versionParts(version);
-  required(parsed, 'A stable current release version is required for collection transfer.');
-  return parsed;
-}
-function sourceFor(channel, current) {
-  if (typeof channel !== 'string') return null;
-  const legacy = channel === 'release';
-  const buildLabel = legacy ? 'v0.2.0' : /^release-(v?\d+\.\d+\.\d+)$/.exec(channel)?.[1];
-  const parsed = versionParts(buildLabel);
-  if (!parsed || (!legacy && compare(parsed, [0, 2, 1]) < 0) || compare(parsed, current) >= 0)
-    return null;
-  const profileKey = `${prefix}${channel}${suffix}`;
-  return Object.freeze({
-    id: channel,
-    channel,
-    version: `v${parsed.join('.')}`,
-    buildLabel,
-    legacy,
-    profileKey,
-    packsKey: `revealline.packs.${channel}.v1`,
-    sessionKey: `revealline.suspended.${channel}.v1`,
-    journalKey: `${profileKey}.backup-journal`,
-    writerKey: `${profileKey}.writer`,
-    lockKey: `${profileKey}.backup-lock`,
-  });
-}
-
 /** Bounded key discovery only: candidates are not verified until prepared.
  * Frozen v0.2.0 used exactly `release`; v0.2.1 onward uses the build label in
  * `release-vN.N.N` (or `release-N.N.N`). These sources share the writer/journal
