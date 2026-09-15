@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=2",
+    "game/test/gallery-return-host.test.mjs",
+    "game/test/gallery-focus.test.mjs",
+    "game/test/collection-context-host.test.mjs"
+  ],
+  "exit": 0,
+  "seconds": 21.954645459074527,
+  "inputsUnchanged": 300
+}

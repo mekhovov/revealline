@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-name-pattern=metadata success|over search$",
+    "game/test/gallery-return-host.test.mjs"
+  ],
+  "exit": 1,
+  "seconds": 0.6577090420760214
+}

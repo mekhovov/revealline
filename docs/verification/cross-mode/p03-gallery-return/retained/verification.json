@@ -1,0 +1,190 @@
+{
+  "at": "2026-09-15T21:48:03.412914+00:00",
+  "base": "87f0f49c84e2f92bceb24b0a317d5e6c79e64ac6",
+  "scope": "Gallery picture return intent only; internal source candidate, no native/browser/release or complete P03 acceptance.",
+  "sourceHold": {
+    "path": ".cache/gallery-return/source-held-01.json",
+    "bytes": 759,
+    "sha256": "1115f7954aa7a03a52441e9c17c67561bf6555387334a0218dcae39c4555a973"
+  },
+  "files": [
+    {
+      "path": "game/ui/library-panel.mjs",
+      "bytes": 58305,
+      "sha256": "b71af2d75576583b2390aa4bb4468690548ddfe57b7929cd4f045b93552c2929"
+    },
+    {
+      "path": "game/test/gallery-return-host.test.mjs",
+      "bytes": 11823,
+      "sha256": "099d247469140c69422cdce827acb71866d9e6a5d92ca9f32d361a7745af676f"
+    },
+    {
+      "path": "game/test/gallery-focus.test.mjs",
+      "bytes": 50281,
+      "sha256": "b9e36ad0ca642035616a4d3cbef05cb55c7ec1f5c149d7f741474b155eba83ef"
+    }
+  ],
+  "wholeRuns": [
+    {
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/gallery-return-host.test.mjs",
+        "game/test/gallery-focus.test.mjs",
+        "game/test/collection-context-host.test.mjs"
+      ],
+      "exit": 0,
+      "seconds": 20.260952207958326
+    },
+    {
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/gallery-return-host.test.mjs",
+        "game/test/gallery-focus.test.mjs",
+        "game/test/collection-context-host.test.mjs"
+      ],
+      "exit": 0,
+      "seconds": 21.954645459074527,
+      "inputsUnchanged": 300
+    }
+  ],
+  "wholeScope": {
+    "files": [
+      "game/test/gallery-return-host.test.mjs",
+      "game/test/gallery-focus.test.mjs",
+      "game/test/collection-context-host.test.mjs"
+    ],
+    "casesPerRuntime": 60,
+    "newActualHostCases": 13,
+    "existingGalleryCases": 41,
+    "existingContextCases": 6
+  },
+  "rawLogs": [
+    {
+      "path": ".cache/gallery-return/baseline-node22.log",
+      "bytes": 3941,
+      "sha256": "0817cd81451d83e46ffee1958bc8801a63e7a8af2eae2c627d17f9827d8f00b8",
+      "summary": {
+        "tests": 2,
+        "pass": 0,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": ".cache/gallery-return/baseline-02-node22.log",
+      "bytes": 1230,
+      "sha256": "f8022818445756c64dbb13a305175611e1c69ab10eebf002c067c9e22593cd8b",
+      "summary": {
+        "tests": 2,
+        "pass": 1,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": ".cache/gallery-return/whole-01-node22.log",
+      "bytes": 88238,
+      "sha256": "92195a6df638473a6b677e62ab4320423005b3cd60e5fb7c54dd6417dca86d51",
+      "summary": {
+        "tests": 13,
+        "pass": 9,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": ".cache/gallery-return/whole-02-node22.log",
+      "bytes": 14142,
+      "sha256": "9d0c5dea7f67cb3bba7b1654050b090836c525611c0f389a8f00949a7bb23289",
+      "summary": {
+        "tests": 60,
+        "pass": 60,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "path": ".cache/gallery-return/whole-node20.log",
+      "bytes": 13231,
+      "sha256": "4aa945f35fbc94536ec609136a4145c91064a38b446eba9ad04fbf139ae55b60",
+      "summary": {
+        "tests": 60,
+        "pass": 60,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "finiteInputs": {
+    "Node22": "Three changed inputs held before/after the complete run. Original finite admission is retained; no independently captured complete before-run import graph.",
+    "Node20": {
+      "count": 300,
+      "bytes": 27284516,
+      "beforeAfterIdentical": true,
+      "beforeSha256": "58c61bda8f431d7c43087bdce7a1ceb439240448561c5779bac6595ef2bfd3fc",
+      "afterSha256": "58c61bda8f431d7c43087bdce7a1ceb439240448561c5779bac6595ef2bfd3fc"
+    }
+  },
+  "fixtureCorrection": "Initial seed decoder omission failed before host boot. Corrected baseline normal return passed and Search during held metadata failed. Initial successor9/13: removed-pack metadata refusal properly resolves Search; three suspension cases included existing suspended-slot timestamp autosaves. Final tests separately establish those lifecycle-only writes before asserting return performs no further write; profile/media/checkpoint remain unchanged. Raw histories retained.",
+  "fixtureAdapter": {
+    "path": ".cache/gallery-return/gallery-focus-adapter.diff",
+    "bytes": 4894,
+    "sha256": "dec3066a795dd9030f945ab610438e29c1f4b8a7d3cba465e8d4503c5d62bd86",
+    "scope": "Coordinated Parfit release: tag/ancestry and event/default restoration only, no original assertions changed. Legacy direct card onclick models focused keyboard activation; close stays synchronous. Full actual-host test separately models queued native default ordering and one Window."
+  },
+  "sourcePeer": "Root read complete production/new13/helper at held01: no blocker. Legacy adapter compact peer pending.",
+  "static": [
+    {
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/ui/library-panel.mjs",
+        "game/test/gallery-return-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exit": 0,
+      "log": ".cache/gallery-return/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/ui/library-panel.mjs",
+        "game/test/gallery-return-host.test.mjs",
+        "game/test/gallery-focus.test.mjs"
+      ],
+      "exit": 0,
+      "log": ".cache/gallery-return/format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "log": ".cache/gallery-return/diff.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "limits": [
+    "No browser pixels, physical input, layout, offline or final release qualification.",
+    "Already detached native origin remains BODY: no generic empty-focus admission.",
+    "No pager/render/score/Replay or strict format changes; later pager composition must preserve independent owners."
+  ]
+}

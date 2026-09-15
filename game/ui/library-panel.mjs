@@ -74,7 +74,8 @@ export function attachLibraryPanel(api) {
     launchGeneration = 0;
   let galleryPage = 0,
     scorePage = 0,
-    galleryReturn = null;
+    galleryReturn = null,
+    galleryReturnFocus = null;
   const galleryCards = new Map();
   const gallerySealSlots = new Map();
   const installedRows = new Map();
@@ -1083,7 +1084,11 @@ export function attachLibraryPanel(api) {
     renderGallery(null);
   }
   $('collection-dialog').addEventListener('close', () => {
-    if (!$('collection-dialog').open) galleryPopulation++;
+    if (!$('collection-dialog').open) {
+      galleryPopulation++;
+      galleryReturnFocus?.cancel();
+      galleryReturnFocus = null;
+    }
   });
   function renderGallery(media) {
     const population = galleryPopulation;
@@ -1227,12 +1232,16 @@ export function attachLibraryPanel(api) {
         : !$('collection-dialog').open || $('gallery-view-dialog').open)
     )
       return;
-    if (!switching)
+    if (!switching) {
+      galleryReturnFocus?.cancel();
+      galleryReturnFocus = null;
       galleryReturn = {
         key: picture.item.key,
+        card: galleryCards.get(picture.item.key),
         page: galleryPage,
         query: $('gallery-search').value,
       };
+    }
     const generation = ++viewGeneration;
     cancelAnimationFrame(galleryFrame);
     returnToCollection = true;
@@ -1412,28 +1421,55 @@ export function attachLibraryPanel(api) {
       // Restore the scope synchronously. Late media reads may refresh this open
       // Collection, but must never reopen it after the player navigates away.
       if (!$('collection-dialog').open) $('collection-dialog').showModal();
-      const pending = populateGallery(),
-        returnPopulation = galleryPopulation;
-      const finishReturn = () => {
-        if (
-          returnPopulation !== galleryPopulation ||
-          closingGeneration !== viewGeneration ||
-          $('gallery-view-dialog').open ||
-          !$('collection-dialog').open
-        )
-          return;
-        // populateGallery replaces every card. Resolve the current node by the
-        // stable picture key instead of keeping a detached originating button.
-        const target = [
-          galleryCards.get(origin?.key),
-          ...galleryCards.values(),
-          $('gallery-search'),
-          ...$('collection-dialog').querySelectorAll('button'),
-        ].find((element) => element?.isConnected && !element.disabled && !element.hidden);
-        target?.focus();
+      const library = api.get().library;
+      let returnPopulation;
+      const currentReturn = () =>
+        returnPopulation === galleryPopulation &&
+        closingGeneration === viewGeneration &&
+        library === api.get().library &&
+        !$('gallery-view-dialog').open &&
+        $('collection-dialog').open;
+      galleryReturnFocus?.cancel();
+      // Native close restores the original card before this queued listener.
+      // A newer Search/Close choice or an already detached BODY origin cannot
+      // become this picture's focus intent. Capture before cards are rebuilt.
+      const focus =
+        origin?.card && document.activeElement === origin.card
+          ? captureOperationFocus(origin.card, {
+              resolveTarget: () =>
+                currentReturn()
+                  ? [
+                      galleryCards.get(origin.key),
+                      ...galleryCards.values(),
+                      $('gallery-search'),
+                      ...$('collection-dialog').querySelectorAll('button'),
+                    ].find(
+                      (element) => element?.isConnected && !element.disabled && !element.hidden,
+                    )
+                  : null,
+            })
+          : null;
+      galleryReturnFocus = focus;
+      const retireReturn = () => {
+        focus?.cancel();
+        if (galleryReturnFocus === focus) galleryReturnFocus = null;
       };
-      if (pending?.then) pending.then(finishReturn);
-      else finishReturn();
+      const finishReturn = () => {
+        try {
+          if (galleryReturnFocus === focus && currentReturn()) focus?.restore();
+        } finally {
+          retireReturn();
+        }
+      };
+      try {
+        const pending = populateGallery();
+        returnPopulation = galleryPopulation;
+        if (pending?.then) pending.then(finishReturn, retireReturn);
+        else finishReturn();
+      } catch (error) {
+        retireReturn();
+        throw error;
+      }
     }
   });
   return { open, refresh, populateGallery, refreshMasteries, cancelAttemptExport };
