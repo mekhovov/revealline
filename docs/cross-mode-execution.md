@@ -4,6 +4,8 @@ Approved scope: **consistent maps and presentation across Solo, Versus and Team*
 
 **Active phase: P01 — loading feedback. Implementation and qualification in progress.** P00 is accepted as immutable v0.55.0, source `acc9f265b651017fd268ffd8bbe6989bec614c41`; its [public acceptance](../publishing/pages-controller/delivery/evidence/cross-mode-p00/public-v055/acceptance.json) records the deployed bytes and ordinary play. The integration worktree includes the subsequently reviewed v0.56.0 source and P00 evidence merge `a395462b101c348d28ee2643c24263ca72b2c751`. P02 cannot start until P01 has its own exact-source qualification, immutable release and public acceptance. A source change, unit test, generated asset or uploaded artifact alone is not a completed phase.
 
+P01's initial v0.57.0 release passed its six source gates, all 4,185 tests and the complete 2,373-file public audit. The public portrait check exposed an active offline label that includes the full optional-pack catalogue and pushes the count/Stop action below the initial viewport. P01 remains unaccepted while v0.57.1 corrects that visibility problem and receives its own qualification. Preserve the original release and failed observations; the [P01 delivery record](../publishing/pages-controller/delivery/evidence/cross-mode-p01/README.md) distinguishes the initial publication from the corrective release.
+
 The [P01 loading contract](presentation-loading.md) documents the implemented shared presenter, operation ownership and required regression cases. It applies to later phases; phase acceptance remains separate from this implementation description.
 
 ## Baseline and preservation

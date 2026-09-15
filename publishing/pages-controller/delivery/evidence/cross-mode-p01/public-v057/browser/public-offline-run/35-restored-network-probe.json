@@ -1,0 +1,10 @@
+{
+  "elapsedMs": 624.2999999523163,
+  "expected": "network refusal",
+  "origin": "https://mekhovov.github.io",
+  "outcome": "response-received",
+  "status": 404,
+  "time": "2026-09-15T12:13:56.503Z",
+  "type": "basic",
+  "warning": "A response, including HTTP 404, does not prove network refusal. Check proxy/CDP evidence."
+}

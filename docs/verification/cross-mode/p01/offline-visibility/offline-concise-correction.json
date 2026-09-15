@@ -1,0 +1,95 @@
+{
+  "format": {
+    "status": "PASS",
+    "files": [
+      "game/offline.mjs",
+      "game/ui/offline-panel.mjs",
+      "game/index.html",
+      "game/test/offline.test.mjs",
+      "game/test/offline-panel.test.mjs"
+    ],
+    "log": {
+      "path": ".cache/cross-mode/p01/offline-concise-format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  },
+  "status": "FOCUSED_CHECKS_PASS",
+  "checkedAt": "2026-09-15T12:09:52.332965+00:00",
+  "files": [
+    {
+      "path": "game/offline.mjs",
+      "bytes": 14552,
+      "sha256": "97f8f9f622292344f3a254f7dcf588063106796b17125cd902768837fbfcca1f"
+    },
+    {
+      "path": "game/ui/offline-panel.mjs",
+      "bytes": 4414,
+      "sha256": "0a749d816ffe56470f8faccd248ba580cee73b8625439eb1c8350cfdb5a621cf"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 68550,
+      "sha256": "dd60fa23f3db4b3223d97bc4fd33e537e44db2f729b042255b88a1f827854c94"
+    },
+    {
+      "path": "game/test/offline.test.mjs",
+      "bytes": 52037,
+      "sha256": "134abe9bdfab085343695db18eed8ea844230f67184b1d0ee5f00596794d7a5f"
+    },
+    {
+      "path": "game/test/offline-panel.test.mjs",
+      "bytes": 11244,
+      "sha256": "b957ea55fed75285fb1d1b4de621608d769b623f18b9d35c01037e548815e1a5"
+    }
+  ],
+  "diff": {
+    "path": ".cache/cross-mode/p01/offline-concise-correction.diff",
+    "bytes": 12970,
+    "sha256": "41fbb474eec229eca13179ced7a09fddcbe597ba83b3e4a44b9176b428b73e88"
+  },
+  "tests": {
+    "command": "node --test game/test/offline-panel.test.mjs game/test/offline.test.mjs",
+    "counts": {
+      "tests": 44,
+      "pass": 44,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "log": {
+      "path": ".cache/cross-mode/p01/offline-concise-focused-final.log",
+      "bytes": 10890,
+      "sha256": "ba7808eca2434f085c168ab89192542c86d0edd631076d32bbb3307ea2c29116"
+    }
+  },
+  "lint": {
+    "status": "PASS",
+    "files": [
+      "game/offline.mjs",
+      "game/ui/offline-panel.mjs",
+      "game/test/offline.test.mjs",
+      "game/test/offline-panel.test.mjs"
+    ],
+    "log": {
+      "path": ".cache/cross-mode/p01/offline-concise-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "diffCheck": "PASS",
+  "coverage": [
+    "All 11 actual current packaged optional pack names loaded from build configuration, pack originals and optional catalog.",
+    "Real offline host with native Node MessageChannel, controlled worker progress: connecting/checking/downloading/saving/verifying/ready; counts and Stop remain present in the DOM.",
+    "Full optional note remains plain text before, during and after preparation/verification in its separate details paragraph.",
+    "Verbose message equality retained for preparing/ready/waiting APIs; check results and raw panel result details retain full note.",
+    "Existing message-only fallback, abort/detach, rejoin/stale-finally, worker failure and focus tests pass unchanged."
+  ],
+  "limits": [
+    "DOM fixture assertions are not a browser viewport measurement; root owns actual responsive browser correction review.",
+    "No worker/protocol/timing/cancellation/storage changes, new CSS, source version edits, Git mutations, production regeneration or release changes performed by this agent."
+  ],
+  "newElement": "#offline-optional-note inside existing Offline verification details",
+  "blockers": []
+}

@@ -1,0 +1,139 @@
+{
+  "files": [
+    {
+      "path": "artifact-receipt.json",
+      "bytes": 456878,
+      "sha256": "d5dd1b24e699d40145f116525b6397674a4cc957e18f30089ae477852d5eef86"
+    },
+    {
+      "path": "artifacts.json",
+      "bytes": 1401,
+      "sha256": "5f3c61305580d5a3fd50611cb62cfe7752540d438c7fac368d88d5f455c818e0"
+    },
+    {
+      "path": "checks.json",
+      "bytes": 6627,
+      "sha256": "26f7fdb696e1dcf0121c1ce8a56732e5efa146ada2532583ead19e119ebaf2b7"
+    },
+    {
+      "path": "controller-commit.json",
+      "bytes": 69494,
+      "sha256": "22a42de78282ea293043fafec8466595f162d3817ed16771ec6a4d67622aae21"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 6586,
+      "sha256": "59f7a61387c727034efd112804d136e09dd35c18d33b5a2a559c3c2f16a2af01"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 3823,
+      "sha256": "1832264e84dd088ed4276fc8fc32553abe8566062a87c95513bf63aed018e055"
+    },
+    {
+      "path": "deployments.json",
+      "bytes": 3825,
+      "sha256": "3451d80848532cda013c9151a8bc8999a7b51fa9b2b96afe567bc5e7c315a3fb"
+    },
+    {
+      "path": "job-104370230131.log",
+      "bytes": 327492,
+      "sha256": "9de2244ab7cac6cf430abbf73cdf583d8b6a64eb043d42223227f386a45e42c9"
+    },
+    {
+      "path": "job-104370729595.log",
+      "bytes": 22020,
+      "sha256": "c77392b4d80f9bd6eec471982233950dbb7743c0b954594772e74230336d92e7"
+    },
+    {
+      "path": "jobs-20260915T115538Z.json",
+      "bytes": 2486,
+      "sha256": "64fb581799b4d4b6f11d20a5b19d41df7bf7ad22d9a6b04ecbf7143f371ccea8"
+    },
+    {
+      "path": "jobs-20260915T115638Z.json",
+      "bytes": 2862,
+      "sha256": "2aa98324a22b644a5845721e57eccff149a6551f97f1a9d35a680c2e04f81b9c"
+    },
+    {
+      "path": "jobs-20260915T115738Z.json",
+      "bytes": 5289,
+      "sha256": "31539c7f63eab2249113d070cca3a00c19882ae77cbb84815f828c8b8474735b"
+    },
+    {
+      "path": "jobs-20260915T115838Z.json",
+      "bytes": 5571,
+      "sha256": "cf37eb3b6d2d73a4d9499e6d2c94cbd7db37688c2f9c324eab26ec63312a6d78"
+    },
+    {
+      "path": "jobs.json",
+      "bytes": 5571,
+      "sha256": "cf37eb3b6d2d73a4d9499e6d2c94cbd7db37688c2f9c324eab26ec63312a6d78"
+    },
+    {
+      "path": "main-ref-after.json",
+      "bytes": 336,
+      "sha256": "2614de614524c7eeb969739d190b18a4283205b5c5a59a86d0701536bbfc93b3"
+    },
+    {
+      "path": "main-ref.json",
+      "bytes": 336,
+      "sha256": "2614de614524c7eeb969739d190b18a4283205b5c5a59a86d0701536bbfc93b3"
+    },
+    {
+      "path": "observe.py",
+      "bytes": 2612,
+      "sha256": "d97fb990111534a195f798365058ca32bf9b478a8b6ce73a0eb71961fb48e219"
+    },
+    {
+      "path": "original-receipts.zip",
+      "bytes": 113968,
+      "sha256": "15dbcb28b37b3c720a0247e1e521698ded5e05a0879610999484f91829f974c3"
+    },
+    {
+      "path": "receipt-reception.json",
+      "bytes": 1018,
+      "sha256": "316037ca224b5d8930dcf2dbdd4560a639a85654a790492d03708756edc8b8d6"
+    },
+    {
+      "path": "review.json",
+      "bytes": 1520,
+      "sha256": "4c849e08f92ca705515bac588368296090f1f6400800e39c1cfe70bb3864ed12"
+    },
+    {
+      "path": "run-20260915T115538Z.json",
+      "bytes": 12164,
+      "sha256": "4230d9acdb86853cd04ae042819dba625ebe5eef0691bbb0d9183c84d719ceb8"
+    },
+    {
+      "path": "run-20260915T115638Z.json",
+      "bytes": 12164,
+      "sha256": "4230d9acdb86853cd04ae042819dba625ebe5eef0691bbb0d9183c84d719ceb8"
+    },
+    {
+      "path": "run-20260915T115738Z.json",
+      "bytes": 12164,
+      "sha256": "ff8d45779ee83083025efb1e7bcf17f56858c1a72ca77a9a16bc1b9bfb370b93"
+    },
+    {
+      "path": "run-20260915T115838Z.json",
+      "bytes": 12167,
+      "sha256": "2b1173f333f32a1fc399489882e0370539616efa77e1b26906336ccd5d64e147"
+    },
+    {
+      "path": "run.json",
+      "bytes": 12167,
+      "sha256": "2b1173f333f32a1fc399489882e0370539616efa77e1b26906336ccd5d64e147"
+    },
+    {
+      "path": "workflow-runs.json",
+      "bytes": 12200,
+      "sha256": "e5afb5e0d23bbf6a4e90601707975ace43198a429c9f64ef29d3724688cdc6e9"
+    },
+    {
+      "path": "zip-receipt.json",
+      "bytes": 407,
+      "sha256": "0e60fcc8adb88d31c8c7265e1e75cff84c01fa52a50b1b65f634c298bdfba1c8"
+    }
+  ]
+}

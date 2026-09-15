@@ -1,0 +1,71 @@
+{
+  "bootState": "ready",
+  "build": {
+    "entry": "game/index.html",
+    "formatVersion": 1,
+    "sourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+    "version": "v0.57.0"
+  },
+  "cacheNames": [
+    "revealline-offline:https%3A%2F%2Fmekhovov.github.io%2Frevealline%2Freleases%2Fv0.57.0%2Fsite%2F:8b7ab11efc3be749f519b50f4d4299dc2a203a61d4fd970bd3a62278bda7402b"
+  ],
+  "channel": "release-v0.57.0",
+  "controller": {
+    "scriptURL": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/service-worker.js",
+    "state": "activated"
+  },
+  "flightState": "briefing",
+  "focusedId": "",
+  "href": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/",
+  "htmlBuildVersion": "v0.57.0",
+  "hud": {
+    "coverage": "0.0%",
+    "flight-state": "Ready for launch",
+    "lives": "◆ ◆ ◆",
+    "objective-state": "Close a line to reveal the picture",
+    "run-message": "Your first route: fly down from the marked start to the opposite border.",
+    "score": "00000"
+  },
+  "navigationType": "navigate",
+  "observedAt": "2026-09-15T12:05:20.799Z",
+  "offline": {
+    "details": "{\n  \"status\": \"ready\",\n  \"version\": \"v0.57.0\",\n  \"buildId\": \"8b7ab11efc3be749f519b50f4d4299dc2a203a61d4fd970bd3a62278bda7402b\",\n  \"count\": 608,\n  \"verified\": 608,\n  \"bytes\": 55383385,\n  \"missing\": [],\n  \"corrupt\": [],\n  \"format\": \"revealline.offline-progress.v1\",\n  \"requestId\": \"offline-2\",\n  \"kind\": \"terminal\",\n  \"scope\": \"https://mekhovov.github.io/revealline/releases/v0.57.0/site/\",\n  \"message\": \"Core offline files verified. FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.\"\n}",
+    "stage": "verifying",
+    "state": "busy",
+    "text": "Verifying every saved core file… FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.494 / 608 files"
+  },
+  "onlineHint": true,
+  "pictureState": "ready",
+  "registrations": [
+    {
+      "active": {
+        "scriptURL": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/service-worker.js",
+        "state": "activated"
+      },
+      "installing": null,
+      "scope": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/",
+      "waiting": null
+    }
+  ],
+  "storage": {
+    "library": {
+      "bytes": null,
+      "key": "revealline.library.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "packs": {
+      "bytes": null,
+      "key": "revealline.packs.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "suspended": {
+      "bytes": null,
+      "key": "revealline.suspended.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    }
+  },
+  "timeOrigin": 1789473791158.2
+}

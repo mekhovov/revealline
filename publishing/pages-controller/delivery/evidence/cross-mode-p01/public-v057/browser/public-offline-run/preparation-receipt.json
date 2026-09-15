@@ -1,0 +1,33 @@
+{
+  "status": "PREPARED_WAITING_FOR_PUBLIC_IDENTITY_SIGNAL",
+  "browserLaunched": false,
+  "sourceChanged": false,
+  "syntaxChecks": "PASS",
+  "files": [
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/expected-public-identity.json",
+      "bytes": 1146,
+      "sha256": "727653f5fbd583a6d46dc32721771a64b9e4bd237a6a024042ab4f22551f59ee"
+    },
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/collect-cdp.mjs",
+      "bytes": 7294,
+      "sha256": "b6924392153138eb70c32762b88c5ceb2172f8231af945084121b818858a2a48"
+    },
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/verify-online-identity.js",
+      "bytes": 1534,
+      "sha256": "e6d75ee8c263f5b5ba58a35988e5a3675b8f109356c7949f2701ea98bd705293"
+    },
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/observe-team.js",
+      "bytes": 1668,
+      "sha256": "f6f9f637771a15acb81680f3d28c68937647fb75f777d26ea145d587b8b9b9c0"
+    },
+    {
+      "path": ".cache/cross-mode/p01/public-offline-run/prepared-plan.json",
+      "bytes": 2703,
+      "sha256": "c73bb73bfce1d8cc728e336b442c83a82594e96627f38029e03a166ef7dfb97c"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "bootState": "ready",
+  "build": {
+    "entry": "game/index.html",
+    "formatVersion": 1,
+    "sourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+    "version": "v0.57.0"
+  },
+  "cacheNames": [],
+  "channel": "release-v0.57.0",
+  "controller": null,
+  "flightState": "briefing",
+  "focusedId": "",
+  "href": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/",
+  "htmlBuildVersion": "v0.57.0",
+  "hud": {
+    "coverage": "0.0%",
+    "flight-state": "Ready for launch",
+    "lives": "◆ ◆ ◆",
+    "objective-state": "Close a line to reveal the picture",
+    "run-message": "Your first route: fly down from the marked start to the opposite border.",
+    "score": "00000"
+  },
+  "navigationType": "navigate",
+  "observedAt": "2026-09-15T12:04:13.325Z",
+  "offline": {
+    "details": "No offline check yet.",
+    "stage": "downloading",
+    "state": "busy",
+    "text": "Downloading and verifying core offline files… FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.172 / 608 files"
+  },
+  "onlineHint": true,
+  "pictureState": "ready",
+  "registrations": [
+    {
+      "active": null,
+      "installing": {
+        "scriptURL": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/service-worker.js",
+        "state": "installing"
+      },
+      "scope": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/",
+      "waiting": null
+    }
+  ],
+  "storage": {
+    "library": {
+      "bytes": null,
+      "key": "revealline.library.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "packs": {
+      "bytes": null,
+      "key": "revealline.packs.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "suspended": {
+      "bytes": null,
+      "key": "revealline.suspended.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    }
+  },
+  "timeOrigin": 1789473791158.2
+}

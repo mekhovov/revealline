@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "audit-main.mjs",
+    "--binding",
+    "inputs/74f289510617603c28768bb3f6bfd8e9f7a72cdd/binding.json",
+    "--binding-sha",
+    "1012ce11b82893c75e3c20bbbd0efeda71e1a5dd92100ef1fa46f51b78f1445e",
+    "--out",
+    "complete-1"
+  ],
+  "startedAt": "2026-09-15T12:01:27.790728+00:00",
+  "finishedAt": "2026-09-15T12:03:26.387241+00:00",
+  "wallSeconds": 118.60004750010557,
+  "exitCode": 0,
+  "stdout": "complete-1.stdout.log",
+  "stderr": "complete-1.stderr.log",
+  "networkScope": "All inventory HTTP decoded bodies, streamed without expanded site",
+  "run": "runs/complete-1"
+}
