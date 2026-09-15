@@ -1,0 +1,69 @@
+{
+  "at": "2026-09-15T18:53:00.111435+00:00",
+  "status": "FOCUSED_SOURCE_PASS_PUBLIC_CORRECTION_PENDING",
+  "phaseAccepted": false,
+  "files": [
+    {
+      "path": "game/ui/profile-recovery.mjs",
+      "bytes": 13478,
+      "sha256": "bda0ec9cd94068e844ae6be586cb6a7f50281eb267b8cf32bebbf6ae969799f9"
+    },
+    {
+      "path": "game/test/profile-original-recovery-view.test.mjs",
+      "bytes": 21944,
+      "sha256": "dfeb5eb514525ebdf53986e2d0350ca218b096067ed2e0547c05188cbee4e899"
+    }
+  ],
+  "runtimeScope": "Selected option and summary describe the existing view-owned verified handle; clearing verification refreshes both. No reader or storage object mutation, new format, URL/lock/input/focus behavior change.",
+  "tests": {
+    "command": "node --test game/test/profile-original-recovery-view.test.mjs game/test/profile-recovery-view.test.mjs game/test/profile-original-recovery.test.mjs game/test/profile-recovery-dialog.test.mjs",
+    "node": "v20.19.5",
+    "tests": 58,
+    "pass": 58,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 2949.52325,
+    "beforeRuntimeFix": {
+      "tests": 16,
+      "pass": 12,
+      "fail": 4,
+      "failureType": "Assertions reproduce stale verification labels; original log retained."
+    }
+  },
+  "checks": {
+    "scopedLint": 0,
+    "scopedFormat": 0,
+    "relatedDiffCheck": 0
+  },
+  "logs": [
+    {
+      "path": "docs/verification/cross-mode/p01/recovery-verification-copy/before-fix.log",
+      "bytes": 8262,
+      "sha256": "336dba2debb4981d7da199b8146eed8f78f3b9b4ab24c641dd755004e784f844"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/recovery-verification-copy/focused.log",
+      "bytes": 13400,
+      "sha256": "94709d0b7192014444d47c757b7cace0ee439e0e1173fc4dd25befab8d26433e"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/recovery-verification-copy/lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/verification/cross-mode/p01/recovery-verification-copy/format.log",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "publicFinding": "docs/verification/cross-mode/p01/legacy-transfer-index/independent-recovery/review.json",
+  "publicFindingSource": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "limits": [
+    "Focused modeled UI/reader tests; no new corrected native/browser/public claim.",
+    "Original public source download/verification worked; this correction addresses contradictory labels.",
+    "Other source changes and broad release gates remain parent-owned."
+  ]
+}

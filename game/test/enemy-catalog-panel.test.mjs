@@ -272,3 +272,34 @@ test('role detail reader stays controller scrollable and Back returns to its own
   assert.equal(h.doc.activeElement, h.$('read'));
   assert.equal(h.panel.dialog.open, true);
 });
+
+test('file picker cancellation keeps Enemy Catalog choices and an in-flight save; dialog Escape still stops waiting', async (t) => {
+  const gate = deferred(),
+    h = setup(t, { onApplyDraft: () => gate.promise });
+  h.$('enabled').checked = false;
+  h.$('enabled').onchange();
+  const draft = h.panel.snapshot(),
+    input = h.$('import');
+  input.files = [new Blob(['retained file'])];
+  input.focus();
+  input.dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(h.panel.dialog.open, true);
+  assert.deepEqual(h.panel.snapshot(), draft);
+  assert.equal(h.doc.activeElement, input);
+  assert.equal(await input.files[0].text(), 'retained file');
+  const saving = h.$('apply').onclick(),
+    status = h.$('status').textContent;
+  input.dispatchEvent(new Event('cancel', { bubbles: true }));
+  assert.equal(h.$('status').textContent, status);
+  assert.equal(h.$('status').dataset.state, 'busy');
+  const escape = new Event('cancel', { cancelable: true });
+  h.panel.dialog.dispatchEvent(escape);
+  assert.equal(escape.defaultPrevented, true);
+  assert.equal(h.panel.dialog.open, true);
+  assert.equal(h.$('status').dataset.state, 'detached');
+  gate.resolve();
+  await saving;
+  assert.equal(h.$('status').dataset.state, 'ready');
+  h.panel.dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+  assert.equal(h.panel.dialog.open, false);
+});

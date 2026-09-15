@@ -1,0 +1,34 @@
+{
+  "scope": "R3\u2013R6 original source-browser evidence and failures; no frozen/public or physical-device acceptance",
+  "runs": [
+    {
+      "id": "r3",
+      "originalFiles": 59,
+      "bytes": 314562,
+      "manifestSha256": "ba6be346d274b96a68de5b5be1de07202f5839d0d0380c9c6193b62aef4c2fac"
+    },
+    {
+      "id": "r4",
+      "originalFiles": 158,
+      "bytes": 1074844,
+      "manifestSha256": "066991add262e7ed869c4d1d683a25deb4525626e11c0d32e2f04651c1d37ae6"
+    },
+    {
+      "id": "r5",
+      "originalFiles": 82,
+      "bytes": 513774,
+      "manifestSha256": "3afd198ca4722b74211c74993c64c5dc2c6f808c51517c4f62a39fab478b8d4d"
+    },
+    {
+      "id": "r6",
+      "originalFiles": 134,
+      "bytes": 1246733,
+      "manifestSha256": "779a4828d45b05dbb9e59727dcaba52d3972363a81124555bfb2166a63e41569"
+    }
+  ],
+  "originalFiles": 433,
+  "originalBytes": 3149913,
+  "zipBytes": 2011425,
+  "sha256": "1a635400ad20ab708c26ce452395d43ac8d269b758a7391909c49cdf6d4d9d96",
+  "allOriginalsRehashedAndZipMembersVerified": true
+}

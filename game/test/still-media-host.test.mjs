@@ -138,6 +138,102 @@ test('actual authoring entry opens no DB until explicit activation and shares on
   await new Promise(setImmediate);
   assert.ok(h.memory.closed > 0);
 });
+function modelNativeDisabledFocus(h, opener) {
+  let disabled = opener.disabled;
+  const focus = opener.focus.bind(opener);
+  // A native disabled focused button blurs before the awaited catalogue resolves.
+  Object.defineProperty(opener, 'disabled', {
+    get: () => disabled,
+    set(value) {
+      disabled = value;
+      if (value && h.doc.activeElement === opener) h.doc.activeElement = h.doc.body;
+    },
+  });
+  opener.focus = () => {
+    if (!disabled) focus();
+  };
+}
+test('cold workshop Escape restores the invoker blurred by its disabled loading state', async (t) => {
+  const gate = deferred(),
+    f = mediaFixture(true),
+    source = { baseEntry: { campaign: f.campaign, themes: [{ id: 'fpv' }] }, presets: {} };
+  const h = await setup(t, { host: { readBase: () => gate.promise } });
+  const opener = h.$('still-host-open');
+  modelNativeDisabledFocus(h, opener);
+  opener.focus();
+  const opening = opener.onclick();
+  assert.equal(opener.disabled, true);
+  assert.equal(h.doc.activeElement, h.doc.body);
+  assert.equal(h.host.panel, null);
+  gate.resolve(source);
+  assert.equal(await opening, true);
+  assert.equal(opener.disabled, false);
+  assert.equal(h.host.panel.dialog.open, true);
+  const close = h.host.panel.dialog.emit('cancel');
+  assert.equal(close.defaultPrevented, true);
+  assert.equal(h.host.panel.dialog.open, false);
+  assert.equal(h.doc.activeElement === opener, true, 'Escape returns to the original invoker.');
+
+  // A reused panel takes this invocation's target, not its previous opener.
+  const other = h.$('still-host-export-audio');
+  other.focus();
+  assert.equal(await h.host.open(), true);
+  h.host.panel.dialog.emit('cancel');
+  assert.equal(h.doc.activeElement === other, true, 'Reopen retains its own invoker.');
+});
+test('closing a pending workshop read restores the invoker before settling and preserves later focus', async (t) => {
+  const gate = deferred(),
+    entered = deferred();
+  const h = await setup(t, {
+    host: {
+      createStills(args) {
+        const store = createStillMediaStore(args);
+        return {
+          ...store,
+          async read(options) {
+            entered.resolve();
+            await gate.promise;
+            return store.read(options);
+          },
+        };
+      },
+    },
+  });
+  const opener = h.$('still-host-open');
+  modelNativeDisabledFocus(h, opener);
+  opener.focus();
+  const opening = opener.onclick();
+  await entered.promise;
+  assert.equal(h.host.panel.dialog.open, true);
+  assert.equal(opener.disabled, true);
+  h.host.panel.dialog.emit('cancel');
+  assert.equal(h.host.panel.dialog.open, true, 'First Back cancels busy work without closing.');
+  const close = h.host.panel.dialog.emit('cancel');
+  assert.equal(close.defaultPrevented, true);
+  assert.equal(h.host.panel.dialog.open, false);
+  assert.equal(
+    opener.disabled,
+    false,
+    'Closing detaches the pending host owner before return focus.',
+  );
+  assert.equal(
+    h.doc.activeElement === opener,
+    true,
+    'Pending-read Close returns to enabled invoker.',
+  );
+  const other = h.$('still-host-close');
+  other.focus();
+  const status = h.$('still-host-status').textContent;
+  gate.resolve();
+  assert.equal(await opening, false);
+  assert.equal(
+    h.doc.activeElement === other,
+    true,
+    'Late read settlement cannot steal later focus.',
+  );
+  assert.equal(h.$('still-host-status').textContent, status);
+  assert.equal(h.host.panel.dialog.open, false);
+});
 test('v1 MP3 bytes remain exact through shared v4 upgrade and explicit native backup preparation', async (t) => {
   const memory = memoryIndexedDB(),
     old = createSoundtrackStore({ indexedDB: memory.indexedDB });
@@ -304,12 +400,18 @@ test('opening announces the held catalogue read and Close fences its late failur
   assert.match(h.$('still-host-status').textContent, /Opening the picture workshop/);
   assert.equal(h.$('still-host-close').disabled, false);
   h.$('still-host-close').onclick();
+  h.$('still-host-close').focus(); // Deliberate navigation after Close restored its own default.
   const closed = h.$('still-host-status').textContent;
   pending.reject(new Error('Late catalogue failure'));
   assert.equal(await opening, false);
   assert.equal(h.$('still-host-status').textContent, closed);
   assert.equal(h.$('still-host-status').dataset.state, 'ready');
   assert.equal(h.host.panel, null);
+  assert.equal(
+    h.doc.activeElement === h.$('still-host-close'),
+    true,
+    'Late cancelled reads retain deliberate focus.',
+  );
 });
 
 test('classic picture workshop exposes loading and Back before storage explanation', async () => {
