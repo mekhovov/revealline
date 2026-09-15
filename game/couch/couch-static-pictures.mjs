@@ -1,0 +1,434 @@
+import { canonicalJSON, required } from '../data-json.mjs';
+import { createExecutionCatalog } from '../campaign-contexts.mjs';
+import { createDifficultyContext } from '../campaign-difficulty.mjs';
+import { createMediaIdentityCatalog } from '../media-library.mjs';
+import { createPresentationPins } from '../presentation-pins.mjs';
+import { createManagedMediaStore } from '../managed-media-store.mjs';
+import { createStillMediaStore } from '../media-store.mjs';
+import { acquirePresentationImage } from '../ui/presentation-image.mjs';
+import {
+  matchesReleasePictureBaseline,
+  releasePictureForIdentity,
+} from '../presentation/release-pictures.mjs';
+import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { inspectImageDataUrl } from '../content.mjs';
+
+const cancelled = () => new DOMException('Couch picture preparation cancelled.', 'AbortError');
+const releaseImage = (image) => {
+  image?.removeAttribute?.('src');
+  image?.close?.();
+};
+const absentStoreNotice = 'Saved picture choices are unavailable in this browser.';
+
+/** One read-only picture choice and decoded lease for both static Versus boards.
+ * The established manager may initialize/upgrade its schema, as other readers do;
+ * this consumer never prepares or commits media, assignments, history or progress.
+ * Existing authored backdrops are borrowed from the chapter owner, never released here.
+ */
+export function createCouchStaticPictures({
+  entries,
+  presentationPage,
+  indexedDB = globalThis.indexedDB,
+  ImageClass = globalThis.Image,
+  URLImpl = globalThis.URL,
+} = {}) {
+  const catalog = createExecutionCatalog(entries),
+    identityCatalog = createMediaIdentityCatalog(catalog),
+    sources = new Set(entries);
+  let manager = null,
+    store = null,
+    disposed = false,
+    generation = 0,
+    pending = null,
+    requested = null,
+    accepted = null,
+    binding = null;
+  const check = (signal) => {
+    if (disposed || signal?.aborted) throw cancelled();
+  };
+  const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
+  const currentPage = () => presentationPage?.current?.() ?? null;
+  const mediaStore = () => {
+    if (!store) {
+      manager = createManagedMediaStore({ indexedDB, storyMedia: true });
+      store = createStillMediaStore({ managedStore: manager });
+    }
+    return store;
+  };
+  function waitFor(promise, signal) {
+    check(signal);
+    return new Promise((resolve, reject) => {
+      const abort = () => reject(cancelled());
+      signal.addEventListener('abort', abort, { once: true });
+      Promise.resolve(promise)
+        .then(resolve, reject)
+        .finally(() => {
+          signal.removeEventListener('abort', abort);
+        });
+      if (signal.aborted) abort();
+    });
+  }
+  function contextFor(row, themeId, raceId) {
+    required(sources.has(row?.pictureEntry), 'Select a registered static couch chapter.');
+    required(Number.isSafeInteger(raceId) && raceId >= 0, 'Use an in-memory race identity.');
+    const context = createDifficultyContext(row.pictureEntry.campaign),
+      entry = catalog.find(context.campaignKey),
+      level = entry?.campaign.levels.find((level) => level.id === row.level?.id);
+    required(
+      level && same(level, row.level),
+      'The couch map differs from its exact catalog owner.',
+    );
+    const request = {
+      executionKey: entry.executionKey,
+      levelId: level.id,
+      levelRevision: level.revision,
+      themeId,
+    };
+    const identity = identityCatalog.resolve(request);
+    required(identity, 'This world does not belong to the exact couch map.');
+    return {
+      row,
+      raceId,
+      themeId,
+      request,
+      identity,
+      background: row.authoredBackground ? Object.freeze({ ...row.authoredBackground }) : null,
+      backdrop: row.backdrop ?? null,
+    };
+  }
+  function operation(signal, onStatus, work) {
+    check(signal);
+    const ticket = ++generation,
+      previous = pending,
+      controller = new AbortController(),
+      abort = () => controller.abort();
+    previous?.controller.abort();
+    signal?.addEventListener('abort', abort, { once: true });
+    if (signal?.aborted) abort();
+    const item = { controller, promise: null };
+    pending = item;
+    const current = () => {
+      check(controller.signal);
+      if (ticket !== generation) throw cancelled();
+    };
+    const report = (stage, message, status = 'preparing') => {
+      if (disposed || controller.signal.aborted || ticket !== generation) return;
+      try {
+        onStatus?.({ stage, message, status, progress: null });
+      } catch {}
+    };
+    // Publish the promise before any status callback can synchronously select again.
+    item.promise = Promise.resolve()
+      .then(async () => {
+        // A cancelled manager open belongs to its first signal. Join it before reuse.
+        if (previous) await previous.promise.catch(() => {});
+        current();
+        try {
+          return await work(controller.signal, current, report);
+        } catch (error) {
+          if (error.name !== 'AbortError') report('error', error.message, 'error');
+          throw error;
+        }
+      })
+      .finally(() => {
+        signal?.removeEventListener('abort', abort);
+        if (pending === item) pending = null;
+      });
+    return item.promise;
+  }
+  function decode(source, signal) {
+    check(signal);
+    required(typeof ImageClass === 'function', 'Browser picture decoding is unavailable.');
+    return new Promise((resolve, reject) => {
+      const image = new ImageClass();
+      let settled = false;
+      const finish = (error) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        signal.removeEventListener('abort', abort);
+        image.onload = image.onerror = null;
+        if (error) {
+          releaseImage(image);
+          reject(error);
+        } else resolve(image);
+      };
+      const abort = () => finish(cancelled());
+      const timer = setTimeout(() => finish(new Error('Couch picture decode timed out.')), 15000);
+      signal.addEventListener('abort', abort, { once: true });
+      image.onerror = () => finish(new Error('The selected couch original could not decode.'));
+      image.onload = async () => {
+        try {
+          required(typeof image.decode === 'function', 'Complete picture decoding is unavailable.');
+          await image.decode();
+          check(signal);
+          finish();
+        } catch (error) {
+          finish(error);
+        }
+      };
+      if (signal.aborted) return abort();
+      try {
+        image.src = source;
+      } catch (error) {
+        finish(error);
+      }
+    });
+  }
+  async function choose(state, signal, current, report) {
+    if (state.chosen) return;
+    report('verifying', 'Checking the exact map and saved picture choice…');
+    if (!state.mediaCaptured && indexedDB) {
+      state.metadata = await mediaStore().readMetadata({ signal });
+      current();
+      const pins = createPresentationPins({
+        library: state.metadata.document.library,
+        identityCatalog,
+        ...state.request,
+        themeIds: [state.themeId],
+      });
+      state.pin = pins.choices[0];
+    } else if (!indexedDB) state.notice = absentStoreNotice;
+    // Even an unassigned/legacy result is a captured choice. Cancelling while the
+    // optional release is loading must not turn Retry into a new assignment lookup.
+    state.mediaCaptured = true;
+    if (state.pin?.kind === 'still') {
+      state.kind = 'still';
+      state.chosen = true;
+      return;
+    }
+    let snapshot;
+    try {
+      snapshot = await waitFor(presentationPage?.ready ?? null, signal);
+    } catch (error) {
+      current();
+      if (error.name === 'AbortError') throw error;
+      snapshot = null;
+    }
+    current();
+    required(
+      (snapshot ?? null) === currentPage(),
+      'The release artwork changed; choose setup again.',
+    );
+    state.snapshot = snapshot ?? null;
+    if (
+      snapshot &&
+      (await matchesReleasePictureBaseline(state.identity, state.background, {
+        signal,
+      }))
+    ) {
+      current();
+      state.release = releasePictureForIdentity(snapshot, state.identity);
+    }
+    if (state.release) state.kind = 'release';
+    else {
+      state.kind = 'authored';
+      if (!snapshot)
+        state.notice = [
+          state.notice,
+          'Release artwork is unavailable; the authored picture is kept.',
+        ]
+          .filter(Boolean)
+          .join(' ');
+      state.original = null;
+      if (state.background) {
+        required(state.backdrop?.image, 'The selected authored original is unavailable.');
+        const header = inspectImageDataUrl(state.background.dataUrl);
+        required(header.valid, 'The selected authored picture descriptor is invalid.');
+        const image = state.backdrop.image,
+          fit = state.background.fit ?? 'cover';
+        required(
+          (image.naturalWidth ?? image.width) === header.width &&
+            (image.naturalHeight ?? image.height) === header.height &&
+            (state.backdrop.fit ?? 'cover') === fit,
+          'The borrowed authored picture differs from its original dimensions or fit.',
+        );
+        const binary = atob(state.background.dataUrl.split(',')[1]);
+        const sha256 = await hashPresentationBytes(Uint8Array.from(binary, (c) => c.charCodeAt(0)));
+        current();
+        state.original = Object.freeze({
+          sha256,
+          bytes: binary.length,
+          mime: header.mime,
+          width: header.width,
+          height: header.height,
+          fit,
+        });
+      } else
+        required(!state.backdrop?.image, 'A borrowed picture needs its exact authored descriptor.');
+    }
+    current();
+    state.chosen = true;
+  }
+  function verifyContext(state, signal) {
+    check(signal);
+    required(requested === state, 'The selected couch picture changed.');
+    const latest = contextFor(state.row, state.themeId, state.raceId);
+    required(same(latest.request, state.request), 'The selected couch owner changed.');
+    required(
+      same(latest.background, state.background) && latest.backdrop === state.backdrop,
+      'The selected authored picture changed; choose setup again.',
+    );
+    if (state.kind !== 'still')
+      required(
+        state.snapshot === currentPage(),
+        'The release artwork changed; choose setup again.',
+      );
+  }
+  async function verifyMedia(state, signal) {
+    if (!state.metadata) return;
+    const latest = await mediaStore().readMetadata({ signal });
+    check(signal);
+    required(
+      latest.generation === state.metadata.generation,
+      'Saved picture choices changed; choose the map again before starting.',
+    );
+  }
+  async function acquireRelease(state, signal, report) {
+    let url = null,
+      image = null;
+    const release = () => {
+      const oldImage = image,
+        oldURL = url;
+      image = url = null;
+      try {
+        releaseImage(oldImage);
+      } finally {
+        if (oldURL !== null) URLImpl.revokeObjectURL(oldURL);
+      }
+    };
+    try {
+      const { slotId, asset } = state.release,
+        file = asset.file;
+      const original = await presentationPage.readPicture(slotId, {
+        snapshot: state.snapshot,
+        signal,
+        onStatus: ({ stage, message }) => report(stage, message),
+      });
+      check(signal);
+      required(same(original?.asset, asset), 'The selected release picture identity changed.');
+      required(original.blob?.size === file.bytes, 'The selected release original size differs.');
+      const bytes = new Uint8Array(await original.blob.arrayBuffer());
+      required(
+        (await hashPresentationBytes(bytes)) === file.sha256,
+        'Release picture SHA-256 differs.',
+      );
+      check(signal);
+      let binary = '';
+      for (let offset = 0; offset < bytes.length; offset += 16384)
+        binary += String.fromCharCode(...bytes.subarray(offset, offset + 16384));
+      const header = inspectImageDataUrl(`data:${file.mime};base64,${btoa(binary)}`);
+      required(
+        header.valid && header.width === file.width && header.height === file.height,
+        'The release picture header differs from its selected original.',
+      );
+      required(
+        typeof URLImpl?.createObjectURL === 'function' &&
+          typeof URLImpl?.revokeObjectURL === 'function',
+        'Picture object URLs are unavailable.',
+      );
+      report('decoding', 'Opening one original for both boards…');
+      url = URLImpl.createObjectURL(original.blob);
+      image = await decode(url, signal);
+      check(signal);
+      required(
+        image.naturalWidth === file.width &&
+          image.naturalHeight === file.height &&
+          image.width === file.width &&
+          image.height === file.height,
+        'The decoded release picture dimensions differ.',
+      );
+      return { image, fit: 'contain', sampling: 'nearest', release };
+    } catch (error) {
+      release();
+      throw error;
+    }
+  }
+  async function select(row, { themeId = row.defaultThemeId, raceId, signal, onStatus } = {}) {
+    check(signal);
+    const context = contextFor(row, themeId, raceId);
+    if (requested?.raceId === raceId)
+      required(
+        requested.row === row && same(requested.request, context.request),
+        'Changed setup requires a new race identity.',
+      );
+    else requested = { ...context, chosen: false, notice: '' };
+    const state = requested;
+    return operation(signal, onStatus, async (s, current, report) => {
+      let candidate = null;
+      try {
+        await choose(state, s, current, report);
+        current();
+        if (state.kind === 'still') {
+          report('decoding', 'Opening the saved original for both boards…');
+          candidate = await acquirePresentationImage(
+            { pin: state.pin, metadata: state.metadata, store: mediaStore() },
+            { signal: s, ImageClass, URLImpl },
+          );
+        } else if (state.kind === 'release') candidate = await acquireRelease(state, s, report);
+        else candidate = { ...(state.backdrop ?? {}), release() {} };
+        current();
+        await verifyMedia(state, s);
+        current();
+        verifyContext(state, s);
+        const next = Object.freeze({
+          image: candidate.image ?? null,
+          fit: candidate.fit ?? 'cover',
+          sampling: candidate.sampling ?? 'nearest',
+          choice: Object.freeze({
+            kind: state.kind,
+            identity: state.identity,
+            ...(state.kind === 'authored' ? { original: state.original } : {}),
+            ...(state.pin?.kind === 'still' ? { pin: state.pin } : {}),
+            ...(state.release
+              ? { slotId: state.release.slotId, sha256: state.release.asset.file.sha256 }
+              : {}),
+          }),
+          notice: state.notice,
+          release: candidate.release,
+        });
+        const previous = binding;
+        binding = next;
+        accepted = state;
+        candidate = null;
+        previous?.release();
+        report('ready', state.notice || 'The exact picture is ready for both boards.', 'ready');
+        current();
+        return next;
+      } finally {
+        candidate?.release();
+      }
+    });
+  }
+  function confirm(row, { raceId, signal, onStatus } = {}) {
+    check(signal);
+    const state = accepted;
+    required(
+      state?.row === row && state.raceId === raceId && state === requested && !pending,
+      'Load the selected original before starting.',
+    );
+    verifyContext(state, signal);
+    if (!state.metadata) return binding;
+    return operation(signal, onStatus, async (s, current) => {
+      await verifyMedia(state, s);
+      current();
+      verifyContext(state, s);
+      required(accepted === state, 'The prepared race changed.');
+      return binding;
+    });
+  }
+  function cancel() {
+    generation++;
+    pending?.controller.abort();
+  }
+  function dispose() {
+    if (disposed) return;
+    disposed = true;
+    cancel();
+    binding?.release();
+    binding = accepted = requested = null;
+    store?.close();
+    manager?.close();
+  }
+  return Object.freeze({ select, confirm, current: () => binding, cancel, dispose });
+}

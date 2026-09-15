@@ -313,7 +313,7 @@ test('a real finished draw exposes both frozen boards, Results returns without a
   const base = JSON.parse(
     await readFile(new URL('../content/campaign.json', import.meta.url), 'utf8'),
   );
-  const campaign = { ...base, levels: [retryFixture('enemy-player').level] };
+  const campaign = { ...base, briefs: [], levels: [retryFixture('enemy-player').level] };
   const f = await couchPage(t, { campaign });
   f.$('race-start').click();
   f.frame();

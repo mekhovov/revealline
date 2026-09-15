@@ -1,0 +1,23 @@
+{
+  "node": "22.22.2",
+  "testFiles": [
+    "game/test/couch-installed-chapters.test.mjs"
+  ],
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/couch-installed-chapters.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 159.662,
+  "sourceUnchanged": true,
+  "inputPins": "test-inputs-02.json",
+  "sourceHold": "source-held-01.json",
+  "log": {
+    "path": "installed-02-node22.log",
+    "bytes": 3423,
+    "sha256": "f48582b8aa52efd7fbca8a70f429da177ebe5ed63664ea326b7eb6bcd08f83bc"
+  },
+  "summary": "1..12\n# tests 12\n# suites 0\n# pass 12\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 159426.16725\n"
+}
