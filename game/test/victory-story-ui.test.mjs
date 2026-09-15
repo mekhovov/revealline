@@ -7,6 +7,21 @@ import { createStoryMusicDucker, createVictoryStoryPresentation } from '../ui/vi
 import { createAudioMaster } from '../ui/audio-master.mjs';
 
 class Node extends Element {
+  get hidden() {
+    return this._hidden ?? false;
+  }
+  set hidden(value) {
+    this._hidden = Boolean(value);
+    // A browser drops focus as soon as its active control becomes hidden.
+    if (this._hidden && this.ownerDocument.activeElement === this) this.blur();
+  }
+  get disabled() {
+    return this._disabled ?? false;
+  }
+  set disabled(value) {
+    this._disabled = Boolean(value);
+    if (this._disabled && this.ownerDocument.activeElement === this) this.blur();
+  }
   insertBefore(child, target) {
     child.remove();
     const index = this.children.indexOf(target);
@@ -532,6 +547,37 @@ test('native focus follows visible story actions through Play, Pause, end and Re
   assert.equal(h.doc.activeElement, h.button('Replay'));
   assert.equal(h.doc.activeElement.hidden, false);
   // Native focus methods and click defaults are modeled here; physical keys/controllers remain a host gate.
+});
+
+test('story completion preserves focus on volume or the enclosing Close action', async (t) => {
+  for (const target of ['volume', 'close']) {
+    const h = await setup(t);
+    h.ready();
+    const close = h.doc.createElement('button');
+    close.textContent = 'Close story';
+    h.doc.body.append(close);
+    const chosen = target === 'volume' ? h.player.element.querySelector('input') : close;
+    assert.ok(chosen);
+    await h.player.play();
+    chosen.focus();
+    h.video.at(4);
+    assert.equal(h.player.snapshot().state, 'poster');
+    assert.equal(h.doc.activeElement, chosen);
+  }
+});
+
+test('a deliberate focus change during native blur wins over story fallback', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  await h.player.play();
+  const close = h.doc.createElement('button');
+  close.textContent = 'Close story';
+  h.doc.body.append(close);
+  const pause = h.button('Pause');
+  pause.focus();
+  pause.blur = () => close.focus();
+  h.video.at(4);
+  assert.equal(h.doc.activeElement, close);
 });
 
 test('an obsolete play result cannot pause or redock a newer explicit play', async (t) => {
