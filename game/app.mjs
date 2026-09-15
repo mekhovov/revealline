@@ -48,6 +48,7 @@ import { revealFirstFlightBoard } from './ui/first-flight-launch.mjs';
 import { attachInput } from './ui/input.mjs';
 import { resolveTouchControls } from './touch-controls.mjs';
 import { attachFullscreen } from './ui/fullscreen.mjs';
+import { attachFlightLayout } from './ui/flight-layout.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { attachMissionPicker } from './ui/mission-picker.mjs';
 import { fetchBundledChapter } from './chapter-download.mjs';
@@ -5000,6 +5001,7 @@ try {
     onWorlds: () => optionalWorlds.open(),
   });
   attachFullscreen($('shell-fullscreen'));
+  attachFlightLayout();
   void initializeSoundtrack();
   if (autoplayPackLaunch)
     requestAnimationFrame(() => {
