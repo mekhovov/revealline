@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: a restored FPV-only pack keeps all four canonical Guide appearances and practices
+ok 1 - a restored FPV-only pack keeps all four canonical Guide appearances and practices
+  ---
+  duration_ms: 408.81275
+  type: 'test'
+  ...
+# Subtest: immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 2 - immediate: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 2292.929916
+  type: 'test'
+  ...
+# Subtest: grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+ok 3 - grid-center: actual guide preserves a live cut, Large text preference and held-input isolation through practice and return
+  ---
+  duration_ms: 2269.37125
+  type: 'test'
+  ...
+# Subtest: actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+ok 4 - actual guide repeated return and canceled load preserve the parent and reject stale lesson messages
+  ---
+  duration_ms: 896.923625
+  type: 'test'
+  ...
+# Subtest: actual guide returns with streamed music still explicitly paused, without resuming flight
+ok 5 - actual guide returns with streamed music still explicitly paused, without resuming flight
+  ---
+  duration_ms: 1045.659917
+  type: 'test'
+  ...
+# Subtest: actual guide returns with streamed music continuing, without resuming flight
+ok 6 - actual guide returns with streamed music continuing, without resuming flight
+  ---
+  duration_ms: 930.618458
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8023.998042

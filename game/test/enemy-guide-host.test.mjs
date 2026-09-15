@@ -497,14 +497,27 @@ for (const listening of [false, true]) {
     );
     page.$('soundtrack-play').click();
     const media = page.audioElements[0];
-    // Play starts media within the click task; let its persisted listening
-    // intent settle before the next separate Close/Start gesture.
+    // Play owns transport only. Choose the independent master explicitly before
+    // exercising audible music's suspension and return around the guide.
+    await settle(
+      () => !media.paused,
+      'The muted stream must start without changing master intent.',
+    );
+    assert.equal(
+      loadLibrary(page.storage, profileKey, { campaigns: [campaign] }).library.preferences
+        .musicEnabled,
+      false,
+      'Play does not persist an implicit master unmute.',
+    );
+    assert.equal(media.muted, true);
+    page.$('soundtrack-master-mute').click();
     await settle(
       () =>
         !media.paused &&
+        !media.muted &&
         loadLibrary(page.storage, profileKey, { campaigns: [campaign] }).library.preferences
           .musicEnabled,
-      'Playback and persisted listening intent must settle before opening the guide.',
+      'Explicit master intent and playback must settle before opening the guide.',
     );
     if (!listening) {
       page.$('soundtrack-pause').click();
