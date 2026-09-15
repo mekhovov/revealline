@@ -140,3 +140,47 @@ test('the old invalid-CRC embedded PNG is a corrupt-original negative, never the
   };
   await assert.rejects(prepareBackupSet(f.source));
 });
+
+test('preparations within the same millisecond have distinct safe common filenames and exact report references', async (t) => {
+  const fixture = await backupSetFixture();
+  t.mock.method(Date.prototype, 'toISOString', () => '2026-09-15T12:34:56.789Z');
+  const first = await prepareBackupSet(fixture.source),
+    second = await prepareBackupSet(fixture.source);
+  const suffixes = {
+    game: 'game-data.json',
+    media: 'originals.rlmedia',
+    story: 'stories.rlstory',
+    audio: 'soundtrack.rlsound',
+    coverage: 'coverage.json',
+  };
+  const prefixes = [];
+  for (const set of [first, second]) {
+    assert.equal(set.coverage.preparedAt, '2026-09-15T12:34:56.789Z');
+    const setPrefixes = new Set();
+    for (const file of set.files) {
+      const suffix = '-' + suffixes[file.id],
+        prefix = file.filename.slice(0, -suffix.length);
+      assert.equal(file.filename.endsWith(suffix), true);
+      assert.match(prefix, /^RevealLine-backup-20260915T123456789Z-[a-f0-9]{32}$/);
+      assert.match(file.filename, /^[A-Za-z0-9._-]+$/);
+      assert.ok(file.filename.length <= 128);
+      setPrefixes.add(prefix);
+    }
+    assert.equal(
+      setPrefixes.size,
+      1,
+      'All five download names share exactly one preparation prefix.',
+    );
+    prefixes.push([...setPrefixes][0]);
+    assert.deepEqual(
+      set.coverage.files.map((row) => row.filename),
+      set.files.filter((file) => file.id !== 'coverage').map((file) => file.filename),
+    );
+    assert.deepEqual(
+      JSON.parse(await set.files.find((file) => file.id === 'coverage').blob.text()),
+      set.coverage,
+    );
+  }
+  assert.notEqual(prefixes[0], prefixes[1], 'The timestamp alone must not identify a set.');
+  assert.equal(new Set([...first.files, ...second.files].map((file) => file.filename)).size, 10);
+});

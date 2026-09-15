@@ -1,6 +1,6 @@
 # Guided backup: scoped native download evidence
 
-Recorded 15 September 2026 against the immutable source preview `a85817ce127d2d9e4e594e671c5f1f573b18265e`, served at its isolated local origin. This is source-preview evidence, not a frozen/public release check. The actual coverage report identifies the development channel and has `sourceRevision: null`; the preview's pinned Git server supplies source identity separately.
+Recorded 15 September 2026 against the immutable source preview `a85817ce127d2d9e4e594e671c5f1f573b18265e`, served at its isolated local origin. This is source-preview evidence for the older fixed filenames, not a frozen/public release check or native qualification of the later unique-prefix source. The actual coverage report identifies the development channel and has `sourceRevision: null`; the preview's pinned Git server supplies source identity separately.
 
 The browser operator activated all five visible Download links through explicit keyboard actions. The actual destination files were observed and each component's byte length and SHA-256 matched the downloaded coverage report. Existing Downloads were left untouched; only the proven new files were copied into an owned check directory under the exact report-declared names.
 
