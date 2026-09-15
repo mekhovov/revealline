@@ -130,6 +130,13 @@
       "versions": [
         "v0.52.0"
       ]
+    },
+    {
+      "id": "archive-13",
+      "repository": "mekhovov/revealline-archive-13",
+      "versions": [
+        "v0.54.0"
+      ]
     }
   ]
 }

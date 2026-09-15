@@ -1,0 +1,67 @@
+{
+  "status": "verified-draft-attachments",
+  "observedAt": "2026-09-15T06:59:12.664516+00:00",
+  "releaseId": 388923117,
+  "tag": "v0.55.0",
+  "source": "acc9f265b651017fd268ffd8bbe6989bec614c41",
+  "draft": true,
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "distribution.zip",
+      "id": 565105368,
+      "bytes": 312325608,
+      "sha256": "69807866db04cc22d6e4d5fdbd5e04b5bc8b57834548cc7a147da5bd0ec1eab7"
+    },
+    {
+      "name": "distribution.zip.sha256",
+      "id": 565105371,
+      "bytes": 83,
+      "sha256": "ef5594fdec1f6d6e3aa638c442ebdc53ae0a0c4fc0870d68c7aa18910300f482"
+    },
+    {
+      "name": "manifest.json",
+      "id": 565105372,
+      "bytes": 120099,
+      "sha256": "96085dafb2c7f8083564e9923647b914efe29a5704a35b23d7fe337f4be4ae56"
+    },
+    {
+      "name": "qualification-evidence-record.json",
+      "id": 565105439,
+      "bytes": 470,
+      "sha256": "06616680c4daf16144f81e2be04bb1990cb67bf58d0ad872e87edbd83602b80d"
+    },
+    {
+      "name": "release.json",
+      "id": 565105370,
+      "bytes": 465,
+      "sha256": "fc79b9ce3974276a6aa3c5e7a81925fe484387b12e0472f54f81ceea01927d17"
+    },
+    {
+      "name": "source-qualification-evidence.zip",
+      "id": 565105440,
+      "bytes": 363390,
+      "sha256": "f0ee2b15537537ff165d3e8c53c320362dda897c4451a9a6a5a240d36ffb67f0"
+    },
+    {
+      "name": "source-qualification.json",
+      "id": 565105436,
+      "bytes": 13337,
+      "sha256": "b84d2995e56d3034f2eae8b4fa3c175b2c91157d7ad68f58b9ad11cc781fe956"
+    },
+    {
+      "name": "source.tar",
+      "id": 565105375,
+      "bytes": 672389120,
+      "sha256": "8e0e60607a9321e940de9af1b1f109b79c13dc17e54fb99e62434757427f6a6f"
+    },
+    {
+      "name": "verification.json",
+      "id": 565105465,
+      "bytes": 122173,
+      "sha256": "d18a9f0d93bed2609fb8fc089d1d3f4885909c7fba588ca065430494c073b28d"
+    }
+  ],
+  "published": false,
+  "publicAcceptance": false
+}
