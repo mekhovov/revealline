@@ -70,7 +70,7 @@ Statuses are `queued`, `implementing`, `reviewing`, `qualifying`, `deployed`, `a
 
 Queued means phase acceptance is outstanding; it does not erase delivered foundations. The audited baseline retains partial saves/scores/Collection/backups, 15 of 29 map families (60 of 116 pictures), one of twelve stories, incomplete animated presentation sets, five synthesized runtime recipes, thirteen authoring skills, and partial Versus/Team play. Forty reserve originals are accepted as source art, not installed missions. Another three picture families and the 24-track album are candidates. The 132 new Solo missions remain a production backlog; bulk production follows the three-level gameplay benchmark.
 
-P03-A, P03-B, P03-C, P03-D, P03-E and P03-F are internal work packages within approved **P03**, not separately accepted public phases. This branch retains scoped desktop keyboard evidence for A/B/C/D/E/F. P03-D's story-focus work is integrated here after E; F is the modal Tab-boundary candidate below. The public baseline remains v0.57.1. P03 stays implementing until combined-source, public and device gates close.
+P03-A, P03-B, P03-C, P03-D, P03-E, P03-F and P03-G are internal work packages within approved **P03**, not separately accepted public phases. This branch retains scoped desktop keyboard evidence for A/B/C/D/E/F/G. P03-D's story-focus work is integrated here after E; F is the modal Tab-boundary candidate below; G adds guarded unfinished-mission replacement with the scoped evidence below. The public baseline remains v0.57.1. P03 stays implementing until combined-source, public and device gates close.
 
 ## P03-A actual-opener candidate
 
@@ -101,6 +101,14 @@ After Team enables Start and reports ready, an untouched foreground page chooses
 ## P03-F modal Tab-boundary candidate
 
 The active modal keeps Tab inside its visible eligible first/last boundary in both directions. Interior movement stays with native controls, including file inputs and reading regions; negative tab indices, hidden controls and inactive nested parents are excluded. This change does not activate controls, commit drafts or resume play. Source-host tests cover actual story controls and nested Collection/picture return. [Scoped native evidence](verification/cross-mode/p03-f/README.md) now covers both boundaries in Collection, picture and story, unchanged interior controls and nested Escape returns. Root's earlier BODY-focus failure remains retained separately. Integrated release and physical-device qualification are still open.
+
+## P03-G unfinished-mission replacement candidate
+
+The four interactive Solo entry points—mission card, Level, Campaign and Pack selection (including chapter cards)—ask before replacing a started running/recovering flight, including paused and restored attempts. Selecting the same live mission/campaign/chapter is a no-op. The current selectors stay on the actual flight while one Stay/Replace prompt owns input; repeated changes do not queue more prompts. A ready or terminal attempt keeps its direct selection behavior. Programmatic restore, replay and Library adoption retain their existing contracts.
+
+The prompt pauses and holds autosave before reusing P03-C's checked replay, writer, backup-lock and bounded readback protections. Stay, Escape and controller Back preserve the queued turn and return to the actual opener without Resume. Replace remains disabled while checking. An unverified save warns that replacement may lose this attempt; a changed saved slot requires another deliberate Replace and is not overwritten. Pack download/install preserves the old run and recorder until the final guarded selection; cancelling or failing that preparation does not reset the flight. Pack metadata may already have committed before a later check fails, so this is not a rollback promise.
+
+The [G source and native record](verification/cross-mode/p03-g/README.md) separates 101/101 tests on each Node runtime from root’s desktop keyboard journeys. The confirmation currently leaves excessive blank space at full height; P05 should fit this prompt to its content. G is an internal P03 candidate, not public or physical-device acceptance. Starting class and Steering remain an explicit next review: the existing `class-select` and `turn-select` change handlers in `game/app.mjs` still call `prepare()` on live attempts. Settings must not silently convert a live run; starting equipment belongs to a fresh attempt, while the authored Tactical Hangar remains an in-flight action. G does not change those paths, Library scenario launches, Team Change setup or the broader mode-entry design.
 
 ## Player flow and feedback contract
 

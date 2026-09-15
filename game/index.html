@@ -1406,6 +1406,31 @@
       </div>
     </dialog>
     <dialog
+      id="mission-replace-dialog"
+      class="restart-dialog"
+      role="alertdialog"
+      aria-labelledby="mission-replace-title"
+      aria-describedby="mission-replace-target mission-replace-status"
+    >
+      <p class="eyebrow">UNFINISHED FLIGHT</p>
+      <h2 id="mission-replace-title">Replace this flight?</h2>
+      <p id="mission-replace-target"></p>
+      <p id="mission-replace-status" role="status"></p>
+      <div class="overlay-actions">
+        <button
+          id="mission-replace-stay"
+          class="button primary"
+          type="button"
+          data-close="mission-replace-dialog"
+        >
+          Stay with this flight
+        </button>
+        <button id="mission-replace-confirm" class="button secondary" type="button">
+          Replace flight
+        </button>
+      </div>
+    </dialog>
+    <dialog
       id="restart-dialog"
       class="restart-dialog"
       role="alertdialog"

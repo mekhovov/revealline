@@ -639,6 +639,7 @@ try {
     courseEntryMessage = '',
     courseEntryHold = false,
     modeDeparture = null,
+    missionReplacement = null,
     modeDepartureHold = false,
     lastOwnedAttempt = null,
     contentSwitchBusy = false,
@@ -1649,6 +1650,7 @@ try {
     // keeps its memory available for export without reclaiming stale storage.
     if (courseEntry) cancelCourseEntry();
     cancelModeDeparture();
+    cancelMissionReplacement();
     optionalWorlds?.close(false);
     invalidateContentSwitch();
     pause(true);
@@ -2027,10 +2029,58 @@ try {
         : 'Back from Team returns to this Missions selection; it does not resume a flight.'
     }`;
   }
+  function unfinishedFlight() {
+    return started && ['running', 'respawning'].includes(run?.status);
+  }
+  async function retainNavigationFlight(ticket, assertCurrent, onProgress) {
+    const retained = await retainFlightForFirstFlight({
+      run,
+      recorder,
+      campaign,
+      campaignKey: campaignKey(campaign),
+      themeId: theme.id,
+      bodyId,
+      runId,
+      continuation: { direction: input.snapshotDirection() },
+      presentationPins: flightPictures?.pins(),
+      mediaIdentityCatalog: flightPictures?.identityCatalog,
+      storage: localStorage,
+      sessionKey,
+      signal: ticket.controller.signal,
+      assertCurrent,
+      assertWritable: async () => {
+        assertWriter();
+        const currentSaved = localStorage.getItem(sessionKey);
+        if (currentSaved !== null && currentSaved !== lastOwnedAttempt)
+          throw new Error(
+            'The saved flight is not this tab’s last verified save. Its bytes were kept.',
+          );
+        if (!storedStateAdopted || recovery !== null || (await readAssetStore(journalKey)) !== null)
+          throw new Error('Stored data needs recovery before this flight can be retained.');
+      },
+      withStorageLock: (work) => {
+        if (!navigator.locks?.request)
+          throw new Error('Checked saving is unavailable in this browser.');
+        return navigator.locks.request(
+          `${libraryKey}.backup-lock`,
+          { signal: ticket.controller.signal },
+          work,
+        );
+      },
+      onProgress,
+    });
+    assertCurrent();
+    const raw = localStorage.getItem(sessionKey);
+    if (!attemptReadbackMatches(raw, retained.session))
+      throw new Error('The checked saved flight changed before departure was ready.');
+    ticket.savedRaw = raw;
+    lastOwnedAttempt = raw;
+  }
   async function requestTeam(event) {
     event.preventDefault();
     if (
       modeDeparture ||
+      missionReplacement ||
       courseSession ||
       courseEntry ||
       practice ||
@@ -2050,7 +2100,7 @@ try {
       campaign,
       generation: libraryGeneration,
       selection: modeSelection(),
-      unfinished: started && ['running', 'respawning'].includes(run?.status),
+      unfinished: unfinishedFlight(),
       savedRaw: null,
       fallback: false,
       pending: true,
@@ -2078,56 +2128,15 @@ try {
     $('mode-leave-stay').focus({ preventScroll: true });
     try {
       if (ticket.unfinished) {
-        const retained = await retainFlightForFirstFlight({
-          run,
-          recorder,
-          campaign,
-          campaignKey: campaignKey(campaign),
-          themeId: theme.id,
-          bodyId,
-          runId,
-          continuation: { direction: input.snapshotDirection() },
-          presentationPins: flightPictures?.pins(),
-          mediaIdentityCatalog: flightPictures?.identityCatalog,
-          storage: localStorage,
-          sessionKey,
-          signal: ticket.controller.signal,
-          assertCurrent: () => modeDepartureCurrent(ticket),
-          assertWritable: async () => {
-            assertWriter();
-            const currentSaved = localStorage.getItem(sessionKey);
-            if (currentSaved !== null && currentSaved !== lastOwnedAttempt)
-              throw new Error(
-                'The saved flight is not this tab’s last verified save. Its bytes were kept.',
-              );
-            if (
-              !storedStateAdopted ||
-              recovery !== null ||
-              (await readAssetStore(journalKey)) !== null
-            )
-              throw new Error('Stored data needs recovery before this flight can be retained.');
-          },
-          withStorageLock: (work) => {
-            if (!navigator.locks?.request)
-              throw new Error('Checked saving is unavailable in this browser.');
-            return navigator.locks.request(
-              `${libraryKey}.backup-lock`,
-              { signal: ticket.controller.signal },
-              work,
-            );
-          },
-          onProgress: ({ ticks, total }) => {
+        await retainNavigationFlight(
+          ticket,
+          () => modeDepartureCurrent(ticket),
+          ({ ticks, total }) => {
             if (modeDeparture === ticket)
               $('mode-leave-status').textContent =
                 `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
           },
-        });
-        modeDepartureCurrent(ticket);
-        const raw = localStorage.getItem(sessionKey);
-        if (!attemptReadbackMatches(raw, retained.session))
-          throw new Error('The checked saved flight changed before departure was ready.');
-        ticket.savedRaw = raw;
-        lastOwnedAttempt = raw;
+        );
       }
       modeDepartureCurrent(ticket);
     } catch (error) {
@@ -2182,6 +2191,231 @@ try {
     } catch (error) {
       if (ticket.token) modeReturn.clear(ticket.token);
       $('mode-leave-status').textContent = `${error.message} Your flight remains paused here.`;
+    }
+  };
+  function cancelMissionReplacement() {
+    const ticket = missionReplacement;
+    if (!ticket) return;
+    ticket.controller.abort();
+    missionReplacement = null;
+    if (ticket.installing) invalidateContentSwitch();
+    // Keep the checked-save hold until explicit Resume or a new attempt.
+  }
+  function missionReplacementCurrent(ticket, { installed = false } = {}) {
+    if (
+      missionReplacement !== ticket ||
+      ticket.controller.signal.aborted ||
+      run !== ticket.run ||
+      recorder !== ticket.recorder ||
+      runId !== ticket.runId ||
+      campaign !== ticket.campaign ||
+      activeEntry !== ticket.entry ||
+      libraryGeneration !== ticket.generation ||
+      (!installed && packs !== ticket.packs) ||
+      canonicalJSON(modeSelection()) !== canonicalJSON(ticket.selection)
+    )
+      throw new Error('The flight or available missions changed. Stay here and choose again.');
+  }
+  function resolveMissionRequest(request) {
+    if (request.kind === 'level' || request.kind === 'card') {
+      const index = campaign.levels.findIndex((level) => level.id === request.id);
+      if (index < 0 || !missionAvailable(index))
+        throw new Error('That mission is unavailable or still locked.');
+      return {
+        same: campaign.levels[levelIndex].id === request.id,
+        title: campaign.levels[index].name,
+      };
+    }
+    if (request.kind === 'campaign') {
+      const entry = catalog().find((item) => campaignKey(item.campaign) === request.id);
+      if (!entry) throw new Error('This campaign is not installed.');
+      return {
+        same:
+          (entry.baseCampaignKey || campaignKey(entry.campaign)) === modeSelection().campaignKey,
+        title: entry.campaign.title || entry.campaign.name || entry.campaign.id,
+        entry,
+      };
+    }
+    if (request.kind === 'pack') {
+      const pack = request.id
+        ? packs.packs.find((item) => item.id === request.id) ||
+          packCatalog.packs.find((item) => item.id === request.id)
+        : null;
+      if (request.id && !pack) throw new Error('This chapter is unavailable.');
+      return {
+        same: request.id
+          ? activeEntry.sourcePackId === request.id
+          : modeSelection().campaignKey === campaignKey(baseEntry.campaign),
+        title:
+          pack?.name ||
+          baseEntry.campaign.title ||
+          baseEntry.campaign.name ||
+          baseEntry.campaign.id,
+      };
+    }
+    throw new Error('Unknown mission action.');
+  }
+  async function applyMissionRequest(request, ticket = null) {
+    const target = resolveMissionRequest(request);
+    if (request.kind === 'pack') {
+      if (ticket) ticket.installing = true;
+      return activatePack(request.id, {
+        preserveCurrentRun: !!ticket,
+        beforeSelect: ticket
+          ? () => missionReplacementCurrent(ticket, { installed: true })
+          : undefined,
+      });
+    }
+    if (request.kind === 'campaign') {
+      selectEntry(target.entry);
+      contentStatus(`${target.title} selected and ready.`);
+    } else if (request.kind === 'level') return selectLevel(request.id);
+    else {
+      leavePractice();
+      levelIndex = campaign.levels.findIndex((level) => level.id === request.id);
+      prepare();
+      rememberSelection();
+      contentStatus(`${campaign.levels[levelIndex].name} selected. Deploy when ready.`);
+      if (!ticket) focusMission();
+    }
+    return true;
+  }
+  function missionReplacementMessage(ticket) {
+    $('mission-replace-status').textContent = ticket.savedRaw
+      ? 'Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.'
+      : 'This flight was not verified as safely saved. Replacing it may lose this attempt. Stay keeps it paused in this tab; Replace deliberately discards it.';
+    if (ticket.failure) $('mission-replace-status').textContent += ` ${ticket.failure}`;
+  }
+  async function requestMissionReplacement(request, opener) {
+    // Only the four explicit player adapters call this gate. Restore, replay,
+    // Library adoption and internal pack selection retain their own contracts.
+    if (
+      missionReplacement ||
+      modeDeparture ||
+      courseSession ||
+      courseEntry ||
+      sessionBusy ||
+      contentSwitchBusy ||
+      pictureThemePending ||
+      backupBusy
+    ) {
+      refreshContentSelectors();
+      $('campaign-select').value = modeSelection().campaignKey;
+      return false;
+    }
+    let target;
+    try {
+      target = resolveMissionRequest(request);
+    } catch (error) {
+      refreshContentSelectors();
+      $('campaign-select').value = modeSelection().campaignKey;
+      contentStatus(error.message, true);
+      return false;
+    }
+    if (!unfinishedFlight()) return applyMissionRequest(request);
+    refreshContentSelectors();
+    $('campaign-select').value = modeSelection().campaignKey;
+    if (target.same) return false;
+    // Practice retains its existing non-advertised selection behavior.
+    if (practice) return applyMissionRequest(request);
+    const ticket = {
+      request: { kind: request.kind, id: request.id },
+      opener,
+      controller: new AbortController(),
+      run,
+      recorder,
+      runId,
+      campaign,
+      entry: activeEntry,
+      generation: libraryGeneration,
+      packs,
+      selection: modeSelection(),
+      savedRaw: null,
+      pending: true,
+      installing: false,
+    };
+    missionReplacement = ticket;
+    modeDepartureHold = true;
+    pause(true);
+    clearInput();
+    $('mission-replace-target').textContent =
+      `${campaign.levels[levelIndex].name} → ${target.title}`;
+    $('mission-replace-status').textContent =
+      'Checking the saved flight. Your current flight stays paused. Stay cancels waiting.';
+    $('mission-replace-confirm').disabled = true;
+    $('mission-replace-dialog').showModal();
+    $('mission-replace-stay').focus({ preventScroll: true });
+    try {
+      await retainNavigationFlight(
+        ticket,
+        () => missionReplacementCurrent(ticket),
+        ({ ticks, total }) => {
+          if (missionReplacement === ticket)
+            $('mission-replace-status').textContent =
+              `Verifying your saved flight: ${ticks} / ${total} ticks. Stay cancels waiting.`;
+        },
+      );
+    } catch (error) {
+      if (missionReplacement !== ticket || ticket.controller.signal.aborted) return false;
+      ticket.savedRaw = null;
+      ticket.failure = error.message;
+    }
+    if (missionReplacement !== ticket) return false;
+    ticket.pending = false;
+    $('mission-replace-confirm').disabled = false;
+    missionReplacementMessage(ticket);
+    return false;
+  }
+  $('mission-replace-dialog').addEventListener('close', () => {
+    if ($('mission-replace-dialog').open) return;
+    const ticket = missionReplacement;
+    cancelMissionReplacement();
+    if (availableFocusTarget(ticket?.opener)) ticket.opener.focus({ preventScroll: true });
+  });
+  $('mission-replace-confirm').onclick = async () => {
+    const ticket = missionReplacement;
+    if (!ticket || ticket.pending) return;
+    try {
+      missionReplacementCurrent(ticket);
+      resolveMissionRequest(ticket.request);
+      if (ticket.savedRaw) {
+        try {
+          assertWriter();
+          if (localStorage.getItem(sessionKey) !== ticket.savedRaw)
+            throw new Error('Saved flight changed.');
+        } catch {
+          ticket.savedRaw = null;
+          ticket.failure =
+            'The saved flight changed or saving became unavailable. Review this warning before choosing Replace again.';
+          missionReplacementMessage(ticket);
+          return;
+        }
+      }
+      ticket.pending = true;
+      $('mission-replace-confirm').disabled = true;
+      $('mission-replace-status').textContent =
+        'Preparing the selected mission. Your current flight stays paused until it is ready. Stay cancels waiting.';
+      const selected = await applyMissionRequest(ticket.request, ticket);
+      if (missionReplacement !== ticket) return;
+      missionReplacement = null;
+      ticket.controller.abort();
+      $('mission-replace-dialog').close();
+      if (!selected) {
+        if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
+        return;
+      }
+      if (ticket.request.kind === 'card') {
+        // Missions remains the active parent, as for ordinary gallery selection.
+        if ($('shell-missions').open)
+          $('missions').querySelector('.selected')?.focus({ preventScroll: true });
+        else focusMission();
+      } else if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
+    } catch (error) {
+      if (missionReplacement !== ticket) return;
+      ticket.pending = false;
+      ticket.failure = `${error.message} Your flight remains paused here.`;
+      $('mission-replace-confirm').disabled = false;
+      missionReplacementMessage(ticket);
     }
   };
   function selectCourseLesson(lessonId) {
@@ -2652,7 +2886,7 @@ try {
       }
     }
   }
-  async function ensureBundledPack(packId, operation) {
+  async function ensureBundledPack(packId, operation, { preserveCurrentRun = false } = {}) {
     const before = packs;
     packLaunchGuard.assert(operation, before);
     const installed = packs.packs.find((pack) => pack.id === packId);
@@ -2694,6 +2928,7 @@ try {
     contentStatus(`Saving ${summary.name} on this device…`, false, { busy: true, stage: 'saving' });
     await replacePackLibrary(installPack(before, prepared.pack), {
       contentSwitchTicket: operation,
+      preserveCurrentRun,
     });
     return { pack: prepared.pack, installed: true };
   }
@@ -2845,7 +3080,10 @@ try {
       }
     }
   }
-  async function activatePack(packId, { campaignId, levelId, announce = true } = {}) {
+  async function activatePack(
+    packId,
+    { campaignId, levelId, announce = true, preserveCurrentRun = false, beforeSelect } = {},
+  ) {
     attemptFiles?.invalidate();
     cancelRestore();
     const operation = packLaunchGuard.begin(packs);
@@ -2855,13 +3093,14 @@ try {
     contentStatus('Preparing your selected chapter…', false, { busy: true });
     try {
       if (!packId) {
+        beforeSelect?.();
         selectEntry(baseEntry, { levelId, contentSwitchTicket: operation });
         if (announce)
           contentStatus(`Base game · ${campaign.levels[levelIndex].name} selected and ready.`);
         else contentStatus('');
         return operation;
       }
-      const result = await ensureBundledPack(packId, operation);
+      const result = await ensureBundledPack(packId, operation, { preserveCurrentRun });
       packLaunchGuard.assert(operation, packs);
       const source = campaignId
         ? result.pack.campaigns.find((item) => item.id === campaignId)
@@ -2871,11 +3110,12 @@ try {
         (item) => item.sourcePackId === result.pack.id && item.campaign.id === source.id,
       );
       if (!entry) throw new Error('The installed pack campaign could not be selected.');
+      beforeSelect?.();
       if (levelId) {
         const targetIndex = entry.campaign.levels.findIndex((level) => level.id === levelId);
         if (targetIndex < 0) throw new Error('This pack level is unavailable.');
         if (!missionAvailable(targetIndex, entry)) {
-          selectEntry(entry, { contentSwitchTicket: operation });
+          if (!preserveCurrentRun) selectEntry(entry, { contentSwitchTicket: operation });
           throw new Error(
             `${entry.campaign.levels[targetIndex].name} is still locked. The next available level is selected.`,
           );
@@ -3442,13 +3682,20 @@ try {
   $('pack-select').onchange = async () => {
     const packId = $('pack-select').value;
     if (packId.startsWith('campaign:')) return;
-    await activatePack(packId);
+    const opener =
+      availableFocusTarget(document.activeElement) &&
+      $('shell-missions').contains(document.activeElement)
+        ? document.activeElement
+        : $('pack-select');
+    return requestMissionReplacement({ kind: 'pack', id: packId }, opener);
   };
-  $('level-select').onchange = () => selectLevel($('level-select').value);
-  $('campaign-select').onchange = () => {
-    selectEntry(catalog().find((e) => campaignKey(e.campaign) === $('campaign-select').value));
-    contentStatus(`${campaign.title || campaign.name || campaign.id} selected and ready.`);
-  };
+  $('level-select').onchange = () =>
+    requestMissionReplacement({ kind: 'level', id: $('level-select').value }, $('level-select'));
+  $('campaign-select').onchange = () =>
+    requestMissionReplacement(
+      { kind: 'campaign', id: $('campaign-select').value },
+      $('campaign-select'),
+    );
   $('difficulty-select').onchange = () => {
     if ($('difficulty-select').disabled) return;
     const mode = resolveCampaignDifficulty($('difficulty-select').value);
@@ -3869,13 +4116,12 @@ try {
             ? '—'
             : '↗';
       b.append(number, name, medal);
-      b.onclick = () => {
-        if (courseEntry) return;
-        leavePractice();
-        levelIndex = index;
-        prepare();
-        rememberSelection();
-        focusMission();
+      b.onclick = (event) => {
+        const pending = requestMissionReplacement({ kind: 'card', id: level.id }, b);
+        // The gallery's queued selection focus belongs to completed selection,
+        // not the separate confirmation dialog that now owns input.
+        if (missionReplacement) event.stopPropagation();
+        return pending;
       };
       $('missions').append(b);
     });
