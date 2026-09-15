@@ -240,6 +240,21 @@ export function createCoopPainter(canvas) {
           -1.05,
         );
       }
+      // Authoritative active time keeps this cue visible through pause and reduced effects.
+      if (enemy.speedScale < 1 && enemy.slowUntil > run.time) {
+        ctx.strokeStyle = '#e6f8ff';
+        ctx.lineWidth = 0.11;
+        ctx.setLineDash([0.16, 0.12]);
+        ctx.beginPath();
+        ctx.arc(0, 0, 0.88, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = '#e6f8ff';
+        ctx.font = 'bold 0.6px system-ui';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SLOWED', 0, Math.min(run.height - 0.6, enemy.y + 1.25) - enemy.y);
+      }
       ctx.restore();
     }
     for (const impact of run.impacts || []) {

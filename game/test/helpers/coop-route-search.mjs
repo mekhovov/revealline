@@ -14,7 +14,7 @@ const command = (direction = null, support = false, boost = true) => ({
 export function trial(
   level,
   difficulty,
-  { cover = true, boost = true, coverDrifters = true } = {},
+  { cover = true, boost = true, boostBySeat = [boost, boost], coverDrifters = true } = {},
 ) {
   const run = startCoop(createCoop(level, { difficulty, seed: 17 }));
   const log = [],
@@ -38,7 +38,7 @@ export function trial(
           run.impacts.some(
             (impact) => Math.hypot(impact.x - player.x, impact.y - player.y) <= 5.9,
           ));
-      return command(direction, support, boost);
+      return command(direction, support, boostBySeat[id]);
     });
     stepCoop(run, inputs);
     log.push(inputs);

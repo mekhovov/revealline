@@ -173,3 +173,34 @@ test('Expert walking guard window supports a real spark interception before the 
   );
   assert.ok(result.events.find((event) => event.type === 'core.defeated').time > intercepted.time);
 });
+
+test('Standard Yard supports unequal movement speeds and the same route after exchanging seats', (t) => {
+  // This rehearsed controller uses public waypoints and nearby-threat Cover.
+  // Different Boost use proves legal cooperation at unequal movement speeds;
+  // it does not model human reaction time, skill, or first-attempt success.
+  const result = yardOpening('standard', {
+    boostBySeat: [true, false],
+    cover: true,
+    waitAfterOpening: 300,
+  });
+  assert.equal(result.run.status, 'won', JSON.stringify(result.stages));
+  assert.equal(downs(result.events).length, 0);
+  assert.ok(result.log.some((commands) => commands[0].boost));
+  assert.ok(result.log.every((commands) => !commands[1].boost));
+  assert.ok(result.events.some((event) => event.type === 'cut.joint'));
+  const shield = result.events.find((event) => event.type === 'shield.disabled');
+  const core = result.events.find((event) => event.type === 'core.defeated');
+  assert.ok(core && shield && core.time > shield.time);
+  const waiting = result.stages.findIndex(
+    (stage) => stage.label === 'wait on newly banked safe ground',
+  );
+  assert.equal(result.stages[waiting].tick - result.stages[waiting - 1].tick, 300);
+  assert.ok(result.stages[waiting].players.every((player) => !player.cutting));
+  const swapped = replayRoute(RELAY_YARD, 'standard', result.log, { swapped: true });
+  assert.deepEqual(physicalState(swapped.run, true), physicalState(result.run));
+  assert.deepEqual(swapped.run.cells, result.run.cells);
+  assert.equal(downs(swapped.events).length, 0);
+  t.diagnostic(
+    `Rehearsed unequal-speed clear: ${result.run.time.toFixed(3)} seconds; one boosted player, one walking player; no knockdowns.`,
+  );
+});

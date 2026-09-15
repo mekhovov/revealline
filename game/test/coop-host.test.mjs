@@ -4,6 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/couch-host.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
+import { createCoop, startCoop, pauseCoop, resumeCoop, stepCoop, FIXED_DT } from '../coop/core.mjs';
+import { createCoopPainter } from '../couch/coop-view.mjs';
+import { coopRetryFeedback } from '../couch/coop-feedback.mjs';
 
 const html = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 let sequence = 0;
@@ -74,7 +77,19 @@ async function page(t) {
     $(id).onchange();
   };
   const press = (key) => doc.activeElement.emit('keydown', { key, code: key, repeat: false });
-  return { $, doc, selectFile, choose, press };
+  const tap = (key) => {
+    press(key);
+    doc.activeElement.emit('keyup', { key, code: key });
+  };
+  let now = 0;
+  const tick = (count = 1) => {
+    for (let index = 0; index < count; index++) {
+      const [id, callback] = frames.entries().next().value;
+      frames.delete(id);
+      callback((now += FIXED_DT * 1000));
+    }
+  };
+  return { $, doc, selectFile, choose, press, tap, tick };
 }
 
 function customPack(id = 'custom') {
@@ -239,4 +254,144 @@ test('lobby keyboard navigation reaches Race and accessibility controls while ex
       'Paused navigation stays in the overlay.',
     );
   }
+});
+
+test('the selected cut rules agree across the briefing and actual start message', async (t) => {
+  const f = await page(t);
+  for (const style of ['independent', 'joint', 'full']) {
+    f.choose('coop-experiment', style);
+    if (style === 'independent') {
+      assert.doesNotMatch(f.$('coop-intro').textContent, /meet to join/);
+      assert.match(f.$('coop-cut-help').textContent, /does not join your lines/);
+    } else {
+      assert.match(f.$('coop-intro').textContent, /small loop/);
+      assert.match(f.$('coop-cut-help').textContent, /bank a shared cut/);
+      assert.doesNotMatch(f.$('coop-cut-help').textContent, /does not join/);
+    }
+    f.$('coop-start').click();
+    assert.match(
+      f.$('coop-message').textContent,
+      style === 'independent' ? /head meetings do not join/ : /join after the charge passes/,
+    );
+    f.$('coop-pause').click();
+    f.$('coop-lobby').click();
+  }
+});
+
+test('real keyboard self-crossings explain the shared recovery and cause-aware retry', async (t) => {
+  const f = await page(t),
+    pack = customPack('self-crossing');
+  // An authored empty arena isolates input, recovery and debrief behavior from enemy motion.
+  pack.levels[0].enemies = [];
+  await f.selectFile(JSON.stringify(pack));
+  f.$('coop-difficulty').value = 'expert';
+  f.$('coop-start').click();
+  f.tick(3);
+  const loop = () => {
+    for (const [first, second, ticks] of [
+      ['KeyD', 'ArrowLeft', 30],
+      ['KeyW', 'ArrowUp', 15],
+      ['KeyD', 'ArrowLeft', 15],
+      ['KeyS', 'ArrowDown', 15],
+      ['KeyA', 'ArrowRight', 15],
+    ]) {
+      f.tap(first);
+      f.tap(second);
+      f.tick(ticks);
+    }
+  };
+  loop();
+  assert.match(f.$('coop-message').textContent, /Both craft are back\. One team reserve used/);
+  assert.equal(f.$('coop-reserves').textContent, '0 reserves');
+  loop();
+  assert.equal(f.$('coop-overlay').hidden, false);
+  assert.equal(f.$('coop-resume').hidden, true);
+  const copy = f.$('coop-overlay-copy').textContent;
+  assert.match(copy, /0% revealed; goal 65%/);
+  assert.match(copy, /unfinished line crossed itself/);
+  assert.match(copy, /safe ground before crossing your own line/);
+  assert.doesNotMatch(copy, /Hunter|Support|Sunflower|Skyline/);
+  assert.equal(copy.match(/unfinished line crossed itself/g).length, 1);
+  f.$('coop-retry').click();
+  assert.equal(f.$('coop-overlay').hidden, true);
+  assert.equal(f.$('coop-reserves').textContent, '1 reserve');
+  assert.equal(f.$('coop-clock').textContent, '0:00');
+  assert.equal(f.$('coop-level').value, 'self-crossing-coverage');
+});
+
+test('retry feedback counts required objectives and distinguishes enemy and spark causes', () => {
+  const run = {
+    coverage: 0.5,
+    level: { goal: { cores: ['required'] } },
+    strongholds: [
+      { id: 'optional', defeated: true, anchors: [{ captured: true }, { captured: true }] },
+      { id: 'required', defeated: false, anchors: [{ captured: true }, { captured: false }] },
+    ],
+    enemies: [
+      { id: 'hunter', type: 'hunter' },
+      { id: 'drifter', type: 'drifter' },
+    ],
+  };
+  const hunter = coopRetryFeedback(run, [{ cause: 'enemy-trail', enemy: 'hunter' }]);
+  assert.match(hunter, /0 \/ 1 required cores and 1 \/ 2 anchors/);
+  assert.match(hunter, /A Hunter caught an unfinished line/);
+  assert.doesNotMatch(hunter, /50%|crossed itself/);
+  const drifter = coopRetryFeedback(run, [{ cause: 'enemy-player', enemy: 'drifter' }]);
+  assert.match(drifter, /roaming enemy caught an exposed craft/);
+  assert.doesNotMatch(drifter, /Hunter/);
+  const spark = coopRetryFeedback(run, [{ cause: 'line-impact', enemy: 'required' }]);
+  assert.match(spark, /travelling spark/);
+  assert.match(spark, /Intercept a nearby spark with Support or bank the cut sooner/);
+  const coverage = coopRetryFeedback({ ...run, level: { goal: { coverage: 0.724001 } } });
+  assert.match(coverage, /50% revealed; goal 72\.41%/);
+  assert.doesNotMatch(coverage, /cores|anchors/);
+});
+
+test('a slowed enemy stays marked after the pulse, through pause and reduced effects, then expires', () => {
+  const level = structuredClone(COOP_STARTER_PACK.levels[0]);
+  level.enemies = [{ id: 'nearby', type: 'drifter', x: 3.5, y: 17.5, vx: 1, vy: 0, radius: 0.3 }];
+  const run = createCoop(level);
+  const neutral = () =>
+    Array.from({ length: 2 }, () => ({ direction: null, boost: false, support: false }));
+  const labels = [];
+  const context = new Proxy(
+    { fillText: (text) => labels.push(text) },
+    {
+      get: (target, key) => (Object.hasOwn(target, key) ? target[key] : () => {}),
+    },
+  );
+  const painter = createCoopPainter({ width: 1152, getContext: () => context });
+  const marked = (reduced = false) => {
+    labels.length = 0;
+    painter.paint(run, { reduced });
+    return labels.includes('SLOWED');
+  };
+  startCoop(run);
+  stepCoop(run, neutral(), FIXED_DT);
+  const pulse = neutral();
+  pulse[0].support = true;
+  stepCoop(run, pulse, FIXED_DT);
+  assert.equal(marked(), true);
+  for (let tick = 0; tick < 60; tick++) stepCoop(run, neutral(), FIXED_DT);
+  assert.equal(run.supportEffects.length, 0, 'The short pulse animation has ended.');
+  assert.equal(marked(true), true);
+  pauseCoop(run);
+  const before = structuredClone(run);
+  for (let tick = 0; tick < 120; tick++) stepCoop(run, neutral(), FIXED_DT);
+  assert.equal(marked(), true);
+  assert.deepEqual(
+    run,
+    before,
+    'Neither paused stepping nor rendering changes authoritative state.',
+  );
+  resumeCoop(run);
+  for (let tick = 0; tick < 125; tick++) stepCoop(run, neutral(), FIXED_DT);
+  assert.equal(marked(), false);
+  const empty = neutral();
+  empty[1].support = true;
+  stepCoop(run, empty, FIXED_DT);
+  assert.ok(
+    run.events.some((event) => event.type === 'support.pulse' && !event.slowedEnemies.length),
+  );
+  assert.equal(marked(), false, 'An empty pulse does not claim an enemy is slowed.');
 });

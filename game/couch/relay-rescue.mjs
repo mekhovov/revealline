@@ -12,6 +12,7 @@ import { COOP_STARTER_PACK, readCoopPack, coopGoalText } from '../coop/library.m
 import { COOP_PACK_MAX_BYTES } from '../coop/recipes.mjs';
 import { attachCouchInput } from './couch-input.mjs';
 import { createCoopPainter } from './coop-view.mjs';
+import { coopFailureFeedback, coopRetryFeedback } from './coop-feedback.mjs';
 import { createControllerRouter } from '../ui/controller-router.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { onNativeInactive } from '../platform.mjs';
@@ -35,8 +36,12 @@ export function bootCoop() {
   let previousPads = new Map();
   let pack = COOP_STARTER_PACK;
   let importRequest = 0;
+  let knockdowns = [null, null];
   const selectedLevel = () =>
     pack.levels.find((level) => level.id === $('coop-level').value) || pack.levels[0];
+  const selectedConfiguration = () =>
+    COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
+    COOP_PLAYTEST_CONFIGURATIONS[0];
   let menuHint = '';
   const running = () => run?.status === 'running';
   const scope = () => (running() ? 'flight' : run ? `coop-${run.status}` : 'coop-lobby');
@@ -109,7 +114,7 @@ export function bootCoop() {
     $('coop-overlay-copy').textContent = won
       ? `${(run.coverage * 100).toFixed(1)}% revealed together in ${clock(run.time)}. ${run.team.jointCuts} Joint Cuts, ${run.team.rescues} rescues and ${run.team.interceptions} intercepted sparks. Try another level or a harder challenge.`
       : lost
-        ? `You revealed ${(run.coverage * 100).toFixed(1)}%. Agree on a shorter exposed route, save Support for the warning, or move closer for a rescue.`
+        ? coopRetryFeedback(run, knockdowns.filter(Boolean))
         : 'Release your controls, then choose Resume together.';
     primary().focus({ preventScroll: true });
   }
@@ -161,10 +166,9 @@ export function bootCoop() {
   function start() {
     importRequest++;
     $('coop-pack-file').value = '';
-    const experiment =
-      COOP_PLAYTEST_CONFIGURATIONS.find((item) => item.id === $('coop-experiment').value) ||
-      COOP_PLAYTEST_CONFIGURATIONS[0];
+    const experiment = selectedConfiguration();
     clear();
+    knockdowns = [null, null];
     const level = selectedLevel();
     run = createCoop(level, {
       seed: 17,
@@ -226,17 +230,23 @@ export function bootCoop() {
       if (event.type === 'cut.joint')
         message('Joint Cut! Both lines are safe. Choose your next route together.');
       if (event.type === 'player.downed') {
+        knockdowns[event.player] = event;
         input.clearPlayer(event.player);
         batch.release(event.player);
         message(
-          `${names[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' or capture 2% new territory' : ''}.`,
+          `${coopFailureFeedback(run, event).cause} ${names[event.player]} needs a rescue. Hold Support nearby${run.config.advancedCooperation ? ' or capture 2% new territory' : ''}.`,
         );
       }
       if (event.type === 'player.revived') {
+        knockdowns[event.player] = null;
         input.clearPlayer(event.player);
         batch.release(event.player);
-        message(`${names[event.player]} is back. Choose a fresh direction.`);
+        message(
+          `${names[event.player]} is back.${event.reason === 'reserve' ? ' One team reserve used.' : ''} Choose a fresh direction.`,
+        );
       }
+      if (event.type === 'team.recovery')
+        message('Both craft are back. One team reserve used. Choose fresh directions together.');
       if (event.type === 'shield.disabled')
         message('Both anchors secured! Now capture the exposed core in a new cut.');
       if (event.type === 'core.defeated')
@@ -329,7 +339,17 @@ export function bootCoop() {
   $('coop-lobby').onclick = lobby;
   function setupNote() {
     const level = selectedLevel();
+    const experiment = selectedConfiguration();
     const stronghold = Boolean(level.goal.cores);
+    $('coop-intro').textContent = experiment.jointCuts
+      ? 'Start with a small loop. Cover each other, then meet to join a larger cut.'
+      : 'Start with small loops. Cover each other and return to safe ground to bank each line.';
+    $('coop-cut-title').textContent = experiment.jointCuts
+      ? 'Join when ready.'
+      : 'Bring each line home.';
+    $('coop-cut-help').textContent = experiment.jointCuts
+      ? 'Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.'
+      : 'Return to safe ground to bank your cut. Crossing a partner’s line is harmless; meeting their head does not join your lines.';
     $('coop-stronghold-help').hidden = !stronghold;
     $('coop-menu-goal').textContent = coopGoalText(level);
     $('coop-briefing-title').textContent = stronghold
@@ -344,10 +364,9 @@ export function bootCoop() {
         : stronghold
           ? 'One open field. Bait a Hunter, cover the crossing, then take the anchors together.'
           : 'Both halves are contested. Create safe routes in small steps, then coordinate a larger cut.';
-    $('coop-setup-note').textContent =
-      $('coop-experiment').value === 'full'
-        ? 'Captures recharge both players’ Support and can rescue a downed partner.'
-        : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
+    $('coop-setup-note').textContent = experiment.advancedCooperation
+      ? 'Captures recharge both players’ Support and can rescue a downed partner.'
+      : 'Comparison: Support refills on its timer. Rescue by holding Support nearby. Captures do not speed either up.';
   }
   function showPack(next, preferred = next.levels[0].id) {
     pack = next;

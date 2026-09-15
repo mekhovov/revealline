@@ -58,15 +58,28 @@
   min-height: 56px;
 }
 .playing .controls {
-  padding-top: 12px;
+  padding-top: 8px;
+}
+.playing .control-card {
+  padding: 8px 12px;
+}
+.playing .control-card h2,
+.playing .control-card .support-status {
+  display: none;
+}
+.playing .help-footer {
+  padding-top: 4px;
 }
 .playing .help-footer p {
   display: none;
 }
-@media (min-width: 900px) {
+@media (min-width: 761px) {
   .playing .arena-wrap {
-    width: min(100%, max(640px, calc((100svh - 330px) * 2)));
+    width: min(100%, max(360px, calc((100svh - 370px) * 2)));
     margin-inline: auto;
+  }
+  .playing:has(#coop-touch:checked) .arena-wrap {
+    width: min(100%, max(360px, calc((100svh - 455px) * 2)));
   }
 }
 * {
@@ -349,6 +362,7 @@ canvas {
   background: #07141ddb;
   backdrop-filter: blur(3px);
   padding: 16px;
+  overflow: auto;
 }
 .overlay-card {
   text-align: center;
