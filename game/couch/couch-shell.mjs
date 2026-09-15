@@ -77,8 +77,27 @@ export function createCouchShell({
     return status === 'running' || screen === 'review' ? $('race-hud') : $(SCREENS[screen][0]);
   }
   function focus(element = primary()) {
-    if (!destroyed && !element.disabled && !element.closest('[hidden],[inert]'))
-      element.focus({ preventScroll: true });
+    const owner = root(),
+      previousScreen = screen,
+      previousStatus = status;
+    const eligible = () =>
+      !destroyed &&
+      foreground() &&
+      screen === previousScreen &&
+      status === previousStatus &&
+      root() === owner &&
+      element?.isConnected &&
+      owner.contains(element) &&
+      !element.disabled &&
+      !element.closest('[hidden],[inert],[aria-hidden="true"]') &&
+      element.getClientRects().length > 0 &&
+      doc.defaultView?.getComputedStyle(element)?.visibility !== 'hidden';
+    if (!eligible()) return;
+    element.focus({ preventScroll: true });
+    // The screen is installed first. Reveal its actual focused action without
+    // letting a synchronous focus callback scroll a replacement/background view.
+    if (eligible() && doc.activeElement === element)
+      element.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'auto' });
   }
   function renderScreens() {
     const running = status === 'running' || screen === 'review';
@@ -311,7 +330,6 @@ export function createCouchShell({
       if (status !== 'ready' || previous === null) screen = 'main';
       opener = null;
       renderScreens();
-      if (previous !== null && status !== 'running') focus();
     }
     setText('race-summary', summary);
     setText(
@@ -358,6 +376,9 @@ export function createCouchShell({
       );
     }
     renderPads();
+    // Result rows and their copy precede the primary action in the layout.
+    // Install them before the one transition-owned focus/reveal, never later.
+    if (status !== previous && previous !== null && status !== 'running') focus();
   }
   renderScreens();
   return {
