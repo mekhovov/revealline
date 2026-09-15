@@ -1,5 +1,13 @@
 import { prepareBackupSet } from '../backup-set.mjs';
 
+const PURPOSES = {
+  game: 'game data',
+  media: 'pictures',
+  story: 'stories',
+  audio: 'music',
+  coverage: 'coverage report',
+};
+
 /** Uses the existing Library dialog and native links. Owns only its operation
  * and Blob URLs, never the borrowed game/media adapters or profile writer. */
 export function attachBackupSetPanel({
@@ -25,14 +33,20 @@ export function attachBackupSetPanel({
       'backup-set-status',
       'Prepare separate game data, picture, story and saved music files. Keep all five downloads in a new folder with the shown filenames. Unsaved drafts are excluded.',
     ),
-    list = node('ul', 'backup-set-files', '');
+    list = node('ul', 'backup-set-files', ''),
+    filenames = node('details', 'backup-set-filenames', ''),
+    filenameSummary = node('summary', 'backup-set-filename-summary', 'File names'),
+    filenameList = node('dl', 'backup-set-filename-list', '');
   prepare.type = cancelButton.type = 'button';
   prepare.className = 'button primary';
   cancelButton.className = 'button secondary';
   cancelButton.hidden = true;
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
-  root.append(prepare, cancelButton, status, list);
+  filenames.hidden = true;
+  filenames.open = false;
+  filenames.append(filenameSummary, filenameList);
+  root.append(prepare, cancelButton, status, list, filenames);
   let operation = null,
     prepared = null;
   const urls = new Set();
@@ -41,6 +55,9 @@ export function attachBackupSetPanel({
     urls.clear();
     prepared = null;
     list.replaceChildren();
+    filenameList.replaceChildren();
+    filenames.open = false;
+    filenames.hidden = true;
   }
   function finish(op) {
     if (operation !== op) return;
@@ -105,13 +122,14 @@ export function attachBackupSetPanel({
       prepared = result;
       for (const file of result.files) {
         const row = node('li', `backup-set-${file.id}`, ''),
-          link = node('a', `download-backup-${file.id}`, `Download ${file.filename}`),
-          state = node('span', `backup-set-state-${file.id}`, ` — Prepared · ${file.bytes} bytes`),
+          link = node('a', `download-backup-${file.id}`, `Download ${PURPOSES[file.id]}`),
+          state = node('span', `backup-set-state-${file.id}`, `Prepared · ${file.bytes} bytes`),
           url = URLImpl.createObjectURL(file.blob);
         urls.add(url);
         link.href = url;
         link.download = file.filename;
         link.className = 'button secondary';
+        link.setAttribute('aria-describedby', state.id);
         link.onclick = (event) => {
           if (prepared !== result || !dialog.open || busy()) {
             event?.preventDefault();
@@ -124,14 +142,19 @@ export function attachBackupSetPanel({
             cancel({ message: error.message });
             return false;
           }
-          state.textContent = ` — Download requested · ${file.bytes} bytes`;
+          state.textContent = `Download requested · ${file.bytes} bytes`;
           status.textContent =
             'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.';
           return true; // Native default action, no async or synthetic click.
         };
         row.append(link, state);
         list.append(row);
+        filenameList.append(
+          node('dt', `backup-set-purpose-${file.id}`, link.textContent),
+          node('dd', `backup-set-filename-${file.id}`, file.filename),
+        );
       }
+      filenames.hidden = false;
       status.textContent = result.coverage.detachedStories.length
         ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
         : 'Prepared all four saved inventories and their coverage report. Download each file. No file has been saved to disk. Unsaved drafts are excluded.';
