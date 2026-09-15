@@ -137,7 +137,11 @@ jobs:
 
   build:
     if: github.event_name == 'pull_request'
-    needs: [preflight, test]
+    # Test shards remain visible on every source PR, but a regression in one of
+    # them must not suppress the independently useful package-build result.
+    # Preflight stays required: broken validation, lint, formatting or
+    # production provenance still prevents an artifact from being built.
+    needs: [preflight]
     runs-on: ubuntu-latest
     steps:
       - name: Check out complete history and tags
