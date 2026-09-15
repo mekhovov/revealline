@@ -71,7 +71,7 @@ results must be labeled separately from physical touch/controller evidence.
 
 ## Return from Settings — source candidate
 
-Opening Settings & sound from the title keeps the title beneath the settings dialog. Close, Escape and controller Back return to that same title action. Music Studio remains a child of Settings: Back returns to Settings first, then to the title. Settings entered from a paused flight returns to that paused flight; it never resumes automatically. Mission selection and saved-flight destinations still leave the title through their existing handlers.
+Opening Settings & sound from the title keeps the title beneath the settings dialog. Close, Escape and controller Back return to that same title action. Music Studio remains a child of Settings: Back returns to Settings first, then to the title. Settings entered from a paused flight returns to that paused flight; it never resumes automatically. Mission selection and saved-flight destinations still leave the title through their existing handlers. Missions entered from the title return to that title on Back, Escape or controller Back. Missions or a brief entered from the flight return to the paused field; Back to flight and Deploy retain their explicit destinations. Returning never resumes or changes the saved flight; existing Home entry may refresh its autosave timestamp.
 
 This follows the same-input and consistent-navigation guidance linked above. Source and native verification are recorded separately; this change does not certify physical controllers.
 
