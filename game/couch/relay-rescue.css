@@ -21,6 +21,23 @@
   font-size: 0.8rem;
   line-height: 1.6;
 }
+.pack-picker {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.pack-picker summary {
+  cursor: pointer;
+  padding: 10px 0;
+}
+.pack-picker label {
+  display: block;
+  margin: 8px 0;
+}
+.pack-picker input {
+  max-width: 100%;
+}
 .live-objective {
   margin: 0 0 12px;
   color: var(--sun);
@@ -239,11 +256,15 @@ h1 em {
   font-size: 0.8rem;
 }
 .identity .player-number {
-  grid-row: span 2;
+  grid-row: span 3;
   align-self: center;
 }
 .identity > span:last-child {
   color: var(--muted);
+}
+.identity .charge-state {
+  grid-column: 2;
+  font-size: 0.7rem;
 }
 .player-number {
   display: inline-grid;

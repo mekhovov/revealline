@@ -12,7 +12,7 @@
       <header class="masthead">
         <a href="../" class="brand">REVEAL<span>LINE</span></a>
         <span class="mode-label">COUCH CO-OP <b id="coop-stage">FIRST CONNECTION</b></span>
-        <a href="./">Race mode ↗</a>
+        <a id="coop-race" href="./">Race mode ↗</a>
       </header>
 
       <section id="coop-menu" class="menu" aria-labelledby="coop-title">
@@ -26,8 +26,8 @@
           <div class="setup">
             <label
               >Arena<select id="coop-level">
-                <option value="first-connection">First Connection · learn to join</option>
-                <option value="relay-yard">Relay Yard · take the stronghold</option>
+                <option value="first-connection">First Connection · territory challenge</option>
+                <option value="relay-yard" selected>Relay Yard · stronghold challenge</option>
               </select></label
             >
             <label
@@ -48,8 +48,18 @@
           <p id="coop-setup-note" class="setup-note">
             Captures recharge both players’ Support and can rescue a downed partner.
           </p>
+          <p id="coop-level-note" class="setup-note">
+            One open field. Bait a Hunter, cover the crossing, then take the anchors together.
+          </p>
           <button id="coop-start" class="primary" type="button" disabled>Preparing arena…</button>
           <p id="coop-boot" role="status">Loading Relay Rescue.</p>
+          <details class="pack-picker">
+            <summary>Play a created co-op pack</summary>
+            <label for="coop-pack-file">Open a co-op pack JSON file</label>
+            <input id="coop-pack-file" type="file" accept=".json,application/json" />
+            <p id="coop-pack-status" role="status">Relay Rescue · 2 levels</p>
+            <button id="coop-pack-reset" type="button" hidden>Return to Relay Rescue</button>
+          </details>
         </div>
         <div class="briefing">
           <p class="eyebrow" id="coop-briefing-title">YOUR FIRST CONNECTION</p>
@@ -64,7 +74,8 @@
             </li>
             <li>
               <strong>Watch the red shapes.</strong> Enemies can hit your craft and unfinished line.
-              Split their attention and choose your moment.
+              Hunters mark a route before charging. Wait for recovery or use Support to protect the
+              crossing. Both approaches face the same enemy tools.
             </li>
             <li>
               <strong>Cover each other.</strong> Tap Support to slow nearby enemies and intercept
@@ -87,6 +98,7 @@
           <div class="identity sunflower">
             <span class="player-number">1</span><strong>SUNFLOWER</strong
             ><span id="coop-state-0">Ready</span>
+            <span id="coop-charge-0" class="charge-state">Support ready</span>
           </div>
           <div class="team-status">
             <span>TEAM TERRITORY</span><strong id="coop-coverage">0%</strong
@@ -96,6 +108,7 @@
           <div class="identity skyline">
             <span class="player-number">2</span><strong>SKYLINE</strong
             ><span id="coop-state-1">Ready</span>
+            <span id="coop-charge-1" class="charge-state">Support ready</span>
           </div>
         </div>
         <p id="coop-objective" class="live-objective">Reveal 65% together</p>

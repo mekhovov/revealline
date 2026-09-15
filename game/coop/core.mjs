@@ -11,6 +11,7 @@ import {
 } from './geometry.mjs';
 import {
   COOP_TIMING,
+  COOP_ENCOUNTER_BOUNDS,
   initializeThreats,
   updateThreatClocks,
   nextThreatDeadline,
@@ -21,7 +22,7 @@ import {
   strongholdIndex,
 } from './threats.mjs';
 
-export const COOP_RULESET = 'revealline-coop.v2';
+export const COOP_RULESET = 'revealline-coop.v3';
 export const COOP_LEVEL_VERSION = 'revealline-coop-level.v1';
 export const FIXED_DT = 1 / 120;
 export const FIELD = 0;
@@ -90,6 +91,7 @@ export function validateCoopLevel(level) {
       'goal',
       'rules',
       'strongholds',
+      'encounter',
     ])
   )
     return {
@@ -217,6 +219,14 @@ export function validateCoopLevel(level) {
         (level.rules.moveSpeed === undefined || finite(level.rules.moveSpeed, 1, 20)) &&
         (level.rules.boostMultiplier === undefined || finite(level.rules.boostMultiplier, 1, 3))),
     'Unsupported movement rules.',
+  );
+  check(
+    level.encounter === undefined ||
+      (keys(level.encounter, Object.keys(COOP_ENCOUNTER_BOUNDS)) &&
+        Object.entries(level.encounter).every(([name, value]) =>
+          finite(value, ...COOP_ENCOUNTER_BOUNDS[name]),
+        )),
+    'Encounter settings must use supported, bounded timing and attack values.',
   );
   if (errors.length) return { valid: false, errors };
   const board = { width: 72, height: 36, cells: buildGrid(level) };
