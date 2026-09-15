@@ -113,6 +113,10 @@ on keeping essential temporary information near the player's focus. These are
 design principles applied to the browser game, not adoption of Apple's native
 Touch Controller framework.
 
+## Contextual craft switching
+
+Flight setup shows **Change craft** and hangar guidance only when the active flight has more than one craft recipe and authored hangars. The same availability governs the button, keyboard shortcut and controller hangar action; without it, the controller retains its Missions action. R5's single Scout and empty hangar list therefore show no unusable craft-switch control. Starting class still selects a fresh attempt, and Save & pause remains separate. Tactical hangars retain their normal in-flight switch flow; automatic Arcade equipment policy alone does not decide craft availability. These source host checks do not establish native layout or physical-controller acceptance.
+
 ## September 13, 2026 — current chapter menu source
 
 The current source features R5, eight current packs and four older First Light
