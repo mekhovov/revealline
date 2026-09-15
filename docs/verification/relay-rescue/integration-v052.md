@@ -1,6 +1,6 @@
 # Relay Rescue integration · v0.52.0
 
-This candidate rebases the completed two-arena co-op delivery onto `origin/main` at `2b8521b`. That upstream source is version 0.51.1; its newest published stable edition at preparation time is v0.51.0. The original co-op checkpoint `38ad5618d9ad2ea4703f6b4d3bb12bfb102c5a50` remains on `codex/relay-rescue-pre-rebase-0.46.0` and in its qualified local playable snapshot. Historical phase receipts describe their original commits, not the rebased history.
+This candidate rebases the completed two-arena co-op delivery onto `origin/main`, initially at `2b8521b`, then at `6cbe1c8` after the upstream PR-build scheduling fix and delivery evidence landed. That upstream source is version 0.51.1; its newest published stable edition at preparation time is v0.51.0. The original co-op checkpoint `38ad5618d9ad2ea4703f6b4d3bb12bfb102c5a50` remains on `codex/relay-rescue-pre-rebase-0.46.0` and in its qualified local playable snapshot. Historical phase receipts describe their original commits, not the rebased history.
 
 ## Integration and review
 
@@ -26,9 +26,15 @@ Actual desktop browser input checks include two-player pillar contact and tangen
 
 ## Inherited qualification findings
 
+The same rehearsed browser route also completed Expert Relay Yard at 15.2% and 0:13, retaining its one reserve. This proves the route remains legal with timely cover; it does not establish a difficulty distribution or human enjoyment. The original automated route comparison includes knockdowns when the same Expert command stream omits Support.
+
 The first hosted qualification, [run 34920267156](https://github.com/mekhovov/revealline/actions/runs/34920267156), passed validation, lint and formatting gates but failed the additional production-reproduction check; test and freeze jobs correctly did not run. Upstream 0.51.1 changed audio-session and gesture-wake sources without updating their production provenance. The generator appended eight audio source successors (ledger 14), preserving all 932 historical asset records and all 127 binary payloads. A separate explicit Codex technical review appended eight review successors (ledger 15); it did not copy historical approvals or claim new listening/physical-iPhone qualification. Original sound recipes, instruments, event mappings, gains and media bytes are unchanged.
 
 The focused audio check initially exposed three host fixture races after upstream moved media playback into the synchronous user gesture. The host test now waits for both playback and persisted listening intent before issuing its next gesture, within the existing 500ms deadline. All 64 audio, transport, published-media and host tests then passed with zero skips. Production audio code was not changed by that fix. Generator reproduction and the 194 required reviewed-slot declaration pass; unchanged-source assertions now follow all hosted qualification and test jobs. The failed candidate remains in history; the successor must pass a fresh exact-source run.
+
+The first full PR run also exposed the same setup race in the Guide return journey. Its streamed-playback fixture now waits for the persisted listening intent before leaving Studio; the later Guide return and paused-flight assertions remain intact, with no timeout increase. The failed hosted log and local reproduction are retained separately from the corrected run.
+
+The preserved v0.51.0 archive passed a complete 620-file public byte audit and native online play/save restoration, but two uninterrupted offline-preparation attempts reached the visible 60-second deadline. Its immutable worker serially downloads 568 core files (65,925,650 bytes) before serial cache writes. That gives each request less than 106ms before transfer, hashing or storage overhead. The new worker uses four bounded concurrent downloads with the same integrity checks; cache publication still waits for every download to verify. Failure stops scheduling, cancels outstanding requests, and leaves no partially ready cache. The historical archive remains unchanged, and its receipt explicitly excludes disconnected qualification. A fresh frozen-build browser check must establish whether the new preparation completes in this environment.
 
 ## Release gate
 
