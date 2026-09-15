@@ -778,6 +778,7 @@ try {
   legacyPictureButton.textContent = 'Use original pack artwork';
   legacyPictureButton.hidden = true;
   document.querySelector('.overlay-actions').append(legacyPictureButton);
+  let pictureRecovery = null;
   const pictureRecoveryButtons = [
     ['picture-export-data', 'Export game data', () => libraryPanel.open('saves')],
     ['picture-reload', 'Reload saved profile', () => window.location.reload()],
@@ -793,6 +794,7 @@ try {
     return button;
   });
   function clearPictureRecovery() {
+    pictureRecovery = null;
     for (const button of pictureRecoveryButtons) button.hidden = true;
   }
   async function pictureMedia({ signal } = {}) {
@@ -895,10 +897,22 @@ try {
           : undefined,
     });
   }
-  function cancelPictureStart({ retirePrewarm = false } = {}) {
-    clearPreparation();
-    clearPictureRecovery();
-    themeFeedback.clear();
+  function cancelPictureStart({ retirePrewarm = false, preserveRecovery = false } = {}) {
+    // Opening a secondary dialog must not dismiss a settled recovery path.
+    // A retry, new context or page retirement still cancels it unconditionally.
+    const keepRecovery =
+      preserveRecovery &&
+      !retirePrewarm &&
+      !preparationOperation &&
+      !pictureThemePending &&
+      pictureRecovery?.owner === flightPictures &&
+      pictureRecovery?.run === run &&
+      pictureRecovery?.themeId === theme.id;
+    if (!keepRecovery) {
+      clearPreparation();
+      clearPictureRecovery();
+      themeFeedback.clear();
+    }
     $('theme-preparation-cancel').hidden = true;
     pictureGeneration++;
     if (pictureResume !== null || retirePrewarm) {
@@ -912,6 +926,7 @@ try {
   function pictureFailure(error) {
     if (error?.name === 'AbortError') return;
     const needsWriter = error instanceof ReleasePictureWriteRequiredError;
+    pictureRecovery = needsWriter ? { owner: flightPictures, run, themeId: theme.id } : null;
     const message = needsWriter
       ? error.message
       : `Picture unavailable: ${error.message} Your flight remains paused. Retry after restoring its original media.`;
@@ -4028,6 +4043,7 @@ try {
     )?.catch?.(() => {});
     if (!flightPictures?.ready(theme.id)) {
       if (pictureResume) return;
+      clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
@@ -4138,7 +4154,7 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force) {
-    cancelPictureStart();
+    cancelPictureStart({ preserveRecovery: true });
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -4720,6 +4736,7 @@ try {
   $('theme-select').onchange = async () => {
     if (courseSession || courseEntry) return;
     cancelRestore();
+    cancelPictureStart();
     pause(true);
     const next =
       themesFile.themes.find((t) => t.id === $('theme-select').value) ||

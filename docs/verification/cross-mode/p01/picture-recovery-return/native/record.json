@@ -1,0 +1,30 @@
+{
+  "status": "EXACT_ORIGINALS_ZIP_VERIFIED",
+  "at": "2026-09-15T21:31:30.537803+00:00",
+  "manifest": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0574-recovery-return/native-r1-r5-closed-evidence/manifest.json",
+    "bytes": 80361,
+    "sha256": "2498d68528bd3054ef2ac348d5a333d516443192ccb312f41d49abe3230ca30e"
+  },
+  "archive": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0574-recovery-return/native-r1-r5-closed-evidence/evidence.zip",
+    "bytes": 748493,
+    "sha256": "fac862c61d45608220f9ab433b550a749da71569efb0870a57b70c66706966a7"
+  },
+  "originals": 248,
+  "originalBytes": 2183271,
+  "zipMembers": 249,
+  "crcAndEveryOriginalBodyVerified": true,
+  "runtimeUnchanged": true,
+  "r5Review": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0574-recovery-return/native-r5/run/review.json",
+    "bytes": 8735,
+    "sha256": "54e7af8230fe95e7bcada992876c612f436ef6bad0936bf8e6aa730198853610"
+  },
+  "r5Closure": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0574-recovery-return/native-r5/run/closure.json",
+    "bytes": 860,
+    "sha256": "dedd92e48a6251609ac3a8c8585f2738d5191d7d013cdac492a36eee3b3402c9"
+  },
+  "scope": "Durable source delivery evidence of actual failed/inconclusive native attempts only. Required Export/Escape/directReload is pending; no product failure attributed to harness refusals. Existing nested prior-originalZIPs are retained byte-exact as small original receipts, with no profile members."
+}
