@@ -1,0 +1,49 @@
+{
+  "targetInfos": [
+    {
+      "targetId": "BAC448084449C2FD73B676191C00FC05",
+      "type": "service_worker",
+      "title": "Service Worker chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+      "url": "chrome-extension://fignfifoniblkonapihmkfakmlgkbkcf/service_worker.js",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "09AD16D906F86BC5163148F64E8E5ED7"
+    },
+    {
+      "targetId": "71D581951A33F68B5163583CFF6B267F",
+      "type": "browser_ui",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "09AD16D906F86BC5163148F64E8E5ED7"
+    },
+    {
+      "targetId": "D7A53CAFB443234D1EFE62FD73178274",
+      "type": "browser_ui",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "09AD16D906F86BC5163148F64E8E5ED7"
+    },
+    {
+      "targetId": "AC561348B25ECAB10CB7CD909FBE88E2",
+      "type": "background_page",
+      "title": "Google Hangouts",
+      "url": "chrome-extension://nkeimhogjdpnpccoofpliimaahmaaome/background.html",
+      "attached": false,
+      "canAccessOpener": false,
+      "browserContextId": "09AD16D906F86BC5163148F64E8E5ED7"
+    },
+    {
+      "targetId": "2E587CB7FFF1558AFDAD924A3C6BE6F9",
+      "type": "page",
+      "title": "Reveal / Line",
+      "url": "http://127.0.0.1:52965/game/",
+      "attached": true,
+      "canAccessOpener": false,
+      "browserContextId": "09AD16D906F86BC5163148F64E8E5ED7"
+    }
+  ]
+}

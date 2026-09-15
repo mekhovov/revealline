@@ -1,0 +1,17 @@
+{
+  "time": "2026-09-15T13:51:37.936449+00:00",
+  "baselineTime": "2026-09-15T13:50:37.190Z",
+  "endpointTime": "2026-09-15T13:51:18.880Z",
+  "valuesEqual": true,
+  "keys": [
+    "revealline.library.release-v0.57.1.v1",
+    "revealline.library.release-v0.57.1.v1.last-selection.v1",
+    "revealline.packs.release-v0.57.1.v1",
+    "revealline.suspended.release-v0.57.1.v1"
+  ],
+  "totalBytes": 7288,
+  "storageEvents": [],
+  "heartbeats": 21,
+  "anomalies": [],
+  "limits": "Actual observed scoped CDP localStorage events and read-only endpoints; no IndexedDB no-write claim."
+}

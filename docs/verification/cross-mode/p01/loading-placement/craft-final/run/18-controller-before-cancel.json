@@ -1,0 +1,86 @@
+{
+  "active": {
+    "action": "cancel",
+    "centerHitId": "",
+    "centerHitTag": "BUTTON",
+    "centerHitWithin": true,
+    "disabled": false,
+    "focused": true,
+    "fullyInViewport": true,
+    "hidden": false,
+    "id": "",
+    "rect": {
+      "bottom": 218.921875,
+      "height": 47,
+      "left": 314.875,
+      "right": 460.78125,
+      "top": 171.921875,
+      "width": 145.90625,
+      "x": 314.875,
+      "y": 171.921875
+    },
+    "rendered": true,
+    "tag": "BUTTON",
+    "text": "Cancel draft",
+    "value": ""
+  },
+  "activeEqualsEnabledEdit": false,
+  "at": "2026-09-15T14:25:04.039Z",
+  "edit": {
+    "action": "edit",
+    "centerHitId": "settings-dialog",
+    "centerHitTag": "DIALOG",
+    "centerHitWithin": false,
+    "disabled": false,
+    "focused": false,
+    "fullyInViewport": false,
+    "hidden": true,
+    "id": "",
+    "rect": {
+      "bottom": 0,
+      "height": 0,
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "width": 0,
+      "x": 0,
+      "y": 0
+    },
+    "rendered": false,
+    "tag": "BUTTON",
+    "text": "Edit controller settings",
+    "value": ""
+  },
+  "editorHidden": false,
+  "glyphChoice": "playstation",
+  "hasFocus": true,
+  "status": {
+    "action": null,
+    "centerHitId": "",
+    "centerHitTag": "SPAN",
+    "centerHitWithin": true,
+    "focused": false,
+    "fullyInViewport": true,
+    "hidden": false,
+    "id": "controller-settings-root-status",
+    "rect": {
+      "bottom": 281.921875,
+      "height": 33,
+      "left": 51.75,
+      "right": 792.25,
+      "top": 248.921875,
+      "width": 740.5,
+      "x": 51.75,
+      "y": 248.921875
+    },
+    "rendered": true,
+    "tag": "P",
+    "text": "Draft changed. Current controls are unchanged until Apply."
+  },
+  "url": "http://127.0.0.1:52965/game/",
+  "viewport": {
+    "height": 390,
+    "width": 844
+  },
+  "visibility": "visible"
+}

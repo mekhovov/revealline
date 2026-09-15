@@ -1,0 +1,355 @@
+TAP version 13
+# Subtest: source labels and unavailability follow the host, without suspending or verifying on refresh
+ok 1 - source labels and unavailability follow the host, without suspending or verifying on refresh
+  ---
+  duration_ms: 5.011875
+  ...
+# Subtest: one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+ok 2 - one stored export verifies, rechecks authority, copies before the real web adapter, and restores controls
+  ---
+  duration_ms: 2.501625
+  ...
+# Subtest: current replay-only export names its source and retains the matching-campaign warning
+ok 3 - current replay-only export names its source and retains the matching-campaign warning
+  ---
+  duration_ms: 1.790083
+  ...
+# Subtest: button cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 4 - button cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 1.250959
+  ...
+# Subtest: Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 5 - Escape cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 2.4785
+  ...
+# Subtest: controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+ok 6 - controller Back cancels verification immediately, keeps the dialog open, and rejects late publication
+  ---
+  duration_ms: 1.608083
+  ...
+# Subtest: close aborts and suppresses a pending export without restoring focus
+ok 7 - close aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 1.333417
+  ...
+# Subtest: pagehide aborts and suppresses a pending export without restoring focus
+ok 8 - pagehide aborts and suppresses a pending export without restoring focus
+  ---
+  duration_ms: 0.822417
+  ...
+# Subtest: a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+ok 9 - a stale host assertion or failed verification preserves the previous copy and permits a fresh attempt
+  ---
+  duration_ms: 1.207834
+  ...
+# Subtest: a cancelled operation cannot clear a newer operation or overwrite its status
+ok 10 - a cancelled operation cannot clear a newer operation or overwrite its status
+  ---
+  duration_ms: 1.871125
+  ...
+# Subtest: adapter failure retains the already verified copy and reports the real error
+ok 11 - adapter failure retains the already verified copy and reports the real error
+  ---
+  duration_ms: 1.619625
+  ...
+# Subtest: Stop waiting keeps a requested download protected until the platform returns
+ok 12 - Stop waiting keeps a requested download protected until the platform returns
+  ---
+  duration_ms: 1.019708
+  ...
+# Subtest: verified attempt download offers Stop waiting and reports the actual platform result afterward
+ok 13 - verified attempt download offers Stop waiting and reports the actual platform result afterward
+  ---
+  duration_ms: 0.739625
+  ...
+# Subtest: export-backup awaits the external backup guard before preparation or download
+ok 14 - export-backup awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 1.346
+  ...
+# Subtest: export-packs awaits the external backup guard before preparation or download
+ok 15 - export-packs awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 0.747291
+  ...
+# Subtest: import-save awaits the external backup guard before preparation or download
+ok 16 - import-save awaits the external backup guard before preparation or download
+  ---
+  duration_ms: 0.816833
+  ...
+# Subtest: a cancelled Library file read cannot install or unlock a newer read
+ok 17 - a cancelled Library file read cannot install or unlock a newer read
+  ---
+  duration_ms: 3.259209
+  ...
+# Subtest: rail places the exact status and escape before a held read; navigation restores their original nodes
+ok 18 - rail places the exact status and escape before a held read; navigation restores their original nodes
+  ---
+  duration_ms: 1.042792
+  ...
+# Subtest: older cancelled read cannot replace a newer Packs rail or release its controls
+ok 19 - older cancelled read cannot replace a newer Packs rail or release its controls
+  ---
+  duration_ms: 1.172417
+  ...
+# Subtest: attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+ok 20 - attempt rail preserves count, cancel focus and exact sibling order across terminal navigation
+  ---
+  duration_ms: 1.039666
+  ...
+# Subtest: non-abortable owner reopens with its exact detached status and no stale closed rail
+ok 21 - non-abortable owner reopens with its exact detached status and no stale closed rail
+  ---
+  duration_ms: 1.344417
+  ...
+# Subtest: backup navigation same-section joins cancellation then clears only the invalidated backup host
+ok 22 - backup navigation same-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 42.626083
+  ...
+# Subtest: backup navigation other-section joins cancellation then clears only the invalidated backup host
+ok 23 - backup navigation other-section joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 24.324083
+  ...
+# Subtest: backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+ok 24 - backup navigation close-reopen joins cancellation then clears only the invalidated backup host
+  ---
+  duration_ms: 21.969458
+  ...
+# Subtest: native-reported sticky overlap scrolls the live focused control clear without changing focus or ownership
+ok 25 - native-reported sticky overlap scrolls the live focused control clear without changing focus or ownership
+  ---
+  duration_ms: 0.889
+  ...
+# Subtest: a queued feedback layout reads current focus and cannot follow an old opener or a closed dialog
+ok 26 - a queued feedback layout reads current focus and cannot follow an old opener or a closed dialog
+  ---
+  duration_ms: 0.769125
+  ...
+# Subtest: Close above feedback retains its own native scroll destination
+ok 27 - Close above feedback retains its own native scroll destination
+  ---
+  duration_ms: 0.794084
+  ...
+# Subtest: a tall Library editor keeps its beginning below feedback when its full height cannot fit
+ok 28 - a tall Library editor keeps its beginning below feedback when its full height cannot fit
+  ---
+  duration_ms: 0.694125
+  ...
+# Subtest: Collection shows pagination only when 0 pictures need a second page
+ok 29 - Collection shows pagination only when 0 pictures need a second page
+  ---
+  duration_ms: 3.28525
+  ...
+# Subtest: Collection shows pagination only when 12 pictures need a second page
+ok 30 - Collection shows pagination only when 12 pictures need a second page
+  ---
+  duration_ms: 20.870958
+  ...
+# Subtest: Collection shows pagination only when 13 pictures need a second page
+ok 31 - Collection shows pagination only when 13 pictures need a second page
+  ---
+  duration_ms: 10.753
+  ...
+# Subtest: Filtering to one page preserves unrelated focus
+ok 32 - Filtering to one page preserves unrelated focus
+  ---
+  duration_ms: 39.950333
+  ...
+# Subtest: Filtering to one page restores removed pager focus to search
+ok 33 - Filtering to one page restores removed pager focus to search
+  ---
+  duration_ms: 38.739083
+  ...
+# Subtest: wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+ok 34 - wide and legacy pictures adopt their own bitmap ratio for cards, full view and celebration without changing records
+  ---
+  duration_ms: 3.051958
+  ...
+# Subtest: Back restores the same stable picture on its page and preserves the original filter
+ok 35 - Back restores the same stable picture on its page and preserves the original filter
+  ---
+  duration_ms: 41.732917
+  ...
+# Subtest: native cancel follows the same picture return path and does not clear collection context
+ok 36 - native cancel follows the same picture return path and does not clear collection context
+  ---
+  duration_ms: 35.949375
+  ...
+# Subtest: a reordered collection resolves the stable picture key rather than the old card index
+ok 37 - a reordered collection resolves the stable picture key rather than the old card index
+  ---
+  duration_ms: 33.251667
+  ...
+# Subtest: a removed picture clamps the page and focuses a remaining enabled card
+ok 38 - a removed picture clamps the page and focuses a remaining enabled card
+  ---
+  duration_ms: 32.544667
+  ...
+# Subtest: a missing pack or empty filtered collection falls back to the enabled search field
+ok 39 - a missing pack or empty filtered collection falls back to the enabled search field
+  ---
+  duration_ms: 32.292125
+  ...
+# Subtest: the underlying Collection cannot replace its open child picture
+ok 40 - the underlying Collection cannot replace its open child picture
+  ---
+  duration_ms: 0.950208
+  ...
+# Subtest: Replay leaves the collection closed and preserves the host mission focus
+ok 41 - Replay leaves the collection closed and preserves the host mission focus
+  ---
+  duration_ms: 31.379792
+  ...
+# Subtest: late decoding and a queued old close cannot steal focus from a new picture
+ok 42 - late decoding and a queued old close cannot steal focus from a new picture
+  ---
+  duration_ms: 1.141042
+  ...
+# Subtest: a new picture hides the previous artwork and blocks actions until its own decode completes
+ok 43 - a new picture hides the previous artwork and blocks actions until its own decode completes
+  ---
+  duration_ms: 1.337875
+  ...
+# Subtest: an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+ok 44 - an older decode completing during rapid navigation cannot reveal or enable the newer pending picture
+  ---
+  duration_ms: 0.921833
+  ...
+# Subtest: an older rejected decode cannot replace the selected ready picture with an error
+ok 45 - an older rejected decode cannot replace the selected ready picture with an error
+  ---
+  duration_ms: 0.944708
+  ...
+# Subtest: a failed selected decode keeps stale pixels hidden and can be closed and retried
+ok 46 - a failed selected decode keeps stale pixels hidden and can be closed and retried
+  ---
+  duration_ms: 0.927167
+  ...
+# Subtest: a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+ok 47 - a rejected celebration preparation preserves the ready picture and reports failure without an unhandled promise
+  ---
+  duration_ms: 0.986667
+  ...
+# Subtest: a failed illustration reload cannot start a procedural celebration over the ready authored picture
+ok 48 - a failed illustration reload cannot start a procedural celebration over the ready authored picture
+  ---
+  duration_ms: 0.502292
+  ...
+# Subtest: busy library import still prevents cancel until its guarded task finishes
+ok 49 - busy library import still prevents cancel until its guarded task finishes
+  ---
+  duration_ms: 1.341917
+  ...
+# Subtest: profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+ok 50 - profile replacement cancels pending writes before its Undo snapshot and restores the prior profile
+  ---
+  duration_ms: 5.100917
+  ...
+# Subtest: a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+ok 51 - a rejected replacement boundary preserves the active profile without taking an Undo snapshot
+  ---
+  duration_ms: 1.730417
+  ...
+# Subtest: a late seal updates an existing focused collection card without repaint or replacement
+ok 52 - a late seal updates an existing focused collection card without repaint or replacement
+  ---
+  duration_ms: 20.042917
+  ...
+# Subtest: an already open picture receives friendly seal details without disturbing its focus or artwork
+ok 53 - an already open picture receives friendly seal details without disturbing its focus or artwork
+  ---
+  duration_ms: 2.04025
+  ...
+# Subtest: late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+ok 54 - late detail refresh keeps foreign records out, labels changed definitions archived and clears removed seals
+  ---
+  duration_ms: 1.409917
+  ...
+# Subtest: both difficulty records share a card while mode changes preserve focus and Back returns to that card
+ok 55 - both difficulty records share a card while mode changes preserve focus and Back returns to that card
+  ---
+  duration_ms: 22.71675
+  ...
+# Subtest: picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+ok 56 - picture Replay explicitly selects stored standard despite the opposite next-attempt preference
+  ---
+  duration_ms: 2.164791
+  ...
+# Subtest: picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+ok 57 - picture Replay explicitly selects stored gentle despite the opposite next-attempt preference
+  ---
+  duration_ms: 1.390167
+  ...
+# Subtest: rapid difficulty switches retain the latest image generation and keep stale actions blocked
+ok 58 - rapid difficulty switches retain the latest image generation and keep stale actions blocked
+  ---
+  duration_ms: 1.421125
+  ...
+# Subtest: score and saved-attempt mode labels use exact execution keys and searchable separate boards
+ok 59 - score and saved-attempt mode labels use exact execution keys and searchable separate boards
+  ---
+  duration_ms: 14.663875
+  ...
+# Subtest: a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+ok 60 - a late Standard seal decorates the shared card without appearing on its selected Gentle variant
+  ---
+  duration_ms: 6.976791
+  ...
+# Subtest: an open picture cannot replay a pack removed after the picture was resolved
+ok 61 - an open picture cannot replay a pack removed after the picture was resolved
+  ---
+  duration_ms: 0.487333
+  ...
+# Subtest: a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+ok 62 - a trusted Challenge picture keeps its activity label and replay has no campaign difficulty override
+  ---
+  duration_ms: 0.351917
+  ...
+# Subtest: Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+ok 63 - Collection shows the first earned revision after reassignment, releases images and returns keyboard focus
+  ---
+  duration_ms: 183.355833
+  ...
+# Subtest: Collection retains an earned original after its pack is removed without offering replay or invented animation
+ok 64 - Collection retains an earned original after its pack is removed without offering replay or invented animation
+  ---
+  duration_ms: 109.672958
+  ...
+# Subtest: an unavailable original never silently falls back to current authored artwork
+ok 65 - an unavailable original never silently falls back to current authored artwork
+  ---
+  duration_ms: 51.018292
+  ...
+# Subtest: closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+ok 66 - closing while an earned original decodes prevents stale canvas replacement and releases the late drawable
+  ---
+  duration_ms: 106.044041
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after navigation
+ok 67 - Back keeps its scope but late metadata cannot steal focus after navigation
+  ---
+  duration_ms: 84.64175
+  ...
+# Subtest: Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+ok 68 - Back keeps its scope but late metadata cannot steal focus after a new Collection visit
+  ---
+  duration_ms: 111.757041
+  ...
+# Subtest: Collection labels the retained score run separately from a later best medal without rewriting either record
+ok 69 - Collection labels the retained score run separately from a later best medal without rewriting either record
+  ---
+  duration_ms: 0.776791
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 69
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1127.927334

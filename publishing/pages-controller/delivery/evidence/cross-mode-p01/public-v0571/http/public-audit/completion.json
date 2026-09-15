@@ -1,0 +1,56 @@
+{
+  "format": "revealline-v0571-complete-public-http-review.v1",
+  "status": "PASS",
+  "completedAt": "2026-09-15T13:44:12.173190+00:00",
+  "version": "v0.57.1",
+  "sourceRevision": "4c85277ac7393eeeabab035387d4d4ae8734aba1",
+  "controllerCommit": "9ef75091762cfb9c84b02475ef79913a4476c651",
+  "controllerTree": "15963dede1cdcd977486d68fdc69714db9c02892",
+  "runId": 34976023839,
+  "deploymentId": 6460112203,
+  "binding": {
+    "path": ".cache/cross-mode/p01/v0571/public-audit/inputs/9ef75091762cfb9c84b02475ef79913a4476c651/binding.json",
+    "bytes": 2020,
+    "sha256": "c7254fd8899c5e0bfc7139ec78925a2c8ceee804b2271c564d9a0390c9ad5ae4"
+  },
+  "httpReport": {
+    "path": ".cache/cross-mode/p01/v0571/public-audit/runs/complete-1/report.json",
+    "bytes": 3556,
+    "sha256": "6e3759bcd26b22c30dacbd744dcd1682cf34fa09d595c9b1e2d99842aaca5e02"
+  },
+  "resultRows": {
+    "path": ".cache/cross-mode/p01/v0571/public-audit/runs/complete-1/results.jsonl",
+    "bytes": 1562695,
+    "sha256": "0941888cc0ab9065382809ef98b01adabb2f900dbb64e92b9c7e00ad92a6a30c"
+  },
+  "attemptRows": {
+    "path": ".cache/cross-mode/p01/v0571/public-audit/runs/complete-1/attempts.jsonl",
+    "bytes": 1562695,
+    "sha256": "0941888cc0ab9065382809ef98b01adabb2f900dbb64e92b9c7e00ad92a6a30c"
+  },
+  "afterHttpReview": {
+    "path": ".cache/cross-mode/p01/v0571/publication-hosted/after-http/review.json",
+    "bytes": 541,
+    "sha256": "c348431292c8aaebccc747b86ecefb03c027f758c2b5f0220bcfa8d0402d574f"
+  },
+  "files": 2398,
+  "verifiedBytes": 636567742,
+  "failedFiles": 0,
+  "retries": 0,
+  "skippedFiles": 0,
+  "hiddenFiles": [
+    ".nojekyll",
+    ".xonix-build.json",
+    "releases/v0.57.1/site/.xonix-build.json"
+  ],
+  "visibleVersions": 63,
+  "historicalBridges": 62,
+  "archiveAdmissions": 14,
+  "allOriginalAuthorityPinsRehashed": true,
+  "allOriginalReceiptZipMembersMatched": true,
+  "allResultRowsMatchedCompleteInventory": true,
+  "postAuditLatestMainAndDeploymentUnchanged": true,
+  "scope": "Complete public HTTP decoded body/hash/size/MIME coverage only; no retained payload copies. Native browser, offline, physical device and P01 phase acceptance remain separate. Known Library placement follow-up remains unresolved.",
+  "publicBrowserAcceptance": false,
+  "phaseAccepted": false
+}

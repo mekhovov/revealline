@@ -1,0 +1,350 @@
+TAP version 13
+# Subtest: Mission setup keeps the original craft status in its modal and restores it after closing
+ok 1 - Mission setup keeps the original craft status in its modal and restores it after closing
+  ---
+  duration_ms: 395.424667
+  ...
+# Subtest: direct briefing and disposal retain one craft presenter outside hidden mission content
+ok 2 - direct briefing and disposal retain one craft presenter outside hidden mission content
+  ---
+  duration_ms: 327.561208
+  ...
+# Subtest: title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight
+ok 3 - title has five game destinations and the release catalog; Workshop and mission Back preserve an unstarted flight
+  ---
+  duration_ms: 317.142125
+  ...
+# Subtest: mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+ok 4 - mission gallery pages reuse locks; concealed pictures have no original and selection does not launch
+  ---
+  duration_ms: 440.355958
+  ...
+# Subtest: Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+ok 5 - Deploy uses the existing start guard and Continue replaces Deploy after a paused flight
+  ---
+  duration_ms: 439.486958
+  ...
+# Subtest: an accepted world change rebuilds mission thumbnails without starting the existing flight
+ok 6 - an accepted world change rebuilds mission thumbnails without starting the existing flight
+  ---
+  duration_ms: 421.30325
+  ...
+# Subtest: Missions button returns to home without resuming or changing a saved cut
+ok 7 - Missions button returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1092.193708
+  ...
+# Subtest: Missions escape returns to home without resuming or changing a saved cut
+ok 8 - Missions escape returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1064.279375
+  ...
+# Subtest: Missions controller returns to home without resuming or changing a saved cut
+ok 9 - Missions controller returns to home without resuming or changing a saved cut
+  ---
+  duration_ms: 1134.393917
+  ...
+# Subtest: Missions button returns to flight without resuming or changing a saved cut
+ok 10 - Missions button returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 968.523042
+  ...
+# Subtest: Missions escape returns to flight without resuming or changing a saved cut
+ok 11 - Missions escape returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 1017.589375
+  ...
+# Subtest: Missions controller returns to flight without resuming or changing a saved cut
+ok 12 - Missions controller returns to flight without resuming or changing a saved cut
+  ---
+  duration_ms: 1133.537084
+  ...
+# Subtest: Missions button returns to brief without resuming or changing a saved cut
+ok 13 - Missions button returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1105.344667
+  ...
+# Subtest: Missions escape returns to brief without resuming or changing a saved cut
+ok 14 - Missions escape returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 981.49725
+  ...
+# Subtest: Missions controller returns to brief without resuming or changing a saved cut
+ok 15 - Missions controller returns to brief without resuming or changing a saved cut
+  ---
+  duration_ms: 1134.130292
+  ...
+# Subtest: Back to flight remains an intentional exit from title Missions
+ok 16 - Back to flight remains an intentional exit from title Missions
+  ---
+  duration_ms: 298.122292
+  ...
+# Subtest: controller Back retains a cancellation warning when a transaction keeps its dialog open
+ok 17 - controller Back retains a cancellation warning when a transaction keeps its dialog open
+  ---
+  duration_ms: 335.619833
+  ...
+# Subtest: Large portrait selector is fully below the measured expanded heading
+ok 18 - Large portrait selector is fully below the measured expanded heading
+  ---
+  duration_ms: 0.806166
+  ...
+# Subtest: Large landscape selector clears the measured bottom action bar
+ok 19 - Large landscape selector clears the measured bottom action bar
+  ---
+  duration_ms: 0.092833
+  ...
+# Subtest: queued reflow reads current focus and leaves the heading action alone
+ok 20 - queued reflow reads current focus and leaves the heading action alone
+  ---
+  duration_ms: 0.068459
+  ...
+# Subtest: large reading region retains its beginning and manual scrolling is not undone
+ok 21 - large reading region retains its beginning and manual scrolling is not undone
+  ---
+  duration_ms: 0.590292
+  ...
+# Subtest: queued layout cannot alter a closed owner's scroll or focus
+ok 22 - queued layout cannot alter a closed owner's scroll or focus
+  ---
+  duration_ms: 0.150709
+  ...
+# Subtest: queued layout cannot alter a hidden owner's scroll or focus
+ok 23 - queued layout cannot alter a hidden owner's scroll or focus
+  ---
+  duration_ms: 0.058583
+  ...
+# Subtest: queued layout cannot alter a blurred owner's scroll or focus
+ok 24 - queued layout cannot alter a blurred owner's scroll or focus
+  ---
+  duration_ms: 0.131
+  ...
+# Subtest: queued layout cannot alter a outside owner's scroll or focus
+ok 25 - queued layout cannot alter a outside owner's scroll or focus
+  ---
+  duration_ms: 0.112625
+  ...
+# Subtest: queued layout cannot alter a disposed owner's scroll or focus
+ok 26 - queued layout cannot alter a disposed owner's scroll or focus
+  ---
+  duration_ms: 0.192084
+  ...
+# Subtest: opening order owns controller scope across reversed DOM order, Back and fresh reopen
+ok 27 - opening order owns controller scope across reversed DOM order, Back and fresh reopen
+  ---
+  duration_ms: 2.244167
+  ...
+# Subtest: ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+ok 28 - ordered mutation records cover older engines and same-task close/reopen without guessing DOM order
+  ---
+  duration_ms: 0.659458
+  ...
+# Subtest: actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+ok 29 - actual title → Missions → Collection controller Back closes only the front dialog and never starts flight
+  ---
+  duration_ms: 664.21275
+  ...
+# Subtest: actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+ok 30 - actual native keyboard/pointer handoff retains controller owner but suppresses its held menu repeat until neutral
+  ---
+  duration_ms: 470.200875
+  ...
+# Subtest: actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 31 - actual help-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 910.671292
+  ...
+# Subtest: actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+ok 32 - actual collection-dialog reader reaches the bottom; first Back/Escape leaves reading without closing or starting
+  ---
+  duration_ms: 971.660417
+  ...
+# Subtest: Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+ok 33 - Collection disclosure ends reading on collapse without leaving hidden focus or resuming
+  ---
+  duration_ms: 505.095875
+  ...
+# Subtest: Collection disclosure ends reading on collapse without stealing later focus
+ok 34 - Collection disclosure ends reading on collapse without stealing later focus
+  ---
+  duration_ms: 504.654292
+  ...
+# Subtest: actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+ok 35 - actual Settings → Studio listbox/range edits preview, cancel and apply through native handlers before Back returns
+  ---
+  duration_ms: 1111.479792
+  ...
+# Subtest: title Settings returns to its title opener after controller Back or native Escape
+ok 36 - title Settings returns to its title opener after controller Back or native Escape
+  ---
+  duration_ms: 465.464917
+  ...
+# Subtest: opening Settings during a flight keeps its paused-flight return instead of opening the title
+ok 37 - opening Settings during a flight keeps its paused-flight return instead of opening the title
+  ---
+  duration_ms: 633.301541
+  ...
+# Subtest: title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+ok 38 - title Workshop Field Guide returns through its visible openers after Back, Escape and isolated practice
+  ---
+  duration_ms: 638.495334
+  ...
+# Subtest: Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+ok 39 - Main menu Workshop Field Guide returns through both menus over an unchanged paused-flight checkpoint
+  ---
+  duration_ms: 744.838667
+  ...
+# Subtest: title picture controller returns through Collection to its exact title opener
+ok 40 - title picture controller returns through Collection to its exact title opener
+  ---
+  duration_ms: 344.248917
+  ...
+# Subtest: title picture escape returns through Collection to its exact title opener
+ok 41 - title picture escape returns through Collection to its exact title opener
+  ---
+  duration_ms: 304.713958
+  ...
+# Subtest: title picture close button returns through Collection to its exact title opener
+ok 42 - title picture close button returns through Collection to its exact title opener
+  ---
+  duration_ms: 327.906208
+  ...
+# Subtest: picture Replay deliberately leaves title and Collection for the selected ready briefing
+ok 43 - picture Replay deliberately leaves title and Collection for the selected ready briefing
+  ---
+  duration_ms: 339.489875
+  ...
+# Subtest: Collection Choose appearance deliberately leaves title for Missions setup
+ok 44 - Collection Choose appearance deliberately leaves title for Missions setup
+  ---
+  duration_ms: 410.68375
+  ...
+# Subtest: Collection resets its return label from title to a direct paused-flight visit
+ok 45 - Collection resets its return label from title to a direct paused-flight visit
+  ---
+  duration_ms: 1028.235625
+  ...
+# Subtest: programmatic Collection after a real win does not refocus a hidden opener
+ok 46 - programmatic Collection after a real win does not refocus a hidden opener
+  ---
+  duration_ms: 10112.428
+  ...
+# Subtest: immediate: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+ok 47 - immediate: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+  ---
+  duration_ms: 1647.292375
+  ...
+# Subtest: immediate: controller brief/read/Back and held direction retain the paused flight
+ok 48 - immediate: controller brief/read/Back and held direction retain the paused flight
+  ---
+  duration_ms: 2161.145167
+  ...
+# Subtest: grid-center: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+ok 49 - grid-center: native keyboard opens exact practice lesson from ready and a live-cut pause without starting or changing the run
+  ---
+  duration_ms: 1460.053959
+  ...
+# Subtest: grid-center: controller brief/read/Back and held direction retain the paused flight
+ok 50 - grid-center: controller brief/read/Back and held direction retain the paused flight
+  ---
+  duration_ms: 2180.811333
+  ...
+# Subtest: focused brief restores exact picker placement, native Back and normal missions across repeated openings
+ok 51 - focused brief restores exact picker placement, native Back and normal missions across repeated openings
+  ---
+  duration_ms: 496.175292
+  ...
+# Subtest: long brief has scoped fluid reading layout, explicit body sizes and Large preference without simulation changes
+ok 52 - long brief has scoped fluid reading layout, explicit body sizes and Large preference without simulation changes
+  ---
+  duration_ms: 327.378334
+  ...
+# Subtest: an imported authored arcade scenario is still labeled practice
+ok 53 - an imported authored arcade scenario is still labeled practice
+  ---
+  duration_ms: 291.716
+  ...
+# Subtest: First Flight keeps its own lesson reader and contextual label
+ok 54 - First Flight keeps its own lesson reader and contextual label
+  ---
+  duration_ms: 234.079792
+  ...
+# Subtest: ordinary manual missions show the Tactical edition label
+ok 55 - ordinary manual missions show the Tactical edition label
+  ---
+  duration_ms: 384.283667
+  ...
+# Subtest: only an ordinary validated Arcade action policy receives the Arcade label
+ok 56 - only an ordinary validated Arcade action policy receives the Arcade label
+  ---
+  duration_ms: 4269.215667
+  ...
+# Subtest: compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+ok 57 - compiled bodies adopt normalized pivots and bitmap dimensions without changing presets, source art or authority
+  ---
+  duration_ms: 70.973792
+  ...
+# Subtest: phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+ok 58 - phone and microtile presentations choose compact art; explicit player and enemy overrides retain priority
+  ---
+  duration_ms: 61.116416
+  ...
+# Subtest: compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+ok 59 - compiled enemy bodies skip legacy image loads while explicit skins retain the original body path
+  ---
+  duration_ms: 48.995459
+  ...
+# Subtest: current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+ok 60 - current non-FPV worlds retain their original canvas art while the interface can use Field Kit
+  ---
+  duration_ms: 43.795875
+  ...
+# Subtest: published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+ok 61 - published motion settings scale cosmetic clocks and zero motion keeps functional effect timing
+  ---
+  duration_ms: 134.137958
+  ...
+# Subtest: enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+ok 62 - enemy cropped-frame geometry positions the art and rotors while retaining the existing contact marker
+  ---
+  duration_ms: 0.480041
+  ...
+# Subtest: terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+ok 63 - terrain, supplies and objectives honor visual pivots while retaining cell and contact coordinates
+  ---
+  duration_ms: 43.744875
+  ...
+# Subtest: classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+ok 64 - classic terrain and contact pickups share pivot placement while their material and contact cues stay fixed
+  ---
+  duration_ms: 0.3055
+  ...
+# Subtest: compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+ok 65 - compiled enemy defaults own their images while explicit original skins and manual uploads keep priority
+  ---
+  duration_ms: 52.086042
+  ...
+# Subtest: compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+ok 66 - compiled player selection keeps each class body and leaves unknown or other-world bodies unchanged
+  ---
+  duration_ms: 49.126292
+  ...
+# Subtest: Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+ok 67 - Plain canvas text uses the selected system pair and switching back restores compiled fonts without authority changes
+  ---
+  duration_ms: 42.151667
+  ...
+# Subtest: cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+ok 68 - cosmetic look status starts before image completion and an obsolete look cannot replace newer feedback
+  ---
+  duration_ms: 0.84525
+  ...
+1..68
+# tests 68
+# suites 0
+# pass 68
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 21164.118333

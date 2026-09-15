@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "game/test/focus-clearance.test.mjs",
+    "game/test/field-kit-flow.test.mjs",
+    "game/test/presentation-renderer.test.mjs",
+    "game/test/practice-brief-host.test.mjs",
+    "game/test/modal-navigation.test.mjs"
+  ],
+  "startedAt": "2026-09-15T14:18:42.491275+00:00",
+  "finishedAt": "2026-09-15T14:19:03.937089+00:00",
+  "exitCode": 0
+}

@@ -1,0 +1,49 @@
+--- a/game/data-json.mjs
++++ b/game/data-json.mjs
+@@ -19,6 +19,7 @@
+   } = {},
+ ) {
+   const encoder = new TextEncoder();
++  const encodedBytes = (value) => encoder.encode(JSON.stringify(value)).byteLength;
+   if (typeof source === 'string') {
+     if (source.length > maxBytes || encoder.encode(source).byteLength > maxBytes)
+       throw new TypeError('JSON file exceeds its byte budget.');
+@@ -39,17 +40,17 @@
+     if (++nodes > maxNodes || depth > maxDepth)
+       throw new TypeError('JSON exceeds its structural budget.');
+     if (value === null || typeof value === 'boolean') {
+-      add(5);
++      add(encodedBytes(value));
+       return value;
+     }
+     if (typeof value === 'number') {
+       if (!Number.isFinite(value)) throw new TypeError('JSON numbers must be finite.');
+-      add(24);
++      add(encodedBytes(value));
+       return value;
+     }
+     if (typeof value === 'string') {
+       if (value.length > maxString) throw new TypeError('JSON string exceeds its budget.');
+-      add(encoder.encode(value).byteLength + 2);
++      add(encodedBytes(value));
+       return value;
+     }
+     const array = Array.isArray(value);
+@@ -63,6 +64,7 @@
+     if (array && value.length > maxArray)
+       throw new TypeError('JSON array exceeds its item budget.');
+     ancestors.add(value);
++    add(2); // JSON container delimiters.
+     const out = array ? [] : {},
+       descriptors = Object.getOwnPropertyDescriptors(value);
+     let count = 0;
+@@ -77,7 +79,8 @@
+       if (key.length > 512) throw new TypeError('JSON field name exceeds its budget.');
+       if (array && (!/^(0|[1-9]\d*)$/.test(key) || Number(key) >= value.length))
+         throw new TypeError('JSON arrays cannot have custom properties.');
+-      add(encoder.encode(key).byteLength + 4);
++      if (count) add(1); // Comma before every subsequent entry.
++      if (!array) add(encodedBytes(key) + 1); // Object key and colon; array indexes are not serialized.
+       out[key] = copy(descriptor.value, depth + 1);
+       count++;
+     }

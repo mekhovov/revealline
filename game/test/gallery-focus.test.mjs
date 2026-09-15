@@ -35,8 +35,16 @@ class Element extends DOMElement {
   get isConnected() {
     return this.rootConnected || !!this.parent?.isConnected;
   }
+  get parentNode() {
+    return this.parent;
+  }
+  set parentNode(value) {
+    this.parent = value;
+  }
   append(...children) {
     for (const child of children) {
+      child.remove();
+      child.rootConnected = false;
       child.parent = this;
       this.children.push(child);
     }
@@ -121,6 +129,16 @@ async function setup(t, count = 30, hostOverrides = {}) {
   document.createElement = (tag) => new Element(document, tag);
   document.querySelectorAll = () => [];
   const node = document.getElementById;
+  // Library feedback moves existing nodes; retain their actual parent/sibling
+  // relationships instead of supplying permanently detached status elements.
+  node('library-dialog').append(node('library-operation-rail'), node('library-saves'));
+  node('library-operation-rail').append(
+    node('library-operation-message'),
+    node('library-operation-controls'),
+  );
+  node('library-operation-controls').append(node('library-operation-cancel'));
+  node('library-operation-rail').hidden = true;
+  node('library-saves').append(node('save-status'), node('cancel-attempt-export'));
   node('collection-dialog').append(
     node('gallery-search'),
     node('gallery-grid'),

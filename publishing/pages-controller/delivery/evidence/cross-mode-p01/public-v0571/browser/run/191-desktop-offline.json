@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:52:18.341075+00:00",
+  "finishedAt": "2026-09-15T13:52:18.536958+00:00",
+  "attempt": "restored-1",
+  "pid": 7246,
+  "endpoint": "ws://127.0.0.1:51927/devtools/browser/3d3e4769-c0ec-4f39-8208-b68535debccb",
+  "action": [
+    "eval",
+    "--stdin"
+  ],
+  "script": ".cache/cross-mode/p01/v0571/public-browser-preparation/measure-offline.js",
+  "exitCode": 0,
+  "stdout": "{\"action\": {\"display\": \"inline-flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 766.03125, \"height\": 47, \"left\": 162, \"right\": 413.125, \"top\": 719.03125, \"width\": 251.125, \"x\": 162, \"y\": 719.03125}, \"text\": \"Prepare offline play\", \"visibility\": \"visible\"}, \"count\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"\", \"visibility\": \"visible\"}, \"focus\": \"settings-tab-data\", \"href\": \"https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/\", \"label\": {\"display\": \"block\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 698.03125, \"height\": 26.09375, \"left\": 192, \"right\": 1118, \"top\": 671.9375, \"width\": 926, \"x\": 192, \"y\": 671.9375}, \"text\": \"Download this release for offline play on this device.\", \"visibility\": \"visible\"}, \"meter\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"max\": 1, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"\", \"value\": 0, \"visibility\": \"visible\"}, \"note\": {\"detailsOpen\": false, \"display\": \"block\", \"fullyInViewport\": false, \"hidden\": false, \"rect\": {\"bottom\": 946.40625, \"height\": 104.375, \"left\": 178, \"right\": 1102, \"top\": 842.03125, \"width\": 924, \"x\": 178, \"y\": 842.03125}, \"visibility\": \"visible\"}, \"preferences\": {\"face\": \"plain\", \"reduced\": true, \"size\": \"large\"}, \"rawDetails\": \"No offline check yet.\", \"settingsScrollTop\": 0, \"signalAnimation\": \"none\", \"status\": {\"display\": \"flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 698.03125, \"height\": 26.09375, \"left\": 162, \"right\": 1118, \"top\": 671.9375, \"width\": 956, \"x\": 162, \"y\": 671.9375}, \"stage\": \"preparing\", \"state\": \"ready\", \"text\": \"Download this release for offline play on this device.\", \"visibility\": \"visible\"}, \"stop\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"Stop waiting\", \"visibility\": \"visible\"}, \"time\": \"2026-09-15T13:52:18.531Z\", \"timeOrigin\": 1789480327727.4, \"viewport\": {\"height\": 800, \"width\": 1280}}",
+  "stderr": ""
+}

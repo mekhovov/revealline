@@ -1,0 +1,1017 @@
+[
+  {
+    "at": "2026-09-15T14:12:38.372Z",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1,
+      "visual": {
+        "width": 390,
+        "height": 844,
+        "scale": 1
+      }
+    },
+    "preferences": {
+      "face": "pixel",
+      "textSize": "standard",
+      "effects": "full",
+      "osReduced": false
+    },
+    "visibility": "visible",
+    "hasFocus": true,
+    "active": {
+      "id": "pack-select",
+      "tag": "SELECT"
+    },
+    "targets": [
+      {
+        "id": "craft-preparation-status",
+        "text": "Loading craft and scene artwork\u2026",
+        "rect": {
+          "x": 37,
+          "y": 176.296875,
+          "width": 316,
+          "height": 20.296875,
+          "top": 176.296875,
+          "right": 353,
+          "bottom": 196.59375,
+          "left": 37
+        },
+        "centerHit": "SPAN",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 41,
+            "y": 180.296875,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 180.296875,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 41,
+            "y": 192.59375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 192.59375,
+            "hit": "SPAN",
+            "inside": true
+          }
+        ],
+        "clientWidth": 316,
+        "scrollWidth": 316
+      },
+      {
+        "id": "pack-select",
+        "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+        "rect": {
+          "x": 55,
+          "y": 249.609375,
+          "width": 282,
+          "height": 44,
+          "top": 249.609375,
+          "right": 337,
+          "bottom": 293.609375,
+          "left": 55
+        },
+        "centerHit": "pack-select",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 59,
+            "y": 253.609375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 333,
+            "y": 253.609375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 59,
+            "y": 289.609375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 333,
+            "y": 289.609375,
+            "hit": "pack-select",
+            "inside": true
+          }
+        ],
+        "clientWidth": 278,
+        "scrollWidth": 278
+      },
+      {
+        "id": "shell-missions-back",
+        "text": "Back",
+        "rect": {
+          "x": 252.984375,
+          "y": 70.640625,
+          "width": 113.015625,
+          "height": 44,
+          "top": 70.640625,
+          "right": 366,
+          "bottom": 114.640625,
+          "left": 252.984375
+        },
+        "centerHit": "shell-missions-back",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 256.984375,
+            "y": 74.640625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 74.640625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 256.984375,
+            "y": 110.640625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 110.640625,
+            "hit": "shell-missions-back",
+            "inside": true
+          }
+        ],
+        "clientWidth": 109,
+        "scrollWidth": 109
+      },
+      {
+        "id": "craft-sticky-heading",
+        "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        Loading craft and scene artwork\u2026\n      ",
+        "rect": {
+          "x": 24,
+          "y": 16,
+          "width": 342,
+          "height": 199.59375,
+          "top": 16,
+          "right": 366,
+          "bottom": 215.59375,
+          "left": 24
+        },
+        "centerHit": "shell-missions-title",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 28,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 28,
+            "y": 211.59375,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 211.59375,
+            "hit": "DIV",
+            "inside": true
+          }
+        ],
+        "clientWidth": 342,
+        "scrollWidth": 342
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T14:12:41.969Z",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1,
+      "visual": {
+        "width": 844,
+        "height": 390,
+        "scale": 1
+      }
+    },
+    "preferences": {
+      "face": "pixel",
+      "textSize": "standard",
+      "effects": "full",
+      "osReduced": false
+    },
+    "visibility": "visible",
+    "hasFocus": true,
+    "active": {
+      "id": "pack-select",
+      "tag": "SELECT"
+    },
+    "targets": [
+      {
+        "id": "craft-preparation-status",
+        "text": "Loading craft and scene artwork\u2026",
+        "rect": {
+          "x": 55,
+          "y": 141.296875,
+          "width": 734,
+          "height": 20.296875,
+          "top": 141.296875,
+          "right": 789,
+          "bottom": 161.59375,
+          "left": 55
+        },
+        "centerHit": "SPAN",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 59,
+            "y": 145.296875,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 785,
+            "y": 145.296875,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 59,
+            "y": 157.59375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 785,
+            "y": 157.59375,
+            "hit": "SPAN",
+            "inside": true
+          }
+        ],
+        "clientWidth": 734,
+        "scrollWidth": 734
+      },
+      {
+        "id": "pack-select",
+        "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+        "rect": {
+          "x": 73,
+          "y": 250.03125,
+          "width": 345,
+          "height": 44,
+          "top": 250.03125,
+          "right": 418,
+          "bottom": 294.03125,
+          "left": 73
+        },
+        "centerHit": "pack-select",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 77,
+            "y": 254.03125,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 414,
+            "y": 254.03125,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 77,
+            "y": 290.03125,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 414,
+            "y": 290.03125,
+            "hit": "pack-select",
+            "inside": true
+          }
+        ],
+        "clientWidth": 341,
+        "scrollWidth": 341
+      },
+      {
+        "id": "shell-missions-back",
+        "text": "Back",
+        "rect": {
+          "x": 688.984375,
+          "y": 57.140625,
+          "width": 113.015625,
+          "height": 44,
+          "top": 57.140625,
+          "right": 802,
+          "bottom": 101.140625,
+          "left": 688.984375
+        },
+        "centerHit": "shell-missions-back",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 692.984375,
+            "y": 61.140625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 61.140625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 692.984375,
+            "y": 97.140625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 97.140625,
+            "hit": "shell-missions-back",
+            "inside": true
+          }
+        ],
+        "clientWidth": 109,
+        "scrollWidth": 109
+      },
+      {
+        "id": "craft-sticky-heading",
+        "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        Loading craft and scene artwork\u2026\n      ",
+        "rect": {
+          "x": 42,
+          "y": 24,
+          "width": 760,
+          "height": 156.59375,
+          "top": 24,
+          "right": 802,
+          "bottom": 180.59375,
+          "left": 42
+        },
+        "centerHit": "shell-missions-title",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 46,
+            "y": 28,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 28,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 46,
+            "y": 176.59375,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 176.59375,
+            "hit": "DIV",
+            "inside": true
+          }
+        ],
+        "clientWidth": 760,
+        "scrollWidth": 760
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T14:13:50.917Z",
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "dpr": 1,
+      "visual": {
+        "width": 844,
+        "height": 390,
+        "scale": 1
+      }
+    },
+    "preferences": {
+      "face": "plain",
+      "textSize": "large",
+      "effects": "reduced",
+      "osReduced": false
+    },
+    "visibility": "visible",
+    "hasFocus": true,
+    "active": {
+      "id": "pack-select",
+      "tag": "SELECT"
+    },
+    "targets": [
+      {
+        "id": "craft-preparation-status",
+        "text": "Loading craft and scene artwork\u2026",
+        "rect": {
+          "x": 55,
+          "y": 155.484375,
+          "width": 734,
+          "height": 26.09375,
+          "top": 155.484375,
+          "right": 789,
+          "bottom": 181.578125,
+          "left": 55
+        },
+        "centerHit": "SPAN",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 59,
+            "y": 159.484375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 785,
+            "y": 159.484375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 59,
+            "y": 177.578125,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 785,
+            "y": 177.578125,
+            "hit": "SPAN",
+            "inside": true
+          }
+        ],
+        "clientWidth": 734,
+        "scrollWidth": 734
+      },
+      {
+        "id": "pack-select",
+        "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+        "rect": {
+          "x": 73,
+          "y": 274.34375,
+          "width": 345,
+          "height": 45,
+          "top": 274.34375,
+          "right": 418,
+          "bottom": 319.34375,
+          "left": 73
+        },
+        "centerHit": "pack-select",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 77,
+            "y": 278.34375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 414,
+            "y": 278.34375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 77,
+            "y": 315.34375,
+            "hit": "shell-deploy-bar",
+            "inside": false
+          },
+          {
+            "x": 414,
+            "y": 315.34375,
+            "hit": "shell-deploy-bar",
+            "inside": false
+          }
+        ],
+        "clientWidth": 341,
+        "scrollWidth": 341
+      },
+      {
+        "id": "shell-missions-back",
+        "text": "Back",
+        "rect": {
+          "x": 679.5,
+          "y": 62.734375,
+          "width": 122.5,
+          "height": 47,
+          "top": 62.734375,
+          "right": 802,
+          "bottom": 109.734375,
+          "left": 679.5
+        },
+        "centerHit": "shell-missions-back",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 683.5,
+            "y": 66.734375,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 66.734375,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 683.5,
+            "y": 105.734375,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 105.734375,
+            "hit": "shell-missions-back",
+            "inside": true
+          }
+        ],
+        "clientWidth": 119,
+        "scrollWidth": 119
+      },
+      {
+        "id": "craft-sticky-heading",
+        "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        Loading craft and scene artwork\u2026\n      ",
+        "rect": {
+          "x": 42,
+          "y": 24,
+          "width": 760,
+          "height": 176.578125,
+          "top": 24,
+          "right": 802,
+          "bottom": 200.578125,
+          "left": 42
+        },
+        "centerHit": "shell-missions-title",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 46,
+            "y": 28,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 28,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 46,
+            "y": 196.578125,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 798,
+            "y": 196.578125,
+            "hit": "DIV",
+            "inside": true
+          }
+        ],
+        "clientWidth": 760,
+        "scrollWidth": 760
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T14:13:55.309Z",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1,
+      "visual": {
+        "width": 390,
+        "height": 844,
+        "scale": 1
+      }
+    },
+    "preferences": {
+      "face": "plain",
+      "textSize": "large",
+      "effects": "reduced",
+      "osReduced": false
+    },
+    "visibility": "visible",
+    "hasFocus": true,
+    "active": {
+      "id": "pack-select",
+      "tag": "SELECT"
+    },
+    "targets": [
+      {
+        "id": "craft-preparation-status",
+        "text": "Loading craft and scene artwork\u2026",
+        "rect": {
+          "x": 37,
+          "y": 249.265625,
+          "width": 316,
+          "height": 26.09375,
+          "top": 249.265625,
+          "right": 353,
+          "bottom": 275.359375,
+          "left": 37
+        },
+        "centerHit": "SPAN",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 41,
+            "y": 253.265625,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 253.265625,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 41,
+            "y": 271.359375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 271.359375,
+            "hit": "SPAN",
+            "inside": true
+          }
+        ],
+        "clientWidth": 316,
+        "scrollWidth": 316
+      },
+      {
+        "id": "pack-select",
+        "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+        "rect": {
+          "x": 55,
+          "y": 274.34375,
+          "width": 282,
+          "height": 45,
+          "top": 274.34375,
+          "right": 337,
+          "bottom": 319.34375,
+          "left": 55
+        },
+        "centerHit": "pack-select",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 59,
+            "y": 278.34375,
+            "hit": "shell-craft-feedback",
+            "inside": false
+          },
+          {
+            "x": 333,
+            "y": 278.34375,
+            "hit": "shell-craft-feedback",
+            "inside": false
+          },
+          {
+            "x": 59,
+            "y": 315.34375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 333,
+            "y": 315.34375,
+            "hit": "pack-select",
+            "inside": true
+          }
+        ],
+        "clientWidth": 278,
+        "scrollWidth": 278
+      },
+      {
+        "id": "shell-missions-back",
+        "text": "Back",
+        "rect": {
+          "x": 243.5,
+          "y": 105.625,
+          "width": 122.5,
+          "height": 47,
+          "top": 105.625,
+          "right": 366,
+          "bottom": 152.625,
+          "left": 243.5
+        },
+        "centerHit": "shell-missions-back",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 247.5,
+            "y": 109.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 109.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 247.5,
+            "y": 148.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 148.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          }
+        ],
+        "clientWidth": 119,
+        "scrollWidth": 119
+      },
+      {
+        "id": "craft-sticky-heading",
+        "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        Loading craft and scene artwork\u2026\n      ",
+        "rect": {
+          "x": 24,
+          "y": 16,
+          "width": 342,
+          "height": 278.359375,
+          "top": 16,
+          "right": 366,
+          "bottom": 294.359375,
+          "left": 24
+        },
+        "centerHit": "shell-missions-title",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 28,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 28,
+            "y": 290.359375,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 290.359375,
+            "hit": "DIV",
+            "inside": true
+          }
+        ],
+        "clientWidth": 342,
+        "scrollWidth": 342
+      }
+    ]
+  },
+  {
+    "at": "2026-09-15T14:13:58.257Z",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 1,
+      "visual": {
+        "width": 390,
+        "height": 844,
+        "scale": 1
+      }
+    },
+    "preferences": {
+      "face": "plain",
+      "textSize": "large",
+      "effects": "reduced",
+      "osReduced": false
+    },
+    "visibility": "visible",
+    "hasFocus": true,
+    "active": {
+      "id": "pack-select",
+      "tag": "SELECT"
+    },
+    "targets": [
+      {
+        "id": "craft-preparation-status",
+        "text": "Loading craft and scene artwork\u2026",
+        "rect": {
+          "x": 37,
+          "y": 249.265625,
+          "width": 316,
+          "height": 26.09375,
+          "top": 249.265625,
+          "right": 353,
+          "bottom": 275.359375,
+          "left": 37
+        },
+        "centerHit": "SPAN",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 41,
+            "y": 253.265625,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 253.265625,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 41,
+            "y": 271.359375,
+            "hit": "SPAN",
+            "inside": true
+          },
+          {
+            "x": 349,
+            "y": 271.359375,
+            "hit": "SPAN",
+            "inside": true
+          }
+        ],
+        "clientWidth": 316,
+        "scrollWidth": 316
+      },
+      {
+        "id": "pack-select",
+        "text": "Base game \u00b7 12 levelsFPV Front \u00b7 Pressure Lines \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 Frontier Lines \u00b7 3 levels \u00b7 install on selectNight Shift \u00b7 3 levels \u00b7 install on selectLiving Threads \u00b7 3 levels \u00b7 install on selectFieldcraft \u00b7 4 levels \u00b7 install on selectHomeward Skies \u00b7 3 levels \u00b7 install on selectEquipment Workshop \u00b7 3 levels \u00b7 install on selectSentinel Relay \u00b7 1 level \u00b7 install on selectFPV Front \u00b7 First Light Arcade R4 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R3 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light R2 \u00b7 3 levels \u00b7 install on selectFPV Front \u00b7 First Light \u00b7 3 levels \u00b7 install on select",
+        "rect": {
+          "x": 55,
+          "y": 274.34375,
+          "width": 282,
+          "height": 45,
+          "top": 274.34375,
+          "right": 337,
+          "bottom": 319.34375,
+          "left": 55
+        },
+        "centerHit": "pack-select",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 59,
+            "y": 278.34375,
+            "hit": "shell-craft-feedback",
+            "inside": false
+          },
+          {
+            "x": 333,
+            "y": 278.34375,
+            "hit": "shell-craft-feedback",
+            "inside": false
+          },
+          {
+            "x": 59,
+            "y": 315.34375,
+            "hit": "pack-select",
+            "inside": true
+          },
+          {
+            "x": 333,
+            "y": 315.34375,
+            "hit": "pack-select",
+            "inside": true
+          }
+        ],
+        "clientWidth": 278,
+        "scrollWidth": 278
+      },
+      {
+        "id": "shell-missions-back",
+        "text": "Back",
+        "rect": {
+          "x": 243.5,
+          "y": 105.625,
+          "width": 122.5,
+          "height": 47,
+          "top": 105.625,
+          "right": 366,
+          "bottom": 152.625,
+          "left": 243.5
+        },
+        "centerHit": "shell-missions-back",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 247.5,
+            "y": 109.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 109.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 247.5,
+            "y": 148.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 148.625,
+            "hit": "shell-missions-back",
+            "inside": true
+          }
+        ],
+        "clientWidth": 119,
+        "scrollWidth": 119
+      },
+      {
+        "id": "craft-sticky-heading",
+        "text": "\n        \n          YOUR NEXT FLIGHT\n          Choose your mission\n        \n        Back\n        Loading craft and scene artwork\u2026\n      ",
+        "rect": {
+          "x": 24,
+          "y": 16,
+          "width": 342,
+          "height": 278.359375,
+          "top": 16,
+          "right": 366,
+          "bottom": 294.359375,
+          "left": 24
+        },
+        "centerHit": "shell-missions-title",
+        "centerHitWithin": true,
+        "interiorHits": [
+          {
+            "x": 28,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 20,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 28,
+            "y": 290.359375,
+            "hit": "DIV",
+            "inside": true
+          },
+          {
+            "x": 362,
+            "y": 290.359375,
+            "hit": "DIV",
+            "inside": true
+          }
+        ],
+        "clientWidth": 342,
+        "scrollWidth": 342
+      }
+    ]
+  }
+]

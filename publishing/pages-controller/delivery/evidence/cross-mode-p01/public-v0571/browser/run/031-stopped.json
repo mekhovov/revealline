@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:44:57.316079+00:00",
+  "finishedAt": "2026-09-15T13:44:57.512858+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "eval",
+    "--stdin"
+  ],
+  "script": ".cache/cross-mode/p01/v0571/public-browser-preparation/measure-offline.js",
+  "exitCode": 0,
+  "stdout": "{\"action\": {\"display\": \"inline-flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 625.96875, \"height\": 47, \"left\": 24, \"right\": 243.40625, \"top\": 578.96875, \"width\": 219.40625, \"x\": 24, \"y\": 578.96875}, \"text\": \"Check progress\", \"visibility\": \"visible\"}, \"count\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"\", \"visibility\": \"visible\"}, \"focus\": \"offline-button\", \"href\": \"https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/\", \"label\": {\"display\": \"block\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 557.96875, \"height\": 78.28125, \"left\": 54, \"right\": 366, \"top\": 479.6875, \"width\": 312, \"x\": 54, \"y\": 479.6875}, \"text\": \"Stopped waiting. Offline preparation may still be running. Check progress to confirm its result.\", \"visibility\": \"visible\"}, \"meter\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"max\": 608, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"\", \"value\": 172, \"visibility\": \"visible\"}, \"note\": {\"detailsOpen\": false, \"display\": \"block\", \"fullyInViewport\": false, \"hidden\": false, \"rect\": {\"bottom\": 1041.1875, \"height\": 339.21875, \"left\": 40, \"right\": 350, \"top\": 701.96875, \"width\": 310, \"x\": 40, \"y\": 701.96875}, \"visibility\": \"visible\"}, \"preferences\": {\"face\": \"plain\", \"reduced\": true, \"size\": \"large\"}, \"rawDetails\": \"No offline check yet.\", \"settingsScrollTop\": 552, \"signalAnimation\": \"none\", \"status\": {\"display\": \"flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 557.96875, \"height\": 78.28125, \"left\": 24, \"right\": 366, \"top\": 479.6875, \"width\": 342, \"x\": 24, \"y\": 479.6875}, \"stage\": \"downloading\", \"state\": \"detached\", \"text\": \"Stopped waiting. Offline preparation may still be running. Check progress to confirm its result.\", \"visibility\": \"visible\"}, \"stop\": {\"display\": \"none\", \"fullyInViewport\": false, \"hidden\": true, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"text\": \"Stop waiting\", \"visibility\": \"visible\"}, \"time\": \"2026-09-15T13:44:57.507Z\", \"timeOrigin\": 1789479852540.8, \"viewport\": {\"height\": 844, \"width\": 390}}",
+  "stderr": ""
+}

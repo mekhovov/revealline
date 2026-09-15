@@ -1,0 +1,15 @@
+{
+  "time": "2026-09-15T13:44:37.262428+00:00",
+  "finishedAt": "2026-09-15T13:44:37.458754+00:00",
+  "attempt": "online-1",
+  "pid": 90207,
+  "endpoint": "ws://127.0.0.1:51302/devtools/browser/ae1705ad-71a3-4c87-a4e7-f7367a4334f4",
+  "action": [
+    "eval",
+    "--stdin"
+  ],
+  "script": ".cache/cross-mode/p01/v0571/public-browser-preparation/measure-offline.js",
+  "exitCode": 0,
+  "stdout": "{\"action\": {\"display\": \"inline-flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 664.71875, \"height\": 44, \"left\": 24, \"right\": 245.796875, \"top\": 620.71875, \"width\": 221.796875, \"x\": 24, \"y\": 620.71875}, \"text\": \"Prepare offline play\", \"visibility\": \"visible\"}, \"count\": {\"display\": \"block\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 599.71875, \"height\": 20.296875, \"left\": 24, \"right\": 133.203125, \"top\": 579.421875, \"width\": 109.203125, \"x\": 24, \"y\": 579.421875}, \"text\": \"0 / 608 files\", \"visibility\": \"visible\"}, \"focus\": \"\", \"href\": \"https://mekhovov.github.io/revealline/releases/v0.57.1/site/game/\", \"label\": {\"display\": \"block\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 571.421875, \"height\": 40.59375, \"left\": 54, \"right\": 224, \"top\": 530.828125, \"width\": 170, \"x\": 54, \"y\": 530.828125}, \"text\": \"Downloading and verifying core offline files…\", \"visibility\": \"visible\"}, \"meter\": {\"display\": \"block\", \"fullyInViewport\": true, \"hidden\": false, \"max\": 608, \"rect\": {\"bottom\": 555.125, \"height\": 8, \"left\": 236, \"right\": 366, \"top\": 547.125, \"width\": 130, \"x\": 236, \"y\": 547.125}, \"text\": \"\", \"value\": 0, \"visibility\": \"visible\"}, \"note\": {\"detailsOpen\": false, \"display\": \"block\", \"fullyInViewport\": false, \"hidden\": false, \"rect\": {\"bottom\": 0, \"height\": 0, \"left\": 0, \"right\": 0, \"top\": 0, \"width\": 0, \"x\": 0, \"y\": 0}, \"visibility\": \"visible\"}, \"preferences\": {\"face\": \"pixel\", \"reduced\": false, \"size\": \"standard\"}, \"rawDetails\": \"No offline check yet.\", \"settingsScrollTop\": 309, \"signalAnimation\": \"operation-signal\", \"status\": {\"display\": \"flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 599.71875, \"height\": 68.890625, \"left\": 24, \"right\": 366, \"top\": 530.828125, \"width\": 342, \"x\": 24, \"y\": 530.828125}, \"stage\": \"downloading\", \"state\": \"busy\", \"text\": \"Downloading and verifying core offline files…0 / 608 files\", \"visibility\": \"visible\"}, \"stop\": {\"display\": \"inline-flex\", \"fullyInViewport\": true, \"hidden\": false, \"rect\": {\"bottom\": 708.71875, \"height\": 44, \"left\": 24, \"right\": 151.5625, \"top\": 664.71875, \"width\": 127.5625, \"x\": 24, \"y\": 664.71875}, \"text\": \"Stop waiting\", \"visibility\": \"visible\"}, \"time\": \"2026-09-15T13:44:37.453Z\", \"timeOrigin\": 1789479852540.8, \"viewport\": {\"height\": 844, \"width\": 390}}",
+  "stderr": ""
+}

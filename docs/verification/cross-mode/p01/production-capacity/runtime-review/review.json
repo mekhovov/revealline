@@ -1,0 +1,56 @@
+{
+  "status": "STATIC_REVIEW_NO_RUNTIME_BLOCKER",
+  "at": "2026-09-15T15:04:09.847176+00:00",
+  "head": "69195ddd1d21a7bc3f863cf7589069a735301a03",
+  "reviewedUncommittedSource": true,
+  "scope": [
+    "game/data-json.mjs",
+    "game/test/data-json.test.mjs"
+  ],
+  "sourcePins": [
+    {
+      "path": "game/data-json.mjs",
+      "bytes": 4920,
+      "sha256": "bcf8c3cb859473a39973cc93cee347085d3146164b0b92a02e81df57f6ffc823"
+    },
+    {
+      "path": "game/test/data-json.test.mjs",
+      "bytes": 3542,
+      "sha256": "7e6416574d3dd5a282aa32410519a57cc4105480a1c0a23cb0d64cbc4ab3bc69"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/capacity-measurement.json",
+      "bytes": 2882,
+      "sha256": "584254f0115808db531191bd0d06d2ccb208c9354f9c3a6ea09072c8341bbd7a"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572/exact-source/first-failure/accounting-proposal/parent-review.json",
+      "bytes": 2076,
+      "sha256": "4d341f92f34262e4c67210909c8b61268310de43a82372c295d08db92a099b7d"
+    },
+    {
+      "path": ".cache/cross-mode/p01/v0572-capacity/capacity-note-draft.md",
+      "bytes": 1546,
+      "sha256": "8133117e8570e091e0aa582053722f52bdbd87dcf71032c9a8553e69db7970af"
+    }
+  ],
+  "trackedRuntimeDiff": {
+    "bytes": 2236,
+    "sha256": "e8cfd19bb8b70c36e38b37b22e5b14a575bff4d067a21de074dc990370c1614b"
+  },
+  "runtimeFindings": [],
+  "testFindings": [],
+  "documentationFollowup": "capacity-note-draft.md termination/application claims are stale relative to parent-supplied natural full-suite completion and current applied source; reconcile with actual final receipt.",
+  "noExecution": {
+    "tests": true,
+    "build": true,
+    "browser": true,
+    "network": true
+  },
+  "sourceEdits": false,
+  "report": {
+    "path": ".cache/cross-mode/p01/v0572-capacity/runtime-review/review.md",
+    "bytes": 3181,
+    "sha256": "87938357108be6df4b9c8cd82fa24c587f0d0bd4df7b0ff8f18561cf6dc2b7a7"
+  }
+}
