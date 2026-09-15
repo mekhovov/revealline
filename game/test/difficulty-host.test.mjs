@@ -96,9 +96,15 @@ function pauseAndRead(page, expectedContext) {
   assert.equal(checked.match, true, JSON.stringify(checked.diagnostics));
   return session;
 }
-async function retryInto(page, context, previous, control = 'restart-button') {
+async function retryInto(page, context, previous, control = 'overlay-restart') {
   assert.equal(page.$(control).hidden, false);
-  page.$(control).click(); // Actual explicit restart or terminal Retry handler.
+  page.$(control).focus();
+  page.$(control).click(); // Actual visible restart or terminal Retry handler.
+  if (control === 'overlay-restart') {
+    assert.equal(page.$('restart-dialog').open, true);
+    assert.equal(page.doc.activeElement.id, 'restart-cancel');
+    page.$('restart-confirm').click();
+  }
   await settle(
     () => page.doc.body.dataset.flightState === 'running',
     'Retry prepares its new picture before flight.',
@@ -368,6 +374,8 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   async function install(candidate) {
     page.$('library-button').click();
     assert.equal(page.$('library-dialog').open, true);
+    page.doc.querySelector('[data-library-panel="packs"]').click();
+    assert.equal(page.$('library-packs').hidden, false);
     page.$('pack-json').value = JSON.stringify(candidate);
     assert.equal(page.$('install-pack').disabled, false);
     page.$('install-pack').click();
@@ -382,6 +390,7 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
     .find((button) => button.textContent === 'Play Host second chapter');
   assert.ok(play, 'The real library exposes each authored chapter separately.');
   play.click();
+  await settle(() => !page.$('library-dialog').open);
   assert.equal(page.$('library-dialog').open, false);
   page.change('difficulty-select', 'gentle');
   page.frame(0);
@@ -490,6 +499,7 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   page.$('challenge-date').value = '2026-09-12';
   page.change('challenge-kind', 'calm');
   page.$('launch-challenge').click();
+  await settle(() => !page.$('library-dialog').open);
   assert.equal(page.$('library-dialog').open, false);
   const authored = createDifficultyContext(base, 'standard');
   assert.notEqual(page.$('campaign-select').value, authored.campaignKey);

@@ -1,0 +1,58 @@
+{
+  "base": "4397b367b3f1fa17bf4a0989c90febaca9de9710",
+  "files": [
+    {
+      "path": "game/test/backup-set-host.test.mjs",
+      "bytes": 13972,
+      "sha256": "1a1f35ffc9237ef64a00657802ec1ee1b132df0316b542320518df45dde7f84d",
+      "gitBlob": "bd07587b7c3d9fbf27959e1725047e9bc6037be6",
+      "sharedFixture": null
+    },
+    {
+      "path": "game/test/helpers/backup-set-fixture.mjs",
+      "bytes": 3025,
+      "sha256": "94c2a0e66cc7fac61b7c37ff33225fdd8177f41f9b92f5b16b33346c5ef9dacd",
+      "gitBlob": "d5caedfafc493c678fd5143b71a1245620c88d94",
+      "sharedFixture": null
+    },
+    {
+      "path": "authoring/library/runtime-sprite-candidates-v1/export/atlas-bell-warden-v1-aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce.png",
+      "bytes": 65737,
+      "sha256": "aaa88f04dccaa141ffb121acbb6e1b4eb9b89c0ace3e8ebddc172ba4294eabce",
+      "gitBlob": "987410cba0d56874a461f5bace2206c8c0d02169",
+      "sharedFixture": null
+    },
+    {
+      "path": "game/test/gallery-focus.test.mjs",
+      "bytes": 49062,
+      "sha256": "4f4861c3ffec2c4924dbc901265391fcf76a6b4c8151990b6707d570190abb3d",
+      "gitBlob": "3a47152b9ea637ea5f689037a74f4906c868aa7a",
+      "sharedFixture": null
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b",
+      "gitBlob": "df1de5b6fe61803f407e8fe25ebf720331a6193a",
+      "sharedFixture": "/Users/oleksandr.mekhovov/work/my_projects/go_test/game/content/packs/homeward-skies.json"
+    },
+    {
+      "path": "game/test/helpers/earned-picture-fixture.mjs",
+      "bytes": 2528,
+      "sha256": "4c8eeecd9b3209414ff2e082a06f421517a1e3332fc5d403f095ae12e1b1291f",
+      "gitBlob": "b42d004f45db17ee27cf48996ee69e73c26f9247",
+      "sharedFixture": null
+    },
+    {
+      "path": "game/test/attempt-export-panel.test.mjs",
+      "bytes": 16500,
+      "sha256": "26478c784eddeca2af23b34494de45ae11da91578016ce2c22ababefb8a9ed3f",
+      "gitBlob": "0078d93af9fc690c702c44e6a7ada4b6ab93ec05",
+      "sharedFixture": null
+    }
+  ],
+  "newBytes": 150824,
+  "sharedFixtureBytes": 11371849,
+  "earlierRefusal": "Proposed direct intake exceeded2MiB; asserted before any materialization. Exact already-retained fixture is now shared by read-only symlink.",
+  "sharedFixtureMethod": "read-only test hardlink to exact retained Git blob; no body copy, verified before/after. Replaced initial symlink because Git correctly reported a tracked file-type change."
+}

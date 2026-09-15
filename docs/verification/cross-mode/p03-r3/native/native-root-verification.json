@@ -1,0 +1,55 @@
+{
+  "scope": "P03 R3 desktop keyboard actual-earned-picture Replay and Challenge journeys",
+  "base": "4397b367b3f1fa17bf4a0989c90febaca9de9710",
+  "hold": {
+    "path": ".cache/p03r3/source-held-02.json",
+    "bytes": 1584,
+    "sha256": "1294a7841e93db192a88c2fe858b0111ad5f4282e6bd333b2b9df3cdc468bad6"
+  },
+  "preview": {
+    "path": ".cache/p03r3/preview/binding.json",
+    "bytes": 1174,
+    "sha256": "e7f886c4cc9aa5141fd05af257be8ff08e403ab138454272a3f395e3d8d88a6b"
+  },
+  "events": {
+    "path": ".cache/p03r3/native/events.json",
+    "bytes": 74850,
+    "sha256": "5a2acab012b8f4d4935f3e00e5606a58b831757e52126f6600589571ca067c5e"
+  },
+  "eventCount": 22,
+  "images": [
+    {
+      "path": ".cache/p03r3/native/challenge-ready.png",
+      "bytes": 46394,
+      "sha256": "c9629ae2d9e2734edbf1be580345068e481e7de6c60ea6b685f2e51a094ac518"
+    },
+    {
+      "path": ".cache/p03r3/native/challenge-warning.png",
+      "bytes": 38424,
+      "sha256": "b63cd550755471fdfe4de83d8f01f6558ae0bfa15c272c51447e18e021609d75"
+    },
+    {
+      "path": ".cache/p03r3/native/replay-warning.png",
+      "bytes": 39876,
+      "sha256": "6fd895281e049fc484218797f128e65d8e7d756f62140290e846e8ed95f077a5"
+    }
+  ],
+  "observed": [
+    "Actual First Signal win earned its picture, score8160 and reported3.58s. Selected and started Relay Orchard before pausing it.",
+    "Keyboard Collection -> earned First Signal -> Replay opened the checked replacement warning above both retained parent dialogs. Stay returned focus to Replay and kept Relay Orchard paused.",
+    "After the saved-flight check enabled Replace, explicit confirmation closed the owned picture/Collection parents and selected First Signal at briefing with Start focused, without starting.",
+    "Started and paused the new flight, then opened Main menu -> Workshop -> Scores & saves -> Challenges entirely by keyboard. Selected Pressure run.",
+    "Challenge Stay returned to the actual launcher with Library/Workshop/Title retained. A fresh confirmed Replace closed all three parents and selected route-2026-09-15-expert at briefing, Start focused, target75% and requiredrelay visible."
+  ],
+  "annotations": [
+    "Event01 is loading, despite its intended title-ready label. Event04 is picture/reward after a real win, not pause; event05 opened Missions rather than the intended Title. Actual snapshots are authoritative.",
+    "Event12 intended confirmation still shows Stay result because Tab/Enter ran while the verification action was not ready. Event13 confirms Replace enabled; event14 is the actual accepted replacement.",
+    "Later paused native attempts show0:00; exact nonempty-cut checkpoints/queued turns and saved bytes are established by host tests, not browser storage inspection."
+  ],
+  "limits": [
+    "No native installed-pack Play, background/stale-slot injection, original-media replacement, phone/zoom or physical-controller acceptance in this scope. Source tests cover the corresponding guarded adapters.",
+    "Earned picture viewing uses its retained original. Mission Replay selects current authored artwork; this check does not establish an exact earned-original replay override.",
+    "Not integrated with A1/A2/TitleB/P05/P08, and not a full P03/public release qualification."
+  ],
+  "method": "Documented browser keyboard actions and DOM-backed snapshots; no injected state. Actual Git base plus two pinned production overlays."
+}
