@@ -42,6 +42,8 @@ The [story and paused-flight supplement](story-and-paused-flight.md) records can
 
 ## Production and acceptance remain open
 
+The later [native mixer check](output-probe/README.md) also measures actual Web Audio output: three silent windows, a quarter-volume RMS ratio of 0.250056547 and restored ratio 0.999610075. All six checks pass; explicit cancellation closes the owned context. Its reproducible diagnostic, raw iterations and source pins are retained separately. This adds digital mixer evidence without claiming physical speaker or native media-element gain qualification.
+
 The [dependency plan](receipts/production-dependency-plan.json) initially found eight changed audio recipe successors at source stage. The producer support subsequently adds `audio-master.mjs` to the direct fingerprint. The strict test **“P01 UI and P02-A audio reviews cover exact current inputs”** still fails on both runtimes until a real current P02-A review is supplied. Its synthetic invalidation fixture does not approve production. The earlier committed-ledger readiness pass belongs to the old ledger; it does not qualify these changed inputs.
 
 Preserve P01's incoming ledger history, then bind an actual scoped audio review to the final inputs before canonical regeneration and complete readiness checks. Do not copy an earlier approval hash or promote a source-stage recipe merely to turn the test green.

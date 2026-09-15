@@ -31,6 +31,8 @@ Play and audition are transport actions, including while muted. The Library expl
 
 Focused tests use real game modules with finite media/context/DOM boundaries. They establish sequencing and state, not audible quality, actual decoding, native hit targets or hardware behavior. The source preview can serve unchanged missing assets from the exact v0.57.1 Git tree; that preview is explicitly separate from an ordinary production build and immutable public verification.
 
+The [reproducible native mixer check](verification/cross-mode/p02-a/output-probe/README.md) adds actual Web Audio signal measurements after the master/compressor: mute and zero volume produce zero measured signal; quarter volume produces a 0.250056547 RMS ratio. This verifies the digital mixer separately from native MP3/video transport observations and future physical listening/device qualification.
+
 The final phase gate requires the existing six source checks, relevant production reproduction/readiness, ordinary build, hunk-reviewed source PR, immutable next unused minor version, publication-selector PR and full deployed-file verification. Preserve prior versions. Never convert preparatory passes into accepted P01/P02-A release claims.
 
 ## Research and device boundary
