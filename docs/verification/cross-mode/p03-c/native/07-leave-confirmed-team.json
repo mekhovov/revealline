@@ -1,0 +1,28 @@
+{
+  "step": "07-leave-confirmed-team",
+  "dom": {
+    "dialogs": [],
+    "focus": {
+      "id": "",
+      "tag": "BODY",
+      "text": "REVEALLINE\n        COUCH CO-OP RELAY YARD\n        Back to Solo\n      \n\n      \n        \n          ONE ARENA. TWO PARTNERS.\n          Find yourcommon ground.\n    "
+    },
+    "hud": [
+      {
+        "id": "coverage"
+      },
+      {
+        "id": "lives"
+      },
+      {
+        "id": "time"
+      },
+      {
+        "id": "score"
+      }
+    ],
+    "url": "http://127.0.0.1:60366/game/couch/relay-rescue.html?return=solo&return-token=d299fb7b1e574e3488bde57af1690278",
+    "view": [1393, 1348]
+  },
+  "snapshot": "- main:\n  - link \"REVEAL LINE\":\n    - /url: ../\n    - text: REVEAL\n    - generic: LINE\n  - text: COUCH CO-OP\n  - generic: RELAY YARD\n  - link \"Back to Solo\":\n    - /url: ../?mode-return=d299fb7b1e574e3488bde57af1690278\n  - region \"Find your common ground.\":\n    - paragraph: ONE ARENA. TWO PARTNERS.\n    - heading \"Find your common ground.\" [level=1]:\n      - text: Find your\n      - emphasis: common ground.\n    - paragraph: Start with a small loop. Cover each other, then meet to join a larger cut.\n    - text: Arena\n    - combobox \"Arena\":\n      - option \"First Connection · territory challenge\"\n      - option \"Relay Yard · stronghold challenge\" [selected]\n    - text: Play style\n    - combobox \"Play style\":\n      - option \"Full teamwork\" [selected]\n      - option \"Joint Cuts + ordinary cover\"\n      - option \"Individual cuts + ordinary cover\"\n    - text: Challenge\n    - combobox \"Challenge\":\n      - option \"Gentle\"\n      - option \"Standard\" [selected]\n      - option \"Expert\"\n    - paragraph: Captures recharge both players’ Support and can rescue a downed partner.\n    - paragraph: One open field. Bait a Hunter, cover the crossing, then take the anchors together.\n    - button \"Start together →\"\n    - paragraph:\n      - status: Two players · one screen · a shared victory\n    - generic \"Play a created co-op pack\"\n    - complementary \"Help and options\":\n      - generic \"How to play and controls\"\n      - generic \"Options\"\n      - option \"Auto · touch players without a controller\" [selected]\n      - option \"Show both players\"\n      - option \"Hide touch controls\"\n    - paragraph: TAKE THE STRONGHOLD TOGETHER\n    - list:\n      - strong: Start small.\n      - text: Draw a short loop back to safe ground to claim it. Banking stops your craft; steer again for your next cut.\n      - strong: Join when ready.\n      - text: Steer both moving heads together to bank a shared cut. Crossing an old part of a partner’s line is harmless.\n      - strong: Watch the red shapes.\n      - text: Enemies can hit your craft and unfinished line. Hunters mark a route before charging. Wait for recovery or use Support to protect the crossing. Both approaches face the same enemy tools.\n      - strong: Cover each other.\n      - text: Tap Support to slow nearby enemies and intercept sparks. A dashed ring marks an enemy while it is slowed. Hold Support beside a downed partner for one second to rescue them for free.\n      - strong: Open both approaches.\n      - text: Capture anchors A and B to expose the core. Then make a new cut that captures the core itself. The shield blocks entry. Bait the Hunter’s warning and cut during recovery; banking its cell clears it.\n    - paragraph:\n      - text: TEAM OBJECTIVE\n      - strong: Capture both anchors, then the exposed core"
+}

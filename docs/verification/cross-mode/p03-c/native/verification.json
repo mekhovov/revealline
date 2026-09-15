@@ -1,0 +1,107 @@
+{
+  "source": "cf169ebd1a214ef2c6b7eb54946860ffe58de644",
+  "sourceTree": "1afca37defae8381e4267b6295c7d71aed217a2c",
+  "pins": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 226100,
+      "sha256": "c586ac5e6d22aa8d071ab5081669fa11ae80c366ee9a030ea1d1533e41ce6da5"
+    },
+    {
+      "path": "game/mode-return.mjs",
+      "bytes": 5791,
+      "sha256": "d7b428457d17bd024de91e8a04008743abb363750f500998ede5c55f4619c526"
+    },
+    {
+      "path": "game/selection-bookmark.mjs",
+      "bytes": 3207,
+      "sha256": "0591740d60d1863ad9c459617a33d278672631fb286ca2b1c0f5c5c10131f235"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 69498,
+      "sha256": "7869c5d587c877a74ae5fd887ffde5f1d8f002453353dcfd7dc1b9543a372a22"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 23870,
+      "sha256": "c31bed6291377ec2501232387ae6af323ef97c50db8e11c26b40fe217524b6af"
+    },
+    {
+      "path": "game/test/mode-return.test.mjs",
+      "bytes": 12021,
+      "sha256": "37476839dd63e435c69c5c8821633d1d712755a68c85a81dffed18e232a4b5fd"
+    },
+    {
+      "path": "game/test/mode-return-host.test.mjs",
+      "bytes": 14172,
+      "sha256": "2ecb8ae59aef3825d7f616c98155184f2c691910aa9cb67be6f64c507cce2215"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "bytes": 38928,
+      "sha256": "dc0ff31f6ea09efde1ce9291f757fe1dfc8326aec0991ea27291527793d8a011"
+    },
+    {
+      "path": "game/test/coop-host.test.mjs",
+      "bytes": 27585,
+      "sha256": "eb061be286ae51090680529565e54a5f22c7e39ed9b0bd983f613eb2d7f30e6b"
+    },
+    {
+      "path": "docs/cross-mode-execution.md",
+      "bytes": 33778,
+      "sha256": "35787a956ecdea731e0374d9559881d72408c9ea3bc2d1765b1c07d9f6802b56"
+    },
+    {
+      "path": "authoring/skills/xonix-runtime-maintainer/SKILL.md",
+      "bytes": 100702,
+      "sha256": "b17a615ff45f34d33dd65f028a7d750fda10b6c2fa0924c332fd55c1b21628e7"
+    }
+  ],
+  "servedRuntime": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 226100,
+      "sha256": "c586ac5e6d22aa8d071ab5081669fa11ae80c366ee9a030ea1d1533e41ce6da5"
+    },
+    {
+      "path": "game/mode-return.mjs",
+      "bytes": 5791,
+      "sha256": "d7b428457d17bd024de91e8a04008743abb363750f500998ede5c55f4619c526"
+    },
+    {
+      "path": "game/selection-bookmark.mjs",
+      "bytes": 3207,
+      "sha256": "0591740d60d1863ad9c459617a33d278672631fb286ca2b1c0f5c5c10131f235"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 69498,
+      "sha256": "7869c5d587c877a74ae5fd887ffde5f1d8f002453353dcfd7dc1b9543a372a22"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "bytes": 23870,
+      "sha256": "c31bed6291377ec2501232387ae6af323ef97c50db8e11c26b40fe217524b6af"
+    }
+  ],
+  "input": "Native browser keyboard; no page-state injection",
+  "viewport": {
+    "width": 1393,
+    "height": 1348
+  },
+  "scope": "Ready Solo and paused unfinished Solo \u2192 Team \u2192 exact Missions selection \u2192 explicit Continue \u2192 paused restored run",
+  "retainedHud": {
+    "coverage": "1.5%",
+    "lives": 3,
+    "time": "2:51",
+    "score": 340
+  },
+  "limits": [
+    "No native storage-failure injection; source-host tests qualify newer-slot/readback/cancel/denied storage.",
+    "No physical controller or touch claim.",
+    "Team lobby initial focus BODY remains a separate P03 item.",
+    "No complete build/public deployment qualification.",
+    "The current saved run was previously created through gameplay; this pass verifies its menu/save-return path, not a new win."
+  ]
+}
