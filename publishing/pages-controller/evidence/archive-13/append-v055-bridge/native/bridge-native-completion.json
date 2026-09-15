@@ -1,0 +1,97 @@
+{
+  "status": "PASS_SCOPED_ARCHIVE_BROWSER_JOURNEYS",
+  "checkedAt": "2026-09-15T08:39:01.746870+00:00",
+  "archiveId": "archive-13",
+  "infrastructureCommit": "58b21ebeff3c2d8e8ca37d5b7764f8203b8824ed",
+  "runId": 34947667008,
+  "deploymentId": 6454910731,
+  "versions": [
+    "v0.54.0",
+    "v0.55.0"
+  ],
+  "observations": {
+    "v0.55.0": [
+      "Visible exact version title; keyboard Deploy and actual pack preparation completed",
+      "Actual Standard Immediate Orchard Crossing movement, travelling line-strike warning, closure at51.5%,12060points,3lives",
+      "Explicit Pause/Resume with directional release; reload then Continue restored same coverage,score,lives,time paused",
+      "Keyboard pause menu returned to title; Tab reached Release explorer and Enter followed the real game anchor through new bridge to https://mekhovov.github.io/revealline/releases/ with visible Playable versions catalog"
+    ],
+    "v0.54.0": [
+      "Visible exact version title; keyboard Deploy-to-Missions focus and Enter opened Choose mission",
+      "Escape from mission selection returned title with Deploy focus",
+      "Tab reached Release explorer; Enter followed the actual game link through the bridge to canonical main catalog"
+    ]
+  },
+  "routingDefect": {
+    "prior404RetainedIn": "observation.json",
+    "resolvedAfterBridgeDeployment": true
+  },
+  "limits": [
+    "Observed v055 flight/capture and save/load precede bridge-only deployment; frozen game bytes are unchanged by it. Both explorer paths were exercised after the new deployment.",
+    "No full archive mission win or exhaustive menus, physical device/controller or touch qualification in this check.",
+    "Fresh archived offline disconnect not exercised here; predecessor054 and P00 current055 offline evidence remain separately scoped.",
+    "Inspection pauses and timing do not establish difficulty balance or performance benchmarks."
+  ],
+  "evidence": [
+    {
+      "file": "capture-paused.png",
+      "bytes": 48400,
+      "sha256": "94c8bc42afc54e47f1288bc7fd7753663282438578f7c065353823d27836ac48"
+    },
+    {
+      "file": "capture-paused.txt",
+      "bytes": 1016,
+      "sha256": "d045327e586031f92509c169c0b9ff94316312579b5df7825e0c26ca689de9b0"
+    },
+    {
+      "file": "observation.json",
+      "bytes": 2559,
+      "sha256": "93518066e982fd271631b9846a904661ba93b448bbe318fe9e3d903cca832b66"
+    },
+    {
+      "file": "restored-flight.png",
+      "bytes": 116523,
+      "sha256": "46192a07eaaad04ce59968b86289531d067f457a51823b89681dd3e8d9847da5"
+    },
+    {
+      "file": "restored-paused.png",
+      "bytes": 48400,
+      "sha256": "94c8bc42afc54e47f1288bc7fd7753663282438578f7c065353823d27836ac48"
+    },
+    {
+      "file": "restored-paused.txt",
+      "bytes": 1018,
+      "sha256": "300f3a410160b78cc58bf4f180c0555cc7542e8214f91104ac6d2b4185cb2ac8"
+    },
+    {
+      "file": "v054-release-explorer.png",
+      "bytes": 46640,
+      "sha256": "6732c86c5fdef6579b1b899146746fec56729cd1ab81397b116cba1c349b2216"
+    },
+    {
+      "file": "v054-release-explorer.txt",
+      "bytes": 25876,
+      "sha256": "97df09bff8e2d5d22e34b82b38dee6a73ba347d643731101d6c578dce626b7a6"
+    },
+    {
+      "file": "v054-title-return.png",
+      "bytes": 120913,
+      "sha256": "d1677b263262f48fe533e6dc2d8cdbdd0c6b7d0fbefdc189563cc6a866702059"
+    },
+    {
+      "file": "v054-title-return.txt",
+      "bytes": 2089,
+      "sha256": "4cdc366a5db50e8812c73dd438ea26b2358c39fea9bcae5f71c52781eee3ba6c"
+    },
+    {
+      "file": "v055-release-explorer.png",
+      "bytes": 46640,
+      "sha256": "6732c86c5fdef6579b1b899146746fec56729cd1ab81397b116cba1c349b2216"
+    },
+    {
+      "file": "v055-release-explorer.txt",
+      "bytes": 25876,
+      "sha256": "97df09bff8e2d5d22e34b82b38dee6a73ba347d643731101d6c578dce626b7a6"
+    }
+  ]
+}

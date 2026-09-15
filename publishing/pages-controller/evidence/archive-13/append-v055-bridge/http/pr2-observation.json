@@ -1,0 +1,15 @@
+{
+  "command": [
+    "gh",
+    "pr",
+    "view",
+    "2",
+    "--repo",
+    "mekhovov/revealline-archive-13",
+    "--json",
+    "state,headRefOid,mergeCommit,mergedAt,url"
+  ],
+  "startedAt": "2026-09-15T08:34:51.997937+00:00",
+  "finishedAt": "2026-09-15T08:34:52.522362+00:00",
+  "stderr": ""
+}
