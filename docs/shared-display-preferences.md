@@ -96,10 +96,38 @@ records keyboard selection and Solo→Team→Versus→Solo restoration at the de
 preview. Team only started and paused at 0:00. It does not close the remaining
 viewport, system-toggle, storage-event, failure or physical-device checks.
 
+Remaining P05 visual work also includes disabled-action distinction and primary
+action hierarchy. A separate root-reported P08 delayed-picture observation found
+Versus Start correctly disabled but still bright yellow like an enabled primary
+action, with the Relay Rescue link similarly prominent. Review those states in
+the actual preparation and ready layouts; this is a visual follow-up, not an
+inferred input-control failure. It is outside the confirmation-layout correction.
+
 A final integrated source must receive its normal exact-source tests, static and
 production-readiness checks before release qualification. This slice does not
 regenerate producer output, amend recipe approval hashes, allocate a version or
 change the publication controller.
+
+## Compact confirmation layout
+
+Short confirmation dialogs opt in with `restart-dialog`, independently of their
+element ID. They use content height, a 460px width cap, safe-area viewport limits
+and scrolling when their copy or Large text exceeds that height. Actions remain
+stacked with the existing 50px minimum target. Title, Missions, Collection and
+other full-screen panels retain their layouts. For a new confirmation, inspect
+actual Standard/Large text in desktop, narrow portrait and short landscape;
+reach both actions by keyboard and scroll, and check the visible safe focus and
+return to the opener. CSS source checks do not establish native layout or touch
+device acceptance.
+
+The first combined native preview confirmed compact mission replacement and
+unchanged Missions sizing, Tab wrapping and Escape return. It also found that a
+later Field Kit rule reduced the confirmation actions to 44px. The narrower
+action selector now outranks that rule. The [scoped desktop successor check](verification/cross-mode/p05-a/confirmations/README.md)
+measured 50px actions in Standard/Large mission replacement and Restart, with
+Tab wrapping, Escape opener restoration and the flight still paused. The
+original 44px observation is retained. Portrait, short landscape, zoom and
+physical-input checks remain open; this does not complete P05.
 
 ## Reusable bounded journey
 

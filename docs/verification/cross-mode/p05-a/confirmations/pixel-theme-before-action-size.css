@@ -871,7 +871,7 @@ body.game-shell:not(.first-flight-session) {
   gap: 8px;
   margin-top: 24px;
 }
-.game-shell dialog.restart-dialog .overlay-actions .button {
+.game-shell dialog.restart-dialog .button {
   width: 100%;
   min-height: 50px;
 }

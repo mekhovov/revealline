@@ -1,0 +1,2305 @@
+[
+  {
+    "label": "Standard replacement confirmation fits content",
+    "time": "2026-09-15T17:19:30.959Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace flight\"\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-stay",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 749.045166015625
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 801.0330200195312
+            }
+          ],
+          "clientHeight": 422,
+          "height": "425.608px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 425.607666015625,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 461.0850830078125
+          },
+          "scrollHeight": 422
+        },
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "shell-missions-back",
+              "w": 112.3263931274414,
+              "x": 1148.6806640625,
+              "y": 60.138893127441406
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 305.295166015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 383.810791015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 483.9236450195313
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 584.0364990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 662.5521240234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 741.0677490234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 819.5833740234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 898.0989990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 976.6146240234376
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1329.8958740234375
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1430.0087890625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1530.12158203125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "collection-button",
+              "w": 108.6371612548828,
+              "x": 1152.369873046875,
+              "y": 349.94793701171875
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 112.0920181274414,
+              "x": 427.2743225097656,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 83.22048950195312,
+              "x": 1177.7864990234375,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-prepare",
+              "w": 122.5607681274414,
+              "x": 219.64410400390625,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-briefing",
+              "w": 131.5104217529297,
+              "x": 976.2239990234376,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-deploy",
+              "w": 141.2760467529297,
+              "x": 1119.73095703125,
+              "y": 1148.1424560546875
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Compact confirmation wraps keyboard focus",
+    "time": "2026-09-15T17:19:41.513Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace flight\"\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-stay",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 749.045166015625
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 801.0330200195312
+            }
+          ],
+          "clientHeight": 422,
+          "height": "425.608px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 425.607666015625,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 461.0850830078125
+          },
+          "scrollHeight": 422
+        },
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "shell-missions-back",
+              "w": 112.3263931274414,
+              "x": 1148.6806640625,
+              "y": 60.138893127441406
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-worlds",
+              "w": 127.96007537841795,
+              "x": 751.37158203125,
+              "y": 224.2621612548828
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 305.295166015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 383.810791015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 483.9236450195313
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 584.0364990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 662.5521240234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 741.0677490234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 819.5833740234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 898.0989990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 976.6146240234376
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1229.7830810546875
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1329.8958740234375
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1430.0087890625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1530.12158203125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "collection-button",
+              "w": 108.6371612548828,
+              "x": 1152.369873046875,
+              "y": 349.94793701171875
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 112.0920181274414,
+              "x": 427.2743225097656,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 83.22048950195312,
+              "x": 1177.7864990234375,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-read",
+              "w": 532.7864990234375,
+              "x": 160.87673950195312,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-prepare",
+              "w": 122.5607681274414,
+              "x": 219.64410400390625,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-briefing",
+              "w": 131.5104217529297,
+              "x": 976.2239990234376,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-deploy",
+              "w": 141.2760467529297,
+              "x": 1119.73095703125,
+              "y": 1148.1424560546875
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Escape restores the selected card in full-size Missions",
+    "time": "2026-09-15T17:19:41.631Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\" [active]:\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "shell-missions-back",
+              "w": 112.3263931274414,
+              "x": 1148.6806640625,
+              "y": 60.138893127441406
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-worlds",
+              "w": 127.96007537841795,
+              "x": 751.37158203125,
+              "y": 224.2621612548828
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 305.295166015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 383.810791015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 483.9236450195313
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 584.0364990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 662.5521240234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 741.0677490234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 819.5833740234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 898.0989990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 976.6146240234376
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1229.7830810546875
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1329.8958740234375
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1430.0087890625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1530.12158203125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "collection-button",
+              "w": 108.6371612548828,
+              "x": 1152.369873046875,
+              "y": 349.94793701171875
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 112.0920181274414,
+              "x": 427.2743225097656,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 83.22048950195312,
+              "x": 1177.7864990234375,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-read",
+              "w": 532.7864990234375,
+              "x": 160.87673950195312,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-prepare",
+              "w": 122.5607681274414,
+              "x": 219.64410400390625,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-briefing",
+              "w": 131.5104217529297,
+              "x": 976.2239990234376,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-deploy",
+              "w": 141.2760467529297,
+              "x": 1119.73095703125,
+              "y": 1148.1424560546875
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Corrected minimum: Large text mission confirmation",
+    "time": "2026-09-15T17:24:59.240Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace flight\"\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-stay",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 781.6146240234375
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 839.6094360351562
+            }
+          ],
+          "clientHeight": 511,
+          "height": "514.783px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 514.7830200195312,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 416.4930725097656
+          },
+          "scrollHeight": 511
+        },
+        {
+          "actions": [
+            {
+              "h": 46.3194465637207,
+              "id": "shell-missions-back",
+              "w": 121.0763931274414,
+              "x": 1139.9306640625,
+              "y": 66.0763931274414
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 328.23785400390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 417.7517700195313
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 534.26220703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 650.7725830078125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 740.2864990234375
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 829.8004150390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 919.3142700195312
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1035.82470703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1152.3350830078125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1586.979248046875
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1703.4896240234375
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1820.0001220703125
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "collection-button",
+              "w": 126.9618148803711,
+              "x": 1134.045166015625,
+              "y": 378.6632080078125
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 131.28472900390625,
+              "x": 427.2743225097656,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 95.19965362548828,
+              "x": 1165.807373046875,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-prepare",
+              "w": 144.3663330078125,
+              "x": 239.9913330078125,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-briefing",
+              "w": 155.546875,
+              "x": 936.2066650390624,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-deploy",
+              "w": 157.2569580078125,
+              "x": 1103.75,
+              "y": 1198.3160400390625
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: Tab reaches replace",
+    "time": "2026-09-15T17:25:06.516Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\"\n  - button \"Replace flight\" [active]\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-confirm",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 781.6146240234375
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 839.6094360351562
+            }
+          ],
+          "clientHeight": 511,
+          "height": "514.783px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 514.7830200195312,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 416.4930725097656
+          },
+          "scrollHeight": 511
+        },
+        {
+          "actions": [
+            {
+              "h": 46.3194465637207,
+              "id": "shell-missions-back",
+              "w": 121.0763931274414,
+              "x": 1139.9306640625,
+              "y": 66.0763931274414
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-worlds",
+              "w": 151.1197967529297,
+              "x": 879.7830200195312,
+              "y": 238.47222900390625
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 328.23785400390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 417.7517700195313
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 534.26220703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 650.7725830078125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 740.2864990234375
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 829.8004150390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 919.3142700195312
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1035.82470703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1152.3350830078125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1470.4688720703125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1586.979248046875
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1703.4896240234375
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1820.0001220703125
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "collection-button",
+              "w": 126.9618148803711,
+              "x": 1134.045166015625,
+              "y": 378.6632080078125
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 131.28472900390625,
+              "x": 427.2743225097656,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 95.19965362548828,
+              "x": 1165.807373046875,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-read",
+              "w": 532.7864990234375,
+              "x": 160.87673950195312,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-prepare",
+              "w": 144.3663330078125,
+              "x": 239.9913330078125,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-briefing",
+              "w": 155.546875,
+              "x": 936.2066650390624,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-deploy",
+              "w": 157.2569580078125,
+              "x": 1103.75,
+              "y": 1198.3160400390625
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: Tab wraps to Stay",
+    "time": "2026-09-15T17:25:06.730Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: Your current flight was saved and verified. Replace selects the new mission without starting it. Stay keeps this flight paused.\n  - button \"Stay with this flight\" [active]\n  - button \"Replace flight\"\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-stay",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 781.6146240234375
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 839.6094360351562
+            }
+          ],
+          "clientHeight": 511,
+          "height": "514.783px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 514.7830200195312,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 416.4930725097656
+          },
+          "scrollHeight": 511
+        },
+        {
+          "actions": [
+            {
+              "h": 46.3194465637207,
+              "id": "shell-missions-back",
+              "w": 121.0763931274414,
+              "x": 1139.9306640625,
+              "y": 66.0763931274414
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-worlds",
+              "w": 151.1197967529297,
+              "x": 879.7830200195312,
+              "y": 238.47222900390625
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 328.23785400390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 417.7517700195313
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 534.26220703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 650.7725830078125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 740.2864990234375
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 829.8004150390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 919.3142700195312
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1035.82470703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1152.3350830078125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1470.4688720703125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1586.979248046875
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1703.4896240234375
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1820.0001220703125
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "collection-button",
+              "w": 126.9618148803711,
+              "x": 1134.045166015625,
+              "y": 378.6632080078125
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 131.28472900390625,
+              "x": 427.2743225097656,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 95.19965362548828,
+              "x": 1165.807373046875,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-read",
+              "w": 532.7864990234375,
+              "x": 160.87673950195312,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-prepare",
+              "w": 144.3663330078125,
+              "x": 239.9913330078125,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-briefing",
+              "w": 155.546875,
+              "x": 936.2066650390624,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-deploy",
+              "w": 157.2569580078125,
+              "x": 1103.75,
+              "y": 1198.3160400390625
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: Escape returns to exact mission card",
+    "time": "2026-09-15T17:25:06.936Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\" [active]:\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 46.3194465637207,
+              "id": "shell-missions-back",
+              "w": 121.0763931274414,
+              "x": 1139.9306640625,
+              "y": 66.0763931274414
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-worlds",
+              "w": 151.1197967529297,
+              "x": 879.7830200195312,
+              "y": 238.47222900390625
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 328.23785400390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 417.7517700195313
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 534.26220703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 650.7725830078125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 740.2864990234375
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 829.8004150390625
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 919.3142700195312
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1035.82470703125
+            },
+            {
+              "h": 81.51910400390625,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 1152.3350830078125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1470.4688720703125
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1586.979248046875
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1703.4896240234375
+            },
+            {
+              "h": 108.51563262939452,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1820.0001220703125
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "collection-button",
+              "w": 126.9618148803711,
+              "x": 1134.045166015625,
+              "y": 378.6632080078125
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 204.01910400390625,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 436.9791870117187
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 200.59896850585935,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 652.9948120117188
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 131.28472900390625,
+              "x": 427.2743225097656,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "",
+              "w": 95.19965362548828,
+              "x": 1165.807373046875,
+              "y": 869.592041015625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-read",
+              "w": 532.7864990234375,
+              "x": 160.87673950195312,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 1042.0052490234375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2339.66162109375
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-prepare",
+              "w": 144.3663330078125,
+              "x": 239.9913330078125,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-briefing",
+              "w": 155.546875,
+              "x": 936.2066650390624,
+              "y": 1198.3160400390625
+            },
+            {
+              "h": 46.3194465637207,
+              "id": "shell-deploy",
+              "w": 157.2569580078125,
+              "x": 1103.75,
+              "y": 1198.3160400390625
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: restart confirmation uses shared compact layout",
+    "time": "2026-09-15T17:25:24.459Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Restart this mission?\":\n  - paragraph: CURRENT ATTEMPT\n  - heading \"Restart this mission?\" [level=2]\n  - paragraph: Your current line, score and elapsed time will be reset. Campaign progress you already earned stays safe.\n  - button \"Keep playing\" [active]\n  - button \"Restart mission\"",
+    "geometry": {
+      "active": {
+        "id": "restart-cancel",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "restart-cancel",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 737.62158203125
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "restart-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 795.6163330078125
+            }
+          ],
+          "clientHeight": 423,
+          "height": "426.797px",
+          "id": "restart-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 426.7969055175781,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 460.4861450195313
+          },
+          "scrollHeight": 423
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: restart Tab reaches confirm",
+    "time": "2026-09-15T17:25:33.281Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Restart this mission?\":\n  - paragraph: CURRENT ATTEMPT\n  - heading \"Restart this mission?\" [level=2]\n  - paragraph: Your current line, score and elapsed time will be reset. Campaign progress you already earned stays safe.\n  - button \"Keep playing\"\n  - button \"Restart mission\" [active]",
+    "geometry": {
+      "active": {
+        "id": "restart-confirm",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "restart-cancel",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 737.62158203125
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "restart-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 795.6163330078125
+            }
+          ],
+          "clientHeight": 423,
+          "height": "426.797px",
+          "id": "restart-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 426.7969055175781,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 460.4861450195313
+          },
+          "scrollHeight": 423
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Large text: restart Escape keeps paused flight and restores opener",
+    "time": "2026-09-15T17:25:33.398Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\" [active]\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status",
+    "geometry": {
+      "active": {
+        "id": "overlay-restart",
+        "tag": "BUTTON"
+      },
+      "dialogs": [],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Corrected minimum: Standard text mission confirmation",
+    "time": "2026-09-15T17:25:41.000Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Replace this flight?\":\n  - paragraph: UNFINISHED FLIGHT\n  - heading \"Replace this flight?\" [level=2]\n  - paragraph: First Signal → Relay Orchard\n  - status: \"Verifying your saved flight: 5 / 5 ticks. Stay cancels waiting.\"\n  - button \"Stay with this flight\" [active]\n  - button \"Replace flight\" [disabled]\n- dialog \"Choose your mission\":\n  - paragraph: YOUR NEXT FLIGHT\n  - heading \"Choose your mission\" [level=2]\n  - button \"Back\"\n  - generic \"Mode · Solo flight\"\n  - complementary \"Mission and loadout\":\n    - generic: FLIGHT DECK\n    - generic: 01 / 12 · Standard medals\n    - region \"Choose a chapter\":\n      - heading \"Choose a chapter\" [level=3]\n      - group \"Choose a chapter\":\n        - button \"Base game · 12 levels Current chapter\" [pressed]:\n          - generic: Base game · 12 levels\n          - generic: Current chapter\n        - button \"FPV Front · Pressure Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Pressure Lines · 3 levels\n          - generic: Choose chapter\n        - button \"FPV Front · Frontier Lines · 3 levels Choose chapter\":\n          - generic: FPV Front · Frontier Lines · 3 levels\n          - generic: Choose chapter\n        - button \"Night Shift · 3 levels Choose chapter\":\n          - generic: Night Shift · 3 levels\n          - generic: Choose chapter\n        - button \"Living Threads · 3 levels Choose chapter\":\n          - generic: Living Threads · 3 levels\n          - generic: Choose chapter\n        - button \"Fieldcraft · 4 levels Choose chapter\":\n          - generic: Fieldcraft · 4 levels\n          - generic: Choose chapter\n        - button \"Homeward Skies · 3 levels Choose chapter\":\n          - generic: Homeward Skies · 3 levels\n          - generic: Choose chapter\n        - button \"Equipment Workshop · 3 levels Choose chapter\":\n          - generic: Equipment Workshop · 3 levels\n          - generic: Choose chapter\n        - button \"Sentinel Relay · 1 level Choose chapter\":\n          - generic: Sentinel Relay · 1 level\n          - generic: Choose chapter\n      - generic \"Older chapters (4)\"\n    - region \"Missions in this chapter\":\n      - paragraph:\n        - status: First Signal · Relay Orchard selected. Continue a saved flight separately.\n      - generic: CAMPAIGN / First Signal\n      - button \"Collection\"\n      - button \"1. First Signal\" [pressed]:\n        - generic: \"01\"\n        - generic: First Signal\n        - generic: ★★★\n        - generic: Picture earned\n      - button \"2. Relay Orchard\":\n        - generic: \"02\"\n        - generic: Relay Orchard\n        - generic: ↗\n        - generic: Picture concealed\n      - button \"3. Crosswind — locked\" [disabled]:\n        - generic: \"03\"\n        - generic: Crosswind\n        - generic: —\n        - generic: Locked\n      - button \"4. Stone Lanes — locked\" [disabled]:\n        - generic: \"04\"\n        - generic: Stone Lanes\n        - generic: —\n        - generic: Locked\n      - button \"5. Night Patrol — locked\" [disabled]:\n        - generic: \"05\"\n        - generic: Night Patrol\n        - generic: —\n        - generic: Locked\n      - button \"6. Hidden Frequency — locked\" [disabled]:\n        - generic: \"06\"\n        - generic: Hidden Frequency\n        - generic: —\n        - generic: Locked\n      - navigation \"Mission pages\":\n        - button \"← Previous\" [disabled]\n        - status: 1 / 2\n        - button \"Next →\"\n    - generic \"Mission brief\"\n    - generic \"Flight setup\"\n    - option \"Base game · 12 levels\" [selected]\n    - option \"FPV Front · Pressure Lines · 3 levels · installed\"\n    - option \"FPV Front · Frontier Lines · 3 levels · install on select\"\n    - option \"Night Shift · 3 levels · install on select\"\n    - option \"Living Threads · 3 levels · install on select\"\n    - option \"Fieldcraft · 4 levels · install on select\"\n    - option \"Homeward Skies · 3 levels · install on select\"\n    - option \"Equipment Workshop · 3 levels · install on select\"\n    - option \"Sentinel Relay · 1 level · install on select\"\n    - option \"FPV Front · First Light Arcade R4 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R3 · 3 levels · install on select\"\n    - option \"FPV Front · First Light R2 · 3 levels · install on select\"\n    - option \"FPV Front · First Light · 3 levels · install on select\"\n    - option \"01 · First Signal\" [selected]\n    - option \"02 · Relay Orchard\"\n    - option \"03 · Crosswind · locked\" [disabled]\n    - option \"04 · Stone Lanes · locked\" [disabled]\n    - option \"05 · Night Patrol · locked\" [disabled]\n    - option \"06 · Hidden Frequency · locked\" [disabled]\n    - option \"07 · The Crossing · locked\" [disabled]\n    - option \"08 · Last Light · locked\" [disabled]\n    - option \"09 · Signal Garden · locked\" [disabled]\n    - option \"10 · Supply Circuit · locked\" [disabled]\n    - option \"11 · Short Fuse · locked\" [disabled]\n    - option \"12 · Relay Storm · locked\" [disabled]\n    - option \"FPV Front\" [selected]\n    - option \"Ukraine Atlas\"\n    - option \"1994 Forever\"\n    - option \"Spend Network\"\n    - option \"First Signal\" [selected]\n    - option \"FPV Front · Pressure Lines\"\n    - option \"Standard\" [selected]\n    - option \"Gentle\"\n    - option \"Scout\" [selected]\n    - option \"Light carrier\"\n    - option \"Heavy carrier\"\n    - option \"Interceptor\"\n    - option \"Fiber relay\"\n    - option \"Impact craft\"\n    - option \"Trapper\"\n    - option \"Immediate\" [selected]\n    - option \"Grid + buffer\"\n    - option \"Daybreak FPV\"\n    - option \"Neutral marker\"\n    - option \"Atlas bird\"\n    - option \"Tape runner\"\n    - option \"Spend Sprite\"\n    - option \"Skyline FPV\"\n    - option \"Night signal FPV · locked\" [disabled]\n    - option \"Falcon trim\"\n    - option \"Vector trail\"\n    - option \"Audit pulse\"\n    - option \"Scout quad\"\n    - option \"Heavy lift\"\n    - option \"Fixed-wing body\"\n    - option \"Delta interceptor · locked\" [disabled]\n    - option \"Scout camera quad\" [selected]\n    - option \"Light support carrier\"\n    - option \"Heavy six-hub carrier\"\n    - option \"Compact interceptor\"\n    - option \"Fiber relay quad\"\n    - option \"Blunt pulse craft\"\n    - option \"Lattice support craft\"\n    - option \"Round courier swallow\"\n    - option \"Pottery courier\"\n    - option \"Carved supply chest\"\n    - option \"Broad falcon chevron\"\n    - option \"Wide barrel bobbin\"\n    - option \"Bell warden\"\n    - option \"Woven basket\"\n  - paragraph: First Signal\n  - button \"Flight setup\"\n  - button \"Back to flight\"\n  - button \"Deploy →\"",
+    "geometry": {
+      "active": {
+        "id": "mission-replace-stay",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-stay",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 743.0382080078125
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "mission-replace-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 801.0330200195312
+            }
+          ],
+          "clientHeight": 434,
+          "height": "437.622px",
+          "id": "mission-replace-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 437.6215515136719,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 455.0781555175781
+          },
+          "scrollHeight": 434
+        },
+        {
+          "actions": [
+            {
+              "h": 43.99305725097656,
+              "id": "shell-missions-back",
+              "w": 112.3263931274414,
+              "x": 1148.6806640625,
+              "y": 60.138893127441406
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 305.295166015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 383.810791015625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 483.9236450195313
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 584.0364990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 662.5521240234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 741.0677490234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 819.5833740234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 898.0989990234375
+            },
+            {
+              "h": 70.52083587646484,
+              "id": "",
+              "w": 262.96875,
+              "x": 136.3194580078125,
+              "y": 976.6146240234376
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1329.8958740234375
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1430.0087890625
+            },
+            {
+              "h": 92.11805725097656,
+              "id": "",
+              "w": 230.97222900390625,
+              "x": 152.31771850585938,
+              "y": 1530.12158203125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "collection-button",
+              "w": 108.6371612548828,
+              "x": 1152.369873046875,
+              "y": 349.94793701171875
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 198.6197967529297,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 405.9375305175781
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 427.2743225097656,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 709.18408203125,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 195.1996612548828,
+              "id": "",
+              "w": 269.9132080078125,
+              "x": 991.0938110351562,
+              "y": 616.5538330078125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 112.0920181274414,
+              "x": 427.2743225097656,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "",
+              "w": 83.22048950195312,
+              "x": 1177.7864990234375,
+              "y": 827.7517700195312
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "mission-brief-reading-done",
+              "w": 532.795166015625,
+              "x": 699.6614990234375,
+              "y": 994.8351440429688
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "hangar-button",
+              "w": 265.1736145019531,
+              "x": 148.3246612548828,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "save-attempt-button",
+              "w": 265.1736145019531,
+              "x": 421.4930725097656,
+              "y": 2224.236328125
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-prepare",
+              "w": 122.5607681274414,
+              "x": 219.64410400390625,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-briefing",
+              "w": 131.5104217529297,
+              "x": 976.2239990234376,
+              "y": 1148.1424560546875
+            },
+            {
+              "h": 43.99305725097656,
+              "id": "shell-deploy",
+              "w": 141.2760467529297,
+              "x": 1119.73095703125,
+              "y": 1148.1424560546875
+            }
+          ],
+          "clientHeight": 1348,
+          "height": "1347.78px",
+          "id": "shell-missions",
+          "maxHeight": "1347.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 1347.77783203125,
+            "w": 1180,
+            "x": 106.66667175292967,
+            "y": 0
+          },
+          "scrollHeight": 1348
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Standard text: restart confirmation",
+    "time": "2026-09-15T17:25:51.543Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status\n- alertdialog \"Restart this mission?\":\n  - paragraph: CURRENT ATTEMPT\n  - heading \"Restart this mission?\" [level=2]\n  - paragraph: Your current line, score and elapsed time will be reset. Campaign progress you already earned stays safe.\n  - button \"Keep playing\" [active]\n  - button \"Restart mission\"",
+    "geometry": {
+      "active": {
+        "id": "restart-cancel",
+        "tag": "BUTTON"
+      },
+      "dialogs": [
+        {
+          "actions": [
+            {
+              "h": 50.000003814697266,
+              "id": "restart-cancel",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 720.5382080078125
+            },
+            {
+              "h": 50.000003814697266,
+              "id": "restart-confirm",
+              "w": 376.6666870117187,
+              "x": 508.3333435058594,
+              "y": 778.5330200195312
+            }
+          ],
+          "clientHeight": 389,
+          "height": "392.622px",
+          "id": "restart-dialog",
+          "maxHeight": "1315.78px",
+          "overflow": "auto",
+          "rect": {
+            "h": 392.6215515136719,
+            "w": 460.0000305175781,
+            "x": 466.6666870117187,
+            "y": 477.5781555175781
+          },
+          "scrollHeight": 389
+        }
+      ],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  },
+  {
+    "label": "Standard text: restart cancelled without starting the flight",
+    "time": "2026-09-15T17:25:51.675Z",
+    "url": "http://127.0.0.1:53903/game/",
+    "snapshot": "- button \"Game menu\": ◩ REVEAL / LINE\n- generic: TACTICAL EDITION\n- button \"Enter fullscreen\": ⛶\n- button \"Missions\"\n- button \"Collection\"\n- button \"Game settings\": Settings\n- main:\n  - region \"Game\":\n    - generic: REVEALED\n    - strong: 0.0%\n    - emphasis: TARGET 45%\n    - generic: LIVES\n    - strong: ◆ ◆ ◆\n    - generic: TIME\n    - strong: 0:00\n    - generic: SCORE\n    - strong: \"00000\"\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - text: ◆ ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\" [active]\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - strong: Paused\n    - generic: Close a line to reveal the picture\n    - status: Saved flight verified and restored. Press Resume to continue.\n    - status",
+    "geometry": {
+      "active": {
+        "id": "overlay-restart",
+        "tag": "BUTTON"
+      },
+      "dialogs": [],
+      "viewport": [
+        1393,
+        1348
+      ]
+    }
+  }
+]
