@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Soundscape, DEFAULT_TRACKS, MUSIC_STYLES, SYNTH_SONG_STEPS } from '../ui/audio.mjs';
+import {
+  Soundscape,
+  DEFAULT_TRACKS,
+  MUSIC_STYLES,
+  SYNTH_SONG_STEPS,
+  requestPlaybackAudioSession,
+  releasePlaybackAudioSession,
+} from '../ui/audio.mjs';
 import { composeStep, scheduleWindow, deriveTension, validateTrack } from '../ui/music.mjs';
 class Param {
   constructor() {
@@ -114,6 +121,25 @@ const setup = async (options = {}) => {
   await sound.enable();
   return { context, sound };
 };
+
+test('playback audio session opts out of iPhone ambient mute and safely falls back elsewhere', () => {
+  const session = { type: 'ambient' };
+  assert.equal(requestPlaybackAudioSession(session), true);
+  assert.equal(session.type, 'playback');
+  assert.equal(releasePlaybackAudioSession(session), true);
+  assert.equal(session.type, 'auto');
+  assert.equal(requestPlaybackAudioSession(null), false);
+  assert.equal(releasePlaybackAudioSession(null), false);
+  const blocked = {
+    get type() {
+      return 'ambient';
+    },
+    set type(_value) {
+      throw new Error('unsupported');
+    },
+  };
+  assert.equal(requestPlaybackAudioSession(blocked), false);
+});
 
 test('classic contact and erosion cues are distinct and respect gameplay pause independently from persistent music', async () => {
   const { context, sound } = await setup({ persistentMusic: true });

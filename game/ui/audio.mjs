@@ -16,11 +16,37 @@ const trackFields = ['id', 'name', 'genre', 'tempo', 'root', 'scale'];
 const sameTrack = (a, b) => trackFields.every((key) => a[key] === b[key]);
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 const voiceLimit = 64;
+const playbackAudioSession = 'playback';
 const defaultFactory = () => {
   const Audio = globalThis.AudioContext || globalThis.webkitAudioContext;
   if (!Audio) return null;
   return new Audio({ latencyHint: 'interactive' });
 };
+
+/**
+ * iOS treats Web Audio as ambient unless the page requests a playback session.
+ * Ambient audio obeys the iPhone Silent switch even while AudioContext reports
+ * `running`, which leaves a progressing but inaudible game soundtrack.
+ */
+export function requestPlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
+  if (!audioSession || typeof audioSession !== 'object') return false;
+  try {
+    if (audioSession.type !== playbackAudioSession) audioSession.type = playbackAudioSession;
+    return audioSession.type === playbackAudioSession;
+  } catch {
+    return false;
+  }
+}
+
+export function releasePlaybackAudioSession(audioSession = globalThis.navigator?.audioSession) {
+  if (!audioSession || typeof audioSession !== 'object') return false;
+  try {
+    if (audioSession.type === playbackAudioSession) audioSession.type = 'auto';
+    return audioSession.type !== playbackAudioSession;
+  } catch {
+    return false;
+  }
+}
 
 /** One shared context, three gain buses, original oscillator/noise instruments.
  * Only toggle/enable/resume create or resume audio; update never bypasses a gesture.
@@ -288,6 +314,8 @@ export class Soundscape {
   async enable() {
     if (this.disposed) return false;
     const token = ++this.transition;
+    // Must happen before context creation/resume in the same user activation.
+    requestPlaybackAudioSession();
     if (!this.setup()) return false;
     if (this.persistentMusic && this.enabled && !this.paused && this.context.state === 'running') {
       this.gameplayPaused = false;
@@ -334,6 +362,7 @@ export class Soundscape {
     try {
       void Promise.resolve(this.context?.suspend()).catch(() => {});
     } catch {}
+    releasePlaybackAudioSession();
     return false;
   }
   pause() {
@@ -362,6 +391,7 @@ export class Soundscape {
   async resume() {
     if (!this.enabled || this.disposed) return false;
     const token = ++this.transition;
+    requestPlaybackAudioSession();
     if (this.persistentMusic && !this.paused && this.context.state === 'running') {
       this.gameplayPaused = false;
       return true;
@@ -413,6 +443,7 @@ export class Soundscape {
     try {
       await this.context?.close();
     } catch {}
+    releasePlaybackAudioSession();
     this.context = null;
     this.noise = null;
   }
