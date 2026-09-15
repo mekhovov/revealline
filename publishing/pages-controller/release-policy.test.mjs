@@ -32,18 +32,13 @@ test('older release events cannot roll back or implicitly change the reviewed se
     /does not match/,
   );
 });
-test('a latest release requires an enabled matching selector before routing or publishing', () => {
+test('a latest release requires an enabled selector before routing or publishing', () => {
   for (const route of [true, false]) {
     const args = { pages, requested: 'v0.51.0', route };
     assert.throws(
       () =>
         releaseDecision({ ...args, configuration: { ...configuration, deploymentEnabled: false } }),
       /not enabled/,
-    );
-    assert.throws(
-      () =>
-        releaseDecision({ ...args, configuration: { ...configuration, currentVersion: 'v0.9.0' } }),
-      /not the latest/,
     );
     assert.equal(releaseDecision({ ...args, configuration }).shouldDispatch, route);
   }
@@ -53,4 +48,27 @@ test('a latest release requires an enabled matching selector before routing or p
   );
   assert.throws(() => releaseDecision({ configuration, pages, route: true }), /name its tag/);
   assert.equal(releaseDecision({ configuration, pages }).requested, 'v0.51.0');
+});
+test('a newly published release waits successfully for its reviewed frozen selector', () => {
+  const waiting = releaseDecision({
+    configuration: { ...configuration, currentVersion: 'v0.9.0' },
+    pages,
+    requested: 'v0.51.0',
+    route: true,
+  });
+  assert.deepEqual(waiting, {
+    shouldDispatch: false,
+    requested: 'v0.51.0',
+    latest: 'v0.51.0',
+    reason: 'Awaiting a reviewed frozen selector for the latest stable release.',
+  });
+  assert.throws(
+    () =>
+      releaseDecision({
+        configuration: { ...configuration, currentVersion: 'v0.9.0' },
+        pages,
+        requested: 'v0.51.0',
+      }),
+    /not the latest/,
+  );
 });
