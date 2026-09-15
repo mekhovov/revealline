@@ -1,5 +1,7 @@
 # Reveal Line — FPV Field Kit delivery
 
+**Current additive release: [v0.56 player library, couch controls and reserve-art delivery](evidence/player-library-v056/README.md).** It is published with a complete public-file audit and scoped keyboard play, save/restore and Library/Studio/Team navigation evidence. [Play the latest game](https://mekhovov.github.io/revealline/game/). P00/v0.55 is accepted; P01 loading and retry improvements continue for v0.57. The historical report below retains its original scope.
+
 The later [cross-mode P00 audit and delivery record](evidence/cross-mode-p00/README.md) tracks the approved Solo, Versus and Team redesign. It identifies unfinished Team artwork, actor/objective integration and responsive controls, plus Versus artwork-resolution gaps. The historical v0.51 report below retains its original scope and evidence; its registry-completeness statements do not establish the new P08-A cross-mode acceptance.
 
 **The FPV Field Kit redesign is delivered as v0.51.0.** All eight phases have versioned releases, and the final frozen game has passed source, public-file and browser qualification. This report records the implemented scope, test evidence and remaining limits.

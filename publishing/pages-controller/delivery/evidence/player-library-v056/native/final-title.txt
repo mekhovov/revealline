@@ -1,0 +1,52 @@
+- button "Game menu": ◩ REVEAL / LINE
+- generic: ARCADE EDITION
+- button "Enter fullscreen": ⛶
+- button "Missions"
+- button "Collection"
+- button "Game settings": Settings
+- main:
+  - region "Game":
+    - generic: REVEALED
+    - strong: 50.0%
+    - emphasis: TARGET 68%
+    - generic: LIVES
+    - strong: ◆ ◆ ◆
+    - generic: TIME
+    - strong: 2:25
+    - generic: SCORE
+    - strong: "11720"
+    - application "Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again."
+    - status: Paused
+    - text: ◆
+    - button "Resume →"
+    - text: ◆ ◆ ◆ ◆ ◆
+    - button "Restart mission"
+    - button "Mission brief"
+    - button "Main menu"
+    - strong: Paused
+    - generic: Close a line to reveal the picture
+    - status: Saved flight verified and restored. Press Resume to continue.
+    - status
+- dialog "REVEAL / LINE":
+  - paragraph: FPV FIELD KIT / FLIGHT READY
+  - heading "REVEAL / LINE" [level=1]:
+    - text: REVEAL
+    - generic: / LINE
+  - navigation "Main menu":
+    - button "Continue":
+      - generic: Continue
+      - generic: →
+    - button "Missions"
+    - button "Collection"
+    - button "Settings" [active]
+    - button "Workshop"
+    - link "Release explorer Play another edition":
+      - /url: https://mekhovov.github.io/revealline/releases/
+      - text: Release explorer
+      - generic: Play another edition
+  - paragraph: Continue · Orchard Crossing
+  - paragraph: Choose a flight. Trace a path. Close the line.
+  - paragraph: Version v0.56.0
+  - paragraph:
+    - text: HANGAR 01
+    - generic: FIRST LIGHT

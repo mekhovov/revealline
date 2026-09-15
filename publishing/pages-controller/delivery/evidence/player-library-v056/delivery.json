@@ -1,0 +1,78 @@
+{
+  "format": "revealline-player-library-delivery.v1",
+  "version": "v0.56.0",
+  "status": "PUBLISHED_WITH_SCOPED_PUBLIC_VERIFICATION",
+  "wholeProductionPlanComplete": false,
+  "sourceRevision": "20f017963e6f3875ce6388a198a6fb601e0aea40",
+  "sourceTree": "b48ab534db3a202ee070802957944fa898d864ef",
+  "sourcePullRequest": "https://github.com/mekhovov/revealline/pull/51",
+  "publicationPullRequest": "https://github.com/mekhovov/revealline/pull/54",
+  "release": "https://github.com/mekhovov/revealline/releases/tag/v0.56.0",
+  "play": "https://mekhovov.github.io/revealline/releases/v0.56.0/site/game/",
+  "sourceQualification": {
+    "tests": 4110,
+    "testFiles": 368,
+    "gates": 6,
+    "productionChecks": 69,
+    "runId": 34937808046,
+    "freezeRunId": 34940670694
+  },
+  "public": {
+    "controller": "02364d4ad8832a4693e184f6d36c46dfabd58ef6",
+    "runId": 34950891496,
+    "deploymentId": 6455476355,
+    "files": 2337,
+    "bytes": 635636681,
+    "failures": 0,
+    "retries": 0,
+    "skips": 0
+  },
+  "scope": [
+    "Scoped desktop in-app browser observations; not all menus, themes, difficulties, modes or physical devices",
+    "No real controller, multitouch, Safari/WebKit or handheld hardware certification",
+    "No fresh disconnected-network check; historical v55 offline evidence is separate",
+    "No audible soundtrack listening, MP3 upload, media transfer or uploaded video playback check",
+    "Current Team artwork still uses simpler markers; P08-A/P08-B parity and celebration catalogue work remain",
+    "Earlier source play completed three missions and separately verified an actual one-earned-picture five-file backup; those records are distinct from this current public journey"
+  ],
+  "acceptedBaseline": "P00 / v0.55.0",
+  "activeNext": "P01 / v0.57.0 loading, cancellation, retry and stale-operation feedback",
+  "content": {
+    "reserveIllustrationsSourceOnly": 40,
+    "reservePerTheme": 10,
+    "aiSkillsUpdated": 13,
+    "new132MissionProgrammeDelivered": false
+  },
+  "evidence": [
+    {
+      "path": "public/completion.json",
+      "bytes": 15558,
+      "sha256": "2edae93584254e3e6d40970802ef9bba0fbb837a07fa1b94698a23e2c3c99652"
+    },
+    {
+      "path": "native/completion.json",
+      "bytes": 6843,
+      "sha256": "5a3dd4411eb88a48cdeb376b0ea9006f312fb16b46988cb864cec07d3dcaf5d7"
+    },
+    {
+      "path": "source/campaign-playtest-manifest.json",
+      "bytes": 6970,
+      "sha256": "ef2beab8ac117f1d1c74d3ebce676f38ae747df84c2ef4679f31e27ded8cb7b1"
+    },
+    {
+      "path": "source/earned-records.json",
+      "bytes": 4090,
+      "sha256": "f6fd56420270b2d03300bf1979b9444208ee39b780b7a5df38c45ee6a6e45001"
+    },
+    {
+      "path": "source/original-verification.json",
+      "bytes": 122537,
+      "sha256": "2bd2bd7038132d939d2f14f10fb659bce7808884e811e72f8a32735170756501"
+    }
+  ],
+  "evidenceNotes": [
+    "Public and native evidence trees are included byte-for-byte with their referenced files.",
+    "Copied source summaries preserve original local paths; underlying source play/download artifacts remain retained locally and their scope is distinct from this public check.",
+    "This report does not self-assert the merge of its later evidence-only PR."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "status": "LOCAL_METADATA_INTAKE_ALLOWLIST_CORRECTED",
+  "initialRefusal": "The reader allowed artifact-receipt.json but omitted zip-receipt.json, which exactb86 publish.mjs lines203-204 explicitly writes. The authenticated artifact-receipt.json was preserved.",
+  "affectedData": "112401-byte authenticated receipt ZIP only; no game artifact/public body audit ran or failed.",
+  "correction": "Use exactly the two receipt names declared by publisher source, compare any existing first receipt byte-exact, and preserve original ZIP/raw metadata identity."
+}

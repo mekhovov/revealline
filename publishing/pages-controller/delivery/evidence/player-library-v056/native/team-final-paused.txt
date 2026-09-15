@@ -1,0 +1,39 @@
+- main:
+  - link "REVEAL LINE":
+    - /url: ../
+    - text: REVEAL
+    - generic: LINE
+  - text: COUCH CO-OP
+  - generic: RELAY YARD
+  - link "Race mode ↗":
+    - /url: ./
+  - region "Shared Relay Rescue arena":
+    - generic: "1"
+    - strong: SUNFLOWER
+    - generic: On safe ground
+    - generic: Support ready
+    - generic: TEAM TERRITORY
+    - strong: 0.0%
+    - generic: 3 reserves
+    - progressbar "Team territory"
+    - generic: "2"
+    - strong: SKYLINE
+    - generic: On safe ground
+    - generic: Support ready
+    - paragraph: Capture the shield anchors · 0 / 2 secured
+    - img "One shared arena. Sunflower is marked 1 and Skyline is marked 2."
+    - paragraph: PAUSED
+    - heading "Both players paused" [level=2]
+    - paragraph: Release your controls, then choose Resume together.
+    - button "Resume together" [active]
+    - button "Retry same arena"
+    - button "Change setup"
+    - complementary "Help and options":
+      - generic "How to play and controls"
+      - generic "Options"
+      - option "Auto · touch players without a controller"
+      - option "Show both players" [selected]
+      - option "Hide touch controls"
+    - status: Choose fresh directions when you are ready.
+    - generic: 0:12
+    - button "Pause" [disabled]
