@@ -655,6 +655,7 @@ try {
     missionReplacement = null,
     restartRequest = null,
     modeDepartureHold = false,
+    titleFlightHold = false,
     lastOwnedAttempt = null,
     contentSwitchBusy = false,
     backupBusy = false;
@@ -3514,6 +3515,8 @@ try {
     );
   }
   function persistAttempt(notify = true) {
+    if (titleFlightHold)
+      throw new Error('Explicitly Resume the verified flight before saving again.');
     if (modeDepartureHold)
       throw new Error('Return to the flight and explicitly Resume before saving again.');
     if (courseEntryHold)
@@ -3556,10 +3559,11 @@ try {
     }
     return entry;
   }
-  async function restoreAttempt(candidate) {
+  async function restoreAttempt(candidate, { beforeAdopt, onAdopted, onStatus, signal } = {}) {
     if (courseSession || courseEntry)
       throw new Error('End First Flight before loading a campaign flight.');
     if (sessionBusy) throw new Error('A flight is already being verified.');
+    if (signal?.aborted) throw new DOMException('Title launch cancelled.', 'AbortError');
     const entry = findCampaignEntry(candidate?.campaignKey);
     if (!entry) throw new Error('Install the matching campaign pack before loading this flight.');
     invalidateContentSwitch();
@@ -3570,9 +3574,17 @@ try {
     clearInput();
     const controller = new AbortController();
     restoreController = controller;
-    const feedback = beginPreparation('Verifying your saved flight…', cancelRestore, 'verifying');
-    let stagedPictures = null;
+    const abort = () => controller.abort();
+    signal?.addEventListener('abort', abort, { once: true });
+    let feedback,
+      stagedPictures = null;
     try {
+      feedback = beginPreparation('Verifying your saved flight…', cancelRestore, 'verifying');
+      onStatus?.({
+        status: 'preparing',
+        message: 'Verifying your saved flight…',
+        stage: 'verifying',
+      });
       const restored = await restoreSession(candidate, {
         campaign: entry.campaign,
         campaignKey: campaignKey(entry.campaign),
@@ -3597,10 +3609,14 @@ try {
       });
       await stagedPictures.ensure(restored.session.themeId, {
         signal: controller.signal,
-        onStatus: feedback.update,
+        onStatus: (status) => {
+          feedback.update(status);
+          onStatus?.(status);
+        },
       });
       if (controller.signal.aborted)
         throw new DOMException('Picture restore cancelled.', 'AbortError');
+      beforeAdopt?.();
       feedback.finish(savedFlightRestoredMessage);
       selectEntry(entry, {
         levelId: restored.run.levelId,
@@ -3634,20 +3650,224 @@ try {
       overlay('pause');
       refreshHUD();
       warning(savedFlightRestoredMessage, 'restored');
+      const adopted = {
+        run,
+        recorder,
+        runId,
+        entry: activeEntry,
+        campaign,
+        theme,
+        libraryGeneration,
+      };
+      onAdopted?.(adopted);
+      return adopted;
     } catch (error) {
       if (controller.signal.aborted)
         throw new DOMException(
           'Loading was cancelled; your newer selection is kept.',
           'AbortError',
         );
-      feedback.finish(`Saved flight unavailable: ${error.message}`, 'error');
+      feedback?.finish(`Saved flight unavailable: ${error.message}`, 'error');
       throw error;
     } finally {
+      signal?.removeEventListener('abort', abort);
       sessionBusy = false;
       stagedPictures?.dispose();
       if (restoreController === controller) restoreController = null;
       refreshSavedFlight();
       await packCommits.reconcile();
+    }
+  }
+  let titleFlight = null;
+  const titleFeedback = createOperationStatus($('shell-flight-status'));
+  function cancelTitleFlight() {
+    const ticket = titleFlight;
+    if (!ticket) return;
+    titleFlight = null;
+    ticket.controller.abort();
+    if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
+    ticket.feedback.finish({
+      state: 'cancelled',
+      message: 'Preparation cancelled. Your flight remains paused.',
+    });
+    $('shell-flight-cancel').hidden = true;
+  }
+  function titleFlightCurrent(ticket, expected = ticket) {
+    return (
+      titleFlight === ticket &&
+      !ticket.controller.signal.aborted &&
+      ticket.isCurrent() &&
+      !document.hidden &&
+      document.hasFocus() !== false &&
+      !courseBlocked() &&
+      !courseEntry &&
+      !modeDeparture &&
+      !missionReplacement &&
+      !restartRequest &&
+      !contentSwitchBusy &&
+      !backupBusy &&
+      !pictureThemePending &&
+      run === expected.run &&
+      recorder === expected.recorder &&
+      runId === expected.runId &&
+      activeEntry === expected.entry &&
+      campaign === expected.campaign &&
+      theme === expected.theme &&
+      libraryGeneration === expected.libraryGeneration &&
+      packs === ticket.packs &&
+      writer.writable === ticket.writable &&
+      persistenceReady === ticket.persistenceReady &&
+      localStorage.getItem(`${libraryKey}.backup-lock`) === ticket.backupLock &&
+      localStorage.getItem(sessionKey) === ticket.savedRaw
+    );
+  }
+  async function launchTitleFlight(kind, { isCurrent, leave }) {
+    if (
+      !isCurrent() ||
+      titleFlight ||
+      sessionBusy ||
+      contentSwitchBusy ||
+      backupBusy ||
+      courseSession ||
+      practice ||
+      courseEntry ||
+      modeDeparture ||
+      missionReplacement ||
+      restartRequest ||
+      pictureThemePending ||
+      !run
+    )
+      return;
+    const feedback = titleFeedback.begin({ message: 'Preparing your flight…', stage: 'preparing' });
+    const ticket = {
+      controller: new AbortController(),
+      feedback,
+      isCurrent,
+      run,
+      recorder,
+      runId,
+      entry: activeEntry,
+      campaign,
+      theme,
+      libraryGeneration,
+      packs,
+      savedRaw: null,
+    };
+    titleFlight = ticket;
+    $('shell-flight-cancel').hidden = false;
+    // The original activation unlocks audio; the persisted master gate is unchanged.
+    void activateAudio().catch(() => {});
+    try {
+      ticket.savedRaw = localStorage.getItem(sessionKey);
+      ticket.writable = writer.writable;
+      ticket.persistenceReady = persistenceReady;
+      ticket.backupLock = localStorage.getItem(`${libraryKey}.backup-lock`);
+      if (ticket.backupLock !== null)
+        throw new Error('Finish game-data recovery before continuing.');
+      const assertCurrent = () => {
+        if (!titleFlightCurrent(ticket))
+          throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
+      };
+      assertCurrent();
+      let expected = ticket;
+      ticket.observe = (status) => {
+        if (titleFlightCurrent(ticket) && status.status === 'preparing') feedback.update(status);
+      };
+      const continuing = started && !['won', 'lost'].includes(run.status);
+      if (!continuing && kind === 'continue') {
+        if (!ticket.savedRaw)
+          throw new Error('The saved flight is unavailable. Open Library & saves to review it.');
+        let candidate;
+        try {
+          candidate = JSON.parse(ticket.savedRaw);
+        } catch {
+          throw new Error(
+            'The saved flight needs recovery. Open Library & saves; its bytes are unchanged.',
+          );
+        }
+        expected = await restoreAttempt(candidate, {
+          beforeAdopt: assertCurrent,
+          onAdopted: () => {
+            titleFlightHold = true;
+          },
+          onStatus: ticket.observe,
+          signal: ticket.controller.signal,
+        });
+      } else {
+        if (!continuing && ticket.savedRaw !== null)
+          throw new Error(
+            'A saved flight is present. Choose Continue or review Library & saves before starting another.',
+          );
+        if (campaignOverview || ['won', 'lost'].includes(run.status)) {
+          // The named Start is an explicit fresh attempt after a completed result.
+          campaignOverview = false;
+          prepare();
+          Object.assign(ticket, {
+            run,
+            recorder,
+            runId,
+            entry: activeEntry,
+            campaign,
+            theme,
+            libraryGeneration,
+          });
+        }
+        const owner = flightPictures;
+        if (!owner)
+          throw new Error('The mission picture is unavailable. Choose the mission again.');
+        ticket.prewarm =
+          picturePrewarm?.owner === owner && picturePrewarm.themeId === theme.id
+            ? picturePrewarm
+            : null;
+        if (ticket.prewarm) {
+          ticket.prewarm.observe = ticket.observe;
+          if (ticket.prewarm.latest) ticket.observe(ticket.prewarm.latest);
+        }
+        const pending =
+          ticket.prewarm?.promise ??
+          owner.ensure(theme.id, {
+            signal: ticket.controller.signal,
+            onStatus: ticket.observe,
+          });
+        const signal = ticket.controller.signal;
+        let abort;
+        try {
+          await Promise.race([
+            pending,
+            new Promise((resolve, reject) => {
+              abort = () => reject(new DOMException('Title launch cancelled.', 'AbortError'));
+              signal.addEventListener('abort', abort, { once: true });
+              if (signal.aborted) abort();
+            }),
+          ]);
+        } finally {
+          signal.removeEventListener('abort', abort);
+        }
+        if (owner !== flightPictures)
+          throw new DOMException('The chosen picture changed.', 'AbortError');
+      }
+      if (!titleFlightCurrent(ticket, expected) || !flightPictures?.ready(theme.id))
+        throw new DOMException('Title launch changed. Your flight stays paused.', 'AbortError');
+      feedback.finish({ message: '' });
+      titleFlight = null;
+      $('shell-flight-cancel').hidden = true;
+      leave();
+      resume();
+    } catch (error) {
+      if (titleFlight === ticket)
+        feedback.finish({
+          state: error.name === 'AbortError' ? 'cancelled' : 'error',
+          message:
+            error.name === 'AbortError'
+              ? 'Preparation cancelled. Your flight remains paused.'
+              : `Flight unavailable: ${error.message}`,
+        });
+    } finally {
+      if (ticket.prewarm?.observe === ticket.observe) ticket.prewarm.observe = null;
+      if (titleFlight === ticket) {
+        titleFlight = null;
+        $('shell-flight-cancel').hidden = true;
+      }
     }
   }
   function adoptPreferences() {
@@ -4645,6 +4865,7 @@ try {
     else invalidateContentSwitch({ announce: true });
     courseEntryHold = false;
     modeDepartureHold = false;
+    titleFlightHold = false;
     courseEntryMessage = '';
     if (courseSession) coursePhase = 'ready';
     if (!restoreAdoption) {
@@ -4873,6 +5094,7 @@ try {
     neutralResumeTick = true;
     courseEntryHold = false;
     modeDepartureHold = false;
+    titleFlightHold = false;
     courseEntryMessage = '';
     if (!started) rememberSelection();
     started = true;
@@ -4939,7 +5161,14 @@ try {
     clearInput();
     paused = true;
     sound.pause?.();
-    if (!practice && !courseEntryHold && !modeDepartureHold && recorder && !sessionBusy) {
+    if (
+      !practice &&
+      !courseEntryHold &&
+      !modeDepartureHold &&
+      !titleFlightHold &&
+      recorder &&
+      !sessionBusy
+    ) {
       try {
         persistAttempt(false);
       } catch {}
@@ -5915,6 +6144,7 @@ try {
     // deliberately returns early, and a hidden renderer may not tick at all.
     controllerInactive = true;
     cancelModeDeparture({ close: true });
+    cancelTitleFlight();
     invalidateRestart('Restart cancelled when focus changed.');
     invalidateContentSwitch({ announce: true });
     if (courseEntry)
@@ -6177,7 +6407,10 @@ try {
       (started && !['won', 'lost'].includes(run?.status)) || !$('continue-saved').hidden,
     initial: !practice && !courseSession && !packLaunchRequest,
     initialFocus: false, // The boot guard still hides the title until ready().
-    onFeatured: () => activatePack('fpv-arcade-r5', { campaignId: 'fpv-pressure-lines' }),
+    titleDestination: () => `Start · ${campaign.levels[levelIndex].name}`,
+    onTitleStart: (options) => launchTitleFlight('start', options),
+    onTitleContinue: (options) => launchTitleFlight('continue', options),
+    onTitleCancel: cancelTitleFlight,
     onWorlds: () => optionalWorlds.open(),
   });
   attachFullscreen($('shell-fullscreen'));

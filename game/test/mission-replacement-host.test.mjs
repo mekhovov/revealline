@@ -415,14 +415,17 @@ test('restored paused unfinished flight is guarded and Stay preserves its exact 
     raw = storage.getItem(slot);
   });
   raw = storage.getItem(slot);
-  await t.test('reload, explicitly Continue, then choose another mission', async (t) => {
+  await t.test('reload, explicitly Continue, Pause, then choose another mission', async (t) => {
     const h = await soloPage(t, { storage, titleScreen: true });
     h.$('shell-continue').click();
     await settle(() => {
       h.frame(0);
       return h.rendered.run.tick > 0;
     });
+    await settle(() => h.doc.body.dataset.flightState === 'running');
     assert.deepEqual(checkpoint(h), before);
+    h.$('pause-button').click(); // Named title Continue now resumes; Pause remains explicit.
+    h.frame(0);
     assert.equal(h.rendered.paused, true);
     h.$('overlay-menu').click();
     h.$('shell-packs').click();

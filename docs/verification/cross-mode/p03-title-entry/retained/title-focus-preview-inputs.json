@@ -1,0 +1,50 @@
+{
+  "base": "c7f4faae318d58eacab140c1b2913e620e15efb7",
+  "overlays": {
+    "game/app.mjs": {
+      "bytes": 250007,
+      "sha256": "2781cea918d2b62e74cac015d62658d8750712b60b3debb3b0a3dde88178fa91"
+    },
+    "game/index.html": {
+      "bytes": 70549,
+      "sha256": "538e4c50d24666fb3d34d6ddd69db1e72e623e842b5cebed645fff33880a3547"
+    },
+    "game/ui/game-shell.mjs": {
+      "bytes": 16761,
+      "sha256": "ee4fadd514db831d656abc6da58db38827654dbaf9207202e297ce1c466f256c"
+    },
+    "game/ui/field-kit-copy.mjs": {
+      "bytes": 3829,
+      "sha256": "f3ac3bed3a344934cf72990c1a9b37833320ecee1e05393cc1cc42166fe1ae23"
+    }
+  },
+  "picture": {
+    "path": "game/presentation/compiled/assets/c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce.png",
+    "bytes": 40810,
+    "height": 576,
+    "mime": "image/png",
+    "sha256": "c1aedf89bc3433dc1cb60998fa1e2563480a590c38586332f444c4c12c772fce",
+    "width": 768,
+    "slot": "picture.fpv.26e53164613e83d0",
+    "assetId": "picture.fpv.26e53164613e83d0.field-kit",
+    "revision": 2,
+    "owner": {
+      "baseCampaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "levelRevision": "1",
+      "themeId": "fpv"
+    }
+  },
+  "authority": {
+    "runtime": {
+      "path": "game/presentation/compiled/runtime.json",
+      "bytes": 970555,
+      "sha256": "94e24b96644c5c1c2e8d4e014f4d80fe7812359827863d75f00ab132c684982f"
+    },
+    "previousHelper": {
+      "path": ".cache/p03b-title-entry/serve-native-root.py",
+      "sha256": "5cbfde008db4c528eaf1050c390f66d85eb0809e63e0ce8701c9a2560c6e623f"
+    }
+  },
+  "scope": "Fresh TitleB four-overlay source preview; no game-state injection/build/image transformation. Optional6s response delay only for exact selected First Signal PNG. Prior59387 and its bindings remain untouched."
+}
