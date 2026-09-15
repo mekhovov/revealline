@@ -1035,13 +1035,11 @@ export function attachSoundtrackPanel({
     if (!dialog.open) dialog.showModal();
     closeButton.focus();
     if (!saved) {
-      const focusedClose = doc.activeElement === closeButton;
-      const loading = reload();
       const focusIsEmpty = () => doc.activeElement === doc.body || doc.activeElement === dialog;
-      // Loading disables Close synchronously; browsers can then move focus to BODY.
-      let displaced = focusedClose && closeButton.disabled && focusIsEmpty();
+      // Remember the initial target; native blur may arrive later during the read.
+      let restoreOpeningFocus = doc.activeElement === closeButton;
       const relinquish = () => {
-        displaced = false;
+        restoreOpeningFocus = false;
       };
       const focusChanged = (event) => {
         if (event.target !== doc.body && event.target !== dialog) relinquish();
@@ -1054,13 +1052,15 @@ export function attachSoundtrackPanel({
       dialog.addEventListener('close', relinquish);
       bindings.push(stopObserving);
       try {
+        const loading = reload();
+        restoreOpeningFocus = restoreOpeningFocus && closeButton.disabled;
         await loading;
       } finally {
         stopObserving();
         const bindingIndex = bindings.indexOf(stopObserving);
         if (bindingIndex >= 0) bindings.splice(bindingIndex, 1);
         if (
-          displaced &&
+          restoreOpeningFocus &&
           !disposed &&
           !doc.hidden &&
           dialog.isConnected &&
