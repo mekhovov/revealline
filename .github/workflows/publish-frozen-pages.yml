@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'publishing/pages-controller/**'
+      - '!publishing/pages-controller/delivery/**'
       - '.github/workflows/publish-frozen-pages.yml'
       - '.github/workflows/deploy-pages.yml'
       - '.cursor/skills/deploy-release-pages/**'

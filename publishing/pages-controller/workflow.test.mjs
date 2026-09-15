@@ -71,3 +71,31 @@ test("source qualification retains six gates while the controller owns guarded m
     /pull_request_target|environment:.*preview|npm test/,
   );
 });
+
+test("delivery-only push is excluded after the controller glob while PR review and mixed publication remain enabled", async () => {
+  const workflow = await fs.readFile(
+    new URL(
+      "../../.github/workflows/publish-frozen-pages.yml",
+      import.meta.url,
+    ),
+    "utf8",
+  );
+  const push = workflow.slice(
+    workflow.indexOf("  push:"),
+    workflow.indexOf("  pull_request:"),
+  );
+  const pullRequest = workflow.slice(
+    workflow.indexOf("  pull_request:"),
+    workflow.indexOf("  workflow_dispatch:"),
+  );
+  const positive = "      - 'publishing/pages-controller/**'";
+  const negative = "      - '!publishing/pages-controller/delivery/**'";
+  assert.ok(push.includes(positive));
+  assert.equal(push.split(negative).length - 1, 1);
+  assert.ok(push.indexOf(negative) > push.indexOf(positive));
+  assert.ok(pullRequest.includes(positive));
+  assert.ok(!pullRequest.includes(negative));
+  assert.match(push, /branches: \[main\]/);
+  assert.match(push, /docs\/deployment\.md/);
+  assert.match(workflow, /publish\.mjs verify-artifact/);
+});
