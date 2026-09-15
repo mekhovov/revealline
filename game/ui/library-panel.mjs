@@ -61,6 +61,7 @@ export function attachLibraryPanel(api) {
   let transferPanel = null;
   let attemptExport = null;
   let libraryTask = null;
+  let libraryTaskGeneration = 0;
   let backupSetPanel = null;
   let previousLibrary = null,
     previousBackup = null,
@@ -76,6 +77,8 @@ export function attachLibraryPanel(api) {
     galleryReturn = null;
   const galleryCards = new Map();
   const gallerySealSlots = new Map();
+  const installedRows = new Map();
+  let installedRenderGeneration = 0;
   let pictureSealsSignature = null,
     viewVariants = [],
     catalogSource = null,
@@ -299,9 +302,14 @@ export function attachLibraryPanel(api) {
     $('export-session').textContent = exportSource.label;
     $('export-session').disabled = busy || exportSource.source === null;
     $('attempt-export-source').textContent = exportSource.reason;
+    installedRenderGeneration++;
+    installedRows.clear();
     $('installed-packs').replaceChildren();
     for (const pack of api.get().packs.packs) {
-      const row = document.createElement('article');
+      const row = document.createElement('article'),
+        plays = [];
+      row.dataset.packId = pack.id;
+      row.dataset.packVersion = pack.version;
       const title = document.createElement('strong');
       title.textContent = `${pack.name} · ${pack.version}`;
       const p = document.createElement('p');
@@ -328,11 +336,16 @@ export function attachLibraryPanel(api) {
             },
           );
         });
+        play.dataset.packAction = 'play';
+        play.dataset.campaignId = source.id;
+        plays.push(play);
         row.append(play);
       }
-      row.append(
-        button('Remove from device', () =>
-          task('pack-status', async (operation) => {
+      const remove = button('Remove from device', () => {
+        const focusReturn = packRemovalFocus(pack);
+        return task(
+          'pack-status',
+          async (operation) => {
             operation.commit('Removing the installed pack…');
             await api.setPacks(removePack(api.get().packs, pack.id));
             operation.check();
@@ -341,9 +354,14 @@ export function attachLibraryPanel(api) {
               'pack-status',
               'Pack removed. Player records and earned uploaded originals are preserved. Reinstall its exact pack to play again or view pack-embedded artwork.',
             );
-          }),
-        ),
-      );
+          },
+          undefined,
+          focusReturn,
+        );
+      });
+      remove.dataset.packAction = 'remove';
+      row.append(remove);
+      installedRows.set(pack.id, { pack, row, plays, remove });
       $('installed-packs').append(row);
     }
     if (libraryTask) {
@@ -355,6 +373,52 @@ export function attachLibraryPanel(api) {
       for (const control of $('library-dialog').querySelectorAll('button,input,select,textarea'))
         control.disabled = control !== $('cancel-attempt-export') || !!attemptExport.detached;
     }
+  }
+  function packRemovalFocus(pack) {
+    const visit = launchGeneration,
+      order = api.get().packs.packs.map(({ id, version }) => ({ id, version })),
+      index = order.findIndex((item) => item.id === pack.id && item.version === pack.version),
+      valid = index >= 0 && installedRows.get(pack.id)?.pack === pack,
+      neighbors = [...order.slice(index + 1), ...order.slice(0, index).reverse()];
+    let settled = null,
+      taskGeneration = -1,
+      generation = -1;
+    const current = () =>
+      valid &&
+      !libraryTask &&
+      libraryTaskGeneration === taskGeneration &&
+      visit === launchGeneration &&
+      $('library-dialog').open &&
+      !$('library-packs').hidden &&
+      api.get().packs === settled &&
+      installedRenderGeneration === generation;
+    return {
+      beforeRefresh() {
+        settled = api.get().packs;
+        taskGeneration = libraryTaskGeneration;
+      },
+      afterRefresh() {
+        generation = installedRenderGeneration;
+      },
+      resolve() {
+        if (!current()) return null;
+        const remaining = settled.packs.find((item) => item.id === pack.id);
+        let target = $('library-dialog').querySelector('[data-library-panel="packs"]');
+        if (remaining?.version === pack.version) {
+          const row = installedRows.get(pack.id);
+          if (row?.pack === remaining) target = row.remove;
+        } else if (!remaining) {
+          for (const item of neighbors) {
+            const row = installedRows.get(item.id);
+            if (row?.pack.version === item.version && row.plays[0]) {
+              target = row.plays[0];
+              break;
+            }
+          }
+        }
+        return current() ? target : null;
+      },
+    };
   }
   $('library-dialog').addEventListener('cancel', (e) => {
     if (cancelAttemptExport() || busy) e.preventDefault();
@@ -506,6 +570,7 @@ export function attachLibraryPanel(api) {
   }
   function releaseTask(owner, restoreFocus = true) {
     if (libraryTask !== owner) return;
+    owner.focusReturn?.beforeRefresh();
     libraryTask = null;
     busy = false;
     for (const { element, disabled } of owner.controls)
@@ -514,6 +579,7 @@ export function attachLibraryPanel(api) {
     cancel.hidden = true;
     cancel.disabled = true;
     refresh();
+    owner.focusReturn?.afterRefresh();
     if (restoreFocus && !owner.detached) owner.focus.restore();
     else owner.focus.cancel();
   }
@@ -548,19 +614,24 @@ export function attachLibraryPanel(api) {
     }
     return true;
   }
-  async function task(id, fn, label = 'Preparing Library operation…') {
+  async function task(id, fn, label = 'Preparing Library operation…', focusReturn = null) {
     if (busy) return;
+    libraryTaskGeneration++;
     const owner = {
       id,
       controller: new AbortController(),
       committing: false,
       detached: false,
       opener: document.activeElement,
+      focusReturn,
       controls: [...$('library-dialog').querySelectorAll('button,input,select,textarea')].map(
         (element) => ({ element, disabled: element.disabled }),
       ),
     };
-    owner.focus = captureOperationFocus(owner.opener, { owned: [$('library-operation-cancel')] });
+    owner.focus = captureOperationFocus(owner.opener, {
+      owned: [$('library-operation-cancel')],
+      resolveTarget: focusReturn?.resolve,
+    });
     libraryTask = owner;
     busy = true;
     status(id, label, 'busy');
