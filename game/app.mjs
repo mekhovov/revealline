@@ -88,6 +88,7 @@ import {
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { attachLibraryPanel } from './ui/library-panel.mjs';
+import { releaseExplorerHref } from './release-explorer.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
 import { createMasteryAwards } from './mastery-awards.mjs';
@@ -241,6 +242,8 @@ try {
     isRelease = true;
   } catch {}
   if (isRelease) document.querySelectorAll('[data-source-only]').forEach((a) => (a.hidden = true));
+  for (const link of document.querySelectorAll('[data-release-explorer]'))
+    link.href = releaseExplorerHref(location.href);
   const versionLabel =
     buildVersion === 'dev' ? 'DEV' : `${/^\d/.test(buildVersion) ? 'v' : ''}${buildVersion}`;
   $('version').textContent = versionLabel;
@@ -867,7 +870,11 @@ try {
     if (!soundtrackPlayer) return sound.enable();
     if (soundtrackSuspended) {
       soundtrackSuspended = false;
-      await soundtrackPlayer.resume();
+      // Keep this synchronous with the tap/click that resumed the game. Safari
+      // rejects a media play request if a lifecycle resume has crossed an await.
+      const wasListening = soundtrackPlayer.snapshot().desired;
+      const resumed = soundtrackPlayer.resume();
+      if (wasListening) return resumed;
     }
     if (explicit || !soundtrackPlayer.snapshot().track) return soundtrackPlayer.play();
     // Ordinary Resume enables effects but keeps an intentional music-only Pause.
@@ -947,10 +954,10 @@ try {
           preferences({ musicVolume: value });
         },
         onAudioEnabled: () => preferences({ musicEnabled: true }),
-        beforeAudio: async () => {
+        beforeAudio: () => {
           if (soundtrackSuspended) {
             soundtrackSuspended = false;
-            await soundtrackPlayer.resume();
+            return soundtrackPlayer.wake();
           }
         },
       });
@@ -966,6 +973,9 @@ try {
           soundtrackGeneration = snapshot.generation;
           soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
           soundtrackPlayer.setLibrary(snapshot.library);
+          // This does not play audio. It only makes a selected local MP3 ready
+          // before the player taps Start or Play, which iOS requires.
+          void soundtrackPlayer.prepare();
         }
       } catch (error) {
         if (!soundtrackDisposed)
@@ -4734,18 +4744,33 @@ try {
   );
   window.addEventListener('blur', suspendInteraction);
   function restoreListening() {
-    if (
-      document.hidden ||
-      soundtrackDisposed ||
-      !soundtrackPlayer ||
-      !soundtrackSuspended ||
-      enemyGuide?.practiceActive
-    )
+    if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
+    if (!soundtrackPlayer) {
+      // The procedural fallback is used when file-audio setup is unavailable.
+      // It still needs a fresh resume after an iOS lifecycle interruption.
+      if (sound.enabled && sound.context?.state !== 'running') void sound.resume();
       return;
+    }
+    if (!soundtrackSuspended) return;
     soundtrackSuspended = false;
     void soundtrackPlayer.resume();
   }
+  const restoreAudioOnGesture = () => {
+    if (
+      document.hidden ||
+      soundtrackDisposed ||
+      enemyGuide?.practiceActive ||
+      !library.preferences.musicEnabled
+    )
+      return;
+    if (soundtrackPlayer && soundtrackSuspended) void activateAudio();
+    else if (!soundtrackPlayer && sound.enabled && sound.context?.state !== 'running')
+      void sound.resume();
+  };
   window.addEventListener('focus', restoreListening);
+  document.addEventListener('pointerdown', restoreAudioOnGesture, { capture: true, passive: true });
+  document.addEventListener('touchstart', restoreAudioOnGesture, { capture: true, passive: true });
+  document.addEventListener('keydown', restoreAudioOnGesture, true);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
       optionalWorlds?.close(false);
