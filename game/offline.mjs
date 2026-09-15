@@ -6,6 +6,9 @@ function optionalNote(config) {
   if (!Array.isArray(packs) || !packs.length) return '';
   return ` ${packs.map((pack) => pack.name).join(', ')} ${packs.length === 1 ? 'is' : 'are'} optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.`;
 }
+function withOptionalNote(config, summary) {
+  return { summary, message: summary + optionalNote(config) };
+}
 function configFromPage(documentRef = globalThis.document, locationRef = globalThis.location) {
   const marker = documentRef?.querySelector(MARKER)?.content;
   if (!marker || !locationRef?.href) return null;
@@ -228,7 +231,7 @@ function requestReport(worker, registration, config, options) {
           ...report,
           status: preparing ? 'preparing' : 'checking',
           progress,
-          message: phaseMessages[report.stage] + optionalNote(config),
+          ...withOptionalNote(config, phaseMessages[report.stage]),
         };
         // Duplicate snapshots cannot keep a dead operation alive indefinitely.
         const advanced =
@@ -305,7 +308,7 @@ export async function prepareOffline(options = {}) {
     status: 'preparing',
     stage: 'connecting',
     progress: null,
-    message: phaseMessages.connecting + optionalNote(config),
+    ...withOptionalNote(config, phaseMessages.connecting),
   });
   const registration = await observePromise(
     env.navigatorRef.serviceWorker.register(config.worker, {
@@ -336,11 +339,12 @@ export async function prepareOffline(options = {}) {
   const result = {
     ...report,
     status: waiting ? 'waiting' : 'ready',
-    message:
-      (waiting
+    ...withOptionalNote(
+      config,
+      waiting
         ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
-        : 'Offline files verified. This version can open without a connection while the browser retains its storage.') +
-      optionalNote(config),
+        : 'Offline files verified. This version can open without a connection while the browser retains its storage.',
+    ),
   };
   status(result);
   return result;
@@ -380,10 +384,12 @@ export async function checkOffline(options = {}) {
     ...(report.status === 'ready'
       ? {
           status: waiting ? 'waiting' : 'ready',
-          message:
-            (waiting
+          ...withOptionalNote(
+            config,
+            waiting
               ? 'Update saved. Close all tabs of this version to use it; your current game continues unchanged.'
-              : report.message || 'Core offline files verified.') + optionalNote(config),
+              : report.message || 'Core offline files verified.',
+          ),
         }
       : {}),
   };

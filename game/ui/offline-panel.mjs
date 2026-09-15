@@ -18,6 +18,9 @@ export function attachOfflinePanel({
   let action = 'prepare';
   const feedback = createOperationStatus($('offline-status'), { isCurrent: () => !disposed });
   const available = availability();
+  const note = $('offline-optional-note');
+  note.textContent = available.note ?? '';
+  note.hidden = !available.note;
   button.hidden = !available.available;
   feedback.begin({ message: '' }).finish({
     message: available.available
@@ -68,7 +71,7 @@ export function attachOfflinePanel({
         onStatus(status) {
           if (!current() || !['preparing', 'checking'].includes(status.status)) return;
           owned.status.update({
-            message: status.message,
+            message: status.summary ?? status.message,
             stage: status.stage,
             progress: status.progress ?? null,
           });
@@ -80,7 +83,7 @@ export function attachOfflinePanel({
       action = ready ? 'verify' : pending ? 'check' : 'prepare';
       owned.status.finish({
         state: ready ? 'ready' : pending ? 'detached' : 'error',
-        message: `${result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
+        message: `${result.summary || result.message || result.status}${result.verified ? ` · ${result.verified} files verified` : ''}`,
       });
       $('offline-details').textContent = JSON.stringify(result, null, 2);
     } catch (error) {

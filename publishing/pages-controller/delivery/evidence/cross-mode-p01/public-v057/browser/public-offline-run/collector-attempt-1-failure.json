@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-09-15T12:01:13.073218+00:00",
+  "phase": "about:blank before public navigation",
+  "endpoint": "ws://127.0.0.1:64692/devtools/browser/df06565d-ebba-4a61-b3ec-4769d840e6a1",
+  "target": "2D862F32E53B3D82B1814DDF1E3B21E7",
+  "command": "Browser.getBrowserCommandLine",
+  "error": "Command line not returned because --enable-automation not set.",
+  "collectorExitCode": 1,
+  "browserProfileReset": false,
+  "resolution": "Restart same owned profile with explicit --enable-automation launch argument before any public navigation."
+}

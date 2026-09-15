@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "reviewer": "root",
+  "reviewedAt": "2026-09-15T12:04:16.252283+00:00",
+  "controllerCommit": "74f289510617603c28768bb3f6bfd8e9f7a72cdd",
+  "deploymentId": 6458234240,
+  "bindingSha256": "1012ce11b82893c75e3c20bbbd0efeda71e1a5dd92100ef1fa46f51b78f1445e",
+  "verifiedRows": 2373,
+  "verifiedBytes": 636426379,
+  "attempts": 2373,
+  "failures": 0,
+  "retries": 0,
+  "evidence": [
+    {
+      "path": "report.json",
+      "bytes": 3532,
+      "sha256": "484ba517f37c4e35719eeba4c33ab1f461c89b7e46b4b9f7f9679b064a5b8482"
+    },
+    {
+      "path": "inventory.json",
+      "bytes": 607790,
+      "sha256": "a5c9ff371abed1c207ceae6bafadb95ac8823e06136f207c2961da81f6e0fbb5"
+    },
+    {
+      "path": "attempts.jsonl",
+      "bytes": 1546768,
+      "sha256": "a5225d257146f5e5c8b458fdfaf8ecbcd12ff72d4a0853d9b9237ffafb0313b5"
+    },
+    {
+      "path": "results.jsonl",
+      "bytes": 1546768,
+      "sha256": "a5225d257146f5e5c8b458fdfaf8ecbcd12ff72d4a0853d9b9237ffafb0313b5"
+    }
+  ],
+  "scope": "Independent reread of every recorded HTTP result/attempt against original hosted receipt and runner pins. No second network fetch; live authority recheck and browser/offline remain separate."
+}

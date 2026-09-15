@@ -1,0 +1,57 @@
+[
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/3844AFD78CF91580560B83B76E7A2E0D",
+    "id": "3844AFD78CF91580560B83B76E7A2E0D",
+    "title": "Omnibox Popup",
+    "type": "browser_ui",
+    "url": "chrome://omnibox-popup.top-chrome/",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/3844AFD78CF91580560B83B76E7A2E0D"
+  },
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/2D862F32E53B3D82B1814DDF1E3B21E7",
+    "id": "2D862F32E53B3D82B1814DDF1E3B21E7",
+    "title": "about:blank",
+    "type": "page",
+    "url": "about:blank",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/2D862F32E53B3D82B1814DDF1E3B21E7"
+  },
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/857775FD588411DF6E1F22E8FAEBA419",
+    "id": "857775FD588411DF6E1F22E8FAEBA419",
+    "title": "chrome://newtab-footer",
+    "type": "browser_ui",
+    "url": "chrome://newtab-footer/",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/857775FD588411DF6E1F22E8FAEBA419"
+  },
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/68C1E3E6446E80D7A1010E1262F82A1A",
+    "id": "68C1E3E6446E80D7A1010E1262F82A1A",
+    "title": "Omnibox Popup",
+    "type": "browser_ui",
+    "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/68C1E3E6446E80D7A1010E1262F82A1A"
+  },
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/A80EA3217BE1023C69804B8E427DD836",
+    "id": "A80EA3217BE1023C69804B8E427DD836",
+    "title": "New Tab",
+    "type": "page",
+    "url": "chrome://newtab/",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/A80EA3217BE1023C69804B8E427DD836"
+  },
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "https://chrome-devtools-frontend.appspot.com/serve_rev/@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b/inspector.html?ws=127.0.0.1:64692/devtools/page/AE4677678E4D570FD3ECBD77DCDCF879",
+    "id": "AE4677678E4D570FD3ECBD77DCDCF879",
+    "parentId": "A80EA3217BE1023C69804B8E427DD836",
+    "title": "chrome-untrusted://new-tab-page/one-google-bar?paramsencoded=",
+    "type": "iframe",
+    "url": "chrome-untrusted://new-tab-page/one-google-bar?paramsencoded=",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:64692/devtools/page/AE4677678E4D570FD3ECBD77DCDCF879"
+  }
+]

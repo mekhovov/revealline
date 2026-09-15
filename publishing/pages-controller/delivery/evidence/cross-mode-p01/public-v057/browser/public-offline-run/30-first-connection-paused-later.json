@@ -1,0 +1,55 @@
+{
+  "build": {
+    "entry": "game/index.html",
+    "formatVersion": 1,
+    "sourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+    "version": "v0.57.0"
+  },
+  "channel": "release-v0.57.0",
+  "controller": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/service-worker.js",
+  "focusedId": "coop-resume",
+  "href": "https://mekhovov.github.io/revealline/releases/v0.57.0/site/game/couch/relay-rescue.html",
+  "level": "first-connection",
+  "menuHidden": true,
+  "observedAt": "2026-09-15T12:11:57.653Z",
+  "overlayHidden": false,
+  "playHidden": false,
+  "storage": {
+    "library": {
+      "bytes": null,
+      "key": "revealline.library.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "packs": {
+      "bytes": null,
+      "key": "revealline.packs.release-v0.57.0.v1",
+      "raw": null,
+      "sha256": null
+    },
+    "suspended": {
+      "bytes": 6102,
+      "key": "revealline.suspended.release-v0.57.0.v1",
+      "raw": "{\"format\":\"xonix-session.v4\",\"campaignKey\":\"fpv-pressure-lines/1/ebb56ffdd9baa8e8\",\"themeId\":\"fpv\",\"bodyId\":\"fpv-body\",\"runId\":\"5de82731-4053-4461-a168-e7fb48856ba1\",\"savedAt\":\"2026-09-15T12:10:56.639Z\",\"continuation\":{\"direction\":null},\"presentationPins\":{\"format\":\"revealline-flight-pictures.v2\",\"executionKey\":\"fpv-pressure-lines/1/ebb56ffdd9baa8e8\",\"levelId\":\"orchard-crossing\",\"levelRevision\":\"1\",\"choices\":[{\"picture\":{\"kind\":\"still\",\"identity\":{\"baseCampaignKey\":\"fpv-pressure-lines/1/ebb56ffdd9baa8e8\",\"levelId\":\"orchard-crossing\",\"levelRevision\":\"1\",\"themeId\":\"fpv\"},\"presentationId\":\"fk-picture-41c46cb641bb7a0ac8f3f9972eb433741096bdfb7d7e9bdec498ff80e44d16e3\",\"presentationRevision\":1,\"assetId\":\"fk-art-53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850\",\"sha256\":\"53f1206a11a8791892f5c844c0641529acbc2c09c8d558676d0d801d72113850\"},\"story\":null}]},\"replay\":{\"version\":\"xonix-replay.v6\",\"build\":\"v0.57.0\",\"ruleset\":\"xonix-core.v5\",\"level\":{\"version\":\"xonix-level.v4\",\"revision\":\"1\",\"width\":72,\"height\":36,\"themeId\":\"fpv\",\"encounter\":null,\"objectives\":[],\"supplies\":[],\"signalZones\":[],\"hangars\":[],\"id\":\"orchard-crossing\",\"name\":\"Orchard Crossing\",\"spawn\":{\"x\":36.5,\"y\":0.5},\"walls\":[{\"x\":18,\"y\":11,\"w\":2,\"h\":9},{\"x\":51,\"y\":18,\"w\":2,\"h\":9}],\"enemies\":[{\"id\":\"orchard-hunter\",\"type\":\"bouncer\",\"x\":17.5,\"y\":7.5,\"vx\":9,\"vy\":6,\"radius\":0.3},{\"id\":\"east-crosser\",\"type\":\"bouncer\",\"x\":57.5,\"y\":27.5,\"vx\":-8,\"vy\":-7,\"radius\":0.3},{\"id\":\"south-crosser\",\"type\":\"bouncer\",\"x\":29.5,\"y\":28.5,\"vx\":7,\"vy\":-8,\"radius\":0.3},{\"id\":\"orchard-contour\",\"type\":\"contour-patrol\",\"edge\":{\"x\":1,\"y\":26,\"side\":\"west\"},\"clockwise\":true,\"speed\":6,\"radius\":0.25}],\"goal\":{\"coverage\":0.68},\"rules\":{\"lives\":3,\"moveSpeed\":15,\"boostMultiplier\":1,\"respawnSeconds\":0.7,\"graceSeconds\":0.8,\"playerRadius\":0.18,\"pointsPerCell\":10,\"objectivePoints\":500,\"timeMedals\":[34,58],\"switchCooldownSeconds\":2,\"timeLimitSeconds\":180,\"cutTimeLimitSeconds\":0,\"maxTrailCells\":0,\"stopOnCapture\":true},\"musicId\":\"first-light-orchard-window\",\"metadata\":{\"title\":\"Orchard Crossing\",\"description\":\"Reveal 68%. A bracketed hunter locks a point on your unfinished cut. Change your route before it commits. Two offset walls divide your exits; the contour patrol follows secured boundaries. Mud slows only your craft. A speed pickup rewards the western detour. Tap a direction to fly; closing a cut stops the craft. Choose a fresh direction to continue.\",\"author\":\"RevealLine\",\"license\":\"Original project content\",\"rightsStatus\":\"Original pressure layout. Existing owned First Light/Homeward Skies reward art; not new artwork or a reference-game copy.\"},\"classic\":{\"version\":\"classic.v1\",\"terrain\":[{\"id\":\"orchard-mud\",\"kind\":\"slow\",\"x\":40,\"y\":14,\"w\":4,\"h\":5}],\"powerups\":[{\"id\":\"orchard-speed\",\"kind\":\"player-speed\",\"x\":12.5,\"y\":10.5}],\"lineImpact\":{\"version\":\"line-impact.v1\",\"speed\":24},\"arcadeActions\":{\"version\":\"arcade-actions.v1\"},\"enemyPressure\":{\"version\":\"enemy-pressure.v1\",\"actors\":[{\"id\":\"orchard-hunter\",\"mode\":\"trail-pursuit\",\"senseRadius\":16,\"scanTicks\":60,\"warningTicks\":90,\"commitTicks\":144,\"cooldownTicks\":300,\"leadTicks\":0}]}}},\"options\":{\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"classRecipes\":[{\"id\":\"scout\",\"label\":\"FPV Scout\",\"description\":\"Direction-only Arcade craft. Cruise speed belongs to each level; fly over marked pickups to receive their effects. Manual Scan, supply and Boost actions are disabled by the authored Arcade policy.\",\"primitive\":\"scan\",\"capacity\":0,\"cooldown\":6,\"duration\":4,\"radius\":48,\"revision\":\"2\"}]},\"segments\":[{\"ticks\":655,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":181,\"input\":{\"direction\":\"down\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":189,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":78,\"input\":{\"direction\":\"down\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":76,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":74,\"input\":{\"direction\":\"up\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":58,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":113,\"input\":{\"direction\":\"down\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":82,\"input\":{\"direction\":\"right\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":113,\"input\":{\"direction\":\"up\",\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false},{\"ticks\":27,\"input\":{\"direction\":null,\"boost\":false,\"action\":false,\"pickup\":false,\"switchClass\":null},\"releaseBefore\":false}],\"releaseAfter\":false,\"ticks\":1646,\"summary\":{\"ruleset\":\"xonix-core.v5\",\"levelId\":\"orchard-crossing\",\"revision\":\"1\",\"seed\":1,\"turnPolicy\":\"immediate\",\"classId\":\"scout\",\"activeClassId\":\"scout\",\"rosterHash\":\"roster-v1-25103a34\",\"classHistory\":[{\"classId\":\"scout\",\"classRevision\":\"2\",\"loadoutHash\":\"loadout-v1-8360440c\",\"tick\":0}],\"switches\":0,\"failureCause\":\"enemy-trail\",\"classRevision\":\"2\",\"loadoutHash\":\"loadout-v1-8360440c\",\"status\":\"running\",\"won\":false,\"tick\":1646,\"time\":13.716666666666528,\"lives\":2,\"livesLost\":1,\"score\":2700,\"coverage\":0.11518771331058021,\"claimedCount\":270,\"totalClaimable\":2344,\"medal\":null,\"objectives\":{\"captured\":0,\"total\":0,\"required\":0}},\"checkpoint\":{\"algorithm\":\"fnv1a64-state-v5\",\"hash\":\"30e84b2d52667380\",\"sections\":{\"identity\":\"7e94c7fb6e20db7e\",\"configuration\":\"187d6be3a7626f13\",\"board\":\"2906587ff0d3d44c\",\"player\":\"b7e21c2612e0a609\",\"trail\":\"f0ca473df9efdcc8\",\"enemies\":\"b601bd5ff5667743\",\"objectives\":\"09612b07b5ecb5a5\",\"supplies\":\"09612b07b5ecb5a5\",\"ability\":\"1b2c860fdc20d639\",\"clock\":\"7e350731062225e2\",\"continuation\":\"a1e7286b42b404e7\",\"result\":\"5b9bc4ba528108e4\",\"encounter\":\"5b9bc4ba528108e4\",\"classic\":\"97b82af836f9d7b7\"}}}}",
+      "sha256": "6e224f10529488e3d6061a06de3023aabccdced000e9b37ca7eae46d8ab4ff26"
+    }
+  },
+  "text": {
+    "coop-boot": "Two players · one screen · a shared victory",
+    "coop-charge-0": "Support · 7.0s",
+    "coop-charge-1": "Support · 6.3s",
+    "coop-clock": "0:12",
+    "coop-coverage": "0.0%",
+    "coop-message": "Watch the Hunter warnings. Cover a crossing or join after the charge passes.",
+    "coop-objective": "Capture the shield anchors · 0 / 2 secured",
+    "coop-overlay-title": "Both players paused",
+    "coop-reserves": "3 reserves",
+    "coop-stage": "FIRST CONNECTION",
+    "coop-state-0": "Line exposed",
+    "coop-state-1": "Line exposed",
+    "coop-support-0": "Support recharging · 7.0s",
+    "coop-support-1": "Support recharging · 6.3s"
+  },
+  "timeOrigin": 1789474256630.1,
+  "toolState": "ready"
+}

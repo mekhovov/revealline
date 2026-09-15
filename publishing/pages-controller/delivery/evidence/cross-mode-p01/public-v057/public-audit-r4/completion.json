@@ -1,0 +1,74 @@
+{
+  "format": "revealline-public-http-completion.v1",
+  "status": "PASS",
+  "completedAt": "2026-09-15T12:05:12.318121+00:00",
+  "scope": "Actual deployed all-body HTTP byte/hash/required-MIME qualification only. Public browser/offline/physical-device and phase acceptance remain separate.",
+  "controllerCommit": "74f289510617603c28768bb3f6bfd8e9f7a72cdd",
+  "controllerTree": "8d8173c2f14effcac2e63b8cec22848943d88110",
+  "gameSourceRevision": "b7db0134d4ede3452dc90b5d3f7ffb1491a0579b",
+  "qualifiedSourceTree": "7cd40e4ef8bf975e7eb2795cdd2669aa18811a57",
+  "version": "v0.57.0",
+  "deploymentId": 6458234240,
+  "runId": 34965929587,
+  "auditStartedAt": "2026-09-15T12:01:27.839Z",
+  "auditFinishedAt": "2026-09-15T12:03:26.380Z",
+  "filesVerified": 2373,
+  "decodedBytesVerified": 636426379,
+  "attempts": 2373,
+  "failedFiles": 0,
+  "retries": 0,
+  "skippedFiles": 0,
+  "uninspectedFiles": 0,
+  "allArtifactBodiesVerified": true,
+  "allThreeHiddenBodiesVerified": true,
+  "retainedReleaseVersions": 62,
+  "canonicalCurrentBodies": 657,
+  "report": {
+    "path": ".cache/cross-mode/p01/public-audit-r4/runs/complete-1/report.json",
+    "bytes": 3532,
+    "sha256": "484ba517f37c4e35719eeba4c33ab1f461c89b7e46b4b9f7f9679b064a5b8482"
+  },
+  "agentResultReview": {
+    "path": ".cache/cross-mode/p01/public-audit-r4/complete-1-result-review.json",
+    "bytes": 5483,
+    "sha256": "df3b8f79f1f8d82121dbec93e9671a20838ae83461bf1436eb68ccb2ea28c9fd"
+  },
+  "independentParentResultReview": {
+    "path": ".cache/cross-mode/p01/public-audit-r4/parent-result-review.json",
+    "bytes": 1212,
+    "sha256": "10e7e9cd26b2a62918ab470b1f9f701f6837660d73cc9263326ff9ec70dbf021"
+  },
+  "independentParentBindingReview": {
+    "path": ".cache/cross-mode/p01/public-audit-r4/parent-binding-review.json",
+    "bytes": 789,
+    "sha256": "06cab2ffcaff8d2b35ac29d9d8e8d0a945a4bc98b9d0235de8f244aab673f7fd"
+  },
+  "postAuditAuthority": {
+    "observedAt": "2026-09-15T12:04:03.427433+00:00",
+    "review": {
+      "path": ".cache/cross-mode/p01/publication-hosted-r4/after-http/review.json",
+      "bytes": 585,
+      "sha256": "10ff4fb3d8e56fa30118b5fe009fc1ebd4350c73c73f07abc1f143249bce3d5e"
+    },
+    "manifest": {
+      "path": ".cache/cross-mode/p01/publication-hosted-r4/after-http/manifest.json",
+      "bytes": 917,
+      "sha256": "f05343248b11c6a8a0978f2a3f0a9d7d579d66c0899b1a6bec491908576ee258"
+    },
+    "originalApiBodies": 5,
+    "mainUnchanged": true,
+    "latestPagesDeploymentUnchanged": true,
+    "latestStatusSuccess": true,
+    "actualRunUnchangedSuccessful": true
+  },
+  "originalAuthorityAndHelperPinsUnchanged": true,
+  "expandedSiteWritten": false,
+  "secondHttpRunPerformed": false,
+  "publicBrowserAcceptance": false,
+  "releaseAccepted": false,
+  "limitations": [
+    "Deployment snapshots prove observed before/after authority, not a continuous deployment lock.",
+    "HTTP engine streams decoded response bodies; it does not claim wire-compressed-byte equality.",
+    "HTTP bytes and required MIME do not prove rendering, gameplay, native media decoding, storage migration, offline launch, or physical-device behavior."
+  ]
+}

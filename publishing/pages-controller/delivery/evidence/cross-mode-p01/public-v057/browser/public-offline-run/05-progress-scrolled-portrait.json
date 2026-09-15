@@ -1,0 +1,36 @@
+{
+  "countRect": {
+    "bottom": 0,
+    "height": 0,
+    "left": 0,
+    "right": 0,
+    "top": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "focus": "",
+  "stage": "verifying",
+  "state": "ready",
+  "statusRect": {
+    "bottom": 574.09375,
+    "height": 223.265625,
+    "left": 24,
+    "right": 366,
+    "top": 350.828125,
+    "width": 342,
+    "x": 24,
+    "y": 350.828125
+  },
+  "stopRect": {
+    "bottom": 0,
+    "height": 0,
+    "left": 0,
+    "right": 0,
+    "top": 0,
+    "width": 0,
+    "x": 0,
+    "y": 0
+  },
+  "time": "2026-09-15T12:04:53.706Z"
+}

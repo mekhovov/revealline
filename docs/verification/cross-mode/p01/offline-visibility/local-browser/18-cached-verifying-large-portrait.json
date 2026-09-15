@@ -1,0 +1,250 @@
+{
+  "format": "revealline-retained-historical-excerpt.v1",
+  "scope": "Retained historical excerpt after an ownership migration. Original bytes are preserved separately. Historical counts, hashes and approvals inside the excerpt describe the original record only; this derived document is not a release qualification, executable restore plan, or complete original inventory.",
+  "originalSHA256": "fcf161619d90374a86bda08c9a8ffad836cb69406a7ee8d27265cd84b45f2094",
+  "originalGitBlob": "70a43195f58fa6d606ce1956457a80ce98cbb881",
+  "removedRecordsOrFields": 3,
+  "excerpt": {
+    "at": "2026-09-15T12:15:44.844Z",
+    "bodyState": {
+      "arenaChrome": "full",
+      "effects": "reduced",
+      "flightState": "briefing",
+      "inputMode": "pointer",
+      "pictureState": "ready",
+      "screenControls": "hidden",
+      "screenSteeringHand": "right",
+      "textFace": "plain",
+      "textSize": "large",
+      "touchMode": "stick",
+      "touchSide": "right",
+      "touchSize": "regular"
+    },
+    "boot": "ready",
+    "button": {
+      "disabled": true,
+      "rect": {
+        "bottom": 659.96875,
+        "display": "inline-flex",
+        "fontSize": "20px",
+        "fullyWithinViewport": true,
+        "height": 47,
+        "hidden": false,
+        "left": 24,
+        "lineHeight": "27px",
+        "right": 256.75,
+        "top": 612.96875,
+        "visibility": "visible",
+        "width": 232.75,
+        "x": 24,
+        "y": 612.96875
+      },
+      "text": "Verify offline files"
+    },
+    "cacheNames": [
+      "revealline-offline:http%3A%2F%2F127.0.0.1%3A64963%2F:39f9ba278274ad326e6d85751711e3b50e682c66389796bb4499608999f0bb1a"
+    ],
+    "details": "{\"status\": \"ready\", \"version\": \"0.57.1\", \"buildId\": \"39f9ba278274ad326e6d85751711e3b50e682c66389796bb4499608999f0bb1a\", \"count\": 608, \"verified\": 608, \"bytes\": 55383689, \"missing\": [], \"corrupt\": [], \"format\": \"revealline.offline-progress.v1\", \"requestId\": \"offline-4\", \"kind\": \"terminal\", \"scope\": \"http://127.0.0.1:64963/\", \"summary\": \"Core offline files verified.\"}",
+    "dialog": {
+      "open": true,
+      "rect": {
+        "bottom": 844,
+        "display": "block",
+        "fontSize": "22px",
+        "fullyWithinViewport": true,
+        "height": 844,
+        "hidden": false,
+        "left": 8,
+        "lineHeight": "33px",
+        "right": 382,
+        "top": 0,
+        "visibility": "visible",
+        "width": 374,
+        "x": 8,
+        "y": 0
+      }
+    },
+    "documentState": {
+      "bootState": "ready",
+      "buildVersion": "v0.57.1",
+      "presentationTheme": "fpv"
+    },
+    "focus": {
+      "id": "",
+      "tag": "BODY",
+      "text": "\n    \n      \n        REVEAL / LINE\n        \n        Find your line.\n        Reading your saved fligh"
+    },
+    "href": "http://127.0.0.1:64963/game/",
+    "note": {
+      "detailsOpen": false,
+      "insideVerificationDetails": true,
+      "rect": {
+        "bottom": 1122.1875,
+        "display": "block",
+        "fontSize": "18px",
+        "fullyWithinViewport": false,
+        "height": 339.21875,
+        "hidden": false,
+        "left": 40,
+        "lineHeight": "26.1px",
+        "right": 350,
+        "top": 782.96875,
+        "visibility": "visible",
+        "width": 310,
+        "x": 40,
+        "y": 782.96875
+      }
+    },
+    "optionalPacks": [
+      {
+        "id": "fpv-arcade-r2",
+        "name": "FPV Front · First Light R2",
+        "path": "game/content/packs/fpv-arcade-r2.json"
+      },
+      {
+        "id": "fpv-arcade-r3",
+        "name": "FPV Front · First Light R3",
+        "path": "game/content/packs/fpv-arcade-r3.json"
+      },
+      {
+        "id": "fpv-arcade-r4",
+        "name": "FPV Front · First Light Arcade R4",
+        "path": "game/content/packs/fpv-arcade-r4.json"
+      },
+      {
+        "id": "fpv-arcade-r5",
+        "name": "FPV Front · Pressure Lines",
+        "path": "game/content/packs/fpv-arcade-r5.json"
+      },
+      {
+        "id": "fpv-arcade",
+        "name": "FPV Front · First Light",
+        "path": "game/content/packs/fpv-arcade.json"
+      },
+      {
+        "id": "fpv-pressure-frontier",
+        "name": "FPV Front · Frontier Lines",
+        "path": "game/content/packs/fpv-pressure-frontier.json"
+      },
+      {
+        "id": "original-fpv-pressure",
+        "name": "FPV Front · Illustrated Pressure",
+        "path": "authoring/library/four-worlds-chapters/packs/original-fpv-pressure.json"
+      },
+      {
+        "id": "original-ukraine-atlas",
+        "name": "Ukraine Atlas · Woven Lines",
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      },
+      {
+        "id": "original-retro-1994",
+        "name": "1994 Forever · After Hours",
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      },
+      {
+        "id": "fpv-route-choices",
+        "name": "FPV Front · Route Choices — Tactical",
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      }
+    ],
+    "preferences": {
+      "face": "plain",
+      "reduced": true,
+      "size": "large"
+    },
+    "scroll": {
+      "settings": 526,
+      "x": 0,
+      "y": 0
+    },
+    "status": {
+      "count": {
+        "rect": {
+          "bottom": 591.96875,
+          "display": "block",
+          "fontSize": "18px",
+          "fullyWithinViewport": true,
+          "height": 26.09375,
+          "hidden": false,
+          "left": 24,
+          "lineHeight": "26.1px",
+          "right": 186.5625,
+          "top": 565.875,
+          "visibility": "visible",
+          "width": 162.5625,
+          "x": 24,
+          "y": 565.875
+        },
+        "text": "504 / 608 files"
+      },
+      "progress": {
+        "max": 608,
+        "rect": {
+          "bottom": 535.78125,
+          "display": "block",
+          "fontSize": "18px",
+          "fullyWithinViewport": true,
+          "height": 8,
+          "hidden": false,
+          "left": 236,
+          "lineHeight": "26.1px",
+          "right": 366,
+          "top": 527.78125,
+          "visibility": "visible",
+          "width": 130,
+          "x": 236,
+          "y": 527.78125
+        },
+        "value": 504
+      },
+      "rect": {
+        "bottom": 591.96875,
+        "display": "flex",
+        "fontSize": "18px",
+        "fullyWithinViewport": true,
+        "height": 86.28125,
+        "hidden": false,
+        "left": 24,
+        "lineHeight": "26.1px",
+        "right": 366,
+        "top": 505.6875,
+        "visibility": "visible",
+        "width": 342,
+        "x": 24,
+        "y": 505.6875
+      },
+      "stage": "verifying",
+      "state": "busy",
+      "text": "Verifying every saved core file…504 / 608 files"
+    },
+    "stop": {
+      "rect": {
+        "bottom": 706.96875,
+        "display": "inline-flex",
+        "fontSize": "20px",
+        "fullyWithinViewport": true,
+        "height": 47,
+        "hidden": false,
+        "left": 24,
+        "lineHeight": "27px",
+        "right": 171.28125,
+        "top": 659.96875,
+        "visibility": "visible",
+        "width": 147.28125,
+        "x": 24,
+        "y": 659.96875
+      },
+      "text": "Stop waiting"
+    },
+    "viewport": {
+      "height": 844,
+      "width": 390
+    },
+    "worker": {
+      "active": "activated",
+      "controller": "http://127.0.0.1:64963/service-worker.js",
+      "scope": "http://127.0.0.1:64963/",
+      "script": "http://127.0.0.1:64963/service-worker.js"
+    }
+  }
+}
