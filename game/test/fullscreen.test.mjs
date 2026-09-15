@@ -73,7 +73,7 @@ test('fullscreen control follows the browser state and exits through the same ex
   assert.equal(doc.documentElement.dataset.gameFullscreen, undefined);
 });
 
-test('installed standalone PWAs use the immersive arena layout without browser fullscreen', (t) => {
+test('installed standalone PWAs report their display state without browser fullscreen', (t) => {
   const button = new Button();
   const doc = fullscreenDocument();
   const displayMode = new Target();
@@ -89,7 +89,7 @@ test('installed standalone PWAs use the immersive arena layout without browser f
   assert.equal(button.getAttribute('aria-pressed'), 'false');
 });
 
-test('iOS Home Screen games use the immersive arena layout', (t) => {
+test('iOS Home Screen games report standalone display state', (t) => {
   const button = new Button();
   const doc = fullscreenDocument();
   doc.fullscreenEnabled = false;
@@ -100,6 +100,25 @@ test('iOS Home Screen games use the immersive arena layout', (t) => {
 
   assert.equal(button.hidden, true);
   assert.equal(doc.documentElement.dataset.gameFullscreen, 'true');
+});
+
+test('display-mode changes update state and detach releases the listener', async () => {
+  const button = new Button();
+  const doc = fullscreenDocument();
+  const displayMode = new Target();
+  displayMode.matches = false;
+  doc.fullscreenEnabled = false;
+  doc.defaultView = { matchMedia: () => displayMode };
+  const detach = attachFullscreen(button, doc);
+
+  displayMode.matches = true;
+  await displayMode.emit('change');
+  assert.equal(doc.documentElement.dataset.gameFullscreen, 'true');
+  displayMode.matches = false;
+  await displayMode.emit('change');
+  assert.equal(doc.documentElement.dataset.gameFullscreen, undefined);
+  detach();
+  assert.equal(displayMode.listeners.size, 0);
 });
 
 test('unsupported browsers retain their responsive game layout without an inoperable control', () => {
