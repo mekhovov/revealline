@@ -1,0 +1,51 @@
+{
+  "base": "5aceb1b34764822e12303489494bd6b91e23516e",
+  "dependencyCommit": "8078796de87ba64ae49076a81e7a444915f5e720",
+  "status": "Source held; two complete test files running. No final qualification.",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "bytes": 259089,
+      "sha256": "a0d71aa3cac7ef2307766869e141f42d8994eb879304dabc568c9f5f62955d5b"
+    },
+    {
+      "path": "game/index.html",
+      "bytes": 70883,
+      "sha256": "6bb6ae969591cd87697f966375f3d64e3e65b1b8a3d2a66823a7b9acc05d0178"
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "bytes": 18766,
+      "sha256": "fe07efe98487bbee60cdb1fe163f4b1374038cfcbaf31de71ebf696d2f713649"
+    },
+    {
+      "path": "game/ui/modal-navigation.mjs",
+      "bytes": 4082,
+      "sha256": "fd37db206138f733e7a184f1b4b3e26cf8fc594e336542fb16277eddcc01ad3e"
+    },
+    {
+      "path": "game/test/title-mode-departure-host.test.mjs",
+      "bytes": 17233,
+      "sha256": "4bbb42c4dc5ff7343602999c897d4f25f452b87b30000d61987c814dbec75de1"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "bytes": 42277,
+      "sha256": "0be05d6bad6d94cabccbeb759a51abc2f36799986ba07a160268634524ebe82c"
+    },
+    {
+      "path": "game/ui/mode-choice.mjs",
+      "bytes": 1339,
+      "sha256": "7b7f7369966c7d56d1c74c512bff7da006d5e6b29ec9d2bc08bc0d184107b858"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "bytes": 1506,
+      "sha256": "e731f8bac965adcec2e8fe5fe855eeb53c28a2f77529d619fedc2898ea49e7d6"
+    }
+  ],
+  "notOwnedOrStaged": [
+    "game/ui/mode-choice.mjs",
+    "game/ui/mode-choice.css"
+  ]
+}

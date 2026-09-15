@@ -101,6 +101,7 @@
     <link rel="stylesheet" data-boot-href="style.css" />
     <link rel="stylesheet" data-boot-href="ui/controller-settings.css" />
     <link rel="stylesheet" data-boot-href="ui/game-shell.css" />
+    <link rel="stylesheet" data-boot-href="ui/mode-choice.css" />
     <link rel="stylesheet" data-boot-href="ui/pixel-theme.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-picker.css" />
     <link rel="stylesheet" data-boot-href="ui/mission-brief.css" />
@@ -1461,6 +1462,10 @@
         <p class="eyebrow">FPV FIELD KIT / FLIGHT READY</p>
         <h1 id="shell-title">REVEAL<span>/ LINE</span></h1>
         <p class="home-copy">Find your line.<br />Bring the picture home.</p>
+        <nav id="shell-title-modes" aria-label="Game mode">
+          <a id="shell-title-versus" href="couch/?return=solo">Couch Versus</a>
+          <a id="shell-title-team" href="couch/relay-rescue.html?return=solo">Couch Team</a>
+        </nav>
         <p id="shell-featured-status" class="home-status" role="status" hidden></p>
         <p id="shell-flight-status" class="home-status" role="status" hidden></p>
         <button id="shell-flight-cancel" type="button" class="button secondary" hidden>
