@@ -1,0 +1,72 @@
+{
+  "status": "PASS_BOUNDED_HISTORICAL_ARCHIVE_JOURNEY",
+  "closedAt": "2026-09-15T18:18:09.267018+00:00",
+  "gameSource": "cc9f8ffcc3be246f53ca0df7f068476d8401d040",
+  "archiveRevision": "275a3061e8233a2c1046a494e613dca03783e231",
+  "version": "v0.57.2",
+  "runId": 35005881487,
+  "deploymentId": 6465379166,
+  "url": "https://mekhovov.github.io/revealline-archive-16/releases/v0.57.2/site/game/",
+  "nativeJourney": [
+    "title readiness",
+    "visible Deploy preparation",
+    "Base game selection",
+    "First Signal deployment",
+    "ordinary ArrowDown",
+    "genuine victory 52.2% / 8160 points / 3 lives",
+    "Results / Try again",
+    "explicit Pause",
+    "Main menu / actual Release Explorer link",
+    "native Back to exact archive",
+    "390x844 portrait / original Explorer focus"
+  ],
+  "savedRetry": {
+    "runId": "7ad5c928-4758-4ce8-ba0d-e6ebc2c447c2",
+    "ticks": 58,
+    "checkpoint": "2f617e946ac1c963",
+    "pinsUnchanged": true
+  },
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "portrait": {
+    "horizontalOverflow": false,
+    "mainMenuMinimumHeight": 51,
+    "releaseExplorerHeight": 78,
+    "focus": "shell-release-explorer"
+  },
+  "inputScope": "Agent-browser native pointer and keyboard in isolated headless Chrome; no physical-device or complete keyboard-only/touch/controller claim",
+  "corrections": [
+    "Initial hidden shell-continue selection had no visible effect; actual observed Deploy ref used.",
+    "An incorrect Explorer CSS selector failed. A subsequent mistaken Back returned to owned about:blank; normal Forward restored the game. The later actual visible Explorer link and Back are independently recorded in actions 45\u201350.",
+    "paused.png captures the actual victory picture, not a paused attempt; paused-retry.png is the explicit paused retry.",
+    "Initial portrait selector returned an empty list; subsequent measured actual shell control IDs and screenshot establish only the reported menu geometry."
+  ],
+  "historicalLimitations": [
+    "Known unstarted-mission picture-writer race remains uncorrected in original v0.57.2; this completed-picture sample does not reproduce or clear it.",
+    "Session-only history return warning preserved; no auto-resume.",
+    "No offline, imports, authoring or full P01 acceptance in this archive run."
+  ],
+  "observation": {
+    "capped": false,
+    "events": 1634,
+    "bytes": 539465,
+    "exceptions": 0
+  },
+  "closure": {
+    "browserPid": 26327,
+    "collectorPid": 26737,
+    "portClosed": true,
+    "profileRetained": true,
+    "minimumFreeBytes": 959946752,
+    "maxProfileBytes": 27019364
+  },
+  "phaseAccepted": false
+}

@@ -1,0 +1,49 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-15",
+  "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "deploymentId": 6460910463,
+  "versions": [
+    "v0.57.1"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-15/browser-review.json",
+      "sha256": "31cbe516e2cca24025194054cf6fdb8d527d79f3d7f5c2fc2a2e59bd256f770a"
+    },
+    {
+      "path": "evidence/archive-15/native-assertions.json",
+      "sha256": "36f218d42cff2907de62d219481f7e4414f4bc0c0e55c41d5520bdf3b34b1b11"
+    },
+    {
+      "path": "evidence/archive-15/native-evidence.zip",
+      "sha256": "873eaf2fc5d823ba23836d2511aa7fc58c75a81f894d46dac65feea67b9ad74b"
+    },
+    {
+      "path": "evidence/archive-15/native-evidence-record.json",
+      "sha256": "0a4b5925bb0b595da26d8c753855cfd8bb901e06c38bf137df0618edaa52cc43"
+    },
+    {
+      "path": "evidence/archive-15/native-title.png",
+      "sha256": "8c07f4be00c0be06a2639157b620dcb0a9775e351b2c6bf26e5b6f5c8cb7312d"
+    },
+    {
+      "path": "evidence/archive-15/native-pause.png",
+      "sha256": "80b1f8dbd67588180f439e641f44754336efea9d1d58b039e0d426b39bdcb74b"
+    },
+    {
+      "path": "evidence/archive-15/native-explorer.png",
+      "sha256": "726fcc68727d5e8d3b9a5b061981b06c576f3cdcde24c931dee592620a72e4f7"
+    },
+    {
+      "path": "evidence/archive-15/native-return.png",
+      "sha256": "9b1d8fe961964443a4ebc243321355677df91dabb84d8d1f3850c9b160f8acde"
+    },
+    {
+      "path": "evidence/archive-15/native-portrait.png",
+      "sha256": "3280f3f8cbe00c62cf7ecfcc959ba94dfa1d030733dfdfe9aaa848fd2732694b"
+    }
+  ],
+  "scope": "Bounded online Archive15 preservation only: exact frozen version, ordinary native capture and pause, Explorer/Back with capture and focus retained, portrait title controls and owned closure. Raw evidence preserves two caught lines, one confirmed Restart, a Help-tab identity refusal and explicit owned-target close/restore intervention, existing session-only warning, and canonical main Explorer loading-CSS 404. Known historical Library/craft/Controller focus findings remain. No physical device, exhaustive input, offline, future v0.57.2 correction or P01 acceptance claim."
+}

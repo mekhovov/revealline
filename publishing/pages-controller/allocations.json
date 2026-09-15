@@ -146,6 +146,20 @@
       "versions": [
         "v0.57.0"
       ]
+    },
+    {
+      "id": "archive-15",
+      "repository": "mekhovov/revealline-archive-15",
+      "versions": [
+        "v0.57.1"
+      ]
+    },
+    {
+      "id": "archive-16",
+      "repository": "mekhovov/revealline-archive-16",
+      "versions": [
+        "v0.57.2"
+      ]
     }
   ]
 }

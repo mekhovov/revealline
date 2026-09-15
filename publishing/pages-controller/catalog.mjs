@@ -65,6 +65,7 @@ export async function copyCatalogPresentation(projectRoot, destination) {
     await copy(`game/ui/fonts/field-kit/${notice}`);
   await copy('game/ui/field-kit-surfaces.mjs');
   await copy('game/presentation/page-entry.mjs');
+  await copy('game/ui/operation-status.css');
   await copy('site/release-catalog.css');
   const manifest = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
   if (manifest.format !== 'revealline-presentation-build.v1' || !Array.isArray(manifest.files))

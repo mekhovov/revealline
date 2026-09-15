@@ -1,0 +1,18 @@
+{
+  "status": "PASS_BYTE_PRESERVATION_ONLY",
+  "archive": {
+    "path": "native-evidence.zip",
+    "bytes": 1360024,
+    "sha256": "873eaf2fc5d823ba23836d2511aa7fc58c75a81f894d46dac65feea67b9ad74b"
+  },
+  "manifest": {
+    "path": "native-evidence-manifest.json",
+    "bytes": 16308,
+    "sha256": "44e4ece154001e67607520d2aed85641a92ab40e7c18c420bd4755721a251e35"
+  },
+  "members": 100,
+  "uncompressedBytes": 1833090,
+  "allMembersReread": true,
+  "profileAndPayloadExcluded": true,
+  "phaseAccepted": false
+}

@@ -1,0 +1,109 @@
+{
+  "status": "CACHE_ONLY_CANDIDATE",
+  "templateCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "templateTree": "9881cab9459e1d2dc6f093c8e002468973406829",
+  "candidateFiles": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "bytes": 3074,
+      "sha256": "334622ad1557cd4a17f26d6e98450807aae8f2e2bcb4e4883abd3b85b0882db1"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2604,
+      "sha256": "cd567b05f7ccd22768714e8771f2da52735f11cb641f8803232f053c847ef15c"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 137169,
+      "sha256": "5be38feb73ce5bbd6dfd5448e15773a4e2ca7028ba831a92d9fba90faf83280c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 773,
+      "sha256": "2ef4aac3efc3aed9f216ee43ad6bf30ec5f28fd247b6d258dedd4a1d2e46399e"
+    },
+    {
+      "path": "input-authority.json",
+      "bytes": 5000,
+      "sha256": "964d6be20d60ce361311cbd2db6806e769c8f191086be9d5e0e2f6ddfaa5c457"
+    },
+    {
+      "path": "metadata/v0.57.2/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "61d61243d117c53783fa08ab585e2e5ff6e08fd7ede170163208f59d97db42d1"
+    },
+    {
+      "path": "metadata/v0.57.2/manifest.json",
+      "bytes": 121562,
+      "sha256": "e451485b178a2f14ba3e87350f9a305d4f03f264025794544bc924b0003a318d"
+    },
+    {
+      "path": "metadata/v0.57.2/release.json",
+      "bytes": 465,
+      "sha256": "8b5a376673ae2beee6118c8d7c3c2cd1101c678efec3405e7056181146aaa1dd"
+    },
+    {
+      "path": "metadata/v0.57.2/source-qualification.json",
+      "bytes": 64747,
+      "sha256": "899192dd56c7baa3824d28fef5d53d9221b90014aa36269649e1eb08d9bbf5fb"
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0"
+    },
+    {
+      "path": "source-lock.json",
+      "bytes": 1428,
+      "sha256": "3559d997946d9d4effc29184c7469a1a6f394c9c4a3d2784607cbbddd28470f5"
+    },
+    {
+      "path": "tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f"
+    },
+    {
+      "path": "tools/test_prepare.py",
+      "bytes": 16702,
+      "sha256": "eacb5c8d8899e0a565b20b27a761546c68e6100c076e7d1a0aa956e3bc852148"
+    },
+    {
+      "path": "tools/test_verify.py",
+      "bytes": 2278,
+      "sha256": "84891f0ee35945d12e165279b5fcffc8393646dc940c703f3fdeab1ef16b3a85"
+    },
+    {
+      "path": "tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06"
+    }
+  ],
+  "count": 16,
+  "bytes": 368811,
+  "expectedInventory": {
+    "files": 663,
+    "bytes": 312625191,
+    "sha256": "5be38feb73ce5bbd6dfd5448e15773a4e2ca7028ba831a92d9fba90faf83280c"
+  },
+  "originalManifestRows": 655,
+  "declaredExtras": 8,
+  "largeAssetsDownloaded": false,
+  "remoteWrites": false,
+  "futureGameVersionSourceSpecified": false,
+  "capacity": {
+    "expectedFiles": 663,
+    "expectedBytes": 312625191,
+    "archiveBudgetBytes": 800000000,
+    "archiveHeadroomBytes": 487374809,
+    "hostedMinimumFreeBytes": 3221225472,
+    "mainBudgetBytes": 950000000,
+    "localPayloadBuild": false
+  },
+  "metadataTestConstantsCorrected": true
+}
