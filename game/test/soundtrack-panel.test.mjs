@@ -32,7 +32,10 @@ class Element {
   }
   set disabled(value) {
     this._disabled = Boolean(value);
-    if (this._disabled) this.blur();
+    if (this._disabled && this.document.activeElement === this) {
+      if (this.document.deferDisabledBlur) this.document.disabledBlurs.push(() => this.blur());
+      else this.blur();
+    }
   }
   get disabled() {
     return this._disabled;
@@ -158,7 +161,13 @@ async function setup(
     open = true,
   } = {},
 ) {
-  const doc = { nodes: new Map(), activeElement: null, hidden: false, nativeDownloads: [] };
+  const doc = {
+    nodes: new Map(),
+    activeElement: null,
+    hidden: false,
+    nativeDownloads: [],
+    disabledBlurs: [],
+  };
   const eventRoot = new Element(doc, 'document');
   doc.addEventListener = (...args) => eventRoot.addEventListener(...args);
   doc.removeEventListener = (...args) => eventRoot.removeEventListener(...args);
@@ -272,7 +281,7 @@ const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
 
 // Hold the actual first store read while the DOM models native blur when the
 // focused Close button becomes disabled. Cached openings must not read again.
-async function pendingFirstOpen(t) {
+async function pendingFirstOpen(t, { deferredBlur = false } = {}) {
   const db = memoryIndexedDB(),
     savedStore = createSoundtrackStore({ indexedDB: db.indexedDB });
   let release,
@@ -294,14 +303,24 @@ async function pendingFirstOpen(t) {
       close: () => savedStore.close(),
     },
   });
+  app.doc.deferDisabledBlur = deferredBlur;
   const opening = app.panel.open();
   assert.equal(app.node('close').disabled, true);
   assert.equal(
-    app.doc.activeElement === app.doc.body,
+    app.doc.activeElement === (deferredBlur ? app.node('close') : app.doc.body),
     true,
-    'Disabling focused Close causes native-like blur.',
+    'The DOM boundary controls whether disabling blurs immediately or later.',
   );
-  return { ...app, opening, release, reject, reads: () => reads };
+  return {
+    ...app,
+    opening,
+    release,
+    reject,
+    reads: () => reads,
+    flushDisabledBlur: () => {
+      for (const blur of app.doc.disabledBlurs.splice(0)) blur();
+    },
+  };
 }
 
 test('first Studio read restores displaced Close focus after successful loading', async (t) => {
@@ -383,6 +402,45 @@ test('cached Studio reopening focuses Close without a second store read', async 
   assert.equal(app.node('close').disabled, false);
   assert.equal(app.doc.activeElement === app.node('close'), true, 'Expected exact focused node');
   assert.equal(app.node('status').textContent, 'Music library ready.');
+});
+
+for (const outcome of ['success', 'failure']) {
+  test(`first Studio read restores Close when disabling blurs later during ${outcome}`, async (t) => {
+    const app = await pendingFirstOpen(t, { deferredBlur: true });
+    app.flushDisabledBlur();
+    assert.equal(
+      app.doc.activeElement === app.doc.body,
+      true,
+      'Native blur arrives after open returned its pending Promise.',
+    );
+    if (outcome === 'failure') app.reject(new Error('Deferred first-read failure'));
+    else app.release();
+    await app.opening;
+    assert.equal(app.node('close').disabled, false);
+    assert.equal(
+      app.doc.activeElement === app.node('close'),
+      true,
+      'Restore the original enabled entry target after late blur.',
+    );
+    assert.match(
+      app.node('status').textContent,
+      outcome === 'failure' ? /Deferred first-read failure/ : /Saved library loaded/,
+    );
+  });
+}
+
+test('late first-read blur does not override a later deliberate focus choice that also blurs', async (t) => {
+  const app = await pendingFirstOpen(t, { deferredBlur: true });
+  app.flushDisabledBlur();
+  app.node('previous').focus();
+  app.node('previous').blur();
+  app.release();
+  await app.opening;
+  assert.equal(
+    app.doc.activeElement === app.doc.body,
+    true,
+    'A user choice relinquishes restoration permanently for this opening.',
+  );
 });
 
 test('real MP3 batch import is a draft; one atomic save stores originals and metadata without restarting transport', async (t) => {
