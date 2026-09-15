@@ -1,0 +1,35 @@
+{
+  "onePaused": [
+    {
+      "currentTime": 0.085253,
+      "duration": 2.0375,
+      "muted": true,
+      "paused": true,
+      "readyState": 4
+    },
+    {
+      "currentTime": 0.042586,
+      "duration": 2.0375,
+      "muted": false,
+      "paused": false,
+      "readyState": 4
+    }
+  ],
+  "masterMuted": [
+    {
+      "currentTime": 0.085253,
+      "duration": 2.0375,
+      "muted": true,
+      "paused": true,
+      "readyState": 4
+    },
+    {
+      "currentTime": 0.201637,
+      "duration": 2.0375,
+      "muted": true,
+      "paused": false,
+      "readyState": 4
+    }
+  ],
+  "order": "saved/current then draft; current explicitly paused while draft progresses; master mute affects both output flags without transport change"
+}
