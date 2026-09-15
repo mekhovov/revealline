@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:37:25.725362+00:00",
+  "completedAt": "2026-09-15T01:37:27.074538+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({links:[...document.querySelectorAll(\"a[href]\")].filter(a=>/couch|asset-studio/.test(a.href)).map(a=>({text:a.textContent,href:a.href})),installedRows:document.querySelector(\"#installed-packs\")?.children.length,installed:document.querySelector(\"#installed-packs\")?.textContent,offers:document.querySelector(\"#builtin-packs\")?.innerText})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"links\\\":[{\\\"text\\\":\\\"Couch race\\\",\\\"href\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/couch/\\\"},{\\\"text\\\":\\\"Asset Studio Art, themes & generation prompts\\\",\\\"href\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/authoring/asset-studio/\\\"},{\\\"text\\\":\\\"Couch race \u00b7 2 players\\\",\\\"href\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/couch/\\\"}],\\\"installedRows\\\":0,\\\"installed\\\":\\\"\\\",\\\"offers\\\":\\\"Install fpv arcade r5Install fpv pressure frontierInstall night shiftInstall living threadsInstall fieldcraftInstall homeward skiesInstall equipment workshopInstall sentinel relay\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

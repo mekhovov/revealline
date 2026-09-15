@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:27:21.433177+00:00",
+  "completedAt": "2026-09-15T01:27:21.940579+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({text:document.body.innerText,focus:document.activeElement.id,offlineStatus:document.querySelector(\"#offline-status\")?.textContent,details:document.querySelector(\"#offline-details\")?.textContent,viewport:{width:innerWidth,height:innerHeight,dpr:devicePixelRatio}})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nTACTICAL EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 45%\\\\nLIVES\\\\n\u25c6 \u25c6\\\\nTIME\\\\n2:12\\\\nSCORE\\\\n00000\\\\n\\\\nPAUSED\\\\n\\\\nResume \u2192\\\\nRestart mission\\\\nMission brief\\\\nMain menu\\\\nPaused\\\\nClose a line to reveal the picture\\\\n\\\\nYour line was caught. The territory you revealed is kept.\\\",\\\"focus\\\":\\\"start-button\\\",\\\"offlineStatus\\\":\\\"Offline preparation timed out. Keep the page online and try again.\\\",\\\"details\\\":\\\"No offline check yet.\\\",\\\"viewport\\\":{\\\"width\\\":1280,\\\"height\\\":800,\\\"dpr\\\":1}}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

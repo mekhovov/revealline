@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:40:41.419319+00:00",
+  "completedAt": "2026-09-15T01:40:41.750687+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,preview:document.querySelector(\"#draft-preview\")?.innerText,status:document.querySelector(\"#studio-status\")?.textContent,resources:performance.getEntriesByType(\"resource\").filter(e=>/content\\/packs\\//.test(e.name)).map(e=>({name:e.name,transfer:e.transferSize,decoded:e.decodedBodySize}))})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"preview\\\":\\\"FLIGHT / STUDIO\\\\nIII 00:00 0%\\\\nBoardPainter \u00b7 Orchard Crossing \u00b7 72 \u00d7 36 cells \u00b7 isolated fixture \u00b7 selected compact body at every preview width\\\",\\\"status\\\":\\\"Current release assets loaded. Changes stay in this local studio.\\\",\\\"resources\\\":[{\\\"name\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/fpv-arcade-r5.json\\\",\\\"transfer\\\":0,\\\"decoded\\\":0},{\\\"name\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/classic-lab.json\\\",\\\"transfer\\\":0,\\\"decoded\\\":40556},{\\\"name\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/fpv-arcade.json\\\",\\\"transfer\\\":0,\\\"decoded\\\":0},{\\\"name\\\":\\\"https://mekhovov.github.io/revealline/releases/v0.51.0/site/game/content/packs/sentinel-relay.json\\\",\\\"transfer\\\":0,\\\"decoded\\\":11416}]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

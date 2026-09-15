@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:43:33.349744+00:00",
+  "completedAt": "2026-09-15T01:43:33.664079+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,text:document.body.innerText,focus:document.activeElement.id})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":false,\\\"text\\\":\\\" \u25e9 REVEAL / LINE\\\\nTACTICAL EDITION\\\\n\u26f6\\\\nMissions\\\\nCollection\\\\nSettings\\\\nREVEALED\\\\n0.0%\\\\nTARGET 45%\\\\nLIVES\\\\n\u25c6 \u25c6 \u25c6\\\\nTIME\\\\n0:00\\\\nSCORE\\\\n00000\\\\n\\\\nMISSION 01\\\\n\\\\nClear a path.\\\\nReveal a world.\\\\n\\\\nLeave safe ground, draw a line and return.\\\\nReveal 45% by enclosing regions without a field enemy.\\\\n\\\\nStandard difficulty.\\\\n\\\\nStart mission \u2197\\\\nLearn by playing\\\\nMission brief\\\\nMain menu\\\\n\\\\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\\\\n\\\\nReady for launch\\\\nClose a line to reveal the picture\\\\n\\\\nYour first route: fly down from the marked start to the opposite border.\\\",\\\"focus\\\":\\\"\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

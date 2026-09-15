@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:49:22.520423+00:00",
+  "completedAt": "2026-09-15T01:49:24.588819+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({focus:document.activeElement.outerHTML,buttons:[...document.querySelectorAll(\"#installed-packs button\")].map(b=>({html:b.outerHTML,rect:b.getBoundingClientRect().toJSON(),inert:b.closest(\"[inert]\")?.id,style:{display:getComputedStyle(b).display,visibility:getComputedStyle(b).visibility}})),dialogs:[...document.querySelectorAll(\"dialog[open]\")].map(d=>({id:d.id,inert:d.inert,rect:d.getBoundingClientRect().toJSON()}))})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"focus\\\":\\\"<button class=\\\\\\\"dialog-close controller-focus\\\\\\\" data-close=\\\\\\\"library-dialog\\\\\\\" aria-label=\\\\\\\"Close library\\\\\\\" data-presentation-icon=\\\\\\\"close\\\\\\\">\u00d7</button>\\\",\\\"buttons\\\":[{\\\"html\\\":\\\"<button type=\\\\\\\"button\\\\\\\" class=\\\\\\\"button secondary\\\\\\\">Play FPV Front \u00b7 Pressure Lines</button>\\\",\\\"rect\\\":{\\\"x\\\":179,\\\"y\\\":780.484375,\\\"width\\\":315.5625,\\\"height\\\":47,\\\"top\\\":780.484375,\\\"right\\\":494.5625,\\\"bottom\\\":827.484375,\\\"left\\\":179},\\\"style\\\":{\\\"display\\\":\\\"inline-flex\\\",\\\"visibility\\\":\\\"visible\\\"}},{\\\"html\\\":\\\"<button type=\\\\\\\"button\\\\\\\" class=\\\\\\\"button secondary\\\\\\\">Remove from device</button>\\\",\\\"rect\\\":{\\\"x\\\":502.5625,\\\"y\\\":780.484375,\\\"width\\\":221.25,\\\"height\\\":47,\\\"top\\\":780.484375,\\\"right\\\":723.8125,\\\"bottom\\\":827.484375,\\\"left\\\":502.5625},\\\"style\\\":{\\\"display\\\":\\\"inline-flex\\\",\\\"visibility\\\":\\\"visible\\\"}}],\\\"dialogs\\\":[{\\\"id\\\":\\\"settings-dialog\\\",\\\"inert\\\":false,\\\"rect\\\":{\\\"x\\\":120,\\\"y\\\":0,\\\"width\\\":1040,\\\"height\\\":800,\\\"top\\\":0,\\\"right\\\":1160,\\\"bottom\\\":800,\\\"left\\\":120}},{\\\"id\\\":\\\"library-dialog\\\",\\\"inert\\\":false,\\\"rect\\\":{\\\"x\\\":120,\\\"y\\\":0,\\\"width\\\":1040,\\\"height\\\":800,\\\"top\\\":0,\\\"right\\\":1160,\\\"bottom\\\":800,\\\"left\\\":120}}]}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}

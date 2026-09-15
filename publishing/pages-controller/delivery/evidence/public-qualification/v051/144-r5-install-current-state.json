@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-09-15T01:46:34.138035+00:00",
+  "completedAt": "2026-09-15T01:46:34.516885+00:00",
+  "command": [
+    "agent-browser",
+    "--session",
+    "field-kit-public51-persistent",
+    "--profile",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test_fpv_redesign/.cache/fpv-redesign/public-qualification/profiles/final51",
+    "eval",
+    "JSON.stringify({online:navigator.onLine,status:document.querySelector(\"#pack-status\")?.textContent,installed:document.querySelector(\"#installed-packs\")?.innerText,rows:document.querySelector(\"#installed-packs\")?.children.length,dialog:document.querySelector(\"#library-dialog\")?.innerText})"
+  ],
+  "returncode": 0,
+  "stdout": "\"{\\\"online\\\":true,\\\"status\\\":\\\"Checking\u2026\\\",\\\"installed\\\":\\\"\\\",\\\"rows\\\":0,\\\"dialog\\\":\\\"\u00d7\\\\n\\\\nTHE THINGS YOU KEEP\\\\n\\\\nFlight library.\\\\nRecords\\\\nSaves & loads\\\\nExpansion packs\\\\nChallenges\\\\n\\\\nExpansion packs add campaigns, maps, registered abilities, themes, images and original music recipes. Packs contain data; they cannot execute scripts.\\\\n\\\\nInstall fpv arcade r5Install fpv pressure frontierInstall night shiftInstall living threadsInstall fieldcraftInstall homeward skiesInstall equipment workshopInstall sentinel relay\\\\nInstall a pack file\\\\nPaste pack JSON\\\\nExport installed packs\\\\n\\\\nChecking\u2026\\\"}\"\n",
+  "stderr": "\u26a0 --profile ignored: daemon already running. Use 'agent-browser close' first to restart with new options.\n"
+}
