@@ -1,0 +1,71 @@
+{
+  "sourceParent": "0b541daa0d9bdd569c68517fe98a07ae0a15ca6c",
+  "status": "INTEGRATED_CANDIDATE_FOCUSED_PASS",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=4",
+    "game/test/audio-master.test.mjs",
+    "game/test/audio-preferences.test.mjs",
+    "game/test/soundtrack-master.test.mjs",
+    "game/test/audio.test.mjs",
+    "game/test/soundtrack-player.test.mjs",
+    "game/test/soundtrack-gain-leases.test.mjs",
+    "game/test/soundtrack-panel.test.mjs",
+    "game/test/story-dialog.test.mjs",
+    "game/test/victory-story-ui.test.mjs",
+    "game/test/soundtrack-host.test.mjs",
+    "game/test/soundtrack-master-keyboard-host.test.mjs",
+    "game/test/couch-audio-master.test.mjs",
+    "game/test/couch-navigation.test.mjs",
+    "game/test/coop-host.test.mjs",
+    "game/test/asset-studio-audio-master.test.mjs",
+    "game/test/asset-studio-loading.test.mjs",
+    "game/test/asset-studio-host-loading.test.mjs",
+    "game/test/presentation-production-history.test.mjs",
+    "game/test/data-json.test.mjs",
+    "game/test/mastery-library.test.mjs",
+    "game/test/attempt-export-panel.test.mjs",
+    "game/test/controller-settings.test.mjs",
+    "game/test/field-kit-flow.test.mjs",
+    "game/test/focus-clearance.test.mjs",
+    "game/test/gallery-focus.test.mjs",
+    "game/test/modal-navigation.test.mjs"
+  ],
+  "wholeFiles": 26,
+  "tests": 424,
+  "pass": 424,
+  "fail": 0,
+  "durationMs": 66640.897417,
+  "logSha256": "1097d4855e6effa0c2e4afd44b4c4a1f4036579633efe2e2f91a033680b0c398",
+  "logBytes": 96954,
+  "initialRun": {
+    "tests": 424,
+    "pass": 416,
+    "fail": 8,
+    "causes": [
+      "Seven errors from two missing sparse fixtures, restored exactly from HEAD.",
+      "One strict review-label test required Scoped P02-A source review. Functional modifier moved after that label, with scope unchanged."
+    ]
+  },
+  "sourceIdentityLimit": "Working candidate producer/ledger changes above source parent; final intended committed-source qualification still required.",
+  "phaseComplete": false,
+  "retainedLogs": [
+    {
+      "path": "integrated-initial-node20.txt",
+      "originalBytes": 104812,
+      "originalSha256": "dda60309aa4388a3eb0c105455cb9248a865f75dd4a486a31ec945a530f9c3f2",
+      "bytes": 104710,
+      "sha256": "6404c230ca3c19531c9442c28e645829ff82274d93db6e6398a0c7db52aa6909",
+      "normalization": "Strip line trailing whitespace and retain one final LF; original logs retained in .cache/p02a-integration."
+    },
+    {
+      "path": "integrated-restored-node20.txt",
+      "originalBytes": 97056,
+      "originalSha256": "07f9b28ca198af4a94bb91e0a3b8ffc1d995d88b56c1a9e168c329e5fc5ea3d4",
+      "bytes": 96954,
+      "sha256": "1097d4855e6effa0c2e4afd44b4c4a1f4036579633efe2e2f91a033680b0c398",
+      "normalization": "Strip line trailing whitespace and retain one final LF; original logs retained in .cache/p02a-integration."
+    }
+  ]
+}
