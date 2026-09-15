@@ -1,6 +1,6 @@
 # Text presentation and saved preferences
 
-The current solo game offers **Theme font** and **Plain** in Display & accessibility.
+The original solo integration offers **Theme font** and **Plain** in Display & accessibility.
 Theme font retains the selected presentation's display, interface and numeric
 faces. The current Field Kit uses Handjet accents, Exo 2 interface text and IBM
 Plex Mono counters. Plain uses ordinary platform text and monospace counters.
@@ -11,6 +11,12 @@ rename stored records or replace a historical font choice with an old asset just
 because this value says `pixel`. Existing profiles that omit `textFace` acquire the
 default in memory; reading a profile does not rewrite its raw stored document.
 Malformed explicit values still fail the ordinary preference validator.
+
+The isolated [P05-A candidate](shared-display-preferences.md) extends these same
+values to Solo, Versus and Team through one separate origin-local display record.
+The historical profile behavior below remains the legacy fallback; a valid shared
+record and later explicit intent take precedence in that candidate. Its browser
+and release acceptance remain separate.
 
 ## Presentation boundaries
 
@@ -24,7 +30,7 @@ Malformed explicit values still fail the ordinary preference validator.
 - Text changes never modify a run, its geometry, pending direction, queued turn,
   fixed-tick commands, replay hash or saved flight. Opening Settings pauses and
   only explicit Resume continues movement.
-- This preference belongs to the current solo shell. Separate Workshop pages,
+- This original integration belongs to the solo shell. Separate Workshop pages,
   historical releases and native OS dialogs retain their own presentation. Do
   not claim those surfaces inherit this setting without implementing and testing
   their host lifecycle.
