@@ -1,0 +1,35 @@
+{
+  "at": "2026-09-15T09:31:05.283884+00:00",
+  "checks": [
+    {
+      "path": "releases/v0.56.0/site/game/build-info.json",
+      "url": "https://mekhovov.github.io/revealline-archive-12/releases/v0.56.0/site/game/build-info.json",
+      "status": 200,
+      "finalURL": "https://mekhovov.github.io/revealline-archive-12/releases/v0.56.0/site/game/build-info.json",
+      "bytes": 143,
+      "sha256": "1f682ed7d0d2b21cb53a4b4318af61fbc0f83ff94a7301798f5e40ad44a11887",
+      "contentType": "application/json; charset=utf-8",
+      "passed": true
+    },
+    {
+      "path": "releases/v0.52.0/site/game/build-info.json",
+      "url": "https://mekhovov.github.io/revealline-archive-12/releases/v0.52.0/site/game/build-info.json",
+      "status": 200,
+      "finalURL": "https://mekhovov.github.io/revealline-archive-12/releases/v0.52.0/site/game/build-info.json",
+      "bytes": 143,
+      "sha256": "42a7ae63cad9b43a7f408326388c03c41b5ba9c696702929eebcb2823b67900c",
+      "contentType": "application/json; charset=utf-8",
+      "passed": true
+    },
+    {
+      "path": "releases/index.html",
+      "url": "https://mekhovov.github.io/revealline-archive-12/releases/index.html",
+      "status": 200,
+      "finalURL": "https://mekhovov.github.io/revealline-archive-12/releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0",
+      "contentType": "text/html; charset=utf-8",
+      "passed": true
+    }
+  ]
+}

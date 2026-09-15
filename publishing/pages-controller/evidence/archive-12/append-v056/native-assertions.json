@@ -1,0 +1,94 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "v056 title version and Deploy",
+      "passed": true
+    },
+    {
+      "name": "title Deploy enters actual installed Pressure Lines catalogue",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 exact canonical route",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 positive capture, score, lives and explicit pause",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 complete visible browser viewport",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 real canvas present",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 exact canonical route",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 positive capture, score, lives and explicit pause",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 complete visible browser viewport",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 real canvas present",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 title explorer reached canonical main",
+      "passed": true
+    },
+    {
+      "name": "v0.56.0 browser Back retains paused capture",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 title explorer reached canonical main",
+      "passed": true
+    },
+    {
+      "name": "v0.52.0 browser Back retains paused capture",
+      "passed": true
+    },
+    {
+      "name": "v056 saved flight verified after separate v052 visit",
+      "passed": true
+    },
+    {
+      "name": "v056 resumes only after explicit Resume",
+      "passed": true
+    },
+    {
+      "name": "v056-errors.txt empty",
+      "passed": true
+    },
+    {
+      "name": "v052-errors.txt empty",
+      "passed": true
+    },
+    {
+      "name": "final-errors.txt empty",
+      "passed": true
+    },
+    {
+      "name": "v056-console.txt empty",
+      "passed": true
+    },
+    {
+      "name": "v052-console.txt empty",
+      "passed": true
+    },
+    {
+      "name": "final-console.txt empty",
+      "passed": true
+    }
+  ],
+  "total": 22
+}

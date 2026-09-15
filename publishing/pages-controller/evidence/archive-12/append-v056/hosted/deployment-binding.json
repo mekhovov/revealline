@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "archiveId": "archive-12",
+  "infrastructureCommit": "48fadddd098af0e3e71e7913445144731d6da259",
+  "infrastructureTree": "c19591e0f919a80f6f8785e4d32980defbebc725",
+  "runId": 34952518018,
+  "deploymentId": 6455796852,
+  "artifactId": 10389563954,
+  "receiptZipSha256": "9ea1b4db6e3007f2325ffe8607670fc87e0b0ab23e38696b6b8d67d13af25d72",
+  "files": 1288,
+  "bytes": 635435625,
+  "expectedInventorySha256": "f0482926a23fbb56b3f6f808e64c3d44cdec104c09f0fc698510e815d2f5c338",
+  "pins": [
+    {
+      "path": "run.json",
+      "bytes": 13128,
+      "sha256": "5e868b8a4fd44725345c8802a95f888ffc13de4f0add4672b0598b41922f4cf1"
+    },
+    {
+      "path": "jobs.json",
+      "bytes": 4852,
+      "sha256": "e25deead592ba8d4f17b5a0c0fe3c39fbffe5b14bb9ceefe9e9eb3155e45e179"
+    },
+    {
+      "path": "main.json",
+      "bytes": 51616,
+      "sha256": "9e15c57f4a737b8a98ec22c716c38113fd52e3287de46918da10721de4c2ea6b"
+    },
+    {
+      "path": "deployment.json",
+      "bytes": 4689,
+      "sha256": "22a1b74bff4a54fbd5d0e2a0b140bd955eaa0a90e856f8480250eb1c74a1f3e9"
+    },
+    {
+      "path": "deployment-statuses.json",
+      "bytes": 7831,
+      "sha256": "5e71febd550538701ccb7e4e78da16266f0259de92389dc70f2fdc33f839f996"
+    },
+    {
+      "path": "artifacts.json",
+      "bytes": 1454,
+      "sha256": "b34f0e029dee04f4b7549d11de3e6348635d2850816f606756b3388166aba4dc"
+    },
+    {
+      "path": "receipts/receipt.json",
+      "bytes": 1753,
+      "sha256": "43af4d16ecd99c04f5bdadcae8142ec525c132826d7b22592961cb4983dbf371"
+    },
+    {
+      "path": "receipts/expected-inventory.json",
+      "bytes": 266189,
+      "sha256": "f0482926a23fbb56b3f6f808e64c3d44cdec104c09f0fc698510e815d2f5c338"
+    },
+    {
+      "path": "receipts/zip-receipt-v0.52.0.json",
+      "bytes": 407,
+      "sha256": "7e09817f5d2f6c4f130a1d806c10d59c4eb315525b6342b284a37fac5d58fb5e"
+    },
+    {
+      "path": "receipts/zip-receipt-v0.56.0.json",
+      "bytes": 407,
+      "sha256": "b73f70f1ab1c047ffacf2a07ce6a0931f3b82083a146baa917e15da1d7843273"
+    }
+  ],
+  "scope": "Actual protected deployment and original small hosted receipts. Public HTTP/native checks remain separate."
+}
