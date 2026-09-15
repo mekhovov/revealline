@@ -1,0 +1,7271 @@
+[
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 348,
+          "y": 824
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 740
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 440
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 364,
+      "width": 485.328125,
+      "x": 287.328125,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 796,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 860,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 908,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 844,
+          "y": 308
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 224
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 440,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 956
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 295.5,
+      "width": 394,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 394,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 306,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 354,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 310,
+          "y": 742
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 658
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 874,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 402
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 326,
+      "width": 434.6640625,
+      "x": 271.6640625,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 714,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 778,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 826,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 762,
+          "y": 270
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 186
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 402,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 874
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 288.75,
+      "width": 385,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 385,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 297,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 345,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 301,
+          "y": 720
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 636
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 852,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 393
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 317,
+      "width": 422.6640625,
+      "x": 266.6640625,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 692,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 756,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 804,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 740,
+          "y": 261
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 177
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 393,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 852
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 303,
+      "width": 404,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 320,
+          "y": 783
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 699
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 412
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 336,
+      "width": 448,
+      "x": 285.5,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 755,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 819,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 867,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 803,
+          "y": 280
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 196
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 412,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 915
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 282,
+      "width": 376,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 376,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 288,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 336,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 292,
+          "y": 722
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 638
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 854,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 384
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 308,
+      "width": 410.6640625,
+      "x": 273.6640625,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 694,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 758,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 806,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 742,
+          "y": 252
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 168
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 384,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 854
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 264,
+      "width": 352,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 352,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 264,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 312,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 268,
+          "y": 668
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 584
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 800,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 360
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 284,
+      "width": 378.6640625,
+      "x": 262.6640625,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 640,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 704,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 752,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 688,
+          "y": 228
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 144
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 360,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 800
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 275.25,
+      "width": 367,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 367,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 279,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 327,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 283,
+          "y": 535
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 451
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 667,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 375
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 248.25,
+      "width": 331,
+      "x": 220,
+      "y": 97.375
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 507,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 571,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 619,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 555,
+          "y": 243
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 159
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 375,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 667
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 216,
+      "width": 288,
+      "x": 16,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 228,
+          "y": 436
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 352
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 320
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 174,
+      "width": 232,
+      "x": 220,
+      "y": 107
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 456,
+          "y": 188
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 104
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 320,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 568
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 552,
+      "width": 736,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 652,
+          "y": 1001
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 917
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 744
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 597.75,
+      "width": 797,
+      "x": 220,
+      "y": 107.125
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 1021,
+          "y": 612
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 528
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1133
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 609,
+      "width": 812,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 812,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 724,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 772,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 728,
+          "y": 1048
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 4,
+          "y": 964
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 1180,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 820
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 633,
+      "width": 844,
+      "x": 220,
+      "y": 127.5
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 1020,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1084,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1132,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 1068,
+          "y": 688
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 604
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 820,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1180
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 708,
+      "width": 944,
+      "x": 220,
+      "y": 80
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 1120,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1184,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1232,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 1168,
+          "y": 668
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 584
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 800,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1280
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 322,
+      "width": 429.328125,
+      "x": 245.328125,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 147.578125,
+          "width": 132,
+          "x": 820,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 820,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 820,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 868,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 724,
+          "y": 198
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 114
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 956
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 204,
+      "width": 272,
+      "x": 249.5,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 507,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 571,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 619,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 555,
+          "y": 148
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 64
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 280,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 667
+  },
+  {
+    "label": "manual-large-left-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 174,
+      "width": 232,
+      "x": 220,
+      "y": 75
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 456,
+          "y": 124
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 24,
+          "y": 40
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 256,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 568
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 824
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 244,
+          "y": 740
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 440
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 322,
+      "width": 429.328125,
+      "x": 281.328125,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 147.578125,
+          "width": 132,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 144,
+          "y": 198
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 740,
+          "y": 114
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 956
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 216,
+      "width": 288,
+      "x": 16,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 436
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 124,
+          "y": 352
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 320
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 174,
+      "width": 232,
+      "x": 116,
+      "y": 75
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 124
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 352,
+          "y": 40
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 256,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 568
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 303,
+      "width": 404,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 783
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 216,
+          "y": 699
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 412
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 336,
+      "width": 448,
+      "x": 181.5,
+      "y": 72
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 755,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 819,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 867,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 280
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 699,
+          "y": 196
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 412,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 915
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 552,
+      "width": 736,
+      "x": 4,
+      "y": 120
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 1001
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 548,
+          "y": 917
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 744
+  },
+  {
+    "label": "manual-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 597.75,
+      "width": 797,
+      "x": 116,
+      "y": 107.125
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 612
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 917,
+          "y": 528
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1133
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 184
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 432,
+          "x": 4,
+          "y": 120
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 824
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 244,
+          "y": 740
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 440
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 190,
+      "width": 253.328125,
+      "x": 299.328125,
+      "y": 136
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 796,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 860,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 908,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 620,
+          "x": 116,
+          "y": 72
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 198
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 740,
+          "y": 114
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 330,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 956
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 152,
+      "width": 202.6640625,
+      "x": 58.6640625,
+      "y": 184
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 312,
+          "x": 4,
+          "y": 120
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 436
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 124,
+          "y": 352
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 320
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 116,
+      "width": 154.6640625,
+      "x": 154.6640625,
+      "y": 136
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 232,
+          "x": 116,
+          "y": 72
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 124
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 352,
+          "y": 40
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 256,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 568
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 303,
+      "width": 404,
+      "x": 4,
+      "y": 184
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 404,
+          "x": 4,
+          "y": 120
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 783
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 216,
+          "y": 699
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 412
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 272,
+      "width": 362.6640625,
+      "x": 224.1640625,
+      "y": 136
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 755,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 819,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 867,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 579,
+          "x": 116,
+          "y": 72
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 280
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 699,
+          "y": 196
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 412,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 915
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 552,
+      "width": 736,
+      "x": 4,
+      "y": 184
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 736,
+          "x": 4,
+          "y": 120
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 1001
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 548,
+          "y": 917
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 744
+  },
+  {
+    "label": "warning-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 597.75,
+      "width": 797,
+      "x": 116,
+      "y": 139.125
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": {
+          "height": 64,
+          "width": 797,
+          "x": 116,
+          "y": 72
+        },
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 612
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 917,
+          "y": 528
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1133
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 192
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 54,
+          "width": 432,
+          "x": 4,
+          "y": 120
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 824
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 244,
+          "y": 740
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 440
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 182,
+      "width": 242.6640625,
+      "x": 304.6640625,
+      "y": 144
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 796,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 860,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 908,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 29,
+          "width": 620,
+          "x": 116,
+          "y": 72
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 198
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 740,
+          "y": 114
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 330,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 956
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 144,
+      "width": 192,
+      "x": 64,
+      "y": 192
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 54,
+          "width": 312,
+          "x": 4,
+          "y": 120
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 436
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 124,
+          "y": 352
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 320
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 101,
+      "width": 134.6640625,
+      "x": 164.6640625,
+      "y": 151
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 79,
+          "width": 232,
+          "x": 116,
+          "y": 72
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 124
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 352,
+          "y": 40
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 256,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 568
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 303,
+      "width": 404,
+      "x": 4,
+      "y": 192
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 54,
+          "width": 404,
+          "x": 4,
+          "y": 120
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 783
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 216,
+          "y": 699
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 412
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 264,
+      "width": 352,
+      "x": 229.5,
+      "y": 144
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 755,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 819,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 867,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 29,
+          "width": 579,
+          "x": 116,
+          "y": 72
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 280
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 699,
+          "y": 196
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 412,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 915
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 552,
+      "width": 736,
+      "x": 4,
+      "y": 192
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 29,
+          "width": 736,
+          "x": 4,
+          "y": 120
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 4,
+          "y": 1001
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 548,
+          "y": 917
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 744
+  },
+  {
+    "label": "training-large-right-dpad",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 596,
+      "width": 794.6640625,
+      "x": 117.1640625,
+      "y": 144
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 68,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": {
+          "height": 29,
+          "width": 797,
+          "x": 116,
+          "y": 72
+        },
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 24,
+          "y": 612
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": {
+          "height": 192,
+          "width": 192,
+          "x": 917,
+          "y": 528
+        },
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "large",
+    "touch": "dpad",
+    "width": 1133
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 216,
+      "width": 432,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 440
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 414,
+      "width": 828,
+      "x": 124,
+      "y": 13
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 392
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 440,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 956
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 197,
+      "width": 394,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 394,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 306,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 354,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 874,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 402
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 373,
+      "width": 746,
+      "x": 124,
+      "y": 14.5
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 354
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 402,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 874
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 192.5,
+      "width": 385,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 385,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 297,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 345,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 852,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 393
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 362,
+      "width": 724,
+      "x": 124,
+      "y": 15.5
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 345
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 393,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 852
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 202,
+      "width": 404,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 412
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 393.5,
+      "width": 787,
+      "x": 124,
+      "y": 9.25
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 364
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 412,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 915
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 188,
+      "width": 376,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 376,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 288,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 336,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 854,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 384
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 363,
+      "width": 726,
+      "x": 124,
+      "y": 10.5
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 336
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 384,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 854
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 176,
+      "width": 352,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 352,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 264,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 312,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 800,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 360
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 336,
+      "width": 672,
+      "x": 124,
+      "y": 12
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 312
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 360,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 800
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 183.5,
+      "width": 367,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 367,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 279,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 327,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 667,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 375
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 311,
+      "width": 622,
+      "x": 22.5,
+      "y": 60
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 507,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 571,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 619,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 375,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 667
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 156,
+      "width": 312,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 320
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 256,
+      "width": 512,
+      "x": 28,
+      "y": 60
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 408,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 472,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 320,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 568
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 368,
+      "width": 736,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 744
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 562.5,
+      "width": 1125,
+      "x": 4,
+      "y": 118.75
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 1133
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 406,
+      "width": 812,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 812,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 724,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 772,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 1180,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 820
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 586,
+      "width": 1172,
+      "x": 4,
+      "y": 145
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 1020,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1084,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1132,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 820,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 1180
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 636,
+      "width": 1272,
+      "x": 4,
+      "y": 110
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 1120,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1184,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1232,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 800,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 1280
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 322,
+      "width": 644,
+      "x": 216,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 52,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 956
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 269.5,
+      "width": 539,
+      "x": 124,
+      "y": 5.25
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 232
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 72,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 280,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 667
+  },
+  {
+    "label": "arcade-standard-right-stick",
+    "aspect": 2,
+    "board": {
+      "height": 220,
+      "width": 440,
+      "x": 124,
+      "y": 18
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 4,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 208
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 72,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "right",
+    "height": 256,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "stick",
+    "width": 568
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 216,
+      "width": 432,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 440
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 322,
+      "width": 644,
+      "x": 96,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 840,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 888,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 956
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 156,
+      "width": 312,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 224,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 320
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 220,
+      "width": 440,
+      "x": 4,
+      "y": 18
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 452,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 208
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 256,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 568
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 202,
+      "width": 404,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 316,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 412
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 393.5,
+      "width": 787,
+      "x": 4,
+      "y": 9.25
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 799,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 799,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 799,
+          "y": 364
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 847,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 412,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 915
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 368,
+      "width": 736,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 648,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 744
+  },
+  {
+    "label": "arcade-standard-left-swipe",
+    "aspect": 2,
+    "board": {
+      "height": 562.5,
+      "width": 1125,
+      "x": 4,
+      "y": 118.75
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 56,
+          "width": 973,
+          "x": 56,
+          "y": 4
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1037,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1085,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 744,
+    "inside": true,
+    "layout": "strip",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 1133
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 440
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 322,
+      "width": 429.328125,
+      "x": 203.328125,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 840,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 956
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 234,
+      "width": 312,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 312,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 272,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 568,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 320
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 248,
+      "width": 330.6640625,
+      "x": 58.6640625,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 452,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 208
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 256,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 568
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 303,
+      "width": 404,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 404,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 364,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 915,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 412
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 404,
+      "width": 538.6640625,
+      "x": 128.1640625,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 799,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 799,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 799,
+          "y": 364
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 412,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 915
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 552,
+      "width": 736,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 736,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 696,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 1133,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 744
+  },
+  {
+    "label": "revealed-picture",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 736,
+      "width": 981.328125,
+      "x": 15.828125,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 131.7265625,
+          "width": 112,
+          "x": 1017,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1017,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 1017,
+          "y": 696
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": null,
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 744,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "picture",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 1133
+  },
+  {
+    "label": "offline-restored-flight",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 324,
+      "width": 432,
+      "x": 4,
+      "y": 104
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 52,
+          "width": 432,
+          "x": 4,
+          "y": 52
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 4,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 344,
+          "y": 4
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 392,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 348,
+          "y": 824
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 956,
+    "inside": true,
+    "layout": "portrait",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 440
+  },
+  {
+    "label": "offline-restored-flight",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 322,
+      "width": 429.328125,
+      "x": 147.328125,
+      "y": 4
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 840,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 840,
+          "y": 282
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 888,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 744,
+          "y": 198
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 330,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 956
+  },
+  {
+    "label": "offline-restored-flight",
+    "aspect": 1.3333333333333333,
+    "board": {
+      "height": 246,
+      "width": 328,
+      "x": 4,
+      "y": 5
+    },
+    "fixed": [
+      {
+        "box": {
+          "height": 129.59375,
+          "width": 112,
+          "x": 452,
+          "y": 60
+        },
+        "selector": ".telemetry"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 4
+        },
+        "selector": "#shell-menu"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 452,
+          "y": 208
+        },
+        "selector": "#shell-fullscreen"
+      },
+      {
+        "box": {
+          "height": 44,
+          "width": 44,
+          "x": 520,
+          "y": 4
+        },
+        "selector": "#pause-button"
+      },
+      {
+        "box": null,
+        "selector": "#flight-alert"
+      },
+      {
+        "box": null,
+        "selector": ".first-flight-task"
+      },
+      {
+        "box": {
+          "height": 108,
+          "width": 88,
+          "x": 356,
+          "y": 124
+        },
+        "selector": ".play-controls .ability-buttons"
+      },
+      {
+        "box": null,
+        "selector": ".play-controls .direction-controls"
+      }
+    ],
+    "hand": "left",
+    "height": 256,
+    "inside": true,
+    "layout": "rail",
+    "overlaps": [],
+    "scoreHidden": true,
+    "state": "running",
+    "textSize": "standard",
+    "touch": "swipe",
+    "width": 568
+  }
+]

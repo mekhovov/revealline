@@ -1,0 +1,56 @@
+[
+  {
+    "check": "fullscreen enter",
+    "label": "Exit fullscreen",
+    "pressed": "true",
+    "state": "running"
+  },
+  {
+    "check": "fullscreen exit",
+    "label": "Enter fullscreen",
+    "pressed": "false",
+    "state": "running"
+  },
+  {
+    "check": "manual actions and rotation preserve active flight",
+    "snapshot": "- main:\n  - region \"Game\":\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - paragraph: Revealed 0.0% · TARGET 58% · 3 lives · Time 0:33 · Score 00000\n    - paragraph: Hidden objectives marked. Short direction hints show where enemies are heading.\n    - text: ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - status"
+  },
+  {
+    "check": "fullscreen help pauses gameplay",
+    "snapshot": "- main:\n  - region \"Game\":\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; pause Esc / P. Releasing a direction keeps you moving. Closing a cut stops your craft; tap a fresh direction to fly again.\"\n    - status: Paused\n    - paragraph: Revealed 0.0% · TARGET 68% · 3 lives · Time 2:46 · Score 00000\n    - paragraph: AIM → CHASE → REST. Bait a locked target, then choose another exit.\n    - text: ◆\n    - button \"Resume →\"\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - status\n- dialog \"More room to play\":\n  - button \"Close fullscreen help\" [active]: ×\n  - heading \"More room to play\" [level=2]\n  - status: Enter fullscreen to hide browser controls, or launch the game from your Home Screen. You can also keep playing in this window.\n  - heading \"On iPhone or iPad\" [level=3]\n  - list:\n    - text: Open this game in Safari and choose\n    - strong: Share\n    - text: (in the page menu on some layouts).\n    - text: Choose\n    - strong: Add to Home Screen\n    - text: .\n    - text: Leave\n    - strong: Open as Web App\n    - text: enabled, then tap\n    - strong: Add\n    - text: .\n    - listitem: Launch Reveal Line from its Home Screen icon.\n  - paragraph: On other devices, use your browser’s Install app or Add to Home Screen option when available.\n  - paragraph: To keep a portable copy of your progress, use Settings → Game data → Saves & recovery before switching. Browser and Home Screen storage may be separate; your saves are not transferred automatically.\n  - button \"Enter fullscreen\"\n  - button \"Back to game\"\n- dialog \"Flight settings.\":\n  - button \"Close settings\": ×\n  - heading \"Flight settings.\" [level=2]\n  - tablist \"Settings categories\":\n    - tab \"Controls\"\n    - tab \"Audio\"\n    - tab \"Display & accessibility\" [selected]\n    - tab \"Game data\"\n  - tabpanel \"Display & accessibility\":\n    - paragraph: Readable text, terrain and comfortable motion.\n    - button \"Fullscreen & Home Screen\"\n    - text: Text style\n    - combobox \"Text style\":\n      - option \"Theme font\" [selected]\n      - option \"Plain\"\n    - text: Text size\n    - combobox \"Text size\":\n      - option \"Standard\" [selected]\n      - option \"Large\"\n    - text: Terrain detail\n    - combobox \"Terrain detail\":\n      - option \"Balanced detail\" [selected]\n      - option \"Small pixel tiles\"\n      - option \"Larger landmarks\"\n    - checkbox \"Show grid guides\"\n    - text: Show grid guides\n    - checkbox \"Reduced effects\"\n    - text: Reduced effects\n    - paragraph: Reduced effects softens movement and celebration effects. Every direction tap keeps you moving. Use Pause to take a break. Manual equipment, when provided by a map, uses separate controls.\n- dialog \"REVEAL / LINE\":\n  - paragraph: FPV FIELD KIT / FLIGHT READY\n  - heading \"REVEAL / LINE\" [level=1]:\n    - text: REVEAL\n    - generic: / LINE\n  - navigation \"Main menu\":\n    - button \"Continue\":\n      - generic: Continue\n      - generic: →\n    - button \"Missions\"\n    - button \"Collection\"\n    - button \"Settings\"\n    - button \"Workshop\"\n    - link \"Release explorer Play another edition\":\n      - /url: http://127.0.0.1:8989/mobile-ux-8a4fae452cdc/site/releases/\n      - text: Release explorer\n      - generic: Play another edition\n  - paragraph: Continue · Orchard Crossing\n  - paragraph: Version v0.53.1"
+  },
+  {
+    "check": "help return restores focus and stays paused",
+    "focus": "\n          Fullscreen & Home Screen\n        ",
+    "helpOpen": false,
+    "settingsOpen": true,
+    "state": "paused"
+  },
+  {
+    "check": "offline preparation",
+    "details": "{\n  \"status\": \"ready\",\n  \"version\": \"v0.53.1\",\n  \"buildId\": \"a3025e69515ea5699d2c1a3e10d73ed5b94195eb2a49a732512181c2298da3c7\",\n  \"count\": 602,\n  \"verified\": 602,\n  \"bytes\": 55073041,\n  \"missing\": [],\n  \"corrupt\": [],\n  \"message\": \"Offline files verified. This version can open without a connection while the browser retains its storage. FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup.\"\n}",
+    "status": "Offline files verified. This version can open without a connection while the browser retains its storage. FPV Front · First Light R2, FPV Front · First Light R3, FPV Front · First Light Arcade R4, FPV Front · Pressure Lines, FPV Front · First Light, FPV Front · Frontier Lines, FPV Front · Illustrated Pressure, Ukraine Atlas · Woven Lines, 1994 Forever · After Hours, Spend Network · Shared Routes, FPV Front · Route Choices — Tactical are optional: install once while online for offline play. Already-installed packs remain in device storage; keep a complete backup. · 602 files verified"
+  },
+  {
+    "check": "before offline reload",
+    "snapshot": "- main:\n  - region \"Game\":\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - paragraph: Revealed 0.0% · TARGET 58% · 3 lives · Time 0:00 · Score 00000\n    - paragraph: Choose your route. Open Missions → Mission brief for guidance.\n    - text: ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - status"
+  },
+  {
+    "check": "offline reload restored paused flight",
+    "snapshot": "- main:\n  - region \"Game\":\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - region \"Mission details\":\n      - paragraph: MISSION 02\n      - heading \"Relay Orchard\" [level=1]\n      - paragraph: Reveal 58% · 1 required relay.\n      - paragraph: Standard difficulty.\n    - button \"Verifying saved flight…\" [disabled]\n    - button \"Continue campaign →\"\n    - button \"Learn by playing\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - paragraph: Tap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n    - status"
+  },
+  {
+    "check": "offline explicit resume and pause",
+    "snapshot": "- main:\n  - region \"Game\":\n    - application \"Territory capture game. Tap a direction to fly. Tap another to turn. Up ↑ / W; down ↓ / S; left ← / A; right → / D; ability E; boost Left Shift / Right Shift; change craft G; pause Esc / P. Releasing a direction keeps you moving.\"\n    - status: Paused\n    - paragraph: Revealed 0.0% · TARGET 58% · 3 lives · Time 0:01 · Score 00000\n    - paragraph: Flight resumed.\n    - text: ◆\n    - button \"Resume →\" [active]\n    - text: ◆ ◆ ◆ ◆ ◆\n    - button \"Restart mission\"\n    - button \"Mission brief\"\n    - button \"Main menu\"\n    - status"
+  },
+  {
+    "check": "keyboard focus on short pause",
+    "box": {
+      "height": 44,
+      "width": 249,
+      "x": 288,
+      "y": 133.0859375
+    },
+    "focus": "\n                    Restart mission\n                  "
+  }
+]

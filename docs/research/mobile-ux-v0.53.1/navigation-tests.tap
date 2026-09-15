@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: real win focuses results; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls
+ok 1 - real win focuses results; keyboard arrows and Tab include visible headers and exclude unrelated or flight controls
+  ---
+  duration_ms: 14091.790416
+  ...
+# Subtest: controller reaches results plus visible headers; Confirm opens picture and Back restores the same result
+ok 2 - controller reaches results plus visible headers; Confirm opens picture and Back restores the same result
+  ---
+  duration_ms: 15984.442875
+  ...
+# Subtest: a legal terminal self-contact focuses Retry and keyboard retry starts a fresh stopped attempt
+ok 3 - a legal terminal self-contact focuses Retry and keyboard retry starts a fresh stopped attempt
+  ---
+  duration_ms: 3701.60475
+  ...
+# Subtest: held Confirm cannot cross result → next briefing; keyboard Pause and fresh Resume preserve stopped flight
+ok 4 - held Confirm cannot cross result → next briefing; keyboard Pause and fresh Resume preserve stopped flight
+  ---
+  duration_ms: 13522.211667
+  ...
+# Subtest: short results omit reading controls; overflow reading scrolls by keyboard and ends without launching
+ok 5 - short results omit reading controls; overflow reading scrolls by keyboard and ends without launching
+  ---
+  duration_ms: 11990.829584
+  ...
+# Subtest: result keyboard picture/Back and appearance/settings return keep the same earned attempt
+ok 6 - result keyboard picture/Back and appearance/settings return keep the same earned attempt
+  ---
+  duration_ms: 13879.142542
+  ...
+# Subtest: campaign-complete replay choice opens the visible Missions dialog without changing the completed run
+ok 7 - campaign-complete replay choice opens the visible Missions dialog without changing the completed run
+  ---
+  duration_ms: 13413.700208
+  ...
+# Subtest: native input modality follows fresh keyboard/touch/controller events without held-pad reclaim
+ok 8 - native input modality follows fresh keyboard/touch/controller events without held-pad reclaim
+  ---
+  duration_ms: 998.014
+  ...
+# Subtest: keyboard: Pause → Main menu → Settings/Missions → return stays paused and preserves the live cut
+ok 9 - keyboard: Pause → Main menu → Settings/Missions → return stays paused and preserves the live cut
+  ---
+  duration_ms: 1899.90725
+  ...
+# Subtest: controller: Pause → Main menu → Settings/Missions → return stays paused and preserves the live cut
+ok 10 - controller: Pause → Main menu → Settings/Missions → return stays paused and preserves the live cut
+  ---
+  duration_ms: 3400.509083
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93240.066083
