@@ -1,0 +1,55 @@
+{
+  "status": "RETIRED_LOCAL_CONTAINER",
+  "at": "2026-09-15T13:25:01.925993+00:00",
+  "original": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test_cross_mode/.cache/cross-mode/p01/v0571/qualified-artifact-original.zip",
+    "bytes": 1136547026,
+    "sha256": "e9b9cf9d6ac976e443124a2e17468f052f61ad9b92403790d4cc0a5dba47ad52",
+    "externallyExpectedDigestSupplied": true,
+    "members": 5,
+    "prefix": "v0.57.1/"
+  },
+  "publishedReleaseId": 389160255,
+  "publishedAt": "2026-09-15T13:24:27Z",
+  "verifiedPublishedOriginals": {
+    "source.tar": {
+      "id": 565740258,
+      "size": 823808000,
+      "digest": "sha256:8a05aeeeae5e3a2a2da53cf5e716d532e27abc1ed48954dd95bcf4307761beb0",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/source.tar"
+    },
+    "distribution.zip": {
+      "id": 565746975,
+      "size": 312616348,
+      "digest": "sha256:743519288b61b061112ae5d3aea1cd8f011eb015d0e205c3a38f6baf47807401",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/distribution.zip"
+    },
+    "manifest.json": {
+      "id": 565750452,
+      "size": 121400,
+      "digest": "sha256:7f0be3dbdddb0b3252e0f3c60b53b0f6f93a38f9e5c513d37cf0e38a176e0f78",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/manifest.json"
+    },
+    "release.json": {
+      "id": 565750456,
+      "size": 465,
+      "digest": "sha256:1687fe1846f7f6cec588d24085a422fa0d9e75a1555f8c0e9a7aefcfe796ac66",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/release.json"
+    },
+    "distribution.zip.sha256": {
+      "id": 565750453,
+      "size": 83,
+      "digest": "sha256:f2f0331f64f19fe074d9a854b4b4e4b872e661bb3fc02948763333b46bd5f30a",
+      "state": "uploaded",
+      "browser_download_url": "https://github.com/mekhovov/revealline/releases/download/v0.57.1/distribution.zip.sha256"
+    }
+  },
+  "reason": "Original released payloads and metadata are independently verified on GitHub. Retire only this temporary enclosing Actions ZIP to make room for native public verification. Source archives, working trees, references, releases, browser profiles and evidence remain unchanged.",
+  "freeBefore": 588361728,
+  "localContainerExists": false,
+  "freeAfter": 1727504384
+}

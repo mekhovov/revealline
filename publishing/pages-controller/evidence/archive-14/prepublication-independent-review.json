@@ -1,0 +1,156 @@
+{
+  "format": "revealline-archive-independent-candidate-review.v1",
+  "recordedAt": "2026-09-15T12:20:09.680205+00:00",
+  "status": "PASS_SCOPED_LOCAL_CANDIDATE",
+  "reviewer": "p01_offline",
+  "remoteMutation": false,
+  "sourceMutation": false,
+  "testsRerun": false,
+  "browserRun": false,
+  "payloadDownloaded": false,
+  "archiveDeploymentPassed": false,
+  "releaseAccepted": false,
+  "candidateFiles": 16,
+  "candidateBytes": 353944,
+  "expectedFiles": 662,
+  "expectedBytes": 312553884,
+  "originalManifestFiles": 654,
+  "originalManifestBytes": 312379448,
+  "blockers": [],
+  "checks": [
+    "All preparation-manifest pins and all16 candidate source pins independently reread. Four ignored existing Python bytecode files are excluded by candidate .gitignore; no unlisted source file.",
+    "All654 exact original manifest descriptors retained beneath releases/v0.57.0/site; eight explicitly derived extras total174436bytes produce662/312553884. This is descriptor/recipe retention; actual archived body audit remains future hosted work.",
+    "Release/manifest/checksum metadata byte-equal both original inspected artifacts and published controller74f2895 blobs. Original qualification byte-equal qualification-r4, release attachments and draft readback copies, and its asset digest.",
+    "All10 fresh cached Release389093107 asset ID/size/digests match input authority; four selected metadata bodies match those digests. Cached annotated tag c3fd6145 points to b7db0134 and actual local commit tree matches7cd40e4e.",
+    "Clean accepted template checkout48fadddd independently identified. prepare.py delta only conditionally copies original qualification outside frozen site; verify.py delta adds exact qualification length/SHA, source/checkout/tree/format/pass/six-gate validation. Generic multi-cohort, fresh-output, capacity, tag/checkout and inventory guards are unchanged.",
+    "Pinned extractor and its tests byte-equal original Git0594 blobs. Extractor validates transfer/ZIP budgets, original SHA and manifest identity, safe unique member names/types, CRC and each byte/hash; stages then renames and deletes its own temporary ZIP.",
+    "Existing20 infrastructure and4 extractor pass logs inspected, not rerun. New positive two-cohort qualification copy plus corrupt/wrong-source/incomplete-gates cases are present; original generic link/budget/corruption checks retained.",
+    "Sole workflow has automatic push only main, guarded main-only manual retry, both build/deploy ref guards, contents-read default, pages/id-token scoped deploy, serialized no-cancel concurrency, pinned extractor, tests before extraction, independent reread before hidden-file upload. No second workflow or extra automatic publisher.",
+    "Canonical explorer bridge byte-equal accepted template; original frozen site files and immutable GitHub ZIP/source TAR remain unchanged. P01 portrait defect is explicitly historical, not fixed or accepted by archival."
+  ],
+  "wordingFindings": [
+    {
+      "path": "PLAN.md",
+      "issue": "Sole main-push trigger wording omitted inherited workflow_dispatch; manual main retry is technically enabled.",
+      "disposition": "Parent explicitly accepted unchanged guarded template retry path. Intended operation one main push with no duplicate dispatch; owner to add clarification preserving original pins. No workflow removal required."
+    },
+    {
+      "path": "PLAN.md",
+      "issue": "Build marker described as51bytes; original MARKER and expected row are53bytes.",
+      "disposition": "Documentation clarification only; pinned662-row total is correct."
+    }
+  ],
+  "limitations": [
+    "No new GitHub/API call; cached authority observations may require root freshness reread just before repository creation.",
+    "No original312MB ZIP downloaded/extracted and no candidate build/public body audit performed.",
+    "Actual infrastructure commit/tree, main deployment, hosted receipts, full662-body HTTP/MIME/hash audit, native archive route/Back/play and controller admission remain required.",
+    "Source Q preservation is not a P01/public-offline acceptance statement; v0.57 portrait displacement remains recorded."
+  ],
+  "pins": {
+    "preparationManifest": {
+      "path": ".cache/cross-mode/p01/archive14-v057/preparation-manifest.json",
+      "sha256": "4a433012336c1a8674e30b9e6c34f36e005695639467638c1e38ae2a0c39d5b5"
+    },
+    "localReview": {
+      "path": ".cache/cross-mode/p01/archive14-v057/evidence/local-review.json",
+      "sha256": "c67d593fc55ba74dd58715ca3522a9215af784c1ed8a28553a880cd14c05feb2"
+    },
+    "sourceLock": {
+      "sha256": "1cb93f15cfdec0f3d2e93c36d131b52a0b7e1f59fad414e392eed324e67c90a3"
+    },
+    "expectedInventory": {
+      "sha256": "f24adf62b38808725c834d92ea7b1e2475a6318eb0294051313e06f54fab5c27"
+    },
+    "workflow": {
+      "sha256": "74f8c0e2026ba462d811f35d68897661d0cefeaa0f3263cafdeb0cea777cfabf"
+    },
+    "qualification": {
+      "bytes": 51091,
+      "sha256": "fa7619fb0633fb20e45def339ff94421b4862eaccd2386ff608c0d0a1f8344bb"
+    },
+    "templateCommit": "48fadddd098af0e3e71e7913445144731d6da259",
+    "extractorCommit": "0594b60136db000c9d6c87527c7885c2c51a2562"
+  },
+  "candidatePins": [
+    {
+      "path": ".github/workflows/deploy.yml",
+      "bytes": 3074,
+      "sha256": "74f8c0e2026ba462d811f35d68897661d0cefeaa0f3263cafdeb0cea777cfabf"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 19,
+      "sha256": "862263fa1f46c20f0d1e4dac5ffcc75abd55c08211b2c3864c5f8764b9d87793"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2372,
+      "sha256": "5e434fba972b043ec63765719e0ced77f0bdc24a25c679c660c86f836b477fae"
+    },
+    {
+      "path": "expected-inventory.json",
+      "bytes": 136985,
+      "sha256": "f24adf62b38808725c834d92ea7b1e2475a6318eb0294051313e06f54fab5c27"
+    },
+    {
+      "path": "index.html",
+      "bytes": 773,
+      "sha256": "b6bccadf27248d2ad44a1d57c149744cf391542470d3aeb01092e556d1b1ddea"
+    },
+    {
+      "path": "input-authority.json",
+      "bytes": 4368,
+      "sha256": "e1fecbc82d6f7be88c5a87086b430330d168edc472deee2f25a4bc486122d8bc"
+    },
+    {
+      "path": "metadata/v0.57.0/distribution.zip.sha256",
+      "bytes": 83,
+      "sha256": "130f887dcb5144706ae2efe1676914f9ab1a501dd1f2765bd53dc757a197085a"
+    },
+    {
+      "path": "metadata/v0.57.0/manifest.json",
+      "bytes": 121400,
+      "sha256": "83aecda2a3ec5d6ec5e02cfedc5c61b2fcbc592f923fe739d58c81d23b3bf017"
+    },
+    {
+      "path": "metadata/v0.57.0/release.json",
+      "bytes": 465,
+      "sha256": "e03f57b85893dd27d9bb122c2d3cea6795660658a8caf59368b935c77b343f6d"
+    },
+    {
+      "path": "metadata/v0.57.0/source-qualification.json",
+      "bytes": 51091,
+      "sha256": "fa7619fb0633fb20e45def339ff94421b4862eaccd2386ff608c0d0a1f8344bb"
+    },
+    {
+      "path": "releases/index.html",
+      "bytes": 571,
+      "sha256": "a67eebc2c45e1659fef5b993c65fee2146ae3e47f352f25b0c9d42ccc77471c0"
+    },
+    {
+      "path": "source-lock.json",
+      "bytes": 1428,
+      "sha256": "1cb93f15cfdec0f3d2e93c36d131b52a0b7e1f59fad414e392eed324e67c90a3"
+    },
+    {
+      "path": "tools/prepare.py",
+      "bytes": 4420,
+      "sha256": "d0c66a9f0ff13e5c9e343cec0251da40aebc98849059ffc70da948b3f0fa524f"
+    },
+    {
+      "path": "tools/test_prepare.py",
+      "bytes": 16701,
+      "sha256": "ed9690670c5594296998c6abee91adc1f5b7086287de5a7ee408ee02af5f0220"
+    },
+    {
+      "path": "tools/test_verify.py",
+      "bytes": 2278,
+      "sha256": "84891f0ee35945d12e165279b5fcffc8393646dc940c703f3fdeab1ef16b3a85"
+    },
+    {
+      "path": "tools/verify.py",
+      "bytes": 7916,
+      "sha256": "5e9c64fdc246d61b58355a5afebb39de55cfd4a1d1315f7f6d73b7e706281b06"
+    }
+  ]
+}
