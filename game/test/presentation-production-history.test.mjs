@@ -76,6 +76,34 @@ test('production refuses silent slot contract mutation and can explicitly return
   );
 });
 
+test('the current source-pinned motion and feedback recipe reviews remain selected', async () => {
+  const production = await createFieldKitProduction();
+  const resolved = resolvePresentation(production.document);
+  for (const slotId of [
+    'player.scout.rotors',
+    'player.bomber.rotors',
+    'player.carrier.rotors',
+    'player.interceptor.rotors',
+    'player.fiber.rotors',
+    'player.impact.rotors',
+    'player.trapper.rotors',
+    'trail.active',
+    'trail.secured',
+    'trail.head',
+    'effect.capture',
+    'effect.failure',
+    'effect.victory',
+    'effect.pickup',
+    'effect.shield',
+    'effect.respawn',
+    'effect.pressure',
+  ]) {
+    const asset = resolved.assets[slotId];
+    assert.equal(asset.quality.stage, 'reviewed', slotId);
+    assert.ok(asset.quality.evidence.some((entry) => entry.includes('Scoped v0.54 source review')));
+  }
+});
+
 test('the whole production collection has capacity for immutable review successors', async () => {
   const prior = await importThemeBundle(
     new Blob([
