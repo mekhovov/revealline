@@ -30,11 +30,13 @@ Pass the actual JSON file as the `artifact_binding` string input. The schema is 
 
 The nine names are `source.tar`, `distribution.zip`, `manifest.json`, `release.json`, `distribution.zip.sha256`, `source-qualification.json`, `source-qualification-evidence.zip`, `verification.json`, and `qualification-evidence-record.json`. The last seven must already exist on the draft. The evidence record binds the other eight; its own descriptor comes from the reviewed binding. Source and distribution descriptors must bind the original archive member names as well as bytes/hashes. No future release/artifact ID is embedded in source.
 
-After root review, an operator can dispatch using the existing workflow:
+After root review, verify the dispatch branch still resolves to the reviewed utility commit, then dispatch using that branch. GitHub workflow dispatch requires a branch or tag name; the actual workflow commit and qualified source remain independently pinned in the receipts:
 
 ```sh
+test "$(gh api "repos/$REPOSITORY/git/ref/heads/$REVIEWED_UTILITY_BRANCH" --jq .object.sha)" = "$REVIEWED_UTILITY_COMMIT" &&
 gh workflow run qualify-release-source.yml \
-  --ref "$REVIEWED_UTILITY_COMMIT" \
+  --repo "$REPOSITORY" \
+  --ref "$REVIEWED_UTILITY_BRANCH" \
   -f operation=inspect-artifact \
   -f artifact_binding="$(cat "$REVIEWED_INSPECTION_BINDING")"
 ```
