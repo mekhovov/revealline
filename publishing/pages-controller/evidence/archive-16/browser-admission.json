@@ -1,0 +1,54 @@
+{
+  "format": "revealline-archive-browser-admission.v1",
+  "status": "PASS",
+  "archiveId": "archive-16",
+  "infrastructureCommit": "275a3061e8233a2c1046a494e613dca03783e231",
+  "deploymentId": 6465379166,
+  "versions": [
+    "v0.57.2"
+  ],
+  "evidence": [
+    {
+      "path": "evidence/archive-16/browser-review.json",
+      "sha256": "1dbf089cca879c3b53faca5e6a7049f76cab0f3890bddefb113940488b8e57a1"
+    },
+    {
+      "path": "evidence/archive-16/native-evidence-manifest.json",
+      "sha256": "f32647470df0b145a4b18c045c1ab0b86e291522430a366532484cb0c449c75a"
+    },
+    {
+      "path": "evidence/archive-16/native-evidence-record.json",
+      "sha256": "38f93ff77de2ab921ea297db712141ec2bcefc9b24efa697a2a940dbd8a8aaf3"
+    },
+    {
+      "path": "evidence/archive-16/native-evidence.zip",
+      "sha256": "fe79e8c82269c4c34ca571416f350f4e4e4e85879eae9ba0cae8ee442631c894"
+    },
+    {
+      "path": "evidence/archive-16/after-native-main.json",
+      "sha256": "0a944acceda253c59295567dac98a4b9515cc040765314940bf1c18b725d5ef2"
+    },
+    {
+      "path": "evidence/archive-16/after-native-run.json",
+      "sha256": "d053037e685b9fb932af5bf6447ec389b3a00b7d39e52357c8563c494bb85412"
+    },
+    {
+      "path": "evidence/archive-16/after-native-statuses.json",
+      "sha256": "8643e83aae59b35a9d31084d02da6243050938652042042cc7b90af7ce09dd72"
+    },
+    {
+      "path": "evidence/archive-16/after-native-review.json",
+      "sha256": "b8d9f57e9ae829c950381b7aed973b5e329747c86a4c93a1ffde894f7bb6ea9c"
+    },
+    {
+      "path": "evidence/archive-16/after-native-deployment.json",
+      "sha256": "5842799034f0c3ff7ee992ec09d490a429c0a9254abf390c82c5e0c694f89ac5"
+    },
+    {
+      "path": "evidence/archive-16/admission-review.json",
+      "sha256": "3587cf57ecad1489e721abce045a76cd23fee7db8b311655e7db074906f0f0b2"
+    }
+  ],
+  "scope": "Bounded online Archive16 preservation of original v0.57.2 only: exact frozen build, genuine 52.2% / 8160 victory, Try again and explicit paused retry (58 ticks, checkpoint 2f617e946ac1c963), actual Release Explorer link / native Back with saved pins preserved, and 390x844 portrait menu geometry. All failed selectors, mistaken earlier Back/Forward, misleading paused.png name and corrected observations remain in the unchanged native ZIP. Historical unstarted-mission picture-writer race and session-only history warning remain. No offline, imports, authoring, physical-device, complete input-mode coverage, future release qualification or whole P01 acceptance claim.",
+  "phaseAccepted": false
+}
