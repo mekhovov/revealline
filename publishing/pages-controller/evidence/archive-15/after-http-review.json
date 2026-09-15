@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-09-15T14:20:30.863646+00:00",
+  "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+  "runId": 34980491924,
+  "deploymentId": 6460910463,
+  "latestMainRunAndDeploymentUnchanged": true,
+  "oneAutomaticRunNoManualDuplicates": true,
+  "httpFinishedAt": "2026-09-15T14:20:21.452148+00:00",
+  "pins": [
+    {
+      "path": "post-http/all-runs.json",
+      "bytes": 13243,
+      "sha256": "2707023569ca9539f735a30cd99128e7306e9c267ed4077e182430865f2c9dc5"
+    },
+    {
+      "path": "post-http/deployments.json",
+      "bytes": 3858,
+      "sha256": "9a451b0132fac0109f58c26de08fdb70315bdf1c7da1305a20896e5f09d058f7"
+    },
+    {
+      "path": "post-http/main.json",
+      "bytes": 358,
+      "sha256": "ec28e72cda6c908efad947a870091c32721e74ac199d9bf380ae9185c9267d42"
+    },
+    {
+      "path": "post-http/run.json",
+      "bytes": 13207,
+      "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2"
+    },
+    {
+      "path": "post-http/statuses.json",
+      "bytes": 6817,
+      "sha256": "28ed57cc05f111aadfc84d67d03c6143b6cf018b20a2493249c6e4bfa8c01484"
+    }
+  ]
+}

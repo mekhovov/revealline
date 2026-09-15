@@ -1,8 +1,8 @@
 {
   "format": "revealline-pages-controller.v1",
-  "currentVersion": "v0.57.1",
-  "catalogSha256": "0ea8ce45a3ad02882046a1876e791db86ace0e81de483fe136e915f9cdb05eb9",
-  "allocationSha256": "9f299a83104e4ecc130c4cc34ff3f5746f64e36798aacb3d9ce95bde1978e283",
+  "currentVersion": "v0.57.2",
+  "catalogSha256": "5073557dd93949d33f9332e86d579bc6dca957789d83a4e86bd335746e8b58b0",
+  "allocationSha256": "b90a21fe254c2ffc8f59d0f58134710c1e41dcabba2cb4b6bf8cdb80ec669af9",
   "admissions": [
     {
       "id": "archive-01",
@@ -1446,12 +1446,229 @@
           "kind": "reference"
         }
       ]
+    },
+    {
+      "id": "archive-15",
+      "infrastructureCommit": "546610e6bae47f80122ee59cd69baa6546f6fe39",
+      "deploymentId": 6460910463,
+      "evidence": [
+        {
+          "path": "evidence/archive-15/expected-inventory.json",
+          "sha256": "c5cf1352d8bcaaa36dd53d65e570ecc8e571bc3724641325521e09e54dd7b89f",
+          "kind": "inventory"
+        },
+        {
+          "path": "evidence/archive-15/http-report.json",
+          "sha256": "64134680e50d37799c6e492afa65cc88e83d43cdc88a173637ae279e317e9573",
+          "kind": "http"
+        },
+        {
+          "path": "evidence/archive-15/source-lock.json",
+          "sha256": "726d38cd7821230e3892748524f3f9c59b283be382357c27e011b2b2cb3491ea",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/input-authority.json",
+          "sha256": "7507c25266a326950bc30fc639bddcb4d63bfb18d8f5c9fd49137cd7524c28b6",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/candidate-pins.json",
+          "sha256": "b4f984ce4ec34b99513c165e4597016e06b0061b0027932adee5030e8aa96f03",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/committed-candidate.json",
+          "sha256": "849ca89fc89a9a554034545c2d36e13ca341ac7845d31ce0fb202ed1874ff009",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/merged-commit.json",
+          "sha256": "b60e72ab3210c307b2fb74c66987dd94338fd662515280514e31871d1f82acf8",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/completion-step5.json",
+          "sha256": "5cd445c4558152a92aa3999a9417fdf3fcfc32876c5512456d27e4b4cd4f8047",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/run.json",
+          "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/jobs.json",
+          "sha256": "067c44f0277374da858470496135b19008fdfcedbbdd6ce7473df4c6a57fcbe6",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/artifacts.json",
+          "sha256": "6e2aba3811816c05ee233d208922b4aebabd6adc52a4c6c9020063e093ab8203",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/deployment.json",
+          "sha256": "1c80414f76a001f52de7154cb1120b7de88f86af9682cec9f0d885c64a0565ee",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/deployment-statuses.json",
+          "sha256": "28ed57cc05f111aadfc84d67d03c6143b6cf018b20a2493249c6e4bfa8c01484",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/main-ref.json",
+          "sha256": "ec28e72cda6c908efad947a870091c32721e74ac199d9bf380ae9185c9267d42",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/receipt.json",
+          "sha256": "4942ba5995131febca00a935cba093e65aa35a13f05973d1cdec7b1def27bfa5",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/zip-receipt-v0.57.1.json",
+          "sha256": "df1e329cd39a788f6ba45e4a77ba180f08a045a05094cf2a557be389e6c67bee",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/original-receipts.zip",
+          "sha256": "5a1f73e1bf29fe2c55592b5fc4ca12230ab5fefa1ea4e59ea6478529ab4d0eb0",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/hosted-review.json",
+          "sha256": "5d0ce202dd3b82e3a2524291f2a2a747d5855abb10904cb08d7d1cdba45a2e6a",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-main.json",
+          "sha256": "ec28e72cda6c908efad947a870091c32721e74ac199d9bf380ae9185c9267d42",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-run.json",
+          "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-all-runs.json",
+          "sha256": "2707023569ca9539f735a30cd99128e7306e9c267ed4077e182430865f2c9dc5",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-deployments.json",
+          "sha256": "9a451b0132fac0109f58c26de08fdb70315bdf1c7da1305a20896e5f09d058f7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-statuses.json",
+          "sha256": "28ed57cc05f111aadfc84d67d03c6143b6cf018b20a2493249c6e4bfa8c01484",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-http-review.json",
+          "sha256": "8f3488f1ed09168adf2033df03991a80e7e6f863b206b60249c2b019308c9b22",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/step5-evidence-index.json",
+          "sha256": "0188819172672ccf5aa4619ae550e2c252a7037b5ac0afc99eb954f96ee8f8ca",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/step5-evidence.zip",
+          "sha256": "ec1f9d2787b9f0ce150875c74746a7a2e191a8d7b55f16089ade45c790808648",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/step5-evidence-record.json",
+          "sha256": "f1733f27bc5d15575894e3a947e34ca41da9ed62bd2fc33ffd9ad372ce9d945e",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-native-deployments.json",
+          "sha256": "9a451b0132fac0109f58c26de08fdb70315bdf1c7da1305a20896e5f09d058f7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-native-main.json",
+          "sha256": "ec28e72cda6c908efad947a870091c32721e74ac199d9bf380ae9185c9267d42",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-native-review.json",
+          "sha256": "69d62097f0d2653e8b45254427e424390c41b1320a8b8f413b0ecf65729c8d24",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-native-run.json",
+          "sha256": "41a6e376fab52d87fbdbce2f9edb72ffa26edf44663c5c4a4b1de83a60ac9ce2",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/after-native-statuses.json",
+          "sha256": "28ed57cc05f111aadfc84d67d03c6143b6cf018b20a2493249c6e4bfa8c01484",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/browser-review.json",
+          "sha256": "31cbe516e2cca24025194054cf6fdb8d527d79f3d7f5c2fc2a2e59bd256f770a",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-assertions.json",
+          "sha256": "36f218d42cff2907de62d219481f7e4414f4bc0c0e55c41d5520bdf3b34b1b11",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-evidence.zip",
+          "sha256": "873eaf2fc5d823ba23836d2511aa7fc58c75a81f894d46dac65feea67b9ad74b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-evidence-record.json",
+          "sha256": "0a4b5925bb0b595da26d8c753855cfd8bb901e06c38bf137df0618edaa52cc43",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-title.png",
+          "sha256": "8c07f4be00c0be06a2639157b620dcb0a9775e351b2c6bf26e5b6f5c8cb7312d",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-pause.png",
+          "sha256": "80b1f8dbd67588180f439e641f44754336efea9d1d58b039e0d426b39bdcb74b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-explorer.png",
+          "sha256": "726fcc68727d5e8d3b9a5b061981b06c576f3cdcde24c931dee592620a72e4f7",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-return.png",
+          "sha256": "9b1d8fe961964443a4ebc243321355677df91dabb84d8d1f3850c9b160f8acde",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/native-portrait.png",
+          "sha256": "3280f3f8cbe00c62cf7ecfcc959ba94dfa1d030733dfdfe9aaa848fd2732694b",
+          "kind": "reference"
+        },
+        {
+          "path": "evidence/archive-15/browser-admission.json",
+          "sha256": "4affe781d2e27c85f944db5ba4582a3d99421054f557e2314c0f9915ebf5e50d",
+          "kind": "browser"
+        }
+      ]
     }
   ],
   "deploymentEnabled": true,
   "currentSourceQualification": {
-    "path": "evidence/current-v0571/source-qualification.json",
-    "sha256": "3f191263ad827c30ecd797d7dcf1186d03551fae9a8500611b91a5d72ce512bd"
+    "path": "evidence/current-v0572/source-qualification.json",
+    "sha256": "899192dd56c7baa3824d28fef5d53d9221b90014aa36269649e1eb08d9bbf5fb"
   },
   "retainedReleasesPerMajor": 100,
   "testingRoutes": {}
