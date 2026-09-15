@@ -63,10 +63,27 @@ test('explicit native links preserve retry URLs, distinguish requested from prep
   const h = await panel();
   assert.equal(await h.$('prepare-backup-set').onclick(), true);
   assert.equal(h.urls.size, 5);
+  assert.equal(h.$('backup-set-filenames').hidden, false);
+  assert.equal(h.$('backup-set-filenames').open, false);
+  assert.equal(h.$('backup-set-filename-summary').tagName, 'SUMMARY');
+  assert.equal(h.$('backup-set-filename-summary').textContent, 'File names');
+  assert.equal(h.$('backup-set-files').querySelectorAll('a').length, 5);
   const names = ['game', 'media', 'story', 'audio', 'coverage'].map((id) => {
     const anchor = h.$(`download-backup-${id}`);
     assert.match(anchor.download, /^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/);
-    assert.equal(anchor.textContent, `Download ${anchor.download}`);
+    assert.equal(
+      anchor.textContent,
+      {
+        game: 'Download game data',
+        media: 'Download pictures',
+        story: 'Download stories',
+        audio: 'Download music',
+        coverage: 'Download coverage report',
+      }[id],
+    );
+    assert.equal(anchor.getAttribute('aria-describedby'), `backup-set-state-${id}`);
+    assert.equal(h.$(`backup-set-filename-${id}`).textContent, anchor.download);
+    assert.equal(h.$(`backup-set-purpose-${id}`).textContent, anchor.textContent);
     return anchor.download.match(/^RevealLine-backup-[0-9TZ]+-[a-f0-9]{32}-/)[0];
   });
   assert.equal(new Set(names).size, 1, 'The actual native links keep the shared prefix.');
@@ -79,8 +96,12 @@ test('explicit native links preserve retry URLs, distinguish requested from prep
   assert.match(h.$('backup-set-state-audio').textContent, /Prepared/);
   assert.equal(h.urls.size, 5);
   assert.equal(link.emit('click').defaultPrevented, false);
+  h.$('backup-set-filenames').open = true;
   h.dialog.open = false;
   h.dialog.emit('close');
+  assert.equal(h.$('backup-set-filenames').hidden, true);
+  assert.equal(h.$('backup-set-filenames').open, false);
+  assert.equal(h.$('backup-set-filename-list').children.length, 0);
   assert.equal(h.urls.size, 0);
   assert.equal(h.revoked.length, 5);
   assert.equal(
@@ -125,7 +146,11 @@ test('changed source rejects native activation and visibility teardown releases 
   assert.equal(link.emit('click').defaultPrevented, true);
   assert.equal(h.urls.size, 0);
   assert.equal(h.document.activeElement.id, 'prepare-backup-set');
+  assert.equal(h.$('backup-set-filenames').hidden, true);
   await h.$('prepare-backup-set').onclick();
+  assert.equal(h.$('backup-set-filenames').open, false);
+  assert.notEqual(h.$('backup-set-filename-game').textContent, link.download);
+  assert.equal(h.$('backup-set-filename-game').textContent, h.$('download-backup-game').download);
   assert.equal(h.urls.size, 5);
   h.document.hidden = true;
   h.document.emit('visibilitychange');
@@ -213,5 +238,30 @@ for (const exit of ['escape', 'controller'])
     assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
     assert.deepEqual(h.storage.map, stored);
     assert.doesNotMatch(h.$('controller-ui-hint').textContent, /operation is still in progress/);
+    assert.deepEqual(h.errors, []);
+    assert.equal(await h.$('prepare-backup-set').onclick(), true);
+    const downloadUrl = h.$('download-backup-game').href;
+    // Model the native details open state; the browser owns summary activation.
+    h.$('backup-set-filenames').open = true;
+    h.$('backup-set-filename-summary').focus();
+    assert.equal(h.doc.activeElement.id, 'backup-set-filename-summary');
+    if (exit === 'escape') {
+      const event = new Event('cancel', { cancelable: true });
+      if (h.$('library-dialog').dispatchEvent(event)) h.$('library-dialog').close();
+      assert.equal(event.defaultPrevented, false);
+    } else {
+      pad.buttons[1] = { pressed: true, value: 1 };
+      h.frame();
+      pad.buttons[1] = { pressed: false, value: 0 };
+      h.frame();
+    }
+    assert.equal(h.$('library-dialog').open, false, 'File names add no separate Back layer.');
+    assert.equal(h.$('backup-set-filenames').hidden, true);
+    assert.equal(h.$('backup-set-filenames').open, false);
+    assert.equal(h.$('backup-set-filename-list').children.length, 0);
+    await assert.rejects(fetchBlob(downloadUrl), /fetch failed/);
+    assert.equal(h.rendered.paused, true);
+    assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+    assert.deepEqual(h.storage.map, stored);
     assert.deepEqual(h.errors, []);
   });
